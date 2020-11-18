@@ -13,8 +13,10 @@ module.exports = {
     {
       react: 'react',
       'react-redux': 'react-redux',
-      'react-dom': 'react-dom',
-      '@reduxjs/toolkit': '@reduxjs/toolkit'
+      'react-dom': 'react-dom',      
+      '@reduxjs/toolkit': '@reduxjs/toolkit',
+      '@deck.gl/core': '@deck.gl/core',
+      '@deck.gl/google-maps': '@deck.gl/google-maps',
     },
     /^@material-ui\/.+$/,
   ],

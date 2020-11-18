@@ -1,4 +1,5 @@
-export {
+// api
+import {
   executeSQL,
   getUserDatasets,
   AggregationTypes,
@@ -6,13 +7,26 @@ export {
   buildQuery,
 } from './api';
 
-export * from './slice';
+const api = {
+  executeSQL,
+  getUserDatasets,
+  AggregationTypes,
+  FilterTypes,
+  buildQuery,
+};
 
-export * from './basemaps';
+// slice
+import * as slice from './slice';
 
-export { OAuthCallback, OAuthLogin, useOAuthLogin } from './oauth';
+// basemaps
+import * as basemaps from './basemaps';
 
-export {
+// oauth
+import { OAuthCallback, OAuthLogin, useOAuthLogin } from './oauth';
+const oauth = { OAuthCallback, OAuthLogin, useOAuthLogin };
+
+// widgets
+import {
   CategoryWidget,
   FormulaWidget,
   GeocoderWidget,
@@ -22,9 +36,38 @@ export {
   getCategories,
 } from './widgets';
 
-export {
+const widgets = {
+  CategoryWidget,
+  FormulaWidget,
+  GeocoderWidget,
+  HistogramWidget,
+  getFormula,
+  getHistogram,
+  getCategories,
+};
+
+// ui
+import {
   cartoThemeOptions,
+  WrapperWidgetUI,
   CategoryWidgetUI,
   HistogramWidgetUI,
   FormulaWidgetUI,
 } from './ui';
+
+const ui = {
+  cartoThemeOptions,
+  WrapperWidgetUI,
+  CategoryWidgetUI,
+  HistogramWidgetUI,
+  FormulaWidgetUI,
+}
+
+// ---
+
+export { api };
+export { slice };
+export { basemaps };
+export { oauth };
+export { widgets };
+export { ui };
