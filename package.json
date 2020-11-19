@@ -3,10 +3,10 @@
   "version": "1.0.0-alpha1",
   "description": "CARTO for React",
   "scripts": {
-    "lint": "eslint 'src/**/*.{js,jsx}'",
-    "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
+    "start": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && webpack --config webpack.prod.js --watch",
     "build": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && webpack --config webpack.prod.js",
-    "start": "webpack --config webpack.prod.js --watch"
+    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix"
   },
   "keywords": [],
   "author": "CARTO Dev Team",
