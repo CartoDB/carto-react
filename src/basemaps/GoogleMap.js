@@ -31,6 +31,19 @@ export function GoogleMap(props) {
       },
       mapTypeControl: false,
       zoom: viewState.zoom + 1, // notice the 1 zoom level difference relative to deckgl
+
+      // Custom control positioning
+      // TODO: Make them configurable from outside
+      zoomControl: true,
+      zoomControlOptions: {
+        position: window.google.maps.ControlPosition.LEFT_BOTTOM,
+      },
+      streetViewControl: true,
+      streetViewControlOptions: {
+        position: window.google.maps.ControlPosition.LEFT_BOTTOM,
+      },
+
+
       ...basemap.options,
     };
 

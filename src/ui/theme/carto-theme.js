@@ -1008,6 +1008,13 @@ export const cartoThemeOptions = {
     },
     MuiSelect: {
       variant: 'outlined',
+      MenuProps: {
+        getContentAnchorEl: null,
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'left',
+        }
+      }
     },
     MuiOutlinedInput: {
       notched: false,
