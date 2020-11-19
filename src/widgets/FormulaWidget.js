@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectSourceById } from '../redux/cartoSlice';
 import { WrapperWidgetUI, FormulaWidgetUI } from '../ui';
 import { getFormula } from './models';
@@ -7,7 +7,6 @@ import { getFormula } from './models';
 export default function FormulaWidget(props) {
   const [formulaData, setFormulaData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const { data, credentials, filters } = source;
@@ -44,7 +43,7 @@ export default function FormulaWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, filters, viewport, props, dispatch]);
+  }, [credentials, data, filters, viewport, props]);
 
   return (
     <WrapperWidgetUI title={props.title} expandable={true} loading={loading}>

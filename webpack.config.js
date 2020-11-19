@@ -2,13 +2,6 @@ const path = require('path');
 
 const config = {
   mode: 'development',
-  entry: './src/index.js',
-  // output: {
-  //   path: path.resolve(__dirname, 'dist'),
-  //   filename: 'carto-react.js',
-  //   library: 'cartoForReact',
-  //   libraryTarget: 'umd'
-  // },
   externals: [
     {
       react: 'react',
@@ -34,7 +27,8 @@ const config = {
   }
 };
 
-const api = {...config, 
+const api = {
+  ...config, 
   output: {
     path: path.resolve(__dirname, 'dist', 'api'),
     filename: 'index.js',
@@ -44,7 +38,8 @@ const api = {...config,
   entry: './src/api/index.js',
 };
 
-const basemaps = {...config, 
+const basemaps = {
+  ...config, 
   output: {
     path: path.resolve(__dirname, 'dist', 'basemaps'),
     filename: 'index.js',
@@ -54,7 +49,8 @@ const basemaps = {...config,
   entry: './src/basemaps/index.js',
 };
 
-const oauth = {...config, 
+const oauth = {
+  ...config, 
   output: {
     path: path.resolve(__dirname, 'dist', 'oauth'),
     filename: 'index.js',
@@ -64,7 +60,8 @@ const oauth = {...config,
   entry: './src/oauth/index.js',
 };
 
-const redux = {...config, 
+const redux = {
+  ...config, 
   output: {
     path: path.resolve(__dirname, 'dist', 'redux'),
     filename: 'index.js',
@@ -74,7 +71,8 @@ const redux = {...config,
   entry: './src/redux/index.js',
 };
 
-const ui = {...config, 
+const ui = {
+  ...config, 
   output: {
     path: path.resolve(__dirname, 'dist', 'ui'),
     filename: 'index.js',
@@ -84,7 +82,8 @@ const ui = {...config,
   entry: './src/ui/index.js',
 };
 
-const widgets = {...config, 
+const widgets = {
+  ...config, 
   output: {
     path: path.resolve(__dirname, 'dist', 'widgets'),
     filename: 'index.js',
