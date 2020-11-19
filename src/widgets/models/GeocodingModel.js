@@ -1,6 +1,6 @@
 // Geocoding / Data Services https://carto.com/developers/data-services-api/reference/
 
-import { executeSQL } from './SQL';
+import { executeSQL } from '../../api';
 
 /**
  * Street-Level Geocoder

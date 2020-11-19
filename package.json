@@ -1,12 +1,12 @@
 {
-  "name": "react-victor-test",
-  "version": "1.0.0-alpha11",
+  "name": "@carto/react",
+  "version": "1.0.0-alpha1",
   "description": "CARTO for React",
-  "main": "dist/carto-react.js",
   "scripts": {
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
-    "build": "rm -rf dist && webpack --config webpack.prod.js"
+    "build": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && webpack --config webpack.prod.js",
+    "start": "webpack --config webpack.prod.js --watch"
   },
   "keywords": [],
   "author": "CARTO Dev Team",

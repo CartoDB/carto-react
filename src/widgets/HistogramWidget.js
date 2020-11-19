@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addFilter, removeFilter, selectSourceById } from '../slice/cartoSlice';
+import { addFilter, removeFilter, selectSourceById } from '../redux/cartoSlice';
 import { WrapperWidgetUI, HistogramWidgetUI } from '../ui';
-import { FilterTypes, getApplicableFilters } from '../api';
+import { FilterTypes, getApplicableFilters } from '../api/FilterQueryBuilder';
 import { getHistogram } from './models';
 
 export default function HistogramWidget(props) {
@@ -14,7 +14,6 @@ export default function HistogramWidget(props) {
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const { title, formatter, xAxisFormatter, dataAxis, ticks } = props;
   const { data, credentials } = source;
-  // const selectedBars = getSelectBars(column, source.filters, ticks);
 
   const tooltipFormatter = ([serie]) => {
     const formattedValue = formatter
