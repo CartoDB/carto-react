@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Checkbox, IconButton, Switch, Typography } from '@material-ui/core';
 import ColorizeIcon from '@material-ui/icons/Colorize';
 import MenuIcon from '@material-ui/icons/Menu';
 import WrapperWidgetUI from '../../widgets/WrapperWidgetUI';
@@ -44,14 +44,15 @@ Loading.args = { title: 'Loading', loading: true };
 export const WithActions = Template.bind({});
 WithActions.args = {
   title: 'Wrapper with actions',
-  actions: [
-    {
-      id: 'a1',
-      name: 'Autostyle',
-      icon: <ColorizeIcon />,
-      action: () => alert('Action!'),
-    },
-  ],
+  actions: (
+    <React.Fragment>
+      <Switch/>
+      <IconButton onClick={() => alert('Action!')}>
+        <ColorizeIcon />
+      </IconButton>
+      <Checkbox></Checkbox>
+    </React.Fragment>
+  ),
 };
 
 export const WithOptions = Template.bind({});
@@ -66,14 +67,15 @@ WithOptions.args = {
 export const WithActionsAndOptions = Template.bind({});
 WithActionsAndOptions.args = {
   title: 'Wrapper with actions and options',
-  actions: [
-    {
-      id: 'a1',
-      name: 'Autostyle',
-      icon: <ColorizeIcon />,
-      action: () => alert('Action!'),
-    },
-  ],
+  actions: (
+    <React.Fragment>
+      <Switch/>
+      <IconButton onClick={() => alert('Action!')}>
+        <ColorizeIcon />
+      </IconButton>
+      <Checkbox></Checkbox>
+    </React.Fragment>
+  ),
   options: [
     { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
     { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') },

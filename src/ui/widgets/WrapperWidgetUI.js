@@ -134,18 +134,7 @@ function WrapperWidgetUI(props) {
         </Button>
 
         <Grid item style={{ display: 'flex' }}>
-          {actions.map((action) => {
-            return (
-              <IconButton
-                key={action.id}
-                aria-label={action.label}
-                onClick={action.action}
-                className={classes.iconAction}
-              >
-                {action.icon}
-              </IconButton>
-            );
-          })}
+          {actions}
 
           {options.length > 0 && (
             <div>
