@@ -4,7 +4,7 @@ import {
   getUserDatasets,
   AggregationTypes,
   FilterTypes,
-  buildQuery,
+  buildQueryFilters,
 } from './api';
 
 const api = {
@@ -12,7 +12,7 @@ const api = {
   getUserDatasets,
   AggregationTypes,
   FilterTypes,
-  buildQuery,
+  buildQueryFilters,
 };
 
 // slice
