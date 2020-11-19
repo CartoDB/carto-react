@@ -48,7 +48,7 @@ export const filtersToSQL = (filters = {}) => {
     });
   });
 
-  return result.length ? `WHERE ${result.join(' AND ')}` : '';
+  return result.length ? `WHERE (${result.join(') AND (')})` : '';
 };
 
 export const viewportToSQL = (viewport) => {
