@@ -1,4 +1,6 @@
-import { executeSQL, filtersToSQL, viewportToSQL } from '../../api';
+import { executeSQL } from '../../api';
+import { filtersToSQL, viewportToSQL } from '../../api/FilterQueryBuilder';
+
 
 export const getHistogram = async (props) => {
   const { data, credentials, column, operation, ticks, filters, viewport, opts } = props;

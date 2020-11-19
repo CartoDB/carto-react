@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectSourceById } from '../slice/cartoSlice';
+import { selectSourceById } from '../redux/cartoSlice';
 import { WrapperWidgetUI, FormulaWidgetUI } from '../ui';
 import { getFormula } from './models';
 
