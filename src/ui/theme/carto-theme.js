@@ -732,10 +732,7 @@ export const cartoThemeOptions = {
         height: 4,
         '&.colorPrimary': {
           backgroundColor: variables.palette.text.primary,
-        },
-        '&.colorDefault': {
-          backgroundColor: variables.palette.common.white,
-        },
+        }
       },
     },
 
@@ -1045,8 +1042,7 @@ export const cartoThemeOptions = {
       textColor: 'primary',
       TabIndicatorProps: {
         classes: {
-          colorPrimary: 'colorPrimary',
-          colorDefault: 'colorDefault',
+          colorPrimary: 'colorPrimary'
         },
       },
     },
