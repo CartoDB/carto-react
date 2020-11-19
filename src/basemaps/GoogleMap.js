@@ -18,9 +18,9 @@ export function GoogleMap(props) {
     left: 0,
     top: 0,
     width: props.width || '100%',
-    height: props.height || '100%',    
-    ...customStyle
-  }
+    height: props.height || '100%',
+    ...customStyle,
+  };
 
   const onLoad = () => {
     // gmaps
