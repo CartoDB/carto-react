@@ -11,6 +11,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+/** 
+ * Shows a login button.
+ * When this button is clicked, the OAuth protocol flow is handled
+ * by the `useOAuthLogin` hook.
+ * 
+ * @exports OAuthLogin
+ */
 export default function OAuthLogin() {
   const dispatch = useDispatch();
   const classes = useStyles();

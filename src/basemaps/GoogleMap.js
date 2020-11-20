@@ -2,6 +2,17 @@ import React, { useEffect, useRef } from 'react';
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { debounce } from '../utils';
 
+/**
+ * React component for working with Google Maps API and deck.gl
+ *
+ * @param { Object } props - Properties
+ * @param { Object } props.basemap - CARTO username
+ * @param { Object } props.viewState - Viewstate (center, zoom level)
+ * @param { Layer[] } props.layers - Layers array
+ * @param { function } props.getTooltip - Tooltip handler
+ * @param { string } props.apiKey - Google Maps API Key
+ * @returns { Object } - Data returned from the SQL query execution
+ */
 export function GoogleMap(props) {
   const { basemap, viewState, layers, getTooltip, apiKey } = props;
   // based on https://publiuslogic.com/blog/google-maps+react-hooks/

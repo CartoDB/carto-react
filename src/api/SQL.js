@@ -6,11 +6,15 @@ import { dealWithApiError, generateApiUrl } from './common';
 const API = 'api/v2/sql';
 
 /**
- * Execute a SQL query
+ * Executes a SQL query
  *
- * @param { username, apiKey, serverUrlTemplate } credentials - CARTO user credentials
+ * @param { Object } credentials - CARTO user credentials
+ * @param { string } credentials.username - CARTO username
+ * @param { string } credentials.apiKey - CARTO API Key
+ * @param { string } credentials.serverUrlTemplate - CARTO server URL template
  * @param { string } query - SQL query to be executed
- * @param { format } opts - Additional options for the HTTP request
+ * @param { Object } opts - Additional options for the HTTP request
+ * @param { string } opts.format - Output format (i.e. geojson)
  * @returns { Object } - Data returned from the SQL query execution
  */
 export const executeSQL = async (credentials, query, opts = {}) => {

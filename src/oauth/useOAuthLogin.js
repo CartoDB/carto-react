@@ -4,8 +4,13 @@ import { createOAuthPopup, getOAuthParamsFromCallback } from './oauthHelper';
 /**
  * Hook to perform login against CARTO using OAuth implicit flow using a popup
  *
- * @param { clientId, scopes, authorizeEndPoint } oauthApp data
- * @returns [handleLogin] - function to trigger oauth with a popup
+ * @param { Object } oauthApp - OAuth parameters
+ * @param { string } oauthApp.clientId - Application client ID
+ * @param { string[] } oauthApp.scopes - Scopes to request
+ * @param { string } oauthApp.authorizeEndPoint - Authorization endpoint
+ * @param { function } onParamsRefreshed - Function to call when params are refreshed
+ * @returns { function } - Function to trigger oauth with a popup
+ * @exports useOAuthLogin
  */
 export default function useOAuthLogin(oauthApp, onParamsRefreshed) {
   const [oauthParams, setOAuthParams] = useState(null);
