@@ -58,6 +58,13 @@ export const viewportToSQL = (viewport) => {
   )`;
 };
 
+/**
+ * Returns a SQL query applying a set of filters
+ *
+ * @param { string } data - Dataset name or SQL query
+ * @param { Object } filters - Filters to be applied
+ * @returns { string } - SQL query
+ */
 export const buildQueryFilters = ({ data, filters }) => {
   return `
     SELECT *

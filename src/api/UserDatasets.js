@@ -4,7 +4,11 @@ import { dealWithApiError, generateApiUrl } from './common';
 const API = 'api/v4/datasets';
 
 /**
- * Get the datasets list
+ * Get the lists of datasets for the user by performing a request to CARTO datasets API
+ *
+ * @param { username, apiKey, serverUrlTemplate } credentials - CARTO user credentials
+ * @param { Object } opts - Additional options for the HTTP request
+ * @returns { Object } - List of datasets
  */
 export const getUserDatasets = async (credentials, opts = {}) => {
   let response;
