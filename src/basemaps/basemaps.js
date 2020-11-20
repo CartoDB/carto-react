@@ -1,8 +1,36 @@
+/** @constant
+    @type {string}
+    @default
+*/
 export const POSITRON = 'positron';
+/** @constant
+    @type {string}
+    @default
+*/
 export const VOYAGER = 'voyager';
+/** @constant
+    @type {string}
+    @default
+*/
+/** @constant
+    @type {string}
+    @default
+*/
 export const DARK_MATTER = 'dark-matter';
+/** @constant
+    @type {string}
+    @default
+*/
 export const GOOGLE_ROADMAP = 'roadmap';
+/** @constant
+    @type {string}
+    @default
+*/
 export const GOOGLE_SATELLITE = 'satellite';
+/** @constant
+    @type {string}
+    @default
+*/
 export const GOOGLE_HYBRID = 'hybrid';
 
 export const BASEMAPS = {

@@ -6,8 +6,12 @@ const API = 'api/v4/datasets';
 /**
  * Get the lists of datasets for the user by performing a request to CARTO datasets API
  *
- * @param { username, apiKey, serverUrlTemplate } credentials - CARTO user credentials
+ * @param { Object } credentials - CARTO user credentials
+ * @param { string } credentials.username - CARTO username
+ * @param { string } credentials.apiKey - CARTO API Key
+ * @param { string } credentials.serverUrlTemplate - CARTO server URL template
  * @param { Object } opts - Additional options for the HTTP request
+ * @param { string } opts.format - Output format (i.e. geojson)
  * @returns { Object } - List of datasets
  */
 export const getUserDatasets = async (credentials, opts = {}) => {
