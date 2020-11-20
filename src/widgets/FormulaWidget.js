@@ -9,7 +9,6 @@ import { AggregationTypes } from './AggregationTypes';
 /**
   * Renders a <FormulaWidget /> component
   * @param  props
-  * @param  {string} props.id - ID for the widget instance.
   * @param  {string} props.title - Title to show in the widget header.
   * @param  {string} props.dataSource - ID of the data source to get the data from.
   * @param  {string} props.column - Name of the data source's column to get the data from.
@@ -67,7 +66,6 @@ function FormulaWidget(props) {
 };
 
 FormulaWidget.propTypes = {
-  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
   column: PropTypes.string.isRequired,

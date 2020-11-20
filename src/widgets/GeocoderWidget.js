@@ -49,7 +49,6 @@ const SearchIcon = (args) => (
 /**
  * Renders a <GeocoderWidget /> component
  * @param  props
- * @param  {string} props.id - ID for the widget instance.
  * @param  {Object} [props.className] - Material-UI withStyle class for styling
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  */
@@ -154,8 +153,7 @@ function GeocoderWidget(props) {
 };
 
 GeocoderWidget.propTypes = {
-  id: PropTypes.string.isRequired,
-  className: PropTypes.object,
+  className: PropTypes.string,
   onError: PropTypes.func
 };
 
