@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { addFilter, removeFilter, selectSourceById } from '../redux/cartoSlice';
 import { WrapperWidgetUI, CategoryWidgetUI } from '../ui';
 import { FilterTypes, getApplicableFilters } from '../api/FilterQueryBuilder';
 import { getCategories } from './models';
+import { AggregationTypes } from './AggregationTypes';
 
-export default function CategoryWidget(props) {
+/**
+  * Renders a <CategoryWidget /> component
+  * @param  props
+  * @param  {string} props.id - ID for the widget instance.
+  * @param  {string} props.title - Title to show in the widget header.
+  * @param  {string} props.dataSource - ID of the data source to get the data from.
+  * @param  {string} props.column - Name of the data source's column to get the data from.
+  * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
+  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
+  * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
+  * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not. 
+  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
+  */
+ function CategoryWidget(props) {
   const { column } = props;
   const [categoryData, setCategoryData] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -84,3 +99,21 @@ export default function CategoryWidget(props) {
     </WrapperWidgetUI>
   );
 }
+
+CategoryWidget.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  dataSource: PropTypes.string.isRequired,
+  column: PropTypes.string.isRequired,
+  operationColumn: PropTypes.string,
+  operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
+  formatter: PropTypes.func,
+  viewportFilter: PropTypes.bool,
+  onError: PropTypes.func
+};
+
+CategoryWidget.defaultProps = {
+  viewportFilter: false
+};
+
+export default CategoryWidget;

@@ -1,11 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter, selectSourceById } from '../redux/cartoSlice';
 import { WrapperWidgetUI, HistogramWidgetUI } from '../ui';
 import { FilterTypes, getApplicableFilters } from '../api/FilterQueryBuilder';
 import { getHistogram } from './models';
+import { AggregationTypes } from './AggregationTypes';
 
-export default function HistogramWidget(props) {
+/**
+  * Renders a <HistogramWidget /> component
+  * @param  props
+  * @param  {string} props.id - ID for the widget instance.
+  * @param  {string} props.title - Title to show in the widget header.
+  * @param  {string} props.dataSource - ID of the data source to get the data from.
+  * @param  {string} props.column - Name of the data source's column to get the data from.
+  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
+  * @param  {number[]} props.ticks - Array of thresholds for the X axis.
+  * @param  {formatterCallback} [props.xAxisformatter] - Function to format X axis values.
+  * @param  {formatterCallback} [props.formatter] - Function to format Y axis values.
+  * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not. 
+  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
+  */
+function HistogramWidget(props) {
   const { column } = props;
   const [histogramData, setHistogramData] = useState([]);
   const [selectedBars, setSelectedBars] = useState([]);
@@ -18,11 +34,11 @@ export default function HistogramWidget(props) {
   const tooltipFormatter = ([serie]) => {
     const formattedValue = formatter
       ? formatter(serie.value)
-      : { preffix: '', value: serie.value };
+      : { prefix: '', value: serie.value };
 
     return `${
       typeof formattedValue === 'object'
-        ? `${formattedValue.preffix}${formattedValue.value}`
+        ? `${formattedValue.prefix}${formattedValue.value}`
         : formattedValue
     }`;
   };
@@ -96,4 +112,23 @@ export default function HistogramWidget(props) {
       />
     </WrapperWidgetUI>
   );
-}
+};
+
+HistogramWidget.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  dataSource: PropTypes.string.isRequired,
+  column: PropTypes.string.isRequired,
+  operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
+  xAxisFormatter: PropTypes.func,
+  formatter: PropTypes.func,
+  ticks: PropTypes.array.isRequired,
+  viewportFilter: PropTypes.bool,
+  onError: PropTypes.func
+};
+
+HistogramWidget.defaultProps = {
+  viewportFilter: false
+};
+
+export default HistogramWidget;

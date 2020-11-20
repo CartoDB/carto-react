@@ -1,6 +1,6 @@
 {
   "name": "@carto/react",
-  "version": "1.0.0-alpha1",
+  "version": "1.0.0-beta1",
   "description": "CARTO for React",
   "scripts": {
     "start": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && webpack --config webpack.prod.js --watch",
@@ -9,8 +9,8 @@
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
     "storybook": "start-storybook -c src/ui/.storybook -p 6006",
     "build-storybook": "build-storybook -c src/ui/.storybook",
-    "publish-storybook": "build-storybook -c src/ui/.storybook && cd storybook-static && npx vercel --prod --name 'react-airship-ui'",
-    "publish-storybook-staging": "build-storybook -c src/ui/.storybook && cd storybook-static && npx vercel --prod --name 'react-airship-ui-staging'"
+    "publish-storybook": "build-storybook -c src/ui/.storybook && cd storybook-static && npx vercel --prod --name 'react-ui'",
+    "publish-storybook-staging": "build-storybook -c src/ui/.storybook && cd storybook-static && npx vercel --prod --name 'react-ui-staging'"
   },
   "keywords": [],
   "author": "CARTO Dev Team",
@@ -32,6 +32,7 @@
     "echarts": "^4.9.0",
     "echarts-for-react": "^2.0.16",
     "jest": "^26.6.3",
+    "jsdoc-to-markdown": "^6.0.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
