@@ -37,10 +37,11 @@ function FormulaWidgetUI(props) {
 
   useEffect(() => {
     if (typeof data === 'number') {
-      animateValue(prevValue, data, 500, (val) => setValue(val));
+      animateValue(prevValue || 0, data, 500, (val) => setValue(val));
     } else if (
       typeof data === 'object' &&
-      data != null &&
+      data &&
+      prevValue &&
       data.value !== null &&
       data.value !== undefined
     ) {
