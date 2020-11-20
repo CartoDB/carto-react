@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { PropTypes } from 'prop-types';
 
 import { geocodeStreetPoint } from './models';
-
 import { selectOAuthCredentials } from '../redux/oauthSlice';
 import { addLayer, setGeocoderResult, setViewState } from '../redux/cartoSlice';
 
@@ -41,13 +41,19 @@ const SearchIcon = (args) => (
   <SvgIcon {...args}>
     <path
       d='M11,4 C14.8659932,4 18,7.13400675 18,11 C18,12.7003211 17.3937669,14.2590489 16.3856562,15.4718279 L19.4748737,18.5606602 L18.0606602,19.9748737 L14.8998887,16.8138615 C13.7854137,17.5629194 12.4437497,18 11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 Z M11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 Z'
-      id='-↳Color'
       fill='inherit'
     ></path>
   </SvgIcon>
 );
 
-export default function GeocoderWidget(props) {
+/**
+ * Renders a <GeocoderWidget /> component
+ * @param  props
+ * @param  {string} props.id - ID for the widget instance.
+ * @param  {Object} [props.className] - Material-UI withStyle class for styling
+ * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
+ */
+function GeocoderWidget(props) {
   const inputRef = useRef();
   const oauthCredentials = useSelector(selectOAuthCredentials);
   const globalCredentials = useSelector((state) => state.carto.credentials);
@@ -145,4 +151,14 @@ export default function GeocoderWidget(props) {
       </IconButton>}
     </Paper>
   );
-}
+};
+
+GeocoderWidget.propTypes = {
+  id: PropTypes.string.isRequired,
+  className: PropTypes.object,
+  onError: PropTypes.func
+};
+
+GeocoderWidget.defaultProps = {};
+
+export default GeocoderWidget;
