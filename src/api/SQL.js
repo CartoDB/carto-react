@@ -7,6 +7,11 @@ const API = 'api/v2/sql';
 
 /**
  * Execute a SQL query
+ *
+ * @param { username, apiKey, serverUrlTemplate } credentials - CARTO user credentials
+ * @param { string } query - SQL query to be executed
+ * @param { format } opts - Additional options for the HTTP request
+ * @returns { Object } - Data returned from the SQL query execution
  */
 export const executeSQL = async (credentials, query, opts = {}) => {
   let response;
