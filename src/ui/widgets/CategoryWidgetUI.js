@@ -327,7 +327,7 @@ function CategoryWidgetUI(props) {
             <span className={classes.label}>{getCategoryLabel(data.category)}</span>
             {typeof value === 'object' && value !== null ? (
               <span>
-                {value.preffix}
+                {value.prefix}
                 {value.value}
                 {value.suffix}
               </span>

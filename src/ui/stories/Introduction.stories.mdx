@@ -1,12 +1,15 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta, Description } from '@storybook/addon-docs/blocks';
+import Readme from '../../../README.md';
 
 <Meta title="Introduction" />
 
-# Airship UI for React (v3.0.0-alpha5)
+<Description>{Readme}</Description>
 
-## How to add a new Story
-Put your `stories.js` files inside the `src/stories` folder following the same folder structure as the source files. For example:
-`stories/widgets/FormulaWidgetUI.stories.js` for `src/widgets/FormulaWidgetUI.js` component.
+## Storybook Development
+
+### How to add a new Story
+Put your `stories.js` files inside the `src/ui/stories` folder following the same folder structure as the source files. For example:
+`stories/widgets/FormulaWidgetUI.stories.js` for `src/ui/widgets/FormulaWidgetUI.js` component.
 
 As long as we are using a decorator to inject the MaterialUI theme, you just need to import and add your component to the `template` of your story.
 ```js

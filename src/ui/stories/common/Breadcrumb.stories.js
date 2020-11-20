@@ -24,7 +24,7 @@ const Template = ({ ...args }) => (
       CARTO
     </Link>
     <Link color='inherit' href='#'>
-      Airship
+      React
     </Link>
     <Typography color='textPrimary'>Storybook</Typography>
   </Breadcrumbs>
@@ -42,7 +42,7 @@ const WithIconsTemplate = ({ ...args }) => (
     </Link>
     <Link color='inherit' href='#'>
       <CloudCircle />
-      Airship
+      React
     </Link>
     <Typography color='textPrimary'>
       <Style />
