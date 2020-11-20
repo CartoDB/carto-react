@@ -70,7 +70,7 @@ Renders a `<HistogramWidget />` component
 | props.operation | <code>string</code> |  | Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object. |
 | props.ticks | <code>Array.&lt;number&gt;</code> |  | Array of thresholds for the X axis. |
 | [props.xAxisformatter] | [<code>formatterCallback</code>](#formatterCallback) |  | Function to format X axis values. |
-| [props.yAxisformatter] | [<code>formatterCallback</code>](#formatterCallback) |  | Function to format Y axis values. |
+| [props.formatter] | [<code>formatterCallback</code>](#formatterCallback) |  | Function to format tooltip and Y axis values. |
 | [props.viewportFilter] | <code>boolean</code> | <code>false</code> | Defines whether filter by the viewport or not. |
 | [props.onError] | [<code>errorCallback</code>](#errorCallback) |  | Function to handle error messages from the widget. |
 

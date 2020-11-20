@@ -17,7 +17,7 @@ import { AggregationTypes } from './AggregationTypes';
   * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
   * @param  {number[]} props.ticks - Array of thresholds for the X axis.
   * @param  {formatterCallback} [props.xAxisformatter] - Function to format X axis values.
-  * @param  {formatterCallback} [props.yAxisformatter] - Function to format Y axis values.
+  * @param  {formatterCallback} [props.formatter] - Function to format Y axis values.
   * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not. 
   * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
   */
@@ -28,12 +28,12 @@ function HistogramWidget(props) {
   const dispatch = useDispatch();
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const { title, yAxisformatter, xAxisFormatter, dataAxis, ticks } = props;
+  const { title, formatter, xAxisFormatter, dataAxis, ticks } = props;
   const { data, credentials } = source;
 
   const tooltipFormatter = ([serie]) => {
-    const formattedValue = yAxisformatter
-      ? yAxisformatter(serie.value)
+    const formattedValue = formatter
+      ? formatter(serie.value)
       : { prefix: '', value: serie.value };
 
     return `${
@@ -108,7 +108,7 @@ function HistogramWidget(props) {
         onSelectedBarsChange={handleSelectedBarsChange}
         tooltipFormatter={tooltipFormatter}
         xAxisFormatter={xAxisFormatter}
-        yAxisFormatter={yAxisformatter}
+        yAxisFormatter={formatter}
       />
     </WrapperWidgetUI>
   );
@@ -121,7 +121,7 @@ HistogramWidget.propTypes = {
   column: PropTypes.string.isRequired,
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   xAxisFormatter: PropTypes.func,
-  yAxisformatter: PropTypes.func,
+  formatter: PropTypes.func,
   ticks: PropTypes.array.isRequired,
   viewportFilter: PropTypes.bool,
   onError: PropTypes.func
