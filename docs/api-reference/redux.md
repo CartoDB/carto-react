@@ -1,5 +1,7 @@
 # Redux
-## createCartoSlice
+
+## CARTO Slice
+### createCartoSlice
 A function that accepts an initialState, setup the state and creates 
 the CARTO reducers that support CARTO for React achitecture.
 
@@ -27,7 +29,7 @@ the CARTO reducers that support CARTO for React achitecture.
 | --- | --- | --- |
 | initialState | <code>object</code> | the initial state|
 
-## addSource
+### addSource
 Action to add a source to the store
 
 Parameters are in the form of destructuring arguments.
@@ -38,14 +40,14 @@ Parameters are in the form of destructuring arguments.
 | {data} | <code>string</code> | data definition for the source. Query for SQL dataset or the name of the tileset for BigQuery Tileset |
 | {type} | <code>string</code> | type of source. Posible values are sql or bq 
 
-## removeSource
+### removeSource
 Action to remove a source from the store
 
 | Param | Type | Description |
 | --- | --- | --- |
 | sourceId | <code>string</code> | id of the source to remove |
 
-## addLayer
+### addLayer
 Action to add a Layer to the store
 
 | Param | Type | Description |
@@ -53,22 +55,22 @@ Action to add a Layer to the store
 | id | <code>string</code> | unique id for the layer |
 | source | <code>string</code> | id of the source of the layer |
 
-## removeLayer
+### removeLayer
 Action to remove a layer from the store
 
 | Param | Type | Description |
 | --- | --- | --- |
 | layerId | <code>string</code> | id of the layer to remove |
 
-## setBaseMap
+### setBaseMap
 Action to set a basemap
 
 | Param | Type | Description |
 | --- | --- | --- |
 | basemap | <code>String</code> | the new basemap to add |
 
-## addFilter
-Action to add a filter on a given source
+### addFilter
+Action to add a filter on a given source and column
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -76,7 +78,7 @@ Action to add a filter on a given source
 | {column} | <code>string</code> | column to filter at the source |
 | {type} | <code>FilterType</code> | `FilterTypes.IN` and `FilterTypes.BETWEEN` |
 
-## removeFilter
+### removeFilter
 Action to remove a filter from the store
 
 | Type | Description |
@@ -84,17 +86,18 @@ Action to remove a filter from the store
 | <code>id</code> | sourceId of the filter to remove |
 | <code>column</code> | column of the filter to remove |
 
-## selectSourceById
+### selectSourceById
 Redux selector to get a source by ID
 
-## setViewState
+### setViewState
 Action to set the current ViewState
 
 | Param | Type |
 | --- | --- |
 | viewState | <code>Object</code> | 
 
-## createOauthCartoSlice
+## OAuth Slice
+### createOauthCartoSlice
 A function that accepts an initialState, setup the state and creates 
 reducers to manage OAuth with CARTO platform.
 
@@ -117,7 +120,7 @@ export const oauthInitialState = {
 | --- | --- | --- |
 | initialState | <code>object</code> | the initial state  |
 
-## setOAuthApp
+### setOAuthApp
 Action to set the OAuthApp
 
 | Param | Type | Description |
@@ -126,11 +129,11 @@ Action to set the OAuthApp
 | scopes | <code>array</code> | array of valid scopes for the App. |
 | authorizeEndPoint | <code>string</code> | URL of CARTO authorization endpoint. Except for on-premise, it should be 'https://carto.com/oauth2/authorize' |
 
-## setTokenAndUserInfoAsync
+### setTokenAndUserInfoAsync
 Action to get the userInfo once there is a valid token, and set them both into state
 
-## logout
+### logout
 Action to logout an user
 
-## selectOAuthCredentials
+### selectOAuthCredentials
 Selector to fetch the current OAuth credentials from the storage

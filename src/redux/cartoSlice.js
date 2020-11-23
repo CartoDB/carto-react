@@ -141,7 +141,7 @@ export const removeLayer = (layerId) => ({ type: 'carto/removeLayer', payload: l
 export const setBaseMap = (basemap) => ({ type: 'carto/setBaseMap', payload: basemap });
 
 /**
- * Action to add a filter on a given source
+ * Action to add a filter on a given source and column
  * @param {string} id - sourceId of the source to apply the filter
  * @param {string} column - column to filter at the source
  * @param {FilterType} type - FilterTypes.IN and FilterTypes.BETWEEN
