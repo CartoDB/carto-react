@@ -1,63 +1,66 @@
 # API
 
+Functions for working with CARTO REST APIs
+
 ## Functions
 
-### executeSQL
+<dl>
+<dt><a href="#buildQueryFilters">buildQueryFilters</a> ⇒ <code>string</code></dt>
+<dd><p>Returns a SQL query applying a set of filters</p>
+</dd>
+<dt><a href="#executeSQL">executeSQL</a> ⇒ <code>Object</code></dt>
+<dd><p>Execute a SQL query</p>
+</dd>
+<dt><a href="#getUserDatasets">getUserDatasets</a> ⇒ <code>Object</code></dt>
+<dd><p>Get the lists of datasets for the user by performing a request to CARTO datasets API</p>
+</dd>
+</dl>
 
-Executes a SQL query
+<a name="buildQueryFilters"></a>
 
-#### Parameters
-
-##### `credentials` ({ username, apiKey, serverUrlTemplate })
-
-Required. CARTO user credentials.
-
-##### `query` (String)
-
-Required. SQL query to be executed.
-
-##### `opts` ({ format })
-
-Optional. Additional options for the HTTP request.
-
-#### Returns
-
-{ Object }. Data returned from the SQL query execution.
-
-If `opts.format` is "geojson", it returns the full object returned by CARTO SQL API; otherwise it returns only the `rows` property.
-
-### getUserDatasets
-
-Get the lists of datasets for the user by performing a request to CARTO datasets API
-
-#### Parameters
-
-##### `credentials` ({ username, apiKey, serverUrlTemplate })
-
-Required. CARTO user credentials.
-
-##### `opts` ({ Object })
-
-Optional. Additional options for the HTTP request.
-
-#### Returns
-
-{ Object }. List of datasets owned by the user that are in CARTO canonical form (cartodbfied).
-
-### buildQueryFilters
-
+## buildQueryFilters ⇒ <code>string</code>
 Returns a SQL query applying a set of filters
 
-#### Parameters
+**Kind**: global function  
+**Returns**: <code>string</code> - SQL query  
 
-##### `data` ({ string }) 
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>string</code> | Dataset name or SQL query |
+| filters | <code>Object</code> | Filters to be applied |
 
-Required. Dataset name or SQL query
+<a name="executeSQL"></a>
 
-##### `filters` ({ Object }) 
+## executeSQL ⇒ <code>Object</code>
+Executes a SQL query
 
-Optional. Filters to be applied
+**Kind**: global function  
+**Returns**: <code>Object</code> - Data returned from the SQL query execution  
 
-#### Returns
+| Param | Type | Description |
+| --- | --- | --- |
+| credentials | <code>Object</code> | CARTO user credentials |
+| credentials.username | <code>string</code> | CARTO username |
+| credentials.apiKey | <code>string</code> | CARTO API Key |
+| credentials.serverUrlTemplate | <code>string</code> | CARTO server URL template |
+| query | <code>string</code> | SQL query to be executed |
+| opts | <code>Object</code> | Additional options for the HTTP request |
+| opts.format | <code>string</code> | Output format (i.e. geojson) |
 
-{ string }. SQL query.
+<a name="getUserDatasets"></a>
+
+## getUserDatasets ⇒ <code>Object</code>
+Get the lists of datasets for the user by performing a request to CARTO datasets API
+
+**Kind**: global function  
+**Returns**: <code>Object</code> - List of datasets  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| credentials | <code>Object</code> | CARTO user credentials |
+| credentials.username | <code>string</code> | CARTO username |
+| credentials.apiKey | <code>string</code> | CARTO API Key |
+| credentials.serverUrlTemplate | <code>string</code> | CARTO server URL template |
+| opts | <code>Object</code> | Additional options for the HTTP request |
+| opts.format | <code>string</code> | Output format (i.e. geojson) |
+
