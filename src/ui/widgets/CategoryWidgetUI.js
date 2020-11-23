@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -102,6 +102,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function usePrevious(value) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
+
 const REST_CATEGORY = '__rest__';
 
 const SearchIcon = () => (
@@ -122,6 +130,8 @@ function CategoryWidgetUI(props) {
   const [searchValue, setSearchValue] = useState('');
   const [blockedCategories, setBlockedCategories] = useState([]);
   const [tempBlockedCategories, setTempBlockedCategories] = useState(false);
+  const [animValues, setAnimValues] = useState([]);
+  const prevAnimValues = usePrevious(animValues);
   const classes = useStyles();
 
   const handleCategorySelected = (category) => {
@@ -294,6 +304,43 @@ function CategoryWidgetUI(props) {
     showAll,
   ]);
 
+  useEffect(() => {
+    animateValues(prevAnimValues || [], sortedData, 500, (val) => setAnimValues(val));
+  }, [sortedData]);
+
+  const animateValues = (start, end, duration, drawFrame) => {
+    const isEqual = start.length === end.length && start.every((val, i) => val.value === end[i].value);
+    if (isEqual) return;
+
+    let currentValues = end.map((elem, i) => start[i] && start[i].category === elem.category
+      ? { ...elem, value: start[i].value }
+      : elem
+    );
+    let currentFrame = 0;
+    
+    const ranges = currentValues.map((elem, i) => end[i].value - elem.value);
+    const noChanges = ranges.every((val) => val === 0);
+    if (noChanges) {
+      drawFrame(end);
+      return;
+    }
+
+    const frames = (duration / 1000) * 60;
+    const steps = ranges.map((val) => val / frames);
+
+    const animate = () => {
+      if (currentFrame < frames) {
+        currentValues = currentValues.map((elem, i) => ({...elem, value: elem.value + steps[i]}) );
+        drawFrame(currentValues);
+        currentFrame++;
+        requestAnimationFrame(animate);
+      } else {
+        drawFrame(end);
+      }
+    };
+    requestAnimationFrame(animate);
+  }
+
   // Separated to simplify the widget layout but inside the main component to avoid passing all dependencies
   const CategoryItem = (props) => {
     const { data, onCategoryClick } = props;
@@ -438,8 +485,8 @@ function CategoryWidgetUI(props) {
             </Grid>
           )}
           <Grid container item className={classes.categoriesWrapper}>
-            {sortedData.length
-              ? sortedData.map((d, i) => (
+            {animValues.length
+              ? animValues.map((d, i) => (
                   <CategoryItem
                     key={i}
                     data={d}
