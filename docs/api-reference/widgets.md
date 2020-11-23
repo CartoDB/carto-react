@@ -1,11 +1,7 @@
 # Widgets
  
-<a name="CategoryWidget"></a>
-
 ## CategoryWidget
 Renders a `<CategoryWidget />` component
-
-**Kind**: global function  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -20,12 +16,8 @@ Renders a `<CategoryWidget />` component
 | [props.viewportFilter] | <code>boolean</code> | <code>false</code> | Defines whether filter by the viewport or not. |
 | [props.onError] | [<code>errorCallback</code>](#errorCallback) |  | Function to handle error messages from the widget. |
 
-<a name="FormulaWidget"></a>
-
 ## FormulaWidget
 Renders a `<FormulaWidget />` component
-
-**Kind**: global function  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -39,12 +31,8 @@ Renders a `<FormulaWidget />` component
 | [props.viewportFilter] | <code>boolean</code> | <code>false</code> | Defines whether filter by the viewport or not. |
 | [props.onError] | [<code>errorCallback</code>](#errorCallback) |  | Function to handle error messages from the widget. |
 
-<a name="GeocoderWidget"></a>
-
 ## GeocoderWidget
 Renders a `<GeocoderWidget />` component
-
-**Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -53,12 +41,8 @@ Renders a `<GeocoderWidget />` component
 | [props.className] | <code>Object</code> | Material-UI withStyle class for styling |
 | [props.onError] | [<code>errorCallback</code>](#errorCallback) | Function to handle error messages from the widget. |
 
-<a name="HistogramWidget"></a>
-
 ## HistogramWidget
 Renders a `<HistogramWidget />` component
-
-**Kind**: global function  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -73,8 +57,6 @@ Renders a `<HistogramWidget />` component
 | [props.formatter] | [<code>formatterCallback</code>](#formatterCallback) |  | Function to format tooltip and Y axis values. |
 | [props.viewportFilter] | <code>boolean</code> | <code>false</code> | Defines whether filter by the viewport or not. |
 | [props.onError] | [<code>errorCallback</code>](#errorCallback) |  | Function to handle error messages from the widget. |
-
-<a name="AggregationTypes"></a>
 
 ## AggregationTypes
 Enum for the different types of aggregations available for widgets

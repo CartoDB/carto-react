@@ -4,13 +4,18 @@ import { PropTypes } from 'prop-types';
 
 import { geocodeStreetPoint } from './models';
 import { selectOAuthCredentials } from '../redux/oauthSlice';
-import { addLayer, setGeocoderResult, setViewState } from '../redux/cartoSlice';
+import { addLayer, setViewState } from '../redux/cartoSlice';
 
 import { CircularProgress, IconButton, InputBase, Paper, SvgIcon } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 
 const DEFAULT_COUNTRY = ''; // 'SPAIN', 'USA'
+
+const setGeocoderResult = (payload) => ({
+  type: 'carto/setGeocoderResult',
+  payload,
+});
 
 const useStyles = makeStyles((theme) => ({
   paperInput: {
