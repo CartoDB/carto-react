@@ -150,9 +150,10 @@ export const addFilter = ({id, column, type, values, owner}) => ({ type: 'carto/
 
 /**
  * Action to remove a filter from the store
- * @param {id} - sourceID of the  
+ * @param {id} - sourceId of the filter to remove
+ * @param {column} - column of the filter to remove
  */
-export const removeFilter = (payload) => ({ type: 'carto/removeFilter', payload});
+export const removeFilter = ({id, column}) => ({ type: 'carto/removeFilter', payload: {id, column}});
 
 const _setViewState = (payload) => ({ type: 'carto/setViewState', payload });
 const _setViewPort = (payload) => ({ type: 'carto/setViewPort', payload });

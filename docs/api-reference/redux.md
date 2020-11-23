@@ -81,7 +81,8 @@ Action to remove a filter from the store
 
 | Type | Description |
 | --- | --- |
-| <code>id</code> | sourceID of the |
+| <code>id</code> | sourceId of the filter to remove |
+| <code>column</code> | column of the filter to remove |
 
 ## selectSourceById
 Redux selector to get a source by ID
