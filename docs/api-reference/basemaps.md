@@ -2,36 +2,22 @@
 
 Basemaps constants and Google Maps component
 
-## Constants
+## Constants for available basemaps
 
-<dl>
-<dt><a href="#POSITRON">POSITRON</a> : <code>string</code></dt>
-<dd></dd>
-<dt><a href="#VOYAGER">VOYAGER</a> : <code>string</code></dt>
-<dd></dd>
-<dt><a href="#DARK_MATTER">DARK_MATTER</a> : <code>string</code></dt>
-<dd></dd>
-<dt><a href="#GOOGLE_ROADMAP">GOOGLE_ROADMAP</a> : <code>string</code></dt>
-<dd></dd>
-<dt><a href="#GOOGLE_SATELLITE">GOOGLE_SATELLITE</a> : <code>string</code></dt>
-<dd></dd>
-<dt><a href="#GOOGLE_HYBRID">GOOGLE_HYBRID</a> : <code>string</code></dt>
-<dd></dd>
-</dl>
+* POSITRON: <code>string</code>
+* VOYAGER: <code>string</code>
+* DARK_MATTER: <code>string</code>
+* GOOGLE_ROADMAP: <code>string</code>
+* GOOGLE_SATELLITE: <code>string</code>
+* GOOGLE_HYBRID: <code>string</code>
 
-## Functions
+## GoogleMap
 
-<dl>
-<dt><a href="#GoogleMap">GoogleMap(props)</a></dt>
-<dd><p>React component for working with Google Maps API and deck.gl</p>
-</dd>
-</dl>
-
-**Kind**: global function  
+React component for working with Google Maps API and [deck.gl](https://deck.gl).
 
 | Param | Type | Description |
 | --- | --- | --- |
-| props | <code>Object</code> | Properties |
+| props |||
 | props.basemap | <code>Object</code> | Basemap (see basemaps constants) |
 | props.viewState | <code>Object</code> | Viewstate (center, zoom level) |
 | props.layers | <code>Array.&lt;Layer&gt;</code> | Layers array |
