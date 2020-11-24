@@ -15,7 +15,9 @@
   "keywords": [
     "react",
     "carto",
-    "material-ui"
+    "material-ui",
+    "deck.gl",
+    "google-maps"
   ],
   "repository": {
     "type": "git",
