@@ -1,6 +1,6 @@
 {
   "name": "@carto/react",
-  "version": "1.0.0-beta2",
+  "version": "1.0.0-beta3",
   "description": "CARTO for React",
   "scripts": {
     "start": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && webpack --config webpack.prod.js --watch",
