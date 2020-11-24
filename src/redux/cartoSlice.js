@@ -50,10 +50,8 @@ export const createCartoSlice = (initialState) => {
     },
     reducers: {
       addSource: (state, action) => {
-        state.dataSources[action.payload.id] = {
-          credentials: state.credentials,
-          ...action.payload,
-        };
+        action.payload.credentials = action.payload.credentials || state.credentials;
+        state.dataSources[action.payload.id] = action.payload;
       },
       removeSource: (state, action) => {
         delete state.dataSources[action.payload];
