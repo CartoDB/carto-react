@@ -1,4 +1,4 @@
-# Not released
+# 1.0.0-beta3 (2020-11-24)
 - Improve package.json metadata + README inclusion in npm publication [#20](https://github.com/CartoDB/carto-react-lib/pull/20)
 
 # 1.0.0-beta2 (2020-11-23)
