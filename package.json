@@ -4,7 +4,7 @@
   "description": "CARTO for React",
   "scripts": {
     "start": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && webpack --config webpack.prod.js --watch",
-    "build": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && webpack --config webpack.prod.js",
+    "build": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && cp README.md ./dist/README.md && webpack --config webpack.prod.js",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
     "storybook": "start-storybook -c src/ui/.storybook -p 6006",
@@ -12,7 +12,17 @@
     "publish-storybook": "build-storybook -c src/ui/.storybook && cd storybook-static && npx vercel --prod --name 'react-ui'",
     "publish-storybook-staging": "build-storybook -c src/ui/.storybook && cd storybook-static && npx vercel --prod --name 'react-ui-staging'"
   },
-  "keywords": [],
+  "keywords": [
+    "react",
+    "carto",
+    "material-ui",
+    "deck.gl",
+    "google-maps"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CartoDB/carto-react-lib.git"
+  },
   "author": "CARTO Dev Team",
   "license": "BSD-3-Clause",
   "devDependencies": {
