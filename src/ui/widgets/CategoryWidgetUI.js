@@ -150,7 +150,13 @@ function CategoryWidgetUI(props) {
   };
 
   const handleBlockClicked = () => {
-    setBlockedCategories([...selectedCategories]);
+    // keep the 'by value' order on selectedCategories
+    const orderedCategories = data.sort((cat1, cat2)=> (cat1.value > cat2.value) ? -1 : 1);
+    const newBlockedCategories = orderedCategories
+      .filter(entry => selectedCategories.includes(entry.category))
+      .map(entry => entry.category);
+
+    setBlockedCategories([...newBlockedCategories]);
   };
 
   const handleApplyClicked = () => {
