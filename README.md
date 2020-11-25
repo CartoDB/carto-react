@@ -1,13 +1,15 @@
 # CARTO React Library
 
-<a href="https://npmjs.org/package/@carto/react">
-  <img src="https://img.shields.io/npm/v/@carto/react.svg?style=flat-square" alt="version" />
-</a>
+<p>
+  <a href="https://npmjs.org/package/@carto/react">
+    <img src="https://img.shields.io/npm/v/@carto/react.svg?style=flat-square" alt="version" />
+  </a>
 
-<a href="https://npmjs.org/package/@carto/react">
-  <img src="https://img.shields.io/npm/dt/@carto/react.svg?style=flat-square" alt="downloads" />
-</a>
-
+  <a href="https://npmjs.org/package/@carto/react">
+    <img src="https://img.shields.io/npm/dt/@carto/react.svg?style=flat-square" alt="downloads" />
+  </a>
+</p>
+<br/>
 
 This is the official CARTO library for working with React. It is used by the [CARTO for React](https://github.com/CartoDB/cra-template-carto) templates.
 
