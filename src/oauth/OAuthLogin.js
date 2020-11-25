@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button } from '@material-ui/core';
+import { Button, Hidden, IconButton } from '@material-ui/core';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import useOAuthLogin from './useOAuthLogin';
 import { setTokenAndUserInfoAsync } from '../redux/oauthSlice';
 
@@ -27,8 +28,17 @@ export default function OAuthLogin() {
   const [handleLogin] = useOAuthLogin(oauthApp, onParamsRefreshed);
 
   return (
-    <Button color='inherit' variant='outlined' onClick={handleLogin}>
-      Login
-    </Button>
+    <React.Fragment>
+      <Hidden xsDown>
+        <Button color="inherit" variant="outlined" onClick={handleLogin}>
+          Login
+        </Button>
+      </Hidden>
+      <Hidden smUp>
+        <IconButton color="inherit" aria-label="Login" onClick={handleLogin}>
+          <AccountCircleOutlinedIcon />
+        </IconButton>
+      </Hidden>
+    </React.Fragment>
   );
 }

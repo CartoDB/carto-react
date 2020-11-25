@@ -399,6 +399,13 @@ export const cartoThemeOptions = {
           background: variables.palette.action.focus,
           outline: 'none',
         },
+
+        // Mapbox controls
+        '.mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right': {
+          '@media (max-width: 600px)': { // sm
+            bottom: spacing(4)
+          }
+        }
       },
     },
 
