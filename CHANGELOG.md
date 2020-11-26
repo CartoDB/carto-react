@@ -1,3 +1,6 @@
+## Unreleased
+- Remove FilterTypes from API exports
+
 ## 1.0.0-beta5 (2020-11-25)
 - Fix addSource keeping optional credentials property in the payload [#24](https://github.com/CartoDB/carto-react-lib/pull/24)
 
