@@ -1,15 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, Grid } from '@material-ui/core';
+import { Button, Hidden, IconButton } from '@material-ui/core';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import useOAuthLogin from './useOAuthLogin';
 import { setTokenAndUserInfoAsync } from '../redux/oauthSlice';
-
-const useStyles = makeStyles(() => ({
-  root: {
-    flexGrow: 1,
-  },
-}));
 
 /** 
  * Shows a login button.
@@ -20,7 +14,6 @@ const useStyles = makeStyles(() => ({
  */
 export default function OAuthLogin() {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const oauthApp = useSelector((state) => state.oauth.oauthApp);
 
   const onParamsRefreshed = (oauthParams) => {
@@ -35,20 +28,17 @@ export default function OAuthLogin() {
   const [handleLogin] = useOAuthLogin(oauthApp, onParamsRefreshed);
 
   return (
-    <div className={classes.root}>
-      <Grid
-        container
-        justify='flex-end'
-        alignItems='center'
-        spacing={1}
-        style={{ flexGrow: 1 }}
-      >
-        <Grid item>
-          <Button color='inherit' variant='outlined' onClick={handleLogin}>
-            Login
-          </Button>
-        </Grid>
-      </Grid>
-    </div>
+    <React.Fragment>
+      <Hidden xsDown>
+        <Button color="inherit" variant="outlined" onClick={handleLogin}>
+          Login
+        </Button>
+      </Hidden>
+      <Hidden smUp>
+        <IconButton color="inherit" aria-label="Login" onClick={handleLogin}>
+          <AccountCircleOutlinedIcon />
+        </IconButton>
+      </Hidden>
+    </React.Fragment>
   );
 }
