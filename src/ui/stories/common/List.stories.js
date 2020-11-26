@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Avatar,
+  Box,
   Checkbox,
   Collapse,
   Divider,
@@ -12,6 +13,7 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
+  Typography,
   makeStyles,
   Switch,
   Paper,
@@ -145,6 +147,66 @@ const Template = ({ secondary, ...args }) => {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary='Drafts' secondary={secondary} />
+              </ListItem>
+            </List>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
+
+const TemplateMetaValue = ({ secondary, ...args }) => {
+  const classes = useStyles();
+
+  const MetaValueLabel = ({ value }) => {
+    return (
+      <Box alignSelf='flex-start' marginY={0.75}>
+        <Typography variant='body2' align='right'>{value}</Typography>
+      </Box>
+    );
+  };
+
+  return (
+    <Grid container spacing={6} className={classes.root}>
+      <Grid container item spacing={2}>
+        <Grid item xs={3}>
+          <Paper>
+            <List component='nav' aria-label='main mailbox folders'>
+              <ListItem button>
+                <ListItemText primary='Home' />
+                <MetaValueLabel value={ args.metaValue }></MetaValueLabel>
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary='Inbox' />
+                <MetaValueLabel value={ args.metaValue }></MetaValueLabel>
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary='Drafts' />
+                <MetaValueLabel value={ args.metaValue }></MetaValueLabel>
+              </ListItem>
+            </List>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={3}>
+          <Paper>
+            <List component='nav' aria-label='main mailbox folders'>
+              <ListItem button>
+                <ListItemText primary='Home' secondary={secondary} />
+                <MetaValueLabel value={ args.metaValue }></MetaValueLabel>
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary='Inbox' secondary={secondary} />
+                <MetaValueLabel value={ args.metaValue }></MetaValueLabel>
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary='Drafts' secondary={secondary} />
+                <MetaValueLabel value={ args.metaValue }></MetaValueLabel>
               </ListItem>
             </List>
           </Paper>
@@ -333,5 +395,8 @@ export const TwoLines = Template.bind({});
 TwoLines.args = { secondary: 'Secondary text' };
 
 export const SecondaryActions = TemplateSecondaryActions.bind({});
+
+export const MetaValue = TemplateMetaValue.bind({});
+MetaValue.args = { secondary: 'Secondary text too long here', metaValue: '$1,234.87' };
 
 export const NestedOptions = TemplateNested.bind({});
