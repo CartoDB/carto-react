@@ -134,6 +134,12 @@ function CategoryWidgetUI(props) {
   const prevAnimValues = usePrevious(animValues);
   const classes = useStyles();
 
+  // Get blockedCategories in the same order as original data
+  const sortBlockedSameAsData = (blockedCategories) => sortedData.reduce((acum, elem) => {
+    if (blockedCategories.includes(elem.category)) acum.push(elem.category);
+    return acum;
+  }, []);
+
   const handleCategorySelected = (category) => {
     if (category !== REST_CATEGORY) {
       let categories;
@@ -159,13 +165,15 @@ function CategoryWidgetUI(props) {
     setBlockedCategories([]);
   };
 
-  const handleBlockClicked = () => {
-    setBlockedCategories([...selectedCategories]);
+  const handleBlockClicked = () => {    
+    setBlockedCategories(sortBlockedSameAsData(selectedCategories));
   };
 
   const handleApplyClicked = () => {
-    props.onSelectedCategoriesChange([...tempBlockedCategories]);
-    setBlockedCategories([...tempBlockedCategories]);
+    const blockedCategoriesOrdered = sortBlockedSameAsData(tempBlockedCategories);
+
+    props.onSelectedCategoriesChange([...blockedCategoriesOrdered]);
+    setBlockedCategories([...blockedCategoriesOrdered]);
     setTempBlockedCategories([]);
     setShowAll(false);
     setSearchValue('');
