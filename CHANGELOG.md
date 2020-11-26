@@ -2,6 +2,7 @@
 
 ## Not released
 - Fix CategoryWidgetUI displaying no data while loading [#26](https://github.com/CartoDB/carto-react-lib/pull/26)
+- Animate CategoryWidget values [#30](https://github.com/CartoDB/carto-react-lib/pull/30)
 - Make OAuthLogin component responsive [#28](https://github.com/CartoDB/carto-react-lib/pull/28)
 
 ## 1.0.0-beta5 (2020-11-25)
