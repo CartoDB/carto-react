@@ -497,7 +497,7 @@ function CategoryWidgetUI(props) {
                     }
                   />
                 ))
-              : data.length === 0 && (
+              : (data.length === 0 && !loading) && (
                   <Alert severity='warning'>
                     <AlertTitle>NO DATA AVAILABLE</AlertTitle>
                     There are no results for the combination of filters applied to your
