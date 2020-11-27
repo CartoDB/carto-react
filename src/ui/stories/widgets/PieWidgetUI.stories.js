@@ -8,7 +8,7 @@ export default {
 };
 
 const dataDefault = [
-  { name: 'Women too long', value: 1010, color: '#31996b', label: { show: true } }, // TODO
+  { name: 'Women', value: 101, color: '#31996b' },
   { name: 'Men', value: 100, color: '#47db99' },
 ];
 
@@ -25,5 +25,5 @@ const Template = (args) => <PieWidgetUI {...args} />;
 export const Default = Template.bind({});
 Default.args = { data: dataDefault };
 
-export const Custom = Template.bind({});
-Custom.args = { data: dataCustom };
+export const Example = Template.bind({});
+Example.args = { data: dataCustom };
