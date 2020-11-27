@@ -275,7 +275,7 @@ function CategoryWidgetUI(props) {
         ? value != null
           ? '100%'
           : 0
-        : `${(value || 0 * 100) / maxValue}%`;
+        : `${((value || 0) * 100) / maxValue}%`;
     },
     [maxValue]
   );

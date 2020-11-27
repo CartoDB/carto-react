@@ -6,6 +6,8 @@
 - Make OAuthLogin component responsive [#28](https://github.com/CartoDB/carto-react-lib/pull/28)
 - Remove FilterTypes from API exports [#29](https://github.com/CartoDB/carto-react-lib/pull/29)
 - Fix CategoryWidgetUI keeping the order for blocked categories [#32](https://github.com/CartoDB/carto-react-lib/pull/32)
+- Fix bar size in CategoryWidget [#33](https://github.com/CartoDB/carto-react-lib/pull/33)
+
 
 ## 1.0.0-beta5 (2020-11-25)
 - Fix addSource keeping optional credentials property in the payload [#24](https://github.com/CartoDB/carto-react-lib/pull/24)
