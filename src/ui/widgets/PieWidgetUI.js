@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { useTheme, makeStyles } from '@material-ui/core';
 
+const useStyles = makeStyles((theme) => ({
+  // TODO: tooltip styles here?
+}));
+
 function __generateDefaultConfig(
-  { tooltipFormatter, xAxisFormatter = (v) => v, yAxisFormatter = (v) => v },
+  { tooltipFormatter },
   data,
   theme
 ) {
@@ -16,6 +20,12 @@ function __generateDefaultConfig(
       bottom: theme.spacing(0),
     },
     color: [theme.palette.secondary.main],
+    tooltip: {
+      trigger: 'item',
+      padding: [theme.spacing(0.5), theme.spacing(1)],
+      backgroundColor: theme.palette.other.tooltip,
+      ...(tooltipFormatter ? { formatter: tooltipFormatter } : {}),
+    },
     legend: {
       orient: 'horizontal',
       left: theme.spacing(1),
@@ -34,14 +44,15 @@ function __generateDefaultConfig(
         color: theme.palette.text.primary,
         lineHeight: 1,
         verticalAlign: 'bottom',
-        padding: [0, 0, 0, theme.spacing(1.5)]
+        padding: [0, 0, 0, theme.spacing(1.5)],
+        
       },
       inactiveColor: theme.palette.text.disabled,
     },
   };
 }
 
-function __generateSerie(name, data, theme, height, backgroundColor) {
+function __generateSerie(name, data, theme) {
   return [
     {
       type: 'pie',
@@ -175,7 +186,11 @@ function PieWidgetUI (props) {
 }
 
 PieWidgetUI.defaultProps = {
-  tooltipFormatter: (v) => v,
+  tooltipFormatter: (params) => {
+    console.log(params);
+    const colorSpan = color => '<span style="display:inline-block;margin-right:8px;border-radius:4px;width:8px;height:8px;background-color:' + color + '"></span>';
+    return '<p>' + params.name + '</p><p>' + colorSpan(params.color) + params.value + ' (' + params.percent + '%)</p>';
+  },
   name: null,
   height: 300,
 };
