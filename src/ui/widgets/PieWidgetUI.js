@@ -1,26 +1,7 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
-import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  optionsSelectedBar: {
-    marginBottom: theme.spacing(2),
-
-    '& .MuiTypography-caption': {
-      color: theme.palette.text.secondary,
-    },
-
-    '& .MuiButton-label': {
-      ...theme.typography.caption,
-    },
-  },
-
-  selectAllButton: {
-    ...theme.typography.caption,
-    cursor: 'pointer',
-  },
-}));
+import { useTheme, makeStyles } from '@material-ui/core';
 
 function __generateDefaultConfig(
   { tooltipFormatter, xAxisFormatter = (v) => v, yAxisFormatter = (v) => v },
@@ -44,7 +25,7 @@ function __generateDefaultConfig(
       icon: 'circle',
       itemWidth: theme.spacing(1),
       itemHeight: theme.spacing(1),
-      // TODO: as prop
+      // TODO: as prop?
       formatter: function (name) {
         return name.toUpperCase();
       },
@@ -76,12 +57,11 @@ function __generateSerie(name, data, theme, height, backgroundColor) {
       }),
       radius: ['59%', '70%'],
       selectedOffset: 0,
+      hoverOffset: 5,
       label: {
         formatter: '{per|{d}%}\n{b|{b}}',
-        show: false,
+        show: true,
         position: 'center',
-        backgroundColor: backgroundColor, // TODO: as prop
-        width: (53 / 100) * height,
         rich: {
           b: {
             fontFamily: theme.typography.charts.fontFamily,
@@ -99,11 +79,6 @@ function __generateSerie(name, data, theme, height, backgroundColor) {
           }
         }
       },
-      emphasis: {
-        label: {
-          show: true,
-        },
-      },
     },
   ];
 }
@@ -120,7 +95,6 @@ function PieWidgetUI (props) {
     data = [],
     tooltipFormatter,
     height,
-    backgroundColor,
   } = props;
 
   const chartInstance = useRef();
@@ -130,7 +104,7 @@ function PieWidgetUI (props) {
       data,
       theme
     );
-    const series = __generateSerie(name, data, theme, height, backgroundColor);
+    const series = __generateSerie(name, data, theme);
     return Object.assign({}, config, { series });
   }, [
     data,
@@ -138,24 +112,47 @@ function PieWidgetUI (props) {
     theme,
     tooltipFormatter,
   ]);
+  const max = options.series[0].data.reduce((prev, current) => (prev.value > current.value) ? prev : current);
+  let echart;
 
-  // console.log(chartInstance)
-  // const echart = chartInstance.current.getEchartsInstance();
-  // echart.on('legendselectchanged', function (params) {
-  //   console.log(params);
-  // });
+  useEffect(() => {
+    echart = chartInstance.current.getEchartsInstance();
+
+    options.series[0].data.forEach(serie => {
+      if (serie.name === max.name) {
+        serie.label = { show: true };
+      } else {
+        serie.label = { show: false };
+      }
+    });
+    echart.setOption(options, true);
+  }, []);
 
   const clickEvent = (params) => {
-    // TODO
-    console.log(params);
+    // console.log(params);
+
   };
 
   const mouseoverEvent = (params) => {
-    // TODO
+    options.series[0].data.forEach(serie => {
+      serie.label.show = false;
+
+      if (serie.name === params.data.name) {
+        serie.label.show = true;
+      }
+    });
+    echart.setOption(options, true);
   };
   
   const mouseoutEvent = (params) => {
-    // TODO
+    options.series[0].data.forEach(serie => {
+      serie.label.show = false;
+
+      if (serie.name === max.name) {
+        serie.label.show = true;
+      }
+    });
+    echart.setOption(options, true);
   };
 
   const onEvents = {
@@ -180,8 +177,7 @@ function PieWidgetUI (props) {
 PieWidgetUI.defaultProps = {
   tooltipFormatter: (v) => v,
   name: null,
-  height: 200,
-  backgroundColor: '#ff0000'
+  height: 300,
 };
 
 PieWidgetUI.propTypes = {
@@ -189,7 +185,6 @@ PieWidgetUI.propTypes = {
   tooltipFormatter: PropTypes.func,
   name: PropTypes.string,
   height: PropTypes.number,
-  backgroundColor: PropTypes.string,
 };
 
 export default PieWidgetUI;
