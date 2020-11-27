@@ -60,7 +60,7 @@ function __generateDefaultConfig(
   };
 }
 
-function __generateSerie(name, data, theme) {
+function __generateSerie(name, data, theme, height, backgroundColor) {
   return [
     {
       type: 'pie',
@@ -75,10 +75,13 @@ function __generateSerie(name, data, theme) {
         return item;
       }),
       radius: ['59%', '70%'],
-      label: { 
+      selectedOffset: 0,
+      label: {
         formatter: '{per|{d}%}\n{b|{b}}',
         show: false,
         position: 'center',
+        backgroundColor: backgroundColor, // TODO: as prop
+        width: (53 / 100) * height,
         rich: {
           b: {
             fontFamily: theme.typography.charts.fontFamily,
@@ -94,7 +97,7 @@ function __generateSerie(name, data, theme) {
             fontWeight: 600,
             color: theme.palette.text.primary,
           }
-      }
+        }
       },
       emphasis: {
         label: {
@@ -117,9 +120,9 @@ function PieWidgetUI (props) {
     data = [],
     tooltipFormatter,
     height,
+    backgroundColor,
   } = props;
 
-  const classes = useStyles();
   const chartInstance = useRef();
   const options = useMemo(() => {
     const config = __generateDefaultConfig(
@@ -127,7 +130,7 @@ function PieWidgetUI (props) {
       data,
       theme
     );
-    const series = __generateSerie(name, data, theme);
+    const series = __generateSerie(name, data, theme, height, backgroundColor);
     return Object.assign({}, config, { series });
   }, [
     data,
@@ -136,11 +139,37 @@ function PieWidgetUI (props) {
     tooltipFormatter,
   ]);
 
+  // console.log(chartInstance)
+  // const echart = chartInstance.current.getEchartsInstance();
+  // echart.on('legendselectchanged', function (params) {
+  //   console.log(params);
+  // });
+
+  const clickEvent = (params) => {
+    // TODO
+    console.log(params);
+  };
+
+  const mouseoverEvent = (params) => {
+    // TODO
+  };
+  
+  const mouseoutEvent = (params) => {
+    // TODO
+  };
+
+  const onEvents = {
+    click: clickEvent,
+    mouseover: mouseoverEvent,
+    mouseout: mouseoutEvent,
+  };
+
   return (
     <div>
       <EchartsWrapper
         ref={chartInstance}
         option={options}
+        onEvents={onEvents}
         lazyUpdate={true}
         style={{ height }}
       />
@@ -151,7 +180,8 @@ function PieWidgetUI (props) {
 PieWidgetUI.defaultProps = {
   tooltipFormatter: (v) => v,
   name: null,
-  height: 300
+  height: 200,
+  backgroundColor: '#ff0000'
 };
 
 PieWidgetUI.propTypes = {
@@ -159,6 +189,7 @@ PieWidgetUI.propTypes = {
   tooltipFormatter: PropTypes.func,
   name: PropTypes.string,
   height: PropTypes.number,
+  backgroundColor: PropTypes.string,
 };
 
 export default PieWidgetUI;

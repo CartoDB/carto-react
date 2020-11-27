@@ -8,9 +8,8 @@ export default {
 };
 
 const dataDefault = [
-  { name: 'Women', value: 101, color: '#31996b' },
-  // { name: 'Women', value: 101, color: '#31996b', label: { show: true } },
-  { name: 'Men', value: 100, color: '#cbcdcf' },
+  { name: 'Women too long', value: 1010, color: '#31996b', label: { show: true } }, // TODO
+  { name: 'Men', value: 100, color: '#47db99' },
 ];
 
 const dataCustom = [
