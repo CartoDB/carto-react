@@ -8,8 +8,16 @@ function __disableSerie (serie, theme) {
 function __clearFilter (serie) {
   serie.data.forEach((d) => {
     d.disabled = false;
-    delete d.itemStyle;
+    __setColor(d);
   });
+}
+
+function __setColor (d) {
+  if (d.color) {
+    d.itemStyle.color = d.color;
+  } else {
+    delete d.itemStyle;
+  }
 }
 
 export default function applyChartFilter (serie, clickedSerieIndex, theme) {
@@ -33,7 +41,7 @@ export default function applyChartFilter (serie, clickedSerieIndex, theme) {
         __clearFilter(serie);
       }
     } else {
-      delete clickedData.itemStyle;
+      __setColor(clickedData);
     }
   }
 
