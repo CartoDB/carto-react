@@ -8,11 +8,11 @@ export default {
 };
 
 const dataDefault = [
-  { name: 'Women', value: 101, color: '#31996b' },
-  { name: 'Men', value: 100, color: '#47db99' },
+  { name: 'Women', value: 101 },
+  { name: 'Men', value: 100 },
 ];
 
-const dataCustom = [
+const dataCustomColors = [
   { name: 'Dogs', value: 100, color: '#7f3c8d' },
   { name: 'Cats', value: 120, color: '#11a579' },
   { name: 'Rabbits', value: 150, color: '#3969ac' },
@@ -25,5 +25,5 @@ const Template = (args) => <PieWidgetUI {...args} />;
 export const Default = Template.bind({});
 Default.args = { data: dataDefault };
 
-export const Example = Template.bind({});
-Example.args = { data: dataCustom };
+export const CustomColors = Template.bind({});
+CustomColors.args = { data: dataCustomColors };

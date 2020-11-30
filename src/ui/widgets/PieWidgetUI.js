@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { useTheme, makeStyles } from '@material-ui/core';
+import applyFilter from '../utils/applyFilter'
 
 const useStyles = makeStyles((theme) => ({
   // TODO: tooltip styles here?
@@ -19,7 +20,7 @@ function __generateDefaultConfig(
       right: theme.spacing(0),
       bottom: theme.spacing(0),
     },
-    color: [theme.palette.secondary.main],
+    color: [theme.palette.secondary.dark, theme.palette.secondary.main, theme.palette.secondary.light],
     tooltip: {
       trigger: 'item',
       padding: [theme.spacing(0.5), theme.spacing(1)],
@@ -71,7 +72,6 @@ function __generateSerie(name, data, theme) {
       hoverOffset: 5,
       label: {
         formatter: '{per|{d}%}\n{b|{b}}',
-        show: true,
         position: 'center',
         rich: {
           b: {
@@ -106,6 +106,7 @@ function PieWidgetUI (props) {
     data = [],
     tooltipFormatter,
     height,
+    onSelectedSeriesChange
   } = props;
 
   const chartInstance = useRef();
@@ -123,47 +124,54 @@ function PieWidgetUI (props) {
     theme,
     tooltipFormatter,
   ]);
-  const max = options.series[0].data.reduce((prev, current) => (prev.value > current.value) ? prev : current);
+  const higherValue = options.series[0].data.reduce((prev, current) => (prev.value > current.value) ? prev : current);
   let echart;
 
   useEffect(() => {
     echart = chartInstance.current.getEchartsInstance();
 
-    options.series[0].data.forEach(serie => {
-      if (serie.name === max.name) {
+    const option = echart.getOption();
+    const serie = option.series[0];
+    serie.data.forEach(serie => {
+      if (serie.name === higherValue.name) {
         serie.label = { show: true };
       } else {
         serie.label = { show: false };
       }
     });
-    echart.setOption(options, true);
+
+    echart.setOption(option, true);
   }, []);
 
   const clickEvent = (params) => {
-    // console.log(params);
-
+    if (onSelectedSeriesChange) {
+      const option = echart.getOption();
+      const serie = option.series[params.seriesIndex];
+      applyFilter(serie, params.dataIndex, theme);
+      echart.setOption(option, true);
+    }
   };
 
   const mouseoverEvent = (params) => {
-    options.series[0].data.forEach(serie => {
-      serie.label.show = false;
-
-      if (serie.name === params.data.name) {
-        serie.label.show = true;
-      }
+    const option = echart.getOption();
+    const serie = option.series[params.seriesIndex];
+    serie.data.forEach(d => {
+      d.label.show = d.name === params.data.name;
+      d.emphasis.label.show = d.name === params.data.name;
     });
-    echart.setOption(options, true);
+
+    echart.setOption(option, true);
   };
   
   const mouseoutEvent = (params) => {
-    options.series[0].data.forEach(serie => {
-      serie.label.show = false;
-
-      if (serie.name === max.name) {
-        serie.label.show = true;
-      }
+    const option = echart.getOption();
+    const serie = option.series[params.seriesIndex];
+    serie.data.forEach(d => {
+      d.label.show = d.name === higherValue.name;
+      d.emphasis.label.show = d.name === higherValue.name;
     });
-    echart.setOption(options, true);
+
+    echart.setOption(option, true);
   };
 
   const onEvents = {
@@ -187,11 +195,11 @@ function PieWidgetUI (props) {
 
 PieWidgetUI.defaultProps = {
   tooltipFormatter: (params) => {
-    console.log(params);
-    const colorSpan = color => '<span style="display:inline-block;margin-right:8px;border-radius:4px;width:8px;height:8px;background-color:' + color + '"></span>';
-    return '<p>' + params.name + '</p><p>' + colorSpan(params.color) + params.value + ' (' + params.percent + '%)</p>';
+    const colorSpan = color => '<span style="display:inline-block;margin-right:4px;border-radius:4px;width:8px;height:8px;background-color:' + color + '"></span>';
+    return '<p style="font-size:12px;font-weight:600;line-height:1.33;margin:4px 0 4px 0;">' + params.name + '</p><p style="font-size: 12px;font-weight:normal;line-height:1.33;margin:0 0 4px 0;">' + colorSpan(params.color) + params.value + ' (' + params.percent + '%)</p>';
   },
   name: null,
+  onSelectedSeriesChange: null,
   height: 300,
 };
 
@@ -199,6 +207,7 @@ PieWidgetUI.propTypes = {
   data: PropTypes.array.isRequired,
   tooltipFormatter: PropTypes.func,
   name: PropTypes.string,
+  onSelectedSeriesChange: PropTypes.func,
   height: PropTypes.number,
 };
 
