@@ -21,6 +21,7 @@ function __generateDefaultConfig({ tooltipFormatter }, theme) {
       ...(tooltipFormatter ? { formatter: tooltipFormatter } : {}),
     },
     legend: {
+      selectedMode: false,  // TODO
       orient: 'horizontal',
       left: theme.spacing(1),
       bottom: -theme.spacing(0.5),
@@ -87,6 +88,10 @@ function __generateSerie(name, data, theme) {
   ];
 }
 
+function __getDefaultLabel (data) {
+  return data.reduce((prev, current) => (prev.value > current.value) ? prev : current)
+}
+
 const EchartsWrapper = React.memo(
   ReactEcharts,
   ({ option: optionPrev }, { option: optionNext }) => __dataEqual(optionPrev, optionNext)
@@ -113,7 +118,7 @@ function PieWidgetUI (props) {
     theme,
     tooltipFormatter,
   ]);
-  const higherValue = options.series[0].data.reduce((prev, current) => (prev.value > current.value) ? prev : current);
+  let defaultLabel = __getDefaultLabel(options.series[0].data);
   let echart;
 
   useEffect(() => {
@@ -121,7 +126,7 @@ function PieWidgetUI (props) {
 
     const { option, serie } = getChartSerie(echart, 0);
     serie.data.forEach(serie => {
-      if (serie.name === higherValue.name) {
+      if (serie.name === defaultLabel.name) {
         serie.label = { show: true };
       } else {
         serie.label = { show: false };
@@ -143,6 +148,8 @@ function PieWidgetUI (props) {
           activeSeries.push(index);
         }
       });
+      
+      defaultLabel = __getDefaultLabel(activeSeries.map(i => serie.data[i]));
 
       onSelectedSeriesChange({
         series: activeSeries.length === serie.data.length ? [] : activeSeries,
@@ -164,8 +171,8 @@ function PieWidgetUI (props) {
   const mouseoutEvent = (params) => {
     const { option, serie } = getChartSerie(echart, params.seriesIndex);
     serie.data.forEach(d => {
-      d.label.show = d.name === higherValue.name;
-      d.emphasis.label.show = d.name === higherValue.name;
+      d.label.show = d.name === defaultLabel.name;
+      d.emphasis.label.show = d.name === defaultLabel.name;
     });
 
     echart.setOption(option, true);
@@ -194,7 +201,7 @@ PieWidgetUI.defaultProps = {
   tooltipFormatter: (params) => {
     const colorSpan = color => `<span style="display:inline-block;margin-right:4px;border-radius:4px;width:8px;height:8px;background-color:${color}"></span>`;
     return `<p style="font-size:12px;font-weight:600;line-height:1.33;margin:4px 0 4px 0;">${params.name}</p>
-            <p style="font-size: 12px;font-weight:normal;line-height:1.33;margin:0 0 4px 0;">${colorSpan(params.color)} ${params.value} (${params.percent}%)</p>`;
+            <p style="font-size: 12px;font-weight:normal;line-height:1.33;margin:0 0 4px 0;">${colorSpan(params.data.color || params.color)} ${params.value} (${params.percent}%)</p>`;
   },
   name: null,
   onSelectedSeriesChange: null,
