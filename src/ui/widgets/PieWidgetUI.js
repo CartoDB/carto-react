@@ -136,6 +136,18 @@ function PieWidgetUI (props) {
       const { option, serie } = getChartSerie(echart, params.seriesIndex);
       applyChartFilter(serie, params.dataIndex, theme);
       echart.setOption(option, true);
+
+      const activeSeries = [];
+      serie.data.forEach((d, index) => {
+        if (!d.disabled) {
+          activeSeries.push(index);
+        }
+      });
+
+      onSelectedSeriesChange({
+        series: activeSeries.length === serie.data.length ? [] : activeSeries,
+        chartInstance,
+      });
     }
   };
 
