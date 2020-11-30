@@ -12,7 +12,7 @@ function __clearFilter (serie) {
   });
 }
 
-export default function applyFilter (serie, clickedSerieIndex, theme) {
+export default function applyChartFilter (serie, clickedSerieIndex, theme) {
   const anyDisabled = serie.data.find((d) => d.disabled);
 
   if (!anyDisabled) {
