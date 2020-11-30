@@ -1,6 +1,7 @@
 ## Unreleased
 - Make OAuthLogin component responsive [#28](https://github.com/CartoDB/carto-react-lib/pull/28)
 - Added meta value version to List component [#31](https://github.com/CartoDB/carto-react-lib/pull/31)
+- Created Pie chart component [#36](https://github.com/CartoDB/carto-react-lib/pull/36)
 
 ## 1.0.0-beta5 (2020-11-25)
 - Fix addSource keeping optional credentials property in the payload [#24](https://github.com/CartoDB/carto-react-lib/pull/24)
