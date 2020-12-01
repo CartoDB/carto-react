@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { useTheme } from '@material-ui/core';
-import applyChartFilter from '../utils/applyChartFilter'
+import { applyChartFilter, dataEqual, disableSerie, setColor } from '../utils/chartUtils'
 import getChartSerie from '../utils/getChartSerie'
 
 function __generateDefaultConfig({ tooltipFormatter }, theme) {
@@ -55,19 +55,11 @@ function __generateSerie(name, data, theme, selectedCategories) {
       data: data.map(item => {
         const disabled = selectedCategories && selectedCategories.length && !selectedCategories.some(c => c === item.name)
         if (disabled) {
-          return {
-            ...item,
-            disabled: true,
-            itemStyle: { color: theme.palette.charts.disabled },
-          }
+          disableSerie(item, theme);
+          return item;
         }
 
-        if (item.color) {
-          return {
-            ...item,
-            itemStyle: { color: item.color },
-          }
-        }
+        setColor(item);
 
         return item;
       }),
@@ -104,7 +96,7 @@ function __getDefaultLabel (data) {
 
 const EchartsWrapper = React.memo(
   ReactEcharts,
-  ({ option: optionPrev }, { option: optionNext }) => __dataEqual(optionPrev, optionNext)
+  ({ option: optionPrev }, { option: optionNext }) => dataEqual(optionPrev, optionNext)
 );
 
 function PieWidgetUI (props) {

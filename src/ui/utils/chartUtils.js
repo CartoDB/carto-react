@@ -1,6 +1,16 @@
 
+export function dataEqual(optionPrev, optionNext) {
+  const dataPrev = optionPrev.series[0].data;
+  const dataNext = optionNext.series[0].data;
+  if (dataPrev && dataNext && dataPrev.length === dataNext.length) {
+    return !dataNext.some(({ value }, index) => {
+      return !(value === dataPrev[index].value);
+    });
+  }
+  return false;
+}
 
-export function disableSerie (serie, theme) {
+export function disableSerie(serie, theme) {
   serie.disabled = true;
   serie.itemStyle = { color: theme.palette.charts.disabled };
 }
@@ -8,19 +18,19 @@ export function disableSerie (serie, theme) {
 export function clearFilter (serie) {
   serie.data.forEach((d) => {
     d.disabled = false;
-    __setColor(d);
+    setColor(d);
   });
 }
 
-function __setColor (d) {
+export function setColor(d) {
   if (d.color) {
-    d.itemStyle.color = d.color;
+    d.itemStyle = { ...d.itemStyle, color: d.color };
   } else {
     delete d.itemStyle;
   }
 }
 
-export default function applyChartFilter (serie, clickedSerieIndex, theme) {
+export function applyChartFilter(serie, clickedSerieIndex, theme) {
   const anyDisabled = serie.data.find((d) => d.disabled);
 
   if (!anyDisabled) {
@@ -38,10 +48,10 @@ export default function applyChartFilter (serie, clickedSerieIndex, theme) {
       const anyActive = serie.data.find((d) => !d.disabled);
 
       if (!anyActive) {
-        __clearFilter(serie);
+        clearFilter(serie);
       }
     } else {
-      __setColor(clickedData);
+      setColor(clickedData);
     }
   }
 
