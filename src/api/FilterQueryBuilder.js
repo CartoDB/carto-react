@@ -52,11 +52,36 @@ export const filtersToSQL = (filters = {}) => {
 };
 
 export const viewportToSQL = (viewport) => {
-  return `ST_Intersects(
-    the_geom_webmercator,
-    ST_Transform(ST_MakeEnvelope(${viewport.join(',')}, 4326), 3857)
-  )`;
+  const bboxes = getBoundingBoxes(viewport);
+
+  const queries = bboxes.map((bbox) => {
+    return `ST_Intersects(
+      the_geom_webmercator,
+      ST_Transform(ST_MakeEnvelope(${bbox.join(',')}, 4326), 3857)
+    )`;
+  });
+
+  return queries.join(' OR ');
+
 };
+
+function getBoundingBoxes ([west, south, east, north]) {
+  var bboxes = [];
+
+  if (east - west >= 360) {
+      bboxes.push([-180, south, 180, north]);
+  } else if (west >= -180 && east <= 180) {
+      bboxes.push([west, south, east, north]);
+  } else {
+      console.log([west, south, east, north]);
+      bboxes.push([west, south, 180, north]);
+      // here we assume west,east have been adjusted => west >= -180 => east > 180
+      bboxes.push([-180, south, east - 360, north]);
+  }
+
+  return bboxes;
+}
+
 
 /**
  * Returns a SQL query applying a set of filters
