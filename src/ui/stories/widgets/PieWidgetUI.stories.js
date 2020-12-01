@@ -25,7 +25,19 @@ CustomColors.args = {
     { name: 'Rabbits', value: 150, color: '#3969ac' },
     { name: 'Canaries', value: 90, color: '#f2b701' },
     { name: 'Passerines', value: 200, color: '#e73f74' },
+  ]
+};
+
+
+export const SelectedCategories = Template.bind({});
+SelectedCategories.args = {
+  data: [
+    { name: 'Dogs', value: 100, color: '#7f3c8d' },
+    { name: 'Cats', value: 120, color: '#11a579' },
+    { name: 'Rabbits', value: 150, color: '#3969ac' },
+    { name: 'Canaries', value: 90, color: '#f2b701' },
+    { name: 'Passerines', value: 200, color: '#e73f74' },
   ],
-  selectedCategories: ['Passerines', 'Cats'],
+  selectedCategories: ['Cats', 'Canaries'],
   onSelectedCategoriesChange: (categories) => console.log(categories),
 };
