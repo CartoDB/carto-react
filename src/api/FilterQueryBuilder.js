@@ -73,7 +73,6 @@ function getBoundingBoxes ([west, south, east, north]) {
   } else if (west >= -180 && east <= 180) {
       bboxes.push([west, south, east, north]);
   } else {
-      console.log([west, south, east, north]);
       bboxes.push([west, south, 180, north]);
       // here we assume west,east have been adjusted => west >= -180 => east > 180
       bboxes.push([-180, south, east - 360, north]);
