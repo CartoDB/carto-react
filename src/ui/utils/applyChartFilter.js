@@ -1,11 +1,11 @@
 
 
-function __disableSerie (serie, theme) {
+export function disableSerie (serie, theme) {
   serie.disabled = true;
   serie.itemStyle = { color: theme.palette.charts.disabled };
 }
 
-function __clearFilter (serie) {
+export function clearFilter (serie) {
   serie.data.forEach((d) => {
     d.disabled = false;
     __setColor(d);
@@ -26,14 +26,14 @@ export default function applyChartFilter (serie, clickedSerieIndex, theme) {
   if (!anyDisabled) {
     serie.data.forEach((d, index) => {
       if (index !== clickedSerieIndex) {
-        __disableSerie(d, theme);
+        disableSerie(d, theme);
       }
     });
   } else {
     const clickedData = serie.data[clickedSerieIndex];
     clickedData.disabled = !clickedData.disabled;
     if (clickedData.disabled) {
-      __disableSerie(clickedData, theme);
+      disableSerie(clickedData, theme);
 
       const anyActive = serie.data.find((d) => !d.disabled);
 
