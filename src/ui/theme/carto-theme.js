@@ -403,7 +403,7 @@ export const cartoThemeOptions = {
         // Mapbox controls
         '.mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right': {
           '@media (max-width: 600px)': { // sm
-            bottom: spacing(4)
+            bottom: spacing(16)
           }
         }
       },
@@ -740,7 +740,7 @@ export const cartoThemeOptions = {
         '&.colorPrimary': {
           backgroundColor: variables.palette.text.primary,
         }
-      },
+      }
     },
 
     // Tab
