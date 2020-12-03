@@ -162,7 +162,7 @@ function WrapperWidgetUI(props) {
                 id='options-menu'
                 elevation={3}
                 anchorOrigin={{
-                  vertical: 'bottom',
+                  vertical: 'top',
                   horizontal: 'right',
                 }}
                 transformOrigin={{
@@ -170,14 +170,15 @@ function WrapperWidgetUI(props) {
                   horizontal: 'right',
                 }}
                 anchorEl={anchorEl}
+                getContentAnchorEl={null}
                 keepMounted
                 open={open}
                 onClose={handleClose}
                 PaperProps={{
                   style: {
                     marginTop: '48px',
-                    maxHeight: '144px',
-                    width: '128px',
+                    maxHeight: '168px',
+                    minWidth: '128px',
                   },
                 }}
               >
