@@ -1,6 +1,7 @@
 # CHANGELOG
 ## Not released
-- Added meta value version to List component [#31](https://github.com/CartoDB/carto-react-lib/pull/31)
+- Add meta value example to List component story [#31](https://github.com/CartoDB/carto-react-lib/pull/31)
+- Add updateLayer action to cartoSlice [#39](https://github.com/CartoDB/carto-react-lib/pull/39)
 
 ## 1.0.0-beta6 (2020-11-27)
 - Fix CategoryWidgetUI displaying no data while loading [#26](https://github.com/CartoDB/carto-react-lib/pull/26)
