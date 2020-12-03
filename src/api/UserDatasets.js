@@ -37,8 +37,9 @@ export const getUserDatasets = async (credentials, opts = {}) => {
   }
 
   // only cartodbfied and user datasets
+  const allowedSchemas = [credentials.username, 'public'];
   return data.result.filter(
-    (d) => d.cartodbfied && d.table_schema === credentials.username
+    (d) => d.cartodbfied && allowedSchemas.includes(d.table_schema)
   );
 };
 

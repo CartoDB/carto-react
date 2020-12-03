@@ -97,7 +97,21 @@ function GeocoderWidget(props) {
   };
 
   const handleKeyPress = async (e) => {
-    if (credentials && e.keyCode === 13) {
+    if (e.keyCode === 13) {
+      // Force blur to hide virtual keyboards on mobile and search
+      e.target.blur();
+    }
+  };
+
+  // Needed to handle keyboard "Done" button on iOS
+  const handleBlur = async () => {
+    if (searchText.length) {
+      handleSearch();
+    }
+  };
+
+  const handleSearch = async () => {
+    if (credentials) {
       try {
         setLoading(true);
         const result = await geocodeStreetPoint(credentials, {
@@ -115,7 +129,7 @@ function GeocoderWidget(props) {
         setLoading(false);
       }
     }
-  };
+  }
 
   const zoomToResult = (result) => {
     dispatch(
@@ -142,6 +156,8 @@ function GeocoderWidget(props) {
     <Paper className={`${props.className} ${classes.paperInput}`} elevation={2}>
       {loading ? <CircularProgress size={20} className={classes.icon} /> : <SearchIcon className={classes.icon}/>}
       <InputBase
+        type="search"
+        tabIndex={-1}
         inputRef={inputRef}
         size='small'
         placeholder='Search address'
@@ -149,7 +165,8 @@ function GeocoderWidget(props) {
         value={searchText}
         onChange={handleChange}
         onInput={handleInput}
-        onKeyDown={handleKeyPress}/>
+        onKeyDown={handleKeyPress}
+        onBlur={handleBlur}/>
       {result && <IconButton onClick={clearResult} className={classes.clear}>
         <Close className={classes.icon}/>
       </IconButton>}
