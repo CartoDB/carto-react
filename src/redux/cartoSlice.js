@@ -61,7 +61,7 @@ export const createCartoSlice = (initialState) => {
       },
       updateLayer: (state, action) => {
         const layer = state.layers[action.payload.id];
-        if (layer) state.layers[action.payload.id] = { ...layer, ...action.payload }
+        if (layer) state.layers[action.payload.id] = { ...layer, ...action.payload.layerAttributes }
       },
       removeLayer: (state, action) => {
         delete state.layers[action.payload];
@@ -134,9 +134,9 @@ export const addLayer = ({id, source}) => ({ type: 'carto/addLayer', payload: {i
 /**
  * Action to update a Layer in the store
  * @param {string} id - id of the layer to update
- * @param {string} ...attrs - layer attributes to update (source, or other custom attributes)
+ * @param {object} layerAttributes - layer attributes to update (source, or other custom attributes)
  */
-export const updateLayer = ({id, ...attrs}) => ({ type: 'carto/updateLayer', payload: {id, ...attrs} });
+export const updateLayer = (id, layerAttributes) => ({ type: 'carto/updateLayer', payload: {id, layerAttributes} });
 
 /**
  * Action to remove a layer from the store
