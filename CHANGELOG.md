@@ -1,5 +1,5 @@
 # CHANGELOG
-## Not released
+## 1.0.0-beta7 (2020-12-04)
 - Add meta value example to List component story [#31](https://github.com/CartoDB/carto-react-lib/pull/31)
 - Mobile fixes and fix loading datasets for free accounts [#38](https://github.com/CartoDB/carto-react-lib/pull/38)
 - Add updateLayer action to cartoSlice [#39](https://github.com/CartoDB/carto-react-lib/pull/39)
