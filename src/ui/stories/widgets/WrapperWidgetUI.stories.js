@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import ColorizeIcon from '@material-ui/icons/Colorize';
+import AddLocationIcon from '@material-ui/icons/AddLocation';
 import MenuIcon from '@material-ui/icons/Menu';
 import WrapperWidgetUI from '../../widgets/WrapperWidgetUI';
 
@@ -88,4 +89,30 @@ WithOptionsAndCustomIcon.args = {
     { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') },
   ],
   optionsIcon: <MenuIcon />,
+};
+
+export const WithActionsTooltip = Template.bind({});
+WithActionsTooltip.args = {
+  title: 'Wrapper with actions tooltip',
+  actions: [
+    {
+      id: 'a1',
+      name: 'Autostyle',
+      icon: <ColorizeIcon />,
+      action: () => alert('Action!'),
+      tooltip: {
+        text: 'Tooltip default',
+      }
+    },
+    {
+      id: 'a2',
+      name: 'Autostyle',
+      icon: <AddLocationIcon />,
+      action: () => alert('Action!'),
+      tooltip: {
+        text: 'Tooltip on bottom',
+        placement: 'bottom'
+      }
+    },
+  ],
 };

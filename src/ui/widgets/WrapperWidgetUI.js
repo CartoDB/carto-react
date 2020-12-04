@@ -11,6 +11,7 @@ import {
   LinearProgress,
   Menu,
   MenuItem,
+  Tooltip,
   Typography,
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore, MoreVert } from '@material-ui/icons';
@@ -111,6 +112,19 @@ function WrapperWidgetUI(props) {
     handleClose();
   };
 
+  const iconButtonTooltip = (action) => {
+    return (
+      <IconButton
+        key={action.id}
+        aria-label={action.label}
+        onClick={action.action}
+        className={classes.iconAction}
+      >
+        {action.icon}
+      </IconButton>
+    )
+  };
+
   return (
     <Box className={classes.root}>
       {props.loading ? <LinearProgress className={classes.loading} /> : null}
@@ -135,16 +149,14 @@ function WrapperWidgetUI(props) {
 
         <Grid item style={{ display: 'flex' }}>
           {actions.map((action) => {
-            return (
-              <IconButton
-                key={action.id}
-                aria-label={action.label}
-                onClick={action.action}
-                className={classes.iconAction}
-              >
-                {action.icon}
-              </IconButton>
-            );
+            {
+              return action.tooltip ?
+                <Tooltip title={action.tooltip.text} placement={action.tooltip.placement || 'top'}>
+                  {iconButtonTooltip(action)}
+                </Tooltip> 
+              :
+                iconButtonTooltip(action);
+            }
           })}
 
           {options.length > 0 && (
