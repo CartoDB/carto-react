@@ -2,6 +2,7 @@
 
 ## Not released
 - Remove OAuthLogin component (extracted to the template project) [#44](https://github.com/CartoDB/carto-react-lib/pull/44)
+- Add layerAttributes to addLayer and refactor updateLayer to use same destructuring approach [#45](https://github.com/CartoDB/carto-react-lib/pull/45)
 
 ## 1.0.0-beta7 (2020-12-04)
 - Add meta value example to List component story [#31](https://github.com/CartoDB/carto-react-lib/pull/31)
