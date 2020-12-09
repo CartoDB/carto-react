@@ -1,4 +1,8 @@
 # CHANGELOG
+
+## Not released
+- Remove OAuthLogin component (extracted to the template project) [#44](https://github.com/CartoDB/carto-react-lib/pull/44)
+
 ## 1.0.0-beta7 (2020-12-04)
 - Add meta value example to List component story [#31](https://github.com/CartoDB/carto-react-lib/pull/31)
 - Mobile fixes and fix loading datasets for free accounts [#38](https://github.com/CartoDB/carto-react-lib/pull/38)
