@@ -55,6 +55,14 @@ Action to add a Layer to the store
 | id | <code>string</code> | unique id for the layer |
 | source | <code>string</code> | id of the source of the layer |
 
+### updateLayer
+Action to update a Layer in the store
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | unique id for the layer |
+| layerAttributes | <code>object</code> | layer attributes to update (source, or other custom attributes) |
+
 ### removeLayer
 Action to remove a layer from the store
 
