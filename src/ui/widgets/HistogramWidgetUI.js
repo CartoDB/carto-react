@@ -2,6 +2,9 @@ import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
+import detectTouchScreen from '../utils/detectTouchScreen';
+
+const IS_TOUCH_SCREEN = detectTouchScreen();
 
 const useStyles = makeStyles((theme) => ({
   optionsSelectedBar: {
@@ -34,7 +37,7 @@ function __dataEqual(optionPrev, optionNext) {
 }
 
 function __generateDefaultConfig(
-  { dataAxis, tooltipFormatter, xAxisFormatter = (v) => v, yAxisFormatter = (v) => v },
+  { dataAxis, tooltip, tooltipFormatter, xAxisFormatter = (v) => v, yAxisFormatter = (v) => v },
   data,
   theme
 ) {
@@ -51,6 +54,7 @@ function __generateDefaultConfig(
       },
     },
     tooltip: {
+      show: tooltip,
       trigger: 'axis',
       padding: [theme.spacing(0.5), theme.spacing(1)],
       textStyle: {
@@ -155,11 +159,11 @@ function __generateSerie(name, data, selectedBars = [], theme) {
       }),
       barCategoryGap: 1,
       barMinWidth: '95%',
-      ...(theme
+      ...(!IS_TOUCH_SCREEN && theme
         ? {
             emphasis: {
               itemStyle: {
-                color: '#31996b', // FIXME: This color don't appears in carto-theme. Secondary dark is red instead of green. It is correct?
+                color: theme.palette.secondary.dark,
               },
             },
           }
@@ -170,7 +174,9 @@ function __generateSerie(name, data, selectedBars = [], theme) {
 
 function __disableBar(bar, theme) {
   bar.disabled = true;
-  bar.itemStyle = { color: theme.palette.charts.disabled };
+  bar.itemStyle = {
+    color: theme.palette.charts.disabled
+  };
 }
 
 function __clearFilter(serie) {
@@ -221,6 +227,7 @@ function HistogramWidgetUI(props) {
     dataAxis,
     onSelectedBarsChange,
     selectedBars,
+    tooltip,
     tooltipFormatter,
     xAxisFormatter,
     yAxisFormatter,
@@ -231,7 +238,7 @@ function HistogramWidgetUI(props) {
   const chartInstance = useRef();
   const options = useMemo(() => {
     const config = __generateDefaultConfig(
-      { dataAxis, tooltipFormatter, xAxisFormatter, yAxisFormatter },
+      { dataAxis, tooltip, tooltipFormatter, xAxisFormatter, yAxisFormatter },
       data,
       theme
     );
@@ -318,6 +325,7 @@ function HistogramWidgetUI(props) {
 }
 
 HistogramWidgetUI.defaultProps = {
+  tooltip: true,
   tooltipFormatter: (v) => v,
   xAxisFormatter: (v) => v,
   yAxisFormatter: (v) => v,
@@ -328,6 +336,7 @@ HistogramWidgetUI.defaultProps = {
 
 HistogramWidgetUI.propTypes = {
   data: PropTypes.arrayOf(PropTypes.number).isRequired,
+  tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
   xAxisFormatter: PropTypes.func,
   yAxisFormatter: PropTypes.func,
