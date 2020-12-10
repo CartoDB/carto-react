@@ -386,6 +386,7 @@ export const cartoThemeOptions = {
   overrides: {
     MuiCssBaseline: {
       '@global': {
+        // Custom scrollbars
         '*::-webkit-scrollbar': {
           position: 'fixed',
           width: '5px',
@@ -398,6 +399,17 @@ export const cartoThemeOptions = {
           borderRadius: '3px',
           background: variables.palette.action.focus,
           outline: 'none',
+        },
+
+        // iOS Search clear button
+        'input[type="search"]::-webkit-search-cancel-button': {
+          '-webkit-appearance': 'none',
+          height: spacing(2),
+          width: spacing(2),
+          display: 'block',
+          backgroundImage: `url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAn0lEQVR42u3UMQrDMBBEUZ9WfQqDmm22EaTyjRMHAlM5K+Y7lb0wnUZPIKHlnutOa+25Z4D++MRBX98MD1V/trSppLKHqj9TTBWKcoUqffbUcbBBEhTjBOV4ja4l4OIAZThEOV6jHO8ARXD+gPPvKMABinGOrnu6gTNUawrcQKNCAQ7QeTxORzle3+sDfjJpPCqhJh7GixZq4rHcc9l5A9qZ+WeBhgEuAAAAAElFTkSuQmCC)`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: spacing(2)
         },
 
         // Mapbox controls

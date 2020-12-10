@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     ...theme.typography.body2,
-    width: 'calc(100% - 64px)',
+    width: `calc(100% - ${theme.spacing(5)}px)`,
     marginLeft: theme.spacing(1)
   },
 }));
