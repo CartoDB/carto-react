@@ -128,21 +128,22 @@ export const removeSource = (sourceId) => ({ type: 'carto/removeSource', payload
  * Action to add a Layer to the store
  * @param {string} id - unique id for the layer
  * @param {string} source - id of the source of the layer
+ * @param {object} layerAttributes - custom attributes to pass to the layer 
  */
-export const addLayer = ({id, source}) => ({ type: 'carto/addLayer', payload: {id, source} });
+export const addLayer = ({id, source, layerAttributes = {}}) => ({ type: 'carto/addLayer', payload: {id, source, layerAttributes} });
 
 /**
  * Action to update a Layer in the store
  * @param {string} id - id of the layer to update
  * @param {object} layerAttributes - layer attributes to update (source, or other custom attributes)
  */
-export const updateLayer = (id, layerAttributes) => ({ type: 'carto/updateLayer', payload: {id, layerAttributes} });
+export const updateLayer = ({id, layerAttributes}) => ({ type: 'carto/updateLayer', payload: {id, layerAttributes} });
 
 /**
  * Action to remove a layer from the store
- * @param {string} layerId - id of the layer to remove 
+ * @param {string} id - id of the layer to remove 
  */
-export const removeLayer = (layerId) => ({ type: 'carto/removeLayer', payload: layerId});
+export const removeLayer = (id) => ({ type: 'carto/removeLayer', payload: id});
 
 /**
  * Action to set a basemap

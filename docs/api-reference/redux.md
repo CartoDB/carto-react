@@ -54,6 +54,7 @@ Action to add a Layer to the store
 | --- | --- | --- |
 | id | <code>string</code> | unique id for the layer |
 | source | <code>string</code> | id of the source of the layer |
+| layerAttributes | <code>object</code> | (optional) custom attributes to pass to the layer |
 
 ### updateLayer
 Action to update a Layer in the store
@@ -61,14 +62,14 @@ Action to update a Layer in the store
 | Param | Type | Description |
 | --- | --- | --- |
 | id | <code>string</code> | unique id for the layer |
-| layerAttributes | <code>object</code> | layer attributes to update (source, or other custom attributes) |
+| layerAttributes | <code>object</code> | custom attributes to pass to the layer |
 
 ### removeLayer
 Action to remove a layer from the store
 
 | Param | Type | Description |
 | --- | --- | --- |
-| layerId | <code>string</code> | id of the layer to remove |
+| id | <code>string</code> | id of the layer to remove |
 
 ### setBaseMap
 Action to set a basemap
