@@ -740,6 +740,20 @@ export const cartoThemeOptions = {
         '&.colorPrimary': {
           backgroundColor: variables.palette.text.primary,
         }
+      },
+
+      vertical: {
+        '& $indicator': {
+          width: 4
+        },
+
+        '& .MuiTab-root': {
+          padding: spacing(0, 2),
+
+          '& .MuiTab-wrapper': {
+            alignItems: 'flex-start'
+          }
+        }
       }
     },
 
