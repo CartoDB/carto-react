@@ -78,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
 
   optionsSelectedBar: {
     marginBottom: theme.spacing(2),
+    paddingRight: theme.spacing(1),
 
     '& .MuiTypography-caption': {
       color: theme.palette.text.secondary,
@@ -456,7 +457,7 @@ function CategoryWidgetUI(props) {
                 </Link>
               ) : (
                 selectedCategories.length > 0 && (
-                  <Grid container direction='row' justify='flex-end' spacing={1} item xs>
+                  <Grid container direction='row' justify='flex-end' item xs>
                     <Link className={classes.linkAsButton} onClick={handleBlockClicked}>
                       Block
                     </Link>
