@@ -524,6 +524,7 @@ function CategoryWidgetUI(props) {
               <Button
                 size='small'
                 color='primary'
+                startIcon={<SearchIcon />}
                 onClick={handleShowAllCategoriesClicked}
               >
                 Search in {data.length - maxItems} elements
