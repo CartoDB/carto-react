@@ -80,12 +80,6 @@ function GeocoderWidget(props) {
 
   const classes = useStyles();
 
-  const clearResult = () => {
-    updateMarker(null);
-    setResult(null);
-    setSearchText('');
-  }
-
   const handleChange = (e) => {
     setSearchText(e.target.value);
   };
@@ -93,6 +87,7 @@ function GeocoderWidget(props) {
   const handleInput = (e) => {
     if (e.target.value === '') {
       updateMarker(null);
+      setResult(null);
     }
   };
 
@@ -167,9 +162,6 @@ function GeocoderWidget(props) {
         onInput={handleInput}
         onKeyDown={handleKeyPress}
         onBlur={handleBlur}/>
-      {result && <IconButton onClick={clearResult} className={classes.clear}>
-        <Close className={classes.icon}/>
-      </IconButton>}
     </Paper>
   );
 };

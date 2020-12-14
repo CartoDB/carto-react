@@ -403,7 +403,7 @@ export const cartoThemeOptions = {
         // Mapbox controls
         '.mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right': {
           '@media (max-width: 600px)': { // sm
-            bottom: spacing(16)
+            bottom: spacing(14)
           }
         }
       },
@@ -509,13 +509,6 @@ export const cartoThemeOptions = {
         padding: spacing(0.25),
       },
     },
-
-    // TextField
-    // MuiTextField: {
-    //   root: {
-    //     padding
-    //   },
-    // },
 
     MuiInputBase: {
       root: {
@@ -739,6 +732,20 @@ export const cartoThemeOptions = {
         height: 4,
         '&.colorPrimary': {
           backgroundColor: variables.palette.text.primary,
+        }
+      },
+
+      vertical: {
+        '& $indicator': {
+          width: 4
+        },
+
+        '& .MuiTab-root': {
+          padding: spacing(0, 2),
+
+          '& .MuiTab-wrapper': {
+            alignItems: 'flex-start'
+          }
         }
       }
     },
