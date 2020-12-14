@@ -48,11 +48,13 @@ export function getOAuthParamsFromCallback(url) {
     // a success example: "https://localhost:3000/oauthCallback#access_token=abcdefghijxxxxxxx&token_type=Bearer&expires_in=3599.915738379&user_info_url=https%3A%2F%2Fpublic.carto.com%2Fapi%2Fv4%2Fme&state=GJ2w6pcsrHRAwIJE"
     const userInfoUrl = params.get('user_info_url');
     const expiresIn = params.get('expires_in');
+    const state = params.get('state');
     const expirationDate = Date.now() + expiresIn * 1000;
     return {
       accessToken,
       expirationDate,
       userInfoUrl,
+      state
     };
   }
 
@@ -62,8 +64,7 @@ export function getOAuthParamsFromCallback(url) {
 /**
  * Prepare the url for the OAuth authorization request
  */
-function buildAuthorizeUrl({ clientId, scopes, authorizeEndPoint }) {
-  const state = randomString(16);
+function buildAuthorizeUrl({ clientId, scopes, authorizeEndPoint, state = randomString(16)}) {
   const scope = encodeURIComponent(scopes.join(' '));
   const redirectUrl = `${window.location.origin}/oauthCallback`;
 
@@ -73,7 +74,8 @@ function buildAuthorizeUrl({ clientId, scopes, authorizeEndPoint }) {
 /**
  * Prepare the url for an OAuth token renewal
  */
-export function buildTokenRenewalUrl(oauthApp) {
-  let base = buildAuthorizeUrl(oauthApp);
+export function buildTokenRenewalUrl(oauthApp, state) {
+  const configuration = { ...oauthApp, state };
+  let base = buildAuthorizeUrl(configuration);
   return `${base}&prompt=none`;
 }
