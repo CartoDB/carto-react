@@ -28,7 +28,7 @@ function HistogramWidget(props) {
   const dispatch = useDispatch();
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const { title, formatter, xAxisFormatter, dataAxis, ticks } = props;
+  const { title, formatter, xAxisFormatter, dataAxis, ticks, tooltip } = props;
   const { data, credentials } = source;
 
   const tooltipFormatter = ([serie]) => {
@@ -106,6 +106,7 @@ function HistogramWidget(props) {
         dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}
         selectedBars={selectedBars}
         onSelectedBarsChange={handleSelectedBarsChange}
+        tooltip={tooltip}
         tooltipFormatter={tooltipFormatter}
         xAxisFormatter={xAxisFormatter}
         yAxisFormatter={formatter}
@@ -122,12 +123,14 @@ HistogramWidget.propTypes = {
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   xAxisFormatter: PropTypes.func,
   formatter: PropTypes.func,
+  tooltip: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
   viewportFilter: PropTypes.bool,
   onError: PropTypes.func
 };
 
 HistogramWidget.defaultProps = {
+  tooltip: true,
   viewportFilter: false
 };
 
