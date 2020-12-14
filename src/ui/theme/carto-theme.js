@@ -732,6 +732,13 @@ export const cartoThemeOptions = {
       },
     },
 
+    // Menu
+    MuiMenuItem: {
+      root: {
+        ...variables.typography.body2
+      }
+    },
+
     // Autocomplete
     MuiAutocomplete: {
       inputRoot: {
