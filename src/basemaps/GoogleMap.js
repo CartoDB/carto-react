@@ -49,7 +49,7 @@ export function GoogleMap(props) {
       zoomControl: false,
       streetViewControl: true,
       streetViewControlOptions: {
-        position: window.google.maps.ControlPosition.RIGHT_CENTER,
+        position: window.google.maps.ControlPosition.RIGHT_BOTTOM,
       },
       ...basemap.options,
     };
