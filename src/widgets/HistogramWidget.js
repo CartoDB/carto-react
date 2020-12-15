@@ -100,7 +100,7 @@ function HistogramWidget(props) {
   };
 
   return (
-    <WrapperWidgetUI title={title} expandable={true}>
+    <WrapperWidgetUI title={title} expandable={true} options={props.options} actions={props.actions}>
       <HistogramWidgetUI
         data={histogramData}
         dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}
