@@ -87,7 +87,7 @@ import { AggregationTypes } from './AggregationTypes';
   };
 
   return (
-    <WrapperWidgetUI title={props.title} loading={loading}>
+    <WrapperWidgetUI title={props.title} loading={loading} actions={props.actions} options={props.options}>
       <CategoryWidgetUI
         data={categoryData}
         formatter={props.formatter}
