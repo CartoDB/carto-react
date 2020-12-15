@@ -2,3 +2,10 @@
 /dist
 /storybook-static
 .DS_Store
+
+# Firebase
+firebase-debug.log*
+firebase-debug.*.log*
+
+# Firebase cache
+.firebase/
