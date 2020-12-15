@@ -413,11 +413,6 @@ export const cartoThemeOptions = {
         },
 
         // Mapbox controls
-        '.mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right': {
-          '@media (max-width: 600px)': { // sm
-            bottom: spacing(12.5)
-          }
-        },
         '.mapboxgl-ctrl.mapboxgl-ctrl-attrib': {
           padding: spacing(0, 1),
           borderRadius: spacing(.5, 0, 0, 0),
