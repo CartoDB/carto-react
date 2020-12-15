@@ -453,13 +453,13 @@ function CategoryWidgetUI(props) {
                 </Link>
               ) : blockedCategories.length > 0 ? (
                 <Link className={classes.linkAsButton} onClick={handleUnblockClicked}>
-                  Unblock
+                  Unlock
                 </Link>
               ) : (
                 selectedCategories.length > 0 && (
                   <Grid container direction='row' justify='flex-end' item xs>
                     <Link className={classes.linkAsButton} onClick={handleBlockClicked}>
-                      Block
+                      Lock
                     </Link>
                     <Divider orientation='vertical' flexItem />
                     <Link className={classes.linkAsButton} onClick={handleClearClicked}>
