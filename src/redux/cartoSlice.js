@@ -130,7 +130,7 @@ export const removeSource = (sourceId) => ({ type: 'carto/removeSource', payload
  * @param {string} source - id of the source of the layer
  * @param {object} layerAttributes - custom attributes to pass to the layer 
  */
-export const addLayer = ({id, source, layerAttributes = {}}) => ({ type: 'carto/addLayer', payload: {id, source, layerAttributes} });
+export const addLayer = ({id, source, layerAttributes = {}}) => ({ type: 'carto/addLayer', payload: {id, source, ...layerAttributes} });
 
 /**
  * Action to update a Layer in the store
