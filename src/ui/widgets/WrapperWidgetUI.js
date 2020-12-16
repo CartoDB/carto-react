@@ -51,6 +51,11 @@ const useStyles = makeStyles((theme) => ({
     height: '56px',
     padding: theme.spacing(1.25, 1.25, 1.25, 3),
   },
+  optionsMenu: {
+    marginTop: theme.spacing(6),
+    maxHeight: theme.spacing(21),
+    minWidth: theme.spacing(16),
+  },
   button: {
     padding: 0,
     cursor: (props) => (props.expandable ? 'pointer' : 'default'),
@@ -170,17 +175,10 @@ function WrapperWidgetUI(props) {
                   horizontal: 'right',
                 }}
                 anchorEl={anchorEl}
-                getContentAnchorEl={null}
                 keepMounted
                 open={open}
                 onClose={handleClose}
-                PaperProps={{
-                  style: {
-                    marginTop: '48px',
-                    maxHeight: '168px',
-                    minWidth: '128px',
-                  },
-                }}
+                PaperProps={{ className: classes.optionsMenu }}
               >
                 {options.map((option) => (
                   <MenuItem
