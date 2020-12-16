@@ -74,7 +74,9 @@ const useStyles = makeStyles((theme) => ({
 
   unselected: {},
 
-  rest: {},
+  rest: {
+    cursor: 'default'
+  },
 
   optionsSelectedBar: {
     marginBottom: theme.spacing(2),
