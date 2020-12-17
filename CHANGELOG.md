@@ -1,9 +1,12 @@
 # CHANGELOG
 
 ## Not released
+
+- Add tooltip to WrapperWidget action buttons [#55](https://github.com/CartoDB/carto-react-lib/pull/55)
 - Extend widget props to WrapperWidgetUI with a better implementation [#57](https://github.com/CartoDB/carto-react-lib/pull/57)
 
 ## 1.0.0-beta9 (2020-12-18)
+
 - Pass actions and options to WrapperWidgetUI from HistogramWidget and CategoryWidget [#50](https://github.com/CartoDB/carto-react-lib/pull/50)
 - Fix addSource in cartoSlice spreading layerAttributes [#52](https://github.com/CartoDB/carto-react-lib/pull/52)
 - Category widget UX improvements [#54](https://github.com/CartoDB/carto-react-lib/pull/54)
