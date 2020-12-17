@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Not released
+- Category widget UX improvements [#54](https://github.com/CartoDB/carto-react-lib/pull/54)
+
 ## 1.0.0-beta8 (2020-12-15)
 - Remove OAuthLogin component (extracted to the template project) [#44](https://github.com/CartoDB/carto-react-lib/pull/44)
 - Add layerAttributes to addLayer and refactor updateLayer to use same destructuring approach [#45](https://github.com/CartoDB/carto-react-lib/pull/45)
