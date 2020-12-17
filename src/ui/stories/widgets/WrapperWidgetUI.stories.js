@@ -60,7 +60,14 @@ WithOptions.args = {
   title: 'Wrapper with options',
   options: [
     { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
-    { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') },
+    { id: 'o2', name: 'Option 2 too long', action: () => alert('Option 2!') },
+    { id: 'o3', name: 'Option 2', action: () => alert('Option 2!') },
+    { id: 'o4', name: 'Option 2 too long here', action: () => alert('Option 2!') },
+    { id: 'o5', name: 'Option 2', action: () => alert('Option 2!') },
+    { id: 'o6', name: 'Option 2', action: () => alert('Option 2!') },
+    { id: 'o7', name: 'Option 2', action: () => alert('Option 2!') },
+    { id: 'o8', name: 'Option 2', action: () => alert('Option 2!') },
+    { id: 'o9', name: 'Option 2', action: () => alert('Option 2!') },
   ],
 };
 
