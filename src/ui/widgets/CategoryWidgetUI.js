@@ -200,6 +200,10 @@ function CategoryWidgetUI(props) {
     }
   };
 
+  const handleSearchFocus = (event) => {
+    event.currentTarget.scrollIntoView();
+  };
+
   const handleSearchChange = (event) => {
     setSearchValue(event.currentTarget.value);
   };
@@ -483,6 +487,7 @@ function CategoryWidgetUI(props) {
                 size='small'
                 placeholder='Search'
                 onChange={handleSearchChange}
+                onFocus={handleSearchFocus}
                 className={classes.searchInput}
                 InputProps={{
                   startAdornment: (
