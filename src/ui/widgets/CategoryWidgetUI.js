@@ -512,14 +512,22 @@ function CategoryWidgetUI(props) {
                     }
                   />
                 ))
-              : (data.length === 0 && !loading) && (
-                  <Alert severity='warning'>
-                    <AlertTitle>NO DATA AVAILABLE</AlertTitle>
-                    There are no results for the combination of filters applied to your
-                    data. Try tweaking your filters, or zoom and pan the map to adjust the
-                    Map View.
-                  </Alert>
-                )}
+              : (data.length === 0 && !loading)
+                ? (
+                    <Alert severity='warning'>
+                      <AlertTitle>NO DATA AVAILABLE</AlertTitle>
+                      There are no results for the combination of filters applied to your
+                      data. Try tweaking your filters, or zoom and pan the map to adjust the
+                      Map View.
+                    </Alert>
+                )
+                : (
+                  <>
+                    <Typography variant="body2">No results</Typography>
+                    <Typography variant="caption">Your search "{searchValue}" didn't match with any value.</Typography>
+                  </>
+                )
+            }
           </Grid>
           {data.length > maxItems ? (
             showAll ? (
