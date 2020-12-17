@@ -3,6 +3,7 @@
 ## Not released
 - Pass actions and options to WrapperWidgetUI from HistogramWidget and CategoryWidget [#50](https://github.com/CartoDB/carto-react-lib/pull/50)
 - Fix addSource in cartoSlice spreading layerAttributes [#52∫](https://github.com/CartoDB/carto-react-lib/pull/52)
+- Add new clearFilters action [#58](https://github.com/CartoDB/carto-react-lib/pull/58)
 
 ## 1.0.0-beta8 (2020-12-15)
 - Remove OAuthLogin component (extracted to the template project) [#44](https://github.com/CartoDB/carto-react-lib/pull/44)
