@@ -19,6 +19,7 @@ import { AggregationTypes } from './AggregationTypes';
   * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
   * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not. 
   * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
+  * @param  {Object} [props.wrapperProps] - Extra props to pass to WrapperWidgetUI (see storybook for reference)
   */
  function CategoryWidget(props) {
   const { column } = props;
@@ -87,7 +88,7 @@ import { AggregationTypes } from './AggregationTypes';
   };
 
   return (
-    <WrapperWidgetUI title={props.title} loading={loading} actions={props.actions} options={props.options}>
+    <WrapperWidgetUI title={props.title} loading={loading} {...props.wrapperProps}>
       <CategoryWidgetUI
         data={categoryData}
         formatter={props.formatter}
@@ -113,7 +114,8 @@ CategoryWidget.propTypes = {
 };
 
 CategoryWidget.defaultProps = {
-  viewportFilter: false
+  viewportFilter: false,
+  wrapperProps: {}
 };
 
 export default CategoryWidget;

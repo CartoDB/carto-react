@@ -19,7 +19,9 @@ import { AggregationTypes } from './AggregationTypes';
   * @param  {formatterCallback} [props.xAxisformatter] - Function to format X axis values.
   * @param  {formatterCallback} [props.formatter] - Function to format Y axis values.
   * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not. 
+  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
   * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
+  * @param  {Object} [props.wrapperProps] - Extra props to pass to WrapperWidgetUI (see storybook for reference)
   */
 function HistogramWidget(props) {
   const { column } = props;
@@ -100,7 +102,7 @@ function HistogramWidget(props) {
   };
 
   return (
-    <WrapperWidgetUI title={title} actions={props.actions} options={props.options}>
+    <WrapperWidgetUI title={title} {...props.wrapperProps}>
       <HistogramWidgetUI
         data={histogramData}
         dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}
@@ -131,7 +133,8 @@ HistogramWidget.propTypes = {
 
 HistogramWidget.defaultProps = {
   tooltip: true,
-  viewportFilter: false
+  viewportFilter: false,
+  wrapperProps: {}
 };
 
 export default HistogramWidget;

@@ -16,6 +16,7 @@ import { AggregationTypes } from './AggregationTypes';
   * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
   * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not. 
   * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
+  * @param  {Object} [props.wrapperProps] - Extra props to pass to WrapperWidgetUI (see storybook for reference)
   */
 function FormulaWidget(props) {
   const [formulaData, setFormulaData] = useState(null);
@@ -59,7 +60,7 @@ function FormulaWidget(props) {
   }, [credentials, data, filters, viewport, props]);
 
   return (
-    <WrapperWidgetUI title={props.title} expandable={true} loading={loading}>
+    <WrapperWidgetUI title={props.title} loading={loading} {...wrapperProps}>
       <FormulaWidgetUI data={formulaData} formatter={props.formatter} unitBefore={true} />
     </WrapperWidgetUI>
   );
@@ -76,7 +77,8 @@ FormulaWidget.propTypes = {
 };
 
 FormulaWidget.defaultProps = {
-  viewportFilter: false
+  viewportFilter: false,
+  wrapperProps: {}
 };
 
 export default FormulaWidget;
