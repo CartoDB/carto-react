@@ -100,6 +100,14 @@ export const createCartoSlice = (initialState) => {
           delete source.filters[column];
         }
       },
+      clearFilters: (state, action) => {
+        const { id } = action.payload;
+        const source = state.dataSources[id];
+
+        if (source && source.filters) {
+          delete source.filters;
+        }
+      },
       setGeocoderResult: (state, action) => {
         state.geocoderResult = action.payload;
       },
@@ -160,11 +168,17 @@ export const setBaseMap = (basemap) => ({ type: 'carto/setBaseMap', payload: bas
 export const addFilter = ({id, column, type, values, owner}) => ({ type: 'carto/addFilter', payload: {id, column, type, values, owner} });
 
 /**
- * Action to remove a filter from the store
+ * Action to remove a column filter from a source
  * @param {id} - sourceId of the filter to remove
  * @param {column} - column of the filter to remove
  */
 export const removeFilter = ({id, column}) => ({ type: 'carto/removeFilter', payload: {id, column}});
+
+/**
+ * Action to remove all filters from a source
+ * @param {id} - sourceId
+ */
+export const clearFilters = (id) => ({ type: 'carto/clearFilters', payload: {id }});
 
 const _setViewState = (payload) => ({ type: 'carto/setViewState', payload });
 const _setViewPort = (payload) => ({ type: 'carto/setViewPort', payload });
