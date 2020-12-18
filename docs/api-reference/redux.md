@@ -100,7 +100,7 @@ Action to remove all filters from a source
 
 | Type | Description |
 | --- | --- |
-| <code>id</code> | sourceId of the filter to remove |
+| <code>id</code> | sourceId of the source to remove all filters from |
 
 ### selectSourceById
 Redux selector to get a source by ID
