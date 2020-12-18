@@ -6,6 +6,7 @@
 - Fix addSource in cartoSlice spreading layerAttributes [#52](https://github.com/CartoDB/carto-react-lib/pull/52)
 - Category widget UX improvements [#54](https://github.com/CartoDB/carto-react-lib/pull/54)
 - Extend widget props to WrapperWidgetUI with a better implementation [#57](https://github.com/CartoDB/carto-react-lib/pull/57)
+- Add new clearFilters action [#58](https://github.com/CartoDB/carto-react-lib/pull/58)
 - Design improvements [#59](https://github.com/CartoDB/carto-react-lib/pull/59)
 
 ## 1.0.0-beta8 (2020-12-15)
