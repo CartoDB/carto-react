@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## Not released
+- Pass actions and options to WrapperWidgetUI from HistogramWidget and CategoryWidget [#50](https://github.com/CartoDB/carto-react-lib/pull/50)
+- Fix addSource in cartoSlice spreading layerAttributes [#52∫](https://github.com/CartoDB/carto-react-lib/pull/52)
 - Category widget UX improvements [#54](https://github.com/CartoDB/carto-react-lib/pull/54)
 
 ## 1.0.0-beta8 (2020-12-15)

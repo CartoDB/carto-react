@@ -45,16 +45,12 @@ export function GoogleMap(props) {
 
       // Custom control positioning
       // TODO: Make them configurable from outside
-      zoomControl: true,
-      zoomControlOptions: {
-        position: window.google.maps.ControlPosition.LEFT_BOTTOM,
-      },
+      fullscreenControl: false,
+      zoomControl: false,
       streetViewControl: true,
       streetViewControlOptions: {
-        position: window.google.maps.ControlPosition.LEFT_BOTTOM,
+        position: window.google.maps.ControlPosition.RIGHT_CENTER,
       },
-
-
       ...basemap.options,
     };
 
