@@ -74,7 +74,9 @@ const useStyles = makeStyles((theme) => ({
 
   unselected: {},
 
-  rest: {},
+  rest: {
+    cursor: 'default'
+  },
 
   optionsSelectedBar: {
     marginBottom: theme.spacing(2),
@@ -197,6 +199,10 @@ function CategoryWidgetUI(props) {
 
       setTempBlockedCategories(categories);
     }
+  };
+
+  const handleSearchFocus = (event) => {
+    event.currentTarget.scrollIntoView();
   };
 
   const handleSearchChange = (event) => {
@@ -482,6 +488,7 @@ function CategoryWidgetUI(props) {
                 size='small'
                 placeholder='Search'
                 onChange={handleSearchChange}
+                onFocus={handleSearchFocus}
                 className={classes.searchInput}
                 InputProps={{
                   startAdornment: (
@@ -506,14 +513,22 @@ function CategoryWidgetUI(props) {
                     }
                   />
                 ))
-              : (data.length === 0 && !loading) && (
-                  <Alert severity='warning'>
-                    <AlertTitle>NO DATA AVAILABLE</AlertTitle>
-                    There are no results for the combination of filters applied to your
-                    data. Try tweaking your filters, or zoom and pan the map to adjust the
-                    Map View.
-                  </Alert>
-                )}
+              : (data.length === 0 && !loading)
+                ? (
+                    <Alert severity='warning'>
+                      <AlertTitle>NO DATA AVAILABLE</AlertTitle>
+                      There are no results for the combination of filters applied to your
+                      data. Try tweaking your filters, or zoom and pan the map to adjust the
+                      Map View.
+                    </Alert>
+                )
+                : (
+                  <>
+                    <Typography variant="body2">No results</Typography>
+                    <Typography variant="caption">Your search "{searchValue}" didn't match with any value.</Typography>
+                  </>
+                )
+            }
           </Grid>
           {data.length > maxItems ? (
             showAll ? (
