@@ -47,10 +47,7 @@ export function GoogleMap(props) {
       // TODO: Make them configurable from outside
       fullscreenControl: false,
       zoomControl: false,
-      streetViewControl: true,
-      streetViewControlOptions: {
-        position: window.google.maps.ControlPosition.RIGHT_BOTTOM,
-      },
+      streetViewControl: false,
       ...basemap.options,
     };
 
