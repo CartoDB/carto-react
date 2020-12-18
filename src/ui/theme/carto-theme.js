@@ -428,9 +428,8 @@ export const cartoThemeOptions = {
           },
           
           '&.mapboxgl-compact': {
-            maxWidth: '75%',
             backgroundColor: 'transparent',
-            right: 0,
+            right: spacing(0.5),
             bottom: spacing(2.5),
 
             // Mobile
