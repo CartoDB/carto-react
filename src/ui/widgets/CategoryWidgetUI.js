@@ -74,10 +74,13 @@ const useStyles = makeStyles((theme) => ({
 
   unselected: {},
 
-  rest: {},
+  rest: {
+    cursor: 'default'
+  },
 
   optionsSelectedBar: {
     marginBottom: theme.spacing(2),
+    paddingRight: theme.spacing(1),
 
     '& .MuiTypography-caption': {
       color: theme.palette.text.secondary,
@@ -196,6 +199,10 @@ function CategoryWidgetUI(props) {
 
       setTempBlockedCategories(categories);
     }
+  };
+
+  const handleSearchFocus = (event) => {
+    event.currentTarget.scrollIntoView();
   };
 
   const handleSearchChange = (event) => {
@@ -452,13 +459,13 @@ function CategoryWidgetUI(props) {
                 </Link>
               ) : blockedCategories.length > 0 ? (
                 <Link className={classes.linkAsButton} onClick={handleUnblockClicked}>
-                  Unblock
+                  Unlock
                 </Link>
               ) : (
                 selectedCategories.length > 0 && (
-                  <Grid container direction='row' justify='flex-end' spacing={1} item xs>
+                  <Grid container direction='row' justify='flex-end' item xs>
                     <Link className={classes.linkAsButton} onClick={handleBlockClicked}>
-                      Block
+                      Lock
                     </Link>
                     <Divider orientation='vertical' flexItem />
                     <Link className={classes.linkAsButton} onClick={handleClearClicked}>
@@ -481,6 +488,7 @@ function CategoryWidgetUI(props) {
                 size='small'
                 placeholder='Search'
                 onChange={handleSearchChange}
+                onFocus={handleSearchFocus}
                 className={classes.searchInput}
                 InputProps={{
                   startAdornment: (
@@ -505,14 +513,22 @@ function CategoryWidgetUI(props) {
                     }
                   />
                 ))
-              : (data.length === 0 && !loading) && (
-                  <Alert severity='warning'>
-                    <AlertTitle>NO DATA AVAILABLE</AlertTitle>
-                    There are no results for the combination of filters applied to your
-                    data. Try tweaking your filters, or zoom and pan the map to adjust the
-                    Map View.
-                  </Alert>
-                )}
+              : (data.length === 0 && !loading)
+                ? (
+                    <Alert severity='warning'>
+                      <AlertTitle>No data available</AlertTitle>
+                      There are no results for the combination of filters applied to your
+                      data. Try tweaking your filters, or zoom and pan the map to adjust the
+                      Map View.
+                    </Alert>
+                )
+                : (
+                  <>
+                    <Typography variant="body2">No results</Typography>
+                    <Typography variant="caption">Your search "{searchValue}" didn't match with any value.</Typography>
+                  </>
+                )
+            }
           </Grid>
           {data.length > maxItems ? (
             showAll ? (
@@ -523,6 +539,7 @@ function CategoryWidgetUI(props) {
               <Button
                 size='small'
                 color='primary'
+                startIcon={<SearchIcon />}
                 onClick={handleShowAllCategoriesClicked}
               >
                 Search in {data.length - maxItems} elements
