@@ -88,12 +88,19 @@ Action to add a filter on a given source and column
 | {type} | <code>FilterType</code> | `FilterTypes.IN` and `FilterTypes.BETWEEN` |
 
 ### removeFilter
-Action to remove a filter from the store
+Action to remove a column filter from a source
 
 | Type | Description |
 | --- | --- |
 | <code>id</code> | sourceId of the filter to remove |
 | <code>column</code> | column of the filter to remove |
+
+### clearFilters
+Action to remove all filters from a source
+
+| Type | Description |
+| --- | --- |
+| <code>id</code> | sourceId of the source to remove all filters from |
 
 ### selectSourceById
 Redux selector to get a source by ID
