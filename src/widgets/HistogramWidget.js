@@ -21,7 +21,7 @@ import { AggregationTypes } from './AggregationTypes';
   * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not. 
   * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
   * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
-  * @param  {Object} [props.wrapperProps] - Extra props to pass to WrapperWidgetUI (see storybook for reference)
+  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
   */
 function HistogramWidget(props) {
   const { column } = props;
