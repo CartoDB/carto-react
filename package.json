@@ -7,6 +7,8 @@
     "build": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && cp README.md ./dist/README.md && webpack --config webpack.prod.js",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "storybook": "start-storybook -c src/ui/.storybook -p 6006",
     "build-storybook": "build-storybook -c src/ui/.storybook",
     "publish-storybook": "build-storybook -c src/ui/.storybook && yarn firebase deploy",
@@ -38,6 +40,7 @@
     "@storybook/addon-essentials": "^6.0.28",
     "@storybook/addon-links": "^6.0.28",
     "@storybook/react": "^6.0.28",
+    "babel-jest": "^26.6.3",
     "babel-loader": "^8.2.1",
     "deck.gl": "^8.3.8",
     "echarts": "^4.9.0",
@@ -54,6 +57,7 @@
     "webpack-cli": "^4.2.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.5"
+    "@babel/runtime": "^7.12.5",
+    "pgsql-minify": "^1.0.5"
   }
 }
