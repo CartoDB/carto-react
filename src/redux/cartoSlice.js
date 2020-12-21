@@ -46,6 +46,7 @@ export const createCartoSlice = (initialState) => {
       dataSources: {
         // Auto import dataSources
       },
+      viewportFeatures: {},
       ...initialState,
     },
     reducers: {
@@ -111,6 +112,21 @@ export const createCartoSlice = (initialState) => {
       setGeocoderResult: (state, action) => {
         state.geocoderResult = action.payload;
       },
+      setViewportFeatures: (state, action) => {
+        const {layerId, data} = action.payload;
+
+        state.viewportFeatures = {
+          ...state.viewportFeatures,
+          [layerId]: data
+        }
+      },
+      removeViewportFeatures: (state, action) => {
+        const {layerId} = action.payload;
+
+        if (state.viewportFeatures[layerId]) {
+          delete state.viewportFeatures[layerId];
+        }
+      }
     },
   });
 
@@ -201,3 +217,15 @@ export const setViewState = (viewState) => {
     debouncedSetViewPort(dispatch, _setViewPort);
   };
 };
+
+/**
+ * Action to set the viewport features of a layer
+ * @param {object} data - layer info
+ */
+export const setViewportFeatures = (data) => ({ type: 'carto/setViewportFeatures', payload: data});
+
+/**
+ * Action to remove the viewport features of a layer
+ * @param {String} layerId - the layer id to remove
+ */
+export const removeViewportFeatures = (data) => ({ type: 'carto/removeViewportFeatures', payload: data});

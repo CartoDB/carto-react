@@ -6,6 +6,7 @@ import { WrapperWidgetUI, CategoryWidgetUI } from '../ui';
 import { FilterTypes, getApplicableFilters } from '../api/FilterQueryBuilder';
 import { getCategories } from './models';
 import { AggregationTypes } from './AggregationTypes';
+import {groupValuesByColumn} from './operations/grouping';
 
 /**
   * Renders a <CategoryWidget /> component
@@ -29,41 +30,67 @@ import { AggregationTypes } from './AggregationTypes';
   const dispatch = useDispatch();
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const { data, credentials } = source;
+  const { data, credentials, type: dataExtractMode } = source;
+
+  const vF = useSelector((state) => state.carto.viewportFeatures);
 
   useEffect(() => {
-    const abortController = new AbortController();
-    if (
-      data &&
-      credentials &&
-      (!props.viewportFilter || (props.viewportFilter && viewport))
-    ) {
-      const filters = getApplicableFilters(source.filters, props.id);
-      setLoading(true);
-      getCategories({
-        ...props,
-        data,
-        filters,
-        credentials,
-        viewport,
-        opts: { abortController },
-      })
-        .then((data) => {
-          setCategoryData(data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          if (error.name === 'AbortError') return;
-          if (props.onError) props.onError(error);
-        });
-    } else {
-      setCategoryData(null);
+    if (dataExtractMode && props.viewportFilter) {
+      // TODO: fill error message
+      throw new Error();
+    }
+  }, []);
+
+  useEffect(() => {
+    const {dataLayer, operation, operationColumn, column} = props;
+
+    if (dataExtractMode === 'TileLayer') {
+      const targetFeatures = vF[dataLayer];
+ 
+      if (targetFeatures) {
+        const groups = groupValuesByColumn(targetFeatures, operationColumn, column, operation);
+        setCategoryData(groups);
+      }
     }
 
-    return function cleanup() {
-      abortController.abort();
-    };
-  }, [credentials, data, source.filters, viewport, props, dispatch]);
+    return () => setCategoryData(null);
+  }, [dataExtractMode, props, vF]);
+
+  useEffect(() => {
+    if (dataExtractMode !== 'TileLayer') {
+      const abortController = new AbortController();
+      if (
+        data &&
+        credentials &&
+        (!props.viewportFilter || (props.viewportFilter && viewport))
+      ) {
+        const filters = getApplicableFilters(source.filters, props.id);
+        setLoading(true);
+        getCategories({
+          ...props,
+          data,
+          filters,
+          credentials,
+          viewport,
+          opts: { abortController },
+        })
+          .then((data) => {
+            setCategoryData(data);
+            setLoading(false);
+          })
+          .catch((error) => {
+            if (error.name === 'AbortError') return;
+            if (props.onError) props.onError(error);
+          });
+      } else {
+        setCategoryData(null);
+      }
+  
+      return function cleanup() {
+        abortController.abort();
+      };
+    }
+  }, [credentials, data, source.filters, viewport, props, dataExtractMode]);
 
   const handleSelectedCategoriesChange = (categories) => {
     setSelectedCategories(categories);
@@ -105,6 +132,7 @@ CategoryWidget.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
+  dataLayer: PropTypes.string,
   column: PropTypes.string.isRequired,
   operationColumn: PropTypes.string,
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
