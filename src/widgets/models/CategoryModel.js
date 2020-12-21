@@ -4,7 +4,7 @@ import { executeSQL } from '../../api';
 import { filtersToSQL, viewportToSQL } from '../../api/FilterQueryBuilder';
 
 /**
- * Execute a query against SQL API to get categories defined by props
+ * Execute a query against SQL API to get Categories defined by props
  */
 export const getCategories = async (props) => {
   const { credentials, opts, ...propsForQuery } = props;
@@ -14,7 +14,7 @@ export const getCategories = async (props) => {
 };
 
 /**
- * Builds a SQL sentence to get the categories defined by props
+ * Build a SQL sentence to get Categories defined by props
  */
 export const buildSqlQueryToGetCategories = (props) => {
   const { data, column, operation, filters, viewport } = props;
