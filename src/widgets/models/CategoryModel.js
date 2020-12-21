@@ -1,8 +1,23 @@
+import { minify } from 'pgsql-minify';
+
 import { executeSQL } from '../../api';
 import { filtersToSQL, viewportToSQL } from '../../api/FilterQueryBuilder';
 
+/**
+ * Execute a query against SQL API to get categories defined by props
+ */
 export const getCategories = async (props) => {
-  const { data, credentials, column, operation, filters, viewport, opts } = props;
+  const { credentials, opts, ...propsForQuery } = props;
+  const query = buildSqlQueryToGetCategories(propsForQuery);
+
+  return await executeSQL(credentials, query, opts);
+};
+
+/**
+ * Builds a SQL sentence to get the categories defined by props
+ */
+export const buildSqlQueryToGetCategories = (props) => {
+  const { data, column, operation, filters, viewport } = props;
 
   const operationColumn = props.operationColumn || column;
 
@@ -11,23 +26,31 @@ export const getCategories = async (props) => {
   }
 
   let query =
-    (viewport && `SELECT * FROM (${data})  as q WHERE ${viewportToSQL(viewport)}`) ||
+    (viewport && `SELECT * FROM (${data}) as q WHERE ${viewportToSQL(viewport)}`) ||
     data;
 
-  query = `WITH all_categories as (
-    SELECT ${column} as category
-      FROM (${query}) as q
-    GROUP BY category
-  ),
-  categories as (
-    SELECT ${column} as category, ${operation}(${operationColumn}) as value
-      FROM (${query}) as q
-    ${filtersToSQL(filters)}
-    GROUP BY category
-  )
-  SELECT a.category, b.value
-    FROM all_categories a
-    LEFT JOIN categories b ON a.category=b.category`;
+  query = `
+    WITH all_categories as (
+      SELECT
+        ${column} as category
+      FROM
+        (${query}) as q
+      GROUP BY category
+    ),
+    categories as (
+      SELECT
+        ${column} as category, ${operation}(${operationColumn}) as value
+      FROM
+        (${query}) as q
+      ${filtersToSQL(filters)}
+      GROUP BY category
+    )
+    SELECT
+      a.category, b.value
+    FROM
+      all_categories a
+    LEFT JOIN categories b ON a.category=b.category
+  `;
 
-  return await executeSQL(credentials, query, opts);
-};
+  return minify(query);
+}
