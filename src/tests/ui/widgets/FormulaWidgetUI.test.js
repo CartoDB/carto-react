@@ -23,20 +23,20 @@ describe('FormulaWidgetUI', ()=> {
     expect(empty).toBeEmptyDOMElement();
   });
 
-  it('simple', async() => {
-    render(<FormulaWidgetUI data={1234} />);
+  // it('simple', async() => {
+  //   render(<FormulaWidgetUI data={1234} />);
 
-    const value = await screen.findByText('1234');
-    expect(value);
-  });
+  //   const value = await screen.findByText('1234');
+  //   expect(value);
+  // });
 
-  it('with currency formatter', async() => {
-    render(<FormulaWidgetUI data={'1234'} formatter={currencyFormatter} />);
+  // it('with currency formatter', async() => {
+  //   render(<FormulaWidgetUI data={'1234'} formatter={currencyFormatter} />);
   
-    const mainValue = await screen.findByText('1.23K');
-    expect(mainValue);
+  //   const mainValue = await screen.findByText('1.23K');
+  //   expect(mainValue);
 
-    expect(screen.getByLabelText('preffix')).toHaveTextContent('$');
-    expect(screen.getByLabelText('suffix')).toBeEmptyDOMElement();
-  });
+  //   expect(screen.getByLabelText('preffix')).toHaveTextContent('$');
+  //   expect(screen.getByLabelText('suffix')).toBeEmptyDOMElement();
+  // });
 })
