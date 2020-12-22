@@ -26,26 +26,25 @@ import {groupValuesByColumn} from './operations/grouping';
   const { column } = props;
   const [categoryData, setCategoryData] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const { data, credentials, type: dataExtractMode } = source;
+  const { data, credentials, sourceType: dataExtractMode } = source;
 
   const vF = useSelector((state) => state.carto.viewportFeatures);
 
   useEffect(() => {
-    if (dataExtractMode && props.viewportFilter) {
-      // TODO: fill error message
-      throw new Error();
+    if (dataExtractMode === 'TileLayer' && props.viewportFilter) {
+      throw new Error(`"viewportFilter" should be false if Source Type is "${AggregationTypes.TILE_LAYER}"`);
     }
   }, []);
 
   useEffect(() => {
-    const {dataLayer, operation, operationColumn, column} = props;
+    const {dataSource, operation, operationColumn, column} = props;
 
     if (dataExtractMode === 'TileLayer') {
-      const targetFeatures = vF[dataLayer];
+      const targetFeatures = vF[dataSource];
  
       if (targetFeatures) {
         const groups = groupValuesByColumn(targetFeatures.getRenderedFeatures(), operationColumn, column, operation);

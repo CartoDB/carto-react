@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '../utils';
+import { SourceTypes } from '../widgets/SourceTypes';
 
 /**
   *
@@ -113,18 +114,18 @@ export const createCartoSlice = (initialState) => {
         state.geocoderResult = action.payload;
       },
       setViewportFeatures: (state, action) => {
-        const {layerId, data} = action.payload;
+        const {sourceId, data} = action.payload;
 
         state.viewportFeatures = {
           ...state.viewportFeatures,
-          [layerId]: data
+          [sourceId]: data
         }
       },
       removeViewportFeatures: (state, action) => {
-        const layerId = action.payload;
+        const sourceId = action.payload;
 
-        if (state.viewportFeatures[layerId]) {
-          delete state.viewportFeatures[layerId];
+        if (state.viewportFeatures[sourceId]) {
+          delete state.viewportFeatures[sourceId];
         }
       }
     },
@@ -138,9 +139,10 @@ export const createCartoSlice = (initialState) => {
  * @param {string} id - unique id for the source
  * @param {string} data - data definition for the source. Query for SQL dataset or the name of the tileset for BigQuery Tileset
  * @param {string} type - type of source. Posible values are sql or bq
+ * @param {string} sourceType - type of source. Posible values are TILE_LAYER or SQL
  * @param {Object} credentials - (optional) Custom credentials to be used in the source
  */
-export const addSource = ({id, data, type, credentials}) => ({ type: 'carto/addSource', payload: {id, data, type, credentials}});
+export const addSource = ({id, data, type, sourceType = SourceTypes.SQL, credentials}) => ({ type: 'carto/addSource', payload: {id, data, type, sourceType, credentials}});
 
 /**
  * Action to remove a source from the store

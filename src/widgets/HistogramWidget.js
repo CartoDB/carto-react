@@ -6,6 +6,7 @@ import { WrapperWidgetUI, HistogramWidgetUI } from '../ui';
 import { FilterTypes, getApplicableFilters } from '../api/FilterQueryBuilder';
 import { getHistogram } from './models';
 import { AggregationTypes } from './AggregationTypes';
+import { histogram } from './operations/histogram';
 
 /**
   * Renders a <HistogramWidget /> component
@@ -31,7 +32,9 @@ function HistogramWidget(props) {
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const { title, formatter, xAxisFormatter, dataAxis, ticks, tooltip } = props;
-  const { data, credentials } = source;
+  const { data, credentials, sourceType: dataExtractMode } = source;
+
+  const vF = useSelector((state) => state.carto.viewportFeatures);
 
   const tooltipFormatter = ([serie]) => {
     const formattedValue = formatter
@@ -46,34 +49,57 @@ function HistogramWidget(props) {
   };
 
   useEffect(() => {
-    const abortController = new AbortController();
+    if (dataExtractMode === 'TileLayer' && props.viewportFilter) {
+      throw new Error(`"viewportFilter" should be false if Source Type is "${AggregationTypes.TILE_LAYER}"`);
+    }
+  }, []);
 
-    if (
-      data &&
-      credentials &&
-      (!props.viewportFilter || (props.viewportFilter && viewport))
-    ) {
-      const filters = getApplicableFilters(source.filters, props.id);
-      getHistogram({
-        ...props,
-        data,
-        filters,
-        credentials,
-        viewport,
-        opts: { abortController },
-      })
-        .then((data) => data && setHistogramData(data))
-        .catch((error) => {
-          if (error.name === 'AbortError') return;
-          if (props.onError) props.onError(error);
-        });
-    } else {
-      setHistogramData([]);
+  useEffect(() => {
+    const {dataSource, operation, column, ticks} = props;
+
+    if (dataExtractMode === 'TileLayer') {
+      const targetFeatures = vF[dataSource];
+
+      if (targetFeatures) {
+        const result = histogram(targetFeatures.getRenderedFeatures(), column, ticks, operation);
+        setHistogramData(result);
+      }
     }
 
-    return function cleanup() {
-      abortController.abort();
-    };
+    return () => setHistogramData([]);
+  }, [dataExtractMode, props, vF]);
+
+  useEffect(() => {
+    if (dataExtractMode !== 'TileLayer') {
+      const abortController = new AbortController();
+
+      if (
+        data &&
+        credentials &&
+        (!props.viewportFilter || (props.viewportFilter && viewport))
+      ) {
+        const filters = getApplicableFilters(source.filters, props.id);
+        getHistogram({
+          ...props,
+          data,
+          filters,
+          credentials,
+          viewport,
+          opts: { abortController },
+        })
+          .then((data) => data && setHistogramData(data))
+          .catch((error) => {
+            if (error.name === 'AbortError') return;
+            if (props.onError) props.onError(error);
+          });
+      } else {
+        setHistogramData([]);
+      }
+
+      return function cleanup() {
+        abortController.abort();
+      };
+    }
   }, [credentials, data, source.filters, viewport, props, dispatch]);
 
   const handleSelectedBarsChange = ({ bars }) => {
@@ -105,7 +131,7 @@ function HistogramWidget(props) {
     <WrapperWidgetUI title={title} {...props.wrapperProps}>
       <HistogramWidgetUI
         data={histogramData}
-        dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}
+        dataAxis={dataAxis || ticks}
         selectedBars={selectedBars}
         onSelectedBarsChange={handleSelectedBarsChange}
         tooltip={tooltip}

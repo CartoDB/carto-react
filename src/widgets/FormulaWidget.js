@@ -24,24 +24,23 @@ function FormulaWidget(props) {
   const [loading, setLoading] = useState(false);
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const { data, credentials, filters, type: dataExtractMode } = source;
+  const { data, credentials, filters, sourceType: dataExtractMode } = source;
 
   const vF = useSelector((state) => state.carto.viewportFeatures);
 
   useEffect(() => {
-    if (dataExtractMode && props.viewportFilter) {
-      // TODO: fill error message
-      throw new Error();
+    if (dataExtractMode === 'TileLayer' && props.viewportFilter) {
+      throw new Error(`"viewportFilter" should be false if Source Type is "${AggregationTypes.TILE_LAYER}"`);
     }
   }, []);
 
   useEffect(() => {
-    const {dataLayer, operation, column} = props;
+    const {dataSource, operation, column} = props;
 
     if (dataExtractMode === 'TileLayer') {
       const operations = aggregationFunctions();
       const targetOperation = operations[operation];
-      const targetFeatures = vF[dataLayer];
+      const targetFeatures = vF[dataSource];
 
       if (targetOperation && targetFeatures) {
         setFormulaData(targetOperation(targetFeatures.getRenderedFeatures(), column));

@@ -25,5 +25,5 @@ export function groupValuesByColumn(data, valuesColumn, keysColumn, operation) {
     return Object.entries(groups).map(([category, value]) => ({category, value: targetOperation(value)}));
   }
   
-  return;
+  return [];
 }
