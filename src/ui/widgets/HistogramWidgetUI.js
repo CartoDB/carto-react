@@ -2,6 +2,8 @@ import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
+
 import detectTouchScreen from '../utils/detectTouchScreen';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
@@ -161,12 +163,12 @@ function __generateSerie(name, data, selectedBars = [], theme) {
       barMinWidth: '95%',
       ...(!IS_TOUCH_SCREEN && theme
         ? {
-            emphasis: {
-              itemStyle: {
-                color: theme.palette.secondary.dark,
-              },
+          emphasis: {
+            itemStyle: {
+              color: theme.palette.secondary.dark,
             },
-          }
+          },
+        }
         : {}),
     },
   ];
@@ -290,6 +292,18 @@ function HistogramWidgetUI(props) {
   const onEvents = {
     click: clickEvent,
   };
+
+  if (data.length === 0) {
+    return (
+      <div>
+        <Alert severity='warning'>
+          <AlertTitle>No data available</AlertTitle>
+      There are no results from your data. If you are using filters, try tweaking them or zoom / pan the map to adjust the
+      viewport.
+        </Alert>
+      </div>
+    );
+  }
 
   return (
     <div>
