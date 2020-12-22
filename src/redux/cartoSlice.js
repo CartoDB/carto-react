@@ -121,7 +121,7 @@ export const createCartoSlice = (initialState) => {
         }
       },
       removeViewportFeatures: (state, action) => {
-        const {layerId} = action.payload;
+        const layerId = action.payload;
 
         if (state.viewportFeatures[layerId]) {
           delete state.viewportFeatures[layerId];

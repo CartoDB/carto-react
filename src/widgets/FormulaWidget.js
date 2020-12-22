@@ -44,7 +44,7 @@ function FormulaWidget(props) {
       const targetFeatures = vF[dataLayer];
 
       if (targetOperation && targetFeatures) {
-        setFormulaData(targetOperation(targetFeatures, column));
+        setFormulaData(targetOperation(targetFeatures.getRenderedFeatures(), column));
       }
     }
 

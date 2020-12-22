@@ -48,7 +48,7 @@ import {groupValuesByColumn} from './operations/grouping';
       const targetFeatures = vF[dataLayer];
  
       if (targetFeatures) {
-        const groups = groupValuesByColumn(targetFeatures, operationColumn, column, operation);
+        const groups = groupValuesByColumn(targetFeatures.getRenderedFeatures(), operationColumn, column, operation);
         setCategoryData(groups);
       }
     }
