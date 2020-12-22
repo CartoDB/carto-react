@@ -60,14 +60,14 @@ function FormulaWidgetUI(props) {
     <Box className={classes.root}>
       {typeof formattedValue === 'object' && formattedValue !== null ? (
         <span>
-          <span className={`${classes.unit} ${classes.before}`}>
+          <span aria-label="preffix" className={`${classes.unit} ${classes.before}`}>
             {formattedValue.prefix}
           </span>
-          {formattedValue.value}
-          <span className={classes.suffix}>{formattedValue.suffix}</span>
+          <span aria-label="formattedValue">{formattedValue.value}</span>
+          <span aria-label="suffix" className={classes.suffix}>{formattedValue.suffix}</span>
         </span>
       ) : (
-        <span>{formattedValue}</span>
+        <span aria-label="formattedValue">{formattedValue}</span>
       )}
     </Box>
   );
