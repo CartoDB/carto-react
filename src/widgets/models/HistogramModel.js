@@ -11,8 +11,12 @@ export const getHistogram = async (props) => {
     throw new Error('Array is not a valid type to get histogram');
   }
 
-  // TODO: need to move this computation to a webworker
-  if (viewportFilter || type === 'bq') {
+  if (type === 'bq' && !viewportFilter) {
+    throw new Error('Histogram Widget error: BigQuery layers needs "viewportFilter" prop set to true.');
+  }
+
+  // It's an await because we probably will move this calculation need to a webworker
+  if (viewportFilter) {
     const targetFeatures = viewportFeatures[dataSource];
 
     if (targetFeatures) {

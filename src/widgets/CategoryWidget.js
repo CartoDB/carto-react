@@ -6,7 +6,6 @@ import { WrapperWidgetUI, CategoryWidgetUI } from '../ui';
 import { FilterTypes, getApplicableFilters } from '../api/FilterQueryBuilder';
 import { getCategories } from './models';
 import { AggregationTypes } from './AggregationTypes';
-import {groupValuesByColumn} from './operations/grouping';
 
 /**
   * Renders a <CategoryWidget /> component

@@ -3,10 +3,10 @@ const filterFunctions = {
       return filterValues.includes(featureValue);
     },
     BETWEEN(filterValues, featureValue) {
-      const checkRange = function checkRange(range) {
+      const checkRange = (range) => {
         const [lowerBound, upperBound] = range;
         return featureValue >= lowerBound && featureValue <= upperBound;
-      };
+      }
 
       if (Array.isArray(filterValues[0])) {
         return filterValues.every(checkRange);

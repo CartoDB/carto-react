@@ -6,7 +6,6 @@ import { WrapperWidgetUI, HistogramWidgetUI } from '../ui';
 import { FilterTypes, getApplicableFilters } from '../api/FilterQueryBuilder';
 import { getHistogram } from './models';
 import { AggregationTypes } from './AggregationTypes';
-import { histogram } from './operations/histogram';
 
 /**
   * Renders a <HistogramWidget /> component
@@ -132,9 +131,6 @@ HistogramWidget.propTypes = {
   formatter: PropTypes.func,
   tooltip: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
-  start: PropTypes.number,
-  end: PropTypes.number,
-  bins: PropTypes.number,
   viewportFilter: PropTypes.bool,
   onError: PropTypes.func
 };
