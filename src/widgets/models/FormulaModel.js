@@ -3,7 +3,7 @@ import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import {aggregationFunctions} from '../operations/aggregation/values';
 
 export const getFormula = async (props) => {
-  const { data, credentials, operation, column, filters, viewport, opts, dataSource, viewportFilter, viewportFeatures, layerType } = props;
+  const { data, credentials, operation, column, filters, viewport, opts, dataSource, viewportFilter, viewportFeatures, type } = props;
 
 
   if (Array.isArray(data)) {
@@ -11,7 +11,7 @@ export const getFormula = async (props) => {
   }
 
   // TODO: need to move this computation to a webworker
-  if (viewportFilter || layerType === 'bq') {
+  if (viewportFilter || type === 'bq') {
     const operations = aggregationFunctions();
     const targetOperation = operations[operation];
     const targetFeatures = viewportFeatures[dataSource];

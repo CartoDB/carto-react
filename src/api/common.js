@@ -1,6 +1,6 @@
 const DEFAULT_USER_COMPONENT_IN_URL = '{user}';
 
-/** d
+/**
  * Return more descriptive error from API
  */
 export function dealWithApiError({ API, credentials, response, data }) {

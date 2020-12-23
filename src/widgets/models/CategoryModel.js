@@ -3,7 +3,7 @@ import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import {groupValuesByColumn} from '../operations/grouping';
 
 export const getCategories = async (props) => {
-  const { data, credentials, column, operation, filters, viewport, dataSource, viewportFilter, viewportFeatures, layerType, opts } = props;
+  const { data, credentials, column, operation, filters, viewport, dataSource, viewportFilter, viewportFeatures, type, opts } = props;
 
   const operationColumn = props.operationColumn || column;
 
@@ -12,7 +12,7 @@ export const getCategories = async (props) => {
   }
 
   // TODO: need to move this computation to a webworker
-  if (viewportFilter || layerType === 'bq') {
+  if (viewportFilter || type === 'bq') {
     const targetFeatures = viewportFeatures[dataSource];
  
     if (targetFeatures) {

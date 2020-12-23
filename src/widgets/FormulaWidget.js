@@ -25,7 +25,7 @@ function FormulaWidget(props) {
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
-  const { data, credentials, filters, type: layerType } = source;
+  const { data, credentials, filters, type } = source;
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -42,7 +42,7 @@ function FormulaWidget(props) {
         credentials,
         viewport,
         viewportFeatures,
-        layerType,
+        type,
         opts: { abortController },
       })
         .then((data) => {

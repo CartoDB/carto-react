@@ -33,7 +33,7 @@ function HistogramWidget(props) {
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
   const { title, formatter, xAxisFormatter, dataAxis, ticks, tooltip } = props;
-  const { data, credentials, type: layerType } = source;
+  const { data, credentials, type } = source;
 
   const tooltipFormatter = useCallback(([serie]) => {
     const formattedValue = formatter
@@ -63,7 +63,7 @@ function HistogramWidget(props) {
         credentials,
         viewport,
         viewportFeatures,
-        layerType,
+        type,
         opts: { abortController },
       })
         .then((data) => data && setHistogramData(data))

@@ -26,12 +26,12 @@ import {groupValuesByColumn} from './operations/grouping';
   const { column } = props;
   const [categoryData, setCategoryData] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
-  const { data, credentials, type: layerType } = source;
+  const { data, credentials, type } = source;
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -49,7 +49,7 @@ import {groupValuesByColumn} from './operations/grouping';
         credentials,
         viewport,
         viewportFeatures,
-        layerType,
+        type,
         opts: { abortController },
       })
         .then((data) => {
