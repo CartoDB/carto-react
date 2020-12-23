@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter, selectSourceById } from '../redux/cartoSlice';
@@ -30,15 +30,14 @@ import {groupValuesByColumn} from './operations/grouping';
   const dispatch = useDispatch();
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const { data, credentials, sourceType: dataExtractMode } = source;
-
   const vF = useSelector((state) => state.carto.viewportFeatures);
+  const { data, credentials, sourceType: dataExtractMode } = source;
 
   useEffect(() => {
     if (dataExtractMode === 'TileLayer' && props.viewportFilter) {
       throw new Error(`"viewportFilter" should be false if Source Type is "${AggregationTypes.TILE_LAYER}"`);
     }
-  }, []);
+  }, [props.viewportFilter]);
 
   useEffect(() => {
     const {dataSource, operation, operationColumn, column} = props;
@@ -47,7 +46,7 @@ import {groupValuesByColumn} from './operations/grouping';
       const targetFeatures = vF[dataSource];
  
       if (targetFeatures) {
-        const groups = groupValuesByColumn(targetFeatures.getRenderedFeatures(), operationColumn, column, operation);
+        const groups = groupValuesByColumn(targetFeatures, operationColumn, column, operation);
         setCategoryData(groups);
       }
     }
@@ -56,7 +55,7 @@ import {groupValuesByColumn} from './operations/grouping';
   }, [dataExtractMode, props, vF]);
 
   useEffect(() => {
-    if (dataExtractMode !== 'TileLayer') {
+    if (dataExtractMode === 'SQL') {
       const abortController = new AbortController();
       if (
         data &&
@@ -91,8 +90,9 @@ import {groupValuesByColumn} from './operations/grouping';
     }
   }, [credentials, data, source.filters, viewport, props, dataExtractMode]);
 
-  const handleSelectedCategoriesChange = (categories) => {
+  const handleSelectedCategoriesChange = useCallback((categories) => {
     setSelectedCategories(categories);
+    
     if (categories && categories.length) {
       dispatch(
         addFilter({
@@ -111,7 +111,7 @@ import {groupValuesByColumn} from './operations/grouping';
         })
       );
     }
-  };
+  }, [setSelectedCategories, dispatch, addFilter, removeFilter, dataExtractMode]);
 
   return (
     <WrapperWidgetUI title={props.title} loading={loading} {...props.wrapperProps}>

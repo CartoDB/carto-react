@@ -118,7 +118,7 @@ export const createCartoSlice = (initialState) => {
 
         state.viewportFeatures = {
           ...state.viewportFeatures,
-          [sourceId]: data
+          [sourceId]: data.getRenderedFeatures()
         }
       },
       removeViewportFeatures: (state, action) => {

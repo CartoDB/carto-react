@@ -24,15 +24,14 @@ function FormulaWidget(props) {
   const [loading, setLoading] = useState(false);
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const { data, credentials, filters, sourceType: dataExtractMode } = source;
-
   const vF = useSelector((state) => state.carto.viewportFeatures);
+  const { data, credentials, filters, sourceType: dataExtractMode } = source;
 
   useEffect(() => {
     if (dataExtractMode === 'TileLayer' && props.viewportFilter) {
       throw new Error(`"viewportFilter" should be false if Source Type is "${AggregationTypes.TILE_LAYER}"`);
     }
-  }, []);
+  }, [props.viewportFilter]);
 
   useEffect(() => {
     const {dataSource, operation, column} = props;
@@ -43,7 +42,7 @@ function FormulaWidget(props) {
       const targetFeatures = vF[dataSource];
 
       if (targetOperation && targetFeatures) {
-        setFormulaData(targetOperation(targetFeatures.getRenderedFeatures(), column));
+        setFormulaData(targetOperation(targetFeatures, column));
       }
     }
 
@@ -51,7 +50,7 @@ function FormulaWidget(props) {
   }, [dataExtractMode, props, vF]);
 
   useEffect(() => {
-    if (dataExtractMode !== 'TileLayer') {
+    if (dataExtractMode === 'SQL') {
       const abortController = new AbortController();
       if (
         data &&

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter, selectSourceById } from '../redux/cartoSlice';
@@ -32,11 +32,10 @@ function HistogramWidget(props) {
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const { title, formatter, xAxisFormatter, dataAxis, ticks, tooltip } = props;
+  const vF = useSelector((state) => state.carto.viewportFeatures);
   const { data, credentials, sourceType: dataExtractMode } = source;
 
-  const vF = useSelector((state) => state.carto.viewportFeatures);
-
-  const tooltipFormatter = ([serie]) => {
+  const tooltipFormatter = useCallback(([serie]) => {
     const formattedValue = formatter
       ? formatter(serie.value)
       : { prefix: '', value: serie.value };
@@ -46,22 +45,22 @@ function HistogramWidget(props) {
         ? `${formattedValue.prefix}${formattedValue.value}`
         : formattedValue
     }`;
-  };
+  }, []);
 
   useEffect(() => {
     if (dataExtractMode === 'TileLayer' && props.viewportFilter) {
       throw new Error(`"viewportFilter" should be false if Source Type is "${AggregationTypes.TILE_LAYER}"`);
     }
-  }, []);
+  }, [props.viewportFilter]);
 
   useEffect(() => {
-    const {dataSource, operation, column, ticks} = props;
+    const {dataSource, operation, column, ticks, start, end, bins} = props;
 
     if (dataExtractMode === 'TileLayer') {
       const targetFeatures = vF[dataSource];
 
       if (targetFeatures) {
-        const result = histogram(targetFeatures.getRenderedFeatures(), column, ticks, operation);
+        const result = histogram(targetFeatures, column, ticks, operation, start, end, bins);
         setHistogramData(result);
       }
     }
@@ -70,7 +69,7 @@ function HistogramWidget(props) {
   }, [dataExtractMode, props, vF]);
 
   useEffect(() => {
-    if (dataExtractMode !== 'TileLayer') {
+    if (dataExtractMode === 'SQL') {
       const abortController = new AbortController();
 
       if (
@@ -102,8 +101,9 @@ function HistogramWidget(props) {
     }
   }, [credentials, data, source.filters, viewport, props, dispatch]);
 
-  const handleSelectedBarsChange = ({ bars }) => {
+  const handleSelectedBarsChange = useCallback(({ bars }) => {
     setSelectedBars(bars);
+    
     if (bars && bars.length) {
       const thresholds = bars.map((i) => {
         return [ticks[i - 1], ticks.length !== i + 1 ? ticks[i] : undefined];
@@ -125,7 +125,7 @@ function HistogramWidget(props) {
         })
       );
     }
-  };
+  }, [setSelectedBars, dispatch, addFilter, removeFilter]);
 
   return (
     <WrapperWidgetUI title={title} {...props.wrapperProps}>
@@ -153,6 +153,9 @@ HistogramWidget.propTypes = {
   formatter: PropTypes.func,
   tooltip: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
+  start: PropTypes.number,
+  end: PropTypes.number,
+  bins: PropTypes.number,
   viewportFilter: PropTypes.bool,
   onError: PropTypes.func
 };
