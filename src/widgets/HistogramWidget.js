@@ -31,9 +31,9 @@ function HistogramWidget(props) {
   const dispatch = useDispatch();
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
+  const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
   const { title, formatter, xAxisFormatter, dataAxis, ticks, tooltip } = props;
-  const vF = useSelector((state) => state.carto.viewportFeatures);
-  const { data, credentials, sourceType: dataExtractMode } = source;
+  const { data, credentials, type: layerType } = source;
 
   const tooltipFormatter = useCallback(([serie]) => {
     const formattedValue = formatter
@@ -48,57 +48,36 @@ function HistogramWidget(props) {
   }, []);
 
   useEffect(() => {
-    if (dataExtractMode === 'TileLayer' && props.viewportFilter) {
-      throw new Error(`"viewportFilter" should be false if Source Type is "${AggregationTypes.TILE_LAYER}"`);
+    const abortController = new AbortController();
+
+    if (
+      data &&
+      credentials &&
+      (!props.viewportFilter || (props.viewportFilter && viewport))
+    ) {
+      const filters = getApplicableFilters(source.filters, props.id);
+      getHistogram({
+        ...props,
+        data,
+        filters,
+        credentials,
+        viewport,
+        viewportFeatures,
+        layerType,
+        opts: { abortController },
+      })
+        .then((data) => data && setHistogramData(data))
+        .catch((error) => {
+          if (error.name === 'AbortError') return;
+          if (props.onError) props.onError(error);
+        });
+    } else {
+      setHistogramData([]);
     }
-  }, [props.viewportFilter]);
 
-  useEffect(() => {
-    const {dataSource, operation, column, ticks, start, end, bins} = props;
-
-    if (dataExtractMode === 'TileLayer') {
-      const targetFeatures = vF[dataSource];
-
-      if (targetFeatures) {
-        const result = histogram(targetFeatures, column, ticks, operation, start, end, bins);
-        setHistogramData(result);
-      }
-    }
-
-    return () => setHistogramData([]);
-  }, [dataExtractMode, props, vF]);
-
-  useEffect(() => {
-    if (dataExtractMode === 'SQL') {
-      const abortController = new AbortController();
-
-      if (
-        data &&
-        credentials &&
-        (!props.viewportFilter || (props.viewportFilter && viewport))
-      ) {
-        const filters = getApplicableFilters(source.filters, props.id);
-        getHistogram({
-          ...props,
-          data,
-          filters,
-          credentials,
-          viewport,
-          opts: { abortController },
-        })
-          .then((data) => data && setHistogramData(data))
-          .catch((error) => {
-            if (error.name === 'AbortError') return;
-            if (props.onError) props.onError(error);
-          });
-      } else {
-        setHistogramData([]);
-      }
-
-      return function cleanup() {
-        abortController.abort();
-      };
-    }
+    return function cleanup() {
+      abortController.abort();
+    };
   }, [credentials, data, source.filters, viewport, props, dispatch]);
 
   const handleSelectedBarsChange = useCallback(({ bars }) => {

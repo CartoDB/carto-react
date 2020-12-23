@@ -30,65 +30,44 @@ import {groupValuesByColumn} from './operations/grouping';
   const dispatch = useDispatch();
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const vF = useSelector((state) => state.carto.viewportFeatures);
-  const { data, credentials, sourceType: dataExtractMode } = source;
+  const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
+  const { data, credentials, type: layerType } = source;
 
   useEffect(() => {
-    if (dataExtractMode === 'TileLayer' && props.viewportFilter) {
-      throw new Error(`"viewportFilter" should be false if Source Type is "${AggregationTypes.TILE_LAYER}"`);
-    }
-  }, [props.viewportFilter]);
-
-  useEffect(() => {
-    const {dataSource, operation, operationColumn, column} = props;
-
-    if (dataExtractMode === 'TileLayer') {
-      const targetFeatures = vF[dataSource];
- 
-      if (targetFeatures) {
-        const groups = groupValuesByColumn(targetFeatures, operationColumn, column, operation);
-        setCategoryData(groups);
-      }
-    }
-
-    return () => setCategoryData(null);
-  }, [dataExtractMode, props, vF]);
-
-  useEffect(() => {
-    if (dataExtractMode === 'SQL') {
-      const abortController = new AbortController();
-      if (
-        data &&
-        credentials &&
-        (!props.viewportFilter || (props.viewportFilter && viewport))
-      ) {
-        const filters = getApplicableFilters(source.filters, props.id);
-        setLoading(true);
-        getCategories({
-          ...props,
-          data,
-          filters,
-          credentials,
-          viewport,
-          opts: { abortController },
+    const abortController = new AbortController();
+    if (
+      data &&
+      credentials &&
+      (!props.viewportFilter || (props.viewportFilter && viewport))
+    ) {
+      const filters = getApplicableFilters(source.filters, props.id);
+      setLoading(true);
+      getCategories({
+        ...props,
+        data,
+        filters,
+        credentials,
+        viewport,
+        viewportFeatures,
+        layerType,
+        opts: { abortController },
+      })
+        .then((data) => {
+          setCategoryData(data);
+          setLoading(false);
         })
-          .then((data) => {
-            setCategoryData(data);
-            setLoading(false);
-          })
-          .catch((error) => {
-            if (error.name === 'AbortError') return;
-            if (props.onError) props.onError(error);
-          });
-      } else {
-        setCategoryData(null);
-      }
-  
-      return function cleanup() {
-        abortController.abort();
-      };
+        .catch((error) => {
+          if (error.name === 'AbortError') return;
+          if (props.onError) props.onError(error);
+        });
+    } else {
+      setCategoryData(null);
     }
-  }, [credentials, data, source.filters, viewport, props, dataExtractMode]);
+
+    return function cleanup() {
+      abortController.abort();
+    };
+  }, [credentials, data, source.filters, viewport, props]);
 
   const handleSelectedCategoriesChange = useCallback((categories) => {
     setSelectedCategories(categories);
@@ -111,7 +90,7 @@ import {groupValuesByColumn} from './operations/grouping';
         })
       );
     }
-  }, [setSelectedCategories, dispatch, addFilter, removeFilter, dataExtractMode]);
+  }, [setSelectedCategories, dispatch, addFilter, removeFilter]);
 
   return (
     <WrapperWidgetUI title={props.title} loading={loading} {...props.wrapperProps}>
@@ -131,7 +110,6 @@ CategoryWidget.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
-  dataLayer: PropTypes.string,
   column: PropTypes.string.isRequired,
   operationColumn: PropTypes.string,
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,

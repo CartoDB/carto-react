@@ -24,65 +24,43 @@ function FormulaWidget(props) {
   const [loading, setLoading] = useState(false);
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const vF = useSelector((state) => state.carto.viewportFeatures);
-  const { data, credentials, filters, sourceType: dataExtractMode } = source;
+  const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
+  const { data, credentials, filters, type: layerType } = source;
 
   useEffect(() => {
-    if (dataExtractMode === 'TileLayer' && props.viewportFilter) {
-      throw new Error(`"viewportFilter" should be false if Source Type is "${AggregationTypes.TILE_LAYER}"`);
-    }
-  }, [props.viewportFilter]);
-
-  useEffect(() => {
-    const {dataSource, operation, column} = props;
-
-    if (dataExtractMode === 'TileLayer') {
-      const operations = aggregationFunctions();
-      const targetOperation = operations[operation];
-      const targetFeatures = vF[dataSource];
-
-      if (targetOperation && targetFeatures) {
-        setFormulaData(targetOperation(targetFeatures, column));
-      }
-    }
-
-    return () => setFormulaData(undefined);
-  }, [dataExtractMode, props, vF]);
-
-  useEffect(() => {
-    if (dataExtractMode === 'SQL') {
-      const abortController = new AbortController();
-      if (
-        data &&
-        credentials &&
-        (!props.viewportFilter || (props.viewportFilter && viewport))
-      ) {
-        setLoading(true);
-        getFormula({
-          ...props,
-          data,
-          filters,
-          credentials,
-          viewport,
-          opts: { abortController },
+    const abortController = new AbortController();
+    if (
+      data &&
+      credentials &&
+      (!props.viewportFilter || (props.viewportFilter && viewport))
+    ) {
+      setLoading(true);
+      getFormula({
+        ...props,
+        data,
+        filters,
+        credentials,
+        viewport,
+        viewportFeatures,
+        layerType,
+        opts: { abortController },
+      })
+        .then((data) => {
+          data && data[0] && setFormulaData(data[0].value);
+          setLoading(false);
         })
-          .then((data) => {
-            data && data[0] && setFormulaData(data[0].value);
-            setLoading(false);
-          })
-          .catch((error) => {
-            if (error.name === 'AbortError') return;
-            if (props.onError) props.onError(error);
-          });
-      } else {
-        setFormulaData(undefined);
-      }
+        .catch((error) => {
+          if (error.name === 'AbortError') return;
+          if (props.onError) props.onError(error);
+        });
+    } else {
+      setFormulaData(undefined);
+    }
 
-      return function cleanup() {
-        abortController.abort();
-      };
-    }  
-  }, [credentials, data, filters, viewport, props, dataExtractMode]);
+    return function cleanup() {
+      abortController.abort();
+    };
+  }, [credentials, data, filters, viewport, props]);
 
   return (
     <WrapperWidgetUI title={props.title} loading={loading} {...props.wrapperProps}>
@@ -94,7 +72,6 @@ function FormulaWidget(props) {
 FormulaWidget.propTypes = {
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
-  dataLayer: PropTypes.string,
   column: PropTypes.string.isRequired,
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,

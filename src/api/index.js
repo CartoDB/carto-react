@@ -1,7 +1,7 @@
 export { executeSQL } from './SQL';
 export { getUserDatasets } from './UserDatasets';
-export {
+/* export {
   buildQueryFilters,
-} from './FilterQueryBuilder';
+} from './FilterQueryBuilder'; */
 export { filterApplicator } from './FilterApplicator';
-export { useRenderedFeatures } from './useRenderedFeatures';
+export { default as useCartoProps } from './useCartoProps';
