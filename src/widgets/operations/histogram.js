@@ -1,9 +1,11 @@
 import {aggregationFunctions} from './aggregation/values';
 
 export function histogram(features, columnName, ticks, operation) {
+  ticks = [0, ...ticks];
+
   const binsContainer = ticks
     .map((tick, currentIndex, arr) => {
-      if (Number.isFinite(arr[currentIndex + 1])) {
+      if (arr[currentIndex + 1]) {
         return {
           bin: currentIndex,
           start: tick,
@@ -11,8 +13,6 @@ export function histogram(features, columnName, ticks, operation) {
           values: []
         };
       }
-
-      return;
     })
     .filter(Boolean);
 

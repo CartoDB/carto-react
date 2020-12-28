@@ -1,3 +1,17 @@
+function addExtremeValues(values) {
+  return values.map(val => {
+    if (val[0] === undefined) {
+      return [Number.MIN_SAFE_INTEGER, val[1]]
+    }
+
+    if (val[1] === undefined) {
+      return [val[0], Number.MAX_SAFE_INTEGER]
+    }
+
+    return val;
+  });
+}
+
 const filterFunctions = {
   IN(filterValues, featureValue) {
     return filterValues.includes(featureValue);
@@ -8,7 +22,7 @@ const filterFunctions = {
       return featureValue >= lowerBound && featureValue <= upperBound;
     };
 
-    return filterValues.some(checkRange);
+    return addExtremeValues(filterValues).some(checkRange);
   }
 };
 

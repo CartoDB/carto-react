@@ -14,13 +14,17 @@ export const getFormula = async (props) => {
   }
 
   // It's an await because we probably will move this calculation need to a webworker
-  if (viewportFilter && viewportFeatures) {
-    const operations = aggregationFunctions();
-    const targetOperation = operations[operation];
-
-    if (targetOperation) {
-      return await [{ value: targetOperation(viewportFeatures, column) }];
+  if (viewportFilter) {
+    if (viewportFeatures) {
+      const operations = aggregationFunctions();
+      const targetOperation = operations[operation];
+  
+      if (targetOperation) {
+        return await [{ value: targetOperation(viewportFeatures, column) }];
+      }
     }
+
+    return await [];
   } else {
     let query =
       (viewport && `SELECT * FROM (${data})  as q`) ||

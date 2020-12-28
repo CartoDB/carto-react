@@ -16,9 +16,13 @@ export const getCategories = async (props) => {
   }
 
   // It's an await because we probably will move this calculation need to a webworker
-  if (viewportFilter && viewportFeatures) {
-    const groups = groupValuesByColumn(viewportFeatures, operationColumn, column, operation);
-    return await groups;
+  if (viewportFilter) {
+    if (viewportFeatures) {
+      const groups = groupValuesByColumn(viewportFeatures, operationColumn, column, operation);
+      return await groups;
+    }
+
+    return await [];
   } else {
     let query =
       (viewport && `SELECT * FROM (${data})  as q`) ||

@@ -109,7 +109,7 @@ function HistogramWidget(props) {
     <WrapperWidgetUI title={title} {...props.wrapperProps}>
       <HistogramWidgetUI
         data={histogramData}
-        dataAxis={dataAxis || ticks}
+        dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}
         selectedBars={selectedBars}
         onSelectedBarsChange={handleSelectedBarsChange}
         tooltip={tooltip}

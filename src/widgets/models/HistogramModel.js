@@ -16,9 +16,13 @@ export const getHistogram = async (props) => {
   }
 
   // It's an await because we probably will move this calculation need to a webworker
-  if (viewportFilter && viewportFeatures) {
-    const result = histogram(viewportFeatures, column, ticks, operation);
-    return await result;
+  if (viewportFilter) {
+    if (viewportFeatures) {
+      const result = histogram(viewportFeatures, column, ticks, operation);
+      return await result;
+    }
+
+    return await [];
   } else {
     let query =
       (viewport && `SELECT * FROM (${data})  as q`) ||
