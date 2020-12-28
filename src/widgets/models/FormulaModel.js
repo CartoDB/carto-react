@@ -3,7 +3,7 @@ import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import {aggregationFunctions} from '../operations/aggregation/values';
 
 export const getFormula = async (props) => {
-  const { data, credentials, operation, column, filters, viewport, opts, dataSource, viewportFilter, viewportFeatures, type } = props;
+  const { data, credentials, operation, column, filters, viewport, opts, viewportFilter, viewportFeatures, type } = props;
 
   if (Array.isArray(data)) {
     throw new Error('Array is not a valid type to get categories');
@@ -14,13 +14,12 @@ export const getFormula = async (props) => {
   }
 
   // It's an await because we probably will move this calculation need to a webworker
-  if (viewportFilter) {
+  if (viewportFilter && viewportFeatures) {
     const operations = aggregationFunctions();
     const targetOperation = operations[operation];
-    const targetFeatures = viewportFeatures[dataSource];
 
-    if (targetOperation && targetFeatures) {
-      return await [{ value: targetOperation(targetFeatures, column) }];
+    if (targetOperation) {
+      return await [{ value: targetOperation(viewportFeatures, column) }];
     }
   } else {
     let query =

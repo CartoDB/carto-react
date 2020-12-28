@@ -61,7 +61,7 @@ function HistogramWidget(props) {
         filters,
         credentials,
         viewport,
-        viewportFeatures,
+        viewportFeatures: viewportFeatures[props.dataSource],
         type,
         opts: { abortController },
       })
@@ -77,7 +77,7 @@ function HistogramWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, source.filters, viewport, props, dispatch]);
+  }, [credentials, data, source.filters, viewport, viewportFeatures, props, dispatch]);
 
   const handleSelectedBarsChange = useCallback(({ bars }) => {
     setSelectedBars(bars);

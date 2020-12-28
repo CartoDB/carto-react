@@ -47,7 +47,7 @@ import { AggregationTypes } from './AggregationTypes';
         filters,
         credentials,
         viewport,
-        viewportFeatures,
+        viewportFeatures: viewportFeatures[props.dataSource],
         type,
         opts: { abortController },
       })
@@ -66,7 +66,7 @@ import { AggregationTypes } from './AggregationTypes';
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, source.filters, viewport, props]);
+  }, [credentials, data, source.filters, viewport, viewportFeatures, props]);
 
   const handleSelectedCategoriesChange = useCallback((categories) => {
     setSelectedCategories(categories);

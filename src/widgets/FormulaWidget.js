@@ -40,7 +40,7 @@ function FormulaWidget(props) {
         filters,
         credentials,
         viewport,
-        viewportFeatures,
+        viewportFeatures: viewportFeatures[props.dataSource],
         type,
         opts: { abortController },
       })
@@ -59,7 +59,7 @@ function FormulaWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, filters, viewport, props]);
+  }, [credentials, data, filters, viewport, viewportFeatures, props]);
 
   return (
     <WrapperWidgetUI title={props.title} loading={loading} {...props.wrapperProps}>
