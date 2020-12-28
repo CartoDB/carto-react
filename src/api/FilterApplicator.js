@@ -1,22 +1,22 @@
 const filterFunctions = {
-    IN(filterValues, featureValue) {
-      return filterValues.includes(featureValue);
-    },
-    BETWEEN(filterValues, featureValue) {
-      const checkRange = (range) => {
-        const [lowerBound, upperBound] = range;
-        return featureValue >= lowerBound && featureValue <= upperBound;
-      }
+  IN(filterValues, featureValue) {
+    return filterValues.includes(featureValue);
+  },
+  BETWEEN(filterValues, featureValue) {
+    const checkRange = (range) => {
+      const [lowerBound, upperBound] = range;
+      return featureValue >= lowerBound && featureValue <= upperBound;
+    };
 
-      if (Array.isArray(filterValues[0])) {
-        return filterValues.every(checkRange);
-      } else {
-        return checkRange(filterValues);
-      }
-    }
+    return filterValues.some(checkRange);
+  }
 };
 
 export function filterApplicator(feature, filters) {
+    if (!filters) {
+      return 1;
+    }
+
     const columns = Object.keys(filters);
 
     if (!columns) {
