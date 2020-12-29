@@ -5,6 +5,10 @@ class Cache {
     this.cache = new Map();
   }
 
+  clear() {
+    this.cache.clear();
+  }
+
   updateCache(id, feature) {
     if (this.cache.has(id)) {
       this.cache.delete(id);
@@ -68,7 +72,7 @@ class FilterApplicatorForFeatures extends Cache {
         return [];
     }
 
-    this.cache.clear();
+    this.clear();
 
     columns.forEach(column => {
         const columnFilters = filters[column];
@@ -92,4 +96,3 @@ function featureId(feature) {
 }
 
 export const filterApplicatorForFeatures = new FilterApplicatorForFeatures();
-

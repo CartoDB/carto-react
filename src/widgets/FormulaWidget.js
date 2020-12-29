@@ -5,7 +5,6 @@ import { selectSourceById } from '../redux/cartoSlice';
 import { WrapperWidgetUI, FormulaWidgetUI } from '../ui';
 import { getFormula } from './models';
 import { AggregationTypes } from './AggregationTypes';
-import { cache } from '../api/FilterApplicatorForFeatures';
 
 /**
   * Renders a <FormulaWidget /> component
