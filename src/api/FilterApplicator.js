@@ -1,16 +1,4 @@
-function addExtremeValues(values) {
-  return values.map(val => {
-    if (val[0] === undefined) {
-      return [Number.MIN_SAFE_INTEGER, val[1]]
-    }
-
-    if (val[1] === undefined) {
-      return [val[0], Number.MAX_SAFE_INTEGER]
-    }
-
-    return val;
-  });
-}
+import { addExtremeValuesToArr } from '../utils/addExtremeValuesToArr';
 
 const filterFunctions = {
   IN(filterValues, featureValue) {
@@ -22,18 +10,14 @@ const filterFunctions = {
       return featureValue >= lowerBound && featureValue <= upperBound;
     };
 
-    return addExtremeValues(filterValues).some(checkRange);
+    return addExtremeValuesToArr(filterValues).some(checkRange);
   }
 };
 
 export function filterApplicator(feature, filters) {
-    if (!filters) {
-      return 1;
-    }
-
     const columns = Object.keys(filters);
 
-    if (!columns) {
+    if (!columns || !filters) {
         return 1;
     }
 
@@ -52,7 +36,7 @@ export function filterApplicator(feature, filters) {
                 throw new Error(`"${filterFunction}" not implemented`);
             }
         
-            return filterFunction(columnFilters[filter].values, feature.properties[column] || '');
+            return filterFunction(columnFilters[filter].values, feature.properties[column]);
         });
     });
 

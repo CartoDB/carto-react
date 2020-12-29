@@ -5,6 +5,7 @@ import { selectSourceById } from '../redux/cartoSlice';
 import { WrapperWidgetUI, FormulaWidgetUI } from '../ui';
 import { getFormula } from './models';
 import { AggregationTypes } from './AggregationTypes';
+import { cache } from '../api/FilterApplicatorForFeatures';
 
 /**
   * Renders a <FormulaWidget /> component
@@ -24,7 +25,7 @@ function FormulaWidget(props) {
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
-  const { data, credentials, filters, type } = source;
+  const { data, credentials, type, filters } = source;
 
   useEffect(() => {
     const abortController = new AbortController();

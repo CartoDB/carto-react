@@ -1,6 +1,7 @@
 import { executeSQL} from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import {aggregationFunctions} from '../operations/aggregation/values';
+import {filterApplicatorForFeatures} from '../../api/FilterApplicatorForFeatures';
 
 export const getFormula = async (props) => {
   const { data, credentials, operation, column, filters, viewport, opts, viewportFilter, viewportFeatures, type } = props;
@@ -18,13 +19,18 @@ export const getFormula = async (props) => {
     if (viewportFeatures) {
       const operations = aggregationFunctions();
       const targetOperation = operations[operation];
-  
+
       if (targetOperation) {
+        if (filters && Object.keys(filters).length) {
+          const filteredFeatures = filterApplicatorForFeatures.filter(viewportFeatures, filters);
+          return await [{ value: targetOperation(filteredFeatures, column) }];
+        }
+
         return await [{ value: targetOperation(viewportFeatures, column) }];
       }
     }
 
-    return await [];
+    return [];
   } else {
     let query =
       (viewport && `SELECT * FROM (${data})  as q`) ||

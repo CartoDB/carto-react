@@ -1,6 +1,7 @@
 import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import {groupValuesByColumn} from '../operations/groupby';
+import {filterApplicatorForFeatures} from '../../api/FilterApplicatorForFeatures';
 
 export const getCategories = async (props) => {
   const { data, credentials, column, operation, filters, viewport, viewportFilter, viewportFeatures, type, opts } = props;
@@ -18,11 +19,17 @@ export const getCategories = async (props) => {
   // It's an await because we probably will move this calculation need to a webworker
   if (viewportFilter) {
     if (viewportFeatures) {
+      if (Object.keys(filters).length) {
+        const filteredFeatures = filterApplicatorForFeatures.filter(viewportFeatures, filters);
+        const groups = groupValuesByColumn(filteredFeatures, operationColumn, column, operation);
+        return await groups;
+      }
+
       const groups = groupValuesByColumn(viewportFeatures, operationColumn, column, operation);
       return await groups;
     }
 
-    return await [];
+    return null;
   } else {
     let query =
       (viewport && `SELECT * FROM (${data})  as q`) ||

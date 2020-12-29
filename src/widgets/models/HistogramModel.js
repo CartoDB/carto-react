@@ -1,6 +1,7 @@
 import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import {histogram} from '../operations/histogram';
+import {filterApplicatorForFeatures} from '../../api/FilterApplicatorForFeatures';
 
 export const getHistogram = async (props) => {
   const { data, credentials, column, operation, ticks, filters, viewport, opts, viewportFilter, viewportFeatures, type } = props;
@@ -18,11 +19,17 @@ export const getHistogram = async (props) => {
   // It's an await because we probably will move this calculation need to a webworker
   if (viewportFilter) {
     if (viewportFeatures) {
+      if (Object.keys(filters).length) {
+        const filteredFeatures = filterApplicatorForFeatures.filter(viewportFeatures, filters);
+        const result = histogram(filteredFeatures, column, ticks, operation);
+        return await result;
+      }
+
       const result = histogram(viewportFeatures, column, ticks, operation);
       return await result;
     }
 
-    return await [];
+    return [];
   } else {
     let query =
       (viewport && `SELECT * FROM (${data})  as q`) ||

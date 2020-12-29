@@ -1,26 +1,21 @@
 import {aggregationFunctions} from './aggregation/values';
 
 export function histogram(features, columnName, ticks, operation) {
-  ticks = [0, ...ticks];
+  ticks = [Number.MIN_SAFE_INTEGER, ...ticks];
 
   const binsContainer = ticks
-    .map((tick, currentIndex, arr) => {
-      if (arr[currentIndex + 1]) {
-        return {
-          bin: currentIndex,
-          start: tick,
-          end: arr[currentIndex + 1],
-          values: []
-        };
-      }
-    })
-    .filter(Boolean);
+    .map((tick, currentIndex, arr) => ({
+      bin: currentIndex,
+      start: tick,
+      end: arr[currentIndex + 1],
+      values: []
+    }));
 
   features.forEach(feature => {
       const featureValue = feature.properties[columnName];
 
       const binContainer = binsContainer.find(
-        bin => bin.start <= featureValue && bin.end > featureValue
+        bin => bin.start < featureValue && bin.end > featureValue
       );
 
       if (!binContainer) {
