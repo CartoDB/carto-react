@@ -1,10 +1,9 @@
 import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import {histogram} from '../operations/histogram';
-import {filterApplicatorForFeatures} from '../../api/FilterApplicatorForFeatures';
 
 export const getHistogram = async (props) => {
-  const { data, credentials, column, operation, ticks, filters, viewport, opts, viewportFilter, viewportFeatures, type } = props;
+  const { data, credentials, column, operation, ticks, filters, viewport, opts, applicatorInstance, viewportFilter, viewportFeatures, type } = props;
 
   const operationColumn = props.operationColumn || column;
 
@@ -20,7 +19,7 @@ export const getHistogram = async (props) => {
   if (viewportFilter) {
     if (viewportFeatures) {
       if (Object.keys(filters).length) {
-        const filteredFeatures = filterApplicatorForFeatures.filter(viewportFeatures, filters);
+        const filteredFeatures = applicatorInstance.filter(viewportFeatures, filters);
         const result = histogram(filteredFeatures, column, ticks, operation);
         return await result;
       }

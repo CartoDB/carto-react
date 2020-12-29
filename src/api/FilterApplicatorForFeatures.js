@@ -5,6 +5,10 @@ class Cache {
     this.cache = new Map();
   }
 
+  getCache() {
+    return this.cache;
+  }
+
   clear() {
     this.cache.clear();
   }
@@ -65,7 +69,7 @@ class FilterApplicatorForFeatures extends Cache {
     });
   }
 
-  filter(features, filters) {
+  filter(features, filters, shouldFilter) {
     const columns = Object.keys(filters);
 
     if (!columns || !features) {
@@ -95,4 +99,4 @@ function featureId(feature) {
   return feature.id || feature.properties.cartodb_id;
 }
 
-export const filterApplicatorForFeatures = new FilterApplicatorForFeatures();
+export default FilterApplicatorForFeatures;
