@@ -1,6 +1,10 @@
 import {aggregationFunctions} from './aggregation/values';
 
 export function groupValuesByColumn(data, valuesColumn, keysColumn, operation) {
+  if (Array.isArray(data) && data.length === 0) {
+    return null;
+  }
+
   const groups = data.reduce(
     (accumulator, item) => {
       const group = item.properties[keysColumn];

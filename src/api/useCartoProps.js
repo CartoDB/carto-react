@@ -8,7 +8,7 @@ export default function useCartoProps(source) {
 
     return {
         onViewportChange: debounce(onViewportChange, 500),
-        getFilterValue: (row) => source?.filters ? Number(filterApplicator(row, source.filters)) : 1,
+        getFilterValue: filterApplicator({ filters: source?.filters, returnedType: 'number' }),
         filterRange: [1, 1],
         extensions: [new DataFilterExtension({ filterSize: 1 })],
         updateTriggers: {

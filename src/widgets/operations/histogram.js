@@ -1,6 +1,10 @@
 import {aggregationFunctions} from './aggregation/values';
 
 export function histogram(features, columnName, ticks, operation) {
+  if (Array.isArray(features) && features.length === 0) {
+    return [];
+  }
+
   ticks = [Number.MIN_SAFE_INTEGER, ...ticks];
 
   const binsContainer = ticks

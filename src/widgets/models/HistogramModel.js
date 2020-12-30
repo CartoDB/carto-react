@@ -18,18 +18,9 @@ export const getHistogram = async (props) => {
 
   // It's an await because we probably will move this calculation need to a webworker
   if (viewportFilter) {
-    if (viewportFeatures) {
-      if (Object.keys(filters).length) {
-        const filteredFeatures = viewportFeatures.filter(feat => filterApplicator(feat, filters));
-        const result = histogram(filteredFeatures, column, ticks, operation);
-        return await result;
-      }
-
-      const result = histogram(viewportFeatures, column, ticks, operation);
-      return await result;
-    }
-
-    return [];
+    const filteredFeatures = (viewportFeatures || []).filter(filterApplicator({ filters }));
+    const result = histogram(filteredFeatures, column, ticks, operation);
+    return await result;
   } else {
     let query =
       (viewport && `SELECT * FROM (${data})  as q`) ||

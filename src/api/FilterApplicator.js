@@ -15,32 +15,34 @@ const filterFunctions = {
   }
 };
 
-export function filterApplicator(feature, filters) {
+export function filterApplicator({ filters = {}, returnedType = 'boolean' }) {
+  if (!Object.keys(filters).length) {
+    return () => returnedType === 'number' ? 1 : true;
+  }
+
+  return object => {
     const columns = Object.keys(filters);
 
-    if (!columns || !filters) {
-        return true;
-    }
-
     const featurePassesFilter = columns.every(column => {
-        const columnFilters = filters[column];
-        const columnFilterTypes = Object.keys(columnFilters);
+      const columnFilters = filters[column];
+      const columnFilterTypes = Object.keys(columnFilters);
     
-        if (!feature || !feature.properties[column]) {
-            return false;
+      if (!object || !object.properties[column]) {
+        return false;
+      }
+    
+      return columnFilterTypes.every(filter => {
+        const filterFunction = filterFunctions[filter];
+        
+        if (!filterFunction) {
+          throw new Error(`"${filterFunction}" not implemented`);
         }
-    
-        return columnFilterTypes.every(filter => {
-            const filterFunction = filterFunctions[filter];
         
-            if (!filterFunction) {
-                throw new Error(`"${filterFunction}" not implemented`);
-            }
-        
-            return filterFunction(columnFilters[filter].values, feature.properties[column]);
-        });
+        return filterFunction(columnFilters[filter].values, object.properties[column]);
+      });
     });
 
-    return featurePassesFilter;
+    return returnedType === 'number' ? Number(featurePassesFilter) : featurePassesFilter;
+  }
 }
 
