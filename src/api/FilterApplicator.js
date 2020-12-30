@@ -1,10 +1,11 @@
 import { addExtremeValuesToArr } from '../utils/addExtremeValuesToArr';
+import { FilterTypes } from './FilterQueryBuilder';
 
 const filterFunctions = {
-  IN(filterValues, featureValue) {
+  [FilterTypes.IN](filterValues, featureValue) {
     return filterValues.includes(featureValue);
   },
-  BETWEEN(filterValues, featureValue) {
+  [FilterTypes.BETWEEN](filterValues, featureValue) {
     const checkRange = (range) => {
       const [lowerBound, upperBound] = range;
       return featureValue >= lowerBound && featureValue <= upperBound;
@@ -18,7 +19,7 @@ export function filterApplicator(feature, filters) {
     const columns = Object.keys(filters);
 
     if (!columns || !filters) {
-        return 1;
+        return true;
     }
 
     const featurePassesFilter = columns.every(column => {
@@ -30,7 +31,7 @@ export function filterApplicator(feature, filters) {
         }
     
         return columnFilterTypes.every(filter => {
-            const filterFunction = filterFunctions[filter.toUpperCase()];
+            const filterFunction = filterFunctions[filter];
         
             if (!filterFunction) {
                 throw new Error(`"${filterFunction}" not implemented`);
@@ -40,6 +41,6 @@ export function filterApplicator(feature, filters) {
         });
     });
 
-    return Number(featurePassesFilter);
+    return featurePassesFilter;
 }
 

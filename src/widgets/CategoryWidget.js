@@ -29,7 +29,6 @@ import { AggregationTypes } from './AggregationTypes';
   const dispatch = useDispatch();
   const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const applicatorInstance = useSelector((state) => state.carto.filterApplicatorInstance);
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
   const { data, credentials, type } = source;
 
@@ -49,7 +48,6 @@ import { AggregationTypes } from './AggregationTypes';
         credentials,
         viewport,
         viewportFeatures: viewportFeatures[props.dataSource],
-        applicatorInstance,
         type,
         opts: { abortController },
       })

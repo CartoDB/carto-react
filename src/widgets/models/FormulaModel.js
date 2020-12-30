@@ -1,9 +1,10 @@
 import { executeSQL} from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
-import {aggregationFunctions} from '../operations/aggregation/values';
+import { filterApplicator } from '../../api/FilterApplicator';
+import { aggregationFunctions } from '../operations/aggregation/values';
 
 export const getFormula = async (props) => {
-  const { data, credentials, operation, column, filters, viewport, opts, applicatorInstance, viewportFilter, viewportFeatures, type } = props;
+  const { data, credentials, operation, column, filters, viewport, opts, viewportFilter, viewportFeatures, type } = props;
 
   if (Array.isArray(data)) {
     throw new Error('Array is not a valid type to get categories');
@@ -19,14 +20,12 @@ export const getFormula = async (props) => {
       const operations = aggregationFunctions();
       const targetOperation = operations[operation];
 
-      if (targetOperation) {
-        if (filters && Object.keys(filters).length) {
-          const filteredFeatures = applicatorInstance.filter(viewportFeatures, filters);
-          return await [{ value: targetOperation(filteredFeatures, column) }];
-        }
-
-        return await [{ value: targetOperation(viewportFeatures, column) }];
+      if (filters && Object.keys(filters).length) {
+        const filteredFeatures = viewportFeatures.filter(feat => filterApplicator(feat, filters));
+        return await [{ value: targetOperation(filteredFeatures, column) }];
       }
+
+      return await [{ value: targetOperation(viewportFeatures, column) }];
     }
 
     return [];

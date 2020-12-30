@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '../utils';
-import FilterApplicatorForFeatures from '../api/FilterApplicatorForFeatures';
 
 /**
   *
@@ -48,7 +47,6 @@ export const createCartoSlice = (initialState) => {
         // Auto import dataSources
       },
       viewportFeatures: {},
-      filterApplicatorInstance: new FilterApplicatorForFeatures(),
       ...initialState,
     },
     reducers: {

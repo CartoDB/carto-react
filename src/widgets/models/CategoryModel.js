@@ -1,9 +1,10 @@
 import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
-import {groupValuesByColumn} from '../operations/groupby';
+import { filterApplicator } from '../../api/FilterApplicator';
+import { groupValuesByColumn } from '../operations/groupby';
 
 export const getCategories = async (props) => {
-  const { data, credentials, column, operation, filters, viewport, viewportFilter, viewportFeatures, applicatorInstance, type, opts } = props;
+  const { data, credentials, column, operation, filters, viewport, viewportFilter, viewportFeatures, type, opts } = props;
 
   const operationColumn = props.operationColumn || column;
 
@@ -19,7 +20,7 @@ export const getCategories = async (props) => {
   if (viewportFilter) {
     if (viewportFeatures) {
       if (Object.keys(filters).length) {
-        const filteredFeatures = applicatorInstance.filter(viewportFeatures, filters);
+        const filteredFeatures = viewportFeatures.filter(feat => filterApplicator(feat, filters));
         const groups = groupValuesByColumn(filteredFeatures, operationColumn, column, operation);
         return await groups;
       }
