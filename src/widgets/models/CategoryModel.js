@@ -1,6 +1,6 @@
 import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
-import { filterApplicator } from '../../api/FilterApplicator';
+import { filterApplicator } from '../../api/Filter';
 import { groupValuesByColumn } from '../operations/groupby';
 
 export const getCategories = async (props) => {
@@ -18,7 +18,8 @@ export const getCategories = async (props) => {
 
   // It's an await because we probably will move this calculation need to a webworker
   if (viewportFilter) {
-    const filteredFeatures = (viewportFeatures || []).filter(filterApplicator({ filters }));
+    const features = viewportFeatures || [];
+    const filteredFeatures = features.filter(filterApplicator({ filters }));
     const groups = groupValuesByColumn(filteredFeatures, operationColumn, column, operation);
     return await groups;
   } else {

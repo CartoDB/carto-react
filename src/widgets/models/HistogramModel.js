@@ -1,6 +1,6 @@
 import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
-import { filterApplicator } from '../../api/FilterApplicator';
+import { filterApplicator } from '../../api/Filter';
 import { histogram } from '../operations/histogram';
 
 export const getHistogram = async (props) => {
@@ -18,7 +18,8 @@ export const getHistogram = async (props) => {
 
   // It's an await because we probably will move this calculation need to a webworker
   if (viewportFilter) {
-    const filteredFeatures = (viewportFeatures || []).filter(filterApplicator({ filters }));
+    const features = viewportFeatures || [];
+    const filteredFeatures = features.filter(filterApplicator({ filters }));
     const result = histogram(filteredFeatures, column, ticks, operation);
     return await result;
   } else {
