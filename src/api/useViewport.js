@@ -7,7 +7,7 @@ export default function useViewport(sourceId) {
   
   const onViewportChange = useCallback(
     (e) => {
-      dispatch(setViewportFeatures({ sourceId, getRenderedFeatures: e.getRenderedFeatures }));
+      dispatch(setViewportFeatures({ sourceId, features: e.getRenderedFeatures() }));
     },
     [dispatch, sourceId, setViewportFeatures]
   );

@@ -113,11 +113,11 @@ export const createCartoSlice = (initialState) => {
         state.geocoderResult = action.payload;
       },
       setViewportFeatures: (state, action) => {
-        const {sourceId, getRenderedFeatures} = action.payload;
+        const {sourceId, features} = action.payload;
 
         state.viewportFeatures = {
           ...state.viewportFeatures,
-          [sourceId]: getRenderedFeatures()
+          [sourceId]: features
         }
       },
       removeViewportFeatures: (state, action) => {
@@ -222,7 +222,7 @@ export const setViewState = (viewState) => {
  * Action to set the viewport features of a layer
  * @param {object} data - layer info
  */
-export const setViewportFeatures = (data) => ({ type: 'carto/setViewportFeatures', payload: data});
+export const setViewportFeatures = (data) => ({ type: 'carto/setViewportFeatures', payload: data });
 
 /**
  * Action to remove the viewport features of a layer
