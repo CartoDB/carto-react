@@ -41,7 +41,7 @@ Returns a number (0-1) or a boolean checking wether a feature should be rendered
 | returnedType | <code>string</code> | 'boolean' | Output type: number (0-1) or boolean |
 
 ## useCartoProps ⇒ <code>Object</code>
-Returns required default props for layers. Manages filtering and viewport changes.
+Returns required default props for layers. It manages filtering and viewport changes.
 
 | Param | Type | Description |
 | --- | --- | --- |

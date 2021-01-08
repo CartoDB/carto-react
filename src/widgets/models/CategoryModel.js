@@ -4,7 +4,7 @@ import { filterApplicator } from '../../api/Filter';
 import { groupValuesByColumn } from '../operations/groupby';
 
 export const getCategories = async (props) => {
-  const { data, credentials, column, operation, filters, viewport, viewportFilter, viewportFeatures, type, opts } = props;
+  const { data, credentials, column, operation, filters, viewportFilter, viewportFeatures, type, opts } = props;
 
   const operationColumn = props.operationColumn || column;
 
@@ -23,9 +23,7 @@ export const getCategories = async (props) => {
     const groups = groupValuesByColumn(filteredFeatures, operationColumn, column, operation);
     return await groups;
   } else {
-    let query =
-      (viewport && `SELECT * FROM (${data})  as q`) ||
-      data;
+    let query = data;
 
     query = `WITH all_categories as (
       SELECT ${column} as category

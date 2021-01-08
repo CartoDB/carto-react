@@ -4,7 +4,7 @@ import { filterApplicator } from '../../api/Filter';
 import { aggregationFunctions } from '../operations/aggregation/values';
 
 export const getFormula = async (props) => {
-  const { data, credentials, operation, column, filters, viewport, opts, viewportFilter, viewportFeatures, type } = props;
+  const { data, credentials, operation, column, filters, opts, viewportFilter, viewportFeatures, type } = props;
 
   if (Array.isArray(data)) {
     throw new Error('Array is not a valid type to get categories');
@@ -23,9 +23,7 @@ export const getFormula = async (props) => {
     const filteredFeatures = features.filter(filterApplicator({ filters }));
     return await [{ value: targetOperation(filteredFeatures, column) }];
   } else {
-    let query =
-      (viewport && `SELECT * FROM (${data})  as q`) ||
-      data;
+    let query = data;
 
     query = `
       SELECT ${operation}(${column}) as value

@@ -118,7 +118,7 @@ Action to set the viewport features to a specific source
 | Param | Type | Description |
 | --- | --- | --- |
 | {sourceId} | <code>string</code> | id of the source |
-| {getRenderedFeatures} | <code>function</code> | deck.gl method to get the viewport features | 
+| {features} | <code>Array</code> | viewport features | 
 
 ### removeViewportFeatures
 Action to remove the viewport features to a specific source

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { selectSourceById, selectPostsByUser } from '../redux/cartoSlice';
+import { selectSourceById } from '../redux/cartoSlice';
 import { WrapperWidgetUI, FormulaWidgetUI } from '../ui';
 import { getFormula } from './models';
 import { AggregationTypes } from './AggregationTypes';
@@ -14,14 +14,13 @@ import { AggregationTypes } from './AggregationTypes';
   * @param  {string} props.column - Name of the data source's column to get the data from.
   * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
   * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
-  * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not. 
+  * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or globally. 
   * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
   * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
   */
 function FormulaWidget(props) {
   const [formulaData, setFormulaData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
   const { data, credentials, type, filters } = source;
@@ -31,7 +30,7 @@ function FormulaWidget(props) {
     if (
       data &&
       credentials &&
-      (!props.viewportFilter || (props.viewportFilter && viewport))
+      (!props.viewportFilter || (props.viewportFilter && viewportFeatures[props.dataSource]))
     ) {
       setLoading(true);
       getFormula({
@@ -39,7 +38,6 @@ function FormulaWidget(props) {
         data,
         filters,
         credentials,
-        viewport,
         viewportFeatures: viewportFeatures[props.dataSource],
         type,
         opts: { abortController },
@@ -59,7 +57,7 @@ function FormulaWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, filters, viewport, viewportFeatures, props]);
+  }, [credentials, data, filters, viewportFeatures, props]);
 
   return (
     <WrapperWidgetUI title={props.title} loading={loading} {...props.wrapperProps}>

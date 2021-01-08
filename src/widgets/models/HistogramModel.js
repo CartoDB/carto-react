@@ -4,7 +4,7 @@ import { filterApplicator } from '../../api/Filter';
 import { histogram } from '../operations/histogram';
 
 export const getHistogram = async (props) => {
-  const { data, credentials, column, operation, ticks, filters, viewport, opts, viewportFilter, viewportFeatures, type } = props;
+  const { data, credentials, column, operation, ticks, filters, opts, viewportFilter, viewportFeatures, type } = props;
 
   const operationColumn = props.operationColumn || column;
 
@@ -23,9 +23,7 @@ export const getHistogram = async (props) => {
     const result = histogram(filteredFeatures, column, ticks, operation);
     return await result;
   } else {
-    let query =
-      (viewport && `SELECT * FROM (${data})  as q`) ||
-      data;
+    let query = data;
 
     const caseTicks = ticks.map((t, index) => `WHEN ${column} < ${t} THEN 'cat_${index}'`);
     caseTicks.push(`ELSE 'cat_${ticks.length}'`);

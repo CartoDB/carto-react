@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { addFilter, removeFilter, selectSourceById, selectPostsByUser } from '../redux/cartoSlice';
+import { addFilter, removeFilter, selectSourceById } from '../redux/cartoSlice';
 import { WrapperWidgetUI, HistogramWidgetUI } from '../ui';
 import { FilterTypes, getApplicableFilters } from '../api/FilterQueryBuilder';
 import { getHistogram } from './models';
@@ -18,7 +18,7 @@ import { AggregationTypes } from './AggregationTypes';
   * @param  {number[]} props.ticks - Array of thresholds for the X axis.
   * @param  {formatterCallback} [props.xAxisformatter] - Function to format X axis values.
   * @param  {formatterCallback} [props.formatter] - Function to format Y axis values.
-  * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not. 
+  * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or globally. 
   * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
   * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
   * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
@@ -28,7 +28,6 @@ function HistogramWidget(props) {
   const [histogramData, setHistogramData] = useState([]);
   const [selectedBars, setSelectedBars] = useState([]);
   const dispatch = useDispatch();
-  const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
   const { title, formatter, xAxisFormatter, dataAxis, ticks, tooltip } = props;
@@ -52,7 +51,7 @@ function HistogramWidget(props) {
     if (
       data &&
       credentials &&
-      (!props.viewportFilter || (props.viewportFilter && viewport))
+      (!props.viewportFilter || (props.viewportFilter && viewportFeatures[props.dataSource]))
     ) {
       const filters = getApplicableFilters(source.filters, props.id);
       getHistogram({
@@ -60,7 +59,6 @@ function HistogramWidget(props) {
         data,
         filters,
         credentials,
-        viewport,
         viewportFeatures: viewportFeatures[props.dataSource],
         type,
         opts: { abortController },
@@ -77,7 +75,7 @@ function HistogramWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, source.filters, viewport, viewportFeatures, props, dispatch]);
+  }, [credentials, data, source.filters, viewportFeatures, props, dispatch]);
 
   const handleSelectedBarsChange = useCallback(({ bars }) => {
     setSelectedBars(bars);
