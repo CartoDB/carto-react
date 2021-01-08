@@ -15,7 +15,7 @@ const filterFunctions = {
   }
 };
 
-export function filterApplicator({ filters = {}, returnedType = 'boolean' }) {
+export function applyFilter({ filters = {}, returnedType = 'boolean' }) {
   if (!Object.keys(filters).length) {
     return () => returnedType === 'number' ? 1 : true;
   }
