@@ -4,7 +4,7 @@ import { applyFilter } from './Filter';
 import { debounce } from '../utils/debounce';
 
 export default function useCartoProps(source) {
-    const [onViewportChange] = useViewport(source?.id);
+    const [onViewportChange] = useViewport(source);
 
     return {
         onViewportChange: debounce(onViewportChange, 500),

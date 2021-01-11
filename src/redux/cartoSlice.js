@@ -219,13 +219,14 @@ export const setViewState = (viewState) => {
 };
 
 /**
- * Action to set the viewport features of a layer
- * @param {object} data - layer info
+ * Action to set the source features of a layer
+ * @param {object} sourceId - the id of the source
+ * @param {object} feature - the viewport features
  */
 export const setViewportFeatures = (data) => ({ type: 'carto/setViewportFeatures', payload: data });
 
 /**
- * Action to remove the viewport features of a layer
- * @param {String} layerId - the layer id to remove
+ * Action to remove the source features of a layer
+ * @param {String} sourceId - the source id to remove
  */
 export const removeViewportFeatures = (data) => ({ type: 'carto/removeViewportFeatures', payload: data});
