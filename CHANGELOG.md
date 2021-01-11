@@ -1,11 +1,12 @@
 # CHANGELOG
 
 ## Not released
+- Extend widget props to WrapperWidgetUI with a better implementation [#57](https://github.com/CartoDB/carto-react-lib/pull/57)
 
+## 1.0.0-beta9 (2020-12-18)
 - Pass actions and options to WrapperWidgetUI from HistogramWidget and CategoryWidget [#50](https://github.com/CartoDB/carto-react-lib/pull/50)
 - Fix addSource in cartoSlice spreading layerAttributes [#52](https://github.com/CartoDB/carto-react-lib/pull/52)
 - Category widget UX improvements [#54](https://github.com/CartoDB/carto-react-lib/pull/54)
-- Extend widget props to WrapperWidgetUI with a better implementation [#57](https://github.com/CartoDB/carto-react-lib/pull/57)
 - Add new clearFilters action [#58](https://github.com/CartoDB/carto-react-lib/pull/58)
 - Design improvements [#59](https://github.com/CartoDB/carto-react-lib/pull/59)
 
