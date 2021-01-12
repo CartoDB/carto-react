@@ -60,7 +60,7 @@ function FormulaWidget(props) {
   }, [credentials, data, filters, viewport, props]);
 
   return (
-    <WrapperWidgetUI title={props.title} loading={loading} {...wrapperProps}>
+    <WrapperWidgetUI title={props.title} loading={loading} {...props.wrapperProps}>
       <FormulaWidgetUI data={formulaData} formatter={props.formatter} unitBefore={true} />
     </WrapperWidgetUI>
   );
