@@ -21,7 +21,7 @@ export const getCategories = async (props) => {
     const features = viewportFeatures || [];
     const filteredFeatures = features.filter(applyFilter({ filters }));
     const groups = groupValuesByColumn(filteredFeatures, operationColumn, column, operation);
-    return await groups;
+    return groups;
   } else {
     let query = data;
 

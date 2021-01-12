@@ -16,8 +16,7 @@ export const getFormula = async (props) => {
 
   // It's an await because we probably will move this calculation need to a webworker
   if (viewportFilter) {
-    const operations = aggregationFunctions();
-    const targetOperation = operations[operation];
+    const targetOperation = aggregationFunctions[operation];
 
     const features = viewportFeatures || [];
     const filteredFeatures = features.filter(applyFilter({ filters }));
