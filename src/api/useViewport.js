@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { setViewportFeatures } from '../redux/cartoSlice';
-import bboxPolygon from "@turf/bbox-polygon";
-import intersects from "@turf/boolean-intersects";
+import bboxPolygon from '@turf/bbox-polygon';
+import intersects from '@turf/boolean-intersects';
 
 const GEOMETRY_TYPES = Object.freeze([
   'Point',
@@ -32,12 +32,12 @@ function uniqueId(feature) {
   throw new Error('"uniqueFeatureId" is required.');
 }
 
-async function getUniqueFeatures(tiles) {
+function getUniqueFeatures(tiles) {
   const features = new Map();
 
-  await tiles.forEach(async tile => {
+  tiles.forEach(tile => {
     if ('dataWithWGS84Coords' in tile) {
-      const data = await tile.dataWithWGS84Coords;
+      const data = tile.dataWithWGS84Coords;
 
       for (const feature of data) {
         const id = uniqueId(feature);
@@ -49,7 +49,7 @@ async function getUniqueFeatures(tiles) {
     }
   });
 
-  return Array.from(await features.values());
+  return Array.from(features.values());
 }
 
 function featuresInViewport(features, viewport) {
@@ -69,8 +69,8 @@ export default function useViewport(source) {
   
   const onViewportChange = useCallback(
     async ({ getVisibleTiles, viewport }) => {
-      const sourceFeatures = getVisibleTiles('wgs84');
-      const uniqueFeatures = await getUniqueFeatures(sourceFeatures);
+      const sourceFeatures = await getVisibleTiles('wgs84');
+      const uniqueFeatures = getUniqueFeatures(sourceFeatures);
       const intersectedFeaturesWithViewport = featuresInViewport(uniqueFeatures, viewport, source.filters);
 
       dispatch(setViewportFeatures({
