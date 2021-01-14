@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Not released
+## 1.0.0-beta10 (2021-01-14)
 
 - Fix WrapperWidgetUI anchorOrigin error [#55](https://github.com/CartoDB/carto-react-lib/pull/55)
 - Add tooltip to WrapperWidget action buttons [#56](https://github.com/CartoDB/carto-react-lib/pull/56)
