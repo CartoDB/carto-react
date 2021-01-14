@@ -2,7 +2,8 @@
 
 ## Not released
 
-- Add tooltip to WrapperWidget action buttons [#55](https://github.com/CartoDB/carto-react-lib/pull/55)
+- Fix WrapperWidgetUI anchorOrigin error [#55](https://github.com/CartoDB/carto-react-lib/pull/55)
+- Add tooltip to WrapperWidget action buttons [#56](https://github.com/CartoDB/carto-react-lib/pull/56)
 - Extend widget props to WrapperWidgetUI with a better implementation [#57](https://github.com/CartoDB/carto-react-lib/pull/57)
 
 ## 1.0.0-beta9 (2020-12-18)
