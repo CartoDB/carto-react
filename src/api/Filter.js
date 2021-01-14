@@ -15,34 +15,37 @@ const filterFunctions = {
   }
 };
 
-export function applyFilter({ filters = {}, returnedType = 'boolean' }) {
+function passesFilter(columns, filters, feature) {
+  return columns.every(column => {
+    const columnFilters = filters[column];
+    const columnFilterTypes = Object.keys(columnFilters);
+  
+    if (!feature || !feature.properties[column]) {
+      return false;
+    }
+  
+    return columnFilterTypes.every(filter => {
+      const filterFunction = filterFunctions[filter];
+      
+      if (!filterFunction) {
+        throw new Error(`"${filterFunction}" not implemented`);
+      }
+      
+      return filterFunction(columnFilters[filter].values, feature.properties[column]);
+    });
+  });
+}
+
+export function applyFilter({ filters = {}, type = 'boolean' }) {
   if (!Object.keys(filters).length) {
-    return () => returnedType === 'number' ? 1 : true;
+    return () => type === 'number' ? 1 : true;
   }
 
-  return object => {
+  return feature => {
     const columns = Object.keys(filters);
+    const featurePassesFilter = passesFilter(columns, filters, feature);
 
-    const featurePassesFilter = columns.every(column => {
-      const columnFilters = filters[column];
-      const columnFilterTypes = Object.keys(columnFilters);
-    
-      if (!object || !object.properties[column]) {
-        return false;
-      }
-    
-      return columnFilterTypes.every(filter => {
-        const filterFunction = filterFunctions[filter];
-        
-        if (!filterFunction) {
-          throw new Error(`"${filterFunction}" not implemented`);
-        }
-        
-        return filterFunction(columnFilters[filter].values, object.properties[column]);
-      });
-    });
-
-    return returnedType === 'number' ? Number(featurePassesFilter) : featurePassesFilter;
+    return type === 'number' ? Number(featurePassesFilter) : featurePassesFilter;
   }
 }
 

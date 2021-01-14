@@ -13,10 +13,9 @@ export const getCategories = async (props) => {
   }
 
   if (type === 'bq' && !viewportFilter) {
-    throw new Error('Category Widget error: BigQuery layers needs "viewportFilter" prop set to true.');
+    throw new Error('Category Widget error: BigQuery layers need "viewportFilter" prop set to true.');
   }
 
-  // It's an await because we probably will move this calculation need to a webworker
   if (viewportFilter) {
     const features = viewportFeatures || [];
     const filteredFeatures = features.filter(applyFilter({ filters }));

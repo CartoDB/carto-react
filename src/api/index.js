@@ -4,4 +4,4 @@ export { getUserDatasets } from './UserDatasets';
   buildQueryFilters,
 } from './FilterQueryBuilder'; */
 export { applyFilter } from './Filter';
-export { default as useCartoProps } from './useCartoProps';
+export { default as useCartoLayerFilterProps } from './useCartoLayerFilterProps';

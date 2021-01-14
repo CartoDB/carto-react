@@ -15,7 +15,7 @@ const GEOMETRY_TYPES = Object.freeze([
 
 // TODO: need to find another way to get the unique feature id
 // User will need to specify the unique id as a widget prop ?¿
-// useViewport receives another argument with unique id ?¿
+// useViewportFeatures receives another argument with unique id ?¿
 function uniqueId(feature) {
   if ('id' in feature) {
     return feature.id;
@@ -64,22 +64,22 @@ function featuresInViewport(features, viewport) {
   });
 }
 
-export default function useViewport(source) {
+export default function useViewportFeatures(source) {
   const dispatch = useDispatch();
   
-  const onViewportChange = useCallback(
+  const calculateViewportFeatures = useCallback(
     async ({ getVisibleTiles, viewport }) => {
       const sourceFeatures = await getVisibleTiles('wgs84');
       const uniqueFeatures = getUniqueFeatures(sourceFeatures);
-      const intersectedFeaturesWithViewport = featuresInViewport(uniqueFeatures, viewport, source.filters);
+      const viewportFeatures = featuresInViewport(uniqueFeatures, viewport, source.filters);
 
       dispatch(setViewportFeatures({
         sourceId: source.id,
-        features: intersectedFeaturesWithViewport
+        features: viewportFeatures
       }));
     },
     [dispatch, source, setViewportFeatures]
   );
 
-  return [onViewportChange];
+  return [calculateViewportFeatures];
 }

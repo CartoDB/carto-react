@@ -11,16 +11,15 @@ export const getFormula = async (props) => {
   }
 
   if (type === 'bq' && !viewportFilter) {
-    throw new Error('Formula Widget error: BigQuery layers needs "viewportFilter" prop set to true.');
+    throw new Error('Formula Widget error: BigQuery layers need "viewportFilter" prop set to true.');
   }
 
-  // It's an await because we probably will move this calculation need to a webworker
   if (viewportFilter) {
     const targetOperation = aggregationFunctions[operation];
 
     const features = viewportFeatures || [];
     const filteredFeatures = features.filter(applyFilter({ filters }));
-    return await [{ value: targetOperation(filteredFeatures, column) }];
+    return [{ value: targetOperation(filteredFeatures, column) }];
   } else {
     let query = data;
 

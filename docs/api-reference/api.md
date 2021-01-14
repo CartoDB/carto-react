@@ -31,16 +31,16 @@ Get the lists of datasets for the user by performing a request to CARTO datasets
 | opts.format | <code>string</code> | Output format (i.e. geojson) |
 
 ## applyFilter ⇒ <code>number|boolean</code>
-Returns a number (0-1) or a boolean checking wether a feature should be rendered by widgets and displayed on the map or no
+Returns a number (0-1) or a boolean checking wether a feature should be rendered by widgets and displayed on the map
 
 **Returns**: <code>number|boolean</code> - Feature that passes the filter
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | filters | <code>Object</code> | {} | Filters to be applied |
-| returnedType | <code>string</code> | 'boolean' | Output type: number (0-1) or boolean |
+| type | <code>string</code> | 'boolean' | Output type: number (0-1) or boolean |
 
-## useCartoProps ⇒ <code>Object</code>
+## useCartoLayerFilterProps ⇒ <code>Object</code>
 Returns required default props for layers. It manages filtering and viewport changes.
 
 | Param | Type | Description |

@@ -13,15 +13,14 @@ export const getHistogram = async (props) => {
   }
 
   if (type === 'bq' && !viewportFilter) {
-    throw new Error('Histogram Widget error: BigQuery layers needs "viewportFilter" prop set to true.');
+    throw new Error('Histogram Widget error: BigQuery layer needs "viewportFilter" prop set to true.');
   }
 
-  // It's an await because we probably will move this calculation need to a webworker
   if (viewportFilter) {
     const features = viewportFeatures || [];
     const filteredFeatures = features.filter(applyFilter({ filters }));
     const result = histogram(filteredFeatures, column, ticks, operation);
-    return await result;
+    return result;
   } else {
     let query = data;
 
