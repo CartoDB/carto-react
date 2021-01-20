@@ -39,7 +39,7 @@ export const createCartoSlice = (initialState) => {
       viewport: undefined,
       geocoderResult: null,
       error: null,
-      baseMap: 'positron',
+      basemap: 'positron',
       layers: {
         // Auto import layers
       },
@@ -67,7 +67,7 @@ export const createCartoSlice = (initialState) => {
         delete state.layers[action.payload];
       },
       setBaseMap: (state, action) => {
-        state.baseMap = action.payload;
+        state.basemap = action.payload;
       },
       setViewState: (state, action) => {
         const viewState = action.payload;
