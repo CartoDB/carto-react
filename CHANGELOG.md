@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## unreleased
+- Fix basemap casing in store and action so `basemap` and `setBasemap` are used [#64](https://github.com/CartoDB/carto-react-lib/pull/64)
+
 ## 1.0.0-beta10 (2021-01-14)
 
 - Fix WrapperWidgetUI anchorOrigin error [#55](https://github.com/CartoDB/carto-react-lib/pull/55)
