@@ -1,8 +1,9 @@
-import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { setViewportFeatures } from '../redux/cartoSlice';
 import bboxPolygon from '@turf/bbox-polygon';
 import intersects from '@turf/boolean-intersects';
+import { debounce } from '../utils/debounce';
 
 const GEOMETRY_TYPES = Object.freeze([
   'Point',
@@ -36,12 +37,12 @@ function getUniqueFeatures(tiles) {
   const features = new Map();
 
   tiles.forEach(tile => {
-    if ('dataWithWGS84Coords' in tile) {
-      const data = tile.dataWithWGS84Coords;
+    const data = tile.dataInWGS84;
 
+    if (data) {
       for (const feature of data) {
         const id = uniqueId(feature);
-  
+    
         if (!features.has(id)) {
           features.set(id, feature);
         }
@@ -53,7 +54,7 @@ function getUniqueFeatures(tiles) {
 }
 
 function featuresInViewport(features, viewport) {
-  const viewportBbox = bboxPolygon(viewport.getBounds());
+  const viewportBbox = bboxPolygon(viewport);
 
   return features.filter(feat => {
     if (GEOMETRY_TYPES.includes(feat.geometry.type)) {
@@ -66,20 +67,48 @@ function featuresInViewport(features, viewport) {
 
 export default function useViewportFeatures(source) {
   const dispatch = useDispatch();
-  
-  const calculateViewportFeatures = useCallback(
-    async ({ getVisibleTiles, viewport }) => {
-      const sourceFeatures = await getVisibleTiles('wgs84');
-      const uniqueFeatures = getUniqueFeatures(sourceFeatures);
-      const viewportFeatures = featuresInViewport(uniqueFeatures, viewport, source.filters);
+  const viewport = useSelector((state) => state.carto.viewport);
+  const [visibleTiles, setVisibleTiles] = useState();
+  const [delayedViewport, setDelayedViewport] = useState();
+  const firstUpdate = useRef(true);
 
-      dispatch(setViewportFeatures({
-        sourceId: source.id,
-        features: viewportFeatures
-      }));
-    },
-    [dispatch, source, setViewportFeatures]
+  const computeFeatures = useCallback((tiles, viewport, sourceId) => {
+    const uniqueFeatures = getUniqueFeatures(tiles);
+    const viewportFeatures = featuresInViewport(uniqueFeatures, viewport);
+
+    dispatch(setViewportFeatures({
+      sourceId,
+      features: viewportFeatures
+    }));
+  }, []);
+
+  useEffect(() => {
+    if (firstUpdate.current && visibleTiles && viewport && source?.id) {
+      computeFeatures(visibleTiles, viewport, source.id);
+      firstUpdate.current = false;
+    }
+  }, [visibleTiles, viewport, source]);
+
+  useEffect(() => {
+    if (visibleTiles && delayedViewport && source?.id) {
+      computeFeatures(visibleTiles, delayedViewport, source.id);
+    }
+  }, [delayedViewport, source]);
+
+  useEffect(() => {
+    verifyViewport(viewport);
+  }, [viewport]);
+
+  const verifyViewport = useCallback(
+    debounce(viewport => {
+      setDelayedViewport(viewport);
+    }, 500),
+    []
   );
 
-  return [calculateViewportFeatures];
+  function onViewportLoad(visibleTiles) {
+    setVisibleTiles(visibleTiles);
+  }
+
+  return [onViewportLoad];
 }

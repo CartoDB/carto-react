@@ -4,10 +4,10 @@ import { applyFilter } from './Filter';
 import { debounce } from '../utils/debounce';
 
 export default function useCartoLayerFilterProps(source) {
-    const [calculateViewportFeatures] = useViewportFeatures(source);
+    const [onViewportLoad] = useViewportFeatures(source);
 
     return {
-        onViewportChange: debounce(calculateViewportFeatures, 500),
+        onViewportLoad: debounce(onViewportLoad),
         getFilterValue: applyFilter({ filters: source?.filters, type: 'number' }),
         filterRange: [1, 1],
         extensions: [new DataFilterExtension({ filterSize: 1 })],
@@ -15,4 +15,4 @@ export default function useCartoLayerFilterProps(source) {
             getFilterValue: source?.filters
         },
     };
-}
+};
