@@ -158,6 +158,7 @@ function GeocoderWidget(props) {
         placeholder='Search address'
         className={classes.input}
         value={searchText}
+        name='GeocoderSearch'
         onChange={handleChange}
         onInput={handleInput}
         onKeyDown={handleKeyPress}

@@ -39,7 +39,7 @@ export const createCartoSlice = (initialState) => {
       viewport: undefined,
       geocoderResult: null,
       error: null,
-      baseMap: 'positron',
+      basemap: 'positron',
       layers: {
         // Auto import layers
       },
@@ -66,8 +66,8 @@ export const createCartoSlice = (initialState) => {
       removeLayer: (state, action) => {
         delete state.layers[action.payload];
       },
-      setBaseMap: (state, action) => {
-        state.baseMap = action.payload;
+      setBasemap: (state, action) => {
+        state.basemap = action.payload;
       },
       setViewState: (state, action) => {
         const viewState = action.payload;
@@ -157,7 +157,7 @@ export const removeLayer = (id) => ({ type: 'carto/removeLayer', payload: id});
  * Action to set a basemap
  * @param {String} basemap - the new basemap to add 
  */
-export const setBaseMap = (basemap) => ({ type: 'carto/setBaseMap', payload: basemap });
+export const setBasemap = (basemap) => ({ type: 'carto/setBasemap', payload: basemap });
 
 /**
  * Action to add a filter on a given source and column

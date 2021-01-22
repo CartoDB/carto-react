@@ -71,7 +71,7 @@ Action to remove a layer from the store
 | --- | --- | --- |
 | id | <code>string</code> | id of the layer to remove |
 
-### setBaseMap
+### setBasemap
 Action to set a basemap
 
 | Param | Type | Description |
