@@ -5,7 +5,7 @@ import { useTheme } from '@material-ui/core';
 import { applyChartFilter, dataEqual, disableSerie, setColor } from '../utils/chartUtils'
 import getChartSerie from '../utils/getChartSerie'
 
-function __generateDefaultConfig({ tooltipFormatter }, theme) {
+function __generateDefaultConfig({ tooltipFormatter, formatter }, theme) {
   return {
     grid: {
       left: theme.spacing(0),
@@ -18,7 +18,7 @@ function __generateDefaultConfig({ tooltipFormatter }, theme) {
       trigger: 'item',
       padding: [theme.spacing(0.5), theme.spacing(1)],
       backgroundColor: theme.palette.other.tooltip,
-      ...(tooltipFormatter ? { formatter: tooltipFormatter } : {}),
+      ...(tooltipFormatter ? { formatter: (params) => tooltipFormatter({ ...params, formatter }) } : {}),
     },
     legend: {
       selectedMode: false,  // TODO
@@ -40,7 +40,7 @@ function __generateDefaultConfig({ tooltipFormatter }, theme) {
         lineHeight: 1,
         verticalAlign: 'bottom',
         padding: [0, 0, 0, theme.spacing(1.5)],
-        
+
       },
       inactiveColor: theme.palette.text.disabled,
     },
@@ -53,7 +53,7 @@ function __generateSerie(name, data, theme, selectedCategories) {
       type: 'pie',
       name,
       data: data.map(item => {
-        const disabled = selectedCategories && selectedCategories.length && !selectedCategories.some(c => c === item.name)
+        const disabled = selectedCategories && selectedCategories.length && selectedCategories.indexOf(item.name) !== -1
         if (disabled) {
           disableSerie(item, theme);
           return item;
@@ -91,7 +91,7 @@ function __generateSerie(name, data, theme, selectedCategories) {
 }
 
 function __getDefaultLabel (data) {
-  return data.filter(c => !c.disabled).reduce((prev, current) => (prev.value > current.value) ? prev : current)
+  return data.filter(c => !c.disabled).reduce((prev, current) => (prev.value > current.value) ? prev : current, {})
 }
 
 const EchartsWrapper = React.memo(
@@ -104,6 +104,7 @@ function PieWidgetUI (props) {
   const {
     name,
     data = [],
+    formatter,
     tooltipFormatter,
     height,
     selectedCategories,
@@ -112,7 +113,7 @@ function PieWidgetUI (props) {
 
   const chartInstance = useRef();
   const options = useMemo(() => {
-    const config = __generateDefaultConfig({ tooltipFormatter }, theme);
+    const config = __generateDefaultConfig({ formatter, tooltipFormatter }, theme);
     const series = __generateSerie(name, data, theme, selectedCategories);
     return Object.assign({}, config, { series });
   }, [
@@ -122,11 +123,9 @@ function PieWidgetUI (props) {
     tooltipFormatter,
   ]);
   let defaultLabel = __getDefaultLabel(options.series[0].data);
-  let echart;
 
   useEffect(() => {
-    echart = chartInstance.current.getEchartsInstance();
-
+    const echart = chartInstance.current.getEchartsInstance();
     const { option, serie } = getChartSerie(echart, 0);
     serie.data.forEach(category => {
       if (category.name === defaultLabel.name) {
@@ -137,10 +136,11 @@ function PieWidgetUI (props) {
     });
 
     echart.setOption(option, true);
-  }, []);
+  }, [data]);
 
   const clickEvent = (params) => {
     if (onSelectedCategoriesChange) {
+      const echart = chartInstance.current.getEchartsInstance();
       const { option, serie } = getChartSerie(echart, params.seriesIndex);
       applyChartFilter(serie, params.dataIndex, theme);
       echart.setOption(option, true);
@@ -148,14 +148,12 @@ function PieWidgetUI (props) {
       const activeCategories = serie.data.filter(category => !category.disabled);
       defaultLabel = __getDefaultLabel(activeCategories);
 
-      onSelectedCategoriesChange({
-        series: activeCategories.length === serie.data.length ? [] : activeCategories,
-        chartInstance,
-      });
+      onSelectedCategoriesChange(activeCategories.length === serie.data.length ? [] : activeCategories.map(category => category.name));
     }
   };
 
   const mouseoverEvent = (params) => {
+    const echart = chartInstance.current.getEchartsInstance();
     const { option, serie } = getChartSerie(echart, params.seriesIndex);
     serie.data.forEach(category => {
       category.label.show = category.name === params.data.name;
@@ -164,8 +162,9 @@ function PieWidgetUI (props) {
 
     echart.setOption(option, true);
   };
-  
+
   const mouseoutEvent = (params) => {
+    const echart = chartInstance.current.getEchartsInstance();
     const { option, serie } = getChartSerie(echart, params.seriesIndex);
     serie.data.forEach(category => {
       category.label.show = category.name === defaultLabel.name;
@@ -196,12 +195,16 @@ function PieWidgetUI (props) {
 
 PieWidgetUI.defaultProps = {
   name: null,
+  formatter: (v) => v,
   tooltipFormatter: (params) => {
+    const value = params.formatter(params.value)
+    const valueHtml = typeof value === 'object' && value !== null ? `${value.prefix || ''}${value.value}${value.suffix || ''}` : value
+
     const colorSpan = color => `<span style="display:inline-block;margin-right:4px;border-radius:4px;width:8px;height:8px;background-color:${color}"></span>`;
     return `<p style="font-size:12px;font-weight:600;line-height:1.33;margin:4px 0 4px 0;">${params.name}</p>
-            <p style="font-size: 12px;font-weight:normal;line-height:1.33;margin:0 0 4px 0;">${colorSpan(params.data.color || params.color)} ${params.value} (${params.percent}%)</p>`;
+            <p style="font-size: 12px;font-weight:normal;line-height:1.33;margin:0 0 4px 0;">${colorSpan(params.data.color || params.color)} ${valueHtml} (${params.percent}%)</p>`;
   },
-  height: 300,
+  height: '300px',
   selectedCategories: [],
 };
 
@@ -213,8 +216,9 @@ PieWidgetUI.propTypes = {
       value: PropTypes.number,
     })
   ),
+  formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
-  height: PropTypes.number,
+  height: PropTypes.string,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func,
 };

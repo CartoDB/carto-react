@@ -58,6 +58,24 @@ Renders a `<HistogramWidget />` component
 | [props.viewportFilter] | <code>boolean</code> | <code>false</code> | Defines whether filter by the viewport or not. |
 | [props.onError] | [<code>errorCallback</code>](#errorCallback) |  | Function to handle error messages from the widget. |
 
+## PieWidget
+Renders a `<PieWidget />` component
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| props |  |  |  |
+| props.id | <code>string</code> |  | ID for the widget instance. |
+| props.title | <code>string</code> |  | Title to show in the widget header. |
+| props.dataSource | <code>string</code> |  | ID of the data source to get the data from. |
+| props.column | <code>string</code> |  | Name of the data source's column to get the data from. |
+| [props.operationColumn] | <code>string</code> |  | Name of the data source's column to operate with. If not defined it will default to the one defined in `column`. |
+| props.operation | <code>string</code> |  | Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object. |
+| [props.formatter] | [<code>formatterCallback</code>](#formatterCallback) |  | Function to format each value returned. |
+| [props.tooltipFormatter] | [<code>formatterCallback</code>](#formatterCallback) |  |  Function to return the HTML of the tooltip. |
+| [props.viewportFilter] | <code>boolean</code> | <code>false</code> | Defines whether filter by the viewport or not. |
+| props.height | <code>string</code> | <code>300px</code> | Height of the chart in CSS format. |
+| [props.onError] | [<code>errorCallback</code>](#errorCallback) |  | Function to handle error messages from the widget. |
+
 ## AggregationTypes
 Enum for the different types of aggregations available for widgets
 

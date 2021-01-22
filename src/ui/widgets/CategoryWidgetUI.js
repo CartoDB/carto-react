@@ -136,7 +136,7 @@ function CategoryWidgetUI(props) {
 
   // Get blockedCategories in the same order as original data
   const sortBlockedSameAsData = (blockedCategories) => sortedData.reduce((acum, elem) => {
-    if (blockedCategories.includes(elem.category)) acum.push(elem.category);
+    if (blockedCategories.includes(elem.name)) acum.push(elem.name);
     return acum;
   }, []);
 
@@ -219,7 +219,7 @@ function CategoryWidgetUI(props) {
                 acum.value += elem.value;
                 return acum;
               },
-              { category: REST_CATEGORY, value: 0 }
+              { name: REST_CATEGORY, value: 0 }
             );
             return [...main, rest];
           } else {
@@ -229,9 +229,9 @@ function CategoryWidgetUI(props) {
           // Showing only blocked categories
         } else {
           const main = blockedCategories.reduce((acum, category) => {
-            const categoryElem = list.find((elem) => elem.category === category);
+            const categoryElem = list.find((elem) => elem.name === category);
             acum.push({
-              category,
+              name: category,
               value: categoryElem ? categoryElem.value : null,
             });
             return acum;
@@ -244,9 +244,9 @@ function CategoryWidgetUI(props) {
         return searchValue
           ? list.filter((elem) => {
               return (
-                elem.category.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
-                (labels[elem.category]
-                  ? labels[elem.category]
+                elem.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
+                (labels[elem.name]
+                  ? labels[elem.name]
                       .toLowerCase()
                       .indexOf(searchValue.toLowerCase()) !== -1
                   : false)
@@ -320,7 +320,7 @@ function CategoryWidgetUI(props) {
     const isEqual = start.length === end.length && start.every((val, i) => val.value === end[i].value);
     if (isEqual) return;
 
-    let currentValues = end.map((elem, i) => start[i] && start[i].category === elem.category
+    let currentValues = end.map((elem, i) => start[i] && start[i].name === elem.name
       ? { ...elem, value: start[i].value }
       : elem
     );
@@ -365,21 +365,21 @@ function CategoryWidgetUI(props) {
           ${
             !showAll &&
             selectedCategories.length > 0 &&
-            selectedCategories.indexOf(data.category) === -1
+            selectedCategories.indexOf(data.name) === -1
               ? classes.unselected
               : ''
           }
-          ${data.category === REST_CATEGORY ? classes.rest : ''}
+          ${data.name === REST_CATEGORY ? classes.rest : ''}
         `}
       >
         {showAll && (
           <Grid item>
-            <Checkbox checked={tempBlockedCategories.indexOf(data.category) !== -1} />
+            <Checkbox checked={tempBlockedCategories.indexOf(data.name) !== -1} />
           </Grid>
         )}
         <Grid container item xs>
           <Grid container item direction='row' justify='space-between'>
-            <span className={classes.label}>{getCategoryLabel(data.category)}</span>
+            <span className={classes.label}>{getCategoryLabel(data.name)}</span>
             {typeof value === 'object' && value !== null ? (
               <span>
                 {value.prefix}
@@ -500,8 +500,8 @@ function CategoryWidgetUI(props) {
                     data={d}
                     onCategoryClick={() =>
                       showAll
-                        ? handleCategoryBlocked(d.category)
-                        : handleCategorySelected(d.category)
+                        ? handleCategoryBlocked(d.name)
+                        : handleCategorySelected(d.name)
                     }
                   />
                 ))
@@ -555,7 +555,7 @@ CategoryWidgetUI.defaultProps = {
 CategoryWidgetUI.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      category: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       value: PropTypes.number,
     })
   ),
