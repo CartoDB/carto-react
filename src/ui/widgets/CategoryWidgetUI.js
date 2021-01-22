@@ -314,7 +314,7 @@ function CategoryWidgetUI(props) {
 
   useEffect(() => {
     animateValues(prevAnimValues || [], sortedData, 500, (val) => setAnimValues(val));
-  }, [sortedData]);
+  }, [sortedData, prevAnimValues]);
 
   const animateValues = (start, end, duration, drawFrame) => {
     const isEqual = start.length === end.length && start.every((val, i) => val.value === end[i].value);

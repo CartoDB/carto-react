@@ -2,8 +2,7 @@ import React, { useMemo, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { useTheme } from '@material-ui/core';
-import { applyChartFilter, dataEqual, disableSerie, setColor } from '../utils/chartUtils'
-import getChartSerie from '../utils/getChartSerie'
+import { getChartSerie, applyChartFilter, dataEqual, disableSerie, setColor } from '../utils/chartUtils'
 
 function __generateDefaultConfig({ tooltipFormatter, formatter }, theme) {
   return {
@@ -121,6 +120,8 @@ function PieWidgetUI (props) {
     name,
     theme,
     tooltipFormatter,
+    formatter,
+    selectedCategories,
   ]);
   let defaultLabel = __getDefaultLabel(options.series[0].data);
 
@@ -136,7 +137,7 @@ function PieWidgetUI (props) {
     });
 
     echart.setOption(option, true);
-  }, [data]);
+  }, [data, defaultLabel.name]);
 
   const clickEvent = (params) => {
     if (onSelectedCategoriesChange) {

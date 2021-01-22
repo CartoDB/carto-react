@@ -74,7 +74,9 @@ import { AggregationTypes } from './AggregationTypes';
     column,
     operation,
     operationColumn,
-    dispatch
+    dispatch,
+    id,
+    onError,
   ]);
 
   const handleSelectedCategoriesChange = (categories) => {

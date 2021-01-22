@@ -57,3 +57,10 @@ export function applyChartFilter(serie, clickedSerieIndex, theme) {
 
   return serie;
 }
+
+export function getChartSerie (chart, index) {
+  const option = chart.getOption();
+  const serie =  option.series[index];
+
+  return { option, serie };
+};

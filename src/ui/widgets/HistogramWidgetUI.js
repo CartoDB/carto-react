@@ -2,8 +2,7 @@ import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
-import { applyChartFilter, clearFilter, dataEqual, disableSerie } from '../utils/chartUtils'
-import getChartSerie from '../utils/getChartSerie'
+import { applyChartFilter, clearFilter, dataEqual, disableSerie, getChartSerie } from '../utils/chartUtils'
 
 const useStyles = makeStyles((theme) => ({
   optionsSelectedBar: {
@@ -23,17 +22,6 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
 }));
-
-// function __dataEqual(optionPrev, optionNext) {
-//   const dataPrev = optionPrev.series[0].data;
-//   const dataNext = optionNext.series[0].data;
-//   if (dataPrev && dataNext && dataPrev.length === dataNext.length) {
-//     return !dataNext.some(({ value }, index) => {
-//       return !(value === dataPrev[index].value);
-//     });
-//   }
-//   return false;
-// }
 
 function __generateDefaultConfig(
   { dataAxis, tooltipFormatter, xAxisFormatter = (v) => v, yAxisFormatter = (v) => v },
