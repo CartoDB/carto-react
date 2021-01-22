@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setViewportFeatures } from '../redux/cartoSlice';
 import bboxPolygon from '@turf/bbox-polygon';
+import booleanContains from '@turf/boolean-contains';
 import intersects from '@turf/boolean-intersects';
 import { debounce } from '../utils/debounce';
 
@@ -36,14 +37,13 @@ function uniqueId(feature) {
 function getUniqueFeatures(tiles) {
   const features = new Map();
 
-  tiles.forEach(tile => {
-    const data = tile.dataInWGS84;
-
+  tiles.forEach(({ data, isCompletelyInViewport }) => {
     if (data) {
       for (const feature of data) {
         const id = uniqueId(feature);
     
         if (!features.has(id)) {
+          feature = { ...feature, isCompletelyInViewport };
           features.set(id, feature);
         }
       }
@@ -58,6 +58,10 @@ function featuresInViewport(features, viewport) {
 
   return features.filter(feat => {
     if (GEOMETRY_TYPES.includes(feat.geometry.type)) {
+      if (feat.isCompletelyInViewport) {
+        return true;
+      }
+
       return intersects(feat, viewportBbox);
     }
     
@@ -68,13 +72,12 @@ function featuresInViewport(features, viewport) {
 export default function useViewportFeatures(source) {
   const dispatch = useDispatch();
   const viewport = useSelector((state) => state.carto.viewport);
-  const [visibleTiles, setVisibleTiles] = useState();
+  const [uniqueFeatures, setUniqueFeatures] = useState();
   const [delayedViewport, setDelayedViewport] = useState();
   const firstUpdate = useRef(true);
 
-  const computeFeatures = useCallback((tiles, viewport, sourceId) => {
-    const uniqueFeatures = getUniqueFeatures(tiles);
-    const viewportFeatures = featuresInViewport(uniqueFeatures, viewport);
+  const computeFeatures = useCallback((features, viewport, sourceId) => {
+    const viewportFeatures = featuresInViewport(features, viewport);
 
     dispatch(setViewportFeatures({
       sourceId,
@@ -83,15 +86,15 @@ export default function useViewportFeatures(source) {
   }, []);
 
   useEffect(() => {
-    if (firstUpdate.current && visibleTiles && viewport && source?.id) {
-      computeFeatures(visibleTiles, viewport, source.id);
+    if (firstUpdate.current && uniqueFeatures && viewport && source?.id) {
+      computeFeatures(uniqueFeatures, viewport, source.id);
       firstUpdate.current = false;
     }
-  }, [visibleTiles, viewport, source]);
+  }, [uniqueFeatures, viewport, source]);
 
   useEffect(() => {
-    if (visibleTiles && delayedViewport && source?.id) {
-      computeFeatures(visibleTiles, delayedViewport, source.id);
+    if (uniqueFeatures && delayedViewport && source?.id) {
+      computeFeatures(uniqueFeatures, delayedViewport, source.id);
     }
   }, [delayedViewport, source]);
 
@@ -106,9 +109,21 @@ export default function useViewportFeatures(source) {
     []
   );
 
-  function onViewportLoad(visibleTiles) {
-    setVisibleTiles(visibleTiles);
-  }
+  const onViewportLoad = useCallback((visibleTiles) => {
+    const viewportBbox = bboxPolygon(viewport);
+    
+    const tilesInViewport = visibleTiles.map(tile => {
+      const tileBbox = bboxPolygon(Object.values(tile.bbox));
+
+      return {
+        isCompletelyInViewport: booleanContains(viewportBbox, tileBbox),
+        data: tile.dataInWGS84
+      }
+    });
+
+    const features = getUniqueFeatures(tilesInViewport);
+    setUniqueFeatures(features);
+  }, [viewport]);
 
   return [onViewportLoad];
 }
