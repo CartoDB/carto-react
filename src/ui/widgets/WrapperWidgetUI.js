@@ -131,7 +131,7 @@ function WrapperWidgetUI(props) {
   };
 
   return (
-    <Box className={classes.root}>
+    <Box component='section' aria-label={props.title} className={classes.root}>
       {props.loading ? <LinearProgress className={classes.loading} /> : null}
       <Grid container className={classes.header}>
         <Button
