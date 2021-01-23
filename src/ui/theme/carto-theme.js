@@ -518,6 +518,11 @@ export const cartoThemeOptions = {
         padding: '16px 24px',
         fontSize: pxToRem(16),
       },
+      containedSecondary: {
+        '&:hover': {
+          backgroundColor: variables.palette.secondary.light,
+        },
+      },
       outlinedSizeLarge: {
         padding: '16px 24px',
         fontSize: pxToRem(16),
