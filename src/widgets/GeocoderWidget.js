@@ -158,7 +158,7 @@ function GeocoderWidget(props) {
         placeholder='Search address'
         className={classes.input}
         value={searchText}
-        aria-label='GeocoderSearch'
+        inputProps={{'aria-label': 'GeocoderSearch'}}
         onChange={handleChange}
         onInput={handleInput}
         onKeyDown={handleKeyPress}
