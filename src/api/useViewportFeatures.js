@@ -99,10 +99,10 @@ export default function useViewportFeatures(source) {
   }, [delayedViewport, source]);
 
   useEffect(() => {
-    verifyViewport(viewport);
+    setDebouncedViewport(viewport);
   }, [viewport]);
 
-  const verifyViewport = useCallback(
+  const setDebouncedViewport = useCallback(
     debounce(viewport => {
       setDelayedViewport(viewport);
     }, 500),

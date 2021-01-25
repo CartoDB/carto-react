@@ -2,6 +2,7 @@ import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import { applyFilter } from '../../api/Filter';
 import { histogram } from '../operations/histogram';
+import { LayerTypes } from '../LayerTypes';
 
 export const getHistogram = async (props) => {
   const { data, credentials, column, operation, ticks, filters, opts, viewportFilter, viewportFeatures, type } = props;
@@ -12,7 +13,7 @@ export const getHistogram = async (props) => {
     throw new Error('Array is not a valid type to get histogram');
   }
 
-  if (type === 'bq' && !viewportFilter) {
+  if (type === LayerTypes.BQ && !viewportFilter) {
     throw new Error('Histogram Widget error: BigQuery layer needs "viewportFilter" prop set to true.');
   }
 

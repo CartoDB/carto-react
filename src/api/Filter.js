@@ -1,4 +1,4 @@
-import { addExtremeValuesToArr } from '../utils/addExtremeValuesToArr';
+import { makeClosedInterval } from '../utils/makeClosedInterval';
 import { FilterTypes } from './FilterQueryBuilder';
 
 const filterFunctions = {
@@ -11,7 +11,7 @@ const filterFunctions = {
       return featureValue >= lowerBound && featureValue <= upperBound;
     };
 
-    return addExtremeValuesToArr(filterValues).some(checkRange);
+    return makeClosedInterval(filterValues).some(checkRange);
   }
 };
 

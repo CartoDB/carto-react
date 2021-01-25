@@ -2,6 +2,7 @@ import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import { applyFilter } from '../../api/Filter';
 import { groupValuesByColumn } from '../operations/groupby';
+import { LayerTypes } from '../LayerTypes';
 
 export const getCategories = async (props) => {
   const { data, credentials, column, operation, filters, viewportFilter, viewportFeatures, type, opts } = props;
@@ -12,7 +13,7 @@ export const getCategories = async (props) => {
     throw new Error('Array is not a valid type to get categories');
   }
 
-  if (type === 'bq' && !viewportFilter) {
+  if (type === LayerTypes.BQ && !viewportFilter) {
     throw new Error('Category Widget error: BigQuery layers need "viewportFilter" prop set to true.');
   }
 

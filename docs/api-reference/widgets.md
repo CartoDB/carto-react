@@ -81,3 +81,18 @@ Enum for the different types of aggregations available for widgets
 <dd><p>Sum</p>
 </dd>
 </dl>
+
+## LayerTypes
+Enum for the different types of @deck.gl/carto layers
+
+**Kind**: global enum  
+**Read only**: true  
+
+<dl>
+<dt><a href="#SQL">SQL</a></dt>
+<dd><p>sql</p>
+</dd>
+<dt><a href="#BQ">BQ</a></dt>
+<dd><p>bq</p>
+</dd>
+</dl>

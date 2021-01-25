@@ -5731,7 +5731,7 @@ decimal.js@^10.2.0:
   resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-10.2.1.tgz#238ae7b0f0c793d3e3cea410108b35a2c01426a3"
   integrity sha512-KaL7+6Fw6i5A2XSnsbhm/6B+NuEA7TZ4vqxnd5tXz9sbKtrN9Srj8ab4vKVdK8YAqZO9P1kg45Y6YLoduPf+kw==
 
-deck.gl@8.4.0-beta.1:
+deck.gl@^8.4.0-beta.1:
   version "8.4.0-beta.1"
   resolved "https://registry.yarnpkg.com/deck.gl/-/deck.gl-8.4.0-beta.1.tgz#dde0de4863aa74d52dd5cbc5baf70a3a10417605"
   integrity sha512-xNCtRFv0v/J2zRo9dk3/byRom8T0qU+BJsMhLl2+JkV6POQ9E+WKYEqslUZ6NlMs8ZXHvpal92F/pOt2fGHWZQ==

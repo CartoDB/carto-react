@@ -207,12 +207,25 @@ const debouncedSetViewPort = debounce((dispatch, setViewPort) => {
   dispatch(setViewPort());
 }, 200);
 
+const NOT_ALLOWED_DECK_PROPS = ['transitionDuration', 'transitionEasing', 'transitionInterpolator', 'transitionInterruption'];
+
 /**
  * Action to set the current ViewState
  * @param {Object} viewState 
  */
 export const setViewState = (viewState) => {
   return (dispatch) => {
+    /**
+     * "transition" deck props contain non-serializable values, like:
+     *  - transitionInterpolator: instance of LinearInterpolator
+     *  - transitionEasing: function
+     * To prevent the Redux checker from failing: removing all "transition" properties in the state
+     * If need it, transitions should be handled in layer components
+     */
+    for (const viewProp of NOT_ALLOWED_DECK_PROPS) {
+      delete viewState[viewProp];
+    }
+
     dispatch(_setViewState(viewState));
     debouncedSetViewPort(dispatch, _setViewPort);
   };

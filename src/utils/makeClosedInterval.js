@@ -1,4 +1,4 @@
-export function addExtremeValuesToArr(values) {
+export function makeClosedInterval(values) {
   return values.map(val => {
     if (val[0] === undefined) {
       return [Number.MIN_SAFE_INTEGER, val[1]]

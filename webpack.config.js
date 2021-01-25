@@ -23,12 +23,6 @@ const config = {
           presets: ['@babel/preset-env', '@babel/preset-react'],
           plugins: ['@babel/plugin-transform-runtime']
         }
-     },
-     {
-       test: /\.m?js/,
-         resolve: {
-         fullySpecified: false
-       }
      }
     ]
   }
