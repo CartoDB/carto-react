@@ -42,7 +42,7 @@
     "@turf/boolean-contains": "^6.3.0",
     "@turf/boolean-intersects": "^6.0.2",
     "babel-loader": "^8.2.1",
-    "deck.gl": "8.4.0-alpha.4",
+    "deck.gl": "8.4.0-beta.1",
     "echarts": "^4.9.0",
     "echarts-for-react": "^2.0.16",
     "firebase-tools": "^8.17.0",
