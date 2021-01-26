@@ -15,16 +15,13 @@ const GEOMETRY_TYPES = Object.freeze([
   'MultiPolygon'
 ]);
 
-// TODO: need to find another way to get the unique feature id
-// User will need to specify the unique id as a widget prop ?¿
-// useViewportFeatures receives another argument with unique id ?¿
-function uniqueId(feature) {
-  if ('id' in feature) {
-    return feature.id;
+function pickPropByUniqueId(feature, uniqueId) {
+  if (uniqueId in feature.properties) {
+    return feature.properties[uniqueId];
   }
 
-  if ('cartodb_id' in feature.properties) {
-    return feature.properties.cartodb_id;
+  if ('id' in feature) {
+    return feature.id;
   }
 
   if ('geoid' in feature.properties) {
@@ -34,13 +31,13 @@ function uniqueId(feature) {
   throw new Error('"uniqueFeatureId" is required.');
 }
 
-function getUniqueFeatures(tiles) {
+function getUniqueFeatures(tiles, uniqueId) {
   const features = new Map();
 
   tiles.forEach(({ data, isCompletelyInViewport }) => {
     if (data) {
       for (const feature of data) {
-        const id = uniqueId(feature);
+        const id = pickPropByUniqueId(feature, uniqueId);
     
         if (!features.has(id)) {
           feature = { ...feature, isCompletelyInViewport };
@@ -69,12 +66,11 @@ function featuresInViewport(features, viewport) {
   });
 }
 
-export default function useViewportFeatures(source) {
+export default function useViewportFeatures(source, uniqueId) {
   const dispatch = useDispatch();
   const viewport = useSelector((state) => state.carto.viewport);
   const [uniqueFeatures, setUniqueFeatures] = useState();
   const [delayedViewport, setDelayedViewport] = useState();
-  const firstUpdate = useRef(true);
 
   const computeFeatures = useCallback((features, viewport, sourceId) => {
     const viewportFeatures = featuresInViewport(features, viewport);
@@ -86,17 +82,10 @@ export default function useViewportFeatures(source) {
   }, []);
 
   useEffect(() => {
-    if (firstUpdate.current && uniqueFeatures && viewport && source?.id) {
-      computeFeatures(uniqueFeatures, viewport, source.id);
-      firstUpdate.current = false;
-    }
-  }, [uniqueFeatures, viewport, source]);
-
-  useEffect(() => {
     if (uniqueFeatures && delayedViewport && source?.id) {
       computeFeatures(uniqueFeatures, delayedViewport, source.id);
     }
-  }, [delayedViewport, source]);
+  }, [uniqueFeatures, delayedViewport, source]);
 
   useEffect(() => {
     setDebouncedViewport(viewport);
@@ -121,9 +110,9 @@ export default function useViewportFeatures(source) {
       }
     });
 
-    const features = getUniqueFeatures(tilesInViewport);
+    const features = getUniqueFeatures(tilesInViewport, uniqueId);
     setUniqueFeatures(features);
-  }, [viewport]);
+  }, [uniqueId, viewport]);
 
   return [onViewportLoad];
 }
