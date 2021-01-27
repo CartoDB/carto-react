@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setViewportFeatures } from '../redux/cartoSlice';
 import bboxPolygon from '@turf/bbox-polygon';
@@ -70,33 +70,24 @@ export default function useViewportFeatures(source, uniqueId) {
   const dispatch = useDispatch();
   const viewport = useSelector((state) => state.carto.viewport);
   const [uniqueFeatures, setUniqueFeatures] = useState();
-  const [delayedViewport, setDelayedViewport] = useState();
 
-  const computeFeatures = useCallback((features, viewport, sourceId) => {
-    const viewportFeatures = featuresInViewport(features, viewport);
+  const computeFeatures = useCallback(
+    debounce((features, viewport, sourceId) => {
+      const viewportFeatures = featuresInViewport(features, viewport);
 
-    dispatch(setViewportFeatures({
-      sourceId,
-      features: viewportFeatures
-    }));
-  }, []);
-
-  useEffect(() => {
-    if (uniqueFeatures && delayedViewport && source?.id) {
-      computeFeatures(uniqueFeatures, delayedViewport, source.id);
-    }
-  }, [uniqueFeatures, delayedViewport, source]);
-
-  useEffect(() => {
-    setDebouncedViewport(viewport);
-  }, [viewport]);
-
-  const setDebouncedViewport = useCallback(
-    debounce(viewport => {
-      setDelayedViewport(viewport);
+      dispatch(setViewportFeatures({
+        sourceId,
+        features: viewportFeatures
+      }));
     }, 500),
     []
   );
+
+  useEffect(() => {
+    if (uniqueFeatures && viewport && source?.id) {
+      computeFeatures(uniqueFeatures, viewport, source.id);
+    }
+  }, [uniqueFeatures, viewport, source]);
 
   const onViewportLoad = useCallback((visibleTiles) => {
     const viewportBbox = bboxPolygon(viewport);
