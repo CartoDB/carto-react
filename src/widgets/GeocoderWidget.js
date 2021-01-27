@@ -6,7 +6,13 @@ import { geocodeStreetPoint } from './models';
 import { selectOAuthCredentials } from '../redux/oauthSlice';
 import { addLayer, setViewState } from '../redux/cartoSlice';
 
-import { CircularProgress, IconButton, InputBase, Paper, SvgIcon } from '@material-ui/core';
+import {
+  CircularProgress,
+  IconButton,
+  InputBase,
+  Paper,
+  SvgIcon,
+} from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -30,15 +36,14 @@ const useStyles = makeStyles((theme) => ({
     fill: theme.palette.text.secondary,
     height: '1em',
     fontSize: `${theme.typography.body2.lineHeight}em`,
-
   },
   clear: {
-    ...theme.typography.body2
+    ...theme.typography.body2,
   },
   input: {
     ...theme.typography.body2,
     width: `calc(100% - ${theme.spacing(5)}px)`,
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1),
   },
 }));
 
@@ -124,7 +129,7 @@ function GeocoderWidget(props) {
         setLoading(false);
       }
     }
-  }
+  };
 
   const zoomToResult = (result) => {
     dispatch(
@@ -149,27 +154,33 @@ function GeocoderWidget(props) {
 
   return (
     <Paper className={`${props.className} ${classes.paperInput}`} elevation={2}>
-      {loading ? <CircularProgress size={20} className={classes.icon} /> : <SearchIcon className={classes.icon}/>}
+      {loading ? (
+        <CircularProgress size={20} className={classes.icon} />
+      ) : (
+        <SearchIcon className={classes.icon} />
+      )}
       <InputBase
-        type="search"
+        type='search'
         tabIndex={-1}
         inputRef={inputRef}
         size='small'
         placeholder='Search address'
         className={classes.input}
         value={searchText}
-        inputProps={{'aria-label': 'GeocoderSearch'}}
+        inputProps={{ 'aria-label': 'GeocoderSearch' }}
         onChange={handleChange}
         onInput={handleInput}
         onKeyDown={handleKeyPress}
-        onBlur={handleBlur}/>
+        onBlur={handleBlur}
+      />
     </Paper>
   );
-};
+}
 
 GeocoderWidget.propTypes = {
   className: PropTypes.string,
-  onError: PropTypes.func
+
+  onError: PropTypes.func,
 };
 
 GeocoderWidget.defaultProps = {};
