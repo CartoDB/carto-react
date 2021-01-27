@@ -51,7 +51,7 @@ export const filtersToSQL = (filters = {}) => {
   return result.length ? `WHERE (${result.join(') AND (')})` : '';
 };
 
-export const viewportToSQL = (viewport) => {
+/* export const viewportToSQL = (viewport) => {
   const bboxes = getBoundingBoxes(viewport);
 
   const queries = bboxes.map((bbox) => {
@@ -79,7 +79,7 @@ function getBoundingBoxes ([west, south, east, north]) {
   }
 
   return bboxes;
-}
+} */
 
 
 /**
@@ -89,10 +89,10 @@ function getBoundingBoxes ([west, south, east, north]) {
  * @param { Object } filters - Filters to be applied
  * @returns { string } - SQL query
  */
-export const buildQueryFilters = ({ data, filters }) => {
+/* export const buildQueryFilters = ({ data, filters }) => {
   return `
     SELECT *
     FROM (${data}) as q
     ${filtersToSQL(filters)}
   `;
-};
+}; */

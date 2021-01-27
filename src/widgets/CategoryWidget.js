@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter, selectSourceById } from '../redux/cartoSlice';
@@ -17,7 +17,7 @@ import { AggregationTypes } from './AggregationTypes';
   * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
   * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
   * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
-  * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not. 
+  * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or globally. 
   * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
   * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
   */
@@ -27,16 +27,16 @@ import { AggregationTypes } from './AggregationTypes';
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const { data, credentials } = source;
+  const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
+  const { data, credentials, type } = source;
 
   useEffect(() => {
     const abortController = new AbortController();
     if (
       data &&
       credentials &&
-      (!props.viewportFilter || (props.viewportFilter && viewport))
+      (!props.viewportFilter || (props.viewportFilter && viewportFeatures[props.dataSource]))
     ) {
       const filters = getApplicableFilters(source.filters, props.id);
       setLoading(true);
@@ -45,7 +45,8 @@ import { AggregationTypes } from './AggregationTypes';
         data,
         filters,
         credentials,
-        viewport,
+        viewportFeatures: viewportFeatures[props.dataSource],
+        type,
         opts: { abortController },
       })
         .then((data) => {
@@ -63,10 +64,11 @@ import { AggregationTypes } from './AggregationTypes';
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, source.filters, viewport, props, dispatch]);
+  }, [credentials, data, source.filters, viewportFeatures, props]);
 
-  const handleSelectedCategoriesChange = (categories) => {
+  const handleSelectedCategoriesChange = useCallback((categories) => {
     setSelectedCategories(categories);
+    
     if (categories && categories.length) {
       dispatch(
         addFilter({
@@ -85,7 +87,7 @@ import { AggregationTypes } from './AggregationTypes';
         })
       );
     }
-  };
+  }, [setSelectedCategories, dispatch, addFilter, removeFilter]);
 
   return (
     <WrapperWidgetUI title={props.title} loading={loading} {...props.wrapperProps}>

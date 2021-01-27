@@ -1,8 +1,11 @@
 import { executeSQL } from '../../api';
-import { filtersToSQL, viewportToSQL } from '../../api/FilterQueryBuilder';
+import { filtersToSQL } from '../../api/FilterQueryBuilder';
+import { applyFilter } from '../../api/Filter';
+import { groupValuesByColumn } from '../operations/groupby';
+import { LayerTypes } from '../LayerTypes';
 
 export const getCategories = async (props) => {
-  const { data, credentials, column, operation, filters, viewport, opts } = props;
+  const { data, credentials, column, operation, filters, viewportFilter, viewportFeatures, type, opts } = props;
 
   const operationColumn = props.operationColumn || column;
 
@@ -10,24 +13,33 @@ export const getCategories = async (props) => {
     throw new Error('Array is not a valid type to get categories');
   }
 
-  let query =
-    (viewport && `SELECT * FROM (${data})  as q WHERE ${viewportToSQL(viewport)}`) ||
-    data;
+  if (type === LayerTypes.BQ && !viewportFilter) {
+    throw new Error('Category Widget error: BigQuery layers need "viewportFilter" prop set to true.');
+  }
 
-  query = `WITH all_categories as (
-    SELECT ${column} as category
-      FROM (${query}) as q
-    GROUP BY category
-  ),
-  categories as (
-    SELECT ${column} as category, ${operation}(${operationColumn}) as value
-      FROM (${query}) as q
-    ${filtersToSQL(filters)}
-    GROUP BY category
-  )
-  SELECT a.category, b.value
-    FROM all_categories a
-    LEFT JOIN categories b ON a.category=b.category`;
+  if (viewportFilter) {
+    const features = viewportFeatures || [];
+    const filteredFeatures = features.filter(applyFilter({ filters }));
+    const groups = groupValuesByColumn(filteredFeatures, operationColumn, column, operation);
+    return groups;
+  } else {
+    let query = data;
 
-  return await executeSQL(credentials, query, opts);
+    query = `WITH all_categories as (
+      SELECT ${column} as category
+        FROM (${query}) as q
+      GROUP BY category
+    ),
+    categories as (
+      SELECT ${column} as category, ${operation}(${operationColumn}) as value
+        FROM (${query}) as q
+      ${filtersToSQL(filters)}
+      GROUP BY category
+    )
+    SELECT a.category, b.value
+      FROM all_categories a
+      LEFT JOIN categories b ON a.category=b.category`;
+
+    return await executeSQL(credentials, query, opts);
+  }
 };

@@ -46,6 +46,7 @@ export const createCartoSlice = (initialState) => {
       dataSources: {
         // Auto import dataSources
       },
+      viewportFeatures: {},
       ...initialState,
     },
     reducers: {
@@ -111,6 +112,21 @@ export const createCartoSlice = (initialState) => {
       setGeocoderResult: (state, action) => {
         state.geocoderResult = action.payload;
       },
+      setViewportFeatures: (state, action) => {
+        const {sourceId, features} = action.payload;
+
+        state.viewportFeatures = {
+          ...state.viewportFeatures,
+          [sourceId]: features
+        }
+      },
+      removeViewportFeatures: (state, action) => {
+        const sourceId = action.payload;
+
+        if (state.viewportFeatures[sourceId]) {
+          delete state.viewportFeatures[sourceId];
+        }
+      }
     },
   });
 
@@ -191,13 +207,39 @@ const debouncedSetViewPort = debounce((dispatch, setViewPort) => {
   dispatch(setViewPort());
 }, 200);
 
+const NOT_ALLOWED_DECK_PROPS = ['transitionDuration', 'transitionEasing', 'transitionInterpolator', 'transitionInterruption'];
+
 /**
  * Action to set the current ViewState
  * @param {Object} viewState 
  */
 export const setViewState = (viewState) => {
   return (dispatch) => {
+    /**
+     * "transition" deck props contain non-serializable values, like:
+     *  - transitionInterpolator: instance of LinearInterpolator
+     *  - transitionEasing: function
+     * To prevent the Redux checker from failing: removing all "transition" properties in the state
+     * If need it, transitions should be handled in layer components
+     */
+    for (const viewProp of NOT_ALLOWED_DECK_PROPS) {
+      delete viewState[viewProp];
+    }
+
     dispatch(_setViewState(viewState));
     debouncedSetViewPort(dispatch, _setViewPort);
   };
 };
+
+/**
+ * Action to set the source features of a layer
+ * @param {object} sourceId - the id of the source
+ * @param {object} feature - the viewport features
+ */
+export const setViewportFeatures = (data) => ({ type: 'carto/setViewportFeatures', payload: data });
+
+/**
+ * Action to remove the source features of a layer
+ * @param {String} sourceId - the source id to remove
+ */
+export const removeViewportFeatures = (data) => ({ type: 'carto/removeViewportFeatures', payload: data});

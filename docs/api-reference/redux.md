@@ -112,6 +112,21 @@ Action to set the current ViewState
 | --- | --- |
 | viewState | <code>Object</code> | 
 
+### setViewportFeatures
+Action to set the viewport features to a specific source
+
+| Param | Type | Description |
+| --- | --- | --- |
+| {sourceId} | <code>string</code> | id of the source |
+| {features} | <code>Array</code> | viewport features | 
+
+### removeViewportFeatures
+Action to remove the viewport features to a specific source
+
+| Param | Type | Description |
+| --- | --- | --- |
+| {sourceId} | <code>string</code> | id of the source to remove the viewport features from |
+
 ## OAuth Slice
 ### createOauthCartoSlice
 A function that accepts an initialState, setup the state and creates 
