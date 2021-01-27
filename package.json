@@ -5,13 +5,16 @@
   "scripts": {
     "start": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && webpack --config webpack.prod.js --watch",
     "build": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && cp README.md ./dist/README.md && webpack --config webpack.prod.js",
-    "lint": "eslint 'src/**/*.{js,jsx}'",
-    "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
-    "format": "npx prettier --write \"**/*.+(js|jsx|json|md)\"",
+    "lint": "eslint './src/**/*.{js,jsx}'",
+    "lint:fix": "eslint './src/**/*.{js,jsx}' --fix",
+    "format": "npx prettier --write \"./src/**/*.+(js|jsx|json|md)\"",
     "storybook": "start-storybook -c src/ui/.storybook -p 6006",
     "build-storybook": "build-storybook -c src/ui/.storybook",
     "publish-storybook": "build-storybook -c src/ui/.storybook && yarn firebase deploy",
     "publish-storybook-staging": "build-storybook -c src/ui/.storybook && cd storybook-static && npx vercel --prod --name 'react-ui-staging'"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "keywords": [
     "react",
