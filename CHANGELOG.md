@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## Not released
-
+- Remove getUserDatasets method from api [#68](https://github.com/CartoDB/carto-react-lib/pull/68)
 - Fix hover color in secondary buttons [#65](https://github.com/CartoDB/carto-react-lib/pull/65)
 
 ## 1.0.0-beta12 (2021-01-22)
