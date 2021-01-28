@@ -79,7 +79,8 @@
     "webpack-cli": "^4.2.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.5"
+    "@babel/runtime": "^7.12.5",
+    "pgsql-minify": "^1.0.5"
   },
   "husky": {
     "hooks": {
