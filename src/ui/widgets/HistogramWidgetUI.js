@@ -37,7 +37,13 @@ function __dataEqual(optionPrev, optionNext) {
 }
 
 function __generateDefaultConfig(
-  { dataAxis, tooltip, tooltipFormatter, xAxisFormatter = (v) => v, yAxisFormatter = (v) => v },
+  {
+    dataAxis,
+    tooltip,
+    tooltipFormatter,
+    xAxisFormatter = (v) => v,
+    yAxisFormatter = (v) => v,
+  },
   data,
   theme
 ) {
@@ -175,7 +181,7 @@ function __generateSerie(name, data, selectedBars = [], theme) {
 function __disableBar(bar, theme) {
   bar.disabled = true;
   bar.itemStyle = {
-    color: theme.palette.charts.disabled
+    color: theme.palette.charts.disabled,
   };
 }
 

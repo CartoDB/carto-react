@@ -409,13 +409,13 @@ export const cartoThemeOptions = {
           display: 'block',
           backgroundImage: `url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAn0lEQVR42u3UMQrDMBBEUZ9WfQqDmm22EaTyjRMHAlM5K+Y7lb0wnUZPIKHlnutOa+25Z4D++MRBX98MD1V/trSppLKHqj9TTBWKcoUqffbUcbBBEhTjBOV4ja4l4OIAZThEOV6jHO8ARXD+gPPvKMABinGOrnu6gTNUawrcQKNCAQ7QeTxORzle3+sDfjJpPCqhJh7GixZq4rHcc9l5A9qZ+WeBhgEuAAAAAElFTkSuQmCC)`,
           backgroundRepeat: 'no-repeat',
-          backgroundSize: spacing(2)
+          backgroundSize: spacing(2),
         },
 
         // Mapbox controls
         '.mapboxgl-ctrl.mapboxgl-ctrl-attrib': {
           padding: spacing(0, 1),
-          borderRadius: spacing(.5, 0, 0, 0),
+          borderRadius: spacing(0.5, 0, 0, 0),
 
           '& .mapboxgl-ctrl-attrib-inner': {
             ...variables.typography.overline,
@@ -423,10 +423,10 @@ export const cartoThemeOptions = {
             letterSpacing: '0.75px',
 
             '& a': {
-              color: variables.palette.primary.main
-            }
+              color: variables.palette.primary.main,
+            },
           },
-          
+
           '&.mapboxgl-compact': {
             backgroundColor: 'transparent',
             right: spacing(0.5),
@@ -445,30 +445,30 @@ export const cartoThemeOptions = {
               right: 0,
 
               '&:not(:disabled):hover': {
-                backgroundColor: 'rgba(255,255,255,.8)'
-              }
+                backgroundColor: 'rgba(255,255,255,.8)',
+              },
             },
 
             '& .mapboxgl-ctrl-attrib-inner': {
               backgroundColor: 'rgba(255,255,255,.8)',
-              padding: spacing(.5, 1),
+              padding: spacing(0.5, 1),
               borderRadius: spacing(1.5),
               marginRight: spacing(2.5),
-              color: variables.palette.text.secondary
+              color: variables.palette.text.secondary,
             },
 
             '&.mapboxgl-compact-show': {
               '& .mapboxgl-ctrl-attrib-button': {
                 backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20height='24'%20viewBox='0%200%2024%2024'%20width='24'%3E%3Cpath%20d='M0%200h24v24H0z'%20fill='none'/%3E%3Cpath%20d='M19%206.41L17.59%205%2012%2010.59%206.41%205%205%206.41%2010.59%2012%205%2017.59%206.41%2019%2012%2013.41%2017.59%2019%2019%2017.59%2013.41%2012z'%20fill='white'/%3E%3C/svg%3E")`,
                 backgroundColor: variables.palette.common.black,
-                
+
                 '&:not(:disabled):hover': {
-                  backgroundColor: variables.palette.common.black
-                }
-              }
-            }
-          }
-        }
+                  backgroundColor: variables.palette.common.black,
+                },
+              },
+            },
+          },
+        },
       },
     },
 
@@ -742,8 +742,8 @@ export const cartoThemeOptions = {
     // Menu
     MuiMenuItem: {
       root: {
-        ...variables.typography.body2
-      }
+        ...variables.typography.body2,
+      },
     },
 
     // Autocomplete
@@ -807,22 +807,22 @@ export const cartoThemeOptions = {
         height: 4,
         '&.colorPrimary': {
           backgroundColor: variables.palette.text.primary,
-        }
+        },
       },
 
       vertical: {
         '& $indicator': {
-          width: 4
+          width: 4,
         },
 
         '& .MuiTab-root': {
           padding: spacing(0, 2),
 
           '& .MuiTab-wrapper': {
-            alignItems: 'flex-start'
-          }
-        }
-      }
+            alignItems: 'flex-start',
+          },
+        },
+      },
     },
 
     // Tab
@@ -1102,8 +1102,8 @@ export const cartoThemeOptions = {
         anchorOrigin: {
           vertical: 'bottom',
           horizontal: 'left',
-        }
-      }
+        },
+      },
     },
     MuiOutlinedInput: {
       notched: false,
@@ -1138,7 +1138,7 @@ export const cartoThemeOptions = {
       textColor: 'primary',
       TabIndicatorProps: {
         classes: {
-          colorPrimary: 'colorPrimary'
+          colorPrimary: 'colorPrimary',
         },
       },
     },

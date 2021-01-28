@@ -109,7 +109,7 @@ WithActionsTooltip.args = {
       action: () => alert('Action!'),
       tooltip: {
         text: 'Tooltip default',
-      }
+      },
     },
     {
       id: 'a2',
@@ -118,8 +118,8 @@ WithActionsTooltip.args = {
       action: () => alert('Action!'),
       tooltip: {
         text: 'Tooltip on bottom',
-        placement: 'bottom'
-      }
+        placement: 'bottom',
+      },
     },
   ],
 };

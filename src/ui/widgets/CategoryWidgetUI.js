@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
   unselected: {},
 
   rest: {
-    cursor: 'default'
+    cursor: 'default',
   },
 
   optionsSelectedBar: {
@@ -138,10 +138,11 @@ function CategoryWidgetUI(props) {
   const classes = useStyles();
 
   // Get blockedCategories in the same order as original data
-  const sortBlockedSameAsData = (blockedCategories) => sortedData.reduce((acum, elem) => {
-    if (blockedCategories.includes(elem.category)) acum.push(elem.category);
-    return acum;
-  }, []);
+  const sortBlockedSameAsData = (blockedCategories) =>
+    sortedData.reduce((acum, elem) => {
+      if (blockedCategories.includes(elem.category)) acum.push(elem.category);
+      return acum;
+    }, []);
 
   const handleCategorySelected = (category) => {
     if (category !== REST_CATEGORY) {
@@ -168,7 +169,7 @@ function CategoryWidgetUI(props) {
     setBlockedCategories([]);
   };
 
-  const handleBlockClicked = () => {    
+  const handleBlockClicked = () => {
     setBlockedCategories(sortBlockedSameAsData(selectedCategories));
   };
 
@@ -324,15 +325,17 @@ function CategoryWidgetUI(props) {
   }, [sortedData]);
 
   const animateValues = (start, end, duration, drawFrame) => {
-    const isEqual = start.length === end.length && start.every((val, i) => val.value === end[i].value);
+    const isEqual =
+      start.length === end.length && start.every((val, i) => val.value === end[i].value);
     if (isEqual) return;
 
-    let currentValues = end.map((elem, i) => start[i] && start[i].category === elem.category
-      ? { ...elem, value: start[i].value }
-      : elem
+    let currentValues = end.map((elem, i) =>
+      start[i] && start[i].category === elem.category
+        ? { ...elem, value: start[i].value }
+        : elem
     );
     let currentFrame = 0;
-    
+
     const ranges = currentValues.map((elem, i) => end[i].value - elem.value);
     const noChanges = ranges.every((val) => val === 0);
     if (noChanges) {
@@ -345,7 +348,10 @@ function CategoryWidgetUI(props) {
 
     const animate = () => {
       if (currentFrame < frames) {
-        currentValues = currentValues.map((elem, i) => ({...elem, value: elem.value + steps[i]}) );
+        currentValues = currentValues.map((elem, i) => ({
+          ...elem,
+          value: elem.value + steps[i],
+        }));
         drawFrame(currentValues);
         currentFrame++;
         requestAnimationFrame(animate);
@@ -354,7 +360,7 @@ function CategoryWidgetUI(props) {
       }
     };
     requestAnimationFrame(animate);
-  }
+  };
 
   // Separated to simplify the widget layout but inside the main component to avoid passing all dependencies
   const CategoryItem = (props) => {
@@ -501,34 +507,32 @@ function CategoryWidgetUI(props) {
             </Grid>
           )}
           <Grid container item className={classes.categoriesWrapper}>
-            {animValues.length
-              ? animValues.map((d, i) => (
-                  <CategoryItem
-                    key={i}
-                    data={d}
-                    onCategoryClick={() =>
-                      showAll
-                        ? handleCategoryBlocked(d.category)
-                        : handleCategorySelected(d.category)
-                    }
-                  />
-                ))
-              : (data.length === 0 && !loading)
-                ? (
-                    <Alert severity='warning'>
-                      <AlertTitle>No data available</AlertTitle>
-                      There are no results for the combination of filters applied to your
-                      data. Try tweaking your filters, or zoom and pan the map to adjust the
-                      Map View.
-                    </Alert>
-                )
-                : (
-                  <>
-                    <Typography variant="body2">No results</Typography>
-                    <Typography variant="caption">Your search "{searchValue}" didn't match with any value.</Typography>
-                  </>
-                )
-            }
+            {animValues.length ? (
+              animValues.map((d, i) => (
+                <CategoryItem
+                  key={i}
+                  data={d}
+                  onCategoryClick={() =>
+                    showAll
+                      ? handleCategoryBlocked(d.category)
+                      : handleCategorySelected(d.category)
+                  }
+                />
+              ))
+            ) : data.length === 0 && !loading ? (
+              <Alert severity='warning'>
+                <AlertTitle>No data available</AlertTitle>
+                There are no results for the combination of filters applied to your data.
+                Try tweaking your filters, or zoom and pan the map to adjust the Map View.
+              </Alert>
+            ) : (
+              <>
+                <Typography variant='body2'>No results</Typography>
+                <Typography variant='caption'>
+                  Your search "{searchValue}" didn't match with any value.
+                </Typography>
+              </>
+            )}
           </Grid>
           {data.length > maxItems ? (
             showAll ? (

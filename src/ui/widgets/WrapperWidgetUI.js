@@ -127,7 +127,7 @@ function WrapperWidgetUI(props) {
       >
         {action.icon}
       </IconButton>
-    )
+    );
   };
 
   return (
@@ -153,14 +153,20 @@ function WrapperWidgetUI(props) {
         </Button>
 
         <Grid item style={{ display: 'flex' }}>
-          {actions.length > 0 && actions.map((action) => {
-              return action.tooltip ?
-                <Tooltip key={action.id} title={action.tooltip.text} placement={action.tooltip.placement || 'top'}>
+          {actions.length > 0 &&
+            actions.map((action) => {
+              return action.tooltip ? (
+                <Tooltip
+                  key={action.id}
+                  title={action.tooltip.text}
+                  placement={action.tooltip.placement || 'top'}
+                >
                   {iconButtonTooltip(action)}
-                </Tooltip> 
-              :
-                iconButtonTooltip(action);
-          })}
+                </Tooltip>
+              ) : (
+                iconButtonTooltip(action)
+              );
+            })}
 
           {options.length > 0 && (
             <div>

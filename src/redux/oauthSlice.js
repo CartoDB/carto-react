@@ -1,24 +1,24 @@
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 
 /**
-*
-* A function that accepts an initialState, setup the state and creates 
-* reducers to manage OAuth with CARTO platform.
-* 
-* export const oauthInitialState = {
-*   oauthApp: {
-*     clientId: 'CARTO OAUTH APP clienID'
-*     scopes: [
-*       'user:profile', // to load avatar photo
-*       'datasets:metadata', // to list all your datasets,
-*       'dataservices:geocoding', // to use geocoding through Data Services API
-*       'dataservices:isolines', // to launch isochrones or isodistances through Data Services API
-*     ],
-*     authorizeEndPoint: 'https://carto.com/oauth2/authorize', 
-*   }
-* };
-** param  {object} initialState - the initial state of the state
-*/
+ *
+ * A function that accepts an initialState, setup the state and creates
+ * reducers to manage OAuth with CARTO platform.
+ *
+ * export const oauthInitialState = {
+ *   oauthApp: {
+ *     clientId: 'CARTO OAUTH APP clienID'
+ *     scopes: [
+ *       'user:profile', // to load avatar photo
+ *       'datasets:metadata', // to list all your datasets,
+ *       'dataservices:geocoding', // to use geocoding through Data Services API
+ *       'dataservices:isolines', // to launch isochrones or isodistances through Data Services API
+ *     ],
+ *     authorizeEndPoint: 'https://carto.com/oauth2/authorize',
+ *   }
+ * };
+ ** param  {object} initialState - the initial state of the state
+ */
 export const createOauthCartoSlice = (initialState) => {
   const state = loadOAuthState(initialState);
 
@@ -57,11 +57,14 @@ export const createOauthCartoSlice = (initialState) => {
  * @param {array} scopes - array of valid scopes for the App.
  * @param {string} authorizeEndPoint - URL of CARTO authorization endpoint. Except for on-premise, it should be 'https://carto.com/oauth2/authorize'
  */
-export const setOAuthApp = ({clientId, scopes, authorizeEndPoint}) => ({ type: 'oauth/setOAuthApp', payload: {clientId, scopes, authorizeEndPoint}});
+export const setOAuthApp = ({ clientId, scopes, authorizeEndPoint }) => ({
+  type: 'oauth/setOAuthApp',
+  payload: { clientId, scopes, authorizeEndPoint },
+});
 
 /**
  * Action to setTokenAndUserInfo at the store. Typically after a token is retrieved.
- * @param {Object} payload 
+ * @param {Object} payload
  */
 export const setTokenAndUserInfo = (payload) => ({
   type: 'oauth/setTokenAndUserInfo',
@@ -70,7 +73,8 @@ export const setTokenAndUserInfo = (payload) => ({
 
 /**
  *  Action to get the userInfo once there is a valid token, and set them both into state
- * */ 
+ * */
+
 export const setTokenAndUserInfoAsync = createAsyncThunk(
   'oauth/setTokenAndUserInfo',
   async (token, thunkApi) => {
@@ -86,7 +90,6 @@ export const setTokenAndUserInfoAsync = createAsyncThunk(
  * Action to logout an user
  */
 export const logout = () => ({ type: 'oauth/logout', payload: {} });
-
 
 // Get the credentials, from curren token & userInfo
 const selectToken = (state) => state.oauth.token;
