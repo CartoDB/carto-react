@@ -9,31 +9,31 @@ export default {
     variant: {
       control: {
         type: 'select',
-        options: ['standard', 'filled', 'outlined'],
-      },
+        options: ['standard', 'filled', 'outlined']
+      }
     },
     size: {
       control: {
         type: 'select',
-        options: ['small', 'medium'],
-      },
+        options: ['small', 'medium']
+      }
     },
     required: {
       control: {
-        type: 'boolean',
-      },
+        type: 'boolean'
+      }
     },
     disabled: {
       control: {
-        type: 'boolean',
-      },
+        type: 'boolean'
+      }
     },
     label: {
       control: {
-        type: 'text',
-      },
-    },
-  },
+        type: 'text'
+      }
+    }
+  }
 };
 
 const Template = (args) => <TextField {...args}></TextField>;
@@ -45,7 +45,7 @@ const TextFieldTemplate = ({ ...rest }) => {
       <InputAdornment position='end'>
         <Visibility />
       </InputAdornment>
-    ),
+    )
   };
 
   return (
@@ -272,7 +272,7 @@ const commonArgs = { helperText: 'Helper text' };
 const disabledControlsArgTypes = {
   variant: { table: { disable: true } },
   disabled: { table: { disable: true } },
-  required: { table: { disable: true } },
+  required: { table: { disable: true } }
 };
 
 export const Playground = Template.bind({});

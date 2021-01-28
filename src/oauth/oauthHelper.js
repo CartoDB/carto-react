@@ -11,7 +11,7 @@ export function createOAuthPopup(oauthApp) {
     height,
     left:
       Math.floor(window.screen.width / 2 - width / 2) + (window.screen.availLeft || 0),
-    top: Math.floor(window.screen.height / 2 - height / 2),
+    top: Math.floor(window.screen.height / 2 - height / 2)
   };
 
   const oauthAuthorizeUrl = buildAuthorizeUrl(oauthApp);
@@ -38,7 +38,7 @@ export function getOAuthParamsFromCallback(url) {
     // an error example: https://localhost:3000/oauthCallback#error=invalid_scope&error_description=Unsupported+scopes%3A+whatever&state=m8p81d13f
     return {
       error,
-      errorDescription: params.get('error_description'),
+      errorDescription: params.get('error_description')
     };
   }
 
@@ -52,7 +52,7 @@ export function getOAuthParamsFromCallback(url) {
     return {
       accessToken,
       expirationDate,
-      userInfoUrl,
+      userInfoUrl
     };
   }
 

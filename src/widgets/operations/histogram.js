@@ -1,4 +1,4 @@
-import {aggregationFunctions} from './aggregation/values';
+import { aggregationFunctions } from './aggregation/values';
 
 export function histogram(features, columnName, ticks, operation) {
   if (Array.isArray(features) && features.length === 0) {
@@ -7,33 +7,32 @@ export function histogram(features, columnName, ticks, operation) {
 
   ticks = [Number.MIN_SAFE_INTEGER, ...ticks, Number.MAX_SAFE_INTEGER];
 
-  const binsContainer = ticks
-    .map((tick, currentIndex, arr) => ({
-      bin: currentIndex,
-      start: tick,
-      end: arr[currentIndex + 1],
-      values: []
-    }));
+  const binsContainer = ticks.map((tick, currentIndex, arr) => ({
+    bin: currentIndex,
+    start: tick,
+    end: arr[currentIndex + 1],
+    values: []
+  }));
 
-  features.forEach(feature => {
-      const featureValue = feature.properties[columnName];
+  features.forEach((feature) => {
+    const featureValue = feature.properties[columnName];
 
-      if (!featureValue) {
-        return;
-      }
+    if (!featureValue) {
+      return;
+    }
 
-      const binContainer = binsContainer.find(
-        bin => bin.start <= featureValue && bin.end > featureValue
-      );
+    const binContainer = binsContainer.find(
+      (bin) => bin.start <= featureValue && bin.end > featureValue
+    );
 
-      if (!binContainer) {
-        return;
-      }
+    if (!binContainer) {
+      return;
+    }
 
-      binContainer.values.push(featureValue);
+    binContainer.values.push(featureValue);
   });
 
-  const transformedBins = binsContainer.map(binContainer => binContainer.values);
+  const transformedBins = binsContainer.map((binContainer) => binContainer.values);
 
   const targetOperation = aggregationFunctions[operation];
 

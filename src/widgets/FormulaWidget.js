@@ -7,17 +7,17 @@ import { getFormula } from './models';
 import { AggregationTypes } from './AggregationTypes';
 
 /**
-  * Renders a <FormulaWidget /> component
-  * @param  props
-  * @param  {string} props.title - Title to show in the widget header.
-  * @param  {string} props.dataSource - ID of the data source to get the data from.
-  * @param  {string} props.column - Name of the data source's column to get the data from.
-  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
-  * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
-  * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or globally. 
-  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
-  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
-  */
+ * Renders a <FormulaWidget /> component
+ * @param  props
+ * @param  {string} props.title - Title to show in the widget header.
+ * @param  {string} props.dataSource - ID of the data source to get the data from.
+ * @param  {string} props.column - Name of the data source's column to get the data from.
+ * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
+ * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
+ * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or globally.
+ * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ */
 function FormulaWidget(props) {
   const [formulaData, setFormulaData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -30,7 +30,8 @@ function FormulaWidget(props) {
     if (
       data &&
       credentials &&
-      (!props.viewportFilter || (props.viewportFilter && viewportFeatures[props.dataSource]))
+      (!props.viewportFilter ||
+        (props.viewportFilter && viewportFeatures[props.dataSource]))
     ) {
       setLoading(true);
       getFormula({
@@ -40,7 +41,7 @@ function FormulaWidget(props) {
         credentials,
         viewportFeatures: viewportFeatures[props.dataSource],
         type,
-        opts: { abortController },
+        opts: { abortController }
       })
         .then((data) => {
           data && data[0] && setFormulaData(data[0].value);
@@ -64,7 +65,7 @@ function FormulaWidget(props) {
       <FormulaWidgetUI data={formulaData} formatter={props.formatter} unitBefore={true} />
     </WrapperWidgetUI>
   );
-};
+}
 
 FormulaWidget.propTypes = {
   title: PropTypes.string.isRequired,

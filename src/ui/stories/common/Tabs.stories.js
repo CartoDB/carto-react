@@ -9,23 +9,23 @@ export default {
     variant: {
       control: {
         type: 'select',
-        options: ['standard', 'filled', 'outlined'],
-      },
+        options: ['standard', 'filled', 'outlined']
+      }
     },
     indicatorColor: {
       default: 'primary',
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary'],
-      },
+        options: ['default', 'primary', 'secondary']
+      }
     },
     textColor: {
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary'],
-      },
-    },
-  },
+        options: ['default', 'primary', 'secondary']
+      }
+    }
+  }
 };
 
 const Template = ({ ...args }) => {

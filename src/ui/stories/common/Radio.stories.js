@@ -5,7 +5,7 @@ import {
   FormLabel,
   Grid,
   Radio,
-  RadioGroup,
+  RadioGroup
 } from '@material-ui/core';
 
 export default {
@@ -15,20 +15,20 @@ export default {
     color: {
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary'],
-      },
+        options: ['default', 'primary', 'secondary']
+      }
     },
     disabled: {
       control: {
-        type: 'boolean',
-      },
+        type: 'boolean'
+      }
     },
     label: {
       control: {
-        type: 'text',
-      },
-    },
-  },
+        type: 'text'
+      }
+    }
+  }
 };
 
 const Template = ({ label, color, checked = false, ...args }) => {

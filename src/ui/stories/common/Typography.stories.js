@@ -21,16 +21,16 @@ export default {
           'body2',
           'button',
           'caption',
-          'overline',
-        ],
-      },
-    },
-  },
+          'overline'
+        ]
+      }
+    }
+  }
 };
 
 const Template = (args) => <Typography {...args}>{args.text}</Typography>;
 const disabledControlsArgTypes = {
-  variant: { table: { disable: true } },
+  variant: { table: { disable: true } }
 };
 
 export const Default = Template.bind({});

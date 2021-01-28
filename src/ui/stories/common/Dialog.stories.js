@@ -8,12 +8,12 @@ import {
   DialogActions,
   FormGroup,
   Grid,
-  TextField,
+  TextField
 } from '@material-ui/core';
 
 export default {
   title: 'Common/Dialog',
-  component: Dialog,
+  component: Dialog
 };
 
 const Template = ({ content, ...args }) => {

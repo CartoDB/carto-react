@@ -1,6 +1,10 @@
 import { AggregationTypes } from '../../AggregationTypes';
 
-const sum = (v, column) => v.reduce((a, b) => typeof b === 'object' ? a + (b.properties[column] || 0) : a + b, 0);
+const sum = (v, column) =>
+  v.reduce(
+    (a, b) => (typeof b === 'object' ? a + (b.properties[column] || 0) : a + b),
+    0
+  );
 
 export const aggregationFunctions = {
   [AggregationTypes.COUNT]: (val) => val.length,
