@@ -7,10 +7,10 @@ export default {
   argTypes: {
     formatter: {
       table: {
-        disable: true,
-      },
-    },
-  },
+        disable: true
+      }
+    }
+  }
 };
 
 const Template = (args) => <FormulaWidgetUI {...args} />;
@@ -33,5 +33,5 @@ FormatterValueUnit.args = { data: 1000000 };
 export const FormatterValueUnitBefore = Template.bind({});
 FormatterValueUnitBefore.args = {
   data: 1000000,
-  unitBefore: true,
+  unitBefore: true
 };

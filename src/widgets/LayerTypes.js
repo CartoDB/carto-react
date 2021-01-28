@@ -6,8 +6,7 @@
 export const LayerTypes = Object.freeze({
   /** CartoSQLLayer */
   SQL: 'sql',
-    
+
   /** CartoBQTilerLayer */
-  BQ: 'bq',
+  BQ: 'bq'
 });
-  

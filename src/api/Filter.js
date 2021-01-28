@@ -16,21 +16,21 @@ const filterFunctions = {
 };
 
 function passesFilter(columns, filters, feature) {
-  return columns.every(column => {
+  return columns.every((column) => {
     const columnFilters = filters[column];
     const columnFilterTypes = Object.keys(columnFilters);
-  
+
     if (!feature || !feature.properties[column]) {
       return false;
     }
-  
-    return columnFilterTypes.every(filter => {
+
+    return columnFilterTypes.every((filter) => {
       const filterFunction = filterFunctions[filter];
-      
+
       if (!filterFunction) {
         throw new Error(`"${filterFunction}" not implemented`);
       }
-      
+
       return filterFunction(columnFilters[filter].values, feature.properties[column]);
     });
   });
@@ -38,14 +38,13 @@ function passesFilter(columns, filters, feature) {
 
 export function applyFilter({ filters = {}, type = 'boolean' }) {
   if (!Object.keys(filters).length) {
-    return () => type === 'number' ? 1 : true;
+    return () => (type === 'number' ? 1 : true);
   }
 
-  return feature => {
+  return (feature) => {
     const columns = Object.keys(filters);
     const featurePassesFilter = passesFilter(columns, filters, feature);
 
     return type === 'number' ? Number(featurePassesFilter) : featurePassesFilter;
-  }
+  };
 }
-

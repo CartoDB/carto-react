@@ -6,19 +6,19 @@ export default {
   component: CategoryWidgetUI,
   argTypes: {
     selectedCategories: {
-      table: { disable: true },
+      table: { disable: true }
     },
     onSelectedCategoriesChange: {
-      table: { disable: true },
+      table: { disable: true }
     },
     order: {
       defaultValue: 'ranking',
       control: {
         type: 'select',
-        options: ['ranking', 'fixed'],
-      },
-    },
-  },
+        options: ['ranking', 'fixed']
+      }
+    }
+  }
 };
 
 const Template = (args) => <CategoryWidgetUI {...args}></CategoryWidgetUI>;
@@ -29,14 +29,14 @@ const data = [
   { category: 'categoryD', value: 90 },
   { category: 'categoryE', value: 200 },
   { category: 'categoryF', value: 20 },
-  { category: 'categoryG', value: 90 },
+  { category: 'categoryG', value: 90 }
 ];
 
 const dataFiltered = [
   { category: 'categoryA', value: null },
   { category: 'categoryB', value: 120 },
   { category: 'categoryC', value: 100 },
-  { category: 'categoryD', value: null },
+  { category: 'categoryD', value: null }
 ];
 
 export const Default = Template.bind({});
@@ -55,13 +55,13 @@ WithCustomLabels.args = {
     categoryA: 'Cat. A',
     categoryB: 'Cat. B',
     categoryC: 'Cat. C',
-    categoryD: 'Cat. D',
-  },
+    categoryD: 'Cat. D'
+  }
 };
 
 export const WithSelectedCategories = Template.bind({});
 WithSelectedCategories.args = {
   data: dataFiltered,
   selectedCategories: ['categoryB', 'categoryC'],
-  onSelectedCategoriesChange: (categories) => console.log(categories),
+  onSelectedCategoriesChange: (categories) => console.log(categories)
 };

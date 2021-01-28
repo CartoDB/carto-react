@@ -10,15 +10,15 @@ export default {
   component: WrapperWidgetUI,
   argTypes: {
     actions: {
-      table: { disable: true },
+      table: { disable: true }
     },
     options: {
-      table: { disable: true },
+      table: { disable: true }
     },
     children: {
-      table: { disable: true },
-    },
-  },
+      table: { disable: true }
+    }
+  }
 };
 
 const Template = (args) => (
@@ -50,9 +50,9 @@ WithActions.args = {
       id: 'a1',
       name: 'Autostyle',
       icon: <ColorizeIcon />,
-      action: () => alert('Action!'),
-    },
-  ],
+      action: () => alert('Action!')
+    }
+  ]
 };
 
 export const WithOptions = Template.bind({});
@@ -67,8 +67,8 @@ WithOptions.args = {
     { id: 'o6', name: 'Option 2', action: () => alert('Option 2!') },
     { id: 'o7', name: 'Option 2', action: () => alert('Option 2!') },
     { id: 'o8', name: 'Option 2', action: () => alert('Option 2!') },
-    { id: 'o9', name: 'Option 2', action: () => alert('Option 2!') },
-  ],
+    { id: 'o9', name: 'Option 2', action: () => alert('Option 2!') }
+  ]
 };
 
 export const WithActionsAndOptions = Template.bind({});
@@ -79,13 +79,13 @@ WithActionsAndOptions.args = {
       id: 'a1',
       name: 'Autostyle',
       icon: <ColorizeIcon />,
-      action: () => alert('Action!'),
-    },
+      action: () => alert('Action!')
+    }
   ],
   options: [
     { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
-    { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') },
-  ],
+    { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') }
+  ]
 };
 
 export const WithOptionsAndCustomIcon = Template.bind({});
@@ -93,9 +93,9 @@ WithOptionsAndCustomIcon.args = {
   title: 'Wrapper with options and custom icon',
   options: [
     { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
-    { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') },
+    { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') }
   ],
-  optionsIcon: <MenuIcon />,
+  optionsIcon: <MenuIcon />
 };
 
 export const WithActionsTooltip = Template.bind({});
@@ -108,8 +108,8 @@ WithActionsTooltip.args = {
       icon: <ColorizeIcon />,
       action: () => alert('Action!'),
       tooltip: {
-        text: 'Tooltip default',
-      },
+        text: 'Tooltip default'
+      }
     },
     {
       id: 'a2',
@@ -118,8 +118,8 @@ WithActionsTooltip.args = {
       action: () => alert('Action!'),
       tooltip: {
         text: 'Tooltip on bottom',
-        placement: 'bottom',
-      },
-    },
-  ],
+        placement: 'bottom'
+      }
+    }
+  ]
 };

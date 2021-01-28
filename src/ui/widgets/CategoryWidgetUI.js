@@ -10,19 +10,19 @@ import {
   SvgIcon,
   TextField,
   Typography,
-  makeStyles,
+  makeStyles
 } from '@material-ui/core';
 import { Alert, AlertTitle, Skeleton } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    ...theme.typography.body2,
+    ...theme.typography.body2
   },
 
   categoriesWrapper: {
     maxHeight: theme.spacing(40),
     overflow: 'auto',
-    padding: theme.spacing(0, 1, 1, 0),
+    padding: theme.spacing(0, 1, 1, 0)
   },
 
   element: {
@@ -32,21 +32,21 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.text.disabled,
 
       '& $progressbar div': {
-        backgroundColor: theme.palette.text.disabled,
-      },
+        backgroundColor: theme.palette.text.disabled
+      }
     },
 
     '&$rest $progressbar div': {
-      backgroundColor: theme.palette.text.disabled,
+      backgroundColor: theme.palette.text.disabled
     },
 
     '&:hover $progressbar div': {
-      backgroundColor: theme.palette.secondary.dark,
-    },
+      backgroundColor: theme.palette.secondary.dark
+    }
   },
 
   label: {
-    fontWeight: theme.typography.fontWeightBold,
+    fontWeight: theme.typography.fontWeightBold
   },
 
   progressbar: {
@@ -62,20 +62,20 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: theme.spacing(0.5),
       backgroundColor: theme.palette.secondary.main,
       transition: `background-color ${theme.transitions.easing.sharp} ${theme.transitions.duration.shortest}ms,
-                   width ${theme.transitions.easing.sharp} ${theme.transitions.duration.complex}ms`,
-    },
+                   width ${theme.transitions.easing.sharp} ${theme.transitions.duration.complex}ms`
+    }
   },
 
   skeletonProgressbar: {
     height: theme.spacing(1),
     width: '100%',
-    margin: theme.spacing(0.5, 0, 1, 0),
+    margin: theme.spacing(0.5, 0, 1, 0)
   },
 
   unselected: {},
 
   rest: {
-    cursor: 'default',
+    cursor: 'default'
   },
 
   optionsSelectedBar: {
@@ -83,12 +83,12 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(1),
 
     '& .MuiTypography-caption': {
-      color: theme.palette.text.secondary,
+      color: theme.palette.text.secondary
     },
 
     '& .MuiButton-label': {
-      ...theme.typography.caption,
-    },
+      ...theme.typography.caption
+    }
   },
 
   linkAsButton: {
@@ -96,13 +96,13 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
 
     '& + hr': {
-      margin: theme.spacing(0, 1),
-    },
+      margin: theme.spacing(0, 1)
+    }
   },
 
   searchInput: {
-    marginTop: theme.spacing(-0.5),
-  },
+    marginTop: theme.spacing(-0.5)
+  }
 }));
 
 function usePrevious(value) {
@@ -240,7 +240,7 @@ function CategoryWidgetUI(props) {
             const categoryElem = list.find((elem) => elem.category === category);
             acum.push({
               category,
-              value: categoryElem ? categoryElem.value : null,
+              value: categoryElem ? categoryElem.value : null
             });
             return acum;
           }, []);
@@ -317,7 +317,7 @@ function CategoryWidgetUI(props) {
     maxItems,
     order,
     searchValue,
-    showAll,
+    showAll
   ]);
 
   useEffect(() => {
@@ -350,7 +350,7 @@ function CategoryWidgetUI(props) {
       if (currentFrame < frames) {
         currentValues = currentValues.map((elem, i) => ({
           ...elem,
-          value: elem.value + steps[i],
+          value: elem.value + steps[i]
         }));
         drawFrame(currentValues);
         currentFrame++;
@@ -501,7 +501,7 @@ function CategoryWidgetUI(props) {
                     <InputAdornment position='start'>
                       <SearchIcon />
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
             </Grid>
@@ -560,7 +560,7 @@ function CategoryWidgetUI(props) {
 
 CategoryWidgetUI.ORDER_TYPES = {
   RANKING: 'ranking',
-  FIXED: 'fixed',
+  FIXED: 'fixed'
 };
 
 CategoryWidgetUI.defaultProps = {
@@ -570,14 +570,14 @@ CategoryWidgetUI.defaultProps = {
   loading: false,
   maxItems: 5,
   order: CategoryWidgetUI.ORDER_TYPES.RANKING,
-  selectedCategories: [],
+  selectedCategories: []
 };
 
 CategoryWidgetUI.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       category: PropTypes.string.isRequired,
-      value: PropTypes.number,
+      value: PropTypes.number
     })
   ),
   formatter: PropTypes.func,
@@ -586,7 +586,7 @@ CategoryWidgetUI.propTypes = {
   maxItems: PropTypes.number,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func,
-  order: PropTypes.oneOf(Object.values(CategoryWidgetUI.ORDER_TYPES)),
+  order: PropTypes.oneOf(Object.values(CategoryWidgetUI.ORDER_TYPES))
 };
 
 export default CategoryWidgetUI;

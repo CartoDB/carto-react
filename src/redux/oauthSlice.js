@@ -27,7 +27,7 @@ export const createOauthCartoSlice = (initialState) => {
     initialState: {
       token: null,
       userInfo: null,
-      ...state,
+      ...state
     },
     reducers: {
       setOAuthApp: (state, action) => {
@@ -44,8 +44,8 @@ export const createOauthCartoSlice = (initialState) => {
         state.token = null;
         state.userInfo = null;
         saveOAuthState(state);
-      },
-    },
+      }
+    }
   });
 
   return slice.reducer;
@@ -59,7 +59,7 @@ export const createOauthCartoSlice = (initialState) => {
  */
 export const setOAuthApp = ({ clientId, scopes, authorizeEndPoint }) => ({
   type: 'oauth/setOAuthApp',
-  payload: { clientId, scopes, authorizeEndPoint },
+  payload: { clientId, scopes, authorizeEndPoint }
 });
 
 /**
@@ -68,7 +68,7 @@ export const setOAuthApp = ({ clientId, scopes, authorizeEndPoint }) => ({
  */
 export const setTokenAndUserInfo = (payload) => ({
   type: 'oauth/setTokenAndUserInfo',
-  payload,
+  payload
 });
 
 /**
@@ -109,7 +109,7 @@ export const selectOAuthCredentials = createSelector(
     const credentials = {
       username: userInfo.username,
       apiKey: token.accessToken,
-      serverUrlTemplate,
+      serverUrlTemplate
     };
     return credentials;
   }

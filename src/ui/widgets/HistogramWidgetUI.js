@@ -11,18 +11,18 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
 
     '& .MuiTypography-caption': {
-      color: theme.palette.text.secondary,
+      color: theme.palette.text.secondary
     },
 
     '& .MuiButton-label': {
-      ...theme.typography.caption,
-    },
+      ...theme.typography.caption
+    }
   },
 
   selectAllButton: {
     ...theme.typography.caption,
-    cursor: 'pointer',
-  },
+    cursor: 'pointer'
+  }
 }));
 
 function __dataEqual(optionPrev, optionNext) {
@@ -42,7 +42,7 @@ function __generateDefaultConfig(
     tooltip,
     tooltipFormatter,
     xAxisFormatter = (v) => v,
-    yAxisFormatter = (v) => v,
+    yAxisFormatter = (v) => v
   },
   data,
   theme
@@ -52,12 +52,12 @@ function __generateDefaultConfig(
       left: theme.spacing(0),
       top: theme.spacing(2),
       right: theme.spacing(0),
-      bottom: theme.spacing(3),
+      bottom: theme.spacing(3)
     },
     axisPointer: {
       lineStyle: {
-        color: theme.palette.charts.axisPointer,
-      },
+        color: theme.palette.charts.axisPointer
+      }
     },
     tooltip: {
       show: tooltip,
@@ -66,7 +66,7 @@ function __generateDefaultConfig(
       textStyle: {
         ...theme.typography.caption,
         fontSize: 12,
-        lineHeight: 16,
+        lineHeight: 16
       },
       backgroundColor: theme.palette.other.tooltip,
       position: function (point, params, dom, rect, size) {
@@ -79,16 +79,16 @@ function __generateDefaultConfig(
         }
         return position;
       },
-      ...(tooltipFormatter ? { formatter: tooltipFormatter } : {}),
+      ...(tooltipFormatter ? { formatter: tooltipFormatter } : {})
     },
     color: [theme.palette.secondary.main],
     xAxis: {
       type: 'category',
       axisLine: {
-        show: false,
+        show: false
       },
       axisTick: {
-        show: false,
+        show: false
       },
       axisLabel: {
         ...theme.typography.charts,
@@ -98,9 +98,9 @@ function __generateDefaultConfig(
           return typeof formatted === 'object'
             ? `${formatted.prefix || ''}${formatted.value}${formatted.suffix || ''}`
             : formatted;
-        },
+        }
       },
-      data: dataAxis,
+      data: dataAxis
     },
     yAxis: {
       type: 'value',
@@ -110,7 +110,7 @@ function __generateDefaultConfig(
           0,
           0,
           theme.typography.charts.fontSize * theme.typography.charts.lineHeight + 4,
-          0,
+          0
         ],
         show: true,
         showMaxLabel: true,
@@ -132,22 +132,22 @@ function __generateDefaultConfig(
           return typeof formatted === 'object'
             ? `${formatted.prefix}${formatted.value}${formatted.suffix || ''}`
             : formatted;
-        },
+        }
       },
       axisLine: {
-        show: false,
+        show: false
       },
       axisTick: {
-        show: false,
+        show: false
       },
       splitLine: {
         show: true,
         onZero: false,
         lineStyle: {
-          color: theme.palette.charts.axisLine,
-        },
-      },
-    },
+          color: theme.palette.charts.axisLine
+        }
+      }
+    }
   };
 }
 
@@ -169,19 +169,19 @@ function __generateSerie(name, data, selectedBars = [], theme) {
         ? {
             emphasis: {
               itemStyle: {
-                color: theme.palette.secondary.dark,
-              },
-            },
+                color: theme.palette.secondary.dark
+              }
+            }
           }
-        : {}),
-    },
+        : {})
+    }
   ];
 }
 
 function __disableBar(bar, theme) {
   bar.disabled = true;
   bar.itemStyle = {
-    color: theme.palette.charts.disabled,
+    color: theme.palette.charts.disabled
   };
 }
 
@@ -237,7 +237,7 @@ function HistogramWidgetUI(props) {
     tooltipFormatter,
     xAxisFormatter,
     yAxisFormatter,
-    height = theme.spacing(22),
+    height = theme.spacing(22)
   } = props;
 
   const classes = useStyles();
@@ -258,7 +258,7 @@ function HistogramWidgetUI(props) {
     tooltipFormatter,
     xAxisFormatter,
     yAxisFormatter,
-    selectedBars,
+    selectedBars
   ]);
 
   const clearBars = () => {
@@ -288,13 +288,13 @@ function HistogramWidgetUI(props) {
       });
       onSelectedBarsChange({
         bars: activeBars.length === serie.data.length ? [] : activeBars,
-        chartInstance,
+        chartInstance
       });
     }
   };
 
   const onEvents = {
-    click: clickEvent,
+    click: clickEvent
   };
 
   return (
@@ -337,7 +337,7 @@ HistogramWidgetUI.defaultProps = {
   yAxisFormatter: (v) => v,
   dataAxis: [],
   name: null,
-  onSelectedBarsChange: null,
+  onSelectedBarsChange: null
 };
 
 HistogramWidgetUI.propTypes = {
@@ -349,7 +349,7 @@ HistogramWidgetUI.propTypes = {
   dataAxis: PropTypes.array,
   name: PropTypes.string,
   onSelectedBarsChange: PropTypes.func,
-  height: PropTypes.number,
+  height: PropTypes.number
 };
 
 export default HistogramWidgetUI;

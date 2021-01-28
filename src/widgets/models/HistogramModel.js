@@ -5,7 +5,18 @@ import { histogram } from '../operations/histogram';
 import { LayerTypes } from '../LayerTypes';
 
 export const getHistogram = async (props) => {
-  const { data, credentials, column, operation, ticks, filters, opts, viewportFilter, viewportFeatures, type } = props;
+  const {
+    data,
+    credentials,
+    column,
+    operation,
+    ticks,
+    filters,
+    opts,
+    viewportFilter,
+    viewportFeatures,
+    type
+  } = props;
 
   const operationColumn = props.operationColumn || column;
 
@@ -14,7 +25,9 @@ export const getHistogram = async (props) => {
   }
 
   if (type === LayerTypes.BQ && !viewportFilter) {
-    throw new Error('Histogram Widget error: BigQuery layer needs "viewportFilter" prop set to true.');
+    throw new Error(
+      'Histogram Widget error: BigQuery layer needs "viewportFilter" prop set to true.'
+    );
   }
 
   if (viewportFilter) {
@@ -25,7 +38,9 @@ export const getHistogram = async (props) => {
   } else {
     let query = data;
 
-    const caseTicks = ticks.map((t, index) => `WHEN ${column} < ${t} THEN 'cat_${index}'`);
+    const caseTicks = ticks.map(
+      (t, index) => `WHEN ${column} < ${t} THEN 'cat_${index}'`
+    );
     caseTicks.push(`ELSE 'cat_${ticks.length}'`);
 
     query = `

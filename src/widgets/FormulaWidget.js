@@ -14,7 +14,7 @@ import { AggregationTypes } from './AggregationTypes';
  * @param  {string} props.column - Name of the data source's column to get the data from.
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
- * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not.
+ * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or globally.
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
@@ -30,7 +30,8 @@ function FormulaWidget(props) {
     if (
       data &&
       credentials &&
-      (!props.viewportFilter || (props.viewportFilter && viewportFeatures[props.dataSource]))
+      (!props.viewportFilter ||
+        (props.viewportFilter && viewportFeatures[props.dataSource]))
     ) {
       setLoading(true);
       getFormula({
@@ -40,7 +41,7 @@ function FormulaWidget(props) {
         credentials,
         viewportFeatures: viewportFeatures[props.dataSource],
         type,
-        opts: { abortController },
+        opts: { abortController }
       })
         .then((data) => {
           data && data[0] && setFormulaData(data[0].value);
@@ -73,12 +74,12 @@ FormulaWidget.propTypes = {
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   viewportFilter: PropTypes.bool,
-  onError: PropTypes.func,
+  onError: PropTypes.func
 };
 
 FormulaWidget.defaultProps = {
   viewportFilter: false,
-  wrapperProps: {},
+  wrapperProps: {}
 };
 
 export default FormulaWidget;

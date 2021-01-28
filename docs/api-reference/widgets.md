@@ -14,7 +14,7 @@ Renders a `<CategoryWidget />` component
 | [props.operationColumn] | <code>string</code>                                  |                    | Name of the data source's column to operate with. If not defined it will default to the one defined in `column`. |
 | props.operation         | <code>string</code>                                  |                    | Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.            |
 | [props.formatter]       | [<code>formatterCallback</code>](#formatterCallback) |                    | Function to format each value returned.                                                                          |
-| [props.viewportFilter]  | <code>boolean</code>                                 | <code>false</code> | Defines whether filter by the viewport or not.                                                                   |
+| [props.viewportFilter]  | <code>boolean</code>                                 | <code>false</code> | Defines whether filter by the viewport or globally.                                                              |
 | [props.onError]         | [<code>errorCallback</code>](#errorCallback)         |                    | Function to handle error messages from the widget.                                                               |
 
 ## FormulaWidget
@@ -30,7 +30,7 @@ Renders a `<FormulaWidget />` component
 | props.column           | <code>string</code>                                  |                    | Name of the data source's column to get the data from.                                                |
 | props.operation        | <code>string</code>                                  |                    | Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object. |
 | [props.formatter]      | [<code>formatterCallback</code>](#formatterCallback) |                    | Function to format each value returned.                                                               |
-| [props.viewportFilter] | <code>boolean</code>                                 | <code>false</code> | Defines whether filter by the viewport or not.                                                        |
+| [props.viewportFilter] | <code>boolean</code>                                 | <code>false</code> | Defines whether filter by the viewport or globally.                                                   |
 | [props.onError]        | [<code>errorCallback</code>](#errorCallback)         |                    | Function to handle error messages from the widget.                                                    |
 
 ## GeocoderWidget
@@ -59,7 +59,7 @@ Renders a `<HistogramWidget />` component
 | props.ticks            | <code>Array.&lt;number&gt;</code>                    |                    | Array of thresholds for the X axis.                                                                   |
 | [props.xAxisformatter] | [<code>formatterCallback</code>](#formatterCallback) |                    | Function to format X axis values.                                                                     |
 | [props.formatter]      | [<code>formatterCallback</code>](#formatterCallback) |                    | Function to format tooltip and Y axis values.                                                         |
-| [props.viewportFilter] | <code>boolean</code>                                 | <code>false</code> | Defines whether filter by the viewport or not.                                                        |
+| [props.viewportFilter] | <code>boolean</code>                                 | <code>false</code> | Defines whether filter by the viewport or globally.                                                   |
 | [props.onError]        | [<code>errorCallback</code>](#errorCallback)         |                    | Function to handle error messages from the widget.                                                    |
 
 ## AggregationTypes
@@ -88,10 +88,11 @@ Enum for the different types of aggregations available for widgets
 </dl>
 
 ## LayerTypes
+
 Enum for the different types of @deck.gl/carto layers
 
 **Kind**: global enum  
-**Read only**: true  
+**Read only**: true
 
 <dl>
 <dt><a href="#SQL">SQL</a></dt>

@@ -20,8 +20,8 @@ theme = responsiveFontSizes(theme, {
     'body2',
     'button',
     'caption',
-    'overline',
-  ],
+    'overline'
+  ]
 });
 
 export const decorators = [
@@ -29,7 +29,7 @@ export const decorators = [
     <ThemeProvider theme={theme}>
       <Story />
     </ThemeProvider>
-  ),
+  )
 ];
 
 export const parameters = {
@@ -37,8 +37,8 @@ export const parameters = {
   viewMode: 'docs',
   docs: {
     source: {
-      type: 'code',
-    },
+      type: 'code'
+    }
   },
   options: {
     storySort: {
@@ -48,8 +48,8 @@ export const parameters = {
         ['Palette', 'Typography'],
         'Common',
         'Widgets',
-        ['WrapperWidgetUI', 'FormulaWidgetUI', 'CategoryWidgetUI'],
-      ],
-    },
-  },
+        ['WrapperWidgetUI', 'FormulaWidgetUI', 'CategoryWidgetUI']
+      ]
+    }
+  }
 };

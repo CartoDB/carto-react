@@ -18,7 +18,7 @@ import { AggregationTypes } from './AggregationTypes';
  * @param  {number[]} props.ticks - Array of thresholds for the X axis.
  * @param  {formatterCallback} [props.xAxisformatter] - Function to format X axis values.
  * @param  {formatterCallback} [props.formatter] - Function to format Y axis values.
- * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not.
+ * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or globally.
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
@@ -51,7 +51,8 @@ function HistogramWidget(props) {
     if (
       data &&
       credentials &&
-      (!props.viewportFilter || (props.viewportFilter && viewportFeatures[props.dataSource]))
+      (!props.viewportFilter ||
+        (props.viewportFilter && viewportFeatures[props.dataSource]))
     ) {
       const filters = getApplicableFilters(source.filters, props.id);
       getHistogram({
@@ -61,7 +62,7 @@ function HistogramWidget(props) {
         credentials,
         viewportFeatures: viewportFeatures[props.dataSource],
         type,
-        opts: { abortController },
+        opts: { abortController }
       })
         .then((data) => data && setHistogramData(data))
         .catch((error) => {
@@ -77,31 +78,34 @@ function HistogramWidget(props) {
     };
   }, [credentials, data, source.filters, viewportFeatures, props, dispatch]);
 
-  const handleSelectedBarsChange = useCallback(({ bars }) => {
-    setSelectedBars(bars);
-    
-    if (bars && bars.length) {
-      const thresholds = bars.map((i) => {
-        return [ticks[i - 1], ticks.length !== i + 1 ? ticks[i] : undefined];
-      });
-      dispatch(
-        addFilter({
-          id: props.dataSource,
-          column,
-          type: FilterTypes.BETWEEN,
-          values: thresholds,
-          owner: props.id,
-        })
-      );
-    } else {
-      dispatch(
-        removeFilter({
-          id: props.dataSource,
-          column,
-        })
-      );
-    }
-  }, [setSelectedBars, dispatch, addFilter, removeFilter]);
+  const handleSelectedBarsChange = useCallback(
+    ({ bars }) => {
+      setSelectedBars(bars);
+
+      if (bars && bars.length) {
+        const thresholds = bars.map((i) => {
+          return [ticks[i - 1], ticks.length !== i + 1 ? ticks[i] : undefined];
+        });
+        dispatch(
+          addFilter({
+            id: props.dataSource,
+            column,
+            type: FilterTypes.BETWEEN,
+            values: thresholds,
+            owner: props.id
+          })
+        );
+      } else {
+        dispatch(
+          removeFilter({
+            id: props.dataSource,
+            column
+          })
+        );
+      }
+    },
+    [setSelectedBars, dispatch, addFilter, removeFilter]
+  );
 
   return (
     <WrapperWidgetUI title={title} {...props.wrapperProps}>
@@ -130,13 +134,13 @@ HistogramWidget.propTypes = {
   tooltip: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
   viewportFilter: PropTypes.bool,
-  onError: PropTypes.func,
+  onError: PropTypes.func
 };
 
 HistogramWidget.defaultProps = {
   tooltip: true,
   viewportFilter: false,
-  wrapperProps: {},
+  wrapperProps: {}
 };
 
 export default HistogramWidget;

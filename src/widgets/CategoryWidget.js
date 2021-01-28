@@ -17,7 +17,7 @@ import { AggregationTypes } from './AggregationTypes';
  * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
- * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not.
+ * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or globally.
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
@@ -36,7 +36,8 @@ function CategoryWidget(props) {
     if (
       data &&
       credentials &&
-      (!props.viewportFilter || (props.viewportFilter && viewportFeatures[props.dataSource]))
+      (!props.viewportFilter ||
+        (props.viewportFilter && viewportFeatures[props.dataSource]))
     ) {
       const filters = getApplicableFilters(source.filters, props.id);
       setLoading(true);
@@ -47,7 +48,7 @@ function CategoryWidget(props) {
         credentials,
         viewportFeatures: viewportFeatures[props.dataSource],
         type,
-        opts: { abortController },
+        opts: { abortController }
       })
         .then((data) => {
           setCategoryData(data);
@@ -66,28 +67,31 @@ function CategoryWidget(props) {
     };
   }, [credentials, data, source.filters, viewportFeatures, props]);
 
-  const handleSelectedCategoriesChange = useCallback((categories) => {
-    setSelectedCategories(categories);
-    
-    if (categories && categories.length) {
-      dispatch(
-        addFilter({
-          id: props.dataSource,
-          column,
-          type: FilterTypes.IN,
-          values: categories,
-          owner: props.id,
-        })
-      );
-    } else {
-      dispatch(
-        removeFilter({
-          id: props.dataSource,
-          column,
-        })
-      );
-    }
-  }, [setSelectedCategories, dispatch, addFilter, removeFilter]);
+  const handleSelectedCategoriesChange = useCallback(
+    (categories) => {
+      setSelectedCategories(categories);
+
+      if (categories && categories.length) {
+        dispatch(
+          addFilter({
+            id: props.dataSource,
+            column,
+            type: FilterTypes.IN,
+            values: categories,
+            owner: props.id
+          })
+        );
+      } else {
+        dispatch(
+          removeFilter({
+            id: props.dataSource,
+            column
+          })
+        );
+      }
+    },
+    [setSelectedCategories, dispatch, addFilter, removeFilter]
+  );
 
   return (
     <WrapperWidgetUI title={props.title} loading={loading} {...props.wrapperProps}>
@@ -112,12 +116,12 @@ CategoryWidget.propTypes = {
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   viewportFilter: PropTypes.bool,
-  onError: PropTypes.func,
+  onError: PropTypes.func
 };
 
 CategoryWidget.defaultProps = {
   viewportFilter: false,
-  wrapperProps: {},
+  wrapperProps: {}
 };
 
 export default CategoryWidget;

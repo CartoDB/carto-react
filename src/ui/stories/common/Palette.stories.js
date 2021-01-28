@@ -9,10 +9,10 @@ export default {
     colorVariant: {
       control: {
         type: 'select',
-        options: ['primary', 'secondary', 'error', 'warning', 'info', 'success'],
-      },
-    },
-  },
+        options: ['primary', 'secondary', 'error', 'warning', 'info', 'success']
+      }
+    }
+  }
 };
 
 const boxStyle = {
@@ -21,7 +21,7 @@ const boxStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  textAlign: 'center',
+  textAlign: 'center'
 };
 
 const ColorTemplate = ({ colorVariant, shade, ...args }) => {

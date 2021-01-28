@@ -16,7 +16,7 @@ import {
   Typography,
   makeStyles,
   Switch,
-  Paper,
+  Paper
 } from '@material-ui/core';
 import {
   Drafts,
@@ -25,20 +25,20 @@ import {
   ExpandMore,
   Home,
   Inbox,
-  Star,
+  Star
 } from '@material-ui/icons';
 
 export default {
   title: 'Common/List',
-  component: List,
+  component: List
 };
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: theme.palette.grey[100]
   },
   nested: {
-    paddingLeft: theme.spacing(4),
-  },
+    paddingLeft: theme.spacing(4)
+  }
 }));
 
 const Template = ({ secondary, ...args }) => {

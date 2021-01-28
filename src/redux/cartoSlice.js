@@ -34,7 +34,7 @@ export const createCartoSlice = (initialState) => {
         ...initialState.viewState,
         latitude: 0,
         longitude: 0,
-        zoom: 0,
+        zoom: 0
       },
       viewport: undefined,
       geocoderResult: null,
@@ -47,7 +47,7 @@ export const createCartoSlice = (initialState) => {
         // Auto import dataSources
       },
       viewportFeatures: {},
-      ...initialState,
+      ...initialState
     },
     reducers: {
       addSource: (state, action) => {
@@ -65,7 +65,7 @@ export const createCartoSlice = (initialState) => {
         if (layer)
           state.layers[action.payload.id] = {
             ...layer,
-            ...action.payload.layerAttributes,
+            ...action.payload.layerAttributes
           };
       },
       removeLayer: (state, action) => {
@@ -117,12 +117,12 @@ export const createCartoSlice = (initialState) => {
         state.geocoderResult = action.payload;
       },
       setViewportFeatures: (state, action) => {
-        const {sourceId, features} = action.payload;
+        const { sourceId, features } = action.payload;
 
         state.viewportFeatures = {
           ...state.viewportFeatures,
           [sourceId]: features
-        }
+        };
       },
       removeViewportFeatures: (state, action) => {
         const sourceId = action.payload;
@@ -131,7 +131,7 @@ export const createCartoSlice = (initialState) => {
           delete state.viewportFeatures[sourceId];
         }
       }
-    },
+    }
   });
 
   return slice.reducer;
@@ -146,7 +146,7 @@ export const createCartoSlice = (initialState) => {
  */
 export const addSource = ({ id, data, type, credentials }) => ({
   type: 'carto/addSource',
-  payload: { id, data, type, credentials },
+  payload: { id, data, type, credentials }
 });
 
 /**
@@ -155,7 +155,7 @@ export const addSource = ({ id, data, type, credentials }) => ({
  */
 export const removeSource = (sourceId) => ({
   type: 'carto/removeSource',
-  payload: sourceId,
+  payload: sourceId
 });
 
 /**
@@ -166,7 +166,7 @@ export const removeSource = (sourceId) => ({
  */
 export const addLayer = ({ id, source, layerAttributes = {} }) => ({
   type: 'carto/addLayer',
-  payload: { id, source, ...layerAttributes },
+  payload: { id, source, ...layerAttributes }
 });
 
 /**
@@ -176,7 +176,7 @@ export const addLayer = ({ id, source, layerAttributes = {} }) => ({
  */
 export const updateLayer = ({ id, layerAttributes }) => ({
   type: 'carto/updateLayer',
-  payload: { id, layerAttributes },
+  payload: { id, layerAttributes }
 });
 
 /**
@@ -199,7 +199,7 @@ export const setBasemap = (basemap) => ({ type: 'carto/setBasemap', payload: bas
  */
 export const addFilter = ({ id, column, type, values, owner }) => ({
   type: 'carto/addFilter',
-  payload: { id, column, type, values, owner },
+  payload: { id, column, type, values, owner }
 });
 
 /**
@@ -209,7 +209,7 @@ export const addFilter = ({ id, column, type, values, owner }) => ({
  */
 export const removeFilter = ({ id, column }) => ({
   type: 'carto/removeFilter',
-  payload: { id, column },
+  payload: { id, column }
 });
 
 /**
@@ -229,7 +229,12 @@ const debouncedSetViewPort = debounce((dispatch, setViewPort) => {
   dispatch(setViewPort());
 }, 200);
 
-const NOT_ALLOWED_DECK_PROPS = ['transitionDuration', 'transitionEasing', 'transitionInterpolator', 'transitionInterruption'];
+const NOT_ALLOWED_DECK_PROPS = [
+  'transitionDuration',
+  'transitionEasing',
+  'transitionInterpolator',
+  'transitionInterruption'
+];
 
 /**
  * Action to set the current ViewState
@@ -258,10 +263,16 @@ export const setViewState = (viewState) => {
  * @param {object} sourceId - the id of the source
  * @param {object} feature - the viewport features
  */
-export const setViewportFeatures = (data) => ({ type: 'carto/setViewportFeatures', payload: data });
+export const setViewportFeatures = (data) => ({
+  type: 'carto/setViewportFeatures',
+  payload: data
+});
 
 /**
  * Action to remove the source features of a layer
  * @param {String} sourceId - the source id to remove
  */
-export const removeViewportFeatures = (data) => ({ type: 'carto/removeViewportFeatures', payload: data});
+export const removeViewportFeatures = (data) => ({
+  type: 'carto/removeViewportFeatures',
+  payload: data
+});

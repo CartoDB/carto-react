@@ -9,9 +9,9 @@ const config = {
       'react-dom': 'react-dom',
       '@reduxjs/toolkit': '@reduxjs/toolkit',
       '@deck.gl/core': '@deck.gl/core',
-      '@deck.gl/google-maps': '@deck.gl/google-maps',
+      '@deck.gl/google-maps': '@deck.gl/google-maps'
     },
-    /^@material-ui\/.+$/,
+    /^@material-ui\/.+$/
   ],
   module: {
     rules: [
@@ -21,11 +21,11 @@ const config = {
         loader: 'babel-loader',
         options: {
           presets: ['@babel/preset-env', '@babel/preset-react'],
-          plugins: ['@babel/plugin-transform-runtime'],
-        },
-      },
-    ],
-  },
+          plugins: ['@babel/plugin-transform-runtime']
+        }
+      }
+    ]
+  }
 };
 
 const api = {
@@ -34,9 +34,9 @@ const api = {
     path: path.resolve(__dirname, 'dist', 'api'),
     filename: 'index.js',
     library: 'cartoForReact',
-    libraryTarget: 'umd',
+    libraryTarget: 'umd'
   },
-  entry: './src/api/index.js',
+  entry: './src/api/index.js'
 };
 
 const basemaps = {
@@ -45,9 +45,9 @@ const basemaps = {
     path: path.resolve(__dirname, 'dist', 'basemaps'),
     filename: 'index.js',
     library: 'cartoForReact',
-    libraryTarget: 'umd',
+    libraryTarget: 'umd'
   },
-  entry: './src/basemaps/index.js',
+  entry: './src/basemaps/index.js'
 };
 
 const oauth = {
@@ -56,9 +56,9 @@ const oauth = {
     path: path.resolve(__dirname, 'dist', 'oauth'),
     filename: 'index.js',
     library: 'cartoForReact',
-    libraryTarget: 'umd',
+    libraryTarget: 'umd'
   },
-  entry: './src/oauth/index.js',
+  entry: './src/oauth/index.js'
 };
 
 const redux = {
@@ -67,9 +67,9 @@ const redux = {
     path: path.resolve(__dirname, 'dist', 'redux'),
     filename: 'index.js',
     library: 'cartoForReact',
-    libraryTarget: 'umd',
+    libraryTarget: 'umd'
   },
-  entry: './src/redux/index.js',
+  entry: './src/redux/index.js'
 };
 
 const ui = {
@@ -78,9 +78,9 @@ const ui = {
     path: path.resolve(__dirname, 'dist', 'ui'),
     filename: 'index.js',
     library: 'cartoForReact',
-    libraryTarget: 'umd',
+    libraryTarget: 'umd'
   },
-  entry: './src/ui/index.js',
+  entry: './src/ui/index.js'
 };
 
 const widgets = {
@@ -89,9 +89,9 @@ const widgets = {
     path: path.resolve(__dirname, 'dist', 'widgets'),
     filename: 'index.js',
     library: 'cartoForReact',
-    libraryTarget: 'umd',
+    libraryTarget: 'umd'
   },
-  entry: './src/widgets/index.js',
+  entry: './src/widgets/index.js'
 };
 
 module.exports = [api, basemaps, oauth, redux, ui, widgets];

@@ -30,7 +30,7 @@ export const geocodeStreetPoint = async (
   const [longitude, latitude] = geometry.coordinates;
   return {
     longitude,
-    latitude,
+    latitude
   };
 };
 
