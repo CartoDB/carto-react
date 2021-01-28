@@ -1,3 +1,5 @@
+import { minify } from 'pgsql-minify';
+
 import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import { applyFilter } from '../../api/Filter';
@@ -18,7 +20,7 @@ export const getFormula = async (props) => {
   } = props;
 
   if (Array.isArray(data)) {
-    throw new Error('Array is not a valid type to get categories');
+    throw new Error('Array is not a valid type to get formula');
   }
 
   if (type === LayerTypes.BQ && !viewportFilter) {
@@ -28,20 +30,49 @@ export const getFormula = async (props) => {
   }
 
   if (viewportFilter) {
+    return filterViewportFeaturesToGetFormula({
+      viewportFeatures,
+      filters,
+      operation,
+      column
+    });
+  }
+
+  const query = buildSqlQueryToGetFormula({ data, column, operation, filters });
+  return await executeSQL(credentials, query, opts);
+};
+
+/**
+ * Build a SQL sentence to get Formula defined by props
+ */
+export const buildSqlQueryToGetFormula = ({ data, column, operation, filters }) => {
+  const query = `
+    SELECT 
+      ${operation}(${column}) as value
+    FROM 
+      (${data}) as q
+    ${filtersToSQL(filters)}
+  `;
+
+  return minify(query);
+};
+
+/**
+ * Filter viewport features to get Formula defined by props
+ */
+export const filterViewportFeaturesToGetFormula = ({
+  viewportFeatures,
+  filters,
+  operation,
+  column
+}) => {
+  if (viewportFeatures) {
     const targetOperation = aggregationFunctions[operation];
 
-    const features = viewportFeatures || [];
-    const filteredFeatures = features.filter(applyFilter({ filters }));
+    const filteredFeatures = viewportFeatures.filter(applyFilter({ filters }));
+
     return [{ value: targetOperation(filteredFeatures, column) }];
-  } else {
-    let query = data;
-
-    query = `
-      SELECT ${operation}(${column}) as value
-      FROM (${query}) as q
-      ${filtersToSQL(filters)}
-    `;
-
-    return await executeSQL(credentials, query, opts);
   }
+
+  return [{ value: null }];
 };
