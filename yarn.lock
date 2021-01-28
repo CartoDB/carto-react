@@ -1051,33 +1051,19 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-<<<<<<< HEAD
-"@deck.gl/aggregation-layers@8.4.0-beta.1":
-  version "8.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@deck.gl/aggregation-layers/-/aggregation-layers-8.4.0-beta.1.tgz#73452db177ec8d45a71ae7541ce83d7cc4b6a1ee"
-  integrity sha512-900Lx0YNho0gS8mbfNPOsCb9QrCQ+HXXHvsLxK2/uzwUuS39ONqaN8HZ9NTzIOmV5jYywK+FmR30cIupSlkYHw==
-=======
-"@deck.gl/aggregation-layers@8.3.15":
-  version "8.3.15"
-  resolved "https://registry.yarnpkg.com/@deck.gl/aggregation-layers/-/aggregation-layers-8.3.15.tgz#89205aba4d54262b73d0a86781f3aeda94b7ab96"
-  integrity sha512-NUmTaVU3k0eT2vuKGpOIXX7oD84nLxTzTs0ioIi15h41QC4PVx18VHsvOm7GzNr6rjnh5hC5ewwTxxPC5jqKpw==
->>>>>>> Add Husky & lint-staged
+"@deck.gl/aggregation-layers@8.4.0-beta.2":
+  version "8.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@deck.gl/aggregation-layers/-/aggregation-layers-8.4.0-beta.2.tgz#59ca27bf6459a4372392349e0afba02278cea42f"
+  integrity sha512-cW0z1l/9W/xEWLburzn7lltk4yLagnmT6xdSkrlEkeWD5JXaVt6oGR44YR77sOBbuWtSrz3vMOIqhrVMGQXyvA==
   dependencies:
     "@luma.gl/shadertools" "^8.4.0-beta.1"
     "@math.gl/web-mercator" "^3.4.2"
     d3-hexbin "^0.2.1"
 
-<<<<<<< HEAD
-"@deck.gl/carto@8.4.0-beta.1":
-  version "8.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@deck.gl/carto/-/carto-8.4.0-beta.1.tgz#1bf846e0f2830c7d23ae07d723a4375586147f2a"
-  integrity sha512-gHjboaekPamCUeDE/PjmvZ1VqLqebMtvcBlLTldVDskEbSDjD9w/AjEIZzv4QTcTRl5fi1Useww7grlNOl58PQ==
-=======
-"@deck.gl/carto@8.3.15":
-  version "8.3.15"
-  resolved "https://registry.yarnpkg.com/@deck.gl/carto/-/carto-8.3.15.tgz#5ea4b4dfb5bd049834f765c1c0de47257dd03d53"
-  integrity sha512-N7HEQK/hU4BHQ4NrRE82SJLjqxSZZ4l5QATG5Do4CqmSlbHhjrifmBEvgyh1DV45lOHHskz6hORjgMSNS0WgpA==
->>>>>>> Add Husky & lint-staged
+"@deck.gl/carto@8.4.0-beta.2":
+  version "8.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@deck.gl/carto/-/carto-8.4.0-beta.2.tgz#dc1fb158690fb213822f72803ed7c9f4d428b1aa"
+  integrity sha512-XMx5hIarM0nxUtQCx2uKqzC4gcfjSn3BJdFAxi0lQNT8W6RkcyfrNo7J/1+ud6fwEji/h6OWvgREvHLReL56WA==
   dependencies:
     "@loaders.gl/loader-utils" "^2.3.0"
     "@loaders.gl/mvt" "^2.3.0"
@@ -1086,17 +1072,10 @@
     cartocolor "^4.0.2"
     d3-scale "^3.2.3"
 
-<<<<<<< HEAD
-"@deck.gl/core@8.4.0-beta.1":
-  version "8.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@deck.gl/core/-/core-8.4.0-beta.1.tgz#65171c4fc49fcec42fcd2cd33cd3b5bdad7abbf1"
-  integrity sha512-HcdxyyvhZ2e9cKlkWkwsCoUVp73xgEfSCt+/+AjN4RWqFvQer4XUsDs7MwJ4kvTdLH5MDXqbMETfuaezyOHxyg==
-=======
-"@deck.gl/core@8.3.15":
-  version "8.3.15"
-  resolved "https://registry.yarnpkg.com/@deck.gl/core/-/core-8.3.15.tgz#12a7eb1a99bbf64654c3d6afe4e89b8c55e65520"
-  integrity sha512-qQwvqfmgFGxtcgeGVThFFVHOk5jnaVy6CjTnMow1NyCky2WamzIyYRLveFp1rxRL7QjCZNVp6NwBbOuJ9kAf8A==
->>>>>>> Add Husky & lint-staged
+"@deck.gl/core@8.4.0-beta.2":
+  version "8.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@deck.gl/core/-/core-8.4.0-beta.2.tgz#77c387ec53b68ceb23590b5ef08dc220a9171994"
+  integrity sha512-ZS6194leInGZqQGc2QkmT3TC17VwkrefQ2stV/5QAyTA6fV3J3f5PbsmraHdlN4r7Mt6PBN5elho9yx0Pco51A==
   dependencies:
     "@loaders.gl/core" "^2.3.0"
     "@loaders.gl/images" "^2.3.0"
@@ -1107,33 +1086,20 @@
     mjolnir.js "^2.5.0"
     probe.gl "^3.2.1"
 
-<<<<<<< HEAD
-"@deck.gl/extensions@8.4.0-beta.1":
-  version "8.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@deck.gl/extensions/-/extensions-8.4.0-beta.1.tgz#98ac9565d47afb1857cf97712397bf00f4aa42e3"
-  integrity sha512-lgLbcp91Sa+Yla30V18dAKki9xtnDgLewdxvvzr8TOMKc0BBiveyNrcw1NrOmWS9Ml3qgTrZZqifNXn+4F+ykA==
-=======
-"@deck.gl/extensions@8.3.15":
-  version "8.3.15"
-  resolved "https://registry.yarnpkg.com/@deck.gl/extensions/-/extensions-8.3.15.tgz#1f0dc516b942f64b583a856819573d87315eaadf"
-  integrity sha512-DhKG65YSDw5TIRH/JH+hXYgtkjF/nju1DtPAoUPgWQ3vC4GsF5hClKb5QiQSVACCH++tfW/6mVw1ZYRBAYDHFA==
->>>>>>> Add Husky & lint-staged
+"@deck.gl/extensions@8.4.0-beta.2":
+  version "8.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@deck.gl/extensions/-/extensions-8.4.0-beta.2.tgz#57443150d75d32cafb41fa3f556161cbcc1c4a4a"
+  integrity sha512-Xphps+C+UC01TIzD2o9ckFRxIo/6/ufYUgi7LxYUI2SKIGPIOwxk2OcKTXXe0E6O1QGcy3BMucsxm0xUZasHEA==
   dependencies:
     "@luma.gl/shadertools" "^8.4.0-beta.1"
 
-<<<<<<< HEAD
-"@deck.gl/geo-layers@8.4.0-beta.1":
-  version "8.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@deck.gl/geo-layers/-/geo-layers-8.4.0-beta.1.tgz#cf7155cbd3b80a09d2b4653b64f31ef84a906334"
-  integrity sha512-0Id7YPDlfd/m255esmkVURYRTT2HbDC2qBLrQi0HzGs1J47K7x+ushEugU9nDljr8+2x0cMpkUKjjN/LPyLJoQ==
-=======
-"@deck.gl/geo-layers@8.3.15":
-  version "8.3.15"
-  resolved "https://registry.yarnpkg.com/@deck.gl/geo-layers/-/geo-layers-8.3.15.tgz#1644f5b2e248eb6a190cfd85608cb99756409631"
-  integrity sha512-wpS2rpGN810LP6n31SJcTcVU/joANjuWWZhhjBailTWlyAt3xh+pDZzbmsak4RB+mgZbWyMBiyXXHEyrhkmLAg==
->>>>>>> Add Husky & lint-staged
+"@deck.gl/geo-layers@8.4.0-beta.2":
+  version "8.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@deck.gl/geo-layers/-/geo-layers-8.4.0-beta.2.tgz#2520cb0024b5cd9c0df213f0d65944bfb94a468c"
+  integrity sha512-8KnaI5q5Ze8zT2Gl1Jlxa7/dYm3FJoeDgo67eYch5lKPl9DR+A/ETZudDZQ5S4KJEr0mMDP6L/ckP2+BCXfSWg==
   dependencies:
     "@loaders.gl/3d-tiles" "^2.3.0"
+    "@loaders.gl/gis" "^2.3.0"
     "@loaders.gl/loader-utils" "^2.3.0"
     "@loaders.gl/mvt" "^2.3.0"
     "@loaders.gl/terrain" "^2.3.0"
@@ -1144,85 +1110,47 @@
     long "^3.2.0"
     math.gl "^3.4.2"
 
-<<<<<<< HEAD
-"@deck.gl/google-maps@8.4.0-beta.1":
-  version "8.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@deck.gl/google-maps/-/google-maps-8.4.0-beta.1.tgz#e3e14312d220fa8dd7a4918abada649e0d6ad9d0"
-  integrity sha512-4ae8qbg7STDznjSnd+ZQBSEwDSjqAVUotvM3c/+bM3kDLQJdVdPJIIINl1jaMCwixafXxI+cv5EBqsC4cx6kwA==
+"@deck.gl/google-maps@8.4.0-beta.2":
+  version "8.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@deck.gl/google-maps/-/google-maps-8.4.0-beta.2.tgz#753868879d80be96fe2391fb773f3d9c91786c47"
+  integrity sha512-P0M2Sv6Bxow9leMKR7qCuuASns4s1d0XhCPmCcPn0cxbnF+GBXIjk9s+Vh9P023mTdQuto3GRdz1750yctZF7A==
 
-"@deck.gl/json@8.4.0-beta.1":
-  version "8.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@deck.gl/json/-/json-8.4.0-beta.1.tgz#be7fd1cb72ec106337f09a8ac9d7800cb3d98d7d"
-  integrity sha512-i9jtdO6A4tngBTIpF3oRU4f1Vwyxrth/c7deNBr4JIWavaznpUY3zwYIBOkGAtwNzixleyIt7WO95EwNNwULng==
-=======
-"@deck.gl/google-maps@8.3.15":
-  version "8.3.15"
-  resolved "https://registry.yarnpkg.com/@deck.gl/google-maps/-/google-maps-8.3.15.tgz#e66af1877f59b0a5012d67ce023bda3bd46a02e1"
-  integrity sha512-mtl3WQ4kpc6oNPj6iF70CSlWfXBS2sdI5I6mcNBA2+PZj2k7HOIfuvTPWtk2GrHi5PaIvDDeiWqhOqUi0bfBQA==
-
-"@deck.gl/json@8.3.15":
-  version "8.3.15"
-  resolved "https://registry.yarnpkg.com/@deck.gl/json/-/json-8.3.15.tgz#ac7bed49341235f3213199d6dcf8246e55bdc858"
-  integrity sha512-z97XtwpXwLeuvD/SJ60FaVvVAEmc80FQbqebZUNjF1vAGbSKNmrKHkfRg+D1keowaetofKiM324Moy8f1kSgZA==
->>>>>>> Add Husky & lint-staged
+"@deck.gl/json@8.4.0-beta.2":
+  version "8.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@deck.gl/json/-/json-8.4.0-beta.2.tgz#b433ed6a8b5ad797bb30b739f520cca12d23b1ba"
+  integrity sha512-K+4Wtkb7vKzxTyUx2t3DiyeT6G/SO7LJ0VoI4P4TCrGPtdIL5xsk5VLO69jHPKs3xtmrhYngUVdNrLJFfwuQBw==
   dependencies:
     d3-dsv "^1.0.8"
     expression-eval "^2.0.0"
 
-<<<<<<< HEAD
-"@deck.gl/layers@8.4.0-beta.1":
-  version "8.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@deck.gl/layers/-/layers-8.4.0-beta.1.tgz#2e8ed76899aa0d7c3087729142b331c57dea1350"
-  integrity sha512-DKjbZ7xWdsDJRvaluadBjMvp7AUEpL+tYupNvX6v4GVEd/YmeC4fJ0efmseys2VDln4903ZvO6ODFxh+oBNqCw==
-=======
-"@deck.gl/layers@8.3.15":
-  version "8.3.15"
-  resolved "https://registry.yarnpkg.com/@deck.gl/layers/-/layers-8.3.15.tgz#e0a5b30107666fb9d0db2c50d964e5224f64b1c8"
-  integrity sha512-stT9XDMhgdP2WfAI09sZQkONnJ4WPbU2TM/6JMMy7F8HKmjrHuYKSNhS0V2Uv+f7/fxoLTRZ1e6VLDzcRQl3mw==
->>>>>>> Add Husky & lint-staged
+"@deck.gl/layers@8.4.0-beta.2":
+  version "8.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@deck.gl/layers/-/layers-8.4.0-beta.2.tgz#8c60795b36c399d206cec43bab95be474c6f4d54"
+  integrity sha512-DjU4sqBwrAGG4Ughh5Rmt0HXGRNH6dCFWrzEXC14Jcu8gUCugU4BsYagKcO8y66n+D/df5kfxPUnLVuR3D2VbQ==
   dependencies:
     "@loaders.gl/images" "^2.3.0"
     "@mapbox/tiny-sdf" "^1.1.0"
     "@math.gl/polygon" "^3.4.2"
     earcut "^2.0.6"
 
-<<<<<<< HEAD
-"@deck.gl/mapbox@8.4.0-beta.1":
-  version "8.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@deck.gl/mapbox/-/mapbox-8.4.0-beta.1.tgz#4b92624e9dc639c3e68247004115182c4e31605a"
-  integrity sha512-cSMCRqmxT4dAHgoWwe7PhC3FNTQfbL9YwvL/GiF0ggiOE/GfDf6vW9B+zAY2qTw7ytUzZAIXrmUWhfPGmEYe2w==
+"@deck.gl/mapbox@8.4.0-beta.2":
+  version "8.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@deck.gl/mapbox/-/mapbox-8.4.0-beta.2.tgz#b222cae125b86f6d36179fdac7e868d783991c45"
+  integrity sha512-97sezrgMXYKTChDGdm1xJgodC0749Ox0WbO0x/3UWCxLGO02snDnsPpovayU/UGeHHvgRMYXY6hXn05BcejKyg==
 
-"@deck.gl/mesh-layers@8.4.0-beta.1":
-  version "8.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@deck.gl/mesh-layers/-/mesh-layers-8.4.0-beta.1.tgz#801d157b126ac44bf9ccd4286be449eb6296cc45"
-  integrity sha512-QiTpncTZ7n5EajriY/21TLIpm1JGDgHcd0B4XG6H3CIW0/Qur7QynOfZMsTP7eupbsj6+pEx88p8m74guAnvvQ==
-=======
-"@deck.gl/mapbox@8.3.15":
-  version "8.3.15"
-  resolved "https://registry.yarnpkg.com/@deck.gl/mapbox/-/mapbox-8.3.15.tgz#da866a25b40f34cdccd91083781aa9e7da8c90fd"
-  integrity sha512-S2eKr87SZwC9Y5H6OxcHqtm7wT7SEITqx3fmOXQS6PEXE8lOi9d/lVw3DkCWY12KU64BLFA8JePp2eM2X32PXg==
-
-"@deck.gl/mesh-layers@8.3.15":
-  version "8.3.15"
-  resolved "https://registry.yarnpkg.com/@deck.gl/mesh-layers/-/mesh-layers-8.3.15.tgz#b3ea69adb45a170683d6ea99098e2b4da1bb9720"
-  integrity sha512-kBgknvM3yJW3vRfaL6dmr0qni9BhXQ7Slm7TIbhNVLpFgm5bd9yi2BZvbXYp4+xwKj5pREUXbbyKLk5VrrUxkw==
->>>>>>> Add Husky & lint-staged
+"@deck.gl/mesh-layers@8.4.0-beta.2":
+  version "8.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@deck.gl/mesh-layers/-/mesh-layers-8.4.0-beta.2.tgz#bae7050c504f1b4aaf882ed0ac43c5726e35d278"
+  integrity sha512-Le+GhTLSeqrrcIH/YIzZie03BzGi8wxkI/K/3+5X8rH+R3JxT7JbIUzIF4Kt0l/UrBhgrfzpiUZYhilc21QQ+w==
   dependencies:
     "@loaders.gl/gltf" "^2.3.0"
     "@luma.gl/experimental" "^8.4.0-beta.1"
     "@luma.gl/shadertools" "^8.4.0-beta.1"
 
-<<<<<<< HEAD
-"@deck.gl/react@8.4.0-beta.1":
-  version "8.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@deck.gl/react/-/react-8.4.0-beta.1.tgz#06d2860d9d225b34145c5e26f943adba5f950ea2"
-  integrity sha512-+7IJELI58OPgQGc6+gYyNOmZgerbZ3+gCJMOPNXR6xmoRenXAMOvU9U0eUecpEX0DZiE68SqpMptUEmC03CmfA==
-=======
-"@deck.gl/react@8.3.15":
-  version "8.3.15"
-  resolved "https://registry.yarnpkg.com/@deck.gl/react/-/react-8.3.15.tgz#b90e4978c9be465fe08ef98d84febe2550530083"
-  integrity sha512-KNUykNq4eg7v/X/tsuYv2hV6QpZTLOXVazRv2pvz/PpkFE64mUREbVbo/yh/00fUhxCjJS+L1a0AUys5NbhzVQ==
->>>>>>> Add Husky & lint-staged
+"@deck.gl/react@8.4.0-beta.2":
+  version "8.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@deck.gl/react/-/react-8.4.0-beta.2.tgz#dfcd7512d34dd4f034fa1e30cb39da36ea51938b"
+  integrity sha512-OZ50Y9zgPxIq+ro4xZbXv7NvjmGCqYqVnP7bmmYj1vgPuZPjfn3VLpgOvkWoBZ8Kn1P8QCugk0mT1+WVoDYAyA==
   dependencies:
     prop-types "^15.6.0"
 
@@ -1644,7 +1572,7 @@
     "@loaders.gl/loader-utils" "2.3.9"
     draco3d "^1.3.6"
 
-"@loaders.gl/gis@2.3.9":
+"@loaders.gl/gis@2.3.9", "@loaders.gl/gis@^2.3.0":
   version "2.3.9"
   resolved "https://registry.yarnpkg.com/@loaders.gl/gis/-/gis-2.3.9.tgz#be07fd7e8ddb8bd3df2ea4f9eeec0965de60689d"
   integrity sha512-18qsEdr/TAoePqudNe/ZGSm1pTenD7D46cKSS6P0mk+cyvWdiILA7TqT9qNzkQcudkTkvGyDVYl0d1fZRHCkDg==
@@ -1653,11 +1581,7 @@
     "@mapbox/vector-tile" "^1.3.1"
     pbf "^3.2.1"
 
-<<<<<<< HEAD
 "@loaders.gl/gltf@2.3.9", "@loaders.gl/gltf@^2.3.0":
-=======
-"@loaders.gl/gltf@2.3.9":
->>>>>>> Add Husky & lint-staged
   version "2.3.9"
   resolved "https://registry.yarnpkg.com/@loaders.gl/gltf/-/gltf-2.3.9.tgz#15ab67ca31f4ee8994d939fd0df69e59f4636f6b"
   integrity sha512-tdjUDqtnN4grzRWqIcoO+iXRTDjglW117/ilBN3DTsG/s70CzQ7kdkuXKcMDV773WuGcA/LYOQdonoZyZn3RlA==
@@ -1725,7 +1649,6 @@
     "@math.gl/web-mercator" "^3.3.0"
     "@probe.gl/stats" "^3.3.0"
 
-<<<<<<< HEAD
 "@luma.gl/constants@8.4.0-beta.2":
   version "8.4.0-beta.2"
   resolved "https://registry.yarnpkg.com/@luma.gl/constants/-/constants-8.4.0-beta.2.tgz#5380f18c03d192709a53e1b9dc4771d899faf916"
@@ -1763,46 +1686,8 @@
   dependencies:
     "@luma.gl/constants" "8.4.0-beta.2"
     "@math.gl/core" "^3.4.1"
-=======
-"@luma.gl/constants@8.3.3":
-  version "8.3.3"
-  resolved "https://registry.yarnpkg.com/@luma.gl/constants/-/constants-8.3.3.tgz#f455863254589e46bb6df3b68709fca42c81c303"
-  integrity sha512-NVbMtLpgmdi4miEM/wOcswAoZuXo/yXAkIxcXvp+PVM3MTEg4BoM9HYimFr7gFOJM6GHhKQ0pbo2FLbWat/mlw==
-
-"@luma.gl/core@^8.3.1":
-  version "8.3.3"
-  resolved "https://registry.yarnpkg.com/@luma.gl/core/-/core-8.3.3.tgz#71068a54c55b472625ce37cfae9b838271a03297"
-  integrity sha512-Qsb04lGyXJ/xPkb2KMNHRJmCOpdiiUVljr3xTMX/d1CvcO+B3VAz2SHgC25Ns6g9SkWd0eP8rf4pfBX+G1b/hg==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    "@luma.gl/constants" "8.3.3"
-    "@luma.gl/engine" "8.3.3"
-    "@luma.gl/shadertools" "8.3.3"
-    "@luma.gl/webgl" "8.3.3"
-
-"@luma.gl/engine@8.3.3":
-  version "8.3.3"
-  resolved "https://registry.yarnpkg.com/@luma.gl/engine/-/engine-8.3.3.tgz#1b794290207913d6d1d221abb0d8ea6963674826"
-  integrity sha512-g/xmMKyo9C/9u6vLA6Pls11VLIpK2ny541Ni/PyLLNqXCRR85Svlh09brxUBJkYklvSaYlzRSzWuO95ba4B3YQ==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    "@luma.gl/constants" "8.3.3"
-    "@luma.gl/gltools" "8.3.3"
-    "@luma.gl/shadertools" "8.3.3"
-    "@luma.gl/webgl" "8.3.3"
-    math.gl "^3.3.0"
-    probe.gl "^3.2.1"
-
-"@luma.gl/experimental@^8.3.1":
-  version "8.3.3"
-  resolved "https://registry.yarnpkg.com/@luma.gl/experimental/-/experimental-8.3.3.tgz#e4b39c562ff3e1dd5c68e146fd03c9b94d412205"
-  integrity sha512-Eg+XsDXMKQkQpmdKOLrPEGnzICy+KkrQLDrrMnI0KeNKCN6bsVSTeotahnxP81RIDGuuXBFHkkOGmMay9wkLcw==
-  dependencies:
-    "@luma.gl/constants" "8.3.3"
->>>>>>> Add Husky & lint-staged
     earcut "^2.0.6"
 
-<<<<<<< HEAD
 "@luma.gl/gltools@8.4.0-beta.2":
   version "8.4.0-beta.2"
   resolved "https://registry.yarnpkg.com/@luma.gl/gltools/-/gltools-8.4.0-beta.2.tgz#296d490634483e2213d1e162ad8e7fdeeeb6cc79"
@@ -1816,26 +1701,10 @@
   version "8.4.0-beta.2"
   resolved "https://registry.yarnpkg.com/@luma.gl/shadertools/-/shadertools-8.4.0-beta.2.tgz#ab73c5637d6154f8ec6321e55c8e2375d35503c3"
   integrity sha512-MFW2RTOfTCtnOVCuyC/TqWPJowhIGX/BRB3cgM+wuYo0k55rHnb7n3fGE07eSvMYUt/WG3xu3SEF8u8WkWYNMg==
-=======
-"@luma.gl/gltools@8.3.3":
-  version "8.3.3"
-  resolved "https://registry.yarnpkg.com/@luma.gl/gltools/-/gltools-8.3.3.tgz#5a738400fb93460bc6823f373055986b474647db"
-  integrity sha512-WixMWT8ljVrz5uTxFOvdR1jNsGUrBnHqB8lRcK1dRGGIYTBOzll0RakZBgzLrcTeSIQwTEhFnAtWbnBkqjclNA==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    "@luma.gl/constants" "8.3.3"
-    probe.gl "^3.2.1"
-
-"@luma.gl/shadertools@8.3.3", "@luma.gl/shadertools@^8.3.1":
-  version "8.3.3"
-  resolved "https://registry.yarnpkg.com/@luma.gl/shadertools/-/shadertools-8.3.3.tgz#d65bf9e6aa01e9f15189a710997694b168ddb1f8"
-  integrity sha512-mtB774AOg0cA+KnFdIGp11rKCmPGpshqBsk2Bjla7XMgIO/nkObatUNnwwNqQHAM8FCdUFPpeCoOjL65OSeZQQ==
->>>>>>> Add Husky & lint-staged
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@math.gl/core" "^3.4.2"
 
-<<<<<<< HEAD
 "@luma.gl/webgl@8.4.0-beta.2":
   version "8.4.0-beta.2"
   resolved "https://registry.yarnpkg.com/@luma.gl/webgl/-/webgl-8.4.0-beta.2.tgz#00a22fe06975aeeb1319df010508329c5988523b"
@@ -1844,16 +1713,6 @@
     "@babel/runtime" "^7.0.0"
     "@luma.gl/constants" "8.4.0-beta.2"
     "@luma.gl/gltools" "8.4.0-beta.2"
-=======
-"@luma.gl/webgl@8.3.3":
-  version "8.3.3"
-  resolved "https://registry.yarnpkg.com/@luma.gl/webgl/-/webgl-8.3.3.tgz#7353934382b0f81265a33a26eb1ec51315cd8e96"
-  integrity sha512-nB7KVdNEOxaBsVJoF3GU68ttKv2F9eTmJeaDAPce+n0+8g46CjvLn6qeVJeunzSVVHwXnZwwd73ACNbApbJ62g==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    "@luma.gl/constants" "8.3.3"
-    "@luma.gl/gltools" "8.3.3"
->>>>>>> Add Husky & lint-staged
     probe.gl "^3.2.1"
 
 "@mapbox/martini@^0.2.0":
@@ -1960,11 +1819,7 @@
     prop-types "^15.7.2"
     react-is "^16.8.0 || ^17.0.0"
 
-<<<<<<< HEAD
 "@math.gl/core@3.4.2", "@math.gl/core@^3.3.0", "@math.gl/core@^3.4.1", "@math.gl/core@^3.4.2":
-=======
-"@math.gl/core@3.4.2", "@math.gl/core@^3.3.0":
->>>>>>> Add Husky & lint-staged
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/@math.gl/core/-/core-3.4.2.tgz#1b5468f04de8e3bdae5b7717b459759daa7b0a80"
   integrity sha512-65vhtokCDq0N16DLwWZhPTNAGuVtTjyyi5tx950yNN3ei5BRxz2JHe6JTSnjjKO/2w9KuQYOOqokc7ARog0vKg==
@@ -1972,11 +1827,7 @@
     "@babel/runtime" "^7.12.0"
     gl-matrix "^3.0.0"
 
-<<<<<<< HEAD
 "@math.gl/culling@^3.3.0", "@math.gl/culling@^3.4.2":
-=======
-"@math.gl/culling@^3.3.0":
->>>>>>> Add Husky & lint-staged
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/@math.gl/culling/-/culling-3.4.2.tgz#a3d9a80e3c69c3613591a732515875dbdcf54e6a"
   integrity sha512-rjDfJp58jvTzMjX954/EMdcaVrX8UkkkXWXc1PU2+XFyAtaBYHDk7jiaFQQbBx8sqk9PKd62j3UTwtSreWyoyQ==
@@ -1994,22 +1845,14 @@
     "@math.gl/core" "3.4.2"
     gl-matrix "^3.0.0"
 
-<<<<<<< HEAD
 "@math.gl/polygon@^3.4.2":
-=======
-"@math.gl/polygon@^3.3.0":
->>>>>>> Add Husky & lint-staged
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/@math.gl/polygon/-/polygon-3.4.2.tgz#36c327257959c8edcc258c4ddeaecf04b125cb90"
   integrity sha512-ANbZmcrzavzEe0bHbdEYyiudPdGGV/quB3FxUJa3L1QCcZbnrqvnuwqX+8U8ltIDhbACG1x0Uxefwo8p77aMNw==
   dependencies:
     "@math.gl/core" "3.4.2"
 
-<<<<<<< HEAD
 "@math.gl/web-mercator@^3.3.0", "@math.gl/web-mercator@^3.4.2":
-=======
-"@math.gl/web-mercator@^3.3.0":
->>>>>>> Add Husky & lint-staged
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/@math.gl/web-mercator/-/web-mercator-3.4.2.tgz#72c7c7e698bcf8d1d1d60c0ec4c5a4698c9b960e"
   integrity sha512-Az/WI8vxbqnrTEcYgqDQ3CgCRoFA2a4XT9mkjVrT7iIlfrUF5lrIXcmpljjKvoFNBldKrng7hFSeHHM2ghgSrg==
@@ -2190,11 +2033,7 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
-<<<<<<< HEAD
 "@reduxjs/toolkit@^1.5.0":
-=======
-"@reduxjs/toolkit@^1.4.0":
->>>>>>> Add Husky & lint-staged
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-1.5.0.tgz#1025c1ccb224d1fc06d8d98a61f6717d57e6d477"
   integrity sha512-E/FUraRx+8guw9Hlg/Ja8jI/hwCrmIKed8Annt9YsZw3BQp+F24t5I5b2OWR6pkEHY4hn1BgP08FrTZFRKsdaQ==
@@ -2769,7 +2608,6 @@
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"
   integrity sha512-XIB2XbzHTN6ieIjfIMV9hlVcfPU26s2vafYWQcZHWXHOxiaRZYEDKEwdl129Zyg50+foYV2jCgtrqSA6qNuNSA==
-<<<<<<< HEAD
   dependencies:
     defer-to-connect "^1.0.1"
 
@@ -2878,8 +2716,6 @@
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@turf/polygon-to-line/-/polygon-to-line-6.3.0.tgz#aa3e1a0ea074479e5cb6c5c111a924bb80ec553e"
   integrity sha512-KFGlQlGOBayBvELz+tip1zCa3eB8xyZePZUZ3I3OnU7mk0FFzJzvLTmPUc7MupgqORT4LkNGmyKSVWaz38NTig==
-=======
->>>>>>> Add Husky & lint-staged
   dependencies:
     "@turf/helpers" "^6.3.0"
     "@turf/invariant" "^6.3.0"
@@ -3953,11 +3789,7 @@ array-flatten@3.0.0:
   resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-3.0.0.tgz#6428ca2ee52c7b823192ec600fa3ed2f157cd541"
   integrity sha512-zPMVc3ZYlGLNk4mpK1NzP2wg0ml9t7fUgDsayR5Y5rSzxQilzR9FGu/EH2jQOcKSAeAfWeylyW8juy3OkWRvNA==
 
-<<<<<<< HEAD
-array-includes@^3.0.3:
-=======
 array-includes@^3.0.3, array-includes@^3.1.1, array-includes@^3.1.2:
->>>>>>> Add Husky & lint-staged
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/array-includes/-/array-includes-3.1.2.tgz#a8db03e0b88c8c6aeddc49cb132f9bcab4ebf9c8"
   integrity sha512-w2GspexNQpx+PutG3QpT437/BenZBj0M/MZGn5mzv/MofYqo0xmRHzn4lFsoDlWJ+THYsGJmFlW68WlDFx7VRw==
@@ -5035,15 +4867,9 @@ camelcase@^6.0.0:
   integrity sha512-c7wVvbw3f37nuobQNtgsgG9POC9qMbNuMQmTCqZv23b6MIz0fcYpBiOlv9gEN/hdLdnZTDQhg6e9Dq5M1vKvfg==
 
 caniuse-lite@^1.0.30001035, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001173:
-<<<<<<< HEAD
-  version "1.0.30001179"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001179.tgz#b0803883b4471a6c62066fb1752756f8afc699c8"
-  integrity sha512-blMmO0QQujuUWZKyVrD1msR4WNDAqb/UPO1Sw2WWsQ7deoM5bJiicKnWJ1Y0NS/aGINSnKPIWBMw5luX+NDUCA==
-=======
   version "1.0.30001180"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001180.tgz#67abcd6d1edf48fa5e7d1e84091d1d65ab76e33b"
   integrity sha512-n8JVqXuZMVSPKiPiypjFtDTXc4jWIdjxull0f92WLo7e1MSi3uJ3NvveakSh/aCl1QKFAvIz3vIj0v+0K+FrXw==
->>>>>>> Add Husky & lint-staged
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -5310,10 +5136,6 @@ cli-table@^0.3.1:
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/cli-table/-/cli-table-0.3.4.tgz#5b37fd723751f1a6e9e70d55953a75e16eab958e"
   integrity sha512-1vinpnX/ZERcmE443i3SZTmU5DF0rPO9DrL4I2iVAllhxzCM9SzPlHnz19fsZB78htkKZvYBvj6SZ6vXnaxmTA==
-<<<<<<< HEAD
-  dependencies:
-    chalk "^2.4.1"
-=======
   dependencies:
     chalk "^2.4.1"
     string-width "^4.2.0"
@@ -5324,7 +5146,6 @@ cli-truncate@^2.1.0:
   integrity sha512-n8fOixwDD6b/ObinzTrp1ZKFzbgvKZvuz/TvejnLn1aQfC6r52XEx85FmuC+3HI+JM7coBRXUvNqEU2PHVrHpg==
   dependencies:
     slice-ansi "^3.0.0"
->>>>>>> Add Husky & lint-staged
     string-width "^4.2.0"
 
 cli-width@^2.0.0:
@@ -5771,8 +5592,6 @@ cosmiconfig@^6.0.0:
     path-type "^4.0.0"
     yaml "^1.7.2"
 
-<<<<<<< HEAD
-=======
 cosmiconfig@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-7.0.0.tgz#ef9b44d773959cae63ddecd122de23853b60f8d3"
@@ -5784,7 +5603,6 @@ cosmiconfig@^7.0.0:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
->>>>>>> Add Husky & lint-staged
 cp-file@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/cp-file/-/cp-file-7.0.0.tgz#b9454cfd07fe3b974ab9ea0e5f29655791a9b8cd"
@@ -6105,15 +5923,7 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.9:
   dependencies:
     ms "2.0.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-debug@4, debug@4.3.1, debug@^4.1.0, debug@^4.1.1:
-=======
-debug@4, debug@4.3.1, debug@^4.1.0, debug@^4.1.1, debug@^4.2.0:
->>>>>>> Add Husky & lint-staged
-=======
 debug@4, debug@4.3.1, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.2.0:
->>>>>>> Add eslintrc.json
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.1.tgz#f0d229c505e0c6d8c49ac553d1b13dc183f6b2ee"
   integrity sha512-doEwdvm4PCeK4K3RQN2ZC2BYUBaxwLARCqZmMjtF8a51J2Rb0xpVloFRnCODwqjpwnAoao4pelN8l3RJdv3gRQ==
@@ -6137,41 +5947,22 @@ decimal.js@^10.2.0:
   resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-10.2.1.tgz#238ae7b0f0c793d3e3cea410108b35a2c01426a3"
   integrity sha512-KaL7+6Fw6i5A2XSnsbhm/6B+NuEA7TZ4vqxnd5tXz9sbKtrN9Srj8ab4vKVdK8YAqZO9P1kg45Y6YLoduPf+kw==
 
-<<<<<<< HEAD
 deck.gl@^8.4.0-beta.1:
-  version "8.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/deck.gl/-/deck.gl-8.4.0-beta.1.tgz#dde0de4863aa74d52dd5cbc5baf70a3a10417605"
-  integrity sha512-xNCtRFv0v/J2zRo9dk3/byRom8T0qU+BJsMhLl2+JkV6POQ9E+WKYEqslUZ6NlMs8ZXHvpal92F/pOt2fGHWZQ==
+  version "8.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/deck.gl/-/deck.gl-8.4.0-beta.2.tgz#e22e1b0513c5f61873b7b0181c60025356779878"
+  integrity sha512-kcCE6z2+chLkQNFnB3dY7pLjmc8IJHw/2phaKEaHyq8fGeA4jKXhTsdUApp1LS07Ff1NQU5ypNbPJEsiUn1R6g==
   dependencies:
-    "@deck.gl/aggregation-layers" "8.4.0-beta.1"
-    "@deck.gl/carto" "8.4.0-beta.1"
-    "@deck.gl/core" "8.4.0-beta.1"
-    "@deck.gl/extensions" "8.4.0-beta.1"
-    "@deck.gl/geo-layers" "8.4.0-beta.1"
-    "@deck.gl/google-maps" "8.4.0-beta.1"
-    "@deck.gl/json" "8.4.0-beta.1"
-    "@deck.gl/layers" "8.4.0-beta.1"
-    "@deck.gl/mapbox" "8.4.0-beta.1"
-    "@deck.gl/mesh-layers" "8.4.0-beta.1"
-    "@deck.gl/react" "8.4.0-beta.1"
-=======
-deck.gl@^8.3.8:
-  version "8.3.15"
-  resolved "https://registry.yarnpkg.com/deck.gl/-/deck.gl-8.3.15.tgz#b445db485aa58db615a748bcd9903c5b27be2f10"
-  integrity sha512-FOIIksrBvrovB0GyotfJrjqTVt7CuwOPYmSsd+uv2XhaZTaOmUQLFtnEvTYdaMkvL2wgT5uSwkbTdqYrbQTVGA==
-  dependencies:
-    "@deck.gl/aggregation-layers" "8.3.15"
-    "@deck.gl/carto" "8.3.15"
-    "@deck.gl/core" "8.3.15"
-    "@deck.gl/extensions" "8.3.15"
-    "@deck.gl/geo-layers" "8.3.15"
-    "@deck.gl/google-maps" "8.3.15"
-    "@deck.gl/json" "8.3.15"
-    "@deck.gl/layers" "8.3.15"
-    "@deck.gl/mapbox" "8.3.15"
-    "@deck.gl/mesh-layers" "8.3.15"
-    "@deck.gl/react" "8.3.15"
->>>>>>> Add Husky & lint-staged
+    "@deck.gl/aggregation-layers" "8.4.0-beta.2"
+    "@deck.gl/carto" "8.4.0-beta.2"
+    "@deck.gl/core" "8.4.0-beta.2"
+    "@deck.gl/extensions" "8.4.0-beta.2"
+    "@deck.gl/geo-layers" "8.4.0-beta.2"
+    "@deck.gl/google-maps" "8.4.0-beta.2"
+    "@deck.gl/json" "8.4.0-beta.2"
+    "@deck.gl/layers" "8.4.0-beta.2"
+    "@deck.gl/mapbox" "8.4.0-beta.2"
+    "@deck.gl/mesh-layers" "8.4.0-beta.2"
+    "@deck.gl/react" "8.4.0-beta.2"
 
 decode-uri-component@^0.2.0:
   version "0.2.0"
@@ -6597,9 +6388,9 @@ ejs@^3.1.2:
     jake "^10.6.1"
 
 electron-to-chromium@^1.3.378, electron-to-chromium@^1.3.634:
-  version "1.3.645"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.645.tgz#c0b269ae2ecece5aedc02dd4586397d8096affb1"
-  integrity sha512-T7mYop3aDpRHIQaUYcmzmh6j9MAe560n6ukqjJMbVC6bVTau7dSpvB18bcsBPPtOSe10cKxhJFtlbEzLa0LL1g==
+  version "1.3.647"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.647.tgz#8f1750ab7a5137f1a9a27f8f4ebdf550e08ae10b"
+  integrity sha512-Or2Nu8TjkmSywY9hk85K/Y6il28hchlonITz30fkC87qvSNupQl29O12BzDDDTnUFlo6kEIFL2QGSpkZDMxH8g==
 
 element-resize-detector@^1.2.1:
   version "1.2.1"
@@ -6761,11 +6552,7 @@ error-stack-parser@^2.0.6:
   dependencies:
     stackframe "^1.1.1"
 
-<<<<<<< HEAD
-es-abstract@^1.17.0-next.0, es-abstract@^1.17.0-next.1:
-=======
 es-abstract@^1.17.0-next.0:
->>>>>>> Add Husky & lint-staged
   version "1.17.7"
   resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.17.7.tgz#a4de61b2f66989fc7421676c1cb9787573ace54c"
   integrity sha512-VBl/gnfcJ7OercKA9MVaegWsBHFjV492syMudcnQZvt/Dw8ezpcOHYZXa/J96O8vx+g4x65YKhxOwDUh63aS5g==
@@ -7203,7 +6990,7 @@ execa@^1.0.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
-execa@^4.0.0:
+execa@^4.0.0, execa@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/execa/-/execa-4.1.0.tgz#4e5491ad1572f2f17a77d388c6c857135b22847a"
   integrity sha512-j5W0//W7f8UxAn8hXVnwG8tLwdiUy4FJLcSupCg6maBYZDpyBvTApK7KyuI4bKj8KOh1r2YH+6ucuYtJv1bTZA==
@@ -7665,8 +7452,6 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
-<<<<<<< HEAD
-=======
 find-versions@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/find-versions/-/find-versions-4.0.0.tgz#3c57e573bf97769b8cb8df16934b627915da4965"
@@ -7674,7 +7459,6 @@ find-versions@^4.0.0:
   dependencies:
     semver-regex "^3.1.2"
 
->>>>>>> Add Husky & lint-staged
 firebase-tools@^8.17.0:
   version "8.20.0"
   resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-8.20.0.tgz#0c7b69a611f584c44ca4cbf9e3003b18ebfd17be"
@@ -8041,11 +7825,7 @@ get-caller-file@^2.0.1:
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-2.0.5.tgz#4f94412a82db32f36e3b0b9741f8a97feb031f7e"
   integrity sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==
 
-<<<<<<< HEAD
-get-intrinsic@^1.0.1, get-intrinsic@^1.0.2:
-=======
 get-intrinsic@^1.0.1, get-intrinsic@^1.0.2, get-intrinsic@^1.1.0:
->>>>>>> Add Husky & lint-staged
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/get-intrinsic/-/get-intrinsic-1.1.0.tgz#892e62931e6938c8a23ea5aaebcfb67bd97da97e"
   integrity sha512-M11rgtQp5GZMZzDL7jLTNxbDfurpzuau5uqRWDPvlHjfvg3TdScAZo96GLvhMjImrmR8uAt0FS2RLoMrfWGKlg==
@@ -8753,8 +8533,6 @@ human-signals@^2.1.0:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
 
-<<<<<<< HEAD
-=======
 husky@^4.3.8:
   version "4.3.8"
   resolved "https://registry.yarnpkg.com/husky/-/husky-4.3.8.tgz#31144060be963fd6850e5cc8f019a1dfe194296d"
@@ -8771,7 +8549,6 @@ husky@^4.3.8:
     slash "^3.0.0"
     which-pm-runs "^1.0.0"
 
->>>>>>> Add Husky & lint-staged
 hyphenate-style-name@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.4.tgz#691879af8e220aea5750e8827db4ef62a54e361d"
@@ -8841,15 +8618,7 @@ import-fresh@^2.0.0:
     caller-path "^2.0.0"
     resolve-from "^3.0.0"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-import-fresh@^3.1.0:
-=======
-import-fresh@^3.1.0, import-fresh@^3.2.1:
->>>>>>> Add Husky & lint-staged
-=======
 import-fresh@^3.0.0, import-fresh@^3.1.0, import-fresh@^3.2.1:
->>>>>>> Add eslintrc.json
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/import-fresh/-/import-fresh-3.3.0.tgz#37162c25fcb9ebaa2e6e53d5b4d88ce17d9e0c2b"
   integrity sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==
@@ -9087,11 +8856,7 @@ is-alphanumerical@^1.0.0:
     is-alphabetical "^1.0.0"
     is-decimal "^1.0.0"
 
-<<<<<<< HEAD
-is-arguments@^1.0.4:
-=======
 is-arguments@^1.1.0:
->>>>>>> Add Husky & lint-staged
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/is-arguments/-/is-arguments-1.1.0.tgz#62353031dfbee07ceb34656a6bde59efecae8dd9"
   integrity sha512-1Ij4lOMPl/xB5kBDn7I+b2ttPMKa8szhEIrXDuXQD/oe3HJLTLhqhgGspwgyGd6MOywBUqVvYicF72lkgDnIHg==
@@ -9299,11 +9064,7 @@ is-installed-globally@^0.3.1:
     global-dirs "^2.0.1"
     is-path-inside "^3.0.1"
 
-<<<<<<< HEAD
-is-map@^2.0.1:
-=======
 is-map@^2.0.2:
->>>>>>> Add Husky & lint-staged
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/is-map/-/is-map-2.0.2.tgz#00922db8c9bf73e81b7a335827bc2a43f2b91127"
   integrity sha512-cOZFQQozTha1f4MxLFzlgKYPTyj26picdZTx82hbc/Xf4K/tZOOXSCkMvU4pKioRXGDLJRn0GM7Upe7kR721yg==
@@ -9394,11 +9155,7 @@ is-root@2.1.0:
   resolved "https://registry.yarnpkg.com/is-root/-/is-root-2.1.0.tgz#809e18129cf1129644302a4f8544035d51984a9c"
   integrity sha512-AGOriNp96vNBd3HtU+RzFEc75FfR5ymiYv8E553I71SCeXBiMsVDUtdio1OEFvrPyLIQ9tVR5RxXIFe5PUFjMg==
 
-<<<<<<< HEAD
-is-set@^2.0.1:
-=======
 is-set@^2.0.2:
->>>>>>> Add Husky & lint-staged
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/is-set/-/is-set-2.0.2.tgz#90755fa4c2562dc1c5d4024760d6119b94ca18ec"
   integrity sha512-+2cnTEZeY5z/iXGbLhPrOAaK/Mau5k5eXq9j14CpRTftq0pAJu2MwVRSZhyZWBzx3o6X795Lz6Bpb6R0GKf37g==
@@ -10975,26 +10732,16 @@ marked@^0.8.2:
   integrity sha512-EGwzEeCcLniFX51DhTpmTom+dSA/MG/OBUDjnWtHbEnjAH180VzUeAw+oE4+Zv+CoYBWyRlYOTR0N8SO9R1PVw==
 
 marked@^1.1.0:
-<<<<<<< HEAD
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-1.2.7.tgz#6e14b595581d2319cdcf033a24caaf41455a01fb"
-  integrity sha512-No11hFYcXr/zkBvL6qFmAp1z6BKY3zqLMHny/JN/ey+al7qwCM2+CMBL9BOgqMxZU36fz4cCWfn2poWIf7QRXA==
-=======
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/marked/-/marked-1.2.8.tgz#5008ece15cfa43e653e85845f3525af4beb6bdd4"
   integrity sha512-lzmFjGnzWHkmbk85q/ILZjFoHHJIQGF+SxGEfIdGk/XhiTPhqGs37gbru6Kkd48diJnEyYwnG67nru0Z2gQtuQ==
->>>>>>> Add Husky & lint-staged
 
 material-colors@^1.2.1:
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/material-colors/-/material-colors-1.2.6.tgz#6d1958871126992ceecc72f4bcc4d8f010865f46"
   integrity sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==
 
-<<<<<<< HEAD
 math.gl@^3.4.2:
-=======
-math.gl@^3.3.0:
->>>>>>> Add Husky & lint-staged
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/math.gl/-/math.gl-3.4.2.tgz#1d39b6b9f735b57134c26f079607611dbf4e8c89"
   integrity sha512-0I77HBiC+q/XRRw807dCwUeMTUotzNQUQZEk0kPd39iRmU67dLId0+OtCGFYjIzyM+gNaj1JWueiOYV/gdl+dQ==
@@ -11303,11 +11050,7 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
-<<<<<<< HEAD
 mjolnir.js@^2.5.0:
-=======
-mjolnir.js@^2.3.0:
->>>>>>> Add Husky & lint-staged
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/mjolnir.js/-/mjolnir.js-2.5.0.tgz#5918b74625d9682002da82e01d6ffb0b16b02b0e"
   integrity sha512-YkVoyKs7qm9xvAgRgjx3Md/7eYqmq7VXOgTKQNnmuzcBJzMebjdIWa7FdTd0RZBrw3UL6V6TTktsxJwBMLXUNA==
@@ -11672,14 +11415,11 @@ object-get@^2.1.1:
   resolved "https://registry.yarnpkg.com/object-get/-/object-get-2.1.1.tgz#1dad63baf6d94df184d1c58756cc9be55b174dac"
   integrity sha512-7n4IpLMzGGcLEMiQKsNR7vCe+N5E9LORFrtNUVy4sO3dj9a3HedZCxEL2T7QuLhcHN1NBuBsMOKaOsAYI9IIvg==
 
-<<<<<<< HEAD
-=======
 object-hash@^2.0.3:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-2.1.1.tgz#9447d0279b4fcf80cff3259bf66a1dc73afabe09"
   integrity sha512-VOJmgmS+7wvXf8CjbQmimtCnEx3IAoLxI3fp2fbWehxrWBcAQFbk+vcwb6vzR0VZv/eNCJ/27j151ZTwqW/JeQ==
 
->>>>>>> Add Husky & lint-staged
 object-inspect@^1.8.0, object-inspect@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.9.0.tgz#c90521d74e1127b67266ded3394ad6116986533a"
@@ -11712,11 +11452,7 @@ object.assign@^4.1.0, object.assign@^4.1.1, object.assign@^4.1.2:
     has-symbols "^1.0.1"
     object-keys "^1.1.1"
 
-<<<<<<< HEAD
-object.entries@^1.1.0:
-=======
 object.entries@^1.1.0, object.entries@^1.1.2:
->>>>>>> Add Husky & lint-staged
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/object.entries/-/object.entries-1.1.3.tgz#c601c7f168b62374541a07ddbd3e2d5e4f7711a6"
   integrity sha512-ym7h7OZebNS96hn5IJeyUmaWhaSM4SVtAPPfNLQEI2MYWCO2egsITb9nab2+i/Pwibx+R0mtn+ltKJXRSeTMGg==
@@ -11726,11 +11462,7 @@ object.entries@^1.1.0, object.entries@^1.1.2:
     es-abstract "^1.18.0-next.1"
     has "^1.0.3"
 
-<<<<<<< HEAD
-"object.fromentries@^2.0.0 || ^1.0.0":
-=======
 "object.fromentries@^2.0.0 || ^1.0.0", object.fromentries@^2.0.2:
->>>>>>> Add Husky & lint-staged
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/object.fromentries/-/object.fromentries-2.0.3.tgz#13cefcffa702dc67750314a3305e8cb3fad1d072"
   integrity sha512-IDUSMXs6LOSJBWE++L0lzIbSqHl9KDCfff2x/JSEIDtEUavUnyMYC2ZGay/04Zq4UT8lvd4xNhU4/YHKibAOlw==
@@ -11756,11 +11488,7 @@ object.pick@^1.3.0:
   dependencies:
     isobject "^3.0.1"
 
-<<<<<<< HEAD
-object.values@^1.1.0:
-=======
 object.values@^1.1.0, object.values@^1.1.1:
->>>>>>> Add Husky & lint-staged
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/object.values/-/object.values-1.1.2.tgz#7a2015e06fcb0f546bd652486ce8583a4731c731"
   integrity sha512-MYC0jvJopr8EK6dPBiO8Nb9mvjdypOachO5REGk6MXzujbBrAisKo3HmdEI6kZDL6fC31Mwee/5YbtMebixeag==
@@ -13855,11 +13583,7 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-<<<<<<< HEAD
-side-channel@^1.0.2, side-channel@^1.0.3:
-=======
 side-channel@^1.0.3, side-channel@^1.0.4:
->>>>>>> Add Husky & lint-staged
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/side-channel/-/side-channel-1.0.4.tgz#efce5c8fdc104ee751b25c58d4290011fa5ea2cf"
   integrity sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==
@@ -14071,9 +13795,9 @@ ssri@^6.0.1:
     figgy-pudding "^3.5.1"
 
 ssri@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/ssri/-/ssri-8.0.0.tgz#79ca74e21f8ceaeddfcb4b90143c458b8d988808"
-  integrity sha512-aq/pz989nxVYwn16Tsbj1TqFpD5LLrQxHf5zaHuieFV+R0Bbr4y8qUsOA45hXT/N4/9UNXTarBjnjVmjSOVaAA==
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/ssri/-/ssri-8.0.1.tgz#638e4e439e2ffbd2cd289776d5ca457c4f51a2af"
+  integrity sha512-97qShzy1AiyxvPNIkLWoGua7xoQzzPjQ0HAH4B0rWKo7SZ6USuPcrUiAFrws0UH8RrbWmgq3LMTObhPIHbbBeQ==
   dependencies:
     minipass "^3.1.1"
 
@@ -14231,11 +13955,7 @@ string-width@^4.0.0, string-width@^4.1.0, string-width@^4.2.0:
     is-fullwidth-code-point "^3.0.0"
     strip-ansi "^6.0.0"
 
-<<<<<<< HEAD
-"string.prototype.matchall@^4.0.0 || ^3.0.1":
-=======
 "string.prototype.matchall@^4.0.0 || ^3.0.1", string.prototype.matchall@^4.0.2:
->>>>>>> Add Husky & lint-staged
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/string.prototype.matchall/-/string.prototype.matchall-4.0.3.tgz#24243399bc31b0a49d19e2b74171a15653ec996a"
   integrity sha512-OBxYDA2ifZQ2e13cP82dWFMaCV9CGF8GzmN4fljBVw5O5wep0lu4gacm1OL6MjROoUnB8VbkWRThqkV2YFLNxw==
@@ -15657,15 +15377,9 @@ webpack@^4.44.2:
     webpack-sources "^1.4.1"
 
 webpack@^5.5.0:
-<<<<<<< HEAD
-  version "5.17.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.17.0.tgz#e92aebad45be25f86f788dc72fc11daacdcfd55d"
-  integrity sha512-R+IdNEaYcYaACpXZOt7reyc8txBK7J06lOPkX1SbgmeoAnUbyBZivJIksrDBnmMA3wlTWvPcX7DubxELyPB8rA==
-=======
   version "5.18.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.18.0.tgz#bbcf13094aa0da0534d513f27d7ee72d74e499c6"
   integrity sha512-RmiP/iy6ROvVe/S+u0TrvL/oOmvP+2+Bs8MWjvBwwY/j82Q51XJyDJ75m0QAGntL1Wx6B//Xc0+4VPP/hlNHmw==
->>>>>>> Add Husky & lint-staged
   dependencies:
     "@types/eslint-scope" "^3.7.0"
     "@types/estree" "^0.0.46"
@@ -15718,14 +15432,11 @@ which-module@^2.0.0:
   resolved "https://registry.yarnpkg.com/which-module/-/which-module-2.0.0.tgz#d9ef07dce77b9902b8a3a8fa4b31c3e3f7e6e87a"
   integrity sha1-2e8H3Od7mQK4o6j6SzHD4/fm6Ho=
 
-<<<<<<< HEAD
-=======
 which-pm-runs@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/which-pm-runs/-/which-pm-runs-1.0.0.tgz#670b3afbc552e0b55df6b7780ca74615f23ad1cb"
   integrity sha1-Zws6+8VS4LVd9rd4DKdGFfI60cs=
 
->>>>>>> Add Husky & lint-staged
 which@^1.2.9, which@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/which/-/which-1.3.1.tgz#a45043d54f5805316da8d62f9f50918d3da70b0a"
@@ -15902,7 +15613,7 @@ yallist@^4.0.0:
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
-yaml@^1.7.2:
+yaml@^1.10.0, yaml@^1.7.2:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.0.tgz#3b593add944876077d4d683fee01081bd9fff31e"
   integrity sha512-yr2icI4glYaNG+KWONODapy2/jDdMSDnrONSjblABjD9B4Z5LgiircSt8m8sRZFNi08kG9Sm0uSHtEmP3zaEGg==
