@@ -7,7 +7,7 @@ import {
   InputLabel,
   MenuItem,
   Typography,
-  Select,
+  Select
 } from '@material-ui/core';
 import { Visibility } from '@material-ui/icons';
 
@@ -18,32 +18,32 @@ export default {
     variant: {
       control: {
         type: 'select',
-        options: ['default', 'filled', 'outlined'],
-      },
+        options: ['default', 'filled', 'outlined']
+      }
     },
     size: {
       control: {
         type: 'select',
-        options: ['small', 'medium'],
-      },
+        options: ['small', 'medium']
+      }
     },
     color: {
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary'],
-      },
+        options: ['default', 'primary', 'secondary']
+      }
     },
     required: {
       control: {
-        type: 'boolean',
-      },
+        type: 'boolean'
+      }
     },
     disabled: {
       control: {
-        type: 'boolean',
-      },
-    },
-  },
+        type: 'boolean'
+      }
+    }
+  }
 };
 
 const Template = ({ label = 'Age', required, size, ...args }) => (
@@ -64,7 +64,7 @@ const SelectTemplate = ({ size, ...rest }) => {
       <InputAdornment position='end'>
         <Visibility />
       </InputAdornment>
-    ),
+    )
   };
 
   return (

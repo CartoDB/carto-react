@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     ...theme.typography.h5,
     fontWeight: theme.typography.fontWeightMedium,
-    color: theme.palette.text.primary,
+    color: theme.palette.text.primary
   },
   unit: {
     color: theme.palette.text.secondary,
@@ -15,10 +15,10 @@ const useStyles = makeStyles((theme) => ({
 
     '&$before': {
       marginLeft: 0,
-      marginRight: theme.spacing(0.5),
-    },
+      marginRight: theme.spacing(0.5)
+    }
   },
-  before: {},
+  before: {}
 }));
 
 function usePrevious(value) {
@@ -76,7 +76,7 @@ function FormulaWidgetUI(props) {
 FormulaWidgetUI.defaultProps = {
   data: '-',
   formatter: (v) => v,
-  unitBefore: false,
+  unitBefore: false
 };
 
 FormulaWidgetUI.propTypes = {
@@ -85,11 +85,11 @@ FormulaWidgetUI.propTypes = {
     PropTypes.number,
     PropTypes.shape({
       value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-      unit: PropTypes.string,
-    }),
+      unit: PropTypes.string
+    })
   ]),
   unitBefore: PropTypes.bool,
-  formatter: PropTypes.func,
+  formatter: PropTypes.func
 };
 
 export default FormulaWidgetUI;

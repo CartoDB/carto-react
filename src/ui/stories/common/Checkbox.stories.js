@@ -8,25 +8,25 @@ export default {
     color: {
       control: {
         type: 'select',
-        options: ['primary', 'default', 'secondary'],
-      },
+        options: ['primary', 'default', 'secondary']
+      }
     },
     checked: {
       control: {
-        type: 'boolean',
-      },
+        type: 'boolean'
+      }
     },
     disabled: {
       control: {
-        type: 'boolean',
-      },
+        type: 'boolean'
+      }
     },
     label: {
       control: {
-        type: 'text',
-      },
-    },
-  },
+        type: 'text'
+      }
+    }
+  }
 };
 
 const Template = ({ label, color = 'primary', checked = false, ...args }) => {

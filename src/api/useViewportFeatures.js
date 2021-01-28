@@ -38,7 +38,7 @@ function getUniqueFeatures(tiles, uniqueId) {
     if (data) {
       for (const feature of data) {
         const id = pickPropByUniqueId(feature, uniqueId);
-    
+
         if (!features.has(id)) {
           feature = { ...feature, isCompletelyInViewport };
           features.set(id, feature);
@@ -53,7 +53,7 @@ function getUniqueFeatures(tiles, uniqueId) {
 function featuresInViewport(features, viewport) {
   const viewportBbox = bboxPolygon(viewport);
 
-  return features.filter(feat => {
+  return features.filter((feat) => {
     if (GEOMETRY_TYPES.includes(feat.geometry.type)) {
       if (feat.isCompletelyInViewport) {
         return true;
@@ -61,7 +61,7 @@ function featuresInViewport(features, viewport) {
 
       return intersects(feat, viewportBbox);
     }
-    
+
     return false;
   });
 }
@@ -75,10 +75,12 @@ export default function useViewportFeatures(source, uniqueId) {
     debounce((features, viewport, sourceId) => {
       const viewportFeatures = featuresInViewport(features, viewport);
 
-      dispatch(setViewportFeatures({
-        sourceId,
-        features: viewportFeatures
-      }));
+      dispatch(
+        setViewportFeatures({
+          sourceId,
+          features: viewportFeatures
+        })
+      );
     }, 500),
     []
   );
@@ -89,21 +91,24 @@ export default function useViewportFeatures(source, uniqueId) {
     }
   }, [uniqueFeatures, viewport, source]);
 
-  const onViewportLoad = useCallback((visibleTiles) => {
-    const viewportBbox = bboxPolygon(viewport);
-    
-    const tilesInViewport = visibleTiles.map(tile => {
-      const tileBbox = bboxPolygon(Object.values(tile.bbox));
+  const onViewportLoad = useCallback(
+    (visibleTiles) => {
+      const viewportBbox = bboxPolygon(viewport);
 
-      return {
-        isCompletelyInViewport: booleanContains(viewportBbox, tileBbox),
-        data: tile.dataInWGS84
-      }
-    });
+      const tilesInViewport = visibleTiles.map((tile) => {
+        const tileBbox = bboxPolygon(Object.values(tile.bbox));
 
-    const features = getUniqueFeatures(tilesInViewport, uniqueId);
-    setUniqueFeatures(features);
-  }, [uniqueId, viewport]);
+        return {
+          isCompletelyInViewport: booleanContains(viewportBbox, tileBbox),
+          data: tile.dataInWGS84
+        };
+      });
+
+      const features = getUniqueFeatures(tilesInViewport, uniqueId);
+      setUniqueFeatures(features);
+    },
+    [uniqueId, viewport]
+  );
 
   return [onViewportLoad];
 }

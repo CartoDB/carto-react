@@ -5,7 +5,17 @@ import { groupValuesByColumn } from '../operations/groupby';
 import { LayerTypes } from '../LayerTypes';
 
 export const getCategories = async (props) => {
-  const { data, credentials, column, operation, filters, viewportFilter, viewportFeatures, type, opts } = props;
+  const {
+    data,
+    credentials,
+    column,
+    operation,
+    filters,
+    viewportFilter,
+    viewportFeatures,
+    type,
+    opts
+  } = props;
 
   const operationColumn = props.operationColumn || column;
 
@@ -14,13 +24,20 @@ export const getCategories = async (props) => {
   }
 
   if (type === LayerTypes.BQ && !viewportFilter) {
-    throw new Error('Category Widget error: BigQuery layers need "viewportFilter" prop set to true.');
+    throw new Error(
+      'Category Widget error: BigQuery layers need "viewportFilter" prop set to true.'
+    );
   }
 
   if (viewportFilter) {
     const features = viewportFeatures || [];
     const filteredFeatures = features.filter(applyFilter({ filters }));
-    const groups = groupValuesByColumn(filteredFeatures, operationColumn, column, operation);
+    const groups = groupValuesByColumn(
+      filteredFeatures,
+      operationColumn,
+      column,
+      operation
+    );
     return groups;
   } else {
     let query = data;

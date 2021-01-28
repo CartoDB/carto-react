@@ -5,6 +5,7 @@
 - Fix hover color in secondary buttons [#65](https://github.com/CartoDB/carto-react-lib/pull/65)
 
 ## 1.0.0-beta12 (2021-01-22)
+
 - Fix basemap casing in store and action so `basemap` and `setBasemap` are used [#64](https://github.com/CartoDB/carto-react-lib/pull/64)
 
 ## 1.0.0-beta10 (2021-01-14)

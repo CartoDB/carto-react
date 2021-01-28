@@ -9,26 +9,26 @@ export default {
     variant: {
       control: {
         type: 'select',
-        options: ['standard', 'filled', 'outlined'],
-      },
+        options: ['standard', 'filled', 'outlined']
+      }
     },
     color: {
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary'],
-      },
+        options: ['default', 'primary', 'secondary']
+      }
     },
     required: {
       control: {
-        type: 'boolean',
-      },
+        type: 'boolean'
+      }
     },
     disabled: {
       control: {
-        type: 'boolean',
-      },
-    },
-  },
+        type: 'boolean'
+      }
+    }
+  }
 };
 
 const top100Films = [
@@ -46,7 +46,7 @@ const top100Films = [
   { title: 'Star Wars: Episode V - The Empire Strikes Back', year: 1980 },
   { title: 'Forrest Gump', year: 1994 },
   { title: 'Inception', year: 2010 },
-  { title: 'The Lord of the Rings: The Two Towers', year: 2002 },
+  { title: 'The Lord of the Rings: The Two Towers', year: 2002 }
 ];
 
 const Template = ({ label = 'Choose films', disabled, ...args }) => (
@@ -64,7 +64,7 @@ const AutocompleteTemplate = ({ disabled, size, ...args }) => {
     const firstLetter = option.title[0].toUpperCase();
     return {
       firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-      ...option,
+      ...option
     };
   });
 

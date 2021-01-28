@@ -9,5 +9,5 @@ export {
   WrapperWidgetUI,
   CategoryWidgetUI,
   FormulaWidgetUI,
-  HistogramWidgetUI,
+  HistogramWidgetUI
 };

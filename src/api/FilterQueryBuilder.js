@@ -1,6 +1,6 @@
 export const FilterTypes = Object.freeze({
   IN: 'in',
-  BETWEEN: 'between',
+  BETWEEN: 'between'
 });
 
 export const getApplicableFilters = (filters = {}, owner) => {
@@ -62,25 +62,23 @@ export const filtersToSQL = (filters = {}) => {
   });
 
   return queries.join(' OR ');
-
 };
 
-function getBoundingBoxes ([west, south, east, north]) {
+function getBoundingBoxes([west, south, east, north]) {
   var bboxes = [];
 
   if (east - west >= 360) {
-      bboxes.push([-180, south, 180, north]);
+    bboxes.push([-180, south, 180, north]);
   } else if (west >= -180 && east <= 180) {
-      bboxes.push([west, south, east, north]);
+    bboxes.push([west, south, east, north]);
   } else {
-      bboxes.push([west, south, 180, north]);
-      // here we assume west,east have been adjusted => west >= -180 => east > 180
-      bboxes.push([-180, south, east - 360, north]);
+    bboxes.push([west, south, 180, north]);
+    // here we assume west,east have been adjusted => west >= -180 => east > 180
+    bboxes.push([-180, south, east - 360, north]);
   }
 
   return bboxes;
 } */
-
 
 /**
  * Returns a SQL query applying a set of filters

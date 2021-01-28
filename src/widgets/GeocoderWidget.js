@@ -6,7 +6,13 @@ import { geocodeStreetPoint } from './models';
 import { selectOAuthCredentials } from '../redux/oauthSlice';
 import { addLayer, setViewState } from '../redux/cartoSlice';
 
-import { CircularProgress, IconButton, InputBase, Paper, SvgIcon } from '@material-ui/core';
+import {
+  CircularProgress,
+  IconButton,
+  InputBase,
+  Paper,
+  SvgIcon
+} from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -14,7 +20,7 @@ const DEFAULT_COUNTRY = ''; // 'SPAIN', 'USA'
 
 const setGeocoderResult = (payload) => ({
   type: 'carto/setGeocoderResult',
-  payload,
+  payload
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -24,13 +30,12 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(1.5),
     borderRadius: 4,
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   icon: {
     fill: theme.palette.text.secondary,
     height: '1em',
-    fontSize: `${theme.typography.body2.lineHeight}em`,
-
+    fontSize: `${theme.typography.body2.lineHeight}em`
   },
   clear: {
     ...theme.typography.body2
@@ -39,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.body2,
     width: `calc(100% - ${theme.spacing(5)}px)`,
     marginLeft: theme.spacing(1)
-  },
+  }
 }));
 
 const SearchIcon = (args) => (
@@ -73,7 +78,7 @@ function GeocoderWidget(props) {
     // layer to display the geocoded direction marker
     dispatch(
       addLayer({
-        id: 'geocoderLayer',
+        id: 'geocoderLayer'
       })
     );
   }, [dispatch]);
@@ -111,7 +116,7 @@ function GeocoderWidget(props) {
         setLoading(true);
         const result = await geocodeStreetPoint(credentials, {
           searchText,
-          country: DEFAULT_COUNTRY,
+          country: DEFAULT_COUNTRY
         });
         if (result) {
           zoomToResult(result);
@@ -124,7 +129,7 @@ function GeocoderWidget(props) {
         setLoading(false);
       }
     }
-  }
+  };
 
   const zoomToResult = (result) => {
     dispatch(
@@ -132,7 +137,7 @@ function GeocoderWidget(props) {
         longitude: result.longitude,
         latitude: result.latitude,
         zoom: 16,
-        transitionDuration: 500,
+        transitionDuration: 500
       })
     );
   };
@@ -149,26 +154,32 @@ function GeocoderWidget(props) {
 
   return (
     <Paper className={`${props.className} ${classes.paperInput}`} elevation={2}>
-      {loading ? <CircularProgress size={20} className={classes.icon} /> : <SearchIcon className={classes.icon}/>}
+      {loading ? (
+        <CircularProgress size={20} className={classes.icon} />
+      ) : (
+        <SearchIcon className={classes.icon} />
+      )}
       <InputBase
-        type="search"
+        type='search'
         tabIndex={-1}
         inputRef={inputRef}
         size='small'
         placeholder='Search address'
         className={classes.input}
         value={searchText}
-        inputProps={{'aria-label': 'GeocoderSearch'}}
+        inputProps={{ 'aria-label': 'GeocoderSearch' }}
         onChange={handleChange}
         onInput={handleInput}
         onKeyDown={handleKeyPress}
-        onBlur={handleBlur}/>
+        onBlur={handleBlur}
+      />
     </Paper>
   );
-};
+}
 
 GeocoderWidget.propTypes = {
   className: PropTypes.string,
+
   onError: PropTypes.func
 };
 

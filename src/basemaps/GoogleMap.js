@@ -30,7 +30,7 @@ export function GoogleMap(props) {
     top: 0,
     width: props.width || '100%',
     height: props.height || '100%',
-    ...customStyle,
+    ...customStyle
   };
 
   const onLoad = () => {
@@ -38,7 +38,7 @@ export function GoogleMap(props) {
     let options = {
       center: {
         lat: viewState.latitude,
-        lng: viewState.longitude,
+        lng: viewState.longitude
       },
       mapTypeControl: false,
       zoom: viewState.zoom + 1, // notice the 1 zoom level difference relative to deckgl
@@ -48,7 +48,7 @@ export function GoogleMap(props) {
       fullscreenControl: false,
       zoomControl: false,
       streetViewControl: false,
-      ...basemap.options,
+      ...basemap.options
     };
 
     const mapNotConnected = containerRef.current.children.length === 0;
@@ -64,7 +64,7 @@ export function GoogleMap(props) {
           latitude: center.lat(),
           zoom: Math.max(map.getZoom() - 1, 1), // cap min zoom level to 1
           pitch: 0, // no pitch or bearing gmaps yet
-          bearing: 0,
+          bearing: 0
         };
 
         if (JSON.stringify(window.cartoViewState) !== JSON.stringify(viewState)) {
@@ -78,7 +78,7 @@ export function GoogleMap(props) {
       map.addListener('resize', () => {
         props.onResize({
           height: map.getDiv().offsetHeight,
-          width: map.getDiv().offsetWidth,
+          width: map.getDiv().offsetWidth
         });
       });
 
