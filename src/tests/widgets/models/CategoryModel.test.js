@@ -10,22 +10,18 @@ import { LayerTypes } from 'src/widgets/LayerTypes';
 import { POINTS } from '../data-mocks/pointsForCategories';
 
 describe('getCategories', () => {
-  test('should thrown an error due to invalid data type', () => {
-    try {
-      getCategories({ data: [] });
-    } catch (err) {
-      expect(err).toBe('Array is not a valid type to get categories');
-    }
+  test('should throw an error due to invalid data type', async () => {
+    await expect(getCategories({ data: [] })).rejects.toThrow(
+      'Array is not a valid type to get categories'
+    );
   });
 
-  test('should thrown an error if trying to implement client-side-logic with CartoBQTilerLayer', () => {
-    try {
-      getCategories({ type: LayerTypes.BQ, viewportFilter: true });
-    } catch (err) {
-      expect(err).toBe(
-        'Category Widget error: BigQuery layers need "viewportFilter" prop set to true.'
-      );
-    }
+  test('should throw an error if trying to implement client-side-logic with CartoBQTilerLayer', async () => {
+    await expect(
+      getCategories({ type: LayerTypes.BQ, viewportFilter: false })
+    ).rejects.toThrow(
+      'Category Widget error: BigQuery layers need "viewportFilter" prop set to true.'
+    );
   });
 
   describe('buildSqlQueryToGetCategories - simple global operations', () => {
