@@ -108,6 +108,28 @@ describe('getHistogram', () => {
       expect(filterViewportFeaturesToGetHistogram(args)).toEqual([0, 1, 2, 3, 0]);
     });
 
+    test(AggregationTypes.MIN, () => {
+      const args = createArguments(AggregationTypes.MIN);
+      expect(filterViewportFeaturesToGetHistogram(args)).toEqual([
+        Infinity,
+        1,
+        2,
+        3,
+        Infinity
+      ]);
+    });
+
+    test(AggregationTypes.MAX, () => {
+      const args = createArguments(AggregationTypes.MAX);
+      expect(filterViewportFeaturesToGetHistogram(args)).toEqual([
+        -Infinity,
+        1,
+        2,
+        3,
+        -Infinity
+      ]);
+    });
+
     test('no features', () => {
       const testCases = [null, undefined];
       for (const tc of testCases) {

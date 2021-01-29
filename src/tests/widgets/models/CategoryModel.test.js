@@ -121,6 +121,22 @@ describe('getCategories', () => {
       ]);
     });
 
+    test(AggregationTypes.MIN, () => {
+      const args = createArguments(AggregationTypes.MIN);
+      expect(filterViewportFeaturesToGetCategories(args)).toEqual([
+        { category: 'a', value: 1 },
+        { category: 'b', value: 3 }
+      ]);
+    });
+
+    test(AggregationTypes.MAX, () => {
+      const args = createArguments(AggregationTypes.MAX);
+      expect(filterViewportFeaturesToGetCategories(args)).toEqual([
+        { category: 'a', value: 2 },
+        { category: 'b', value: 3 }
+      ]);
+    });
+
     test('no features', () => {
       const testCases = [null, undefined];
       for (const tc of testCases) {
