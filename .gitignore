@@ -2,6 +2,7 @@
 /dist
 /storybook-static
 .DS_Store
+/coverage
 
 # Firebase
 firebase-debug.log*
