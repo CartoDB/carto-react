@@ -10,22 +10,18 @@ import { LayerTypes } from 'src/widgets/LayerTypes';
 import { POLYGONS } from '../data-mocks/polygonsForHistogram';
 
 describe('getHistogram', () => {
-  test('should thrown an error due to invalid data type', () => {
-    try {
-      getHistogram({ data: [] });
-    } catch (err) {
-      expect(err).toBe('Array is not a valid type to get histogram');
-    }
+  test('should thrown an error due to invalid data type', async () => {
+    await expect(getHistogram({ data: [] })).rejects.toThrow(
+      'Array is not a valid type to get histogram'
+    );
   });
 
-  test('should thrown an error if trying to implement client-side-logic with CartoBQTilerLayer', () => {
-    try {
-      getHistogram({ type: LayerTypes.BQ, viewportFilter: true });
-    } catch (err) {
-      expect(err).toBe(
-        'Category Widget error: BigQuery layers need "viewportFilter" prop set to true.'
-      );
-    }
+  test('should thrown an error if trying to implement client-side-logic with CartoBQTilerLayer', async () => {
+    await expect(
+      getHistogram({ type: LayerTypes.BQ, viewportFilter: false })
+    ).rejects.toThrow(
+      'Histogram Widget error: BigQuery layer needs "viewportFilter" prop set to true.'
+    );
   });
 
   describe('buildSqlQueryToGetHistogram - simple global operations', () => {
