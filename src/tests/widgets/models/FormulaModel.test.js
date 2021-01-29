@@ -10,13 +10,13 @@ import { LayerTypes } from 'src/widgets/LayerTypes';
 import { LINES } from '../data-mocks/linesForFormula';
 
 describe('getFormula', () => {
-  test('should thrown an error due to invalid data type', async () => {
+  test('should throw an error due to invalid data type', async () => {
     await expect(getFormula({ data: [] })).rejects.toThrow(
       'Array is not a valid type to get formula'
     );
   });
 
-  test('should thrown an error if trying to implement client-side-logic with CartoBQTilerLayer', async () => {
+  test('should throw an error if trying to implement client-side-logic with CartoBQTilerLayer', async () => {
     await expect(
       getFormula({ type: LayerTypes.BQ, viewportFilter: false })
     ).rejects.toThrow(
