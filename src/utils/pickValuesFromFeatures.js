@@ -2,7 +2,7 @@ function isFeature(value) {
   return typeof value === 'object' && 'properties' in value;
 }
 
-function isValidFeature(feature, column) {
+function getValueFromFeature(feature, column) {
   if (!isFeature(feature)) {
     return 0;
   }
@@ -13,5 +13,5 @@ function isValidFeature(feature, column) {
 }
 
 export function pickValuesFromFeatures(features, column) {
-  return features.map((feat) => isValidFeature(feat, column));
+  return features.map((feat) => getValueFromFeature(feat, column));
 }
