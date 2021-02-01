@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setWidgetsLoadingState, removeWidgetsLoadingState } from '../redux/cartoSlice';
+import { setWidgetLoadingState, removeWidgetLoadingState } from '../redux/cartoSlice';
 
 export default function useWidgetLoadingState(widgetId, filterIsByViewport) {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export default function useWidgetLoadingState(widgetId, filterIsByViewport) {
     (isLoading) => {
       if (widgetId) {
         dispatch(
-          setWidgetsLoadingState({
+          setWidgetLoadingState({
             widgetId,
             isLoading
           })
@@ -29,7 +29,7 @@ export default function useWidgetLoadingState(widgetId, filterIsByViewport) {
     setIsLoading(filterIsByViewport);
 
     return () => {
-      dispatch(removeWidgetsLoadingState([widgetId]));
+      dispatch(removeWidgetLoadingState(widgetId));
     };
   }, []);
 
