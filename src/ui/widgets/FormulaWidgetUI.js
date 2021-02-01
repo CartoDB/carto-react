@@ -33,6 +33,7 @@ function FormulaWidgetUI(props) {
   const classes = useStyles();
   const { data, formatter } = props;
   const [value, setValue] = useState('-');
+  const requestRef = useRef();
   const prevValue = usePrevious(value);
 
   useEffect(() => {
@@ -41,7 +42,8 @@ function FormulaWidgetUI(props) {
         start: prevValue || 0,
         end: data,
         duration: 500,
-        drawFrame: (val) => setValue(val)
+        drawFrame: (val) => setValue(val),
+        requestRef
       });
     } else if (
       typeof data === 'object' &&
@@ -54,11 +56,15 @@ function FormulaWidgetUI(props) {
         start: prevValue.value,
         end: data.value,
         duration: 1000,
-        drawFrame: (val) => setValue({ value: val, unit: data.prefix })
+        drawFrame: (val) => setValue({ value: val, unit: data.prefix }),
+        requestRef
       });
     } else {
       setValue(data);
     }
+
+    return () => cancelAnimationFrame(requestRef.current);
+
     // eslint-disable-next-line
   }, [data, setValue]);
 

@@ -144,6 +144,7 @@ function CategoryWidgetUI(props) {
   const [blockedCategories, setBlockedCategories] = useState([]);
   const [tempBlockedCategories, setTempBlockedCategories] = useState(false);
   const [animValues, setAnimValues] = useState([]);
+  const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const classes = useStyles();
 
@@ -335,8 +336,11 @@ function CategoryWidgetUI(props) {
       start: prevAnimValues || [],
       end: sortedData,
       duration: 500,
-      drawFrame: (val) => setAnimValues(val)
+      drawFrame: (val) => setAnimValues(val),
+      requestRef
     });
+
+    return () => cancelAnimationFrame(requestRef.current);
   }, [sortedData]);
 
   // Separated to simplify the widget layout but inside the main component to avoid passing all dependencies

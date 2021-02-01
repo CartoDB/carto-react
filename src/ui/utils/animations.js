@@ -1,7 +1,7 @@
 /**
- * Animate one value from start to end
+ * Animate one value from start to end, storing the current request in requestRef hook
  */
-export function animateValue({ start, end, duration, drawFrame }) {
+export function animateValue({ start, end, duration, drawFrame, requestRef }) {
   if (start === end) return;
 
   const range = end - start;
@@ -11,18 +11,18 @@ export function animateValue({ start, end, duration, drawFrame }) {
     current += step;
     drawFrame(Math.floor(current));
     if ((step > 0 && current < end) || (step < 0 && current > end)) {
-      requestAnimationFrame(animate);
+      requestRef.current = requestAnimationFrame(animate);
     } else {
       drawFrame(end);
     }
   };
-  requestAnimationFrame(animate);
+  requestRef.current = requestAnimationFrame(animate);
 }
 
 /**
- * Animate a series of values from start to end
+ * Animate a series of values from start to end, storing the current request in requestRef hook
  */
-export function animateValues({ start, end, duration, drawFrame }) {
+export function animateValues({ start, end, duration, drawFrame, requestRef }) {
   const isEqual =
     start.length === end.length && start.every((val, i) => val.value === end[i].value);
   if (isEqual) return;
@@ -52,10 +52,10 @@ export function animateValues({ start, end, duration, drawFrame }) {
       }));
       drawFrame(currentValues);
       currentFrame++;
-      requestAnimationFrame(animate);
+      requestRef.current = requestAnimationFrame(animate);
     } else {
       drawFrame(end);
     }
   };
-  requestAnimationFrame(animate);
+  requestRef.current = requestAnimationFrame(animate);
 }
