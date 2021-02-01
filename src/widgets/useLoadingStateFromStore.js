@@ -29,7 +29,7 @@ export default function useLoadingStateFromStore(widgetId, filterIsByViewport) {
     setLoading(filterIsByViewport);
 
     return () => {
-      removeWidgetLoaders();
+      dispatch(removeWidgetLoaders([widgetId]));
     };
   }, []);
 

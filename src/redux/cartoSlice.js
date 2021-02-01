@@ -137,7 +137,7 @@ export const createCartoSlice = (initialState) => {
 
         if (displayAllLoaders) {
           state.widgetLoaders = Object.fromEntries(
-            Object.keys(state.widgetLoaders).map((key) => [key, true])
+            Object.keys(state.widgetLoaders).map((id) => [id, true])
           );
         } else {
           state.widgetLoaders = {
@@ -146,8 +146,17 @@ export const createCartoSlice = (initialState) => {
           };
         }
       },
-      removeWidgetLoaders: (state) => {
-        state.widgetLoaders = {};
+      removeWidgetLoaders: (state, action) => {
+        const widgetIds = action.payload;
+        const isArrayOfWidgetIds = Array.isArray(widgetIds);
+
+        if (isArrayOfWidgetIds && widgetIds.length) {
+          for (const id of widgetIds) {
+            if (id in state.widgetLoaders) {
+              delete state.widgetLoaders[id];
+            }
+          }
+        }
       }
     }
   });
@@ -307,7 +316,9 @@ export const setWidgetLoaders = (data) => ({
 
 /**
  * Action to remove the widget loaders state
+ * @param {string[]} widgetIds - widget ids list to remove
  */
-export const removeWidgetLoaders = () => ({
-  type: 'carto/removeWidgetLoaders'
+export const removeWidgetLoaders = (data) => ({
+  type: 'carto/removeWidgetLoaders',
+  payload: data
 });
