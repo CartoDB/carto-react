@@ -6,7 +6,7 @@ import { WrapperWidgetUI, CategoryWidgetUI } from '../ui';
 import { FilterTypes, getApplicableFilters } from '../api/FilterQueryBuilder';
 import { getCategories } from './models';
 import { AggregationTypes } from './AggregationTypes';
-import useLoadingStateFromStore from './useLoadingStateFromStore';
+import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**
  * Renders a <CategoryWidget /> component
@@ -29,8 +29,8 @@ function CategoryWidget(props) {
   const dispatch = useDispatch();
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
-  const widgetLoaders = useSelector((state) => state.carto.widgetLoaders);
-  const [isLoadingStateSet, setLoading] = useLoadingStateFromStore(
+  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
+  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(
     props.id,
     props.viewportFilter
   );
@@ -38,9 +38,9 @@ function CategoryWidget(props) {
 
   useEffect(() => {
     const abortController = new AbortController();
-    if (data && credentials && isLoadingStateSet) {
+    if (data && credentials && hasLoadingState) {
       const filters = getApplicableFilters(source.filters, props.id);
-      !props.viewportFilter && setLoading(true);
+      !props.viewportFilter && setIsLoading(true);
       getCategories({
         ...props,
         data,
@@ -55,7 +55,7 @@ function CategoryWidget(props) {
           if (error.name === 'AbortError') return;
           if (props.onError) props.onError(error);
         })
-        .finally(() => setLoading(false));
+        .finally(() => setIsLoading(false));
     } else {
       setCategoryData(null);
     }
@@ -63,7 +63,7 @@ function CategoryWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, source.filters, viewportFeatures, props, isLoadingStateSet]);
+  }, [credentials, data, source.filters, viewportFeatures, props, hasLoadingState]);
 
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
@@ -94,14 +94,14 @@ function CategoryWidget(props) {
   return (
     <WrapperWidgetUI
       title={props.title}
-      isLoading={widgetLoaders[props.id]}
+      isLoading={widgetsLoadingState[props.id]}
       {...props.wrapperProps}
     >
       <CategoryWidgetUI
         data={categoryData}
         formatter={props.formatter}
         labels={props.labels}
-        isLoading={widgetLoaders[props.id]}
+        isLoading={widgetsLoadingState[props.id]}
         selectedCategories={selectedCategories}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
       />

@@ -70,7 +70,7 @@ function GeocoderWidget(props) {
   // Component local state and events handling
   const [result, setResult] = useState(null);
   const [searchText, setSearchText] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setIsLoading] = useState(false);
   // Actions dispatched
   const dispatch = useDispatch();
 
@@ -113,7 +113,7 @@ function GeocoderWidget(props) {
   const handleSearch = async () => {
     if (credentials) {
       try {
-        setLoading(true);
+        setIsLoading(true);
         const result = await geocodeStreetPoint(credentials, {
           searchText,
           country: DEFAULT_COUNTRY
@@ -126,7 +126,7 @@ function GeocoderWidget(props) {
       } catch (e) {
         handleGeocodeError(e);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     }
   };

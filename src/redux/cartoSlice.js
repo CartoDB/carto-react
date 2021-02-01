@@ -47,7 +47,7 @@ export const createCartoSlice = (initialState) => {
         // Auto import dataSources
       },
       viewportFeatures: {},
-      widgetLoaders: {},
+      widgetsLoadingState: {},
       ...initialState
     },
     reducers: {
@@ -132,28 +132,28 @@ export const createCartoSlice = (initialState) => {
           delete state.viewportFeatures[sourceId];
         }
       },
-      setWidgetLoaders: (state, action) => {
-        const { widgetId, isLoading, displayAllLoaders } = action.payload;
+      setWidgetsLoadingState: (state, action) => {
+        const { widgetId, isLoading, allAreLoading } = action.payload;
 
-        if (displayAllLoaders) {
-          state.widgetLoaders = Object.fromEntries(
-            Object.keys(state.widgetLoaders).map((id) => [id, true])
+        if (allAreLoading) {
+          state.widgetsLoadingState = Object.fromEntries(
+            Object.keys(state.widgetsLoadingState).map((id) => [id, true])
           );
         } else {
-          state.widgetLoaders = {
-            ...state.widgetLoaders,
+          state.widgetsLoadingState = {
+            ...state.widgetsLoadingState,
             [widgetId]: isLoading
           };
         }
       },
-      removeWidgetLoaders: (state, action) => {
+      removeWidgetsLoadingState: (state, action) => {
         const widgetIds = action.payload;
         const isArrayOfWidgetIds = Array.isArray(widgetIds);
 
         if (isArrayOfWidgetIds && widgetIds.length) {
           for (const id of widgetIds) {
-            if (id in state.widgetLoaders) {
-              delete state.widgetLoaders[id];
+            if (id in state.widgetsLoadingState) {
+              delete state.widgetsLoadingState[id];
             }
           }
         }
@@ -309,8 +309,8 @@ export const removeViewportFeatures = (data) => ({
  * @param {object} widgetId - the id of the widget
  * @param {boolean} isLoading - the loader state
  */
-export const setWidgetLoaders = (data) => ({
-  type: 'carto/setWidgetLoaders',
+export const setWidgetsLoadingState = (data) => ({
+  type: 'carto/setWidgetsLoadingState',
   payload: data
 });
 
@@ -318,7 +318,7 @@ export const setWidgetLoaders = (data) => ({
  * Action to remove the widget loaders state
  * @param {string[]} widgetIds - widget ids list to remove
  */
-export const removeWidgetLoaders = (data) => ({
-  type: 'carto/removeWidgetLoaders',
+export const removeWidgetsLoadingState = (data) => ({
+  type: 'carto/removeWidgetsLoadingState',
   payload: data
 });

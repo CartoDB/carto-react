@@ -5,7 +5,7 @@ import { selectSourceById } from '../redux/cartoSlice';
 import { WrapperWidgetUI, FormulaWidgetUI } from '../ui';
 import { getFormula } from './models';
 import { AggregationTypes } from './AggregationTypes';
-import useLoadingStateFromStore from './useLoadingStateFromStore';
+import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**
  * Renders a <FormulaWidget /> component
@@ -24,17 +24,17 @@ function FormulaWidget(props) {
   const [formulaData, setFormulaData] = useState(null);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
-  const widgetLoaders = useSelector((state) => state.carto.widgetLoaders);
+  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
   const { data, credentials, type, filters } = source;
-  const [isLoadingStateSet, setLoading] = useLoadingStateFromStore(
+  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(
     props.id,
     props.viewportFilter
   );
 
   useEffect(() => {
     const abortController = new AbortController();
-    if (data && credentials && isLoadingStateSet) {
-      !props.viewportFilter && setLoading(true);
+    if (data && credentials && hasLoadingState) {
+      !props.viewportFilter && setIsLoading(true);
       getFormula({
         ...props,
         data,
@@ -51,7 +51,7 @@ function FormulaWidget(props) {
           if (error.name === 'AbortError') return;
           if (props.onError) props.onError(error);
         })
-        .finally(() => setLoading(false));
+        .finally(() => setIsLoading(false));
     } else {
       setFormulaData(undefined);
     }
@@ -59,12 +59,12 @@ function FormulaWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, filters, viewportFeatures, props, isLoadingStateSet]);
+  }, [credentials, data, filters, viewportFeatures, props, hasLoadingState]);
 
   return (
     <WrapperWidgetUI
       title={props.title}
-      isLoading={widgetLoaders[props.id]}
+      isLoading={widgetsLoadingState[props.id]}
       {...props.wrapperProps}
     >
       <FormulaWidgetUI data={formulaData} formatter={props.formatter} unitBefore={true} />
