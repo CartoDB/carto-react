@@ -1,28 +1,27 @@
 import { AggregationTypes } from '../../AggregationTypes';
 
-const isFeature = (val) => typeof val === 'object';
+const isFeature = (value) => typeof value === 'object' && 'properties' in value;
+const isFeatureOrValue = (value, column) =>
+  isFeature(value) ? value.properties[column] || 0 : value;
 
-const sum = (v, column) =>
-  v.reduce((a, b) => (isFeature(b) ? a + (b.properties[column] || 0) : a + b), 0);
+const sum = (values, column) =>
+  values.reduce((a, b) => (isFeature(b) ? a + (b.properties[column] || 0) : a + b), 0);
 
-const findMinOrMaxValue = (type, val, column) => {
+const findMinOrMaxValue = (type, values, column) => {
   const infinityWithSignus = type === AggregationTypes.MAX ? -Infinity : Infinity;
-
-  // features
-  if (isFeature(val[0]) && column) {
-    return Math[type](...val.map((v) => v.properties[column] || 0), infinityWithSignus);
-  }
-
-  // values
-  return val.reduce((a, b) => Math[type](a, b), infinityWithSignus);
+  const checkedFeatureOrValue = (v) => isFeatureOrValue(v, column);
+  return values.reduce(
+    (a, b) => Math[type](checkedFeatureOrValue(a), checkedFeatureOrValue(b)),
+    infinityWithSignus
+  );
 };
 
 export const aggregationFunctions = {
-  [AggregationTypes.COUNT]: (val) => val.length,
-  [AggregationTypes.MIN]: (val, column) =>
-    findMinOrMaxValue(AggregationTypes.MIN, val, column),
-  [AggregationTypes.MAX]: (val, column) =>
-    findMinOrMaxValue(AggregationTypes.MAX, val, column),
-  [AggregationTypes.SUM]: (val, column) => sum(val, column),
-  [AggregationTypes.AVG]: (val, column) => sum(val, column) / val.length
+  [AggregationTypes.COUNT]: (values) => values.length,
+  [AggregationTypes.MIN]: (values, column) =>
+    findMinOrMaxValue(AggregationTypes.MIN, values, column),
+  [AggregationTypes.MAX]: (values, column) =>
+    findMinOrMaxValue(AggregationTypes.MAX, values, column),
+  [AggregationTypes.SUM]: (values, column) => sum(values, column),
+  [AggregationTypes.AVG]: (values, column) => sum(values, column) / values.length
 };
