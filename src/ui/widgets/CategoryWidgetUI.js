@@ -126,7 +126,15 @@ const SearchIcon = () => (
 );
 
 function CategoryWidgetUI(props) {
-  const { data, formatter, labels, loading, maxItems, order, selectedCategories } = props;
+  const {
+    data,
+    formatter,
+    labels,
+    isLoading,
+    maxItems,
+    order,
+    selectedCategories
+  } = props;
   const [sortedData, setSortedData] = useState([]);
   const [maxValue, setMaxValue] = useState(1);
   const [showAll, setShowAll] = useState(false);
@@ -446,7 +454,7 @@ function CategoryWidgetUI(props) {
 
   return (
     <div className={classes.root}>
-      {data && (data.length > 0 || !loading) ? (
+      {data && (data.length > 0 || !isLoading) ? (
         <React.Fragment>
           {sortedData.length > 0 && (
             <Grid
@@ -519,7 +527,7 @@ function CategoryWidgetUI(props) {
                   }
                 />
               ))
-            ) : data.length === 0 && !loading ? (
+            ) : data.length === 0 && !isLoading ? (
               <Alert severity='warning'>
                 <AlertTitle>No data available</AlertTitle>
                 There are no results for the combination of filters applied to your data.
@@ -567,7 +575,7 @@ CategoryWidgetUI.defaultProps = {
   data: null,
   formatter: (v) => v,
   labels: {},
-  loading: false,
+  isLoading: false,
   maxItems: 5,
   order: CategoryWidgetUI.ORDER_TYPES.RANKING,
   selectedCategories: []
@@ -582,7 +590,7 @@ CategoryWidgetUI.propTypes = {
   ),
   formatter: PropTypes.func,
   labels: PropTypes.object,
-  loading: PropTypes.bool,
+  isLoading: PropTypes.bool,
   maxItems: PropTypes.number,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func,

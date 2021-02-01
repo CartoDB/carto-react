@@ -298,7 +298,7 @@ export const removeViewportFeatures = (data) => ({
 /**
  * Action to set the widget loader state
  * @param {object} widgetId - the id of the widget
- * @param {object} isLoading - the loader state
+ * @param {boolean} isLoading - the loader state
  */
 export const setWidgetLoaders = (data) => ({
   type: 'carto/setWidgetLoaders',

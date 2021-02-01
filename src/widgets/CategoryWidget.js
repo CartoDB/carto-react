@@ -30,7 +30,7 @@ function CategoryWidget(props) {
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
   const widgetLoaders = useSelector((state) => state.carto.widgetLoaders);
-  const [widgetIdIsSet, setLoading] = useLoadingStateFromStore(
+  const [isLoadingStateSet, setLoading] = useLoadingStateFromStore(
     props.id,
     props.viewportFilter
   );
@@ -38,7 +38,7 @@ function CategoryWidget(props) {
 
   useEffect(() => {
     const abortController = new AbortController();
-    if (data && credentials && widgetIdIsSet) {
+    if (data && credentials && isLoadingStateSet) {
       const filters = getApplicableFilters(source.filters, props.id);
       !props.viewportFilter && setLoading(true);
       getCategories({
@@ -63,7 +63,7 @@ function CategoryWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, source.filters, viewportFeatures, props, widgetIdIsSet]);
+  }, [credentials, data, source.filters, viewportFeatures, props, isLoadingStateSet]);
 
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
@@ -94,14 +94,14 @@ function CategoryWidget(props) {
   return (
     <WrapperWidgetUI
       title={props.title}
-      loading={widgetLoaders[props.id]}
+      isLoading={widgetLoaders[props.id]}
       {...props.wrapperProps}
     >
       <CategoryWidgetUI
         data={categoryData}
         formatter={props.formatter}
         labels={props.labels}
-        loading={widgetLoaders[props.id]}
+        isLoading={widgetLoaders[props.id]}
         selectedCategories={selectedCategories}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
       />

@@ -32,7 +32,7 @@ function HistogramWidget(props) {
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
   const widgetLoaders = useSelector((state) => state.carto.widgetLoaders);
-  const [widgetIdIsSet, setLoading] = useLoadingStateFromStore(
+  const [isLoadingStateSet, setLoading] = useLoadingStateFromStore(
     props.id,
     props.viewportFilter
   );
@@ -54,7 +54,7 @@ function HistogramWidget(props) {
   useEffect(() => {
     const abortController = new AbortController();
 
-    if (data && credentials && widgetIdIsSet) {
+    if (data && credentials && isLoadingStateSet) {
       const filters = getApplicableFilters(source.filters, props.id);
       !props.viewportFilter && setLoading(true);
       getHistogram({
@@ -79,7 +79,7 @@ function HistogramWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, source.filters, viewportFeatures, props, widgetIdIsSet]);
+  }, [credentials, data, source.filters, viewportFeatures, props, isLoadingStateSet]);
 
   const handleSelectedBarsChange = useCallback(
     ({ bars }) => {
@@ -114,7 +114,7 @@ function HistogramWidget(props) {
     <WrapperWidgetUI
       title={title}
       {...props.wrapperProps}
-      loading={widgetLoaders[props.id]}
+      isLoading={widgetLoaders[props.id]}
     >
       <HistogramWidgetUI
         data={histogramData}

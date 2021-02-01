@@ -132,7 +132,7 @@ function WrapperWidgetUI(props) {
 
   return (
     <Box component='section' aria-label={props.title} className={classes.root}>
-      {props.loading ? <LinearProgress className={classes.loading} /> : null}
+      {props.isLoading ? <LinearProgress className={classes.loading} /> : null}
       <Grid container className={classes.header}>
         <Button
           className={classes.button}
@@ -220,13 +220,13 @@ function WrapperWidgetUI(props) {
 
 WrapperWidgetUI.defaultProps = {
   expandable: true,
-  loading: false
+  isLoading: false
 };
 
 WrapperWidgetUI.propTypes = {
   title: PropTypes.string.isRequired,
   expandable: PropTypes.bool,
-  loading: PropTypes.bool,
+  isLoading: PropTypes.bool,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

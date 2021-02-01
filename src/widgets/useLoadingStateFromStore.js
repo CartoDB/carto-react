@@ -5,7 +5,7 @@ import { setWidgetLoaders, removeWidgetLoaders } from '../redux/cartoSlice';
 export default function useLoadingStateFromStore(widgetId, filterIsByViewport) {
   const dispatch = useDispatch();
   const widgetLoaders = useSelector((state) => state.carto.widgetLoaders);
-  const widgetIdIsSet = useRef(false);
+  const isLoadingStateSet = useRef(false);
 
   const setLoading = useCallback(
     (isLoading) => {
@@ -35,9 +35,9 @@ export default function useLoadingStateFromStore(widgetId, filterIsByViewport) {
 
   useEffect(() => {
     if (widgetId in widgetLoaders) {
-      widgetIdIsSet.current = true;
+      isLoadingStateSet.current = true;
     }
   }, [widgetLoaders]);
 
-  return [widgetIdIsSet.current, setLoading];
+  return [isLoadingStateSet.current, setLoading];
 }

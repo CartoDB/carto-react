@@ -26,14 +26,14 @@ function FormulaWidget(props) {
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
   const widgetLoaders = useSelector((state) => state.carto.widgetLoaders);
   const { data, credentials, type, filters } = source;
-  const [widgetIdIsSet, setLoading] = useLoadingStateFromStore(
+  const [isLoadingStateSet, setLoading] = useLoadingStateFromStore(
     props.id,
     props.viewportFilter
   );
 
   useEffect(() => {
     const abortController = new AbortController();
-    if (data && credentials && widgetIdIsSet) {
+    if (data && credentials && isLoadingStateSet) {
       !props.viewportFilter && setLoading(true);
       getFormula({
         ...props,
@@ -59,12 +59,12 @@ function FormulaWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, filters, viewportFeatures, props, widgetIdIsSet]);
+  }, [credentials, data, filters, viewportFeatures, props, isLoadingStateSet]);
 
   return (
     <WrapperWidgetUI
       title={props.title}
-      loading={widgetLoaders[props.id]}
+      isLoading={widgetLoaders[props.id]}
       {...props.wrapperProps}
     >
       <FormulaWidgetUI data={formulaData} formatter={props.formatter} unitBefore={true} />
