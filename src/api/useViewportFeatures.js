@@ -66,7 +66,7 @@ function featuresInViewport(features, viewport) {
   });
 }
 
-export default function useViewportFeatures(source, uniqueId) {
+export default function useViewportFeatures(source, uniqueId, debounceTimeOut = 500) {
   const dispatch = useDispatch();
   const viewport = useSelector((state) => state.carto.viewport);
   const [uniqueFeatures, setUniqueFeatures] = useState();
@@ -82,7 +82,7 @@ export default function useViewportFeatures(source, uniqueId) {
           features: viewportFeatures
         })
       );
-    }, 500),
+    }, debounceTimeOut),
     []
   );
 
