@@ -6,6 +6,7 @@ import { WrapperWidgetUI, HistogramWidgetUI } from '../ui';
 import { FilterTypes, getApplicableFilters } from '../api/FilterQueryBuilder';
 import { getHistogram } from './models';
 import { AggregationTypes } from './AggregationTypes';
+import useLoadingStateFromStore from './useLoadingStateFromStore';
 
 /**
  * Renders a <HistogramWidget /> component
@@ -30,6 +31,11 @@ function HistogramWidget(props) {
   const dispatch = useDispatch();
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
+  const widgetLoaders = useSelector((state) => state.carto.widgetLoaders);
+  const [widgetIdIsSet, setLoading] = useLoadingStateFromStore(
+    props.id,
+    props.viewportFilter
+  );
   const { title, formatter, xAxisFormatter, dataAxis, ticks, tooltip } = props;
   const { data, credentials, type } = source;
 
@@ -48,19 +54,15 @@ function HistogramWidget(props) {
   useEffect(() => {
     const abortController = new AbortController();
 
-    if (
-      data &&
-      credentials &&
-      (!props.viewportFilter ||
-        (props.viewportFilter && viewportFeatures[props.dataSource]))
-    ) {
+    if (data && credentials && widgetIdIsSet) {
       const filters = getApplicableFilters(source.filters, props.id);
+      !props.viewportFilter && setLoading(true);
       getHistogram({
         ...props,
         data,
         filters,
         credentials,
-        viewportFeatures: viewportFeatures[props.dataSource],
+        viewportFeatures: viewportFeatures[props.dataSource] || [],
         type,
         opts: { abortController }
       })
@@ -68,7 +70,8 @@ function HistogramWidget(props) {
         .catch((error) => {
           if (error.name === 'AbortError') return;
           if (props.onError) props.onError(error);
-        });
+        })
+        .finally(() => setLoading(false));
     } else {
       setHistogramData([]);
     }
@@ -76,7 +79,7 @@ function HistogramWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, source.filters, viewportFeatures, props, dispatch]);
+  }, [credentials, data, source.filters, viewportFeatures, props, widgetIdIsSet]);
 
   const handleSelectedBarsChange = useCallback(
     ({ bars }) => {
@@ -108,7 +111,11 @@ function HistogramWidget(props) {
   );
 
   return (
-    <WrapperWidgetUI title={title} {...props.wrapperProps}>
+    <WrapperWidgetUI
+      title={title}
+      {...props.wrapperProps}
+      loading={widgetLoaders[props.id]}
+    >
       <HistogramWidgetUI
         data={histogramData}
         dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}

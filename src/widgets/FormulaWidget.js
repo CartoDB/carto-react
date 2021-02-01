@@ -5,10 +5,12 @@ import { selectSourceById } from '../redux/cartoSlice';
 import { WrapperWidgetUI, FormulaWidgetUI } from '../ui';
 import { getFormula } from './models';
 import { AggregationTypes } from './AggregationTypes';
+import useLoadingStateFromStore from './useLoadingStateFromStore';
 
 /**
  * Renders a <FormulaWidget /> component
  * @param  props
+ * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's column to get the data from.
@@ -20,37 +22,36 @@ import { AggregationTypes } from './AggregationTypes';
  */
 function FormulaWidget(props) {
   const [formulaData, setFormulaData] = useState(null);
-  const [loading, setLoading] = useState(false);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
+  const widgetLoaders = useSelector((state) => state.carto.widgetLoaders);
   const { data, credentials, type, filters } = source;
+  const [widgetIdIsSet, setLoading] = useLoadingStateFromStore(
+    props.id,
+    props.viewportFilter
+  );
 
   useEffect(() => {
     const abortController = new AbortController();
-    if (
-      data &&
-      credentials &&
-      (!props.viewportFilter ||
-        (props.viewportFilter && viewportFeatures[props.dataSource]))
-    ) {
-      setLoading(true);
+    if (data && credentials && widgetIdIsSet) {
+      !props.viewportFilter && setLoading(true);
       getFormula({
         ...props,
         data,
         filters,
         credentials,
-        viewportFeatures: viewportFeatures[props.dataSource],
+        viewportFeatures: viewportFeatures[props.dataSource] || [],
         type,
         opts: { abortController }
       })
         .then((data) => {
           data && data[0] && setFormulaData(data[0].value);
-          setLoading(false);
         })
         .catch((error) => {
           if (error.name === 'AbortError') return;
           if (props.onError) props.onError(error);
-        });
+        })
+        .finally(() => setLoading(false));
     } else {
       setFormulaData(undefined);
     }
@@ -58,16 +59,21 @@ function FormulaWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, filters, viewportFeatures, props]);
+  }, [credentials, data, filters, viewportFeatures, props, widgetIdIsSet]);
 
   return (
-    <WrapperWidgetUI title={props.title} loading={loading} {...props.wrapperProps}>
+    <WrapperWidgetUI
+      title={props.title}
+      loading={widgetLoaders[props.id]}
+      {...props.wrapperProps}
+    >
       <FormulaWidgetUI data={formulaData} formatter={props.formatter} unitBefore={true} />
     </WrapperWidgetUI>
   );
 }
 
 FormulaWidget.propTypes = {
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
   column: PropTypes.string.isRequired,

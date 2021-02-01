@@ -47,6 +47,7 @@ export const createCartoSlice = (initialState) => {
         // Auto import dataSources
       },
       viewportFeatures: {},
+      widgetLoaders: {},
       ...initialState
     },
     reducers: {
@@ -130,6 +131,23 @@ export const createCartoSlice = (initialState) => {
         if (state.viewportFeatures[sourceId]) {
           delete state.viewportFeatures[sourceId];
         }
+      },
+      setWidgetLoaders: (state, action) => {
+        const { widgetId, isLoading, displayAllLoaders } = action.payload;
+
+        if (displayAllLoaders) {
+          state.widgetLoaders = Object.fromEntries(
+            Object.keys(state.widgetLoaders).map((key) => [key, true])
+          );
+        } else {
+          state.widgetLoaders = {
+            ...state.widgetLoaders,
+            [widgetId]: isLoading
+          };
+        }
+      },
+      removeWidgetLoaders: (state) => {
+        state.widgetLoaders = {};
       }
     }
   });
@@ -275,4 +293,21 @@ export const setViewportFeatures = (data) => ({
 export const removeViewportFeatures = (data) => ({
   type: 'carto/removeViewportFeatures',
   payload: data
+});
+
+/**
+ * Action to set the widget loader state
+ * @param {object} widgetId - the id of the widget
+ * @param {object} isLoading - the loader state
+ */
+export const setWidgetLoaders = (data) => ({
+  type: 'carto/setWidgetLoaders',
+  payload: data
+});
+
+/**
+ * Action to remove the widget loaders state
+ */
+export const removeWidgetLoaders = () => ({
+  type: 'carto/removeWidgetLoaders'
 });
