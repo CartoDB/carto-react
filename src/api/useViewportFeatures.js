@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setViewportFeatures, setWidgetsLoadingState } from '../redux/cartoSlice';
+import { setViewportFeatures, setAllWidgetsLoadingState } from '../redux/cartoSlice';
 import bboxPolygon from '@turf/bbox-polygon';
 import booleanContains from '@turf/boolean-contains';
 import intersects from '@turf/boolean-intersects';
@@ -93,7 +93,7 @@ export default function useViewportFeatures(source, uniqueId, debounceTimeOut = 
       source?.id &&
       Object.keys(widgetsLoadingState).length
     ) {
-      dispatch(setWidgetsLoadingState({ allAreLoading: true }));
+      dispatch(setAllWidgetsLoadingState(true));
       computeFeatures(uniqueFeatures, viewport, source.id);
     }
   }, [uniqueFeatures, viewport, source]);

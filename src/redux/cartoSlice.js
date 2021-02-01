@@ -157,6 +157,13 @@ export const createCartoSlice = (initialState) => {
             }
           }
         }
+      },
+      setAllWidgetsLoadingState: (state, action) => {
+        const areLoading = action.payload;
+
+        state.widgetsLoadingState = Object.fromEntries(
+          Object.keys(state.widgetsLoadingState).map((id) => [id, areLoading])
+        );
       }
     }
   });
@@ -305,13 +312,22 @@ export const removeViewportFeatures = (data) => ({
 });
 
 /**
- * Action to set the widget loader state
- * @param {object} widgetId - the id of the widget
- * @param {boolean} isLoading - the loader state
+ * Action to set the widget loading state
+ * @param {string} widgetId - the id of the widget
+ * @param {boolean} isLoading - the loading state
  */
 export const setWidgetsLoadingState = (data) => ({
   type: 'carto/setWidgetsLoadingState',
   payload: data
+});
+
+/**
+ * Action to set all the widgets loading states at the same time
+ * @param {boolean} areLoading - the loading state
+ */
+export const setAllWidgetsLoadingState = (areLoading) => ({
+  type: 'carto/setAllWidgetsLoadingState',
+  payload: areLoading
 });
 
 /**
