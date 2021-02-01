@@ -14,6 +14,8 @@ import {
 } from '@material-ui/core';
 import { Alert, AlertTitle, Skeleton } from '@material-ui/lab';
 
+import { animateValues } from '../utils/animations';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     ...theme.typography.body2
@@ -329,46 +331,13 @@ function CategoryWidgetUI(props) {
   ]);
 
   useEffect(() => {
-    animateValues(prevAnimValues || [], sortedData, 500, (val) => setAnimValues(val));
+    animateValues({
+      start: prevAnimValues || [],
+      end: sortedData,
+      duration: 500,
+      drawFrame: (val) => setAnimValues(val)
+    });
   }, [sortedData]);
-
-  const animateValues = (start, end, duration, drawFrame) => {
-    const isEqual =
-      start.length === end.length && start.every((val, i) => val.value === end[i].value);
-    if (isEqual) return;
-
-    let currentValues = end.map((elem, i) =>
-      start[i] && start[i].category === elem.category
-        ? { ...elem, value: start[i].value }
-        : elem
-    );
-    let currentFrame = 0;
-
-    const ranges = currentValues.map((elem, i) => end[i].value - elem.value);
-    const noChanges = ranges.every((val) => val === 0);
-    if (noChanges) {
-      drawFrame(end);
-      return;
-    }
-
-    const frames = (duration / 1000) * 60;
-    const steps = ranges.map((val) => val / frames);
-
-    const animate = () => {
-      if (currentFrame < frames) {
-        currentValues = currentValues.map((elem, i) => ({
-          ...elem,
-          value: elem.value + steps[i]
-        }));
-        drawFrame(currentValues);
-        currentFrame++;
-        requestAnimationFrame(animate);
-      } else {
-        drawFrame(end);
-      }
-    };
-    requestAnimationFrame(animate);
-  };
 
   // Separated to simplify the widget layout but inside the main component to avoid passing all dependencies
   const CategoryItem = (props) => {

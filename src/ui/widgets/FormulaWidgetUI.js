@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, makeStyles } from '@material-ui/core';
-import animateValue from '../utils/animateValue';
+import { animateValue } from '../utils/animations';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +37,12 @@ function FormulaWidgetUI(props) {
 
   useEffect(() => {
     if (typeof data === 'number') {
-      animateValue(prevValue || 0, data, 500, (val) => setValue(val));
+      animateValue({
+        start: prevValue || 0,
+        end: data,
+        duration: 500,
+        drawFrame: (val) => setValue(val)
+      });
     } else if (
       typeof data === 'object' &&
       data &&
@@ -45,9 +50,12 @@ function FormulaWidgetUI(props) {
       data.value !== null &&
       data.value !== undefined
     ) {
-      animateValue(prevValue.value, data.value, 1000, (val) =>
-        setValue({ value: val, unit: data.prefix })
-      );
+      animateValue({
+        start: prevValue.value,
+        end: data.value,
+        duration: 1000,
+        drawFrame: (val) => setValue({ value: val, unit: data.prefix })
+      });
     } else {
       setValue(data);
     }
