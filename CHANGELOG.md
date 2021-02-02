@@ -4,6 +4,7 @@
 
 - Remove getUserDatasets method from api [#68](https://github.com/CartoDB/carto-react-lib/pull/68)
 - Fix hover color in secondary buttons [#65](https://github.com/CartoDB/carto-react-lib/pull/65)
+- Fix widgets loading state when calculating client-side [#75](https://github.com/CartoDB/carto-react-lib/pull/75)
 - Fix min/max aggregated functions [#76](https://github.com/CartoDB/carto-react-lib/pull/76)
 
 ## 1.0.0-beta12 (2021-01-22)

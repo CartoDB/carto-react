@@ -47,6 +47,7 @@ export const createCartoSlice = (initialState) => {
         // Auto import dataSources
       },
       viewportFeatures: {},
+      widgetsLoadingState: {},
       ...initialState
     },
     reducers: {
@@ -130,6 +131,28 @@ export const createCartoSlice = (initialState) => {
         if (state.viewportFeatures[sourceId]) {
           delete state.viewportFeatures[sourceId];
         }
+      },
+      setWidgetLoadingState: (state, action) => {
+        const { widgetId, isLoading } = action.payload;
+
+        state.widgetsLoadingState = {
+          ...state.widgetsLoadingState,
+          [widgetId]: isLoading
+        };
+      },
+      removeWidgetLoadingState: (state, action) => {
+        const widgetId = action.payload;
+
+        if (state.widgetsLoadingState[widgetId]) {
+          delete state.widgetsLoadingState[widgetId];
+        }
+      },
+      setAllWidgetsLoadingState: (state, action) => {
+        const areLoading = action.payload;
+
+        state.widgetsLoadingState = Object.fromEntries(
+          Object.keys(state.widgetsLoadingState).map((id) => [id, areLoading])
+        );
       }
     }
   });
@@ -275,4 +298,32 @@ export const setViewportFeatures = (data) => ({
 export const removeViewportFeatures = (data) => ({
   type: 'carto/removeViewportFeatures',
   payload: data
+});
+
+/**
+ * Action to set a widget loading state
+ * @param {string} widgetId - the id of the widget
+ * @param {boolean} isLoading - the loading state
+ */
+export const setWidgetLoadingState = (data) => ({
+  type: 'carto/setWidgetLoadingState',
+  payload: data
+});
+
+/**
+ * Action to remove a widget loading state
+ * @param {string} widgetId - the id of the widget to remove
+ */
+export const removeWidgetLoadingState = (data) => ({
+  type: 'carto/removeWidgetLoadingState',
+  payload: data
+});
+
+/**
+ * Action to set all the widgets loading states at the same time
+ * @param {boolean} areLoading - the loading state
+ */
+export const setAllWidgetsLoadingState = (areLoading) => ({
+  type: 'carto/setAllWidgetsLoadingState',
+  payload: areLoading
 });

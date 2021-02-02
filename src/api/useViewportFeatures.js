@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setViewportFeatures } from '../redux/cartoSlice';
+import { setViewportFeatures, setAllWidgetsLoadingState } from '../redux/cartoSlice';
 import bboxPolygon from '@turf/bbox-polygon';
 import booleanContains from '@turf/boolean-contains';
 import intersects from '@turf/boolean-intersects';
@@ -66,10 +66,11 @@ function featuresInViewport(features, viewport) {
   });
 }
 
-export default function useViewportFeatures(source, uniqueId) {
+export default function useViewportFeatures(source, uniqueId, debounceTimeOut = 500) {
   const dispatch = useDispatch();
   const viewport = useSelector((state) => state.carto.viewport);
   const [uniqueFeatures, setUniqueFeatures] = useState();
+  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
 
   const computeFeatures = useCallback(
     debounce((features, viewport, sourceId) => {
@@ -81,12 +82,18 @@ export default function useViewportFeatures(source, uniqueId) {
           features: viewportFeatures
         })
       );
-    }, 500),
+    }, debounceTimeOut),
     []
   );
 
   useEffect(() => {
-    if (uniqueFeatures && viewport && source?.id) {
+    if (
+      uniqueFeatures &&
+      viewport &&
+      source?.id &&
+      Object.keys(widgetsLoadingState).length
+    ) {
+      dispatch(setAllWidgetsLoadingState(true));
       computeFeatures(uniqueFeatures, viewport, source.id);
     }
   }, [uniqueFeatures, viewport, source]);

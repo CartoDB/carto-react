@@ -6,6 +6,7 @@ import { WrapperWidgetUI, CategoryWidgetUI } from '../ui';
 import { FilterTypes, getApplicableFilters } from '../api/FilterQueryBuilder';
 import { getCategories } from './models';
 import { AggregationTypes } from './AggregationTypes';
+import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**
  * Renders a <CategoryWidget /> component
@@ -25,39 +26,36 @@ function CategoryWidget(props) {
   const { column } = props;
   const [categoryData, setCategoryData] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
+  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
+  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(
+    props.id,
+    props.viewportFilter
+  );
   const { data, credentials, type } = source;
 
   useEffect(() => {
     const abortController = new AbortController();
-    if (
-      data &&
-      credentials &&
-      (!props.viewportFilter ||
-        (props.viewportFilter && viewportFeatures[props.dataSource]))
-    ) {
+    if (data && credentials && hasLoadingState) {
       const filters = getApplicableFilters(source.filters, props.id);
-      setLoading(true);
+      !props.viewportFilter && setIsLoading(true);
       getCategories({
         ...props,
         data,
         filters,
         credentials,
-        viewportFeatures: viewportFeatures[props.dataSource],
+        viewportFeatures: viewportFeatures[props.dataSource] || [],
         type,
         opts: { abortController }
       })
-        .then((data) => {
-          setCategoryData(data);
-          setLoading(false);
-        })
+        .then((data) => setCategoryData(data))
         .catch((error) => {
           if (error.name === 'AbortError') return;
           if (props.onError) props.onError(error);
-        });
+        })
+        .finally(() => setIsLoading(false));
     } else {
       setCategoryData(null);
     }
@@ -65,7 +63,7 @@ function CategoryWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, source.filters, viewportFeatures, props]);
+  }, [credentials, data, source.filters, viewportFeatures, props, hasLoadingState]);
 
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
@@ -94,12 +92,16 @@ function CategoryWidget(props) {
   );
 
   return (
-    <WrapperWidgetUI title={props.title} loading={loading} {...props.wrapperProps}>
+    <WrapperWidgetUI
+      title={props.title}
+      isLoading={widgetsLoadingState[props.id]}
+      {...props.wrapperProps}
+    >
       <CategoryWidgetUI
         data={categoryData}
         formatter={props.formatter}
         labels={props.labels}
-        loading={loading}
+        isLoading={widgetsLoadingState[props.id]}
         selectedCategories={selectedCategories}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
       />
