@@ -6,6 +6,7 @@
 - Fix hover color in secondary buttons [#65](https://github.com/CartoDB/carto-react-lib/pull/65)
 - Fix widgets loading state when calculating client-side [#75](https://github.com/CartoDB/carto-react-lib/pull/75)
 - Fix min/max aggregated functions [#76](https://github.com/CartoDB/carto-react-lib/pull/76)
+- Fix eventual memory leaks on requestAnimationFrame, on Category and Formula widgets [#77](https://github.com/CartoDB/carto-react-lib/pull/77)
 
 ## 1.0.0-beta12 (2021-01-22)
 
