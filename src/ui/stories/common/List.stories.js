@@ -16,7 +16,7 @@ import {
   Typography,
   makeStyles,
   Switch,
-  Paper,
+  Paper
 } from '@material-ui/core';
 import {
   Drafts,
@@ -25,20 +25,20 @@ import {
   ExpandMore,
   Home,
   Inbox,
-  Star,
+  Star
 } from '@material-ui/icons';
 
 export default {
   title: 'Common/List',
-  component: List,
+  component: List
 };
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: theme.palette.grey[100]
   },
   nested: {
-    paddingLeft: theme.spacing(4),
-  },
+    paddingLeft: theme.spacing(4)
+  }
 }));
 
 const Template = ({ secondary, ...args }) => {
@@ -162,7 +162,9 @@ const TemplateMetaValue = ({ secondary, ...args }) => {
   const MetaValueLabel = ({ value }) => {
     return (
       <Box alignSelf='flex-start' marginY={0.75}>
-        <Typography variant='body2' align='right'>{value}</Typography>
+        <Typography variant='body2' align='right'>
+          {value}
+        </Typography>
       </Box>
     );
   };
@@ -175,17 +177,17 @@ const TemplateMetaValue = ({ secondary, ...args }) => {
             <List component='nav' aria-label='main mailbox folders'>
               <ListItem button>
                 <ListItemText primary='Home' />
-                <MetaValueLabel value={ args.metaValue }></MetaValueLabel>
+                <MetaValueLabel value={args.metaValue}></MetaValueLabel>
               </ListItem>
               <Divider />
               <ListItem button>
                 <ListItemText primary='Inbox' />
-                <MetaValueLabel value={ args.metaValue }></MetaValueLabel>
+                <MetaValueLabel value={args.metaValue}></MetaValueLabel>
               </ListItem>
               <Divider />
               <ListItem button>
                 <ListItemText primary='Drafts' />
-                <MetaValueLabel value={ args.metaValue }></MetaValueLabel>
+                <MetaValueLabel value={args.metaValue}></MetaValueLabel>
               </ListItem>
             </List>
           </Paper>
@@ -196,17 +198,17 @@ const TemplateMetaValue = ({ secondary, ...args }) => {
             <List component='nav' aria-label='main mailbox folders'>
               <ListItem button>
                 <ListItemText primary='Home' secondary={secondary} />
-                <MetaValueLabel value={ args.metaValue }></MetaValueLabel>
+                <MetaValueLabel value={args.metaValue}></MetaValueLabel>
               </ListItem>
               <Divider />
               <ListItem button>
                 <ListItemText primary='Inbox' secondary={secondary} />
-                <MetaValueLabel value={ args.metaValue }></MetaValueLabel>
+                <MetaValueLabel value={args.metaValue}></MetaValueLabel>
               </ListItem>
               <Divider />
               <ListItem button>
                 <ListItemText primary='Drafts' secondary={secondary} />
-                <MetaValueLabel value={ args.metaValue }></MetaValueLabel>
+                <MetaValueLabel value={args.metaValue}></MetaValueLabel>
               </ListItem>
             </List>
           </Paper>

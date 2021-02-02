@@ -10,9 +10,9 @@ export function getRequest(url, opts) {
   return new Request(url, {
     method: 'GET',
     headers: {
-      Accept: 'application/json',
+      Accept: 'application/json'
     },
-    ...opts,
+    ...opts
   });
 }
 
@@ -24,10 +24,10 @@ export function postRequest(url, payload, opts) {
     method: 'POST',
     headers: {
       Accept: 'application/json',
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(payload),
-    ...opts,
+    ...opts
   });
 }
 

@@ -1,22 +1,79 @@
-import { executeSQL} from '../../api';
-import { filtersToSQL, viewportToSQL } from '../../api/FilterQueryBuilder';
+import { minify } from 'pgsql-minify';
+
+import { executeSQL } from '../../api';
+import { filtersToSQL } from '../../api/FilterQueryBuilder';
+import { applyFilter } from '../../api/Filter';
+import { aggregationFunctions } from '../operations/aggregation/values';
+import { pickValuesFromFeatures } from '../../utils/pickValuesFromFeatures';
+import { LayerTypes } from '../LayerTypes';
 
 export const getFormula = async (props) => {
-  const { data, credentials, operation, column, filters, viewport, opts } = props;
+  const {
+    data,
+    credentials,
+    operation,
+    column,
+    filters,
+    opts,
+    viewportFilter,
+    viewportFeatures,
+    type
+  } = props;
 
   if (Array.isArray(data)) {
-    throw new Error('Array is not a valid type to get categories');
+    throw new Error('Array is not a valid type to get formula');
   }
 
-  let query =
-    (viewport && `SELECT * FROM (${data})  as q WHERE ${viewportToSQL(viewport)}`) ||
-    data;
+  if (type === LayerTypes.BQ && !viewportFilter) {
+    throw new Error(
+      'Formula Widget error: BigQuery layers need "viewportFilter" prop set to true.'
+    );
+  }
 
-  query = `
-    SELECT ${operation}(${column}) as value
-    FROM (${query}) as q
+  if (viewportFilter) {
+    return filterViewportFeaturesToGetFormula({
+      viewportFeatures,
+      filters,
+      operation,
+      column
+    });
+  }
+
+  const query = buildSqlQueryToGetFormula({ data, column, operation, filters });
+  return await executeSQL(credentials, query, opts);
+};
+
+/**
+ * Build a SQL sentence to get Formula defined by props
+ */
+export const buildSqlQueryToGetFormula = ({ data, column, operation, filters }) => {
+  const query = `
+    SELECT 
+      ${operation}(${column}) as value
+    FROM 
+      (${data}) as q
     ${filtersToSQL(filters)}
   `;
 
-  return await executeSQL(credentials, query, opts);
+  return minify(query);
+};
+
+/**
+ * Filter viewport features to get Formula defined by props
+ */
+export const filterViewportFeaturesToGetFormula = ({
+  viewportFeatures,
+  filters,
+  operation,
+  column
+}) => {
+  if (viewportFeatures) {
+    const targetOperation = aggregationFunctions[operation];
+    const filteredFeatures = viewportFeatures.filter(applyFilter({ filters }));
+    const featureValues = pickValuesFromFeatures(filteredFeatures, column);
+
+    return [{ value: targetOperation(featureValues) }];
+  }
+
+  return [{ value: null }];
 };

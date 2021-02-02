@@ -2,29 +2,44 @@ import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
-import { applyChartFilter, clearFilter, dataEqual, disableSerie, getChartSerie } from '../utils/chartUtils'
+import {
+  applyChartFilter,
+  clearFilter,
+  dataEqual,
+  disableSerie,
+  getChartSerie
+} from '../utils/chartUtils';
+import detectTouchScreen from '../utils/detectTouchScreen';
+
+const IS_TOUCH_SCREEN = detectTouchScreen();
 
 const useStyles = makeStyles((theme) => ({
   optionsSelectedBar: {
     marginBottom: theme.spacing(2),
 
     '& .MuiTypography-caption': {
-      color: theme.palette.text.secondary,
+      color: theme.palette.text.secondary
     },
 
     '& .MuiButton-label': {
-      ...theme.typography.caption,
-    },
+      ...theme.typography.caption
+    }
   },
 
   selectAllButton: {
     ...theme.typography.caption,
-    cursor: 'pointer',
-  },
+    cursor: 'pointer'
+  }
 }));
 
 function __generateDefaultConfig(
-  { dataAxis, tooltipFormatter, xAxisFormatter = (v) => v, yAxisFormatter = (v) => v },
+  {
+    dataAxis,
+    tooltip,
+    tooltipFormatter,
+    xAxisFormatter = (v) => v,
+    yAxisFormatter = (v) => v
+  },
   data,
   theme
 ) {
@@ -33,20 +48,21 @@ function __generateDefaultConfig(
       left: theme.spacing(0),
       top: theme.spacing(2),
       right: theme.spacing(0),
-      bottom: theme.spacing(3),
+      bottom: theme.spacing(3)
     },
     axisPointer: {
       lineStyle: {
-        color: theme.palette.charts.axisPointer,
-      },
+        color: theme.palette.charts.axisPointer
+      }
     },
     tooltip: {
+      show: tooltip,
       trigger: 'axis',
       padding: [theme.spacing(0.5), theme.spacing(1)],
       textStyle: {
         ...theme.typography.caption,
         fontSize: 12,
-        lineHeight: 16,
+        lineHeight: 16
       },
       backgroundColor: theme.palette.other.tooltip,
       position: function (point, params, dom, rect, size) {
@@ -59,16 +75,16 @@ function __generateDefaultConfig(
         }
         return position;
       },
-      ...(tooltipFormatter ? { formatter: tooltipFormatter } : {}),
+      ...(tooltipFormatter ? { formatter: tooltipFormatter } : {})
     },
     color: [theme.palette.secondary.main],
     xAxis: {
       type: 'category',
       axisLine: {
-        show: false,
+        show: false
       },
       axisTick: {
-        show: false,
+        show: false
       },
       axisLabel: {
         ...theme.typography.charts,
@@ -78,9 +94,9 @@ function __generateDefaultConfig(
           return typeof formatted === 'object'
             ? `${formatted.prefix || ''}${formatted.value}${formatted.suffix || ''}`
             : formatted;
-        },
+        }
       },
-      data: dataAxis,
+      data: dataAxis
     },
     yAxis: {
       type: 'value',
@@ -90,7 +106,7 @@ function __generateDefaultConfig(
           0,
           0,
           theme.typography.charts.fontSize * theme.typography.charts.lineHeight + 4,
-          0,
+          0
         ],
         show: true,
         showMaxLabel: true,
@@ -112,22 +128,22 @@ function __generateDefaultConfig(
           return typeof formatted === 'object'
             ? `${formatted.prefix}${formatted.value}${formatted.suffix || ''}`
             : formatted;
-        },
+        }
       },
       axisLine: {
-        show: false,
+        show: false
       },
       axisTick: {
-        show: false,
+        show: false
       },
       splitLine: {
         show: true,
         onZero: false,
         lineStyle: {
-          color: theme.palette.charts.axisLine,
-        },
-      },
-    },
+          color: theme.palette.charts.axisLine
+        }
+      }
+    }
   };
 }
 
@@ -145,16 +161,16 @@ function __generateSerie(name, data, selectedBars = [], theme) {
       }),
       barCategoryGap: 1,
       barMinWidth: '95%',
-      ...(theme
+      ...(!IS_TOUCH_SCREEN && theme
         ? {
             emphasis: {
               itemStyle: {
-                color: '#31996b', // FIXME: This color don't appears in carto-theme. Secondary dark is red instead of green. It is correct?
-              },
-            },
+                color: theme.palette.secondary.dark
+              }
+            }
           }
-        : {}),
-    },
+        : {})
+    }
   ];
 }
 
@@ -162,7 +178,6 @@ const EchartsWrapper = React.memo(
   ReactEcharts,
   ({ option: optionPrev }, { option: optionNext }) => dataEqual(optionPrev, optionNext)
 );
-
 function HistogramWidgetUI(props) {
   const theme = useTheme();
   const {
@@ -171,17 +186,18 @@ function HistogramWidgetUI(props) {
     dataAxis,
     onSelectedBarsChange,
     selectedBars,
+    tooltip,
     tooltipFormatter,
     xAxisFormatter,
     yAxisFormatter,
-    height = theme.spacing(22),
+    height = theme.spacing(22)
   } = props;
 
   const classes = useStyles();
   const chartInstance = useRef();
   const options = useMemo(() => {
     const config = __generateDefaultConfig(
-      { dataAxis, tooltipFormatter, xAxisFormatter, yAxisFormatter },
+      { dataAxis, tooltip, tooltipFormatter, xAxisFormatter, yAxisFormatter },
       data,
       theme
     );
@@ -195,7 +211,7 @@ function HistogramWidgetUI(props) {
     tooltipFormatter,
     xAxisFormatter,
     yAxisFormatter,
-    selectedBars,
+    selectedBars
   ]);
 
   const clearBars = () => {
@@ -223,13 +239,13 @@ function HistogramWidgetUI(props) {
       });
       onSelectedBarsChange({
         bars: activeBars.length === serie.data.length ? [] : activeBars,
-        chartInstance,
+        chartInstance
       });
     }
   };
 
   const onEvents = {
-    click: clickEvent,
+    click: clickEvent
   };
 
   return (
@@ -266,23 +282,25 @@ function HistogramWidgetUI(props) {
 }
 
 HistogramWidgetUI.defaultProps = {
+  tooltip: true,
   tooltipFormatter: (v) => v,
   xAxisFormatter: (v) => v,
   yAxisFormatter: (v) => v,
   dataAxis: [],
   name: null,
-  onSelectedBarsChange: null,
+  onSelectedBarsChange: null
 };
 
 HistogramWidgetUI.propTypes = {
   data: PropTypes.arrayOf(PropTypes.number).isRequired,
+  tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
   xAxisFormatter: PropTypes.func,
   yAxisFormatter: PropTypes.func,
   dataAxis: PropTypes.array,
   name: PropTypes.string,
   onSelectedBarsChange: PropTypes.func,
-  height: PropTypes.number,
+  height: PropTypes.number
 };
 
 export default HistogramWidgetUI;

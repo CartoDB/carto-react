@@ -11,7 +11,8 @@ import {
   LinearProgress,
   Menu,
   MenuItem,
-  Typography,
+  Tooltip,
+  Typography
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore, MoreVert } from '@material-ui/icons';
 
@@ -33,14 +34,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     maxWidth: '100%',
-    padding: 0,
+    padding: 0
   },
   loading: {
     position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
-    height: theme.spacing(0.25),
+    height: theme.spacing(0.25)
   },
   header: {
     display: 'flex',
@@ -49,7 +50,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     width: '100%',
     height: '56px',
-    padding: theme.spacing(1.25, 1.25, 1.25, 3),
+    padding: theme.spacing(1.25, 1.25, 1.25, 3)
+  },
+  optionsMenu: {
+    marginTop: theme.spacing(6),
+    maxHeight: theme.spacing(21),
+    minWidth: theme.spacing(16)
   },
   button: {
     padding: 0,
@@ -58,12 +64,12 @@ const useStyles = makeStyles((theme) => ({
       ...theme.typography.body1,
 
       '& .MuiButton-startIcon': {
-        marginRight: theme.spacing(1),
-      },
+        marginRight: theme.spacing(1)
+      }
     },
     '&:hover': {
-      background: 'none',
-    },
+      background: 'none'
+    }
   },
   iconToggle: {
     display: 'flex',
@@ -71,14 +77,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     width: theme.spacing(3),
     height: theme.spacing(3),
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   iconAction: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   content: {
-    padding: theme.spacing(0, 3, 3, 3),
-  },
+    padding: theme.spacing(0, 3, 3, 3)
+  }
 }));
 
 function WrapperWidgetUI(props) {
@@ -111,9 +117,22 @@ function WrapperWidgetUI(props) {
     handleClose();
   };
 
+  const iconButtonTooltip = (action) => {
+    return (
+      <IconButton
+        key={action.id}
+        aria-label={action.label}
+        onClick={action.action}
+        className={classes.iconAction}
+      >
+        {action.icon}
+      </IconButton>
+    );
+  };
+
   return (
-    <Box className={classes.root}>
-      {props.loading ? <LinearProgress className={classes.loading} /> : null}
+    <Box component='section' aria-label={props.title} className={classes.root}>
+      {props.isLoading ? <LinearProgress className={classes.loading} /> : null}
       <Grid container className={classes.header}>
         <Button
           className={classes.button}
@@ -134,18 +153,20 @@ function WrapperWidgetUI(props) {
         </Button>
 
         <Grid item style={{ display: 'flex' }}>
-          {actions.map((action) => {
-            return (
-              <IconButton
-                key={action.id}
-                aria-label={action.label}
-                onClick={action.action}
-                className={classes.iconAction}
-              >
-                {action.icon}
-              </IconButton>
-            );
-          })}
+          {actions.length > 0 &&
+            actions.map((action) => {
+              return action.tooltip ? (
+                <Tooltip
+                  key={action.id}
+                  title={action.tooltip.text}
+                  placement={action.tooltip.placement || 'top'}
+                >
+                  {iconButtonTooltip(action)}
+                </Tooltip>
+              ) : (
+                iconButtonTooltip(action)
+              );
+            })}
 
           {options.length > 0 && (
             <div>
@@ -162,24 +183,18 @@ function WrapperWidgetUI(props) {
                 id='options-menu'
                 elevation={3}
                 anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
+                  vertical: 'top',
+                  horizontal: 'right'
                 }}
                 transformOrigin={{
                   vertical: 'top',
-                  horizontal: 'right',
+                  horizontal: 'right'
                 }}
                 anchorEl={anchorEl}
                 keepMounted
                 open={open}
                 onClose={handleClose}
-                PaperProps={{
-                  style: {
-                    marginTop: '48px',
-                    maxHeight: '144px',
-                    width: '128px',
-                  },
-                }}
+                PaperProps={{ className: classes.optionsMenu }}
               >
                 {options.map((option) => (
                   <MenuItem
@@ -205,32 +220,32 @@ function WrapperWidgetUI(props) {
 
 WrapperWidgetUI.defaultProps = {
   expandable: true,
-  loading: false,
+  isLoading: false
 };
 
 WrapperWidgetUI.propTypes = {
   title: PropTypes.string.isRequired,
   expandable: PropTypes.bool,
-  loading: PropTypes.bool,
+  isLoading: PropTypes.bool,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       icon: PropTypes.element.isRequired,
-      action: PropTypes.func.isRequired,
+      action: PropTypes.func.isRequired
     })
   ),
   options: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      action: PropTypes.func.isRequired,
+      action: PropTypes.func.isRequired
     })
   ),
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element.isRequired,
-  ]),
+    PropTypes.element.isRequired
+  ])
 };
 
 export default WrapperWidgetUI;

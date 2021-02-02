@@ -8,10 +8,10 @@ export default {
   argTypes: {
     maxItems: {
       control: {
-        type: 'number',
-      },
-    },
-  },
+        type: 'number'
+      }
+    }
+  }
 };
 
 const Template = ({ ...args }) => (

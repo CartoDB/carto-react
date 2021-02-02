@@ -7,12 +7,12 @@ export default {
   argTypes: {
     elevation: {
       defaultValue: 1,
-      control: { type: 'range', min: 0, max: 24, step: 1 },
+      control: { type: 'range', min: 0, max: 24, step: 1 }
     },
     square: {
-      control: { type: 'boolean' },
-    },
-  },
+      control: { type: 'boolean' }
+    }
+  }
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
 
     '& .MuiPaper-root': {
       height: 100,
-      width: 100,
-    },
-  },
+      width: 100
+    }
+  }
 }));
 
 const Template = ({ ...args }) => {

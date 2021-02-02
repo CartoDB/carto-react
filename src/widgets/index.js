@@ -8,7 +8,7 @@
 /**
  * @typedef {Object} ErrorObject
  * @property {string} name - The error name
- * @property {string} message - The error message 
+ * @property {string} message - The error message
  */
 
 /**
@@ -22,7 +22,7 @@
 /**
  * Error handler
  * @callback errorCallback
- * @param {ErrorObject} error - Error object to handle 
+ * @param {ErrorObject} error - Error object to handle
  */
 
 export { default as CategoryWidget } from './CategoryWidget';

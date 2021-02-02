@@ -8,32 +8,32 @@ export default {
     variant: {
       control: {
         type: 'select',
-        options: ['text', 'contained', 'outlined'],
-      },
+        options: ['text', 'contained', 'outlined']
+      }
     },
     color: {
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary'],
-      },
+        options: ['default', 'primary', 'secondary']
+      }
     },
     size: {
       control: {
         type: 'select',
-        options: ['small', 'medium', 'large'],
-      },
+        options: ['small', 'medium', 'large']
+      }
     },
     disabled: {
       control: {
-        type: 'boolean',
-      },
+        type: 'boolean'
+      }
     },
     label: {
       control: {
-        type: 'text',
-      },
-    },
-  },
+        type: 'text'
+      }
+    }
+  }
 };
 
 const Icon = (props) => (
@@ -165,7 +165,7 @@ const ButtonTemplate = ({ label, icon, ...rest }) => {
 const disabledControlsArgTypes = {
   variant: { table: { disable: true } },
   size: { table: { disable: true } },
-  disabled: { table: { disable: true } },
+  disabled: { table: { disable: true } }
 };
 
 export const Default = PlaygroundTemplate.bind({});

@@ -5,7 +5,7 @@ import {
   Tooltip,
   Typography,
   makeStyles,
-  withStyles,
+  withStyles
 } from '@material-ui/core';
 
 export default {
@@ -15,8 +15,8 @@ export default {
     title: {
       defaultValue: 'Hello World!',
       control: {
-        type: 'text',
-      },
+        type: 'text'
+      }
     },
     placement: {
       control: {
@@ -33,21 +33,21 @@ export default {
           'right-end',
           'bottom-start',
           'bottom',
-          'bottom-end',
-        ],
-      },
+          'bottom-end'
+        ]
+      }
     },
     arrow: {
       control: {
-        type: 'boolean',
-      },
+        type: 'boolean'
+      }
     },
     interactive: {
       control: {
-        type: 'boolean',
-      },
-    },
-  },
+        type: 'boolean'
+      }
+    }
+  }
 };
 
 const Template = ({ ...args }) => {
@@ -87,13 +87,13 @@ const TooltipTemplate = () => {
 
 const useStyles = makeStyles((theme) => ({
   data: {
-    padding: theme.spacing(0.5),
+    padding: theme.spacing(0.5)
   },
   list: {
     listStyle: 'none',
     paddingLeft: 0,
     margin: theme.spacing(0.5, 0, 0, 0),
-    fontWeight: theme.typography.fontWeightRegular,
+    fontWeight: theme.typography.fontWeightRegular
   },
   item: {
     display: 'inline-block',
@@ -103,9 +103,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(0.5),
     backgroundColor: theme.palette.primary.main,
     '&:not(:last-child())': {
-      marginBottom: theme.spacing(0.5),
-    },
-  },
+      marginBottom: theme.spacing(0.5)
+    }
+  }
 }));
 
 const DataComponent = () => {

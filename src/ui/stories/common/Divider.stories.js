@@ -6,12 +6,12 @@ import {
   FormatAlignRight,
   FormatBold,
   FormatItalic,
-  FormatUnderlined,
+  FormatUnderlined
 } from '@material-ui/icons';
 
 export default {
   title: 'Common/Divider',
-  component: Divider,
+  component: Divider
 };
 
 const Template = ({ ...args }) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter, selectSourceById } from '../redux/cartoSlice';
@@ -6,55 +6,56 @@ import { WrapperWidgetUI, CategoryWidgetUI } from '../ui';
 import { FilterTypes, getApplicableFilters } from '../api/FilterQueryBuilder';
 import { getCategories } from './models';
 import { AggregationTypes } from './AggregationTypes';
+import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**
-  * Renders a <CategoryWidget /> component
-  * @param  props
-  * @param  {string} props.id - ID for the widget instance.
-  * @param  {string} props.title - Title to show in the widget header.
-  * @param  {string} props.dataSource - ID of the data source to get the data from.
-  * @param  {string} props.column - Name of the data source's column to get the data from.
-  * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
-  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
-  * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
-  * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not. 
-  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
-  */
- function CategoryWidget(props) {
+ * Renders a <CategoryWidget /> component
+ * @param  props
+ * @param  {string} props.id - ID for the widget instance.
+ * @param  {string} props.title - Title to show in the widget header.
+ * @param  {string} props.dataSource - ID of the data source to get the data from.
+ * @param  {string} props.column - Name of the data source's column to get the data from.
+ * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
+ * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
+ * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
+ * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or globally.
+ * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ */
+function CategoryWidget(props) {
   const { column } = props;
   const [categoryData, setCategoryData] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  const viewport = useSelector((state) => props.viewportFilter && state.carto.viewport);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const { data, credentials } = source;
+  const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
+  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
+  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(
+    props.id,
+    props.viewportFilter
+  );
+  const { data, credentials, type } = source;
 
   useEffect(() => {
     const abortController = new AbortController();
-    if (
-      data &&
-      credentials &&
-      (!props.viewportFilter || (props.viewportFilter && viewport))
-    ) {
+    if (data && credentials && hasLoadingState) {
       const filters = getApplicableFilters(source.filters, props.id);
-      setLoading(true);
+      !props.viewportFilter && setIsLoading(true);
       getCategories({
         ...props,
         data,
         filters,
         credentials,
-        viewport,
-        opts: { abortController },
+        viewportFeatures: viewportFeatures[props.dataSource] || [],
+        type,
+        opts: { abortController }
       })
-        .then((data) => {
-          setCategoryData(data);
-          setLoading(false);
-        })
+        .then((data) => setCategoryData(data))
         .catch((error) => {
           if (error.name === 'AbortError') return;
           if (props.onError) props.onError(error);
-        });
+        })
+        .finally(() => setIsLoading(false));
     } else {
       setCategoryData(null);
     }
@@ -62,37 +63,45 @@ import { AggregationTypes } from './AggregationTypes';
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, source.filters, viewport, props, dispatch]);
+  }, [credentials, data, source.filters, viewportFeatures, props, hasLoadingState]);
 
-  const handleSelectedCategoriesChange = (categories) => {
-    setSelectedCategories(categories);
-    if (categories && categories.length) {
-      dispatch(
-        addFilter({
-          id: props.dataSource,
-          column,
-          type: FilterTypes.IN,
-          values: categories,
-          owner: props.id,
-        })
-      );
-    } else {
-      dispatch(
-        removeFilter({
-          id: props.dataSource,
-          column,
-        })
-      );
-    }
-  };
+  const handleSelectedCategoriesChange = useCallback(
+    (categories) => {
+      setSelectedCategories(categories);
+
+      if (categories && categories.length) {
+        dispatch(
+          addFilter({
+            id: props.dataSource,
+            column,
+            type: FilterTypes.IN,
+            values: categories,
+            owner: props.id
+          })
+        );
+      } else {
+        dispatch(
+          removeFilter({
+            id: props.dataSource,
+            column
+          })
+        );
+      }
+    },
+    [setSelectedCategories, dispatch, addFilter, removeFilter]
+  );
 
   return (
-    <WrapperWidgetUI title={props.title} loading={loading}>
+    <WrapperWidgetUI
+      title={props.title}
+      isLoading={widgetsLoadingState[props.id]}
+      {...props.wrapperProps}
+    >
       <CategoryWidgetUI
         data={categoryData}
         formatter={props.formatter}
         labels={props.labels}
-        loading={loading}
+        isLoading={widgetsLoadingState[props.id]}
         selectedCategories={selectedCategories}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
       />
@@ -113,7 +122,8 @@ CategoryWidget.propTypes = {
 };
 
 CategoryWidget.defaultProps = {
-  viewportFilter: false
+  viewportFilter: false,
+  wrapperProps: {}
 };
 
 export default CategoryWidget;
