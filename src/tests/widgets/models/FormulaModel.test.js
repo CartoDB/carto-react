@@ -7,7 +7,7 @@ import {
 } from 'src/widgets/models/FormulaModel';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
 import { LayerTypes } from 'src/widgets/LayerTypes';
-import { LINES } from '../data-mocks/linesForFormula';
+import { LINES } from '../data-mocks/models/linesForFormula';
 
 describe('getFormula', () => {
   test('should throw an error due to invalid data type', async () => {

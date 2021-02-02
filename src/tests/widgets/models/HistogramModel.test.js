@@ -7,7 +7,7 @@ import {
 } from 'src/widgets/models/HistogramModel';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
 import { LayerTypes } from 'src/widgets/LayerTypes';
-import { POLYGONS } from '../data-mocks/polygonsForHistogram';
+import { POLYGONS } from '../data-mocks/models/polygonsForHistogram';
 
 describe('getHistogram', () => {
   test('should throw an error due to invalid data type', async () => {
@@ -96,7 +96,7 @@ describe('getHistogram', () => {
 
     test(AggregationTypes.AVG, () => {
       const args = createArguments(AggregationTypes.AVG);
-      expect(filterViewportFeaturesToGetHistogram(args)).toEqual([NaN, 1, 2, 3, NaN]);
+      expect(filterViewportFeaturesToGetHistogram(args)).toEqual([0, 1, 2, 3, 0]);
     });
 
     test(AggregationTypes.SUM, () => {
@@ -106,24 +106,12 @@ describe('getHistogram', () => {
 
     test(AggregationTypes.MIN, () => {
       const args = createArguments(AggregationTypes.MIN);
-      expect(filterViewportFeaturesToGetHistogram(args)).toEqual([
-        Infinity,
-        1,
-        2,
-        3,
-        Infinity
-      ]);
+      expect(filterViewportFeaturesToGetHistogram(args)).toEqual([0, 1, 2, 3, 0]);
     });
 
     test(AggregationTypes.MAX, () => {
       const args = createArguments(AggregationTypes.MAX);
-      expect(filterViewportFeaturesToGetHistogram(args)).toEqual([
-        -Infinity,
-        1,
-        2,
-        3,
-        -Infinity
-      ]);
+      expect(filterViewportFeaturesToGetHistogram(args)).toEqual([0, 1, 2, 3, 0]);
     });
 
     test('no features', () => {

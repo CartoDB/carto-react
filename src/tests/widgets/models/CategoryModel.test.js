@@ -7,7 +7,7 @@ import {
 } from 'src/widgets/models/CategoryModel';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
 import { LayerTypes } from 'src/widgets/LayerTypes';
-import { POINTS } from '../data-mocks/pointsForCategories';
+import { POINTS } from '../data-mocks/models/pointsForCategories';
 
 describe('getCategories', () => {
   test('should throw an error due to invalid data type', async () => {
