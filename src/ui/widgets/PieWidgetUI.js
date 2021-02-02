@@ -21,6 +21,7 @@ function __generateDefaultConfig({ tooltipFormatter, formatter }, theme) {
     },
     legend: {
       selectedMode: false,  // TODO
+      type: 'scroll',
       orient: 'horizontal',
       left: theme.spacing(1),
       bottom: -theme.spacing(0.5),
@@ -38,10 +39,23 @@ function __generateDefaultConfig({ tooltipFormatter, formatter }, theme) {
         color: theme.palette.text.primary,
         lineHeight: 1,
         verticalAlign: 'bottom',
-        padding: [0, 0, 0, theme.spacing(1.5)],
+        padding: [0, 0, 0, theme.spacing(0.5)],
 
       },
       inactiveColor: theme.palette.text.disabled,
+      pageIcons: {
+        horizontal: ['path://M15.41 7.41 14 6 8 12 14 18 15.41 16.59 10.83 12z', 'path://M9 16.59 13.3265857 12 9 7.41 10.3319838 6 16 12 10.3319838 18z'],
+      },
+      pageIconSize: theme.spacing(1.5),
+      pageIconColor: theme.palette.text.secondary,
+      pageIconInactiveColor: theme.palette.text.disabled,
+      pageTextStyle: {
+        fontFamily: theme.typography.charts.fontFamily,
+        fontSize: theme.spacing(1.5),
+        lineHeight: theme.spacing(1.75),
+        fontWeight: 'normal',
+        color: theme.palette.text.primary,
+      },
     },
   };
 }
@@ -62,9 +76,10 @@ function __generateSerie(name, data, theme, selectedCategories) {
 
         return item;
       }),
-      radius: ['59%', '70%'],
+      radius: ['74%', '90%'],
       selectedOffset: 0,
       hoverOffset: 5,
+      bottom: theme.spacing(2.5),
       label: {
         formatter: '{per|{d}%}\n{b|{b}}',
         position: 'center',
@@ -188,7 +203,7 @@ function PieWidgetUI (props) {
         option={options}
         onEvents={onEvents}
         lazyUpdate={true}
-        style={{ height }}
+        style={{ maxHeight: height }}
       />
     </div>
   );
@@ -205,7 +220,7 @@ PieWidgetUI.defaultProps = {
     return `<p style="font-size:12px;font-weight:600;line-height:1.33;margin:4px 0 4px 0;">${params.name}</p>
             <p style="font-size: 12px;font-weight:normal;line-height:1.33;margin:0 0 4px 0;">${colorSpan(params.data.color || params.color)} ${valueHtml} (${params.percent}%)</p>`;
   },
-  height: '300px',
+  height: '260px',
   selectedCategories: [],
 };
 
