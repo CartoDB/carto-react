@@ -36,11 +36,7 @@ export function histogram(features, columnName, ticks, operation) {
 
   if (targetOperation) {
     const transformedBins = binsContainer.map((binContainer) => binContainer.values);
-
-    return transformedBins.map((val) => {
-      const processedValues = targetOperation(val);
-      return Number.isFinite(processedValues) ? processedValues : 0;
-    });
+    return transformedBins.map((values) => (values.length ? targetOperation(values) : 0));
   }
 
   return [];
