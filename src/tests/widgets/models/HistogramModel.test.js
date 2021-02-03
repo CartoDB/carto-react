@@ -7,7 +7,10 @@ import {
 } from 'src/widgets/models/HistogramModel';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
 import { LayerTypes } from 'src/widgets/LayerTypes';
+
 import { POLYGONS } from '../data-mocks/models/polygonsForHistogram';
+
+import { mockRequest, mockClear } from '../mockRequest';
 
 describe('getHistogram', () => {
   test('should throw an error due to invalid data type', async () => {
@@ -24,13 +27,113 @@ describe('getHistogram', () => {
     );
   });
 
+  describe('should decide whether execute a SQL query to get global data or a viewport features filtering', () => {
+    describe('should execute a SQL query - "viewportFilter" prop is false', () => {
+      const fetchResponse = {
+        rows: [
+          { tick: 'cat_3', value: 1495728 },
+          { tick: 'cat_2', value: 1471841 },
+          { tick: 'cat_1', value: 1326625 },
+          { tick: 'cat_0', value: 1317791 }
+        ]
+      };
+      const requestQuery = 'SELECT revenue FROM retail_stores LIMIT 4';
+      const credentials = {
+        username: 'public',
+        apiKey: 'default_public',
+        serverUrlTemplate: 'https://{user}.carto.com'
+      };
+      const queryResult = [
+        { tick: 'cat_3', value: 1495728 },
+        { tick: 'cat_2', value: 1471841 },
+        { tick: 'cat_1', value: 1326625 },
+        { tick: 'cat_0', value: 1317791 }
+      ];
+
+      mockRequest({ fetchResponse, requestQuery, credentials });
+
+      beforeEach(() => {
+        mockClear();
+      });
+
+      test('should execute a SQL query', async () => {
+        const args = {
+          data: requestQuery,
+          credentials,
+          operation: 'count',
+          column: 'revenue',
+          operationColumn: 'revenue',
+          type: LayerTypes.SQL,
+          ticks: [1300000, 1400000, 1500000],
+          viewportFilter: false
+        };
+        const func = await getHistogram(args);
+
+        function findTicksInQueryResult(ticks, queryResult) {
+          const result = [];
+          for (let i = 0; i <= ticks.length; i++) {
+            const tick = `cat_${i}`;
+            const element = queryResult.find((d) => d.tick === tick);
+            result.push(element ? element.value : null);
+          }
+          return result;
+        }
+
+        const makeTicks = findTicksInQueryResult(args.ticks, queryResult);
+        expect(func).toEqual(makeTicks);
+      });
+    });
+
+    describe('should filter viewport features - "viewportFilter" prop is true', () => {
+      const viewportFeatures = POLYGONS('revenue');
+
+      const createArguments = (operation) => ({
+        operation,
+        column: 'revenue',
+        type: LayerTypes.SQL,
+        ticks: [1, 2, 3],
+        viewportFilter: true,
+        viewportFeatures
+      });
+
+      test(AggregationTypes.COUNT, async () => {
+        const args = createArguments(AggregationTypes.COUNT);
+        const func = await getHistogram(args);
+        expect(func).toEqual([0, 1, 1, 1, 0]);
+      });
+
+      test(AggregationTypes.AVG, async () => {
+        const args = createArguments(AggregationTypes.AVG);
+        const func = await getHistogram(args);
+        expect(func).toEqual([0, 1, 2, 3, 0]);
+      });
+
+      test(AggregationTypes.SUM, async () => {
+        const args = createArguments(AggregationTypes.SUM);
+        const func = await getHistogram(args);
+        expect(func).toEqual([0, 1, 2, 3, 0]);
+      });
+
+      test(AggregationTypes.MIN, async () => {
+        const args = createArguments(AggregationTypes.MIN);
+        const func = await getHistogram(args);
+        expect(func).toEqual([0, 1, 2, 3, 0]);
+      });
+
+      test(AggregationTypes.MAX, async () => {
+        const args = createArguments(AggregationTypes.MAX);
+        const func = await getHistogram(args);
+        expect(func).toEqual([0, 1, 2, 3, 0]);
+      });
+    });
+  });
+
   describe('buildSqlQueryToGetHistogram - simple global operations', () => {
     const createArguments = (operation) => ({
       data: 'SELECT storetype, revenue FROM retail_stores',
       operation,
       column: 'revenue',
       operationColumn: 'revenue',
-      viewportFeatures: POLYGONS('revenue'),
       ticks: [1200000, 1300000, 1400000, 1500000, 1600000, 1700000, 1800000]
     });
 
