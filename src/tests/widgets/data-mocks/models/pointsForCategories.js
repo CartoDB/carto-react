@@ -1,4 +1,4 @@
-export const POINTS = (column, operationColumn) => [
+export const buildPointFeatures = (categoryColumn, operationColumn) => [
   {
     type: 'Feature',
     geometry: {
@@ -6,7 +6,7 @@ export const POINTS = (column, operationColumn) => [
       coordinates: [[0, 0]]
     },
     properties: {
-      [column]: 'a',
+      [categoryColumn]: 'a',
       [operationColumn]: 1
     }
   },
@@ -17,7 +17,7 @@ export const POINTS = (column, operationColumn) => [
       coordinates: [[0, 1]]
     },
     properties: {
-      [column]: 'a',
+      [categoryColumn]: 'a',
       [operationColumn]: 2
     }
   },
@@ -28,7 +28,7 @@ export const POINTS = (column, operationColumn) => [
       coordinates: [[0, 2]]
     },
     properties: {
-      [column]: 'b',
+      [categoryColumn]: 'b',
       [operationColumn]: 3
     }
   }

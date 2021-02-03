@@ -8,18 +8,18 @@ import {
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
 import { LayerTypes } from 'src/widgets/LayerTypes';
 
-import { LINES } from '../data-mocks/models/linesForFormula';
+import { buildLineFeatures } from '../data-mocks/models/linesForFormula';
 
-import { mockRequest, mockClear } from '../mockRequest';
+import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
 
 describe('getFormula', () => {
-  test('should throw an error due to invalid data type', async () => {
+  test('should throw with array data', async () => {
     await expect(getFormula({ data: [] })).rejects.toThrow(
       'Array is not a valid type to get formula'
     );
   });
 
-  test('should throw an error if trying to implement client-side-logic with CartoBQTilerLayer', async () => {
+  test('should throw if using CartoBQTilerLayer without viewportFilter', async () => {
     await expect(
       getFormula({ type: LayerTypes.BQ, viewportFilter: false })
     ).rejects.toThrow(
@@ -27,40 +27,40 @@ describe('getFormula', () => {
     );
   });
 
-  describe('should decide whether execute a SQL query to get global data or a viewport features filtering', () => {
-    describe('should execute a SQL query - "viewportFilter" prop is false', () => {
-      const fetchResponse = { rows: { revenue: 1495728 } };
-      const requestQuery = 'SELECT revenue FROM retail_stores LIMIT 1';
+  describe('SQL Layer', () => {
+    describe('should execute an SqlApi request when using "viewportFilter": false', () => {
+      const response = { rows: { revenue: 1495728 } };
+      const sql = 'SELECT revenue FROM retail_stores LIMIT 1';
       const credentials = {
         username: 'public',
         apiKey: 'default_public',
         serverUrlTemplate: 'https://{user}.carto.com'
       };
 
-      mockRequest({ fetchResponse, requestQuery, credentials });
+      mockSqlApiRequest({ response, sql, credentials });
 
       beforeEach(() => {
         mockClear();
       });
 
-      test('should execute a SQL query', async () => {
-        const args = {
-          data: requestQuery,
+      test('should call SqlApi', async () => {
+        const params = {
+          data: sql,
           credentials,
           operation: AggregationTypes.COUNT,
           column: 'revenue',
           type: LayerTypes.SQL,
           viewportFilter: false
         };
-        const func = await getFormula(args);
-        expect(func).toEqual(fetchResponse.rows);
+        const func = await getFormula(params);
+        expect(func).toEqual(response.rows);
       });
     });
 
-    describe('should filter viewport features - "viewportFilter" prop is true', () => {
-      const viewportFeatures = LINES('revenue');
+    describe('should read viewport features when using "viewportFilter": true', () => {
+      const viewportFeatures = buildLineFeatures('revenue');
 
-      const createArguments = (operation) => ({
+      const buildParamsFor = (operation) => ({
         operation,
         column: 'revenue',
         type: LayerTypes.SQL,
@@ -69,79 +69,81 @@ describe('getFormula', () => {
       });
 
       test(AggregationTypes.COUNT, async () => {
-        const args = createArguments(AggregationTypes.COUNT);
-        const func = await getFormula(args);
-        expect(func).toEqual([{ value: 3 }]);
+        const params = buildParamsFor(AggregationTypes.COUNT);
+        const formula = await getFormula(params);
+        expect(formula).toEqual([{ value: 3 }]);
       });
 
       test(AggregationTypes.AVG, async () => {
-        const args = createArguments(AggregationTypes.AVG);
-        const func = await getFormula(args);
-        expect(func).toEqual([{ value: 2 }]);
+        const params = buildParamsFor(AggregationTypes.AVG);
+        const formula = await getFormula(params);
+        expect(formula).toEqual([{ value: 2 }]);
       });
 
       test(AggregationTypes.SUM, async () => {
-        const args = createArguments(AggregationTypes.SUM);
-        const func = await getFormula(args);
-        expect(func).toEqual([{ value: 6 }]);
+        const params = buildParamsFor(AggregationTypes.SUM);
+        const formula = await getFormula(params);
+        expect(formula).toEqual([{ value: 6 }]);
       });
 
       test(AggregationTypes.MIN, async () => {
-        const args = createArguments(AggregationTypes.MIN);
-        const func = await getFormula(args);
-        expect(func).toEqual([{ value: 1 }]);
+        const params = buildParamsFor(AggregationTypes.MIN);
+        const formula = await getFormula(params);
+        expect(formula).toEqual([{ value: 1 }]);
       });
 
       test(AggregationTypes.MAX, async () => {
-        const args = createArguments(AggregationTypes.MAX);
-        const func = await getFormula(args);
-        expect(func).toEqual([{ value: 3 }]);
+        const params = buildParamsFor(AggregationTypes.MAX);
+        const formula = await getFormula(params);
+        expect(formula).toEqual([{ value: 3 }]);
       });
     });
   });
+});
 
-  describe('buildSqlQueryToGetFormula - simple global operations', () => {
-    test('should return a minified SQL query', () => {
-      const args = {
-        data: 'SELECT * FROM stores',
-        column: 'revenue',
-        operation: AggregationTypes.COUNT
-      };
-      const buildQuery = (type) =>
-        `SELECT ${type}(revenue) as value FROM (SELECT * FROM stores) as q`;
-      expect(buildSqlQueryToGetFormula(args)).toEqual(minify(buildQuery(args.operation)));
-    });
+describe('buildSqlQueryToGetFormula', () => {
+  test('should work as expected', () => {
+    const params = {
+      data: 'SELECT * FROM stores',
+      column: 'revenue',
+      operation: AggregationTypes.COUNT
+    };
+    const buildQuery = (type) =>
+      `SELECT ${type}(revenue) as value FROM (SELECT * FROM stores) as q`;
+    expect(buildSqlQueryToGetFormula(params)).toEqual(
+      minify(buildQuery(params.operation))
+    );
+  });
+});
+
+describe('filterViewportFeaturesToGetFormula', () => {
+  const buildParamsFor = (operation) => ({
+    operation,
+    column: 'revenue',
+    viewportFeatures: buildLineFeatures('revenue')
   });
 
-  describe('filterViewportFeaturesToGetFormula - simple viewport features filtering', () => {
-    const createArguments = (operation) => ({
-      operation,
-      column: 'revenue',
-      viewportFeatures: LINES('revenue')
-    });
+  test(AggregationTypes.COUNT, () => {
+    const params = buildParamsFor(AggregationTypes.COUNT);
+    expect(filterViewportFeaturesToGetFormula(params)).toEqual([{ value: 3 }]);
+  });
 
-    test(AggregationTypes.COUNT, () => {
-      const args = createArguments(AggregationTypes.COUNT);
-      expect(filterViewportFeaturesToGetFormula(args)).toEqual([{ value: 3 }]);
-    });
+  test(AggregationTypes.AVG, () => {
+    const params = buildParamsFor(AggregationTypes.AVG);
+    expect(filterViewportFeaturesToGetFormula(params)).toEqual([{ value: 2 }]);
+  });
 
-    test(AggregationTypes.AVG, () => {
-      const args = createArguments(AggregationTypes.AVG);
-      expect(filterViewportFeaturesToGetFormula(args)).toEqual([{ value: 2 }]);
-    });
+  test(AggregationTypes.SUM, () => {
+    const params = buildParamsFor(AggregationTypes.SUM);
+    expect(filterViewportFeaturesToGetFormula(params)).toEqual([{ value: 6 }]);
+  });
 
-    test(AggregationTypes.SUM, () => {
-      const args = createArguments(AggregationTypes.SUM);
-      expect(filterViewportFeaturesToGetFormula(args)).toEqual([{ value: 6 }]);
-    });
-
-    test('no features', () => {
-      const testCases = [null, undefined];
-      for (const tc of testCases) {
-        expect(filterViewportFeaturesToGetFormula({ viewportFeatures: tc })).toEqual([
-          { value: null }
-        ]);
-      }
-    });
+  test('no features', () => {
+    const testCases = [null, undefined];
+    for (const tc of testCases) {
+      expect(filterViewportFeaturesToGetFormula({ viewportFeatures: tc })).toEqual([
+        { value: null }
+      ]);
+    }
   });
 });

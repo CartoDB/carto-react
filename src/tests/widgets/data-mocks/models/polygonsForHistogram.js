@@ -1,4 +1,4 @@
-export const POLYGONS = (operationColumn) => [
+export const buildPolygonFeatures = (operationColumn) => [
   {
     type: 'Feature',
     geometry: {
