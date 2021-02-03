@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix an issue on histogram's operations when processing a not finite value [#79](https://github.com/CartoDB/carto-react-lib/pull/79)
+
 ## 1.0.0-beta13 (2021-02-02)
 
 - Remove getUserDatasets method from api [#68](https://github.com/CartoDB/carto-react-lib/pull/68)
