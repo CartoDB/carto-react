@@ -7,16 +7,19 @@ import {
 } from 'src/widgets/models/CategoryModel';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
 import { LayerTypes } from 'src/widgets/LayerTypes';
-import { POINTS } from '../data-mocks/pointsForCategories';
+
+import { buildPointFeatures } from '../data-mocks/models/pointsForCategories';
+
+import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
 
 describe('getCategories', () => {
-  test('should throw an error due to invalid data type', async () => {
+  test('should throw with array data', async () => {
     await expect(getCategories({ data: [] })).rejects.toThrow(
       'Array is not a valid type to get categories'
     );
   });
 
-  test('should throw an error if trying to implement client-side-logic with CartoBQTilerLayer', async () => {
+  test('should throw if using CartoBQTilerLayer without viewportFilter', async () => {
     await expect(
       getCategories({ type: LayerTypes.BQ, viewportFilter: false })
     ).rejects.toThrow(
@@ -24,122 +27,178 @@ describe('getCategories', () => {
     );
   });
 
-  describe('buildSqlQueryToGetCategories - simple global operations', () => {
-    const createArguments = (operation) => ({
+  describe('SQL Layer', () => {
+    describe('should execute a SqlApi request when using "viewportFilter": false', () => {
+      const response = {
+        rows: [
+          { category: 'Supermarket', value: 3 },
+          { category: 'Hypermarket', value: 1 }
+        ]
+      };
+      const sql = 'SELECT storetype, revenue FROM retail_stores LIMIT 4';
+      const credentials = {
+        username: 'public',
+        apiKey: 'default_public',
+        serverUrlTemplate: 'https://{user}.carto.com'
+      };
+
+      mockSqlApiRequest({ response, sql, credentials });
+
+      beforeEach(() => {
+        mockClear();
+      });
+
+      test('should call SqlApi', async () => {
+        const params = {
+          data: sql,
+          credentials,
+          operation: AggregationTypes.COUNT,
+          column: 'revenue',
+          type: LayerTypes.SQL,
+          viewportFilter: false
+        };
+        const categories = await getCategories(params);
+        expect(categories).toEqual(response.rows);
+      });
+    });
+
+    describe('should read viewport features when using "viewportFilter": true', () => {
+      const viewportFeatures = buildPointFeatures('storetype', 'revenue');
+
+      const buildGetCategoriesParamsFor = (operation) => ({
+        operation,
+        column: 'storetype',
+        operationColumn: 'revenue',
+        type: LayerTypes.SQL,
+        viewportFilter: true,
+        viewportFeatures
+      });
+
+      test(AggregationTypes.COUNT, async () => {
+        const params = buildGetCategoriesParamsFor(AggregationTypes.COUNT);
+        const categories = await getCategories(params);
+        expect(categories).toEqual([
+          { category: 'a', value: 2 },
+          { category: 'b', value: 1 }
+        ]);
+      });
+
+      test(AggregationTypes.AVG, async () => {
+        const params = buildGetCategoriesParamsFor(AggregationTypes.AVG);
+        const categories = await getCategories(params);
+        expect(categories).toEqual([
+          { category: 'a', value: 1.5 },
+          { category: 'b', value: 3 }
+        ]);
+      });
+
+      test(AggregationTypes.MIN, async () => {
+        const params = buildGetCategoriesParamsFor(AggregationTypes.MIN);
+        const categories = await getCategories(params);
+        expect(categories).toEqual([
+          { category: 'a', value: 1 },
+          { category: 'b', value: 3 }
+        ]);
+      });
+
+      test(AggregationTypes.MAX, async () => {
+        const params = buildGetCategoriesParamsFor(AggregationTypes.MAX);
+        const categories = await getCategories(params);
+        expect(categories).toEqual([
+          { category: 'a', value: 2 },
+          { category: 'b', value: 3 }
+        ]);
+      });
+    });
+  });
+});
+
+describe('buildSqlQueryToGetFormula', () => {
+  test('should work as expected', () => {
+    const params = {
       data: 'SELECT cartodb_id, storetype, revenue FROM retail_stores',
       column: 'storetype',
       operationColumn: 'revenue',
-      operation
-    });
-
-    const buildQuery = (args) => `
-      WITH all_categories as (
+      operation: AggregationTypes.COUNT
+    };
+    const buildQuery = (params) => `
+        WITH all_categories as (
+          SELECT
+            ${params.column} as category
+          FROM
+            (${params.data}) as q
+          GROUP BY category
+        ),
+        categories as (
+          SELECT
+            ${params.column} as category, ${params.operation}(${params.operationColumn}) as value
+          FROM
+            (${params.data}) as q
+          GROUP BY category
+        )
         SELECT
-          ${args.column} as category
+          a.category, b.value
         FROM
-          (${args.data}) as q
-        GROUP BY category
-      ),
-      categories as (
-        SELECT
-          ${args.column} as category, ${args.operation}(${args.operationColumn}) as value
-        FROM
-          (${args.data}) as q
-        GROUP BY category
-      )
-      SELECT
-        a.category, b.value
-      FROM
-        all_categories a
-      LEFT JOIN categories b ON a.category=b.category
-    `;
+          all_categories a
+        LEFT JOIN categories b ON a.category=b.category
+      `;
+    const query = buildQuery(params);
+    expect(buildSqlQueryToGetCategories(params)).toEqual(minify(query));
+  });
+});
 
-    test(AggregationTypes.COUNT, () => {
-      const args = createArguments(AggregationTypes.COUNT);
-      const query = buildQuery(args);
-      expect(buildSqlQueryToGetCategories(args)).toEqual(minify(query));
-    });
-
-    test(AggregationTypes.AVG, () => {
-      const args = createArguments(AggregationTypes.AVG);
-      const query = buildQuery(args);
-      expect(buildSqlQueryToGetCategories(args)).toEqual(minify(query));
-    });
-
-    test(AggregationTypes.SUM, () => {
-      const args = createArguments(AggregationTypes.SUM);
-      const query = buildQuery(args);
-      expect(buildSqlQueryToGetCategories(args)).toEqual(minify(query));
-    });
-
-    test(AggregationTypes.MIN, () => {
-      const args = createArguments(AggregationTypes.MIN);
-      const query = buildQuery(args);
-      expect(buildSqlQueryToGetCategories(args)).toEqual(minify(query));
-    });
-
-    test(AggregationTypes.MAX, () => {
-      const args = createArguments(AggregationTypes.MAX);
-      const query = buildQuery(args);
-      expect(buildSqlQueryToGetCategories(args)).toEqual(minify(query));
-    });
+describe('filterViewportFeaturesToGetCategories', () => {
+  const buildParamsFor = (operation) => ({
+    operation,
+    column: 'storetype',
+    operationColumn: 'revenue',
+    viewportFeatures: buildPointFeatures('storetype', 'revenue')
   });
 
-  describe('filterViewportFeaturesToGetCategories - simple viewport features filtering', () => {
-    const createArguments = (operation) => ({
-      operation,
-      column: 'storetype',
-      operationColumn: 'revenue',
-      viewportFeatures: POINTS('storetype', 'revenue')
-    });
+  test(AggregationTypes.COUNT, () => {
+    const params = buildParamsFor(AggregationTypes.COUNT);
+    expect(filterViewportFeaturesToGetCategories(params)).toEqual([
+      { category: 'a', value: 2 },
+      { category: 'b', value: 1 }
+    ]);
+  });
 
-    test(AggregationTypes.COUNT, () => {
-      const args = createArguments(AggregationTypes.COUNT);
-      expect(filterViewportFeaturesToGetCategories(args)).toEqual([
-        { category: 'a', value: 2 },
-        { category: 'b', value: 1 }
-      ]);
-    });
+  test(AggregationTypes.AVG, () => {
+    const params = buildParamsFor(AggregationTypes.AVG);
+    expect(filterViewportFeaturesToGetCategories(params)).toEqual([
+      { category: 'a', value: 1.5 },
+      { category: 'b', value: 3 }
+    ]);
+  });
 
-    test(AggregationTypes.AVG, () => {
-      const args = createArguments(AggregationTypes.AVG);
-      expect(filterViewportFeaturesToGetCategories(args)).toEqual([
-        { category: 'a', value: 1.5 },
-        { category: 'b', value: 3 }
-      ]);
-    });
+  test(AggregationTypes.SUM, () => {
+    const params = buildParamsFor(AggregationTypes.SUM);
+    expect(filterViewportFeaturesToGetCategories(params)).toEqual([
+      { category: 'a', value: 3 },
+      { category: 'b', value: 3 }
+    ]);
+  });
 
-    test(AggregationTypes.SUM, () => {
-      const args = createArguments(AggregationTypes.SUM);
-      expect(filterViewportFeaturesToGetCategories(args)).toEqual([
-        { category: 'a', value: 3 },
-        { category: 'b', value: 3 }
-      ]);
-    });
+  test(AggregationTypes.MIN, () => {
+    const params = buildParamsFor(AggregationTypes.MIN);
+    expect(filterViewportFeaturesToGetCategories(params)).toEqual([
+      { category: 'a', value: 1 },
+      { category: 'b', value: 3 }
+    ]);
+  });
 
-    test(AggregationTypes.MIN, () => {
-      const args = createArguments(AggregationTypes.MIN);
-      expect(filterViewportFeaturesToGetCategories(args)).toEqual([
-        { category: 'a', value: 1 },
-        { category: 'b', value: 3 }
-      ]);
-    });
+  test(AggregationTypes.MAX, () => {
+    const params = buildParamsFor(AggregationTypes.MAX);
+    expect(filterViewportFeaturesToGetCategories(params)).toEqual([
+      { category: 'a', value: 2 },
+      { category: 'b', value: 3 }
+    ]);
+  });
 
-    test(AggregationTypes.MAX, () => {
-      const args = createArguments(AggregationTypes.MAX);
-      expect(filterViewportFeaturesToGetCategories(args)).toEqual([
-        { category: 'a', value: 2 },
-        { category: 'b', value: 3 }
-      ]);
-    });
-
-    test('no features', () => {
-      const testCases = [null, undefined];
-      for (const tc of testCases) {
-        expect(filterViewportFeaturesToGetCategories({ viewportFeatures: tc })).toEqual(
-          []
-        );
-      }
-    });
+  test('no features', () => {
+    const testCases = [null, undefined];
+    for (const tc of testCases) {
+      expect(filterViewportFeaturesToGetCategories({ viewportFeatures: tc })).toEqual([]);
+    }
   });
 });

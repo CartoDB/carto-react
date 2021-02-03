@@ -1,4 +1,4 @@
-export const LINES = (column) => [
+export const buildLineFeatures = (column) => [
   {
     type: 'Feature',
     geometry: {
