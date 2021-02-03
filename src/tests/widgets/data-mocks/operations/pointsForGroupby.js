@@ -1,6 +1,6 @@
 const VALUES = [1, 2, 3, 4, 5];
 
-export const validFeatures = (columnName) =>
+export const buildValidFeatures = (columnName) =>
   [...Array(5)].map((_, idx) => ({
     type: 'Feature',
     geometry: {
@@ -13,7 +13,7 @@ export const validFeatures = (columnName) =>
     }
   }));
 
-export const invalidFeatures = (columnName) => [
+export const buildInvalidFeatures = (columnName) => [
   {
     type: 'Feature',
     geometry: {

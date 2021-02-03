@@ -1,13 +1,13 @@
 import { groupValuesByColumn } from 'src/widgets/operations/groupby';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
 import {
-  validFeatures,
-  invalidFeatures
+  buildValidFeatures,
+  buildInvalidFeatures
 } from '../data-mocks/operations/pointsForGroupby';
 
 const COLUMN = 'test';
 
-describe('Group values by column', () => {
+describe('groupValuesByColumn', () => {
   test('should return null due to empty data array', () => {
     expect(groupValuesByColumn([])).toEqual(null);
   });
@@ -16,7 +16,7 @@ describe('Group values by column', () => {
     test('should return an empty array due to invalid operation', () => {
       expect(
         groupValuesByColumn(
-          validFeatures(COLUMN),
+          buildValidFeatures(COLUMN),
           `${COLUMN}_quantitative`,
           `${COLUMN}_qualitative`,
           'pow'
@@ -25,13 +25,13 @@ describe('Group values by column', () => {
     });
 
     test(AggregationTypes.COUNT, () => {
-      const func = groupValuesByColumn(
-        validFeatures(COLUMN),
+      const groups = groupValuesByColumn(
+        buildValidFeatures(COLUMN),
         `${COLUMN}_quantitative`,
         `${COLUMN}_qualitative`,
         AggregationTypes.COUNT
       );
-      expect(func).toEqual([
+      expect(groups).toEqual([
         {
           category: 'Category 2',
           value: 3
@@ -44,13 +44,13 @@ describe('Group values by column', () => {
     });
 
     test(AggregationTypes.AVG, () => {
-      const func = groupValuesByColumn(
-        validFeatures(COLUMN),
+      const groups = groupValuesByColumn(
+        buildValidFeatures(COLUMN),
         `${COLUMN}_quantitative`,
         `${COLUMN}_qualitative`,
         AggregationTypes.AVG
       );
-      expect(func).toEqual([
+      expect(groups).toEqual([
         {
           category: 'Category 2',
           value: 3
@@ -63,13 +63,13 @@ describe('Group values by column', () => {
     });
 
     test(AggregationTypes.MIN, () => {
-      const func = groupValuesByColumn(
-        validFeatures(COLUMN),
+      const groups = groupValuesByColumn(
+        buildValidFeatures(COLUMN),
         `${COLUMN}_quantitative`,
         `${COLUMN}_qualitative`,
         AggregationTypes.MIN
       );
-      expect(func).toEqual([
+      expect(groups).toEqual([
         {
           category: 'Category 2',
           value: 1
@@ -82,13 +82,13 @@ describe('Group values by column', () => {
     });
 
     test(AggregationTypes.MAX, () => {
-      const func = groupValuesByColumn(
-        validFeatures(COLUMN),
+      const groups = groupValuesByColumn(
+        buildValidFeatures(COLUMN),
         `${COLUMN}_quantitative`,
         `${COLUMN}_qualitative`,
         AggregationTypes.MAX
       );
-      expect(func).toEqual([
+      expect(groups).toEqual([
         {
           category: 'Category 2',
           value: 5
@@ -101,13 +101,13 @@ describe('Group values by column', () => {
     });
 
     test(AggregationTypes.SUM, () => {
-      const func = groupValuesByColumn(
-        validFeatures(COLUMN),
+      const groups = groupValuesByColumn(
+        buildValidFeatures(COLUMN),
         `${COLUMN}_quantitative`,
         `${COLUMN}_qualitative`,
         AggregationTypes.SUM
       );
-      expect(func).toEqual([
+      expect(groups).toEqual([
         {
           category: 'Category 2',
           value: 9
@@ -122,13 +122,13 @@ describe('Group values by column', () => {
 
   describe('invalid features', () => {
     test('should return all groups values to 0 due to invalid column data', () => {
-      const func = groupValuesByColumn(
-        invalidFeatures(COLUMN),
+      const groups = groupValuesByColumn(
+        buildInvalidFeatures(COLUMN),
         `${COLUMN}_quantitative`,
         `${COLUMN}_qualitative`,
         AggregationTypes.COUNT
       );
-      expect(func).toEqual([
+      expect(groups).toEqual([
         {
           category: 'Category 1',
           value: 0

@@ -3,7 +3,7 @@ import { AggregationTypes } from 'src/widgets/AggregationTypes';
 
 const VALUES = [1, 2, 3, 4, 5];
 
-describe('Aggregation functions', () => {
+describe('aggregationFunctions', () => {
   test(AggregationTypes.COUNT, () => {
     const func = aggregationFunctions[AggregationTypes.COUNT];
     expect(func(VALUES)).toEqual(5);
