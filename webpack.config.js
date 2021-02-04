@@ -2,6 +2,7 @@ const path = require('path');
 
 const config = {
   mode: 'development',
+  devtool: 'eval',
   externals: [
     {
       react: 'react',

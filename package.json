@@ -3,7 +3,7 @@
   "version": "1.0.0-beta13",
   "description": "CARTO for React",
   "scripts": {
-    "start": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && webpack --config webpack.prod.js --watch",
+    "start": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && webpack --config webpack.config.js --watch",
     "build": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && cp README.md ./dist/README.md && webpack --config webpack.prod.js",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
