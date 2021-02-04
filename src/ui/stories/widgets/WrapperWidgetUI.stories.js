@@ -5,7 +5,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 import WrapperWidgetUI from '../../widgets/WrapperWidgetUI';
 
-export default {
+const options = {
   title: 'Widgets/WrapperWidgetUI',
   component: WrapperWidgetUI,
   argTypes: {
@@ -20,6 +20,7 @@ export default {
     }
   }
 };
+export default options;
 
 const Template = (args) => (
   <WrapperWidgetUI {...args}>

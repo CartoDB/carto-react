@@ -63,7 +63,16 @@ function CategoryWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, source.filters, viewportFeatures, props, hasLoadingState]);
+  }, [
+    credentials,
+    data,
+    setIsLoading,
+    source.filters,
+    type,
+    viewportFeatures,
+    props,
+    hasLoadingState
+  ]);
 
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
@@ -88,7 +97,7 @@ function CategoryWidget(props) {
         );
       }
     },
-    [setSelectedCategories, dispatch, addFilter, removeFilter]
+    [column, props.dataSource, props.id, setSelectedCategories, dispatch]
   );
 
   return (

@@ -339,9 +339,9 @@ function CategoryWidgetUI(props) {
       drawFrame: (val) => setAnimValues(val),
       requestRef
     });
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => cancelAnimationFrame(requestRef.current);
-  }, [sortedData]);
+  }, [prevAnimValues, sortedData]);
 
   // Separated to simplify the widget layout but inside the main component to avoid passing all dependencies
   const CategoryItem = (props) => {

@@ -1,14 +1,7 @@
 import React from 'react';
-import {
-  Button,
-  Grid,
-  Tooltip,
-  Typography,
-  makeStyles,
-  withStyles
-} from '@material-ui/core';
+import { Button, Grid, Tooltip, Typography, makeStyles } from '@material-ui/core';
 
-export default {
+const options = {
   title: 'Common/Tooltip',
   component: Tooltip,
   argTypes: {
@@ -49,6 +42,7 @@ export default {
     }
   }
 };
+export default options;
 
 const Template = ({ ...args }) => {
   return (

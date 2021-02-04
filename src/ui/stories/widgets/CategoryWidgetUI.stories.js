@@ -1,7 +1,7 @@
 import React from 'react';
 import CategoryWidgetUI from '../../widgets/CategoryWidgetUI';
 
-export default {
+const options = {
   title: 'Widgets/CategoryWidgetUI',
   component: CategoryWidgetUI,
   argTypes: {
@@ -20,6 +20,7 @@ export default {
     }
   }
 };
+export default options;
 
 const Template = (args) => <CategoryWidgetUI {...args}></CategoryWidgetUI>;
 const data = [

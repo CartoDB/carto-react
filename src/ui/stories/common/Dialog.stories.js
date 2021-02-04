@@ -11,10 +11,11 @@ import {
   TextField
 } from '@material-ui/core';
 
-export default {
+const options = {
   title: 'Common/Dialog',
   component: Dialog
 };
+export default options;
 
 const Template = ({ content, ...args }) => {
   const [open, setOpen] = React.useState(false);

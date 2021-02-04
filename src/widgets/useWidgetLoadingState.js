@@ -18,7 +18,7 @@ export default function useWidgetLoadingState(widgetId, filterIsByViewport) {
         );
       }
     },
-    [widgetId]
+    [dispatch, widgetId]
   );
 
   useEffect(() => {
@@ -31,13 +31,13 @@ export default function useWidgetLoadingState(widgetId, filterIsByViewport) {
     return () => {
       dispatch(removeWidgetLoadingState(widgetId));
     };
-  }, []);
+  }, [dispatch, filterIsByViewport, setIsLoading, widgetId]);
 
   useEffect(() => {
     if (widgetId in widgetsLoadingState) {
       hasLoadingState.current = true;
     }
-  }, [widgetsLoadingState]);
+  }, [widgetId, widgetsLoadingState]);
 
   return [hasLoadingState.current, setIsLoading];
 }

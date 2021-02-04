@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormControlLabel, Grid, Switch } from '@material-ui/core';
 
-export default {
+const options = {
   title: 'Common/Switch',
   component: Switch,
   argTypes: {
@@ -23,6 +23,7 @@ export default {
     }
   }
 };
+export default options;
 
 const Template = ({ label, color, checked, ...args }) => {
   return <FormControlLabel control={<Switch color={color} />} label={label} {...args} />;

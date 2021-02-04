@@ -59,7 +59,16 @@ function FormulaWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, filters, viewportFeatures, props, hasLoadingState]);
+  }, [
+    credentials,
+    data,
+    filters,
+    viewportFeatures,
+    props,
+    hasLoadingState,
+    setIsLoading,
+    type
+  ]);
 
   return (
     <WrapperWidgetUI

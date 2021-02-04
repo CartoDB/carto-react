@@ -28,10 +28,12 @@ import {
   Star
 } from '@material-ui/icons';
 
-export default {
+const options = {
   title: 'Common/List',
   component: List
 };
+export default options;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.grey[100]

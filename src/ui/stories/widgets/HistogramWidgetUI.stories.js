@@ -2,10 +2,11 @@ import React from 'react';
 import HistogramWidgetUI from '../../widgets/HistogramWidgetUI';
 
 // This default export determines where your story goes in the story list
-export default {
+const options = {
   title: 'Widgets/HistogramWidgetUI',
   component: HistogramWidgetUI
 };
+export default options;
 
 const DATA = [220, 350, 1900, 900, 630, 100];
 

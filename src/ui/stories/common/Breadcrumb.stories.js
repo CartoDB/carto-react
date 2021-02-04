@@ -2,7 +2,7 @@ import React from 'react';
 import { Breadcrumbs, Link, Typography } from '@material-ui/core';
 import { NavigateNext, CloudCircle, Home, Style } from '@material-ui/icons';
 
-export default {
+const options = {
   title: 'Common/Breadcrumbs',
   component: Breadcrumbs,
   argTypes: {
@@ -13,6 +13,7 @@ export default {
     }
   }
 };
+export default options;
 
 const Template = ({ ...args }) => (
   <Breadcrumbs

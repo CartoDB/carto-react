@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setViewportFeatures, setAllWidgetsLoadingState } from '../redux/cartoSlice';
 import bboxPolygon from '@turf/bbox-polygon';
@@ -36,7 +36,7 @@ function getUniqueFeatures(tiles, uniqueId) {
 
   tiles.forEach(({ data, isCompletelyInViewport }) => {
     if (data) {
-      for (const feature of data) {
+      for (let feature of data) {
         const id = pickPropByUniqueId(feature, uniqueId);
 
         if (!features.has(id)) {
@@ -96,7 +96,7 @@ export default function useViewportFeatures(source, uniqueId, debounceTimeOut = 
       dispatch(setAllWidgetsLoadingState(true));
       computeFeatures(uniqueFeatures, viewport, source.id);
     }
-  }, [uniqueFeatures, viewport, source]);
+  }, [computeFeatures, dispatch, source, uniqueFeatures, viewport, widgetsLoadingState]);
 
   const onViewportLoad = useCallback(
     (visibleTiles) => {

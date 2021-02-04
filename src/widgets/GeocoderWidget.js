@@ -6,14 +6,7 @@ import { geocodeStreetPoint } from './models';
 import { selectOAuthCredentials } from '../redux/oauthSlice';
 import { addLayer, setViewState } from '../redux/cartoSlice';
 
-import {
-  CircularProgress,
-  IconButton,
-  InputBase,
-  Paper,
-  SvgIcon
-} from '@material-ui/core';
-import { Close } from '@material-ui/icons';
+import { CircularProgress, InputBase, Paper, SvgIcon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const DEFAULT_COUNTRY = ''; // 'SPAIN', 'USA'
@@ -68,7 +61,6 @@ function GeocoderWidget(props) {
   const globalCredentials = useSelector((state) => state.carto.credentials);
   const credentials = oauthCredentials || globalCredentials;
   // Component local state and events handling
-  const [result, setResult] = useState(null);
   const [searchText, setSearchText] = useState('');
   const [loading, setIsLoading] = useState(false);
   // Actions dispatched
@@ -92,7 +84,6 @@ function GeocoderWidget(props) {
   const handleInput = (e) => {
     if (e.target.value === '') {
       updateMarker(null);
-      setResult(null);
     }
   };
 
@@ -121,7 +112,6 @@ function GeocoderWidget(props) {
         if (result) {
           zoomToResult(result);
           updateMarker(result);
-          setResult(result);
         }
       } catch (e) {
         handleGeocodeError(e);

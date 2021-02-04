@@ -62,11 +62,9 @@ function FormulaWidgetUI(props) {
     } else {
       setValue(data);
     }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => cancelAnimationFrame(requestRef.current);
-
-    // eslint-disable-next-line
-  }, [data, setValue]);
+  }, [data, prevValue, setValue]);
 
   const formattedValue = formatter(value);
 
