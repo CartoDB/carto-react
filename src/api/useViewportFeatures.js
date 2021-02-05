@@ -5,6 +5,7 @@ import bboxPolygon from '@turf/bbox-polygon';
 import booleanContains from '@turf/boolean-contains';
 import intersects from '@turf/boolean-intersects';
 import { debounce } from '../utils/debounce';
+import { viewportFeatures } from './viewportFeatures';
 
 const GEOMETRY_TYPES = Object.freeze([
   'Point',
@@ -69,53 +70,31 @@ function featuresInViewport(features, viewport) {
 export default function useViewportFeatures(source, uniqueId, debounceTimeOut = 500) {
   const dispatch = useDispatch();
   const viewport = useSelector((state) => state.carto.viewport);
-  const [uniqueFeatures, setUniqueFeatures] = useState();
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const referencedWidgetsLoadingState = useRef(widgetsLoadingState);
+  const [tiles, setTiles] = useState([]);
 
-  const computeFeatures = useRef(
-    debounce((features, viewport, sourceId) => {
-      const viewportFeatures = featuresInViewport(features, viewport);
-
+  const computeFeatures = useCallback(
+    debounce(({ tiles, viewport, uniqueId, sourceId }) => {
+      const features = viewportFeatures({ tiles, viewport, uniqueId });
       dispatch(
         setViewportFeatures({
           sourceId,
-          features: viewportFeatures
+          features: features
         })
       );
     }, debounceTimeOut)
   ).current;
 
   useEffect(() => {
-    if (
-      uniqueFeatures &&
-      viewport &&
-      source?.id &&
-      Object.keys(referencedWidgetsLoadingState).length
-    ) {
+    if (tiles.length) {
       dispatch(setAllWidgetsLoadingState(true));
-      computeFeatures(uniqueFeatures, viewport, source.id);
+      computeFeatures({ tiles, viewport, uniqueId, sourceId: source.id });
     }
-  }, [computeFeatures, dispatch, source, uniqueFeatures, viewport]);
+  }, [tiles, viewport, uniqueId, computeFeatures, source, dispatch]);
 
-  const onViewportLoad = useCallback(
-    (visibleTiles) => {
-      const viewportBbox = bboxPolygon(viewport);
-
-      const tilesInViewport = visibleTiles.map((tile) => {
-        const tileBbox = bboxPolygon(Object.values(tile.bbox));
-
-        return {
-          isCompletelyInViewport: booleanContains(viewportBbox, tileBbox),
-          data: tile.dataInWGS84
-        };
-      });
-
-      const features = getUniqueFeatures(tilesInViewport, uniqueId);
-      setUniqueFeatures(features);
-    },
-    [uniqueId, viewport]
-  );
+  const onViewportLoad = useCallback((tiles) => {
+    console.log('onViewportLoad');
+    setTiles(tiles);
+  }, []);
 
   return [onViewportLoad];
 }

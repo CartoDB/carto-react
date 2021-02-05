@@ -1,5 +1,5 @@
 function isFeature(value) {
-  return typeof value === 'object' && 'properties' in value;
+  return typeof value === 'object';
 }
 
 function getValueFromFeature(feature, column) {
@@ -7,7 +7,7 @@ function getValueFromFeature(feature, column) {
     return 0;
   }
 
-  const value = feature.properties[column];
+  const value = feature[column];
   const isValidValue = Number.isFinite(value);
   return isValidValue ? value : 0;
 }

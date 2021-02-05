@@ -1,6 +1,7 @@
 const path = require('path');
 
 const config = {
+  devtool: 'eval-source-map',
   mode: 'development',
   devtool: 'eval',
   externals: [
