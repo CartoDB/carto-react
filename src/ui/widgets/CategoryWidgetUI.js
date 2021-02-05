@@ -344,6 +344,11 @@ function CategoryWidgetUI(props) {
     return () => cancelAnimationFrame(requestRef.current);
   }, [sortedData]);
 
+  const getCategoriesCount = useCallback(() => {
+    const blocked = blockedCategories.length;
+    return blocked ? data.length - blocked : data.length - maxItems;
+  }, [data, maxItems, blockedCategories]);
+
   // Separated to simplify the widget layout but inside the main component to avoid passing all dependencies
   const CategoryItem = (props) => {
     const { data, onCategoryClick } = props;
@@ -528,7 +533,7 @@ function CategoryWidgetUI(props) {
                 startIcon={<SearchIcon />}
                 onClick={handleShowAllCategoriesClicked}
               >
-                Search in {data.length - maxItems} elements
+                Search in {getCategoriesCount()} elements
               </Button>
             )
           ) : null}
