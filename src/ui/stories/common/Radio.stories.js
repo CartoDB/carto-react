@@ -8,7 +8,7 @@ import {
   RadioGroup
 } from '@material-ui/core';
 
-export default {
+const options = {
   title: 'Common/Radio',
   component: Radio,
   argTypes: {
@@ -30,6 +30,7 @@ export default {
     }
   }
 };
+export default options;
 
 const Template = ({ label, color, checked = false, ...args }) => {
   return (

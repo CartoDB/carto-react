@@ -39,17 +39,20 @@ function HistogramWidget(props) {
   const { title, formatter, xAxisFormatter, dataAxis, ticks, tooltip } = props;
   const { data, credentials, type } = source;
 
-  const tooltipFormatter = useCallback(([serie]) => {
-    const formattedValue = formatter
-      ? formatter(serie.value)
-      : { prefix: '', value: serie.value };
+  const tooltipFormatter = useCallback(
+    ([serie]) => {
+      const formattedValue = formatter
+        ? formatter(serie.value)
+        : { prefix: '', value: serie.value };
 
-    return `${
-      typeof formattedValue === 'object'
-        ? `${formattedValue.prefix}${formattedValue.value}`
-        : formattedValue
-    }`;
-  }, []);
+      return `${
+        typeof formattedValue === 'object'
+          ? `${formattedValue.prefix}${formattedValue.value}`
+          : formattedValue
+      }`;
+    },
+    [formatter]
+  );
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -79,7 +82,16 @@ function HistogramWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [credentials, data, source.filters, viewportFeatures, props, hasLoadingState]);
+  }, [
+    credentials,
+    data,
+    setIsLoading,
+    source.filters,
+    type,
+    viewportFeatures,
+    props,
+    hasLoadingState
+  ]);
 
   const handleSelectedBarsChange = useCallback(
     ({ bars }) => {
@@ -107,7 +119,7 @@ function HistogramWidget(props) {
         );
       }
     },
-    [setSelectedBars, dispatch, addFilter, removeFilter]
+    [column, props.dataSource, props.id, setSelectedBars, dispatch, ticks]
   );
 
   return (

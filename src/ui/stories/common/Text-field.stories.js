@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, InputAdornment, TextField, Typography } from '@material-ui/core';
 import { Visibility } from '@material-ui/icons';
 
-export default {
+const options = {
   title: 'Common/Text Field',
   component: TextField,
   argTypes: {
@@ -35,6 +35,7 @@ export default {
     }
   }
 };
+export default options;
 
 const Template = (args) => <TextField {...args}></TextField>;
 

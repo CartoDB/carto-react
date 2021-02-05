@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useCallback, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setViewportFeatures, setAllWidgetsLoadingState } from '../redux/cartoSlice';
 import bboxPolygon from '@turf/bbox-polygon';
@@ -36,7 +36,7 @@ function getUniqueFeatures(tiles, uniqueId) {
 
   tiles.forEach(({ data, isCompletelyInViewport }) => {
     if (data) {
-      for (const feature of data) {
+      for (let feature of data) {
         const id = pickPropByUniqueId(feature, uniqueId);
 
         if (!features.has(id)) {
@@ -71,8 +71,9 @@ export default function useViewportFeatures(source, uniqueId, debounceTimeOut = 
   const viewport = useSelector((state) => state.carto.viewport);
   const [uniqueFeatures, setUniqueFeatures] = useState();
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
+  const referencedWidgetsLoadingState = useRef(widgetsLoadingState);
 
-  const computeFeatures = useCallback(
+  const computeFeatures = useRef(
     debounce((features, viewport, sourceId) => {
       const viewportFeatures = featuresInViewport(features, viewport);
 
@@ -82,21 +83,20 @@ export default function useViewportFeatures(source, uniqueId, debounceTimeOut = 
           features: viewportFeatures
         })
       );
-    }, debounceTimeOut),
-    []
-  );
+    }, debounceTimeOut)
+  ).current;
 
   useEffect(() => {
     if (
       uniqueFeatures &&
       viewport &&
       source?.id &&
-      Object.keys(widgetsLoadingState).length
+      Object.keys(referencedWidgetsLoadingState).length
     ) {
       dispatch(setAllWidgetsLoadingState(true));
       computeFeatures(uniqueFeatures, viewport, source.id);
     }
-  }, [uniqueFeatures, viewport, source]);
+  }, [computeFeatures, dispatch, source, uniqueFeatures, viewport]);
 
   const onViewportLoad = useCallback(
     (visibleTiles) => {

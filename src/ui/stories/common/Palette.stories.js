@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Grid, Typography } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
-export default {
+const options = {
   title: 'Getting Started/Palette',
   component: Box,
   argTypes: {
@@ -14,6 +14,7 @@ export default {
     }
   }
 };
+export default options;
 
 const boxStyle = {
   height: 80,

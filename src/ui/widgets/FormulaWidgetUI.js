@@ -35,11 +35,12 @@ function FormulaWidgetUI(props) {
   const [value, setValue] = useState('-');
   const requestRef = useRef();
   const prevValue = usePrevious(value);
+  const referencedPrevValue = useRef(prevValue);
 
   useEffect(() => {
     if (typeof data === 'number') {
       animateValue({
-        start: prevValue || 0,
+        start: referencedPrevValue.current || 0,
         end: data,
         duration: 500,
         drawFrame: (val) => setValue(val),
@@ -48,12 +49,12 @@ function FormulaWidgetUI(props) {
     } else if (
       typeof data === 'object' &&
       data &&
-      prevValue &&
+      referencedPrevValue.current &&
       data.value !== null &&
       data.value !== undefined
     ) {
       animateValue({
-        start: prevValue.value,
+        start: referencedPrevValue.current.value,
         end: data.value,
         duration: 1000,
         drawFrame: (val) => setValue({ value: val, unit: data.prefix }),
@@ -62,10 +63,8 @@ function FormulaWidgetUI(props) {
     } else {
       setValue(data);
     }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => cancelAnimationFrame(requestRef.current);
-
-    // eslint-disable-next-line
   }, [data, setValue]);
 
   const formattedValue = formatter(value);

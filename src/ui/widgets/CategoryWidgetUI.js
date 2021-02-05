@@ -146,6 +146,7 @@ function CategoryWidgetUI(props) {
   const [animValues, setAnimValues] = useState([]);
   const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
+  const referencedPrevAnimValues = useRef(prevAnimValues);
   const classes = useStyles();
 
   // Get blockedCategories in the same order as original data
@@ -333,13 +334,13 @@ function CategoryWidgetUI(props) {
 
   useEffect(() => {
     animateValues({
-      start: prevAnimValues || [],
+      start: referencedPrevAnimValues.current || [],
       end: sortedData,
       duration: 500,
       drawFrame: (val) => setAnimValues(val),
       requestRef
     });
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => cancelAnimationFrame(requestRef.current);
   }, [sortedData]);
 

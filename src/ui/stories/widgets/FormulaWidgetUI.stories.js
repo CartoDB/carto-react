@@ -1,7 +1,7 @@
 import React from 'react';
 import FormulaWidgetUI from '../../widgets/FormulaWidgetUI';
 
-export default {
+const options = {
   title: 'Widgets/FormulaWidgetUI',
   component: FormulaWidgetUI,
   argTypes: {
@@ -12,6 +12,7 @@ export default {
     }
   }
 };
+export default options;
 
 const Template = (args) => <FormulaWidgetUI {...args} />;
 

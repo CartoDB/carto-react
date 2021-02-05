@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox, FormControlLabel, Grid } from '@material-ui/core';
 
-export default {
+const options = {
   title: 'Common/Checkbox',
   component: Checkbox,
   argTypes: {
@@ -28,6 +28,7 @@ export default {
     }
   }
 };
+export default options;
 
 const Template = ({ label, color = 'primary', checked = false, ...args }) => {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 
-export default {
+const options = {
   title: 'Common/Paper',
   component: Paper,
   argTypes: {
@@ -14,6 +14,7 @@ export default {
     }
   }
 };
+export default options;
 
 const useStyles = makeStyles((theme) => ({
   root: {

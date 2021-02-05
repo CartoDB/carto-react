@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, IconButton, Grid, SvgIcon } from '@material-ui/core';
 
-export default {
+const options = {
   title: 'Common/Button',
   component: Button,
   argTypes: {
@@ -35,6 +35,7 @@ export default {
     }
   }
 };
+export default options;
 
 const Icon = (props) => (
   <SvgIcon {...props}>

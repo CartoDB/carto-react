@@ -9,10 +9,11 @@ import {
   FormatUnderlined
 } from '@material-ui/icons';
 
-export default {
+const options = {
   title: 'Common/Divider',
   component: Divider
 };
+export default options;
 
 const Template = ({ ...args }) => {
   return (
