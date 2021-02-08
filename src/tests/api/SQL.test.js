@@ -1,15 +1,12 @@
 import { executeSQL } from 'src/api';
 import { API } from 'src/api/SQL';
 import { mockSqlApiRequest, mockClear } from '../utils/mockSqlApiRequest';
-import { REQUEST_GET_MAX_URL_LENGTH } from '../../utils';
+import { REQUEST_GET_MAX_URL_LENGTH } from '../../utils/requestsUtils';
 
 describe('should call SqlApi', () => {
   const response = { rows: { revenue: 1495728 } };
   const sql = 'SELECT revenue FROM retail_stores LIMIT 1';
-  let sqlByPost = '';
-  for (let i = 0; i < REQUEST_GET_MAX_URL_LENGTH; i++) {
-    sqlByPost += i;
-  }
+  const sqlByPost = 's'.repeat(REQUEST_GET_MAX_URL_LENGTH);
   const credentials = {
     username: 'public',
     apiKey: 'default_public',
