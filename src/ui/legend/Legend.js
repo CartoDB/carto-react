@@ -3,14 +3,17 @@ import {
   Box,
   Button,
   Collapse,
+  Divider,
   Grid,
   Icon,
   makeStyles,
   SvgIcon,
   Switch,
+  Tooltip,
   Typography
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import { Fragment } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,10 +44,7 @@ const useStylesMultiLayers = makeStyles((theme) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: '36px',
-    borderTop: '1px solid transparent',
-    borderTopColor: ({ expanded }) =>
-      expanded ? theme.palette.other.divider : 'transparent'
+    height: '36px'
   },
   button: {
     flex: '1 1 auto',
@@ -78,8 +78,8 @@ const LayersIcon = () => (
 
 function MultiLayers({ layers }) {
   const wrapper = createRef();
+  const classes = useStylesMultiLayers();
   const [expanded, setExpanded] = useState(true);
-  const classes = useStylesMultiLayers({ expanded });
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -104,14 +104,17 @@ function MultiLayers({ layers }) {
 }
 
 function LegendRows({ layers }) {
+  const isSingle = layers.length === 1;
   return layers.map((layer) => (
-    <LegendRow
-      key={layer.id}
-      title={layer.title}
-      expandable={layer.expandable}
-      visibility={layer.visibility}
-      hasVisibility={layer.hasVisibility}
-    ></LegendRow>
+    <Fragment key={layer.id}>
+      <LegendRow
+        title={layer.title}
+        expandable={layer.expandable}
+        visibility={layer.visibility}
+        hasVisibility={layer.hasVisibility}
+      />
+      {!isSingle && <Divider />}
+    </Fragment>
   ));
 }
 
@@ -222,7 +225,9 @@ function Header({
         <Typography variant='subtitle1'>{title}</Typography>
       </Button>
       {hasVisibility && (
-        <Switch checked={visibility} onChange={onChangeVisibility}></Switch>
+        <Tooltip title={visibility ? 'Hide layer' : 'Show layer'} placement='top' arrow>
+          <Switch checked={visibility} onChange={onChangeVisibility}></Switch>
+        </Tooltip>
       )}
     </Grid>
   );
