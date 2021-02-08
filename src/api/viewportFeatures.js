@@ -40,7 +40,7 @@ export function viewportFeatures({ tiles, viewport, uniqueId }) {
       continue;
     }
 
-    const bbox = tile.bbox;
+    const { bbox } = tile;
     const fullVisible =
       bbox.west >= minX && bbox.east <= maxX && bbox.north <= maxY && bbox.south >= minY;
 
