@@ -3,6 +3,7 @@
 ## Not released
 
 - Improve performance widget client side calculations [#88](https://github.com/CartoDB/carto-react-lib/pull/88)
+- Reduce library bundle size by making all dependencies external [#85](https://github.com/CartoDB/carto-react-lib/pull/79)
 
 ## 1.0.0-beta14 (2021-02-08)
 
