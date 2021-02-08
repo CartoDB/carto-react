@@ -32,8 +32,7 @@ export const getCategories = async (props) => {
   const operationColumn = props.operationColumn || column;
 
   if (viewportFilter) {
-    const start = new Date();
-    const r = filterViewportFeaturesToGetCategories({
+    return filterViewportFeaturesToGetCategories({
       viewportFilter,
       viewportFeatures,
       filters,
@@ -41,9 +40,6 @@ export const getCategories = async (props) => {
       column,
       operationColumn
     });
-    const elapsed = new Date() - start;
-    console.log(`filterViewportFeaturesToGetCategories: ${elapsed}ms`);
-    return r;
   }
 
   const query = buildSqlQueryToGetCategories({

@@ -1,22 +1,5 @@
-// import {pointToTile} from '@mapbox/tilebelt';
 import bboxPolygon from '@turf/bbox-polygon';
 import intersects from '@turf/boolean-intersects';
-
-// function getTilesInViewport(viewport, zoom) {
-
-//   const [minX, minY, maxX, maxY] = viewport;
-//   const tiles = [];
-//   const tileMin = pointToTile(minX, minY, zoom);
-//   const tileMax = pointToTile(maxX, maxY, zoom);
-
-//   for (let x=tileMin[0]; x<=tileMax[0]; x++){
-//     for (let y=tileMax[1]; y<=tileMin[1]; y++) {
-//       tiles.push({x, y});
-//     }
-//   }
-
-//   return tiles;
-// }
 
 // Clip the viewport with the tile and transform to tile coordinates [0..1]
 function prepareViewport(tile, viewport) {
@@ -47,7 +30,6 @@ function addIntersectedFeaturesInTile({ map, tile, viewport, uniqueId }) {
 }
 
 export function viewportFeatures({ tiles, viewport, uniqueId }) {
-  // const viewPortTiles = getTilesInViewport(viewport, tiles[0].z);
   const [minX, minY, maxX, maxY] = viewport;
 
   const map = new Map();
@@ -55,7 +37,6 @@ export function viewportFeatures({ tiles, viewport, uniqueId }) {
   for (const tile of tiles) {
     // Discard if it's not a visible tile
     if (!tile.isVisible) {
-      // viewPortTiles.find(t => t.x === tile.x && t.y === tile.y) === undefined) {
       continue;
     }
 

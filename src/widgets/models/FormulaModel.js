@@ -30,17 +30,12 @@ export const getFormula = async (props) => {
   }
 
   if (viewportFilter) {
-    const start = new Date();
-
-    const r = filterViewportFeaturesToGetFormula({
+    return filterViewportFeaturesToGetFormula({
       viewportFeatures,
       filters,
       operation,
       column
     });
-    const elapsed = new Date() - start;
-    console.log(`filterViewportFeaturesToGetFormula: ${elapsed}ms`);
-    return r;
   }
 
   const query = buildSqlQueryToGetFormula({ data, column, operation, filters });

@@ -75,10 +75,7 @@ export default function useViewportFeatures(source, uniqueId, debounceTimeOut = 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const computeFeatures = useCallback(
     debounce(({ tiles, viewport, uniqueId, sourceId }) => {
-      const start = new Date();
       const features = viewportFeatures({ tiles, viewport, uniqueId });
-      const elapsed = new Date() - start;
-      console.log(`viewportFeatures: ${elapsed}ms`);
 
       dispatch(
         setViewportFeatures({
@@ -98,7 +95,6 @@ export default function useViewportFeatures(source, uniqueId, debounceTimeOut = 
   }, [tiles, viewport, uniqueId, computeFeatures, source, dispatch]);
 
   const onViewportLoad = useCallback((tiles) => {
-    console.log('onViewportLoad');
     setTiles(tiles);
   }, []);
 
