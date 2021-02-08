@@ -32,7 +32,8 @@ export const getCategories = async (props) => {
   const operationColumn = props.operationColumn || column;
 
   if (viewportFilter) {
-    return filterViewportFeaturesToGetCategories({
+    const start = new Date();
+    const r = filterViewportFeaturesToGetCategories({
       viewportFilter,
       viewportFeatures,
       filters,
@@ -40,6 +41,9 @@ export const getCategories = async (props) => {
       column,
       operationColumn
     });
+    const elapsed = new Date() - start;
+    console.log(`filterViewportFeaturesToGetCategories: ${elapsed}ms`);
+    return r;
   }
 
   const query = buildSqlQueryToGetCategories({
@@ -99,7 +103,10 @@ export const filterViewportFeaturesToGetCategories = ({
   operationColumn
 }) => {
   if (viewportFeatures) {
-    const filteredFeatures = viewportFeatures.filter(applyFilter({ filters }));
+    const filteredFeatures =
+      Object.keys(viewportFeatures).length === 0
+        ? viewportFeatures
+        : viewportFeatures.filter(applyFilter({ filters }));
 
     const groups = groupValuesByColumn(
       filteredFeatures,

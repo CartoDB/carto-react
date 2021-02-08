@@ -3,7 +3,7 @@ const path = require('path');
 const config = {
   devtool: 'eval-source-map',
   mode: 'development',
-  devtool: 'eval',
+  devtool: 'eval-source-map',
   externals: [
     {
       react: 'react',

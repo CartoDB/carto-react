@@ -74,18 +74,23 @@ export default function useViewportFeatures(source, uniqueId, debounceTimeOut = 
 
   const computeFeatures = useCallback(
     debounce(({ tiles, viewport, uniqueId, sourceId }) => {
+      const start = new Date();
       const features = viewportFeatures({ tiles, viewport, uniqueId });
+      const elapsed = new Date() - start;
+      console.log(`viewportFeatures: ${elapsed}ms`);
+
       dispatch(
         setViewportFeatures({
           sourceId,
           features: features
         })
       );
-    }, debounceTimeOut)
-  ).current;
+    }, debounceTimeOut),
+    []
+  );
 
   useEffect(() => {
-    if (tiles.length) {
+    if (tiles.length && source) {
       dispatch(setAllWidgetsLoadingState(true));
       computeFeatures({ tiles, viewport, uniqueId, sourceId: source.id });
     }

@@ -4,7 +4,6 @@ import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import { applyFilter } from '../../api/Filter';
 import { aggregationFunctions } from '../operations/aggregation/values';
-import { pickValuesFromFeatures } from '../../utils/pickValuesFromFeatures';
 import { LayerTypes } from '../LayerTypes';
 
 export const getFormula = async (props) => {
@@ -31,12 +30,17 @@ export const getFormula = async (props) => {
   }
 
   if (viewportFilter) {
-    return filterViewportFeaturesToGetFormula({
+    const start = new Date();
+
+    const r = filterViewportFeaturesToGetFormula({
       viewportFeatures,
       filters,
       operation,
       column
     });
+    const elapsed = new Date() - start;
+    console.log(`filterViewportFeaturesToGetFormula: ${elapsed}ms`);
+    return r;
   }
 
   const query = buildSqlQueryToGetFormula({ data, column, operation, filters });
@@ -69,10 +73,13 @@ export const filterViewportFeaturesToGetFormula = ({
 }) => {
   if (viewportFeatures) {
     const targetOperation = aggregationFunctions[operation];
-    const filteredFeatures = viewportFeatures.filter(applyFilter({ filters }));
-    const featureValues = pickValuesFromFeatures(filteredFeatures, column);
 
-    return [{ value: targetOperation(featureValues) }];
+    const filteredFeatures =
+      Object.keys(viewportFeatures).length === 0
+        ? viewportFeatures
+        : viewportFeatures.filter(applyFilter({ filters }));
+
+    return [{ value: targetOperation(filteredFeatures, column) }];
   }
 
   return [{ value: null }];
