@@ -72,6 +72,7 @@ export default function useViewportFeatures(source, uniqueId, debounceTimeOut = 
   const viewport = useSelector((state) => state.carto.viewport);
   const [tiles, setTiles] = useState([]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const computeFeatures = useCallback(
     debounce(({ tiles, viewport, uniqueId, sourceId }) => {
       const start = new Date();
