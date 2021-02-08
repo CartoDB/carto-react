@@ -1,10 +1,11 @@
 # CHANGELOG
 
-## Not released
+## 1.0.0-beta14 (2021-02-08)
 
 - Fix an issue on histogram's operations when processing a not finite value [#79](https://github.com/CartoDB/carto-react-lib/pull/79)
 - Add sourcemaps and production mode in webpack bundles [#83](https://github.com/CartoDB/carto-react-lib/pull/83)
 - Fix number of categories counter when some are locked on Category Widget [#81](https://github.com/CartoDB/carto-react-lib/pull/81)
+- Fix luma mismatch caused by the use of '@deck.gl/extensions' [#86](https://github.com/CartoDB/carto-react-lib/pull/86)
 
 ## 1.0.0-beta13 (2021-02-02)
 
