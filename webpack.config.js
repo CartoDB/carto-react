@@ -8,11 +8,10 @@ const config = {
       react: 'react',
       'react-redux': 'react-redux',
       'react-dom': 'react-dom',
-      '@reduxjs/toolkit': '@reduxjs/toolkit',
-      '@deck.gl/core': '@deck.gl/core',
-      '@deck.gl/google-maps': '@deck.gl/google-maps'
+      '@reduxjs/toolkit': '@reduxjs/toolkit'
     },
-    /^@material-ui\/.+$/
+    /^@material-ui\/.+$/,
+    /^@deck.gl\/.+$/
   ],
   module: {
     rules: [
