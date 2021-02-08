@@ -1,10 +1,17 @@
 const _global = typeof global !== 'undefined' ? global : window;
 
-export function mockSqlApiRequest({ response, sql, credentials }) {
+export function mockSqlApiRequest({
+  response,
+  responseIsOk = true,
+  status = 200,
+  sql,
+  credentials
+}) {
   _global.fetch = jest.fn(() =>
     Promise.resolve({
       json: () => Promise.resolve(response),
-      ok: true
+      ok: responseIsOk,
+      status
     })
   );
 

@@ -28,7 +28,7 @@ function passesFilter(columns, filters, feature) {
       const filterFunction = filterFunctions[filter];
 
       if (!filterFunction) {
-        throw new Error(`"${filterFunction}" not implemented`);
+        throw new Error(`"${filter}" not implemented`);
       }
 
       return filterFunction(columnFilters[filter].values, feature[column]);
