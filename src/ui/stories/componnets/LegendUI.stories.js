@@ -53,6 +53,17 @@ const LegendTemplate = () => {
   return <Legend layers={layers}></Legend>;
 };
 
+const LegendNotFoundTemplate = () => {
+  const layers = [
+    {
+      id: 0,
+      title: 'Single Layer',
+      visibility: true
+    }
+  ];
+  return <Legend layers={layers}></Legend>;
+};
+
 const LegendMultiTemplate = () => {
   const layers = [
     {
@@ -208,12 +219,27 @@ const LegendProportionTemplate = () => {
   return <Legend layers={layers}></Legend>;
 };
 
+const LegendCustomTemplate = () => {
+  const layers = [
+    {
+      id: 0,
+      title: 'Single Layer',
+      visibility: true,
+      type: 'custom',
+      children: <Typography>Legend custom</Typography>
+    }
+  ];
+  return <Legend layers={layers}></Legend>;
+};
+
 export const Playground = Template.bind({});
 Playground.args = {};
 
 export const SingleLayer = LegendTemplate.bind({});
 export const MultiLayer = LegendMultiTemplate.bind({});
+export const NotFound = LegendNotFoundTemplate.bind({});
 export const Categories = LegendCategoriesTemplate.bind({});
 export const Icon = LegendIconTemplate.bind({});
 export const Ramp = LegendRampTemplate.bind({});
 export const Proportion = LegendProportionTemplate.bind({});
+export const Custom = LegendCustomTemplate.bind({});

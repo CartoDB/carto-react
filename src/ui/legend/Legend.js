@@ -117,7 +117,8 @@ function LegendRows({ layers, onChangeVisibility }) {
       category: <LegendCategories data={layer.data} info={layer.info} />,
       icon: <LegendIcon data={layer.data} info={layer.info} />,
       ramp: <LegendRamp data={layer.data} info={layer.info} />,
-      proportion: <LegendProportion data={layer.data} info={layer.info} />
+      proportion: <LegendProportion data={layer.data} info={layer.info} />,
+      custom: layer.children
     };
 
     return (
@@ -130,12 +131,16 @@ function LegendRows({ layers, onChangeVisibility }) {
           hasVisibility={layer.hasVisibility}
           onChangeVisibility={onChangeVisibility}
         >
-          {types[layer.type]}
+          {types[layer.type] || <NoLegend></NoLegend>}
         </LegendRow>
         {!isSingle && <Divider />}
       </Fragment>
     );
   });
+}
+
+function NoLegend() {
+  return <Typography>Legend type not found</Typography>;
 }
 
 const useStylesRow = makeStyles((theme) => ({
