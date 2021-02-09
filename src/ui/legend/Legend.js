@@ -16,6 +16,7 @@ import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { Fragment } from 'react';
 import LegendCategories from './LegendCategories';
 import LegendIcon from './LegendIcon';
+import LegendRamp from './LegendRamp';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,15 +26,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Legend({ layers = [] }) {
+function Legend({ layers = [], onChangeVisibility }) {
   const classes = useStyles();
   const isSingle = layers.length === 1;
   return (
     <Box className={classes.root}>
       {!isSingle ? (
-        <MultiLayers layers={layers}></MultiLayers>
+        <MultiLayers
+          layers={layers}
+          onChangeVisibility={onChangeVisibility}
+        ></MultiLayers>
       ) : (
-        <LegendRows layers={layers}></LegendRows>
+        <LegendRows layers={layers} onChangeVisibility={onChangeVisibility}></LegendRows>
       )}
     </Box>
   );
@@ -78,7 +82,7 @@ const LayersIcon = () => (
   </SvgIcon>
 );
 
-function MultiLayers({ layers }) {
+function MultiLayers({ layers, onChangeVisibility }) {
   const wrapper = createRef();
   const classes = useStylesMultiLayers();
   const [expanded, setExpanded] = useState(true);
@@ -90,7 +94,7 @@ function MultiLayers({ layers }) {
   return (
     <>
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
-        <LegendRows layers={layers}></LegendRows>
+        <LegendRows layers={layers} onChangeVisibility={onChangeVisibility}></LegendRows>
       </Collapse>
       <Grid container className={classes.header}>
         <Button
@@ -105,21 +109,24 @@ function MultiLayers({ layers }) {
   );
 }
 
-function LegendRows({ layers }) {
+function LegendRows({ layers, onChangeVisibility }) {
   const isSingle = layers.length === 1;
   return layers.map((layer) => {
     const types = {
       category: <LegendCategories data={layer.data} info={layer.info} />,
-      icon: <LegendIcon data={layer.data} info={layer.info} />
+      icon: <LegendIcon data={layer.data} info={layer.info} />,
+      ramp: <LegendRamp data={layer.data} info={layer.info} />
     };
 
     return (
       <Fragment key={layer.id}>
         <LegendRow
+          id={layer.id}
           title={layer.title}
           expandable={layer.expandable}
           visibility={layer.visibility}
           hasVisibility={layer.hasVisibility}
+          onChangeVisibility={onChangeVisibility}
         >
           {types[layer.type]}
         </LegendRow>
@@ -141,15 +148,18 @@ const useStylesRow = makeStyles((theme) => ({
 }));
 
 export function LegendRow({
+  id,
   title,
   hasVisibility = true,
   visibility = true,
   expandable = true,
-  children
+  children,
+  onChangeVisibility = () => {}
 }) {
   const wrapper = createRef();
   const classes = useStylesRow();
   const [expanded, setExpanded] = useState(true);
+  const [_visibility, setVisibility] = useState(visibility);
 
   const handleExpandClick = () => {
     if (expandable) {
@@ -158,7 +168,9 @@ export function LegendRow({
   };
 
   const handleChangeVisibility = () => {
-    // TODO
+    const value = !_visibility;
+    setVisibility(value);
+    onChangeVisibility({ id, visibility: value });
   };
 
   return (
@@ -166,7 +178,7 @@ export function LegendRow({
       <Header
         title={title}
         hasVisibility={hasVisibility}
-        visibility={visibility}
+        visibility={_visibility}
         expanded={expanded}
         expandable={expandable}
         onExpandClick={handleExpandClick}
