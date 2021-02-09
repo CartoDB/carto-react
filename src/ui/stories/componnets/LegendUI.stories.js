@@ -46,7 +46,7 @@ const LegendTemplate = () => {
   const layers = [
     {
       id: 0,
-      title: 'Single Layer Example',
+      title: 'Single Layer',
       visibility: true
     }
   ];
@@ -57,13 +57,35 @@ const LegendMultiTemplate = () => {
   const layers = [
     {
       id: 0,
-      title: 'Multi Layer Example',
+      title: 'Multi Layer',
       visibility: true
     },
     {
       id: 1,
-      title: 'Multi Layer Example',
+      title: 'Multi Layer',
       visibility: false
+    }
+  ];
+  return <Legend layers={layers}></Legend>;
+};
+
+const LegendCategoriesTemplate = () => {
+  const layers = [
+    {
+      id: 0,
+      title: 'Category Layer',
+      visibility: true,
+      type: 'category',
+      data: [
+        {
+          color: '#000',
+          label: 'Small'
+        },
+        {
+          color: '#FF00FF',
+          label: 'Medium'
+        }
+      ]
     }
   ];
   return <Legend layers={layers}></Legend>;
@@ -74,3 +96,4 @@ Playground.args = {};
 
 export const SingleLayer = LegendTemplate.bind({});
 export const MultiLayer = LegendMultiTemplate.bind({});
+export const Categories = LegendCategoriesTemplate.bind({});

@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { Fragment } from 'react';
+import LegendCategories from './LegendCategories';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -105,17 +106,25 @@ function MultiLayers({ layers }) {
 
 function LegendRows({ layers }) {
   const isSingle = layers.length === 1;
-  return layers.map((layer) => (
-    <Fragment key={layer.id}>
-      <LegendRow
-        title={layer.title}
-        expandable={layer.expandable}
-        visibility={layer.visibility}
-        hasVisibility={layer.hasVisibility}
-      />
-      {!isSingle && <Divider />}
-    </Fragment>
-  ));
+  return layers.map((layer) => {
+    const types = {
+      category: <LegendCategories data={layer.data} />
+    };
+
+    return (
+      <Fragment key={layer.id}>
+        <LegendRow
+          title={layer.title}
+          expandable={layer.expandable}
+          visibility={layer.visibility}
+          hasVisibility={layer.hasVisibility}
+        >
+          {types[layer.type]}
+        </LegendRow>
+        {!isSingle && <Divider />}
+      </Fragment>
+    );
+  });
 }
 
 const useStylesRow = makeStyles((theme) => ({
