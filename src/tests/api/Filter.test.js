@@ -1,16 +1,21 @@
 import { applyFilter } from 'src/api';
 import { filters } from './data-mocks/filters';
 
-const makeFeature = (value) => ({
-  type: 'Feature',
-  geometry: {
-    type: 'Point',
-    coordinates: [0, 0]
+const makePossibleFeature = (value) => [
+  {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [0, 0]
+    },
+    properties: {
+      column1: value
+    }
   },
-  properties: {
+  {
     column1: value
   }
-});
+];
 
 describe('Filters', () => {
   test('should return 1 if no filters present', () => {
@@ -26,35 +31,17 @@ describe('Filters', () => {
   describe('feature passes filter - boolean type', () => {
     const params = { filters, type: 'boolean' };
 
-    test('should return false if feature is not present', () => {
-      expect(applyFilter(params)()).toBe(false);
-    });
-
     describe('should return false if feature column value is falsy', () => {
-      test('0', () => {
-        const func = applyFilter(params)(makeFeature(0));
-        expect(func).toBe(false);
-      });
-
-      test('null', () => {
-        const func = applyFilter(params)(makeFeature(null));
-        expect(func).toBe(false);
-      });
-
-      test('undefined', () => {
-        const func = applyFilter(params)(makeFeature(undefined));
-        expect(func).toBe(false);
-      });
-
-      test('false', () => {
-        const func = applyFilter(params)(makeFeature(false));
-        expect(func).toBe(false);
-      });
-
-      test('empty string', () => {
-        const func = applyFilter(params)(makeFeature(''));
-        expect(func).toBe(false);
-      });
+      const testCases = [0, null, undefined, false, ''];
+      for (const tc of testCases) {
+        test(String(tc), () => {
+          const [featureWithProperties, rawFeature] = makePossibleFeature(tc);
+          const withProps = applyFilter(params)(featureWithProperties);
+          expect(withProps).toBe(false);
+          const noProps = applyFilter(params)(rawFeature);
+          expect(noProps).toBe(false);
+        });
+      }
     });
 
     test('should throw if filter function is not implemented', () => {
@@ -68,7 +55,7 @@ describe('Filters', () => {
         type: 'boolean'
       };
       const func = applyFilter(paramsWithFilterFunctionNotImplemented);
-      expect(() => func(makeFeature(1))).toThrow('"pow" not implemented');
+      expect(() => func(makePossibleFeature(1)[0])).toThrow('"pow" not implemented');
     });
 
     describe('should return true if feature passes filter', () => {
@@ -97,35 +84,17 @@ describe('Filters', () => {
   describe('feature passes filter - number type', () => {
     const params = { filters, type: 'number' };
 
-    test('should return 0 if feature is not present', () => {
-      expect(applyFilter(params)()).toBe(0);
-    });
-
     describe('should return 0 if feature column value is falsy', () => {
-      test('0', () => {
-        const func = applyFilter(params)(makeFeature(0));
-        expect(func).toBe(0);
-      });
-
-      test('null', () => {
-        const func = applyFilter(params)(makeFeature(null));
-        expect(func).toBe(0);
-      });
-
-      test('undefined', () => {
-        const func = applyFilter(params)(makeFeature(undefined));
-        expect(func).toBe(0);
-      });
-
-      test('false', () => {
-        const func = applyFilter(params)(makeFeature(false));
-        expect(func).toBe(0);
-      });
-
-      test('empty string', () => {
-        const func = applyFilter(params)(makeFeature(''));
-        expect(func).toBe(0);
-      });
+      const testCases = [0, null, undefined, false, ''];
+      for (const tc of testCases) {
+        test(String(tc), () => {
+          const [featureWithProperties, rawFeature] = makePossibleFeature(tc);
+          const withProps = applyFilter(params)(featureWithProperties);
+          expect(withProps).toBe(0);
+          const noProps = applyFilter(params)(rawFeature);
+          expect(noProps).toBe(0);
+        });
+      }
     });
 
     test('should throw if filter function is not implemented', () => {
@@ -139,7 +108,7 @@ describe('Filters', () => {
         type: 'number'
       };
       const func = applyFilter(paramsWithFilterFunctionNotImplemented);
-      expect(() => func(makeFeature(1))).toThrow('"pow" not implemented');
+      expect(() => func(makePossibleFeature(1)[0])).toThrow('"pow" not implemented');
     });
 
     describe('should return 1 if feature passes filter', () => {
