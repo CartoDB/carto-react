@@ -20,7 +20,7 @@ function passesFilter(columns, filters, feature) {
     const columnFilters = filters[column];
     const columnFilterTypes = Object.keys(columnFilters);
 
-    if (!feature || !feature.properties[column]) {
+    if (!feature || !feature[column]) {
       return false;
     }
 
@@ -31,7 +31,7 @@ function passesFilter(columns, filters, feature) {
         throw new Error(`"${filterFunction}" not implemented`);
       }
 
-      return filterFunction(columnFilters[filter].values, feature.properties[column]);
+      return filterFunction(columnFilters[filter].values, feature[column]);
     });
   });
 }
@@ -43,7 +43,8 @@ export function applyFilter({ filters = {}, type = 'boolean' }) {
 
   return (feature) => {
     const columns = Object.keys(filters);
-    const featurePassesFilter = passesFilter(columns, filters, feature);
+    const f = feature.properties || feature;
+    const featurePassesFilter = passesFilter(columns, filters, f);
 
     return type === 'number' ? Number(featurePassesFilter) : featurePassesFilter;
   };

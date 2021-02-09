@@ -6,16 +6,14 @@ export function groupValuesByColumn(data, valuesColumn, keysColumn, operation) {
   }
 
   const groups = data.reduce((accumulator, item) => {
-    const group = item.properties[keysColumn];
+    const group = item[keysColumn];
 
     accumulator[group] = accumulator[group] || [];
 
-    const isValid =
-      item.properties[valuesColumn] !== null &&
-      item.properties[valuesColumn] !== undefined;
+    const isValid = item[valuesColumn] !== null && item[valuesColumn] !== undefined;
 
     if (isValid) {
-      accumulator[group].push(item.properties[valuesColumn]);
+      accumulator[group].push(item[valuesColumn]);
     }
 
     return accumulator;

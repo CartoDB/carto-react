@@ -1,9 +1,24 @@
 import { groupValuesByColumn } from 'src/widgets/operations/groupby';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
-import {
-  buildValidFeatures,
-  buildInvalidFeatures
-} from '../data-mocks/operations/pointsForGroupby';
+
+const VALUES = [1, 2, 3, 4, 5];
+
+const buildValidFeatures = (columnName) =>
+  [...Array(VALUES.length)].map((_, idx) => ({
+    [`${columnName}_qualitative`]: `Category ${idx % 2 === 0 ? 2 : 1}`, // 2 categories === 'Category 1' && 3 categories === 'Category 2'
+    [`${columnName}_quantitative`]: VALUES[idx]
+  }));
+
+const buildInvalidFeatures = (columnName) => [
+  {
+    [`${columnName}_qualitative`]: 'Category 1',
+    [`${columnName}_quantitative`]: null
+  },
+  {
+    [`${columnName}_qualitative`]: 'Category 2',
+    [`${columnName}_quantitative`]: undefined
+  }
+];
 
 const COLUMN = 'test';
 

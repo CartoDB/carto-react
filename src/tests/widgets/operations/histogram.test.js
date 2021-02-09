@@ -1,13 +1,24 @@
 import { histogram } from 'src/widgets/operations/histogram';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
-import {
-  values,
-  buildValidFeatures,
-  buildInvalidFeatures
-} from '../data-mocks/operations/linesForHistogram';
+
+const VALUES = [1, 2, 2, 3, 3, 3, 4, 4, 5];
+
+const buildValidFeatures = (columnName) =>
+  [...Array(VALUES.length)].map((_, idx) => ({
+    [columnName]: VALUES[idx]
+  }));
+
+const buildInvalidFeatures = (columnName) => [
+  {
+    [columnName]: null
+  },
+  {
+    [columnName]: undefined
+  }
+];
 
 const COLUMN = 'test';
-const ticks = Array.from(new Set(values));
+const ticks = Array.from(new Set(VALUES));
 
 describe('histogram', () => {
   test('should return an empty array due to empty features array', () => {

@@ -8,9 +8,19 @@ import {
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
 import { LayerTypes } from 'src/widgets/LayerTypes';
 
-import { buildLineFeatures } from '../data-mocks/models/linesForFormula';
-
 import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
+
+const features = (column) => [
+  {
+    [column]: 1
+  },
+  {
+    [column]: 2
+  },
+  {
+    [column]: 3
+  }
+];
 
 describe('getFormula', () => {
   test('should throw with array data', async () => {
@@ -58,7 +68,7 @@ describe('getFormula', () => {
     });
 
     describe('should read viewport features when using "viewportFilter": true', () => {
-      const viewportFeatures = buildLineFeatures('revenue');
+      const viewportFeatures = features('revenue');
 
       const buildParamsFor = (operation) => ({
         operation,
@@ -120,7 +130,7 @@ describe('filterViewportFeaturesToGetFormula', () => {
   const buildParamsFor = (operation) => ({
     operation,
     column: 'revenue',
-    viewportFeatures: buildLineFeatures('revenue')
+    viewportFeatures: features('revenue')
   });
 
   test(AggregationTypes.COUNT, () => {
