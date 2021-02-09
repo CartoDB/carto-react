@@ -91,9 +91,34 @@ const LegendCategoriesTemplate = () => {
   return <Legend layers={layers}></Legend>;
 };
 
+const LegendIconTemplate = () => {
+  const layers = [
+    {
+      id: 0,
+      title: 'Icon Layer',
+      visibility: true,
+      type: 'icon',
+      data: [
+        {
+          icon:
+            'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2FShare%2Ficon%2Fnolan%2FMaps%2Fmarker1600.png&f=1&nofb=1',
+          label: 'Small'
+        },
+        {
+          icon:
+            'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2FShare%2Ficon%2Fnolan%2FMaps%2Fmarker1600.png&f=1&nofb=1',
+          label: 'Medium'
+        }
+      ]
+    }
+  ];
+  return <Legend layers={layers}></Legend>;
+};
+
 export const Playground = Template.bind({});
 Playground.args = {};
 
 export const SingleLayer = LegendTemplate.bind({});
 export const MultiLayer = LegendMultiTemplate.bind({});
 export const Categories = LegendCategoriesTemplate.bind({});
+export const Icon = LegendIconTemplate.bind({});
