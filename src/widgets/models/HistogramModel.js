@@ -106,7 +106,7 @@ export const filterViewportFeaturesToGetHistogram = ({
   ticks
 }) => {
   if (viewportFeatures) {
-    const filteredFeatures = Object.keys(viewportFeatures).length
+    const filteredFeatures = !Object.keys(viewportFeatures).length
       ? viewportFeatures
       : viewportFeatures.filter(applyFilter({ filters }));
 

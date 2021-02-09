@@ -99,7 +99,7 @@ export const filterViewportFeaturesToGetCategories = ({
   operationColumn
 }) => {
   if (viewportFeatures) {
-    const filteredFeatures = Object.keys(viewportFeatures).length
+    const filteredFeatures = !Object.keys(viewportFeatures).length
       ? viewportFeatures
       : viewportFeatures.filter(applyFilter({ filters }));
 

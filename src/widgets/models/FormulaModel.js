@@ -69,7 +69,7 @@ export const filterViewportFeaturesToGetFormula = ({
   if (viewportFeatures) {
     const targetOperation = aggregationFunctions[operation];
 
-    const filteredFeatures = Object.keys(viewportFeatures).length
+    const filteredFeatures = !Object.keys(viewportFeatures).length
       ? viewportFeatures
       : viewportFeatures.filter(applyFilter({ filters }));
 
