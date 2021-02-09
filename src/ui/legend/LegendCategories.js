@@ -1,7 +1,8 @@
 import React from 'react';
 import { Box, Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
+import Note from './Note';
 
-function LegendCategories({ data = [] }) {
+function LegendCategories({ data = [], info }) {
   const max = 1;
   return (
     <Grid container direction='column' pb={16} spacing={1}>
@@ -11,6 +12,7 @@ function LegendCategories({ data = [] }) {
           <Row key={d.label + index} isMax={isMax} label={d.label} color={d.color}></Row>
         );
       })}
+      <Note>{info}</Note>
     </Grid>
   );
 }

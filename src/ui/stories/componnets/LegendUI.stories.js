@@ -76,6 +76,7 @@ const LegendCategoriesTemplate = () => {
       title: 'Category Layer',
       visibility: true,
       type: 'category',
+      info: 'lorem',
       data: [
         {
           color: '#000',

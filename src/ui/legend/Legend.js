@@ -109,8 +109,8 @@ function LegendRows({ layers }) {
   const isSingle = layers.length === 1;
   return layers.map((layer) => {
     const types = {
-      category: <LegendCategories data={layer.data} />,
-      icon: <LegendIcon data={layer.data} />
+      category: <LegendCategories data={layer.data} info={layer.info} />,
+      icon: <LegendIcon data={layer.data} info={layer.info} />
     };
 
     return (

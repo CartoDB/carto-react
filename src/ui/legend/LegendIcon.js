@@ -1,12 +1,14 @@
 import React from 'react';
-import { Box, Grid, makeStyles, SvgIcon, Tooltip, Typography } from '@material-ui/core';
+import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
+import Note from './Note';
 
-function LegendIcon({ data = [] }) {
+function LegendIcon({ data = [], info }) {
   return (
     <Grid container direction='column' pb={16} spacing={1}>
       {data.map((d, index) => (
         <Row key={d.label + index} label={d.label} icon={d.icon}></Row>
       ))}
+      <Note>{info}</Note>
     </Grid>
   );
 }
