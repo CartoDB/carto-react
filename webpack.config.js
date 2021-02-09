@@ -13,7 +13,6 @@ for (const depName in pkg.peerDependencies) {
 }
 
 const config = {
-  devtool: 'eval-source-map',
   mode: 'development',
   devtool: 'eval-source-map',
   externals,
