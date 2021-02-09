@@ -43,7 +43,7 @@ export function applyFilter({ filters = {}, type = 'boolean' }) {
 
   return (feature) => {
     const columns = Object.keys(filters);
-    const f = 'properties' in feature ? feature.properties : feature;
+    const f = feature.properties || feature;
     const featurePassesFilter = passesFilter(columns, filters, f);
 
     return type === 'number' ? Number(featurePassesFilter) : featurePassesFilter;

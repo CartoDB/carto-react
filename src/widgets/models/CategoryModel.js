@@ -99,10 +99,9 @@ export const filterViewportFeaturesToGetCategories = ({
   operationColumn
 }) => {
   if (viewportFeatures) {
-    const filteredFeatures =
-      Object.keys(viewportFeatures).length === 0
-        ? viewportFeatures
-        : viewportFeatures.filter(applyFilter({ filters }));
+    const filteredFeatures = Object.keys(viewportFeatures).length
+      ? viewportFeatures
+      : viewportFeatures.filter(applyFilter({ filters }));
 
     const groups = groupValuesByColumn(
       filteredFeatures,
