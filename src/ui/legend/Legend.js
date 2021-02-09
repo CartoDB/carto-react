@@ -17,6 +17,7 @@ import { Fragment } from 'react';
 import LegendCategories from './LegendCategories';
 import LegendIcon from './LegendIcon';
 import LegendRamp from './LegendRamp';
+import LegendProportion from './LegendProportion';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -115,7 +116,8 @@ function LegendRows({ layers, onChangeVisibility }) {
     const types = {
       category: <LegendCategories data={layer.data} info={layer.info} />,
       icon: <LegendIcon data={layer.data} info={layer.info} />,
-      ramp: <LegendRamp data={layer.data} info={layer.info} />
+      ramp: <LegendRamp data={layer.data} info={layer.info} />,
+      proportion: <LegendProportion data={layer.data} info={layer.info} />
     };
 
     return (

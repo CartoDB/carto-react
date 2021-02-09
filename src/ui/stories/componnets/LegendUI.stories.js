@@ -181,6 +181,33 @@ const LegendRampTemplate = () => {
   );
 };
 
+const LegendProportionTemplate = () => {
+  const layers = [
+    {
+      id: 0,
+      title: 'Proportion Layer',
+      visibility: true,
+      type: 'proportion',
+      data: {
+        values: [
+          {
+            value: 100,
+            color: '#e1e3e4'
+          },
+          {
+            value: 300,
+            color: '#595f63'
+          }
+        ],
+        min: 100,
+        max: 500,
+        avg: 450
+      }
+    }
+  ];
+  return <Legend layers={layers}></Legend>;
+};
+
 export const Playground = Template.bind({});
 Playground.args = {};
 
@@ -189,3 +216,4 @@ export const MultiLayer = LegendMultiTemplate.bind({});
 export const Categories = LegendCategoriesTemplate.bind({});
 export const Icon = LegendIconTemplate.bind({});
 export const Ramp = LegendRampTemplate.bind({});
+export const Proportion = LegendProportionTemplate.bind({});
