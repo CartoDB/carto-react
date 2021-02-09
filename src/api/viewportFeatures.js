@@ -20,13 +20,31 @@ function prepareViewport(bbox, viewport) {
   return [tMinX, tMinY, tMaxX, tMaxY];
 }
 
-function addIntersectedFeaturesInTile({ map, tile, viewport, uniqueId }) {
+function getFeatureUniqueId(feature, uniqueIdProperty) {
+  if (uniqueIdProperty) {
+    return feature.properties[uniqueIdProperty];
+  }
+
+  if ('geoid' in feature.properties) {
+    return feature.properties.geoid;
+  }
+
+  if ('id' in feature) {
+    return feature.id;
+  }
+
+  return -1;
+}
+
+function addIntersectedFeaturesInTile({ map, tile, viewport, uniqueIdProperty }) {
   const viewportIntersection = bboxPolygon(prepareViewport(tile.bbox, viewport));
 
   for (const f of tile.data) {
+    const uniqueId = getFeatureUniqueId(f, uniqueIdProperty);
+
     // Add if the feature was not previously intersected and intersects with the viewport
-    if (!map.has(f.properties[uniqueId]) && intersects(f, viewportIntersection)) {
-      map.set(f.properties[uniqueId], f.properties);
+    if (!map.has(uniqueId) && intersects(f, viewportIntersection)) {
+      map.set(uniqueId, f.properties);
     }
   }
 }
@@ -38,7 +56,7 @@ function isTileFullVisible(bbox, viewport) {
   );
 }
 
-export function viewportFeatures({ tiles, viewport, uniqueId }) {
+export function viewportFeatures({ tiles, viewport, uniqueIdProperty }) {
   const map = new Map();
 
   for (const tile of tiles) {
@@ -54,12 +72,13 @@ export function viewportFeatures({ tiles, viewport, uniqueId }) {
       // All the features of the tile are visible
       for (const f of tile.data) {
         const prop = f.properties;
-        if (!map.has(prop[uniqueId])) {
-          map.set(prop[uniqueId], prop);
+        const uniqueId = getFeatureUniqueId(f, uniqueIdProperty);
+        if (!map.has(uniqueId)) {
+          map.set(uniqueId, prop);
         }
       }
     } else {
-      addIntersectedFeaturesInTile({ map, tile, viewport, uniqueId });
+      addIntersectedFeaturesInTile({ map, tile, viewport, uniqueIdProperty });
     }
   }
 

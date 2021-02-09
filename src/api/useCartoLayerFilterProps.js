@@ -3,8 +3,11 @@ import useViewportFeatures from './useViewportFeatures';
 import { applyFilter } from './Filter';
 import { debounce } from '../utils/debounce';
 
-export default function useCartoLayerFilterProps(source, uniqueId = 'cartodb_id') {
-  const [onViewportLoad] = useViewportFeatures(source, uniqueId);
+export default function useCartoLayerFilterProps(
+  source,
+  uniqueIdProperty = 'cartodb_id'
+) {
+  const [onViewportLoad] = useViewportFeatures(source, uniqueIdProperty);
 
   return {
     onViewportLoad: debounce(onViewportLoad),
