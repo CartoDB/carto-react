@@ -116,6 +116,71 @@ const LegendIconTemplate = () => {
   return <Legend layers={layers}></Legend>;
 };
 
+const LegendRampTemplate = () => {
+  const layersDiscontinuous = [
+    {
+      id: 0,
+      title: 'Ramp Layer',
+      visibility: true,
+      type: 'ramp',
+      data: {
+        values: [
+          {
+            value: 0,
+            color: '#e1e3e4'
+          },
+          {
+            value: 25,
+            color: '#b4b8ba'
+          },
+          {
+            value: 50,
+            color: '#868d91'
+          },
+          {
+            value: 75,
+            color: '#595f63'
+          }
+        ],
+        min: 0,
+        max: 100,
+        avg: 40
+      }
+    }
+  ];
+
+  const layersContinuous = [
+    {
+      id: 0,
+      title: 'Ramp Layer',
+      visibility: true,
+      type: 'ramp',
+      data: {
+        values: [
+          {
+            value: 100,
+            color: '#e1e3e4'
+          },
+          {
+            value: 300,
+            color: '#595f63'
+          }
+        ],
+        min: 100,
+        max: 500,
+        avg: 475
+      }
+    }
+  ];
+
+  return (
+    <>
+      <Legend layers={layersDiscontinuous}></Legend>
+      <Legend layers={layersContinuous}></Legend>
+    </>
+  );
+};
+
 export const Playground = Template.bind({});
 Playground.args = {};
 
@@ -123,3 +188,4 @@ export const SingleLayer = LegendTemplate.bind({});
 export const MultiLayer = LegendMultiTemplate.bind({});
 export const Categories = LegendCategoriesTemplate.bind({});
 export const Icon = LegendIconTemplate.bind({});
+export const Ramp = LegendRampTemplate.bind({});
