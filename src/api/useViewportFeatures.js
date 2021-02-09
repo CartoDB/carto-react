@@ -1,9 +1,6 @@
-import { useEffect, useCallback, useState, useRef } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setViewportFeatures, setAllWidgetsLoadingState } from '../redux/cartoSlice';
-import bboxPolygon from '@turf/bbox-polygon';
-import booleanContains from '@turf/boolean-contains';
-import intersects from '@turf/boolean-intersects';
 import { debounce } from '../utils/debounce';
 import { viewportFeatures } from './viewportFeatures';
 
