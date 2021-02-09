@@ -8,9 +8,22 @@ import {
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
 import { LayerTypes } from 'src/widgets/LayerTypes';
 
-import { buildPointFeatures } from '../data-mocks/models/pointsForCategories';
-
 import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
+
+const features = (categoryColumn, operationColumn) => [
+  {
+    [categoryColumn]: 'a',
+    [operationColumn]: 1
+  },
+  {
+    [categoryColumn]: 'a',
+    [operationColumn]: 2
+  },
+  {
+    [categoryColumn]: 'b',
+    [operationColumn]: 3
+  }
+];
 
 describe('getCategories', () => {
   test('should throw with array data', async () => {
@@ -63,7 +76,7 @@ describe('getCategories', () => {
     });
 
     describe('should read viewport features when using "viewportFilter": true', () => {
-      const viewportFeatures = buildPointFeatures('storetype', 'revenue');
+      const viewportFeatures = features('storetype', 'revenue');
 
       const buildGetCategoriesParamsFor = (operation) => ({
         operation,
@@ -152,7 +165,7 @@ describe('filterViewportFeaturesToGetCategories', () => {
     operation,
     column: 'storetype',
     operationColumn: 'revenue',
-    viewportFeatures: buildPointFeatures('storetype', 'revenue')
+    viewportFeatures: features('storetype', 'revenue')
   });
 
   test(AggregationTypes.COUNT, () => {
