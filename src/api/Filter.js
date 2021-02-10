@@ -36,7 +36,7 @@ function passesFilter(columns, filters, feature) {
   });
 }
 
-export function applyFilter({ filters = {}, type = 'boolean' }) {
+export function buildFeatureFilter({ filters = {}, type = 'boolean' }) {
   if (!Object.keys(filters).length) {
     return () => (type === 'number' ? 1 : true);
   }

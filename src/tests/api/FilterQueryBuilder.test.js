@@ -1,5 +1,19 @@
 import { getApplicableFilters, filtersToSQL } from 'src/api/FilterQueryBuilder';
-import { filters } from './data-mocks/filters';
+
+const filters = {
+  column1: {
+    in: {
+      owner: 'widgetId1',
+      values: ['a', 'b', 'c']
+    }
+  },
+  column2: {
+    between: {
+      owner: 'widgetId2',
+      values: [[1, 2, 3]]
+    }
+  }
+};
 
 describe('Get applicable filters', () => {
   test('should return an empty object if no filters present', () => {

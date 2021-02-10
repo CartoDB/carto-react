@@ -44,7 +44,7 @@ Get the lists of datasets for the user by performing a request to CARTO datasets
 | opts                          | <code>Object</code> | Additional options for the HTTP request |
 | opts.format                   | <code>string</code> | Output format (i.e. geojson)            |
 
-## applyFilter ⇒ <code>number|boolean</code>
+## buildFeatureFilter ⇒ <code>number|boolean</code>
 
 Returns a number (0-1) or a boolean checking wether a feature should be rendered by widgets and displayed on the map
 

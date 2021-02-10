@@ -1,7 +1,21 @@
-import { applyFilter } from 'src/api';
-import { filters } from './data-mocks/filters';
+import { buildFeatureFilter } from 'src/api/Filter';
 
-const makePossibleFeature = (value) => [
+const filters = {
+  column1: {
+    in: {
+      owner: 'widgetId1',
+      values: ['a', 'b', 'c']
+    }
+  },
+  column2: {
+    between: {
+      owner: 'widgetId2',
+      values: [[1, 2, 3]]
+    }
+  }
+};
+
+const makeFeatureWithValueInColum = (value, column = 'column1') => [
   {
     type: 'Feature',
     geometry: {
@@ -9,42 +23,49 @@ const makePossibleFeature = (value) => [
       coordinates: [0, 0]
     },
     properties: {
-      column1: value
+      [column]: value
     }
   },
   {
-    column1: value
+    [column]: value
   }
 ];
 
 describe('Filters', () => {
   test('should return 1 if no filters present', () => {
     const params = { filters: {}, type: 'number' };
-    expect(applyFilter(params)()).toBe(1);
+    expect(buildFeatureFilter(params)()).toBe(1);
   });
 
   test('should return true if no filters present', () => {
     const params = { filters: {}, type: 'boolean' };
-    expect(applyFilter(params)()).toBe(true);
+    expect(buildFeatureFilter(params)()).toBe(true);
   });
 
   describe('feature passes filter - boolean type', () => {
     const params = { filters, type: 'boolean' };
 
     describe('should return false if feature column value is falsy', () => {
-      const testCases = [0, null, undefined, false, ''];
-      for (const tc of testCases) {
-        test(String(tc), () => {
-          const [featureWithProperties, rawFeature] = makePossibleFeature(tc);
-          const withProps = applyFilter(params)(featureWithProperties);
+      const columnValues = [0, null, undefined, false, ''];
+      for (const tc of columnValues) {
+        test(`${tc} - with geojson feature`, () => {
+          const [geojsonFeature] = makeFeatureWithValueInColum(tc);
+          const withProps = buildFeatureFilter(params)(geojsonFeature);
           expect(withProps).toBe(false);
-          const noProps = applyFilter(params)(rawFeature);
+        });
+      }
+
+      for (const tc of columnValues) {
+        test(`${tc} - with geojson feature properties`, () => {
+          const [_, propertiesObject] = makeFeatureWithValueInColum(tc);
+          const noProps = buildFeatureFilter(params)(propertiesObject);
           expect(noProps).toBe(false);
         });
       }
     });
 
-    test('should throw if filter function is not implemented', () => {
+    describe('should throw if filter function is not implemented', () => {
+      const [geojsonFeature, propertiesObject] = makeFeatureWithValueInColum(1);
       const paramsWithFilterFunctionNotImplemented = {
         filters: {
           ...filters,
@@ -54,8 +75,16 @@ describe('Filters', () => {
         },
         type: 'boolean'
       };
-      const func = applyFilter(paramsWithFilterFunctionNotImplemented);
-      expect(() => func(makePossibleFeature(1)[0])).toThrow('"pow" not implemented');
+
+      test('with geojson feature', () => {
+        const filter = buildFeatureFilter(paramsWithFilterFunctionNotImplemented);
+        expect(() => filter(geojsonFeature)).toThrow('"pow" not implemented');
+      });
+
+      test('with geojson feature properties', () => {
+        const filter = buildFeatureFilter(paramsWithFilterFunctionNotImplemented);
+        expect(() => filter(propertiesObject)).toThrow('"pow" not implemented');
+      });
     });
 
     describe('should return true if feature passes filter', () => {
@@ -65,8 +94,8 @@ describe('Filters', () => {
           column2: 1.5
         }
       };
-      const func = applyFilter(params)(feature);
-      expect(func).toBe(true);
+      const featureIsIncluded = buildFeatureFilter(params)(feature);
+      expect(featureIsIncluded).toBe(true);
     });
 
     describe('should return false if feature not passes filter', () => {
@@ -76,8 +105,8 @@ describe('Filters', () => {
           column2: 3
         }
       };
-      const func = applyFilter(params)(feature);
-      expect(func).toBe(false);
+      const featureIsIncluded = buildFeatureFilter(params)(feature);
+      expect(featureIsIncluded).toBe(false);
     });
   });
 
@@ -85,19 +114,26 @@ describe('Filters', () => {
     const params = { filters, type: 'number' };
 
     describe('should return 0 if feature column value is falsy', () => {
-      const testCases = [0, null, undefined, false, ''];
-      for (const tc of testCases) {
-        test(String(tc), () => {
-          const [featureWithProperties, rawFeature] = makePossibleFeature(tc);
-          const withProps = applyFilter(params)(featureWithProperties);
+      const columnValues = [0, null, undefined, false, ''];
+      for (const tc of columnValues) {
+        test(`${tc} - with geojson feature`, () => {
+          const [geojsonFeature] = makeFeatureWithValueInColum(tc);
+          const withProps = buildFeatureFilter(params)(geojsonFeature);
           expect(withProps).toBe(0);
-          const noProps = applyFilter(params)(rawFeature);
+        });
+      }
+
+      for (const tc of columnValues) {
+        test(`${tc} - with geojson feature properties`, () => {
+          const [, propertiesObject] = makeFeatureWithValueInColum(tc);
+          const noProps = buildFeatureFilter(params)(propertiesObject);
           expect(noProps).toBe(0);
         });
       }
     });
 
-    test('should throw if filter function is not implemented', () => {
+    describe('should throw if filter function is not implemented', () => {
+      const [geojsonFeature, propertiesObject] = makeFeatureWithValueInColum(1);
       const paramsWithFilterFunctionNotImplemented = {
         filters: {
           ...filters,
@@ -107,8 +143,16 @@ describe('Filters', () => {
         },
         type: 'number'
       };
-      const func = applyFilter(paramsWithFilterFunctionNotImplemented);
-      expect(() => func(makePossibleFeature(1)[0])).toThrow('"pow" not implemented');
+
+      test('with geojson feature', () => {
+        const filter = buildFeatureFilter(paramsWithFilterFunctionNotImplemented);
+        expect(() => filter(geojsonFeature)).toThrow('"pow" not implemented');
+      });
+
+      test('with geojson feature properties', () => {
+        const filter = buildFeatureFilter(paramsWithFilterFunctionNotImplemented);
+        expect(() => filter(propertiesObject)).toThrow('"pow" not implemented');
+      });
     });
 
     describe('should return 1 if feature passes filter', () => {
@@ -118,8 +162,8 @@ describe('Filters', () => {
           column2: 1.5
         }
       };
-      const func = applyFilter(params)(feature);
-      expect(func).toBe(1);
+      const featureIsIncluded = buildFeatureFilter(params)(feature);
+      expect(featureIsIncluded).toBe(1);
     });
 
     describe('should return 0 if feature not passes filter', () => {
@@ -129,8 +173,8 @@ describe('Filters', () => {
           column2: 3
         }
       };
-      const func = applyFilter(params)(feature);
-      expect(func).toBe(0);
+      const featureIsIncluded = buildFeatureFilter(params)(feature);
+      expect(featureIsIncluded).toBe(0);
     });
   });
 });

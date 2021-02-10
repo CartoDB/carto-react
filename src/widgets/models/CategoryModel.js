@@ -2,7 +2,7 @@ import { minify } from 'pgsql-minify';
 
 import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
-import { applyFilter } from '../../api/Filter';
+import { buildFeatureFilter } from '../../api/Filter';
 import { groupValuesByColumn } from '../operations/groupby';
 import { LayerTypes } from '../LayerTypes';
 
@@ -101,7 +101,7 @@ export const filterViewportFeaturesToGetCategories = ({
   if (viewportFeatures) {
     const filteredFeatures = !Object.keys(viewportFeatures).length
       ? viewportFeatures
-      : viewportFeatures.filter(applyFilter({ filters }));
+      : viewportFeatures.filter(buildFeatureFilter({ filters }));
 
     const groups = groupValuesByColumn(
       filteredFeatures,
