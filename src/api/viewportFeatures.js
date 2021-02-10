@@ -21,7 +21,7 @@ function prepareViewport(bbox, viewport) {
 }
 
 function getFeatureUniqueId(feature, uniqueIdProperty) {
-  if (uniqueIdProperty) {
+  if (uniqueIdProperty in feature.properties) {
     return feature.properties[uniqueIdProperty];
   }
 
