@@ -9,6 +9,7 @@
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:coverage": "jest --collectCoverage --",
     "format": "npx prettier --write \"**/*.+(js|jsx|json|md)\"",
     "storybook": "start-storybook -c src/ui/.storybook -p 6006",
     "build-storybook": "build-storybook -c src/ui/.storybook",
