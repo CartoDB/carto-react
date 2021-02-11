@@ -1,6 +1,6 @@
 import { randomString } from 'src/utils/randomString';
 
-describe('make closed interval', () => {
+describe('randomString', () => {
   test('should return a string', () => {
     expect(typeof randomString(0) === 'string').toBe(true);
   });
@@ -9,7 +9,7 @@ describe('make closed interval', () => {
     expect(randomString(0)).toBe('');
   });
 
-  test('should return a string of length 100', () => {
+  test('should return a string of required length', () => {
     expect(randomString(100).length).toBe(100);
   });
 });
