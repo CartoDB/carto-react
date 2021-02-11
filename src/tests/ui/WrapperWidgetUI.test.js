@@ -1,5 +1,10 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import {
+  render,
+  fireEvent,
+  screen,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import { WrapperWidgetUI, FormulaWidgetUI } from 'src/ui';
 
 describe('WrapperWidgetUI', () => {
@@ -26,25 +31,21 @@ describe('WrapperWidgetUI', () => {
         expect(screen.getByText(FORMULA_DATA)).toBeInTheDocument();
       });
 
-      test('should close', () => {
+      test('should close', async () => {
         render(<WrappedWithFormulaWidget />);
         fireEvent.click(screen.getByText(TITLE));
         // Because animation timeout (prop) is set to 'auto' in WrapperWidgetUI => Collapse component
         // According to Material-UI, 'auto' timeout is equal to 300ms https://github.com/mui-org/material-ui/blob/5aba9087c28736579153e99c09d4895951ca0c33/packages/material-ui/src/styles/transitions.js#L22
-        setTimeout(() => {
-          expect(screen.getByText(FORMULA_DATA)).not.toBeInTheDocument();
-        }, 350);
+        await waitForElementToBeRemoved(() => screen.queryByText(FORMULA_DATA));
       });
 
-      test('should open', () => {
+      test('should open', async () => {
         render(<WrappedWithFormulaWidget />);
 
         fireEvent.click(screen.getByText(TITLE));
         fireEvent.click(screen.getByText(TITLE));
 
-        setTimeout(() => {
-          expect(screen.getByText(FORMULA_DATA)).not.toBeInTheDocument();
-        }, 350);
+        expect(await screen.findByText(FORMULA_DATA)).toBeInTheDocument();
       });
     });
 
