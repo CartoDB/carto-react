@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  render,
-  fireEvent,
-  screen,
-  findAllByText,
-  getAllByText
-} from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { WrapperWidgetUI, FormulaWidgetUI } from 'src/ui';
 
 describe('WrapperWidgetUI', () => {
