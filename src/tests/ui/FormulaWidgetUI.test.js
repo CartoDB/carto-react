@@ -6,30 +6,30 @@ import { currencyFormatter } from './utils';
 describe('FormulaWidgetUI', () => {
   test('empty', () => {
     render(<FormulaWidgetUI />);
-    expect(screen.getByText(/\-/)).toBeInTheDocument();
+    expect(screen.getByText(/-/)).toBeInTheDocument();
   });
 
   test('simple - data as string', () => {
-    const data = '1234';
-    render(<FormulaWidgetUI data={data} />);
-    expect(screen.getByText(data)).toBeInTheDocument();
+    const DATA = '1234';
+    render(<FormulaWidgetUI data={DATA} />);
+    expect(screen.getByText(DATA)).toBeInTheDocument();
   });
 
   test('simple - data as number', async () => {
-    const data = 1234;
-    render(<FormulaWidgetUI data={data} />);
-    expect(await screen.findByText(data)).toBeInTheDocument();
+    const DATA = 1234;
+    render(<FormulaWidgetUI data={DATA} />);
+    expect(await screen.findByText(DATA)).toBeInTheDocument();
   });
 
   test('simple - data as object', async () => {
-    const data = { value: 1234 };
-    render(<FormulaWidgetUI data={data} />);
-    expect(await screen.findByText(data.value)).toBeInTheDocument();
+    const DATA = { value: 1234 };
+    render(<FormulaWidgetUI data={DATA} />);
+    expect(await screen.findByText(DATA.value)).toBeInTheDocument();
   });
 
   test('with currency formatter', () => {
-    const data = '1234';
-    render(<FormulaWidgetUI data={data} formatter={currencyFormatter} />);
+    const DATA = '1234';
+    render(<FormulaWidgetUI data={DATA} formatter={currencyFormatter} />);
     expect(screen.getByText(/\$/)).toBeInTheDocument();
     expect(screen.getByText(/1\.23K/)).toBeInTheDocument();
   });
