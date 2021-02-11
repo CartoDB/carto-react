@@ -2,7 +2,7 @@ import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Grid, TextField } from '@material-ui/core';
 
-export default {
+const options = {
   title: 'Common/Autocomplete',
   component: Autocomplete,
   argTypes: {
@@ -30,6 +30,7 @@ export default {
     }
   }
 };
+export default options;
 
 const top100Films = [
   { title: 'The Shawshank Redemption', year: 1994 },

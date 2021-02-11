@@ -14,6 +14,8 @@ import {
 } from '@material-ui/core';
 import { Alert, AlertTitle, Skeleton } from '@material-ui/lab';
 
+import { animateValues } from '../utils/animations';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     ...theme.typography.body2
@@ -142,7 +144,9 @@ function CategoryWidgetUI(props) {
   const [blockedCategories, setBlockedCategories] = useState([]);
   const [tempBlockedCategories, setTempBlockedCategories] = useState(false);
   const [animValues, setAnimValues] = useState([]);
+  const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
+  const referencedPrevAnimValues = useRef(prevAnimValues);
   const classes = useStyles();
 
   // Get blockedCategories in the same order as original data
@@ -152,14 +156,14 @@ function CategoryWidgetUI(props) {
       return acum;
     }, []);
 
-  const handleCategorySelected = (category) => {
-    if (category !== REST_CATEGORY) {
+  const handleCategorySelected = (name) => {
+    if (name !== REST_CATEGORY) {
       let categories;
 
-      if (selectedCategories.indexOf(category) < 0) {
-        categories = [...selectedCategories, category];
+      if (selectedCategories.indexOf(name) < 0) {
+        categories = [...selectedCategories, name];
       } else {
-        categories = selectedCategories.filter((c) => c !== category);
+        categories = selectedCategories.filter((c) => c !== name);
       }
 
       if (props.onSelectedCategoriesChange) {
@@ -196,14 +200,14 @@ function CategoryWidgetUI(props) {
     setShowAll(false);
   };
 
-  const handleCategoryBlocked = (category) => {
-    if (category !== REST_CATEGORY) {
+  const handleCategoryBlocked = (name) => {
+    if (name !== REST_CATEGORY) {
       let categories;
 
-      if (tempBlockedCategories.indexOf(category) < 0) {
-        categories = [...tempBlockedCategories, category];
+      if (tempBlockedCategories.indexOf(name) < 0) {
+        categories = [...tempBlockedCategories, name];
       } else {
-        categories = tempBlockedCategories.filter((c) => c !== category);
+        categories = tempBlockedCategories.filter((c) => c !== name);
       }
 
       setTempBlockedCategories(categories);
@@ -244,10 +248,10 @@ function CategoryWidgetUI(props) {
 
           // Showing only blocked categories
         } else {
-          const main = blockedCategories.reduce((acum, category) => {
-            const categoryElem = list.find((elem) => elem.name === category);
+          const main = blockedCategories.reduce((acum, name) => {
+            const categoryElem = list.find((elem) => elem.name === name);
             acum.push({
-              name: category,
+              name,
               value: categoryElem ? categoryElem.value : null
             });
             return acum;
@@ -262,8 +266,9 @@ function CategoryWidgetUI(props) {
               return (
                 elem.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
                 (labels[elem.name]
-                  ? labels[elem.name].toLowerCase().indexOf(searchValue.toLowerCase()) !==
-                    -1
+                  ? labels[elem.name]
+                      .toLowerCase()
+                      .indexOf(searchValue.toLowerCase()) !== -1
                   : false)
               );
             })
@@ -274,11 +279,11 @@ function CategoryWidgetUI(props) {
   );
 
   const getCategoryLabel = useCallback(
-    (category) => {
-      if (category === REST_CATEGORY) {
+    (name) => {
+      if (name === REST_CATEGORY) {
         return 'Others';
       } else {
-        return labels[category] || category;
+        return labels[name] || name;
       }
     },
     [labels]
@@ -328,44 +333,21 @@ function CategoryWidgetUI(props) {
   ]);
 
   useEffect(() => {
-    animateValues(prevAnimValues || [], sortedData, 500, (val) => setAnimValues(val));
-  }, [sortedData, prevAnimValues]);
+    animateValues({
+      start: referencedPrevAnimValues.current || [],
+      end: sortedData,
+      duration: 500,
+      drawFrame: (val) => setAnimValues(val),
+      requestRef
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => cancelAnimationFrame(requestRef.current);
+  }, [sortedData]);
 
-  const animateValues = (start, end, duration, drawFrame) => {
-    const isEqual =
-      start.length === end.length && start.every((val, i) => val.value === end[i].value);
-    if (isEqual) return;
-
-    let currentValues = end.map((elem, i) =>
-      start[i] && start[i].name === elem.name ? { ...elem, value: start[i].value } : elem
-    );
-    let currentFrame = 0;
-
-    const ranges = currentValues.map((elem, i) => end[i].value - elem.value);
-    const noChanges = ranges.every((val) => val === 0);
-    if (noChanges) {
-      drawFrame(end);
-      return;
-    }
-
-    const frames = (duration / 1000) * 60;
-    const steps = ranges.map((val) => val / frames);
-
-    const animate = () => {
-      if (currentFrame < frames) {
-        currentValues = currentValues.map((elem, i) => ({
-          ...elem,
-          value: elem.value + steps[i]
-        }));
-        drawFrame(currentValues);
-        currentFrame++;
-        requestAnimationFrame(animate);
-      } else {
-        drawFrame(end);
-      }
-    };
-    requestAnimationFrame(animate);
-  };
+  const getCategoriesCount = useCallback(() => {
+    const blocked = blockedCategories.length;
+    return blocked ? data.length - blocked : data.length - maxItems;
+  }, [data, maxItems, blockedCategories]);
 
   // Separated to simplify the widget layout but inside the main component to avoid passing all dependencies
   const CategoryItem = (props) => {
@@ -551,7 +533,7 @@ function CategoryWidgetUI(props) {
                 startIcon={<SearchIcon />}
                 onClick={handleShowAllCategoriesClicked}
               >
-                Search in {data.length - maxItems} elements
+                Search in {getCategoriesCount()} elements
               </Button>
             )
           ) : null}

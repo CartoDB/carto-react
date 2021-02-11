@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { Visibility } from '@material-ui/icons';
 
-export default {
+const options = {
   title: 'Common/Select',
   component: Select,
   argTypes: {
@@ -45,6 +45,7 @@ export default {
     }
   }
 };
+export default options;
 
 const Template = ({ label = 'Age', required, size, ...args }) => (
   <FormControl size={size} required={required}>

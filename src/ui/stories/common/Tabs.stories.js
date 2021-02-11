@@ -2,7 +2,7 @@ import React from 'react';
 import { Tab, Tabs } from '@material-ui/core';
 import { Layers, LocalOffer, Map, Place, Store } from '@material-ui/icons';
 
-export default {
+const options = {
   title: 'Common/Tabs',
   component: Tabs,
   argTypes: {
@@ -27,6 +27,7 @@ export default {
     }
   }
 };
+export default options;
 
 const Template = ({ ...args }) => {
   const [value, setValue] = React.useState(0);

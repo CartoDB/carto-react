@@ -208,6 +208,7 @@ function HistogramWidgetUI(props) {
     dataAxis,
     name,
     theme,
+    tooltip,
     tooltipFormatter,
     xAxisFormatter,
     yAxisFormatter,

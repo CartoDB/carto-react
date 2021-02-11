@@ -7,15 +7,15 @@ export function histogram(features, columnName, ticks, operation) {
 
   ticks = [Number.MIN_SAFE_INTEGER, ...ticks, Number.MAX_SAFE_INTEGER];
 
-  const binsContainer = ticks.map((tick, currentIndex, arr) => ({
-    bin: currentIndex,
+  const binsContainer = ticks.map((tick, idx, arr) => ({
+    bin: idx,
     start: tick,
-    end: arr[currentIndex + 1],
+    end: arr[idx + 1],
     values: []
   }));
 
   features.forEach((feature) => {
-    const featureValue = feature.properties[columnName];
+    const featureValue = feature[columnName];
 
     if (!featureValue) {
       return;
@@ -32,12 +32,11 @@ export function histogram(features, columnName, ticks, operation) {
     binContainer.values.push(featureValue);
   });
 
-  const transformedBins = binsContainer.map((binContainer) => binContainer.values);
-
   const targetOperation = aggregationFunctions[operation];
 
   if (targetOperation) {
-    return transformedBins.map((val) => targetOperation(val));
+    const transformedBins = binsContainer.map((binContainer) => binContainer.values);
+    return transformedBins.map((values) => (values.length ? targetOperation(values) : 0));
   }
 
   return [];

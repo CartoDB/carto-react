@@ -2,9 +2,8 @@ import { minify } from 'pgsql-minify';
 
 import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
-import { applyFilter } from '../../api/Filter';
+import { buildFeatureFilter } from '../../api/Filter';
 import { aggregationFunctions } from '../operations/aggregation/values';
-import { pickValuesFromFeatures } from '../../utils/pickValuesFromFeatures';
 import { LayerTypes } from '../LayerTypes';
 
 export const getFormula = async (props) => {
@@ -69,10 +68,12 @@ export const filterViewportFeaturesToGetFormula = ({
 }) => {
   if (viewportFeatures) {
     const targetOperation = aggregationFunctions[operation];
-    const filteredFeatures = viewportFeatures.filter(applyFilter({ filters }));
-    const featureValues = pickValuesFromFeatures(filteredFeatures, column);
 
-    return [{ value: targetOperation(featureValues) }];
+    const filteredFeatures = !Object.keys(viewportFeatures).length
+      ? viewportFeatures
+      : viewportFeatures.filter(buildFeatureFilter({ filters }));
+
+    return [{ value: targetOperation(filteredFeatures, column) }];
   }
 
   return [{ value: null }];

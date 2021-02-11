@@ -2,10 +2,25 @@
 
 ## Not released
 
+- Improve widgets performance in client-side calculations [#88](https://github.com/CartoDB/carto-react-lib/pull/88)
+- Add new PieWidget component [#36](https://github.com/CartoDB/carto-react-lib/pull/36)
+- Change 'category' in input data for CategoryWidget for a more generic 'name' parameter [#36](https://github.com/CartoDB/carto-react-lib/pull/36)
+
+## 1.0.0-beta14 (2021-02-08)
+
+- Fix an issue on histogram's operations when processing a not finite value [#79](https://github.com/CartoDB/carto-react-lib/pull/79)
+- Add sourcemaps and production mode in webpack bundles [#83](https://github.com/CartoDB/carto-react-lib/pull/83)
+- Fix number of categories counter when some are locked on Category Widget [#81](https://github.com/CartoDB/carto-react-lib/pull/81)
+- Fix luma mismatch caused by the use of '@deck.gl/extensions' [#86](https://github.com/CartoDB/carto-react-lib/pull/86)
+
+## 1.0.0-beta13 (2021-02-02)
+
 - Remove getUserDatasets method from api [#68](https://github.com/CartoDB/carto-react-lib/pull/68)
 - Fix hover color in secondary buttons [#65](https://github.com/CartoDB/carto-react-lib/pull/65)
 - Fix widgets loading state when calculating client-side [#75](https://github.com/CartoDB/carto-react-lib/pull/75)
 - Fix min/max aggregated functions [#76](https://github.com/CartoDB/carto-react-lib/pull/76)
+- Fix eventual memory leaks on requestAnimationFrame, on Category and Formula widgets [#77](https://github.com/CartoDB/carto-react-lib/pull/77)
+- Update deck.gl version to 8.4 [#78](https://github.com/CartoDB/carto-react-lib/pull/78)
 
 ## 1.0.0-beta12 (2021-01-22)
 
@@ -43,7 +58,6 @@
 ## 1.0.0-beta6 (2020-11-27)
 
 - Added meta value version to List component [#31](https://github.com/CartoDB/carto-react-lib/pull/31)
-- Created Pie chart component [#36](https://github.com/CartoDB/carto-react-lib/pull/36)
 - Fix CategoryWidgetUI displaying no data while loading [#26](https://github.com/CartoDB/carto-react-lib/pull/26)
 - Animate CategoryWidget values [#30](https://github.com/CartoDB/carto-react-lib/pull/30)
 - Make OAuthLogin component responsive [#28](https://github.com/CartoDB/carto-react-lib/pull/28)

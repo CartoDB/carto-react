@@ -1,7 +1,7 @@
 import React from 'react';
 import CategoryWidgetUI from '../../widgets/CategoryWidgetUI';
 
-export default {
+const options = {
   title: 'Widgets/CategoryWidgetUI',
   component: CategoryWidgetUI,
   argTypes: {
@@ -20,23 +20,24 @@ export default {
     }
   }
 };
+export default options;
 
 const Template = (args) => <CategoryWidgetUI {...args}></CategoryWidgetUI>;
 const data = [
-  { category: 'categoryA', value: 100 },
-  { category: 'categoryB', value: 120 },
-  { category: 'categoryC', value: 150 },
-  { category: 'categoryD', value: 90 },
-  { category: 'categoryE', value: 200 },
-  { category: 'categoryF', value: 20 },
-  { category: 'categoryG', value: 90 }
+  { name: 'categoryA', value: 100 },
+  { name: 'categoryB', value: 120 },
+  { name: 'categoryC', value: 150 },
+  { name: 'categoryD', value: 90 },
+  { name: 'categoryE', value: 200 },
+  { name: 'categoryF', value: 20 },
+  { name: 'categoryG', value: 90 }
 ];
 
 const dataFiltered = [
-  { category: 'categoryA', value: null },
-  { category: 'categoryB', value: 120 },
-  { category: 'categoryC', value: 100 },
-  { category: 'categoryD', value: null }
+  { name: 'categoryA', value: null },
+  { name: 'categoryB', value: 120 },
+  { name: 'categoryC', value: 100 },
+  { name: 'categoryD', value: null }
 ];
 
 export const Default = Template.bind({});

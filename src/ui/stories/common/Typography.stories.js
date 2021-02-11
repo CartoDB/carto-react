@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 
-export default {
+const options = {
   title: 'Getting Started/Typography',
   component: Typography,
   argTypes: {
@@ -27,6 +27,7 @@ export default {
     }
   }
 };
+export default options;
 
 const Template = (args) => <Typography {...args}>{args.text}</Typography>;
 const disabledControlsArgTypes = {

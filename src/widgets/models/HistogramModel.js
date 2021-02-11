@@ -2,7 +2,7 @@ import { minify } from 'pgsql-minify';
 
 import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
-import { applyFilter } from '../../api/Filter';
+import { buildFeatureFilter } from '../../api/Filter';
 import { histogram } from '../operations/histogram';
 import { LayerTypes } from '../LayerTypes';
 
@@ -106,7 +106,9 @@ export const filterViewportFeaturesToGetHistogram = ({
   ticks
 }) => {
   if (viewportFeatures) {
-    const filteredFeatures = viewportFeatures.filter(applyFilter({ filters }));
+    const filteredFeatures = !Object.keys(viewportFeatures).length
+      ? viewportFeatures
+      : viewportFeatures.filter(buildFeatureFilter({ filters }));
 
     const result = histogram(filteredFeatures, column, ticks, operation);
     return result;

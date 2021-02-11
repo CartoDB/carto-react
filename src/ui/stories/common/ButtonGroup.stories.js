@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Grid, ButtonGroup } from '@material-ui/core';
 
-export default {
+const options = {
   title: 'Common/Button Group',
   component: ButtonGroup,
   argTypes: {
@@ -41,6 +41,7 @@ export default {
     }
   }
 };
+export default options;
 
 const PlaygroundTemplate = ({ label, icon, ...rest }) => (
   <Grid container spacing={2}>

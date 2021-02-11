@@ -2,7 +2,7 @@ import { minify } from 'pgsql-minify';
 
 import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
-import { applyFilter } from '../../api/Filter';
+import { buildFeatureFilter } from '../../api/Filter';
 import { groupValuesByColumn } from '../operations/groupby';
 import { LayerTypes } from '../LayerTypes';
 
@@ -63,7 +63,7 @@ export const buildSqlQueryToGetCategories = ({
   operation,
   operationColumn,
   filters,
-  alias
+  alias = 'name'
 }) => {
   const query = `
     WITH all_categories as (
@@ -102,7 +102,9 @@ export const filterViewportFeaturesToGetCategories = ({
   operationColumn
 }) => {
   if (viewportFeatures) {
-    const filteredFeatures = viewportFeatures.filter(applyFilter({ filters }));
+    const filteredFeatures = !Object.keys(viewportFeatures).length
+      ? viewportFeatures
+      : viewportFeatures.filter(buildFeatureFilter({ filters }));
 
     const groups = groupValuesByColumn(
       filteredFeatures,
