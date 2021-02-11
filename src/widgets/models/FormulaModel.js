@@ -2,7 +2,7 @@ import { minify } from 'pgsql-minify';
 
 import { executeSQL } from '../../api';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
-import { applyFilter } from '../../api/Filter';
+import { buildFeatureFilter } from '../../api/Filter';
 import { aggregationFunctions } from '../operations/aggregation/values';
 import { LayerTypes } from '../LayerTypes';
 
@@ -71,7 +71,7 @@ export const filterViewportFeaturesToGetFormula = ({
 
     const filteredFeatures = !Object.keys(viewportFeatures).length
       ? viewportFeatures
-      : viewportFeatures.filter(applyFilter({ filters }));
+      : viewportFeatures.filter(buildFeatureFilter({ filters }));
 
     return [{ value: targetOperation(filteredFeatures, column) }];
   }

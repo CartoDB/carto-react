@@ -3,7 +3,7 @@ import { REQUEST_GET_MAX_URL_LENGTH } from '../utils';
 
 import { dealWithApiError, generateApiUrl } from './common';
 
-const API = 'api/v2/sql';
+export const API = 'api/v2/sql';
 
 /**
  * Executes a SQL query

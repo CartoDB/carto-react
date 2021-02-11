@@ -8,7 +8,7 @@ import {
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
 import { LayerTypes } from 'src/widgets/LayerTypes';
 
-import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
+import { mockSqlApiRequest, mockClear } from '../../utils/mockSqlApiRequest';
 
 const features = (operationColumn) => [
   {

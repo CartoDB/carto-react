@@ -1,6 +1,6 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
 import useViewportFeatures from './useViewportFeatures';
-import { applyFilter } from './Filter';
+import { buildFeatureFilter } from './Filter';
 import { debounce } from '../utils/debounce';
 
 export default function useCartoLayerFilterProps(
@@ -11,7 +11,7 @@ export default function useCartoLayerFilterProps(
 
   return {
     onViewportLoad: debounce(onViewportLoad),
-    getFilterValue: applyFilter({ filters: source?.filters, type: 'number' }),
+    getFilterValue: buildFeatureFilter({ filters: source?.filters, type: 'number' }),
     filterRange: [1, 1],
     extensions: [new DataFilterExtension({ filterSize: 1 })],
     updateTriggers: {
