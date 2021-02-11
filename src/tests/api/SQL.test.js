@@ -52,14 +52,14 @@ describe('should call SqlApi', () => {
     test('should throw due status response 401', async () => {
       mockSqlApiRequest({ response, status: 401, responseIsOk: false, sql, credentials });
       await expect(executeSQL(credentials, sql)).rejects.toThrow(
-        `Unauthorized access to API ${API}: invalid combination of user ('${credentials.username}') and apiKey ('${credentials.apiKey}')`
+        `Unauthorized access to ${API} API: invalid combination of user ('${credentials.username}') and apiKey ('${credentials.apiKey}')`
       );
     });
 
     test('should throw due status response 403', async () => {
       mockSqlApiRequest({ response, status: 403, responseIsOk: false, sql, credentials });
       await expect(executeSQL(credentials, sql)).rejects.toThrow(
-        `Unauthorized access to API ${API}: the provided apiKey('${credentials.apiKey}') doesn't provide access to the requested data`
+        `Unauthorized access to ${API} API: the provided apiKey('${credentials.apiKey}') doesn't provide access to the requested data`
       );
     });
 

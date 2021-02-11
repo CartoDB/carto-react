@@ -18,7 +18,7 @@ describe('useCartoLayerFilterProps', () => {
     ]);
   });
 
-  describe('should has correct filter configurations', () => {
+  describe('should have correct filter configurations', () => {
     it('onViewporLoad should be a function', () => {
       expect(result.current.onViewportLoad).toBeInstanceOf(Function);
     });
@@ -41,7 +41,7 @@ describe('useCartoLayerFilterProps', () => {
     });
 
     it('getFilterValue trigger should be present', () => {
-      expect(result.current.updateTriggers.hasOwnProperty('getFilterValue')).toBe(true);
+      expect(result.current.updateTriggers).toHaveProperty('getFilterValue');
     });
   });
 
