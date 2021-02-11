@@ -1,7 +1,7 @@
 import { makeClosedInterval } from 'src/utils/makeClosedInterval';
 
 describe('make closed interval', () => {
-  test('last value isundefined', () => {
+  test('last value is undefined', () => {
     const DATA = [[undefined, 1]];
     expect(makeClosedInterval(DATA)).toEqual([[Number.MIN_SAFE_INTEGER, 1]]);
   });
