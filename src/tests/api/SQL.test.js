@@ -1,6 +1,6 @@
 import { executeSQL } from 'src/api';
 import { API } from 'src/api/SQL';
-import { mockSqlApiRequest, mockClear } from '../utils/mockSqlApiRequest';
+import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
 import { REQUEST_GET_MAX_URL_LENGTH } from '../../utils/requestsUtils';
 
 describe('should call SqlApi', () => {
