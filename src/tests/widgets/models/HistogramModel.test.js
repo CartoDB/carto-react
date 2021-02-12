@@ -31,7 +31,7 @@ describe('getHistogram', () => {
 
   test('should throw if using CartoBQTilerLayer without viewportFilter', async () => {
     await expect(
-      getHistogram({ type: LayerTypes.BQ, viewportFilter: false })
+      getHistogram({ type: LayerTypes.BIGQUERY, viewportFilter: false })
     ).rejects.toThrow(
       'Histogram Widget error: BigQuery layer needs "viewportFilter" prop set to true.'
     );

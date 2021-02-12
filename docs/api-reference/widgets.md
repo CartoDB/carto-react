@@ -98,7 +98,7 @@ Enum for the different types of @deck.gl/carto layers
 <dt><a href="#SQL">SQL</a></dt>
 <dd><p>sql</p>
 </dd>
-<dt><a href="#BQ">BQ</a></dt>
-<dd><p>bq</p>
+<dt><a href="#BIGQUERY">BIGQUERY</a></dt>
+<dd><p>bigquery</p>
 </dd>
 </dl>

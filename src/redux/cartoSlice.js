@@ -164,7 +164,7 @@ export const createCartoSlice = (initialState) => {
  *
  * @param {string} id - unique id for the source
  * @param {string} data - data definition for the source. Query for SQL dataset or the name of the tileset for BigQuery Tileset
- * @param {string} type - type of source. Posible values are sql or bq
+ * @param {string} type - type of source. Posible values are sql or bigquery
  * @param {Object} credentials - (optional) Custom credentials to be used in the source
  */
 export const addSource = ({ id, data, type, credentials }) => ({

@@ -23,7 +23,7 @@ export const getCategories = async (props) => {
     throw new Error('Array is not a valid type to get categories');
   }
 
-  if (type === LayerTypes.BQ && !viewportFilter) {
+  if (type === LayerTypes.BIGQUERY && !viewportFilter) {
     throw new Error(
       'Category Widget error: BigQuery layers need "viewportFilter" prop set to true.'
     );

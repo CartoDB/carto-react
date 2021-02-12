@@ -31,7 +31,7 @@ describe('getFormula', () => {
 
   test('should throw if using CartoBQTilerLayer without viewportFilter', async () => {
     await expect(
-      getFormula({ type: LayerTypes.BQ, viewportFilter: false })
+      getFormula({ type: LayerTypes.BIGQUERY, viewportFilter: false })
     ).rejects.toThrow(
       'Formula Widget error: BigQuery layers need "viewportFilter" prop set to true.'
     );

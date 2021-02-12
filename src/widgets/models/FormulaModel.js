@@ -23,7 +23,7 @@ export const getFormula = async (props) => {
     throw new Error('Array is not a valid type to get formula');
   }
 
-  if (type === LayerTypes.BQ && !viewportFilter) {
+  if (type === LayerTypes.BIGQUERY && !viewportFilter) {
     throw new Error(
       'Formula Widget error: BigQuery layers need "viewportFilter" prop set to true.'
     );

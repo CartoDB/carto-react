@@ -34,7 +34,7 @@ describe('getCategories', () => {
 
   test('should throw if using CartoBQTilerLayer without viewportFilter', async () => {
     await expect(
-      getCategories({ type: LayerTypes.BQ, viewportFilter: false })
+      getCategories({ type: LayerTypes.BIGQUERY, viewportFilter: false })
     ).rejects.toThrow(
       'Category Widget error: BigQuery layers need "viewportFilter" prop set to true.'
     );

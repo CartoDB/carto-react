@@ -8,5 +8,5 @@ export const LayerTypes = Object.freeze({
   SQL: 'sql',
 
   /** CartoBQTilerLayer */
-  BQ: 'bq'
+  BIGQUERY: 'bigquery'
 });
