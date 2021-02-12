@@ -87,9 +87,9 @@ Enum for the different types of aggregations available for widgets
 </dd>
 </dl>
 
-## LayerTypes
+## SourceTypes
 
-Enum for the different types of @deck.gl/carto layers
+Enum for the different types of @deck.gl/carto sources
 
 **Kind**: global enum  
 **Read only**: true

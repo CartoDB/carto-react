@@ -1,10 +1,9 @@
 import { minify } from 'pgsql-minify';
-
 import { executeSQL } from '../../api';
-import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import { buildFeatureFilter } from '../../api/Filter';
+import { filtersToSQL } from '../../api/FilterQueryBuilder';
+import { SourceTypes } from '../../api/SourceTypes';
 import { aggregationFunctions } from '../operations/aggregation/values';
-import { LayerTypes } from '../LayerTypes';
 
 export const getFormula = async (props) => {
   const {
@@ -23,7 +22,7 @@ export const getFormula = async (props) => {
     throw new Error('Array is not a valid type to get formula');
   }
 
-  if (type === LayerTypes.BIGQUERY && !viewportFilter) {
+  if (type === SourceTypes.BIGQUERY && !viewportFilter) {
     throw new Error(
       'Formula Widget error: BigQuery layers need "viewportFilter" prop set to true.'
     );
