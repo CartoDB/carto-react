@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { CategoryWidgetUI } from 'src/ui';
 import { currencyFormatter } from './utils';
 
@@ -17,6 +18,12 @@ describe('CategoryWidgetUI', () => {
 
     expect(screen.getByText(NO_DATA_TEXT)).toBeInTheDocument();
     expect(screen.getByText(NO_RESULT_TEXT)).toBeInTheDocument();
+  });
+
+  test('item skeleton should display', () => {
+    const { container } = render(<CategoryWidgetUI data={[]} isLoading={true} />);
+
+    expect(container.querySelector('.MuiSkeleton-root')).toBeInTheDocument();
   });
 
   test('simple', () => {
@@ -37,6 +44,22 @@ describe('CategoryWidgetUI', () => {
     render(<CategoryWidgetUI data={DATA} selectedCategories={['Category 1']} />);
 
     expect(screen.getByText(/1 selected/)).toBeInTheDocument();
+  });
+
+  describe('order', () => {
+    test('ranking', () => {
+      render(<CategoryWidgetUI data={DATA} />);
+
+      const renderedCategories = screen.getAllByText(/Category/);
+      expect(renderedCategories[0].textContent).toBe('Category 5');
+    });
+
+    test('fixed', () => {
+      render(<CategoryWidgetUI data={DATA} order='fixed' />);
+
+      const renderedCategories = screen.getAllByText(/Category/);
+      expect(renderedCategories[0].textContent).toBe('Category 1');
+    });
   });
 
   describe('events', () => {
@@ -113,6 +136,23 @@ describe('CategoryWidgetUI', () => {
       fireEvent.click(screen.getByText(/Apply/));
       fireEvent.click(screen.getByText(/Unlock/));
       expect(mockOnSelectedCategoriesChange).toHaveBeenCalledTimes(2);
+    });
+
+    test('search category', () => {
+      HTMLElement.prototype.scrollIntoView = jest.fn();
+      const mockOnSelectedCategoriesChange = jest.fn();
+      render(
+        <CategoryWidgetUI
+          data={DATA}
+          maxItems={1}
+          onSelectedCategoriesChange={mockOnSelectedCategoriesChange}
+        />
+      );
+
+      fireEvent.click(screen.getByText(/Search in 4 elements/));
+      userEvent.type(screen.getByRole('textbox'), 'Category 1');
+      fireEvent.click(screen.getByText(/Category 1/));
+      fireEvent.click(screen.getByText(/Apply/));
     });
 
     test('cancel search', () => {
