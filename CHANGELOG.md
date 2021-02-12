@@ -3,6 +3,7 @@
 ## Not released
 
 - Improve performance widget client side calculations [#88](https://github.com/CartoDB/carto-react-lib/pull/88)
+- Refactor BigQuery source type name [#97](https://github.com/CartoDB/carto-react-lib/pull/97)
 
 ## 1.0.0-beta14 (2021-02-08)
 
