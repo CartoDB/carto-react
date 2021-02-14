@@ -87,9 +87,9 @@ Enum for the different types of aggregations available for widgets
 </dd>
 </dl>
 
-## LayerTypes
+## SourceTypes
 
-Enum for the different types of @deck.gl/carto layers
+Enum for the different types of @deck.gl/carto sources
 
 **Kind**: global enum  
 **Read only**: true
@@ -98,7 +98,7 @@ Enum for the different types of @deck.gl/carto layers
 <dt><a href="#SQL">SQL</a></dt>
 <dd><p>sql</p>
 </dd>
-<dt><a href="#BQ">BQ</a></dt>
-<dd><p>bq</p>
+<dt><a href="#BIGQUERY">BIGQUERY</a></dt>
+<dd><p>bigquery</p>
 </dd>
 </dl>

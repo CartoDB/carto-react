@@ -3,3 +3,4 @@ export { executeSQL } from './SQL';
   buildQueryFilters,
 } from './FilterQueryBuilder'; */
 export { default as useCartoLayerFilterProps } from './useCartoLayerFilterProps';
+export { SourceTypes } from './SourceTypes';

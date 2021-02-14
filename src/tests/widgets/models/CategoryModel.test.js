@@ -6,7 +6,7 @@ import {
   filterViewportFeaturesToGetCategories
 } from 'src/widgets/models/CategoryModel';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
-import { LayerTypes } from 'src/widgets/LayerTypes';
+import { SourceTypes } from 'src/api';
 
 import { mockSqlApiRequest, mockClear } from '../../mockSqlApiRequest';
 
@@ -34,7 +34,7 @@ describe('getCategories', () => {
 
   test('should throw if using CartoBQTilerLayer without viewportFilter', async () => {
     await expect(
-      getCategories({ type: LayerTypes.BQ, viewportFilter: false })
+      getCategories({ type: SourceTypes.BIGQUERY, viewportFilter: false })
     ).rejects.toThrow(
       'Category Widget error: BigQuery layers need "viewportFilter" prop set to true.'
     );
@@ -67,7 +67,7 @@ describe('getCategories', () => {
           credentials,
           operation: AggregationTypes.COUNT,
           column: 'revenue',
-          type: LayerTypes.SQL,
+          type: SourceTypes.SQL,
           viewportFilter: false
         };
         const categories = await getCategories(params);
@@ -82,7 +82,7 @@ describe('getCategories', () => {
         operation,
         column: 'storetype',
         operationColumn: 'revenue',
-        type: LayerTypes.SQL,
+        type: SourceTypes.SQL,
         viewportFilter: true,
         viewportFeatures
       });
