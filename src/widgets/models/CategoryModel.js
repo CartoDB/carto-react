@@ -1,10 +1,9 @@
 import { minify } from 'pgsql-minify';
-
 import { executeSQL } from '../../api';
+import { buildFeatureFilter } from '../../api/Filter';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
-import { applyFilter } from '../../api/Filter';
+import { SourceTypes } from '../../api/SourceTypes';
 import { groupValuesByColumn } from '../operations/groupby';
-import { LayerTypes } from '../LayerTypes';
 
 export const getCategories = async (props) => {
   const {
@@ -23,7 +22,7 @@ export const getCategories = async (props) => {
     throw new Error('Array is not a valid type to get categories');
   }
 
-  if (type === LayerTypes.BQ && !viewportFilter) {
+  if (type === SourceTypes.BIGQUERY && !viewportFilter) {
     throw new Error(
       'Category Widget error: BigQuery layers need "viewportFilter" prop set to true.'
     );
@@ -101,7 +100,7 @@ export const filterViewportFeaturesToGetCategories = ({
   if (viewportFeatures) {
     const filteredFeatures = !Object.keys(viewportFeatures).length
       ? viewportFeatures
-      : viewportFeatures.filter(applyFilter({ filters }));
+      : viewportFeatures.filter(buildFeatureFilter({ filters }));
 
     const groups = groupValuesByColumn(
       filteredFeatures,

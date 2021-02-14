@@ -3,7 +3,8 @@
 ## Not released
 
 - Improve performance widget client side calculations [#88](https://github.com/CartoDB/carto-react-lib/pull/88)
-- Reduce library bundle size by making all dependencies external [#85](https://github.com/CartoDB/carto-react-lib/pull/79)
+- Change BigQuery source type name from 'bq' to 'bigquery' [#97](https://github.com/CartoDB/carto-react-lib/pull/97)
+- Change main dependencies mode to peer, reducing library bundle size [#85](https://github.com/CartoDB/carto-react-lib/pull/85)
 
 ## 1.0.0-beta14 (2021-02-08)
 

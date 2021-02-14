@@ -28,7 +28,7 @@ function passesFilter(columns, filters, feature) {
       const filterFunction = filterFunctions[filter];
 
       if (!filterFunction) {
-        throw new Error(`"${filterFunction}" not implemented`);
+        throw new Error(`"${filter}" not implemented`);
       }
 
       return filterFunction(columnFilters[filter].values, feature[column]);
@@ -36,7 +36,7 @@ function passesFilter(columns, filters, feature) {
   });
 }
 
-export function applyFilter({ filters = {}, type = 'boolean' }) {
+export function buildFeatureFilter({ filters = {}, type = 'boolean' }) {
   if (!Object.keys(filters).length) {
     return () => (type === 'number' ? 1 : true);
   }
