@@ -6,9 +6,9 @@ import {
   filterViewportFeaturesToGetHistogram
 } from 'src/widgets/models/HistogramModel';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
-import { LayerTypes } from 'src/widgets/LayerTypes';
+import { SourceTypes } from 'src/api';
 
-import { mockSqlApiRequest, mockClear } from '../../utils/mockSqlApiRequest';
+import { mockSqlApiRequest, mockClear } from '../../mockSqlApiRequest';
 
 const features = (operationColumn) => [
   {
@@ -31,7 +31,7 @@ describe('getHistogram', () => {
 
   test('should throw if using CartoBQTilerLayer without viewportFilter', async () => {
     await expect(
-      getHistogram({ type: LayerTypes.BQ, viewportFilter: false })
+      getHistogram({ type: SourceTypes.BIGQUERY, viewportFilter: false })
     ).rejects.toThrow(
       'Histogram Widget error: BigQuery layer needs "viewportFilter" prop set to true.'
     );
@@ -73,7 +73,7 @@ describe('getHistogram', () => {
           operation: 'count',
           column: 'revenue',
           operationColumn: 'revenue',
-          type: LayerTypes.SQL,
+          type: SourceTypes.SQL,
           ticks: [1300000, 1400000, 1500000],
           viewportFilter: false
         };
@@ -100,7 +100,7 @@ describe('getHistogram', () => {
       const buildParamsFor = (operation) => ({
         operation,
         column: 'revenue',
-        type: LayerTypes.SQL,
+        type: SourceTypes.SQL,
         ticks: [1, 2, 3],
         viewportFilter: true,
         viewportFeatures

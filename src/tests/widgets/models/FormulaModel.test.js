@@ -6,9 +6,9 @@ import {
   filterViewportFeaturesToGetFormula
 } from 'src/widgets/models/FormulaModel';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
-import { LayerTypes } from 'src/widgets/LayerTypes';
+import { SourceTypes } from 'src/api';
 
-import { mockSqlApiRequest, mockClear } from '../../utils/mockSqlApiRequest';
+import { mockSqlApiRequest, mockClear } from '../../mockSqlApiRequest';
 
 const features = (column) => [
   {
@@ -31,7 +31,7 @@ describe('getFormula', () => {
 
   test('should throw if using CartoBQTilerLayer without viewportFilter', async () => {
     await expect(
-      getFormula({ type: LayerTypes.BQ, viewportFilter: false })
+      getFormula({ type: SourceTypes.BIGQUERY, viewportFilter: false })
     ).rejects.toThrow(
       'Formula Widget error: BigQuery layers need "viewportFilter" prop set to true.'
     );
@@ -59,7 +59,7 @@ describe('getFormula', () => {
           credentials,
           operation: AggregationTypes.COUNT,
           column: 'revenue',
-          type: LayerTypes.SQL,
+          type: SourceTypes.SQL,
           viewportFilter: false
         };
         const func = await getFormula(params);
@@ -73,7 +73,7 @@ describe('getFormula', () => {
       const buildParamsFor = (operation) => ({
         operation,
         column: 'revenue',
-        type: LayerTypes.SQL,
+        type: SourceTypes.SQL,
         viewportFilter: true,
         viewportFeatures
       });

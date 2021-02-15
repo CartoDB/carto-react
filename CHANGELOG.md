@@ -2,9 +2,11 @@
 
 ## Not released
 
-- Improve widgets performance in client-side calculations [#88](https://github.com/CartoDB/carto-react-lib/pull/88)
 - Add new PieWidget component [#36](https://github.com/CartoDB/carto-react-lib/pull/36)
 - Change 'category' in input data for CategoryWidget for a more generic 'name' parameter [#36](https://github.com/CartoDB/carto-react-lib/pull/36)
+- Improve performance widget client side calculations [#88](https://github.com/CartoDB/carto-react-lib/pull/88)
+- Change BigQuery source type name from 'bq' to 'bigquery' [#97](https://github.com/CartoDB/carto-react-lib/pull/97)
+- Change main dependencies mode to peer, reducing library bundle size [#85](https://github.com/CartoDB/carto-react-lib/pull/85)
 
 ## 1.0.0-beta14 (2021-02-08)
 
