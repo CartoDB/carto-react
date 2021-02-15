@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
@@ -237,7 +237,8 @@ function HistogramWidgetUI(props) {
     tooltipFormatter,
     xAxisFormatter,
     yAxisFormatter,
-    height = theme.spacing(22)
+    height = theme.spacing(22),
+    _clickOnBar
   } = props;
 
   const classes = useStyles();
@@ -298,6 +299,12 @@ function HistogramWidgetUI(props) {
     click: clickEvent
   };
 
+  useEffect(() => {
+    if (_clickOnBar) {
+      onEvents.click(_clickOnBar);
+    }
+  }, [_clickOnBar]);
+
   return (
     <div>
       {onSelectedBarsChange && (
@@ -350,7 +357,11 @@ HistogramWidgetUI.propTypes = {
   dataAxis: PropTypes.array,
   name: PropTypes.string,
   onSelectedBarsChange: PropTypes.func,
-  height: PropTypes.number
+  height: PropTypes.number,
+  _clickOnBar: PropTypes.shape({
+    seriesIndex: PropTypes.number,
+    dataIndex: PropTypes.number
+  })
 };
 
 export default HistogramWidgetUI;
