@@ -60,8 +60,8 @@ export function viewportFeatures({ tiles, viewport, uniqueIdProperty }) {
   const map = new Map();
 
   for (const tile of tiles) {
-    // Discard if it's not a visible tile
-    if (!tile.isVisible) {
+    // Discard if it's not a visible tile or tile has not data
+    if (!tile.isVisible || !tile.data) {
       continue;
     }
 
