@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useEffect } from 'react';
+import React, { useMemo, useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { useTheme } from '@material-ui/core';
@@ -80,9 +80,7 @@ function __generateSerie({ name, data, theme, color, selectedCategories }) {
         item.color = color[index];
 
         const disabled =
-          selectedCategories &&
-          selectedCategories.length &&
-          selectedCategories.indexOf(item.name) !== -1;
+          selectedCategories?.length && !selectedCategories.includes(item.name);
 
         if (disabled) {
           disableSerie(item, theme);
@@ -121,7 +119,7 @@ function __generateSerie({ name, data, theme, color, selectedCategories }) {
   ];
 }
 
-function __getDefaultLabel(data) {
+function __getDefaultLabel(data = []) {
   return data
     .filter((c) => !c.disabled)
     .reduce((prev, current) => (prev.value > current.value ? prev : current), {});
@@ -143,9 +141,24 @@ function PieWidgetUI({
   onSelectedCategoriesChange
 }) {
   const theme = useTheme();
-
   const chartInstance = useRef();
-  const options = useMemo(() => {
+  const [options, setOptions] = useState({
+    series: []
+  });
+  const [elementHover, setElementHover] = useState();
+  let defaultLabel = useMemo(() => ({}), []);
+
+  const updateLabel = (params) => {
+    const echart = chartInstance.current.getEchartsInstance();
+    const { option, serie } = getChartSerie(echart, params.seriesIndex);
+    serie.data.forEach((category) => {
+      category.label.show = category.name === params.data.name;
+      category.emphasis.label.show = category.name === params.data.name;
+    });
+    echart.setOption(option, true);
+  };
+
+  useEffect(() => {
     const config = __generateDefaultConfig(
       { formatter, tooltipFormatter, colors },
       theme
@@ -157,32 +170,46 @@ function PieWidgetUI({
       color: config.color,
       selectedCategories
     });
-    return Object.assign({}, config, { series });
+
+    setOptions({
+      ...config,
+      series
+    });
   }, [data, name, theme, tooltipFormatter, formatter, selectedCategories, colors]);
-  let defaultLabel = __getDefaultLabel(options.series[0].data);
+
+  useEffect(() => {
+    const label = elementHover || __getDefaultLabel(options.series[0]?.data);
+    // eslint-disable-next-line
+    defaultLabel = label;
+  }, [options]);
 
   useEffect(() => {
     const echart = chartInstance.current.getEchartsInstance();
     const { option, serie } = getChartSerie(echart, 0);
-    serie.data.forEach((category) => {
+    serie?.data.forEach((category) => {
       if (category.name === defaultLabel.name) {
         category.label = { show: true };
+        category.emphasis = { label: { show: true } };
       } else {
         category.label = { show: false };
+        category.emphasis = { label: { show: false } };
       }
     });
 
     echart.setOption(option, true);
-  }, [data, defaultLabel.name]);
+  }, [options, defaultLabel]);
 
   const clickEvent = (params) => {
     if (onSelectedCategoriesChange) {
       const echart = chartInstance.current.getEchartsInstance();
       const { option, serie } = getChartSerie(echart, params.seriesIndex);
+
       applyChartFilter(serie, params.dataIndex, theme);
+
       echart.setOption(option, true);
 
       const activeCategories = serie.data.filter((category) => !category.disabled);
+
       defaultLabel = __getDefaultLabel(activeCategories);
 
       onSelectedCategoriesChange(
@@ -194,25 +221,18 @@ function PieWidgetUI({
   };
 
   const mouseoverEvent = (params) => {
-    const echart = chartInstance.current.getEchartsInstance();
-    const { option, serie } = getChartSerie(echart, params.seriesIndex);
-    serie.data.forEach((category) => {
-      category.label.show = category.name === params.data.name;
-      category.emphasis.label.show = category.name === params.data.name;
-    });
-
-    echart.setOption(option, true);
+    setElementHover(params.data);
+    updateLabel(params);
   };
 
   const mouseoutEvent = (params) => {
-    const echart = chartInstance.current.getEchartsInstance();
-    const { option, serie } = getChartSerie(echart, params.seriesIndex);
-    serie.data.forEach((category) => {
-      category.label.show = category.name === defaultLabel.name;
-      category.emphasis.label.show = category.name === defaultLabel.name;
-    });
+    setElementHover();
 
-    echart.setOption(option, true);
+    const data = {
+      ...params,
+      data: defaultLabel
+    };
+    updateLabel(data);
   };
 
   const onEvents = {

@@ -2,10 +2,12 @@ import React from 'react';
 import PieWidgetUI from '../../widgets/PieWidgetUI';
 
 // This default export determines where your story goes in the story list
-export default {
+const options = {
   title: 'Widgets/PieWidgetUI',
   component: PieWidgetUI
 };
+
+export default options;
 
 const dataDefault = [
   { name: 'Women', value: 101 },

@@ -1,5 +1,5 @@
 export function dataEqual(optionPrev, optionNext) {
-  const dataPrev = optionPrev.series[0].data;
+  const dataPrev = optionPrev.series[0]?.data;
   const dataNext = optionNext.series[0].data;
   if (dataPrev && dataNext && dataPrev.length === dataNext.length) {
     return !dataNext.some(({ value }, index) => {
