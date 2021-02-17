@@ -90,6 +90,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.13",
+    "@loaders.gl/gis": "^2.3.12",
     "pgsql-minify": "^1.0.5"
   },
   "husky": {
