@@ -1,4 +1,3 @@
-
 export function dataEqual(optionPrev, optionNext) {
   const dataPrev = optionPrev.series[0].data;
   const dataNext = optionNext.series[0].data;
@@ -15,18 +14,16 @@ export function disableSerie(serie, theme) {
   serie.itemStyle = { color: theme.palette.charts.disabled };
 }
 
-export function clearFilter (serie) {
-  serie.data.forEach((d) => {
-    d.disabled = false;
-    setColor(d);
+export function clearFilter(serie) {
+  serie.data.forEach((item, index) => {
+    item.disabled = false;
+    setColor(item);
   });
 }
 
-export function setColor(d) {
-  if (d.color) {
-    d.itemStyle = { ...d.itemStyle, color: d.color };
-  } else {
-    delete d.itemStyle;
+export function setColor(item) {
+  if (item.color) {
+    item.itemStyle = { ...item.itemStyle, color: item.color };
   }
 }
 
@@ -58,9 +55,9 @@ export function applyChartFilter(serie, clickedSerieIndex, theme) {
   return serie;
 }
 
-export function getChartSerie (chart, index) {
+export function getChartSerie(chart, index) {
   const option = chart.getOption();
-  const serie =  option.series[index];
+  const serie = option.series[index];
 
   return { option, serie };
-};
+}

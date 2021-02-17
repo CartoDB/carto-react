@@ -4,12 +4,12 @@ import PieWidgetUI from '../../widgets/PieWidgetUI';
 // This default export determines where your story goes in the story list
 export default {
   title: 'Widgets/PieWidgetUI',
-  component: PieWidgetUI,
+  component: PieWidgetUI
 };
 
 const dataDefault = [
   { name: 'Women', value: 101 },
-  { name: 'Men', value: 100 },
+  { name: 'Men', value: 100 }
 ];
 
 const Template = (args) => <PieWidgetUI {...args} />;
@@ -20,29 +20,42 @@ Default.args = { data: dataDefault };
 export const CustomColors = Template.bind({});
 CustomColors.args = {
   data: [
-    { name: 'Dogs', value: 100, color: '#7f3c8d' },
-    { name: 'Cats', value: 120, color: '#11a579' },
-    { name: 'Rabbits', value: 150, color: '#3969ac' },
-    { name: 'Canaries', value: 90, color: '#f2b701' },
-    { name: 'Passerines', value: 200, color: '#e73f74' },
-    { name: 'Elephants', value: 100, color: '#7f3c8d' },
-    { name: 'Mamouths', value: 120, color: '#11a579' },
-    { name: 'Torttles', value: 150, color: '#3969ac' },
-    { name: 'Snakes', value: 90, color: '#f2b701' },
-    { name: 'others', value: 200, color: '#e73f74' }
+    { name: 'Dogs', value: 100 },
+    { name: 'Cats', value: 120 },
+    { name: 'Rabbits', value: 150 },
+    { name: 'Canaries', value: 90 },
+    { name: 'Passerines', value: 200 },
+    { name: 'Elephants', value: 100 },
+    { name: 'Mamouths', value: 120 },
+    { name: 'Torttles', value: 150 },
+    { name: 'Snakes', value: 90 },
+    { name: 'others', value: 200 }
+  ],
+  colors: [
+    '#855C75',
+    '#D9AF6B',
+    '#AF6458',
+    '#736F4C',
+    '#526A83',
+    '#625377',
+    '#68855C',
+    '#9C9C5E',
+    '#A06177',
+    '#8C785D',
+    '#467378',
+    '#7C7C7C'
   ]
 };
-
 
 export const SelectedCategories = Template.bind({});
 SelectedCategories.args = {
   data: [
-    { name: 'Dogs', value: 100, color: '#7f3c8d' },
-    { name: 'Cats', value: 120, color: '#11a579' },
-    { name: 'Rabbits', value: 150, color: '#3969ac' },
-    { name: 'Canaries', value: 90, color: '#f2b701' },
-    { name: 'Passerines', value: 200, color: '#e73f74' },
+    { name: 'Dogs', value: 100 },
+    { name: 'Cats', value: 120 },
+    { name: 'Rabbits', value: 150 },
+    { name: 'Canaries', value: 90 },
+    { name: 'Passerines', value: 200 }
   ],
   selectedCategories: ['Cats', 'Canaries'],
-  onSelectedCategoriesChange: (categories) => console.log(categories),
+  onSelectedCategoriesChange: (categories) => console.log(categories)
 };

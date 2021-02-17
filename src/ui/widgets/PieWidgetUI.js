@@ -2,25 +2,34 @@ import React, { useMemo, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { useTheme } from '@material-ui/core';
-import { getChartSerie, applyChartFilter, dataEqual, disableSerie, setColor } from '../utils/chartUtils'
+import {
+  getChartSerie,
+  applyChartFilter,
+  dataEqual,
+  disableSerie,
+  setColor
+} from '../utils/chartUtils';
 
-function __generateDefaultConfig({ tooltipFormatter, formatter }, theme) {
+function __generateDefaultConfig({ tooltipFormatter, formatter, colors }, theme) {
   return {
     grid: {
       left: theme.spacing(0),
       top: theme.spacing(0),
       right: theme.spacing(0),
-      bottom: theme.spacing(0),
+      bottom: theme.spacing(0)
     },
-    color: [theme.palette.secondary.dark, theme.palette.secondary.main, theme.palette.secondary.light],
+    color: colors || Object.values(theme.palette.qualitative.bold),
     tooltip: {
       trigger: 'item',
-      padding: [theme.spacing(0.5), theme.spacing(1)],
+      showDelay: 1000,
+      transitionDuration: 0,
       backgroundColor: theme.palette.other.tooltip,
-      ...(tooltipFormatter ? { formatter: (params) => tooltipFormatter({ ...params, formatter }) } : {}),
+      ...(tooltipFormatter
+        ? { formatter: (params) => tooltipFormatter({ ...params, formatter }) }
+        : {})
     },
     legend: {
-      selectedMode: false,  // TODO
+      selectedMode: true,
       type: 'scroll',
       orient: 'horizontal',
       left: theme.spacing(1),
@@ -39,12 +48,14 @@ function __generateDefaultConfig({ tooltipFormatter, formatter }, theme) {
         color: theme.palette.text.primary,
         lineHeight: 1,
         verticalAlign: 'bottom',
-        padding: [0, 0, 0, theme.spacing(0.5)],
-
+        padding: [0, 0, 0, theme.spacing(0.5)]
       },
       inactiveColor: theme.palette.text.disabled,
       pageIcons: {
-        horizontal: ['path://M15.41 7.41 14 6 8 12 14 18 15.41 16.59 10.83 12z', 'path://M9 16.59 13.3265857 12 9 7.41 10.3319838 6 16 12 10.3319838 18z'],
+        horizontal: [
+          'path://M15.41 7.41 14 6 8 12 14 18 15.41 16.59 10.83 12z',
+          'path://M9 16.59 13.3265857 12 9 7.41 10.3319838 6 16 12 10.3319838 18z'
+        ]
       },
       pageIconSize: theme.spacing(1.5),
       pageIconColor: theme.palette.text.secondary,
@@ -54,19 +65,25 @@ function __generateDefaultConfig({ tooltipFormatter, formatter }, theme) {
         fontSize: theme.spacing(1.5),
         lineHeight: theme.spacing(1.75),
         fontWeight: 'normal',
-        color: theme.palette.text.primary,
-      },
-    },
+        color: theme.palette.text.primary
+      }
+    }
   };
 }
 
-function __generateSerie(name, data, theme, selectedCategories) {
+function __generateSerie({ name, data, theme, color, selectedCategories }) {
   return [
     {
       type: 'pie',
       name,
-      data: data.map(item => {
-        const disabled = selectedCategories && selectedCategories.length && selectedCategories.indexOf(item.name) !== -1
+      data: data.map((item, index) => {
+        item.color = color[index];
+
+        const disabled =
+          selectedCategories &&
+          selectedCategories.length &&
+          selectedCategories.indexOf(item.name) !== -1;
+
         if (disabled) {
           disableSerie(item, theme);
           return item;
@@ -89,23 +106,25 @@ function __generateSerie(name, data, theme, selectedCategories) {
             fontSize: theme.spacing(1.75),
             lineHeight: theme.spacing(1.75),
             fontWeight: 'normal',
-            color: theme.palette.text.primary,
+            color: theme.palette.text.primary
           },
           per: {
             ...theme.typography,
             fontSize: theme.spacing(3),
             lineHeight: theme.spacing(4.5),
             fontWeight: 600,
-            color: theme.palette.text.primary,
+            color: theme.palette.text.primary
           }
         }
-      },
-    },
+      }
+    }
   ];
 }
 
-function __getDefaultLabel (data) {
-  return data.filter(c => !c.disabled).reduce((prev, current) => (prev.value > current.value) ? prev : current, {})
+function __getDefaultLabel(data) {
+  return data
+    .filter((c) => !c.disabled)
+    .reduce((prev, current) => (prev.value > current.value ? prev : current), {});
 }
 
 const EchartsWrapper = React.memo(
@@ -113,37 +132,39 @@ const EchartsWrapper = React.memo(
   ({ option: optionPrev }, { option: optionNext }) => dataEqual(optionPrev, optionNext)
 );
 
-function PieWidgetUI (props) {
+function PieWidgetUI({
+  name,
+  data = [],
+  formatter,
+  tooltipFormatter,
+  height,
+  colors,
+  selectedCategories,
+  onSelectedCategoriesChange
+}) {
   const theme = useTheme();
-  const {
-    name,
-    data = [],
-    formatter,
-    tooltipFormatter,
-    height,
-    selectedCategories,
-    onSelectedCategoriesChange
-  } = props;
 
   const chartInstance = useRef();
   const options = useMemo(() => {
-    const config = __generateDefaultConfig({ formatter, tooltipFormatter }, theme);
-    const series = __generateSerie(name, data, theme, selectedCategories);
+    const config = __generateDefaultConfig(
+      { formatter, tooltipFormatter, colors },
+      theme
+    );
+    const series = __generateSerie({
+      name,
+      data,
+      theme,
+      color: config.color,
+      selectedCategories
+    });
     return Object.assign({}, config, { series });
-  }, [
-    data,
-    name,
-    theme,
-    tooltipFormatter,
-    formatter,
-    selectedCategories,
-  ]);
+  }, [data, name, theme, tooltipFormatter, formatter, selectedCategories, colors]);
   let defaultLabel = __getDefaultLabel(options.series[0].data);
 
   useEffect(() => {
     const echart = chartInstance.current.getEchartsInstance();
     const { option, serie } = getChartSerie(echart, 0);
-    serie.data.forEach(category => {
+    serie.data.forEach((category) => {
       if (category.name === defaultLabel.name) {
         category.label = { show: true };
       } else {
@@ -161,17 +182,21 @@ function PieWidgetUI (props) {
       applyChartFilter(serie, params.dataIndex, theme);
       echart.setOption(option, true);
 
-      const activeCategories = serie.data.filter(category => !category.disabled);
+      const activeCategories = serie.data.filter((category) => !category.disabled);
       defaultLabel = __getDefaultLabel(activeCategories);
 
-      onSelectedCategoriesChange(activeCategories.length === serie.data.length ? [] : activeCategories.map(category => category.name));
+      onSelectedCategoriesChange(
+        activeCategories.length === serie.data.length
+          ? []
+          : activeCategories.map((category) => category.name)
+      );
     }
   };
 
   const mouseoverEvent = (params) => {
     const echart = chartInstance.current.getEchartsInstance();
     const { option, serie } = getChartSerie(echart, params.seriesIndex);
-    serie.data.forEach(category => {
+    serie.data.forEach((category) => {
       category.label.show = category.name === params.data.name;
       category.emphasis.label.show = category.name === params.data.name;
     });
@@ -182,7 +207,7 @@ function PieWidgetUI (props) {
   const mouseoutEvent = (params) => {
     const echart = chartInstance.current.getEchartsInstance();
     const { option, serie } = getChartSerie(echart, params.seriesIndex);
-    serie.data.forEach(category => {
+    serie.data.forEach((category) => {
       category.label.show = category.name === defaultLabel.name;
       category.emphasis.label.show = category.name === defaultLabel.name;
     });
@@ -193,19 +218,17 @@ function PieWidgetUI (props) {
   const onEvents = {
     click: clickEvent,
     mouseover: mouseoverEvent,
-    mouseout: mouseoutEvent,
+    mouseout: mouseoutEvent
   };
 
   return (
-    <div>
-      <EchartsWrapper
-        ref={chartInstance}
-        option={options}
-        onEvents={onEvents}
-        lazyUpdate={true}
-        style={{ maxHeight: height }}
-      />
-    </div>
+    <EchartsWrapper
+      ref={chartInstance}
+      option={options}
+      onEvents={onEvents}
+      lazyUpdate={true}
+      style={{ maxHeight: height }}
+    />
   );
 }
 
@@ -213,15 +236,24 @@ PieWidgetUI.defaultProps = {
   name: null,
   formatter: (v) => v,
   tooltipFormatter: (params) => {
-    const value = params.formatter(params.value)
-    const valueHtml = typeof value === 'object' && value !== null ? `${value.prefix || ''}${value.value}${value.suffix || ''}` : value
+    const value = params.formatter(params.value);
+    const valueHtml =
+      typeof value === 'object' && value !== null
+        ? `${value.prefix || ''}${value.value}${value.suffix || ''}`
+        : value;
 
-    const colorSpan = color => `<span style="display:inline-block;margin-right:4px;border-radius:4px;width:8px;height:8px;background-color:${color}"></span>`;
-    return `<p style="font-size:12px;font-weight:600;line-height:1.33;margin:4px 0 4px 0;">${params.name}</p>
-            <p style="font-size: 12px;font-weight:normal;line-height:1.33;margin:0 0 4px 0;">${colorSpan(params.data.color || params.color)} ${valueHtml} (${params.percent}%)</p>`;
+    const colorSpan = (color) =>
+      `<span style="display:inline-block;margin-right:4px;border-radius:4px;width:8px;height:8px;background-color:${color}"></span>`;
+    return `<p style="font-size:12px;font-weight:600;line-height:1.33;margin:4px 0 4px 0;">${
+      params.name
+    }</p>
+            <p style="font-size: 12px;font-weight:normal;line-height:1.33;margin:0 0 4px 0;">${colorSpan(
+              params.data.color || params.color
+            )} ${valueHtml} (${params.percent}%)</p>`;
   },
+  colors: null,
   height: '260px',
-  selectedCategories: [],
+  selectedCategories: []
 };
 
 PieWidgetUI.propTypes = {
@@ -229,14 +261,15 @@ PieWidgetUI.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      value: PropTypes.number,
+      value: PropTypes.number
     })
   ),
+  colors: PropTypes.array,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   height: PropTypes.string,
   selectedCategories: PropTypes.array,
-  onSelectedCategoriesChange: PropTypes.func,
+  onSelectedCategoriesChange: PropTypes.func
 };
 
 export default PieWidgetUI;
