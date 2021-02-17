@@ -1,6 +1,42 @@
 import bboxPolygon from '@turf/bbox-polygon';
 import intersects from '@turf/boolean-intersects';
 
+// // import prueba from '../workers/testWorker';
+// const worker = new Worker(new URL('../workers/testWorker.js', import.meta.url));
+// // const worker = new Worker('worker.js');
+
+// worker.postMessage({
+//   question:
+//     'The Answer to the Ultimate Question of Life, The Universe, and Everything.',
+// });
+// import WebWorker from '../workers/WebWorker';
+// import testWorker from '../workers/testWorker.worker.js';
+
+// const testWorker = new Worker('../workers/testWorker.worker.js', { type: 'module' });
+// const worker = new Worker(new URL("../workers/testWorker.worker.js", import.meta.url));
+
+// const worker = new WebWorker(testWorker);
+
+// worker.postMessage({
+//   question:
+//     'The Answer to the Ultimate Question of Life, The Universe, and Everything.',
+// });
+
+// import Worker from "worker-loader!../workers/testWorker.worker.js";
+
+////////FUNCIONA//////////////////////////////////////////////////////////////
+
+// import testWorker from "../workers/testWorker.worker.js";
+
+// const worker = new testWorker();
+// worker.postMessage({
+//   question:
+//     'The Answer to the Ultimate Question of Life, The Universe, and Everything.',
+// });
+////////FUNCIONA//////////////////////////////////////////////////////////////
+
+import { getWorker } from '../workers/workerPool';
+
 // Clip the viewport with the tile and transform to tile coordinates [0..1]
 function prepareViewport(bbox, viewport) {
   const { west, south, east, north } = bbox;
@@ -61,7 +97,7 @@ export function viewportFeatures({ tiles, viewport, uniqueIdProperty }) {
 
   for (const tile of tiles) {
     // Discard if it's not a visible tile
-    if (!tile.isVisible) {
+    if (!tile.isVisible || !tile.data) {
       continue;
     }
 
@@ -81,6 +117,8 @@ export function viewportFeatures({ tiles, viewport, uniqueIdProperty }) {
       addIntersectedFeaturesInTile({ map, tile, viewport, uniqueIdProperty });
     }
   }
+
+  getWorker('testWorker').postMessage({});
 
   return Array.from(map.values());
 }

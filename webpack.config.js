@@ -22,6 +22,13 @@ const config = {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.worker\.js$/,
+        loader: 'worker-loader',
+        options: {
+          inline: 'fallback'
+        }
       }
     ]
   },
@@ -31,7 +38,8 @@ const config = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
     library: 'cartoForReact',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+    globalObject: 'this'
   }
 };
 
