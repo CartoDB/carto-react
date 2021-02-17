@@ -59,15 +59,4 @@ describe('HistogramWidgetUI', () => {
     fireEvent.click(screen.getByText(/Clear/));
     expect(mockOnSelectedBarsChange).toHaveBeenCalledTimes(1);
   });
-
-  test('simulate click', () => {
-    render(
-      <Widget
-        _clickOnBar={{
-          seriesIndex: 0,
-          dataIndex: 0
-        }}
-      />
-    );
-  });
 });
