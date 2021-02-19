@@ -25,6 +25,7 @@ const config = {
       },
       {
         test: /\.worker\.js$/,
+        exclude: /(node_modules)/,
         loader: 'worker-loader',
         options: {
           inline: 'fallback'

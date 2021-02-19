@@ -77,9 +77,6 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@reduxjs/toolkit": "^1.5.0",
-    "@turf/bbox-polygon": "^6.0.1",
-    "@turf/boolean-contains": "^6.3.0",
-    "@turf/boolean-intersects": "^6.0.2",
     "echarts": "^4.9.0",
     "echarts-for-react": "^2.0.16",
     "prop-types": "^15.7.2",
@@ -91,6 +88,9 @@
   "dependencies": {
     "@babel/runtime": "^7.12.13",
     "@loaders.gl/gis": "^2.3.12",
+    "@turf/bbox-polygon": "^6.0.1",
+    "@turf/boolean-contains": "^6.3.0",
+    "@turf/boolean-intersects": "^6.0.2",
     "pgsql-minify": "^1.0.5"
   },
   "husky": {
