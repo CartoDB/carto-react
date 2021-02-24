@@ -2,6 +2,7 @@
   "name": "@carto/react",
   "version": "1.0.0-beta14",
   "description": "CARTO for React",
+  "main": "main.js",
   "scripts": {
     "start": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && webpack --config webpack.config.js --watch",
     "build": "rm -rf dist && mkdir dist && cp package.json ./dist/package.json && cp README.md ./dist/README.md && webpack --config webpack.prod.js",

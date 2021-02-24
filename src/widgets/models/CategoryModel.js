@@ -1,9 +1,9 @@
 import { minify } from 'pgsql-minify';
 import { executeSQL } from '../../api';
-import { buildFeatureFilter } from '../../api/Filter';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import { SourceTypes } from '../../api/SourceTypes';
-import { groupValuesByColumn } from '../operations/groupby';
+import { Methods } from '../../workers';
+import { executeTask } from '../../workers';
 
 export const getCategories = async (props) => {
   const {
@@ -13,7 +13,7 @@ export const getCategories = async (props) => {
     operation,
     filters,
     viewportFilter,
-    viewportFeatures,
+    dataSource,
     type,
     opts
   } = props;
@@ -31,9 +31,7 @@ export const getCategories = async (props) => {
   const operationColumn = props.operationColumn || column;
 
   if (viewportFilter) {
-    return filterViewportFeaturesToGetCategories({
-      viewportFilter,
-      viewportFeatures,
+    return executeTask(dataSource, Methods.VIEWPORT_FEATURES_CATEGORY, {
       filters,
       operation,
       column,
@@ -85,32 +83,4 @@ export const buildSqlQueryToGetCategories = ({
   `;
 
   return minify(query);
-};
-
-/**
- * Filter viewport features to get the Categories defined by props
- */
-export const filterViewportFeaturesToGetCategories = ({
-  viewportFeatures,
-  filters,
-  operation,
-  column,
-  operationColumn
-}) => {
-  if (viewportFeatures) {
-    const filteredFeatures = !Object.keys(viewportFeatures).length
-      ? viewportFeatures
-      : viewportFeatures.filter(buildFeatureFilter({ filters }));
-
-    const groups = groupValuesByColumn(
-      filteredFeatures,
-      operationColumn,
-      column,
-      operation
-    );
-
-    return groups;
-  }
-
-  return [];
 };

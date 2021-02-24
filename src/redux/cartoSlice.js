@@ -47,6 +47,7 @@ export const createCartoSlice = (initialState) => {
         // Auto import dataSources
       },
       viewportFeatures: {},
+      viewportFeaturesReady: {},
       widgetsLoadingState: {},
       ...initialState
     },
@@ -131,6 +132,14 @@ export const createCartoSlice = (initialState) => {
         if (state.viewportFeatures[sourceId]) {
           delete state.viewportFeatures[sourceId];
         }
+      },
+      setViewportFeaturesReady: (state, action) => {
+        const { sourceId, ready } = action.payload;
+
+        state.viewportFeaturesReady = {
+          ...state.viewportFeaturesReady,
+          [sourceId]: ready
+        };
       },
       setWidgetLoadingState: (state, action) => {
         const { widgetId, isLoading } = action.payload;
@@ -297,6 +306,16 @@ export const setViewportFeatures = (data) => ({
  */
 export const removeViewportFeatures = (data) => ({
   type: 'carto/removeViewportFeatures',
+  payload: data
+});
+
+/**
+ * Action to set the ready features state of a layer
+ * @param {object} sourceId - the id of the source
+ * @param {object} ready - Viewport features have been calculated
+ */
+export const setViewportFeaturesReady = (data) => ({
+  type: 'carto/setViewportFeaturesReady',
   payload: data
 });
 

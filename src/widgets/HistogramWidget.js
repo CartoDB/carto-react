@@ -30,7 +30,7 @@ function HistogramWidget(props) {
   const [selectedBars, setSelectedBars] = useState([]);
   const dispatch = useDispatch();
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
+  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
   const [hasLoadingState, setIsLoading] = useWidgetLoadingState(
     props.id,
@@ -65,7 +65,8 @@ function HistogramWidget(props) {
         data,
         filters,
         credentials,
-        viewportFeatures: viewportFeatures[props.dataSource] || [],
+        viewportFeatures: viewportFeaturesReady[props.dataSource] || false,
+        dataSource: props.dataSource,
         type,
         opts: { abortController }
       })
@@ -88,7 +89,7 @@ function HistogramWidget(props) {
     setIsLoading,
     source.filters,
     type,
-    viewportFeatures,
+    viewportFeaturesReady,
     props,
     hasLoadingState
   ]);

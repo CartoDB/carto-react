@@ -1,9 +1,9 @@
 import { minify } from 'pgsql-minify';
 import { executeSQL } from '../../api';
-import { buildFeatureFilter } from '../../api/Filter';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
 import { SourceTypes } from '../../api/SourceTypes';
-import { histogram } from '../operations/histogram';
+import { Methods } from '../../workers';
+import { executeTask } from '../../workers';
 
 export const getHistogram = async (props) => {
   const {
@@ -15,7 +15,7 @@ export const getHistogram = async (props) => {
     filters,
     opts,
     viewportFilter,
-    viewportFeatures,
+    dataSource,
     type
   } = props;
 
@@ -30,8 +30,7 @@ export const getHistogram = async (props) => {
   }
 
   if (viewportFilter) {
-    return filterViewportFeaturesToGetHistogram({
-      viewportFeatures,
+    return executeTask(dataSource, Methods.VIEWPORT_FEATURES_HISTOGRAM, {
       filters,
       operation,
       column,
@@ -92,26 +91,4 @@ export const buildSqlQueryToGetHistogram = ({
   `;
 
   return minify(query);
-};
-
-/**
- * Filter viewport features to get Histogram defined by props
- */
-export const filterViewportFeaturesToGetHistogram = ({
-  viewportFeatures,
-  filters,
-  operation,
-  column,
-  ticks
-}) => {
-  if (viewportFeatures) {
-    const filteredFeatures = !Object.keys(viewportFeatures).length
-      ? viewportFeatures
-      : viewportFeatures.filter(buildFeatureFilter({ filters }));
-
-    const result = histogram(filteredFeatures, column, ticks, operation);
-    return result;
-  }
-
-  return [];
 };
