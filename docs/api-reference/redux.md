@@ -41,7 +41,7 @@ Parameters are in the form of destructuring arguments.
 | ------ | ------------------- | ----------------------------------------------------------------------------------------------------- |
 | {id}   | <code>string</code> | unique id for the source                                                                              |
 | {data} | <code>string</code> | data definition for the source. Query for SQL dataset or the name of the tileset for BigQuery Tileset |
-| {type} | <code>string</code> | type of source. Posible values are sql or bq                                                          |
+| {type} | <code>string</code> | type of source. Posible values are 'sql' or 'bigquery'                                                |
 
 ### removeSource
 

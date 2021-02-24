@@ -6,11 +6,21 @@ import {
   filterViewportFeaturesToGetFormula
 } from 'src/widgets/models/FormulaModel';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
-import { LayerTypes } from 'src/widgets/LayerTypes';
+import { SourceTypes } from 'src/api';
 
-import { buildLineFeatures } from '../data-mocks/models/linesForFormula';
+import { mockSqlApiRequest, mockClear } from '../../mockSqlApiRequest';
 
-import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
+const features = (column) => [
+  {
+    [column]: 1
+  },
+  {
+    [column]: 2
+  },
+  {
+    [column]: 3
+  }
+];
 
 describe('getFormula', () => {
   test('should throw with array data', async () => {
@@ -21,7 +31,7 @@ describe('getFormula', () => {
 
   test('should throw if using CartoBQTilerLayer without viewportFilter', async () => {
     await expect(
-      getFormula({ type: LayerTypes.BQ, viewportFilter: false })
+      getFormula({ type: SourceTypes.BIGQUERY, viewportFilter: false })
     ).rejects.toThrow(
       'Formula Widget error: BigQuery layers need "viewportFilter" prop set to true.'
     );
@@ -49,7 +59,7 @@ describe('getFormula', () => {
           credentials,
           operation: AggregationTypes.COUNT,
           column: 'revenue',
-          type: LayerTypes.SQL,
+          type: SourceTypes.SQL,
           viewportFilter: false
         };
         const func = await getFormula(params);
@@ -58,12 +68,12 @@ describe('getFormula', () => {
     });
 
     describe('should read viewport features when using "viewportFilter": true', () => {
-      const viewportFeatures = buildLineFeatures('revenue');
+      const viewportFeatures = features('revenue');
 
       const buildParamsFor = (operation) => ({
         operation,
         column: 'revenue',
-        type: LayerTypes.SQL,
+        type: SourceTypes.SQL,
         viewportFilter: true,
         viewportFeatures
       });
@@ -120,7 +130,7 @@ describe('filterViewportFeaturesToGetFormula', () => {
   const buildParamsFor = (operation) => ({
     operation,
     column: 'revenue',
-    viewportFeatures: buildLineFeatures('revenue')
+    viewportFeatures: features('revenue')
   });
 
   test(AggregationTypes.COUNT, () => {

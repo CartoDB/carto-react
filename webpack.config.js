@@ -1,19 +1,21 @@
 const path = require('path');
+const { ProgressPlugin } = require('webpack');
+
+const FOLDERS = ['api', 'basemaps', 'oauth', 'redux', 'ui', 'widgets'];
+const entry = Object.fromEntries(FOLDERS.map((f) => [f, `./src/${f}/index.js`]));
+
+const pkg = require('./package.json');
+const externals = [/^@material-ui\/.+$/];
+for (const depName in pkg.peerDependencies) {
+  if (!depName.startsWith('@material-ui')) {
+    externals.push(depName);
+  }
+}
 
 const config = {
   mode: 'development',
-  devtool: 'eval',
-  externals: [
-    {
-      react: 'react',
-      'react-redux': 'react-redux',
-      'react-dom': 'react-dom',
-      '@reduxjs/toolkit': '@reduxjs/toolkit',
-      '@deck.gl/core': '@deck.gl/core',
-      '@deck.gl/google-maps': '@deck.gl/google-maps'
-    },
-    /^@material-ui\/.+$/
-  ],
+  devtool: 'eval-source-map',
+  externals,
   module: {
     rules: [
       {
@@ -22,73 +24,15 @@ const config = {
         loader: 'babel-loader'
       }
     ]
+  },
+  plugins: [new ProgressPlugin()],
+  entry,
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
+    library: 'cartoForReact',
+    libraryTarget: 'umd'
   }
 };
 
-const api = {
-  ...config,
-  output: {
-    path: path.resolve(__dirname, 'dist', 'api'),
-    filename: 'index.js',
-    library: 'cartoForReact',
-    libraryTarget: 'umd'
-  },
-  entry: './src/api/index.js'
-};
-
-const basemaps = {
-  ...config,
-  output: {
-    path: path.resolve(__dirname, 'dist', 'basemaps'),
-    filename: 'index.js',
-    library: 'cartoForReact',
-    libraryTarget: 'umd'
-  },
-  entry: './src/basemaps/index.js'
-};
-
-const oauth = {
-  ...config,
-  output: {
-    path: path.resolve(__dirname, 'dist', 'oauth'),
-    filename: 'index.js',
-    library: 'cartoForReact',
-    libraryTarget: 'umd'
-  },
-  entry: './src/oauth/index.js'
-};
-
-const redux = {
-  ...config,
-  output: {
-    path: path.resolve(__dirname, 'dist', 'redux'),
-    filename: 'index.js',
-    library: 'cartoForReact',
-    libraryTarget: 'umd'
-  },
-  entry: './src/redux/index.js'
-};
-
-const ui = {
-  ...config,
-  output: {
-    path: path.resolve(__dirname, 'dist', 'ui'),
-    filename: 'index.js',
-    library: 'cartoForReact',
-    libraryTarget: 'umd'
-  },
-  entry: './src/ui/index.js'
-};
-
-const widgets = {
-  ...config,
-  output: {
-    path: path.resolve(__dirname, 'dist', 'widgets'),
-    filename: 'index.js',
-    library: 'cartoForReact',
-    libraryTarget: 'umd'
-  },
-  entry: './src/widgets/index.js'
-};
-
-module.exports = [api, basemaps, oauth, redux, ui, widgets];
+module.exports = config;

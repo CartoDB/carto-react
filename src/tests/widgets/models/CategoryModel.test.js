@@ -6,11 +6,24 @@ import {
   filterViewportFeaturesToGetCategories
 } from 'src/widgets/models/CategoryModel';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
-import { LayerTypes } from 'src/widgets/LayerTypes';
+import { SourceTypes } from 'src/api';
 
-import { buildPointFeatures } from '../data-mocks/models/pointsForCategories';
+import { mockSqlApiRequest, mockClear } from '../../mockSqlApiRequest';
 
-import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
+const features = (categoryColumn, operationColumn) => [
+  {
+    [categoryColumn]: 'a',
+    [operationColumn]: 1
+  },
+  {
+    [categoryColumn]: 'a',
+    [operationColumn]: 2
+  },
+  {
+    [categoryColumn]: 'b',
+    [operationColumn]: 3
+  }
+];
 
 describe('getCategories', () => {
   test('should throw with array data', async () => {
@@ -21,7 +34,7 @@ describe('getCategories', () => {
 
   test('should throw if using CartoBQTilerLayer without viewportFilter', async () => {
     await expect(
-      getCategories({ type: LayerTypes.BQ, viewportFilter: false })
+      getCategories({ type: SourceTypes.BIGQUERY, viewportFilter: false })
     ).rejects.toThrow(
       'Category Widget error: BigQuery layers need "viewportFilter" prop set to true.'
     );
@@ -54,7 +67,7 @@ describe('getCategories', () => {
           credentials,
           operation: AggregationTypes.COUNT,
           column: 'revenue',
-          type: LayerTypes.SQL,
+          type: SourceTypes.SQL,
           viewportFilter: false
         };
         const categories = await getCategories(params);
@@ -63,13 +76,13 @@ describe('getCategories', () => {
     });
 
     describe('should read viewport features when using "viewportFilter": true', () => {
-      const viewportFeatures = buildPointFeatures('storetype', 'revenue');
+      const viewportFeatures = features('storetype', 'revenue');
 
       const buildGetCategoriesParamsFor = (operation) => ({
         operation,
         column: 'storetype',
         operationColumn: 'revenue',
-        type: LayerTypes.SQL,
+        type: SourceTypes.SQL,
         viewportFilter: true,
         viewportFeatures
       });
@@ -152,7 +165,7 @@ describe('filterViewportFeaturesToGetCategories', () => {
     operation,
     column: 'storetype',
     operationColumn: 'revenue',
-    viewportFeatures: buildPointFeatures('storetype', 'revenue')
+    viewportFeatures: features('storetype', 'revenue')
   });
 
   test(AggregationTypes.COUNT, () => {

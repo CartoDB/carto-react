@@ -15,7 +15,7 @@ export function histogram(features, columnName, ticks, operation) {
   }));
 
   features.forEach((feature) => {
-    const featureValue = feature.properties[columnName];
+    const featureValue = feature[columnName];
 
     if (!featureValue) {
       return;

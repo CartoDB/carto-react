@@ -7,11 +7,11 @@ export function dealWithApiError({ API, credentials, response, data }) {
   switch (response.status) {
     case 401:
       throw new Error(
-        `Unauthorized access to API ${API}: invalid combination of user ('${credentials.username}') and apiKey ('${credentials.apiKey}')`
+        `Unauthorized access to ${API} API: invalid combination of user ('${credentials.username}') and apiKey ('${credentials.apiKey}')`
       );
     case 403:
       throw new Error(
-        `Unauthorized access to API ${API}: the provided apiKey('${credentials.apiKey}') doesn't provide access to the requested data`
+        `Unauthorized access to ${API} API: the provided apiKey('${credentials.apiKey}') doesn't provide access to the requested data`
       );
     default:
       throw new Error(`${JSON.stringify(data.error)}`);

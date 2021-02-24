@@ -6,11 +6,21 @@ import {
   filterViewportFeaturesToGetHistogram
 } from 'src/widgets/models/HistogramModel';
 import { AggregationTypes } from 'src/widgets/AggregationTypes';
-import { LayerTypes } from 'src/widgets/LayerTypes';
+import { SourceTypes } from 'src/api';
 
-import { buildPolygonFeatures } from '../data-mocks/models/polygonsForHistogram';
+import { mockSqlApiRequest, mockClear } from '../../mockSqlApiRequest';
 
-import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
+const features = (operationColumn) => [
+  {
+    [operationColumn]: 1
+  },
+  {
+    [operationColumn]: 2
+  },
+  {
+    [operationColumn]: 3
+  }
+];
 
 describe('getHistogram', () => {
   test('should throw with array data', async () => {
@@ -21,7 +31,7 @@ describe('getHistogram', () => {
 
   test('should throw if using CartoBQTilerLayer without viewportFilter', async () => {
     await expect(
-      getHistogram({ type: LayerTypes.BQ, viewportFilter: false })
+      getHistogram({ type: SourceTypes.BIGQUERY, viewportFilter: false })
     ).rejects.toThrow(
       'Histogram Widget error: BigQuery layer needs "viewportFilter" prop set to true.'
     );
@@ -63,7 +73,7 @@ describe('getHistogram', () => {
           operation: 'count',
           column: 'revenue',
           operationColumn: 'revenue',
-          type: LayerTypes.SQL,
+          type: SourceTypes.SQL,
           ticks: [1300000, 1400000, 1500000],
           viewportFilter: false
         };
@@ -85,12 +95,12 @@ describe('getHistogram', () => {
     });
 
     describe('should filter viewport features - "viewportFilter" prop is true', () => {
-      const viewportFeatures = buildPolygonFeatures('revenue');
+      const viewportFeatures = features('revenue');
 
       const buildParamsFor = (operation) => ({
         operation,
         column: 'revenue',
-        type: LayerTypes.SQL,
+        type: SourceTypes.SQL,
         ticks: [1, 2, 3],
         viewportFilter: true,
         viewportFeatures
@@ -189,7 +199,7 @@ describe('filterViewportFeaturesToGetHistogram', () => {
   const buildParamsFor = (operation) => ({
     operation,
     column: 'revenue',
-    viewportFeatures: buildPolygonFeatures('revenue'),
+    viewportFeatures: features('revenue'),
     ticks: [1, 2, 3]
   });
 

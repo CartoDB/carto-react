@@ -1,11 +1,9 @@
 import { minify } from 'pgsql-minify';
-
 import { executeSQL } from '../../api';
+import { buildFeatureFilter } from '../../api/Filter';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
-import { applyFilter } from '../../api/Filter';
+import { SourceTypes } from '../../api/SourceTypes';
 import { aggregationFunctions } from '../operations/aggregation/values';
-import { pickValuesFromFeatures } from '../../utils/pickValuesFromFeatures';
-import { LayerTypes } from '../LayerTypes';
 
 export const getFormula = async (props) => {
   const {
@@ -24,7 +22,7 @@ export const getFormula = async (props) => {
     throw new Error('Array is not a valid type to get formula');
   }
 
-  if (type === LayerTypes.BQ && !viewportFilter) {
+  if (type === SourceTypes.BIGQUERY && !viewportFilter) {
     throw new Error(
       'Formula Widget error: BigQuery layers need "viewportFilter" prop set to true.'
     );
@@ -69,10 +67,12 @@ export const filterViewportFeaturesToGetFormula = ({
 }) => {
   if (viewportFeatures) {
     const targetOperation = aggregationFunctions[operation];
-    const filteredFeatures = viewportFeatures.filter(applyFilter({ filters }));
-    const featureValues = pickValuesFromFeatures(filteredFeatures, column);
 
-    return [{ value: targetOperation(featureValues) }];
+    const filteredFeatures = !Object.keys(viewportFeatures).length
+      ? viewportFeatures
+      : viewportFeatures.filter(buildFeatureFilter({ filters }));
+
+    return [{ value: targetOperation(filteredFeatures, column) }];
   }
 
   return [{ value: null }];

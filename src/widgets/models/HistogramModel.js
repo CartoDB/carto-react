@@ -1,10 +1,9 @@
 import { minify } from 'pgsql-minify';
-
 import { executeSQL } from '../../api';
+import { buildFeatureFilter } from '../../api/Filter';
 import { filtersToSQL } from '../../api/FilterQueryBuilder';
-import { applyFilter } from '../../api/Filter';
+import { SourceTypes } from '../../api/SourceTypes';
 import { histogram } from '../operations/histogram';
-import { LayerTypes } from '../LayerTypes';
 
 export const getHistogram = async (props) => {
   const {
@@ -24,7 +23,7 @@ export const getHistogram = async (props) => {
     throw new Error('Array is not a valid type to get histogram');
   }
 
-  if (type === LayerTypes.BQ && !viewportFilter) {
+  if (type === SourceTypes.BIGQUERY && !viewportFilter) {
     throw new Error(
       'Histogram Widget error: BigQuery layer needs "viewportFilter" prop set to true.'
     );
@@ -106,7 +105,9 @@ export const filterViewportFeaturesToGetHistogram = ({
   ticks
 }) => {
   if (viewportFeatures) {
-    const filteredFeatures = viewportFeatures.filter(applyFilter({ filters }));
+    const filteredFeatures = !Object.keys(viewportFeatures).length
+      ? viewportFeatures
+      : viewportFeatures.filter(buildFeatureFilter({ filters }));
 
     const result = histogram(filteredFeatures, column, ticks, operation);
     return result;
