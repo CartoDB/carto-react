@@ -54,25 +54,3 @@ export const buildSqlQueryToGetFormula = ({ data, column, operation, filters }) 
 
   return minify(query);
 };
-
-// /**
-//  * Filter viewport features to get Formula defined by props
-//  */
-// export const filterViewportFeaturesToGetFormula = ({
-//   viewportFeatures,
-//   filters,
-//   operation,
-//   column
-// }) => {
-//   if (viewportFeatures) {
-//     const targetOperation = aggregationFunctions[operation];
-
-//     const filteredFeatures = !Object.keys(viewportFeatures).length
-//       ? viewportFeatures
-//       : viewportFeatures.filter(buildFeatureFilter({ filters }));
-
-//     return [{ value: targetOperation(filteredFeatures, column) }];
-//   }
-
-//   return [{ value: null }];
-// };
