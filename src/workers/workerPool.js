@@ -19,10 +19,10 @@ export function executeTask(source, method, params) {
 
 export function removeWorker(source) {
   if (pool[source]) {
+    pool[source].tasks.forEach((t) => t.reject());
     pool[source].worker.terminate();
     delete pool[source];
   }
-  // TODO clear tasks
 }
 
 function getWorker(source) {

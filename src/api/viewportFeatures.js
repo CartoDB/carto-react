@@ -50,13 +50,13 @@ function addIntersectedFeaturesInTile({ map, tile, viewport, uniqueIdProperty })
 }
 
 function isTileFullVisible(bbox, viewport) {
-  const [minX, maxX, maxY, minY] = viewport;
+  const [minX, minY, maxX, maxY] = viewport;
   return (
     bbox.west >= minX && bbox.east <= maxX && bbox.north <= maxY && bbox.south >= minY
   );
 }
 
-export function viewportFeatures({ tiles, viewport, uniqueIdProperty }) {
+function viewportFeatures({ tiles, viewport, uniqueIdProperty }) {
   const map = new Map();
 
   for (const tile of tiles) {
@@ -84,3 +84,5 @@ export function viewportFeatures({ tiles, viewport, uniqueIdProperty }) {
 
   return Array.from(map.values());
 }
+
+export { prepareViewport, isTileFullVisible, viewportFeatures };

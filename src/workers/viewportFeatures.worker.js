@@ -1,4 +1,3 @@
-import { binaryToGeoJson } from '@loaders.gl/gis';
 import { viewportFeatures } from '../api/viewportFeaturesBinary';
 import { Methods } from './workerMethods';
 import { aggregationFunctions } from '../widgets/operations/aggregation/values';
@@ -28,15 +27,6 @@ onmessage = ({ data: { method, ...params } }) => {
 };
 
 function getViewportFeatures({ tiles, viewport, uniqueIdProperty }) {
-  // currentViewportFeatures = viewportFeatures({
-  //   tiles: tiles.map(({ data, isVisible, bbox }) => ({
-  //     data: data && binaryToGeoJson(data),
-  //     isVisible,
-  //     bbox
-  //   })),
-  //   viewport,
-  //   uniqueIdProperty
-  // });
   currentViewportFeatures = viewportFeatures({
     tiles,
     viewport,

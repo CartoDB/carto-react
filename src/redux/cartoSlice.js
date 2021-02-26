@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '../utils';
+import { removeWorker } from '../workers/workerPool';
 
 /**
  *
@@ -58,6 +59,7 @@ export const createCartoSlice = (initialState) => {
       },
       removeSource: (state, action) => {
         delete state.dataSources[action.payload];
+        removeWorker(action.payload);
       },
       addLayer: (state, action) => {
         state.layers[action.payload.id] = action.payload;
