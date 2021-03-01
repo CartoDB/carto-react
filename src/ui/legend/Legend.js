@@ -32,14 +32,10 @@ function Legend({ layers = [], onChangeVisibility }) {
   const isSingle = layers.length === 1;
   return (
     <Box className={classes.root}>
-      {!isSingle ? (
-        <MultiLayers
-          layers={layers}
-          onChangeVisibility={onChangeVisibility}
-        ></MultiLayers>
-      ) : (
-        <LegendRows layers={layers} onChangeVisibility={onChangeVisibility}></LegendRows>
-      )}
+      {!isSingle
+        ? <MultiLayers layers={layers} onChangeVisibility={onChangeVisibility} />
+        : <LegendRows layers={layers} onChangeVisibility={onChangeVisibility} />
+      }
     </Box>
   );
 }
@@ -95,7 +91,7 @@ function MultiLayers({ layers, onChangeVisibility }) {
   return (
     <>
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
-        <LegendRows layers={layers} onChangeVisibility={onChangeVisibility}></LegendRows>
+        <LegendRows layers={layers} onChangeVisibility={onChangeVisibility} />
       </Collapse>
       <Grid container className={classes.header}>
         <Button
@@ -131,7 +127,7 @@ function LegendRows({ layers, onChangeVisibility }) {
           hasVisibility={layer.hasVisibility}
           onChangeVisibility={onChangeVisibility}
         >
-          {types[layer.type] || <NoLegend></NoLegend>}
+          {types[layer.type] || <NoLegend/>}
         </LegendRow>
         {!isSingle && <Divider />}
       </Fragment>
@@ -190,7 +186,7 @@ export function LegendRow({
         expandable={expandable}
         onExpandClick={handleExpandClick}
         onChangeVisibility={handleChangeVisibility}
-      ></Header>
+      />
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
         <Box className={classes.content}>{children}</Box>
       </Collapse>
@@ -242,11 +238,10 @@ function Header({
         startIcon={
           expandable && (
             <Icon>
-              {expanded ? (
-                <ExpandLess className={classes.iconToggle} />
-              ) : (
-                <ExpandMore className={classes.iconToggle} />
-              )}
+              {expanded
+                ? <ExpandLess className={classes.iconToggle} />
+                : <ExpandMore className={classes.iconToggle} />
+              }
             </Icon>
           )
         }
@@ -256,7 +251,7 @@ function Header({
       </Button>
       {hasVisibility && (
         <Tooltip title={visibility ? 'Hide layer' : 'Show layer'} placement='top' arrow>
-          <Switch checked={visibility} onChange={onChangeVisibility}></Switch>
+          <Switch checked={visibility} onChange={onChangeVisibility}/>
         </Tooltip>
       )}
     </Grid>

@@ -9,7 +9,7 @@ function LegendCategories({ data = [], info }) {
       {data.map((d, index) => {
         const isMax = index === max;
         return (
-          <Row key={d.label + index} isMax={isMax} label={d.label} color={d.color}></Row>
+          <Row key={d.label + index} isMax={isMax} label={d.label} color={d.color}/>
         );
       })}
       <Note>{info}</Note>

@@ -5,7 +5,7 @@ import Note from './Note';
 function LegendRamp({ data = {}, info }) {
   return (
     <Grid container direction='column' pb={16} spacing={1}>
-      <Row data={data}></Row>
+      <Row data={data} />
       <Note>{info}</Note>
     </Grid>
   );
@@ -38,11 +38,9 @@ function Row({ data: { max, min, avg, values = [] } }) {
   return (
     <Grid container item direction='column' spacing={1}>
       <Grid container item>
-        {!hasStep ? (
-          <StepsContinuous values={values} />
-        ) : (
-          <StepsDiscontinuous values={values} max={max} />
-        )}
+        {!hasStep
+          ? <StepsContinuous values={values} />
+          : <StepsDiscontinuous values={values} max={max} />}
       </Grid>
       <Tooltip title={'AVG: ' + avg} placement='top' arrow>
         <Box className={classes.avg} style={{ left: `${avgPerc}%` }} />
@@ -67,7 +65,7 @@ function StepsContinuous({ values = [] }) {
 
   const backgroundImage = `linear-gradient(to right, ${values[0].color}, ${values[1].color})`;
 
-  return <Grid item xs className={classes.step} style={{ backgroundImage }}></Grid>;
+  return <Grid item xs className={classes.step} style={{ backgroundImage }} />;
 }
 
 const useStylesStepsDiscontinuous = makeStyles((theme) => ({
@@ -97,7 +95,7 @@ function StepsDiscontinuous({ values = [], max }) {
         xs
         className={classes.step}
         style={{ backgroundColor: value.color }}
-      ></Grid>
+      />
     </Tooltip>
   ));
 }

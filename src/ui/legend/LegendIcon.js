@@ -6,7 +6,7 @@ function LegendIcon({ data = [], info }) {
   return (
     <Grid container direction='column' pb={16} spacing={1}>
       {data.map((d, index) => (
-        <Row key={d.label + index} label={d.label} icon={d.icon}></Row>
+        <Row key={d.label + index} label={d.label} icon={d.icon} />
       ))}
       <Note>{info}</Note>
     </Grid>
