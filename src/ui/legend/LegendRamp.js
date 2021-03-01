@@ -63,7 +63,7 @@ const useStylesStepsContinuous = makeStyles((theme) => ({
 function StepsContinuous({ values = [] }) {
   const classes = useStylesStepsContinuous();
 
-  const backgroundImage = `linear-gradient(to right, ${values[0].color}, ${values[1].color})`;
+  const backgroundImage = `linear-gradient(to right, ${values.map(value => value.color).join(', ')})`;
 
   return <Grid item xs className={classes.step} style={{ backgroundImage }} />;
 }
