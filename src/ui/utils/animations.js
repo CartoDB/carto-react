@@ -28,7 +28,7 @@ export function animateValues({ start, end, duration, drawFrame, requestRef }) {
   if (isEqual) return;
 
   let currentValues = end.map((elem, i) =>
-    start[i] && start[i].category === elem.category
+    start[i] && start[i].name === elem.name
       ? { ...elem, value: start[i].value }
       : elem
   );

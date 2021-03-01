@@ -15,7 +15,8 @@ export const getCategories = async (props) => {
     viewportFilter,
     viewportFeatures,
     type,
-    opts
+    opts,
+    alias = 'name'
   } = props;
 
   if (Array.isArray(data)) {
@@ -46,7 +47,8 @@ export const getCategories = async (props) => {
     column,
     operation,
     operationColumn,
-    filters
+    filters,
+    alias
   });
   return await executeSQL(credentials, query, opts);
 };
@@ -59,29 +61,30 @@ export const buildSqlQueryToGetCategories = ({
   column,
   operation,
   operationColumn,
-  filters
+  filters,
+  alias = 'name'
 }) => {
   const query = `
     WITH all_categories as (
       SELECT
-        ${column} as category
+        ${column} as ${alias}
       FROM
         (${data}) as q
-      GROUP BY category
+      GROUP BY ${alias}
     ),
     categories as (
       SELECT
-        ${column} as category, ${operation}(${operationColumn}) as value
+        ${column} as ${alias}, ${operation}(${operationColumn}) as value
       FROM
         (${data}) as q
       ${filtersToSQL(filters)}
-      GROUP BY category
+      GROUP BY ${alias}
     )
     SELECT
-      a.category, b.value
+      a.${alias}, b.value
     FROM
       all_categories a
-    LEFT JOIN categories b ON a.category=b.category
+    LEFT JOIN categories b ON a.${alias}=b.${alias}
   `;
 
   return minify(query);

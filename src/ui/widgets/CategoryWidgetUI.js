@@ -152,18 +152,18 @@ function CategoryWidgetUI(props) {
   // Get blockedCategories in the same order as original data
   const sortBlockedSameAsData = (blockedCategories) =>
     sortedData.reduce((acum, elem) => {
-      if (blockedCategories.includes(elem.category)) acum.push(elem.category);
+      if (blockedCategories.includes(elem.name)) acum.push(elem.name);
       return acum;
     }, []);
 
-  const handleCategorySelected = (category) => {
-    if (category !== REST_CATEGORY) {
+  const handleCategorySelected = (name) => {
+    if (name !== REST_CATEGORY) {
       let categories;
 
-      if (selectedCategories.indexOf(category) < 0) {
-        categories = [...selectedCategories, category];
+      if (selectedCategories.indexOf(name) < 0) {
+        categories = [...selectedCategories, name];
       } else {
-        categories = selectedCategories.filter((c) => c !== category);
+        categories = selectedCategories.filter((c) => c !== name);
       }
 
       if (props.onSelectedCategoriesChange) {
@@ -200,14 +200,14 @@ function CategoryWidgetUI(props) {
     setShowAll(false);
   };
 
-  const handleCategoryBlocked = (category) => {
-    if (category !== REST_CATEGORY) {
+  const handleCategoryBlocked = (name) => {
+    if (name !== REST_CATEGORY) {
       let categories;
 
-      if (tempBlockedCategories.indexOf(category) < 0) {
-        categories = [...tempBlockedCategories, category];
+      if (tempBlockedCategories.indexOf(name) < 0) {
+        categories = [...tempBlockedCategories, name];
       } else {
-        categories = tempBlockedCategories.filter((c) => c !== category);
+        categories = tempBlockedCategories.filter((c) => c !== name);
       }
 
       setTempBlockedCategories(categories);
@@ -239,7 +239,7 @@ function CategoryWidgetUI(props) {
                 acum.value += elem.value;
                 return acum;
               },
-              { category: REST_CATEGORY, value: 0 }
+              { name: REST_CATEGORY, value: 0 }
             );
             return [...main, rest];
           } else {
@@ -248,10 +248,10 @@ function CategoryWidgetUI(props) {
 
           // Showing only blocked categories
         } else {
-          const main = blockedCategories.reduce((acum, category) => {
-            const categoryElem = list.find((elem) => elem.category === category);
+          const main = blockedCategories.reduce((acum, name) => {
+            const categoryElem = list.find((elem) => elem.name === name);
             acum.push({
-              category,
+              name,
               value: categoryElem ? categoryElem.value : null
             });
             return acum;
@@ -264,9 +264,9 @@ function CategoryWidgetUI(props) {
         return searchValue
           ? list.filter((elem) => {
               return (
-                elem.category.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
-                (labels[elem.category]
-                  ? labels[elem.category]
+                elem.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
+                (labels[elem.name]
+                  ? labels[elem.name]
                       .toLowerCase()
                       .indexOf(searchValue.toLowerCase()) !== -1
                   : false)
@@ -279,11 +279,11 @@ function CategoryWidgetUI(props) {
   );
 
   const getCategoryLabel = useCallback(
-    (category) => {
-      if (category === REST_CATEGORY) {
+    (name) => {
+      if (name === REST_CATEGORY) {
         return 'Others';
       } else {
-        return labels[category] || category;
+        return labels[name] || name;
       }
     },
     [labels]
@@ -365,21 +365,21 @@ function CategoryWidgetUI(props) {
           ${
             !showAll &&
             selectedCategories.length > 0 &&
-            selectedCategories.indexOf(data.category) === -1
+            selectedCategories.indexOf(data.name) === -1
               ? classes.unselected
               : ''
           }
-          ${data.category === REST_CATEGORY ? classes.rest : ''}
+          ${data.name === REST_CATEGORY ? classes.rest : ''}
         `}
       >
         {showAll && (
           <Grid item>
-            <Checkbox checked={tempBlockedCategories.indexOf(data.category) !== -1} />
+            <Checkbox checked={tempBlockedCategories.indexOf(data.name) !== -1} />
           </Grid>
         )}
         <Grid container item xs>
           <Grid container item direction='row' justify='space-between'>
-            <span className={classes.label}>{getCategoryLabel(data.category)}</span>
+            <span className={classes.label}>{getCategoryLabel(data.name)}</span>
             {typeof value === 'object' && value !== null ? (
               <span>
                 {value.prefix}
@@ -501,8 +501,8 @@ function CategoryWidgetUI(props) {
                   data={d}
                   onCategoryClick={() =>
                     showAll
-                      ? handleCategoryBlocked(d.category)
-                      : handleCategorySelected(d.category)
+                      ? handleCategoryBlocked(d.name)
+                      : handleCategorySelected(d.name)
                   }
                 />
               ))
@@ -563,7 +563,7 @@ CategoryWidgetUI.defaultProps = {
 CategoryWidgetUI.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      category: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       value: PropTypes.number
     })
   ),

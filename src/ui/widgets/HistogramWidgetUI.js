@@ -2,6 +2,13 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
+import {
+  applyChartFilter,
+  clearFilter,
+  dataEqual,
+  disableSerie,
+  getChartSerie
+} from '../utils/chartUtils';
 import detectTouchScreen from '../utils/detectTouchScreen';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
@@ -24,17 +31,6 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer'
   }
 }));
-
-function __dataEqual(optionPrev, optionNext) {
-  const dataPrev = optionPrev.series[0].data;
-  const dataNext = optionNext.series[0].data;
-  if (dataPrev && dataNext && dataPrev.length === dataNext.length) {
-    return !dataNext.some(({ value }, index) => {
-      return !(value === dataPrev[index].value);
-    });
-  }
-  return false;
-}
 
 function __generateDefaultConfig(
   {
@@ -157,9 +153,14 @@ function __generateSerie(name, data, selectedBars = [], theme) {
       type: 'bar',
       name,
       data: data.map((value, index) => {
-        const bar = { value };
-        if (selectedBars.length && !selectedBars.some((i) => i === index)) {
-          __disableBar(bar, theme);
+        const bar = {
+          value,
+          color: theme.palette.secondary.main
+        };
+
+        const disabled = selectedBars.length && !selectedBars.some((i) => i === index);
+        if (disabled) {
+          disableSerie(bar, theme);
         }
         return bar;
       }),
@@ -178,53 +179,10 @@ function __generateSerie(name, data, selectedBars = [], theme) {
   ];
 }
 
-function __disableBar(bar, theme) {
-  bar.disabled = true;
-  bar.itemStyle = {
-    color: theme.palette.charts.disabled
-  };
-}
-
-function __clearFilter(serie) {
-  serie.data.forEach((bar) => {
-    bar.disabled = false;
-    delete bar.itemStyle;
-  });
-}
-
-function __applyFilter(serie, clickedBarIndex, theme) {
-  const anyDisabled = serie.data.find((d) => d.disabled);
-
-  if (!anyDisabled) {
-    serie.data.forEach((bar, index) => {
-      if (index !== clickedBarIndex) {
-        __disableBar(bar, theme);
-      }
-    });
-  } else {
-    const clickedData = serie.data[clickedBarIndex];
-    clickedData.disabled = !clickedData.disabled;
-    if (clickedData.disabled) {
-      __disableBar(clickedData, theme);
-
-      const anyActive = serie.data.find((d) => !d.disabled);
-
-      if (!anyActive) {
-        __clearFilter(serie);
-      }
-    } else {
-      delete clickedData.itemStyle;
-    }
-  }
-
-  return serie;
-}
-
 const EchartsWrapper = React.memo(
   ReactEcharts,
-  ({ option: optionPrev }, { option: optionNext }) => __dataEqual(optionPrev, optionNext)
+  ({ option: optionPrev }, { option: optionNext }) => dataEqual(optionPrev, optionNext)
 );
-
 function HistogramWidgetUI(props) {
   const theme = useTheme();
   const {
@@ -265,9 +223,8 @@ function HistogramWidgetUI(props) {
   const clearBars = () => {
     const echart = chartInstance.current.getEchartsInstance();
 
-    const option = echart.getOption();
-    const serie = option.series[0];
-    __clearFilter(serie);
+    const { option, serie } = getChartSerie(echart, 0);
+    clearFilter(serie);
     echart.setOption(option);
     onSelectedBarsChange({ bars: [], chartInstance });
   };
@@ -276,9 +233,8 @@ function HistogramWidgetUI(props) {
     if (onSelectedBarsChange) {
       const echart = chartInstance.current.getEchartsInstance();
 
-      const option = echart.getOption();
-      const serie = option.series[params.seriesIndex];
-      __applyFilter(serie, params.dataIndex, theme);
+      const { option, serie } = getChartSerie(echart, params.seriesIndex);
+      applyChartFilter(serie, params.dataIndex, theme);
       echart.setOption(option);
 
       const activeBars = [];

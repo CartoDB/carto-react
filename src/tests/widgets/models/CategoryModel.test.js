@@ -44,8 +44,8 @@ describe('getCategories', () => {
     describe('should execute a SqlApi request when using "viewportFilter": false', () => {
       const response = {
         rows: [
-          { category: 'Supermarket', value: 3 },
-          { category: 'Hypermarket', value: 1 }
+          { name: 'Supermarket', value: 3 },
+          { name: 'Hypermarket', value: 1 }
         ]
       };
       const sql = 'SELECT storetype, revenue FROM retail_stores LIMIT 4';
@@ -91,8 +91,8 @@ describe('getCategories', () => {
         const params = buildGetCategoriesParamsFor(AggregationTypes.COUNT);
         const categories = await getCategories(params);
         expect(categories).toEqual([
-          { category: 'a', value: 2 },
-          { category: 'b', value: 1 }
+          { name: 'a', value: 2 },
+          { name: 'b', value: 1 }
         ]);
       });
 
@@ -100,8 +100,8 @@ describe('getCategories', () => {
         const params = buildGetCategoriesParamsFor(AggregationTypes.AVG);
         const categories = await getCategories(params);
         expect(categories).toEqual([
-          { category: 'a', value: 1.5 },
-          { category: 'b', value: 3 }
+          { name: 'a', value: 1.5 },
+          { name: 'b', value: 3 }
         ]);
       });
 
@@ -109,8 +109,8 @@ describe('getCategories', () => {
         const params = buildGetCategoriesParamsFor(AggregationTypes.MIN);
         const categories = await getCategories(params);
         expect(categories).toEqual([
-          { category: 'a', value: 1 },
-          { category: 'b', value: 3 }
+          { name: 'a', value: 1 },
+          { name: 'b', value: 3 }
         ]);
       });
 
@@ -118,8 +118,8 @@ describe('getCategories', () => {
         const params = buildGetCategoriesParamsFor(AggregationTypes.MAX);
         const categories = await getCategories(params);
         expect(categories).toEqual([
-          { category: 'a', value: 2 },
-          { category: 'b', value: 3 }
+          { name: 'a', value: 2 },
+          { name: 'b', value: 3 }
         ]);
       });
     });
@@ -137,23 +137,23 @@ describe('buildSqlQueryToGetFormula', () => {
     const buildQuery = (params) => `
         WITH all_categories as (
           SELECT
-            ${params.column} as category
+            ${params.column} as name
           FROM
             (${params.data}) as q
-          GROUP BY category
+          GROUP BY name
         ),
         categories as (
           SELECT
-            ${params.column} as category, ${params.operation}(${params.operationColumn}) as value
+            ${params.column} as name, ${params.operation}(${params.operationColumn}) as value
           FROM
             (${params.data}) as q
-          GROUP BY category
+          GROUP BY name
         )
         SELECT
-          a.category, b.value
+          a.name, b.value
         FROM
           all_categories a
-        LEFT JOIN categories b ON a.category=b.category
+        LEFT JOIN categories b ON a.name=b.name
       `;
     const query = buildQuery(params);
     expect(buildSqlQueryToGetCategories(params)).toEqual(minify(query));
@@ -171,40 +171,40 @@ describe('filterViewportFeaturesToGetCategories', () => {
   test(AggregationTypes.COUNT, () => {
     const params = buildParamsFor(AggregationTypes.COUNT);
     expect(filterViewportFeaturesToGetCategories(params)).toEqual([
-      { category: 'a', value: 2 },
-      { category: 'b', value: 1 }
+      { name: 'a', value: 2 },
+      { name: 'b', value: 1 }
     ]);
   });
 
   test(AggregationTypes.AVG, () => {
     const params = buildParamsFor(AggregationTypes.AVG);
     expect(filterViewportFeaturesToGetCategories(params)).toEqual([
-      { category: 'a', value: 1.5 },
-      { category: 'b', value: 3 }
+      { name: 'a', value: 1.5 },
+      { name: 'b', value: 3 }
     ]);
   });
 
   test(AggregationTypes.SUM, () => {
     const params = buildParamsFor(AggregationTypes.SUM);
     expect(filterViewportFeaturesToGetCategories(params)).toEqual([
-      { category: 'a', value: 3 },
-      { category: 'b', value: 3 }
+      { name: 'a', value: 3 },
+      { name: 'b', value: 3 }
     ]);
   });
 
   test(AggregationTypes.MIN, () => {
     const params = buildParamsFor(AggregationTypes.MIN);
     expect(filterViewportFeaturesToGetCategories(params)).toEqual([
-      { category: 'a', value: 1 },
-      { category: 'b', value: 3 }
+      { name: 'a', value: 1 },
+      { name: 'b', value: 3 }
     ]);
   });
 
   test(AggregationTypes.MAX, () => {
     const params = buildParamsFor(AggregationTypes.MAX);
     expect(filterViewportFeaturesToGetCategories(params)).toEqual([
-      { category: 'a', value: 2 },
-      { category: 'b', value: 3 }
+      { name: 'a', value: 2 },
+      { name: 'b', value: 3 }
     ]);
   });
 

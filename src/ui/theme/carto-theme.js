@@ -22,6 +22,22 @@ const colors = {
     A400: '#7c7e7f',
     A700: '#545759'
   },
+  qualitative: {
+    bold: {
+      0: '#7F3C8D',
+      1: '#11A579',
+      2: '#3969AC',
+      3: '#F2B701',
+      4: '#E73F74',
+      5: '#80BA5A',
+      6: '#E68310',
+      7: '#008695',
+      8: '#CF1C90',
+      9: '#f97b72',
+      10: '#4b4b8f',
+      11: '#A5AA99'
+    }
+  },
   shades: {
     dark: {
       100: '#2c3032', // Neutral900
@@ -124,6 +140,9 @@ const variables = {
       focus: colors.shades.dark[12],
       focusOpacity: 0.12,
       activatedOpacity: 0.12
+    },
+    qualitative: {
+      ...colors.qualitative
     }
   },
 
@@ -319,7 +338,8 @@ export const cartoThemeOptions = {
     // props: Object => Research,
     /* Custom Colors palette */
     grey: { ...variables.palette.grey },
-    action: { ...variables.palette.action }
+    action: { ...variables.palette.action },
+    qualitative: { ...variables.palette.qualitative }
   },
   shadows: [
     'none',

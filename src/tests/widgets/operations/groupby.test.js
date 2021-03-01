@@ -48,11 +48,11 @@ describe('groupValuesByColumn', () => {
       );
       expect(groups).toEqual([
         {
-          category: 'Category 2',
+          name: 'Category 2',
           value: 3
         },
         {
-          category: 'Category 1',
+          name: 'Category 1',
           value: 2
         }
       ]);
@@ -67,11 +67,11 @@ describe('groupValuesByColumn', () => {
       );
       expect(groups).toEqual([
         {
-          category: 'Category 2',
+          name: 'Category 2',
           value: 3
         },
         {
-          category: 'Category 1',
+          name: 'Category 1',
           value: 3
         }
       ]);
@@ -86,11 +86,11 @@ describe('groupValuesByColumn', () => {
       );
       expect(groups).toEqual([
         {
-          category: 'Category 2',
+          name: 'Category 2',
           value: 1
         },
         {
-          category: 'Category 1',
+          name: 'Category 1',
           value: 2
         }
       ]);
@@ -105,11 +105,11 @@ describe('groupValuesByColumn', () => {
       );
       expect(groups).toEqual([
         {
-          category: 'Category 2',
+          name: 'Category 2',
           value: 5
         },
         {
-          category: 'Category 1',
+          name: 'Category 1',
           value: 4
         }
       ]);
@@ -124,11 +124,11 @@ describe('groupValuesByColumn', () => {
       );
       expect(groups).toEqual([
         {
-          category: 'Category 2',
+          name: 'Category 2',
           value: 9
         },
         {
-          category: 'Category 1',
+          name: 'Category 1',
           value: 6
         }
       ]);
@@ -145,11 +145,11 @@ describe('groupValuesByColumn', () => {
       );
       expect(groups).toEqual([
         {
-          category: 'Category 1',
+          name: 'Category 1',
           value: 0
         },
         {
-          category: 'Category 2',
+          name: 'Category 2',
           value: 0
         }
       ]);

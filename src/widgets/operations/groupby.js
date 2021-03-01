@@ -22,8 +22,8 @@ export function groupValuesByColumn(data, valuesColumn, keysColumn, operation) {
   const targetOperation = aggregationFunctions[operation];
 
   if (targetOperation) {
-    return Object.entries(groups).map(([category, value]) => ({
-      category,
+    return Object.entries(groups).map(([name, value]) => ({
+      name,
       value: targetOperation(value)
     }));
   }

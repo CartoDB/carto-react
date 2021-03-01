@@ -5,7 +5,7 @@ import { CategoryWidgetUI } from 'src/ui';
 import { currencyFormatter } from './utils';
 
 const DATA = [...Array(5)].map((_, idx) => ({
-  category: `Category ${idx + 1}`,
+  name: `Category ${idx + 1}`,
   value: (idx + 1) * 1234
 }));
 
