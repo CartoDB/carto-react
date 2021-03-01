@@ -3,6 +3,15 @@ import { render, screen } from '@testing-library/react';
 import { FormulaWidgetUI } from 'src/ui';
 import { currencyFormatter } from './utils';
 
+// Mock animations
+jest.mock('src/ui/utils/animations');
+// eslint-disable-next-line import/first
+import { animateValue } from 'src/ui/utils/animations';
+
+animateValue.mockImplementation(({ end, drawFrame }) => {
+  drawFrame(end); // draw final step, no intermediate ones
+});
+
 describe('FormulaWidgetUI', () => {
   test('empty', () => {
     render(<FormulaWidgetUI />);

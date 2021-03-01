@@ -9,6 +9,15 @@ const DATA = [...Array(5)].map((_, idx) => ({
   value: (idx + 1) * 1234
 }));
 
+// Mock animations
+jest.mock('src/ui/utils/animations');
+// eslint-disable-next-line import/first
+import { animateValues } from 'src/ui/utils/animations';
+
+animateValues.mockImplementation(({ end, drawFrame }) => {
+  drawFrame(end); // draw final step, no intermediate ones
+});
+
 describe('CategoryWidgetUI', () => {
   test('empty', () => {
     render(<CategoryWidgetUI data={[]} />);
