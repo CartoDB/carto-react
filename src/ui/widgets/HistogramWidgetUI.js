@@ -153,8 +153,13 @@ function __generateSerie(name, data, selectedBars = [], theme) {
       type: 'bar',
       name,
       data: data.map((value, index) => {
-        const bar = { value };
-        if (selectedBars.length && !selectedBars.some((i) => i === index)) {
+        const bar = {
+          value,
+          color: theme.palette.secondary.main
+        };
+
+        const disabled = selectedBars.length && !selectedBars.some((i) => i === index);
+        if (disabled) {
           disableSerie(bar, theme);
         }
         return bar;
