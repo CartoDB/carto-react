@@ -1,6 +1,6 @@
 import bboxPolygon from '@turf/bbox-polygon';
 import intersects from '@turf/boolean-intersects';
-import { prepareViewport, isTileFullVisible } from './viewportFeatures';
+import { prepareViewport, isTileFullyVisible } from './viewportFeatures';
 
 const GEOMETRY_TYPES = Object.freeze({
   Point: 0,
@@ -18,15 +18,7 @@ function addIntersectedFeaturesInTile({ map, data, viewportIntersection, type })
     const featureId = getFeatureId(data, startIndex);
 
     if (!map.has(featureId)) {
-      const ringCoordinates = [];
-
-      for (let j = startIndex; j < endIndex; j++) {
-        ringCoordinates.push(
-          Array.from(
-            positions.value.subarray(j * positions.size, (j + 1) * positions.size)
-          )
-        );
-      }
+      const ringCoordinates = getRingCoordinatesFor(startIndex, endIndex, positions);
 
       if (intersects(getFeatureByType(ringCoordinates, type), viewportIntersection)) {
         map.set(featureId, getPropertiesFromTile(data, startIndex));
@@ -69,14 +61,26 @@ function getFeatureByType(coordinates, type) {
   }
 }
 
+function getRingCoordinatesFor(startIndex, endIndex, positions) {
+  const ringCoordinates = [];
+
+  for (let j = startIndex; j < endIndex; j++) {
+    ringCoordinates.push(
+      Array.from(positions.value.subarray(j * positions.size, (j + 1) * positions.size))
+    );
+  }
+
+  return ringCoordinates;
+}
+
 function calculateViewportFeatures({
   map,
-  fullVisible,
+  tileIsFullyVisible,
   viewportIntersection,
   data,
   type
 }) {
-  if (fullVisible) {
+  if (tileIsFullyVisible) {
     // All the features of the tile are visible
     const indices = getIndices(data);
 
@@ -103,26 +107,26 @@ export function viewportFeatures({ tiles, viewport }) {
     }
 
     const { bbox } = tile;
-    const fullVisible = isTileFullVisible(bbox, viewport);
+    const tileIsFullyVisible = isTileFullyVisible(bbox, viewport);
     const viewportIntersection = bboxPolygon(prepareViewport(tile.bbox, viewport));
 
     calculateViewportFeatures({
       map,
-      fullVisible,
+      tileIsFullyVisible,
       viewportIntersection,
       data: tile.data.points,
       type: GEOMETRY_TYPES['Point']
     });
     calculateViewportFeatures({
       map,
-      fullVisible,
+      tileIsFullyVisible,
       viewportIntersection,
       data: tile.data.lines,
       type: GEOMETRY_TYPES['LineString']
     });
     calculateViewportFeatures({
       map,
-      fullVisible,
+      tileIsFullyVisible,
       viewportIntersection,
       data: tile.data.polygons,
       type: GEOMETRY_TYPES['Polygon']

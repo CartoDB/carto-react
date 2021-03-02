@@ -49,7 +49,7 @@ function addIntersectedFeaturesInTile({ map, tile, viewport, uniqueIdProperty })
   }
 }
 
-function isTileFullVisible(bbox, viewport) {
+function isTileFullyVisible(bbox, viewport) {
   const [minX, minY, maxX, maxY] = viewport;
   return (
     bbox.west >= minX && bbox.east <= maxX && bbox.north <= maxY && bbox.south >= minY
@@ -66,7 +66,7 @@ function viewportFeatures({ tiles, viewport, uniqueIdProperty }) {
     }
 
     const { bbox } = tile;
-    tile.fullVisible = isTileFullVisible(bbox, viewport);
+    tile.fullVisible = isTileFullyVisible(bbox, viewport);
 
     if (tile.fullVisible) {
       // All the features of the tile are visible
@@ -85,4 +85,4 @@ function viewportFeatures({ tiles, viewport, uniqueIdProperty }) {
   return Array.from(map.values());
 }
 
-export { prepareViewport, isTileFullVisible, viewportFeatures };
+export { prepareViewport, isTileFullyVisible, viewportFeatures };

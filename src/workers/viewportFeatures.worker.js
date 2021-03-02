@@ -41,9 +41,7 @@ function getFormula({ filters, operation, column }) {
   if (currentViewportFeatures) {
     const targetOperation = aggregationFunctions[operation];
 
-    const filteredFeatures = !Object.keys(currentViewportFeatures).length
-      ? currentViewportFeatures
-      : currentViewportFeatures.filter(buildFeatureFilter({ filters }));
+    const filteredFeatures = getFilteredFeatures(filters);
 
     result = [{ value: targetOperation(filteredFeatures, column) }];
   }
@@ -55,9 +53,7 @@ function getHistogram({ filters, operation, column, ticks }) {
   let result = [];
 
   if (currentViewportFeatures) {
-    const filteredFeatures = !Object.keys(currentViewportFeatures).length
-      ? currentViewportFeatures
-      : currentViewportFeatures.filter(buildFeatureFilter({ filters }));
+    const filteredFeatures = getFilteredFeatures(filters);
 
     result = histogram(filteredFeatures, column, ticks, operation);
   }
@@ -69,9 +65,7 @@ function getCategories({ filters, operation, column, operationColumn }) {
   let result = [];
 
   if (currentViewportFeatures) {
-    const filteredFeatures = !Object.keys(currentViewportFeatures).length
-      ? currentViewportFeatures
-      : currentViewportFeatures.filter(buildFeatureFilter({ filters }));
+    const filteredFeatures = getFilteredFeatures(filters);
 
     const groups = groupValuesByColumn(
       filteredFeatures,
@@ -84,4 +78,10 @@ function getCategories({ filters, operation, column, operationColumn }) {
   }
 
   postMessage({ result });
+}
+
+function getFilteredFeatures(filters) {
+  return !Object.keys(currentViewportFeatures).length
+    ? currentViewportFeatures
+    : currentViewportFeatures.filter(buildFeatureFilter({ filters }));
 }
