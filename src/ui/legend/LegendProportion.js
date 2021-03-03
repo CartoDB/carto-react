@@ -18,12 +18,12 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative'
   },
   avg: {
-    width: 4,
-    height: 4,
+    width: 12,
+    height: 2,
     position: 'absolute',
     // TODO change color
     border: `1px solid ${theme.palette.common.white}`,
-    borderRadius: 4,
+    // borderRadius: 4,
     backgroundColor: theme.palette.grey[900],
     right: 0
   }
