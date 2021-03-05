@@ -2,12 +2,14 @@ import React from 'react';
 import { Box, Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
 import Note from './Note';
 
-function LegendCategories({ data = [], info }) {
-  const max = 1;
+function LegendCategories({ data = [], info, metadata, attr }) {
+  const max = metadata.tilestats.layers[0]?.attributes
+    .filter((elem) => elem.attribute === attr)[0]
+    ?.categories.reduce((a, b) => (a.frequency > b.frequency ? a : b)).category;
   return (
     <Grid container direction='column' pb={16} spacing={1}>
       {data.map((d, index) => {
-        const isMax = index === max;
+        const isMax = d.label === max;
         return (
           <Row key={d.label + index} isMax={isMax} label={d.label} color={d.color} />
         );

@@ -111,7 +111,14 @@ function LegendRows({ layers, onChangeVisibility }) {
   const isSingle = layers.length === 1;
   return layers.map((layer) => {
     const types = {
-      category: <LegendCategories data={layer.data} info={layer.info} max={layer.max} />,
+      category: (
+        <LegendCategories
+          data={layer.data}
+          info={layer.info}
+          metadata={layer.metadata}
+          attr={layer.attr}
+        />
+      ),
       icon: <LegendIcon data={layer.data} info={layer.info} />,
       ramp: <LegendRamp data={layer.data} info={layer.info} />,
       proportion: <LegendProportion data={layer.data} info={layer.info} />,
