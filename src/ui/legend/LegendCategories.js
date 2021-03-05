@@ -9,7 +9,7 @@ function LegendCategories({ data = [], info }) {
       {data.map((d, index) => {
         const isMax = index === max;
         return (
-          <Row key={d.label + index} isMax={isMax} label={d.label} color={d.color}/>
+          <Row key={d.label + index} isMax={isMax} label={d.label} color={d.color} />
         );
       })}
       <Note>{info}</Note>
@@ -40,7 +40,8 @@ const useStyles = makeStyles((theme) => ({
       height: '16px',
       border: `2px solid ${theme.palette.grey[900]}`,
       transform: 'translate(-30%, -30%)',
-      borderRadius: '50%'
+      borderRadius: '50%',
+      boxSizing: 'content-box'
     }
   }
 }));

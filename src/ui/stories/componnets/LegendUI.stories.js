@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
-import Legend, { LegendRow } from '../../legend/Legend';
+import Legend, { LegendRow } from '../../legend/LegendUI';
 
 const options = {
   title: 'Components/Legend',
@@ -88,6 +88,7 @@ const LegendCategoriesTemplate = () => {
       visibility: true,
       type: 'category',
       info: 'lorem',
+      max: 1,
       data: [
         {
           color: '#000',

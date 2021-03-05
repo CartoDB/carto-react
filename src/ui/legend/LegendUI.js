@@ -27,20 +27,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Legend({ layers = [], onChangeVisibility }) {
+function LegendUI({ layers = [], onChangeVisibility }) {
   const classes = useStyles();
   const isSingle = layers.length === 1;
   return (
     <Box className={classes.root}>
-      {!isSingle
-        ? <MultiLayers layers={layers} onChangeVisibility={onChangeVisibility} />
-        : <LegendRows layers={layers} onChangeVisibility={onChangeVisibility} />
-      }
+      {!isSingle ? (
+        <MultiLayers layers={layers} onChangeVisibility={onChangeVisibility} />
+      ) : (
+        <LegendRows layers={layers} onChangeVisibility={onChangeVisibility} />
+      )}
     </Box>
   );
 }
 
-export default Legend;
+export default LegendUI;
 
 const useStylesMultiLayers = makeStyles((theme) => ({
   header: {
@@ -110,7 +111,7 @@ function LegendRows({ layers, onChangeVisibility }) {
   const isSingle = layers.length === 1;
   return layers.map((layer) => {
     const types = {
-      category: <LegendCategories data={layer.data} info={layer.info} />,
+      category: <LegendCategories data={layer.data} info={layer.info} max={layer.max} />,
       icon: <LegendIcon data={layer.data} info={layer.info} />,
       ramp: <LegendRamp data={layer.data} info={layer.info} />,
       proportion: <LegendProportion data={layer.data} info={layer.info} />,
@@ -127,7 +128,7 @@ function LegendRows({ layers, onChangeVisibility }) {
           hasVisibility={layer.hasVisibility}
           onChangeVisibility={onChangeVisibility}
         >
-          {types[layer.type] || <NoLegend/>}
+          {types[layer.type] || <NoLegend />}
         </LegendRow>
         {!isSingle && <Divider />}
       </Fragment>
@@ -200,7 +201,7 @@ const useStylesHeader = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     height: '60px',
-    padding: theme.spacing(1.25, 1.25, 1.25, 3)
+    padding: theme.spacing(1.25, 1.25, 1.25, 2.5)
   },
   button: {
     padding: 0,
@@ -238,10 +239,11 @@ function Header({
         startIcon={
           expandable && (
             <Icon>
-              {expanded
-                ? <ExpandLess className={classes.iconToggle} />
-                : <ExpandMore className={classes.iconToggle} />
-              }
+              {expanded ? (
+                <ExpandLess className={classes.iconToggle} />
+              ) : (
+                <ExpandMore className={classes.iconToggle} />
+              )}
             </Icon>
           )
         }
@@ -251,7 +253,7 @@ function Header({
       </Button>
       {hasVisibility && (
         <Tooltip title={visibility ? 'Hide layer' : 'Show layer'} placement='top' arrow>
-          <Switch checked={visibility} onChange={onChangeVisibility}/>
+          <Switch checked={visibility} onChange={onChangeVisibility} />
         </Tooltip>
       )}
     </Grid>

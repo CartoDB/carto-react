@@ -29,5 +29,6 @@ export { default as CategoryWidget } from './CategoryWidget';
 export { default as FormulaWidget } from './FormulaWidget';
 export { default as GeocoderWidget } from './GeocoderWidget';
 export { default as HistogramWidget } from './HistogramWidget';
+export { default as LegendWidget } from './LegendWidget';
 export { getFormula, getHistogram, getCategories, geocodeStreetPoint } from './models';
 export { AggregationTypes } from './AggregationTypes';
