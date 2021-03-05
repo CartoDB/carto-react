@@ -14,7 +14,7 @@ function LegendWidget(props) {
   const layers = Object.entries(stateLayers)
     .filter((elem) => elem[1].legend !== undefined)
     .map((elem) => {
-      return elem[1].legend;
+      return { legend: elem[1].legend, metadata: elem[1].metadata };
     });
 
   return <LegendUI layers={layers}></LegendUI>;

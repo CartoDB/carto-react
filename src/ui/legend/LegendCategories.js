@@ -3,9 +3,9 @@ import { Box, Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
 import Note from './Note';
 
 function LegendCategories({ data = [], info, metadata, attr }) {
-  const max = metadata.tilestats.layers[0]?.attributes
+  const max = metadata?.tilestats.layers[0]?.attributes
     .filter((elem) => elem.attribute === attr)[0]
-    ?.categories.reduce((a, b) => (a.frequency > b.frequency ? a : b)).category;
+    ?.categories?.reduce((a, b) => (a.frequency > b.frequency ? a : b)).category;
   return (
     <Grid container direction='column' pb={16} spacing={1}>
       {data.map((d, index) => {
