@@ -165,7 +165,7 @@ function PieWidgetUI({
     );
     const series = __generateSerie({
       name,
-      data,
+      data: data || [],
       theme,
       color: config.color,
       selectedCategories
