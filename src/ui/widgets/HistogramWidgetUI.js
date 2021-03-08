@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
 import {
   applyChartFilter,
   clearFilter,
-  dataEqual,
+  isDataEqual,
   disableSerie,
   getChartSerie
 } from '../utils/chartUtils';
@@ -181,7 +181,7 @@ function __generateSerie(name, data, selectedBars = [], theme) {
 
 const EchartsWrapper = React.memo(
   ReactEcharts,
-  ({ option: optionPrev }, { option: optionNext }) => dataEqual(optionPrev, optionNext)
+  ({ option: optionPrev }, { option: optionNext }) => isDataEqual(optionPrev, optionNext)
 );
 function HistogramWidgetUI(props) {
   const theme = useTheme();
