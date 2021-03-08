@@ -1,7 +1,6 @@
 import React from 'react';
-
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
-
+import echarts from 'echarts';
 import { cartoThemeOptions } from 'src/ui';
 
 export function currencyFormatter(value) {
@@ -44,3 +43,32 @@ function getTheme() {
   });
   return theme;
 }
+
+export const mockEcharts = {
+  init() {
+    jest.spyOn(echarts, 'getInstanceByDom').mockImplementation(() => ({
+      hideLoading: jest.fn(),
+      getOption: jest.fn(() => ({
+        series: [
+          {
+            data: [
+              {
+                disabled: true,
+                itemStyle: {}
+              }
+            ]
+          }
+        ]
+      })),
+      setOption: jest.fn(() => ({
+        disabled: true,
+        itemStyle: {}
+      })),
+      showLoading: jest.fn(),
+      on: jest.fn()
+    }));
+  },
+  destroy() {
+    jest.restoreAllMocks();
+  }
+};
