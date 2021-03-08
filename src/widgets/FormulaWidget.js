@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { selectSourceById } from '../redux/cartoSlice';
@@ -16,7 +16,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {string} props.column - Name of the data source's column to get the data from.
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
- * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or globally.
+ * @param  {boolean} [props.viewportFilter=true] - Defines whether filter by the viewport or globally.
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
@@ -25,33 +25,57 @@ function FormulaWidget(props) {
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
+  const globalDataFetched = useRef(false);
   const { data, credentials, type, filters } = source;
   const [hasLoadingState, setIsLoading] = useWidgetLoadingState(
     props.id,
     props.viewportFilter
   );
 
+  // user could change 'viewportFilter' prop programatically
+  useEffect(() => {
+    if (!props.viewportFilter) {
+      setIsLoading(true);
+      globalDataFetched.current = false;
+    }
+  }, [props.viewportFilter, setIsLoading]);
+
+  // 'setAllWidgetsLoadingState' dispatched by 'useViewportFeatures' causes the loading appearing even with global data
+  useEffect(() => {
+    if (
+      !props.viewportFilter &&
+      globalDataFetched.current &&
+      widgetsLoadingState[props.id]
+    ) {
+      setIsLoading(false);
+    }
+  }, [props.viewportFilter, props.id, setIsLoading, widgetsLoadingState]);
+
   useEffect(() => {
     const abortController = new AbortController();
     if (data && credentials && hasLoadingState) {
-      !props.viewportFilter && setIsLoading(true);
-      getFormula({
-        ...props,
-        data,
-        filters,
-        credentials,
-        viewportFeatures: viewportFeatures[props.dataSource] || [],
-        type,
-        opts: { abortController }
-      })
-        .then((data) => {
-          data && data[0] && setFormulaData(data[0].value);
+      if ((!props.viewportFilter && !globalDataFetched.current) || props.viewportFilter) {
+        getFormula({
+          ...props,
+          data,
+          filters,
+          credentials,
+          viewportFeatures: viewportFeatures[props.dataSource] || [],
+          type,
+          opts: { abortController }
         })
-        .catch((error) => {
-          if (error.name === 'AbortError') return;
-          if (props.onError) props.onError(error);
-        })
-        .finally(() => setIsLoading(false));
+          .then((data) => {
+            data && data[0] && setFormulaData(data[0].value);
+          })
+          .catch((error) => {
+            if (error.name === 'AbortError') return;
+            if (props.onError) props.onError(error);
+          })
+          .finally(() => {
+            setIsLoading(false);
+            if (!props.viewportFilter) globalDataFetched.current = true;
+          });
+      }
     } else {
       setFormulaData(undefined);
     }
@@ -70,10 +94,18 @@ function FormulaWidget(props) {
     type
   ]);
 
+  const shouldDisplayLoading = useCallback(() => {
+    if (props.viewportFilter) {
+      return widgetsLoadingState[props.id];
+    }
+
+    return !globalDataFetched.current;
+  }, [props.viewportFilter, props.id, widgetsLoadingState, globalDataFetched]);
+
   return (
     <WrapperWidgetUI
       title={props.title}
-      isLoading={widgetsLoadingState[props.id]}
+      isLoading={shouldDisplayLoading()}
       {...props.wrapperProps}
     >
       <FormulaWidgetUI data={formulaData} formatter={props.formatter} unitBefore={true} />
@@ -93,7 +125,7 @@ FormulaWidget.propTypes = {
 };
 
 FormulaWidget.defaultProps = {
-  viewportFilter: false,
+  viewportFilter: true,
   wrapperProps: {}
 };
 

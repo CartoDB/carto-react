@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter, selectSourceById } from '../redux/cartoSlice';
@@ -19,7 +19,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {formatterCallback} [props.formatter] - Function to format the value that appears in the tooltip.
  * @param  {formatterCallback} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
- * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not.
+ * @param  {boolean} [props.viewportFilter=true] - Defines whether filter by the viewport or globally.
  * @param  {string} props.height - Height of the chart
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
@@ -34,7 +34,7 @@ function PieWidget({
   operation,
   formatter,
   tooltipFormatter,
-  viewportFilter = false,
+  viewportFilter,
   onError,
   wrapperProps
 }) {
@@ -44,34 +44,51 @@ function PieWidget({
   const dispatch = useDispatch();
   const source = useSelector((state) => selectSourceById(state, dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
-
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
+  const globalDataFetched = useRef(false);
   const [hasLoadingState, setIsLoading] = useWidgetLoadingState(id, viewportFilter);
   const { data, credentials, type } = source;
+
+  useEffect(() => {
+    if (!viewportFilter) {
+      setIsLoading(true);
+      globalDataFetched.current = false;
+    }
+  }, [viewportFilter, setIsLoading]);
+
+  useEffect(() => {
+    if (!viewportFilter && globalDataFetched.current && widgetsLoadingState[id]) {
+      setIsLoading(false);
+    }
+  }, [viewportFilter, id, widgetsLoadingState, setIsLoading]);
 
   useEffect(() => {
     const abortController = new AbortController();
     if (data && credentials && hasLoadingState) {
       const filters = getApplicableFilters(source.filters, id);
-      !viewportFilter && setIsLoading(true);
-      getCategories({
-        column,
-        operation,
-        operationColumn,
-        data,
-        filters,
-        credentials,
-        viewportFilter,
-        viewportFeatures: viewportFeatures[dataSource] || [],
-        type,
-        opts: { abortController }
-      })
-        .then((data) => setCategoryData(data))
-        .catch((error) => {
-          if (error.name === 'AbortError') return;
-          if (onError) onError(error);
+      if ((!viewportFilter && !globalDataFetched.current) || viewportFilter) {
+        getCategories({
+          column,
+          operation,
+          operationColumn,
+          data,
+          filters,
+          credentials,
+          viewportFilter,
+          viewportFeatures: viewportFeatures[dataSource] || [],
+          type,
+          opts: { abortController }
         })
-        .finally(() => setIsLoading(false));
+          .then((data) => setCategoryData(data))
+          .catch((error) => {
+            if (error.name === 'AbortError') return;
+            if (onError) onError(error);
+          })
+          .finally(() => {
+            setIsLoading(false);
+            if (!viewportFilter) globalDataFetched.current = true;
+          });
+      }
     } else {
       setCategoryData([]);
     }
@@ -97,35 +114,42 @@ function PieWidget({
     viewportFilter
   ]);
 
-  const handleSelectedCategoriesChange = useCallback((categories) => {
-    setSelectedCategories(categories);
+  const handleSelectedCategoriesChange = useCallback(
+    (categories) => {
+      setSelectedCategories(categories);
 
-    if (categories && categories.length) {
-      dispatch(
-        addFilter({
-          id: dataSource,
-          column,
-          type: FilterTypes.IN,
-          values: categories,
-          owner: id
-        })
-      );
-    } else {
-      dispatch(
-        removeFilter({
-          id: dataSource,
-          column
-        })
-      );
+      if (categories && categories.length) {
+        dispatch(
+          addFilter({
+            id: dataSource,
+            column,
+            type: FilterTypes.IN,
+            values: categories,
+            owner: id
+          })
+        );
+      } else {
+        dispatch(
+          removeFilter({
+            id: dataSource,
+            column
+          })
+        );
+      }
+    },
+    [column, dataSource, id, setSelectedCategories, dispatch]
+  );
+
+  const shouldDisplayLoading = useCallback(() => {
+    if (viewportFilter) {
+      return widgetsLoadingState[id];
     }
-  }, [column, dataSource, id, setSelectedCategories, dispatch]);
+
+    return !globalDataFetched.current;
+  }, [viewportFilter, id, widgetsLoadingState]);
 
   return (
-    <WrapperWidgetUI
-      title={title}
-      isLoading={widgetsLoadingState[id]}
-      {...wrapperProps}
-    >
+    <WrapperWidgetUI title={title} isLoading={shouldDisplayLoading()} {...wrapperProps}>
       <PieWidgetUI
         data={categoryData}
         formatter={formatter}
@@ -154,7 +178,7 @@ PieWidget.propTypes = {
 };
 
 PieWidget.defaultProps = {
-  viewportFilter: false,
+  viewportFilter: true,
   wrapperProps: {}
 };
 

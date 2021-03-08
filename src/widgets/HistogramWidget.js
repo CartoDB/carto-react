@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter, selectSourceById } from '../redux/cartoSlice';
@@ -19,7 +19,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {number[]} props.ticks - Array of thresholds for the X axis.
  * @param  {formatterCallback} [props.xAxisformatter] - Function to format X axis values.
  * @param  {formatterCallback} [props.formatter] - Function to format Y axis values.
- * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or globally.
+ * @param  {boolean} [props.viewportFilter=true] - Defines whether filter by the viewport or globally.
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
@@ -32,6 +32,7 @@ function HistogramWidget(props) {
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
+  const globalDataFetched = useRef(false);
   const [hasLoadingState, setIsLoading] = useWidgetLoadingState(
     props.id,
     props.viewportFilter
@@ -55,26 +56,46 @@ function HistogramWidget(props) {
   );
 
   useEffect(() => {
-    const abortController = new AbortController();
+    if (!props.viewportFilter) {
+      setIsLoading(true);
+      globalDataFetched.current = false;
+    }
+  }, [props.viewportFilter, setIsLoading]);
 
+  useEffect(() => {
+    if (
+      !props.viewportFilter &&
+      globalDataFetched.current &&
+      widgetsLoadingState[props.id]
+    ) {
+      setIsLoading(false);
+    }
+  }, [props.viewportFilter, props.id, widgetsLoadingState, setIsLoading]);
+
+  useEffect(() => {
+    const abortController = new AbortController();
     if (data && credentials && hasLoadingState) {
       const filters = getApplicableFilters(source.filters, props.id);
-      !props.viewportFilter && setIsLoading(true);
-      getHistogram({
-        ...props,
-        data,
-        filters,
-        credentials,
-        viewportFeatures: viewportFeatures[props.dataSource] || [],
-        type,
-        opts: { abortController }
-      })
-        .then((data) => data && setHistogramData(data))
-        .catch((error) => {
-          if (error.name === 'AbortError') return;
-          if (props.onError) props.onError(error);
+      if ((!props.viewportFilter && !globalDataFetched.current) || props.viewportFilter) {
+        getHistogram({
+          ...props,
+          data,
+          filters,
+          credentials,
+          viewportFeatures: viewportFeatures[props.dataSource] || [],
+          type,
+          opts: { abortController }
         })
-        .finally(() => setIsLoading(false));
+          .then((data) => data && setHistogramData(data))
+          .catch((error) => {
+            if (error.name === 'AbortError') return;
+            if (props.onError) props.onError(error);
+          })
+          .finally(() => {
+            setIsLoading(false);
+            if (!props.viewportFilter) globalDataFetched.current = true;
+          });
+      }
     } else {
       setHistogramData([]);
     }
@@ -122,11 +143,19 @@ function HistogramWidget(props) {
     [column, props.dataSource, props.id, setSelectedBars, dispatch, ticks]
   );
 
+  const shouldDisplayLoading = useCallback(() => {
+    if (props.viewportFilter) {
+      return widgetsLoadingState[props.id];
+    }
+
+    return !globalDataFetched.current;
+  }, [props.viewportFilter, props.id, widgetsLoadingState]);
+
   return (
     <WrapperWidgetUI
       title={title}
       {...props.wrapperProps}
-      isLoading={widgetsLoadingState[props.id]}
+      isLoading={shouldDisplayLoading()}
     >
       <HistogramWidgetUI
         data={histogramData}
@@ -158,7 +187,7 @@ HistogramWidget.propTypes = {
 
 HistogramWidget.defaultProps = {
   tooltip: true,
-  viewportFilter: false,
+  viewportFilter: true,
   wrapperProps: {}
 };
 
