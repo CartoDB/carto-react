@@ -66,29 +66,27 @@ function PieWidget({
     const abortController = new AbortController();
     if (data && credentials && hasLoadingState) {
       const filters = getApplicableFilters(source.filters, id);
-      if ((!viewportFilter && !globalDataFetched.current) || viewportFilter) {
-        getCategories({
-          column,
-          operation,
-          operationColumn,
-          data,
-          filters,
-          credentials,
-          viewportFilter,
-          viewportFeatures: viewportFeatures[dataSource] || [],
-          type,
-          opts: { abortController }
+      getCategories({
+        column,
+        operation,
+        operationColumn,
+        data,
+        filters,
+        credentials,
+        viewportFilter,
+        viewportFeatures: viewportFeatures[dataSource] || [],
+        type,
+        opts: { abortController }
+      })
+        .then((data) => setCategoryData(data))
+        .catch((error) => {
+          if (error.name === 'AbortError') return;
+          if (onError) onError(error);
         })
-          .then((data) => setCategoryData(data))
-          .catch((error) => {
-            if (error.name === 'AbortError') return;
-            if (onError) onError(error);
-          })
-          .finally(() => {
-            setIsLoading(false);
-            if (!viewportFilter) globalDataFetched.current = true;
-          });
-      }
+        .finally(() => {
+          setIsLoading(false);
+          if (!viewportFilter) globalDataFetched.current = true;
+        });
     } else {
       setCategoryData([]);
     }

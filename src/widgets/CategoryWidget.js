@@ -58,26 +58,24 @@ function CategoryWidget(props) {
     const abortController = new AbortController();
     if (data && credentials && hasLoadingState) {
       const filters = getApplicableFilters(source.filters, props.id);
-      if ((!props.viewportFilter && !globalDataFetched.current) || props.viewportFilter) {
-        getCategories({
-          ...props,
-          data,
-          filters,
-          credentials,
-          viewportFeatures: viewportFeatures[props.dataSource] || [],
-          type,
-          opts: { abortController }
+      getCategories({
+        ...props,
+        data,
+        filters,
+        credentials,
+        viewportFeatures: viewportFeatures[props.dataSource] || [],
+        type,
+        opts: { abortController }
+      })
+        .then((data) => setCategoryData(data))
+        .catch((error) => {
+          if (error.name === 'AbortError') return;
+          if (props.onError) props.onError(error);
         })
-          .then((data) => setCategoryData(data))
-          .catch((error) => {
-            if (error.name === 'AbortError') return;
-            if (props.onError) props.onError(error);
-          })
-          .finally(() => {
-            setIsLoading(false);
-            if (!props.viewportFilter) globalDataFetched.current = true;
-          });
-      }
+        .finally(() => {
+          setIsLoading(false);
+          if (!props.viewportFilter) globalDataFetched.current = true;
+        });
     } else {
       setCategoryData(null);
     }

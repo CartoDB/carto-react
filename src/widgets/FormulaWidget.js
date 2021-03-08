@@ -54,28 +54,26 @@ function FormulaWidget(props) {
   useEffect(() => {
     const abortController = new AbortController();
     if (data && credentials && hasLoadingState) {
-      if ((!props.viewportFilter && !globalDataFetched.current) || props.viewportFilter) {
-        getFormula({
-          ...props,
-          data,
-          filters,
-          credentials,
-          viewportFeatures: viewportFeatures[props.dataSource] || [],
-          type,
-          opts: { abortController }
+      getFormula({
+        ...props,
+        data,
+        filters,
+        credentials,
+        viewportFeatures: viewportFeatures[props.dataSource] || [],
+        type,
+        opts: { abortController }
+      })
+        .then((data) => {
+          data && data[0] && setFormulaData(data[0].value);
         })
-          .then((data) => {
-            data && data[0] && setFormulaData(data[0].value);
-          })
-          .catch((error) => {
-            if (error.name === 'AbortError') return;
-            if (props.onError) props.onError(error);
-          })
-          .finally(() => {
-            setIsLoading(false);
-            if (!props.viewportFilter) globalDataFetched.current = true;
-          });
-      }
+        .catch((error) => {
+          if (error.name === 'AbortError') return;
+          if (props.onError) props.onError(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+          if (!props.viewportFilter) globalDataFetched.current = true;
+        });
     } else {
       setFormulaData(undefined);
     }

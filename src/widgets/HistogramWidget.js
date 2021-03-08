@@ -76,26 +76,24 @@ function HistogramWidget(props) {
     const abortController = new AbortController();
     if (data && credentials && hasLoadingState) {
       const filters = getApplicableFilters(source.filters, props.id);
-      if ((!props.viewportFilter && !globalDataFetched.current) || props.viewportFilter) {
-        getHistogram({
-          ...props,
-          data,
-          filters,
-          credentials,
-          viewportFeatures: viewportFeatures[props.dataSource] || [],
-          type,
-          opts: { abortController }
+      getHistogram({
+        ...props,
+        data,
+        filters,
+        credentials,
+        viewportFeatures: viewportFeatures[props.dataSource] || [],
+        type,
+        opts: { abortController }
+      })
+        .then((data) => data && setHistogramData(data))
+        .catch((error) => {
+          if (error.name === 'AbortError') return;
+          if (props.onError) props.onError(error);
         })
-          .then((data) => data && setHistogramData(data))
-          .catch((error) => {
-            if (error.name === 'AbortError') return;
-            if (props.onError) props.onError(error);
-          })
-          .finally(() => {
-            setIsLoading(false);
-            if (!props.viewportFilter) globalDataFetched.current = true;
-          });
-      }
+        .finally(() => {
+          setIsLoading(false);
+          if (!props.viewportFilter) globalDataFetched.current = true;
+        });
     } else {
       setHistogramData([]);
     }
