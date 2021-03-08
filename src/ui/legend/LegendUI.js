@@ -111,31 +111,24 @@ function LegendRows({ layers, onChangeVisibility }) {
   const isSingle = layers.length === 1;
   return layers.map((layer) => {
     const types = {
-      category: (
-        <LegendCategories
-          data={layer.legend.data}
-          info={layer.legend.info}
-          metadata={layer.metadata}
-          attr={layer.legend.attr}
-        />
-      ),
-      icon: <LegendIcon data={layer.legend.data} info={layer.legend.info} />,
-      ramp: <LegendRamp data={layer.legend.data} info={layer.legend.info} />,
-      proportion: <LegendProportion data={layer.legend.data} info={layer.legend.info} />,
-      custom: layer.legend.children
+      category: <LegendCategories data={layer.data} info={layer.info} />,
+      icon: <LegendIcon data={layer.data} info={layer.info} />,
+      ramp: <LegendRamp data={layer.data} info={layer.info} />,
+      proportion: <LegendProportion data={layer.data} info={layer.info} />,
+      custom: layer.children
     };
 
     return (
-      <Fragment key={layer.legend.id}>
+      <Fragment key={layer.id}>
         <LegendRow
-          id={layer.legend.id}
-          title={layer.legend.title}
-          expandable={layer.legend.expandable}
-          visibility={layer.legend.visibility}
-          hasVisibility={layer.legend.hasVisibility}
+          id={layer.id}
+          title={layer.title}
+          expandable={layer.expandable}
+          visibility={layer.visibility}
+          hasVisibility={layer.hasVisibility}
           onChangeVisibility={onChangeVisibility}
         >
-          {types[layer.legend.type] || <NoLegend />}
+          {types[layer.type] || <NoLegend />}
         </LegendRow>
         {!isSingle && <Divider />}
       </Fragment>
