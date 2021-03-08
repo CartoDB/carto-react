@@ -9,6 +9,7 @@
 - Change main dependencies mode to peer, reducing library bundle size [#85](https://github.com/CartoDB/carto-react-lib/pull/85)
 - Fix viewportFeatures with empty tiles [#100](https://github.com/CartoDB/carto-react-lib/pull/100)
 - Fix viewportFeatures mode in PieWidget when using viewportFilter [#102](https://github.com/CartoDB/carto-react-lib/pull/102)
+- BREAKING: Refactor into a new **multi-package** project
 
 ## 1.0.0-beta14 (2021-02-08)
 

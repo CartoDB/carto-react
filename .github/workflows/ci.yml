@@ -3,7 +3,11 @@
 
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+    - master
+  pull_request:
 
 jobs:
   build:
@@ -19,16 +23,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install -g yarn
-      - run: yarn
-      - run: yarn lint
-      - run: yarn build
-      - run: yarn test:coverage
-      
+      - run: npm install
+      - run: npm run build
+      - run: npm run test:coverage
+
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
           CI: true
-      
