@@ -22,7 +22,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {formatterCallback} [props.formatter] - Function to format the value that appears in the tooltip.
  * @param  {formatterCallback} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
- * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not.
+ * @param  {boolean} [props.viewportFilter=true] - Defines whether filter by the viewport or not.
  * @param  {string} props.height - Height of the chart
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
@@ -157,7 +157,7 @@ PieWidget.propTypes = {
 };
 
 PieWidget.defaultProps = {
-  viewportFilter: false,
+  viewportFilter: true,
   wrapperProps: {}
 };
 
