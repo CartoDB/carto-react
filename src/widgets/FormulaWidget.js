@@ -25,55 +25,42 @@ function FormulaWidget(props) {
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const globalDataFetched = useRef(false);
+  const filtersMemo = useRef('');
   const { data, credentials, type, filters } = source;
   const [hasLoadingState, setIsLoading] = useWidgetLoadingState(
     props.id,
     props.viewportFilter
   );
 
-  // user could change 'viewportFilter' prop programatically
-  useEffect(() => {
-    if (!props.viewportFilter) {
-      setIsLoading(true);
-      globalDataFetched.current = false;
-    }
-  }, [props.viewportFilter, setIsLoading]);
-
-  // 'setAllWidgetsLoadingState' dispatched by 'useViewportFeatures' causes the loading appearing even with global data
-  useEffect(() => {
-    if (
-      !props.viewportFilter &&
-      globalDataFetched.current &&
-      widgetsLoadingState[props.id]
-    ) {
-      setIsLoading(false);
-    }
-  }, [props.viewportFilter, props.id, setIsLoading, widgetsLoadingState]);
-
   useEffect(() => {
     const abortController = new AbortController();
     if (data && credentials && hasLoadingState) {
-      getFormula({
-        ...props,
-        data,
-        filters,
-        credentials,
-        viewportFeatures: viewportFeatures[props.dataSource] || [],
-        type,
-        opts: { abortController }
-      })
-        .then((data) => {
-          data && data[0] && setFormulaData(data[0].value);
+      if (
+        (!props.viewportFilter && filtersMemo.current !== JSON.stringify(filters)) ||
+        props.viewportFilter
+      ) {
+        !props.viewportFilter && setIsLoading(true);
+        getFormula({
+          ...props,
+          data,
+          filters,
+          credentials,
+          viewportFeatures: viewportFeatures[props.dataSource] || [],
+          type,
+          opts: { abortController }
         })
-        .catch((error) => {
-          if (error.name === 'AbortError') return;
-          if (props.onError) props.onError(error);
-        })
-        .finally(() => {
-          setIsLoading(false);
-          if (!props.viewportFilter) globalDataFetched.current = true;
-        });
+          .then((data) => {
+            data && data[0] && setFormulaData(data[0].value);
+          })
+          .catch((error) => {
+            if (error.name === 'AbortError') return;
+            if (props.onError) props.onError(error);
+          })
+          .finally(() => {
+            if (!props.viewportFilter) filtersMemo.current = JSON.stringify(filters);
+          });
+      }
+      setIsLoading(false);
     } else {
       setFormulaData(undefined);
     }
@@ -97,8 +84,8 @@ function FormulaWidget(props) {
       return widgetsLoadingState[props.id];
     }
 
-    return !globalDataFetched.current;
-  }, [props.viewportFilter, props.id, widgetsLoadingState, globalDataFetched]);
+    return JSON.stringify(filters) !== filtersMemo.current;
+  }, [props.viewportFilter, props.id, filters, widgetsLoadingState]);
 
   return (
     <WrapperWidgetUI

@@ -45,48 +45,41 @@ function PieWidget({
   const source = useSelector((state) => selectSourceById(state, dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const globalDataFetched = useRef(false);
+  const filtersMemo = useRef('');
   const [hasLoadingState, setIsLoading] = useWidgetLoadingState(id, viewportFilter);
   const { data, credentials, type } = source;
-
-  useEffect(() => {
-    if (!viewportFilter) {
-      setIsLoading(true);
-      globalDataFetched.current = false;
-    }
-  }, [viewportFilter, setIsLoading]);
-
-  useEffect(() => {
-    if (!viewportFilter && globalDataFetched.current && widgetsLoadingState[id]) {
-      setIsLoading(false);
-    }
-  }, [viewportFilter, id, widgetsLoadingState, setIsLoading]);
 
   useEffect(() => {
     const abortController = new AbortController();
     if (data && credentials && hasLoadingState) {
       const filters = getApplicableFilters(source.filters, id);
-      getCategories({
-        column,
-        operation,
-        operationColumn,
-        data,
-        filters,
-        credentials,
-        viewportFilter,
-        viewportFeatures: viewportFeatures[dataSource] || [],
-        type,
-        opts: { abortController }
-      })
-        .then((data) => setCategoryData(data))
-        .catch((error) => {
-          if (error.name === 'AbortError') return;
-          if (onError) onError(error);
+      if (
+        (!viewportFilter && filtersMemo.current !== JSON.stringify(filters)) ||
+        viewportFilter
+      ) {
+        !viewportFilter && setIsLoading(true);
+        getCategories({
+          column,
+          operation,
+          operationColumn,
+          data,
+          filters,
+          credentials,
+          viewportFilter,
+          viewportFeatures: viewportFeatures[dataSource] || [],
+          type,
+          opts: { abortController }
         })
-        .finally(() => {
-          setIsLoading(false);
-          if (!viewportFilter) globalDataFetched.current = true;
-        });
+          .then((data) => setCategoryData(data))
+          .catch((error) => {
+            if (error.name === 'AbortError') return;
+            if (onError) onError(error);
+          })
+          .finally(() => {
+            if (!viewportFilter) filtersMemo.current = JSON.stringify(filters);
+          });
+      }
+      setIsLoading(false);
     } else {
       setCategoryData([]);
     }
@@ -143,8 +136,9 @@ function PieWidget({
       return widgetsLoadingState[id];
     }
 
-    return !globalDataFetched.current;
-  }, [viewportFilter, id, widgetsLoadingState]);
+    const filters = getApplicableFilters(source.filters, id);
+    return JSON.stringify(filters) !== filtersMemo.current;
+  }, [viewportFilter, id, source.filters, widgetsLoadingState]);
 
   return (
     <WrapperWidgetUI title={title} isLoading={shouldDisplayLoading()} {...wrapperProps}>

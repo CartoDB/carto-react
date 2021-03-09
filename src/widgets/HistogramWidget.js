@@ -32,7 +32,7 @@ function HistogramWidget(props) {
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
   const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const globalDataFetched = useRef(false);
+  const filtersMemo = useRef('');
   const [hasLoadingState, setIsLoading] = useWidgetLoadingState(
     props.id,
     props.viewportFilter
@@ -56,44 +56,33 @@ function HistogramWidget(props) {
   );
 
   useEffect(() => {
-    if (!props.viewportFilter) {
-      setIsLoading(true);
-      globalDataFetched.current = false;
-    }
-  }, [props.viewportFilter, setIsLoading]);
-
-  useEffect(() => {
-    if (
-      !props.viewportFilter &&
-      globalDataFetched.current &&
-      widgetsLoadingState[props.id]
-    ) {
-      setIsLoading(false);
-    }
-  }, [props.viewportFilter, props.id, widgetsLoadingState, setIsLoading]);
-
-  useEffect(() => {
     const abortController = new AbortController();
     if (data && credentials && hasLoadingState) {
       const filters = getApplicableFilters(source.filters, props.id);
-      getHistogram({
-        ...props,
-        data,
-        filters,
-        credentials,
-        viewportFeatures: viewportFeatures[props.dataSource] || [],
-        type,
-        opts: { abortController }
-      })
-        .then((data) => data && setHistogramData(data))
-        .catch((error) => {
-          if (error.name === 'AbortError') return;
-          if (props.onError) props.onError(error);
+      if (
+        (!props.viewportFilter && filtersMemo.current !== JSON.stringify(filters)) ||
+        props.viewportFilter
+      ) {
+        !props.viewportFilter && setIsLoading(true);
+        getHistogram({
+          ...props,
+          data,
+          filters,
+          credentials,
+          viewportFeatures: viewportFeatures[props.dataSource] || [],
+          type,
+          opts: { abortController }
         })
-        .finally(() => {
-          setIsLoading(false);
-          if (!props.viewportFilter) globalDataFetched.current = true;
-        });
+          .then((data) => data && setHistogramData(data))
+          .catch((error) => {
+            if (error.name === 'AbortError') return;
+            if (props.onError) props.onError(error);
+          })
+          .finally(() => {
+            if (!props.viewportFilter) filtersMemo.current = JSON.stringify(filters);
+          });
+      }
+      setIsLoading(false);
     } else {
       setHistogramData([]);
     }
@@ -146,8 +135,9 @@ function HistogramWidget(props) {
       return widgetsLoadingState[props.id];
     }
 
-    return !globalDataFetched.current;
-  }, [props.viewportFilter, props.id, widgetsLoadingState]);
+    const filters = getApplicableFilters(source.filters, props.id);
+    return JSON.stringify(filters) !== filtersMemo.current;
+  }, [props.viewportFilter, props.id, source.filters, widgetsLoadingState]);
 
   return (
     <WrapperWidgetUI
