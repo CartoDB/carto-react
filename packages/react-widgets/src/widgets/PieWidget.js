@@ -8,7 +8,7 @@ import {
   _getApplicableFilters as getApplicableFilters
 } from '@carto/react-api';
 import { getCategories } from '../models';
-import { AggregationTypes } from './AggregationTypes';
+import { AggregationTypes } from '@carto/react-core';
 
 /**
   * Renders a <PieWidget /> component

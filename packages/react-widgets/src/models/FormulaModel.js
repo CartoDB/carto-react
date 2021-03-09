@@ -5,7 +5,7 @@ import {
   executeSQL, 
   SourceTypes 
 } from '@carto/react-api';
-import { aggregationFunctions } from '../operations/aggregation/values';
+import { aggregationFunctions } from '@carto/react-core';
 
 export const getFormula = async (props) => {
   const {

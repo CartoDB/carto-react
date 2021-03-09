@@ -5,7 +5,7 @@ import {
   executeSQL, 
   SourceTypes 
 } from '@carto/react-api';
-import { histogram } from '../operations/histogram';
+import { histogram } from '@carto/react-core';
 
 export const getHistogram = async (props) => {
   const {

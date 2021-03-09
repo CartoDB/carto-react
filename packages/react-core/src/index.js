@@ -10,3 +10,8 @@ export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';
 
 export { makeClosedInterval } from './utils/makeClosedInterval';
+
+export { AggregationTypes } from './operations/aggregation/AggregationTypes';
+export { aggregationFunctions } from './operations/aggregation/values';
+export { groupValuesByColumn } from './operations/groupby';
+export { histogram } from './operations/histogram';

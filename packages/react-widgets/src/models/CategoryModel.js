@@ -5,7 +5,7 @@ import {
   executeSQL, 
   SourceTypes 
 } from '@carto/react-api';
-import { groupValuesByColumn } from '../operations/groupby';
+import { groupValuesByColumn } from '@carto/react-core';
 
 export const getCategories = async (props) => {
   const {

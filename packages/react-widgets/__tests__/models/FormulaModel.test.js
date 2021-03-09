@@ -5,7 +5,7 @@ import {
   buildSqlQueryToGetFormula,
   filterViewportFeaturesToGetFormula
 } from '../../src/models/FormulaModel';
-import { AggregationTypes } from '../../src/widgets/AggregationTypes';
+import { AggregationTypes } from '@carto/react-core';
 import { SourceTypes } from '@carto/react-api';
 
 import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
