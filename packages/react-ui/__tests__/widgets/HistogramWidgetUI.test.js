@@ -1,37 +1,15 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import HistogramWidgetUI from '../../src/widgets/HistogramWidgetUI';
-import echarts from 'echarts';
-import { getMaterialUIContext } from './testUtils';
+import { getMaterialUIContext, mockEcharts } from './testUtils';
 
 describe('HistogramWidgetUI', () => {
-  let spy;
-  beforeEach(() => {
-    spy = jest.spyOn(echarts, 'getInstanceByDom').mockImplementation(() => ({
-      hideLoading: jest.fn(),
-      getOption: jest.fn(() => ({
-        series: [
-          {
-            data: [
-              {
-                disabled: true,
-                itemStyle: {}
-              }
-            ]
-          }
-        ]
-      })),
-      setOption: jest.fn(() => ({
-        disabled: true,
-        itemStyle: {}
-      })),
-      showLoading: jest.fn(),
-      on: jest.fn()
-    }));
+  beforeAll(() => {
+    mockEcharts.init();
   });
 
   afterAll(() => {
-    spy.mockRestore();
+    mockEcharts.destroy();
   });
 
   const DATA = [1, 2, 3];
