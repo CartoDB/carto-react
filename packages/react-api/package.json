@@ -58,8 +58,8 @@
     "@turf/boolean-intersects": "^6.3.0"
   },
   "peerDependencies": {
-    "@carto/react-core": "^0.0.1-rc.1",
-    "@carto/react-redux": "^0.0.1-rc.1",
+    "@carto/react-core": "^1.0.0-rc.1",
+    "@carto/react-redux": "^1.0.0-rc.1",
     "@deck.gl/core": "^8.4.10",
     "@deck.gl/extensions": "^8.4.10",
     "react": "^17.0.1",
