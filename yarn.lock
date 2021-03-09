@@ -1066,58 +1066,6 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@carto/react-api@^0.0.1-rc.1":
-  version "0.0.1-rc.4"
-  resolved "https://registry.yarnpkg.com/@carto/react-api/-/react-api-0.0.1-rc.4.tgz#d760c9e125c1ebaa1f1d1ad52150f7f11a68d2fd"
-  integrity sha512-1L5SyKL05SVqLB48EZvAtSH4qrPea3rASnijj4wEO9P7zGm66n4ZotwdDBnXitNdpBZWJ2s5DuMi/7Ktc6jq2g==
-  dependencies:
-    "@babel/runtime" "^7.13.9"
-    "@turf/bbox-polygon" "^6.3.0"
-    "@turf/boolean-intersects" "^6.3.0"
-
-"@carto/react-auth@^0.0.1-rc.1":
-  version "0.0.1-rc.4"
-  resolved "https://registry.yarnpkg.com/@carto/react-auth/-/react-auth-0.0.1-rc.4.tgz#2d23ed371339745ff04b64140f039d81f5acb2f6"
-  integrity sha512-EMbi2KkIHlac3fj4rBSn7Bi/SStYrLF+g387VnQ1qaaf4df06bVKfyOb/AO52TlfxCr+yYgiu3eOakU9lM1Mug==
-  dependencies:
-    "@babel/runtime" "^7.13.9"
-
-"@carto/react-basemaps@^0.0.1-rc.1":
-  version "0.0.1-rc.4"
-  resolved "https://registry.yarnpkg.com/@carto/react-basemaps/-/react-basemaps-0.0.1-rc.4.tgz#7869e6e2978626bf5faa6b4f37ef6a2661d3aaf1"
-  integrity sha512-XfdXvI4nJSW9k+kU7hXsxwicV+CYsUZgsNWxHwcnmWEV8X+VdHCEbMwnzrHEe0zv5tEF6WnBqLCV6iM2ed12Aw==
-  dependencies:
-    "@babel/runtime" "^7.13.9"
-
-"@carto/react-core@^0.0.1-rc.1":
-  version "0.0.1-rc.4"
-  resolved "https://registry.yarnpkg.com/@carto/react-core/-/react-core-0.0.1-rc.4.tgz#d2ed9db3d574b1fa4c7ea6fd98df919a34668d8e"
-  integrity sha512-PPGvrxC+U3Aqzcy3EP8Pqtnt/OaZAOJYsYjvWBPBWWeILdMPyKVxw/lIlic4Vm6atLd1pGKHekm1lsxh/fz/1w==
-  dependencies:
-    "@babel/runtime" "^7.13.9"
-
-"@carto/react-redux@^0.0.1-rc.1":
-  version "0.0.1-rc.4"
-  resolved "https://registry.yarnpkg.com/@carto/react-redux/-/react-redux-0.0.1-rc.4.tgz#cbdd12b77e87471a68234c4f20a10fda7d9a302d"
-  integrity sha512-0PofjGksEP2uRl9wHg6sXO1rL7MKiCzsvrQwwOP/3uqjzLtFZ1+1UCdkIIhrmCC1qBs0pFJmmiVl+X/5FzI7Jw==
-  dependencies:
-    "@babel/runtime" "^7.13.9"
-
-"@carto/react-ui@^0.0.1-rc.1":
-  version "0.0.1-rc.4"
-  resolved "https://registry.yarnpkg.com/@carto/react-ui/-/react-ui-0.0.1-rc.4.tgz#29b247bd08f7b3041b39d3a9fededf65f1896045"
-  integrity sha512-JQSCkiz0YBHfx5dRmQOSMSGOjZrWfgPWpZHpkfzyr6xW0EdPS+zMo7GEokFxdYdSbAM6tsbaCq+bngLd0uI0Gg==
-  dependencies:
-    "@babel/runtime" "^7.13.9"
-
-"@carto/react-widgets@^0.0.1-rc.1":
-  version "0.0.1-rc.4"
-  resolved "https://registry.yarnpkg.com/@carto/react-widgets/-/react-widgets-0.0.1-rc.4.tgz#cd453cb55b50ab13e85c414a9134866cad3d3688"
-  integrity sha512-LdobDgKOAFluc2mU0pLqBUdbAWQWiGcknHQ+zD3XCwu5ae4XYs1tk5fYBNUQfVsbZnEqiJQoS/9EW6UFxLFWXw==
-  dependencies:
-    "@babel/runtime" "^7.13.9"
-    pgsql-minify "^1.0.5"
-
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"

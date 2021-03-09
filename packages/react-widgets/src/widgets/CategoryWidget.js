@@ -8,14 +8,8 @@ import {
   _getApplicableFilters as getApplicableFilters
 } from '@carto/react-api';
 import { getCategories } from '../models';
-import { AggregationTypes, makeClosedInterval } from '@carto/react-core';
+import { AggregationTypes } from '@carto/react-core';
 import useWidgetLoadingState from './useWidgetLoadingState';
-
-var aaa = AggregationTypes;
-var bbb  = makeClosedInterval;
-
-debugger;
-
 
 /**
  * Renders a <CategoryWidget /> component
