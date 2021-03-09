@@ -1,4 +1,4 @@
-export function dataEqual(optionPrev, optionNext) {
+export function isDataEqual(optionPrev, optionNext) {
   const dataPrev = optionPrev.series[0]?.data;
   const dataNext = optionNext.series[0].data;
   if (dataPrev && dataNext && dataPrev.length === dataNext.length) {
@@ -15,7 +15,7 @@ export function disableSerie(serie, theme) {
 }
 
 export function clearFilter(serie) {
-  serie.data.forEach((item, index) => {
+  serie.data.forEach((item) => {
     item.disabled = false;
     setColor(item);
   });
