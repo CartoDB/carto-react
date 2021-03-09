@@ -1,5 +1,5 @@
 import React from 'react';
-import CategoryWidgetUI from '../../widgets/CategoryWidgetUI';
+import CategoryWidgetUI from '../../../src/widgets/CategoryWidgetUI';
 
 const options = {
   title: 'Widgets/CategoryWidgetUI',

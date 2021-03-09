@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
-import { cartoThemeOptions } from '../theme/carto-theme';
+import { cartoThemeOptions } from '../../src/theme/carto-theme';
 
 let theme = createMuiTheme(cartoThemeOptions);
 theme = responsiveFontSizes(theme, {

@@ -39,6 +39,9 @@
     "test:coverage": "lerna run --parallel test:coverage && node scripts/mergeCoverage.js",
     "link-all": "lerna exec --parallel yarn link",
     "unlink-all": "lerna exec --parallel yarn unlink",
+    "storybook:start": "lerna --scope @carto/react-ui exec -- npm run storybook:start",
+    "storybook:build": "lerna --scope @carto/react-ui exec -- npm run storybook:build",
+    "storybook:publish": "lerna --scope @carto/react-ui exec -- npm run storybook:publish",
     "prerelease": "yarn run build:full && lerna publish --dist-tag prerelease --force-publish --preid rc"
   }
 }
