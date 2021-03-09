@@ -1,11 +1,19 @@
 # `@carto/react-basemaps`
 
-> TODO: description
+<p>
+  <a href="https://npmjs.org/package/@carto/react-basemaps">
+    <img src="https://img.shields.io/npm/v/@carto/react-basemaps.svg?style=flat-square" alt="version" />
+  </a>
 
-## Usage
+  <a href="https://npmjs.org/package/@carto/react-basemaps">
+    <img src="https://img.shields.io/npm/dt/@carto/react-basemaps.svg?style=flat-square" alt="downloads" />
+  </a>
+</p>
 
-```
-const reactBasemaps = require('@carto/react-basemaps');
+<br/>
 
-// TODO: DEMONSTRATE API
-```
+Package to use CARTO basemaps + an easy to use GoogleMap React component
+
+See also the [reference](reference.md)
+
+Review [CARTO for React](https://docs.carto.com/react/)
