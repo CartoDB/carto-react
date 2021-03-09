@@ -1,8 +1,17 @@
 # Developers
 
-This is a monorepo, made with lerna and yarn workspaces
+This is a monorepo, made with lerna and yarn workspaces.
 
-Clone and execute `yarn`
+Install lerna globally as a first step, if you don't have it already available
+
+```
+  yarn global add lerna
+```
+
+Clone and execute 
+```
+  yarn
+```
 
 From now on, use one of the root level commands, that lerna will execute for all internal packages, like for example:
 ```
