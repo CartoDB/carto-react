@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
@@ -9,58 +9,72 @@ import {
 } from '@carto/react-api';
 import { getCategories } from '../models';
 import { AggregationTypes } from '@carto/react-core';
+import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**
-  * Renders a <PieWidget /> component
-  * @param  props
-  * @param  {string} id - ID for the widget instance.
-  * @param  {string} title - Title to show in the widget header.
-  * @param  {string} dataSource - ID of the data source to get the data from.
-  * @param  {string} column - Name of the data source's column to get the data from.
-  * @param  {string} [operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
-  * @param  {string} operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
-  * @param  {formatterCallback} [formatter] - Function to format the value that appears in the tooltip.
-  * @param  {formatterCallback} [tooltipFormatter] - Function to return the HTML of the tooltip.
-  * @param  {boolean} [viewportFilter=false] - Defines whether filter by the viewport or not.
-  * @param  {string} height - Height of the chart
-  * @param  {errorCallback} [onError] - Function to handle error messages from the widget.
-  */
- function PieWidget({ id, title, height, dataSource, column, operationColumn, operation, formatter, tooltipFormatter, viewportFilter  = false, onError }) {
-  const dispatch = useDispatch();
-  const viewport = useSelector((state) => viewportFilter && state.carto.viewport);
-  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-
+ * Renders a <PieWidget /> component
+ * @param  props
+ * @param  {string} props.id - ID for the widget instance.
+ * @param  {string} props.title - Title to show in the widget header.
+ * @param  {string} props.dataSource - ID of the data source to get the data from.
+ * @param  {string} props.column - Name of the data source's column to get the data from.
+ * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
+ * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
+ * @param  {formatterCallback} [props.formatter] - Function to format the value that appears in the tooltip.
+ * @param  {formatterCallback} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
+ * @param  {boolean} [props.viewportFilter=false] - Defines whether filter by the viewport or not.
+ * @param  {string} props.height - Height of the chart
+ * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ */
+function PieWidget({
+  id,
+  title,
+  height,
+  dataSource,
+  column,
+  operationColumn,
+  operation,
+  formatter,
+  tooltipFormatter,
+  viewportFilter = false,
+  onError,
+  wrapperProps
+}) {
   const [categoryData, setCategoryData] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+
+  const dispatch = useDispatch();
+  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
+  const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
+
+  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
+  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(id, viewportFilter);
+  const { data, credentials, type } = source;
 
   useEffect(() => {
     const abortController = new AbortController();
-    if (
-      source.data &&
-      source.credentials &&
-      (!viewportFilter || (viewportFilter && viewport))
-    ) {
+    if (data && credentials && hasLoadingState) {
       const filters = getApplicableFilters(source.filters, id);
-      setLoading(true);
+      !viewportFilter && setIsLoading(true);
       getCategories({
         column,
         operation,
         operationColumn,
-        data: source.data,
+        data,
         filters,
-        credentials: source.credentials,
-        viewport,
-        opts: { abortController },
+        credentials,
+        viewportFilter,
+        viewportFeatures: viewportFeatures[dataSource] || [],
+        type,
+        opts: { abortController }
       })
-        .then((data) => {
-          setCategoryData(data);
-          setLoading(false);
-        })
+        .then((data) => setCategoryData(data))
         .catch((error) => {
           if (error.name === 'AbortError') return;
           if (onError) onError(error);
-        });
+        })
+        .finally(() => setIsLoading(false));
     } else {
       setCategoryData([]);
     }
@@ -69,21 +83,26 @@ import { AggregationTypes } from '@carto/react-core';
       abortController.abort();
     };
   }, [
-    source.credentials,
-    source.data,
+    credentials,
+    dataSource,
+    data,
+    setIsLoading,
     source.filters,
-    viewport,
-    viewportFilter,
+    type,
+    viewportFeatures,
     column,
     operation,
     operationColumn,
     dispatch,
     id,
     onError,
+    hasLoadingState,
+    viewportFilter
   ]);
 
-  const handleSelectedCategoriesChange = (categories) => {
+  const handleSelectedCategoriesChange = useCallback((categories) => {
     setSelectedCategories(categories);
+
     if (categories && categories.length) {
       dispatch(
         addFilter({
@@ -91,27 +110,31 @@ import { AggregationTypes } from '@carto/react-core';
           column,
           type: FilterTypes.IN,
           values: categories,
-          owner: id,
+          owner: id
         })
       );
     } else {
       dispatch(
         removeFilter({
           id: dataSource,
-          column,
+          column
         })
       );
     }
-  };
+  }, [column, dataSource, id, setSelectedCategories, dispatch]);
 
   return (
-    <WrapperWidgetUI title={title} loading={loading}>
+    <WrapperWidgetUI
+      title={title}
+      isLoading={widgetsLoadingState[id]}
+      {...wrapperProps}
+    >
       <PieWidgetUI
         data={categoryData}
         formatter={formatter}
         height={height}
         tooltipFormatter={tooltipFormatter}
-        loading={loading}
+        isLoading={widgetsLoadingState[id]}
         selectedCategories={selectedCategories}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
       />
@@ -134,7 +157,8 @@ PieWidget.propTypes = {
 };
 
 PieWidget.defaultProps = {
-  viewportFilter: false
+  viewportFilter: false,
+  wrapperProps: {}
 };
 
 export default PieWidget;

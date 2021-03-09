@@ -5,7 +5,7 @@ import { useTheme } from '@material-ui/core';
 import {
   getChartSerie,
   applyChartFilter,
-  dataEqual,
+  isDataEqual,
   disableSerie,
   setColor
 } from './utils/chartUtils';
@@ -127,7 +127,7 @@ function __getDefaultLabel(data = []) {
 
 const EchartsWrapper = React.memo(
   ReactEcharts,
-  ({ option: optionPrev }, { option: optionNext }) => dataEqual(optionPrev, optionNext)
+  ({ option: optionPrev }, { option: optionNext }) => isDataEqual(optionPrev, optionNext)
 );
 
 function PieWidgetUI({
@@ -165,7 +165,7 @@ function PieWidgetUI({
     );
     const series = __generateSerie({
       name,
-      data,
+      data: data || [],
       theme,
       color: config.color,
       selectedCategories
