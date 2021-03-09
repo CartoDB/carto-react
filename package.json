@@ -3,13 +3,6 @@
   "private": true,
   "workspaces": ["packages/*"],
   "devDependencies": {
-    "@carto/react-api": "^1.0.0-rc.1",
-    "@carto/react-auth": "^1.0.0-rc.1",
-    "@carto/react-basemaps": "^1.0.0-rc.1",
-    "@carto/react-core": "^1.0.0-rc.1",
-    "@carto/react-redux": "^1.0.0-rc.1",
-    "@carto/react-ui": "^1.0.0-rc.1",
-    "@carto/react-widgets": "^1.0.0-rc.1",
     "@deck.gl/core": "^8.4.10",
     "@deck.gl/extensions": "^8.4.10",
     "@deck.gl/google-maps": "^8.4.10",
@@ -34,16 +27,18 @@
   },
   "scripts": {
     "start": "lerna run build:watch --stream --parallel",
-    "build": "NODE_ENV=production lerna run build --stream",
-    "clean-all": "rm -rf ./node_modules && lerna exec -- rm -rf ./node_modules ./dist ./coverage",
+    "build": "yarn clean:build && NODE_ENV=production lerna run build --stream",
+    "build:full": "yarn clean:all && yarn install && yarn build && yarn test",
+    "clean:all": "yarn clean:node_modules && yarn clean:build",
+    "clean:node_modules": "rm -rf ./node_modules && lerna exec -- rm -rf ./node_modules ",
+    "clean:build": "rm -rf ./coverage ./.nyc_output ./reports && lerna exec -- rm -rf ./dist ./coverage",
     "lint": "lerna run lint --stream",
     "lint:fix": "lerna run --parallel lint:fix",
     "test": "lerna run lint --stream && lerna run test --stream",
     "test:watch": "lerna run --parallel test:watch",
     "test:coverage": "lerna run --parallel test:coverage && node scripts/mergeCoverage.js",
-    "test:clean": "yarn clean-all && yarn install && yarn test && yarn build",
     "link-all": "lerna exec --parallel yarn link",
     "unlink-all": "lerna exec --parallel yarn unlink",
-    "prerelease": "yarn run test:clean && lerna publish --dist-tag prerelease --force-publish --preid rc"
+    "prerelease": "yarn run build:full && lerna publish --dist-tag prerelease --force-publish --preid rc"
   }
 }
