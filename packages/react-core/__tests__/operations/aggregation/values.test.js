@@ -1,5 +1,5 @@
 import { aggregationFunctions } from '../../../src/operations/aggregation/values';
-import { AggregationTypes } from '../../../src/widgets/AggregationTypes';
+import { AggregationTypes } from '../../../src/operations/aggregation/AggregationTypes';
 
 const VALUES = [1, 2, 3, 4, 5];
 

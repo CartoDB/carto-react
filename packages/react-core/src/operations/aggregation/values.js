@@ -1,4 +1,4 @@
-import { AggregationTypes } from '../../widgets/AggregationTypes';
+import { AggregationTypes } from './AggregationTypes';
 
 const sum = (values, key) => {
   const fn = key ? (a, b) => a + b[key] : (a, b) => a + b;

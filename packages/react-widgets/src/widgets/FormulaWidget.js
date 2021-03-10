@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import { selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
-import { AggregationTypes } from './AggregationTypes';
+import { AggregationTypes } from '@carto/react-core';
 import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**

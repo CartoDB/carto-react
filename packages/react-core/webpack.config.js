@@ -6,6 +6,9 @@ const webpackBaseConfig = require('../../webpack.base');
 
 const webpackConfig = {
   ...webpackBaseConfig,
+  externals: [
+    /^@turf\/.+$/,
+  ],
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'index.js',

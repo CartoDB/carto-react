@@ -1,8 +1,7 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setViewportFeatures, setAllWidgetsLoadingState } from '@carto/react-redux';
-import { debounce } from '@carto/react-core';
-import { viewportFeatures } from './viewportFeatures';
+import { debounce, viewportFeatures } from '@carto/react-core';
 
 export default function useViewportFeatures(
   source,

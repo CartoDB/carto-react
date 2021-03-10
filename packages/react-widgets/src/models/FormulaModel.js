@@ -2,10 +2,10 @@ import { minify } from 'pgsql-minify';
 import { 
   _buildFeatureFilter as buildFeatureFilter, 
   _filtersToSQL as filtersToSQL, 
-  executeSQL, 
-  SourceTypes 
-} from '@carto/react-api';
-import { aggregationFunctions } from '../operations/aggregation/values';
+  aggregationFunctions
+} from '@carto/react-core';
+
+import { executeSQL, SourceTypes } from '@carto/react-api'
 
 export const getFormula = async (props) => {
   const {

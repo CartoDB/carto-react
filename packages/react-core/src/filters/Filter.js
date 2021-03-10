@@ -1,4 +1,4 @@
-import { makeClosedInterval } from '@carto/react-core';
+import { makeClosedInterval } from '../utils/makeClosedInterval';
 import { FilterTypes } from './FilterQueryBuilder';
 
 const filterFunctions = {

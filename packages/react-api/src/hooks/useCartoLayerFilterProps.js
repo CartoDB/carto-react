@@ -1,7 +1,6 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
-import { debounce } from '@carto/react-core';
-import useViewportFeatures from './viewportFeatures/useViewportFeatures';
-import { buildFeatureFilter } from './Filter';
+import { debounce, _buildFeatureFilter } from '@carto/react-core';
+import useViewportFeatures from './useViewportFeatures';
 
 export default function useCartoLayerFilterProps(
   source,
@@ -11,7 +10,7 @@ export default function useCartoLayerFilterProps(
 
   return {
     onViewportLoad: debounce(onViewportLoad),
-    getFilterValue: buildFeatureFilter({ filters: source?.filters, type: 'number' }),
+    getFilterValue: _buildFeatureFilter({ filters: source?.filters, type: 'number' }),
     filterRange: [1, 1],
     extensions: [new DataFilterExtension({ filterSize: 1 })],
     updateTriggers: {

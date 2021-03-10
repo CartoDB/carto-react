@@ -5,10 +5,10 @@ import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI } from '@carto/react-ui';
 import { 
   _FilterTypes as FilterTypes, 
-  _getApplicableFilters as getApplicableFilters
-} from '@carto/react-api';
+  _getApplicableFilters as getApplicableFilters,
+  AggregationTypes
+} from '@carto/react-core';
 import { getHistogram } from '../models';
-import { AggregationTypes } from './AggregationTypes';
 import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**

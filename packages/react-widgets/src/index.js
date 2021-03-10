@@ -31,4 +31,3 @@ export { default as GeocoderWidget } from './widgets/GeocoderWidget';
 export { default as HistogramWidget } from './widgets/HistogramWidget';
 export { default as PieWidget } from './widgets/PieWidget';
 export { getFormula, getHistogram, getCategories, geocodeStreetPoint } from './models';
-export { AggregationTypes } from './widgets/AggregationTypes';

@@ -1,6 +1,6 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
 import { renderHook } from '@testing-library/react-hooks';
-import useCartoLayerFilterProps from '../../src/filters/useCartoLayerFilterProps';
+import useCartoLayerFilterProps from '../../src/hooks/useCartoLayerFilterProps';
 import { mockClear, mockReduxHooks } from '../mockReduxHooks';
 
 describe('useCartoLayerFilterProps', () => {
