@@ -146,7 +146,7 @@ function CategoryWidgetUI(props) {
   const [animValues, setAnimValues] = useState([]);
   const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
-  const referencedPrevAnimValues = useRef(prevAnimValues);
+  const referencedPrevAnimValues = useRef();
   const classes = useStyles();
 
   // Get blockedCategories in the same order as original data
@@ -331,6 +331,10 @@ function CategoryWidgetUI(props) {
     searchValue,
     showAll
   ]);
+
+  useEffect(() => {
+    referencedPrevAnimValues.current = prevAnimValues;
+  }, [prevAnimValues]);
 
   useEffect(() => {
     animateValues({
