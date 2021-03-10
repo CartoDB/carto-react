@@ -12,7 +12,7 @@
 
 <br/>
 
-Package to use CARTO OAuth system.
+Package to use CARTO Workers system.
 
 See also the [reference](reference.md)
 
