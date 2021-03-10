@@ -18,7 +18,7 @@ Executes a SQL query against [CARTO SQL API](https://carto.com/developers/sql-ap
 | opts                          | <code>Object</code> | Additional options for the HTTP request |
 | opts.format                   | <code>string</code> | Output format (i.e. geojson)            |
 
-## useCartoLayerFilterProps ⇒ <code>Object</code>
+## useCartoLayerProps ⇒ <code>Object</code>
 
 Returns required default props for layers. It manages filtering and viewport changes.
 
