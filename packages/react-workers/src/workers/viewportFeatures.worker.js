@@ -1,7 +1,7 @@
 import {
   viewportFeaturesBinary as viewportFeatures,
   aggregationFunctions,
-  buildFeatureFilter,
+  _buildFeatureFilter,
   histogram,
   groupValuesByColumn } from '@carto/react-core';
 import { Methods } from '../workerMethods';
@@ -84,5 +84,5 @@ function getCategories({ filters, operation, column, operationColumn }) {
 function getFilteredFeatures(filters) {
   return !Object.keys(currentViewportFeatures).length
     ? currentViewportFeatures
-    : currentViewportFeatures.filter(buildFeatureFilter({ filters }));
+    : currentViewportFeatures.filter(_buildFeatureFilter({ filters }));
 }
