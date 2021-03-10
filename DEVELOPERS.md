@@ -1,6 +1,6 @@
 # Developers
 
-This is a monorepo, made with lerna and yarn workspaces.
+This is a monorepo, made with lerna and yarn workspaces. We recommend node version >=14.X
 
 Clone and execute 
 ```
@@ -43,4 +43,3 @@ To deploy there a new update:
     yarn storybook:publish
   ```
 - That will publish the website to the Google Cloud Firebase project.
-

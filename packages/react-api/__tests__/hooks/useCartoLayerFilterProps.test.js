@@ -1,12 +1,12 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
 import { renderHook } from '@testing-library/react-hooks';
-import useCartoLayerFilterProps from '../../src/hooks/useCartoLayerFilterProps';
+import useCartoLayerProps from '../../src/hooks/useCartoLayerProps';
 import { mockClear, mockReduxHooks } from '../mockReduxHooks';
 
-describe('useCartoLayerFilterProps', () => {
+describe('useCartoLayerProps', () => {
   mockReduxHooks();
 
-  const { result } = renderHook(() => useCartoLayerFilterProps());
+  const { result } = renderHook(() => useCartoLayerProps());
 
   it('should return correct filter props', () => {
     expect(Object.keys(result.current)).toEqual([

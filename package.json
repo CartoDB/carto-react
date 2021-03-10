@@ -26,6 +26,8 @@
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
+    "@turf/bbox-polygon": "^6.3.0",
+    "@turf/boolean-intersects": "^6.3.0",
     "webpack": "^5.24.2",
     "webpack-cli": "^4.5.0"
   },
