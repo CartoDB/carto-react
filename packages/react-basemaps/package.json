@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-basemaps",
-  "version": "1.0.0-rc.1",
+  "version": "0.0.1-rc.4",
   "description": "CARTO for React - basemaps",
   "author": "CARTO Dev Team",
   "repository": {
@@ -56,7 +56,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^1.0.0-rc.1",
+    "@carto/react-core": "^0.0.1-rc.4",
     "@deck.gl/google-maps": "^8.4.10",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"

@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-widgets",
-  "version": "1.0.0-rc.1",
+  "version": "0.0.1-rc.4",
   "description": "CARTO for React - widgets",
   "author": "CARTO Dev Team",
   "repository": {
@@ -57,10 +57,10 @@
     "pgsql-minify": "^1.0.5"
   },
   "peerDependencies": {
-    "@carto/react-api": "^1.0.0-rc.1",
-    "@carto/react-core": "^1.0.0-rc.1",
-    "@carto/react-redux": "^1.0.0-rc.1",
-    "@carto/react-ui": "^1.0.0-rc.1",
+    "@carto/react-api": "^0.0.1-rc.4",
+    "@carto/react-core": "^0.0.1-rc.4",
+    "@carto/react-redux": "^0.0.1-rc.4",
+    "@carto/react-ui": "^0.0.1-rc.4",
     "@material-ui/core": "^4.11.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
