@@ -1,7 +1,8 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setViewportFeatures, setAllWidgetsLoadingState } from '@carto/react-redux';
-import { debounce, viewportFeatures } from '@carto/react-core';
+import { setViewportFeaturesReady, setAllWidgetsLoadingState } from '@carto/react-redux';
+import { debounce } from '@carto/react-core';
+import { Methods, executeTask } from '@carto/react-workers'
 
 export default function useViewportFeatures(
   source,
@@ -14,13 +15,23 @@ export default function useViewportFeatures(
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const computeFeatures = useCallback(
-    debounce(({ tiles, viewport, uniqueIdProperty, sourceId }) => {
-      const features = viewportFeatures({ tiles, viewport, uniqueIdProperty });
+    debounce(async ({ tiles, viewport, uniqueIdProperty, sourceId }) => {
+      const tilesCleaned = tiles.map(({ data, isVisible, bbox }) => ({
+        data,
+        isVisible,
+        bbox
+      }));
+
+      await executeTask(sourceId, Methods.VIEWPORT_FEATURES, {
+        tiles: tilesCleaned,
+        viewport,
+        uniqueIdProperty
+      });
 
       dispatch(
-        setViewportFeatures({
+        setViewportFeaturesReady({
           sourceId,
-          features: features
+          ready: true
         })
       );
     }, debounceTimeOut),

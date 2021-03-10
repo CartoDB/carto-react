@@ -31,7 +31,7 @@ function CategoryWidget(props) {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const dispatch = useDispatch();
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
+  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
   const [hasLoadingState, setIsLoading] = useWidgetLoadingState(
     props.id,
@@ -49,7 +49,8 @@ function CategoryWidget(props) {
         data,
         filters,
         credentials,
-        viewportFeatures: viewportFeatures[props.dataSource] || [],
+        viewportFeatures: viewportFeaturesReady[props.dataSource] || false,
+        dataSource: props.dataSource,
         type,
         opts: { abortController }
       })
@@ -72,7 +73,7 @@ function CategoryWidget(props) {
     setIsLoading,
     source.filters,
     type,
-    viewportFeatures,
+    viewportFeaturesReady,
     props,
     hasLoadingState
   ]);

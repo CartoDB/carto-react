@@ -23,3 +23,4 @@ export {
 } from './filters/FilterQueryBuilder';
 export { buildFeatureFilter as _buildFeatureFilter } from './filters/Filter';
 export { viewportFeatures } from './filters/viewportFeatures';
+export { viewportFeatures as viewportFeaturesBinary } from './filters/viewportFeaturesBinary';

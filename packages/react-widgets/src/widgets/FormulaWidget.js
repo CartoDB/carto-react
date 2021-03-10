@@ -23,7 +23,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
 function FormulaWidget(props) {
   const [formulaData, setFormulaData] = useState(null);
   const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
+  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
   const { data, credentials, type, filters } = source;
   const [hasLoadingState, setIsLoading] = useWidgetLoadingState(
@@ -40,7 +40,8 @@ function FormulaWidget(props) {
         data,
         filters,
         credentials,
-        viewportFeatures: viewportFeatures[props.dataSource] || [],
+        viewportFeatures: viewportFeaturesReady[props.dataSource] || false,
+        dataSource: props.dataSource,
         type,
         opts: { abortController }
       })
@@ -63,7 +64,7 @@ function FormulaWidget(props) {
     credentials,
     data,
     filters,
-    viewportFeatures,
+    viewportFeaturesReady,
     props,
     hasLoadingState,
     setIsLoading,

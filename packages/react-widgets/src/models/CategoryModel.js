@@ -1,11 +1,7 @@
 import { minify } from 'pgsql-minify';
-import { 
-  _buildFeatureFilter as buildFeatureFilter, 
-  _filtersToSQL as filtersToSQL, 
-  groupValuesByColumn
-} from '@carto/react-core';
-
-import { executeSQL, SourceTypes } from '@carto/react-api'
+import { _filtersToSQL as filtersToSQL } from '@carto/react-core';
+import { executeSQL, SourceTypes } from '@carto/react-api';
+import { Methods, executeTask } from '@carto/react-workers';
 
 export const getCategories = async (props) => {
   const {
@@ -15,10 +11,9 @@ export const getCategories = async (props) => {
     operation,
     filters,
     viewportFilter,
-    viewportFeatures,
+    dataSource,
     type,
-    opts,
-    alias = 'name'
+    opts
   } = props;
 
   if (Array.isArray(data)) {
@@ -34,9 +29,7 @@ export const getCategories = async (props) => {
   const operationColumn = props.operationColumn || column;
 
   if (viewportFilter) {
-    return filterViewportFeaturesToGetCategories({
-      viewportFilter,
-      viewportFeatures,
+    return executeTask(dataSource, Methods.VIEWPORT_FEATURES_CATEGORY, {
       filters,
       operation,
       column,
@@ -49,8 +42,7 @@ export const getCategories = async (props) => {
     column,
     operation,
     operationColumn,
-    filters,
-    alias
+    filters
   });
   return await executeSQL(credentials, query, opts);
 };
@@ -63,59 +55,30 @@ export const buildSqlQueryToGetCategories = ({
   column,
   operation,
   operationColumn,
-  filters,
-  alias = 'name'
+  filters
 }) => {
   const query = `
     WITH all_categories as (
       SELECT
-        ${column} as ${alias}
+        ${column} as category
       FROM
         (${data}) as q
-      GROUP BY ${alias}
+      GROUP BY category
     ),
     categories as (
       SELECT
-        ${column} as ${alias}, ${operation}(${operationColumn}) as value
+        ${column} as category, ${operation}(${operationColumn}) as value
       FROM
         (${data}) as q
       ${filtersToSQL(filters)}
-      GROUP BY ${alias}
+      GROUP BY category
     )
     SELECT
-      a.${alias}, b.value
+      a.category, b.value
     FROM
       all_categories a
-    LEFT JOIN categories b ON a.${alias}=b.${alias}
+    LEFT JOIN categories b ON a.category=b.category
   `;
 
   return minify(query);
-};
-
-/**
- * Filter viewport features to get the Categories defined by props
- */
-export const filterViewportFeaturesToGetCategories = ({
-  viewportFeatures,
-  filters,
-  operation,
-  column,
-  operationColumn
-}) => {
-  if (viewportFeatures) {
-    const filteredFeatures = !Object.keys(viewportFeatures).length
-      ? viewportFeatures
-      : viewportFeatures.filter(buildFeatureFilter({ filters }));
-
-    const groups = groupValuesByColumn(
-      filteredFeatures,
-      operationColumn,
-      column,
-      operation
-    );
-
-    return groups;
-  }
-
-  return [];
 };

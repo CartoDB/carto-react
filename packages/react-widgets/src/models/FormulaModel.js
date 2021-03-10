@@ -1,11 +1,7 @@
 import { minify } from 'pgsql-minify';
-import { 
-  _buildFeatureFilter as buildFeatureFilter, 
-  _filtersToSQL as filtersToSQL, 
-  aggregationFunctions
-} from '@carto/react-core';
-
-import { executeSQL, SourceTypes } from '@carto/react-api'
+import { _filtersToSQL as filtersToSQL } from '@carto/react-core';
+import { executeSQL, SourceTypes } from '@carto/react-api';
+import { Methods, executeTask } from '@carto/react-workers';
 
 export const getFormula = async (props) => {
   const {
@@ -16,7 +12,7 @@ export const getFormula = async (props) => {
     filters,
     opts,
     viewportFilter,
-    viewportFeatures,
+    dataSource,
     type
   } = props;
 
@@ -31,8 +27,7 @@ export const getFormula = async (props) => {
   }
 
   if (viewportFilter) {
-    return filterViewportFeaturesToGetFormula({
-      viewportFeatures,
+    return executeTask(dataSource, Methods.VIEWPORT_FEATURES_FORMULA, {
       filters,
       operation,
       column
@@ -56,26 +51,4 @@ export const buildSqlQueryToGetFormula = ({ data, column, operation, filters }) 
   `;
 
   return minify(query);
-};
-
-/**
- * Filter viewport features to get Formula defined by props
- */
-export const filterViewportFeaturesToGetFormula = ({
-  viewportFeatures,
-  filters,
-  operation,
-  column
-}) => {
-  if (viewportFeatures) {
-    const targetOperation = aggregationFunctions[operation];
-
-    const filteredFeatures = !Object.keys(viewportFeatures).length
-      ? viewportFeatures
-      : viewportFeatures.filter(buildFeatureFilter({ filters }));
-
-    return [{ value: targetOperation(filteredFeatures, column) }];
-  }
-
-  return [{ value: null }];
 };

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '@carto/react-core';
+import { removeWorker } from '@carto/react-workers';
 
 /**
  *
@@ -47,6 +48,7 @@ export const createCartoSlice = (initialState) => {
         // Auto import dataSources
       },
       viewportFeatures: {},
+      viewportFeaturesReady: {},
       widgetsLoadingState: {},
       ...initialState
     },
@@ -57,9 +59,18 @@ export const createCartoSlice = (initialState) => {
       },
       removeSource: (state, action) => {
         delete state.dataSources[action.payload];
+        removeWorker(action.payload);
       },
       addLayer: (state, action) => {
         state.layers[action.payload.id] = action.payload;
+      },
+      setViewportFeaturesReady: (state, action) => {
+        const { sourceId, ready } = action.payload;
+
+        state.viewportFeaturesReady = {
+          ...state.viewportFeaturesReady,
+          [sourceId]: ready
+        };
       },
       updateLayer: (state, action) => {
         const layer = state.layers[action.payload.id];
@@ -297,6 +308,16 @@ export const setViewportFeatures = (data) => ({
  */
 export const removeViewportFeatures = (data) => ({
   type: 'carto/removeViewportFeatures',
+  payload: data
+});
+
+/**
+ * Action to set the ready features state of a layer
+ * @param {object} sourceId - the id of the source
+ * @param {object} ready - Viewport features have been calculated
+ */
+export const setViewportFeaturesReady = (data) => ({
+  type: 'carto/setViewportFeaturesReady',
   payload: data
 });
 

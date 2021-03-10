@@ -46,7 +46,7 @@ function PieWidget({
 
   const dispatch = useDispatch();
   const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
+  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
 
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
   const [hasLoadingState, setIsLoading] = useWidgetLoadingState(id, viewportFilter);
@@ -65,7 +65,8 @@ function PieWidget({
         filters,
         credentials,
         viewportFilter,
-        viewportFeatures: viewportFeatures[dataSource] || [],
+        viewportFeatures: viewportFeaturesReady[dataSource] || false,
+        dataSource,
         type,
         opts: { abortController }
       })
@@ -89,7 +90,7 @@ function PieWidget({
     setIsLoading,
     source.filters,
     type,
-    viewportFeatures,
+    viewportFeaturesReady,
     column,
     operation,
     operationColumn,
