@@ -55,7 +55,7 @@ Returns a number (0-1) or a boolean checking wether a feature should be rendered
 | filters | <code>Object</code> | {}        | Filters to be applied                |
 | type    | <code>string</code> | 'boolean' | Output type: number (0-1) or boolean |
 
-## useCartoLayerFilterProps ⇒ <code>Object</code>
+## useCartoLayerProps ⇒ <code>Object</code>
 
 Returns required default props for layers. It manages filtering and viewport changes.
 

@@ -11,6 +11,7 @@
 - Fix viewportFeatures mode in PieWidget when using viewportFilter [#102](https://github.com/CartoDB/carto-react-lib/pull/102)
 - BREAKING: Refactor into a new **multi-package** project [#104](https://github.com/CartoDB/carto-react-lib/pull/104)
 - Fix animations in Category Widget [#108](https://github.com/CartoDB/carto-react-lib/pull/108)
+- Rename useCartoLayerFilterProps hook to useCartoLayerProps [#109](https://github.com/CartoDB/carto-react-lib/pull/109)
 
 ## 1.0.0-beta14 (2021-02-08)
 
