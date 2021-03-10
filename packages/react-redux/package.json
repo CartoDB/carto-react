@@ -56,7 +56,6 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-basemaps": "^1.0.0-rc.1",
     "@carto/react-core": "^1.0.0-rc.1",
     "@deck.gl/core": "^8.4.10",
     "@reduxjs/toolkit": "^1.5.0"

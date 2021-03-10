@@ -15,3 +15,11 @@ export { AggregationTypes } from './operations/aggregation/AggregationTypes';
 export { aggregationFunctions } from './operations/aggregation/values';
 export { groupValuesByColumn } from './operations/groupby';
 export { histogram } from './operations/histogram';
+
+export { 
+  FilterTypes as _FilterTypes,
+  filtersToSQL as _filtersToSQL,
+  getApplicableFilters as _getApplicableFilters
+} from './filters/FilterQueryBuilder';
+export { buildFeatureFilter as _buildFeatureFilter } from './filters/Filter';
+export { viewportFeatures } from './filters/viewportFeatures';

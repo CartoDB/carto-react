@@ -2,10 +2,10 @@ import { minify } from 'pgsql-minify';
 import { 
   _buildFeatureFilter as buildFeatureFilter, 
   _filtersToSQL as filtersToSQL, 
-  executeSQL, 
-  SourceTypes 
-} from '@carto/react-api';
-import { groupValuesByColumn } from '@carto/react-core';
+  groupValuesByColumn
+} from '@carto/react-core';
+
+import { executeSQL, SourceTypes } from '@carto/react-api'
 
 export const getCategories = async (props) => {
   const {
