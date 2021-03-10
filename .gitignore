@@ -1,8 +1,15 @@
 /node_modules
-/dist
-/storybook-static
-.DS_Store
 /coverage
+/reports
+/.nyc_output
+
+/packages/*/node_modules
+/packages/*/coverage
+/packages/*/dist
+
+/packages/react-ui/storybook-static
+
+.DS_Store
 
 # Firebase
 firebase-debug.log*
@@ -10,3 +17,5 @@ firebase-debug.*.log*
 
 # Firebase cache
 .firebase/
+
+
