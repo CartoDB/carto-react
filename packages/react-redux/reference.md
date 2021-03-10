@@ -142,6 +142,31 @@ Action to remove the viewport features to a specific source
 | ---------- | ------------------- | ----------------------------------------------------- |
 | {sourceId} | <code>string</code> | id of the source to remove the viewport features from |
 
+### setWidgetLoadingState
+
+Action to set the widget loading state to a specific one
+
+| Param      | Type                | Description       |
+| ---------- | ------------------- | ----------------- |
+| {widgetId} | <code>string</code> | id of the widget  |
+| {isLoading} | <code>boolean</code>  | loading state |
+
+### removeWidgetLoadingState
+
+Action to remove a specific widget loading state
+
+| Param      | Type                | Description       |
+| ---------- | ------------------- | ----------------- |
+| {widgetId} | <code>string</code> | id of the widget  |
+
+### setAllWidgetsLoadingStates
+
+Action to set the all the widgets loading state at once
+
+| Param      | Type                | Description       |
+| ---------- | ------------------- | ----------------- |
+| {areLoading} | <code>boolean</code> | loading state  |
+
 ## OAuth Slice
 
 ### createOauthCartoSlice
