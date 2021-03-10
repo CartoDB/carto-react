@@ -1,11 +1,19 @@
 # `@carto/react-ui`
 
-> TODO: description
+<p>
+  <a href="https://npmjs.org/package/@carto/react-ui">
+    <img src="https://img.shields.io/npm/v/@carto/react-ui.svg?style=flat-square" alt="version" />
+  </a>
 
-## Usage
+  <a href="https://npmjs.org/package/@carto/react-ui">
+    <img src="https://img.shields.io/npm/dt/@carto/react-ui.svg?style=flat-square" alt="downloads" />
+  </a>
+</p>
 
-```
-const reactUi = require('@carto/react-ui');
+<br/>
 
-// TODO: DEMONSTRATE API
-```
+Package with UI components, based on MaterialUI +  a CARTO theme
+
+See also the [storybook](https://storybook-react.carto.com/)
+
+Review [CARTO for React](https://docs.carto.com/react/)

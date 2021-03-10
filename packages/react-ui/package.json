@@ -23,7 +23,10 @@
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --collectCoverage"
+    "test:coverage": "jest --collectCoverage",
+    "storybook:start": "start-storybook -c ./storybook/.storybook -p 6006",
+    "storybook:build": "build-storybook -c ./storybook/.storybook",
+    "storybook:publish": "yarn storybook:build && yarn firebase deploy --project cartodb-fb-storybook-react"
   },
   "devDependencies": {
     "@babel/core": "^7.13.8",
@@ -52,6 +55,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "firebase-tools": "^8.17.0",
     "jest": "^26.6.3",
     "webpack": "^5.24.2",
     "webpack-cli": "^4.5.0"

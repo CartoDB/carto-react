@@ -1,11 +1,19 @@
 # `@carto/react-core`
 
-> TODO: description
+<p>
+  <a href="https://npmjs.org/package/@carto/react-core">
+    <img src="https://img.shields.io/npm/v/@carto/react-core.svg?style=flat-square" alt="version" />
+  </a>
 
-## Usage
+  <a href="https://npmjs.org/package/@carto/react-core">
+    <img src="https://img.shields.io/npm/dt/@carto/react-core.svg?style=flat-square" alt="downloads" />
+  </a>
+</p>
 
-```
-const reactCore = require('@carto/react-core');
+<br/>
 
-// TODO: DEMONSTRATE API
-```
+Package with core elements, used by different packages
+
+See also the [reference](reference.md)
+
+Review [CARTO for React](https://docs.carto.com/react/)

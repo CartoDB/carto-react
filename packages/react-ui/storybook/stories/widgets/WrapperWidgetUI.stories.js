@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import ColorizeIcon from '@material-ui/icons/Colorize';
 import MenuIcon from '@material-ui/icons/Menu';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
-import WrapperWidgetUI from '../../widgets/WrapperWidgetUI';
+import WrapperWidgetUI from '.../../../src/widgets/WrapperWidgetUI';
 
 const options = {
   title: 'Widgets/WrapperWidgetUI',

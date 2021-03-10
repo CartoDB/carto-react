@@ -1,11 +1,19 @@
 # `@carto/react-widgets`
 
-> TODO: description
+<p>
+  <a href="https://npmjs.org/package/@carto/react-widgets">
+    <img src="https://img.shields.io/npm/v/@carto/react-widgets.svg?style=flat-square" alt="version" />
+  </a>
 
-## Usage
+  <a href="https://npmjs.org/package/@carto/react-widgets">
+    <img src="https://img.shields.io/npm/dt/@carto/react-widgets.svg?style=flat-square" alt="downloads" />
+  </a>
+</p>
 
-```
-const reactWidgets = require('@carto/react-widgets');
+<br/>
 
-// TODO: DEMONSTRATE API
-```
+Package to use CARTO UI widgets + advanced filters within a React + Redux project
+
+See also the [reference](reference.md)
+
+Review [CARTO for React](https://docs.carto.com/react/)

@@ -1,5 +1,5 @@
 import React from 'react';
-import HistogramWidgetUI from '../../widgets/HistogramWidgetUI';
+import HistogramWidgetUI from '../../../src/widgets/HistogramWidgetUI';
 
 // This default export determines where your story goes in the story list
 const options = {

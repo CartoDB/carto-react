@@ -1,5 +1,5 @@
 import React from 'react';
-import FormulaWidgetUI from '../../widgets/FormulaWidgetUI';
+import FormulaWidgetUI from '../../../src/widgets/FormulaWidgetUI';
 
 const options = {
   title: 'Widgets/FormulaWidgetUI',
