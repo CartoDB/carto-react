@@ -1,7 +1,7 @@
 {
   "name": "@carto/react-redux",
   "version": "0.0.1-rc.6",
-  "description": "CARTO for React - redux",
+  "description": "CARTO for React - Redux",
   "author": "CARTO Dev Team",
   "repository": {
     "type": "git",
