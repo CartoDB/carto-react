@@ -1,8 +1,8 @@
-# Basemaps
+## Basemaps
 
 Basemaps constants and Google Maps component
 
-## Constants for available basemaps
+### Constants for available basemaps
 
 - POSITRON: <code>string</code>
 - VOYAGER: <code>string</code>
@@ -11,7 +11,7 @@ Basemaps constants and Google Maps component
 - GOOGLE_SATELLITE: <code>string</code>
 - GOOGLE_HYBRID: <code>string</code>
 
-## GoogleMap
+### GoogleMap
 
 React component for working with Google Maps API and [deck.gl](https://deck.gl).
 
