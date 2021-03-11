@@ -10,8 +10,8 @@
     <img src="https://img.shields.io/npm/dt/@carto/react-api.svg?style=flat-square" alt="downloads" />
   </a>
 
-  <a href="https://coveralls.io/github/CartoDB/carto-react-lib?branch=master">
-    <img src="https://coveralls.io/repos/github/CartoDB/carto-react-lib/badge.svg?branch=master" alt="coverage status" />
+  <a href="https://coveralls.io/github/CartoDB/carto-react?branch=master">
+    <img src="https://coveralls.io/repos/github/CartoDB/carto-react/badge.svg?branch=master" alt="coverage status" />
   </a>
 
 </p>

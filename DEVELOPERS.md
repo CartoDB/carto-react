@@ -39,7 +39,7 @@ To make a **prerelease**:
 
 - Create a new branch from master, named after the new version (eg, if current version is v0.0.1-rc.5, name it `v0.0.1-rc.6`)
 - Push that branch upstream, with something like `git push --set-upstream origin v0.0.1-rc.6`
-- Open a PR, with for eg.: `https://github.com/CartoDB/carto-react-lib/pull/new/v0.0.1-rc.6`
+- Open a PR, with for eg.: `https://github.com/CartoDB/carto-react/pull/new/v0.0.1-rc.6`
 - Ask your peers for revision.
 - Once it's ok execute locally `yarn prerelease`
 - Chose Custom prerelease and ensure the packages version proposed is correct
