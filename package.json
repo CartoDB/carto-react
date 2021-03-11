@@ -52,17 +52,15 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lerna run --concurrency 1 --stream precommit --since HEAD --exclude-dependents"
     }
   },
   "lint-staged": {
     "*.+(js|jsx)": [
-      "yarn lint:fix",
-      "git add"
+      "yarn lint:fix"
     ],
     "*.+(js|jsx|json|css|md)": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   }
 }
