@@ -9,6 +9,7 @@ export default function useCartoLayerProps(
   const [onViewportLoad] = useViewportFeatures(source, uniqueIdProperty);
 
   return {
+    uniqueIdProperty,
     onViewportLoad: debounce(onViewportLoad),
     getFilterValue: _buildFeatureFilter({ filters: source?.filters, type: 'number' }),
     filterRange: [1, 1],

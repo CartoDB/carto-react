@@ -12,6 +12,8 @@
 - BREAKING: Refactor into a new **multi-package** project [#104](https://github.com/CartoDB/carto-react-lib/pull/104)
 - Fix animations in Category Widget [#108](https://github.com/CartoDB/carto-react-lib/pull/108)
 - Rename useCartoLayerFilterProps hook to useCartoLayerProps [#109](https://github.com/CartoDB/carto-react-lib/pull/109)
+- Fix histogram opeartions with values equal to zero [#113](https://github.com/CartoDB/carto-react-lib/pull/113)
+- Return uniqueIdProperty from useCartoLayerProps hook [#113](https://github.com/CartoDB/carto-react-lib/pull/113)
 
 ## 1.0.0-beta14 (2021-02-08)
 

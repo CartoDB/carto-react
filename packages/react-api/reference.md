@@ -25,6 +25,7 @@ Returns required default props for layers. It manages filtering and viewport cha
 | Param                               | Type                          | Description                                                               |
 | ----------------------------------- | ----------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------- |
 | props                               | <code>Object</code>           | Required default props for layers                                         |
+| props.uniqueIdProperty              | <code>string</code>           | Unique id property for the layer, default to `cartodb_id`                 |
 | props.onViewportLoad                | <code>function</code>         | Function that is called when all tiles in the current viewport are loaded |
 | props.getFilterValue                | <code>function`               | `number</code>                                                            | Accessor to the filterable value of each data object |
 | props.filterRange                   | <code>[number, number]</code> | The [min, max] bounds of the filter values to display                     |
