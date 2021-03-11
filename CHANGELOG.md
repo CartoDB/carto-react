@@ -2,6 +2,8 @@
 
 ## Not released
 
+## 1.0.0-rc.1 (2021-03-11)
+
 - Add new PieWidget component [#36](https://github.com/CartoDB/carto-react/pull/36)
 - Change 'category' in input data for CategoryWidget for a more generic 'name' parameter [#36](https://github.com/CartoDB/carto-react/pull/36)
 - Improve performance widget client side calculations [#88](https://github.com/CartoDB/carto-react/pull/88)
@@ -12,7 +14,7 @@
 - BREAKING: Refactor into a new **multi-package** project [#104](https://github.com/CartoDB/carto-react/pull/104)
 - Fix animations in Category Widget [#108](https://github.com/CartoDB/carto-react/pull/108)
 - Rename useCartoLayerFilterProps hook to useCartoLayerProps [#109](https://github.com/CartoDB/carto-react/pull/109)
-- Fix histogram opeartions with values equal to zero [#113](https://github.com/CartoDB/carto-react/pull/113)
+- Fix histogram operations with values equal to zero [#113](https://github.com/CartoDB/carto-react/pull/113)
 - Return uniqueIdProperty from useCartoLayerProps hook [#113](https://github.com/CartoDB/carto-react/pull/113)
 - Fix lint-staged for multi package [#117](https://github.com/CartoDB/carto-react/pull/117)
 
