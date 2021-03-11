@@ -3,6 +3,7 @@
     @default
 */
 export const POSITRON = 'positron';
+
 /** @constant
     @type {string}
     @default
