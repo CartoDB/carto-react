@@ -17,7 +17,7 @@
 </p>
 <br/>
 
-This is the official "CARTO for React" library. It is organized as a set of **npm packages** (`@carto/react-*`), that work together providing widgets and utilities to build Location Intelligence applications with React, Redux & Material-UI.
+This is the official "CARTO for React library". It is organized as a set of **npm packages** (`@carto/react-*`), that work together providing widgets and utilities to build Location Intelligence applications with React, Redux & Material-UI.
 
 The packages are:
 
@@ -32,7 +32,7 @@ The packages are:
 
 To work in the code, see [developers](DEVELOPERS.md).
 
-These packages are used by the [CARTO for React](https://github.com/CartoDB/cra-template-carto) templates, made with CRA (Create React App).
+These packages are used by the [CARTO for React templates](https://github.com/CartoDB/carto-react-template), made with CRA (Create React App).
 
 There is a Storybook guide with the main UI components and how to use them at [CARTO for React - UI Components](https://storybook-react.carto.com/)
 

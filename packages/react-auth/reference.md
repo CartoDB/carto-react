@@ -1,12 +1,12 @@
-# Auth
+## Auth
 
 OAuth functions and hook
 
-## OAuthCallback
+### OAuthCallback
 
 Component to attend OAuth callbacks on /oauthCallback
 
-## useOAuthLogin ⇒ <code>function</code>
+### useOAuthLogin ⇒ <code>function</code>
 
 Hook to perform login against CARTO using OAuth implicit flow using a popup
 

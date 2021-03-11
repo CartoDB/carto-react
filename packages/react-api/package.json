@@ -1,7 +1,7 @@
 {
   "name": "@carto/react-api",
   "version": "0.0.1-rc.6",
-  "description": "CARTO for React - api",
+  "description": "CARTO for React - Api",
   "author": "CARTO Dev Team",
   "repository": {
     "type": "git",
