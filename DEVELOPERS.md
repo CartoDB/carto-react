@@ -2,12 +2,14 @@
 
 This is a monorepo, made with lerna and yarn workspaces. We recommend node version >=14.X
 
-Clone and execute 
+Clone and execute
+
 ```
   yarn
 ```
 
 From now on, use one of the root level commands, that lerna will execute for all internal packages, like for example:
+
 ```
   yarn build
   yarn test
@@ -16,15 +18,27 @@ From now on, use one of the root level commands, that lerna will execute for all
 If you have issues, you can always run `yarn build:full`. It will perform a full clean and then ensure that install, build and test work fine
 
 ## Link from carto-react-template
+
 If you want to link these packages to the templates repo, build & then execute here
+
 ```
   yarn link-all
 ```
 
 Then, inside the proper template folder in carto-react-template, link packages with:
+
 ```
   yarn link-carto-react
 ```
+
+## npm release
+
+To make a **prerelease**:
+
+- Create a new branch from master, named after the new version (eg, if current version is v0.0.1-rc.5, name it `v0.0.1-rc.6`)
+- Execute `yarn prerelease`
+- Chose Custom prerelease and ensure the packages version proposed is correct
+- You will need npm credentials under @carto organization
 
 ## Firebase deployment of storybook
 
@@ -43,4 +57,3 @@ To deploy there a new update:
     yarn storybook:publish
   ```
 - That will publish the website to the Google Cloud Firebase project.
-
