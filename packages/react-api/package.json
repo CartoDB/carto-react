@@ -53,6 +53,9 @@
     "webpack": "^5.24.2",
     "webpack-cli": "^4.5.0"
   },
+  "dependencies": {
+    "@babel/runtime": "^7.13.9"
+  },
   "peerDependencies": {
     "@carto/react-core": "^1.0.0-rc.0",
     "@carto/react-redux": "^1.0.0-rc.0",
