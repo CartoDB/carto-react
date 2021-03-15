@@ -1,6 +1,7 @@
 import React from 'react';
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
 import { cartoThemeOptions } from '../../src/theme/carto-theme';
+import { AggregationTypes } from '../../../react-core/src';
 
 let theme = createMuiTheme(cartoThemeOptions);
 theme = responsiveFontSizes(theme, {
@@ -48,8 +49,16 @@ export const parameters = {
         ['Palette', 'Typography'],
         'Common',
         'Widgets',
-        ['WrapperWidgetUI', 'FormulaWidgetUI', 'CategoryWidgetUI']
+        ['FormulaWidget', 'CategoryWidget', 'HistogramWidget', 'PieWidget']
       ]
+    }
+  },
+  argTypes: {
+    operation: {
+      control: {
+        type: 'select',
+        options: Object.values(AggregationTypes),
+      }
     }
   }
 };

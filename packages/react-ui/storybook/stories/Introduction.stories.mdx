@@ -10,28 +10,35 @@ They are based on [Material-UI](https://material-ui.com/), and they include a CA
 
 ### How to add a new Story
 Put your `stories.js` files inside the `storybook/stories` folder following the same folder structure as the source files. For example:
-`stories/widgets/FormulaWidgetUI.stories.js` for `src/ui/widgets/FormulaWidgetUI.js` component.
+`stories/widgets/FormulaWidget.stories.js` for `react-widgets/src/widgets/FormulaWidget.js` component.
 
 As long as we are using a decorator to inject the MaterialUI theme, you just need to import and add your component to the `template` of your story.
 ```js
 import React from 'react';
-import FormulaWidgetUI from '../../../src/widgets/FormulaWidgetUI';
+import FormulaWidget from '../../../../react-widgets/src/widgets/FormulaWidget';
 
-const Template = (args) => <FormulaWidgetUI {...args} />;
+const Template = (args) => <FormulaWidget {...args} />;
 ```
 
 Then, export your story and the different variations:
 ```js
 export default {
-  title: 'Widgets/FormulaWidgetUI',
-  component: FormulaWidgetUI,
+  title: 'Widgets/FormulaWidget',
+  component: FormulaWidget,
+  // We use a decorator for mocking the Redux store
+  decorators: [(Story) => <Provider store={store}><Story /></Provider>]
 };
 
-export const Empty = Template.bind({});
-Empty.args = {};
+const DEFAULT_PROPS = {
+  id: 'sb-formula-id',
+  title: 'wrapper title',
+  dataSource: 'sb-data-source',
+  column: 'sb-column',
+  operation: 'sum'
+};
 
-export const Text = Template.bind({});
-Text.args = { data: '$1000000'};
+export const Default = Template.bind({});
+Default.args = DEFAULT_PROPS;
 ```
 
 Optionally, you can add some extra controls to your story, but by default Storybook will add automatic controls for your story arguments.
