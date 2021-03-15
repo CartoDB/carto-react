@@ -6,20 +6,42 @@ import {
   Primary,
   ArgsTable,
   Stories,
-  PRIMARY_STORY,
+  PRIMARY_STORY
 } from '@storybook/addon-docs/blocks';
 import * as cartoSlice from '../../../../react-redux/src/slices/cartoSlice';
+import { AggregationTypes } from '../../../../react-core/src';
 import FormulaWidget from '../../../../react-widgets/src/widgets/FormulaWidget';
 import { mockAppStoreConfiguration } from './utils';
 
 const store = mockAppStoreConfiguration();
-store.dispatch(cartoSlice.setWidgetLoadingState({ widgetId: 'sb-formula-id', isLoading: false }));
-store.dispatch(cartoSlice.setViewportFeatures({ sourceId: 'sb-data-source', features: [{ 'sb-column': 5000 }, { 'sb-column': 5000 }] }));
+store.dispatch(
+  cartoSlice.setWidgetLoadingState({ widgetId: 'sb-formula-id', isLoading: false })
+);
+store.dispatch(
+  cartoSlice.setViewportFeatures({
+    sourceId: 'sb-data-source',
+    features: [{ 'sb-column': 5000 }, { 'sb-column': 5000 }]
+  })
+);
 
 const options = {
   title: 'Widgets/FormulaWidget',
   component: FormulaWidget,
-  decorators: [(Story) => <Provider store={store}><Story /></Provider>],
+  decorators: [
+    (Story) => (
+      <Provider store={store}>
+        <Story />
+      </Provider>
+    )
+  ],
+  argTypes: {
+    operation: {
+      control: {
+        type: 'select',
+        options: Object.values(AggregationTypes)
+      }
+    }
+  },
   parameters: {
     docs: {
       page: () => (
@@ -52,4 +74,3 @@ Default.args = DEFAULT_PROPS;
 
 export const WithFormatter = Template.bind({});
 WithFormatter.args = { ...DEFAULT_PROPS, formatter: (v) => `$${v}` };
-

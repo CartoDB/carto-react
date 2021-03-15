@@ -6,25 +6,46 @@ import {
   Primary,
   ArgsTable,
   Stories,
-  PRIMARY_STORY,
+  PRIMARY_STORY
 } from '@storybook/addon-docs/blocks';
 import * as cartoSlice from '../../../../react-redux/src/slices/cartoSlice';
+import { AggregationTypes } from '../../../../react-core/src';
 import CategoryWidget from '../../../../react-widgets/src/widgets/CategoryWidget';
 import { mockAppStoreConfiguration } from './utils';
 
 const store = mockAppStoreConfiguration();
-store.dispatch(cartoSlice.setWidgetLoadingState({ widgetId: 'sb-category-id', isLoading: false }));
+store.dispatch(
+  cartoSlice.setWidgetLoadingState({ widgetId: 'sb-category-id', isLoading: false })
+);
 
 const mockedData = [...Array(30)].map((_, idx) => ({
-  'sb-column': `Category ${idx < 5 ? '1' : idx < 10 ? '2' : idx < 15 ? '3' : idx < 20 ? '4' : '5'}`,
+  'sb-column': `Category ${
+    idx < 5 ? '1' : idx < 10 ? '2' : idx < 15 ? '3' : idx < 20 ? '4' : '5'
+  }`,
   'sb-operation-column': idx * 100
 }));
-store.dispatch(cartoSlice.setViewportFeatures({ sourceId: 'sb-data-source', features: mockedData }));
+store.dispatch(
+  cartoSlice.setViewportFeatures({ sourceId: 'sb-data-source', features: mockedData })
+);
 
 const options = {
   title: 'Widgets/CategoryWidget',
   component: CategoryWidget,
-  decorators: [(Story) => <Provider store={store}><Story /></Provider>],
+  decorators: [
+    (Story) => (
+      <Provider store={store}>
+        <Story />
+      </Provider>
+    )
+  ],
+  argTypes: {
+    operation: {
+      control: {
+        type: 'select',
+        options: Object.values(AggregationTypes)
+      }
+    }
+  },
   parameters: {
     docs: {
       page: () => (
@@ -70,4 +91,3 @@ WithCustomLabels.args = {
     'Category 5': 'Cat. 5'
   }
 };
-
