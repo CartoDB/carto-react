@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Improve GoogleMap component [#121](https://github.com/CartoDB/carto-react/pull/121)
+
 ## 1.0.0-rc.1 (2021-03-11)
 
 - Add new PieWidget component [#36](https://github.com/CartoDB/carto-react/pull/36)
