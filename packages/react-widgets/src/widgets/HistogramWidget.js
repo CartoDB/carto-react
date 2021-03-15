@@ -156,7 +156,8 @@ HistogramWidget.propTypes = {
   tooltip: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
   viewportFilter: PropTypes.bool,
-  onError: PropTypes.func
+  onError: PropTypes.func,
+  wrapperProps: PropTypes.object
 };
 
 HistogramWidget.defaultProps = {

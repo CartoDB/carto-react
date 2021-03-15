@@ -153,7 +153,8 @@ PieWidget.propTypes = {
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   viewportFilter: PropTypes.bool,
-  onError: PropTypes.func
+  onError: PropTypes.func,
+  wrapperProps: PropTypes.object
 };
 
 PieWidget.defaultProps = {
