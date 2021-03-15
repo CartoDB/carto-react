@@ -1,7 +1,7 @@
 {
   "name": "@carto/react-ui",
   "version": "1.0.0-rc.1",
-  "description": "CARTO for React - ui",
+  "description": "CARTO for React - UI",
   "author": "CARTO Dev Team",
   "repository": {
     "type": "git",
@@ -26,7 +26,8 @@
     "test:coverage": "jest --collectCoverage",
     "storybook:start": "start-storybook -c ./storybook/.storybook -p 6006",
     "storybook:build": "build-storybook -c ./storybook/.storybook",
-    "storybook:publish": "yarn storybook:build && yarn firebase deploy --project cartodb-fb-storybook-react"
+    "storybook:publish": "yarn storybook:build && yarn firebase deploy --project cartodb-fb-storybook-react",
+    "precommit": "lint-staged"
   },
   "devDependencies": {
     "@babel/core": "^7.13.8",

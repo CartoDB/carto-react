@@ -1,7 +1,7 @@
 {
   "name": "@carto/react-core",
   "version": "1.0.0-rc.1",
-  "description": "CARTO for React - core",
+  "description": "CARTO for React - Core",
   "author": "CARTO Dev Team",
   "repository": {
     "type": "git",
@@ -23,7 +23,8 @@
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --collectCoverage"
+    "test:coverage": "jest --collectCoverage",
+    "precommit": "lint-staged"
   },
   "devDependencies": {
     "@babel/core": "^7.13.8",

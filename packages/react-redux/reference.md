@@ -1,8 +1,8 @@
-# Redux
+## Redux
 
-## CARTO Slice
+### CARTO Slice
 
-### createCartoSlice
+#### createCartoSlice
 
 A function that accepts an initialState, setup the state and creates
 the CARTO reducers that support CARTO for React achitecture.
@@ -31,7 +31,7 @@ export const initialState = {
 | ------------ | ------------------- | ----------------- |
 | initialState | <code>object</code> | the initial state |
 
-### addSource
+#### addSource
 
 Action to add a source to the store
 
@@ -43,7 +43,7 @@ Parameters are in the form of destructuring arguments.
 | {data} | <code>string</code> | data definition for the source. Query for SQL dataset or the name of the tileset for BigQuery Tileset |
 | {type} | <code>string</code> | type of source. Posible values are 'sql' or 'bigquery'                                                |
 
-### removeSource
+#### removeSource
 
 Action to remove a source from the store
 
@@ -51,7 +51,7 @@ Action to remove a source from the store
 | -------- | ------------------- | -------------------------- |
 | sourceId | <code>string</code> | id of the source to remove |
 
-### addLayer
+#### addLayer
 
 Action to add a Layer to the store
 
@@ -61,7 +61,7 @@ Action to add a Layer to the store
 | source          | <code>string</code> | id of the source of the layer                     |
 | layerAttributes | <code>object</code> | (optional) custom attributes to pass to the layer |
 
-### updateLayer
+#### updateLayer
 
 Action to update a Layer in the store
 
@@ -70,7 +70,7 @@ Action to update a Layer in the store
 | id              | <code>string</code> | unique id for the layer                |
 | layerAttributes | <code>object</code> | custom attributes to pass to the layer |
 
-### removeLayer
+#### removeLayer
 
 Action to remove a layer from the store
 
@@ -78,7 +78,7 @@ Action to remove a layer from the store
 | ----- | ------------------- | ------------------------- |
 | id    | <code>string</code> | id of the layer to remove |
 
-### setBasemap
+#### setBasemap
 
 Action to set a basemap
 
@@ -86,7 +86,7 @@ Action to set a basemap
 | ------- | ------------------- | ---------------------- |
 | basemap | <code>String</code> | the new basemap to add |
 
-### addFilter
+#### addFilter
 
 Action to add a filter on a given source and column
 
@@ -96,7 +96,7 @@ Action to add a filter on a given source and column
 | {column} | <code>string</code>     | column to filter at the source             |
 | {type}   | <code>FilterType</code> | `FilterTypes.IN` and `FilterTypes.BETWEEN` |
 
-### removeFilter
+#### removeFilter
 
 Action to remove a column filter from a source
 
@@ -105,7 +105,7 @@ Action to remove a column filter from a source
 | <code>id</code>     | sourceId of the filter to remove |
 | <code>column</code> | column of the filter to remove   |
 
-### clearFilters
+#### clearFilters
 
 Action to remove all filters from a source
 
@@ -113,11 +113,11 @@ Action to remove all filters from a source
 | --------------- | ------------------------------------------------- |
 | <code>id</code> | sourceId of the source to remove all filters from |
 
-### selectSourceById
+#### selectSourceById
 
 Redux selector to get a source by ID
 
-### setViewState
+#### setViewState
 
 Action to set the current ViewState
 
@@ -125,7 +125,7 @@ Action to set the current ViewState
 | --------- | ------------------- |
 | viewState | <code>Object</code> |
 
-### setViewportFeatures
+#### setViewportFeatures
 
 Action to set the viewport features to a specific source
 
@@ -134,7 +134,7 @@ Action to set the viewport features to a specific source
 | {sourceId} | <code>string</code> | id of the source  |
 | {features} | <code>Array</code>  | viewport features |
 
-### removeViewportFeatures
+#### removeViewportFeatures
 
 Action to remove the viewport features to a specific source
 
@@ -142,34 +142,34 @@ Action to remove the viewport features to a specific source
 | ---------- | ------------------- | ----------------------------------------------------- |
 | {sourceId} | <code>string</code> | id of the source to remove the viewport features from |
 
-### setWidgetLoadingState
+#### setWidgetLoadingState
 
 Action to set the widget loading state to a specific one
 
-| Param      | Type                | Description       |
-| ---------- | ------------------- | ----------------- |
-| {widgetId} | <code>string</code> | id of the widget  |
-| {isLoading} | <code>boolean</code>  | loading state |
+| Param       | Type                 | Description      |
+| ----------- | -------------------- | ---------------- |
+| {widgetId}  | <code>string</code>  | id of the widget |
+| {isLoading} | <code>boolean</code> | loading state    |
 
-### removeWidgetLoadingState
+#### removeWidgetLoadingState
 
 Action to remove a specific widget loading state
 
-| Param      | Type                | Description       |
-| ---------- | ------------------- | ----------------- |
-| {widgetId} | <code>string</code> | id of the widget  |
+| Param      | Type                | Description      |
+| ---------- | ------------------- | ---------------- |
+| {widgetId} | <code>string</code> | id of the widget |
 
-### setAllWidgetsLoadingStates
+#### setAllWidgetsLoadingStates
 
 Action to set the all the widgets loading state at once
 
-| Param      | Type                | Description       |
-| ---------- | ------------------- | ----------------- |
-| {areLoading} | <code>boolean</code> | loading state  |
+| Param        | Type                 | Description   |
+| ------------ | -------------------- | ------------- |
+| {areLoading} | <code>boolean</code> | loading state |
 
-## OAuth Slice
+### OAuth Slice
 
-### createOauthCartoSlice
+#### createOauthCartoSlice
 
 A function that accepts an initialState, setup the state and creates
 reducers to manage OAuth with CARTO platform.
@@ -193,7 +193,7 @@ export const oauthInitialState = {
 | ------------ | ------------------- | ----------------- |
 | initialState | <code>object</code> | the initial state |
 
-### setOAuthApp
+#### setOAuthApp
 
 Action to set the OAuthApp
 
@@ -203,14 +203,14 @@ Action to set the OAuthApp
 | scopes            | <code>array</code>  | array of valid scopes for the App.                                                                            |
 | authorizeEndPoint | <code>string</code> | URL of CARTO authorization endpoint. Except for on-premise, it should be 'https://carto.com/oauth2/authorize' |
 
-### setTokenAndUserInfoAsync
+#### setTokenAndUserInfoAsync
 
 Action to get the userInfo once there is a valid token, and set them both into state
 
-### logout
+#### logout
 
 Action to logout an user
 
-### selectOAuthCredentials
+#### selectOAuthCredentials
 
 Selector to fetch the current OAuth credentials from the storage

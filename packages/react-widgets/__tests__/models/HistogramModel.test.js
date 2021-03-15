@@ -12,13 +12,16 @@ import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
 
 const features = (operationColumn) => [
   {
+    [operationColumn]: 0
+  },
+  {
+    [operationColumn]: 1
+  },
+  {
     [operationColumn]: 1
   },
   {
     [operationColumn]: 2
-  },
-  {
-    [operationColumn]: 3
   }
 ];
 
@@ -101,7 +104,7 @@ describe('getHistogram', () => {
         operation,
         column: 'revenue',
         type: SourceTypes.SQL,
-        ticks: [1, 2, 3],
+        ticks: [0, 1, 2],
         viewportFilter: true,
         viewportFeatures
       });
@@ -109,31 +112,31 @@ describe('getHistogram', () => {
       test(AggregationTypes.COUNT, async () => {
         const params = buildParamsFor(AggregationTypes.COUNT);
         const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 1, 1, 1, 0]);
+        expect(histogram).toEqual([0, 1, 2, 1, 0]);
       });
 
       test(AggregationTypes.AVG, async () => {
         const params = buildParamsFor(AggregationTypes.AVG);
         const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 1, 2, 3, 0]);
+        expect(histogram).toEqual([0, 0, 1, 2, 0]);
       });
 
       test(AggregationTypes.SUM, async () => {
         const params = buildParamsFor(AggregationTypes.SUM);
         const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 1, 2, 3, 0]);
+        expect(histogram).toEqual([0, 0, 2, 2, 0]);
       });
 
       test(AggregationTypes.MIN, async () => {
         const params = buildParamsFor(AggregationTypes.MIN);
         const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 1, 2, 3, 0]);
+        expect(histogram).toEqual([0, 0, 1, 2, 0]);
       });
 
       test(AggregationTypes.MAX, async () => {
         const params = buildParamsFor(AggregationTypes.MAX);
         const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 1, 2, 3, 0]);
+        expect(histogram).toEqual([0, 0, 1, 2, 0]);
       });
     });
   });
@@ -200,32 +203,32 @@ describe('filterViewportFeaturesToGetHistogram', () => {
     operation,
     column: 'revenue',
     viewportFeatures: features('revenue'),
-    ticks: [1, 2, 3]
+    ticks: [0, 1, 2]
   });
 
   test(AggregationTypes.COUNT, () => {
     const params = buildParamsFor(AggregationTypes.COUNT);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 1, 1, 1, 0]);
+    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 1, 2, 1, 0]);
   });
 
   test(AggregationTypes.AVG, () => {
     const params = buildParamsFor(AggregationTypes.AVG);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 1, 2, 3, 0]);
+    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 1, 2, 0]);
   });
 
   test(AggregationTypes.SUM, () => {
     const params = buildParamsFor(AggregationTypes.SUM);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 1, 2, 3, 0]);
+    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 2, 2, 0]);
   });
 
   test(AggregationTypes.MIN, () => {
     const params = buildParamsFor(AggregationTypes.MIN);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 1, 2, 3, 0]);
+    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 1, 2, 0]);
   });
 
   test(AggregationTypes.MAX, () => {
     const params = buildParamsFor(AggregationTypes.MAX);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 1, 2, 3, 0]);
+    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 1, 2, 0]);
   });
 
   test('no features', () => {

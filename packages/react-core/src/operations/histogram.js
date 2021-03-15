@@ -17,7 +17,9 @@ export function histogram(features, columnName, ticks, operation) {
   features.forEach((feature) => {
     const featureValue = feature[columnName];
 
-    if (!featureValue) {
+    const isValid = featureValue !== null && featureValue !== undefined;
+
+    if (!isValid) {
       return;
     }
 
