@@ -2,7 +2,7 @@ import { Meta, Description } from '@storybook/addon-docs/blocks';
 
 <Meta title="Introduction" />
 
-# CARTO for React - UI Components
+# CARTO for React - Widgets and UI Components
 This storybook includes the UI Components for CARTO for React (@carto/react-ui).
 They are based on [Material-UI](https://material-ui.com/), and they include a CARTO theme + custom widgets.
 
@@ -25,7 +25,7 @@ Then, export your story and the different variations:
 export default {
   title: 'Widgets/FormulaWidget',
   component: FormulaWidget,
-  // We use a decorator for mocking the Redux store
+  // We use a decorator for mocking the Redux store in Widgets
   decorators: [(Story) => <Provider store={store}><Story /></Provider>]
 };
 

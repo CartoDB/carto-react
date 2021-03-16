@@ -71,7 +71,7 @@ const DEFAULT_PROPS = {
   dataSource: 'sb-data-source',
   column: 'sb-column',
   operationColumn: 'sb-operation-column',
-  operation: 'count'
+  operation: 'sum'
 };
 
 export const Default = Template.bind({});

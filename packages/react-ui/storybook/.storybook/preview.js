@@ -48,7 +48,9 @@ export const parameters = {
         ['Palette', 'Typography'],
         'Common',
         'Widgets',
-        ['FormulaWidget', 'CategoryWidget', 'HistogramWidget', 'PieWidget']
+        ['FormulaWidget', 'CategoryWidget', 'HistogramWidget', 'PieWidget'],
+        'WidgetsUI',
+        ['CategoryWidgetUI']
       ]
     }
   }
