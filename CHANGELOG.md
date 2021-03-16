@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Add Widgets from @carto/react-widgets to StoryBook [#120](https://github.com/CartoDB/carto-react/pull/120)
 - Improve GoogleMap component [#121](https://github.com/CartoDB/carto-react/pull/121)
 
 ## 1.0.0-rc.1 (2021-03-11)
@@ -19,7 +20,6 @@
 - Fix histogram operations with values equal to zero [#113](https://github.com/CartoDB/carto-react/pull/113)
 - Return uniqueIdProperty from useCartoLayerProps hook [#113](https://github.com/CartoDB/carto-react/pull/113)
 - Fix lint-staged for multi package [#117](https://github.com/CartoDB/carto-react/pull/117)
-- Add Widgets from @carto/react-widgets to StoryBook [#120](https://github.com/CartoDB/carto-react/pull/120)
 
 ## 1.0.0-beta14 (2021-02-08)
 
