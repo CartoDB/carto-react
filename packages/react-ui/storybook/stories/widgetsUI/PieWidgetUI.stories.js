@@ -2,7 +2,7 @@ import React from 'react';
 import PieWidgetUI from '../../../src/widgets/PieWidgetUI';
 
 const options = {
-  title: 'WidgetsUI/PieWidgetUI',
+  title: 'Widgets UI/PieWidgetUI',
   component: PieWidgetUI
 };
 
