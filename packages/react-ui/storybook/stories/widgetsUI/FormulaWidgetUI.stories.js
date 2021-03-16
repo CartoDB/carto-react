@@ -2,7 +2,7 @@ import React from 'react';
 import FormulaWidgetUI from '../../../src/widgets/FormulaWidgetUI';
 
 const options = {
-  title: 'Widgets/FormulaWidgetUI',
+  title: 'Widgets UI/FormulaWidgetUI',
   component: FormulaWidgetUI,
   argTypes: {
     formatter: {
@@ -12,27 +12,30 @@ const options = {
     }
   }
 };
+
 export default options;
 
 const Template = (args) => <FormulaWidgetUI {...args} />;
+
+const data = 10000;
 
 export const Empty = Template.bind({});
 Empty.args = {};
 
 export const Text = Template.bind({});
-Text.args = { data: '$1000000' };
+Text.args = { data: `$${data}` };
 
 export const ValueUnit = Template.bind({});
-ValueUnit.args = { data: { value: 1000000, unit: '$' } };
+ValueUnit.args = { data: { value: data, unit: '$' } };
 
 export const FormatterText = Template.bind({});
-FormatterText.args = { data: 1000000, formatter: (v) => `$${v}` };
+FormatterText.args = { data, formatter: (v) => `$${v}` };
 
 export const FormatterValueUnit = Template.bind({});
-FormatterValueUnit.args = { data: 1000000 };
+FormatterValueUnit.args = { data };
 
 export const FormatterValueUnitBefore = Template.bind({});
 FormatterValueUnitBefore.args = {
-  data: 1000000,
+  data,
   unitBefore: true
 };

@@ -14,6 +14,7 @@ Renders a `<CategoryWidget />` component
 | [props.operationColumn] | <code>string</code>                                  |                   | Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.         |
 | props.operation         | <code>string</code>                                  |                   | Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.                    |
 | [props.formatter]       | [<code>formatterCallback</code>](#formatterCallback) |                   | Function to format each value returned.                                                                                  |
+| [props.labels]          | <code>Object</code>                                  | <code>{}</code>   | Overwrite category labels. |
 | [props.viewportFilter]  | <code>boolean</code>                                 | <code>true</code> | Defines whether filter by the viewport or globally.                                                                      |
 | [props.onError]         | [<code>errorCallback</code>](#errorCallback)         |                   | Function to handle error messages from the widget.                                                                       |
 | [props.wrapperProps]    | <code>Object</code>                                  |                   | Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default) |

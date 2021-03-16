@@ -1,9 +1,8 @@
 import React from 'react';
 import PieWidgetUI from '../../../src/widgets/PieWidgetUI';
 
-// This default export determines where your story goes in the story list
 const options = {
-  title: 'Widgets/PieWidgetUI',
+  title: 'Widgets UI/PieWidgetUI',
   component: PieWidgetUI
 };
 

@@ -44,11 +44,19 @@ export const parameters = {
     storySort: {
       order: [
         'Introduction',
-        'Getting Started',
+        'CARTO Theme',
         ['Palette', 'Typography'],
         'Common',
         'Widgets',
-        ['WrapperWidgetUI', 'FormulaWidgetUI', 'CategoryWidgetUI']
+        ['CategoryWidget', 'FormulaWidget', , 'HistogramWidget', 'PieWidget'],
+        'Widgets UI',
+        [
+          'CategoryWidgetUI',
+          'FormulaWidgetUI',
+          'HistogramWidgetUI',
+          'PieWidgetUI',
+          'WrapperWidgetUI'
+        ]
       ]
     }
   }

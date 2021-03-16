@@ -3,7 +3,7 @@ import { Box, Grid, Typography } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
 const options = {
-  title: 'Getting Started/Palette',
+  title: 'CARTO Theme/Palette',
   component: Box,
   argTypes: {
     colorVariant: {

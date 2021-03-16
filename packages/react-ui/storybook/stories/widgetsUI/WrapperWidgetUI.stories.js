@@ -6,7 +6,7 @@ import AddLocationIcon from '@material-ui/icons/AddLocation';
 import WrapperWidgetUI from '.../../../src/widgets/WrapperWidgetUI';
 
 const options = {
-  title: 'Widgets/WrapperWidgetUI',
+  title: 'Widgets UI/WrapperWidgetUI',
   component: WrapperWidgetUI,
   argTypes: {
     actions: {
