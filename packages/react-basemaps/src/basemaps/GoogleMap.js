@@ -6,15 +6,28 @@ import { debounce } from '@carto/react-core';
  * React component for working with Google Maps API and deck.gl
  *
  * @param { Object } props - Properties
- * @param { Object } props.basemap - CARTO username
- * @param { Object } props.viewState - Viewstate (center, zoom level)
- * @param { Layer[] } props.layers - Layers array
- * @param { function } props.getTooltip - Tooltip handler
+ * @param { Object } props.basemap - basemap
+ * @param { Object } props.basemap.options - *MapOptions* as defined by https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions
+ * @param { Object } props.viewState - Viewstate, as defined by deck.gl. Just center and zoom level are supported
+ * @param { Layer[] } props.layers - deck.gl layers array
+ * @param { function } props.getTooltip - (Optional). Tooltip handler
+ * @param { function } props.onResize - (Optional) onResize handler
+ * @param { function } props.onViewStateChange - (Optional) onViewStateChange handler
  * @param { string } props.apiKey - Google Maps API Key
  * @returns { Object } - Data returned from the SQL query execution
  */
 export function GoogleMap(props) {
-  const { basemap, viewState, layers, getTooltip, apiKey } = props;
+  debugger;
+  console.log(props);
+  const {
+    basemap,
+    viewState,
+    layers,
+    getTooltip,
+    onResize,
+    onViewStateChange,
+    apiKey
+  } = props;
   // based on https://publiuslogic.com/blog/google-maps+react-hooks/
   const containerRef = useRef();
   const triggerResize = (map) => {
@@ -42,9 +55,6 @@ export function GoogleMap(props) {
       },
       mapTypeControl: false,
       zoom: viewState.zoom + 1, // notice the 1 zoom level difference relative to deckgl
-
-      // Custom control positioning
-      // TODO: Make them configurable from outside
       fullscreenControl: false,
       zoomControl: false,
       streetViewControl: false,
@@ -69,17 +79,18 @@ export function GoogleMap(props) {
 
         if (JSON.stringify(window.cartoViewState) !== JSON.stringify(viewState)) {
           window.cartoViewState = viewState;
-          props.onViewStateChange({ viewState });
+          onViewStateChange && props.onViewStateChange({ viewState });
         }
       };
 
       const handleViewportChangeDebounced = debounce(handleViewportChange, 200);
       map.addListener('bounds_changed', handleViewportChangeDebounced);
       map.addListener('resize', () => {
-        props.onResize({
-          height: map.getDiv().offsetHeight,
-          width: map.getDiv().offsetWidth
-        });
+        onResize &&
+          onResize({
+            height: map.getDiv().offsetHeight,
+            width: map.getDiv().offsetWidth
+          });
       });
 
       window.onresize = () => {
