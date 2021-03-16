@@ -5,12 +5,12 @@ export function histogram(features, columnName, ticks, operation) {
     return [];
   }
 
-  ticks = [Number.MIN_SAFE_INTEGER, ...ticks, Number.MAX_SAFE_INTEGER];
+  ticks = [Number.MIN_SAFE_INTEGER, ...ticks];
 
-  const binsContainer = ticks.map((tick, idx, arr) => ({
-    bin: idx,
+  const binsContainer = ticks.map((tick, index, arr) => ({
+    bin: index,
     start: tick,
-    end: arr[idx + 1],
+    end: index === arr.length - 1 ? Number.MAX_SAFE_INTEGER : arr[index + 1],
     values: []
   }));
 
