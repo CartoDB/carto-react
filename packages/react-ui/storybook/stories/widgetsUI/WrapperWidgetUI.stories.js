@@ -54,7 +54,7 @@ Loading.args = LoadingProps;
 Loading.parameters = buildReactPropsAsString(LoadingProps, 'WrapperWidgetUI');
 
 export const WithActions = Template.bind({});
-const WithActionsProps = {
+WithActions.args = {
   title: 'Wrapper with actions',
   actions: [
     {
@@ -65,11 +65,26 @@ const WithActionsProps = {
     }
   ]
 };
-WithActions.args = WithActionsProps;
-WithActions.parameters = buildReactPropsAsString(WithActionsProps, 'WrapperWidgetUI');
+WithActions.parameters = {
+  docs: {
+    source: {
+      code: `<WrapperWidgetUI
+  title='Wrapper with actions'
+  actions={[
+    {
+      id: 'a1',
+      name: 'Autostyle',
+      icon: <ColorizeIcon />,
+      action: () => alert('Action!')
+    }
+  ]}
+/>`
+    }
+  }
+};
 
 export const WithOptions = Template.bind({});
-const WithOptionsProps = {
+WithOptions.args = {
   title: 'Wrapper with options',
   options: [
     { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
@@ -83,11 +98,29 @@ const WithOptionsProps = {
     { id: 'o9', name: 'Option 2', action: () => alert('Option 2!') }
   ]
 };
-WithOptions.args = WithOptionsProps;
-WithOptions.parameters = buildReactPropsAsString(WithOptionsProps, 'WrapperWidgetUI');
+WithOptions.parameters = {
+  docs: {
+    source: {
+      code: `<WrapperWidgetUI
+  title='Wrapper with options'
+  options={[
+    { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
+    { id: 'o2', name: 'Option 2 too long', action: () => alert('Option 2!') },
+    { id: 'o3', name: 'Option 2', action: () => alert('Option 2!') },
+    { id: 'o4', name: 'Option 2 too long here', action: () => alert('Option 2!') },
+    { id: 'o5', name: 'Option 2', action: () => alert('Option 2!') },
+    { id: 'o6', name: 'Option 2', action: () => alert('Option 2!') },
+    { id: 'o7', name: 'Option 2', action: () => alert('Option 2!') },
+    { id: 'o8', name: 'Option 2', action: () => alert('Option 2!') },
+    { id: 'o9', name: 'Option 2', action: () => alert('Option 2!') }
+  ]}
+/>`
+    }
+  }
+};
 
 export const WithActionsAndOptions = Template.bind({});
-const WithActionsAndOptionsProps = {
+WithActionsAndOptions.args = {
   title: 'Wrapper with actions and options',
   actions: [
     {
@@ -102,14 +135,30 @@ const WithActionsAndOptionsProps = {
     { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') }
   ]
 };
-WithActionsAndOptions.args = WithActionsAndOptionsProps;
-WithActionsAndOptions.parameters = buildReactPropsAsString(
-  WithActionsAndOptionsProps,
-  'WrapperWidgetUI'
-);
+WithActionsAndOptions.parameters = {
+  docs: {
+    source: {
+      code: `<WrapperWidgetUI
+  title='Wrapper with actions and options'
+  actions={[
+    {
+      id: 'a1',
+      name: 'Autostyle',
+      icon: <ColorizeIcon />,
+      action: () => alert('Action!')
+    }
+  ]}
+  options={[
+    { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
+    { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') }
+  ]}
+/>`
+    }
+  }
+};
 
 export const WithOptionsAndCustomIcon = Template.bind({});
-const WithOptionsAndCustomIconProps = {
+WithOptionsAndCustomIcon.args = {
   title: 'Wrapper with options and custom icon',
   options: [
     { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
@@ -117,14 +166,23 @@ const WithOptionsAndCustomIconProps = {
   ],
   optionsIcon: <MenuIcon />
 };
-WithOptionsAndCustomIcon.args = WithOptionsAndCustomIconProps;
-WithOptionsAndCustomIcon.parameters = buildReactPropsAsString(
-  WithOptionsAndCustomIconProps,
-  'WrapperWidgetUI'
-);
+WithOptionsAndCustomIcon.parameters = {
+  docs: {
+    source: {
+      code: `<WrapperWidgetUI
+  title='Wrapper with options and custom icon'
+  options={[
+    { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
+    { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') }
+  ]}
+  optionsIcon={<MenuIcon />}
+/>`
+    }
+  }
+};
 
 export const WithActionsTooltip = Template.bind({});
-const WithActionsTooltipProps = {
+WithActionsTooltip.args = {
   title: 'Wrapper with actions tooltip',
   actions: [
     {
@@ -148,8 +206,33 @@ const WithActionsTooltipProps = {
     }
   ]
 };
-WithActionsTooltip.args = WithActionsTooltipProps;
-WithActionsTooltip.parameters = buildReactPropsAsString(
-  WithActionsTooltipProps,
-  'WrapperWidgetUI'
-);
+WithActionsTooltip.parameters = {
+  docs: {
+    source: {
+      code: `<WrapperWidgetUI
+  title='Wrapper with actions tooltip'
+  actions={[
+    {
+      id: 'a1',
+      name: 'Autostyle',
+      icon: <ColorizeIcon />,
+      action: () => alert('Action!'),
+      tooltip: {
+        text: 'Tooltip default'
+      }
+    },
+    {
+      id: 'a2',
+      name: 'Autostyle',
+      icon: <AddLocationIcon />,
+      action: () => alert('Action!'),
+      tooltip: {
+        text: 'Tooltip on bottom',
+        placement: 'bottom'
+      }
+    }
+  ]}
+/>`
+    }
+  }
+};
