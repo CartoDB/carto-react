@@ -4,6 +4,7 @@ import ColorizeIcon from '@material-ui/icons/Colorize';
 import MenuIcon from '@material-ui/icons/Menu';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 import WrapperWidgetUI from '.../../../src/widgets/WrapperWidgetUI';
+import { buildReactPropsAsString } from '../../utils';
 
 const options = {
   title: 'Widgets UI/WrapperWidgetUI',
@@ -29,22 +30,31 @@ const Template = (args) => (
 );
 
 export const Default = Template.bind({});
-Default.args = { title: 'Default wrapper' };
+const DefaultProps = { title: 'Default wrapper' };
+Default.args = DefaultProps;
+Default.parameters = buildReactPropsAsString(DefaultProps, 'WrapperWidgetUI');
 
 export const OnlyTitle = Template.bind({});
-OnlyTitle.args = { title: 'Default wrapper' };
+OnlyTitle.args = DefaultProps;
+OnlyTitle.parameters = buildReactPropsAsString(DefaultProps, 'WrapperWidgetUI');
 
 export const Expandable = Template.bind({});
-Expandable.args = { title: 'Expandable', expandable: true };
+const ExpandableProps = { title: 'Expandable', expandable: true };
+Expandable.args = ExpandableProps;
+Expandable.parameters = buildReactPropsAsString(ExpandableProps, 'WrapperWidgetUI');
 
 export const NotExpandable = Template.bind({});
-NotExpandable.args = { title: 'Not Expandable', expandable: false };
+const NotExpandableProps = { title: 'Not Expandable', expandable: false };
+NotExpandable.args = NotExpandableProps;
+NotExpandable.parameters = buildReactPropsAsString(NotExpandableProps, 'WrapperWidgetUI');
 
 export const Loading = Template.bind({});
-Loading.args = { title: 'Loading', loading: true };
+const LoadingProps = { title: 'Loading', loading: true };
+Loading.args = LoadingProps;
+Loading.parameters = buildReactPropsAsString(LoadingProps, 'WrapperWidgetUI');
 
 export const WithActions = Template.bind({});
-WithActions.args = {
+const WithActionsProps = {
   title: 'Wrapper with actions',
   actions: [
     {
@@ -55,9 +65,11 @@ WithActions.args = {
     }
   ]
 };
+WithActions.args = WithActionsProps;
+WithActions.parameters = buildReactPropsAsString(WithActionsProps, 'WrapperWidgetUI');
 
 export const WithOptions = Template.bind({});
-WithOptions.args = {
+const WithOptionsProps = {
   title: 'Wrapper with options',
   options: [
     { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
@@ -71,9 +83,11 @@ WithOptions.args = {
     { id: 'o9', name: 'Option 2', action: () => alert('Option 2!') }
   ]
 };
+WithOptions.args = WithOptionsProps;
+WithOptions.parameters = buildReactPropsAsString(WithOptionsProps, 'WrapperWidgetUI');
 
 export const WithActionsAndOptions = Template.bind({});
-WithActionsAndOptions.args = {
+const WithActionsAndOptionsProps = {
   title: 'Wrapper with actions and options',
   actions: [
     {
@@ -88,9 +102,14 @@ WithActionsAndOptions.args = {
     { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') }
   ]
 };
+WithActionsAndOptions.args = WithActionsAndOptionsProps;
+WithActionsAndOptions.parameters = buildReactPropsAsString(
+  WithActionsAndOptionsProps,
+  'WrapperWidgetUI'
+);
 
 export const WithOptionsAndCustomIcon = Template.bind({});
-WithOptionsAndCustomIcon.args = {
+const WithOptionsAndCustomIconProps = {
   title: 'Wrapper with options and custom icon',
   options: [
     { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
@@ -98,9 +117,14 @@ WithOptionsAndCustomIcon.args = {
   ],
   optionsIcon: <MenuIcon />
 };
+WithOptionsAndCustomIcon.args = WithOptionsAndCustomIconProps;
+WithOptionsAndCustomIcon.parameters = buildReactPropsAsString(
+  WithOptionsAndCustomIconProps,
+  'WrapperWidgetUI'
+);
 
 export const WithActionsTooltip = Template.bind({});
-WithActionsTooltip.args = {
+const WithActionsTooltipProps = {
   title: 'Wrapper with actions tooltip',
   actions: [
     {
@@ -124,3 +148,8 @@ WithActionsTooltip.args = {
     }
   ]
 };
+WithActionsTooltip.args = WithActionsTooltipProps;
+WithActionsTooltip.parameters = buildReactPropsAsString(
+  WithActionsTooltipProps,
+  'WrapperWidgetUI'
+);

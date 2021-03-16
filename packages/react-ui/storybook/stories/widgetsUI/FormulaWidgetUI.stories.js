@@ -1,5 +1,6 @@
 import React from 'react';
 import FormulaWidgetUI from '../../../src/widgets/FormulaWidgetUI';
+import { buildReactPropsAsString } from '../../utils';
 
 const options = {
   title: 'Widgets UI/FormulaWidgetUI',
@@ -21,21 +22,38 @@ const data = 10000;
 
 export const Empty = Template.bind({});
 Empty.args = {};
+Empty.parameters = buildReactPropsAsString({ data: undefined }, 'FormulaWidgetUI');
 
 export const Text = Template.bind({});
-Text.args = { data: `$${data}` };
+const TextProps = { data: `$${data}` };
+Text.args = TextProps;
+Text.parameters = buildReactPropsAsString(TextProps, 'FormulaWidgetUI');
 
 export const ValueUnit = Template.bind({});
-ValueUnit.args = { data: { value: data, unit: '$' } };
+const ValueUnitProps = { data: { value: data, unit: '$' } };
+ValueUnit.args = ValueUnitProps;
+ValueUnit.parameters = buildReactPropsAsString(ValueUnitProps, 'FormulaWidgetUI');
 
 export const FormatterText = Template.bind({});
-FormatterText.args = { data, formatter: (v) => `$${v}` };
+const FormatterTextProps = { data, formatter: (v) => `$${v}` };
+FormatterText.args = FormatterTextProps;
+FormatterText.parameters = buildReactPropsAsString(FormatterTextProps, 'FormulaWidgetUI');
 
 export const FormatterValueUnit = Template.bind({});
-FormatterValueUnit.args = { data };
+const FormatterValueUnitProps = { data };
+FormatterValueUnit.args = FormatterValueUnitProps;
+FormatterValueUnit.parameters = buildReactPropsAsString(
+  FormatterValueUnitProps,
+  'FormulaWidgetUI'
+);
 
 export const FormatterValueUnitBefore = Template.bind({});
-FormatterValueUnitBefore.args = {
+const FormatterValueUnitBeforeProps = {
   data,
   unitBefore: true
 };
+FormatterValueUnitBefore.args = FormatterValueUnitBeforeProps;
+FormatterValueUnitBefore.parameters = buildReactPropsAsString(
+  FormatterValueUnitBeforeProps,
+  'FormulaWidgetUI'
+);

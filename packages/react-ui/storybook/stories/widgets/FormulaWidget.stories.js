@@ -12,6 +12,7 @@ import * as cartoSlice from '../../../../react-redux/src/slices/cartoSlice';
 import { AggregationTypes } from '../../../../react-core/src';
 import FormulaWidget from '../../../../react-widgets/src/widgets/FormulaWidget';
 import { mockAppStoreConfiguration } from './utils';
+import { buildReactPropsAsString } from '../../utils';
 
 const store = mockAppStoreConfiguration();
 store.dispatch(
@@ -71,6 +72,9 @@ const DEFAULT_PROPS = {
 
 export const Default = Template.bind({});
 Default.args = DEFAULT_PROPS;
+Default.parameters = buildReactPropsAsString(DEFAULT_PROPS, 'FormulaWidget');
 
 export const WithFormatter = Template.bind({});
-WithFormatter.args = { ...DEFAULT_PROPS, formatter: (v) => `$${v}` };
+const WithFormatterProps = { ...DEFAULT_PROPS, formatter: (v) => `$${v}` };
+WithFormatter.args = WithFormatterProps;
+WithFormatter.parameters = buildReactPropsAsString(WithFormatterProps, 'FormulaWidget');
