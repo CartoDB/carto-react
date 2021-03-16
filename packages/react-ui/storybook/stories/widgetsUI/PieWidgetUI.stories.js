@@ -1,5 +1,6 @@
 import React from 'react';
 import PieWidgetUI from '../../../src/widgets/PieWidgetUI';
+import { buildReactPropsAsString } from '../../utils';
 
 const options = {
   title: 'Widgets UI/PieWidgetUI',
@@ -16,10 +17,12 @@ const dataDefault = [
 const Template = (args) => <PieWidgetUI {...args} />;
 
 export const Default = Template.bind({});
-Default.args = { data: dataDefault };
+const DefaultProps = { data: dataDefault };
+Default.args = DefaultProps;
+Default.parameters = buildReactPropsAsString(DefaultProps, 'PieWidgetUI');
 
 export const CustomColors = Template.bind({});
-CustomColors.args = {
+const CustomColorsProps = {
   data: [
     { name: 'Dogs', value: 100 },
     { name: 'Cats', value: 120 },
@@ -47,9 +50,11 @@ CustomColors.args = {
     '#7C7C7C'
   ]
 };
+CustomColors.args = CustomColorsProps;
+CustomColors.parameters = buildReactPropsAsString(CustomColorsProps, 'PieWidgetUI');
 
 export const SelectedCategories = Template.bind({});
-SelectedCategories.args = {
+const SelectedCategoriesProps = {
   data: [
     { name: 'Dogs', value: 100 },
     { name: 'Cats', value: 120 },
@@ -60,3 +65,8 @@ SelectedCategories.args = {
   selectedCategories: ['Cats', 'Canaries'],
   onSelectedCategoriesChange: (categories) => console.log(categories)
 };
+SelectedCategories.args = SelectedCategoriesProps;
+SelectedCategories.parameters = buildReactPropsAsString(
+  SelectedCategoriesProps,
+  'PieWidgetUI'
+);

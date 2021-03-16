@@ -12,6 +12,7 @@ import * as cartoSlice from '../../../../react-redux/src/slices/cartoSlice';
 import { AggregationTypes } from '../../../../react-core/src';
 import HistogramWidget from '../../../../react-widgets/src/widgets/HistogramWidget';
 import { mockAppStoreConfiguration } from './utils';
+import { buildReactPropsAsString } from '../../utils';
 
 const store = mockAppStoreConfiguration();
 store.dispatch(
@@ -73,9 +74,20 @@ const DEFAULT_PROPS = {
 
 export const Default = Template.bind({});
 Default.args = DEFAULT_PROPS;
+Default.parameters = buildReactPropsAsString(DEFAULT_PROPS, 'HistogramWidget');
 
 export const xAxisFormatter = Template.bind({});
-xAxisFormatter.args = { ...DEFAULT_PROPS, xAxisFormatter: (v) => `${v}$` };
+const xAxisFormatterProps = { ...DEFAULT_PROPS, xAxisFormatter: (v) => `${v}$` };
+xAxisFormatter.args = xAxisFormatterProps;
+xAxisFormatter.parameters = buildReactPropsAsString(
+  xAxisFormatterProps,
+  'HistogramWidget'
+);
 
 export const yAxisFormatter = Template.bind({});
-yAxisFormatter.args = { ...DEFAULT_PROPS, formatter: (v) => `$${v}` };
+const yAxisFormatterProps = { ...DEFAULT_PROPS, formatter: (v) => `$${v}` };
+yAxisFormatter.args = yAxisFormatterProps;
+yAxisFormatter.parameters = buildReactPropsAsString(
+  yAxisFormatterProps,
+  'HistogramWidget'
+);

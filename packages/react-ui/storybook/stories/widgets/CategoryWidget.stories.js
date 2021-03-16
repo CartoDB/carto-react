@@ -12,6 +12,7 @@ import * as cartoSlice from '../../../../react-redux/src/slices/cartoSlice';
 import { AggregationTypes } from '../../../../react-core/src';
 import CategoryWidget from '../../../../react-widgets/src/widgets/CategoryWidget';
 import { mockAppStoreConfiguration } from './utils';
+import { buildReactPropsAsString } from '../../utils';
 
 const store = mockAppStoreConfiguration();
 store.dispatch(
@@ -76,12 +77,15 @@ const DEFAULT_PROPS = {
 
 export const Default = Template.bind({});
 Default.args = DEFAULT_PROPS;
+Default.parameters = buildReactPropsAsString(DEFAULT_PROPS, 'CategoryWidget');
 
 export const WithFormatter = Template.bind({});
-WithFormatter.args = { ...DEFAULT_PROPS, formatter: (v) => `$${v}` };
+const WithFormatterProps = { ...DEFAULT_PROPS, formatter: (v) => `$${v}` };
+WithFormatter.args = WithFormatterProps;
+WithFormatter.parameters = buildReactPropsAsString(WithFormatterProps, 'CategoryWidget');
 
 export const WithCustomLabels = Template.bind({});
-WithCustomLabels.args = {
+const WithCustomLabelsProps = {
   ...DEFAULT_PROPS,
   labels: {
     'Category 1': 'Cat. 1',
@@ -91,3 +95,8 @@ WithCustomLabels.args = {
     'Category 5': 'Cat. 5'
   }
 };
+WithCustomLabels.args = WithCustomLabelsProps;
+WithCustomLabels.parameters = buildReactPropsAsString(
+  WithCustomLabelsProps,
+  'CategoryWidget'
+);

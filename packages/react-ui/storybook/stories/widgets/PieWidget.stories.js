@@ -12,6 +12,7 @@ import * as cartoSlice from '../../../../react-redux/src/slices/cartoSlice';
 import { AggregationTypes } from '../../../../react-core/src';
 import PieWidget from '../../../../react-widgets/src/widgets/PieWidget';
 import { mockAppStoreConfiguration } from './utils';
+import { buildReactPropsAsString } from '../../utils';
 
 const store = mockAppStoreConfiguration();
 store.dispatch(
@@ -76,12 +77,17 @@ const DEFAULT_PROPS = {
 
 export const Default = Template.bind({});
 Default.args = DEFAULT_PROPS;
+Default.parameters = buildReactPropsAsString(DEFAULT_PROPS, 'PieWidget');
 
 export const WithFormatter = Template.bind({});
-WithFormatter.args = { ...DEFAULT_PROPS, formatter: (v) => `$${v}` };
+const WithFormatterProps = { ...DEFAULT_PROPS, formatter: (v) => `$${v}` };
+WithFormatter.args = WithFormatterProps;
+WithFormatter.parameters = buildReactPropsAsString(WithFormatterProps, 'PieWidget');
 
 export const TooltipFormatter = Template.bind({});
-TooltipFormatter.args = {
+const TooltipFormatterProps = {
   ...DEFAULT_PROPS,
   tooltipFormatter: (params) => `That's a custom tooltip for: ${params.name}`
 };
+TooltipFormatter.args = TooltipFormatterProps;
+TooltipFormatter.parameters = buildReactPropsAsString(TooltipFormatterProps, 'PieWidget');
