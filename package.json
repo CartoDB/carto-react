@@ -34,7 +34,7 @@
   "scripts": {
     "start": "lerna run build:watch --stream --parallel",
     "build": "yarn clean:build && NODE_ENV=production lerna run build --stream",
-    "build:full": "yarn clean:all && yarn install && yarn build && yarn test",
+    "build:clean": "yarn clean:all && yarn install && yarn build && yarn test",
     "clean:all": "yarn clean:node_modules && yarn clean:build",
     "clean:node_modules": "rm -rf ./node_modules && lerna exec -- rm -rf ./node_modules ",
     "clean:build": "rm -rf ./coverage ./.nyc_output ./reports && lerna exec -- rm -rf ./dist ./coverage",
@@ -48,7 +48,7 @@
     "storybook:start": "lerna --scope @carto/react-ui exec -- npm run storybook:start",
     "storybook:build": "lerna --scope @carto/react-ui exec -- npm run storybook:build",
     "storybook:publish": "lerna --scope @carto/react-ui exec -- npm run storybook:publish",
-    "prerelease": "yarn run build:full && lerna publish --dist-tag prerelease --force-publish --preid rc"
+    "prerelease": "yarn run build:clean && lerna publish --dist-tag prerelease --force-publish --preid rc"
   },
   "husky": {
     "hooks": {
