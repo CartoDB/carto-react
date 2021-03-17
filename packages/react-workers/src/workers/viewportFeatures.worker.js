@@ -4,6 +4,7 @@ import {
   aggregationFunctions,
   _buildFeatureFilter,
   histogram,
+  scatterPlot,
   groupValuesByColumn
 } from '@carto/react-core';
 import { Methods } from '../workerMethods';
@@ -24,6 +25,9 @@ onmessage = ({ data: { method, ...params } }) => {
       break;
     case Methods.VIEWPORT_FEATURES_CATEGORY:
       getCategories(params);
+      break;
+    case Methods.VIEWPORT_FEATURES_SCATTERPLOT:
+      getScatterPlot(params);
       break;
     case Methods.LOAD_GEOJSON_FEATURES:
       loadGeoJSONFeatures(params);
@@ -106,8 +110,19 @@ function getCategories({ filters, operation, column, operationColumn }) {
   postMessage({ result });
 }
 
+function getScatterPlot({ filters, xAxisColumn, yAxisColumn }) {
+  let result = [];
+  if (currentViewportFeatures) {
+    const filteredFeatures = getFilteredFeatures(filters);
+    result = scatterPlot(filteredFeatures, xAxisColumn, yAxisColumn);
+  }
+
+  postMessage({ result });
+}
+
 function getFilteredFeatures(filters) {
   return !Object.keys(currentViewportFeatures).length
     ? currentViewportFeatures
     : currentViewportFeatures.filter(_buildFeatureFilter({ filters }));
 }
+
