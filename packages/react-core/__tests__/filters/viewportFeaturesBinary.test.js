@@ -2,7 +2,7 @@ import { geojsonToBinary } from '@loaders.gl/gis';
 import { viewportFeatures } from '../../src/filters/viewportFeaturesBinary';
 
 describe('viewport features with binary mode', () => {
-  const viewport = [-10, -10, 10, 10];
+  const viewport = [-10, -10, 10, 10]; // west - south - east - north
 
   describe('returns no data', () => {
     test('tiles are not visible', () => {
@@ -36,6 +36,7 @@ describe('viewport features with binary mode', () => {
 
   describe('correctly returns data', () => {
     const [west, south, east, north] = viewport;
+    const movedViewport = [-11, viewport[1], 9, viewport[3]]; // Moving viewport to the left 1 degree
 
     describe('should handle points correctly', () => {
       const points = [...Array(3)].map((_, i) => ({
@@ -67,13 +68,12 @@ describe('viewport features with binary mode', () => {
           {
             isVisible: true,
             data: geojsonToBinary(points),
-            // Moving tile to the left 1 degree
-            bbox: { west: west - 1, east: east - 1, north, south }
+            bbox: { west, east, north, south }
           }
         ];
 
-        const func = viewportFeatures({ tiles: mockedTile, viewport });
-        expect(func).toEqual([{ a: 1 }]);
+        const func = viewportFeatures({ tiles: mockedTile, viewport: movedViewport });
+        expect(func).toEqual([{ a: 0 }]);
       });
     });
 
@@ -108,13 +108,12 @@ describe('viewport features with binary mode', () => {
           {
             isVisible: true,
             data: geojsonToBinary(linestrings),
-            // Moving tile to the left 1 degree
-            bbox: { west: west - 1, east: east - 1, north, south }
+            bbox: { west, east, north, south }
           }
         ];
 
-        const func = viewportFeatures({ tiles: mockedTile, viewport });
-        expect(func).toEqual([{ a: 1 }]);
+        const func = viewportFeatures({ tiles: mockedTile, viewport: movedViewport });
+        expect(func).toEqual([{ a: 0 }]);
       });
     });
 
@@ -149,12 +148,12 @@ describe('viewport features with binary mode', () => {
           {
             isVisible: true,
             data: geojsonToBinary(polygons),
-            bbox: { west: west - 1, east: east - 1, north, south }
+            bbox: { west, east, north, south }
           }
         ];
 
-        const func = viewportFeatures({ tiles: mockedTile, viewport });
-        expect(func).toEqual([{ a: 0 }, { a: 1 }]);
+        const func = viewportFeatures({ tiles: mockedTile, viewport: movedViewport });
+        expect(func).toEqual([{ a: 0 }]);
       });
     });
   });
