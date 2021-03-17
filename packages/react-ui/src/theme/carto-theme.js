@@ -649,7 +649,9 @@ export const cartoThemeOptions = {
       }
     },
     MuiInputLabel: {
-      ...variables.typography.body1,
+      root: {
+        ...variables.typography.body1
+      },
 
       formControl: {
         transform: 'translate(16px, 20px) scale(1)',
@@ -693,7 +695,7 @@ export const cartoThemeOptions = {
         marginBottom: spacing(1.5),
         color: variables.palette.text.secondary,
 
-        '&$disabled': {
+        '&:disabled': {
           color: variables.palette.action.disabled
         },
 
@@ -748,8 +750,10 @@ export const cartoThemeOptions = {
     MuiSelect: {
       selectMenu: {},
 
-      '&$hover': {
-        backgroundColor: 'transparent'
+      root: {
+        '&:hover': {
+          backgroundColor: 'transparent'
+        }
       },
 
       select: {
