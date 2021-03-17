@@ -15,8 +15,9 @@ export { AggregationTypes } from './operations/aggregation/AggregationTypes';
 export { aggregationFunctions } from './operations/aggregation/values';
 export { groupValuesByColumn } from './operations/groupby';
 export { histogram } from './operations/histogram';
+export { scatterPlot } from './operations/scatterPlot';
 
-export { 
+export {
   FilterTypes as _FilterTypes,
   filtersToSQL as _filtersToSQL,
   getApplicableFilters as _getApplicableFilters

@@ -3,7 +3,9 @@ import {
   aggregationFunctions,
   _buildFeatureFilter,
   histogram,
-  groupValuesByColumn } from '@carto/react-core';
+  groupValuesByColumn,
+  scatterPlot
+} from '@carto/react-core';
 import { Methods } from '../workerMethods';
 
 let currentViewportFeatures;
@@ -21,6 +23,9 @@ onmessage = ({ data: { method, ...params } }) => {
       break;
     case Methods.VIEWPORT_FEATURES_CATEGORY:
       getCategories(params);
+      break;
+    case Methods.VIEWPORT_FEATURES_SCATTERPLOT:
+      getScatterPlot(params);
       break;
     default:
       throw new Error('Invalid worker method');
@@ -85,4 +90,13 @@ function getFilteredFeatures(filters) {
   return !Object.keys(currentViewportFeatures).length
     ? currentViewportFeatures
     : currentViewportFeatures.filter(_buildFeatureFilter({ filters }));
+}
+function getScatterPlot({ filters, xAxisColumn, yAxisColumn }) {
+  let result = [];
+  if (currentViewportFeatures) {
+    const filteredFeatures = getFilteredFeatures(filters);
+    result = scatterPlot(filteredFeatures, xAxisColumn, yAxisColumn);
+  }
+
+  postMessage({ result });
 }
