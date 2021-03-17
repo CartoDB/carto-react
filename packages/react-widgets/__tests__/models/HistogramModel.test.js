@@ -112,31 +112,31 @@ describe('getHistogram', () => {
       test(AggregationTypes.COUNT, async () => {
         const params = buildParamsFor(AggregationTypes.COUNT);
         const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 1, 2, 1, 0]);
+        expect(histogram).toEqual([0, 1, 2, 1]);
       });
 
       test(AggregationTypes.AVG, async () => {
         const params = buildParamsFor(AggregationTypes.AVG);
         const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 0, 1, 2, 0]);
+        expect(histogram).toEqual([0, 0, 1, 2]);
       });
 
       test(AggregationTypes.SUM, async () => {
         const params = buildParamsFor(AggregationTypes.SUM);
         const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 0, 2, 2, 0]);
+        expect(histogram).toEqual([0, 0, 2, 2]);
       });
 
       test(AggregationTypes.MIN, async () => {
         const params = buildParamsFor(AggregationTypes.MIN);
         const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 0, 1, 2, 0]);
+        expect(histogram).toEqual([0, 0, 1, 2]);
       });
 
       test(AggregationTypes.MAX, async () => {
         const params = buildParamsFor(AggregationTypes.MAX);
         const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 0, 1, 2, 0]);
+        expect(histogram).toEqual([0, 0, 1, 2]);
       });
     });
   });
@@ -152,15 +152,15 @@ describe('buildSqlQueryToGetHistogram', () => {
   });
 
   const buildQuery = (params) => `
-    SELECT 
+    SELECT
       tick, ${params.operation}(${params.operationColumn}) as value
-    FROM 
+    FROM
       (
-        SELECT 
-          CASE WHEN revenue < 1200000 THEN 'cat_0' WHEN revenue < 1300000 THEN 'cat_1' WHEN revenue < 1400000 THEN 'cat_2' WHEN revenue < 1500000 THEN 'cat_3' WHEN revenue < 1600000 THEN 'cat_4' WHEN revenue < 1700000 THEN 'cat_5' WHEN revenue < 1800000 THEN 'cat_6' ELSE 'cat_7' END as tick, ${params.operationColumn} 
+        SELECT
+          CASE WHEN revenue < 1200000 THEN 'cat_0' WHEN revenue < 1300000 THEN 'cat_1' WHEN revenue < 1400000 THEN 'cat_2' WHEN revenue < 1500000 THEN 'cat_3' WHEN revenue < 1600000 THEN 'cat_4' WHEN revenue < 1700000 THEN 'cat_5' WHEN revenue < 1800000 THEN 'cat_6' ELSE 'cat_7' END as tick, ${params.operationColumn}
         FROM (
-          SELECT 
-            * 
+          SELECT
+            *
           FROM (${params.data}) as q2
         ) as q1
       ) as q
@@ -208,27 +208,27 @@ describe('filterViewportFeaturesToGetHistogram', () => {
 
   test(AggregationTypes.COUNT, () => {
     const params = buildParamsFor(AggregationTypes.COUNT);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 1, 2, 1, 0]);
+    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 1, 2, 1]);
   });
 
   test(AggregationTypes.AVG, () => {
     const params = buildParamsFor(AggregationTypes.AVG);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 1, 2, 0]);
+    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 1, 2]);
   });
 
   test(AggregationTypes.SUM, () => {
     const params = buildParamsFor(AggregationTypes.SUM);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 2, 2, 0]);
+    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 2, 2]);
   });
 
   test(AggregationTypes.MIN, () => {
     const params = buildParamsFor(AggregationTypes.MIN);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 1, 2, 0]);
+    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 1, 2]);
   });
 
   test(AggregationTypes.MAX, () => {
     const params = buildParamsFor(AggregationTypes.MAX);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 1, 2, 0]);
+    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 1, 2]);
   });
 
   test('no features', () => {
