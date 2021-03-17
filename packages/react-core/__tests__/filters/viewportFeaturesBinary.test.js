@@ -19,14 +19,14 @@ describe('viewport features with binary mode', () => {
       expect(properties).toEqual([]);
     });
 
-    test('a tiles is visibile but has no data', () => {
+    test('a tile is visibile but has no data', () => {
       const mockedTiles = [{ isVisible: true, data: null }];
 
       const properties = viewportFeatures({ tiles: mockedTiles, viewport });
       expect(properties).toEqual([]);
     });
 
-    test('a tiles has data but is not visibile', () => {
+    test('a tile has data but is not visibile', () => {
       const mockedTiles = [{ isVisible: false, data: [{}] }];
 
       const properties = viewportFeatures({ tiles: mockedTiles, viewport });
@@ -82,11 +82,8 @@ describe('viewport features with binary mode', () => {
         type: 'Feature',
         geometry: {
           type: 'LineString',
-          coordinates: [
-            [i, i],
-            [i, i + 1],
-            [i, i + 2]
-          ]
+          // prettier-ignore
+          coordinates: [[i, i], [i, i + 1], [i, i + 2]]
         },
         properties: {
           a: i
