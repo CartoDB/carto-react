@@ -10,6 +10,7 @@ describe('useCartoLayerProps', () => {
 
   test('should return correct filter props', () => {
     expect(Object.keys(result.current)).toEqual([
+      'binary',
       'uniqueIdProperty',
       'onViewportLoad',
       'getFilterValue',
