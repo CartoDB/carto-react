@@ -8,20 +8,20 @@ const GEOMETRY_TYPES = Object.freeze({
   Polygon: 2
 });
 
-function addIntersectedFeaturesInTile({ map, data, viewportIntersection, type }) {
+function addIntersectedFeaturesInTile({ map, data, viewportIntersection, type, uniqueIdProperty }) {
   const indices = getIndices(data);
   const { positions } = data;
 
   for (let i = 0; i < indices.length - 1; i++) {
     const startIndex = indices[i];
     const endIndex = indices[i + 1];
-    const featureId = getFeatureId(data, startIndex);
+    const properties = getPropertiesFromTile(data, startIndex);
+    const uniqueProperty = properties[uniqueIdProperty];
 
-    if (!map.has(featureId)) {
+    if (uniqueProperty && !map.has(uniqueProperty)) {
       const ringCoordinates = getRingCoordinatesFor(startIndex, endIndex, positions);
-
       if (intersects(getFeatureByType(ringCoordinates, type), viewportIntersection)) {
-        map.set(featureId, getPropertiesFromTile(data, startIndex));
+        map.set(uniqueProperty, properties);
       }
     }
   }
@@ -78,7 +78,8 @@ function calculateViewportFeatures({
   tileIsFullyVisible,
   viewportIntersection,
   data,
-  type
+  type,
+  uniqueIdProperty
 }) {
   if (tileIsFullyVisible) {
     // All the features of the tile are visible
@@ -86,14 +87,15 @@ function calculateViewportFeatures({
 
     for (let i = 0; i < indices.length - 1; i++) {
       const startIndex = indices[i];
-      const featureId = getFeatureId(data, startIndex);
+      const properties = getPropertiesFromTile(data, startIndex);
+      const uniqueProperty = properties[uniqueIdProperty];
 
-      if (!map.has(featureId)) {
-        map.set(featureId, getPropertiesFromTile(data, startIndex));
+      if (uniqueProperty && !map.has(uniqueProperty)) {
+        map.set(uniqueProperty, properties);
       }
     }
   } else {
-    addIntersectedFeaturesInTile({ map, data, viewportIntersection, type });
+    addIntersectedFeaturesInTile({ map, data, viewportIntersection, type, uniqueIdProperty });
   }
 }
 
@@ -109,7 +111,7 @@ function createIndicesForPoints(data) {
   data.pointIndices.value.set([lastFeatureId + 1], featureIds.length);
 }
 
-export function viewportFeatures({ tiles, viewport }) {
+export function viewportFeatures({ tiles, viewport, uniqueIdProperty }) {
   const map = new Map();
 
   for (const tile of tiles) {
@@ -128,21 +130,24 @@ export function viewportFeatures({ tiles, viewport }) {
       tileIsFullyVisible,
       viewportIntersection,
       data: tile.data.points,
-      type: GEOMETRY_TYPES['Point']
+      type: GEOMETRY_TYPES['Point'],
+      uniqueIdProperty
     });
     calculateViewportFeatures({
       map,
       tileIsFullyVisible,
       viewportIntersection,
       data: tile.data.lines,
-      type: GEOMETRY_TYPES['LineString']
+      type: GEOMETRY_TYPES['LineString'],
+      uniqueIdProperty
     });
     calculateViewportFeatures({
       map,
       tileIsFullyVisible,
       viewportIntersection,
       data: tile.data.polygons,
-      type: GEOMETRY_TYPES['Polygon']
+      type: GEOMETRY_TYPES['Polygon'],
+      uniqueIdProperty
     });
   }
 
