@@ -4,7 +4,6 @@ import { viewportFeaturesBinary } from '../../';
 describe('viewport features with binary mode', () => {
   const viewport = [-10, -10, 10, 10]; // west - south - east - north
   const [west, south, east, north] = viewport;
-  const uniqueIdProperty = 'cartodb_id';
 
   describe('returns no data', () => {
     test('tiles are not visible', () => {
@@ -74,7 +73,7 @@ describe('viewport features with binary mode', () => {
       const properties = viewportFeaturesBinary({
         tiles: mockedTile,
         viewport,
-        uniqueIdProperty
+        uniqueIdProperty: 'cartodb_id'
       });
 
       // prettier-ignore
@@ -110,7 +109,7 @@ describe('viewport features with binary mode', () => {
       const properties = viewportFeaturesBinary({
         tiles: mockedTile,
         viewport,
-        uniqueIdProperty
+        uniqueIdProperty: 'cartodb_id'
       });
       // prettier-ignore
       expect(properties).toEqual([
@@ -145,7 +144,7 @@ describe('viewport features with binary mode', () => {
       const properties = viewportFeaturesBinary({
         tiles: mockedTile,
         viewport,
-        uniqueIdProperty
+        uniqueIdProperty: 'cartodb_id'
       });
       // prettier-ignore
       expect(properties).toEqual([
@@ -183,7 +182,7 @@ describe('viewport features with binary mode', () => {
       const properties = viewportFeaturesBinary({
         tiles: mockedTile,
         viewport,
-        uniqueIdProperty
+        uniqueIdProperty: 'cartodb_id'
       });
       // prettier-ignore
       expect(properties).toEqual([
@@ -219,7 +218,7 @@ describe('viewport features with binary mode', () => {
       const properties = viewportFeaturesBinary({
         tiles: mockedTile,
         viewport,
-        uniqueIdProperty
+        uniqueIdProperty: 'cartodb_id'
       });
       expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
     });
@@ -249,7 +248,7 @@ describe('viewport features with binary mode', () => {
       const properties = viewportFeaturesBinary({
         tiles: mockedTile,
         viewport,
-        uniqueIdProperty
+        uniqueIdProperty: 'cartodb_id'
       });
       expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
     });
@@ -279,7 +278,7 @@ describe('viewport features with binary mode', () => {
       const properties = viewportFeaturesBinary({
         tiles: mockedTile,
         viewport,
-        uniqueIdProperty
+        uniqueIdProperty: 'cartodb_id'
       });
       expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
     });
@@ -309,7 +308,7 @@ describe('viewport features with binary mode', () => {
       const properties = viewportFeaturesBinary({
         tiles: mockedTile,
         viewport,
-        uniqueIdProperty
+        uniqueIdProperty: 'cartodb_id'
       });
       expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
     });
@@ -342,7 +341,7 @@ describe('viewport features with binary mode', () => {
       const properties = viewportFeaturesBinary({
         tiles: mockedTile,
         viewport,
-        uniqueIdProperty
+        uniqueIdProperty: 'cartodb_id'
       });
       expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
     });
