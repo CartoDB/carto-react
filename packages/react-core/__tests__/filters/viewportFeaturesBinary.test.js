@@ -3,39 +3,56 @@ import { viewportFeaturesBinary } from '../../';
 
 describe('viewport features with binary mode', () => {
   const viewport = [-10, -10, 10, 10]; // west - south - east - north
+  const [west, south, east, north] = viewport;
+  const uniqueIdProperty = 'cartodb_id';
 
   describe('returns no data', () => {
     test('tiles are not visible', () => {
       const mockedTiles = [...Array(10)].map(() => ({ isVisible: false }));
 
-      const properties = viewportFeaturesBinary({ tiles: mockedTiles, viewport });
+      const properties = viewportFeaturesBinary({
+        tiles: mockedTiles,
+        viewport,
+        uniqueIdProperty
+      });
       expect(properties).toEqual([]);
     });
 
     test('tiles has no data', () => {
       const mockedTiles = [{ data: null }, { data: undefined }];
 
-      const properties = viewportFeaturesBinary({ tiles: mockedTiles, viewport });
+      const properties = viewportFeaturesBinary({
+        tiles: mockedTiles,
+        viewport,
+        uniqueIdProperty
+      });
       expect(properties).toEqual([]);
     });
 
     test('a tile is visibile but has no data', () => {
       const mockedTiles = [{ isVisible: true, data: null }];
 
-      const properties = viewportFeaturesBinary({ tiles: mockedTiles, viewport });
+      const properties = viewportFeaturesBinary({
+        tiles: mockedTiles,
+        viewport,
+        uniqueIdProperty
+      });
       expect(properties).toEqual([]);
     });
 
     test('a tile has data but is not visibile', () => {
       const mockedTiles = [{ isVisible: false, data: [{}] }];
 
-      const properties = viewportFeaturesBinary({ tiles: mockedTiles, viewport });
+      const properties = viewportFeaturesBinary({
+        tiles: mockedTiles,
+        viewport,
+        uniqueIdProperty
+      });
       expect(properties).toEqual([]);
     });
   });
 
   describe('correctly returns data', () => {
-    const [west, south, east, north] = viewport;
     const movedViewport = [-11, viewport[1], 9, viewport[3]]; // Moving viewport to the left 1 degree
 
     describe('should handle points correctly', () => {
@@ -46,7 +63,8 @@ describe('viewport features with binary mode', () => {
           coordinates: [i, i]
         },
         properties: {
-          a: i
+          cartodb_id: i + 1,
+          other_prop: i
         }
       }));
 
@@ -59,16 +77,26 @@ describe('viewport features with binary mode', () => {
       ];
 
       test('tile is completely in viewport', () => {
-        const properties = viewportFeaturesBinary({ tiles: mockedTile, viewport });
-        expect(properties).toEqual([{ a: 0 }, { a: 1 }, { a: 2 }]);
+        const properties = viewportFeaturesBinary({
+          tiles: mockedTile,
+          viewport,
+          uniqueIdProperty
+        });
+        // prettier-ignore
+        expect(properties).toEqual([
+          { 'cartodb_id': 1, 'other_prop': 0 },
+          { 'cartodb_id': 2, 'other_prop': 1 },
+          { 'cartodb_id': 3, 'other_prop': 2 }
+        ]);
       });
 
       test('tile is partially in viewport', () => {
         const properties = viewportFeaturesBinary({
           tiles: mockedTile,
-          viewport: movedViewport
+          viewport: movedViewport,
+          uniqueIdProperty
         });
-        expect(properties).toEqual([{ a: 0 }]);
+        expect(properties).toEqual([{ cartodb_id: 1, other_prop: 0 }]);
       });
     });
 
@@ -81,7 +109,8 @@ describe('viewport features with binary mode', () => {
           coordinates: [[i, i], [i, i + 1], [i, i + 2]]
         },
         properties: {
-          a: i
+          cartodb_id: i + 1,
+          other_prop: i
         }
       }));
 
@@ -94,16 +123,26 @@ describe('viewport features with binary mode', () => {
       ];
 
       test('tile is completely in viewport', () => {
-        const properties = viewportFeaturesBinary({ tiles: mockedTile, viewport });
-        expect(properties).toEqual([{ a: 0 }, { a: 1 }, { a: 2 }]);
+        const properties = viewportFeaturesBinary({
+          tiles: mockedTile,
+          viewport,
+          uniqueIdProperty
+        });
+        // prettier-ignore
+        expect(properties).toEqual([
+          { 'cartodb_id': 1, 'other_prop': 0 },
+          { 'cartodb_id': 2, 'other_prop': 1 },
+          { 'cartodb_id': 3, 'other_prop': 2 }
+        ]);
       });
 
       test('tile is partially in viewport', () => {
         const properties = viewportFeaturesBinary({
           tiles: mockedTile,
-          viewport: movedViewport
+          viewport: movedViewport,
+          uniqueIdProperty
         });
-        expect(properties).toEqual([{ a: 0 }]);
+        expect(properties).toEqual([{ cartodb_id: 1, other_prop: 0 }]);
       });
     });
 
@@ -116,7 +155,8 @@ describe('viewport features with binary mode', () => {
           coordinates: [[[i, i], [i + 1, i + 1]], [[i + 2, i + 2], [i + 3, i + 3]]]
         },
         properties: {
-          a: i
+          cartodb_id: i + 1,
+          other_prop: i
         }
       }));
 
@@ -129,16 +169,26 @@ describe('viewport features with binary mode', () => {
       ];
 
       test('tile is completely in viewport', () => {
-        const properties = viewportFeaturesBinary({ tiles: mockedTile, viewport });
-        expect(properties).toEqual([{ a: 0 }, { a: 1 }, { a: 2 }]);
+        const properties = viewportFeaturesBinary({
+          tiles: mockedTile,
+          viewport,
+          uniqueIdProperty
+        });
+        // prettier-ignore
+        expect(properties).toEqual([
+          { 'cartodb_id': 1, 'other_prop': 0 },
+          { 'cartodb_id': 2, 'other_prop': 1 },
+          { 'cartodb_id': 3, 'other_prop': 2 }
+        ]);
       });
 
       test('tile is partially in viewport', () => {
         const properties = viewportFeaturesBinary({
           tiles: mockedTile,
-          viewport: movedViewport
+          viewport: movedViewport,
+          uniqueIdProperty
         });
-        expect(properties).toEqual([{ a: 0 }]);
+        expect(properties).toEqual([{ cartodb_id: 1, other_prop: 0 }]);
       });
     });
 
@@ -151,7 +201,8 @@ describe('viewport features with binary mode', () => {
           coordinates: [[[i, i], [i + 1, i], [i + 1, i + 1], [i, i + 1], [i, i]]]
         },
         properties: {
-          a: i
+          cartodb_id: i + 1,
+          other_prop: i
         }
       }));
 
@@ -164,8 +215,17 @@ describe('viewport features with binary mode', () => {
       ];
 
       test('tile is completely in viewport', () => {
-        const properties = viewportFeaturesBinary({ tiles: mockedTile, viewport });
-        expect(properties).toEqual([{ a: 0 }, { a: 1 }, { a: 2 }]);
+        const properties = viewportFeaturesBinary({
+          tiles: mockedTile,
+          viewport,
+          uniqueIdProperty
+        });
+        // prettier-ignore
+        expect(properties).toEqual([
+          { 'cartodb_id': 1, 'other_prop': 0 },
+          { 'cartodb_id': 2, 'other_prop': 1 },
+          { 'cartodb_id': 3, 'other_prop': 2 }
+        ]);
       });
 
       test('tile is partially in viewport', () => {
@@ -173,7 +233,7 @@ describe('viewport features with binary mode', () => {
           tiles: mockedTile,
           viewport: movedViewport
         });
-        expect(properties).toEqual([{ a: 0 }]);
+        expect(properties).toEqual([]);
       });
     });
 
@@ -189,7 +249,8 @@ describe('viewport features with binary mode', () => {
           ]
         },
         properties: {
-          a: i
+          cartodb_id: i + 1,
+          other_prop: i
         }
       }));
 
@@ -202,17 +263,181 @@ describe('viewport features with binary mode', () => {
       ];
 
       test('tile is completely in viewport', () => {
-        const properties = viewportFeaturesBinary({ tiles: mockedTile, viewport });
-        expect(properties).toEqual([{ a: 0 }, { a: 1 }, { a: 2 }]);
+        const properties = viewportFeaturesBinary({
+          tiles: mockedTile,
+          viewport,
+          uniqueIdProperty
+        });
+        // prettier-ignore
+        expect(properties).toEqual([
+          { 'cartodb_id': 1, 'other_prop': 0 },
+          { 'cartodb_id': 2, 'other_prop': 1 },
+          { 'cartodb_id': 3, 'other_prop': 2 }
+        ]);
       });
 
       test('tile is partially in viewport', () => {
         const properties = viewportFeaturesBinary({
           tiles: mockedTile,
-          viewport: movedViewport
+          viewport: movedViewport,
+          uniqueIdProperty
         });
-        expect(properties).toEqual([{ a: 0 }]);
+        expect(properties).toEqual([{ cartodb_id: 1, other_prop: 0 }]);
       });
+    });
+  });
+
+  describe('with repeated features', () => {
+    test('points', () => {
+      const points = [...Array(4)].map(() => ({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [0, 0]
+        },
+        properties: {
+          cartodb_id: 1,
+          other_prop: 1
+        }
+      }));
+
+      const mockedTile = [
+        {
+          isVisible: true,
+          data: geojsonToBinary(points),
+          bbox: { west, east, north, south }
+        }
+      ];
+
+      const properties = viewportFeaturesBinary({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty
+      });
+      expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
+    });
+
+    test('linestrings', () => {
+      const linestrings = [...Array(4)].map(() => ({
+        type: 'Feature',
+        geometry: {
+          type: 'LineString',
+          // prettier-ignore
+          coordinates: [[0, 0], [0, 1], [1, 2]]
+        },
+        properties: {
+          cartodb_id: 1,
+          other_prop: 1
+        }
+      }));
+
+      const mockedTile = [
+        {
+          isVisible: true,
+          data: geojsonToBinary(linestrings),
+          bbox: { west, east, north, south }
+        }
+      ];
+
+      const properties = viewportFeaturesBinary({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty
+      });
+      expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
+    });
+
+    test('multilinestrings', () => {
+      const multilinestrings = [...Array(3)].map((_, i) => ({
+        type: 'Feature',
+        geometry: {
+          type: 'MultiLineString',
+          // prettier-ignore
+          coordinates: [[[0, 0], [1, 1]], [[2, 2], [3, 3]]]
+        },
+        properties: {
+          cartodb_id: 1,
+          other_prop: 1
+        }
+      }));
+
+      const mockedTile = [
+        {
+          isVisible: true,
+          data: geojsonToBinary(multilinestrings),
+          bbox: { west, east, north, south }
+        }
+      ];
+
+      const properties = viewportFeaturesBinary({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty
+      });
+      expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
+    });
+
+    test('polygons', () => {
+      const polygons = [...Array(4)].map(() => ({
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          // prettier-ignore
+          coordinates: [[[0, 0], [1, 0], [1, 1], [0, 2], [0, 0]]]
+        },
+        properties: {
+          cartodb_id: 1,
+          other_prop: 1
+        }
+      }));
+
+      const mockedTile = [
+        {
+          isVisible: true,
+          data: geojsonToBinary(polygons),
+          bbox: { west, east, north, south }
+        }
+      ];
+
+      const properties = viewportFeaturesBinary({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty
+      });
+      expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
+    });
+
+    test('multipolygons', () => {
+      const multipolygons = [...Array(4)].map((_, i) => ({
+        type: 'Feature',
+        geometry: {
+          type: 'MultiPolygon',
+          // prettier-ignore
+          coordinates: [
+            [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]],
+            [[[1, 1], [2, 1], [2, 2], [1, 2], [1, 1]]]
+          ]
+        },
+        properties: {
+          cartodb_id: 1,
+          other_prop: 1
+        }
+      }));
+
+      const mockedTile = [
+        {
+          isVisible: true,
+          data: geojsonToBinary(multipolygons),
+          bbox: { west, east, north, south }
+        }
+      ];
+
+      const properties = viewportFeaturesBinary({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty
+      });
+      expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
     });
   });
 });
