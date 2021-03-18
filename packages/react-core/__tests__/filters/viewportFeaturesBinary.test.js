@@ -60,7 +60,7 @@ describe('viewport features with binary mode', () => {
 
       test('tile is completely in viewport', () => {
         const properties = viewportFeaturesBinary({ tiles: mockedTile, viewport });
-        expect(properties).toEqual([{ a: 0 }, { a: 1 }]);
+        expect(properties).toEqual([{ a: 0 }, { a: 1 }, { a: 2 }]);
       });
 
       test('tile is partially in viewport', () => {
