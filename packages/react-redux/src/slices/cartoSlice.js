@@ -216,9 +216,11 @@ export const setBasemap = (basemap) => ({ type: 'carto/setBasemap', payload: bas
 
 /**
  * Action to add a filter on a given source and column
- * @param {string} id - sourceId of the source to apply the filter
- * @param {string} column - column to filter at the source
+ * @param {string} id - sourceId of the source to apply the filter on
+ * @param {string} column - column to use by the filter at the source
  * @param {FilterType} type - FilterTypes.IN and FilterTypes.BETWEEN
+ * @param {array} values -  Values for the filter (eg: ['a', 'b'] for IN or [10, 20] for BETWEEN)
+ * @param {string} owner - (optional) id of the widget triggering the filter (to be excluded)
  */
 export const addFilter = ({ id, column, type, values, owner }) => ({
   type: 'carto/addFilter',
