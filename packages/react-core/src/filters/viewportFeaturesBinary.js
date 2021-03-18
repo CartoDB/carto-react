@@ -28,7 +28,7 @@ function addIntersectedFeaturesInTile({ map, data, viewportIntersection, type })
 }
 
 function getIndices(data) {
-  const indices = data.primitivePolygonIndices || data.pathIndices || data.featureIds;
+  const indices = data.primitivePolygonIndices || data.pathIndices || data.pointIndices;
   return indices.value;
 }
 
@@ -97,6 +97,18 @@ function calculateViewportFeatures({
   }
 }
 
+function createIndicesForPoints(data) {
+  const featureIds = data.featureIds.value;
+  const lastFeatureId = featureIds[featureIds.length - 1];
+
+  data.pointIndices = {
+    value: new featureIds.constructor(featureIds.length + 1),
+    size: 1
+  };
+  data.pointIndices.value.set(featureIds);
+  data.pointIndices.value.set([lastFeatureId + 1], featureIds.length);
+}
+
 export function viewportFeatures({ tiles, viewport }) {
   const map = new Map();
 
@@ -110,6 +122,7 @@ export function viewportFeatures({ tiles, viewport }) {
     const tileIsFullyVisible = isTileFullyVisible(bbox, viewport);
     const viewportIntersection = bboxPolygon(prepareViewport(tile.bbox, viewport));
 
+    createIndicesForPoints(tile.data.points);
     calculateViewportFeatures({
       map,
       tileIsFullyVisible,
