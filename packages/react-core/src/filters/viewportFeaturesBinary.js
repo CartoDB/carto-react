@@ -15,13 +15,12 @@ function addIntersectedFeaturesInTile({ map, data, viewportIntersection, type, u
   for (let i = 0; i < indices.length - 1; i++) {
     const startIndex = indices[i];
     const endIndex = indices[i + 1];
-    const properties = getPropertiesFromTile(data, startIndex);
-    const uniqueProperty = properties[uniqueIdProperty];
+    const uniquePropertyValue = getUniquePropertyValue(data, startIndex, uniqueIdProperty, map);
 
-    if (uniqueProperty && !map.has(uniqueProperty)) {
+    if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
       const ringCoordinates = getRingCoordinatesFor(startIndex, endIndex, positions);
       if (intersects(getFeatureByType(ringCoordinates, type), viewportIntersection)) {
-        map.set(uniqueProperty, properties);
+        map.set(uniquePropertyValue, parseProperties(data, startIndex));
       }
     }
   }
@@ -39,13 +38,29 @@ function getFeatureId(data, startIndex) {
 function getPropertiesFromTile(data, startIndex) {
   const featureId = getFeatureId(data, startIndex);
   const { properties, numericProps } = data;
-  const propertiesCloned = Object.assign(properties[featureId]);
+  const result = {
+    properties: properties[featureId],
+    numericProps: {}
+  };
 
   for (const key in numericProps) {
-    propertiesCloned[key] = numericProps[key].value[startIndex];
+    result.numericProps[key] = numericProps[key].value[startIndex];
   }
 
-  return propertiesCloned;
+  return result;
+}
+
+function parseProperties(data, startIndex) {
+  const { properties, numericProps } = getPropertiesFromTile(data, startIndex);
+  return Object.assign({}, properties, numericProps);
+}
+
+function getUniquePropertyValue (data, startIndex, uniqueIdProperty, map) {
+  const { properties, numericProps } = getPropertiesFromTile(data, startIndex);
+  if (uniqueIdProperty) {
+    return numericProps[uniqueIdProperty] || properties[uniqueIdProperty];
+  }
+  return numericProps['cartodb_id'] || numericProps['geoid'] || properties['cartodb_id'] || properties['geoid'] || (map.size + 1);
 }
 
 function getFeatureByType(coordinates, type) {
@@ -87,11 +102,10 @@ function calculateViewportFeatures({
 
     for (let i = 0; i < indices.length - 1; i++) {
       const startIndex = indices[i];
-      const properties = getPropertiesFromTile(data, startIndex);
-      const uniqueProperty = properties[uniqueIdProperty];
+      const uniquePropertyValue = getUniquePropertyValue(data, startIndex, uniqueIdProperty, map);
 
-      if (uniqueProperty && !map.has(uniqueProperty)) {
-        map.set(uniqueProperty, properties);
+      if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
+        map.set(uniquePropertyValue, parseProperties(data, startIndex));
       }
     }
   } else {
