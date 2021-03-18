@@ -32,6 +32,7 @@
     "@babel/plugin-transform-runtime": "^7.13.9",
     "@babel/preset-env": "^7.13.9",
     "@babel/preset-react": "^7.12.13",
+    "@loaders.gl/gis": "^2.3.13",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/react-hooks": "^5.1.0",

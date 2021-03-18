@@ -1,5 +1,5 @@
 import { geojsonToBinary } from '@loaders.gl/gis';
-import { viewportFeatures } from '../../src/filters/viewportFeaturesBinary';
+import { viewportFeaturesBinary } from '../../';
 
 describe('viewport features with binary mode', () => {
   const viewport = [-10, -10, 10, 10]; // west - south - east - north
@@ -8,28 +8,28 @@ describe('viewport features with binary mode', () => {
     test('tiles are not visible', () => {
       const mockedTiles = [...Array(10)].map(() => ({ isVisible: false }));
 
-      const properties = viewportFeatures({ tiles: mockedTiles, viewport });
+      const properties = viewportFeaturesBinary({ tiles: mockedTiles, viewport });
       expect(properties).toEqual([]);
     });
 
     test('tiles has no data', () => {
       const mockedTiles = [{ data: null }, { data: undefined }];
 
-      const properties = viewportFeatures({ tiles: mockedTiles, viewport });
+      const properties = viewportFeaturesBinary({ tiles: mockedTiles, viewport });
       expect(properties).toEqual([]);
     });
 
     test('a tile is visibile but has no data', () => {
       const mockedTiles = [{ isVisible: true, data: null }];
 
-      const properties = viewportFeatures({ tiles: mockedTiles, viewport });
+      const properties = viewportFeaturesBinary({ tiles: mockedTiles, viewport });
       expect(properties).toEqual([]);
     });
 
     test('a tile has data but is not visibile', () => {
       const mockedTiles = [{ isVisible: false, data: [{}] }];
 
-      const properties = viewportFeatures({ tiles: mockedTiles, viewport });
+      const properties = viewportFeaturesBinary({ tiles: mockedTiles, viewport });
       expect(properties).toEqual([]);
     });
   });
@@ -50,30 +50,25 @@ describe('viewport features with binary mode', () => {
         }
       }));
 
-      test('tile is completely in viewport', () => {
-        const mockedTile = [
-          {
-            isVisible: true,
-            data: geojsonToBinary(points),
-            bbox: { west, east, north, south }
-          }
-        ];
+      const mockedTile = [
+        {
+          isVisible: true,
+          data: geojsonToBinary(points),
+          bbox: { west, east, north, south }
+        }
+      ];
 
-        const func = viewportFeatures({ tiles: mockedTile, viewport });
-        expect(func).toEqual([{ a: 0 }, { a: 1 }]);
+      test('tile is completely in viewport', () => {
+        const properties = viewportFeaturesBinary({ tiles: mockedTile, viewport });
+        expect(properties).toEqual([{ a: 0 }, { a: 1 }]);
       });
 
       test('tile is partially in viewport', () => {
-        const mockedTile = [
-          {
-            isVisible: true,
-            data: geojsonToBinary(points),
-            bbox: { west, east, north, south }
-          }
-        ];
-
-        const func = viewportFeatures({ tiles: mockedTile, viewport: movedViewport });
-        expect(func).toEqual([{ a: 0 }]);
+        const properties = viewportFeaturesBinary({
+          tiles: mockedTile,
+          viewport: movedViewport
+        });
+        expect(properties).toEqual([{ a: 0 }]);
       });
     });
 
@@ -90,30 +85,60 @@ describe('viewport features with binary mode', () => {
         }
       }));
 
-      test('tile is completely in viewport', () => {
-        const mockedTile = [
-          {
-            isVisible: true,
-            data: geojsonToBinary(linestrings),
-            bbox: { west, east, north, south }
-          }
-        ];
+      const mockedTile = [
+        {
+          isVisible: true,
+          data: geojsonToBinary(linestrings),
+          bbox: { west, east, north, south }
+        }
+      ];
 
-        const func = viewportFeatures({ tiles: mockedTile, viewport });
-        expect(func).toEqual([{ a: 0 }, { a: 1 }, { a: 2 }]);
+      test('tile is completely in viewport', () => {
+        const properties = viewportFeaturesBinary({ tiles: mockedTile, viewport });
+        expect(properties).toEqual([{ a: 0 }, { a: 1 }, { a: 2 }]);
       });
 
       test('tile is partially in viewport', () => {
-        const mockedTile = [
-          {
-            isVisible: true,
-            data: geojsonToBinary(linestrings),
-            bbox: { west, east, north, south }
-          }
-        ];
+        const properties = viewportFeaturesBinary({
+          tiles: mockedTile,
+          viewport: movedViewport
+        });
+        expect(properties).toEqual([{ a: 0 }]);
+      });
+    });
 
-        const func = viewportFeatures({ tiles: mockedTile, viewport: movedViewport });
-        expect(func).toEqual([{ a: 0 }]);
+    describe('should handle multilinestrings correctly', () => {
+      const multilinestrings = [...Array(3)].map((_, i) => ({
+        type: 'Feature',
+        geometry: {
+          type: 'MultiLineString',
+          // prettier-ignore
+          coordinates: [[[i, i], [i + 1, i + 1]], [[i + 2, i + 2], [i + 3, i + 3]]]
+        },
+        properties: {
+          a: i
+        }
+      }));
+
+      const mockedTile = [
+        {
+          isVisible: true,
+          data: geojsonToBinary(multilinestrings),
+          bbox: { west, east, north, south }
+        }
+      ];
+
+      test('tile is completely in viewport', () => {
+        const properties = viewportFeaturesBinary({ tiles: mockedTile, viewport });
+        expect(properties).toEqual([{ a: 0 }, { a: 1 }, { a: 2 }]);
+      });
+
+      test('tile is partially in viewport', () => {
+        const properties = viewportFeaturesBinary({
+          tiles: mockedTile,
+          viewport: movedViewport
+        });
+        expect(properties).toEqual([{ a: 0 }]);
       });
     });
 
@@ -130,30 +155,63 @@ describe('viewport features with binary mode', () => {
         }
       }));
 
-      test('tile is completely in viewport', () => {
-        const mockedTile = [
-          {
-            isVisible: true,
-            data: geojsonToBinary(polygons),
-            bbox: { west, east, north, south }
-          }
-        ];
+      const mockedTile = [
+        {
+          isVisible: true,
+          data: geojsonToBinary(polygons),
+          bbox: { west, east, north, south }
+        }
+      ];
 
-        const func = viewportFeatures({ tiles: mockedTile, viewport });
-        expect(func).toEqual([{ a: 0 }, { a: 1 }, { a: 2 }]);
+      test('tile is completely in viewport', () => {
+        const properties = viewportFeaturesBinary({ tiles: mockedTile, viewport });
+        expect(properties).toEqual([{ a: 0 }, { a: 1 }, { a: 2 }]);
       });
 
       test('tile is partially in viewport', () => {
-        const mockedTile = [
-          {
-            isVisible: true,
-            data: geojsonToBinary(polygons),
-            bbox: { west, east, north, south }
-          }
-        ];
+        const properties = viewportFeaturesBinary({
+          tiles: mockedTile,
+          viewport: movedViewport
+        });
+        expect(properties).toEqual([{ a: 0 }]);
+      });
+    });
 
-        const func = viewportFeatures({ tiles: mockedTile, viewport: movedViewport });
-        expect(func).toEqual([{ a: 0 }]);
+    describe('should handle multilipolygons correctly', () => {
+      const multipolygons = [...Array(3)].map((_, i) => ({
+        type: 'Feature',
+        geometry: {
+          type: 'MultiPolygon',
+          // prettier-ignore
+          coordinates: [
+            [[[i, i], [i + 1, i], [i + 1, i + 1], [i, i + 1], [i, i]]],
+            [[[i + 1, i + 1], [i + 2, i + 1], [i + 2, i + 2], [i + 1, i + 2], [i + 1, i + 1]]]
+          ]
+        },
+        properties: {
+          a: i
+        }
+      }));
+
+      const mockedTile = [
+        {
+          isVisible: true,
+          data: geojsonToBinary(multipolygons),
+          bbox: { west, east, north, south }
+        }
+      ];
+
+      test('tile is completely in viewport', () => {
+        const properties = viewportFeaturesBinary({ tiles: mockedTile, viewport });
+        expect(properties).toEqual([{ a: 0 }, { a: 1 }, { a: 2 }]);
+      });
+
+      test('tile is partially in viewport', () => {
+        const properties = viewportFeaturesBinary({
+          tiles: mockedTile,
+          viewport: movedViewport
+        });
+        expect(properties).toEqual([{ a: 0 }]);
       });
     });
   });

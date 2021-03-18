@@ -1,6 +1,8 @@
-import { getCategories } from '../../src/models/CategoryModel';
 import { AggregationTypes } from '@carto/react-core';
 import { SourceTypes } from '@carto/react-api';
+
+import { executeTask } from '@carto/react-workers';
+import { getCategories } from '../../src/models/CategoryModel';
 
 const features = (categoryColumn, operationColumn) => [
   {
@@ -17,10 +19,12 @@ const features = (categoryColumn, operationColumn) => [
   }
 ];
 
-jest.mock('../../../react-workers/src/workerPool');
-// eslint-disable-next-line import/first
-import { executeTask } from '../../../react-workers/src/workerPool';
-executeTask.mockReturnValue(Promise.resolve(true));
+jest.mock('@carto/react-workers', () => ({
+  executeTask: jest.fn(),
+  Methods: {
+    VIEWPORT_FEATURES_CATEGORY: 'viewportFeaturesCategory'
+  }
+}));
 
 // execute only this test with -t flag => yarn test -t 'unique test'
 describe('unique test', () => {
@@ -38,6 +42,9 @@ describe('unique test', () => {
 
   test(AggregationTypes.COUNT, async () => {
     const params = buildGetCategoriesParamsFor(AggregationTypes.COUNT);
-    expect(await getCategories(params)).toBe(true);
+    await getCategories(params);
+    // expect().toBe(true);
+
+    expect(executeTask).toHaveBeenCalled();
   });
 });

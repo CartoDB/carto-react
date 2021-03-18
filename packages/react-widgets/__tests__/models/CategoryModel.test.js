@@ -1,13 +1,11 @@
 import { minify } from 'pgsql-minify';
-
 import {
   getCategories,
-  buildSqlQueryToGetCategories,
-  filterViewportFeaturesToGetCategories
+  buildSqlQueryToGetCategories
 } from '../../src/models/CategoryModel';
 import { AggregationTypes } from '@carto/react-core';
 import { SourceTypes } from '@carto/react-api';
-
+import { Methods, executeTask } from '@carto/react-workers';
 import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
 
 const features = (categoryColumn, operationColumn) => [
@@ -24,6 +22,13 @@ const features = (categoryColumn, operationColumn) => [
     [operationColumn]: 3
   }
 ];
+
+jest.mock('@carto/react-workers', () => ({
+  executeTask: jest.fn(),
+  Methods: {
+    VIEWPORT_FEATURES_CATEGORY: 'viewportFeaturesCategory'
+  }
+}));
 
 describe('getCategories', () => {
   test('should throw with array data', async () => {
@@ -75,52 +80,48 @@ describe('getCategories', () => {
       });
     });
 
-    describe('should read viewport features when using "viewportFilter": true', () => {
+    describe('should handle viewport features when using "viewportFilter": true', () => {
       const viewportFeatures = features('storetype', 'revenue');
 
-      const buildGetCategoriesParamsFor = (operation) => ({
-        operation,
+      const categoriesParams = {
+        operation: AggregationTypes.COUNT,
         column: 'storetype',
         operationColumn: 'revenue',
         type: SourceTypes.SQL,
         viewportFilter: true,
-        viewportFeatures
-      });
+        viewportFeatures,
+        dataSource: 'whatever-data-source',
+        filters: {}
+      };
 
-      test(AggregationTypes.COUNT, async () => {
-        const params = buildGetCategoriesParamsFor(AggregationTypes.COUNT);
-        const categories = await getCategories(params);
+      test('correctly returns data', async () => {
+        executeTask.mockImplementation(() =>
+          Promise.resolve([
+            { name: 'a', value: 2 },
+            { name: 'b', value: 1 }
+          ])
+        );
+        const categories = await getCategories(categoriesParams);
         expect(categories).toEqual([
           { name: 'a', value: 2 },
           { name: 'b', value: 1 }
         ]);
       });
 
-      test(AggregationTypes.AVG, async () => {
-        const params = buildGetCategoriesParamsFor(AggregationTypes.AVG);
-        const categories = await getCategories(params);
-        expect(categories).toEqual([
-          { name: 'a', value: 1.5 },
-          { name: 'b', value: 3 }
-        ]);
-      });
-
-      test(AggregationTypes.MIN, async () => {
-        const params = buildGetCategoriesParamsFor(AggregationTypes.MIN);
-        const categories = await getCategories(params);
-        expect(categories).toEqual([
-          { name: 'a', value: 1 },
-          { name: 'b', value: 3 }
-        ]);
-      });
-
-      test(AggregationTypes.MAX, async () => {
-        const params = buildGetCategoriesParamsFor(AggregationTypes.MAX);
-        const categories = await getCategories(params);
-        expect(categories).toEqual([
-          { name: 'a', value: 2 },
-          { name: 'b', value: 3 }
-        ]);
+      test('correctly called', async () => {
+        const {
+          dataSource,
+          column,
+          filters,
+          operation,
+          operationColumn
+        } = categoriesParams;
+        await getCategories(categoriesParams);
+        expect(executeTask).toHaveBeenCalledWith(
+          dataSource,
+          Methods.VIEWPORT_FEATURES_CATEGORY,
+          { column, filters, operation, operationColumn }
+        );
       });
     });
   });
@@ -157,61 +158,5 @@ describe('buildSqlQueryToGetFormula', () => {
       `;
     const query = buildQuery(params);
     expect(buildSqlQueryToGetCategories(params)).toEqual(minify(query));
-  });
-});
-
-describe('filterViewportFeaturesToGetCategories', () => {
-  const buildParamsFor = (operation) => ({
-    operation,
-    column: 'storetype',
-    operationColumn: 'revenue',
-    viewportFeatures: features('storetype', 'revenue')
-  });
-
-  test(AggregationTypes.COUNT, () => {
-    const params = buildParamsFor(AggregationTypes.COUNT);
-    expect(filterViewportFeaturesToGetCategories(params)).toEqual([
-      { name: 'a', value: 2 },
-      { name: 'b', value: 1 }
-    ]);
-  });
-
-  test(AggregationTypes.AVG, () => {
-    const params = buildParamsFor(AggregationTypes.AVG);
-    expect(filterViewportFeaturesToGetCategories(params)).toEqual([
-      { name: 'a', value: 1.5 },
-      { name: 'b', value: 3 }
-    ]);
-  });
-
-  test(AggregationTypes.SUM, () => {
-    const params = buildParamsFor(AggregationTypes.SUM);
-    expect(filterViewportFeaturesToGetCategories(params)).toEqual([
-      { name: 'a', value: 3 },
-      { name: 'b', value: 3 }
-    ]);
-  });
-
-  test(AggregationTypes.MIN, () => {
-    const params = buildParamsFor(AggregationTypes.MIN);
-    expect(filterViewportFeaturesToGetCategories(params)).toEqual([
-      { name: 'a', value: 1 },
-      { name: 'b', value: 3 }
-    ]);
-  });
-
-  test(AggregationTypes.MAX, () => {
-    const params = buildParamsFor(AggregationTypes.MAX);
-    expect(filterViewportFeaturesToGetCategories(params)).toEqual([
-      { name: 'a', value: 2 },
-      { name: 'b', value: 3 }
-    ]);
-  });
-
-  test('no features', () => {
-    const testCases = [null, undefined];
-    for (const tc of testCases) {
-      expect(filterViewportFeaturesToGetCategories({ viewportFeatures: tc })).toEqual([]);
-    }
   });
 });
