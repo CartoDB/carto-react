@@ -12,8 +12,6 @@
 
 <br/>
 
-Package with CARTO utilities for a React + Redux project 
+Package with CARTO utilities for a React + Redux project
 
-See also the [reference](reference.md)
-
-Review [CARTO for React](https://docs.carto.com/react/)
+See the official doc & reference at [CARTO for React](https://docs.carto.com/react/)

@@ -14,6 +14,4 @@
 
 Package with core elements, used by different packages
 
-See also the [reference](reference.md)
-
-Review [CARTO for React](https://docs.carto.com/react/)
+See the official doc & reference at [CARTO for React](https://docs.carto.com/react/)

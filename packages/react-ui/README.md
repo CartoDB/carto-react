@@ -12,8 +12,6 @@
 
 <br/>
 
-Package with UI components, based on MaterialUI +  a CARTO theme
+Package with UI components, based on MaterialUI + a CARTO theme
 
-See also the [storybook](https://storybook-react.carto.com/)
-
-Review [CARTO for React](https://docs.carto.com/react/)
+See the official doc & reference at [CARTO for React](https://docs.carto.com/react/)
