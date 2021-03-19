@@ -37,7 +37,7 @@ describe('histogram', () => {
         ticks,
         AggregationTypes.COUNT
       );
-      expect(h.length).toBe(1 + ticks.length + 1);
+      expect(h.length).toBe(1 + ticks.length);
     });
 
     test(AggregationTypes.COUNT, () => {
@@ -47,7 +47,7 @@ describe('histogram', () => {
         ticks,
         AggregationTypes.COUNT
       );
-      expect(h).toEqual([0, 1, 2, 3, 2, 1, 0]);
+      expect(h).toEqual([0, 1, 2, 3, 2, 1]);
     });
 
     test(AggregationTypes.AVG, () => {
@@ -57,7 +57,7 @@ describe('histogram', () => {
         ticks,
         AggregationTypes.AVG
       );
-      expect(h).toEqual([0, 1, 2, 3, 4, 5, 0]);
+      expect(h).toEqual([0, 1, 2, 3, 4, 5]);
     });
 
     test(AggregationTypes.MIN, () => {
@@ -67,7 +67,7 @@ describe('histogram', () => {
         ticks,
         AggregationTypes.MIN
       );
-      expect(h).toEqual([0, 1, 2, 3, 4, 5, 0]);
+      expect(h).toEqual([0, 1, 2, 3, 4, 5]);
     });
 
     test(AggregationTypes.MAX, () => {
@@ -77,7 +77,7 @@ describe('histogram', () => {
         ticks,
         AggregationTypes.MAX
       );
-      expect(h).toEqual([0, 1, 2, 3, 4, 5, 0]);
+      expect(h).toEqual([0, 1, 2, 3, 4, 5]);
     });
 
     test(AggregationTypes.SUM, () => {
@@ -87,7 +87,7 @@ describe('histogram', () => {
         ticks,
         AggregationTypes.SUM
       );
-      expect(h).toEqual([0, 1, 4, 9, 8, 5, 0]);
+      expect(h).toEqual([0, 1, 4, 9, 8, 5]);
     });
   });
 
@@ -99,7 +99,7 @@ describe('histogram', () => {
         ticks,
         AggregationTypes.COUNT
       );
-      expect(h).toEqual([0, 0, 0, 0, 0, 0, 0]);
+      expect(h).toEqual([0, 0, 0, 0, 0, 0]);
     });
   });
 });

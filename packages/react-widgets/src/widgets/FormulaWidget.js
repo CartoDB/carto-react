@@ -90,7 +90,8 @@ FormulaWidget.propTypes = {
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   viewportFilter: PropTypes.bool,
-  onError: PropTypes.func
+  onError: PropTypes.func,
+  wrapperProps: PropTypes.object
 };
 
 FormulaWidget.defaultProps = {

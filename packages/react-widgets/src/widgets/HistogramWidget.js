@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI } from '@carto/react-ui';
-import { 
-  _FilterTypes as FilterTypes, 
+import {
+  _FilterTypes as FilterTypes,
   _getApplicableFilters as getApplicableFilters,
   AggregationTypes
 } from '@carto/react-core';
@@ -157,7 +157,8 @@ HistogramWidget.propTypes = {
   tooltip: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
   viewportFilter: PropTypes.bool,
-  onError: PropTypes.func
+  onError: PropTypes.func,
+  wrapperProps: PropTypes.object
 };
 
 HistogramWidget.defaultProps = {

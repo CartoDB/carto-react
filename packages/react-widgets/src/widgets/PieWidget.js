@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, PieWidgetUI } from '@carto/react-ui';
-import { 
-  _FilterTypes as FilterTypes, 
+import {
+  _FilterTypes as FilterTypes,
   _getApplicableFilters as getApplicableFilters,
   AggregationTypes
 } from '@carto/react-core';
@@ -101,35 +101,34 @@ function PieWidget({
     viewportFilter
   ]);
 
-  const handleSelectedCategoriesChange = useCallback((categories) => {
-    setSelectedCategories(categories);
+  const handleSelectedCategoriesChange = useCallback(
+    (categories) => {
+      setSelectedCategories(categories);
 
-    if (categories && categories.length) {
-      dispatch(
-        addFilter({
-          id: dataSource,
-          column,
-          type: FilterTypes.IN,
-          values: categories,
-          owner: id
-        })
-      );
-    } else {
-      dispatch(
-        removeFilter({
-          id: dataSource,
-          column
-        })
-      );
-    }
-  }, [column, dataSource, id, setSelectedCategories, dispatch]);
+      if (categories && categories.length) {
+        dispatch(
+          addFilter({
+            id: dataSource,
+            column,
+            type: FilterTypes.IN,
+            values: categories,
+            owner: id
+          })
+        );
+      } else {
+        dispatch(
+          removeFilter({
+            id: dataSource,
+            column
+          })
+        );
+      }
+    },
+    [column, dataSource, id, setSelectedCategories, dispatch]
+  );
 
   return (
-    <WrapperWidgetUI
-      title={title}
-      isLoading={widgetsLoadingState[id]}
-      {...wrapperProps}
-    >
+    <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
       <PieWidgetUI
         data={categoryData}
         formatter={formatter}
@@ -154,7 +153,8 @@ PieWidget.propTypes = {
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   viewportFilter: PropTypes.bool,
-  onError: PropTypes.func
+  onError: PropTypes.func,
+  wrapperProps: PropTypes.object
 };
 
 PieWidget.defaultProps = {

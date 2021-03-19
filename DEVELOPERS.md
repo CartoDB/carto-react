@@ -15,7 +15,7 @@ From now on, use one of the root level commands, that lerna will execute for all
   yarn test
 ```
 
-If you have issues, you can always run `yarn build:full`. It will perform a full clean and then ensure that install, build and test work fine
+If you have issues, you can always run `yarn build:clean`. It will perform a full clean and then ensure that install, build and test work fine
 
 ## Link from carto-react-template
 

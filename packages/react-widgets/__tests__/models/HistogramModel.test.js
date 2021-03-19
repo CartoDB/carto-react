@@ -102,9 +102,9 @@ describe('getHistogram', () => {
       };
 
       test('correctly returns data', async () => {
-        executeTask.mockImplementation(() => Promise.resolve([0, 1, 2, 1, 0]));
+        executeTask.mockImplementation(() => Promise.resolve([0, 1, 2, 1]));
         const histogram = await getHistogram(histogramParams);
-        expect(histogram).toEqual([0, 1, 2, 1, 0]);
+        expect(histogram).toEqual([0, 1, 2, 1]);
       });
 
       test('correctly called', async () => {
@@ -130,15 +130,15 @@ describe('buildSqlQueryToGetHistogram', () => {
   });
 
   const buildQuery = (params) => `
-    SELECT 
+    SELECT
       tick, ${params.operation}(${params.operationColumn}) as value
-    FROM 
+    FROM
       (
-        SELECT 
-          CASE WHEN revenue < 1200000 THEN 'cat_0' WHEN revenue < 1300000 THEN 'cat_1' WHEN revenue < 1400000 THEN 'cat_2' WHEN revenue < 1500000 THEN 'cat_3' WHEN revenue < 1600000 THEN 'cat_4' WHEN revenue < 1700000 THEN 'cat_5' WHEN revenue < 1800000 THEN 'cat_6' ELSE 'cat_7' END as tick, ${params.operationColumn} 
+        SELECT
+          CASE WHEN revenue < 1200000 THEN 'cat_0' WHEN revenue < 1300000 THEN 'cat_1' WHEN revenue < 1400000 THEN 'cat_2' WHEN revenue < 1500000 THEN 'cat_3' WHEN revenue < 1600000 THEN 'cat_4' WHEN revenue < 1700000 THEN 'cat_5' WHEN revenue < 1800000 THEN 'cat_6' ELSE 'cat_7' END as tick, ${params.operationColumn}
         FROM (
-          SELECT 
-            * 
+          SELECT
+            *
           FROM (${params.data}) as q2
         ) as q1
       ) as q
