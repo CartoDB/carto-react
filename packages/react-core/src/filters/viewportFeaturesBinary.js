@@ -8,19 +8,27 @@ const GEOMETRY_TYPES = Object.freeze({
   Polygon: 2
 });
 
-function addIntersectedFeaturesInTile({ map, data, viewportIntersection, type, uniqueIdProperty }) {
+function addIntersectedFeaturesInTile({
+  map,
+  data,
+  viewportIntersection,
+  type,
+  uniqueIdProperty
+}) {
   const indices = getIndices(data);
   const { positions } = data;
 
   for (let i = 0; i < indices.length - 1; i++) {
     const startIndex = indices[i];
     const endIndex = indices[i + 1];
-    const uniquePropertyValue = getUniquePropertyValue(data, startIndex, uniqueIdProperty, map);
+
+    const tileProps = getPropertiesFromTile(data, startIndex);
+    const uniquePropertyValue = getUniquePropertyValue(tileProps, uniqueIdProperty, map);
 
     if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
       const ringCoordinates = getRingCoordinatesFor(startIndex, endIndex, positions);
       if (intersects(getFeatureByType(ringCoordinates, type), viewportIntersection)) {
-        map.set(uniquePropertyValue, parseProperties(data, startIndex));
+        map.set(uniquePropertyValue, parseProperties(tileProps));
       }
     }
   }
@@ -50,17 +58,27 @@ function getPropertiesFromTile(data, startIndex) {
   return result;
 }
 
-function parseProperties(data, startIndex) {
-  const { properties, numericProps } = getPropertiesFromTile(data, startIndex);
+function parseProperties(tileProps) {
+  const { properties, numericProps } = tileProps;
   return Object.assign({}, properties, numericProps);
 }
 
-function getUniquePropertyValue (data, startIndex, uniqueIdProperty, map) {
-  const { properties, numericProps } = getPropertiesFromTile(data, startIndex);
+function getUniquePropertyValue(tileProps, uniqueIdProperty, map) {
   if (uniqueIdProperty) {
-    return numericProps[uniqueIdProperty] || properties[uniqueIdProperty];
+    // honour the uniqueIdProperty, if it has a explicit value
+    return getValueFromTileProps(tileProps, uniqueIdProperty);
   }
-  return numericProps['cartodb_id'] || numericProps['geoid'] || properties['cartodb_id'] || properties['geoid'] || (map.size + 1);
+  const artificialId = map.size + 1; // a counter, assumed as a valid new id
+  return (
+    getValueFromTileProps(tileProps, 'cartodb_id') ||
+    getValueFromTileProps(tileProps, 'geoid') ||
+    artificialId
+  );
+}
+
+function getValueFromTileProps(tileProps, propertyName) {
+  const { properties, numericProps } = tileProps;
+  return numericProps[propertyName] || properties[propertyName];
 }
 
 function getFeatureByType(coordinates, type) {
@@ -102,14 +120,26 @@ function calculateViewportFeatures({
 
     for (let i = 0; i < indices.length - 1; i++) {
       const startIndex = indices[i];
-      const uniquePropertyValue = getUniquePropertyValue(data, startIndex, uniqueIdProperty, map);
+
+      const tileProps = getPropertiesFromTile(data, startIndex);
+      const uniquePropertyValue = getUniquePropertyValue(
+        tileProps,
+        uniqueIdProperty,
+        map
+      );
 
       if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
-        map.set(uniquePropertyValue, parseProperties(data, startIndex));
+        map.set(uniquePropertyValue, parseProperties(tileProps));
       }
     }
   } else {
-    addIntersectedFeaturesInTile({ map, data, viewportIntersection, type, uniqueIdProperty });
+    addIntersectedFeaturesInTile({
+      map,
+      data,
+      viewportIntersection,
+      type,
+      uniqueIdProperty
+    });
   }
 }
 
