@@ -65,9 +65,9 @@ function parseProperties(tileProps) {
 
 function getUniquePropertyValue(tileProps, uniqueIdProperty, map) {
   if (uniqueIdProperty) {
-    // honour the uniqueIdProperty, if it has a explicit value
     return getValueFromTileProps(tileProps, uniqueIdProperty);
   }
+
   const artificialId = map.size + 1; // a counter, assumed as a valid new id
   return (
     getValueFromTileProps(tileProps, 'cartodb_id') ||
@@ -115,23 +115,7 @@ function calculateViewportFeatures({
   uniqueIdProperty
 }) {
   if (tileIsFullyVisible) {
-    // All the features of the tile are visible
-    const indices = getIndices(data);
-
-    for (let i = 0; i < indices.length - 1; i++) {
-      const startIndex = indices[i];
-
-      const tileProps = getPropertiesFromTile(data, startIndex);
-      const uniquePropertyValue = getUniquePropertyValue(
-        tileProps,
-        uniqueIdProperty,
-        map
-      );
-
-      if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
-        map.set(uniquePropertyValue, parseProperties(tileProps));
-      }
-    }
+    addAllFeaturesInTile({ map, data, uniqueIdProperty });
   } else {
     addIntersectedFeaturesInTile({
       map,
@@ -140,6 +124,21 @@ function calculateViewportFeatures({
       type,
       uniqueIdProperty
     });
+  }
+}
+
+function addAllFeaturesInTile({ map, data, uniqueIdProperty }) {
+  const indices = getIndices(data);
+
+  for (let i = 0; i < indices.length - 1; i++) {
+    const startIndex = indices[i];
+
+    const tileProps = getPropertiesFromTile(data, startIndex);
+    const uniquePropertyValue = getUniquePropertyValue(tileProps, uniqueIdProperty, map);
+
+    if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
+      map.set(uniquePropertyValue, parseProperties(tileProps));
+    }
   }
 }
 
@@ -169,6 +168,7 @@ export function viewportFeatures({ tiles, viewport, uniqueIdProperty }) {
     const viewportIntersection = bboxPolygon(prepareViewport(tile.bbox, viewport));
 
     createIndicesForPoints(tile.data.points);
+
     calculateViewportFeatures({
       map,
       tileIsFullyVisible,
