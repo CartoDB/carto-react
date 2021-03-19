@@ -32,8 +32,8 @@
     "webpack-cli": "^4.5.0"
   },
   "scripts": {
-    "start": "lerna run build:watch --stream --parallel",
     "build": "yarn clean:build && NODE_ENV=production lerna run build --stream",
+    "build:watch": "lerna run build:watch --stream --parallel",
     "build:clean": "yarn clean:all && yarn install && yarn build && yarn test",
     "clean:all": "yarn clean:node_modules && yarn clean:build",
     "clean:node_modules": "rm -rf ./node_modules && lerna exec -- rm -rf ./node_modules ",
