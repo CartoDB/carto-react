@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Add optional parameter colorsPerCategory to PieWidget []()
+
 ## 1.0.0-rc.2 (2021-03-19)
 
 - Fix material-ui warnings due to wrong styles in theme [#124](https://github.com/CartoDB/carto-react/pull/124)
