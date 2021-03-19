@@ -2,7 +2,7 @@ import { useEffect, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setViewportFeaturesReady, setAllWidgetsLoadingState } from '@carto/react-redux';
 import { debounce } from '@carto/react-core';
-import { Methods, executeTask } from '@carto/react-workers'
+import { Methods, executeTask } from '@carto/react-workers';
 
 export default function useViewportFeatures(
   source,
@@ -22,18 +22,23 @@ export default function useViewportFeatures(
         bbox
       }));
 
-      await executeTask(sourceId, Methods.VIEWPORT_FEATURES, {
-        tiles: tilesCleaned,
-        viewport,
-        uniqueIdProperty
-      });
+      try {
+        await executeTask(sourceId, Methods.VIEWPORT_FEATURES, {
+          tiles: tilesCleaned,
+          viewport,
+          uniqueIdProperty
+        });
 
-      dispatch(
-        setViewportFeaturesReady({
-          sourceId,
-          ready: true
-        })
-      );
+        dispatch(
+          setViewportFeaturesReady({
+            sourceId,
+            ready: true
+          })
+        );
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        throw error;
+      }
     }, debounceTimeOut),
     []
   );
