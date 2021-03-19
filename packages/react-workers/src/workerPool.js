@@ -19,7 +19,9 @@ export function executeTask(source, method, params) {
 
 export function removeWorker(source) {
   if (pool[source]) {
-    pool[source].tasks.forEach((t) => t.reject());
+    const removeSourceError = new Error();
+    removeSourceError.name = "AbortError";
+    pool[source].tasks.forEach((t) => t.reject(removeSourceError));
     pool[source].worker.terminate();
     delete pool[source];
   }
@@ -48,9 +50,8 @@ function onmessage(w) {
 function onerror(w) {
   w.worker.onerror = (err) => {
     const task = w.tasks.shift();
-    task.reject();
     resolveWorkerTasks(w);
-    throw new Error(err.message);
+    task.reject(err);
   };
 }
 
