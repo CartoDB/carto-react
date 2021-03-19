@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fix material-ui warnings due to wrong styles in theme [#124](https://github.com/CartoDB/carto-react/pull/124)
 - Add Widgets from @carto/react-widgets to StoryBook [#120](https://github.com/CartoDB/carto-react/pull/120)
 - Improve GoogleMap component [#121](https://github.com/CartoDB/carto-react/pull/121)
 - Fix histogram removing last spurious bin [#123](https://github.com/CartoDB/carto-react/pull/123)
