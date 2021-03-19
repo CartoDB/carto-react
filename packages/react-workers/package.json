@@ -1,7 +1,7 @@
 {
   "name": "@carto/react-workers",
   "version": "1.0.0-rc.1",
-  "description": "CARTO for React - workers",
+  "description": "CARTO for React - Workers",
   "author": "CARTO Dev Team",
   "repository": {
     "type": "git",
@@ -23,7 +23,8 @@
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --collectCoverage --passWithNoTests"
+    "test:coverage": "jest --collectCoverage --passWithNoTests",
+    "precommit": "lint-staged"
   },
   "devDependencies": {
     "@babel/core": "^7.13.8",
