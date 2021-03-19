@@ -2,6 +2,8 @@
 
 ## Not released
 
+## 1.0.0-rc.2 (2021-03-19)
+
 - Fix material-ui warnings due to wrong styles in theme [#124](https://github.com/CartoDB/carto-react/pull/124)
 - Add Widgets from @carto/react-widgets to StoryBook [#120](https://github.com/CartoDB/carto-react/pull/120)
 - Improve GoogleMap component [#121](https://github.com/CartoDB/carto-react/pull/121)
