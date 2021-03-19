@@ -1,11 +1,7 @@
 import { minify } from 'pgsql-minify';
-import { 
-  _buildFeatureFilter as buildFeatureFilter, 
-  _filtersToSQL as filtersToSQL, 
-  histogram
-} from '@carto/react-core';
-
-import { executeSQL, SourceTypes } from '@carto/react-api'
+import { _filtersToSQL as filtersToSQL } from '@carto/react-core';
+import { executeSQL, SourceTypes } from '@carto/react-api';
+import { Methods, executeTask } from '@carto/react-workers';
 
 export const getHistogram = async (props) => {
   const {
@@ -17,7 +13,7 @@ export const getHistogram = async (props) => {
     filters,
     opts,
     viewportFilter,
-    viewportFeatures,
+    dataSource,
     type
   } = props;
 
@@ -32,8 +28,7 @@ export const getHistogram = async (props) => {
   }
 
   if (viewportFilter) {
-    return filterViewportFeaturesToGetHistogram({
-      viewportFeatures,
+    return executeTask(dataSource, Methods.VIEWPORT_FEATURES_HISTOGRAM, {
       filters,
       operation,
       column,
@@ -94,26 +89,4 @@ export const buildSqlQueryToGetHistogram = ({
   `;
 
   return minify(query);
-};
-
-/**
- * Filter viewport features to get Histogram defined by props
- */
-export const filterViewportFeaturesToGetHistogram = ({
-  viewportFeatures,
-  filters,
-  operation,
-  column,
-  ticks
-}) => {
-  if (viewportFeatures) {
-    const filteredFeatures = !Object.keys(viewportFeatures).length
-      ? viewportFeatures
-      : viewportFeatures.filter(buildFeatureFilter({ filters }));
-
-    const result = histogram(filteredFeatures, column, ticks, operation);
-    return result;
-  }
-
-  return [];
 };

@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, PieWidgetUI } from '@carto/react-ui';
-import { 
-  _FilterTypes as FilterTypes, 
+import {
+  _FilterTypes as FilterTypes,
   _getApplicableFilters as getApplicableFilters,
   AggregationTypes
 } from '@carto/react-core';
@@ -46,7 +46,7 @@ function PieWidget({
 
   const dispatch = useDispatch();
   const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeatures = useSelector((state) => state.carto.viewportFeatures);
+  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
 
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
   const [hasLoadingState, setIsLoading] = useWidgetLoadingState(id, viewportFilter);
@@ -65,7 +65,8 @@ function PieWidget({
         filters,
         credentials,
         viewportFilter,
-        viewportFeatures: viewportFeatures[dataSource] || [],
+        viewportFeatures: viewportFeaturesReady[dataSource] || false,
+        dataSource,
         type,
         opts: { abortController }
       })
@@ -89,7 +90,7 @@ function PieWidget({
     setIsLoading,
     source.filters,
     type,
-    viewportFeatures,
+    viewportFeaturesReady,
     column,
     operation,
     operationColumn,
@@ -100,35 +101,34 @@ function PieWidget({
     viewportFilter
   ]);
 
-  const handleSelectedCategoriesChange = useCallback((categories) => {
-    setSelectedCategories(categories);
+  const handleSelectedCategoriesChange = useCallback(
+    (categories) => {
+      setSelectedCategories(categories);
 
-    if (categories && categories.length) {
-      dispatch(
-        addFilter({
-          id: dataSource,
-          column,
-          type: FilterTypes.IN,
-          values: categories,
-          owner: id
-        })
-      );
-    } else {
-      dispatch(
-        removeFilter({
-          id: dataSource,
-          column
-        })
-      );
-    }
-  }, [column, dataSource, id, setSelectedCategories, dispatch]);
+      if (categories && categories.length) {
+        dispatch(
+          addFilter({
+            id: dataSource,
+            column,
+            type: FilterTypes.IN,
+            values: categories,
+            owner: id
+          })
+        );
+      } else {
+        dispatch(
+          removeFilter({
+            id: dataSource,
+            column
+          })
+        );
+      }
+    },
+    [column, dataSource, id, setSelectedCategories, dispatch]
+  );
 
   return (
-    <WrapperWidgetUI
-      title={title}
-      isLoading={widgetsLoadingState[id]}
-      {...wrapperProps}
-    >
+    <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
       <PieWidgetUI
         data={categoryData}
         formatter={formatter}

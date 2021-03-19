@@ -9,7 +9,7 @@ const MOCKED_SOURCE = {
   id: 'sb-data-source',
   type: 'sql',
   data: 'data'
-}
+};
 
 let mockedStore = {};
 

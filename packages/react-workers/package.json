@@ -1,7 +1,7 @@
 {
-  "name": "@carto/react-api",
+  "name": "@carto/react-workers",
   "version": "1.0.0-rc.1",
-  "description": "CARTO for React - Api",
+  "description": "CARTO for React - Workers",
   "author": "CARTO Dev Team",
   "repository": {
     "type": "git",
@@ -21,9 +21,9 @@
     "build:watch": "webpack --config webpack.config.js --watch",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --collectCoverage",
+    "test:coverage": "jest --collectCoverage --passWithNoTests",
     "precommit": "lint-staged"
   },
   "devDependencies": {
@@ -51,20 +51,13 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest": "^26.6.3",
     "webpack": "^5.24.2",
-    "webpack-cli": "^4.5.0"
+    "webpack-cli": "^4.5.0",
+    "worker-loader": "^3.0.8"
   },
   "dependencies": {
-    "@babel/runtime": "^7.13.9"
-  },
-  "peerDependencies": {
+    "@babel/runtime": "^7.13.9",
     "@carto/react-core": "^1.0.0-rc.0",
-    "@carto/react-redux": "^1.0.0-rc.0",
-    "@carto/react-workers": "^1.0.0-rc.0",
-    "@deck.gl/core": "^8.4.10",
-    "@deck.gl/extensions": "^8.4.10",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-redux": "^7.2.2",
-    "redux": "^4.0.5"
+    "@turf/bbox-polygon": "^6.3.0",
+    "@turf/boolean-intersects": "^6.3.0"
   }
 }

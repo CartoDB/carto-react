@@ -6,6 +6,7 @@
 - Add Widgets from @carto/react-widgets to StoryBook [#120](https://github.com/CartoDB/carto-react/pull/120)
 - Improve GoogleMap component [#121](https://github.com/CartoDB/carto-react/pull/121)
 - Fix histogram removing last spurious bin [#123](https://github.com/CartoDB/carto-react/pull/123)
+- Add workers to calculate viewportFeatures [#111](https://github.com/CartoDB/carto-react/pull/111)
 
 ## 1.0.0-rc.1 (2021-03-11)
 

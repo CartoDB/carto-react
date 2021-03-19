@@ -1,11 +1,7 @@
 import { minify } from 'pgsql-minify';
-import {
-  _buildFeatureFilter as buildFeatureFilter,
-  _filtersToSQL as filtersToSQL,
-  groupValuesByColumn
-} from '@carto/react-core';
-
+import { _filtersToSQL as filtersToSQL } from '@carto/react-core';
 import { executeSQL, SourceTypes } from '@carto/react-api';
+import { Methods, executeTask } from '@carto/react-workers';
 
 export const getCategories = async (props) => {
   const {
@@ -15,7 +11,7 @@ export const getCategories = async (props) => {
     operation,
     filters,
     viewportFilter,
-    viewportFeatures,
+    dataSource,
     type,
     opts,
     alias = 'name'
@@ -34,9 +30,7 @@ export const getCategories = async (props) => {
   const operationColumn = props.operationColumn || column;
 
   if (viewportFilter) {
-    return filterViewportFeaturesToGetCategories({
-      viewportFilter,
-      viewportFeatures,
+    return executeTask(dataSource, Methods.VIEWPORT_FEATURES_CATEGORY, {
       filters,
       operation,
       column,
@@ -90,32 +84,4 @@ export const buildSqlQueryToGetCategories = ({
   `;
 
   return minify(query);
-};
-
-/**
- * Filter viewport features to get the Categories defined by props
- */
-export const filterViewportFeaturesToGetCategories = ({
-  viewportFeatures,
-  filters,
-  operation,
-  column,
-  operationColumn
-}) => {
-  if (viewportFeatures) {
-    const filteredFeatures = !Object.keys(viewportFeatures).length
-      ? viewportFeatures
-      : viewportFeatures.filter(buildFeatureFilter({ filters }));
-
-    const groups = groupValuesByColumn(
-      filteredFeatures,
-      operationColumn,
-      column,
-      operation
-    );
-
-    return groups;
-  }
-
-  return [];
 };

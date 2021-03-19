@@ -152,6 +152,16 @@ describe('carto slice', () => {
       const { carto } = store.getState();
       expect(carto.viewportFeatures).not.toHaveProperty(featuresInfo.sourceId);
     });
+
+    test('worker calculations should be finished', () => {
+      const sourceInfo = {
+        sourceId: 'whatever-source-id',
+        ready: true
+      };
+      store.dispatch(cartoSlice.setViewportFeaturesReady(sourceInfo));
+      const { carto } = store.getState();
+      expect(carto.viewportFeaturesReady[sourceInfo.sourceId]).toBe(true);
+    });
   });
 
   describe('widget loading actions', () => {
