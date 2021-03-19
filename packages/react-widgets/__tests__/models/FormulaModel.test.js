@@ -1,26 +1,16 @@
 import { minify } from 'pgsql-minify';
-
-import {
-  getFormula,
-  buildSqlQueryToGetFormula,
-  filterViewportFeaturesToGetFormula
-} from '../../src/models/FormulaModel';
+import { getFormula, buildSqlQueryToGetFormula } from '../../src/models/FormulaModel';
 import { AggregationTypes } from '@carto/react-core';
 import { SourceTypes } from '@carto/react-api';
-
+import { Methods, executeTask } from '@carto/react-workers';
 import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
 
-const features = (column) => [
-  {
-    [column]: 1
-  },
-  {
-    [column]: 2
-  },
-  {
-    [column]: 3
+jest.mock('@carto/react-workers', () => ({
+  executeTask: jest.fn(),
+  Methods: {
+    VIEWPORT_FEATURES_FORMULA: 'viewportFeaturesFormula'
   }
-];
+}));
 
 describe('getFormula', () => {
   test('should throw with array data', async () => {
@@ -67,45 +57,33 @@ describe('getFormula', () => {
       });
     });
 
-    describe('should read viewport features when using "viewportFilter": true', () => {
-      const viewportFeatures = features('revenue');
+    describe('should handle viewport features when using "viewportFilter": true', () => {
+      const viewportFeatures = [...Array(3)].map((_, idx) => ({ revenue: idx }));
 
-      const buildParamsFor = (operation) => ({
-        operation,
+      const formulaParams = {
+        operation: AggregationTypes.COUNT,
         column: 'revenue',
         type: SourceTypes.SQL,
         viewportFilter: true,
-        viewportFeatures
-      });
+        viewportFeatures,
+        dataSource: 'whatever-data-source',
+        filters: {}
+      };
 
-      test(AggregationTypes.COUNT, async () => {
-        const params = buildParamsFor(AggregationTypes.COUNT);
-        const formula = await getFormula(params);
+      test('correctly returns data', async () => {
+        executeTask.mockImplementation(() => Promise.resolve([{ value: 3 }]));
+        const formula = await getFormula(formulaParams);
         expect(formula).toEqual([{ value: 3 }]);
       });
 
-      test(AggregationTypes.AVG, async () => {
-        const params = buildParamsFor(AggregationTypes.AVG);
-        const formula = await getFormula(params);
-        expect(formula).toEqual([{ value: 2 }]);
-      });
-
-      test(AggregationTypes.SUM, async () => {
-        const params = buildParamsFor(AggregationTypes.SUM);
-        const formula = await getFormula(params);
-        expect(formula).toEqual([{ value: 6 }]);
-      });
-
-      test(AggregationTypes.MIN, async () => {
-        const params = buildParamsFor(AggregationTypes.MIN);
-        const formula = await getFormula(params);
-        expect(formula).toEqual([{ value: 1 }]);
-      });
-
-      test(AggregationTypes.MAX, async () => {
-        const params = buildParamsFor(AggregationTypes.MAX);
-        const formula = await getFormula(params);
-        expect(formula).toEqual([{ value: 3 }]);
+      test('correctly called', async () => {
+        const { column, dataSource, filters, operation } = formulaParams;
+        await getFormula(formulaParams);
+        expect(executeTask).toHaveBeenCalledWith(
+          dataSource,
+          Methods.VIEWPORT_FEATURES_FORMULA,
+          { column, filters, operation }
+        );
       });
     });
   });
@@ -123,37 +101,5 @@ describe('buildSqlQueryToGetFormula', () => {
     expect(buildSqlQueryToGetFormula(params)).toEqual(
       minify(buildQuery(params.operation))
     );
-  });
-});
-
-describe('filterViewportFeaturesToGetFormula', () => {
-  const buildParamsFor = (operation) => ({
-    operation,
-    column: 'revenue',
-    viewportFeatures: features('revenue')
-  });
-
-  test(AggregationTypes.COUNT, () => {
-    const params = buildParamsFor(AggregationTypes.COUNT);
-    expect(filterViewportFeaturesToGetFormula(params)).toEqual([{ value: 3 }]);
-  });
-
-  test(AggregationTypes.AVG, () => {
-    const params = buildParamsFor(AggregationTypes.AVG);
-    expect(filterViewportFeaturesToGetFormula(params)).toEqual([{ value: 2 }]);
-  });
-
-  test(AggregationTypes.SUM, () => {
-    const params = buildParamsFor(AggregationTypes.SUM);
-    expect(filterViewportFeaturesToGetFormula(params)).toEqual([{ value: 6 }]);
-  });
-
-  test('no features', () => {
-    const testCases = [null, undefined];
-    for (const tc of testCases) {
-      expect(filterViewportFeaturesToGetFormula({ viewportFeatures: tc })).toEqual([
-        { value: null }
-      ]);
-    }
   });
 });

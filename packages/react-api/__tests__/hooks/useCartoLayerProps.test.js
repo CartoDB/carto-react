@@ -10,6 +10,7 @@ describe('useCartoLayerProps', () => {
 
   test('should return correct filter props', () => {
     expect(Object.keys(result.current)).toEqual([
+      'binary',
       'uniqueIdProperty',
       'onViewportLoad',
       'getFilterValue',
@@ -20,8 +21,8 @@ describe('useCartoLayerProps', () => {
   });
 
   describe('should has correct filter configurations', () => {
-    test('uniqueIdProperty should be a string', () => {
-      expect(typeof result.current.uniqueIdProperty === 'string').toBe(true);
+    test('uniqueIdProperty should be undefined', () => {
+      expect(result.current.uniqueIdProperty).toBeUndefined();
     });
 
     test('onViewporLoad should be a function', () => {

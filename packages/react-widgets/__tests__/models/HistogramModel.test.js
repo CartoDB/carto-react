@@ -2,28 +2,19 @@ import { minify } from 'pgsql-minify';
 
 import {
   getHistogram,
-  buildSqlQueryToGetHistogram,
-  filterViewportFeaturesToGetHistogram
+  buildSqlQueryToGetHistogram
 } from '../../src/models/HistogramModel';
 import { AggregationTypes } from '@carto/react-core';
 import { SourceTypes } from '@carto/react-api';
-
+import { Methods, executeTask } from '@carto/react-workers';
 import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
 
-const features = (operationColumn) => [
-  {
-    [operationColumn]: 0
-  },
-  {
-    [operationColumn]: 1
-  },
-  {
-    [operationColumn]: 1
-  },
-  {
-    [operationColumn]: 2
+jest.mock('@carto/react-workers', () => ({
+  executeTask: jest.fn(),
+  Methods: {
+    VIEWPORT_FEATURES_HISTOGRAM: 'viewportFeaturesHistogram'
   }
-];
+}));
 
 describe('getHistogram', () => {
   test('should throw with array data', async () => {
@@ -97,46 +88,33 @@ describe('getHistogram', () => {
       });
     });
 
-    describe('should filter viewport features - "viewportFilter" prop is true', () => {
-      const viewportFeatures = features('revenue');
+    describe('should handle viewport features - "viewportFilter" prop is true', () => {
+      // prettier-ignore
+      const viewportFeatures = [{ revenue: 0 }, { revenue: 1 }, { revenue: 2 }, { revenue: 3 }];
 
-      const buildParamsFor = (operation) => ({
-        operation,
+      const histogramParams = {
+        operation: AggregationTypes.COUNT,
         column: 'revenue',
         type: SourceTypes.SQL,
         ticks: [0, 1, 2],
         viewportFilter: true,
         viewportFeatures
-      });
+      };
 
-      test(AggregationTypes.COUNT, async () => {
-        const params = buildParamsFor(AggregationTypes.COUNT);
-        const histogram = await getHistogram(params);
+      test('correctly returns data', async () => {
+        executeTask.mockImplementation(() => Promise.resolve([0, 1, 2, 1, 0]));
+        const histogram = await getHistogram(histogramParams);
         expect(histogram).toEqual([0, 1, 2, 1, 0]);
       });
 
-      test(AggregationTypes.AVG, async () => {
-        const params = buildParamsFor(AggregationTypes.AVG);
-        const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 0, 1, 2, 0]);
-      });
-
-      test(AggregationTypes.SUM, async () => {
-        const params = buildParamsFor(AggregationTypes.SUM);
-        const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 0, 2, 2, 0]);
-      });
-
-      test(AggregationTypes.MIN, async () => {
-        const params = buildParamsFor(AggregationTypes.MIN);
-        const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 0, 1, 2, 0]);
-      });
-
-      test(AggregationTypes.MAX, async () => {
-        const params = buildParamsFor(AggregationTypes.MAX);
-        const histogram = await getHistogram(params);
-        expect(histogram).toEqual([0, 0, 1, 2, 0]);
+      test('correctly called', async () => {
+        const { column, dataSource, filters, operation, ticks } = histogramParams;
+        await getHistogram(histogramParams);
+        expect(executeTask).toHaveBeenCalledWith(
+          dataSource,
+          Methods.VIEWPORT_FEATURES_HISTOGRAM,
+          { column, filters, operation, ticks }
+        );
       });
     });
   });
@@ -195,46 +173,5 @@ describe('buildSqlQueryToGetHistogram', () => {
     const params = buildParamsFor(AggregationTypes.MAX);
     const query = buildQuery(params);
     expect(buildSqlQueryToGetHistogram(params)).toEqual(minify(query));
-  });
-});
-
-describe('filterViewportFeaturesToGetHistogram', () => {
-  const buildParamsFor = (operation) => ({
-    operation,
-    column: 'revenue',
-    viewportFeatures: features('revenue'),
-    ticks: [0, 1, 2]
-  });
-
-  test(AggregationTypes.COUNT, () => {
-    const params = buildParamsFor(AggregationTypes.COUNT);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 1, 2, 1, 0]);
-  });
-
-  test(AggregationTypes.AVG, () => {
-    const params = buildParamsFor(AggregationTypes.AVG);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 1, 2, 0]);
-  });
-
-  test(AggregationTypes.SUM, () => {
-    const params = buildParamsFor(AggregationTypes.SUM);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 2, 2, 0]);
-  });
-
-  test(AggregationTypes.MIN, () => {
-    const params = buildParamsFor(AggregationTypes.MIN);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 1, 2, 0]);
-  });
-
-  test(AggregationTypes.MAX, () => {
-    const params = buildParamsFor(AggregationTypes.MAX);
-    expect(filterViewportFeaturesToGetHistogram(params)).toEqual([0, 0, 1, 2, 0]);
-  });
-
-  test('no features', () => {
-    const testCases = [null, undefined];
-    for (const tc of testCases) {
-      expect(filterViewportFeaturesToGetHistogram({ viewportFeatures: tc })).toEqual([]);
-    }
   });
 });
