@@ -20,6 +20,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {string} props.column - Name of the data source's column to get the data from.
  * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
+ * @param  {Object} [props.colorsPerCategory] - (optional) Dictionary with RGB colors per category, expressed as { 'Cat 1': [255, 0, 255] }.
  * @param  {formatterCallback} [props.formatter] - Function to format the value that appears in the tooltip.
  * @param  {formatterCallback} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
  * @param  {boolean} [props.viewportFilter=true] - Defines whether filter by the viewport or not.
@@ -35,6 +36,7 @@ function PieWidget({
   column,
   operationColumn,
   operation,
+  colorsPerCategory = {},
   formatter,
   tooltipFormatter,
   viewportFilter = false,
@@ -42,6 +44,7 @@ function PieWidget({
   wrapperProps
 }) {
   const [categoryData, setCategoryData] = useState([]);
+  const [categoryColors, setCategoryColors] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const dispatch = useDispatch();
@@ -70,7 +73,17 @@ function PieWidget({
         type,
         opts: { abortController }
       })
-        .then((data) => setCategoryData(data))
+        .then((data) => {
+          setCategoryData(data);
+          if (data && colorsPerCategory) {
+            const colors = data.map((category) => {
+              const categoryColor = colorsPerCategory[category.name];
+              const othersColor = [200, 200, 200];
+              return categoryColor || colorsPerCategory['Others'] || othersColor;
+            });
+            setCategoryColors(colors);
+          }
+        })
         .catch((error) => {
           if (error.name === 'AbortError') return;
           if (onError) onError(error);
@@ -78,6 +91,9 @@ function PieWidget({
         .finally(() => setIsLoading(false));
     } else {
       setCategoryData([]);
+      if (colorsPerCategory) {
+        setCategoryColors([]);
+      }
     }
 
     return function cleanup() {
@@ -97,6 +113,7 @@ function PieWidget({
     dispatch,
     id,
     onError,
+    colorsPerCategory,
     hasLoadingState,
     viewportFilter
   ]);
@@ -131,6 +148,7 @@ function PieWidget({
     <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
       <PieWidgetUI
         data={categoryData}
+        colors={categoryColors}
         formatter={formatter}
         height={height}
         tooltipFormatter={tooltipFormatter}
