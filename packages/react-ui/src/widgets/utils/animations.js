@@ -2,7 +2,11 @@
  * Animate one value from start to end, storing the current request in requestRef hook
  */
 export function animateValue({ start, end, duration, drawFrame, requestRef }) {
-  if (start === end) return;
+  const startAndEndZero = start === 0 && end === 0; // must ensure 1 render
+
+  if (start === end && !startAndEndZero) {
+    return;
+  }
 
   const range = end - start;
   let current = start;
@@ -28,9 +32,7 @@ export function animateValues({ start, end, duration, drawFrame, requestRef }) {
   if (isEqual) return;
 
   let currentValues = end.map((elem, i) =>
-    start[i] && start[i].name === elem.name
-      ? { ...elem, value: start[i].value }
-      : elem
+    start[i] && start[i].name === elem.name ? { ...elem, value: start[i].value } : elem
   );
   let currentFrame = 0;
 
