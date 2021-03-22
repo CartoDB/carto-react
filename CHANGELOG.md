@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## Not released
+
+## 1.0.0-rc.3 (2021-03-22)
 - Fix PieWidget tooltip confining it inside canvas [#130](https://github.com/CartoDB/carto-react/pull/130)
 - Fix FormulaWidgetUI render when data is zero [#128](https://github.com/CartoDB/carto-react/pull/128)
 - Remove viewportFilter boolean property from widgets [#131](https://github.com/CartoDB/carto-react/pull/131)
