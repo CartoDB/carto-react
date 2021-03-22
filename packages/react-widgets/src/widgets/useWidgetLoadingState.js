@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setWidgetLoadingState, removeWidgetLoadingState } from '@carto/react-redux';
 
-export default function useWidgetLoadingState(widgetId, filterIsByViewport) {
+export default function useWidgetLoadingState(widgetId, filterIsByViewport = true) {
   const dispatch = useDispatch();
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
   const hasLoadingState = useRef(false);

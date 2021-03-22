@@ -2,6 +2,12 @@
   "name": "@carto/react-basemaps",
   "version": "1.0.0-rc.2",
   "description": "CARTO for React - Basemaps",
+  "keywords": [
+    "carto",
+    "react",
+    "basemaps",
+    "googlemaps"
+  ],
   "author": "CARTO Dev Team",
   "repository": {
     "type": "git",

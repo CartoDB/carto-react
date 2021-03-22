@@ -3,6 +3,13 @@
   "version": "1.0.0-rc.2",
   "description": "CARTO for React - Widgets",
   "author": "CARTO Dev Team",
+  "keywords": [
+    "carto",
+    "react",
+    "widgets",
+    "ui",
+    "redux"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/CartoDB/carto-react.git"
