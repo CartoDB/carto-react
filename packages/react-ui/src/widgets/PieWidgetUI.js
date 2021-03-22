@@ -24,6 +24,7 @@ function __generateDefaultConfig({ tooltipFormatter, formatter, colors }, theme)
       showDelay: 1000,
       transitionDuration: 0,
       backgroundColor: theme.palette.other.tooltip,
+      confine: true,
       ...(tooltipFormatter
         ? { formatter: (params) => tooltipFormatter({ ...params, formatter }) }
         : {})
