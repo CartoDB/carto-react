@@ -3,15 +3,6 @@ import { render, screen } from '@testing-library/react';
 import FormulaWidgetUI from '../../src/widgets/FormulaWidgetUI';
 import { currencyFormatter } from './testUtils';
 
-// Mock animations
-jest.mock('../../src/widgets/utils/animations');
-// eslint-disable-next-line import/first
-import { animateValue } from '../../src/widgets/utils/animations';
-
-animateValue.mockImplementation(({ end, drawFrame }) => {
-  drawFrame(end); // draw final step, no intermediate ones
-});
-
 describe('FormulaWidgetUI', () => {
   test('empty', () => {
     render(<FormulaWidgetUI />);
@@ -34,6 +25,12 @@ describe('FormulaWidgetUI', () => {
     const DATA = { value: 1234 };
     render(<FormulaWidgetUI data={DATA} />);
     expect(await screen.findByText(DATA.value)).toBeInTheDocument();
+  });
+
+  test('should render the current value', async () => {
+    const { rerender } = render(<FormulaWidgetUI data={1234} />);
+    rerender(<FormulaWidgetUI data={0} />);
+    expect(await screen.findByText(0)).toBeInTheDocument();
   });
 
   test('with currency formatter', () => {
