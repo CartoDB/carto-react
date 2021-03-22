@@ -54,7 +54,7 @@ function FormulaWidget(props) {
         })
         .finally(() => setIsLoading(false));
     } else {
-      setFormulaData(undefined);
+      setFormulaData(null);
     }
 
     return function cleanup() {
