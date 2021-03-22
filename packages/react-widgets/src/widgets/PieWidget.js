@@ -22,7 +22,6 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {formatterCallback} [props.formatter] - Function to format the value that appears in the tooltip.
  * @param  {formatterCallback} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
- * @param  {boolean} [props.viewportFilter=true] - Defines whether filter by the viewport or not.
  * @param  {string} props.height - Height of the chart
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
@@ -37,7 +36,6 @@ function PieWidget({
   operation,
   formatter,
   tooltipFormatter,
-  viewportFilter = false,
   onError,
   wrapperProps
 }) {
@@ -49,14 +47,13 @@ function PieWidget({
   const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
 
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(id, viewportFilter);
+  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(id);
   const { data, credentials, type } = source;
 
   useEffect(() => {
     const abortController = new AbortController();
     if (data && credentials && hasLoadingState) {
       const filters = getApplicableFilters(source.filters, id);
-      !viewportFilter && setIsLoading(true);
       getCategories({
         column,
         operation,
@@ -64,7 +61,6 @@ function PieWidget({
         data,
         filters,
         credentials,
-        viewportFilter,
         viewportFeatures: viewportFeaturesReady[dataSource] || false,
         dataSource,
         type,
@@ -97,8 +93,7 @@ function PieWidget({
     dispatch,
     id,
     onError,
-    hasLoadingState,
-    viewportFilter
+    hasLoadingState
   ]);
 
   const handleSelectedCategoriesChange = useCallback(
@@ -152,13 +147,11 @@ PieWidget.propTypes = {
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
-  viewportFilter: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object
 };
 
 PieWidget.defaultProps = {
-  viewportFilter: true,
   wrapperProps: {}
 };
 

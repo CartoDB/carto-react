@@ -16,68 +16,62 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {string} props.column - Name of the data source's column to get the data from.
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
- * @param  {boolean} [props.viewportFilter=true] - Defines whether filter by the viewport or globally.
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
 function FormulaWidget(props) {
+  const {
+    id,
+    title,
+    dataSource,
+    column,
+    operation,
+    formatter,
+    onError,
+    wrapperProps
+  } = props;
   const [formulaData, setFormulaData] = useState(null);
-  const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
+  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
   const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const { data, credentials, type, filters } = source;
-  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(
-    props.id,
-    props.viewportFilter
-  );
+  const { data, filters } = source;
+  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(id);
 
   useEffect(() => {
-    const abortController = new AbortController();
-    if (data && credentials && hasLoadingState) {
-      !props.viewportFilter && setIsLoading(true);
+    if (data && hasLoadingState) {
       getFormula({
-        ...props,
         data,
+        operation,
+        column,
         filters,
-        credentials,
-        viewportFeatures: viewportFeaturesReady[props.dataSource] || false,
-        dataSource: props.dataSource,
-        type,
-        opts: { abortController }
+        dataSource
       })
         .then((data) => {
           data && data[0] && setFormulaData(data[0].value);
         })
         .catch((error) => {
           if (error.name === 'AbortError') return;
-          if (props.onError) props.onError(error);
+          if (onError) onError(error);
         })
         .finally(() => setIsLoading(false));
     } else {
       setFormulaData(null);
     }
-
-    return function cleanup() {
-      abortController.abort();
-    };
   }, [
-    credentials,
     data,
+    operation,
+    column,
     filters,
+    dataSource,
     viewportFeaturesReady,
-    props,
-    hasLoadingState,
     setIsLoading,
-    type
+    hasLoadingState,
+    onError
   ]);
 
   return (
-    <WrapperWidgetUI
-      title={props.title}
-      isLoading={widgetsLoadingState[props.id]}
-      {...props.wrapperProps}
-    >
-      <FormulaWidgetUI data={formulaData} formatter={props.formatter} unitBefore={true} />
+    <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
+      <FormulaWidgetUI data={formulaData} formatter={formatter} unitBefore={true} />
     </WrapperWidgetUI>
   );
 }
@@ -89,13 +83,11 @@ FormulaWidget.propTypes = {
   column: PropTypes.string.isRequired,
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
-  viewportFilter: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object
 };
 
 FormulaWidget.defaultProps = {
-  viewportFilter: true,
   wrapperProps: {}
 };
 

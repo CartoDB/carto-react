@@ -2,7 +2,6 @@
 
 ## Not released
 - Fix PieWidget tooltip confining it inside canvas [#130](https://github.com/CartoDB/carto-react/pull/130)
-
 - Fix FormulaWidgetUI render when data is zero [#128](https://github.com/CartoDB/carto-react/pull/128)
 
 ## 1.0.0-rc.2 (2021-03-19)
