@@ -62,7 +62,7 @@ const options = {
   }
 };
 
-export default options;
+// export default options;
 
 const Template = (args) => <CategoryWidget {...args} />;
 
