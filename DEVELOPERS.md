@@ -43,14 +43,14 @@ To make a **prerelease**:
 4. Open a PR, with for eg.: `https://github.com/CartoDB/carto-react/pull/new/v1.0.0-rc.3`
 5. Ask your peers for revision
 6. Ensure current versions in package.json files are ok (eg. not 1 package with rc.2 and another one with rc.3, also in internal dependencies among packages)
-7. Once it's ok execute locally `yarn prerelease`
+7. Once it's ok execute locally `yarn publish:prerelease`
 8. Choose `Custom prerelease` and ensure the packages version proposed is correct
 9. Once the npm package has been published, `Merge the PR` to master from github
 10. Update the storybook (if required)
 
 To make an official **release**:
 
-1. Repeat the same steps as in a prerelease, but executing `yarn release`
+1. Repeat the same steps as in a prerelease, but executing `yarn publish:release`
 
 ## Firebase deployment of storybook
 

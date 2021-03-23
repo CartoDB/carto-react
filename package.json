@@ -48,8 +48,8 @@
     "storybook:start": "lerna --scope @carto/react-ui exec -- npm run storybook:start",
     "storybook:build": "lerna --scope @carto/react-ui exec -- npm run storybook:build",
     "storybook:publish": "lerna --scope @carto/react-ui exec -- npm run storybook:publish",
-    "prerelease": "yarn run build:clean && lerna publish --dist-tag prerelease --force-publish --preid rc",
-    "release": "yarn run build:clean && lerna publish --force-publish"
+    "publish:prerelease": "yarn run build:clean && lerna publish --dist-tag prerelease --force-publish --preid rc",
+    "publish:release": "yarn run build:clean && lerna publish --force-publish"
   },
   "husky": {
     "hooks": {
