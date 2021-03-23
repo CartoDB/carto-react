@@ -2,6 +2,8 @@
 
 ## Not released
 
+## 1.0.0 (2021-03-23)
+
 ## 1.0.0-rc.3 (2021-03-22)
 
 - Fix PieWidget tooltip confining it inside canvas [#130](https://github.com/CartoDB/carto-react/pull/130)
