@@ -37,14 +37,20 @@ You will need npm credentials under @carto organization.
 
 To make a **prerelease**:
 
-- Create a new branch from master, named after the new version (eg, if current version is v1.0.0-rc.2, `git checkout -b release-1.0.0-rc.3`)
-- Modify the changelog, creating a new entry with current contents from `Not released` for the new release; eg: `## 1.0.0-rc.3 (2021-03-22)`. Keep 'Not released' header for the future work, and commit it to the new branch
-- Push that branch upstream, with something like `git push --set-upstream origin v1.0.0-rc.3`
-- Open a PR, with for eg.: `https://github.com/CartoDB/carto-react/pull/new/v1.0.0-rc.3`
-- Ask your peers for revision
-- Once it's ok execute locally `yarn prerelease`
-- Chose `Custom prerelease` and ensure the packages version proposed is correct
-- Once the npm package has been published, `Merge the PR` to master from github
+1. Create a new branch from master, named after the new version (eg, if current version is v1.0.0-rc.2, `git checkout -b release-1.0.0-rc.3`)
+2. Modify the changelog, creating a new entry with current contents from `Not released` for the new release; eg: `## 1.0.0-rc.3 (2021-03-22)`. Keep 'Not released' header for the future work, and commit it to the new branch
+3. Push that branch upstream, with something like `git push --set-upstream origin v1.0.0-rc.3`
+4. Open a PR, with for eg.: `https://github.com/CartoDB/carto-react/pull/new/v1.0.0-rc.3`
+5. Ask your peers for revision
+6. Ensure current versions in package.json files are ok (eg. not 1 package with rc.2 and another one with rc.3, also in internal dependencies among packages)
+7. Once it's ok execute locally `yarn prerelease`
+8. Choose `Custom prerelease` and ensure the packages version proposed is correct
+9. Once the npm package has been published, `Merge the PR` to master from github
+10. Update the storybook (if required)
+
+To make an official **release**:
+
+1. Repeat the same steps as in a prerelease, but executing `yarn release`
 
 ## Firebase deployment of storybook
 
