@@ -3,42 +3,32 @@ import { Meta, Description } from '@storybook/addon-docs/blocks';
 <Meta title="Introduction" />
 
 # CARTO for React - Widgets and UI Components
-This storybook includes the UI Components (@carto/react-ui) and the powerful Widgets (@carto/react-widgets) for CARTO for React.
+This storybook includes the UI Components (@carto/react-ui) for CARTO for React.
 They are based on [Material-UI](https://material-ui.com/), and they include a CARTO theme + custom widgets.
 
 ## Storybook Development
 
 ### How to add a new Story
 Put your `stories.js` files inside the `storybook/stories` folder following the same folder structure as the source files. For example:
-`stories/widgets/FormulaWidget.stories.js` for `react-widgets/src/widgets/FormulaWidget.js` component.
+`stories/widgetsUI/FormulaWidgetUI.stories.js` for `react-ui/src/widgets/FormulaWidgetUI.js` component.
 
 As long as we are using a decorator to inject the MaterialUI theme, you just need to import and add your component to the `template` of your story.
 ```js
 import React from 'react';
-import FormulaWidget from '../../../../react-widgets/src/widgets/FormulaWidget';
+import FormulaWidgetUI from '../../../../react-widgets/src/widgetsUI/FormulaWidgetUI';
 
-const Template = (args) => <FormulaWidget {...args} />;
+const Template = (args) => <FormulaWidgetUI {...args} />;
 ```
 
 Then, export your story and the different variations:
 ```js
 export default {
   title: 'Widgets/FormulaWidget',
-  component: FormulaWidget,
-  // We use a decorator for mocking the Redux store in Widgets
-  decorators: [(Story) => <Provider store={store}><Story /></Provider>]
-};
-
-const DEFAULT_PROPS = {
-  id: 'sb-formula-id',
-  title: 'wrapper title',
-  dataSource: 'sb-data-source',
-  column: 'sb-column',
-  operation: 'sum'
+  component: FormulaWidget
 };
 
 export const Default = Template.bind({});
-Default.args = DEFAULT_PROPS;
+Default.args = { data: 10000 };
 ```
 
 Optionally, you can add some extra controls to your story, but by default Storybook will add automatic controls for your story arguments.
