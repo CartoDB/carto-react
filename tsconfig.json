@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+    "target": "es2020",
+    "jsx": "react",
+    "strict": true,
+    "noImplicitAny": false,
+    "allowJs": true,
+    "checkJs": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    // "resolveJsonModule": true,
+    "baseUrl": ".",
+    // outside ? "compileOnSave": true,
+    "paths": {
+        "@carto/react-api/*": ["packages/react-api/src/*"],
+        "@carto/react-api/__tests__": ["packages/react-api/__tests__"],
+        /* "@carto/react-auth/*": ["packages/react-auth/src/*"],
+        "@carto/react-basemaps/*": ["packages/react-basemaps/src/*"],
+        "@carto/react-basemaps/__tests__": ["packages/react-basemaps/__tests__"],
+        "@carto/react-core/*": ["packages/react-core/src/*"],
+        "@carto/react-core/__tests__": ["packages/react-core/__tests__"],
+        "@carto/react-redux/*": ["packages/react-redux/src/*"],
+        "@carto/react-redux/__tests__": ["packages/react-redux/__tests__"],
+        "@carto/react-ui/*": ["packages/react-ui/src/*"],
+        "@carto/react-ui/__tests__": ["packages/react-ui/__tests__"],
+        "@carto/react-widgets/*": ["packages/react-widgets/src/*"],
+        "@carto/react-widgets/__tests__": ["packages/react-widgets/__tests__"],
+        "@carto/react-workers/*": ["packages/react-workers/src/*"],
+        "@carto/react-workers/__tests__": ["packages/react-workers/__tests__"], */
+    }
+  }
+}

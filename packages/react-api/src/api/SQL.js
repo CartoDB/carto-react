@@ -15,9 +15,9 @@ export const API = 'api/v2/sql';
  * @param { string } query - SQL query to be executed
  * @param { Object } opts - Additional options for the HTTP request
  * @param { string } opts.format - Output format (i.e. geojson)
- * @returns { Object } - Data returned from the SQL query execution
+ * @returns { Promise<{} | []> } - Data returned from the SQL query execution
  */
-export const executeSQL = async (credentials, query, opts = {}) => {
+export const executeSQL = async (credentials, query, opts = { format: '' }) => {
   let response;
 
   try {
