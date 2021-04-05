@@ -1,5 +1,3 @@
-declare module '@carto/react-auth'
-declare module '@carto/react-basemaps'
 declare module '@carto/react-core'
 declare module '@carto/react-redux'
 declare module '@carto/react-ui'

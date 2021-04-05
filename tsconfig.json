@@ -15,11 +15,9 @@
     // outside ? "compileOnSave": true,
     "paths": {
         "@carto/react-api/*": ["packages/react-api/src/*"],
-        "@carto/react-api/__tests__": ["packages/react-api/__tests__"],
-        /* "@carto/react-auth/*": ["packages/react-auth/src/*"],
+        "@carto/react-auth/*": ["packages/react-auth/src/*"],
         "@carto/react-basemaps/*": ["packages/react-basemaps/src/*"],
-        "@carto/react-basemaps/__tests__": ["packages/react-basemaps/__tests__"],
-        "@carto/react-core/*": ["packages/react-core/src/*"],
+        /* "@carto/react-core/*": ["packages/react-core/src/*"],
         "@carto/react-core/__tests__": ["packages/react-core/__tests__"],
         "@carto/react-redux/*": ["packages/react-redux/src/*"],
         "@carto/react-redux/__tests__": ["packages/react-redux/__tests__"],

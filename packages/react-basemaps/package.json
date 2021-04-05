@@ -19,6 +19,7 @@
     "lib": "src",
     "test": "__tests__"
   },
+  "types": "src/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
