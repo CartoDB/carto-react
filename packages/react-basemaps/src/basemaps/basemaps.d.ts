@@ -1,4 +1,4 @@
-enum CartoBasemapsNames {
+export enum CartoBasemapsNames {
   POSITRON = 'positron',
   VOYAGER = 'voyager',
   DARK_MATTER = 'dark-matter'

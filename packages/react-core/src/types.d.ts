@@ -14,3 +14,9 @@ export type GroupByFeature = {
 }[] | [];
 
 export type HistogramFeature = number[] | [];
+
+export type ViewportFeaturesBinary = {
+  tiles: any, // TODO: add proper deck.gl type
+  viewport: [number, number, number, number],
+  uniqueIdProperty: string
+}

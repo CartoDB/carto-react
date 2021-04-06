@@ -13,7 +13,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**
  * Renders a <PieWidget /> component
- * @param  props
+ * @param  {object} props
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.

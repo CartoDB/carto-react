@@ -23,5 +23,8 @@
         "@carto/react-widgets/*": ["packages/react-widgets/src/*"],
         "@carto/react-workers/*": ["packages/react-workers/src/*"] */
     }
-  }
+  },
+  "include": [
+    "packages/react-core/src/operations/aggregation/AggregationTypes.d.ts"
+  ]
 }
