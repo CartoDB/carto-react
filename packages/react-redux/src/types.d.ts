@@ -8,7 +8,7 @@ export type ViewState = {
   zoom: number,
   pitch: number,
   bearing: number,
-  dragRotate: false
+  dragRotate: boolean
 }
 
 export type InitialCartoState = {
