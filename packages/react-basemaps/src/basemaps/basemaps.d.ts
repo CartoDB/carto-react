@@ -10,7 +10,7 @@ enum CartoUrlBasemaps {
   DARK_MATTER = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
 }
 
-enum GMapsBasemapsNames {
+export enum GMapsBasemapsNames {
   ROADMAP = 'roadmap',
   SATELLITE = 'satellite',
   HYBRID = 'hybrid'
