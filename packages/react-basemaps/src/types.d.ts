@@ -1,4 +1,4 @@
-export type GoogleMap = {
+export type GMap = {
   basemap: object,
   viewState: object,
   layers: object[],

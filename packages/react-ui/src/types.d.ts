@@ -1,19 +1,3 @@
-export type CartoThemeOptions = {
-  themeName: 'CARTO',
-  breakpoints: object,
-  direction: string,
-  mixins: object,
-  palette: object,
-  shadows: string[],
-  typography: object,
-  spacing: object,
-  shape: object,
-  transitions: object,
-  zIndex: object,
-  overrides: object,
-  props: object
-}
-
 export type WrapperWidgetUI = {
   title: string,
   isLoading?: boolean,

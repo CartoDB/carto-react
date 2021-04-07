@@ -1,3 +1,5 @@
+import { Credentials } from '@carto/react-api';
+import { OauthApp } from '@carto/react-auth';
 import { CartoBasemapsNames } from '@carto/react-basemaps';
 
 export type InitialCartoState = {
@@ -10,11 +12,11 @@ export type InitialCartoState = {
     dragRotate: false
   },
   basemap: CartoBasemapsNames.POSITRON,
-  credentials: {}, // TODO: add Credentials type
+  credentials: Credentials,
   googleApiKey: string
 }
 
 export type InitialOauthState = {
-  oauthApp: {} // TODO: add OauthApp type
+  oauthApp: OauthApp
 }
   
