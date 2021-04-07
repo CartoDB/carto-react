@@ -1,5 +1,5 @@
-import { CartoThemeOptions } from '../types';
+import { ThemeOptions } from '@material-ui/core';
 
-export const cartoThemeOptions: CartoThemeOptions;
+export const cartoThemeOptions: ThemeOptions;
 
-export function createTheme(options: object): object;
+export function createTheme(options: object): ThemeOptions;
