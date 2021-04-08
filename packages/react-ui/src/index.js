@@ -1,4 +1,4 @@
-import { cartoThemeOptions } from './theme/carto-theme';
+import { cartoThemeOptions, createTheme } from './theme/carto-theme';
 import WrapperWidgetUI from './widgets/WrapperWidgetUI';
 import CategoryWidgetUI from './widgets/CategoryWidgetUI';
 import FormulaWidgetUI from './widgets/FormulaWidgetUI';
@@ -7,9 +7,10 @@ import PieWidgetUI from './widgets/PieWidgetUI';
 
 export {
   cartoThemeOptions,
+  createTheme as createCartoTheme,
   WrapperWidgetUI,
   CategoryWidgetUI,
   FormulaWidgetUI,
   HistogramWidgetUI,
-  PieWidgetUI,
+  PieWidgetUI
 };
