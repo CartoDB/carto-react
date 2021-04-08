@@ -1,4 +1,4 @@
-import { Credentials } from '../types';
+import { Credentials, ExecuteSQL } from '../types';
 
 export function executeSQL(
   credentials: Credentials,
@@ -6,4 +6,4 @@ export function executeSQL(
   opts?: {
     format: '' | 'geojson'
   }
-): Promise<{} | []>
+): ExecuteSQL;

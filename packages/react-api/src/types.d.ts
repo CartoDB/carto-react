@@ -1,4 +1,5 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
+import { FeatureCollection } from 'geojson';
 
 export type Credentials = {
   username: string,
@@ -20,3 +21,5 @@ export type UseCartoLayerFilterProps = {
     getFilterValue: object
   }
 }
+
+export type ExecuteSQL = Promise<FeatureCollection | {}[]>;
