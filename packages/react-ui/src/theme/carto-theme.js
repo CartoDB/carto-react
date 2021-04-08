@@ -1175,16 +1175,10 @@ export const cartoThemeOptions = {
   }
 };
 
-export function createTheme(options = {}) {
-  const themeOptions = {
-    ...cartoThemeOptions,
-    ...options
-  };
-
-  let theme = createMuiTheme(themeOptions);
-
+export function createTheme() {
+  let theme = createMuiTheme(cartoThemeOptions);
   theme = responsiveFontSizes(theme, {
-    breakpoints: themeOptions.breakpoints.keys,
+    breakpoints: cartoThemeOptions.breakpoints.keys,
     disableAlign: false,
     factor: 2,
     variants: [
