@@ -1,7 +1,7 @@
 import { OauthApp } from '@carto/react-auth/';
-import { InitialOauthState } from '../types';
+import { InitialOauthState, Reducer } from '../types';
 
-export function createOauthCartoSlice(initialState: InitialOauthState): object;
+export function createOauthCartoSlice(initialState: InitialOauthState): Reducer;
 
 export function setOAuthApp(arg: OauthApp): { type: 'carto/setOAuthApp', payload: OauthApp };
 

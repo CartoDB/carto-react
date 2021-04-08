@@ -1,8 +1,8 @@
 import { Credentials } from '@carto/react-api/';
 import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/';
-import { InitialCartoState, ViewState } from '../types';
+import { InitialCartoState, Reducer, ViewState } from '../types';
 
-export function createCartoSlice(initialState: InitialCartoState): object;
+export function createCartoSlice(initialState: InitialCartoState): Reducer;
 
 type AddSource = {
   id: string,
