@@ -5,4 +5,4 @@ export { histogram } from './operations/histogram';
 
 export { viewportFeatures as viewportFeaturesBinary } from './filters/viewportFeaturesBinary';
 
-export { AggregationFunctions, GroupByFeature, HistogramFeature, ViewportFeaturesBinary } from './types';
+export { AggregationFunctions, GroupByFeature, HistogramFeature, Viewport, ViewportFeaturesBinary } from './types';

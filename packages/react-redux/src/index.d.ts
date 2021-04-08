@@ -1,4 +1,10 @@
 export * from './slices/cartoSlice';
 export * from './slices/oauthSlice';
 
-export { InitialCartoState, InitialOauthState } from './types';
+export {
+  InitialCartoState,
+  CartoState,
+  InitialOauthState,
+  OauthState,
+  ViewState,
+} from './types';
