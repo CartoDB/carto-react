@@ -1,10 +1,6 @@
 import { OauthApp } from '@carto/react-auth/';
 import { InitialOauthState, Reducer } from '../types';
 
-export function createOauthCartoSlice(initialState: InitialOauthState): Reducer;
-
-export function setOAuthApp(arg: OauthApp): { type: 'carto/setOAuthApp', payload: OauthApp };
-
 type OauthParams = {
   accessToken: string,
   expirationDate: string,
@@ -16,10 +12,29 @@ type OauthError = {
   errorDescription: string
 }
 
-export function setTokenAndUserInfo(payload: OauthParams | OauthError): { type: 'carto/setTokenAndUserInfo', payload: OauthParams | OauthError };
+declare enum OauthActions {
+  SET_OAUTH_APP = 'carto/setOAuthApp',
+  SET_TOKEN_AND_USER_INFO = 'carto/setTokenAndUserInfo',
+  LOGOUT = 'oauth/logout'
+}
+
+export function createOauthCartoSlice(initialState: InitialOauthState): Reducer;
+
+export function setOAuthApp(arg: OauthApp): {
+  type: OauthActions.SET_OAUTH_APP,
+  payload: OauthApp
+};
+
+export function setTokenAndUserInfo(payload: OauthParams | OauthError): {
+  type: OauthActions.SET_TOKEN_AND_USER_INFO,
+  payload: OauthParams | OauthError
+};
 
 export const setTokenAndUserInfoAsyn: Function;
 
-export function logout(): { type: 'oauth/logout', payload: {} };
+export function logout(): {
+  type: OauthActions.LOGOUT,
+  payload: {}
+};
 
 export const selectOAuthCredentials: Function;
