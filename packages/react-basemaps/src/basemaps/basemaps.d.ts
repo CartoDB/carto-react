@@ -4,7 +4,7 @@ export enum CartoBasemapsNames {
   DARK_MATTER = 'dark-matter'
 }
 
-enum CartoUrlBasemaps {
+declare enum CartoUrlBasemaps {
   POSITRON = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
   VOYAGER = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
   DARK_MATTER = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
