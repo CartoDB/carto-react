@@ -266,9 +266,8 @@ function CategoryWidgetUI(props) {
               return (
                 elem.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
                 (labels[elem.name]
-                  ? labels[elem.name]
-                      .toLowerCase()
-                      .indexOf(searchValue.toLowerCase()) !== -1
+                  ? labels[elem.name].toLowerCase().indexOf(searchValue.toLowerCase()) !==
+                    -1
                   : false)
               );
             })
@@ -403,7 +402,7 @@ function CategoryWidgetUI(props) {
   };
 
   const CategoryItemSkeleton = () => (
-    <React.Fragment>
+    <>
       <Grid
         container
         direction='row'
@@ -416,7 +415,7 @@ function CategoryWidgetUI(props) {
         </Typography>
       </Grid>
       <Grid container item className={classes.categoriesWrapper}>
-        {[...Array(4)].map((e, i) => (
+        {[...Array(4)].map((_, i) => (
           <Grid key={i} container direction='row' spacing={1} className={classes.element}>
             <Grid container item xs>
               <Grid container item direction='row' justify='space-between'>
@@ -432,13 +431,13 @@ function CategoryWidgetUI(props) {
           </Grid>
         ))}
       </Grid>
-    </React.Fragment>
+    </>
   );
 
   return (
     <div className={classes.root}>
       {data && (data.length > 0 || !isLoading) ? (
-        <React.Fragment>
+        <>
           {sortedData.length > 0 && (
             <Grid
               container
@@ -541,7 +540,7 @@ function CategoryWidgetUI(props) {
               </Button>
             )
           ) : null}
-        </React.Fragment>
+        </>
       ) : (
         <CategoryItemSkeleton />
       )}
