@@ -1,6 +1,5 @@
 import { encodeParameter, getRequest, postRequest } from '@carto/react-core';
 import { REQUEST_GET_MAX_URL_LENGTH } from '@carto/react-core';
-import { ExecuteSQL } from '../types';
 
 import { dealWithApiError, generateApiUrl } from './common';
 
@@ -16,7 +15,6 @@ export const API = 'api/v2/sql';
  * @param { string } query - SQL query to be executed
  * @param { Object } opts - Additional options for the HTTP request
  * @param { string } opts.format - Output format (i.e. geojson)
- * @returns { ExecuteSQL } - Data returned from the SQL query execution
  */
 export const executeSQL = async (credentials, query, opts = { format: '' }) => {
   let response;
