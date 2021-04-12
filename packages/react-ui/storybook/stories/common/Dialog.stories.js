@@ -64,7 +64,7 @@ const TextContent = () => (
 );
 
 const FormContent = () => (
-  <React.Fragment>
+  <>
     <DialogContentText>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     </DialogContentText>
@@ -78,7 +78,7 @@ const FormContent = () => (
         </Grid>
       </Grid>
     </FormGroup>
-  </React.Fragment>
+  </>
 );
 
 export const Default = Template.bind({});

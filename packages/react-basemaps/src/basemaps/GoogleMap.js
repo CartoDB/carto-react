@@ -17,8 +17,6 @@ import { debounce } from '@carto/react-core';
  * @returns { Object } - Data returned from the SQL query execution
  */
 export function GoogleMap(props) {
-  debugger;
-  console.log(props);
   const {
     basemap,
     viewState,
