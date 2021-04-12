@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Remove debugger in googlemap and clean code [#137](https://github.com/CartoDB/carto-react/pull/137)
+
 ## 1.0.0 (2021-03-23)
 
 ## 1.0.0-rc.3 (2021-03-22)
