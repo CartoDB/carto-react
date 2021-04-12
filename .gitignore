@@ -6,6 +6,7 @@
 /packages/*/node_modules
 /packages/*/coverage
 /packages/*/dist
+/packages/*/yarn-error.log
 
 /packages/react-ui/storybook-static
 

@@ -13,16 +13,16 @@ import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**
  * Renders a <CategoryWidget /> component
- * @param  props
+ * @param  {object} props
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's column to get the data from.
  * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
- * @param  {formatterCallback} [props.formatter] - Function to format each value returned.
+ * @param  {Function} [props.formatter] - Function to format each value returned.
  * @param  {Object} [props.labels] - Overwrite category labels
- * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
 function CategoryWidget(props) {

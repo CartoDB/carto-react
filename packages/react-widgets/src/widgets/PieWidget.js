@@ -13,17 +13,17 @@ import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**
  * Renders a <PieWidget /> component
- * @param  props
+ * @param  {object} props
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's column to get the data from.
  * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
- * @param  {formatterCallback} [props.formatter] - Function to format the value that appears in the tooltip.
- * @param  {formatterCallback} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
+ * @param  {Function} [props.formatter] - Function to format the value that appears in the tooltip.
+ * @param  {Function} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
  * @param  {string} props.height - Height of the chart
- * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
 function PieWidget({
