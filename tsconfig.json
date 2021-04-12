@@ -10,9 +10,8 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
-    // "resolveJsonModule": true,
     "baseUrl": ".",
-    // outside ? "compileOnSave": true,
+    "compileOnSave": true,
     "paths": {
         "@carto/react-api/*": ["packages/react-api/src/*"],
         "@carto/react-auth/*": ["packages/react-auth/src/*"],
