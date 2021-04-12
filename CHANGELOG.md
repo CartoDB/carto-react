@@ -2,6 +2,8 @@
 
 ## Not released
 
+## 1.0.1 (2021-04-12)
+
 - Add basic Typescript typings [#136](https://github.com/CartoDB/carto-react/pull/136)
 - Remove debugger in googlemap and clean code [#137](https://github.com/CartoDB/carto-react/pull/137)
 
