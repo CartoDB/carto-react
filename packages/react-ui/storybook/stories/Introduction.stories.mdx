@@ -1,0 +1,34 @@
+import { Meta, Description } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# CARTO for React - Widgets and UI Components
+This storybook includes the UI Components (@carto/react-ui) for CARTO for React.
+They are based on [Material-UI](https://material-ui.com/), and they include a CARTO theme + custom widgets.
+
+## Storybook Development
+
+### How to add a new Story
+Put your `stories.js` files inside the `storybook/stories` folder following the same folder structure as the source files. For example:
+`stories/widgetsUI/FormulaWidgetUI.stories.js` for `react-ui/src/widgets/FormulaWidgetUI.js` component.
+
+As long as we are using a decorator to inject the MaterialUI theme, you just need to import and add your component to the `template` of your story.
+```js
+import React from 'react';
+import FormulaWidgetUI from '../../../../react-widgets/src/widgetsUI/FormulaWidgetUI';
+
+const Template = (args) => <FormulaWidgetUI {...args} />;
+```
+
+Then, export your story and the different variations:
+```js
+export default {
+  title: 'Widgets/FormulaWidget',
+  component: FormulaWidget
+};
+
+export const Default = Template.bind({});
+Default.args = { data: 10000 };
+```
+
+Optionally, you can add some extra controls to your story, but by default Storybook will add automatic controls for your story arguments.

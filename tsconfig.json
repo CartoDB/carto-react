@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "jsx": "react",
+    "strict": true,
+    "noImplicitAny": false,
+    "allowJs": true,
+    "checkJs": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "compileOnSave": true,
+    "paths": {
+        "@carto/react-api/*": ["packages/react-api/src/*"],
+        "@carto/react-auth/*": ["packages/react-auth/src/*"],
+        "@carto/react-basemaps/*": ["packages/react-basemaps/src/*"],
+        "@carto/react-core/*": ["packages/react-core/src/*"],
+        "@carto/react-ui/*": ["packages/react-ui/src/*"],
+        "@carto/react-redux/*": ["packages/react-redux/src/*"],
+        "@carto/react-widgets/*": ["packages/react-widgets/src/*"],
+        "@carto/react-workers/*": ["packages/react-workers/src/*"]
+    }
+  }
+}

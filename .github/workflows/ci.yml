@@ -3,7 +3,11 @@
 
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+    - master
+  pull_request:
 
 jobs:
   build:
@@ -24,11 +28,10 @@ jobs:
       - run: yarn lint
       - run: yarn build
       - run: yarn test:coverage
-      
+
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
           CI: true
-      
