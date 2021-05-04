@@ -2,20 +2,20 @@ import React from 'react';
 import { Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
 import { getPalette } from '../utils/palette';
 
-const useStyles = makeStyles((theme) => ({
-  avg: {
-    width: 2,
-    height: 12,
-    position: 'absolute',
-    // TODO change color
-    border: `1px solid ${theme.palette.common.white}`,
-    transform: 'translateY(1px)',
-    backgroundColor: theme.palette.grey[900]
-  }
-}));
+// const useStyles = makeStyles((theme) => ({
+//   avg: {
+//     width: 2,
+//     height: 12,
+//     position: 'absolute',
+//     // TODO change color
+//     border: `1px solid ${theme.palette.common.white}`,
+//     transform: 'translateY(1px)',
+//     backgroundColor: theme.palette.grey[900]
+//   }
+// }));
 
 function LegendRamp({ isContinuous, legend }) {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   if (!legend) {
     return null;
