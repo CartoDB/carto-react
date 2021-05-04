@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
-import Legend, { LegendRow } from '../../../src/legend/LegendUI';
+import Legend, { LegendRow } from '../../../src/legend/LegendWidgetUI';
 
 const options = {
   title: 'Components/Legend',

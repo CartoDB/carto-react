@@ -1,19 +1,19 @@
+import React from 'react';
 import { Box, Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
-import Note from './Note';
+import { getPalette } from '../utils/palette';
 
-function LegendCategories({ data = [], info }) {
-  const max = 1;
-  return (
-    <Grid container direction='column' pb={16} spacing={1}>
-      {data.map((d, index) => {
-        const isMax = index === max;
-        return (
-          <Row key={d.label + index} isMax={isMax} label={d.label} color={d.color} />
-        );
-      })}
-      <Note>{info}</Note>
-    </Grid>
-  );
+function LegendCategories({ legend }) {
+  if (!legend) {
+    return null;
+  }
+
+  const { labels, colors } = legend;
+
+  const palette = getPalette(colors, labels.length);
+
+  return labels.map((label, idx) => (
+    <Row key={label + idx} isMax={false} label={label} color={palette[idx]} />
+  ));
 }
 
 export default LegendCategories;

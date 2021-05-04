@@ -1,22 +1,8 @@
 import React from 'react';
-import { Box, Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
-import Note from './Note';
-
-function LegendRamp({ data = {}, info }) {
-  return (
-    <Grid container direction='column' pb={16} spacing={1}>
-      <Row data={data} />
-      <Note>{info}</Note>
-    </Grid>
-  );
-}
-
-export default LegendRamp;
+import { Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
+import { getPalette } from '../utils/palette';
 
 const useStyles = makeStyles((theme) => ({
-  step: {
-    height: 8
-  },
   avg: {
     width: 2,
     height: 12,
@@ -28,23 +14,49 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Row({ data: { max, min, avg, values = [] } }) {
+function LegendRamp({ isContinuous, legend }) {
   const classes = useStyles();
 
-  const avgPerc = (avg / (max + min)) * 100;
+  if (!legend) {
+    return null;
+  }
 
-  const hasStep = values.length > 2;
+  const {
+    labels,
+    colors,
+    stats,
+  } = legend;
+
+  const palette = getPalette(colors, labels.length);
+
+  let max, min;
+  if (stats) {
+    min = stats.min;
+    max = stats.max;
+  } else {
+    min = labels[0];
+    max = labels[labels.length - 1];
+
+    if (!isContinuous) {
+      min = '< ' + min;
+      max = '≥ ' + max;
+    }
+  }
+
+  // const avgPerc = (avg / (max + min)) * 100;
 
   return (
     <Grid container item direction='column' spacing={1}>
       <Grid container item>
-        {!hasStep
-          ? <StepsContinuous values={values} />
-          : <StepsDiscontinuous values={values} max={max} />}
+        {isContinuous ? (
+          <StepsContinuous palette={palette} />
+        ) : (
+          <StepsDiscontinuous labels={labels} palette={palette} max={max} min={min} />
+        )}
       </Grid>
-      <Tooltip title={'AVG: ' + avg} placement='top' arrow>
+      {/* <Tooltip title={'AVG: ' + avg} placement='top' arrow>
         <Box className={classes.avg} style={{ left: `${avgPerc}%` }} />
-      </Tooltip>
+      </Tooltip> */}
       <Grid container item justify='space-between'>
         <Typography variant='overline'>{min}</Typography>
         <Typography variant='overline'>{max}</Typography>
@@ -53,6 +65,8 @@ function Row({ data: { max, min, avg, values = [] } }) {
   );
 }
 
+export default LegendRamp;
+
 const useStylesStepsContinuous = makeStyles((theme) => ({
   step: {
     height: 8,
@@ -60,10 +74,10 @@ const useStylesStepsContinuous = makeStyles((theme) => ({
   }
 }));
 
-function StepsContinuous({ values = [] }) {
+function StepsContinuous({ palette = [] }) {
   const classes = useStylesStepsContinuous();
 
-  const backgroundImage = `linear-gradient(to right, ${values.map(value => value.color).join(', ')})`;
+  const backgroundImage = `linear-gradient(to right, ${palette.join()})`;
 
   return <Grid item xs className={classes.step} style={{ backgroundImage }} />;
 }
@@ -80,13 +94,22 @@ const useStylesStepsDiscontinuous = makeStyles((theme) => ({
   }
 }));
 
-function StepsDiscontinuous({ values = [], max }) {
+function StepsDiscontinuous({ labels = [], palette = [], max, min }) {
   const classes = useStylesStepsDiscontinuous();
+  const rightLabels = [min, ...labels]
 
-  return values.map((value, index) => (
+  return rightLabels.map((label, idx) => {
+
+    const title = idx === 0
+      ? min
+      : idx === rightLabels.length - 1
+        ? max
+        : `${label} - ${rightLabels[idx + 1]}`
+
+    return (
     <Tooltip
-      key={index}
-      title={value.value + ' - ' + (values[index + 1]?.value || max)}
+      key={idx}
+      title={title}
       placement='top'
       arrow
     >
@@ -94,8 +117,8 @@ function StepsDiscontinuous({ values = [], max }) {
         item
         xs
         className={classes.step}
-        style={{ backgroundColor: value.color }}
+        style={{ backgroundColor: palette[idx] }}
       />
     </Tooltip>
-  ));
+  )});
 }

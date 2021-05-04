@@ -200,7 +200,7 @@ export const removeSource = (sourceId) => ({
  */
 export const addLayer = ({ id, source, layerAttributes = {} }) => ({
   type: 'carto/addLayer',
-  payload: { id, source, ...layerAttributes }
+  payload: { id, source, visible: true, ...layerAttributes }
 });
 
 /**

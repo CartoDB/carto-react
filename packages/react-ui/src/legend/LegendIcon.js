@@ -1,19 +1,5 @@
 import React from 'react';
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
-import Note from './Note';
-
-function LegendIcon({ data = [], info }) {
-  return (
-    <Grid container direction='column' pb={16} spacing={1}>
-      {data.map((d, index) => (
-        <Row key={d.label + index} label={d.label} icon={d.icon} />
-      ))}
-      <Note>{info}</Note>
-    </Grid>
-  );
-}
-
-export default LegendIcon;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,15 +14,23 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Row({ label, icon }) {
+function LegendIcon({ legend }) {
   const classes = useStyles();
 
-  return (
+  if (!legend) {
+    return null;
+  }
+
+  const { labels, icons } = legend;
+
+  return labels.map((label, idx) => (
     <Grid container item className={classes.root}>
       <Box mr={1.5}>
-        <img src={icon} className={classes.icon} alt={icon} />
+        <img src={icons[idx]} className={classes.icon} alt={icons[idx]} />
       </Box>
       <Typography variant='overline'>{label}</Typography>
     </Grid>
-  );
+  ));
 }
+
+export default LegendIcon;
