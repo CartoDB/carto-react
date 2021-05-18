@@ -51,16 +51,13 @@ function loadGeoJSONFeatures({ geojson }) {
 }
 
 function getViewportFeaturesGeoJSON({ viewport, uniqueIdProperty }) {
-  if (!currentGeoJSON) {
-    throw new Error('getViewportFeaturesGeoJSON requires to loadGeoJSONFeatures');
+  if (currentGeoJSON) {
+    currentViewportFeatures = viewportFeaturesGeoJSON({
+      geojson: currentGeoJSON,
+      viewport,
+      uniqueIdProperty
+    });
   }
-
-  currentViewportFeatures = viewportFeaturesGeoJSON({
-    geojson: currentGeoJSON,
-    viewport,
-    uniqueIdProperty
-  });
-
   postMessage({ result: true });
 }
 

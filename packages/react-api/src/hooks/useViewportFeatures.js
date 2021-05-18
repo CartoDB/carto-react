@@ -5,6 +5,10 @@ import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { MAP_TYPES } from '@deck.gl/carto';
 
+function isGeoJSONLayer(source) {
+  return [MAP_TYPES.SQL, MAP_TYPES.TABLE].includes(source?.type);
+}
+
 export default function useViewportFeatures(
   source,
   uniqueIdProperty,
@@ -69,20 +73,18 @@ export default function useViewportFeatures(
   );
 
   useEffect(() => {
-    if (tiles.length && source && source.type === MAP_TYPES.TILESET) {
+    if (tiles.length && source?.type === MAP_TYPES.TILESET) {
       dispatch(setAllWidgetsLoadingState(true));
       computeFeaturesTileset({ tiles, viewport, uniqueIdProperty, sourceId: source.id });
     }
   }, [tiles, viewport, uniqueIdProperty, computeFeaturesTileset, source, dispatch]);
 
   useEffect(() => {
-    if (
-      source &&
-      [MAP_TYPES.SQL, MAP_TYPES.TABLE].includes(source.type) &&
-      isGeoJSONLoaded
-    ) {
+    if (isGeoJSONLayer(source)) {
       dispatch(setAllWidgetsLoadingState(true));
-      computeFeaturesGeoJSON({ viewport, uniqueIdProperty, sourceId: source.id });
+      if (isGeoJSONLoaded) {
+        computeFeaturesGeoJSON({ viewport, uniqueIdProperty, sourceId: source.id });
+      }
     }
   }, [
     viewport,
@@ -104,16 +106,16 @@ export default function useViewportFeatures(
           await executeTask(source.id, Methods.LOAD_GEOJSON_FEATURES, {
             geojson: data
           });
-
           setGeoJSONLoaded(true);
         } catch (error) {
           if (error.name === 'AbortError') return;
           throw error;
         }
       };
+      dispatch(setAllWidgetsLoadingState(true));
       loadDataInWorker();
     },
-    [source]
+    [dispatch, source]
   );
 
   return [onViewportLoad, onDataLoad];
