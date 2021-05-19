@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '@carto/react-core';
 import { removeWorker } from '@carto/react-workers';
-import { setDefaultCredentials } from '@deck.gl/carto';
+import { setDefaultCredentials, API_VERSIONS } from '@deck.gl/carto';
 
 /**
  *

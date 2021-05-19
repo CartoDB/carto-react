@@ -3,10 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setViewportFeaturesReady, setAllWidgetsLoadingState } from '@carto/react-redux';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
-import { MAP_TYPES } from '@deck.gl/carto';
+import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 
 function isGeoJSONLayer(source) {
-  return [MAP_TYPES.SQL, MAP_TYPES.TABLE].includes(source?.type);
+  return isV3(source) && [MAP_TYPES.SQL, MAP_TYPES.TABLE].includes(source?.type);
+}
+
+function isV3(source) {
+  return source?.credentials.apiVersion === API_VERSIONS.V3;
 }
 
 export default function useViewportFeatures(
@@ -73,14 +77,14 @@ export default function useViewportFeatures(
   );
 
   useEffect(() => {
-    if (tiles.length && source?.type === MAP_TYPES.TILESET) {
+    if (source && tiles.length && (!isV3(source) || source?.type === MAP_TYPES.TILESET)) {
       dispatch(setAllWidgetsLoadingState(true));
       computeFeaturesTileset({ tiles, viewport, uniqueIdProperty, sourceId: source.id });
     }
   }, [tiles, viewport, uniqueIdProperty, computeFeaturesTileset, source, dispatch]);
 
   useEffect(() => {
-    if (isGeoJSONLayer(source)) {
+    if (source && isGeoJSONLayer(source)) {
       dispatch(setAllWidgetsLoadingState(true));
       if (isGeoJSONLoaded) {
         computeFeaturesGeoJSON({ viewport, uniqueIdProperty, sourceId: source.id });
