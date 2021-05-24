@@ -8,7 +8,9 @@ export function viewportFeaturesGeoJSON({ geojson, viewport, uniqueIdProperty })
   const bbox = bboxPolygon(viewport);
 
   for (const feature of geojson.features) {
-    const uniqueId = uniqueIdProperty ? geojson.features[uniqueIdProperty] : ++uniqueIdx;
+    const uniqueId = uniqueIdProperty
+      ? feature.properties[uniqueIdProperty]
+      : ++uniqueIdx;
     if (!map.has(uniqueId) && intersects(bbox, feature)) {
       map.set(uniqueId, feature.properties);
     }

@@ -1,4 +1,5 @@
 import * as cartoSlice from '../src/slices/cartoSlice';
+import { setDefaultCredentials, API_VERSIONS } from '@deck.gl/carto';
 import { mockAppStoreConfiguration } from './mockReducerManager';
 import { VOYAGER } from '@carto/react-basemaps';
 
@@ -10,8 +11,18 @@ const INITIAL_STATE = {
     pitch: 0,
     bearing: 0,
     dragRotate: false
+  },
+  credentials: {
+    apiVersion: 'v2',
+    username: 'public',
+    apiKey: 'default_public',
+    mapsUrl: 'https://maps-api-v2.{region}.carto.com/user/{user}'
   }
 };
+
+jest.mock('@deck.gl/carto', () => ({
+  setDefaultCredentials: jest.fn()
+}));
 
 describe('carto slice', () => {
   const store = mockAppStoreConfiguration();
@@ -24,10 +35,20 @@ describe('carto slice', () => {
       type: 'sql'
     };
 
-    test('should add a new source', () => {
+    test('should add a source', () => {
       store.dispatch(cartoSlice.addSource(sourceInfo));
       const { carto } = store.getState();
-      expect(carto.dataSources[sourceInfo.id]).toEqual(sourceInfo);
+      expect(carto.dataSources[sourceInfo.id]).toMatchObject(sourceInfo);
+    });
+
+    test('should add a source with a connection', () => {
+      const sourceInfoWithConnnection = {
+        ...sourceInfo,
+        connection: 'whatever-connection-name'
+      };
+      store.dispatch(cartoSlice.addSource(sourceInfoWithConnnection));
+      const { carto } = store.getState();
+      expect(carto.dataSources[sourceInfo.id]).toMatchObject(sourceInfoWithConnnection);
     });
 
     test('should remove a source', () => {
@@ -188,6 +209,25 @@ describe('carto slice', () => {
       for (const state of Object.values(carto.widgetsLoadingState)) {
         expect(state).toBe(false);
       }
+    });
+  });
+
+  describe('credentials actions', () => {
+    test('should override default credentials', () => {
+      store.dispatch(cartoSlice.setCredentials({ updatedProp: 'update' }));
+
+      const { carto: state } = store.getState();
+      expect(state.credentials).toEqual({
+        ...INITIAL_STATE.credentials,
+        updatedProp: 'update'
+      });
+    });
+
+    test('should call setDefaultCredentials', () => {
+      store.dispatch(cartoSlice.setCredentials({ updatedProp: 'update' }));
+
+      const { carto: state } = store.getState();
+      expect(setDefaultCredentials).toHaveBeenCalledWith(state.credentials);
     });
   });
 });
