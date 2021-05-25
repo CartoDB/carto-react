@@ -29,6 +29,7 @@ export default function useCartoLayerProps(source, uniqueIdProperty) {
     data: source && source.data,
     type: source && source.type,
     connection: source && source.connection,
+    credentials: source && source.credentials,
     getFilterValue: _buildFeatureFilter({ filters: source?.filters, type: 'number' }),
     filterRange: [1, 1],
     extensions: [new DataFilterExtension({ filterSize: 1 })],

@@ -1103,7 +1103,7 @@
 
 "@deck.gl/carto@https://storage.googleapis.com/carto-deck/carto_8.tar.gz":
   version "8.5.0-alpha.6"
-  resolved "https://storage.googleapis.com/carto-deck/carto_8.tar.gz#a858811d220d5848744db3d2ec81e77b749d21a2"
+  resolved "https://storage.googleapis.com/carto-deck/carto_8.tar.gz#eaa470c489737ae964a7a0f5892d035b002669d0"
   dependencies:
     "@loaders.gl/loader-utils" "^3.0.0-alpha.16"
     "@loaders.gl/mvt" "^3.0.0-alpha.16"
