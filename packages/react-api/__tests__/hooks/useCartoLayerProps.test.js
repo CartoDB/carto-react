@@ -13,6 +13,7 @@ describe('useCartoLayerProps', () => {
       'data',
       'type',
       'connection',
+      'credentials',
       'getFilterValue',
       'filterRange',
       'extensions',
