@@ -1,5 +1,5 @@
 import * as cartoSlice from '../src/slices/cartoSlice';
-import { setDefaultCredentials, API_VERSIONS } from '@deck.gl/carto';
+import { setDefaultCredentials } from '@deck.gl/carto';
 import { mockAppStoreConfiguration } from './mockReducerManager';
 import { VOYAGER } from '@carto/react-basemaps';
 

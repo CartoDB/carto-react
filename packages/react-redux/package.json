@@ -65,7 +65,8 @@
   "peerDependencies": {
     "@carto/react-core": "^1.0.0-rc.3",
     "@carto/react-workers": "^1.0.0-rc.3",
-    "@deck.gl/core": "^8.4.10",
+    "@deck.gl/carto": "https://storage.googleapis.com/carto-deck/carto_6.tar.gz",
+    "@deck.gl/core": "8.5.0-alpha.5",
     "@reduxjs/toolkit": "^1.5.0"
   }
 }

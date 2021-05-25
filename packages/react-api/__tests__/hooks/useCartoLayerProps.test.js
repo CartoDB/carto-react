@@ -12,7 +12,6 @@ describe('useCartoLayerProps', () => {
       'uniqueIdProperty',
       'data',
       'type',
-      'provider',
       'connection',
       'getFilterValue',
       'filterRange',
