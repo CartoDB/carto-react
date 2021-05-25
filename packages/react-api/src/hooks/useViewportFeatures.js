@@ -62,7 +62,6 @@ export default function useViewportFeatures(
           uniqueIdProperty
         });
 
-        console.log('completed geojson', r);
         dispatch(
           setViewportFeaturesReady({
             sourceId,
