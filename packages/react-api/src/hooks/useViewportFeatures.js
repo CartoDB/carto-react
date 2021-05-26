@@ -6,7 +6,7 @@ import { Methods, executeTask } from '@carto/react-workers';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 
 function isGeoJSONLayer(source) {
-  return isV3(source) && [MAP_TYPES.SQL, MAP_TYPES.TABLE].includes(source?.type);
+  return isV3(source) && [MAP_TYPES.QUERY, MAP_TYPES.TABLE].includes(source?.type);
 }
 
 function isV3(source) {
@@ -57,7 +57,7 @@ export default function useViewportFeatures(
   const computeFeaturesGeoJSON = useCallback(
     debounce(async ({ viewport, uniqueIdProperty, sourceId }) => {
       try {
-        const r = await executeTask(sourceId, Methods.VIEWPORT_FEATURES_GEOJSON, {
+        await executeTask(sourceId, Methods.VIEWPORT_FEATURES_GEOJSON, {
           viewport,
           uniqueIdProperty
         });

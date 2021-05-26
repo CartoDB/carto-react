@@ -43,7 +43,7 @@ describe('useCartoLayerProps', () => {
           credentials: {
             apiVersion: API_VERSIONS.V2
           },
-          type: MAP_TYPES.SQL
+          type: MAP_TYPES.QUERY
         };
 
         const { result } = renderHook(() => useCartoLayerProps(source));
@@ -96,7 +96,7 @@ describe('useCartoLayerProps', () => {
           credentials: {
             apiVersion: API_VERSIONS.V3
           },
-          type: MAP_TYPES.SQL
+          type: MAP_TYPES.QUERY
         };
 
         const { result } = renderHook(() => useCartoLayerProps(source));
@@ -157,7 +157,7 @@ describe('useCartoLayerProps', () => {
         credentials: {
           apiVersion: API_VERSIONS.V3
         },
-        type: MAP_TYPES.SQL
+        type: MAP_TYPES.QUERY
       };
 
       const { result } = renderHook(() => useCartoLayerProps(source));

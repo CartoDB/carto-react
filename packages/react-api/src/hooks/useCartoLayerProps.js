@@ -17,7 +17,7 @@ export default function useCartoLayerProps(source, uniqueIdProperty) {
       binary: true,
       onViewportLoad
     };
-  } else if (source?.type === MAP_TYPES.SQL || source?.type === MAP_TYPES.TABLE) {
+  } else if (source?.type === MAP_TYPES.QUERY || source?.type === MAP_TYPES.TABLE) {
     props = {
       onDataLoad
     };
