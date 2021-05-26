@@ -5,9 +5,13 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@deck.gl/core": "^8.4.10",
-    "@deck.gl/extensions": "^8.4.10",
-    "@deck.gl/google-maps": "^8.4.10",
+    "@deck.gl/carto": "https://storage.googleapis.com/carto-deck/carto_9.tar.gz",
+    "@deck.gl/core": "8.5.0-alpha.6",
+    "@deck.gl/extensions": "8.5.0-alpha.6",
+    "@deck.gl/geo-layers": "8.5.0-alpha.6",
+    "@deck.gl/google-maps": "8.5.0-alpha.6",
+    "@deck.gl/layers": "8.5.0-alpha.6",
+    "@deck.gl/mesh-layers": "8.5.0-alpha.6",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",

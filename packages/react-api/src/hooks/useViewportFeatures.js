@@ -57,7 +57,7 @@ export default function useViewportFeatures(
   const computeFeaturesGeoJSON = useCallback(
     debounce(async ({ viewport, uniqueIdProperty, sourceId }) => {
       try {
-        await executeTask(sourceId, Methods.VIEWPORT_FEATURES_GEOJSON, {
+        const r = await executeTask(sourceId, Methods.VIEWPORT_FEATURES_GEOJSON, {
           viewport,
           uniqueIdProperty
         });
@@ -98,6 +98,12 @@ export default function useViewportFeatures(
     dispatch,
     isGeoJSONLoaded
   ]);
+
+  useEffect(() => {
+    if (!source) {
+      setGeoJSONLoaded(false);
+    }
+  }, [source]);
 
   const onViewportLoad = useCallback((tiles) => {
     setTiles(tiles);

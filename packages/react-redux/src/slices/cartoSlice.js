@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '@carto/react-core';
 import { removeWorker } from '@carto/react-workers';
-import { setDefaultCredentials, API_VERSIONS } from '@deck.gl/carto';
+import { setDefaultCredentials } from '@deck.gl/carto';
 
 /**
  *
@@ -186,9 +186,9 @@ export const createCartoSlice = (initialState) => {
  * @param {string} type - type of source. Posible values are sql or bigquery
  * @param {Object} credentials - (optional) Custom credentials to be used in the source
  */
-export const addSource = ({ id, data, type, credentials, provider, connection }) => ({
+export const addSource = ({ id, data, type, credentials, connection }) => ({
   type: 'carto/addSource',
-  payload: { id, data, type, credentials, provider, connection }
+  payload: { id, data, type, credentials, connection }
 });
 
 /**
