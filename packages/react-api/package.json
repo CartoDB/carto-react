@@ -64,9 +64,9 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^1.0.0-rc.3",
-    "@carto/react-redux": "^1.0.0-rc.3",
-    "@carto/react-workers": "^1.0.0-rc.3",
+    "@carto/react-core": "^1.1.0",
+    "@carto/react-redux": "^1.1.0",
+    "@carto/react-workers": "^1.1.0",
     "@deck.gl/carto": "https://storage.googleapis.com/carto-deck/carto_8.tar.gz",
     "@deck.gl/core": "8.5.0-alpha.6",
     "@deck.gl/extensions": "8.5.0-alpha.6",
