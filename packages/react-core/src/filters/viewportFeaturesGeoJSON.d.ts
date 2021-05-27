@@ -1,8 +1,8 @@
-import * as GeoJSON from 'geojson';
+import { FeatureCollection } from 'geojson';
 import { Viewport, ViewportFeaturesResponse } from '../types';
 
 type ViewportFeaturesGeoJSONArgs = {
-  geojson: GeoJSON.FeatureCollection,
+  geojson: FeatureCollection,
   viewport: Viewport,
   uniqueIdProperty?: string
 }
