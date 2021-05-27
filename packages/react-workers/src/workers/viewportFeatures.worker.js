@@ -100,7 +100,7 @@ function getCategories({ filters, operation, column, operationColumn }) {
       operation
     );
 
-    result = groups;
+    result = groups || [];
   }
 
   postMessage({ result });
