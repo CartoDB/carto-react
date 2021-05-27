@@ -67,7 +67,8 @@ declare enum CartoActions {
   SET_VIEWPORT_FEATURES_READY = 'carto/setViewportFeaturesReady',
   SET_WIDGET_LOADING_STATE = 'carto/setWidgetLoadingState',
   REMOVE_WIDGET_LOADING_STATE = 'carto/removeWidgetLoadingState',
-  SET_ALL_WIDGETS_LOADING_STATE = 'carto/setAllWidgetsLoadingState'
+  SET_ALL_WIDGETS_LOADING_STATE = 'carto/setAllWidgetsLoadingState',
+  SET_CREDENTIALS = 'carto/setCredentials'
 }
 
 export function createCartoSlice(initialState: InitialCartoState): Reducer;
@@ -149,4 +150,9 @@ export function removeWidgetLoadingState(widgetId: string): {
 export function setAllWidgetsLoadingState(areLoading: boolean): {
   type: CartoActions.SET_ALL_WIDGETS_LOADING_STATE,
   payload: boolean
+};
+
+export function setCredentials(credentials: Credentials): {
+  type: CartoActions.SET_CREDENTIALS,
+  payload: Credentials
 };

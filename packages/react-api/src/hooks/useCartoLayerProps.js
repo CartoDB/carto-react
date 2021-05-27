@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import { DataFilterExtension } from '@deck.gl/extensions';
 import { debounce, _buildFeatureFilter } from '@carto/react-core';
 import useViewportFeatures from './useViewportFeatures';

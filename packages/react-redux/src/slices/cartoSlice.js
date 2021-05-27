@@ -360,9 +360,8 @@ export const setAllWidgetsLoadingState = (areLoading) => ({
 });
 
 /**
- * Action to set the source features of a layer
- * @param {object} sourceId - the id of the source
- * @param {object} feature - the viewport features
+ * Action to set credentials
+ * @param {object} credentials - credentials props to ovewrite
  */
 export const setCredentials = (data) => ({
   type: 'carto/setCredentials',
