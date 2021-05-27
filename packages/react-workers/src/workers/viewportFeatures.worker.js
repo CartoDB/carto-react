@@ -62,7 +62,7 @@ function getViewportFeaturesGeoJSON({ viewport, uniqueIdProperty }) {
 }
 
 function getFormula({ filters, operation, column }) {
-  let result = [{ value: null }];
+  let result = null;
 
   if (currentViewportFeatures) {
     const targetOperation = aggregationFunctions[operation];
@@ -76,7 +76,7 @@ function getFormula({ filters, operation, column }) {
 }
 
 function getHistogram({ filters, operation, column, ticks }) {
-  let result = [];
+  let result = null;
 
   if (currentViewportFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
@@ -88,7 +88,7 @@ function getHistogram({ filters, operation, column, ticks }) {
 }
 
 function getCategories({ filters, operation, column, operationColumn }) {
-  let result = [];
+  let result = null;
 
   if (currentViewportFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);

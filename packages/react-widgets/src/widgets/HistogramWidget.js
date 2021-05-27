@@ -47,7 +47,7 @@ function HistogramWidget(props) {
   const source = useSelector((state) => selectSourceById(state, dataSource) || {});
   const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(id);
+  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
   const { data, filters } = source;
 
   const tooltipFormatter = useCallback(
@@ -66,7 +66,7 @@ function HistogramWidget(props) {
   );
 
   useEffect(() => {
-    if (data && hasLoadingState) {
+    if (data && isLoading) {
       const _filters = getApplicableFilters(filters, id);
       getHistogram({
         data,
@@ -76,12 +76,17 @@ function HistogramWidget(props) {
         filters: _filters,
         dataSource
       })
-        .then((data) => data && setHistogramData(data))
+        .then((data) => {
+          if (data) {
+            setIsLoading(false);
+            setHistogramData(data);
+          }
+        })
         .catch((error) => {
+          setIsLoading(false);
           if (error.name === 'AbortError') return;
           if (onError) onError(error);
-        })
-        .finally(() => setIsLoading(false));
+        });
     } else {
       setHistogramData([]);
     }
@@ -95,7 +100,7 @@ function HistogramWidget(props) {
     dataSource,
     viewportFeaturesReady,
     setIsLoading,
-    hasLoadingState,
+    isLoading,
     onError
   ]);
 

@@ -44,11 +44,11 @@ function CategoryWidget(props) {
   const source = useSelector((state) => selectSourceById(state, dataSource) || {});
   const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(id);
+  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
   const { data, filters } = source;
 
   useEffect(() => {
-    if (data && hasLoadingState) {
+    if (data && isLoading) {
       const _filters = getApplicableFilters(filters, id);
       getCategories({
         data,
@@ -58,12 +58,17 @@ function CategoryWidget(props) {
         filters: _filters,
         dataSource
       })
-        .then((data) => setCategoryData(data))
+        .then((data) => {
+          if (data) {
+            setIsLoading(false);
+            setCategoryData(data);
+          }
+        })
         .catch((error) => {
+          setIsLoading(false);
           if (error.name === 'AbortError') return;
           if (onError) onError(error);
-        })
-        .finally(() => setIsLoading(false));
+        });
     } else {
       setCategoryData(null);
     }
@@ -77,7 +82,7 @@ function CategoryWidget(props) {
     dataSource,
     viewportFeaturesReady,
     setIsLoading,
-    hasLoadingState,
+    isLoading,
     onError
   ]);
 
