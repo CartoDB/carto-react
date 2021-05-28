@@ -1,9 +1,6 @@
-import { minify } from 'pgsql-minify';
 import { getCategories } from '../../src/models/CategoryModel';
 import { AggregationTypes } from '@carto/react-core';
-import { SourceTypes } from '@carto/react-api';
 import { Methods, executeTask } from '@carto/react-workers';
-import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
 
 jest.mock('@carto/react-workers', () => ({
   executeTask: jest.fn(),
@@ -16,14 +13,6 @@ describe('getCategories', () => {
   test('should throw with array data', async () => {
     await expect(getCategories({ data: [] })).rejects.toThrow(
       'Array is not a valid type to get categories'
-    );
-  });
-
-  test.skip('should throw if using CartoBQTilerLayer without viewportFilter', async () => {
-    await expect(
-      getCategories({ type: SourceTypes.BIGQUERY, viewportFilter: false })
-    ).rejects.toThrow(
-      'Category Widget error: BigQuery layers need "viewportFilter" prop set to true.'
     );
   });
 
@@ -64,42 +53,6 @@ describe('getCategories', () => {
         Methods.VIEWPORT_FEATURES_CATEGORY,
         { column, filters, operation, operationColumn }
       );
-    });
-  });
-
-  describe.skip('SQL Layer', () => {
-    describe('should execute a SqlApi request when using "viewportFilter": false', () => {
-      const response = {
-        rows: [
-          { name: 'Supermarket', value: 3 },
-          { name: 'Hypermarket', value: 1 }
-        ]
-      };
-      const sql = 'SELECT storetype, revenue FROM retail_stores LIMIT 4';
-      const credentials = {
-        username: 'public',
-        apiKey: 'default_public',
-        serverUrlTemplate: 'https://{user}.carto.com'
-      };
-
-      mockSqlApiRequest({ response, sql, credentials });
-
-      beforeEach(() => {
-        mockClear();
-      });
-
-      test('should call SqlApi', async () => {
-        const params = {
-          data: sql,
-          credentials,
-          operation: AggregationTypes.COUNT,
-          column: 'revenue',
-          type: SourceTypes.SQL,
-          viewportFilter: false
-        };
-        const categories = await getCategories(params);
-        expect(categories).toEqual(response.rows);
-      });
     });
   });
 });
