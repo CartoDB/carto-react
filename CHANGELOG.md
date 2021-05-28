@@ -3,6 +3,7 @@
 ## Not released
 
 
+## (prerelease) 1.1.0-alpha.2 (2021-05-28)
 ## (prerelease) 1.1.0-alpha.1 (2021-05-27)
 ## (prerelease) 1.1.0-alpha.0 (2021-05-26)
 
