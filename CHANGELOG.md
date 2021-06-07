@@ -2,6 +2,11 @@
 
 ## Not released
 
+- Update TypeScript typings to Cloud Native #147](https://github.com/CartoDB/carto-react/pull/147)
+- Remove SourceTypes from react-api public api #147](https://github.com/CartoDB/carto-react/pull/147)
+
+## (prerelease) 1.1.0-alpha.2 (2021-05-28)
+## (prerelease) 1.1.0-alpha.1 (2021-05-27)
 ## (prerelease) 1.1.0-alpha.0 (2021-05-26)
 
 - Initial Cloud native integration.
