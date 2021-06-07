@@ -1,6 +1,6 @@
-import { UseCartoLayerFilterProps } from '../types';
+import { SourceProps, UseCartoLayerFilterProps } from '../types';
 
 export default function useCartoLayerProps(
-  source: object,
+  source: SourceProps & { id: string },
   uniqueIdProperty?: string
 ): UseCartoLayerFilterProps

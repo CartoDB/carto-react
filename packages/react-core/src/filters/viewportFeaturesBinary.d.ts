@@ -1,3 +1,3 @@
-import { ViewportFeaturesBinary } from '../types';
+import { ViewportFeaturesBinary, ViewportFeaturesResponse } from '../types';
 
-export function viewportFeatures(arg: ViewportFeaturesBinary): object[];
+export function viewportFeaturesBinary(arg: ViewportFeaturesBinary): ViewportFeaturesResponse;
