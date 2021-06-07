@@ -1101,9 +1101,9 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@deck.gl/carto@https://storage.googleapis.com/carto-deck/carto_9.tar.gz":
+"@deck.gl/carto@https://storage.googleapis.com/carto-deck/carto_11.tar.gz":
   version "8.5.0-alpha.6"
-  resolved "https://storage.googleapis.com/carto-deck/carto_9.tar.gz#15404efe9c41762a8c8b378975c2333b4faf559b"
+  resolved "https://storage.googleapis.com/carto-deck/carto_11.tar.gz#f9628405da5a1a1bb1969efb8ed423c64b45e88b"
   dependencies:
     "@loaders.gl/loader-utils" "^3.0.0-alpha.16"
     "@loaders.gl/mvt" "^3.0.0-alpha.16"

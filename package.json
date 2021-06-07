@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@deck.gl/carto": "https://storage.googleapis.com/carto-deck/carto_9.tar.gz",
+    "@deck.gl/carto": "https://storage.googleapis.com/carto-deck/carto_11.tar.gz",
     "@deck.gl/core": "8.5.0-alpha.6",
     "@deck.gl/extensions": "8.5.0-alpha.6",
     "@deck.gl/geo-layers": "8.5.0-alpha.6",
