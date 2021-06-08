@@ -1,5 +1,5 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
-import { debounce, _buildFeatureFilter } from '@carto/react-core';
+import { _buildFeatureFilter } from '@carto/react-core';
 import useViewportFeatures from './useViewportFeatures';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 
