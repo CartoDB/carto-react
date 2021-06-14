@@ -35,10 +35,10 @@ function FormulaWidget(props) {
   const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
   const { data, filters } = source;
-  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(id);
+  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
 
   useEffect(() => {
-    if (data && hasLoadingState) {
+    if (data && isLoading) {
       getFormula({
         data,
         operation,
@@ -47,13 +47,16 @@ function FormulaWidget(props) {
         dataSource
       })
         .then((data) => {
-          data && data[0] && setFormulaData(data[0].value);
+          if (data && data[0]) {
+            setIsLoading(false);
+            setFormulaData(data[0].value);
+          }
         })
         .catch((error) => {
+          setIsLoading(false);
           if (error.name === 'AbortError') return;
           if (onError) onError(error);
-        })
-        .finally(() => setIsLoading(false));
+        });
     } else {
       setFormulaData(null);
     }
@@ -65,7 +68,7 @@ function FormulaWidget(props) {
     dataSource,
     viewportFeaturesReady,
     setIsLoading,
-    hasLoadingState,
+    isLoading,
     onError
   ]);
 

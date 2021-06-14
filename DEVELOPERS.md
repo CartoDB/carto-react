@@ -44,7 +44,7 @@ To make a **prerelease**:
 5. Ask your peers for revision
 6. Ensure current versions in package.json files are ok (eg. not 1 package with rc.2 and another one with rc.3, also in internal dependencies among packages)
 7. Once it's ok execute locally `yarn publish:prerelease`
-8. Choose `Custom prerelease` and ensure the packages version proposed is correct
+8. Choose `Custom prerelease` and ensure the packages version proposed is correct (eg. change suffix to 'alpha' or 'beta', instead of 'rc' if required)
 9. Once the npm package has been published, `Merge the PR` to master from github
 10. Update the storybook (if required)
 

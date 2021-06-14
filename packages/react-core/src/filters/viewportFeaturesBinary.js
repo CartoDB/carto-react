@@ -154,7 +154,7 @@ function createIndicesForPoints(data) {
   data.pointIndices.value.set([lastFeatureId + 1], featureIds.length);
 }
 
-export function viewportFeatures({ tiles, viewport, uniqueIdProperty }) {
+export function viewportFeaturesBinary({ tiles, viewport, uniqueIdProperty }) {
   const map = new Map();
 
   for (const tile of tiles) {

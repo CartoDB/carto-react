@@ -20,5 +20,7 @@ export type Viewport = [number, number, number, number];
 export type ViewportFeaturesBinary = {
   tiles: any, // TODO: add proper deck.gl type
   viewport: Viewport,
-  uniqueIdProperty: string
+  uniqueIdProperty?: string
 }
+
+export type ViewportFeaturesResponse = Record<string, unknown>[] | []
