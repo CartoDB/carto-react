@@ -18,6 +18,10 @@ import { dealWithApiError, generateApiUrl } from './common';
 export const executeSQL = async ({ credentials, query, connection, opts }) => {
   let response;
 
+  if (!credentials) {
+    throw new Error('No credentials provided');
+  }
+
   try {
     const request = createRequest({ credentials, connection, query, opts });
     response = await fetch(request);
@@ -46,14 +50,14 @@ export const executeSQL = async ({ credentials, query, connection, opts }) => {
  * Create an 'SQL query' request
  * (using GET or POST request, depending on url size)
  */
-function createRequest({ credentials, connection, query, opts }) {
+function createRequest({ credentials, connection, query, opts = {} }) {
   const { abortController, ...otherOptions } = opts;
 
   const { apiVersion = API_VERSIONS.V2 } = credentials;
 
   const rawParams = {
     client: 'carto-react',
-    q: query.trim(),
+    q: query?.trim(),
     ...otherOptions
   };
 

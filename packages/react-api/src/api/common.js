@@ -8,9 +8,9 @@ const DEFAULT_USER_COMPONENT_IN_URL = '{user}';
 export function dealWithApiError({ credentials, response, data }) {
   switch (response.status) {
     case 401:
-      throw new Error(`Unauthorized access to SQL API. Invalid credentials.`);
+      throw new Error('Unauthorized access. Invalid credentials');
     case 403:
-      throw new Error(`Unauthorized access to SQL API. Invalid credentials.`);
+      throw new Error('Forbidden access to the requested data');
     default:
       throw new Error(`${JSON.stringify(data.error)}`);
   }
