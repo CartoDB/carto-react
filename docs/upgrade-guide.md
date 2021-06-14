@@ -12,9 +12,11 @@ executeSQL({ credentials, query })
 
 ### Credentials apiVersion
 
-A new parameters is included in cartoSlice
+A new `apiVersion` parameter is included in cartoSlice to indicate the CARTO API to be used.
 
 ```javascript
+import { API_VERSIONS } from '@deck.gl/carto';
+
 export const initialState = {
   ...
   ,
