@@ -1,12 +1,14 @@
 import { REQUEST_GET_MAX_URL_LENGTH } from '@carto/react-core';
 import { mockClear, mockSqlApiRequest } from '../mockSqlApiRequest';
-import { API, executeSQL } from '../../src/api/SQL';
+import { executeSQL } from '../../src/api/SQL';
+import { API_VERSIONS } from '@deck.gl/carto';
 
 describe('should call SqlApi', () => {
   const response = { rows: { revenue: 1495728 } };
-  const sql = 'SELECT revenue FROM retail_stores LIMIT 1';
-  const sqlByPost = 's'.repeat(REQUEST_GET_MAX_URL_LENGTH);
+  const query = 'SELECT revenue FROM retail_stores LIMIT 1';
+  const queryPost = 's'.repeat(REQUEST_GET_MAX_URL_LENGTH);
   const credentials = {
+    apiVersion: API_VERSIONS.V2,
     username: 'public',
     apiKey: 'default_public',
     serverUrlTemplate: 'https://{user}.carto.com'
@@ -14,7 +16,7 @@ describe('should call SqlApi', () => {
 
   describe('ok', () => {
     beforeEach(() => {
-      mockSqlApiRequest({ response, sql, credentials });
+      mockSqlApiRequest({ response, query, credentials });
     });
 
     afterAll(() => {
@@ -22,16 +24,12 @@ describe('should call SqlApi', () => {
     });
 
     test('should return data by GET request', async () => {
-      await expect(executeSQL(credentials, sql)).resolves.toEqual(response.rows);
+      await expect(executeSQL({ credentials, query })).resolves.toEqual(response.rows);
     });
 
     test('should return data by POST request', async () => {
-      await expect(executeSQL(credentials, sqlByPost)).resolves.toEqual(response.rows);
-    });
-
-    test('should return data in geojson format', async () => {
-      await expect(executeSQL(credentials, sql, { format: 'geojson' })).resolves.toEqual(
-        response
+      await expect(executeSQL({ credentials, query: queryPost })).resolves.toEqual(
+        response.rows
       );
     });
   });
@@ -42,23 +40,33 @@ describe('should call SqlApi', () => {
     });
 
     test('should throw due to non-provided credentials', async () => {
-      mockSqlApiRequest({ response, sql, credentials });
-      await expect(executeSQL()).rejects.toThrow(
-        `Failed to connect to ${API} API: TypeError: Cannot read property 'apiKey' of undefined`
-      );
+      mockSqlApiRequest({ response, query, credentials });
+      await expect(executeSQL({})).rejects.toThrow('No credentials provided');
     });
 
     test('should throw due status response 401', async () => {
-      mockSqlApiRequest({ response, status: 401, responseIsOk: false, sql, credentials });
-      await expect(executeSQL(credentials, sql)).rejects.toThrow(
-        `Unauthorized access to ${API} API: invalid combination of user ('${credentials.username}') and apiKey ('${credentials.apiKey}')`
+      mockSqlApiRequest({
+        response,
+        status: 401,
+        responseIsOk: false,
+        query,
+        credentials
+      });
+      await expect(executeSQL({ credentials, query })).rejects.toThrow(
+        'Unauthorized access. Invalid credentials'
       );
     });
 
     test('should throw due status response 403', async () => {
-      mockSqlApiRequest({ response, status: 403, responseIsOk: false, sql, credentials });
-      await expect(executeSQL(credentials, sql)).rejects.toThrow(
-        `Unauthorized access to ${API} API: the provided apiKey('${credentials.apiKey}') doesn't provide access to the requested data`
+      mockSqlApiRequest({
+        response,
+        status: 403,
+        responseIsOk: false,
+        query,
+        credentials
+      });
+      await expect(executeSQL({ credentials, query })).rejects.toThrow(
+        'Forbidden access to the requested data'
       );
     });
 
@@ -66,12 +74,12 @@ describe('should call SqlApi', () => {
       const errorResponse = { ...response, error: {} };
       mockSqlApiRequest({
         response: errorResponse,
-        status: 'unknown',
+        status: 1123,
         responseIsOk: false,
-        sql,
+        query,
         credentials
       });
-      await expect(executeSQL(credentials, sql)).rejects.toThrow(
+      await expect(executeSQL({ credentials, query })).rejects.toThrow(
         `${JSON.stringify(errorResponse.error)}`
       );
     });

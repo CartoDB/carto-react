@@ -4,7 +4,7 @@ export function mockSqlApiRequest({
   response,
   responseIsOk = true,
   status = 200,
-  sql,
+  query,
   credentials
 }) {
   _global.fetch = jest.fn(() =>
@@ -17,7 +17,7 @@ export function mockSqlApiRequest({
 
   _global.Request = jest.fn(
     () =>
-      `https://public.carto.com/api/v2/sql?api_key=${credentials.apiKey}&client=${credentials.username}&q=${sql}`
+      `https://public.carto.com/api/v2/sql?api_key=${credentials.apiKey}&client=${credentials.username}&q=${query}`
   );
 }
 
