@@ -23,47 +23,50 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
 function ScatterPlotWidget(props) {
-  const [scatterData, setScatterData] = useState([]);
-  const source = useSelector((state) => selectSourceById(state, props.dataSource) || {});
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(
-    props.id,
-    props.viewportFilter
-  );
   const {
+    id,
     title,
+    dataSource,
     xAxisColumn,
     yAxisColumn,
     yAxisFormatter,
     xAxisFormatter,
-    tooltipFormatter
+    tooltipFormatter,
+    onError,
+    wrapperProps
   } = props;
-  const { data, credentials, type } = source;
+
+  const [scatterData, setScatterData] = useState([]);
+  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
+  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
+  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
+  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
+  const { data, filters } = source;
 
   useEffect(() => {
     const abortController = new AbortController();
 
-    if (data && credentials && hasLoadingState) {
-      const filters = getApplicableFilters(source.filters, props.id);
-      !props.viewportFilter && setIsLoading(true);
+    if (data && isLoading) {
+      const filters = getApplicableFilters(filters, id);
+
       getScatter({
-        ...props,
         data,
-        filters,
         xAxisColumn,
         yAxisColumn,
-        credentials,
-        viewportFeatures: viewportFeaturesReady[props.dataSource] || false,
-        type,
-        opts: { abortController }
+        filters,
+        dataSource
       })
-        .then((data) => data && setScatterData(data))
-        .catch((error) => {
-          if (error.name === 'AbortError') return;
-          if (props.onError) props.onError(error);
+        .then((data) => {
+          if (data) {
+            setIsLoading(false);
+            setScatterData(data);
+          }
         })
-        .finally(() => setIsLoading(false));
+        .catch((error) => {
+          setIsLoading(false);
+          if (error.name === 'AbortError') return;
+          if (onError) onError(error);
+        });
     } else {
       setScatterData([]);
     }
@@ -71,22 +74,9 @@ function ScatterPlotWidget(props) {
     return function cleanup() {
       abortController.abort();
     };
-  }, [
-    credentials,
-    data,
-    setIsLoading,
-    source.filters,
-    type,
-    viewportFeaturesReady,
-    props,
-    hasLoadingState
-  ]);
+  }, [id, data, setIsLoading, filters, viewportFeaturesReady, setIsLoading, isLoading]);
   return (
-    <WrapperWidgetUI
-      title={title}
-      {...props.wrapperProps}
-      isLoading={widgetsLoadingState[props.id]}
-    >
+    <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
       <ScatterPlotWidgetUI
         data={scatterData}
         tooltipFormatter={tooltipFormatter}
