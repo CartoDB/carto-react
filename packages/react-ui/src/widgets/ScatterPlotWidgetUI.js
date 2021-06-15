@@ -61,9 +61,14 @@ const EchartsWrapper = React.memo(
   ({ option: optionPrev }, { option: optionNext }) => isDataEqual(optionPrev, optionNext)
 );
 
-function ScatterPlotWidgetUI(props) {
+function ScatterPlotWidgetUI({
+  name,
+  data = [],
+  xAxisFormatter,
+  yAxisFormatter,
+  tooltipFormatter
+}) {
   const theme = useTheme();
-  const { data = [], name, xAxisFormatter, yAxisFormatter, tooltipFormatter } = props;
   const chartInstance = useRef();
   const [options, setOptions] = useState({
     series: []

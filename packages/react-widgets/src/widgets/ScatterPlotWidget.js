@@ -18,7 +18,6 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {formatterCallback} [props.xAxisFormatter] - Function to format X axis values.
  * @param  {formatterCallback} [props.yAxisFormatter] - Function to format Y axis values.
  * @param  {formatterCallback} [props.tooltipFormatter] - Function to format Y axis values.
- * @param  {boolean} [props.viewportFilter=true] - Defines whether filter by the viewport or globally.
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
@@ -96,14 +95,12 @@ ScatterPlotWidget.propTypes = {
   xAxisFormatter: PropTypes.func,
   yAxisFormatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
-  viewportFilter: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object
 };
 
 ScatterPlotWidget.defaultProps = {
   tooltip: true,
-  viewportFilter: true,
   wrapperProps: {},
   tooltipFormatter: (v) => `[${v.value[0]}, ${v.value[1]})`,
   xAxisFormatter: (v) => v,
