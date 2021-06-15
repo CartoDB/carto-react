@@ -21,7 +21,7 @@ export const geocodeStreetPoint = async (
   const query = `SELECT ST_AsGeoJSON(cdb_geocode_street_point('${searchText}', '${
     city ?? ''
   }', '${state ?? ''}', '${country ?? ''}')) AS geometry`;
-  const results = await executeSQL(credentials, query, opts);
+  const results = await executeSQL({ credentials, query, opts });
 
   const geometry = JSON.parse(results[0].geometry);
   if (geometry === null) return null;

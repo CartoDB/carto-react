@@ -125,4 +125,3 @@ function getFilteredFeatures(filters) {
     ? currentViewportFeatures
     : currentViewportFeatures.filter(_buildFeatureFilter({ filters }));
 }
-
