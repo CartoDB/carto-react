@@ -6,6 +6,8 @@
 - Update TypeScript typings to Cloud Native and remove SourceTypes from react-api public api[#147](https://github.com/CartoDB/carto-react/pull/147)
 - Remove SourceTypes from react-api public api [#147](https://github.com/CartoDB/carto-react/pull/147)
 - Add support to Cloud Native SQL API [#150](https://github.com/CartoDB/carto-react/pull/150)
+- Update to latest 8.5.0-alpha.10 deck.gl version [#?](https://github.com/CartoDB/carto-react/pull/?)
+- Include a new ScatterplotWidget [#?](https://github.com/CartoDB/carto-react/pull/?)
 
 ## 1.0.1 (2021-04-12)
 
