@@ -53,13 +53,14 @@ function PieWidget({
   useEffect(() => {
     const abortController = new AbortController();
     if (data && credentials && isLoading) {
-      const filters = getApplicableFilters(source.filters, id);
+      const _filters = getApplicableFilters(source.filters, id);
+
       getCategories({
         column,
         operation,
         operationColumn,
         data,
-        filters,
+        filters: _filters,
         credentials,
         viewportFeatures: viewportFeaturesReady[dataSource] || false,
         dataSource,
@@ -74,7 +75,6 @@ function PieWidget({
         })
         .catch((error) => {
           setIsLoading(false);
-          if (error.name === 'AbortError') return;
           if (onError) onError(error);
         });
     } else {

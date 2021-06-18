@@ -50,6 +50,7 @@ function CategoryWidget(props) {
   useEffect(() => {
     if (data && isLoading) {
       const _filters = getApplicableFilters(filters, id);
+
       getCategories({
         data,
         column,
@@ -66,7 +67,6 @@ function CategoryWidget(props) {
         })
         .catch((error) => {
           setIsLoading(false);
-          if (error.name === 'AbortError') return;
           if (onError) onError(error);
         });
     } else {
