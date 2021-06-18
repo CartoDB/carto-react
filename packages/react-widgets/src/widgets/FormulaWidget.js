@@ -54,7 +54,6 @@ function FormulaWidget(props) {
         })
         .catch((error) => {
           setIsLoading(false);
-          if (error.name === 'AbortError') return;
           if (onError) onError(error);
         });
     } else {

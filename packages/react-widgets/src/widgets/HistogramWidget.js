@@ -68,6 +68,7 @@ function HistogramWidget(props) {
   useEffect(() => {
     if (data && isLoading) {
       const _filters = getApplicableFilters(filters, id);
+
       getHistogram({
         data,
         column,
@@ -84,7 +85,6 @@ function HistogramWidget(props) {
         })
         .catch((error) => {
           setIsLoading(false);
-          if (error.name === 'AbortError') return;
           if (onError) onError(error);
         });
     } else {

@@ -43,16 +43,14 @@ function ScatterPlotWidget(props) {
   const { data, filters } = source;
 
   useEffect(() => {
-    const abortController = new AbortController();
-
     if (data && isLoading) {
-      const filters = getApplicableFilters(filters, id);
+      const _filters = getApplicableFilters(filters, id);
 
       getScatter({
         data,
         xAxisColumn,
         yAxisColumn,
-        filters,
+        filters: _filters,
         dataSource
       })
         .then((data) => {
@@ -63,17 +61,13 @@ function ScatterPlotWidget(props) {
         })
         .catch((error) => {
           setIsLoading(false);
-          if (error.name === 'AbortError') return;
           if (onError) onError(error);
         });
     } else {
       setScatterData([]);
     }
-
-    return function cleanup() {
-      abortController.abort();
-    };
   }, [id, data, setIsLoading, filters, viewportFeaturesReady, setIsLoading, isLoading]);
+
   return (
     <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
       <ScatterPlotWidgetUI

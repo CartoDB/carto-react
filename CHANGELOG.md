@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix ScatterplotWidget filters [#153](https://github.com/CartoDB/carto-react/pull/153)
+
 ## 1.1.0-alpha.3 (2021-06-17)
 - Add support to CARTO Cloud Native [#142](https://github.com/CartoDB/carto-react/pull/142)
 - Update TypeScript typings to Cloud Native and remove SourceTypes from react-api public api[#147](https://github.com/CartoDB/carto-react/pull/147)
