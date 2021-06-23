@@ -3,7 +3,8 @@ import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   circles: {
-    position: 'relative'
+    position: 'relative',
+    marginBottom: 4
   },
   avg: {
     width: 12,
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function LegendProportion({ legend }) {
+export default function LegendProportion({ legend }) {
   const classes = useStyles();
 
   const { labels, stats } = legend;
@@ -33,45 +34,40 @@ function LegendProportion({ legend }) {
   }
 
   const gap = (max + min) / 4;
-
-  // const avgPerc = (avg / (max + min)) * 100;
-
   const step1 = min + gap;
   const step2 = max - gap;
 
   return (
     <Grid container item direction='row' spacing={2}>
-    <Grid container item xs={6} justify='flex-end' className={classes.circles}>
-      <Circle index={0}></Circle>
-      <Circle index={1}></Circle>
-      <Circle index={2}></Circle>
-      <Circle index={3}></Circle>
-      {/* <Tooltip title={'AVG: ' + avg} placement='top' arrow>
-        <Box className={classes.avg} style={{ bottom: `${avgPerc}%` }} />
-      </Tooltip> */}
+      <Grid container item xs={6} justify='flex-end' className={classes.circles}>
+        <Circle index={0}></Circle>
+        <Circle index={1}></Circle>
+        <Circle index={2}></Circle>
+        <Circle index={3}></Circle>
+        {/* <Tooltip title={'AVG: ' + avg} placement='top' arrow>
+          <Box className={classes.avg} style={{ bottom: `${avgPerc}%` }} />
+        </Tooltip> */}
+      </Grid>
+      <Grid container item direction='column' justify='space-between' xs={6} spacing={1}>
+        <Grid item>
+          <Typography variant='overline'>Max: {max}</Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant='overline'>{step2}</Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant='overline'>{step1}</Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant='overline'>Min: {min}</Typography>
+        </Grid>
+      </Grid>
     </Grid>
-    <Grid container item direction='column' justify='space-between' xs={6} spacing={1}>
-      <Grid item>
-        <Typography variant='overline'>Max: {max}</Typography>
-      </Grid>
-      <Grid item>
-        <Typography variant='overline'>{step2}</Typography>
-      </Grid>
-      <Grid item>
-        <Typography variant='overline'>{step1}</Typography>
-      </Grid>
-      <Grid item>
-        <Typography variant='overline'>Min: {min}</Typography>
-      </Grid>
-    </Grid>
-  </Grid>
   );
 }
 
-export default LegendProportion;
-
 const useStylesCircle = makeStyles((theme) => ({
-  root: {
+  circle: {
     border: `solid 1px ${theme.palette.grey[100]}`,
     backgroundColor: theme.palette.grey[50],
     borderRadius: '50%',
@@ -94,5 +90,7 @@ function Circle({ index = 0 }) {
   const width = sizes[index];
   const height = sizes[index];
 
-  return <Box component='span' className={classes.root} style={{ width, height }}></Box>;
+  return (
+    <Box component='span' className={classes.circle} style={{ width, height }}></Box>
+  );
 }

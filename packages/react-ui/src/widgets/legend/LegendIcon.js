@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const useStyles = makeStyles(() => ({
+  legendIcon: {
     alignItems: 'center',
     '&:hover': {
       '& $circle': {}
@@ -14,17 +14,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function LegendIcon({ legend }) {
+export default function LegendIcon({ legend }) {
   const classes = useStyles();
 
   if (!legend) {
     return null;
   }
 
-  const { labels, icons } = legend;
+  const { labels = [], icons = [] } = legend;
 
   return labels.map((label, idx) => (
-    <Grid container item className={classes.root}>
+    <Grid key={label} container item className={classes.legendIcon}>
       <Box mr={1.5}>
         <img src={icons[idx]} className={classes.icon} alt={icons[idx]} />
       </Box>
@@ -32,5 +32,3 @@ function LegendIcon({ legend }) {
     </Grid>
   ));
 }
-
-export default LegendIcon;

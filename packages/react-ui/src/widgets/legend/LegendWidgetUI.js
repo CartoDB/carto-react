@@ -9,7 +9,7 @@ import {
   SvgIcon,
   Typography
 } from '@material-ui/core';
-import LegendWrapper from './components/LegendWrapper';
+import LegendWrapper from './LegendWrapper';
 import LegendCategories from './LegendCategories';
 import LegendIcon from './LegendIcon';
 import LegendRamp from './LegendRamp';
@@ -35,7 +35,7 @@ const LayersIcon = () => (
 );
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  legend: {
     minWidth: '240px',
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[1],
@@ -43,12 +43,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LegendWidgetUI({ legends = [], onChangeVisibility, className }) {
+export default function LegendWidgetUI({
+  legends = [],
+  onChangeVisibility,
+  className = ''
+}) {
   const classes = useStyles();
   const isSingle = legends.length === 1;
 
-  return !!legends.length && (
-    <Box className={`${className} ${classes.root}`}>
+  return (
+    <Box className={`${className} ${classes.legend}`}>
       <LegendContainer isSingle={isSingle}>
         <LegendRows legends={legends} onChangeVisibility={onChangeVisibility} />
       </LegendContainer>
@@ -83,24 +87,24 @@ function LegendContainer({ isSingle, children }) {
     setExpanded(!expanded);
   };
 
-  return isSingle
-    ? children
-    : (
-      <>
-        <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
-          { children }
-        </Collapse>
-        <Grid container className={classes.header}>
-          <Button
-            className={classes.button}
-            endIcon={<LayersIcon />}
-            onClick={handleExpandClick}
-          >
-            <Typography variant='subtitle1'>Layers</Typography>
-          </Button>
-        </Grid>
-      </>
-    );
+  return isSingle ? (
+    children
+  ) : (
+    <>
+      <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
+        {children}
+      </Collapse>
+      <Grid container className={classes.header}>
+        <Button
+          className={classes.button}
+          endIcon={<LayersIcon />}
+          onClick={handleExpandClick}
+        >
+          <Typography variant='subtitle1'>Layers</Typography>
+        </Button>
+      </Grid>
+    </>
+  );
 }
 
 export const LEGEND_TYPES = {
@@ -110,22 +114,23 @@ export const LEGEND_TYPES = {
   BINS: 'bins',
   PROPORTION: 'proportion',
   CUSTOM: 'custom'
-}
+};
 
 const LEGEND_COMPONENT_BY_TYPE = {
   [LEGEND_TYPES.CATEGORY]: LegendCategories,
   [LEGEND_TYPES.ICON]: LegendIcon,
   [LEGEND_TYPES.CONTINUOUS_RAMP]: (args) => LegendRamp({ ...args, isContinuous: true }),
   [LEGEND_TYPES.BINS]: (args) => LegendRamp({ ...args, isContinuous: false }),
-  [LEGEND_TYPES.PROPORTION]: LegendProportion,
-}
+  [LEGEND_TYPES.PROPORTION]: LegendProportion
+};
 
-function LegendRows({ legends, onChangeVisibility }) {
+function LegendRows({ legends = [], onChangeVisibility }) {
   const isSingle = legends.length === 1;
 
   return legends.map((legend) => {
     // TODO: Add validation for layer.type
-    const LegendComponent = LEGEND_COMPONENT_BY_TYPE[legend.type] || legend.children;
+    const LegendComponent =
+      LEGEND_COMPONENT_BY_TYPE[legend.type] || (() => legend.children);
 
     return (
       <Fragment key={legend.id}>

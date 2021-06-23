@@ -4,7 +4,7 @@ import CategoryWidgetUI from './widgets/CategoryWidgetUI';
 import FormulaWidgetUI from './widgets/FormulaWidgetUI';
 import HistogramWidgetUI from './widgets/HistogramWidgetUI';
 import PieWidgetUI from './widgets/PieWidgetUI';
-import LegendWidgetUI, { LEGEND_TYPES } from './legend/LegendWidgetUI';
+import LegendWidgetUI, { LEGEND_TYPES } from './widgets/legend/LegendWidgetUI';
 import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
 
 export {

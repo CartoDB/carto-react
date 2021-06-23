@@ -1,13 +1,13 @@
 import React from 'react';
 import { Box, Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
-import { getPalette } from '../utils/palette';
+import { getPalette } from '../../utils/palette';
 
-function LegendCategories({ legend }) {
+export default function LegendCategories({ legend }) {
   if (!legend) {
     return null;
   }
 
-  const { labels, colors } = legend;
+  const { labels = [], colors = [] } = legend;
 
   const palette = getPalette(colors, labels.length);
 
@@ -16,10 +16,8 @@ function LegendCategories({ legend }) {
   ));
 }
 
-export default LegendCategories;
-
 const useStyles = makeStyles((theme) => ({
-  root: {
+  legendCategories: {
     alignItems: 'center',
     '&:hover': {
       '& $circle': {}
@@ -49,7 +47,7 @@ function Row({ label, isMax, color = '#000' }) {
   const classes = useStyles({ isMax });
 
   return (
-    <Grid container item className={classes.root}>
+    <Grid container item className={classes.legendCategories}>
       <Tooltip title={isMax ? 'Most representative' : ''} placement='right' arrow>
         <Box
           mr={1.5}
