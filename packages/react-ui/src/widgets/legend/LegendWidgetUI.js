@@ -43,16 +43,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LegendWidgetUI({
-  legends = [],
-  onChangeVisibility,
-  className = ''
-}) {
+export default function LegendWidgetUI({ legends = [], onChangeVisibility }) {
   const classes = useStyles();
   const isSingle = legends.length === 1;
 
   return (
-    <Box className={`${className} ${classes.legend}`}>
+    <Box className={classes.legend}>
       <LegendContainer isSingle={isSingle}>
         <LegendRows legends={legends} onChangeVisibility={onChangeVisibility} />
       </LegendContainer>
