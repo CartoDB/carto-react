@@ -51,8 +51,18 @@ export type PieWidgetUI = {
   onSelectedCategoriesChange?: Function
 }
 
+export type LegendWidgetUIData = {
+  id: string | number,
+  title: string,
+  switchable: boolean,
+  visible: boolean,
+  collapsible: boolean,
+  note: string,
+  attr: string,
+};
+
 export type LegendWidgetUI = {
-  legends: any[],
+  legends: LegendWidgetUIData[],
   onChangeVisibility: ({ id: string, visible: boolean }) => void
 }
 
