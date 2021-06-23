@@ -1,18 +1,16 @@
+import { API_VERSIONS } from '@deck.gl/carto';
+
 const DEFAULT_USER_COMPONENT_IN_URL = '{user}';
 
 /**
  * Return more descriptive error from API
  */
-export function dealWithApiError({ API, credentials, response, data }) {
+export function dealWithApiError({ credentials, response, data }) {
   switch (response.status) {
     case 401:
-      throw new Error(
-        `Unauthorized access to ${API} API: invalid combination of user ('${credentials.username}') and apiKey ('${credentials.apiKey}')`
-      );
+      throw new Error('Unauthorized access. Invalid credentials');
     case 403:
-      throw new Error(
-        `Unauthorized access to ${API} API: the provided apiKey('${credentials.apiKey}') doesn't provide access to the requested data`
-      );
+      throw new Error('Forbidden access to the requested data');
     default:
       throw new Error(`${JSON.stringify(data.error)}`);
   }
@@ -20,22 +18,36 @@ export function dealWithApiError({ API, credentials, response, data }) {
 
 /**
  * Generate a valid API url for a request
- * @param {} param0
  */
-export function generateApiUrl({ API, credentials, parameters }) {
-  const base = `${serverUrl(credentials)}${API}`;
+export function generateApiUrl({ credentials, connection, parameters }) {
+  const { apiVersion = API_VERSIONS.V2, apiBaseUrl } = credentials;
 
-  if (!parameters) {
-    return base;
+  let url;
+  switch (apiVersion) {
+    case API_VERSIONS.V1:
+    case API_VERSIONS.V2:
+      url = `${sqlApiUrl(credentials)}api/v2/sql`;
+      break;
+
+    case API_VERSIONS.V3:
+      url = `${apiBaseUrl}/v3/sql/${connection}/query`;
+      break;
+
+    default:
+      throw new Error(`Unknown apiVersion ${apiVersion}`);
   }
 
-  return `${base}?${parameters.join('&')}`;
+  if (!parameters) {
+    return url;
+  }
+
+  return `${url}?${parameters.join('&')}`;
 }
 
 /**
  * Prepare a url valid for the specified user, from the serverUrlTemplate
  */
-function serverUrl(credentials) {
+function sqlApiUrl(credentials) {
   let url = credentials.serverUrlTemplate.replace(
     DEFAULT_USER_COMPONENT_IN_URL,
     credentials.username

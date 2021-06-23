@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '@carto/react-core';
 import { removeWorker } from '@carto/react-workers';
+import { setDefaultCredentials } from '@deck.gl/carto';
 
 /**
  *
@@ -164,6 +165,13 @@ export const createCartoSlice = (initialState) => {
         state.widgetsLoadingState = Object.fromEntries(
           Object.keys(state.widgetsLoadingState).map((id) => [id, areLoading])
         );
+      },
+      setCredentials: (state, action) => {
+        state.credentials = {
+          ...state.credentials,
+          ...action.payload
+        };
+        setDefaultCredentials(state.credentials);
       }
     }
   });
@@ -178,9 +186,9 @@ export const createCartoSlice = (initialState) => {
  * @param {string} type - type of source. Posible values are sql or bigquery
  * @param {Object} credentials - (optional) Custom credentials to be used in the source
  */
-export const addSource = ({ id, data, type, credentials }) => ({
+export const addSource = ({ id, data, type, credentials, connection }) => ({
   type: 'carto/addSource',
-  payload: { id, data, type, credentials }
+  payload: { id, data, type, credentials, connection }
 });
 
 /**
@@ -349,4 +357,13 @@ export const removeWidgetLoadingState = (data) => ({
 export const setAllWidgetsLoadingState = (areLoading) => ({
   type: 'carto/setAllWidgetsLoadingState',
   payload: areLoading
+});
+
+/**
+ * Action to set credentials
+ * @param {object} credentials - credentials props to ovewrite
+ */
+export const setCredentials = (data) => ({
+  type: 'carto/setCredentials',
+  payload: data
 });

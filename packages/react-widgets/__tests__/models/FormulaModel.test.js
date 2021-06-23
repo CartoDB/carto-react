@@ -1,9 +1,6 @@
-import { minify } from 'pgsql-minify';
 import { getFormula } from '../../src/models/FormulaModel';
 import { AggregationTypes } from '@carto/react-core';
-import { SourceTypes } from '@carto/react-api';
 import { Methods, executeTask } from '@carto/react-workers';
-import { mockSqlApiRequest, mockClear } from '../mockSqlApiRequest';
 
 jest.mock('@carto/react-workers', () => ({
   executeTask: jest.fn(),
@@ -16,14 +13,6 @@ describe('getFormula', () => {
   test('should throw with array data', async () => {
     await expect(getFormula({ data: [] })).rejects.toThrow(
       'Array is not a valid type to get formula'
-    );
-  });
-
-  test.skip('should throw if using CartoBQTilerLayer without viewportFilter', async () => {
-    await expect(
-      getFormula({ type: SourceTypes.BIGQUERY, viewportFilter: false })
-    ).rejects.toThrow(
-      'Formula Widget error: BigQuery layers need "viewportFilter" prop set to true.'
     );
   });
 
@@ -49,37 +38,6 @@ describe('getFormula', () => {
         Methods.VIEWPORT_FEATURES_FORMULA,
         { column, filters, operation }
       );
-    });
-  });
-
-  describe.skip('SQL Layer', () => {
-    describe('should execute an SqlApi request when using "viewportFilter": false', () => {
-      const response = { rows: { revenue: 1495728 } };
-      const sql = 'SELECT revenue FROM retail_stores LIMIT 1';
-      const credentials = {
-        username: 'public',
-        apiKey: 'default_public',
-        serverUrlTemplate: 'https://{user}.carto.com'
-      };
-
-      mockSqlApiRequest({ response, sql, credentials });
-
-      beforeEach(() => {
-        mockClear();
-      });
-
-      test('should call SqlApi', async () => {
-        const params = {
-          data: sql,
-          credentials,
-          operation: AggregationTypes.COUNT,
-          column: 'revenue',
-          type: SourceTypes.SQL,
-          viewportFilter: false
-        };
-        const func = await getFormula(params);
-        expect(func).toEqual(response.rows);
-      });
     });
   });
 });

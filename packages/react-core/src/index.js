@@ -15,12 +15,14 @@ export { AggregationTypes } from './operations/aggregation/AggregationTypes';
 export { aggregationFunctions } from './operations/aggregation/values';
 export { groupValuesByColumn } from './operations/groupby';
 export { histogram } from './operations/histogram';
+export { scatterPlot } from './operations/scatterPlot';
 
-export { 
+export {
   FilterTypes as _FilterTypes,
   filtersToSQL as _filtersToSQL,
   getApplicableFilters as _getApplicableFilters
 } from './filters/FilterQueryBuilder';
 export { buildFeatureFilter as _buildFeatureFilter } from './filters/Filter';
 export { viewportFeatures } from './filters/viewportFeatures';
-export { viewportFeatures as viewportFeaturesBinary } from './filters/viewportFeaturesBinary';
+export { viewportFeaturesBinary } from './filters/viewportFeaturesBinary';
+export { viewportFeaturesGeoJSON } from './filters/viewportFeaturesGeoJSON';

@@ -1,25 +1,42 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
+import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { FeatureCollection } from 'geojson';
 
-export type Credentials = {
+interface CredentialsCarto {
+  apiVersion: API_VERSIONS.V1 | API_VERSIONS.V2,
   username: string,
   apiKey: string,
   region?: string,
-  mapsVersion?: 'v1' | 'v2',
-  sqlUrl?: string,
-  mapsUrl?: string
+  mapsUrl?: string,
+  serverUrlTemplate?: string
+}
+
+interface CredentialsCartoCloudNative {
+  apiVersion: API_VERSIONS.V3,
+  apiBaseUrl: string,
+  accessToken?: string,
+}
+
+export type Credentials = CredentialsCarto | CredentialsCartoCloudNative;
+
+export type SourceProps = {
+  data: string,
+  type: MAP_TYPES.QUERY | MAP_TYPES.TABLE | MAP_TYPES.TILESET
+  connection?: string,
+  credentials: Credentials
 }
 
 export type UseCartoLayerFilterProps = {
-  binary: boolean,
+  binary?: boolean,
   uniqueIdProperty?: string,
-  onViewportLoad: Function,
+  onViewportLoad?: Function,
+  onDataLoad?: Function
   getFilterValue: Function,
   filterRange: [number, number],
   extensions: DataFilterExtension[],
   updateTriggers: {
-    getFilterValue: object
+    getFilterValue: Record<string, unknown>
   }
-}
+} & SourceProps
 
 export type ExecuteSQL = Promise<FeatureCollection | {}[]>;

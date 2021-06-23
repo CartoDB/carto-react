@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-auth",
-  "version": "1.0.1",
+  "version": "1.1.0-alpha.3",
   "description": "CARTO for React - Auth",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -64,7 +64,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^1.0.0-rc.3",
+    "@carto/react-core": "^1.1.0-alpha.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }

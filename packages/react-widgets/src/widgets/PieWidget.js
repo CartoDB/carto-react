@@ -47,31 +47,36 @@ function PieWidget({
   const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
 
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [hasLoadingState, setIsLoading] = useWidgetLoadingState(id);
+  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
   const { data, credentials, type } = source;
 
   useEffect(() => {
     const abortController = new AbortController();
-    if (data && credentials && hasLoadingState) {
-      const filters = getApplicableFilters(source.filters, id);
+    if (data && credentials && isLoading) {
+      const _filters = getApplicableFilters(source.filters, id);
+
       getCategories({
         column,
         operation,
         operationColumn,
         data,
-        filters,
+        filters: _filters,
         credentials,
         viewportFeatures: viewportFeaturesReady[dataSource] || false,
         dataSource,
         type,
         opts: { abortController }
       })
-        .then((data) => setCategoryData(data))
-        .catch((error) => {
-          if (error.name === 'AbortError') return;
-          if (onError) onError(error);
+        .then((data) => {
+          if (data) {
+            setIsLoading(false);
+            setCategoryData(data);
+          }
         })
-        .finally(() => setIsLoading(false));
+        .catch((error) => {
+          setIsLoading(false);
+          if (onError) onError(error);
+        });
     } else {
       setCategoryData([]);
     }
@@ -93,7 +98,7 @@ function PieWidget({
     dispatch,
     id,
     onError,
-    hasLoadingState
+    isLoading
   ]);
 
   const handleSelectedCategoriesChange = useCallback(

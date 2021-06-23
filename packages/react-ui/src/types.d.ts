@@ -8,7 +8,6 @@ export type WrapperWidgetUI = {
 };
 
 export type CategoryWidgetUIData = { name: string, value: number }[]
-
 export type CategoryWidgetUI = {
   data: CategoryWidgetUIData,
   isLoading?: boolean,
@@ -21,7 +20,6 @@ export type CategoryWidgetUI = {
 };
 
 export type FormulaWidgetUIData = string | number | { value: string[] | number[], unit: string };
-
 export type FormulaWidgetUI = {
   data: FormulaWidgetUIData,
   unitBefore?: boolean,
@@ -29,7 +27,6 @@ export type FormulaWidgetUI = {
 }
 
 export type HistogramWidgetUIData = number[];
-
 export type HistogramWidgetUI = {
   data: HistogramWidgetUIData,
   tooltip?: boolean,
@@ -43,14 +40,13 @@ export type HistogramWidgetUI = {
 }
 
 export type PieWidgetUIData = { name: string, value: number }[];
-
 export type PieWidgetUI = {
   name: string,
   data: PieWidgetUIData,
-  colors?: string[],
   formatter?: Function,
   tooltipFormatter?: Function,
   height?: string,
+  colors?: string[],
   selectedCategories?: string[],
   onSelectedCategoriesChange?: Function
 }
@@ -58,4 +54,13 @@ export type PieWidgetUI = {
 export type LegendWidgetUI = {
   legends: any[],
   onChangeVisibility: ({ id: string, visible: boolean }) => void
+}
+
+export type ScatterPlotWidgetUIData = number[][];
+export type ScatterPlotWidgetUI = {
+  name: string,
+  data: ScatterPlotWidgetUIData,
+  xAxisFormatter?: Function,
+  yAxisFormatter?: Function,
+  tooltipFormatter?: Function
 }

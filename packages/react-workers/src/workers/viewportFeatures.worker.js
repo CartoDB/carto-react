@@ -1,12 +1,16 @@
 import {
-  viewportFeaturesBinary as viewportFeatures,
+  viewportFeaturesBinary,
+  viewportFeaturesGeoJSON,
   aggregationFunctions,
   _buildFeatureFilter,
   histogram,
-  groupValuesByColumn } from '@carto/react-core';
+  scatterPlot,
+  groupValuesByColumn
+} from '@carto/react-core';
 import { Methods } from '../workerMethods';
 
 let currentViewportFeatures;
+let currentGeoJSON;
 
 onmessage = ({ data: { method, ...params } }) => {
   switch (method) {
@@ -22,13 +26,22 @@ onmessage = ({ data: { method, ...params } }) => {
     case Methods.VIEWPORT_FEATURES_CATEGORY:
       getCategories(params);
       break;
+    case Methods.VIEWPORT_FEATURES_SCATTERPLOT:
+      getScatterPlot(params);
+      break;
+    case Methods.LOAD_GEOJSON_FEATURES:
+      loadGeoJSONFeatures(params);
+      break;
+    case Methods.VIEWPORT_FEATURES_GEOJSON:
+      getViewportFeaturesGeoJSON(params);
+      break;
     default:
       throw new Error('Invalid worker method');
   }
 };
 
 function getViewportFeatures({ tiles, viewport, uniqueIdProperty }) {
-  currentViewportFeatures = viewportFeatures({
+  currentViewportFeatures = viewportFeaturesBinary({
     tiles,
     viewport,
     uniqueIdProperty
@@ -36,8 +49,24 @@ function getViewportFeatures({ tiles, viewport, uniqueIdProperty }) {
   postMessage({ result: true });
 }
 
+function loadGeoJSONFeatures({ geojson }) {
+  currentGeoJSON = geojson;
+  postMessage({ result: true });
+}
+
+function getViewportFeaturesGeoJSON({ viewport, uniqueIdProperty }) {
+  if (currentGeoJSON) {
+    currentViewportFeatures = viewportFeaturesGeoJSON({
+      geojson: currentGeoJSON,
+      viewport,
+      uniqueIdProperty
+    });
+  }
+  postMessage({ result: true });
+}
+
 function getFormula({ filters, operation, column }) {
-  let result = [{ value: null }];
+  let result = null;
 
   if (currentViewportFeatures) {
     const targetOperation = aggregationFunctions[operation];
@@ -51,7 +80,7 @@ function getFormula({ filters, operation, column }) {
 }
 
 function getHistogram({ filters, operation, column, ticks }) {
-  let result = [];
+  let result = null;
 
   if (currentViewportFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
@@ -63,7 +92,7 @@ function getHistogram({ filters, operation, column, ticks }) {
 }
 
 function getCategories({ filters, operation, column, operationColumn }) {
-  let result = [];
+  let result = null;
 
   if (currentViewportFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
@@ -75,7 +104,17 @@ function getCategories({ filters, operation, column, operationColumn }) {
       operation
     );
 
-    result = groups;
+    result = groups || [];
+  }
+
+  postMessage({ result });
+}
+
+function getScatterPlot({ filters, xAxisColumn, yAxisColumn }) {
+  let result = [];
+  if (currentViewportFeatures) {
+    const filteredFeatures = getFilteredFeatures(filters);
+    result = scatterPlot(filteredFeatures, xAxisColumn, yAxisColumn);
   }
 
   postMessage({ result });
