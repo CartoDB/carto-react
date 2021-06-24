@@ -1,8 +1,7 @@
 import React from 'react';
 import { updateLayer } from '@carto/react-redux/';
 import { LegendWidgetUI } from '@carto/react-ui';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function LegendWidget({ className }) {
   const dispatch = useDispatch();
