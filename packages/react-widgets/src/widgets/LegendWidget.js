@@ -10,6 +10,10 @@ export default function LegendWidget({ className }) {
     Object.values(state.carto.layers).filter((layer) => !!layer.legend)
   );
 
+  if (!layers.length) {
+    return null;
+  }
+
   const onChangeVisibility = ({ id, visible }) => {
     dispatch(
       updateLayer({
