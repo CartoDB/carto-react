@@ -4,11 +4,13 @@ import { LegendWidgetUI } from '@carto/react-ui';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-export default function LegendWidget() {
+export default function LegendWidget({ className }) {
   const dispatch = useDispatch();
-  const legends = useSelector((state) => {
-    return Object.values(state.carto.layers).filter((layer) => !!layer.legend);
-  });
+  const legends = useSelector((state) =>
+    Object.values(state.carto.layers)
+      .filter((layer) => !!layer.legend)
+      .map(({ legend, ...layer }) => ({ ...layer, ...legend }))
+  );
 
   const onChangeVisibility = ({ id, visible }) => {
     dispatch(
@@ -19,5 +21,11 @@ export default function LegendWidget() {
     );
   };
 
-  return <LegendWidgetUI legends={legends} onChangeVisibility={onChangeVisibility} />;
+  return (
+    <LegendWidgetUI
+      className={className}
+      legends={legends}
+      onChangeVisibility={onChangeVisibility}
+    />
+  );
 }
