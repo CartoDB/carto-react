@@ -61,7 +61,8 @@ describe('carto slice', () => {
   describe('layer actions', () => {
     const layerInfo = {
       id: 'whatever-id',
-      source: 'whatever-source-id'
+      source: 'whatever-source-id',
+      visible: true
     };
 
     const extraInfo = {
@@ -84,10 +85,11 @@ describe('carto slice', () => {
     test('should update a layer with extra layerAttributes info', () => {
       store.dispatch(cartoSlice.updateLayer(extraInfo));
       const { carto } = store.getState();
-      expect(carto.layers[layerInfo.id]).toEqual({
+      const expected = {
         ...layerInfo,
         ...extraInfo.layerAttributes
-      });
+      };
+      expect(carto.layers[layerInfo.id]).toEqual(expected);
     });
 
     test('should remove a layer', () => {
