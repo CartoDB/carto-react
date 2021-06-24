@@ -38,7 +38,7 @@ export default function LegendProportion({ legend }) {
   const step2 = max - gap;
 
   return (
-    <Grid container item direction='row' spacing={2}>
+    <Grid container item direction='row' spacing={2} data-testid='proportion-legend'>
       <Grid container item xs={6} justify='flex-end' className={classes.circles}>
         <Circle index={0}></Circle>
         <Circle index={1}></Circle>

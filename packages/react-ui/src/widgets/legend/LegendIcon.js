@@ -23,7 +23,7 @@ export default function LegendIcon({ legend }) {
 
   const { labels = [], icons = [] } = legend;
 
-  return labels.map((label, idx) => (
+  const Icons = labels.map((label, idx) => (
     <Grid key={label} container item className={classes.legendIcon}>
       <Box mr={1.5}>
         <img src={icons[idx]} className={classes.icon} alt={icons[idx]} />
@@ -31,4 +31,10 @@ export default function LegendIcon({ legend }) {
       <Typography variant='overline'>{label}</Typography>
     </Grid>
   ));
+
+  return (
+    <Grid container direction='column' spacing={1} data-testid='icon-legend'>
+      {Icons}
+    </Grid>
+  );
 }

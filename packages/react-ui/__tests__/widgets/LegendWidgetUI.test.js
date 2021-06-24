@@ -6,7 +6,7 @@ import { Typography } from '@material-ui/core';
 
 const CUSTOM_CHILDREN = <Typography>Legend custom</Typography>;
 
-fdescribe('LegendWidgetUI', () => {
+describe('LegendWidgetUI', () => {
   const DATA = [
     {
       id: 'category',
@@ -61,13 +61,43 @@ fdescribe('LegendWidgetUI', () => {
   ];
   const Widget = (props) => getMaterialUIContext(<LegendWidgetUI {...props} />);
 
-  test('single layer', () => {
+  test('single legend', () => {
     render(<Widget legends={[DATA[0]]}></Widget>);
     expect(screen.queryByText('Layers')).not.toBeInTheDocument();
   });
 
-  test('multiple layers', () => {
+  test('multiple legends', () => {
     render(<Widget legends={DATA}></Widget>);
     expect(screen.queryByText('Layers')).toBeInTheDocument();
+  });
+
+  test('Category legend', () => {
+    render(<Widget legends={[DATA[0]]}></Widget>);
+    expect(screen.getByTestId('categories-legend')).toBeInTheDocument();
+  });
+
+  test('Icon legend', () => {
+    render(<Widget legends={[DATA[1]]}></Widget>);
+    expect(screen.getByTestId('icon-legend')).toBeInTheDocument();
+  });
+
+  test('Bins legend', () => {
+    render(<Widget legends={[DATA[2]]}></Widget>);
+    expect(screen.getByTestId('ramp-legend')).toBeInTheDocument();
+  });
+
+  test('Continuous legend', () => {
+    render(<Widget legends={[DATA[3]]}></Widget>);
+    expect(screen.getByTestId('ramp-legend')).toBeInTheDocument();
+  });
+
+  test('Proportion legend', () => {
+    render(<Widget legends={[DATA[4]]}></Widget>);
+    expect(screen.getByTestId('proportion-legend')).toBeInTheDocument();
+  });
+
+  test('Custom legend', () => {
+    render(<Widget legends={[DATA[5]]}></Widget>);
+    expect(screen.getByText('Legend custom')).toBeInTheDocument();
   });
 });

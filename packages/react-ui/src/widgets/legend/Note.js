@@ -15,7 +15,7 @@ export default function Note({ children }) {
   }
 
   return (
-    <Box mt={1}>
+    <Box mt={1} data-testid='note-legend'>
       <Typography variant='caption'>Note:</Typography>{' '}
       <Typography className={classes.note} variant='caption'>
         {children}

@@ -11,9 +11,15 @@ export default function LegendCategories({ legend }) {
 
   const palette = getPalette(colors, labels.length);
 
-  return labels.map((label, idx) => (
+  const Rows = labels.map((label, idx) => (
     <Row key={label + idx} isMax={false} label={label} color={palette[idx]} />
   ));
+
+  return (
+    <Grid container direction='column' spacing={1} data-testid='categories-legend'>
+      {Rows}
+    </Grid>
+  );
 }
 
 const useStyles = makeStyles((theme) => ({

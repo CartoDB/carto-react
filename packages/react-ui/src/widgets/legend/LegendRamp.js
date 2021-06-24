@@ -22,7 +22,7 @@ export default function LegendRamp({ isContinuous, legend }) {
   // const avgPerc = (avg / (max + min)) * 100;
 
   return (
-    <Grid container item direction='column' spacing={1}>
+    <Grid container item direction='column' spacing={1} data-testid='ramp-legend'>
       <Grid container item>
         {isContinuous ? (
           <StepsContinuous palette={palette} />
