@@ -6,10 +6,8 @@ import { useSelector } from 'react-redux';
 
 export default function LegendWidget({ className }) {
   const dispatch = useDispatch();
-  const legends = useSelector((state) =>
-    Object.values(state.carto.layers)
-      .filter((layer) => !!layer.legend)
-      .map(({ legend, ...layer }) => ({ ...layer, ...legend }))
+  const layers = useSelector((state) =>
+    Object.values(state.carto.layers).filter((layer) => !!layer.legend)
   );
 
   const onChangeVisibility = ({ id, visible }) => {
@@ -24,7 +22,7 @@ export default function LegendWidget({ className }) {
   return (
     <LegendWidgetUI
       className={className}
-      legends={legends}
+      layers={layers}
       onChangeVisibility={onChangeVisibility}
     />
   );

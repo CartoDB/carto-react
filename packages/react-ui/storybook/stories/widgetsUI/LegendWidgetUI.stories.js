@@ -24,22 +24,10 @@ const options = {
         type: 'boolean'
       }
     },
-    collapsible: {
-      defaultValue: true,
+    layers: {
+      defaultValue: [],
       control: {
-        type: 'boolean'
-      }
-    },
-    note: {
-      default: '',
-      control: {
-        type: 'text'
-      }
-    },
-    attr: {
-      default: '',
-      control: {
-        type: 'text'
+        type: 'array'
       }
     }
   }
@@ -60,10 +48,12 @@ const LegendTemplate = () => {
       id: 0,
       title: 'Single Layer',
       visible: true,
-      children: <Typography>Your Content</Typography>
+      legend: {
+        children: <Typography>Your Content</Typography>
+      }
     }
   ];
-  return <LegendWidgetUI legends={layers}></LegendWidgetUI>;
+  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
 };
 
 const LegendNotFoundTemplate = () => {
@@ -74,7 +64,7 @@ const LegendNotFoundTemplate = () => {
       visible: true
     }
   ];
-  return <LegendWidgetUI legends={layers}></LegendWidgetUI>;
+  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
 };
 
 const LegendMultiTemplate = () => {
@@ -83,17 +73,21 @@ const LegendMultiTemplate = () => {
       id: 0,
       title: 'Multi Layer',
       visible: true,
-      children: <Typography>Your Content</Typography>
+      legend: {
+        children: <Typography>Your Content</Typography>
+      }
     },
     {
       id: 1,
       title: 'Multi Layer',
       visible: false,
       collapsible: false,
-      children: <Typography>Your Content</Typography>
+      legend: {
+        children: <Typography>Your Content</Typography>
+      }
     }
   ];
-  return <LegendWidgetUI legends={layers}></LegendWidgetUI>;
+  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
 };
 
 const LegendCategoriesTemplate = () => {
@@ -102,13 +96,15 @@ const LegendCategoriesTemplate = () => {
       id: 0,
       title: 'Category Layer',
       visible: true,
-      type: 'category',
-      note: 'lorem',
-      colors: ['#000', '#00F', '#0F0'],
-      labels: ['Category 1', 'Category 2', 'Category 3']
+      legend: {
+        type: 'category',
+        note: 'lorem',
+        colors: ['#000', '#00F', '#0F0'],
+        labels: ['Category 1', 'Category 2', 'Category 3']
+      }
     }
   ];
-  return <LegendWidgetUI legends={layers}></LegendWidgetUI>;
+  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
 };
 
 const LegendIconTemplate = () => {
@@ -117,16 +113,18 @@ const LegendIconTemplate = () => {
       id: 0,
       title: 'Icon Layer',
       visible: true,
-      type: 'icon',
-      labels: ['Icon 1', 'Icon 2', 'Icon 3'],
-      icons: [
-        'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2FShare%2Ficon%2Fnolan%2FMaps%2Fmarker1600.png&f=1&nofb=1',
-        'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2FShare%2Ficon%2Fnolan%2FMaps%2Fmarker1600.png&f=1&nofb=1',
-        'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2FShare%2Ficon%2Fnolan%2FMaps%2Fmarker1600.png&f=1&nofb=1'
-      ]
+      legend: {
+        type: 'icon',
+        labels: ['Icon 1', 'Icon 2', 'Icon 3'],
+        icons: [
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2FShare%2Ficon%2Fnolan%2FMaps%2Fmarker1600.png&f=1&nofb=1',
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2FShare%2Ficon%2Fnolan%2FMaps%2Fmarker1600.png&f=1&nofb=1',
+          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2FShare%2Ficon%2Fnolan%2FMaps%2Fmarker1600.png&f=1&nofb=1'
+        ]
+      }
     }
   ];
-  return <LegendWidgetUI legends={layers}></LegendWidgetUI>;
+  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
 };
 
 const LegendRampTemplate = () => {
@@ -135,9 +133,11 @@ const LegendRampTemplate = () => {
       id: 0,
       title: 'Ramp Layer',
       visible: true,
-      type: 'bins',
-      colors: ['#000', '#00F', '#0F0', '#F00'],
-      labels: [100, 200, 300]
+      legend: {
+        type: 'bins',
+        colors: ['#000', '#00F', '#0F0', '#F00'],
+        labels: [100, 200, 300]
+      }
     }
   ];
 
@@ -146,16 +146,18 @@ const LegendRampTemplate = () => {
       id: 0,
       title: 'Ramp Layer',
       visible: true,
-      type: 'continuous_ramp',
-      colors: ['#000', '#00F', '#0F0', '#F00'],
-      labels: [100, 200, 300]
+      legend: {
+        type: 'continuous_ramp',
+        colors: ['#000', '#00F', '#0F0', '#F00'],
+        labels: [100, 200, 300]
+      }
     }
   ];
 
   return (
     <>
-      <LegendWidgetUI legends={layersDiscontinuous}></LegendWidgetUI>
-      <LegendWidgetUI legends={layersContinuous}></LegendWidgetUI>
+      <LegendWidgetUI layers={layersDiscontinuous}></LegendWidgetUI>
+      <LegendWidgetUI layers={layersContinuous}></LegendWidgetUI>
     </>
   );
 };
@@ -166,12 +168,14 @@ const LegendProportionTemplate = () => {
       id: 0,
       title: 'Proportion Layer',
       visible: true,
-      type: 'proportion',
-      labels: [100, 500]
-      // avg: 450
+      legend: {
+        type: 'proportion',
+        labels: [100, 500]
+        // avg: 450
+      }
     }
   ];
-  return <LegendWidgetUI legends={layers}></LegendWidgetUI>;
+  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
 };
 
 const LegendCustomTemplate = () => {
@@ -180,10 +184,12 @@ const LegendCustomTemplate = () => {
       id: 0,
       title: 'Single Layer',
       visible: true,
-      children: <Typography>Legend custom</Typography>
+      legend: {
+        children: <Typography>Legend custom</Typography>
+      }
     }
   ];
-  return <LegendWidgetUI legends={layers}></LegendWidgetUI>;
+  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
 };
 
 export const Playground = Template.bind({});

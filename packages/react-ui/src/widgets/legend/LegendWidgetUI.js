@@ -43,14 +43,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LegendWidgetUI({ className, legends = [], onChangeVisibility }) {
+export default function LegendWidgetUI({ className, layers = [], onChangeVisibility }) {
   const classes = useStyles();
-  const isSingle = legends.length === 1;
+  const isSingle = layers.length === 1;
 
   return (
     <Box className={`${classes.legend} ${className}`}>
       <LegendContainer isSingle={isSingle}>
-        <LegendRows legends={legends} onChangeVisibility={onChangeVisibility} />
+        <LegendRows layers={layers} onChangeVisibility={onChangeVisibility} />
       </LegendContainer>
     </Box>
   );
@@ -120,32 +120,60 @@ const LEGEND_COMPONENT_BY_TYPE = {
   [LEGEND_TYPES.PROPORTION]: LegendProportion
 };
 
-function LegendRows({ legends = [], onChangeVisibility }) {
-  const isSingle = legends.length === 1;
+function LegendRows({ layers = [], onChangeVisibility }) {
+  const isSingle = layers.length === 1;
 
-  return legends.map((legend) => {
-    // TODO: Add validation for layer.type
-    const LegendComponent =
-      LEGEND_COMPONENT_BY_TYPE[legend.type] || (() => legend.children);
+  return layers.map(
+    ({
+      id,
+      title,
+      switchable,
+      visible,
+      legend: {
+        children,
+        type,
+        collapsible,
+        note,
+        attr,
+        colors,
+        labels,
+        icons,
+        stats
+      } = {}
+    }) => {
+      // TODO: Add validation for layer.type
+      const LegendComponent = LEGEND_COMPONENT_BY_TYPE[type] || (() => children);
 
-    return (
-      <Fragment key={legend.id}>
-        <LegendWrapper
-          id={legend.id}
-          title={legend.title}
-          collapsible={legend.collapsible}
-          switchable={legend.switchable}
-          visible={legend.visible}
-          note={legend.note}
-          attr={legend.attr}
-          onChangeVisibility={onChangeVisibility}
-        >
-          {LegendComponent({ legend }) || <NoLegend />}
-        </LegendWrapper>
-        {!isSingle && <Divider />}
-      </Fragment>
-    );
-  });
+      return (
+        <Fragment key={id}>
+          <LegendWrapper
+            id={id}
+            title={title}
+            collapsible={collapsible}
+            switchable={switchable}
+            visible={visible}
+            note={note}
+            attr={attr}
+            onChangeVisibility={onChangeVisibility}
+          >
+            {LegendComponent({
+              legend: {
+                type,
+                collapsible,
+                note,
+                attr,
+                colors,
+                labels,
+                icons,
+                stats
+              }
+            }) || <NoLegend />}
+          </LegendWrapper>
+          {!isSingle && <Divider />}
+        </Fragment>
+      );
+    }
+  );
 }
 
 function NoLegend() {
