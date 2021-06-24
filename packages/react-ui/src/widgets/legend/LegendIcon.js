@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   legendIcon: {
     alignItems: 'center',
     '&:hover': {
@@ -9,8 +9,8 @@ const useStyles = makeStyles(() => ({
     }
   },
   icon: {
-    width: '16px',
-    height: '16px'
+    width: theme.spacing(2),
+    height: theme.spacing(2)
   }
 }));
 
