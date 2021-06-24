@@ -19,11 +19,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LegendProportion({ legend }) {
-  const classes = useStyles();
-
-  const { labels, stats } = legend;
-
+function calculateRange({ labels, stats }) {
   let max, min;
   if (stats) {
     min = stats.min;
@@ -33,9 +29,22 @@ export default function LegendProportion({ legend }) {
     max = labels[labels.length - 1];
   }
 
+  return [min, max];
+}
+
+function calculateSteps([min, max]) {
   const gap = (max + min) / 4;
   const step1 = min + gap;
   const step2 = max - gap;
+
+  return [step1, step2];
+}
+
+export default function LegendProportion({ legend }) {
+  const classes = useStyles();
+
+  const [min, max] = calculateRange(legend);
+  const [step1, step2] = calculateSteps([min, max]);
 
   return (
     <Grid container item direction='row' spacing={2} data-testid='proportion-legend'>
