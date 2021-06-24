@@ -2,6 +2,7 @@
 
 ## Not released
 
+## 1.1.0-alpha.4 (2021-06-24)
 - Fix ScatterplotWidget filters [#153](https://github.com/CartoDB/carto-react/pull/153)
 - Add LegendWidget [#91](https://github.com/CartoDB/carto-react/pull/91)
 
