@@ -12,8 +12,8 @@ interface CredentialsCarto {
 }
 
 interface CredentialsCartoCloudNative {
-  apiVersion: API_VERSIONS.V3,
-  apiBaseUrl: string,
+  apiVersion?: API_VERSIONS.V3,
+  apiBaseUrl?: string,
   accessToken?: string,
 }
 

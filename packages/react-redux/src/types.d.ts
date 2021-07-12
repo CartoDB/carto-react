@@ -5,19 +5,35 @@ import { Viewport } from '@carto/react-core';
 import { AnyAction } from 'redux';
 
 export type ViewState = {
-  latitude: number,
-  longitude: number,
-  zoom: number,
-  pitch: number,
-  bearing: number,
-  dragRotate: boolean
+  latitude?: number,
+  longitude?: number,
+  zoom?: number,
+  pitch?: number,
+  bearing?: number,
+  dragRotate?: boolean
 }
 
 export type InitialCartoState = {
   viewState: ViewState,
-  basemap: CartoBasemapsNames.POSITRON,
+  basemap: CartoBasemapsNames,
   credentials: Credentials,
-  googleApiKey: string
+  googleApiKey: string,
+}
+
+export type InitialCartoCloudNativeState = {
+  viewState: ViewState,
+  basemap: CartoBasemapsNames,
+  credentials: Credentials,
+  googleApiKey: string,
+  oauth?: OauthCartoCloudNative
+}
+
+export type OauthCartoCloudNative = {
+  domain: string,
+  clientId: string,
+  scopes: Array<string>
+  audience: string,
+  authorizeEndPoint: string
 }
 
 export type CartoState = {
@@ -44,4 +60,3 @@ export type Reducer = {
   state: CartoState | OauthState,
   action: AnyAction
 }
-  
