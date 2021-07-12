@@ -2,7 +2,7 @@ import { DataFilterExtension } from '@deck.gl/extensions';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { FeatureCollection } from 'geojson';
 
-interface CredentialsCarto {
+interface Credentials2 {
   apiVersion: API_VERSIONS.V1 | API_VERSIONS.V2,
   username: string,
   apiKey: string,
@@ -11,13 +11,13 @@ interface CredentialsCarto {
   serverUrlTemplate?: string
 }
 
-interface CredentialsCartoCloudNative {
+interface Credentials3 {
   apiVersion?: API_VERSIONS.V3,
   apiBaseUrl?: string,
   accessToken?: string,
 }
 
-export type Credentials = CredentialsCarto | CredentialsCartoCloudNative;
+export type Credentials = Credentials2 | Credentials3;
 
 export type SourceProps = {
   data: string,
