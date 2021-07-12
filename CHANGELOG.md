@@ -2,8 +2,10 @@
 
 ## Not released
 
+## 1.1.0-alpha.5 (2021-07-12)
+
 - Add and improve typings [#157](https://github.com/CartoDB/carto-react/pull/157)
-- Update to latest 8.5.0-alpha.11 deck.gl version [#](https://github.com/CartoDB/carto-react/pull/)
+- Update to latest 8.5.0-beta.1 deck.gl version [#158](https://github.com/CartoDB/carto-react/pull/158)
 
 ## 1.1.0-alpha.4 (2021-06-24)
 
