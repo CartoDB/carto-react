@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Not released
+- Add legend without children [](https://github.com/CartoDB/carto-react/pull/)
 
 ## 1.1.0-alpha.5 (2021-07-12)
 

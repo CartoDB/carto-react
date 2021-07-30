@@ -63,19 +63,21 @@ export default function LegendWrapper({
         onExpandClick={handleExpandClick}
         onChangeVisibility={handleChangeVisibility}
       />
-      <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
-        <Box className={classes.content}>
-          <Grid container direction='column' pb={16} spacing={1}>
-            {attr && (
-              <Typography className={classes.attr} variant='caption'>
-                By {attr}
-              </Typography>
-            )}
-            {children}
-            <Note>{note}</Note>
-          </Grid>
-        </Box>
-      </Collapse>
+      {!!children && (
+        <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
+          <Box className={classes.content}>
+            <Grid container direction='column' pb={16} spacing={1}>
+              {attr && (
+                <Typography className={classes.attr} variant='caption'>
+                  By {attr}
+                </Typography>
+              )}
+              {children}
+              <Note>{note}</Note>
+            </Grid>
+          </Box>
+        </Collapse>
+      )}
     </Box>
   );
 }
