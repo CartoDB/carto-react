@@ -381,7 +381,7 @@ function CategoryWidgetUI(props) {
           </Grid>
         )}
         <Grid container item xs>
-          <Grid container item direction='row' justify='space-between'>
+          <Grid container item direction='row' justifyContent='space-between'>
             <span className={classes.label}>{getCategoryLabel(data.name)}</span>
             {typeof value === 'object' && value !== null ? (
               <span>
@@ -406,7 +406,7 @@ function CategoryWidgetUI(props) {
       <Grid
         container
         direction='row'
-        justify='space-between'
+        justifyContent='space-between'
         alignItems='center'
         className={classes.optionsSelectedBar}
       >
@@ -418,7 +418,7 @@ function CategoryWidgetUI(props) {
         {[...Array(4)].map((_, i) => (
           <Grid key={i} container direction='row' spacing={1} className={classes.element}>
             <Grid container item xs>
-              <Grid container item direction='row' justify='space-between'>
+              <Grid container item direction='row' justifyContent='space-between'>
                 <Typography variant='body2'>
                   <Skeleton variant='text' width={100} />
                 </Typography>
@@ -442,7 +442,7 @@ function CategoryWidgetUI(props) {
             <Grid
               container
               direction='row'
-              justify='space-between'
+              justifyContent='space-between'
               alignItems='center'
               className={classes.optionsSelectedBar}
             >
@@ -459,7 +459,7 @@ function CategoryWidgetUI(props) {
                 </Link>
               ) : (
                 selectedCategories.length > 0 && (
-                  <Grid container direction='row' justify='flex-end' item xs>
+                  <Grid container direction='row' justifyContent='flex-end' item xs>
                     <Link className={classes.linkAsButton} onClick={handleBlockClicked}>
                       Lock
                     </Link>
@@ -476,7 +476,7 @@ function CategoryWidgetUI(props) {
             <Grid
               container
               direction='row'
-              justify='space-between'
+              justifyContent='space-between'
               alignItems='center'
               className={classes.optionsSelectedBar}
             >

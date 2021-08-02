@@ -33,7 +33,7 @@ export default function LegendRamp({ isContinuous, legend }) {
       {/* <Tooltip title={'AVG: ' + avg} placement='top' arrow>
         <Box className={classes.avg} style={{ left: `${avgPerc}%` }} />
       </Tooltip> */}
-      <Grid container item justify='space-between'>
+      <Grid container item justifyContent='space-between'>
         <Typography variant='overline'>{min}</Typography>
         <Typography variant='overline'>{max}</Typography>
       </Grid>
