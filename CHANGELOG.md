@@ -2,6 +2,9 @@
 
 ## Not released
 
+- Update deck.gl version to 8.5.0 [#264](https://github.com/CartoDB/carto-react-template/pull/264)
+- Fix external libraries warnings [#264](https://github.com/CartoDB/carto-react-template/pull/264)
+
 ## 1.1.0-alpha.5 (2021-07-12)
 
 - Add and improve typings [#157](https://github.com/CartoDB/carto-react/pull/157)
