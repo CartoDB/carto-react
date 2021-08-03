@@ -192,6 +192,18 @@ const LegendCustomTemplate = () => {
   return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
 };
 
+const LegendNoChildrenTemplate = () => {
+  const layers = [
+    {
+      id: 0,
+      title: 'Single Layer',
+      visible: true,
+      legend: {}
+    }
+  ];
+  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+};
+
 export const Playground = Template.bind({});
 
 export const SingleLayer = LegendTemplate.bind({});
@@ -202,3 +214,4 @@ export const Icon = LegendIconTemplate.bind({});
 export const Ramp = LegendRampTemplate.bind({});
 export const Proportion = LegendProportionTemplate.bind({});
 export const Custom = LegendCustomTemplate.bind({});
+export const NoChildren = LegendNoChildrenTemplate.bind({});
