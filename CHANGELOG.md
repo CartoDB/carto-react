@@ -1,7 +1,11 @@
 # CHANGELOG
 
 ## Not released
-- Add legend without children [#161](https://github.com/CartoDB/carto-react/pull/161)
+
+- Improve types [#160](https://github.com/CartoDB/carto-react/pull/160)
+- Adapt Legend widget to work without children [#161](https://github.com/CartoDB/carto-react/pull/161)
+- Update deck.gl version to 8.5.0 [#162](https://github.com/CartoDB/carto-react/pull/162)
+- Fix Material-UI warnings on justify property [#162](https://github.com/CartoDB/carto-react/pull/162)
 
 ## 1.1.0-alpha.5 (2021-07-12)
 
