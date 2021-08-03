@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Improve types [#160](https://github.com/CartoDB/carto-react/pull/160)
+
 ## 1.1.0-alpha.5 (2021-07-12)
 
 - Add and improve typings [#157](https://github.com/CartoDB/carto-react/pull/157)
