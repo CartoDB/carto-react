@@ -48,7 +48,7 @@ export default function LegendProportion({ legend }) {
 
   return (
     <Grid container item direction='row' spacing={2} data-testid='proportion-legend'>
-      <Grid container item xs={6} justify='flex-end' className={classes.circles}>
+      <Grid container item xs={6} justifyContent='flex-end' className={classes.circles}>
         <Circle index={0}></Circle>
         <Circle index={1}></Circle>
         <Circle index={2}></Circle>
@@ -57,7 +57,14 @@ export default function LegendProportion({ legend }) {
           <Box className={classes.avg} style={{ bottom: `${avgPerc}%` }} />
         </Tooltip> */}
       </Grid>
-      <Grid container item direction='column' justify='space-between' xs={6} spacing={1}>
+      <Grid
+        container
+        item
+        direction='column'
+        justifyContent='space-between'
+        xs={6}
+        spacing={1}
+      >
         <Grid item>
           <Typography variant='overline'>Max: {max}</Typography>
         </Grid>

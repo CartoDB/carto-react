@@ -130,26 +130,26 @@ function LegendRows({ layers = [], onChangeVisibility }) {
       switchable,
       visible,
       legend: {
-        children,
-        type,
-        collapsible,
-        note,
-        attr,
-        colors,
-        labels,
-        icons,
-        stats
+        children = null,
+        type = '',
+        collapsible = true,
+        note = '',
+        attr = '',
+        colors = [],
+        labels = [],
+        icons = [],
+        stats = undefined
       } = {}
     }) => {
       // TODO: Add validation for layer.type
+      const hasChildren = LEGEND_COMPONENT_BY_TYPE[type] || children;
       const LegendComponent = LEGEND_COMPONENT_BY_TYPE[type] || (() => children);
-
       return (
         <Fragment key={id}>
           <LegendWrapper
             id={id}
             title={title}
-            collapsible={collapsible}
+            collapsible={!!(collapsible && hasChildren)}
             switchable={switchable}
             visible={visible}
             note={note}
@@ -167,15 +167,11 @@ function LegendRows({ layers = [], onChangeVisibility }) {
                 icons,
                 stats
               }
-            }) || <NoLegend />}
+            })}
           </LegendWrapper>
           {!isSingle && <Divider />}
         </Fragment>
       );
     }
   );
-}
-
-function NoLegend() {
-  return <Typography>Legend type not found</Typography>;
 }
