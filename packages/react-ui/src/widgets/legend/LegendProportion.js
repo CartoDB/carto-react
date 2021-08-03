@@ -57,7 +57,14 @@ export default function LegendProportion({ legend }) {
           <Box className={classes.avg} style={{ bottom: `${avgPerc}%` }} />
         </Tooltip> */}
       </Grid>
-      <Grid container item direction='column' justifyContent='space-between' xs={6} spacing={1}>
+      <Grid
+        container
+        item
+        direction='column'
+        justifyContent='space-between'
+        xs={6}
+        spacing={1}
+      >
         <Grid item>
           <Typography variant='overline'>Max: {max}</Typography>
         </Grid>
