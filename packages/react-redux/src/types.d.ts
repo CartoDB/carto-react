@@ -10,31 +10,31 @@ export type ViewState = {
   zoom?: number,
   pitch?: number,
   bearing?: number,
-  dragRotate?: boolean
+  dragRotate?: boolean,
+  width?: number,
+  height?: number,
 }
 
-export type InitialCartoState = {
+type InitialCarto2State = {
   viewState: ViewState,
   basemap: CartoBasemapsNames,
   credentials: Credentials,
   googleApiKey: string,
 }
 
-export type InitialCartoCloudNativeState = {
-  viewState: ViewState,
-  basemap: CartoBasemapsNames,
-  credentials: Credentials,
-  googleApiKey: string,
-  oauth?: OauthCartoCloudNative
-}
-
-export type OauthCartoCloudNative = {
+type OauthCarto3 = {
   domain: string,
   clientId: string,
   scopes: Array<string>
   audience: string,
   authorizeEndPoint: string
 }
+
+type InitialCarto3State = {
+  oauth?: OauthCarto3
+} & InitialCarto2State;
+
+export type InitialCartoState = InitialCarto2State | InitialCarto3State;
 
 export type CartoState = {
   viewport: Viewport | undefined,
