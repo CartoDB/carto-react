@@ -29,7 +29,7 @@ describe('useCartoLayerProps', () => {
           type: MAP_TYPES.TILESET
         };
 
-        const { result } = renderHook(() => useCartoLayerProps(source));
+        const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual([
           'binary',
@@ -46,7 +46,7 @@ describe('useCartoLayerProps', () => {
           type: MAP_TYPES.QUERY
         };
 
-        const { result } = renderHook(() => useCartoLayerProps(source));
+        const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual([
           'binary',
@@ -63,7 +63,7 @@ describe('useCartoLayerProps', () => {
           type: MAP_TYPES.TABLE
         };
 
-        const { result } = renderHook(() => useCartoLayerProps(source));
+        const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual([
           'binary',
@@ -82,7 +82,7 @@ describe('useCartoLayerProps', () => {
           type: MAP_TYPES.TILESET
         };
 
-        const { result } = renderHook(() => useCartoLayerProps(source));
+        const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual([
           'binary',
@@ -99,7 +99,7 @@ describe('useCartoLayerProps', () => {
           type: MAP_TYPES.QUERY
         };
 
-        const { result } = renderHook(() => useCartoLayerProps(source));
+        const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual(['onDataLoad', ...COMMON_PROPS]);
       });
@@ -112,7 +112,7 @@ describe('useCartoLayerProps', () => {
           type: MAP_TYPES.TABLE
         };
 
-        const { result } = renderHook(() => useCartoLayerProps(source));
+        const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual(['onDataLoad', ...COMMON_PROPS]);
       });
@@ -134,7 +134,7 @@ describe('useCartoLayerProps', () => {
         type: MAP_TYPES.TILESET
       };
 
-      const { result } = renderHook(() => useCartoLayerProps(source));
+      const { result } = renderHook(() => useCartoLayerProps({ source }));
 
       expect(result.current.onViewportLoad).toBeInstanceOf(Function);
     });
@@ -147,7 +147,7 @@ describe('useCartoLayerProps', () => {
         type: MAP_TYPES.TILESET
       };
 
-      const { result } = renderHook(() => useCartoLayerProps(source));
+      const { result } = renderHook(() => useCartoLayerProps({ source }));
 
       expect(result.current.binary).toBe(true);
     });
@@ -160,7 +160,7 @@ describe('useCartoLayerProps', () => {
         type: MAP_TYPES.QUERY
       };
 
-      const { result } = renderHook(() => useCartoLayerProps(source));
+      const { result } = renderHook(() => useCartoLayerProps({ source }));
 
       expect(result.current.onDataLoad).toBeInstanceOf(Function);
     });
