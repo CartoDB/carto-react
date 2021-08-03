@@ -29,7 +29,7 @@ describe('useCartoLayerProps', () => {
           type: MAP_TYPES.TILESET
         };
 
-        const { result } = renderHook(() => useCartoLayerProps(source));
+        const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual([
           'binary',
@@ -46,7 +46,7 @@ describe('useCartoLayerProps', () => {
           type: MAP_TYPES.QUERY
         };
 
-        const { result } = renderHook(() => useCartoLayerProps(source));
+        const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual([
           'binary',
@@ -63,7 +63,7 @@ describe('useCartoLayerProps', () => {
           type: MAP_TYPES.TABLE
         };
 
-        const { result } = renderHook(() => useCartoLayerProps(source));
+        const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual([
           'binary',
@@ -82,7 +82,7 @@ describe('useCartoLayerProps', () => {
           type: MAP_TYPES.TILESET
         };
 
-        const { result } = renderHook(() => useCartoLayerProps(source));
+        const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual([
           'binary',
@@ -99,7 +99,7 @@ describe('useCartoLayerProps', () => {
           type: MAP_TYPES.QUERY
         };
 
-        const { result } = renderHook(() => useCartoLayerProps(source));
+        const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual(['onDataLoad', ...COMMON_PROPS]);
       });
@@ -112,7 +112,7 @@ describe('useCartoLayerProps', () => {
           type: MAP_TYPES.TABLE
         };
 
-        const { result } = renderHook(() => useCartoLayerProps(source));
+        const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual(['onDataLoad', ...COMMON_PROPS]);
       });
@@ -121,7 +121,7 @@ describe('useCartoLayerProps', () => {
 
   describe('should has correct filter configurations', () => {
     test('uniqueIdProperty should be undefined', () => {
-      const { result } = renderHook(() => useCartoLayerProps());
+      const { result } = renderHook(() => useCartoLayerProps({}));
 
       expect(result.current.uniqueIdProperty).toBeUndefined();
     });
@@ -134,7 +134,7 @@ describe('useCartoLayerProps', () => {
         type: MAP_TYPES.TILESET
       };
 
-      const { result } = renderHook(() => useCartoLayerProps(source));
+      const { result } = renderHook(() => useCartoLayerProps({ source }));
 
       expect(result.current.onViewportLoad).toBeInstanceOf(Function);
     });
@@ -147,7 +147,7 @@ describe('useCartoLayerProps', () => {
         type: MAP_TYPES.TILESET
       };
 
-      const { result } = renderHook(() => useCartoLayerProps(source));
+      const { result } = renderHook(() => useCartoLayerProps({ source }));
 
       expect(result.current.binary).toBe(true);
     });
@@ -160,38 +160,38 @@ describe('useCartoLayerProps', () => {
         type: MAP_TYPES.QUERY
       };
 
-      const { result } = renderHook(() => useCartoLayerProps(source));
+      const { result } = renderHook(() => useCartoLayerProps({ source }));
 
       expect(result.current.onDataLoad).toBeInstanceOf(Function);
     });
 
     test('getFilterValue should be a function', () => {
-      const { result } = renderHook(() => useCartoLayerProps());
+      const { result } = renderHook(() => useCartoLayerProps({}));
 
       expect(result.current.getFilterValue).toBeInstanceOf(Function);
     });
 
     test('filter range should be between 1 and 1', () => {
-      const { result } = renderHook(() => useCartoLayerProps());
+      const { result } = renderHook(() => useCartoLayerProps({}));
 
       expect(result.current.filterRange).toEqual([1, 1]);
     });
 
     test('extensions should have an unique instance of DataFilterExtension', () => {
-      const { result } = renderHook(() => useCartoLayerProps());
+      const { result } = renderHook(() => useCartoLayerProps({}));
 
       expect(result.current.extensions.length).toBe(1);
       expect(result.current.extensions[0]).toBeInstanceOf(DataFilterExtension);
     });
 
     test('filter size should be 1', () => {
-      const { result } = renderHook(() => useCartoLayerProps());
+      const { result } = renderHook(() => useCartoLayerProps({}));
 
       expect(result.current.extensions[0].opts.filterSize).toEqual(1);
     });
 
     test('getFilterValue trigger should be present', () => {
-      const { result } = renderHook(() => useCartoLayerProps());
+      const { result } = renderHook(() => useCartoLayerProps({}));
 
       expect(result.current.updateTriggers).toHaveProperty('getFilterValue');
     });

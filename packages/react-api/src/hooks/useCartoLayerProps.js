@@ -3,7 +3,11 @@ import { _buildFeatureFilter } from '@carto/react-core';
 import useViewportFeatures from './useViewportFeatures';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 
-export default function useCartoLayerProps(source, uniqueIdProperty) {
+export default function useCartoLayerProps({
+  source,
+  uniqueIdProperty,
+  viewportFeatures = true
+}) {
   const [onViewportLoad, onDataLoad] = useViewportFeatures(source, uniqueIdProperty);
 
   let props = {};
@@ -14,17 +18,18 @@ export default function useCartoLayerProps(source, uniqueIdProperty) {
   ) {
     props = {
       binary: true,
-      onViewportLoad
+      onViewportLoad: viewportFeatures ? onViewportLoad : null
     };
   } else if (source?.type === MAP_TYPES.QUERY || source?.type === MAP_TYPES.TABLE) {
     props = {
-      onDataLoad
+      // empty function should be removed by null, but need a fix in CartoLayer
+      onDataLoad: viewportFeatures ? onDataLoad : () => null
     };
   }
 
   return {
     ...props,
-    uniqueIdProperty: uniqueIdProperty,
+    uniqueIdProperty,
     data: source && source.data,
     type: source && source.type,
     connection: source && source.connection,

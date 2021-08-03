@@ -1,6 +1,9 @@
 import { SourceProps, UseCartoLayerFilterProps } from '../types';
 
-export default function useCartoLayerProps(
+interface UseCartoLayerProps {
   source: SourceProps & { id: string },
   uniqueIdProperty?: string
-): UseCartoLayerFilterProps
+  viewportFeatures?: boolean
+}
+
+export default function useCartoLayerProps(props: UseCartoLayerProps): UseCartoLayerFilterProps

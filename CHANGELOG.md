@@ -2,6 +2,7 @@
 
 ## Not released
 
+- **Breaking change**: Allow to disable viewport features calculation. useCartoLayerProps uses now object destructuring. [#164](https://github.com/CartoDB/carto-react/pull/164)
 - Rename Credentials exported types [#159](https://github.com/CartoDB/carto-react/pull/159)
 - Improve types [#160](https://github.com/CartoDB/carto-react/pull/160)
 - Adapt Legend widget to work without children [#161](https://github.com/CartoDB/carto-react/pull/161)
