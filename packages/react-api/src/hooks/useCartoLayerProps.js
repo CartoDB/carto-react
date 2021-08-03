@@ -22,7 +22,8 @@ export default function useCartoLayerProps({
     };
   } else if (source?.type === MAP_TYPES.QUERY || source?.type === MAP_TYPES.TABLE) {
     props = {
-      onDataLoad: viewportFeatures ? onDataLoad : null
+      // empty function should be removed by null, but need a fix in CartoLayer
+      onDataLoad: viewportFeatures ? onDataLoad : () => null
     };
   }
 
