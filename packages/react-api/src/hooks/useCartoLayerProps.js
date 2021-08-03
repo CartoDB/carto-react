@@ -28,7 +28,7 @@ export default function useCartoLayerProps({
 
   return {
     ...props,
-    uniqueIdProperty: uniqueIdProperty,
+    uniqueIdProperty,
     data: source && source.data,
     type: source && source.type,
     connection: source && source.connection,
