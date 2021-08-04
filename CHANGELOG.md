@@ -2,6 +2,8 @@
 
 ## Not released
 
+## 1.1.0-alpha.6 (2021-08-04)
+
 - **Breaking change**: Allow to disable viewport features calculation. useCartoLayerProps uses now object destructuring. [#164](https://github.com/CartoDB/carto-react/pull/164)
 - Rename Credentials exported types [#159](https://github.com/CartoDB/carto-react/pull/159)
 - Improve types [#160](https://github.com/CartoDB/carto-react/pull/160)
