@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Update echarts to v5 [#167](https://github.com/CartoDB/carto-react/pull/167)
+
 ## 1.1.0-alpha.6 (2021-08-04)
 
 - **Breaking change**: Allow to disable viewport features calculation. useCartoLayerProps uses now object destructuring. [#164](https://github.com/CartoDB/carto-react/pull/164)
