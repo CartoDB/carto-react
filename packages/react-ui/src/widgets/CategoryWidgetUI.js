@@ -12,9 +12,10 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import { Alert, AlertTitle, Skeleton } from '@material-ui/lab';
+import { Skeleton } from '@material-ui/lab';
 
 import { animateValues } from './utils/animations';
+import NoDataAlert from '../utils/NoDataAlert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -510,11 +511,7 @@ function CategoryWidgetUI(props) {
                 />
               ))
             ) : data.length === 0 && !isLoading ? (
-              <Alert severity='warning'>
-                <AlertTitle>No data available</AlertTitle>
-                There are no results for the combination of filters applied to your data.
-                Try tweaking your filters, or zoom and pan the map to adjust the Map View.
-              </Alert>
+              <NoDataAlert />
             ) : (
               <>
                 <Typography variant='body2'>No results</Typography>
