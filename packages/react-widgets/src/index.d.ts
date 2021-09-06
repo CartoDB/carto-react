@@ -12,3 +12,4 @@ export {
   geocodeStreetPoint,
   getScatter
 } from './models';
+export { default as TimeSeriesWidget } from './widgets/TimeSeriesWidget';
