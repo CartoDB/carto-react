@@ -22,3 +22,6 @@ export { viewportFeaturesBinary } from './filters/viewportFeaturesBinary';
 export { viewportFeaturesGeoJSON } from './filters/viewportFeaturesGeoJSON';
 
 export { AggregationFunctions, GroupByFeature, HistogramFeature, Viewport, ViewportFeaturesBinary } from './types';
+
+export { GroupDateTypes } from './operations/GroupDateTypes';
+export { groupValuesByDateColumn } from './operations/groupByDate';
