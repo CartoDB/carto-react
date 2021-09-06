@@ -91,6 +91,10 @@ export type ScatterPlotWidgetUI = {
   tooltipFormatter?: Function;
 };
 
+export type TimeSeriesWidgetUIData = number[][];
+export type TimeSeriesWidgetUI = {
+};
+
 export type NoDataAlert = {
   title: string;
   body: string;
