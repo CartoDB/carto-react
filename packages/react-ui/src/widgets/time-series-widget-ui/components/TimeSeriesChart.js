@@ -6,7 +6,13 @@ import useTimeSeriesInteractivity from '../hooks/useTimeSeriesInteractivity';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 
-export default function TimeSeriesChart({ chartType, tooltip, tooltipFormatter, data, height }) {
+export default function TimeSeriesChart({
+  chartType,
+  tooltip,
+  tooltipFormatter,
+  data,
+  height
+}) {
   const theme = useTheme();
   const chartInstance = useRef();
 
