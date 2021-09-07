@@ -48,25 +48,25 @@ export function TimeSeriesProvider({
   const [_timeframe, setTimeframe] = useState([]);
 
   useEffect(() => {
-    if (timeframe.length === 2) {
-      onTimeframeUpdate(timeframe.sort());
+    if (_timeframe.length === 2) {
+      onTimeframeUpdate(_timeframe.sort());
     }
     // Only executed when timeframe changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeframe]);
+  }, [_timeframe]);
 
   const togglePlay = useCallback(() => {
-    if (isPlaying) {
+    if (_isPlaying) {
       if (onPause) onPause();
       setIsPaused(true);
     }
-    if (!isPlaying) {
+    if (!_isPlaying) {
       if (onPlay) onPlay();
       setIsPaused(false);
     }
     setIsPlaying((oldState) => !oldState);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPlaying, onPause, onPlay]);
+  }, [_isPlaying, onPause, onPlay]);
 
   const stopWrapper = () => {
     setIsPlaying(false);
