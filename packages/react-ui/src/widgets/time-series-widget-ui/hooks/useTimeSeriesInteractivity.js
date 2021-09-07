@@ -51,31 +51,6 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
 
   useEffect(() => {
     if (echartsInstance) {
-      // const componentsMap = echartsInstance._api.getModel()._componentsMap;
-      // const keys = echartsInstance._api.getModel()._componentsMap.keys();
-      // const isReady = keys.every((componentKey) => {
-      //   const [component] = componentsMap.get(componentKey);
-
-      //   console.log('Component', component)
-
-      //   if (!component) {
-      //     return true;
-      //   }
-
-      //   const view =
-      //     component.mainType === 'series'
-      //       ? echartsInstance._api.getViewOfSeriesModel(component)
-      //       : echartsInstance._api.getViewOfComponentModel(component);
-        
-      //   console.log(view, view?.group, component)
-        
-      //   return !!view;
-      // });
-
-      // if (!isReady) {
-      //   return null;
-      // }
-
       zr.off('mousedown', mouseDownEvent);
       zr.off('mousemove', mouseMoveEvent);
       zr.off('mouseup', mouseUpEvent);
