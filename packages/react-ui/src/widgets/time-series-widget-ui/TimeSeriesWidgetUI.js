@@ -1,4 +1,12 @@
-import { Box, Button, Grid, SvgIcon, Typography } from '@material-ui/core';
+import {
+  Box,
+  Menu,
+  Grid,
+  IconButton,
+  MenuItem,
+  SvgIcon,
+  Typography
+} from '@material-ui/core';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import TimeSeriesChart from './components/TimeSeriesChart';
 import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesContext';
@@ -126,6 +134,8 @@ function TimeSeriesWidgetUIContent({
   height,
   showControls
 }) {
+  const [anchorSpeedEl, setAnchorSpeedEl] = useState(null);
+  const [speed, setSpeed] = useState(1);
   const {
     isPlaying,
     isPaused,
@@ -153,12 +163,12 @@ function TimeSeriesWidgetUIContent({
     if (isPlaying && !timeframe.length) {
       const interval = setInterval(
         () => setTimelinePosition((oldState) => Math.min(data.length - 1, oldState + 1)),
-        animationStep
+        animationStep / speed
       );
       return () => clearInterval(interval);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isPlaying, animationStep]);
+  }, [data, isPlaying, animationStep, speed]);
 
   useEffect(() => {
     if (isPlaying && timeframe.length === 2) {
@@ -175,10 +185,10 @@ function TimeSeriesWidgetUIContent({
         } else {
           setTimeframe(newTimeframe);
         }
-      }, 10);
+      }, 10 / speed);
       return () => clearInterval(interval);
     }
-  }, [data, isPlaying, timeframe, stepSize, setTimeframe, stop]);
+  }, [data, isPlaying, timeframe, stepSize, setTimeframe, stop, speed]);
 
   useEffect(() => {
     if ((isPlaying || isPaused) && timelinePosition < data?.length && !timeframe.length) {
@@ -226,28 +236,72 @@ function TimeSeriesWidgetUIContent({
     />
   );
 
+  const handleOpenSpeedMenu = (e) => {
+    if (e?.currentTarget) {
+      setAnchorSpeedEl(e.currentTarget);
+    }
+  };
+
+  const handleCloseSpeedMenu = () => {
+    setAnchorSpeedEl(null);
+  };
+
+  const handleSpeedUpdate = (newSpeed) => {
+    setSpeed(newSpeed);
+    handleCloseSpeedMenu();
+  };
+
   return (
     <Box>
       <Typography color='textSecondary' variant='caption'>
         {currentDate}
       </Typography>
       {showControls ? (
-        <Grid container spacing={1} alignItems='flex-end'>
+        <Grid container alignItems='flex-end'>
           <Grid item xs={1}>
-            <Button
+            <IconButton
               size='small'
-              color='primary'
+              color='default'
               disabled={!(isPaused || isPlaying)}
-              startIcon={<StopIcon />}
-              onClick={stop}
-            />
-            <Box mt={0.5}>
-              <Button
+              onClick={handleOpenSpeedMenu}
+            >
+              <ClockIcon />
+            </IconButton>
+            <Menu
+              anchorEl={anchorSpeedEl}
+              keepMounted
+              open={Boolean(anchorSpeedEl)}
+              onClose={handleCloseSpeedMenu}
+            >
+              <MenuItem disabled>
+                <Typography variant='caption' color='textSecondary'>
+                  Speed
+                </Typography>
+              </MenuItem>
+              {[0.5, 1, 2, 3].map((speedItem) => (
+                <MenuItem
+                  key={speedItem}
+                  selected={speedItem === speed}
+                  onClick={() => handleSpeedUpdate(speedItem)}
+                >
+                  {speedItem}x
+                </MenuItem>
+              ))}
+            </Menu>
+            <Box mt={2}>
+              <IconButton
                 size='small'
                 color='primary'
-                startIcon={isPlaying ? <PauseIcon /> : <PlayIcon />}
-                onClick={togglePlay}
-              />
+                disabled={!(isPaused || isPlaying)}
+                onClick={stop}
+              >
+                <StopIcon />
+              </IconButton>
+            </Box>
+            <Box mt={0.75}>
+              <IconButton size='small' color='primary' onClick={togglePlay}>
+                {isPlaying ? <PauseIcon /> : <PlayIcon />}
+              </IconButton>
             </Box>
           </Grid>
           <Grid item xs={11}>
@@ -342,13 +396,25 @@ function PauseIcon() {
   );
 }
 
+function ClockIcon() {
+  return (
+    <SvgIcon viewBox='0 0 20 20'>
+      <path
+        d='M12.5 1.254h-5v1.667h5V1.254zM9.167 12.088h1.666v-5H9.167v5zm6.691-5.517 1.184-1.183a9.207 9.207 0 0 0-1.175-1.175l-1.184 1.183A7.468 7.468 0 0 0 10 3.746a7.5 7.5 0 0 0-7.5 7.5c0 4.141 3.35 7.5 7.5 7.5s7.5-3.358 7.5-7.5a7.504 7.504 0 0 0-1.642-4.675zM10 17.088a5.83 5.83 0 0 1-5.833-5.834A5.83 5.83 0 0 1 10 5.421a5.83 5.83 0 0 1 5.833 5.833A5.83 5.83 0 0 1 10 17.087z'
+        id='-↳Color'
+        fill='inherit'
+      ></path>
+    </SvgIcon>
+  );
+}
+
 // Special useEffect that only
 // works after the first rendering
-function useDidMountEffect (func, deps) {
+function useDidMountEffect(func, deps) {
   const didMount = useRef(false);
 
   useEffect(() => {
-      if (didMount.current) func();
-      else didMount.current = true;
+    if (didMount.current) func();
+    else didMount.current = true;
   }, deps);
 }
