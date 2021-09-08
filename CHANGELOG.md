@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Not released
+- Fix warning console when LegendIcon it is used [#170](https://github.com/CartoDB/carto-react/pull/170)
 
 ## 1.1.0-beta.0 (2021-09-07)
 
