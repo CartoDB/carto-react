@@ -16,11 +16,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[900],
     right: 0,
     boxSizing: 'border-box'
+  },
+  errorContainer: {
+    maxWidth: 240
   }
 }));
 
 function calculateRange({ labels, stats }) {
-  let max, min;
+  let max;
+  let min;
+  let error = false;
+
   if (stats) {
     min = stats.min;
     max = stats.max;
@@ -29,10 +35,22 @@ function calculateRange({ labels, stats }) {
     max = labels[labels.length - 1];
   }
 
-  return [min, max];
+  if (typeof min !== 'number') {
+    min = parseInt(min, 10);
+  }
+
+  if (typeof max !== 'number') {
+    max = parseInt(max, 10);
+  }
+
+  if (Number.isNaN(min) || Number.isNaN(max)) {
+    error = true;
+  }
+
+  return { min, max, error };
 }
 
-function calculateSteps([min, max]) {
+function calculateSteps(min, max) {
   const gap = (max + min) / 4;
   const step1 = min + gap;
   const step2 = max - gap;
@@ -43,8 +61,8 @@ function calculateSteps([min, max]) {
 export default function LegendProportion({ legend }) {
   const classes = useStyles();
 
-  const [min, max] = calculateRange(legend);
-  const [step1, step2] = calculateSteps([min, max]);
+  const { min, max, error } = calculateRange(legend);
+  const [step1, step2] = calculateSteps(min, max);
 
   return (
     <Grid container item direction='row' spacing={2} data-testid='proportion-legend'>
@@ -65,18 +83,28 @@ export default function LegendProportion({ legend }) {
         xs={6}
         spacing={1}
       >
-        <Grid item>
-          <Typography variant='overline'>Max: {max}</Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant='overline'>{step2}</Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant='overline'>{step1}</Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant='overline'>Min: {min}</Typography>
-        </Grid>
+        {error ? (
+          <Grid item className={classes.errorContainer}>
+            <Typography variant='overline'>
+              You need to specify valid numbers for the labels property
+            </Typography>
+          </Grid>
+        ) : (
+          <>
+            <Grid item>
+              <Typography variant='overline'>Max: {max}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant='overline'>{step2}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant='overline'>{step1}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant='overline'>Min: {min}</Typography>
+            </Grid>
+          </>
+        )}
       </Grid>
     </Grid>
   );
