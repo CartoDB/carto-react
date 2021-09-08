@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Not released
+- Fix LegendProportional when the values are not a number [#171](https://github.com/CartoDB/carto-react/pull/171)
 
 ## 1.1.0-beta.0 (2021-09-07)
 
