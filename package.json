@@ -20,7 +20,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/react-hooks": "^5.1.0",
     "@testing-library/user-event": "^12.8.1",
-    "echarts": "^5.0.0",
+    "echarts": "^5.2.0",
     "echarts-for-react": "^3.0.1",
     "husky": "^4.3.8",
     "lerna": "^4.0.0",
