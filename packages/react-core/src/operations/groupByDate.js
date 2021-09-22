@@ -1,3 +1,4 @@
+import { getMonday } from '../utils/dateUtils';
 import { aggregationFunctions } from './aggregation/values';
 import { GroupDateTypes } from './GroupDateTypes';
 
@@ -57,16 +58,4 @@ export function groupValuesByDateColumn(
   }
 
   return [];
-}
-
-// Aux
-
-// TODO: Somewhere else maybe?
-function getMonday(d) {
-  const day = d.getDay(),
-    diff = d.getDate() - day + (day ? 1 : -6); // adjust when day is sunday
-  d.setDate(diff);
-  // Ignore hours
-  d.setHours(0, 0, 0, 0);
-  return d;
 }

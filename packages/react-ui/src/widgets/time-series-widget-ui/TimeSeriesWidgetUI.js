@@ -13,6 +13,7 @@ import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesCont
 import { CHART_TYPES } from './utils/constants';
 import { PropTypes } from 'prop-types';
 import { GroupDateTypes } from '@carto/react-core';
+import { getMonday } from '@carto/react-core';
 
 const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.DAYS]: daysCurrentDateRange,
@@ -141,7 +142,6 @@ function TimeSeriesWidgetUIContent({
     isPaused,
     timeframe,
     timelinePosition,
-    onTimelineUpdate,
     setTimelinePosition,
     setTimeframe,
     stop,
@@ -149,9 +149,9 @@ function TimeSeriesWidgetUIContent({
     animationStep
   } = useTimeSeriesContext();
 
-  // If data changes, stop animation.
-  // useDidMountEffect is used to avoid
-  // being executed in the initial rendering
+  // If data changes, stop animation. useDidMountEffect is used to avoid
+  // being executed in the initial rendering because that cause
+  // resetting (stop) the state settled by the user using props.
   useDidMountEffect(
     () => (isPlaying || isPaused) && stop(),
     // Only executed when data changes
@@ -159,17 +159,7 @@ function TimeSeriesWidgetUIContent({
     [data]
   );
 
-  useEffect(() => {
-    if (isPlaying && !timeframe.length) {
-      const interval = setInterval(
-        () => setTimelinePosition((oldState) => Math.min(data.length - 1, oldState + 1)),
-        animationStep / speed
-      );
-      return () => clearInterval(interval);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isPlaying, animationStep, speed]);
-
+  // Running timeframe
   useEffect(() => {
     if (isPlaying && timeframe.length === 2) {
       const timeframeStep = TIMEFRAME_STEP_BY_STEP_SIZE[stepSize];
@@ -190,24 +180,38 @@ function TimeSeriesWidgetUIContent({
     }
   }, [data, isPlaying, timeframe, stepSize, setTimeframe, stop, speed]);
 
+  // Running timeline
   useEffect(() => {
-    if ((isPlaying || isPaused) && timelinePosition < data?.length && !timeframe.length) {
-      // TODO: Maybe it's neccesary to delay this until markline animation is done
-      onTimelineUpdate({ position: timelinePosition, data: data[timelinePosition] });
-
-      if (isPlaying && timelinePosition === data.length - 1) {
-        setTimeout(stop, animationStep * 2);
-      }
+    if (isPlaying && !timeframe.length) {
+      const interval = setInterval(() => {
+        const newTimelinePosition = Math.min(data.length - 1, timelinePosition + 1);
+        if (isPlaying && newTimelinePosition === data.length - 1) {
+          clearInterval(interval);
+          // "* 2" for waiting to show the last item
+          setTimeout(stop, animationStep * 2);
+        } else {
+          setTimelinePosition(newTimelinePosition);
+        }
+      }, animationStep / speed);
+      return () => clearInterval(interval);
     }
-    // onTimelineUpdate and stop cause infinite loop
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, timelinePosition, isPlaying, isPaused, animationStep]);
+  }, [
+    data,
+    isPlaying,
+    animationStep,
+    speed,
+    timeframe.length,
+    timelinePosition,
+    stop,
+    setTimelinePosition
+  ]);
 
   const currentDate = useMemo(() => {
     if (!data.length) {
       return '';
     }
 
+    // If timeframe is activated
     if (timeframe.length) {
       const timeframeFormatter = FORMAT_TIMEFRAME_BY_STEP_SIZE[stepSize];
       return timeframe.map((time) => timeframeFormatter(new Date(time))).join(' - ');
@@ -215,26 +219,18 @@ function TimeSeriesWidgetUIContent({
 
     const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
 
+    // If animation is active
     if ((isPlaying || isPaused) && timelinePosition && data[timelinePosition]) {
       const currentDate = new Date(data[timelinePosition].name);
       return formatter(currentDate);
     }
 
+    // If widget is reset, then first and last date
     const firstDate = new Date(data[0].name);
     const lastDate = new Date(data[data.length - 1].name);
 
     return `${formatter(firstDate)} - ${formatter(lastDate)}`;
   }, [data, isPlaying, isPaused, timelinePosition, timeframe, stepSize]);
-
-  const chart = (
-    <TimeSeriesChart
-      chartType={chartType}
-      data={data}
-      tooltip={tooltip}
-      tooltipFormatter={(params) => tooltipFormatter(params, stepSize, formatter)}
-      height={height}
-    />
-  );
 
   const handleOpenSpeedMenu = (e) => {
     if (e?.currentTarget) {
@@ -250,6 +246,16 @@ function TimeSeriesWidgetUIContent({
     setSpeed(newSpeed);
     handleCloseSpeedMenu();
   };
+
+  const chart = (
+    <TimeSeriesChart
+      chartType={chartType}
+      data={data}
+      tooltip={tooltip}
+      tooltipFormatter={(params) => tooltipFormatter(params, stepSize, formatter)}
+      height={height}
+    />
+  );
 
   return (
     <Box>
@@ -318,15 +324,6 @@ function TimeSeriesWidgetUIContent({
 // Auxiliary fns
 function daysCurrentDateRange(date) {
   return date.toLocaleDateString();
-}
-
-function getMonday(d) {
-  const day = d.getDay(),
-    diff = d.getDate() - day + (day ? 1 : -6); // adjust when day is sunday
-  d.setDate(diff);
-  // Ignore hours
-  d.setHours(0, 0, 0, 0);
-  return d;
 }
 
 function weeksCurrentDateRange(date) {
@@ -410,11 +407,12 @@ function ClockIcon() {
 
 // Special useEffect that only
 // works after the first rendering
-function useDidMountEffect(func, deps) {
+function useDidMountEffect(func, deps = []) {
   const didMount = useRef(false);
 
   useEffect(() => {
     if (didMount.current) func();
     else didMount.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 }

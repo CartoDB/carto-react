@@ -5,6 +5,8 @@ export {
   REQUEST_GET_MAX_URL_LENGTH
 } from './utils/requestsUtils';
 
+export { getMonday } from './utils/dateUtils';
+
 export { debounce } from './utils/debounce';
 export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';

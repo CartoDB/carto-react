@@ -17,12 +17,12 @@ export const TimeSeriesContext = createContext({
   onStop: () => {},
   timelinePosition: 0,
   setTimelinePosition: (value) => {},
-  onTimelineUpdate: () => {},
+  onTimelineUpdate: (value) => {},
   timeframe: [],
   setTimeframe: (value) => {},
-  onTimeframeUpdate: () => {},
+  onTimeframeUpdate: (value) => {},
   togglePlay: () => {},
-  stop: () => {},
+  stop: () => {}
 });
 
 export function useTimeSeriesContext() {
@@ -55,6 +55,12 @@ export function TimeSeriesProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_timeframe]);
 
+  useEffect(() => {
+    onTimelineUpdate(_timelinePosition);
+    // Only executed when timelinePosition changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [_timelinePosition]);
+
   const togglePlay = useCallback(() => {
     if (_isPlaying) {
       if (onPause) onPause();
@@ -65,7 +71,6 @@ export function TimeSeriesProvider({
       setIsPaused(false);
     }
     setIsPlaying((oldState) => !oldState);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_isPlaying, onPause, onPlay]);
 
   const stopWrapper = () => {
@@ -89,7 +94,7 @@ export function TimeSeriesProvider({
       setIsPlaying(isPlaying);
     }
     // Only when the state out of the context changes
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying]);
 
   useEffect(() => {
@@ -97,7 +102,7 @@ export function TimeSeriesProvider({
       setIsPaused(isPaused);
     }
     // Only when the state out of the context changes
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPaused]);
 
   useEffect(() => {
@@ -105,7 +110,7 @@ export function TimeSeriesProvider({
       setTimelinePosition(timelinePosition);
     }
     // Only when the state out of the context changes
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timelinePosition]);
 
   useEffect(() => {
@@ -113,7 +118,7 @@ export function TimeSeriesProvider({
       setTimeframe(timeframe);
     }
     // Only when the state out of the context changes
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...timeframe]);
 
   return (

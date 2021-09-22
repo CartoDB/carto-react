@@ -1,10 +1,7 @@
 import { useTheme } from '@material-ui/core';
 import React, { useMemo, useRef } from 'react';
-import detectTouchscreen from '../../utils/detectTouchScreen';
 import ReactEcharts from 'echarts-for-react';
 import useTimeSeriesInteractivity from '../hooks/useTimeSeriesInteractivity';
-
-const IS_TOUCH_SCREEN = detectTouchscreen();
 
 export default function TimeSeriesChart({
   chartType,
@@ -152,9 +149,6 @@ export default function TimeSeriesChart({
         lineStyle: {
           width: 3,
           color: theme.palette.secondary.main
-          // ...(!IS_TOUCH_SCREEN && theme && {
-          // color: theme.palette.secondary.dark
-          // })
         }
       }
     }),

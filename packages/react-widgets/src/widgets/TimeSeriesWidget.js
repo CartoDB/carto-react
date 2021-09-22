@@ -48,7 +48,7 @@ function TimeSeriesWidget({
   timeframe,
   onTimeframeUpdate,
   // Both
-  stepSize,
+  stepSize
 }) {
   const dispatch = useDispatch();
   const [timeSeriesData, setTimeSeriesData] = useState([]);
@@ -114,8 +114,8 @@ function TimeSeriesWidget({
     onError
   ]);
 
-  const handleTimelineUpdate = ({ data }) => {
-    const { name: moment } = data;
+  const handleTimelineUpdate = (timelinePosition) => {
+    const { name: moment } = timeSeriesData[timelinePosition];
     handleTimeframeUpdate([
       moment,
       moment + BUCKET_SIZE_RANGE_MAPPING[selectedStepSize] * 1000
@@ -261,7 +261,7 @@ TimeSeriesWidget.propTypes = {
   showControls: PropTypes.bool,
   chartType: PropTypes.oneOf(Object.values(TIME_SERIES_CHART_TYPES)),
   // Both
-  stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired,
+  stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired
 };
 
 TimeSeriesWidget.defaultProps = {
@@ -279,7 +279,7 @@ TimeSeriesWidget.defaultProps = {
   timelinePosition: 0,
   timeframe: [],
   showControls: true,
-  chartType: TIME_SERIES_CHART_TYPES.LINE,
+  chartType: TIME_SERIES_CHART_TYPES.LINE
 };
 
 export default TimeSeriesWidget;
