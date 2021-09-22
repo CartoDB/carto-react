@@ -87,7 +87,12 @@ function TimeSeriesWidgetUI({
 }
 
 TimeSeriesWidgetUI.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.number,
+      value: PropTypes.number
+    })
+  ).isRequired,
   stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired,
   chartType: PropTypes.oneOf(Object.values(CHART_TYPES)),
   duration: PropTypes.number,
