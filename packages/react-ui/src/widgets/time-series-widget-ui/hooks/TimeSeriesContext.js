@@ -56,10 +56,12 @@ export function TimeSeriesProvider({
   }, [_timeframe]);
 
   useEffect(() => {
-    onTimelineUpdate(_timelinePosition);
+    if (_isPlaying || _isPaused) {
+      onTimelineUpdate(_timelinePosition);
+    }
     // Only executed when timelinePosition changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_timelinePosition]);
+  }, [_timelinePosition, _isPlaying, _isPaused]);
 
   const togglePlay = useCallback(() => {
     if (_isPlaying) {

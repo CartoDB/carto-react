@@ -184,11 +184,11 @@ function TimeSeriesWidgetUIContent({
   useEffect(() => {
     if (isPlaying && !timeframe.length) {
       const interval = setInterval(() => {
-        const newTimelinePosition = Math.min(data.length - 1, timelinePosition + 1);
-        if (isPlaying && newTimelinePosition === data.length - 1) {
+        const newTimelinePosition = Math.min(data.length, timelinePosition + 1);
+        if (isPlaying && newTimelinePosition === data.length) {
           clearInterval(interval);
-          // "* 2" for waiting to show the last item
-          setTimeout(stop, animationStep * 2);
+          // To show the last item, wait an animationStep
+          setTimeout(stop, animationStep);
         } else {
           setTimelinePosition(newTimelinePosition);
         }
@@ -219,18 +219,20 @@ function TimeSeriesWidgetUIContent({
 
     const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
 
+    // If widget is reset, then first and last date
+    if (!isPlaying && !isPaused) {
+      const firstDate = new Date(data[0].name);
+      const lastDate = new Date(data[data.length - 1].name);
+
+      return `${formatter(firstDate)} - ${formatter(lastDate)}`;
+    }
+
     // If animation is active
-    if ((isPlaying || isPaused) && timelinePosition && data[timelinePosition]) {
+    if (timelinePosition >= 0 && data[timelinePosition]) {
       const currentDate = new Date(data[timelinePosition].name);
       return formatter(currentDate);
     }
-
-    // If widget is reset, then first and last date
-    const firstDate = new Date(data[0].name);
-    const lastDate = new Date(data[data.length - 1].name);
-
-    return `${formatter(firstDate)} - ${formatter(lastDate)}`;
-  }, [data, isPlaying, isPaused, timelinePosition, timeframe, stepSize]);
+  }, [data, stepSize, isPlaying, isPaused, timeframe, timelinePosition]);
 
   const handleOpenSpeedMenu = (e) => {
     if (e?.currentTarget) {

@@ -210,7 +210,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
                       show: false
                     }
                   },
-                  xAxis: data[timelinePosition]?.name,
+                  xAxis: data[Math.max(0, timelinePosition)]?.name,
                   lineStyle: {
                     type: 'solid',
                     color: theme.palette.primary.main,

@@ -9,7 +9,7 @@ import {
   _FilterTypes as FilterTypes,
   _getApplicableFilters as getApplicableFilters
 } from '@carto/react-core';
-import { capitalize, Menu, MenuItem, SvgIcon } from '@material-ui/core';
+import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/core';
 import { TIME_SERIES_CHART_TYPES } from '@carto/react-ui';
 import { PropTypes } from 'prop-types';
 
@@ -217,6 +217,11 @@ function TimeSeriesWidget({
         open={Boolean(anchorEl)}
         onClose={handleCloseBucketSizeMenu}
       >
+        <MenuItem disabled>
+          <Typography variant='caption' color='textSecondary'>
+            Step size
+          </Typography>
+        </MenuItem>
         {stepSizeOptions.map((stepSize) => (
           <MenuItem
             key={stepSize}
