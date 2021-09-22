@@ -25,11 +25,11 @@ const options = {
 };
 export default options;
 
-const Template = ({ label, color, checked, ...args }) => {
+const Template = ({ label, color = 'primary', checked = false, ...args }) => {
   return <FormControlLabel control={<Switch color={color} />} label={label} {...args} />;
 };
 
-const SwitchTemplate = ({ color, ...args }) => {
+const SwitchTemplate = ({ color = 'primary', ...args }) => {
   return (
     <Grid container spacing={2}>
       <Grid item container spacing={2}>

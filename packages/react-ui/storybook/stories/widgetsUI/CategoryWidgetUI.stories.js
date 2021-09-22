@@ -1,6 +1,5 @@
 import React from 'react';
 import CategoryWidgetUI from '../../../src/widgets/CategoryWidgetUI';
-import { buildReactPropsAsString } from '../../utils';
 
 const options = {
   title: 'Widgets UI/CategoryWidgetUI',
@@ -10,6 +9,7 @@ const options = {
       table: { disable: true }
     },
     onSelectedCategoriesChange: {
+      defaultValue: () => {},
       table: { disable: true }
     },
     order: {
@@ -38,15 +38,12 @@ const filteredData = data.slice(0, 4).map((cat, idx) => {
 export const Default = Template.bind({});
 const DefaultProps = { data };
 Default.args = DefaultProps;
-Default.parameters = buildReactPropsAsString(DefaultProps, 'CategoryWidgetUI');
 
 export const OnlyData = Template.bind({});
 OnlyData.args = DefaultProps;
-OnlyData.parameters = buildReactPropsAsString(DefaultProps, 'CategoryWidgetUI');
 
 export const WithFormatter = Template.bind({});
-WithFormatter.args = DefaultProps;
-WithFormatter.parameters = buildReactPropsAsString(DefaultProps, 'CategoryWidgetUI');
+WithFormatter.args = { ...DefaultProps, formatter: (value) => (value / 100) + '%'};
 
 export const WithCustomLabels = Template.bind({});
 const WithCustomLabelsProps = {
@@ -59,10 +56,6 @@ const WithCustomLabelsProps = {
   }
 };
 WithCustomLabels.args = WithCustomLabelsProps;
-WithCustomLabels.parameters = buildReactPropsAsString(
-  WithCustomLabelsProps,
-  'CategoryWidgetUI'
-);
 
 export const WithSelectedCategories = Template.bind({});
 const WithSelectedCategoriesProps = {
@@ -71,7 +64,3 @@ const WithSelectedCategoriesProps = {
   onSelectedCategoriesChange: (categories) => console.log(categories)
 };
 WithSelectedCategories.args = WithSelectedCategoriesProps;
-WithSelectedCategories.parameters = buildReactPropsAsString(
-  WithSelectedCategoriesProps,
-  'CategoryWidgetUI'
-);

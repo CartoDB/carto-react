@@ -22,17 +22,12 @@ const options = {
       control: {
         type: 'boolean'
       }
-    },
-    label: {
-      control: {
-        type: 'text'
-      }
     }
   }
 };
 export default options;
 
-const Template = ({ label, color, checked = false, ...args }) => {
+const Template = ({ color = 'primary', checked = false, ...args }) => {
   return (
     <FormControl component='fieldset'>
       <FormLabel component='legend'>Gender</FormLabel>
@@ -55,7 +50,7 @@ const Template = ({ label, color, checked = false, ...args }) => {
   );
 };
 
-const RadioTemplate = ({ color, ...args }) => {
+const RadioTemplate = ({ color = 'primary', ...args }) => {
   return (
     <Grid container spacing={2}>
       <Grid item container spacing={2}>
@@ -96,7 +91,7 @@ const RadioTemplate = ({ color, ...args }) => {
 };
 
 export const Playground = Template.bind({});
-Playground.args = { label: 'Text' };
+Playground.args = {};
 
 export const Primary = RadioTemplate.bind({});
 Primary.args = {};

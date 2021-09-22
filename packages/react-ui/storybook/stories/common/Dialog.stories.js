@@ -13,7 +13,15 @@ import {
 
 const options = {
   title: 'Common/Dialog',
-  component: Dialog
+  component: Dialog,
+  // Using default value (dynamic) cause an infinite loop
+  parameters: {
+    docs: {
+      source: {
+        type: 'code'
+      }
+    },
+  }
 };
 export default options;
 

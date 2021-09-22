@@ -4,7 +4,6 @@ import ColorizeIcon from '@material-ui/icons/Colorize';
 import MenuIcon from '@material-ui/icons/Menu';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 import WrapperWidgetUI from '.../../../src/widgets/WrapperWidgetUI';
-import { buildReactPropsAsString } from '../../utils';
 
 const options = {
   title: 'Widgets UI/WrapperWidgetUI',
@@ -32,26 +31,21 @@ const Template = (args) => (
 export const Default = Template.bind({});
 const DefaultProps = { title: 'Default wrapper' };
 Default.args = DefaultProps;
-Default.parameters = buildReactPropsAsString(DefaultProps, 'WrapperWidgetUI');
 
 export const OnlyTitle = Template.bind({});
 OnlyTitle.args = DefaultProps;
-OnlyTitle.parameters = buildReactPropsAsString(DefaultProps, 'WrapperWidgetUI');
 
 export const Expandable = Template.bind({});
 const ExpandableProps = { title: 'Expandable', expandable: true };
 Expandable.args = ExpandableProps;
-Expandable.parameters = buildReactPropsAsString(ExpandableProps, 'WrapperWidgetUI');
 
 export const NotExpandable = Template.bind({});
 const NotExpandableProps = { title: 'Not Expandable', expandable: false };
 NotExpandable.args = NotExpandableProps;
-NotExpandable.parameters = buildReactPropsAsString(NotExpandableProps, 'WrapperWidgetUI');
 
 export const Loading = Template.bind({});
 const LoadingProps = { title: 'Loading', loading: true };
 Loading.args = LoadingProps;
-Loading.parameters = buildReactPropsAsString(LoadingProps, 'WrapperWidgetUI');
 
 export const WithActions = Template.bind({});
 WithActions.args = {
@@ -78,7 +72,9 @@ WithActions.parameters = {
       action: () => alert('Action!')
     }
   ]}
-/>`
+>
+  <Typography>Your Content</Typography>
+</WrapperWidgetUI>`
     }
   }
 };
@@ -114,7 +110,9 @@ WithOptions.parameters = {
     { id: 'o8', name: 'Option 2', action: () => alert('Option 2!') },
     { id: 'o9', name: 'Option 2', action: () => alert('Option 2!') }
   ]}
-/>`
+>
+  <Typography>Your Content</Typography>
+</WrapperWidgetUI>`
     }
   }
 };
@@ -152,7 +150,9 @@ WithActionsAndOptions.parameters = {
     { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
     { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') }
   ]}
-/>`
+>
+  <Typography>Your Content</Typography>
+</WrapperWidgetUI>`
     }
   }
 };
@@ -176,7 +176,9 @@ WithOptionsAndCustomIcon.parameters = {
     { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') }
   ]}
   optionsIcon={<MenuIcon />}
-/>`
+>
+  <Typography>Your Content</Typography>
+</WrapperWidgetUI>`
     }
   }
 };
@@ -232,7 +234,9 @@ WithActionsTooltip.parameters = {
       }
     }
   ]}
-/>`
+>
+  <Typography>Your Content</Typography>
+</WrapperWidgetUI>`
     }
   }
 };

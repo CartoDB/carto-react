@@ -5,6 +5,14 @@ import { Layers, LocalOffer, Map, Place, Store } from '@material-ui/icons';
 const options = {
   title: 'Common/Tabs',
   component: Tabs,
+  // Using default value (dynamic) cause an infinite loop
+  parameters: {
+    docs: {
+      source: {
+        type: 'code'
+      }
+    }
+  },
   argTypes: {
     variant: {
       control: {

@@ -77,12 +77,10 @@ const DEFAULT_PROPS = {
 
 export const Default = Template.bind({});
 Default.args = DEFAULT_PROPS;
-Default.parameters = buildReactPropsAsString(DEFAULT_PROPS, 'CategoryWidget');
 
 export const WithFormatter = Template.bind({});
 const WithFormatterProps = { ...DEFAULT_PROPS, formatter: (v) => `$${v}` };
 WithFormatter.args = WithFormatterProps;
-WithFormatter.parameters = buildReactPropsAsString(WithFormatterProps, 'CategoryWidget');
 
 export const WithCustomLabels = Template.bind({});
 const WithCustomLabelsProps = {
@@ -96,7 +94,3 @@ const WithCustomLabelsProps = {
   }
 };
 WithCustomLabels.args = WithCustomLabelsProps;
-WithCustomLabels.parameters = buildReactPropsAsString(
-  WithCustomLabelsProps,
-  'CategoryWidget'
-);
