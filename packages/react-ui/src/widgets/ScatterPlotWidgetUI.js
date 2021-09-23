@@ -8,7 +8,13 @@ function __generateDefaultConfig(
   theme
 ) {
   return {
-    grid: {},
+    grid: {
+      top: 10,
+      left: 5,
+      bottom: 10,
+      right: 15,
+      containLabel: true,
+    },
     tooltip: {
       padding: [theme.spacing(0.5), theme.spacing(1)],
       textStyle: {
@@ -89,7 +95,7 @@ function ScatterPlotWidgetUI({
       series
     });
   }, [data, name, theme, xAxisFormatter, yAxisFormatter, tooltipFormatter]);
-  return <EchartsWrapper ref={chartInstance} option={options} lazyUpdate={true} />;
+  return <EchartsWrapper ref={chartInstance} option={options} lazyUpdate={true} style={{ height: 225 }} />;
 }
 
 ScatterPlotWidgetUI.defaultProps = {
