@@ -2574,7 +2574,7 @@
   dependencies:
     "@babel/runtime" "^7.4.4"
 
-"@material-ui/lab@^4.0.0-alpha.57":
+"@material-ui/lab@^4.0.0-alpha.60":
   version "4.0.0-alpha.60"
   resolved "https://registry.yarnpkg.com/@material-ui/lab/-/lab-4.0.0-alpha.60.tgz#5ad203aed5a8569b0f1753945a21a05efa2234d2"
   integrity sha512-fadlYsPJF+0fx2lRuyqAuJj7hAS1tLDdIEEdov5jlrpb5pp4b+mRDUqQTUxi4inRZHS1bEXpU8QWUhO6xX88aA==
@@ -11656,9 +11656,9 @@ listenercount@~1.0.1:
   integrity sha1-hMinKrWcRyUyFIDJdeZQg0LnCTc=
 
 listr2@^3.2.2:
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/listr2/-/listr2-3.12.1.tgz#75e515b86c66b60baf253542cc0dced6b60fedaf"
-  integrity sha512-oB1DlXlCzGPbvWhqYBZUQEPJKqsmebQWofXG6Mpbe3uIvoNl8mctBEojyF13ZyqwQ91clCWXpwsWp+t98K4FOQ==
+  version "3.12.2"
+  resolved "https://registry.yarnpkg.com/listr2/-/listr2-3.12.2.tgz#2d55cc627111603ad4768a9e87c9c7bb9b49997e"
+  integrity sha512-64xC2CJ/As/xgVI3wbhlPWVPx0wfTqbUAkpb7bjDi0thSWMqrf07UFhrfsGoo8YSXmF049Rp9C0cjLC8rZxK9A==
   dependencies:
     cli-truncate "^2.1.0"
     colorette "^1.4.0"
