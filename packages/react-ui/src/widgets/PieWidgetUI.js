@@ -10,7 +10,7 @@ import {
   setColor
 } from './utils/chartUtils';
 
-function __generateDefaultConfig({ tooltipFormatter, formatter, colors }, theme) {
+function __generateDefaultConfig({ tooltipFormatter, formatter }, theme) {
   return {
     grid: {
       left: theme.spacing(0),
@@ -18,7 +18,6 @@ function __generateDefaultConfig({ tooltipFormatter, formatter, colors }, theme)
       right: theme.spacing(0),
       bottom: theme.spacing(0)
     },
-    color: colors || Object.values(theme.palette.qualitative.bold),
     tooltip: {
       trigger: 'item',
       showDelay: 1000,
@@ -77,9 +76,7 @@ function __generateSerie({ name, data, theme, color, selectedCategories }) {
     {
       type: 'pie',
       name,
-      data: data.map((item, index) => {
-        item.color = color[index];
-
+      data: data.map((item) => {
         const disabled =
           selectedCategories?.length && !selectedCategories.includes(item.name);
 
@@ -159,14 +156,34 @@ function PieWidgetUI({
     echart.setOption(option, true);
   };
 
+  const [colorByCategory, setColorByCategory] = useState({});
+
+  // Reset color by category when colors changes
+  // Spread colors array to avoid reference problems
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => setColorByCategory({}), [...(colors || [])]);
+
+  const dataWithColor = useMemo(() => {
+    return (data || []).map((item) => {
+      const { name } = item;
+      const colorUsed = colorByCategory[name];
+      if (colorUsed) {
+        item.color = colorUsed;
+      } else {
+        const colorsToUse = colors || theme.palette.qualitative.bold;
+        colorByCategory[name] =
+          colorsToUse[Object.keys(colorByCategory).length] || '#fff';
+        setColorByCategory({ ...colorByCategory });
+      }
+      return item;
+    });
+  }, [data, colorByCategory, colors, theme.palette.qualitative.bold]);
+
   useEffect(() => {
-    const config = __generateDefaultConfig(
-      { formatter, tooltipFormatter, colors },
-      theme
-    );
+    const config = __generateDefaultConfig({ formatter, tooltipFormatter }, theme);
     const series = __generateSerie({
       name,
-      data: data || [],
+      data: dataWithColor,
       theme,
       color: config.color,
       selectedCategories
@@ -176,7 +193,7 @@ function PieWidgetUI({
       ...config,
       series
     });
-  }, [data, name, theme, tooltipFormatter, formatter, selectedCategories, colors]);
+  }, [dataWithColor, name, theme, tooltipFormatter, formatter, selectedCategories]);
 
   useEffect(() => {
     const label = elementHover || __getDefaultLabel(options.series[0]?.data);
