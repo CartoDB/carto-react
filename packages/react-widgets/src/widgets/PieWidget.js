@@ -36,6 +36,7 @@ function PieWidget({
   operation,
   formatter,
   tooltipFormatter,
+  colors,
   onError,
   wrapperProps
 }) {
@@ -134,6 +135,7 @@ function PieWidget({
         formatter={formatter}
         height={height}
         tooltipFormatter={tooltipFormatter}
+        colors={colors}
         isLoading={widgetsLoadingState[id]}
         selectedCategories={selectedCategories}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
@@ -152,6 +154,7 @@ PieWidget.propTypes = {
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
+  colors: PropTypes.array,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object
 };
