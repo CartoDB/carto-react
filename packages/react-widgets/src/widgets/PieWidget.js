@@ -22,6 +22,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.formatter] - Function to format the value that appears in the tooltip.
  * @param  {Function} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
+ * @param  {object} props.labels - Object that maps category name with a chosen label
  * @param  {string} props.height - Height of the chart
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
@@ -36,6 +37,7 @@ function PieWidget({
   operation,
   formatter,
   tooltipFormatter,
+  labels,
   onError,
   wrapperProps
 }) {
@@ -134,6 +136,7 @@ function PieWidget({
         formatter={formatter}
         height={height}
         tooltipFormatter={tooltipFormatter}
+        labels={labels}
         isLoading={widgetsLoadingState[id]}
         selectedCategories={selectedCategories}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
@@ -152,6 +155,7 @@ PieWidget.propTypes = {
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
+  labels: PropTypes.object,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object
 };

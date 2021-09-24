@@ -72,12 +72,16 @@ function __generateDefaultConfig({ tooltipFormatter, formatter, colors }, theme)
   };
 }
 
-function __generateSerie({ name, data, theme, color, selectedCategories }) {
+function __generateSerie({ name, data, theme, color, selectedCategories, labels }) {
   return [
     {
       type: 'pie',
       name,
       data: data.map((item, index) => {
+        if (labels?.[item.name]) {
+          item.name = labels[item.name];
+        }
+
         item.color = color[index];
 
         const disabled =
@@ -137,6 +141,7 @@ function PieWidgetUI({
   formatter,
   tooltipFormatter,
   height,
+  labels,
   colors,
   selectedCategories,
   onSelectedCategoriesChange
@@ -169,14 +174,24 @@ function PieWidgetUI({
       data: data || [],
       theme,
       color: config.color,
-      selectedCategories
+      selectedCategories,
+      labels
     });
 
     setOptions({
       ...config,
       series
     });
-  }, [data, name, theme, tooltipFormatter, formatter, selectedCategories, colors]);
+  }, [
+    data,
+    name,
+    theme,
+    tooltipFormatter,
+    formatter,
+    selectedCategories,
+    labels,
+    colors
+  ]);
 
   useEffect(() => {
     const label = elementHover || __getDefaultLabel(options.series[0]?.data);
@@ -273,6 +288,7 @@ PieWidgetUI.defaultProps = {
             )} ${valueHtml} (${params.percent}%)</p>`;
   },
   colors: null,
+  labels: {},
   height: '260px',
   selectedCategories: []
 };
@@ -285,6 +301,7 @@ PieWidgetUI.propTypes = {
       value: PropTypes.number
     })
   ),
+  labels: PropTypes.object,
   colors: PropTypes.array,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
