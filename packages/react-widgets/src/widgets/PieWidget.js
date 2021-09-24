@@ -22,7 +22,10 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.formatter] - Function to format the value that appears in the tooltip.
  * @param  {Function} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
- * @param  {string} props.height - Height of the chart
+ * @param  {array} props.colors - Array of hex colors used in the chart.
+ * @param  {array} props.selectedCategories - Names of the selected categories. It may be used to define a initial state or to manage state outside the component.
+ * @param  {Function} [props.onSelectedCategoriesChange] - Event raised when a category is (un)selected. The current selected categories are passed as argument.
+ * @param  {string} props.height - Height of the chart.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
@@ -37,11 +40,21 @@ function PieWidget({
   formatter,
   tooltipFormatter,
   colors,
+  selectedCategories,
+  onSelectedCategoriesChange,
   onError,
   wrapperProps
 }) {
   const [categoryData, setCategoryData] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [_selectedCategories, setSelectedCategories] = useState([]);
+
+  useEffect(() => {
+    if (selectedCategories !== _selectedCategories) {
+      setSelectedCategories(selectedCategories);
+    }
+    // Only executed when the state is managed out of the component
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCategories]);
 
   const dispatch = useDispatch();
   const source = useSelector((state) => selectSourceById(state, dataSource) || {});
@@ -137,8 +150,10 @@ function PieWidget({
         tooltipFormatter={tooltipFormatter}
         colors={colors}
         isLoading={widgetsLoadingState[id]}
-        selectedCategories={selectedCategories}
-        onSelectedCategoriesChange={handleSelectedCategoriesChange}
+        selectedCategories={_selectedCategories}
+        onSelectedCategoriesChange={
+          onSelectedCategoriesChange || handleSelectedCategoriesChange
+        }
       />
     </WrapperWidgetUI>
   );
@@ -155,6 +170,8 @@ PieWidget.propTypes = {
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   colors: PropTypes.array,
+  selectedCategories: PropTypes.array,
+  onSelectedCategoriesChange: PropTypes.func,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object
 };
