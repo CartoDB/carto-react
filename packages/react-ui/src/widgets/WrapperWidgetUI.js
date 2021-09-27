@@ -43,21 +43,22 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: theme.spacing(0.25)
   },
-  header: {
+  header: ({ expanded }) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    height: '56px',
+    ...(expanded ? { minHeight: '56px' } : { height: 56 }),
     padding: theme.spacing(1.25, 1.25, 1.25, 3)
-  },
+  }),
   optionsMenu: {
     marginTop: theme.spacing(6),
     maxHeight: theme.spacing(21),
     minWidth: theme.spacing(16)
   },
   button: {
+    flex: 1,
     padding: 0,
     cursor: (props) => (props.expandable ? 'pointer' : 'default'),
     '& .MuiButton-label': {
@@ -71,6 +72,13 @@ const useStyles = makeStyles((theme) => ({
       background: 'none'
     }
   },
+  buttonText: ({ expanded }) => ({
+    ...(!expanded && {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    })
+  }),
   iconToggle: {
     display: 'flex',
     alignItems: 'center',
@@ -89,9 +97,9 @@ const useStyles = makeStyles((theme) => ({
 
 function WrapperWidgetUI(props) {
   const wrapper = createRef();
-  const classes = useStyles(props);
   const [expanded, setExpanded] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
+  const classes = useStyles({ ...props, expanded });
   const open = Boolean(anchorEl);
   const { options = [], actions = [], optionsIcon = <MoreVert /> } = props;
 
@@ -130,6 +138,12 @@ function WrapperWidgetUI(props) {
     );
   };
 
+  const Title = (
+    <Typography className={classes.buttonText} align='left' variant='subtitle1'>
+      {props.title}
+    </Typography>
+  );
+
   return (
     <Box component='section' aria-label={props.title} className={classes.root}>
       {props.isLoading ? <LinearProgress className={classes.loading} /> : null}
@@ -149,7 +163,13 @@ function WrapperWidgetUI(props) {
           }
           onClick={handleExpandClick}
         >
-          <Typography variant='subtitle1'>{props.title}</Typography>
+          {expanded ? (
+            Title
+          ) : (
+            <Tooltip title={props.title} placement='top' arrow>
+              {Title}
+            </Tooltip>
+          )}
         </Button>
 
         <Grid item style={{ display: 'flex' }}>
