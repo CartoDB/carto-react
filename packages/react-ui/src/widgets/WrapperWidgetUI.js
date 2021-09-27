@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     flex: 1,
     padding: 0,
+    alignItems: 'flex-start',
     cursor: (props) => (props.expandable ? 'pointer' : 'default'),
     '& .MuiButton-label': {
       ...theme.typography.body1,
