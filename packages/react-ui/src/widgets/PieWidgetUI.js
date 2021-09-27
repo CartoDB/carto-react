@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useEffect, useState } from 'react';
+import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { useTheme } from '@material-ui/core';
@@ -147,7 +147,7 @@ function PieWidgetUI({
     series: []
   });
   const [elementHover, setElementHover] = useState();
-  let defaultLabel = useMemo(() => ({}), []);
+  let defaultLabel = useRef({});
 
   const updateLabel = (params) => {
     const echart = chartInstance.current.getEchartsInstance();
@@ -180,15 +180,15 @@ function PieWidgetUI({
 
   useEffect(() => {
     const label = elementHover || __getDefaultLabel(options.series[0]?.data);
+    defaultLabel.current = label;
     // eslint-disable-next-line
-    defaultLabel = label;
   }, [options]);
 
   useEffect(() => {
     const echart = chartInstance.current.getEchartsInstance();
     const { option, serie } = getChartSerie(echart, 0);
     serie?.data.forEach((category) => {
-      if (category.name === defaultLabel.name) {
+      if (category.name === defaultLabel.current.name) {
         category.label = { show: true };
         category.emphasis = { label: { show: true } };
       } else {
@@ -200,7 +200,7 @@ function PieWidgetUI({
     echart.setOption(option, true);
   }, [options, defaultLabel]);
 
-  const clickEvent = (params) => {
+  const clickEvent = useCallback((params) => {
     if (onSelectedCategoriesChange) {
       const echart = chartInstance.current.getEchartsInstance();
       const { option, serie } = getChartSerie(echart, params.seriesIndex);
@@ -211,7 +211,7 @@ function PieWidgetUI({
 
       const activeCategories = serie.data.filter((category) => !category.disabled);
 
-      defaultLabel = __getDefaultLabel(activeCategories);
+      defaultLabel.current = __getDefaultLabel(activeCategories);
 
       onSelectedCategoriesChange(
         activeCategories.length === serie.data.length
@@ -219,28 +219,34 @@ function PieWidgetUI({
           : activeCategories.map((category) => category.name)
       );
     }
-  };
+  }, [onSelectedCategoriesChange, theme]);
 
-  const mouseoverEvent = (params) => {
+  const mouseoverEvent = useCallback((params) => {
     setElementHover(params.data);
     updateLabel(params);
-  };
+  }, []);
 
-  const mouseoutEvent = (params) => {
-    setElementHover();
+  const mouseoutEvent = useCallback(
+    (params) => {
+      setElementHover();
 
-    const data = {
-      ...params,
-      data: defaultLabel
-    };
-    updateLabel(data);
-  };
+      const data = {
+        ...params,
+        data: defaultLabel
+      };
+      updateLabel(data);
+    },
+    [defaultLabel]
+  );
 
-  const onEvents = {
-    click: clickEvent,
-    mouseover: mouseoverEvent,
-    mouseout: mouseoutEvent
-  };
+  const onEvents = useMemo(
+    () => ({
+      click: clickEvent,
+      mouseover: mouseoverEvent,
+      mouseout: mouseoutEvent
+    }),
+    [clickEvent, mouseoverEvent, mouseoutEvent]
+  );
 
   return (
     <EchartsWrapper
