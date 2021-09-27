@@ -23,6 +23,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {Function} [props.xAxisformatter] - Function to format X axis values.
  * @param  {Function} [props.formatter] - Function to format Y axis values.
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
+ * @param  {boolean} [props.animation=true] - It indicates if values' change animation is enabled
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
@@ -38,6 +39,7 @@ function HistogramWidget(props) {
     dataAxis,
     formatter,
     tooltip,
+    animation,
     onError,
     wrapperProps
   } = props;
@@ -144,6 +146,7 @@ function HistogramWidget(props) {
         tooltipFormatter={tooltipFormatter}
         xAxisFormatter={xAxisFormatter}
         yAxisFormatter={formatter}
+        animation={animation}
       />
     </WrapperWidgetUI>
   );
@@ -158,6 +161,7 @@ HistogramWidget.propTypes = {
   xAxisFormatter: PropTypes.func,
   formatter: PropTypes.func,
   tooltip: PropTypes.bool,
+  animation: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object
@@ -165,6 +169,7 @@ HistogramWidget.propTypes = {
 
 HistogramWidget.defaultProps = {
   tooltip: true,
+  animation: true,
   wrapperProps: {}
 };
 

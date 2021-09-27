@@ -135,7 +135,8 @@ function CategoryWidgetUI(props) {
     isLoading,
     maxItems,
     order,
-    selectedCategories
+    selectedCategories,
+    animation
   } = props;
   const [sortedData, setSortedData] = useState([]);
   const [maxValue, setMaxValue] = useState(1);
@@ -336,16 +337,20 @@ function CategoryWidgetUI(props) {
   }, [prevAnimValues]);
 
   useEffect(() => {
-    animateValues({
-      start: referencedPrevAnimValues.current || [],
-      end: sortedData,
-      duration: 500,
-      drawFrame: (val) => setAnimValues(val),
-      requestRef
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    return () => cancelAnimationFrame(requestRef.current);
-  }, [sortedData]);
+    if (animation) {
+      animateValues({
+        start: referencedPrevAnimValues.current || [],
+        end: sortedData,
+        duration: 500,
+        drawFrame: (val) => setAnimValues(val),
+        requestRef
+      });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      return () => cancelAnimationFrame(requestRef.current);
+    } else {
+      setAnimValues(sortedData);
+    }
+  }, [animation, sortedData]);
 
   const getCategoriesCount = useCallback(() => {
     const blocked = blockedCategories.length;

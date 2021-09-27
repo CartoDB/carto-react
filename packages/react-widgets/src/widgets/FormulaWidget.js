@@ -16,6 +16,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {string} props.column - Name of the data source's column to get the data from.
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.formatter] - Function to format each value returned.
+ * @param  {boolean} [props.animation=true] - It indicates if values' change animation is enabled
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
@@ -27,6 +28,7 @@ function FormulaWidget(props) {
     column,
     operation,
     formatter,
+    animation,
     onError,
     wrapperProps
   } = props;
@@ -73,7 +75,12 @@ function FormulaWidget(props) {
 
   return (
     <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
-      <FormulaWidgetUI data={formulaData} formatter={formatter} unitBefore={true} />
+      <FormulaWidgetUI
+        data={formulaData}
+        formatter={formatter}
+        unitBefore={true}
+        animation={animation}
+      />
     </WrapperWidgetUI>
   );
 }
@@ -85,11 +92,13 @@ FormulaWidget.propTypes = {
   column: PropTypes.string.isRequired,
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
+  animation: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object
 };
 
 FormulaWidget.defaultProps = {
+  animation: true,
   wrapperProps: {}
 };
 
