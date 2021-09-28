@@ -30,15 +30,19 @@ function FormulaWidget(props) {
     onError,
     wrapperProps
   } = props;
+  const isSourceReady = useSelector(
+    (state) => state.carto.viewportFeaturesReady[dataSource]
+  );
   const [formulaData, setFormulaData] = useState(null);
   const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
   const { data, filters } = source;
   const [isLoading, setIsLoading] = useWidgetLoadingState(id);
 
   useEffect(() => {
-    if (data && isLoading) {
+    setIsLoading(true);
+
+    if (isSourceReady) {
       getFormula({
         data,
         operation,
@@ -65,10 +69,10 @@ function FormulaWidget(props) {
     column,
     filters,
     dataSource,
-    viewportFeaturesReady,
     setIsLoading,
     isLoading,
-    onError
+    onError,
+    isSourceReady
   ]);
 
   return (

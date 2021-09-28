@@ -38,17 +38,19 @@ function CategoryWidget(props) {
     onError,
     wrapperProps
   } = props;
+  const isSourceReady = useSelector(
+    (state) => state.carto.viewportFeaturesReady[dataSource]
+  );
   const [categoryData, setCategoryData] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const dispatch = useDispatch();
   const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
   const [isLoading, setIsLoading] = useWidgetLoadingState(id);
   const { data, filters } = source;
 
   useEffect(() => {
-    if (data && isLoading) {
+    if (isSourceReady) {
       const _filters = getApplicableFilters(filters, id);
 
       getCategories({
@@ -80,10 +82,10 @@ function CategoryWidget(props) {
     operation,
     filters,
     dataSource,
-    viewportFeaturesReady,
     setIsLoading,
     isLoading,
-    onError
+    onError,
+    isSourceReady
   ]);
 
   const handleSelectedCategoriesChange = useCallback(

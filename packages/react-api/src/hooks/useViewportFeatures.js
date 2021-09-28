@@ -26,6 +26,13 @@ export default function useViewportFeatures(
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const computeFeaturesTileset = useCallback(
     debounce(async ({ tiles, viewport, uniqueIdProperty, sourceId }) => {
+      dispatch(
+        setViewportFeaturesReady({
+          sourceId,
+          ready: false
+        })
+      );
+
       const tilesCleaned = tiles.map(({ data, isVisible, bbox }) => ({
         data,
         isVisible,

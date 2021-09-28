@@ -37,13 +37,15 @@ function ScatterPlotWidget(props) {
 
   const [scatterData, setScatterData] = useState([]);
   const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
   const [isLoading, setIsLoading] = useWidgetLoadingState(id);
   const { data, filters } = source;
+  const isSourceReady = useSelector(
+    (state) => state.carto.viewportFeaturesReady[dataSource]
+  );
 
   useEffect(() => {
-    if (data && isLoading) {
+    if (isSourceReady) {
       const _filters = getApplicableFilters(filters, id);
 
       getScatter({
@@ -66,7 +68,7 @@ function ScatterPlotWidget(props) {
     } else {
       setScatterData([]);
     }
-  }, [id, data, setIsLoading, filters, viewportFeaturesReady, setIsLoading, isLoading]);
+  }, [id, data, setIsLoading, filters, isSourceReady, setIsLoading, isLoading]);
 
   return (
     <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>

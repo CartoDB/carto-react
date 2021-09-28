@@ -44,15 +44,17 @@ function PieWidget({
 
   const dispatch = useDispatch();
   const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
 
   const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
   const [isLoading, setIsLoading] = useWidgetLoadingState(id);
   const { data, credentials, type } = source;
+  const isSourceReady = useSelector(
+    (state) => state.carto.viewportFeaturesReady[dataSource]
+  );
 
   useEffect(() => {
     const abortController = new AbortController();
-    if (data && credentials && isLoading) {
+    if (isSourceReady) {
       const _filters = getApplicableFilters(source.filters, id);
 
       getCategories({
@@ -77,8 +79,6 @@ function PieWidget({
           setIsLoading(false);
           if (onError) onError(error);
         });
-    } else {
-      setCategoryData([]);
     }
 
     return function cleanup() {
@@ -91,14 +91,14 @@ function PieWidget({
     setIsLoading,
     source.filters,
     type,
-    viewportFeaturesReady,
     column,
     operation,
     operationColumn,
     dispatch,
     id,
     onError,
-    isLoading
+    isLoading,
+    isSourceReady
   ]);
 
   const handleSelectedCategoriesChange = useCallback(
