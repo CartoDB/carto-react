@@ -10,12 +10,6 @@ jest.mock('@carto/react-workers', () => ({
 }));
 
 describe('getFormula', () => {
-  test('should throw with array data', async () => {
-    await expect(getFormula({ data: [] })).rejects.toThrow(
-      'Array is not a valid type to get formula'
-    );
-  });
-
   describe('should correctly handle viewport features', () => {
     const formulaParams = {
       operation: AggregationTypes.COUNT,
