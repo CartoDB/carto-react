@@ -9,7 +9,6 @@ import {
   AggregationTypes
 } from '@carto/react-core';
 import { getCategories } from '../models';
-import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**
  * Renders a <CategoryWidget /> component
@@ -38,23 +37,24 @@ function CategoryWidget(props) {
     onError,
     wrapperProps
   } = props;
+  const dispatch = useDispatch();
+
   const isSourceReady = useSelector(
     (state) => state.carto.viewportFeaturesReady[dataSource]
   );
+  const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
+
   const [categoryData, setCategoryData] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const dispatch = useDispatch();
-  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
-  const { data, filters } = source;
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
+
     if (isSourceReady) {
       const _filters = getApplicableFilters(filters, id);
 
       getCategories({
-        data,
         column,
         operationColumn,
         operation,
@@ -71,19 +71,15 @@ function CategoryWidget(props) {
           setIsLoading(false);
           if (onError) onError(error);
         });
-    } else {
-      setCategoryData(null);
     }
   }, [
     id,
-    data,
     column,
     operationColumn,
     operation,
     filters,
     dataSource,
     setIsLoading,
-    isLoading,
     onError,
     isSourceReady
   ]);
@@ -115,12 +111,12 @@ function CategoryWidget(props) {
   );
 
   return (
-    <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
+    <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <CategoryWidgetUI
         data={categoryData}
         formatter={formatter}
         labels={labels}
-        isLoading={widgetsLoadingState[id]}
+        isLoading={isLoading}
         selectedCategories={selectedCategories}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
       />

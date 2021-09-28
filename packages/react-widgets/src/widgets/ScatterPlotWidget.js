@@ -5,7 +5,6 @@ import { selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, ScatterPlotWidgetUI } from '@carto/react-ui';
 import { _getApplicableFilters as getApplicableFilters } from '@carto/react-core';
 import { getScatter } from '../models';
-import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**
  * Renders a <ScatterPlotWidget /> component
@@ -36,20 +35,20 @@ function ScatterPlotWidget(props) {
   } = props;
 
   const [scatterData, setScatterData] = useState([]);
-  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
-  const { data, filters } = source;
+  const [isLoading, setIsLoading] = useState(true);
+
   const isSourceReady = useSelector(
     (state) => state.carto.viewportFeaturesReady[dataSource]
   );
+  const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
 
   useEffect(() => {
+    setIsLoading(true);
+
     if (isSourceReady) {
       const _filters = getApplicableFilters(filters, id);
 
       getScatter({
-        data,
         xAxisColumn,
         yAxisColumn,
         filters: _filters,
@@ -68,10 +67,19 @@ function ScatterPlotWidget(props) {
     } else {
       setScatterData([]);
     }
-  }, [id, data, setIsLoading, filters, isSourceReady, setIsLoading, isLoading]);
+  }, [
+    id,
+    xAxisColumn,
+    yAxisColumn,
+    dataSource,
+    filters,
+    setIsLoading,
+    isSourceReady,
+    onError
+  ]);
 
   return (
-    <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
+    <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <ScatterPlotWidgetUI
         data={scatterData}
         tooltipFormatter={tooltipFormatter}

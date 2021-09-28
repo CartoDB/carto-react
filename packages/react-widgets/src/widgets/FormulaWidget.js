@@ -5,7 +5,6 @@ import { selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
-import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**
  * Renders a <FormulaWidget /> component
@@ -33,18 +32,16 @@ function FormulaWidget(props) {
   const isSourceReady = useSelector(
     (state) => state.carto.viewportFeaturesReady[dataSource]
   );
+  const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
+
   const [formulaData, setFormulaData] = useState(null);
-  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const { data, filters } = source;
-  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
 
     if (isSourceReady) {
       getFormula({
-        data,
         operation,
         column,
         filters,
@@ -64,19 +61,17 @@ function FormulaWidget(props) {
       setFormulaData(null);
     }
   }, [
-    data,
     operation,
     column,
     filters,
     dataSource,
     setIsLoading,
-    isLoading,
     onError,
     isSourceReady
   ]);
 
   return (
-    <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
+    <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <FormulaWidgetUI data={formulaData} formatter={formatter} unitBefore={true} />
     </WrapperWidgetUI>
   );

@@ -9,7 +9,6 @@ import {
   AggregationTypes
 } from '@carto/react-core';
 import { getHistogram } from '../models';
-import useWidgetLoadingState from './useWidgetLoadingState';
 
 /**
  * Renders a <HistogramWidget /> component
@@ -41,13 +40,13 @@ function HistogramWidget(props) {
     onError,
     wrapperProps
   } = props;
+  const dispatch = useDispatch();
+
   const [histogramData, setHistogramData] = useState([]);
   const [selectedBars, setSelectedBars] = useState([]);
-  const dispatch = useDispatch();
-  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
-  const { data, filters } = source;
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
   const isSourceReady = useSelector(
     (state) => state.carto.viewportFeaturesReady[dataSource]
   );
@@ -74,7 +73,6 @@ function HistogramWidget(props) {
       const _filters = getApplicableFilters(filters, id);
 
       getHistogram({
-        data,
         column,
         operation,
         ticks,
@@ -94,14 +92,12 @@ function HistogramWidget(props) {
     }
   }, [
     id,
-    data,
     column,
     operation,
     ticks,
-    filters,
     dataSource,
+    filters,
     setIsLoading,
-    isLoading,
     onError,
     isSourceReady
   ]);
@@ -136,7 +132,7 @@ function HistogramWidget(props) {
   );
 
   return (
-    <WrapperWidgetUI title={title} {...wrapperProps} isLoading={widgetsLoadingState[id]}>
+    <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
       <HistogramWidgetUI
         data={histogramData}
         dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}
