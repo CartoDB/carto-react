@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTimeSeries } from '../models';
 import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
-import { NoDataAlert, TimeSeriesWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { NoDataAlert, TimeSeriesWidgetUI, WrapperWidgetUI, TIME_SERIES_CHART_TYPES } from '@carto/react-ui';
 import {
   GroupDateTypes,
   AggregationTypes,
@@ -10,7 +10,6 @@ import {
   _getApplicableFilters as getApplicableFilters
 } from '@carto/react-core';
 import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/core';
-import { TIME_SERIES_CHART_TYPES } from '@carto/react-ui';
 import { PropTypes } from 'prop-types';
 
 const BUCKET_SIZE_RANGE_MAPPING = {
@@ -114,31 +113,37 @@ function TimeSeriesWidget({
     onError
   ]);
 
-  const handleTimelineUpdate = (timelinePosition) => {
-    const { name: moment } = timeSeriesData[timelinePosition];
-    handleTimeframeUpdate([
-      moment,
-      moment + BUCKET_SIZE_RANGE_MAPPING[selectedStepSize] * 1000
-    ]);
+  const handleTimeframeUpdate = useCallback(
+    (timeframe) => {
+      dispatch(
+        addFilter({
+          id: dataSource,
+          column,
+          type: FilterTypes.BETWEEN,
+          values: [timeframe],
+          owner: id
+        })
+      );
 
-    if (onTimelineUpdate) onTimelineUpdate();
-  };
+      if (onTimeframeUpdate) onTimeframeUpdate();
+    },
+    [column, dataSource, dispatch, id, onTimeframeUpdate]
+  );
 
-  const handleTimeframeUpdate = (timeframe) => {
-    dispatch(
-      addFilter({
-        id: dataSource,
-        column,
-        type: FilterTypes.BETWEEN,
-        values: [timeframe],
-        owner: id
-      })
-    );
+  const handleTimelineUpdate = useCallback(
+    (timelinePosition) => {
+      const { name: moment } = timeSeriesData[timelinePosition];
+      handleTimeframeUpdate([
+        moment,
+        moment + BUCKET_SIZE_RANGE_MAPPING[selectedStepSize] * 1000
+      ]);
 
-    if (onTimeframeUpdate) onTimeframeUpdate();
-  };
+      if (onTimelineUpdate) onTimelineUpdate();
+    },
+    [handleTimeframeUpdate, onTimelineUpdate, selectedStepSize, timeSeriesData]
+  );
 
-  const handleStop = () => {
+  const handleStop = useCallback(() => {
     dispatch(
       removeFilter({
         id: dataSource,
@@ -147,7 +152,7 @@ function TimeSeriesWidget({
     );
 
     if (onStop) onStop();
-  };
+  }, [column, dataSource, dispatch, onStop]);
 
   const [anchorEl, setAnchorEl] = useState(null);
 

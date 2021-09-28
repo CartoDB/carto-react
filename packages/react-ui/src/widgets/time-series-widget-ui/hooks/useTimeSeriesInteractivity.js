@@ -2,18 +2,13 @@ import { useTheme } from '@material-ui/core';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTimeSeriesContext } from './TimeSeriesContext';
 
-let mouseDownEvent = () => null,
-  mouseMoveEvent = () => null,
-  mouseUpEvent = () => null,
-  clickEvent = () => null,
-  mouseOutEvent = () => null,
-  initialTimeframe = null;
+const events = {};
+let initialTimeframe = null;
 
 export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
   const theme = useTheme();
   const {
     isPlaying,
-    setIsPlaying,
     isPaused,
     setIsPaused,
     timelinePosition,
@@ -49,144 +44,147 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
     [data, echartsInstance, setTimelinePosition]
   );
 
+  // Echarts events
   useEffect(() => {
-    if (echartsInstance) {
-      zr.off('mousedown', mouseDownEvent);
-      zr.off('mousemove', mouseMoveEvent);
-      zr.off('mouseup', mouseUpEvent);
-      zr.off('click', clickEvent);
+    function clickEvent(params) {
+      if (!timeframe.length && params.target?.type !== 'ec-line') {
+        updateTimelineByCoordinate(params);
 
-      clickEvent = (params) => {
-        // console.log(echartsInstance, { ...echartsInstance.getModel() });
-        if (!timeframe.length && params.target?.type !== 'ec-line') {
-          updateTimelineByCoordinate(params);
-
-          // If stopped, pause to show the markline.
-          if (!isPaused && !isPlaying) {
-            setIsPaused(true);
-          }
+        // If stopped, pause to show the markline.
+        if (!isPaused && !isPlaying) {
+          setIsPaused(true);
         }
+      }
 
-        if (timeframe.length === 2) {
-          setTimeframe([]);
-          stop();
-        }
-      };
-
-      mouseDownEvent = (params) => {
-        // console.log(echartsInstance, { ...echartsInstance.getModel() });
-
-        if (params.target?.type === 'ec-line') {
-          setIsMarkLineSelected(true);
-          updateCursor('grabbing');
-          return;
-        }
-
-        // Move markArea
-        if (timeframe.length === 2) {
-          const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
-            params.offsetX,
-            params.offsetY
-          ]);
-          if (x >= timeframe[0] && x <= timeframe[1]) {
-            setIsMarkAreaMoving(true);
-            const newMarkAreaPosition = x - timeframe[0];
-            setOldMarkAreaPosition(newMarkAreaPosition);
-            return;
-          }
-        }
-
-        if (echartsInstance) {
-          setIsMarkAreaSelected(true);
-          const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
-            params.offsetX,
-            params.offsetY
-          ]);
-          initialTimeframe = x;
-          return;
-        }
-      };
-
-      mouseMoveEvent = (params) => {
-        if (params?.target?.type === 'polygon') {
-          updateCursor('move');
-        }
-
-        if (isMarkLineSelected && echartsInstance) {
-          updateTimelineByCoordinate(params);
-          updateCursor('grabbing');
-        }
-
-        if (isMarkAreaSelected) {
-          const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
-            params.offsetX,
-            params.offsetY
-          ]);
-          if (initialTimeframe === x) {
-            setTimeframe([]);
-          } else {
-            setTimeframe([initialTimeframe, x]);
-          }
-        }
-      };
-
-      mouseUpEvent = (params) => {
-        if (isMarkLineSelected) {
-          setIsMarkLineSelected(false);
-          updateCursor('default');
-        }
-
-        if (isMarkAreaSelected) {
-          setIsMarkAreaSelected(false);
-          initialTimeframe = null;
-          if (timeframe.length === 1) {
-            setTimeframe([]);
-          }
-        }
-
-        if (isMarkAreaMoving) {
-          const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
-            params.offsetX,
-            params.offsetY
-          ]);
-          const newMarkAreaPosition = x - timeframe[0];
-          if (oldMarkAreaPosition) {
-            const diff = newMarkAreaPosition - oldMarkAreaPosition;
-            setTimeframe([timeframe[0] + diff, timeframe[1] + diff]);
-          }
-          setIsMarkAreaMoving(false);
-        }
-      };
-
-      mouseOutEvent = () => {};
-
-      zr.on('click', clickEvent);
-      zr.on('mousedown', mouseDownEvent);
-      zr.on('mousemove', mouseMoveEvent);
-      zr.on('mouseup', mouseUpEvent);
-      zr.on('mouseout', mouseOutEvent);
+      if (timeframe.length === 2) {
+        setTimeframe([]);
+        stop();
+      }
     }
+
+    return addEvent(zr, 'click', clickEvent);
   }, [
+    zr,
     isPaused,
     isPlaying,
-    data,
+    setIsPaused,
+    setTimeframe,
+    stop,
+    timeframe.length,
+    updateTimelineByCoordinate
+  ]);
+
+  useEffect(() => {
+    function mouseDownEvent(params) {
+      if (params.target?.type === 'ec-line') {
+        setIsMarkLineSelected(true);
+        updateCursor('grabbing');
+        return;
+      }
+
+      // Move markArea
+      if (timeframe.length === 2) {
+        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+          params.offsetX,
+          params.offsetY
+        ]);
+        if (x >= timeframe[0] && x <= timeframe[1]) {
+          setIsMarkAreaMoving(true);
+          const newMarkAreaPosition = x - timeframe[0];
+          setOldMarkAreaPosition(newMarkAreaPosition);
+          return;
+        }
+      }
+
+      if (echartsInstance) {
+        setIsMarkAreaSelected(true);
+        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+          params.offsetX,
+          params.offsetY
+        ]);
+        initialTimeframe = x;
+        return;
+      }
+    }
+
+    return addEvent(zr, 'mousedown', mouseDownEvent);
+  }, [zr, echartsInstance, timeframe, updateCursor]);
+
+  useEffect(() => {
+    function mouseMoveEvent(params) {
+      if (params?.target?.type === 'polygon') {
+        updateCursor('move');
+      }
+
+      if (isMarkLineSelected && echartsInstance) {
+        updateTimelineByCoordinate(params);
+        updateCursor('grabbing');
+      }
+
+      if (isMarkAreaSelected) {
+        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+          params.offsetX,
+          params.offsetY
+        ]);
+        if (initialTimeframe === x) {
+          setTimeframe([]);
+        } else {
+          setTimeframe([initialTimeframe, x]);
+        }
+      }
+    }
+
+    return addEvent(zr, 'mousemove', mouseMoveEvent);
+  }, [
     zr,
     echartsInstance,
-    isMarkLineSelected,
-    setIsPaused,
-    setIsPlaying,
-    setTimelinePosition,
-    updateCursor,
-    updateTimelineByCoordinate,
     isMarkAreaSelected,
-    setIsMarkAreaSelected,
-    timeframe,
+    isMarkLineSelected,
     setTimeframe,
+    updateCursor,
+    updateTimelineByCoordinate
+  ]);
+
+  useEffect(() => {
+    function mouseUpEvent(params) {
+      if (isMarkLineSelected) {
+        setIsMarkLineSelected(false);
+        updateCursor('default');
+      }
+
+      if (isMarkAreaSelected) {
+        setIsMarkAreaSelected(false);
+        initialTimeframe = null;
+        if (timeframe.length === 1) {
+          setTimeframe([]);
+        }
+      }
+
+      if (isMarkAreaMoving) {
+        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+          params.offsetX,
+          params.offsetY
+        ]);
+        const newMarkAreaPosition = x - timeframe[0];
+        if (oldMarkAreaPosition) {
+          const diff = newMarkAreaPosition - oldMarkAreaPosition;
+          setTimeframe([timeframe[0] + diff, timeframe[1] + diff]);
+        }
+        setIsMarkAreaMoving(false);
+      }
+    }
+
+    return addEvent(zr, 'mouseup', mouseUpEvent);
+  }, [
+    zr,
+    echartsInstance,
     isMarkAreaMoving,
-    setIsMarkAreaMoving,
+    isMarkAreaSelected,
+    isMarkLineSelected,
     oldMarkAreaPosition,
-    setOldMarkAreaPosition,
-    stop
+    setTimeframe,
+    timeframe,
+    updateCursor
   ]);
 
   // markLine in echarts
@@ -242,6 +240,17 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
 }
 
 // Aux
+function addEvent(zr, eventKey, event) {
+  if (zr) {
+    events[eventKey] = event;
+    zr.on(eventKey, event);
+
+    return () => {
+      if (events[eventKey]) zr.off(eventKey, event);
+    };
+  }
+}
+
 function findTimelinePositionByX(item, idx, data, x) {
   const currentDate = item.name;
   const upperCloseDate = data[idx + 1]?.name;

@@ -12,8 +12,7 @@ import TimeSeriesChart from './components/TimeSeriesChart';
 import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesContext';
 import { CHART_TYPES } from './utils/constants';
 import { PropTypes } from 'prop-types';
-import { GroupDateTypes } from '@carto/react-core';
-import { getMonday } from '@carto/react-core';
+import { GroupDateTypes, getMonday } from '@carto/react-core';
 
 const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.DAYS]: daysCurrentDateRange,
@@ -180,7 +179,7 @@ function TimeSeriesWidgetUIContent({
         } else {
           setTimeframe(newTimeframe);
         }
-      }, 10 / speed);
+      }, 100 / speed);
       return () => clearInterval(interval);
     }
   }, [data, isPlaying, timeframe, stepSize, setTimeframe, stop, speed]);

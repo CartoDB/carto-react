@@ -75,19 +75,19 @@ export function TimeSeriesProvider({
     setIsPlaying((oldState) => !oldState);
   }, [_isPlaying, onPause, onPlay]);
 
-  const stopWrapper = () => {
+  const stopWrapper = useCallback(() => {
     setIsPlaying(false);
     setIsPaused(false);
     setTimelinePosition(0);
     setTimeframe([]);
-  };
+  }, []);
 
   const stop = useCallback(() => {
     stopWrapper();
     // Wait a clock cycle to avoid condition race
     // meanwhile the states is setted above
     setTimeout(onStop || (() => {}));
-  }, [onStop]);
+  }, [onStop, stopWrapper]);
 
   // These four useEffects are used to allow
   // manage time series state outside the widget
