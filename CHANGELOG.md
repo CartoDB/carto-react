@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix unnecessary widgets calculations when unrelated source changes [#184]
+- Remove widgetsLoadingState and derived actions from cartoSlice [#184]
 - Fix unnecessary viewportFeatures calculation, after a filter change inside a source [#183](https://github.com/CartoDB/carto-react/pull/183)
 
 ## 1.1.0-beta.0 (2021-09-07)
