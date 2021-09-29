@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setViewportFeaturesReady } from '@carto/react-redux';
 import { debounce } from '@carto/react-core';
@@ -83,14 +83,27 @@ export default function useViewportFeatures(
     []
   );
 
-  useEffect(() => {
-    if (source && tiles.length && (!isV3(source) || source?.type === MAP_TYPES.TILESET)) {
-      computeFeaturesTileset({ tiles, viewport, uniqueIdProperty, sourceId: source.id });
-    }
-  }, [tiles, viewport, uniqueIdProperty, computeFeaturesTileset, source, dispatch]);
+  const isSourceV3 = useMemo(() => isV3(source), [source]);
+  const isSourceTileset = useMemo(() => source?.type === MAP_TYPES.TILESET, [source]);
+  const isSourceGeoJSONLayer = useMemo(() => isGeoJSONLayer(source), [source]);
 
   useEffect(() => {
-    if (source && isGeoJSONLayer(source)) {
+    if (source?.id && tiles.length && (!isSourceV3 || isSourceTileset)) {
+      computeFeaturesTileset({ tiles, viewport, uniqueIdProperty, sourceId: source.id });
+    }
+  }, [
+    tiles,
+    viewport,
+    uniqueIdProperty,
+    computeFeaturesTileset,
+    source?.id,
+    isSourceV3,
+    isSourceTileset,
+    dispatch
+  ]);
+
+  useEffect(() => {
+    if (source?.id && isSourceGeoJSONLayer) {
       if (isGeoJSONLoaded) {
         computeFeaturesGeoJSON({ viewport, uniqueIdProperty, sourceId: source.id });
       }
@@ -99,7 +112,8 @@ export default function useViewportFeatures(
     viewport,
     uniqueIdProperty,
     computeFeaturesGeoJSON,
-    source,
+    source?.id,
+    isSourceGeoJSONLayer,
     dispatch,
     isGeoJSONLoaded
   ]);
