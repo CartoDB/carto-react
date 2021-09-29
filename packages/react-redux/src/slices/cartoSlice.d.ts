@@ -65,9 +65,6 @@ declare enum CartoActions {
   SET_VIEWPORT_FEATURES = 'carto/setViewportFeatures',
   REMOVE_VIEWPORT_FEATURES = 'carto/removeViewportFeatures',
   SET_VIEWPORT_FEATURES_READY = 'carto/setViewportFeaturesReady',
-  SET_WIDGET_LOADING_STATE = 'carto/setWidgetLoadingState',
-  REMOVE_WIDGET_LOADING_STATE = 'carto/removeWidgetLoadingState',
-  SET_ALL_WIDGETS_LOADING_STATE = 'carto/setAllWidgetsLoadingState',
   SET_CREDENTIALS = 'carto/setCredentials'
 }
 
@@ -135,21 +132,6 @@ export function removeViewportFeatures(sourceId: string): {
 export function setViewportFeaturesReady(data: ViewportFeaturesReadyDataAction): {
   type: CartoActions.SET_VIEWPORT_FEATURES_READY,
   payload: ViewportFeaturesReadyDataAction
-};
-
-export function setWidgetLoadingState(data: WidgetLoadingState): {
-  type: CartoActions.SET_WIDGET_LOADING_STATE,
-  payload: WidgetLoadingState
-};
-
-export function removeWidgetLoadingState(widgetId: string): {
-  type: CartoActions.REMOVE_WIDGET_LOADING_STATE,
-  payload: string
-};
-
-export function setAllWidgetsLoadingState(areLoading: boolean): {
-  type: CartoActions.SET_ALL_WIDGETS_LOADING_STATE,
-  payload: boolean
 };
 
 export function setCredentials(credentials: Credentials): {

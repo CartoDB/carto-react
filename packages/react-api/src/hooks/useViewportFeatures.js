@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setViewportFeaturesReady, setAllWidgetsLoadingState } from '@carto/react-redux';
+import { setViewportFeaturesReady } from '@carto/react-redux';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
@@ -85,14 +85,12 @@ export default function useViewportFeatures(
 
   useEffect(() => {
     if (source && tiles.length && (!isV3(source) || source?.type === MAP_TYPES.TILESET)) {
-      dispatch(setAllWidgetsLoadingState(true));
       computeFeaturesTileset({ tiles, viewport, uniqueIdProperty, sourceId: source.id });
     }
   }, [tiles, viewport, uniqueIdProperty, computeFeaturesTileset, source, dispatch]);
 
   useEffect(() => {
     if (source && isGeoJSONLayer(source)) {
-      dispatch(setAllWidgetsLoadingState(true));
       if (isGeoJSONLoaded) {
         computeFeaturesGeoJSON({ viewport, uniqueIdProperty, sourceId: source.id });
       }
@@ -129,10 +127,9 @@ export default function useViewportFeatures(
           throw error;
         }
       };
-      dispatch(setAllWidgetsLoadingState(true));
       loadDataInWorker();
     },
-    [dispatch, source]
+    [source]
   );
 
   return [onViewportLoad, onDataLoad];
