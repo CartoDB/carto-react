@@ -2,9 +2,12 @@
 
 ## Not released
 
+- Fix unnecessary viewportFeatures calculation, after a filter change inside a source [#183](https://github.com/CartoDB/carto-react/pull/183)
+
 ## 1.1.0-beta.0 (2021-09-07)
 
 - No major changes from 1.1.0-alpha.6. Just move to beta.
+
 ## 1.1.0-alpha.6 (2021-08-04)
 
 - **Breaking change**: Allow to disable viewport features calculation. useCartoLayerProps uses now object destructuring. [#164](https://github.com/CartoDB/carto-react/pull/164)
