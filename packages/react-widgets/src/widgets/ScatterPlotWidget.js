@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { selectSourceById } from '@carto/react-redux';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux';
 import { WrapperWidgetUI, ScatterPlotWidgetUI } from '@carto/react-ui';
 import { _getApplicableFilters as getApplicableFilters } from '@carto/react-core';
 import { getScatter } from '../models';
-import useWidgetLoadingState from './useWidgetLoadingState';
+import useSourceFilters from '../hooks/useSourceFilters';
 
 /**
  * Renders a <ScatterPlotWidget /> component
@@ -36,21 +36,21 @@ function ScatterPlotWidget(props) {
   } = props;
 
   const [scatterData, setScatterData] = useState([]);
-  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
-  const { data, filters } = source;
+  const [isLoading, setIsLoading] = useState(true);
+
+  const isSourceReady = useSelector((state) =>
+    selectIsViewportFeaturesReadyForSource(state, dataSource)
+  );
+  const filters = useSourceFilters({ dataSource, id });
 
   useEffect(() => {
-    if (data && isLoading) {
-      const _filters = getApplicableFilters(filters, id);
+    setIsLoading(true);
 
+    if (isSourceReady) {
       getScatter({
-        data,
         xAxisColumn,
         yAxisColumn,
-        filters: _filters,
+        filters,
         dataSource
       })
         .then((data) => {
@@ -63,13 +63,20 @@ function ScatterPlotWidget(props) {
           setIsLoading(false);
           if (onError) onError(error);
         });
-    } else {
-      setScatterData([]);
     }
-  }, [id, data, setIsLoading, filters, viewportFeaturesReady, setIsLoading, isLoading]);
+  }, [
+    id,
+    xAxisColumn,
+    yAxisColumn,
+    dataSource,
+    filters,
+    setIsLoading,
+    isSourceReady,
+    onError
+  ]);
 
   return (
-    <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
+    <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <ScatterPlotWidgetUI
         data={scatterData}
         tooltipFormatter={tooltipFormatter}

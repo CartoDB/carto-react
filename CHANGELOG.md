@@ -3,6 +3,11 @@
 ## Not released
 
 - Update echarts to v5 [#167](https://github.com/CartoDB/carto-react/pull/167)
+- Fix unnecessary widget calculations triggered by widget itself [#185](https://github.com/CartoDB/carto-react/pull/185)
+- Add new `useSourceFilters` hook for better custom widgets dev [#185](https://github.com/CartoDB/carto-react/pull/185)
+- Fix unnecessary widgets calculations when unrelated source changes [#184](https://github.com/CartoDB/carto-react/pull/184)
+- Remove widgetsLoadingState and derived actions from cartoSlice [#184](https://github.com/CartoDB/carto-react/pull/184)
+- Fix unnecessary viewportFeatures calculation, after a filter change inside a source [#183](https://github.com/CartoDB/carto-react/pull/183)
 
 ## 1.1.0-beta.0 (2021-09-07)
 

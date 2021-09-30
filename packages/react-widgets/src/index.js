@@ -13,3 +13,4 @@ export {
   geocodeStreetPoint,
   getScatter
 } from './models';
+export { default as useSourceFilters } from './hooks/useSourceFilters';
