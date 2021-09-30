@@ -23,7 +23,7 @@ export default function useViewportFeatures(
   const [tiles, setTiles] = useState([]);
   const [isGeoJSONLoaded, setGeoJSONLoaded] = useState(false);
 
-  const sourceId = useMemo(() => source?.id, [source]);
+  const sourceId = source?.id;
 
   const setSourceViewportFeaturesReady = useCallback(
     (ready) => {
