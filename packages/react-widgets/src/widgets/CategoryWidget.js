@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
+import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, CategoryWidgetUI } from '@carto/react-ui';
-import {
-  _FilterTypes as FilterTypes,
-  _getApplicableFilters as getApplicableFilters,
-  AggregationTypes
-} from '@carto/react-core';
+import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
+import useSourceFilters from '../hooks/useSourceFilters';
 import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
@@ -43,23 +40,22 @@ function CategoryWidget(props) {
   const isSourceReady = useSelector(
     (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
-  const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
 
   const [categoryData, setCategoryData] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const filters = useSourceFilters({ dataSource, id });
+
   useEffect(() => {
     setIsLoading(true);
 
     if (isSourceReady) {
-      const _filters = getApplicableFilters(filters, id);
-
       getCategories({
         column,
         operationColumn,
         operation,
-        filters: _filters,
+        filters,
         dataSource
       })
         .then((data) => {

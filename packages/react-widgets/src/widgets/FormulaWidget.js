@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
+import useSourceFilters from '../hooks/useSourceFilters';
 import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux';
 
 /**
@@ -33,7 +33,7 @@ function FormulaWidget(props) {
   const isSourceReady = useSelector(
     (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
-  const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
+  const filters = useSourceFilters({ dataSource, id });
 
   const [formulaData, setFormulaData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

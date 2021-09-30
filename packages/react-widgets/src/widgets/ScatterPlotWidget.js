@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { selectIsViewportFeaturesReadyForSource, selectSourceById } from '@carto/react-redux';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux';
 import { WrapperWidgetUI, ScatterPlotWidgetUI } from '@carto/react-ui';
 import { _getApplicableFilters as getApplicableFilters } from '@carto/react-core';
 import { getScatter } from '../models';
+import useSourceFilters from '../hooks/useSourceFilters';
 
 /**
  * Renders a <ScatterPlotWidget /> component
@@ -40,18 +41,16 @@ function ScatterPlotWidget(props) {
   const isSourceReady = useSelector(
     (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
-  const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
+  const filters = useSourceFilters({ dataSource, id });
 
   useEffect(() => {
     setIsLoading(true);
 
     if (isSourceReady) {
-      const _filters = getApplicableFilters(filters, id);
-
       getScatter({
         xAxisColumn,
         yAxisColumn,
-        filters: _filters,
+        filters,
         dataSource
       })
         .then((data) => {

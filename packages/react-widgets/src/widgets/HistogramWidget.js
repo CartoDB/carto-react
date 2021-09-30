@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
+import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI } from '@carto/react-ui';
 import {
   _FilterTypes as FilterTypes,
@@ -9,6 +9,7 @@ import {
   AggregationTypes
 } from '@carto/react-core';
 import { getHistogram } from '../models';
+import useSourceFilters from '../hooks/useSourceFilters';
 import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
@@ -47,7 +48,7 @@ function HistogramWidget(props) {
   const [selectedBars, setSelectedBars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
+  const filters = useSourceFilters({ dataSource, id });
   const isSourceReady = useSelector(
     (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
@@ -71,13 +72,11 @@ function HistogramWidget(props) {
     setIsLoading(true);
 
     if (isSourceReady) {
-      const _filters = getApplicableFilters(filters, id);
-
       getHistogram({
         column,
         operation,
         ticks,
-        filters: _filters,
+        filters,
         dataSource
       })
         .then((data) => {

@@ -45,3 +45,8 @@ export type ScatterPlotWidget = {
   yAxisFormatter?: Function,
   tooltipFormatter?: Function
 } & CommonWidgetProps
+
+export type useSourceFilters =  {
+  dataSource: string,
+  id: string,
+};
