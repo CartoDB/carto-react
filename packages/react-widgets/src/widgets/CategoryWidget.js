@@ -40,7 +40,7 @@ function CategoryWidget(props) {
   const dispatch = useDispatch();
 
   const isSourceReady = useSelector(
-    (state) => state.carto.viewportFeaturesReady[dataSource]
+    (state) => !!state.carto.viewportFeaturesReady[dataSource]
   );
   const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
 

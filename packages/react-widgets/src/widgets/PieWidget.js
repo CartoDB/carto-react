@@ -45,7 +45,7 @@ function PieWidget({
   const [isLoading, setIsLoading] = useState(true);
 
   const isSourceReady = useSelector(
-    (state) => state.carto.viewportFeaturesReady[dataSource]
+    (state) => !!state.carto.viewportFeaturesReady[dataSource]
   );
   const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
 

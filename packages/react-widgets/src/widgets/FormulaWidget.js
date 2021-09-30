@@ -30,7 +30,7 @@ function FormulaWidget(props) {
     wrapperProps
   } = props;
   const isSourceReady = useSelector(
-    (state) => state.carto.viewportFeaturesReady[dataSource]
+    (state) => !!state.carto.viewportFeaturesReady[dataSource]
   );
   const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
 
