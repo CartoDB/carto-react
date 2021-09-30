@@ -276,6 +276,7 @@ function TimeSeriesWidgetUIContent({
               color='default'
               disabled={!(isPaused || isPlaying)}
               onClick={handleOpenSpeedMenu}
+              data-testid='clock'
             >
               <ClockIcon />
             </IconButton>
@@ -306,12 +307,13 @@ function TimeSeriesWidgetUIContent({
                 color='primary'
                 disabled={!(isPaused || isPlaying)}
                 onClick={stop}
+                data-testid='stop'
               >
                 <StopIcon />
               </IconButton>
             </Box>
             <Box mt={0.75}>
-              <IconButton size='small' color='primary' onClick={togglePlay}>
+              <IconButton data-testid='play-pause' size='small' color='primary' onClick={togglePlay}>
                 {isPlaying ? <PauseIcon /> : <PlayIcon />}
               </IconButton>
             </Box>
@@ -365,7 +367,7 @@ function defaultTooltipFormatter(params, stepSize, valueFormatter) {
 
 function PlayIcon() {
   return (
-    <SvgIcon>
+    <SvgIcon data-testid='play-icon'>
       <path
         d='M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z'
         id='-↳Color'
@@ -389,7 +391,7 @@ function StopIcon() {
 
 function PauseIcon() {
   return (
-    <SvgIcon>
+    <SvgIcon data-testid='pause-icon'>
       <path
         d='M9,16 L11,16 L11,8 L9,8 L9,16 Z M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,20 C7.59,20 4,16.41 4,12 C4,7.59 7.59,4 12,4 C16.41,4 20,7.59 20,12 C20,16.41 16.41,20 12,20 Z M13,16 L15,16 L15,8 L13,8 L13,16 Z'
         id='-↳Color'

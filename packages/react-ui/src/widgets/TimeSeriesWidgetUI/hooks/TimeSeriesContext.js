@@ -48,7 +48,7 @@ export function TimeSeriesProvider({
   const [_timeframe, setTimeframe] = useState([]);
 
   useEffect(() => {
-    if (_timeframe.length === 2) {
+    if (_timeframe.length === 2 && onTimeframeUpdate) {
       onTimeframeUpdate(_timeframe.sort());
     }
     // Only executed when timeframe changes
@@ -56,7 +56,7 @@ export function TimeSeriesProvider({
   }, [_timeframe]);
 
   useEffect(() => {
-    if (!_timeframe.length && (_isPlaying || _isPaused)) {
+    if (!_timeframe.length && (_isPlaying || _isPaused) && onTimelineUpdate) {
       onTimelineUpdate(_timelinePosition);
     }
     // Only executed when timelinePosition changes
