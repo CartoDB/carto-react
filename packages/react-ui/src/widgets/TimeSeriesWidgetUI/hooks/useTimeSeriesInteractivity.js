@@ -62,7 +62,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
       }
     }
 
-    return addEvent(zr, 'click', clickEvent);
+    return addEventWithCleanUp(zr, 'click', clickEvent);
   }, [
     zr,
     isPaused,
@@ -107,7 +107,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
       }
     }
 
-    return addEvent(zr, 'mousedown', mouseDownEvent);
+    return addEventWithCleanUp(zr, 'mousedown', mouseDownEvent);
   }, [zr, echartsInstance, timeframe, updateCursor]);
 
   useEffect(() => {
@@ -134,7 +134,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
       }
     }
 
-    return addEvent(zr, 'mousemove', mouseMoveEvent);
+    return addEventWithCleanUp(zr, 'mousemove', mouseMoveEvent);
   }, [
     zr,
     echartsInstance,
@@ -174,7 +174,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
       }
     }
 
-    return addEvent(zr, 'mouseup', mouseUpEvent);
+    return addEventWithCleanUp(zr, 'mouseup', mouseUpEvent);
   }, [
     zr,
     echartsInstance,
@@ -240,7 +240,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
 }
 
 // Aux
-function addEvent(zr, eventKey, event) {
+function addEventWithCleanUp(zr, eventKey, event) {
   if (zr) {
     events[eventKey] = event;
     zr.on(eventKey, event);
