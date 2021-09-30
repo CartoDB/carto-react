@@ -8,11 +8,6 @@ import LegendWidgetUI, { LEGEND_TYPES } from './widgets/legend/LegendWidgetUI';
 import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/time-series-widget-ui/TimeSeriesWidgetUI';
 import NoDataAlert from './utils/NoDataAlert';
-import {
-  useTimeSeriesContext,
-  TimeSeriesProvider
-} from './widgets/time-series-widget-ui/hooks/TimeSeriesContext';
-import useTimeSeriesInteractivity from './widgets/time-series-widget-ui/hooks/useTimeSeriesInteractivity';
 import { CHART_TYPES } from './widgets/time-series-widget-ui/utils/constants';
 
 export {
@@ -24,9 +19,6 @@ export {
   PieWidgetUI,
   ScatterPlotWidgetUI,
   TimeSeriesWidgetUI,
-  useTimeSeriesContext,
-  useTimeSeriesInteractivity,
-  TimeSeriesProvider,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
   LegendWidgetUI,
   LEGEND_TYPES,
