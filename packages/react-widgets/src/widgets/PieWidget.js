@@ -55,13 +55,11 @@ function PieWidget({
     setIsLoading(true);
 
     if (isSourceReady) {
-      const _filters = getApplicableFilters(filters, id);
-
       getCategories({
         column,
         operation,
         operationColumn,
-        filters: _filters,
+        filters,
         dataSource
       })
         .then((data) => {

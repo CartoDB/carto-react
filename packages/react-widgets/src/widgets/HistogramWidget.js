@@ -72,13 +72,11 @@ function HistogramWidget(props) {
     setIsLoading(true);
 
     if (isSourceReady) {
-      const _filters = getApplicableFilters(filters, id);
-
       getHistogram({
         column,
         operation,
         ticks,
-        filters: _filters,
+        filters,
         dataSource
       })
         .then((data) => {

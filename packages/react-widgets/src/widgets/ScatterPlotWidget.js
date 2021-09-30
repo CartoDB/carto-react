@@ -47,12 +47,10 @@ function ScatterPlotWidget(props) {
     setIsLoading(true);
 
     if (isSourceReady) {
-      const _filters = getApplicableFilters(filters, id);
-
       getScatter({
         xAxisColumn,
         yAxisColumn,
-        filters: _filters,
+        filters,
         dataSource
       })
         .then((data) => {
