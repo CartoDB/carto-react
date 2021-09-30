@@ -15,9 +15,6 @@ import { mockAppStoreConfiguration } from './utils';
 import { buildReactPropsAsString } from '../../utils';
 
 const store = mockAppStoreConfiguration();
-store.dispatch(
-  cartoSlice.setWidgetLoadingState({ widgetId: 'sb-histogram-id', isLoading: false })
-);
 
 const mockedData = [...Array(40)].map((_, idx) => ({
   'sb-column': idx < 10 ? 100 : idx < 25 ? 200 : idx < 33 ? 300 : idx < 35 ? 400 : 500
