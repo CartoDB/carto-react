@@ -6,14 +6,14 @@ import HistogramWidgetUI from './widgets/HistogramWidgetUI';
 import PieWidgetUI from './widgets/PieWidgetUI';
 import LegendWidgetUI, { LEGEND_TYPES } from './widgets/legend/LegendWidgetUI';
 import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
-import TimeSeriesWidgetUI from './widgets/time-series-widget-ui/TimeSeriesWidgetUI';
+import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import NoDataAlert from './utils/NoDataAlert';
 import {
   useTimeSeriesContext,
   TimeSeriesProvider
-} from './widgets/time-series-widget-ui/hooks/TimeSeriesContext';
-import useTimeSeriesInteractivity from './widgets/time-series-widget-ui/hooks/useTimeSeriesInteractivity';
-import { CHART_TYPES } from './widgets/time-series-widget-ui/utils/constants';
+} from './widgets/TimeSeriesWidgetUI/hooks/TimeSeriesContext';
+import useTimeSeriesInteractivity from './widgets/TimeSeriesWidgetUI/hooks/useTimeSeriesInteractivity';
+import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 
 export {
   cartoThemeOptions,

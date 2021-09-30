@@ -1,5 +1,5 @@
 import React from 'react';
-import TimeSeriesWidgetUI from '../../../src/widgets/time-series-widget-ui/TimeSeriesWidgetUI';
+import TimeSeriesWidgetUI from '../../../src/widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import { GroupDateTypes } from '@carto/react-core';
 import { TIME_SERIES_CHART_TYPES } from '@carto/react-ui';
 
