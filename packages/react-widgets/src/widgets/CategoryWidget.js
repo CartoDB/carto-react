@@ -5,7 +5,7 @@ import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, CategoryWidgetUI } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
-import useSourceFilters from '../utils/useSourceFilters';
+import useSourceFilters from '../hooks/useSourceFilters';
 
 /**
  * Renders a <CategoryWidget /> component

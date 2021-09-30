@@ -9,7 +9,7 @@ import {
   AggregationTypes
 } from '@carto/react-core';
 import { getCategories } from '../models';
-import useSourceFilters from '../utils/useSourceFilters';
+import useSourceFilters from '../hooks/useSourceFilters';
 
 /**
  * Renders a <PieWidget /> component

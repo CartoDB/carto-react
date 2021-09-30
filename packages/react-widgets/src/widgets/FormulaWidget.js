@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
-import useSourceFilters from '../utils/useSourceFilters';
+import useSourceFilters from '../hooks/useSourceFilters';
 
 /**
  * Renders a <FormulaWidget /> component

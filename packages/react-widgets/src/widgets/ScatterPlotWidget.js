@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import { WrapperWidgetUI, ScatterPlotWidgetUI } from '@carto/react-ui';
 import { _getApplicableFilters as getApplicableFilters } from '@carto/react-core';
 import { getScatter } from '../models';
-import useSourceFilters from '../utils/useSourceFilters';
+import useSourceFilters from '../hooks/useSourceFilters';
 
 /**
  * Renders a <ScatterPlotWidget /> component

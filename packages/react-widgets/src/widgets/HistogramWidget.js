@@ -9,7 +9,7 @@ import {
   AggregationTypes
 } from '@carto/react-core';
 import { getHistogram } from '../models';
-import useSourceFilters from '../utils/useSourceFilters';
+import useSourceFilters from '../hooks/useSourceFilters';
 
 /**
  * Renders a <HistogramWidget /> component
