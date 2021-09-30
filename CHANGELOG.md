@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Update echarts to v5 [#167](https://github.com/CartoDB/carto-react/pull/167)
 - Fix unnecessary widget calculations triggered by widget itself [#185](https://github.com/CartoDB/carto-react/pull/185)
 - Add new `useSourceFilters` hook for better custom widgets dev [#185](https://github.com/CartoDB/carto-react/pull/185)
 - Fix unnecessary widgets calculations when unrelated source changes [#184](https://github.com/CartoDB/carto-react/pull/184)

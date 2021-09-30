@@ -1,7 +1,7 @@
 import React from 'react';
 
-import echarts from 'echarts';
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
+import * as echarts from 'echarts';
 
 import { cartoThemeOptions } from '../../src/theme/carto-theme';
 

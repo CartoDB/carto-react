@@ -30,8 +30,8 @@ function FormulaWidget(props) {
     onError,
     wrapperProps
   } = props;
-  const isSourceReady = useSelector(
-    (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
+  const isSourceReady = useSelector((state) =>
+    selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
   const filters = useSourceFilters({ dataSource, id });
 
@@ -59,15 +59,7 @@ function FormulaWidget(props) {
           if (onError) onError(error);
         });
     }
-  }, [
-    operation,
-    column,
-    filters,
-    dataSource,
-    setIsLoading,
-    onError,
-    isSourceReady
-  ]);
+  }, [operation, column, filters, dataSource, setIsLoading, onError, isSourceReady]);
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>

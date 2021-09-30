@@ -37,8 +37,8 @@ function CategoryWidget(props) {
   } = props;
   const dispatch = useDispatch();
 
-  const isSourceReady = useSelector(
-    (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
+  const isSourceReady = useSelector((state) =>
+    selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
 
   const [categoryData, setCategoryData] = useState(null);
