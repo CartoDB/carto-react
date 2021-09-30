@@ -10,6 +10,7 @@ import {
 } from '@carto/react-core';
 import { getHistogram } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
  * Renders a <HistogramWidget /> component
@@ -49,7 +50,7 @@ function HistogramWidget(props) {
 
   const filters = useSourceFilters({ dataSource, id });
   const isSourceReady = useSelector(
-    (state) => state.carto.viewportFeaturesReady[dataSource]
+    (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
 
   const tooltipFormatter = useCallback(

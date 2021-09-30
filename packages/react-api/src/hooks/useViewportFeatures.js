@@ -1,6 +1,6 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setViewportFeaturesReady, setAllWidgetsLoadingState } from '@carto/react-redux';
+import { setViewportFeaturesReady } from '@carto/react-redux';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
@@ -23,16 +23,20 @@ export default function useViewportFeatures(
   const [tiles, setTiles] = useState([]);
   const [isGeoJSONLoaded, setGeoJSONLoaded] = useState(false);
 
+  const sourceId = source?.id;
+
+  const setSourceViewportFeaturesReady = useCallback(
+    (ready) => {
+      if (sourceId) {
+        dispatch(setViewportFeaturesReady({ sourceId, ready }));
+      }
+    },
+    [dispatch, sourceId]
+  );
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const computeFeaturesTileset = useCallback(
     debounce(async ({ tiles, viewport, uniqueIdProperty, sourceId }) => {
-      dispatch(
-        setViewportFeaturesReady({
-          sourceId,
-          ready: false
-        })
-      );
-
       const tilesCleaned = tiles.map(({ data, isVisible, bbox }) => ({
         data,
         isVisible,
@@ -46,18 +50,13 @@ export default function useViewportFeatures(
           uniqueIdProperty
         });
 
-        dispatch(
-          setViewportFeaturesReady({
-            sourceId,
-            ready: true
-          })
-        );
+        setSourceViewportFeaturesReady(true);
       } catch (error) {
         if (error.name === 'AbortError') return;
         throw error;
       }
     }, debounceTimeOut),
-    []
+    [setSourceViewportFeaturesReady]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,41 +68,50 @@ export default function useViewportFeatures(
           uniqueIdProperty
         });
 
-        dispatch(
-          setViewportFeaturesReady({
-            sourceId,
-            ready: true
-          })
-        );
+        setSourceViewportFeaturesReady(true);
       } catch (error) {
         if (error.name === 'AbortError') return;
         throw error;
       }
     }, debounceTimeOut),
-    []
+    [setSourceViewportFeaturesReady]
   );
 
-  useEffect(() => {
-    if (source && tiles.length && (!isV3(source) || source?.type === MAP_TYPES.TILESET)) {
-      dispatch(setAllWidgetsLoadingState(true));
-      computeFeaturesTileset({ tiles, viewport, uniqueIdProperty, sourceId: source.id });
-    }
-  }, [tiles, viewport, uniqueIdProperty, computeFeaturesTileset, source, dispatch]);
+  const isSourceV3 = useMemo(() => isV3(source), [source]);
+  const isSourceTileset = useMemo(() => source?.type === MAP_TYPES.TILESET, [source]);
+  const isSourceGeoJSONLayer = useMemo(() => isGeoJSONLayer(source), [source]);
 
   useEffect(() => {
-    if (source && isGeoJSONLayer(source)) {
-      dispatch(setAllWidgetsLoadingState(true));
+    if (sourceId && tiles.length && (!isSourceV3 || isSourceTileset)) {
+      setSourceViewportFeaturesReady(false);
+      computeFeaturesTileset({ tiles, viewport, uniqueIdProperty, sourceId });
+    }
+  }, [
+    tiles,
+    viewport,
+    uniqueIdProperty,
+    computeFeaturesTileset,
+    sourceId,
+    isSourceV3,
+    isSourceTileset,
+    setSourceViewportFeaturesReady
+  ]);
+
+  useEffect(() => {
+    if (sourceId && isSourceGeoJSONLayer) {
+      setSourceViewportFeaturesReady(false);
       if (isGeoJSONLoaded) {
-        computeFeaturesGeoJSON({ viewport, uniqueIdProperty, sourceId: source.id });
+        computeFeaturesGeoJSON({ viewport, uniqueIdProperty, sourceId });
       }
     }
   }, [
     viewport,
     uniqueIdProperty,
     computeFeaturesGeoJSON,
-    source,
-    dispatch,
-    isGeoJSONLoaded
+    sourceId,
+    isSourceGeoJSONLayer,
+    isGeoJSONLoaded,
+    setSourceViewportFeaturesReady
   ]);
 
   useEffect(() => {
@@ -129,10 +137,10 @@ export default function useViewportFeatures(
           throw error;
         }
       };
-      dispatch(setAllWidgetsLoadingState(true));
+      setSourceViewportFeaturesReady(false);
       loadDataInWorker();
     },
-    [dispatch, source]
+    [source, setSourceViewportFeaturesReady]
   );
 
   return [onViewportLoad, onDataLoad];

@@ -6,6 +6,7 @@ import { WrapperWidgetUI, CategoryWidgetUI } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
  * Renders a <CategoryWidget /> component
@@ -37,7 +38,7 @@ function CategoryWidget(props) {
   const dispatch = useDispatch();
 
   const isSourceReady = useSelector(
-    (state) => state.carto.viewportFeaturesReady[dataSource]
+    (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
 
   const [categoryData, setCategoryData] = useState(null);

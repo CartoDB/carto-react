@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux';
 import { WrapperWidgetUI, ScatterPlotWidgetUI } from '@carto/react-ui';
 import { _getApplicableFilters as getApplicableFilters } from '@carto/react-core';
 import { getScatter } from '../models';
@@ -38,7 +39,7 @@ function ScatterPlotWidget(props) {
   const [isLoading, setIsLoading] = useState(true);
 
   const isSourceReady = useSelector(
-    (state) => state.carto.viewportFeaturesReady[dataSource]
+    (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
   const filters = useSourceFilters({ dataSource, id });
 
@@ -64,8 +65,6 @@ function ScatterPlotWidget(props) {
           setIsLoading(false);
           if (onError) onError(error);
         });
-    } else {
-      setScatterData([]);
     }
   }, [
     id,

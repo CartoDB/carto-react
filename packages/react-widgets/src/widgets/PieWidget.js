@@ -10,6 +10,7 @@ import {
 } from '@carto/react-core';
 import { getCategories } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
  * Renders a <PieWidget /> component
@@ -46,7 +47,7 @@ function PieWidget({
   const [isLoading, setIsLoading] = useState(true);
 
   const isSourceReady = useSelector(
-    (state) => state.carto.viewportFeaturesReady[dataSource]
+    (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
   const filters = useSourceFilters({ dataSource, id });
 

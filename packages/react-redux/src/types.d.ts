@@ -44,7 +44,6 @@ export type CartoState = {
   dataSources: { [key: string]: string },
   viewportFeatures: { [key: string]: object },
   viewportFeaturesReady: { [key: string]: boolean },
-  widgetsLoadingState: { [key: string]: boolean }
 } & InitialCartoState;
 
 export type InitialOauthState = {
