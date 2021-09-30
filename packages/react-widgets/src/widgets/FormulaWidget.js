@@ -57,8 +57,6 @@ function FormulaWidget(props) {
           setIsLoading(false);
           if (onError) onError(error);
         });
-    } else {
-      setFormulaData(null);
     }
   }, [
     operation,

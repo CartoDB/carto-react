@@ -64,8 +64,6 @@ function ScatterPlotWidget(props) {
           setIsLoading(false);
           if (onError) onError(error);
         });
-    } else {
-      setScatterData([]);
     }
   }, [
     id,
