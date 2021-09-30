@@ -23,16 +23,20 @@ export default function useViewportFeatures(
   const [tiles, setTiles] = useState([]);
   const [isGeoJSONLoaded, setGeoJSONLoaded] = useState(false);
 
+  const sourceId = useMemo(() => source?.id, [source]);
+
+  const setSourceViewportFeaturesReady = useCallback(
+    (ready) => {
+      if (sourceId) {
+        dispatch(setViewportFeaturesReady({ sourceId, ready }));
+      }
+    },
+    [dispatch, sourceId]
+  );
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const computeFeaturesTileset = useCallback(
     debounce(async ({ tiles, viewport, uniqueIdProperty, sourceId }) => {
-      dispatch(
-        setViewportFeaturesReady({
-          sourceId,
-          ready: false
-        })
-      );
-
       const tilesCleaned = tiles.map(({ data, isVisible, bbox }) => ({
         data,
         isVisible,
@@ -46,18 +50,13 @@ export default function useViewportFeatures(
           uniqueIdProperty
         });
 
-        dispatch(
-          setViewportFeaturesReady({
-            sourceId,
-            ready: true
-          })
-        );
+        setSourceViewportFeaturesReady(true);
       } catch (error) {
         if (error.name === 'AbortError') return;
         throw error;
       }
     }, debounceTimeOut),
-    []
+    [setSourceViewportFeaturesReady]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,18 +68,13 @@ export default function useViewportFeatures(
           uniqueIdProperty
         });
 
-        dispatch(
-          setViewportFeaturesReady({
-            sourceId,
-            ready: true
-          })
-        );
+        setSourceViewportFeaturesReady(true);
       } catch (error) {
         if (error.name === 'AbortError') return;
         throw error;
       }
     }, debounceTimeOut),
-    []
+    [setSourceViewportFeaturesReady]
   );
 
   const isSourceV3 = useMemo(() => isV3(source), [source]);
@@ -88,34 +82,34 @@ export default function useViewportFeatures(
   const isSourceGeoJSONLayer = useMemo(() => isGeoJSONLayer(source), [source]);
 
   useEffect(() => {
-    if (source?.id && tiles.length && (!isSourceV3 || isSourceTileset)) {
-      computeFeaturesTileset({ tiles, viewport, uniqueIdProperty, sourceId: source.id });
+    if (sourceId && tiles.length && (!isSourceV3 || isSourceTileset)) {
+      setSourceViewportFeaturesReady(false);
+      computeFeaturesTileset({ tiles, viewport, uniqueIdProperty, sourceId });
     }
   }, [
     tiles,
     viewport,
     uniqueIdProperty,
     computeFeaturesTileset,
-    source?.id,
+    sourceId,
     isSourceV3,
     isSourceTileset,
-    dispatch
+    setSourceViewportFeaturesReady
   ]);
 
   useEffect(() => {
-    if (source?.id && isSourceGeoJSONLayer) {
-      if (isGeoJSONLoaded) {
-        computeFeaturesGeoJSON({ viewport, uniqueIdProperty, sourceId: source.id });
-      }
+    if (sourceId && isSourceGeoJSONLayer && isGeoJSONLoaded) {
+      setSourceViewportFeaturesReady(false);
+      computeFeaturesGeoJSON({ viewport, uniqueIdProperty, sourceId });
     }
   }, [
     viewport,
     uniqueIdProperty,
     computeFeaturesGeoJSON,
-    source?.id,
+    sourceId,
     isSourceGeoJSONLayer,
-    dispatch,
-    isGeoJSONLoaded
+    isGeoJSONLoaded,
+    setSourceViewportFeaturesReady
   ]);
 
   useEffect(() => {
