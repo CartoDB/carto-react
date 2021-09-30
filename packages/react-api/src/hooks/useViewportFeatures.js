@@ -98,9 +98,11 @@ export default function useViewportFeatures(
   ]);
 
   useEffect(() => {
-    if (sourceId && isSourceGeoJSONLayer && isGeoJSONLoaded) {
+    if (sourceId && isSourceGeoJSONLayer) {
       setSourceViewportFeaturesReady(false);
-      computeFeaturesGeoJSON({ viewport, uniqueIdProperty, sourceId });
+      if (isGeoJSONLoaded) {
+        computeFeaturesGeoJSON({ viewport, uniqueIdProperty, sourceId });
+      }
     }
   }, [
     viewport,
@@ -135,9 +137,10 @@ export default function useViewportFeatures(
           throw error;
         }
       };
+      setSourceViewportFeaturesReady(false);
       loadDataInWorker();
     },
-    [source]
+    [source, setSourceViewportFeaturesReady]
   );
 
   return [onViewportLoad, onDataLoad];
