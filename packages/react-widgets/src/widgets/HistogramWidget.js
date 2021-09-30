@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
+import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI } from '@carto/react-ui';
 import {
   _FilterTypes as FilterTypes,
@@ -9,7 +9,8 @@ import {
   AggregationTypes
 } from '@carto/react-core';
 import { getHistogram } from '../models';
-import useWidgetLoadingState from './useWidgetLoadingState';
+import useSourceFilters from '../hooks/useSourceFilters';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
  * Renders a <HistogramWidget /> component
@@ -41,14 +42,16 @@ function HistogramWidget(props) {
     onError,
     wrapperProps
   } = props;
+  const dispatch = useDispatch();
+
   const [histogramData, setHistogramData] = useState([]);
   const [selectedBars, setSelectedBars] = useState([]);
-  const dispatch = useDispatch();
-  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
-  const { data, filters } = source;
+  const [isLoading, setIsLoading] = useState(true);
+
+  const filters = useSourceFilters({ dataSource, id });
+  const isSourceReady = useSelector((state) =>
+    selectIsViewportFeaturesReadyForSource(state, dataSource)
+  );
 
   const tooltipFormatter = useCallback(
     ([serie]) => {
@@ -66,15 +69,14 @@ function HistogramWidget(props) {
   );
 
   useEffect(() => {
-    if (data && isLoading) {
-      const _filters = getApplicableFilters(filters, id);
+    setIsLoading(true);
 
+    if (isSourceReady) {
       getHistogram({
-        data,
         column,
         operation,
         ticks,
-        filters: _filters,
+        filters,
         dataSource
       })
         .then((data) => {
@@ -87,21 +89,17 @@ function HistogramWidget(props) {
           setIsLoading(false);
           if (onError) onError(error);
         });
-    } else {
-      setHistogramData([]);
     }
   }, [
     id,
-    data,
     column,
     operation,
     ticks,
-    filters,
     dataSource,
-    viewportFeaturesReady,
+    filters,
     setIsLoading,
-    isLoading,
-    onError
+    onError,
+    isSourceReady
   ]);
 
   const handleSelectedBarsChange = useCallback(
@@ -134,7 +132,7 @@ function HistogramWidget(props) {
   );
 
   return (
-    <WrapperWidgetUI title={title} {...wrapperProps} isLoading={widgetsLoadingState[id]}>
+    <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
       <HistogramWidgetUI
         data={histogramData}
         dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}

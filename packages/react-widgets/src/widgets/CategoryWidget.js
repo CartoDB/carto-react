@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
+import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, CategoryWidgetUI } from '@carto/react-ui';
-import {
-  _FilterTypes as FilterTypes,
-  _getApplicableFilters as getApplicableFilters,
-  AggregationTypes
-} from '@carto/react-core';
+import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
-import useWidgetLoadingState from './useWidgetLoadingState';
+import useSourceFilters from '../hooks/useSourceFilters';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
  * Renders a <CategoryWidget /> component
@@ -38,25 +35,27 @@ function CategoryWidget(props) {
     onError,
     wrapperProps
   } = props;
+  const dispatch = useDispatch();
+
+  const isSourceReady = useSelector((state) =>
+    selectIsViewportFeaturesReadyForSource(state, dataSource)
+  );
+
   const [categoryData, setCategoryData] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const dispatch = useDispatch();
-  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
-  const { data, filters } = source;
+  const [isLoading, setIsLoading] = useState(true);
+
+  const filters = useSourceFilters({ dataSource, id });
 
   useEffect(() => {
-    if (data && isLoading) {
-      const _filters = getApplicableFilters(filters, id);
+    setIsLoading(true);
 
+    if (isSourceReady) {
       getCategories({
-        data,
         column,
         operationColumn,
         operation,
-        filters: _filters,
+        filters,
         dataSource
       })
         .then((data) => {
@@ -69,21 +68,17 @@ function CategoryWidget(props) {
           setIsLoading(false);
           if (onError) onError(error);
         });
-    } else {
-      setCategoryData(null);
     }
   }, [
     id,
-    data,
     column,
     operationColumn,
     operation,
     filters,
     dataSource,
-    viewportFeaturesReady,
     setIsLoading,
-    isLoading,
-    onError
+    onError,
+    isSourceReady
   ]);
 
   const handleSelectedCategoriesChange = useCallback(
@@ -113,12 +108,12 @@ function CategoryWidget(props) {
   );
 
   return (
-    <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
+    <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <CategoryWidgetUI
         data={categoryData}
         formatter={formatter}
         labels={labels}
-        isLoading={widgetsLoadingState[id]}
+        isLoading={isLoading}
         selectedCategories={selectedCategories}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
       />
