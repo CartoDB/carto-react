@@ -49,8 +49,8 @@ function HistogramWidget(props) {
   const [isLoading, setIsLoading] = useState(true);
 
   const filters = useSourceFilters({ dataSource, id });
-  const isSourceReady = useSelector(
-    (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
+  const isSourceReady = useSelector((state) =>
+    selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
 
   const tooltipFormatter = useCallback(

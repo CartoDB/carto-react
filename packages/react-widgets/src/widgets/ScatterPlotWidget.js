@@ -38,8 +38,8 @@ function ScatterPlotWidget(props) {
   const [scatterData, setScatterData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const isSourceReady = useSelector(
-    (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
+  const isSourceReady = useSelector((state) =>
+    selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
   const filters = useSourceFilters({ dataSource, id });
 
