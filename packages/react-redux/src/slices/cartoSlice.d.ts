@@ -117,6 +117,8 @@ export function clearFilters(id: string): {
 
 export function selectSourceById(state: any, id: string): string;
 
+export function selectIsViewportFeaturesReadyForSource(state: any, id: string): boolean;
+
 export function setViewState(viewState: ViewState): Function;
 
 export function setViewportFeatures(data: ViewportFeaturesDataAction): {

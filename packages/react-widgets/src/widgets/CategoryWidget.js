@@ -9,6 +9,7 @@ import {
   AggregationTypes
 } from '@carto/react-core';
 import { getCategories } from '../models';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
  * Renders a <CategoryWidget /> component
@@ -40,7 +41,7 @@ function CategoryWidget(props) {
   const dispatch = useDispatch();
 
   const isSourceReady = useSelector(
-    (state) => !!state.carto.viewportFeaturesReady[dataSource]
+    (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
   const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
 

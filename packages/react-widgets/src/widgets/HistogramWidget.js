@@ -9,6 +9,7 @@ import {
   AggregationTypes
 } from '@carto/react-core';
 import { getHistogram } from '../models';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
  * Renders a <HistogramWidget /> component
@@ -48,7 +49,7 @@ function HistogramWidget(props) {
 
   const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
   const isSourceReady = useSelector(
-    (state) => !!state.carto.viewportFeaturesReady[dataSource]
+    (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
 
   const tooltipFormatter = useCallback(

@@ -246,6 +246,12 @@ const _setViewPort = (payload) => ({ type: 'carto/setViewPort', payload });
  */
 export const selectSourceById = (state, id) => state.carto.dataSources[id];
 
+/**
+ * Redux selector to know if viewport features from a certain source are ready
+ */
+export const selectIsViewportFeaturesReadyForSource = (state, id) =>
+  !!state.carto.viewportFeaturesReady[id];
+
 const debouncedSetViewPort = debounce((dispatch, setViewPort) => {
   dispatch(setViewPort());
 }, 200);

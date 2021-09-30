@@ -5,6 +5,7 @@ import { selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux';
 
 /**
  * Renders a <FormulaWidget /> component
@@ -30,7 +31,7 @@ function FormulaWidget(props) {
     wrapperProps
   } = props;
   const isSourceReady = useSelector(
-    (state) => !!state.carto.viewportFeaturesReady[dataSource]
+    (state) => selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
   const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
 
