@@ -29,6 +29,8 @@ const TIMEFRAME_STEP_BY_STEP_SIZE = {
   [GroupDateTypes.WEEKS]: 60 * 60 * 24
 };
 
+const SPEED_FACTORS = [0.5, 1, 2, 3];
+
 function TimeSeriesWidgetUI({
   data,
   stepSize,
@@ -291,7 +293,7 @@ function TimeSeriesWidgetUIContent({
                   Speed
                 </Typography>
               </MenuItem>
-              {[0.5, 1, 2, 3].map((speedItem) => (
+              {SPEED_FACTORS.map((speedItem) => (
                 <MenuItem
                   key={speedItem}
                   selected={speedItem === speed}
@@ -313,7 +315,12 @@ function TimeSeriesWidgetUIContent({
               </IconButton>
             </Box>
             <Box mt={0.75}>
-              <IconButton data-testid='play-pause' size='small' color='primary' onClick={togglePlay}>
+              <IconButton
+                data-testid='play-pause'
+                size='small'
+                color='primary'
+                onClick={togglePlay}
+              >
                 {isPlaying ? <PauseIcon /> : <PlayIcon />}
               </IconButton>
             </Box>
