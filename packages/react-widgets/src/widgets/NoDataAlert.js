@@ -1,5 +1,6 @@
 import React from 'react';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import { Box } from '@material-ui/core';
 
 function NoDataAlert({
   title = 'No data available',
@@ -7,8 +8,8 @@ function NoDataAlert({
 }) {
   return (
     <Alert severity='warning'>
-      <AlertTitle>{title}</AlertTitle>
-      {body}
+      {title && <AlertTitle>{title}</AlertTitle>}
+      {body || <Box mt={-1} />}
     </Alert>
   );
 }
