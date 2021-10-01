@@ -3,13 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, PieWidgetUI } from '@carto/react-ui';
-import {
-  _FilterTypes as FilterTypes,
-  AggregationTypes
-} from '@carto/react-core';
+import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
+import NoDataAlert from './NoDataAlert';
 
 /**
  * Renders a <PieWidget /> component
@@ -25,6 +23,7 @@ import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {string} props.height - Height of the chart
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
  */
 function PieWidget({
   id,
@@ -37,7 +36,8 @@ function PieWidget({
   formatter,
   tooltipFormatter,
   onError,
-  wrapperProps
+  wrapperProps,
+  noDataAlertProps
 }) {
   const dispatch = useDispatch();
 
@@ -112,14 +112,18 @@ function PieWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      <PieWidgetUI
-        data={categoryData}
-        formatter={formatter}
-        height={height}
-        tooltipFormatter={tooltipFormatter}
-        selectedCategories={selectedCategories}
-        onSelectedCategoriesChange={handleSelectedCategoriesChange}
-      />
+      {categoryData.length || isLoading ? (
+        <PieWidgetUI
+          data={categoryData}
+          formatter={formatter}
+          height={height}
+          tooltipFormatter={tooltipFormatter}
+          selectedCategories={selectedCategories}
+          onSelectedCategoriesChange={handleSelectedCategoriesChange}
+        />
+      ) : (
+        <NoDataAlert {...noDataAlertProps} />
+      )}
     </WrapperWidgetUI>
   );
 }
@@ -135,11 +139,13 @@ PieWidget.propTypes = {
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   onError: PropTypes.func,
-  wrapperProps: PropTypes.object
+  wrapperProps: PropTypes.object,
+  noDataAlertProps: PropTypes.object
 };
 
 PieWidget.defaultProps = {
-  wrapperProps: {}
+  wrapperProps: {},
+  noDataAlertProps: {}
 };
 
 export default PieWidget;

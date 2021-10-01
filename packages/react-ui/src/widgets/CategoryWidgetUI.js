@@ -129,15 +129,7 @@ const SearchIcon = () => (
 );
 
 function CategoryWidgetUI(props) {
-  const {
-    data,
-    formatter,
-    labels,
-    isLoading,
-    maxItems,
-    order,
-    selectedCategories
-  } = props;
+  const { data, formatter, labels, maxItems, order, selectedCategories } = props;
   const [sortedData, setSortedData] = useState([]);
   const [maxValue, setMaxValue] = useState(1);
   const [showAll, setShowAll] = useState(false);
@@ -437,7 +429,7 @@ function CategoryWidgetUI(props) {
 
   return (
     <div className={classes.root}>
-      {data && (data.length > 0 || !isLoading) ? (
+      {data?.length > 0 ? (
         <>
           {sortedData.length > 0 && (
             <Grid
@@ -510,7 +502,7 @@ function CategoryWidgetUI(props) {
                   }
                 />
               ))
-            ) : data.length === 0 && !isLoading ? (
+            ) : data.length === 0 ? (
               <NoDataAlert />
             ) : (
               <>
@@ -554,7 +546,6 @@ CategoryWidgetUI.defaultProps = {
   data: null,
   formatter: (v) => v,
   labels: {},
-  isLoading: false,
   maxItems: 5,
   order: CategoryWidgetUI.ORDER_TYPES.RANKING,
   selectedCategories: []
@@ -569,7 +560,6 @@ CategoryWidgetUI.propTypes = {
   ),
   formatter: PropTypes.func,
   labels: PropTypes.object,
-  isLoading: PropTypes.bool,
   maxItems: PropTypes.number,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func,
