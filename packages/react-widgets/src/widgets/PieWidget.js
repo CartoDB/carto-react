@@ -5,7 +5,6 @@ import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, PieWidgetUI } from '@carto/react-ui';
 import {
   _FilterTypes as FilterTypes,
-  _getApplicableFilters as getApplicableFilters,
   AggregationTypes
 } from '@carto/react-core';
 import { getCategories } from '../models';

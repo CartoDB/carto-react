@@ -5,7 +5,6 @@ import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI } from '@carto/react-ui';
 import {
   _FilterTypes as FilterTypes,
-  _getApplicableFilters as getApplicableFilters,
   AggregationTypes
 } from '@carto/react-core';
 import { getHistogram } from '../models';
