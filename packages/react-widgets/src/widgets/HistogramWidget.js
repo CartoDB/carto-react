@@ -11,6 +11,7 @@ import {
 import { getHistogram } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
+import NoDataAlert from './NoDataAlert';
 
 /**
  * Renders a <HistogramWidget /> component
@@ -26,6 +27,7 @@ import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
  */
 function HistogramWidget(props) {
   const {
@@ -40,7 +42,8 @@ function HistogramWidget(props) {
     formatter,
     tooltip,
     onError,
-    wrapperProps
+    wrapperProps,
+    noDataAlertProps
   } = props;
   const dispatch = useDispatch();
 
@@ -133,16 +136,20 @@ function HistogramWidget(props) {
 
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
-      <HistogramWidgetUI
-        data={histogramData}
-        dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}
-        selectedBars={selectedBars}
-        onSelectedBarsChange={handleSelectedBarsChange}
-        tooltip={tooltip}
-        tooltipFormatter={tooltipFormatter}
-        xAxisFormatter={xAxisFormatter}
-        yAxisFormatter={formatter}
-      />
+      {histogramData.length || isLoading ? (
+        <HistogramWidgetUI
+          data={histogramData}
+          dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}
+          selectedBars={selectedBars}
+          onSelectedBarsChange={handleSelectedBarsChange}
+          tooltip={tooltip}
+          tooltipFormatter={tooltipFormatter}
+          xAxisFormatter={xAxisFormatter}
+          yAxisFormatter={formatter}
+        />
+      ) : (
+        <NoDataAlert {...noDataAlertProps} />
+      )}
     </WrapperWidgetUI>
   );
 }
@@ -158,12 +165,14 @@ HistogramWidget.propTypes = {
   tooltip: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
   onError: PropTypes.func,
-  wrapperProps: PropTypes.object
+  wrapperProps: PropTypes.object,
+  noDataAlertProps: PropTypes.object
 };
 
 HistogramWidget.defaultProps = {
   tooltip: true,
-  wrapperProps: {}
+  wrapperProps: {},
+  noDataAlertProps: {}
 };
 
 export default HistogramWidget;
