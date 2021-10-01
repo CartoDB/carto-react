@@ -137,6 +137,8 @@ function PieWidget({
           })
         );
       }
+      
+      if (onSelectedCategoriesChange) onSelectedCategoriesChange(categories);
     },
     [column, dataSource, id, setSelectedCategories, dispatch]
   );
@@ -151,9 +153,7 @@ function PieWidget({
         colors={colors}
         isLoading={widgetsLoadingState[id]}
         selectedCategories={_selectedCategories}
-        onSelectedCategoriesChange={
-          onSelectedCategoriesChange || handleSelectedCategoriesChange
-        }
+        onSelectedCategoriesChange={handleSelectedCategoriesChange}
       />
     </WrapperWidgetUI>
   );
