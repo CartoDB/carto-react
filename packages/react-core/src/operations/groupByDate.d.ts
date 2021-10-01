@@ -1,8 +1,8 @@
-import { GroupByFeature } from '../types'
+import { GroupByFeature } from '../types';
 import { GroupDateTypes } from './GroupDateTypes';
 
 export function groupValuesByDateColumn(
-  data: [], // TODO: geojson types
+  data: [],
   valuesColumn: string,
   keysColumn: string,
   operation: GroupDateTypes
