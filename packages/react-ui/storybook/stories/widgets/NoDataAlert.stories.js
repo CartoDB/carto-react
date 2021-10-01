@@ -7,9 +7,19 @@ const options = {
   component: NoDataAlert,
   argTypes: {
     title: {
+      table: {
+        type: {
+          summary: 'string'
+        }
+      },
       control: { type: 'text' }
     },
     body: {
+      table: {
+        type: {
+          summary: 'string'
+        }
+      },
       control: { type: 'text' }
     }
   }
