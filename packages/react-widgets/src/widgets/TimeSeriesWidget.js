@@ -1,16 +1,25 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTimeSeries } from '../models';
-import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
-import { NoDataAlert, TimeSeriesWidgetUI, WrapperWidgetUI, TIME_SERIES_CHART_TYPES } from '@carto/react-ui';
+import {
+  addFilter,
+  removeFilter,
+  selectIsViewportFeaturesReadyForSource
+} from '@carto/react-redux';
+import {
+  NoDataAlert,
+  TimeSeriesWidgetUI,
+  WrapperWidgetUI,
+  TIME_SERIES_CHART_TYPES
+} from '@carto/react-ui';
 import {
   GroupDateTypes,
   AggregationTypes,
-  _FilterTypes as FilterTypes,
-  _getApplicableFilters as getApplicableFilters
+  _FilterTypes as FilterTypes
 } from '@carto/react-core';
 import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
+import { useSourceFilters } from '..';
 
 const BUCKET_SIZE_RANGE_MAPPING = {
   [GroupDateTypes.WEEKS]: 60 * 60 * 24 * 7,
@@ -50,9 +59,15 @@ function TimeSeriesWidget({
   stepSize
 }) {
   const dispatch = useDispatch();
+
+  const isSourceReady = useSelector((state) =>
+    selectIsViewportFeaturesReadyForSource(state, dataSource)
+  );
+  const filters = useSourceFilters({ dataSource, id });
+
   const [timeSeriesData, setTimeSeriesData] = useState([]);
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
   const [selectedStepSize, setSelectedStepSize] = useState(stepSize);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (stepSize !== selectedStepSize) {
@@ -62,24 +77,12 @@ function TimeSeriesWidget({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepSize]);
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const filters = useSelector((state) => {
-    const source = selectSourceById(state, dataSource) || {};
-    const filters = { ...source.filters };
-    delete filters[column];
-    return filters;
-  });
-
-  const isSourceReady = !!viewportFeaturesReady[dataSource];
-
   useEffect(() => {
-    if (isSourceReady) {
-      setIsLoading(true);
-      const _filters = getApplicableFilters(filters, id);
+    setIsLoading(true);
 
+    if (isSourceReady) {
       getTimeSeries({
-        filters: _filters,
+        filters,
         dataSource,
         column,
         stepSize: selectedStepSize,
@@ -97,12 +100,9 @@ function TimeSeriesWidget({
           if (onError) onError(error);
         });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     id,
-    // filters is always a new object, then we have to stringify it
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    JSON.stringify(filters),
+    filters,
     dataSource,
     column,
     selectedStepSize,
