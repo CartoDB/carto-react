@@ -21,11 +21,47 @@ import { PropTypes } from 'prop-types';
 import { useSourceFilters } from '..';
 import NoDataAlert from './NoDataAlert';
 
-const BUCKET_SIZE_RANGE_MAPPING = {
+const STEP_SIZE_RANGE_MAPPING = {
+  [GroupDateTypes.YEARS]: 60 * 60 * 24 * 7 * 30 * 12,
+  [GroupDateTypes.MONTHS]: 60 * 60 * 24 * 7 * 30,
   [GroupDateTypes.WEEKS]: 60 * 60 * 24 * 7,
-  [GroupDateTypes.DAYS]: 60 * 60 * 24
+  [GroupDateTypes.DAYS]: 60 * 60 * 24,
+  // [GroupDateTypes.HOURS]: 60 * 60,
+  // [GroupDateTypes.MINUTES]: 60
 };
 
+/**
+ * Renders a <TimeSeriesWidget /> component
+ * @param  props
+ * @param  {string} props.id - ID for the widget instance.
+ * @param  {string} props.title - Title to show in the widget header.
+ * @param  {string} props.dataSource - ID of the data source to get the data from.
+ * @param  {string} props.column - Name of the data source's date column for grouping the data.
+ * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
+ * @param  {string} [props.operation] - Operation to apply to the operationColumn. Operation used by default is COUNT. Must be one of those defined in `AggregationTypes` object.
+ * @param  {string} props.stepSize - Step applied to group the data. Must be one of those defined in `GroupDateTypes` object.
+ * @param  {string[]} [props.stepSizeOptions] - Different steps that can be applied to group the data. If filled, an icon with a menu appears to change between steps. Every value must be one of those defined in `AggregationTypes` object.
+ * @param  {string} [props.chartType] - Chart used to represent the time serie. Must be one of those defined in `TIME_SERIES_CHART_TYPES` object.
+ * @param  {number} [props.duration] - Duration of the animation in milliseconds. 20s by default.
+ * @param  {boolean} [props.tooltip] - Enable/disable tooltip.
+ * @param  {function} [props.tooltipFormatter] - Function that returns the HTML for the chart tooltip.
+ * @param  {function} [props.formatter] - Function for formatting the value that is represented in the tooltip.
+ * @param  {string} [props.height] - Height of the chart.
+ * @param  {boolean} [props.showControls] - Enable/disable animation controls (play, pause, stop, speed). True by default.
+ * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
+ * @param  {function} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
+ * Internal state
+ * @param  {boolean} [props.isPlaying] - If true, the animation starts.
+ * @param  {boolean} [props.isPaused] - If true and isPlaying false, the animation is paused.
+ * @param  {any[]} [props.timeWindow] - Array of two elements that represent a date range. The values can be anything that Date constructor can receive.
+ * Events
+ * @param  {function} [props.onPlay] - Event raised when the animation starts.
+ * @param  {function} [props.onPause] - Event raised when the animation is paused.
+ * @param  {function} [props.onTimelineUpdate] - Event raised when the timeline is updated. It happens when the animation is playing. The function receive as param the date that is being shown.
+ * @param  {function} [props.onTimeWindowUpdate] - Event raised when the timeWindow is updated. It happens when the animation is playing with a timeWindow enabled. The function receive as param an array of two date objects.
+ */
 function TimeSeriesWidget({
   // Widget
   id,
@@ -51,10 +87,13 @@ function TimeSeriesWidget({
   isPaused,
   onPause,
   onStop,
-  timelinePosition,
+  // TODO: timelinePosition isn't prepared for the released.
+  // Its content is too complicated for TimeSeriesWidget.
+  // If you want to use timelinePosition, use TimeSeriesWidgetUI.
+  // timelinePosition,
   onTimelineUpdate,
-  timeframe,
-  onTimeframeUpdate,
+  timeWindow,
+  onTimeWindowUpdate,
   // Both
   stepSize
 }) {
@@ -113,34 +152,34 @@ function TimeSeriesWidget({
     onError
   ]);
 
-  const handleTimeframeUpdate = useCallback(
-    (timeframe) => {
+  const handleTimeWindowUpdate = useCallback(
+    (timeWindow) => {
       dispatch(
         addFilter({
           id: dataSource,
           column,
           type: FilterTypes.BETWEEN,
-          values: [timeframe],
+          values: [timeWindow.map((date) => date.getTime())],
           owner: id
         })
       );
 
-      if (onTimeframeUpdate) onTimeframeUpdate();
+      if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
     },
-    [column, dataSource, dispatch, id, onTimeframeUpdate]
+    [column, dataSource, dispatch, id, onTimeWindowUpdate]
   );
 
   const handleTimelineUpdate = useCallback(
     (timelinePosition) => {
       const { name: moment } = timeSeriesData[timelinePosition];
-      handleTimeframeUpdate([
+      handleTimeWindowUpdate([
         moment,
-        moment + BUCKET_SIZE_RANGE_MAPPING[selectedStepSize] * 1000
+        moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize] * 1000
       ]);
 
-      if (onTimelineUpdate) onTimelineUpdate();
+      if (onTimelineUpdate) onTimelineUpdate(new Date(moment));
     },
-    [handleTimeframeUpdate, onTimelineUpdate, selectedStepSize, timeSeriesData]
+    [handleTimeWindowUpdate, onTimelineUpdate, selectedStepSize, timeSeriesData]
   );
 
   const handleStop = useCallback(() => {
@@ -207,10 +246,10 @@ function TimeSeriesWidget({
             isPaused={isPaused}
             onPause={onPause}
             onStop={handleStop}
-            timelinePosition={timelinePosition}
+            // timelinePosition={timelinePosition}
             onTimelineUpdate={handleTimelineUpdate}
-            timeframe={timeframe}
-            onTimeframeUpdate={handleTimeframeUpdate}
+            timeWindow={timeWindow}
+            onTimeWindowUpdate={handleTimeWindowUpdate}
           />
         ) : (
           <NoDataAlert {...noDataAlertProps} />
@@ -264,10 +303,10 @@ TimeSeriesWidget.propTypes = {
   isPaused: PropTypes.bool,
   onPause: PropTypes.func,
   onStop: PropTypes.func,
-  timelinePosition: PropTypes.number,
+  // timelinePosition: PropTypes.number,
   onTimelineUpdate: PropTypes.func,
-  timeframe: PropTypes.arrayOf(PropTypes.number),
-  onTimeframeUpdate: PropTypes.func,
+  timeWindow: PropTypes.arrayOf(PropTypes.number),
+  onTimeWindowUpdate: PropTypes.func,
   showControls: PropTypes.bool,
   chartType: PropTypes.oneOf(Object.values(TIME_SERIES_CHART_TYPES)),
   // Both
@@ -286,8 +325,8 @@ TimeSeriesWidget.defaultProps = {
   formatter: (value) => value,
   isPlaying: false,
   isPaused: false,
-  timelinePosition: 0,
-  timeframe: [],
+  // timelinePosition: 0,
+  timeWindow: [],
   showControls: true,
   chartType: TIME_SERIES_CHART_TYPES.LINE
 };

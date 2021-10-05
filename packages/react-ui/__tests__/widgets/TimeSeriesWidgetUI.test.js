@@ -212,21 +212,21 @@ describe('TimeSeriesWidgetUI', () => {
     });
   });
 
-  test('renders with initial timeframe position', () => {
-    const onTimeframeUpdate = jest.fn();
+  test('renders with initial timeWindow position', () => {
+    const onTimeWindowUpdate = jest.fn();
 
     render(
       <Widget
-        timeframe={[1517785200000, 1528063200000]}
-        onTimeframeUpdate={onTimeframeUpdate}
+        timeWindow={[1517785200000, 1528063200000]}
+        onTimeWindowUpdate={onTimeWindowUpdate}
       />
     );
 
-    expect(onTimeframeUpdate).toBeCalled();
+    expect(onTimeWindowUpdate).toBeCalled();
   });
 
-  test('calls onTimeframeUpdate when animation starts', () => {
-    const onTimeframeUpdate = jest.fn();
+  test('calls onTimeWindowUpdate when animation starts', () => {
+    const onTimeWindowUpdate = jest.fn();
     const onStop = jest.fn();
 
     act(() => {
@@ -234,14 +234,14 @@ describe('TimeSeriesWidgetUI', () => {
         <Widget
           isPlaying={true}
           isPaused={false}
-          timeframe={[1517785200000, 1528063200000]}
-          onTimeframeUpdate={onTimeframeUpdate}
+          timeWindow={[1517785200000, 1528063200000]}
+          onTimeWindowUpdate={onTimeWindowUpdate}
           onStop={onStop}
         />
       );
 
       setTimeout(() => {
-        expect(onTimeframeUpdate).toHaveBeenCalledTimes(15);
+        expect(onTimeWindowUpdate).toHaveBeenCalledTimes(15);
         expect(onStop).toBeCalled();
       }, 101);
       jest.runAllTimers();

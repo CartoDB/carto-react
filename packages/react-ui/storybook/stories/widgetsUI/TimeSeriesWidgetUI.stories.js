@@ -128,14 +128,14 @@ const options = {
       description:
         'Event emitted when timeline is updated. TimeSeriesWidget is responsible of applying the filter.'
     },
-    timeframe: {
+    timeWindow: {
       description: `Array of two UNIX timestamp (ms) that indicates the start and end of a frame to filter data. Example: [${data[0].name}, ${data[5].name}].
       [Internal state] This prop is used to managed state outside of the component.`,
       control: { type: 'array', expanded: true }
     },
-    onTimeframeUpdate: {
+    onTimeWindowUpdate: {
       description:
-        'Event emitted when timeframe is updated. TimeSeriesWidget is responsible of applying the filter.'
+        'Event emitted when timeWindow is updated. TimeSeriesWidget is responsible of applying the filter.'
     }
   }
 };
@@ -143,8 +143,8 @@ const options = {
 export default options;
 
 const Template = (args) => {
-  if (args.timeframe && !Array.isArray(args.timeframe)) {
-    args.timeframe = [];
+  if (args.timeWindow && !Array.isArray(args.timeWindow)) {
+    args.timeWindow = [];
   }
 
   return <TimeSeriesWidgetUI {...args} />;
@@ -153,7 +153,7 @@ const Template = (args) => {
 const requiredProps = {
   data,
   stepSize: GroupDateTypes.WEEKS,
-  timeframe: []
+  timeWindow: []
 };
 
 export const Default = Template.bind({});

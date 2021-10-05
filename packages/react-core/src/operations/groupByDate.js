@@ -3,9 +3,27 @@ import { aggregationFunctions } from './aggregation/values';
 import { GroupDateTypes } from './GroupDateTypes';
 
 const GROUP_KEY_FN_MAPPING = {
+  // @ts-ignore
+  [GroupDateTypes.YEARS]: (date) => new Date(Date.UTC(date.getFullYear())),
+  [GroupDateTypes.MONTHS]: (date) =>
+    new Date(Date.UTC(date.getFullYear(), date.getMonth())),
   [GroupDateTypes.WEEKS]: (date) => getMonday(date),
   [GroupDateTypes.DAYS]: (date) =>
-    new Date(date.getFullYear(), date.getMonth(), date.getDate())
+    new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
+  // [GroupDateTypes.HOURS]: (date) =>
+  //   new Date(
+  //     Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours())
+  //   ),
+  // [GroupDateTypes.MINUTES]: (date) =>
+  //   new Date(
+  //     Date.UTC(
+  //       date.getFullYear(),
+  //       date.getMonth(),
+  //       date.getDate(),
+  //       date.getHours(),
+  //       date.getMinutes()
+  //     )
+  //   )
 };
 
 export function groupValuesByDateColumn(

@@ -127,7 +127,7 @@ export default function TimeSeriesChart({
 
   const {
     timelineOptions: markLine,
-    timeframeOptions: markArea
+    timeWindowOptions: markArea
   } = useTimeSeriesInteractivity({
     echartsInstance,
     data

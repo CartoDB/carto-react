@@ -17,11 +17,8 @@ export const GroupDateTypes = Object.freeze({
   DAYS: 'days',
 
   /** Hours */
-  HOURS: 'hours',
+  // HOURS: 'hours',
 
   /** Minutes */
-  MINUTES: 'minutes',
-
-  /** Seconds */
-  SECONDS: 'seconds'
+  // MINUTES: 'minutes',
 });

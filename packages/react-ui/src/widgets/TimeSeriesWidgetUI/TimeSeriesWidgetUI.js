@@ -5,7 +5,9 @@ import {
   IconButton,
   MenuItem,
   SvgIcon,
-  Typography
+  Typography,
+  capitalize,
+  makeStyles
 } from '@material-ui/core';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import TimeSeriesChart from './components/TimeSeriesChart';
@@ -15,18 +17,26 @@ import { PropTypes } from 'prop-types';
 import { GroupDateTypes, getMonday } from '@carto/react-core';
 
 const FORMAT_DATE_BY_STEP_SIZE = {
-  [GroupDateTypes.DAYS]: daysCurrentDateRange,
-  [GroupDateTypes.WEEKS]: weeksCurrentDateRange
+  [GroupDateTypes.YEARS]: yearCurrentDateRange,
+  [GroupDateTypes.MONTHS]: monthsCurrentDateRange,
+  [GroupDateTypes.WEEKS]: weeksCurrentDateRange,
+  [GroupDateTypes.DAYS]: daysCurrentDateRange
 };
 
-const FORMAT_TIMEFRAME_BY_STEP_SIZE = {
-  [GroupDateTypes.DAYS]: daysCurrentDateRange,
-  [GroupDateTypes.WEEKS]: daysCurrentDateRange
+const FORMAT_TIME_WINDOW_BY_STEP_SIZE = {
+  [GroupDateTypes.YEARS]: yearCurrentDateRange,
+  [GroupDateTypes.MONTHS]: monthsCurrentDateRange,
+  [GroupDateTypes.WEEKS]: daysCurrentDateRange,
+  [GroupDateTypes.DAYS]: daysCurrentDateRange
 };
 
-const TIMEFRAME_STEP_BY_STEP_SIZE = {
-  [GroupDateTypes.DAYS]: 60 * 60 * 24,
-  [GroupDateTypes.WEEKS]: 60 * 60 * 24
+const TIME_WINDOW_STEP_BY_STEP_SIZE = {
+  [GroupDateTypes.YEARS]: 60 * 60 * 24 * 7,
+  [GroupDateTypes.MONTHS]: 60 * 60 * 24,
+  [GroupDateTypes.WEEKS]: 60 * 60 * 24,
+  [GroupDateTypes.DAYS]: 60 * 60 * 12
+  // [GroupDateTypes.HOURS]: 60 * 60,
+  // [GroupDateTypes.MINUTES]: 60
 };
 
 const SPEED_FACTORS = [0.5, 1, 2, 3];
@@ -43,8 +53,8 @@ function TimeSeriesWidgetUI({
   showControls,
   timelinePosition,
   onTimelineUpdate,
-  timeframe,
-  onTimeframeUpdate,
+  timeWindow,
+  onTimeWindowUpdate,
   isPlaying,
   onPlay,
   isPaused,
@@ -70,8 +80,8 @@ function TimeSeriesWidgetUI({
       onStop={onStop}
       timelinePosition={timelinePosition}
       onTimelineUpdate={onTimelineUpdate}
-      timeframe={timeframe}
-      onTimeframeUpdate={onTimeframeUpdate}
+      timeWindow={timeWindow}
+      onTimeWindowUpdate={onTimeWindowUpdate}
     >
       <TimeSeriesWidgetUIContent
         data={data}
@@ -108,8 +118,8 @@ TimeSeriesWidgetUI.propTypes = {
   onStop: PropTypes.func,
   timelinePosition: PropTypes.number,
   onTimelineUpdate: PropTypes.func,
-  timeframe: PropTypes.arrayOf(PropTypes.number),
-  onTimeframeUpdate: PropTypes.func,
+  timeWindow: PropTypes.arrayOf(PropTypes.number),
+  onTimeWindowUpdate: PropTypes.func,
   showControls: PropTypes.bool
 };
 
@@ -123,11 +133,18 @@ TimeSeriesWidgetUI.defaultProps = {
   isPlaying: false,
   isPaused: false,
   timelinePosition: 0,
-  timeframe: [],
+  timeWindow: [],
   showControls: true
 };
 
 export default TimeSeriesWidgetUI;
+
+const useStyles = makeStyles((theme) => ({
+  currentStepSize: {
+    fontSize: 12,
+    marginLeft: theme.spacing(1),
+  }
+}))
 
 // Content is splitted from the default
 // component to be able to use context
@@ -141,15 +158,16 @@ function TimeSeriesWidgetUIContent({
   height,
   showControls
 }) {
+  const classes = useStyles();
   const [anchorSpeedEl, setAnchorSpeedEl] = useState(null);
   const [speed, setSpeed] = useState(1);
   const {
     isPlaying,
     isPaused,
-    timeframe,
+    timeWindow,
     timelinePosition,
     setTimelinePosition,
-    setTimeframe,
+    setTimeWindow,
     stop,
     togglePlay,
     animationStep
@@ -165,30 +183,30 @@ function TimeSeriesWidgetUIContent({
     [data]
   );
 
-  // Running timeframe
+  // Running timeWindow
   useEffect(() => {
-    if (isPlaying && timeframe.length === 2) {
-      const timeframeStep = TIMEFRAME_STEP_BY_STEP_SIZE[stepSize];
+    if (isPlaying && timeWindow.length === 2) {
+      const timeWindowStep = TIME_WINDOW_STEP_BY_STEP_SIZE[stepSize];
       const interval = setInterval(() => {
-        const msTimeframeStep = timeframeStep * 1000;
-        const newTimeframe = [
-          timeframe[0] + msTimeframeStep,
-          timeframe[1] + msTimeframeStep
+        const msTimeWindowStep = timeWindowStep * 1000;
+        const newTimeWindow = [
+          timeWindow[0] + msTimeWindowStep,
+          timeWindow[1] + msTimeWindowStep
         ];
-        if (newTimeframe[1] > data[data.length - 1].name) {
+        if (newTimeWindow[1] > data[data.length - 1].name) {
           stop();
           clearInterval(interval);
         } else {
-          setTimeframe(newTimeframe);
+          setTimeWindow(newTimeWindow);
         }
       }, 100 / speed);
       return () => clearInterval(interval);
     }
-  }, [data, isPlaying, timeframe, stepSize, setTimeframe, stop, speed]);
+  }, [data, isPlaying, timeWindow, stepSize, setTimeWindow, stop, speed]);
 
   // Running timeline
   useEffect(() => {
-    if (isPlaying && !timeframe.length) {
+    if (isPlaying && !timeWindow.length) {
       const interval = setInterval(() => {
         const newTimelinePosition = Math.min(data.length, timelinePosition + 1);
         if (isPlaying && newTimelinePosition === data.length) {
@@ -206,7 +224,7 @@ function TimeSeriesWidgetUIContent({
     isPlaying,
     animationStep,
     speed,
-    timeframe.length,
+    timeWindow.length,
     timelinePosition,
     stop,
     setTimelinePosition
@@ -217,10 +235,10 @@ function TimeSeriesWidgetUIContent({
       return '';
     }
 
-    // If timeframe is activated
-    if (timeframe.length) {
-      const timeframeFormatter = FORMAT_TIMEFRAME_BY_STEP_SIZE[stepSize];
-      return timeframe.map((time) => timeframeFormatter(new Date(time))).join(' - ');
+    // If timeWindow is activated
+    if (timeWindow.length) {
+      const timeWindowFormatter = FORMAT_TIME_WINDOW_BY_STEP_SIZE[stepSize];
+      return timeWindow.map((time) => timeWindowFormatter(new Date(time))).join(' - ');
     }
 
     const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
@@ -238,7 +256,7 @@ function TimeSeriesWidgetUIContent({
       const currentDate = new Date(data[timelinePosition].name);
       return formatter(currentDate);
     }
-  }, [data, stepSize, isPlaying, isPaused, timeframe, timelinePosition]);
+  }, [data, stepSize, isPlaying, isPaused, timeWindow, timelinePosition]);
 
   const handleOpenSpeedMenu = (e) => {
     if (e?.currentTarget) {
@@ -267,9 +285,16 @@ function TimeSeriesWidgetUIContent({
 
   return (
     <Box>
-      <Typography color='textSecondary' variant='caption'>
-        {currentDate}
-      </Typography>
+      {!!currentDate && (
+        <Box>
+          <Typography color='textSecondary' variant='caption'>
+            {currentDate}
+          </Typography>
+          <Typography className={classes.currentStepSize} color='textSecondary' variant='caption'>
+            ({capitalize(stepSize)})
+          </Typography>
+        </Box>
+      )}
       {showControls ? (
         <Grid container alignItems='flex-end'>
           <Grid item xs={1}>
@@ -343,6 +368,18 @@ function daysCurrentDateRange(date) {
 
 function weeksCurrentDateRange(date) {
   return `Week of ${getMonday(date).toLocaleDateString()}`;
+}
+
+function yearCurrentDateRange(date) {
+  return date.getFullYear();
+}
+
+function monthsCurrentDateRange(date) {
+  return formatMonth(date) + '/' + date.getFullYear();
+}
+
+function formatMonth(date) {
+  return ('0' + (date.getMonth() + 1)).slice(-2);
 }
 
 function defaultTooltipFormatter(params, stepSize, valueFormatter) {

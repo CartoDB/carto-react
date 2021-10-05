@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTimeSeriesContext } from './TimeSeriesContext';
 
 const events = {};
-let initialTimeframe = null;
+let initialTimeWindow = null;
 
 export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
   const theme = useTheme();
@@ -12,8 +12,8 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
     isPaused,
     setIsPaused,
     timelinePosition,
-    timeframe,
-    setTimeframe,
+    timeWindow,
+    setTimeWindow,
     setTimelinePosition,
     stop,
     animationStep
@@ -47,7 +47,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
   // Echarts events
   useEffect(() => {
     function clickEvent(params) {
-      if (!timeframe.length && params.target?.type !== 'ec-line') {
+      if (!timeWindow.length && params.target?.type !== 'ec-line') {
         updateTimelineByCoordinate(params);
 
         // If stopped, pause to show the markline.
@@ -56,8 +56,8 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
         }
       }
 
-      if (timeframe.length === 2) {
-        setTimeframe([]);
+      if (timeWindow.length === 2) {
+        setTimeWindow([]);
         stop();
       }
     }
@@ -68,9 +68,9 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
     isPaused,
     isPlaying,
     setIsPaused,
-    setTimeframe,
+    setTimeWindow,
     stop,
-    timeframe.length,
+    timeWindow.length,
     updateTimelineByCoordinate
   ]);
 
@@ -83,14 +83,14 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
       }
 
       // Move markArea
-      if (timeframe.length === 2) {
+      if (timeWindow.length === 2) {
         const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
           params.offsetX,
           params.offsetY
         ]);
-        if (x >= timeframe[0] && x <= timeframe[1]) {
+        if (x >= timeWindow[0] && x <= timeWindow[1]) {
           setIsMarkAreaMoving(true);
-          const newMarkAreaPosition = x - timeframe[0];
+          const newMarkAreaPosition = x - timeWindow[0];
           setOldMarkAreaPosition(newMarkAreaPosition);
           return;
         }
@@ -102,13 +102,13 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
           params.offsetX,
           params.offsetY
         ]);
-        initialTimeframe = x;
+        initialTimeWindow = x;
         return;
       }
     }
 
     return addEventWithCleanUp(zr, 'mousedown', mouseDownEvent);
-  }, [zr, echartsInstance, timeframe, updateCursor]);
+  }, [zr, echartsInstance, timeWindow, updateCursor]);
 
   useEffect(() => {
     function mouseMoveEvent(params) {
@@ -126,10 +126,10 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
           params.offsetX,
           params.offsetY
         ]);
-        if (initialTimeframe === x) {
-          setTimeframe([]);
+        if (initialTimeWindow === x) {
+          setTimeWindow([]);
         } else {
-          setTimeframe([initialTimeframe, x]);
+          setTimeWindow([initialTimeWindow, x]);
         }
       }
     }
@@ -140,7 +140,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
     echartsInstance,
     isMarkAreaSelected,
     isMarkLineSelected,
-    setTimeframe,
+    setTimeWindow,
     updateCursor,
     updateTimelineByCoordinate
   ]);
@@ -154,9 +154,9 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
 
       if (isMarkAreaSelected) {
         setIsMarkAreaSelected(false);
-        initialTimeframe = null;
-        if (timeframe.length === 1) {
-          setTimeframe([]);
+        initialTimeWindow = null;
+        if (timeWindow.length === 1) {
+          setTimeWindow([]);
         }
       }
 
@@ -165,10 +165,10 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
           params.offsetX,
           params.offsetY
         ]);
-        const newMarkAreaPosition = x - timeframe[0];
+        const newMarkAreaPosition = x - timeWindow[0];
         if (oldMarkAreaPosition) {
           const diff = newMarkAreaPosition - oldMarkAreaPosition;
-          setTimeframe([timeframe[0] + diff, timeframe[1] + diff]);
+          setTimeWindow([timeWindow[0] + diff, timeWindow[1] + diff]);
         }
         setIsMarkAreaMoving(false);
       }
@@ -182,8 +182,8 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
     isMarkAreaSelected,
     isMarkLineSelected,
     oldMarkAreaPosition,
-    setTimeframe,
-    timeframe,
+    setTimeWindow,
+    timeWindow,
     updateCursor
   ]);
 
@@ -191,7 +191,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
   const timelineOptions = useMemo(
     () =>
       // Cannot have markLine and markArea at the same time
-      !timeframe.length && {
+      !timeWindow.length && {
         symbol: ['none', 'none'],
         animationDuration: 100,
         animationDurationUpdate: Math.min(300, animationStep / 2),
@@ -220,23 +220,23 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
               ]
             : []
       },
-    [isPaused, isPlaying, data, theme, animationStep, timelinePosition, timeframe]
+    [isPaused, isPlaying, data, theme, animationStep, timelinePosition, timeWindow]
   );
 
   // markArea in echarts
-  const timeframeOptions = useMemo(
+  const timeWindowOptions = useMemo(
     () =>
-      timeframe.length === 2 && {
-        data: [[{ coord: [timeframe[0]] }, { coord: [timeframe[1]] }]],
+      timeWindow.length === 2 && {
+        data: [[{ coord: [timeWindow[0]] }, { coord: [timeWindow[1]] }]],
         itemStyle: {
           color: theme.palette.primary.main,
           opacity: 0.2
         }
       },
-    [theme, timeframe]
+    [theme, timeWindow]
   );
 
-  return { timelineOptions, timeframeOptions };
+  return { timelineOptions, timeWindowOptions };
 }
 
 // Aux
