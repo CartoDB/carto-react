@@ -7,7 +7,6 @@ import PieWidgetUI from './widgets/PieWidgetUI';
 import LegendWidgetUI, { LEGEND_TYPES } from './widgets/legend/LegendWidgetUI';
 import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
-import NoDataAlert from './utils/NoDataAlert';
 import {
   useTimeSeriesContext,
   TimeSeriesProvider
@@ -29,6 +28,5 @@ export {
   TimeSeriesProvider,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
   LegendWidgetUI,
-  LEGEND_TYPES,
-  NoDataAlert
+  LEGEND_TYPES
 };

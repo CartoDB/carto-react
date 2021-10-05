@@ -7,7 +7,6 @@ import {
   selectIsViewportFeaturesReadyForSource
 } from '@carto/react-redux';
 import {
-  NoDataAlert,
   TimeSeriesWidgetUI,
   WrapperWidgetUI,
   TIME_SERIES_CHART_TYPES
@@ -20,6 +19,7 @@ import {
 import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import { useSourceFilters } from '..';
+import NoDataAlert from './NoDataAlert';
 
 const BUCKET_SIZE_RANGE_MAPPING = {
   [GroupDateTypes.WEEKS]: 60 * 60 * 24 * 7,
@@ -191,9 +191,7 @@ function TimeSeriesWidget({
             : [])
         ]}
       >
-        {!timeSeriesData.length ? (
-          <NoDataAlert {...noDataAlertProps} />
-        ) : (
+        {timeSeriesData.length || isLoading ? (
           <TimeSeriesWidgetUI
             data={timeSeriesData}
             stepSize={selectedStepSize}
@@ -214,6 +212,8 @@ function TimeSeriesWidget({
             timeframe={timeframe}
             onTimeframeUpdate={handleTimeframeUpdate}
           />
+        ) : (
+          <NoDataAlert {...noDataAlertProps} />
         )}
       </WrapperWidgetUI>
       <Menu

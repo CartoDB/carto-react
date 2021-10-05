@@ -15,7 +15,6 @@ import {
 import { Skeleton } from '@material-ui/lab';
 
 import { animateValues } from './utils/animations';
-import NoDataAlert from '../utils/NoDataAlert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -502,8 +501,6 @@ function CategoryWidgetUI(props) {
                   }
                 />
               ))
-            ) : data.length === 0 ? (
-              <NoDataAlert />
             ) : (
               <>
                 <Typography variant='body2'>No results</Typography>
