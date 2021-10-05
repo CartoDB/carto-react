@@ -25,7 +25,7 @@ const STEP_SIZE_RANGE_MAPPING = {
   [GroupDateTypes.YEARS]: 60 * 60 * 24 * 7 * 30 * 12,
   [GroupDateTypes.MONTHS]: 60 * 60 * 24 * 7 * 30,
   [GroupDateTypes.WEEKS]: 60 * 60 * 24 * 7,
-  [GroupDateTypes.DAYS]: 60 * 60 * 24,
+  [GroupDateTypes.DAYS]: 60 * 60 * 24
   // [GroupDateTypes.HOURS]: 60 * 60,
   // [GroupDateTypes.MINUTES]: 60
 };
@@ -159,7 +159,7 @@ function TimeSeriesWidget({
           id: dataSource,
           column,
           type: FilterTypes.BETWEEN,
-          values: [timeWindow.map((date) => date.getTime())],
+          values: [timeWindow.map((date) => date.getTime?.() || date)],
           owner: id
         })
       );
@@ -172,14 +172,19 @@ function TimeSeriesWidget({
   const handleTimelineUpdate = useCallback(
     (timelinePosition) => {
       const { name: moment } = timeSeriesData[timelinePosition];
-      handleTimeWindowUpdate([
-        moment,
-        moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize] * 1000
-      ]);
+      dispatch(
+        addFilter({
+          id: dataSource,
+          column,
+          type: FilterTypes.BETWEEN,
+          values: [moment, moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize] * 1000],
+          owner: id
+        })
+      );
 
       if (onTimelineUpdate) onTimelineUpdate(new Date(moment));
     },
-    [handleTimeWindowUpdate, onTimelineUpdate, selectedStepSize, timeSeriesData]
+    [column, dataSource, dispatch, id, onTimelineUpdate, selectedStepSize, timeSeriesData]
   );
 
   const handleStop = useCallback(() => {
