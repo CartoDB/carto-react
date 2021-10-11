@@ -160,8 +160,8 @@ export default function TimeSeriesChart({
       grid: {
         left: theme.spacing(2),
         top: theme.spacing(4),
-        right: theme.spacing(1),
-        bottom: theme.spacing(3)
+        right: theme.spacing(2),
+        bottom: theme.spacing(3),
       },
       color: [theme.palette.secondary.main],
       tooltip: tooltipOptions,

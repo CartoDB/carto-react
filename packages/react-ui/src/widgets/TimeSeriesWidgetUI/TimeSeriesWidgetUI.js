@@ -23,13 +23,6 @@ const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.DAYS]: daysCurrentDateRange
 };
 
-const FORMAT_TIME_WINDOW_BY_STEP_SIZE = {
-  [GroupDateTypes.YEARS]: yearCurrentDateRange,
-  [GroupDateTypes.MONTHS]: monthsCurrentDateRange,
-  [GroupDateTypes.WEEKS]: daysCurrentDateRange,
-  [GroupDateTypes.DAYS]: daysCurrentDateRange
-};
-
 const TIME_WINDOW_STEP_BY_STEP_SIZE = {
   [GroupDateTypes.YEARS]: 60 * 60 * 24 * 7,
   [GroupDateTypes.MONTHS]: 60 * 60 * 24,
@@ -237,8 +230,7 @@ function TimeSeriesWidgetUIContent({
 
     // If timeWindow is activated
     if (timeWindow.length) {
-      const timeWindowFormatter = FORMAT_TIME_WINDOW_BY_STEP_SIZE[stepSize];
-      return timeWindow.map((time) => timeWindowFormatter(new Date(time))).join(' - ');
+      return timeWindow.map((time) => daysCurrentDateRange(new Date(time))).join(' - ');
     }
 
     const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];

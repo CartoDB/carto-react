@@ -22,10 +22,10 @@ import { useSourceFilters } from '..';
 import NoDataAlert from './NoDataAlert';
 
 const STEP_SIZE_RANGE_MAPPING = {
-  [GroupDateTypes.YEARS]: 60 * 60 * 24 * 7 * 30 * 12,
-  [GroupDateTypes.MONTHS]: 60 * 60 * 24 * 7 * 30,
-  [GroupDateTypes.WEEKS]: 60 * 60 * 24 * 7,
-  [GroupDateTypes.DAYS]: 60 * 60 * 24
+  [GroupDateTypes.YEARS]: 60 * 60 * 24 * 7 * 30 * 12 * 1000,
+  [GroupDateTypes.MONTHS]: 60 * 60 * 24 * 7 * 30 * 1000,
+  [GroupDateTypes.WEEKS]: 60 * 60 * 24 * 7 * 1000,
+  [GroupDateTypes.DAYS]: 60 * 60 * 24 * 1000
   // [GroupDateTypes.HOURS]: 60 * 60,
   // [GroupDateTypes.MINUTES]: 60
 };
@@ -177,7 +177,7 @@ function TimeSeriesWidget({
           id: dataSource,
           column,
           type: FilterTypes.BETWEEN,
-          values: [moment, moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize] * 1000],
+          values: [moment, moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize]],
           owner: id
         })
       );
