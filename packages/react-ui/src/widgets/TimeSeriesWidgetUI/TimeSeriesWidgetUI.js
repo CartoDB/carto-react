@@ -23,13 +23,13 @@ const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.DAYS]: daysCurrentDateRange
 };
 
+// TimeWindow step is the amount of time (in seconds) that pass in every iteration during the animation.
+// It depends on step size for a better animation speed adjustment.
 const TIME_WINDOW_STEP_BY_STEP_SIZE = {
-  [GroupDateTypes.YEARS]: 60 * 60 * 24 * 7,
-  [GroupDateTypes.MONTHS]: 60 * 60 * 24,
-  [GroupDateTypes.WEEKS]: 60 * 60 * 24,
-  [GroupDateTypes.DAYS]: 60 * 60 * 12
-  // [GroupDateTypes.HOURS]: 60 * 60,
-  // [GroupDateTypes.MINUTES]: 60
+  [GroupDateTypes.YEARS]: 60 * 60 * 24 * 7, // Week
+  [GroupDateTypes.MONTHS]: 60 * 60 * 24, // Day
+  [GroupDateTypes.WEEKS]: 60 * 60 * 24, // Day
+  [GroupDateTypes.DAYS]: 60 * 60 * 12 // Half day
 };
 
 const SPEED_FACTORS = [0.5, 1, 2, 3];

@@ -21,13 +21,15 @@ import { PropTypes } from 'prop-types';
 import { useSourceFilters } from '..';
 import NoDataAlert from './NoDataAlert';
 
+// Due to the widget groups the data by a certain stepSize, when filtering
+// the filter applied must be a range that represent the grouping range.
+// For example, if you group the data by day, the range must
+// start with a day and ends 24 hours later.
 const STEP_SIZE_RANGE_MAPPING = {
-  [GroupDateTypes.YEARS]: 60 * 60 * 24 * 7 * 30 * 12 * 1000,
-  [GroupDateTypes.MONTHS]: 60 * 60 * 24 * 7 * 30 * 1000,
+  [GroupDateTypes.YEARS]: 60 * 60 * 24 * 365 * 1000,
+  [GroupDateTypes.MONTHS]: 60 * 60 * 24 * 30 * 1000,
   [GroupDateTypes.WEEKS]: 60 * 60 * 24 * 7 * 1000,
   [GroupDateTypes.DAYS]: 60 * 60 * 24 * 1000
-  // [GroupDateTypes.HOURS]: 60 * 60,
-  // [GroupDateTypes.MINUTES]: 60
 };
 
 /**
