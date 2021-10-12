@@ -157,7 +157,7 @@ function TimeSeriesWidget({
         addFilter({
           id: dataSource,
           column,
-          type: FilterTypes.BETWEEN,
+          type: FilterTypes.TIME,
           values: [timeWindow.map((date) => date.getTime?.() || date)],
           owner: id
         })
@@ -175,7 +175,7 @@ function TimeSeriesWidget({
         addFilter({
           id: dataSource,
           column,
-          type: FilterTypes.BETWEEN,
+          type: FilterTypes.TIME,
           values: [[moment, moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize]]],
           owner: id
         })
