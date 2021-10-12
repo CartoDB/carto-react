@@ -3,9 +3,6 @@ export enum GroupDateTypes {
   MONTHS = 'months',
   WEEKS = 'weeks',
   DAYS = 'days',
-  HOURS = 'hours',
-  MINUTES = 'minutes',
-  SECONDS = 'seconds'
 }
 
   

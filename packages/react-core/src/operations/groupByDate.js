@@ -10,20 +10,6 @@ const GROUP_KEY_FN_MAPPING = {
   [GroupDateTypes.WEEKS]: (date) => getMonday(date),
   [GroupDateTypes.DAYS]: (date) =>
     new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
-  // [GroupDateTypes.HOURS]: (date) =>
-  //   new Date(
-  //     Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours())
-  //   ),
-  // [GroupDateTypes.MINUTES]: (date) =>
-  //   new Date(
-  //     Date.UTC(
-  //       date.getFullYear(),
-  //       date.getMonth(),
-  //       date.getDate(),
-  //       date.getHours(),
-  //       date.getMinutes()
-  //     )
-  //   )
 };
 
 export function groupValuesByDateColumn(

@@ -15,10 +15,4 @@ export const GroupDateTypes = Object.freeze({
 
   /** Days */
   DAYS: 'days',
-
-  /** Hours */
-  // HOURS: 'hours',
-
-  /** Minutes */
-  // MINUTES: 'minutes',
 });
