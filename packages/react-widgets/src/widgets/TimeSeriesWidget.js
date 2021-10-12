@@ -89,10 +89,6 @@ function TimeSeriesWidget({
   isPaused,
   onPause,
   onStop,
-  // TODO: timelinePosition isn't prepared for the released.
-  // Its content is too complicated for TimeSeriesWidget.
-  // If you want to use timelinePosition, use TimeSeriesWidgetUI.
-  // timelinePosition,
   onTimelineUpdate,
   timeWindow,
   onTimeWindowUpdate,
@@ -310,7 +306,6 @@ TimeSeriesWidget.propTypes = {
   isPaused: PropTypes.bool,
   onPause: PropTypes.func,
   onStop: PropTypes.func,
-  // timelinePosition: PropTypes.number,
   onTimelineUpdate: PropTypes.func,
   timeWindow: PropTypes.arrayOf(PropTypes.number),
   onTimeWindowUpdate: PropTypes.func,
