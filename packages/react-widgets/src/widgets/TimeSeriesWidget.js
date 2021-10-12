@@ -179,7 +179,7 @@ function TimeSeriesWidget({
           id: dataSource,
           column,
           type: FilterTypes.BETWEEN,
-          values: [moment, moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize]],
+          values: [[moment, moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize]]],
           owner: id
         })
       );
