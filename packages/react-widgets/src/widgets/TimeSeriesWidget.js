@@ -111,7 +111,7 @@ function TimeSeriesWidget({
     if (stepSize !== selectedStepSize) {
       setSelectedStepSize(stepSize);
     }
-    // Only on bucketSize update
+    // Only on stepSize update
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepSize]);
 
@@ -199,19 +199,19 @@ function TimeSeriesWidget({
 
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleOpenBucketSizeMenu = (e) => {
+  const handleOpenStepSizeMenu = (e) => {
     if (e?.currentTarget) {
       setAnchorEl(e.currentTarget);
     }
   };
 
-  const handleCloseBucketSizeMenu = () => {
+  const handleCloseStepSizeMenu = () => {
     setAnchorEl(null);
   };
 
   const handleStepSizeUpdate = (stepSize) => {
     setSelectedStepSize(stepSize);
-    handleCloseBucketSizeMenu();
+    handleCloseStepSizeMenu();
   };
 
   return (
@@ -228,7 +228,7 @@ function TimeSeriesWidget({
                   id: 'a0',
                   name: 'Bucket size',
                   icon: <StepSizeIcon />,
-                  action: handleOpenBucketSizeMenu
+                  action: handleOpenStepSizeMenu
                 }
               ]
             : [])
@@ -263,7 +263,7 @@ function TimeSeriesWidget({
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleCloseBucketSizeMenu}
+        onClose={handleCloseStepSizeMenu}
       >
         <MenuItem disabled>
           <Typography variant='caption' color='textSecondary'>
