@@ -61,6 +61,7 @@ const STEP_SIZE_RANGE_MAPPING = {
  * Events
  * @param  {function} [props.onPlay] - Event raised when the animation starts.
  * @param  {function} [props.onPause] - Event raised when the animation is paused.
+ * @param  {function} [props.onStop] - Event raised when the animation is stopped.
  * @param  {function} [props.onTimelineUpdate] - Event raised when the timeline is updated. It happens when the animation is playing. The function receive as param the date that is being shown.
  * @param  {function} [props.onTimeWindowUpdate] - Event raised when the timeWindow is updated. It happens when the animation is playing with a timeWindow enabled. The function receive as param an array of two date objects.
  */
