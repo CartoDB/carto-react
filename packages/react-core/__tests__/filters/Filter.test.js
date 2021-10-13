@@ -12,6 +12,12 @@ const filters = {
       owner: 'widgetId2',
       values: [[1, 2, 3]]
     }
+  },
+  column3: {
+    time: {
+      owner: 'widgetId3',
+      values: [[0, 1]]
+    }
   }
 };
 
@@ -93,7 +99,8 @@ describe('Filters', () => {
       const feature = {
         properties: {
           column1: 'a',
-          column2: 1.5
+          column2: 1.5,
+          column3: 1
         }
       };
       const featureIsIncluded = buildFeatureFilter(params)(feature);
@@ -104,7 +111,8 @@ describe('Filters', () => {
       const feature = {
         properties: {
           column1: 'a',
-          column2: 3
+          column2: 3,
+          column3: '1999'
         }
       };
       const featureIsIncluded = buildFeatureFilter(params)(feature);
@@ -162,7 +170,8 @@ describe('Filters', () => {
       const feature = {
         properties: {
           column1: 'a',
-          column2: 1.5
+          column2: 1.5,
+          column3: '1970'
         }
       };
       const featureIsIncluded = buildFeatureFilter(params)(feature);
@@ -173,7 +182,8 @@ describe('Filters', () => {
       const feature = {
         properties: {
           column1: 'a',
-          column2: 3
+          column2: 3,
+          column3: -1
         }
       };
       const featureIsIncluded = buildFeatureFilter(params)(feature);
