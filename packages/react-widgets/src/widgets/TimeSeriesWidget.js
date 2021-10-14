@@ -9,7 +9,8 @@ import {
 import {
   TimeSeriesWidgetUI,
   WrapperWidgetUI,
-  TIME_SERIES_CHART_TYPES
+  TIME_SERIES_CHART_TYPES,
+  NoDataAlert
 } from '@carto/react-ui';
 import {
   GroupDateTypes,
@@ -18,8 +19,7 @@ import {
 } from '@carto/react-core';
 import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
-import { useSourceFilters } from '..';
-import NoDataAlert from './NoDataAlert';
+import useSourceFilters from '../hooks/useSourceFilters';
 
 // Due to the widget groups the data by a certain stepSize, when filtering
 // the filter applied must be a range that represent the grouping range.
