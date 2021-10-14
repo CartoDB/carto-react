@@ -2,12 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
-import { WrapperWidgetUI, PieWidgetUI } from '@carto/react-ui';
+import { WrapperWidgetUI, PieWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
-import NoDataAlert from './NoDataAlert';
 
 /**
  * Renders a <PieWidget /> component

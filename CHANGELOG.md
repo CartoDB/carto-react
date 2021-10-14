@@ -3,7 +3,7 @@
 ## Not released
 
 - Add TimeSeriesWidget [#168](https://github.com/CartoDB/carto-react/pull/168)
-- Add NoDataAlert widget [#188](https://github.com/CartoDB/carto-react/pull/188)
+- Add NoDataAlert component [#188](https://github.com/CartoDB/carto-react/pull/188) and [#191](https://github.com/CartoDB/carto-react/pull/191)
 - Update echarts to v5 [#167](https://github.com/CartoDB/carto-react/pull/167)
 - Fix unnecessary widget calculations triggered by widget itself [#185](https://github.com/CartoDB/carto-react/pull/185)
 - Add new `useSourceFilters` hook for better custom widgets dev [#185](https://github.com/CartoDB/carto-react/pull/185)

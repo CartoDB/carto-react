@@ -13,6 +13,7 @@ import {
 } from './widgets/TimeSeriesWidgetUI/hooks/TimeSeriesContext';
 import useTimeSeriesInteractivity from './widgets/TimeSeriesWidgetUI/hooks/useTimeSeriesInteractivity';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
+import NoDataAlert from './widgets/NoDataAlert';
 
 export {
   cartoThemeOptions,
@@ -28,5 +29,6 @@ export {
   TimeSeriesProvider,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
   LegendWidgetUI,
-  LEGEND_TYPES
+  LEGEND_TYPES,
+  NoDataAlert
 };

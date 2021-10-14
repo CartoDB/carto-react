@@ -2,12 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
-import { WrapperWidgetUI, CategoryWidgetUI } from '@carto/react-ui';
+import { WrapperWidgetUI, CategoryWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
-import NoDataAlert from './NoDataAlert';
 
 /**
  * Renders a <CategoryWidget /> component

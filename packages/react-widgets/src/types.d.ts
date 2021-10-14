@@ -50,8 +50,3 @@ export type useSourceFilters =  {
   dataSource: string,
   id: string,
 };
-
-export type NoDataAlert = {
-  title: string,
-  body: string,
-};

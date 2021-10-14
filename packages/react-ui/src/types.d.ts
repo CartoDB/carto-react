@@ -94,3 +94,8 @@ export type ScatterPlotWidgetUI = {
 export type TimeSeriesWidgetUIData = number[][];
 export type TimeSeriesWidgetUI = {
 };
+
+export type NoDataAlert = {
+  title: string,
+  body: string,
+};
