@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fix Scatterplot having Y axis values partially hidden [#174](https://github.com/CartoDB/carto-react/pull/174)
 - Use Material-UI createTheme instead of deprecated createMuiTheme [#187](https://github.com/CartoDB/carto-react/pull/187)
 - Fix error formatting FormulaWidget (AVG) values with no features in current viewport [#186](https://github.com/CartoDB/carto-react/pull/186)
 - Add TimeSeriesWidget [#168](https://github.com/CartoDB/carto-react/pull/168)
