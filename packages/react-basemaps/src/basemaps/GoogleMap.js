@@ -24,7 +24,8 @@ export function GoogleMap(props) {
     getTooltip,
     onResize,
     onViewStateChange,
-    apiKey
+    apiKey,
+    mapId
   } = props;
   // based on https://publiuslogic.com/blog/google-maps+react-hooks/
   const containerRef = useRef();
@@ -56,6 +57,7 @@ export function GoogleMap(props) {
       fullscreenControl: false,
       zoomControl: false,
       streetViewControl: false,
+      mapId,
       ...basemap.options
     };
 

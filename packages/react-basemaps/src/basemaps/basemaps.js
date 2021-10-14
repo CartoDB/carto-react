@@ -32,6 +32,11 @@ export const GOOGLE_SATELLITE = 'satellite';
     @default
 */
 export const GOOGLE_HYBRID = 'hybrid';
+/** @constant
+    @type {string}
+    @default
+*/
+export const GOOGLE_CUSTOM = 'custom';
 
 export const BASEMAPS = {
   [POSITRON]: {
@@ -68,6 +73,12 @@ export const BASEMAPS = {
     type: 'gmaps',
     options: {
       mapTypeId: 'hybrid'
+    }
+  },
+  [GOOGLE_CUSTOM]: {
+    type: 'gmaps',
+    options: {
+      // mapId prop must be passed to component directly
     }
   }
 };
