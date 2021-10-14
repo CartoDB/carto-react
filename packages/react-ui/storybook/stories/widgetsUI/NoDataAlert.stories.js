@@ -1,9 +1,9 @@
+import { NoDataAlert } from '@carto/react-ui';
 import React from 'react';
-import NoDataAlert from '../../../../react-widgets/src/widgets/NoDataAlert';
 import { buildReactPropsAsString } from '../../utils';
 
 const options = {
-  title: 'Widgets/NoDataAlert',
+  title: 'Widgets UI/NoDataAlert',
   component: NoDataAlert,
   argTypes: {
     title: {

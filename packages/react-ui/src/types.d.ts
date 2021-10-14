@@ -90,3 +90,8 @@ export type ScatterPlotWidgetUI = {
   yAxisFormatter?: Function;
   tooltipFormatter?: Function;
 };
+
+export type NoDataAlert = {
+  title: string,
+  body: string,
+};

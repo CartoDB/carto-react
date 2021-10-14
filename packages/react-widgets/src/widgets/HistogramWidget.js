@@ -2,16 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
-import { WrapperWidgetUI, HistogramWidgetUI } from '@carto/react-ui';
-import {
-  _FilterTypes as FilterTypes,
-  _getApplicableFilters as getApplicableFilters,
-  AggregationTypes
-} from '@carto/react-core';
+import { WrapperWidgetUI, HistogramWidgetUI, NoDataAlert } from '@carto/react-ui';
+import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getHistogram } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
-import NoDataAlert from './NoDataAlert';
 
 /**
  * Renders a <HistogramWidget /> component
