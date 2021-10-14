@@ -53,6 +53,8 @@ export function GoogleMap(props) {
         lng: viewState.longitude
       },
       mapTypeControl: false,
+      heading: viewState.bearing,
+      tilt: viewState.pitch,
       zoom: viewState.zoom + 1, // notice the 1 zoom level difference relative to deckgl
       fullscreenControl: false,
       zoomControl: false,
@@ -73,8 +75,8 @@ export function GoogleMap(props) {
           longitude: center.lng(),
           latitude: center.lat(),
           zoom: Math.max(map.getZoom() - 1, 1), // cap min zoom level to 1
-          pitch: 0, // no pitch or bearing gmaps yet
-          bearing: 0
+          pitch: map.getTilt(),
+          bearing: map.getHeading()
         };
 
         if (JSON.stringify(window.cartoViewState) !== JSON.stringify(viewState)) {
@@ -118,7 +120,7 @@ export function GoogleMap(props) {
       script.id = 'gmaps';
       script.async = true;
       script.type = `text/javascript`;
-      script.src = `https://maps.google.com/maps/api/js?key=` + apiKey;
+      script.src = `https://maps.google.com/maps/api/js?v=beta&key=` + apiKey;
       const headScript = document.getElementsByTagName(`script`)[0];
       headScript.parentNode.insertBefore(script, headScript);
       script.addEventListener(`load`, onLoad);
