@@ -2,6 +2,8 @@
 
 ## Not released
 
+## 1.1.0-beta.1 (2021-10-14)
+
 - Update deck.gl version to 8.6.x [#197](https://github.com/CartoDB/carto-react/pull/197)
 - Fix Scatterplot having Y axis values partially hidden [#174](https://github.com/CartoDB/carto-react/pull/174)
 - Use Material-UI createTheme instead of deprecated createMuiTheme [#187](https://github.com/CartoDB/carto-react/pull/187)
