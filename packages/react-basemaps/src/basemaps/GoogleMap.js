@@ -104,9 +104,11 @@ export function GoogleMap(props) {
       window.cartoGmap = map;
       window.cartoDeck = deckOverlay;
     } else {
-      const { center, zoom, ...rest } = options;
-      window.cartoGmap.setZoom(zoom);
+      const { center, heading, tilt, zoom, ...rest } = options;
       window.cartoGmap.setCenter(center);
+      window.cartoGmap.setHeading(heading);
+      window.cartoGmap.setTilt(tilt);
+      window.cartoGmap.setZoom(zoom);
       window.cartoGmap.setOptions(rest);
       window.cartoDeck.setProps({ layers, getTooltip });
     }
