@@ -3,6 +3,7 @@
 ## Not released
 
 - Use Material-UI createTheme instead of deprecated createMuiTheme [#187](https://github.com/CartoDB/carto-react/pull/187)
+- Fix error formatting FormulaWidget (AVG) values with no features in current viewport [#186](https://github.com/CartoDB/carto-react/pull/186)
 - Add TimeSeriesWidget [#168](https://github.com/CartoDB/carto-react/pull/168)
 - Add NoDataAlert component [#188](https://github.com/CartoDB/carto-react/pull/188) and [#191](https://github.com/CartoDB/carto-react/pull/191)
 - Update echarts to v5 [#167](https://github.com/CartoDB/carto-react/pull/167)
