@@ -103,7 +103,7 @@ TimeSeriesWidgetUI.propTypes = {
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
   formatter: PropTypes.func,
-  height: PropTypes.number,
+  height: PropTypes.string,
   isPlaying: PropTypes.bool,
   onPlay: PropTypes.func,
   isPaused: PropTypes.bool,
@@ -111,7 +111,7 @@ TimeSeriesWidgetUI.propTypes = {
   onStop: PropTypes.func,
   timelinePosition: PropTypes.number,
   onTimelineUpdate: PropTypes.func,
-  timeWindow: PropTypes.arrayOf(PropTypes.number),
+  timeWindow: PropTypes.arrayOf(PropTypes.any),
   onTimeWindowUpdate: PropTypes.func,
   showControls: PropTypes.bool
 };

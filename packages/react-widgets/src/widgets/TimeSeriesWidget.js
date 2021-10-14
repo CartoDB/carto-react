@@ -50,7 +50,6 @@ const STEP_SIZE_RANGE_MAPPING = {
  * @param  {function} [props.formatter] - Function for formatting the value that is represented in the tooltip.
  * @param  {string} [props.height] - Height of the chart.
  * @param  {boolean} [props.showControls] - Enable/disable animation controls (play, pause, stop, speed). True by default.
- * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -301,14 +300,14 @@ TimeSeriesWidget.propTypes = {
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
   formatter: PropTypes.func,
-  height: PropTypes.number,
+  height: PropTypes.string,
   isPlaying: PropTypes.bool,
   onPlay: PropTypes.func,
   isPaused: PropTypes.bool,
   onPause: PropTypes.func,
   onStop: PropTypes.func,
   onTimelineUpdate: PropTypes.func,
-  timeWindow: PropTypes.arrayOf(PropTypes.number),
+  timeWindow: PropTypes.arrayOf(PropTypes.any),
   onTimeWindowUpdate: PropTypes.func,
   showControls: PropTypes.bool,
   chartType: PropTypes.oneOf(Object.values(TIME_SERIES_CHART_TYPES)),
