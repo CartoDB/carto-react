@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux';
-import { WrapperWidgetUI, ScatterPlotWidgetUI } from '@carto/react-ui';
-import { _getApplicableFilters as getApplicableFilters } from '@carto/react-core';
+import { WrapperWidgetUI, ScatterPlotWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getScatter } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 
@@ -20,6 +19,7 @@ import useSourceFilters from '../hooks/useSourceFilters';
  * @param  {formatterCallback} [props.tooltipFormatter] - Function to format Y axis values.
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
  */
 function ScatterPlotWidget(props) {
   const {
@@ -32,7 +32,8 @@ function ScatterPlotWidget(props) {
     xAxisFormatter,
     tooltipFormatter,
     onError,
-    wrapperProps
+    wrapperProps,
+    noDataAlertProps
   } = props;
 
   const [scatterData, setScatterData] = useState([]);
@@ -77,12 +78,16 @@ function ScatterPlotWidget(props) {
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      <ScatterPlotWidgetUI
-        data={scatterData}
-        tooltipFormatter={tooltipFormatter}
-        xAxisFormatter={xAxisFormatter}
-        yAxisFormatter={yAxisFormatter}
-      />
+      {scatterData.length || isLoading ? (
+        <ScatterPlotWidgetUI
+          data={scatterData}
+          tooltipFormatter={tooltipFormatter}
+          xAxisFormatter={xAxisFormatter}
+          yAxisFormatter={yAxisFormatter}
+        />
+      ) : (
+        <NoDataAlert {...noDataAlertProps} />
+      )}
     </WrapperWidgetUI>
   );
 }
@@ -97,12 +102,14 @@ ScatterPlotWidget.propTypes = {
   yAxisFormatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   onError: PropTypes.func,
-  wrapperProps: PropTypes.object
+  wrapperProps: PropTypes.object,
+  noDataAlertProps: PropTypes.object
 };
 
 ScatterPlotWidget.defaultProps = {
   tooltip: true,
   wrapperProps: {},
+  noDataAlertProps: {},
   tooltipFormatter: (v) => `[${v.value[0]}, ${v.value[1]})`,
   xAxisFormatter: (v) => v,
   yAxisFormatter: (v) => v

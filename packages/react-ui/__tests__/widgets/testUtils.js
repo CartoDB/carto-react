@@ -67,7 +67,8 @@ export const mockEcharts = {
         itemStyle: {}
       })),
       showLoading: jest.fn(),
-      on: jest.fn()
+      on: jest.fn(),
+      getZr: jest.fn()
     }));
   },
   destroy() {
