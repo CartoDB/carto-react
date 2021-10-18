@@ -246,7 +246,7 @@ function addEventWithCleanUp(zr, eventKey, event) {
     zr.on(eventKey, event);
 
     return () => {
-      if (events[eventKey] && zr.handler) zr.off(eventKey, event);
+      if (events[eventKey] && zr?.handler) zr.off(eventKey, event);
     };
   }
 }
