@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
-import useWidgetLoadingState from './useWidgetLoadingState';
+import useSourceFilters from '../hooks/useSourceFilters';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux';
 
 /**
  * Renders a <FormulaWidget /> component
@@ -30,17 +30,19 @@ function FormulaWidget(props) {
     onError,
     wrapperProps
   } = props;
+  const isSourceReady = useSelector((state) =>
+    selectIsViewportFeaturesReadyForSource(state, dataSource)
+  );
+  const filters = useSourceFilters({ dataSource, id });
+
   const [formulaData, setFormulaData] = useState(null);
-  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const { data, filters } = source;
-  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (data && isLoading) {
+    setIsLoading(true);
+
+    if (isSourceReady) {
       getFormula({
-        data,
         operation,
         column,
         filters,
@@ -56,23 +58,11 @@ function FormulaWidget(props) {
           setIsLoading(false);
           if (onError) onError(error);
         });
-    } else {
-      setFormulaData(null);
     }
-  }, [
-    data,
-    operation,
-    column,
-    filters,
-    dataSource,
-    viewportFeaturesReady,
-    setIsLoading,
-    isLoading,
-    onError
-  ]);
+  }, [operation, column, filters, dataSource, setIsLoading, onError, isSourceReady]);
 
   return (
-    <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
+    <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <FormulaWidgetUI data={formulaData} formatter={formatter} unitBefore={true} />
     </WrapperWidgetUI>
   );

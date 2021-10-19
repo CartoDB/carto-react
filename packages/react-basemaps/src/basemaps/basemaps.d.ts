@@ -13,7 +13,8 @@ declare enum CartoUrlBasemaps {
 export enum GMapsBasemapsNames {
   ROADMAP = 'roadmap',
   SATELLITE = 'satellite',
-  HYBRID = 'hybrid'
+  HYBRID = 'hybrid',
+  CUSTOM = 'custom'
 }
 
 export const POSITRON: CartoBasemapsNames.POSITRON;
@@ -22,6 +23,7 @@ export const DARK_MATTER: CartoBasemapsNames.DARK_MATTER;
 export const GOOGLE_ROADMAP: GMapsBasemapsNames.ROADMAP;
 export const GOOGLE_SATELLITE: GMapsBasemapsNames.SATELLITE;
 export const GOOGLE_HYBRID: GMapsBasemapsNames.HYBRID;
+export const GOOGLE_CUSTOM: GMapsBasemapsNames.CUSTOM;
 
 type CartoBasemaps = {
   [B in CartoBasemapsNames]: {

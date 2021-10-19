@@ -5,6 +5,7 @@ export { default as HistogramWidget } from './widgets/HistogramWidget';
 export { default as PieWidget } from './widgets/PieWidget';
 export { default as LegendWidget } from './widgets/LegendWidget';
 export { default as ScatterPlotWidget } from './widgets/ScatterPlotWidget';
+export { default as TimeSeriesWidget } from './widgets/TimeSeriesWidget';
 export {
   getFormula,
   getHistogram,
@@ -12,3 +13,4 @@ export {
   geocodeStreetPoint,
   getScatter
 } from './models';
+export { default as useSourceFilters } from './hooks/useSourceFilters';

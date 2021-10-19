@@ -24,7 +24,8 @@ export function GoogleMap(props) {
     getTooltip,
     onResize,
     onViewStateChange,
-    apiKey
+    apiKey,
+    mapId
   } = props;
   // based on https://publiuslogic.com/blog/google-maps+react-hooks/
   const containerRef = useRef();
@@ -52,10 +53,13 @@ export function GoogleMap(props) {
         lng: viewState.longitude
       },
       mapTypeControl: false,
+      heading: viewState.bearing,
+      tilt: viewState.pitch,
       zoom: viewState.zoom + 1, // notice the 1 zoom level difference relative to deckgl
       fullscreenControl: false,
       zoomControl: false,
       streetViewControl: false,
+      mapId,
       ...basemap.options
     };
 
@@ -67,17 +71,17 @@ export function GoogleMap(props) {
       const handleViewportChange = () => {
         const center = map.getCenter();
         // adapted to common Deck viewState format
-        const viewState = {
+        const newViewState = {
           longitude: center.lng(),
           latitude: center.lat(),
           zoom: Math.max(map.getZoom() - 1, 1), // cap min zoom level to 1
-          pitch: 0, // no pitch or bearing gmaps yet
-          bearing: 0
+          pitch: map.getTilt(),
+          bearing: map.getHeading()
         };
 
-        if (JSON.stringify(window.cartoViewState) !== JSON.stringify(viewState)) {
-          window.cartoViewState = viewState;
-          onViewStateChange && props.onViewStateChange({ viewState });
+        if (JSON.stringify(window.cartoViewState) !== JSON.stringify(newViewState)) {
+          window.cartoViewState = newViewState;
+          onViewStateChange && props.onViewStateChange({ viewState: newViewState });
         }
       };
 
@@ -100,9 +104,20 @@ export function GoogleMap(props) {
       window.cartoGmap = map;
       window.cartoDeck = deckOverlay;
     } else {
-      const { center, zoom, ...rest } = options;
-      window.cartoGmap.setZoom(zoom);
-      window.cartoGmap.setCenter(center);
+      const { center, heading, tilt, zoom, ...rest } = options;
+      const newViewState = {
+        longitude: center.lng,
+        latitude: center.lat,
+        zoom: zoom - 1,
+        pitch: tilt,
+        bearing: heading
+      };
+      if (JSON.stringify(window.cartoViewState) !== JSON.stringify(newViewState)) {
+        window.cartoGmap.setCenter(center);
+        window.cartoGmap.setHeading(heading);
+        window.cartoGmap.setTilt(tilt);
+        window.cartoGmap.setZoom(zoom);
+      }
       window.cartoGmap.setOptions(rest);
       window.cartoDeck.setProps({ layers, getTooltip });
     }
@@ -116,7 +131,7 @@ export function GoogleMap(props) {
       script.id = 'gmaps';
       script.async = true;
       script.type = `text/javascript`;
-      script.src = `https://maps.google.com/maps/api/js?key=` + apiKey;
+      script.src = `https://maps.google.com/maps/api/js?v=beta&key=` + apiKey;
       const headScript = document.getElementsByTagName(`script`)[0];
       headScript.parentNode.insertBefore(script, headScript);
       script.addEventListener(`load`, onLoad);

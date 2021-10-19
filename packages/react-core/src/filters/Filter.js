@@ -1,17 +1,27 @@
 import { makeClosedInterval } from '../utils/makeClosedInterval';
 import { FilterTypes } from './FilterQueryBuilder';
 
+function between(filterValues, featureValue) {
+  const checkRange = (range) => {
+    const [lowerBound, upperBound] = range;
+    return featureValue >= lowerBound && featureValue <= upperBound;
+  };
+
+  return makeClosedInterval(filterValues).some(checkRange);
+}
+
 const filterFunctions = {
   [FilterTypes.IN](filterValues, featureValue) {
     return filterValues.includes(featureValue);
   },
-  [FilterTypes.BETWEEN](filterValues, featureValue) {
-    const checkRange = (range) => {
-      const [lowerBound, upperBound] = range;
-      return featureValue >= lowerBound && featureValue <= upperBound;
-    };
-
-    return makeClosedInterval(filterValues).some(checkRange);
+  [FilterTypes.BETWEEN]: between,
+  [FilterTypes.TIME](filterValues, featureValue) {
+    const featureValueAsTimestamp = new Date(featureValue).getTime();
+    if (isFinite(featureValueAsTimestamp)) {
+      return between(filterValues, featureValueAsTimestamp);
+    } else {
+      throw new Error(`Column used to filter by time isn't well formatted.`);
+    }
   }
 };
 

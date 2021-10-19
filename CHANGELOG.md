@@ -1,10 +1,31 @@
 # CHANGELOG
 
 ## Not released
+- Fix warning console when LegendIcon is used [#170](https://github.com/CartoDB/carto-react/pull/170)
+- Fix useTimeSeriesInteractivity error in TimeSeries widget [#200](https://github.com/CartoDB/carto-react/pull/200)
+- Fix viewState sync bug in GoogleMap component [#199](https://github.com/CartoDB/carto-react/pull/199)
+- Update Google maps component to support vector maps [#194](https://github.com/CartoDB/carto-react/pull/194)
+- Fix LegendProportional when the values are not numbers [#171](https://github.com/CartoDB/carto-react/pull/171)
+
+## 1.1.0-beta.1 (2021-10-14)
+
+- Update deck.gl version to 8.6.x [#197](https://github.com/CartoDB/carto-react/pull/197)
+- Fix Scatterplot having Y axis values partially hidden [#174](https://github.com/CartoDB/carto-react/pull/174)
+- Use Material-UI createTheme instead of deprecated createMuiTheme [#187](https://github.com/CartoDB/carto-react/pull/187)
+- Fix error formatting FormulaWidget (AVG) values with no features in current viewport [#186](https://github.com/CartoDB/carto-react/pull/186)
+- Add TimeSeriesWidget [#168](https://github.com/CartoDB/carto-react/pull/168)
+- Add NoDataAlert component [#188](https://github.com/CartoDB/carto-react/pull/188) and [#191](https://github.com/CartoDB/carto-react/pull/191)
+- Update echarts to v5 [#167](https://github.com/CartoDB/carto-react/pull/167)
+- Fix unnecessary widget calculations triggered by widget itself [#185](https://github.com/CartoDB/carto-react/pull/185)
+- Add new `useSourceFilters` hook for better custom widgets dev [#185](https://github.com/CartoDB/carto-react/pull/185)
+- Fix unnecessary widgets calculations when unrelated source changes [#184](https://github.com/CartoDB/carto-react/pull/184)
+- Remove widgetsLoadingState and derived actions from cartoSlice [#184](https://github.com/CartoDB/carto-react/pull/184)
+- Fix unnecessary viewportFeatures calculation, after a filter change inside a source [#183](https://github.com/CartoDB/carto-react/pull/183)
 
 ## 1.1.0-beta.0 (2021-09-07)
 
 - No major changes from 1.1.0-alpha.6. Just move to beta.
+
 ## 1.1.0-alpha.6 (2021-08-04)
 
 - **Breaking change**: Allow to disable viewport features calculation. useCartoLayerProps uses now object destructuring. [#164](https://github.com/CartoDB/carto-react/pull/164)
