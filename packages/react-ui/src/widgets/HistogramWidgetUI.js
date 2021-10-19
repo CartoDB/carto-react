@@ -64,7 +64,7 @@ function __generateDefaultConfig(
         ...theme.typography.caption,
         fontSize: 12,
         lineHeight: 16,
-        color: theme.palette.common.white,
+        color: theme.palette.common.white
       },
       backgroundColor: theme.palette.other.tooltip,
       position: function (point, params, dom, rect, size) {

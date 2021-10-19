@@ -13,7 +13,7 @@ function __generateDefaultConfig(
       left: 5,
       bottom: 10,
       right: 15,
-      containLabel: true,
+      containLabel: true
     },
     tooltip: {
       padding: [theme.spacing(0.5), theme.spacing(1)],
@@ -21,7 +21,7 @@ function __generateDefaultConfig(
         ...theme.typography.caption,
         fontSize: 12,
         lineHeight: 16,
-        color: theme.palette.common.white,
+        color: theme.palette.common.white
       },
       backgroundColor: theme.palette.other.tooltip,
       ...(tooltipFormatter ? { formatter: tooltipFormatter } : {})
@@ -95,7 +95,14 @@ function ScatterPlotWidgetUI({
       series
     });
   }, [data, name, theme, xAxisFormatter, yAxisFormatter, tooltipFormatter]);
-  return <EchartsWrapper ref={chartInstance} option={options} lazyUpdate={true} style={{ height: 225 }} />;
+  return (
+    <EchartsWrapper
+      ref={chartInstance}
+      option={options}
+      lazyUpdate={true}
+      style={{ height: 225 }}
+    />
+  );
 }
 
 ScatterPlotWidgetUI.defaultProps = {

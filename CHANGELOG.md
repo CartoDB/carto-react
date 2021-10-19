@@ -1,10 +1,11 @@
 # CHANGELOG
 
 ## Not released
-- Fix warning console when LegendIcon it is used [#170](https://github.com/CartoDB/carto-react/pull/170)
+- Fix warning console when LegendIcon is used [#170](https://github.com/CartoDB/carto-react/pull/170)
 - Fix useTimeSeriesInteractivity error in TimeSeries widget [#200](https://github.com/CartoDB/carto-react/pull/200)
 - Fix viewState sync bug in GoogleMap component [#199](https://github.com/CartoDB/carto-react/pull/199)
 - Update Google maps component to support vector maps [#194](https://github.com/CartoDB/carto-react/pull/194)
+- Fix LegendProportional when the values are not numbers [#171](https://github.com/CartoDB/carto-react/pull/171)
 
 ## 1.1.0-beta.1 (2021-10-14)
 
