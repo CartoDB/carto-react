@@ -3,10 +3,7 @@ import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   legendIcon: {
-    alignItems: 'center',
-    '&:hover': {
-      '& $circle': {}
-    }
+    alignItems: 'center'
   },
   icon: {
     width: theme.spacing(2),

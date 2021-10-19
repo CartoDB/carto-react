@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
-import { WrapperWidgetUI, PieWidgetUI } from '@carto/react-ui';
-import {
-  _FilterTypes as FilterTypes,
-  _getApplicableFilters as getApplicableFilters,
-  AggregationTypes
-} from '@carto/react-core';
+import { addFilter, removeFilter } from '@carto/react-redux';
+import { WrapperWidgetUI, PieWidgetUI, NoDataAlert } from '@carto/react-ui';
+import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
-import useWidgetLoadingState from './useWidgetLoadingState';
+import useSourceFilters from '../hooks/useSourceFilters';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
  * Renders a <PieWidget /> component
@@ -25,6 +22,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {string} props.height - Height of the chart
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
  */
 function PieWidget({
   id,
@@ -37,35 +35,30 @@ function PieWidget({
   formatter,
   tooltipFormatter,
   onError,
-  wrapperProps
+  wrapperProps,
+  noDataAlertProps
 }) {
+  const dispatch = useDispatch();
+
   const [categoryData, setCategoryData] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const dispatch = useDispatch();
-  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
-
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
-  const { data, credentials, type } = source;
+  const isSourceReady = useSelector((state) =>
+    selectIsViewportFeaturesReadyForSource(state, dataSource)
+  );
+  const filters = useSourceFilters({ dataSource, id });
 
   useEffect(() => {
-    const abortController = new AbortController();
-    if (data && credentials && isLoading) {
-      const _filters = getApplicableFilters(source.filters, id);
+    setIsLoading(true);
 
+    if (isSourceReady) {
       getCategories({
         column,
         operation,
         operationColumn,
-        data,
-        filters: _filters,
-        credentials,
-        viewportFeatures: viewportFeaturesReady[dataSource] || false,
-        dataSource,
-        type,
-        opts: { abortController }
+        filters,
+        dataSource
       })
         .then((data) => {
           if (data) {
@@ -77,28 +70,17 @@ function PieWidget({
           setIsLoading(false);
           if (onError) onError(error);
         });
-    } else {
-      setCategoryData([]);
     }
-
-    return function cleanup() {
-      abortController.abort();
-    };
   }, [
-    credentials,
-    dataSource,
-    data,
-    setIsLoading,
-    source.filters,
-    type,
-    viewportFeaturesReady,
-    column,
-    operation,
-    operationColumn,
-    dispatch,
     id,
+    column,
+    operationColumn,
+    operation,
+    filters,
+    dataSource,
+    setIsLoading,
     onError,
-    isLoading
+    isSourceReady
   ]);
 
   const handleSelectedCategoriesChange = useCallback(
@@ -128,16 +110,19 @@ function PieWidget({
   );
 
   return (
-    <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
-      <PieWidgetUI
-        data={categoryData}
-        formatter={formatter}
-        height={height}
-        tooltipFormatter={tooltipFormatter}
-        isLoading={widgetsLoadingState[id]}
-        selectedCategories={selectedCategories}
-        onSelectedCategoriesChange={handleSelectedCategoriesChange}
-      />
+    <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
+      {categoryData.length || isLoading ? (
+        <PieWidgetUI
+          data={categoryData}
+          formatter={formatter}
+          height={height}
+          tooltipFormatter={tooltipFormatter}
+          selectedCategories={selectedCategories}
+          onSelectedCategoriesChange={handleSelectedCategoriesChange}
+        />
+      ) : (
+        <NoDataAlert {...noDataAlertProps} />
+      )}
     </WrapperWidgetUI>
   );
 }
@@ -153,11 +138,13 @@ PieWidget.propTypes = {
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   onError: PropTypes.func,
-  wrapperProps: PropTypes.object
+  wrapperProps: PropTypes.object,
+  noDataAlertProps: PropTypes.object
 };
 
 PieWidget.defaultProps = {
-  wrapperProps: {}
+  wrapperProps: {},
+  noDataAlertProps: {}
 };
 
 export default PieWidget;

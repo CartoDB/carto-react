@@ -59,10 +59,12 @@ function __generateDefaultConfig(
       show: tooltip,
       trigger: 'axis',
       padding: [theme.spacing(0.5), theme.spacing(1)],
+      borderWidth: 0,
       textStyle: {
         ...theme.typography.caption,
         fontSize: 12,
-        lineHeight: 16
+        lineHeight: 16,
+        color: theme.palette.common.white
       },
       backgroundColor: theme.palette.other.tooltip,
       position: function (point, params, dom, rect, size) {
