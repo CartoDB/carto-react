@@ -6,6 +6,7 @@
 - Fix viewState sync bug in GoogleMap component [#199](https://github.com/CartoDB/carto-react/pull/199)
 - Update Google maps component to support vector maps [#194](https://github.com/CartoDB/carto-react/pull/194)
 - Fix LegendProportional when the values are not numbers [#171](https://github.com/CartoDB/carto-react/pull/171)
+- Fix Storybook showing args instead of properties [#172](https://github.com/CartoDB/carto-react/pull/172)
 
 ## 1.1.0-beta.1 (2021-10-14)
 
