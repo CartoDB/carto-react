@@ -5,7 +5,8 @@ type CommonWidgetProps = {
   title: string,
   dataSource: string,
   onError?: Function,
-  wrapperProps?: object
+  wrapperProps?: object,
+  noDataAlertProps?: object
 }
 
 type MonoColumnWidgetProps = {
@@ -35,8 +36,9 @@ export type HistogramWidget = {
 export type PieWidget = {
   height: string,
   operationColumn?: string,
-  tooltipFormatter?: Function
-}
+  tooltipFormatter?: Function,
+  colors?: string[];
+} & CommonWidgetProps & MonoColumnWidgetProps;
 
 export type ScatterPlotWidget = {
   xAxisColumn: string,
@@ -44,4 +46,30 @@ export type ScatterPlotWidget = {
   xAxisFormatter?: Function,
   yAxisFormatter?: Function,
   tooltipFormatter?: Function
-} & CommonWidgetProps
+} & CommonWidgetProps;
+
+export type useSourceFilters =  {
+  dataSource: string,
+  id: string,
+};
+
+export type TimeSeriesWidget = {
+  operationColumn?: string,
+  stepSize: string,
+  stepSizeOptions?: string[],
+  chartType?: string,
+  duration?: number,
+  tooltip?: boolean,
+  tooltipFormatter?: Function,
+  formatter?: Function,
+  height?: string,
+  showControls?: boolean,
+  isPlaying?: boolean,
+  isPaused?: boolean,
+  timeWindow?: any[],
+  onPlay?: Function,
+  onPause?: Function,
+  onStop?: Function,
+  onTimelineUpdate?: Function,
+  onTimeWindowUpdate?: Function
+} & CommonWidgetProps & MonoColumnWidgetProps;

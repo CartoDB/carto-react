@@ -187,33 +187,6 @@ describe('carto slice', () => {
     });
   });
 
-  describe('widget loading actions', () => {
-    const loadingInfo = {
-      widgetId: 'whatever-id',
-      isLoading: true
-    };
-
-    test('should set a widget loading state', () => {
-      store.dispatch(cartoSlice.setWidgetLoadingState(loadingInfo));
-      const { carto } = store.getState();
-      expect(carto.widgetsLoadingState[loadingInfo.widgetId]).toBe(loadingInfo.isLoading);
-    });
-
-    test('should remove a widget loading state by sourceId', () => {
-      store.dispatch(cartoSlice.removeWidgetLoadingState(loadingInfo.widgetId));
-      const { carto } = store.getState();
-      expect(carto.widgetsLoadingState).not.toHaveProperty(loadingInfo.widgetId);
-    });
-
-    test('should set all widget loading states', () => {
-      store.dispatch(cartoSlice.setAllWidgetsLoadingState(false));
-      const { carto } = store.getState();
-      for (const state of Object.values(carto.widgetsLoadingState)) {
-        expect(state).toBe(false);
-      }
-    });
-  });
-
   describe('credentials actions', () => {
     test('should override default credentials', () => {
       store.dispatch(cartoSlice.setCredentials({ updatedProp: 'update' }));

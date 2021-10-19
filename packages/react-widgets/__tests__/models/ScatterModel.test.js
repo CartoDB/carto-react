@@ -24,12 +24,6 @@ const features = (xColumn, yColumn) => [
 ];
 
 describe('getScatter', () => {
-  test('should throw with array data', async () => {
-    await expect(getScatter({ data: [] })).rejects.toThrow(
-      'Array is not a valid type to get scatter'
-    );
-  });
-
   describe('should correctly handle viewport features', () => {
     const scatterPlotParams = {
       xAxisColumn: 'x',

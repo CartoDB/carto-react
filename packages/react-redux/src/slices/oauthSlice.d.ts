@@ -30,7 +30,7 @@ export function setTokenAndUserInfo(payload: OauthParams | OauthError): {
   payload: OauthParams | OauthError
 };
 
-export const setTokenAndUserInfoAsyn: Function;
+export const setTokenAndUserInfoAsync: Function;
 
 export function logout(): {
   type: OauthActions.LOGOUT,

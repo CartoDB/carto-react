@@ -10,12 +10,6 @@ jest.mock('@carto/react-workers', () => ({
 }));
 
 describe('getHistogram', () => {
-  test('should throw with array data', async () => {
-    await expect(getHistogram({ data: [] })).rejects.toThrow(
-      'Array is not a valid type to get histogram'
-    );
-  });
-
   describe('should correctly handle viewport features', () => {
     const histogramParams = {
       column: 'revenue',
