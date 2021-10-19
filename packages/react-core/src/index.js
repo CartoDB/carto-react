@@ -5,6 +5,8 @@ export {
   REQUEST_GET_MAX_URL_LENGTH
 } from './utils/requestsUtils';
 
+export { getMonday } from './utils/dateUtils';
+
 export { debounce } from './utils/debounce';
 export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';
@@ -26,3 +28,6 @@ export { buildFeatureFilter as _buildFeatureFilter } from './filters/Filter';
 export { viewportFeatures } from './filters/viewportFeatures';
 export { viewportFeaturesBinary } from './filters/viewportFeaturesBinary';
 export { viewportFeaturesGeoJSON } from './filters/viewportFeaturesGeoJSON';
+
+export { GroupDateTypes } from './operations/GroupDateTypes';
+export { groupValuesByDateColumn } from './operations/groupByDate';

@@ -1,8 +1,8 @@
 import { AggregationTypes } from './aggregation/AggregationTypes';
-import { HistogramFeature } from '../types'
+import { HistogramFeature } from '../types';
 
 export function histogram(
-  features: [], // TODO: geojson types
+  features: [],
   columnName: string,
   ticks: number[],
   operation: AggregationTypes

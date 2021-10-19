@@ -8,7 +8,8 @@ describe('basemaps', () => {
       'dark-matter',
       'roadmap',
       'satellite',
-      'hybrid'
+      'hybrid',
+      'custom'
     ]);
   });
 
