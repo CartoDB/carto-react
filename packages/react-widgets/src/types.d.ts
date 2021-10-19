@@ -36,8 +36,9 @@ export type HistogramWidget = {
 export type PieWidget = {
   height: string,
   operationColumn?: string,
-  tooltipFormatter?: Function
-}
+  tooltipFormatter?: Function,
+  colors?: string[];
+} & CommonWidgetProps & MonoColumnWidgetProps;
 
 export type ScatterPlotWidget = {
   xAxisColumn: string,
