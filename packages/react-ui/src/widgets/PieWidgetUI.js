@@ -24,6 +24,9 @@ function __generateDefaultConfig({ tooltipFormatter, formatter }, theme) {
       transitionDuration: 0,
       backgroundColor: theme.palette.other.tooltip,
       confine: true,
+      textStyle: {
+        color: theme.palette.common.white
+      },
       ...(tooltipFormatter
         ? { formatter: (params) => tooltipFormatter({ ...params, formatter }) }
         : {})
@@ -286,7 +289,7 @@ PieWidgetUI.defaultProps = {
       params.name
     }</p>
             <p style="font-size: 12px;font-weight:normal;line-height:1.33;margin:0 0 4px 0;">${colorSpan(
-              params.data.color || params.color
+              params.data.color || params.textStyle.color
             )} ${valueHtml} (${params.percent}%)</p>`;
   },
   colors: null,

@@ -1,6 +1,7 @@
 export const FilterTypes = Object.freeze({
   IN: 'in',
-  BETWEEN: 'between'
+  BETWEEN: 'between',
+  TIME: 'time'
 });
 
 export const getApplicableFilters = (filters = {}, owner) => {

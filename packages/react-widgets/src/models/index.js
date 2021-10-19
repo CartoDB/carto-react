@@ -3,3 +3,4 @@ export { getHistogram } from './HistogramModel';
 export { getCategories } from './CategoryModel';
 export { geocodeStreetPoint } from './GeocodingModel';
 export { getScatter } from './ScatterPlotModel';
+export { getTimeSeries } from './TimeSeriesModel';
