@@ -8,6 +8,7 @@
 - Fix LegendProportional when the values are not numbers [#171](https://github.com/CartoDB/carto-react/pull/171)
 - Improve DataCloneError message when geometry column not called 'geom' [#175](https://github.com/CartoDB/carto-react/pull/175)
 - Fix PieWidget colors not preserved [#176](https://github.com/CartoDB/carto-react/pull/176)
+- Allow custom colors in PieWidget [#202](https://github.com/CartoDB/carto-react/pull/202)
 
 ## 1.1.0-beta.1 (2021-10-14)
 
