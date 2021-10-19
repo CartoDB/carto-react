@@ -71,7 +71,7 @@ export function GoogleMap(props) {
       const handleViewportChange = () => {
         const center = map.getCenter();
         // adapted to common Deck viewState format
-        const viewState = {
+        const newViewState = {
           longitude: center.lng(),
           latitude: center.lat(),
           zoom: Math.max(map.getZoom() - 1, 1), // cap min zoom level to 1
@@ -79,9 +79,9 @@ export function GoogleMap(props) {
           bearing: map.getHeading()
         };
 
-        if (JSON.stringify(window.cartoViewState) !== JSON.stringify(viewState)) {
-          window.cartoViewState = viewState;
-          onViewStateChange && props.onViewStateChange({ viewState });
+        if (JSON.stringify(window.cartoViewState) !== JSON.stringify(newViewState)) {
+          window.cartoViewState = newViewState;
+          onViewStateChange && props.onViewStateChange({ viewState: newViewState });
         }
       };
 
@@ -105,10 +105,19 @@ export function GoogleMap(props) {
       window.cartoDeck = deckOverlay;
     } else {
       const { center, heading, tilt, zoom, ...rest } = options;
-      window.cartoGmap.setCenter(center);
-      window.cartoGmap.setHeading(heading);
-      window.cartoGmap.setTilt(tilt);
-      window.cartoGmap.setZoom(zoom);
+      const newViewState = {
+        longitude: center.lng,
+        latitude: center.lat,
+        zoom: zoom - 1,
+        pitch: tilt,
+        bearing: heading
+      };
+      if (JSON.stringify(window.cartoViewState) !== JSON.stringify(newViewState)) {
+        window.cartoGmap.setCenter(center);
+        window.cartoGmap.setHeading(heading);
+        window.cartoGmap.setTilt(tilt);
+        window.cartoGmap.setZoom(zoom);
+      }
       window.cartoGmap.setOptions(rest);
       window.cartoDeck.setProps({ layers, getTooltip });
     }
