@@ -1,6 +1,9 @@
 # CHANGELOG
 
 ## Not released
+- Fix warning console when LegendIcon it is used [#170](https://github.com/CartoDB/carto-react/pull/170)
+
+- Fix useTimeSeriesInteractivity error in TimeSeries widget [#200](https://github.com/CartoDB/carto-react/pull/200)
 
 ## 1.1.0-beta.1 (2021-10-14)
 
