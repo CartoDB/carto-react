@@ -9,6 +9,7 @@
 - Improve DataCloneError message when geometry column not called 'geom' [#175](https://github.com/CartoDB/carto-react/pull/175)
 - Fix PieWidget colors not preserved [#176](https://github.com/CartoDB/carto-react/pull/176)
 - Allow custom colors in PieWidget [#202](https://github.com/CartoDB/carto-react/pull/202)
+- Fix the WrapperWidget breaking with headers of two lines [#179](https://github.com/CartoDB/carto-react/pull/179)
 
 ## 1.1.0-beta.1 (2021-10-14)
 
