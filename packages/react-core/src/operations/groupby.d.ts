@@ -1,8 +1,8 @@
 import { AggregationTypes } from './aggregation/AggregationTypes';
-import { GroupByFeature } from '../types'
+import { GroupByFeature } from '../types';
 
 export function groupValuesByColumn(
-  data: [], // TODO: geojson types
+  data: [],
   valuesColumn: string,
   keysColumn: string,
   operation: AggregationTypes

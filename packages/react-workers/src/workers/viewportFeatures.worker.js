@@ -5,7 +5,8 @@ import {
   _buildFeatureFilter,
   histogram,
   scatterPlot,
-  groupValuesByColumn
+  groupValuesByColumn,
+  groupValuesByDateColumn
 } from '@carto/react-core';
 import { Methods } from '../workerMethods';
 
@@ -28,6 +29,9 @@ onmessage = ({ data: { method, ...params } }) => {
       break;
     case Methods.VIEWPORT_FEATURES_SCATTERPLOT:
       getScatterPlot(params);
+      break;
+    case Methods.VIEWPORT_FEATURES_TIME_SERIES:
+      getTimeSeries(params);
       break;
     case Methods.LOAD_GEOJSON_FEATURES:
       loadGeoJSONFeatures(params);
@@ -115,6 +119,26 @@ function getScatterPlot({ filters, xAxisColumn, yAxisColumn }) {
   if (currentViewportFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
     result = scatterPlot(filteredFeatures, xAxisColumn, yAxisColumn);
+  }
+
+  postMessage({ result });
+}
+
+function getTimeSeries({ filters, column, stepSize, operation, operationColumn }) {
+  let result = [];
+
+  if (currentViewportFeatures) {
+    const filteredFeatures = getFilteredFeatures(filters);
+
+    const groups = groupValuesByDateColumn(
+      filteredFeatures,
+      operationColumn,
+      column,
+      stepSize,
+      operation
+    );
+
+    result = groups || [];
   }
 
   postMessage({ result });
