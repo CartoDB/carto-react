@@ -62,7 +62,7 @@ export default function LegendProportion({ legend }) {
   const classes = useStyles();
 
   const { min, max, error } = calculateRange(legend);
-  const [step1, step2] = calculateSteps(min, max);
+  const [step1, step2] = !error ? calculateSteps(min, max) : [0, 0];
 
   return (
     <Grid container item direction='row' spacing={2} data-testid='proportion-legend'>
@@ -71,9 +71,6 @@ export default function LegendProportion({ legend }) {
         <Circle index={1}></Circle>
         <Circle index={2}></Circle>
         <Circle index={3}></Circle>
-        {/* <Tooltip title={'AVG: ' + avg} placement='top' arrow>
-          <Box className={classes.avg} style={{ bottom: `${avgPerc}%` }} />
-        </Tooltip> */}
       </Grid>
       <Grid
         container
