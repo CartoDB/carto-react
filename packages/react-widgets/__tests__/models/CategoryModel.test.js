@@ -10,12 +10,6 @@ jest.mock('@carto/react-workers', () => ({
 }));
 
 describe('getCategories', () => {
-  test('should throw with array data', async () => {
-    await expect(getCategories({ data: [] })).rejects.toThrow(
-      'Array is not a valid type to get categories'
-    );
-  });
-
   describe('should correctly handle viewport features', () => {
     const categoriesParams = {
       column: 'storetype',

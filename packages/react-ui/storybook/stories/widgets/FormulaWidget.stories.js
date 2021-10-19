@@ -15,9 +15,7 @@ import { mockAppStoreConfiguration } from './utils';
 import { buildReactPropsAsString } from '../../utils';
 
 const store = mockAppStoreConfiguration();
-store.dispatch(
-  cartoSlice.setWidgetLoadingState({ widgetId: 'sb-formula-id', isLoading: false })
-);
+
 store.dispatch(
   cartoSlice.setViewportFeatures({
     sourceId: 'sb-data-source',
