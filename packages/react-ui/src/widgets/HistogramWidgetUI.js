@@ -319,7 +319,7 @@ HistogramWidgetUI.propTypes = {
   name: PropTypes.string,
   onSelectedBarsChange: PropTypes.func,
   height: PropTypes.number,
-  animation: PropTypes.bool,
+  animation: PropTypes.bool
 };
 
 export default HistogramWidgetUI;
