@@ -108,7 +108,9 @@ function HistogramWidget(props) {
 
       if (bars && bars.length) {
         const thresholds = bars.map((i) => {
-          return [ticks[i - 1], ticks.length !== i + 1 ? ticks[i] : undefined];
+          const left = ticks[i - 1];
+          const right = ticks.length !== i + 1 ? ticks[i] : undefined;
+          return [left, right];
         });
         dispatch(
           addFilter({
