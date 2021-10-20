@@ -54,7 +54,7 @@ function __generateDefaultConfig(
   };
 }
 
-function __generateSerie({ name, data, animation, theme }) {
+function __generateSerie({ name, data, animation }) {
   return [
     {
       type: 'scatter',
