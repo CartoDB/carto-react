@@ -230,5 +230,38 @@ describe('Filters', () => {
       const featureIsIncluded = buildFeatureFilter(params)(feature);
       expect(featureIsIncluded).toBe(0);
     });
+
+    describe('should manage number filters using ClosedOpen interval checks', () => {
+      const zeroIsValidForThisFilter = {
+        filters: {
+          column1: { closed_open: { owner: 'widgetId1', values: [[10, 20]] } }
+        },
+        type: 'number'
+      };
+
+      test(`left endpoint is ALWAYS included - with geojson feature`, () => {
+        const feature = makeFeatureWithValueInColumn(10);
+        const isFeatureIncluded = buildFeatureFilter(zeroIsValidForThisFilter)(feature);
+        expect(isFeatureIncluded).toBe(1);
+      });
+
+      test(`rigth endpoint is NEVER included - with geojson feature`, () => {
+        const feature = makeFeatureWithValueInColumn(20);
+        const isFeatureIncluded = buildFeatureFilter(zeroIsValidForThisFilter)(feature);
+        expect(isFeatureIncluded).toBe(0);
+      });
+
+      test(`left endpoint is ALWAYS included - with geojson feature properties`, () => {
+        const obj = makeObjectWithValueInColumn(10);
+        const isFeatureIncluded = buildFeatureFilter(zeroIsValidForThisFilter)(obj);
+        expect(isFeatureIncluded).toBe(1);
+      });
+
+      test(`rigth endpoint is NEVER included - with geojson feature properties`, () => {
+        const obj = makeObjectWithValueInColumn(20);
+        const isFeatureIncluded = buildFeatureFilter(zeroIsValidForThisFilter)(obj);
+        expect(isFeatureIncluded).toBe(0);
+      });
+    });
   });
 });
