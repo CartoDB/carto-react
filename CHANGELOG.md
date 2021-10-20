@@ -15,6 +15,7 @@
 - Fix WrapperWidgetUI header justify content [#203](https://github.com/CartoDB/carto-react/pull/203)
 - Add optional parameter to remove animation from widgets [#181](https://github.com/CartoDB/carto-react/pull/181)
 - Allow PieWidget labels to be overwritten [#177](https://github.com/CartoDB/carto-react/pull/177)
+- Fix legit 0 values being excluded from numeric filters [#204](https://github.com/CartoDB/carto-react/pull/204)
 
 ## 1.1.0-beta.1 (2021-10-14)
 
