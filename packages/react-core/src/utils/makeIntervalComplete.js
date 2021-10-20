@@ -1,4 +1,4 @@
-export function makeClosedInterval(values) {
+export function makeIntervalComplete(values) {
   return values.map((val) => {
     if (val[0] === undefined) {
       return [Number.MIN_SAFE_INTEGER, val[1]];

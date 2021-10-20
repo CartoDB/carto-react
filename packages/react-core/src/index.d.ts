@@ -11,7 +11,7 @@ export { debounce } from './utils/debounce';
 export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';
 
-export { makeClosedInterval } from './utils/makeClosedInterval';
+export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
 export { AggregationTypes } from './operations/aggregation/AggregationTypes';
 export { aggregationFunctions } from './operations/aggregation/values';
