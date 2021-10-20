@@ -19,16 +19,6 @@ animateValues.mockImplementation(({ end, drawFrame }) => {
 });
 
 describe('CategoryWidgetUI', () => {
-  test('empty', () => {
-    render(<CategoryWidgetUI data={[]} />);
-
-    const NO_DATA_TEXT = /No data available/;
-    const NO_RESULT_TEXT = /There are no results for the combination of filters applied to your data. Try tweaking your filters, or zoom and pan the map to adjust the Map View./;
-
-    expect(screen.getByText(NO_DATA_TEXT)).toBeInTheDocument();
-    expect(screen.getByText(NO_RESULT_TEXT)).toBeInTheDocument();
-  });
-
   test('item skeleton should display', () => {
     const { container } = render(<CategoryWidgetUI data={[]} isLoading={true} />);
 

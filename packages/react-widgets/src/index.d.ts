@@ -12,3 +12,5 @@ export {
   geocodeStreetPoint,
   getScatter
 } from './models';
+export { default as TimeSeriesWidget } from './widgets/TimeSeriesWidget';
+export { default as useSourceFilters } from './hooks/useSourceFilters';

@@ -20,5 +20,5 @@ export const aggregationFunctions = {
   [AggregationTypes.MIN]: (values, key) => min(values, key),
   [AggregationTypes.MAX]: (values, key) => max(values, key),
   [AggregationTypes.SUM]: (values, key) => sum(values, key),
-  [AggregationTypes.AVG]: (values, key) => sum(values, key) / values.length
+  [AggregationTypes.AVG]: (values, key) => sum(values, key) / (values.length || 1)
 };

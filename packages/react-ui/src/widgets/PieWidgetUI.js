@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useEffect, useState } from 'react';
+import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { useTheme } from '@material-ui/core';
@@ -10,7 +10,7 @@ import {
   setColor
 } from './utils/chartUtils';
 
-function __generateDefaultConfig({ tooltipFormatter, formatter, colors }, theme) {
+function __generateDefaultConfig({ tooltipFormatter, formatter }, theme) {
   return {
     grid: {
       left: theme.spacing(0),
@@ -18,13 +18,15 @@ function __generateDefaultConfig({ tooltipFormatter, formatter, colors }, theme)
       right: theme.spacing(0),
       bottom: theme.spacing(0)
     },
-    color: colors || Object.values(theme.palette.qualitative.bold),
     tooltip: {
       trigger: 'item',
       showDelay: 1000,
       transitionDuration: 0,
       backgroundColor: theme.palette.other.tooltip,
       confine: true,
+      textStyle: {
+        color: theme.palette.common.white
+      },
       ...(tooltipFormatter
         ? { formatter: (params) => tooltipFormatter({ ...params, formatter }) }
         : {})
@@ -77,13 +79,11 @@ function __generateSerie({ name, data, theme, color, selectedCategories, labels 
     {
       type: 'pie',
       name,
-      data: data.map((item, index) => {
+      data: data.map((item) => {
         if (labels?.[item.name]) {
           item.name = labels[item.name];
         }
-
-        item.color = color[index];
-
+  
         const disabled =
           selectedCategories?.length && !selectedCategories.includes(item.name);
 
@@ -152,7 +152,7 @@ function PieWidgetUI({
     series: []
   });
   const [elementHover, setElementHover] = useState();
-  let defaultLabel = useMemo(() => ({}), []);
+  let defaultLabel = useRef({});
 
   const updateLabel = (params) => {
     const echart = chartInstance.current.getEchartsInstance();
@@ -164,14 +164,34 @@ function PieWidgetUI({
     echart.setOption(option, true);
   };
 
+  const [colorByCategory, setColorByCategory] = useState({});
+
+  // Reset color by category when colors changes
+  // Spread colors array to avoid reference problems
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => setColorByCategory({}), [...(colors || [])]);
+
+  const dataWithColor = useMemo(() => {
+    return (data || []).map((item) => {
+      const { name } = item;
+      const colorUsed = colorByCategory[name];
+      if (colorUsed) {
+        item.color = colorUsed;
+      } else {
+        const colorsToUse = colors || theme.palette.qualitative.bold;
+        colorByCategory[name] =
+          colorsToUse[Object.keys(colorByCategory).length] || '#fff';
+        setColorByCategory({ ...colorByCategory });
+      }
+      return item;
+    });
+  }, [data, colorByCategory, colors, theme.palette.qualitative.bold]);
+
   useEffect(() => {
-    const config = __generateDefaultConfig(
-      { formatter, tooltipFormatter, colors },
-      theme
-    );
+    const config = __generateDefaultConfig({ formatter, tooltipFormatter }, theme);
     const series = __generateSerie({
       name,
-      data: data || [],
+      data: dataWithColor,
       theme,
       color: config.color,
       selectedCategories,
@@ -183,27 +203,26 @@ function PieWidgetUI({
       series
     });
   }, [
-    data,
+    dataWithColor,
     name,
     theme,
     tooltipFormatter,
     formatter,
     selectedCategories,
-    labels,
-    colors
+    labels
   ]);
 
   useEffect(() => {
     const label = elementHover || __getDefaultLabel(options.series[0]?.data);
+    defaultLabel.current = label;
     // eslint-disable-next-line
-    defaultLabel = label;
   }, [options]);
 
   useEffect(() => {
     const echart = chartInstance.current.getEchartsInstance();
     const { option, serie } = getChartSerie(echart, 0);
     serie?.data.forEach((category) => {
-      if (category.name === defaultLabel.name) {
+      if (category.name === defaultLabel.current.name) {
         category.label = { show: true };
         category.emphasis = { label: { show: true } };
       } else {
@@ -215,7 +234,7 @@ function PieWidgetUI({
     echart.setOption(option, true);
   }, [options, defaultLabel]);
 
-  const clickEvent = (params) => {
+  const clickEvent = useCallback((params) => {
     if (onSelectedCategoriesChange) {
       const echart = chartInstance.current.getEchartsInstance();
       const { option, serie } = getChartSerie(echart, params.seriesIndex);
@@ -226,7 +245,7 @@ function PieWidgetUI({
 
       const activeCategories = serie.data.filter((category) => !category.disabled);
 
-      defaultLabel = __getDefaultLabel(activeCategories);
+      defaultLabel.current = __getDefaultLabel(activeCategories);
 
       onSelectedCategoriesChange(
         activeCategories.length === serie.data.length
@@ -234,28 +253,34 @@ function PieWidgetUI({
           : activeCategories.map((category) => category.name)
       );
     }
-  };
+  }, [onSelectedCategoriesChange, theme]);
 
-  const mouseoverEvent = (params) => {
+  const mouseoverEvent = useCallback((params) => {
     setElementHover(params.data);
     updateLabel(params);
-  };
+  }, []);
 
-  const mouseoutEvent = (params) => {
-    setElementHover();
+  const mouseoutEvent = useCallback(
+    (params) => {
+      setElementHover();
 
-    const data = {
-      ...params,
-      data: defaultLabel
-    };
-    updateLabel(data);
-  };
+      const data = {
+        ...params,
+        data: defaultLabel
+      };
+      updateLabel(data);
+    },
+    [defaultLabel]
+  );
 
-  const onEvents = {
-    click: clickEvent,
-    mouseover: mouseoverEvent,
-    mouseout: mouseoutEvent
-  };
+  const onEvents = useMemo(
+    () => ({
+      click: clickEvent,
+      mouseover: mouseoverEvent,
+      mouseout: mouseoutEvent
+    }),
+    [clickEvent, mouseoverEvent, mouseoutEvent]
+  );
 
   return (
     <EchartsWrapper
@@ -284,7 +309,7 @@ PieWidgetUI.defaultProps = {
       params.name
     }</p>
             <p style="font-size: 12px;font-weight:normal;line-height:1.33;margin:0 0 4px 0;">${colorSpan(
-              params.data.color || params.color
+              params.data.color || params.textStyle.color
             )} ${valueHtml} (${params.percent}%)</p>`;
   },
   colors: null,
