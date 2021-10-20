@@ -12,6 +12,7 @@
 - Fix the WrapperWidget breaking with headers of two lines [#179](https://github.com/CartoDB/carto-react/pull/179)
 - Fix lack of animation in PieWidget [#180](https://github.com/CartoDB/carto-react/pull/180)
 - Fix lack of animation in HistogramWidget [#182](https://github.com/CartoDB/carto-react/pull/182)
+- Fix WrapperWidgetUI header justify content [#203](https://github.com/CartoDB/carto-react/pull/203)
 
 
 ## 1.1.0-beta.1 (2021-10-14)
