@@ -67,17 +67,26 @@ const useStylesLegendContainer = makeStyles((theme) => ({
     flex: '1 1 auto',
     justifyContent: 'space-between',
     padding: theme.spacing(0.75, 1.25, 0.75, 3),
+    borderTop: ({ expanded }) =>
+      !expanded ? 'none' : `1px solid ${theme.palette.divider}`,
     cursor: 'pointer',
     '& .MuiButton-label': {
       ...theme.typography.body1
     }
+  },
+  wrapperInner: {
+    maxHeight: 'max(350px, 80vh)',
+    overflowY: 'auto',
+    overflowX: 'hidden'
   }
 }));
 
 function LegendContainer({ isSingle, children }) {
   const wrapper = createRef();
-  const classes = useStylesLegendContainer();
   const [expanded, setExpanded] = useState(true);
+  const classes = useStylesLegendContainer({
+    expanded
+  });
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -87,7 +96,15 @@ function LegendContainer({ isSingle, children }) {
     children
   ) : (
     <>
-      <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
+      <Collapse
+        ref={wrapper}
+        in={expanded}
+        timeout='auto'
+        unmountOnExit
+        classes={{
+          wrapperInner: classes.wrapperInner
+        }}
+      >
         {children}
       </Collapse>
       <Grid container className={classes.header}>
@@ -124,23 +141,27 @@ function LegendRows({ layers = [], onChangeVisibility }) {
   const isSingle = layers.length === 1;
 
   return layers.map(
-    ({
-      id,
-      title,
-      switchable,
-      visible,
-      legend: {
-        children = null,
-        type = '',
-        collapsible = true,
-        note = '',
-        attr = '',
-        colors = [],
-        labels = [],
-        icons = [],
-        stats = undefined
-      } = {}
-    }) => {
+    (
+      {
+        id,
+        title,
+        switchable,
+        visible,
+        legend: {
+          children = null,
+          type = '',
+          collapsible = true,
+          note = '',
+          attr = '',
+          colors = [],
+          labels = [],
+          icons = [],
+          stats = undefined
+        } = {}
+      },
+      index
+    ) => {
+      const isLast = layers.length - 1 === index;
       // TODO: Add validation for layer.type
       const hasChildren = LEGEND_COMPONENT_BY_TYPE[type] || children;
       const LegendComponent = LEGEND_COMPONENT_BY_TYPE[type] || (() => children);
@@ -169,7 +190,7 @@ function LegendRows({ layers = [], onChangeVisibility }) {
               }
             })}
           </LegendWrapper>
-          {!isSingle && <Divider />}
+          {!isSingle && !isLast && <Divider />}
         </Fragment>
       );
     }

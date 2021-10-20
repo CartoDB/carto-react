@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
-import { WrapperWidgetUI, CategoryWidgetUI } from '@carto/react-ui';
-import {
-  _FilterTypes as FilterTypes,
-  _getApplicableFilters as getApplicableFilters,
-  AggregationTypes
-} from '@carto/react-core';
+import { addFilter, removeFilter } from '@carto/react-redux';
+import { WrapperWidgetUI, CategoryWidgetUI, NoDataAlert } from '@carto/react-ui';
+import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
-import useWidgetLoadingState from './useWidgetLoadingState';
+import useSourceFilters from '../hooks/useSourceFilters';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
  * Renders a <CategoryWidget /> component
@@ -25,6 +22,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {boolean} [props.animation=true] - It indicates if values' change animation is enabled
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
  */
 function CategoryWidget(props) {
   const {
@@ -38,27 +36,30 @@ function CategoryWidget(props) {
     labels,
     animation,
     onError,
-    wrapperProps
+    wrapperProps,
+    noDataAlertProps
   } = props;
-  const [categoryData, setCategoryData] = useState(null);
-  const [selectedCategories, setSelectedCategories] = useState([]);
   const dispatch = useDispatch();
-  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
-  const { data, filters } = source;
+
+  const isSourceReady = useSelector((state) =>
+    selectIsViewportFeaturesReadyForSource(state, dataSource)
+  );
+
+  const [categoryData, setCategoryData] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const filters = useSourceFilters({ dataSource, id });
 
   useEffect(() => {
-    if (data && isLoading) {
-      const _filters = getApplicableFilters(filters, id);
+    setIsLoading(true);
 
+    if (isSourceReady) {
       getCategories({
-        data,
         column,
         operationColumn,
         operation,
-        filters: _filters,
+        filters,
         dataSource
       })
         .then((data) => {
@@ -71,21 +72,17 @@ function CategoryWidget(props) {
           setIsLoading(false);
           if (onError) onError(error);
         });
-    } else {
-      setCategoryData(null);
     }
   }, [
     id,
-    data,
     column,
     operationColumn,
     operation,
     filters,
     dataSource,
-    viewportFeaturesReady,
     setIsLoading,
-    isLoading,
-    onError
+    onError,
+    isSourceReady
   ]);
 
   const handleSelectedCategoriesChange = useCallback(
@@ -115,16 +112,19 @@ function CategoryWidget(props) {
   );
 
   return (
-    <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
-      <CategoryWidgetUI
-        data={categoryData}
-        formatter={formatter}
-        labels={labels}
-        isLoading={widgetsLoadingState[id]}
-        selectedCategories={selectedCategories}
-        onSelectedCategoriesChange={handleSelectedCategoriesChange}
-        animation={animation}
-      />
+    <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
+      {categoryData.length || isLoading ? (
+        <CategoryWidgetUI
+          data={categoryData}
+          formatter={formatter}
+          labels={labels}
+          selectedCategories={selectedCategories}
+          onSelectedCategoriesChange={handleSelectedCategoriesChange}
+          animation={animation}
+        />
+      ) : (
+        <NoDataAlert {...noDataAlertProps} />
+      )}
     </WrapperWidgetUI>
   );
 }
@@ -140,13 +140,15 @@ CategoryWidget.propTypes = {
   labels: PropTypes.object,
   animation: PropTypes.bool,
   onError: PropTypes.func,
-  wrapperProps: PropTypes.object
+  wrapperProps: PropTypes.object,
+  noDataAlertProps: PropTypes.object
 };
 
 CategoryWidget.defaultProps = {
   labels: {},
   animation: true,
-  wrapperProps: {}
+  wrapperProps: {},
+  noDataAlertProps: {}
 };
 
 export default CategoryWidget;

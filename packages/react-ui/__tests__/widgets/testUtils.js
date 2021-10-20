@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
-import echarts from 'echarts';
+import { createTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
+import * as echarts from 'echarts';
 
 import { cartoThemeOptions } from '../../src/theme/carto-theme';
 
@@ -22,7 +22,7 @@ export function getMaterialUIContext(children) {
 }
 
 function getTheme() {
-  let theme = createMuiTheme(cartoThemeOptions);
+  let theme = createTheme(cartoThemeOptions);
   theme = responsiveFontSizes(theme, {
     breakpoints: cartoThemeOptions.breakpoints.keys,
     disableAlign: false,
@@ -67,7 +67,8 @@ export const mockEcharts = {
         itemStyle: {}
       })),
       showLoading: jest.fn(),
-      on: jest.fn()
+      on: jest.fn(),
+      getZr: jest.fn()
     }));
   },
   destroy() {

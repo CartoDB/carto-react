@@ -12,7 +12,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import { Alert, AlertTitle, Skeleton } from '@material-ui/lab';
+import { Skeleton } from '@material-ui/lab';
 
 import { animateValues } from './utils/animations';
 
@@ -441,7 +441,7 @@ function CategoryWidgetUI(props) {
 
   return (
     <div className={classes.root}>
-      {data && (data.length > 0 || !isLoading) ? (
+      {data?.length > 0 ? (
         <>
           {sortedData.length > 0 && (
             <Grid
@@ -514,12 +514,6 @@ function CategoryWidgetUI(props) {
                   }
                 />
               ))
-            ) : data.length === 0 && !isLoading ? (
-              <Alert severity='warning'>
-                <AlertTitle>No data available</AlertTitle>
-                There are no results for the combination of filters applied to your data.
-                Try tweaking your filters, or zoom and pan the map to adjust the Map View.
-              </Alert>
             ) : (
               <>
                 <Typography variant='body2'>No results</Typography>
@@ -562,7 +556,6 @@ CategoryWidgetUI.defaultProps = {
   data: null,
   formatter: (v) => v,
   labels: {},
-  isLoading: false,
   maxItems: 5,
   order: CategoryWidgetUI.ORDER_TYPES.RANKING,
   selectedCategories: []
@@ -577,7 +570,6 @@ CategoryWidgetUI.propTypes = {
   ),
   formatter: PropTypes.func,
   labels: PropTypes.object,
-  isLoading: PropTypes.bool,
   maxItems: PropTypes.number,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func,

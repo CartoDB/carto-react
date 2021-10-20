@@ -1,3 +1,5 @@
+import { GroupDateTypes } from '@carto/react-core/operations/GroupDateTypes';
+
 export type WrapperWidgetUI = {
   title: string;
   isLoading?: boolean;
@@ -64,7 +66,7 @@ export type Layer = {
 
 export type LegendWidgetUIData = {
   type: string;
-  children?: Node,
+  children?: Node;
   collapsible?: boolean;
   note?: string;
   attr?: string;
@@ -89,4 +91,30 @@ export type ScatterPlotWidgetUI = {
   xAxisFormatter?: Function;
   yAxisFormatter?: Function;
   tooltipFormatter?: Function;
+};
+
+export type TimeSeriesWidgetUIData = { name: number; value: number }[];
+export type TimeSeriesWidgetUI = {
+  data: TimeSeriesWidgetUIData;
+  stepSize: GroupDateTypes;
+  chartType?: string;
+  duration?: number;
+  tooltip?: boolean;
+  tooltipFormatter?: Function;
+  height?: string;
+  isPlaying?: boolean;
+  onPlay?: Function;
+  isPaused?: boolean;
+  onPause?: Function;
+  onStop?: Function;
+  timelinePosition?: number;
+  onTimelineUpdate?: Function;
+  timeWindow?: any[];
+  onTimeWindowUpdate?: Function;
+  showControls?: boolean;
+};
+
+export type NoDataAlert = {
+  title: string;
+  body: string;
 };

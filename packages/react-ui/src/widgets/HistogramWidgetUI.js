@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
@@ -59,10 +59,12 @@ function __generateDefaultConfig(
       show: tooltip,
       trigger: 'axis',
       padding: [theme.spacing(0.5), theme.spacing(1)],
+      borderWidth: 0,
       textStyle: {
         ...theme.typography.caption,
         fontSize: 12,
-        lineHeight: 16
+        lineHeight: 16,
+        color: theme.palette.common.white
       },
       backgroundColor: theme.palette.other.tooltip,
       position: function (point, params, dom, rect, size) {
@@ -232,30 +234,36 @@ function HistogramWidgetUI(props) {
     onSelectedBarsChange({ bars: [], chartInstance });
   };
 
-  const clickEvent = (params) => {
-    if (onSelectedBarsChange) {
-      const echart = chartInstance.current.getEchartsInstance();
+  const clickEvent = useCallback(
+    (params) => {
+      if (onSelectedBarsChange) {
+        const echart = chartInstance.current.getEchartsInstance();
 
-      const { option, serie } = getChartSerie(echart, params.seriesIndex);
-      applyChartFilter(serie, params.dataIndex, theme);
-      echart.setOption(option);
+        const { option, serie } = getChartSerie(echart, params.seriesIndex);
+        applyChartFilter(serie, params.dataIndex, theme);
+        echart.setOption(option);
 
-      const activeBars = [];
-      serie.data.forEach((d, index) => {
-        if (!d.disabled) {
-          activeBars.push(index);
-        }
-      });
-      onSelectedBarsChange({
-        bars: activeBars.length === serie.data.length ? [] : activeBars,
-        chartInstance
-      });
-    }
-  };
+        const activeBars = [];
+        serie.data.forEach((d, index) => {
+          if (!d.disabled) {
+            activeBars.push(index);
+          }
+        });
+        onSelectedBarsChange({
+          bars: activeBars.length === serie.data.length ? [] : activeBars,
+          chartInstance
+        });
+      }
+    },
+    [onSelectedBarsChange, theme]
+  );
 
-  const onEvents = {
-    click: clickEvent
-  };
+  const onEvents = useMemo(
+    () => ({
+      click: clickEvent
+    }),
+    [clickEvent]
+  );
 
   return (
     <div>

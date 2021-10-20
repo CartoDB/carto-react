@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { selectSourceById } from '@carto/react-redux';
-import { WrapperWidgetUI, ScatterPlotWidgetUI } from '@carto/react-ui';
-import { _getApplicableFilters as getApplicableFilters } from '@carto/react-core';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux';
+import { WrapperWidgetUI, ScatterPlotWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getScatter } from '../models';
-import useWidgetLoadingState from './useWidgetLoadingState';
+import useSourceFilters from '../hooks/useSourceFilters';
 
 /**
  * Renders a <ScatterPlotWidget /> component
@@ -21,6 +20,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {formatterCallback} [props.tooltipFormatter] - Function to format Y axis values.
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
  */
 function ScatterPlotWidget(props) {
   const {
@@ -34,25 +34,26 @@ function ScatterPlotWidget(props) {
     xAxisFormatter,
     tooltipFormatter,
     onError,
-    wrapperProps
+    wrapperProps,
+    noDataAlertProps
   } = props;
 
   const [scatterData, setScatterData] = useState([]);
-  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
-  const { data, filters } = source;
+  const [isLoading, setIsLoading] = useState(true);
+
+  const isSourceReady = useSelector((state) =>
+    selectIsViewportFeaturesReadyForSource(state, dataSource)
+  );
+  const filters = useSourceFilters({ dataSource, id });
 
   useEffect(() => {
-    if (data && isLoading) {
-      const _filters = getApplicableFilters(filters, id);
+    setIsLoading(true);
 
+    if (isSourceReady) {
       getScatter({
-        data,
         xAxisColumn,
         yAxisColumn,
-        filters: _filters,
+        filters,
         dataSource
       })
         .then((data) => {
@@ -65,20 +66,31 @@ function ScatterPlotWidget(props) {
           setIsLoading(false);
           if (onError) onError(error);
         });
-    } else {
-      setScatterData([]);
     }
-  }, [id, data, setIsLoading, filters, viewportFeaturesReady, setIsLoading, isLoading]);
+  }, [
+    id,
+    xAxisColumn,
+    yAxisColumn,
+    dataSource,
+    filters,
+    setIsLoading,
+    isSourceReady,
+    onError
+  ]);
 
   return (
-    <WrapperWidgetUI title={title} isLoading={widgetsLoadingState[id]} {...wrapperProps}>
-      <ScatterPlotWidgetUI
-        data={scatterData}
-        animation={animation}
-        tooltipFormatter={tooltipFormatter}
-        xAxisFormatter={xAxisFormatter}
-        yAxisFormatter={yAxisFormatter}
-      />
+    <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
+      {scatterData.length || isLoading ? (
+        <ScatterPlotWidgetUI
+          data={scatterData}
+          tooltipFormatter={tooltipFormatter}
+          xAxisFormatter={xAxisFormatter}
+          yAxisFormatter={yAxisFormatter}
+          animation={animation}
+        />
+      ) : (
+        <NoDataAlert {...noDataAlertProps} />
+      )}
     </WrapperWidgetUI>
   );
 }
@@ -94,13 +106,15 @@ ScatterPlotWidget.propTypes = {
   yAxisFormatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   onError: PropTypes.func,
-  wrapperProps: PropTypes.object
+  wrapperProps: PropTypes.object,
+  noDataAlertProps: PropTypes.object
 };
 
 ScatterPlotWidget.defaultProps = {
   tooltip: true,
   animation: true,
   wrapperProps: {},
+  noDataAlertProps: {},
   tooltipFormatter: (v) => `[${v.value[0]}, ${v.value[1]})`,
   xAxisFormatter: (v) => v,
   yAxisFormatter: (v) => v

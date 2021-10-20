@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
-import { WrapperWidgetUI, HistogramWidgetUI } from '@carto/react-ui';
-import {
-  _FilterTypes as FilterTypes,
-  _getApplicableFilters as getApplicableFilters,
-  AggregationTypes
-} from '@carto/react-core';
+import { addFilter, removeFilter } from '@carto/react-redux';
+import { WrapperWidgetUI, HistogramWidgetUI, NoDataAlert } from '@carto/react-ui';
+import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getHistogram } from '../models';
-import useWidgetLoadingState from './useWidgetLoadingState';
+import useSourceFilters from '../hooks/useSourceFilters';
+import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
  * Renders a <HistogramWidget /> component
@@ -26,6 +23,7 @@ import useWidgetLoadingState from './useWidgetLoadingState';
  * @param  {boolean} [props.animation=true] - It indicates if values' change animation is enabled
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
  */
 function HistogramWidget(props) {
   const {
@@ -41,16 +39,19 @@ function HistogramWidget(props) {
     tooltip,
     animation,
     onError,
-    wrapperProps
+    wrapperProps,
+    noDataAlertProps
   } = props;
+  const dispatch = useDispatch();
+
   const [histogramData, setHistogramData] = useState([]);
   const [selectedBars, setSelectedBars] = useState([]);
-  const dispatch = useDispatch();
-  const source = useSelector((state) => selectSourceById(state, dataSource) || {});
-  const viewportFeaturesReady = useSelector((state) => state.carto.viewportFeaturesReady);
-  const widgetsLoadingState = useSelector((state) => state.carto.widgetsLoadingState);
-  const [isLoading, setIsLoading] = useWidgetLoadingState(id);
-  const { data, filters } = source;
+  const [isLoading, setIsLoading] = useState(true);
+
+  const filters = useSourceFilters({ dataSource, id });
+  const isSourceReady = useSelector((state) =>
+    selectIsViewportFeaturesReadyForSource(state, dataSource)
+  );
 
   const tooltipFormatter = useCallback(
     ([serie]) => {
@@ -68,15 +69,14 @@ function HistogramWidget(props) {
   );
 
   useEffect(() => {
-    if (data && isLoading) {
-      const _filters = getApplicableFilters(filters, id);
+    setIsLoading(true);
 
+    if (isSourceReady) {
       getHistogram({
-        data,
         column,
         operation,
         ticks,
-        filters: _filters,
+        filters,
         dataSource
       })
         .then((data) => {
@@ -89,21 +89,17 @@ function HistogramWidget(props) {
           setIsLoading(false);
           if (onError) onError(error);
         });
-    } else {
-      setHistogramData([]);
     }
   }, [
     id,
-    data,
     column,
     operation,
     ticks,
-    filters,
     dataSource,
-    viewportFeaturesReady,
+    filters,
     setIsLoading,
-    isLoading,
-    onError
+    onError,
+    isSourceReady
   ]);
 
   const handleSelectedBarsChange = useCallback(
@@ -136,18 +132,22 @@ function HistogramWidget(props) {
   );
 
   return (
-    <WrapperWidgetUI title={title} {...wrapperProps} isLoading={widgetsLoadingState[id]}>
-      <HistogramWidgetUI
-        data={histogramData}
-        dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}
-        selectedBars={selectedBars}
-        onSelectedBarsChange={handleSelectedBarsChange}
-        tooltip={tooltip}
-        tooltipFormatter={tooltipFormatter}
-        xAxisFormatter={xAxisFormatter}
-        yAxisFormatter={formatter}
-        animation={animation}
-      />
+    <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
+      {histogramData.length || isLoading ? (
+        <HistogramWidgetUI
+          data={histogramData}
+          dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}
+          selectedBars={selectedBars}
+          onSelectedBarsChange={handleSelectedBarsChange}
+          tooltip={tooltip}
+          tooltipFormatter={tooltipFormatter}
+          xAxisFormatter={xAxisFormatter}
+          yAxisFormatter={formatter}
+          animation={animation}
+        />
+      ) : (
+        <NoDataAlert {...noDataAlertProps} />
+      )}
     </WrapperWidgetUI>
   );
 }
@@ -164,13 +164,15 @@ HistogramWidget.propTypes = {
   animation: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
   onError: PropTypes.func,
-  wrapperProps: PropTypes.object
+  wrapperProps: PropTypes.object,
+  noDataAlertProps: PropTypes.object
 };
 
 HistogramWidget.defaultProps = {
   tooltip: true,
   animation: true,
-  wrapperProps: {}
+  wrapperProps: {},
+  noDataAlertProps: {}
 };
 
 export default HistogramWidget;
