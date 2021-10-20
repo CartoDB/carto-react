@@ -116,7 +116,7 @@ function HistogramWidget(props) {
           addFilter({
             id: dataSource,
             column,
-            type: FilterTypes.BETWEEN,
+            type: FilterTypes.CLOSED_OPEN,
             values: thresholds,
             owner: id
           })
