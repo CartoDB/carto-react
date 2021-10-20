@@ -30,7 +30,7 @@ function passesFilter(columns, filters, feature) {
     const columnFilters = filters[column];
     const columnFilterTypes = Object.keys(columnFilters);
 
-    if (!feature || !feature[column]) {
+    if (!feature || feature[column] === null || feature[column] === undefined) {
       return false;
     }
 
