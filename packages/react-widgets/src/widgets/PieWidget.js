@@ -20,6 +20,7 @@ import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {Function} [props.formatter] - Function to format the value that appears in the tooltip.
  * @param  {Function} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
  * @param  {string} props.height - Height of the chart
+ * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -34,6 +35,7 @@ function PieWidget({
   operation,
   formatter,
   tooltipFormatter,
+  animation,
   colors,
   onError,
   wrapperProps,
@@ -119,6 +121,7 @@ function PieWidget({
           height={height}
           tooltipFormatter={tooltipFormatter}
           colors={colors}
+          animation={animation}
           selectedCategories={selectedCategories}
           onSelectedCategoriesChange={handleSelectedCategoriesChange}
         />
@@ -139,6 +142,7 @@ PieWidget.propTypes = {
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
+  animation: PropTypes.bool,
   onError: PropTypes.func,
   colors: PropTypes.arrayOf(PropTypes.string),
   wrapperProps: PropTypes.object,
@@ -146,6 +150,7 @@ PieWidget.propTypes = {
 };
 
 PieWidget.defaultProps = {
+  animation: true,
   wrapperProps: {},
   noDataAlertProps: {}
 };

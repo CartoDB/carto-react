@@ -149,11 +149,12 @@ function __generateDefaultConfig(
   };
 }
 
-function __generateSerie(name, data, selectedBars = [], theme) {
+function __generateSerie(name, data, selectedBars = [], animation, theme) {
   return [
     {
       type: 'bar',
       name,
+      animation,
       data: data.map((value, index) => {
         const bar = {
           value,
@@ -197,7 +198,8 @@ function HistogramWidgetUI(props) {
     tooltipFormatter,
     xAxisFormatter,
     yAxisFormatter,
-    height = theme.spacing(22)
+    height = theme.spacing(22),
+    animation
   } = props;
 
   const classes = useStyles();
@@ -208,7 +210,7 @@ function HistogramWidgetUI(props) {
       data,
       theme
     );
-    const series = __generateSerie(name, data, selectedBars, theme);
+    const series = __generateSerie(name, data, selectedBars, animation, theme);
     return Object.assign({}, config, { series });
   }, [
     data,
@@ -219,7 +221,8 @@ function HistogramWidgetUI(props) {
     tooltipFormatter,
     xAxisFormatter,
     yAxisFormatter,
-    selectedBars
+    selectedBars,
+    animation
   ]);
 
   const clearBars = () => {
@@ -302,7 +305,8 @@ HistogramWidgetUI.defaultProps = {
   yAxisFormatter: (v) => v,
   dataAxis: [],
   name: null,
-  onSelectedBarsChange: null
+  onSelectedBarsChange: null,
+  animation: true
 };
 
 HistogramWidgetUI.propTypes = {
@@ -314,7 +318,8 @@ HistogramWidgetUI.propTypes = {
   dataAxis: PropTypes.array,
   name: PropTypes.string,
   onSelectedBarsChange: PropTypes.func,
-  height: PropTypes.number
+  height: PropTypes.number,
+  animation: PropTypes.bool,
 };
 
 export default HistogramWidgetUI;

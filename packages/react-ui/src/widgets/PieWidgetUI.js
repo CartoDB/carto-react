@@ -74,11 +74,12 @@ function __generateDefaultConfig({ tooltipFormatter, formatter }, theme) {
   };
 }
 
-function __generateSerie({ name, data, theme, color, selectedCategories }) {
+function __generateSerie({ name, data, theme, color, animation, selectedCategories }) {
   return [
     {
       type: 'pie',
       name,
+      animation,
       data: data.map((item) => {
         const disabled =
           selectedCategories?.length && !selectedCategories.includes(item.name);
@@ -138,6 +139,7 @@ function PieWidgetUI({
   tooltipFormatter,
   height,
   colors,
+  animation,
   selectedCategories,
   onSelectedCategoriesChange
 }) {
@@ -189,6 +191,7 @@ function PieWidgetUI({
       data: dataWithColor,
       theme,
       color: config.color,
+      animation,
       selectedCategories
     });
 
@@ -196,7 +199,15 @@ function PieWidgetUI({
       ...config,
       series
     });
-  }, [dataWithColor, name, theme, tooltipFormatter, formatter, selectedCategories]);
+  }, [
+    dataWithColor,
+    name,
+    theme,
+    tooltipFormatter,
+    formatter,
+    selectedCategories,
+    animation
+  ]);
 
   useEffect(() => {
     const label = elementHover || __getDefaultLabel(options.series[0]?.data);
@@ -300,6 +311,7 @@ PieWidgetUI.defaultProps = {
   },
   colors: null,
   height: '260px',
+  animation: true,
   selectedCategories: []
 };
 
@@ -315,6 +327,7 @@ PieWidgetUI.propTypes = {
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   height: PropTypes.string,
+  animation: PropTypes.bool,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func
 };

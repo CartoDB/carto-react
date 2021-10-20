@@ -20,6 +20,7 @@ import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {Function} [props.xAxisformatter] - Function to format X axis values.
  * @param  {Function} [props.formatter] - Function to format Y axis values.
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
+ * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -36,6 +37,7 @@ function HistogramWidget(props) {
     dataAxis,
     formatter,
     tooltip,
+    animation,
     onError,
     wrapperProps,
     noDataAlertProps
@@ -141,6 +143,7 @@ function HistogramWidget(props) {
           tooltipFormatter={tooltipFormatter}
           xAxisFormatter={xAxisFormatter}
           yAxisFormatter={formatter}
+          animation={animation}
         />
       ) : (
         <NoDataAlert {...noDataAlertProps} />
@@ -158,6 +161,7 @@ HistogramWidget.propTypes = {
   xAxisFormatter: PropTypes.func,
   formatter: PropTypes.func,
   tooltip: PropTypes.bool,
+  animation: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
@@ -166,6 +170,7 @@ HistogramWidget.propTypes = {
 
 HistogramWidget.defaultProps = {
   tooltip: true,
+  animation: true,
   wrapperProps: {},
   noDataAlertProps: {}
 };
