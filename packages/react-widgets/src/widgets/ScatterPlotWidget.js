@@ -14,7 +14,7 @@ import useSourceFilters from '../hooks/useSourceFilters';
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.xAxisColumn - Name of the data source's column to get the x axis from.
  * @param  {string} props.yAxisColumn - Name of the data source's column to get the y axis from.
- * @param  {boolean} [props.animation=true] - It indicates if values' change animation is enabled
+ * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {formatterCallback} [props.xAxisFormatter] - Function to format X axis values.
  * @param  {formatterCallback} [props.yAxisFormatter] - Function to format Y axis values.
  * @param  {formatterCallback} [props.tooltipFormatter] - Function to format Y axis values.

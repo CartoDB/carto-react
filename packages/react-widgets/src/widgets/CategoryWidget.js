@@ -18,8 +18,8 @@ import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.formatter] - Function to format each value returned.
- * @param  {Object} [props.labels] - Overwrite category labels
- * @param  {boolean} [props.animation=true] - It indicates if values' change animation is enabled
+ * @param  {Object} [props.labels] - Overwrite category labels.
+ * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
