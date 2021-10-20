@@ -44,6 +44,7 @@ function TimeSeriesWidgetUI({
   formatter,
   height,
   showControls,
+  animation,
   timelinePosition,
   onTimelineUpdate,
   timeWindow,
@@ -85,6 +86,7 @@ function TimeSeriesWidgetUI({
         formatter={formatter}
         height={height}
         showControls={showControls}
+        animation={animation}
       />
     </TimeSeriesProvider>
   );
@@ -104,6 +106,7 @@ TimeSeriesWidgetUI.propTypes = {
   tooltipFormatter: PropTypes.func,
   formatter: PropTypes.func,
   height: PropTypes.string,
+  animation: PropTypes.bool,
   isPlaying: PropTypes.bool,
   onPlay: PropTypes.func,
   isPaused: PropTypes.bool,
@@ -123,6 +126,7 @@ TimeSeriesWidgetUI.defaultProps = {
   tooltip: true,
   tooltipFormatter: defaultTooltipFormatter,
   formatter: (value) => value,
+  animation: true,
   isPlaying: false,
   isPaused: false,
   timelinePosition: 0,
@@ -149,7 +153,8 @@ function TimeSeriesWidgetUIContent({
   tooltipFormatter,
   formatter,
   height,
-  showControls
+  showControls,
+  animation
 }) {
   const classes = useStyles();
   const [anchorSpeedEl, setAnchorSpeedEl] = useState(null);
@@ -272,6 +277,7 @@ function TimeSeriesWidgetUIContent({
       tooltip={tooltip}
       tooltipFormatter={(params) => tooltipFormatter(params, stepSize, formatter)}
       height={height}
+      animation={animation}
     />
   );
 

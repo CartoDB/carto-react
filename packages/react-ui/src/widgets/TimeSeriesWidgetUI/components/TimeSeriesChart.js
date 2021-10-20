@@ -8,7 +8,8 @@ export default function TimeSeriesChart({
   tooltip,
   tooltipFormatter,
   data,
-  height
+  height,
+  animation
 }) {
   const theme = useTheme();
   const chartInstance = useRef();
@@ -137,6 +138,7 @@ export default function TimeSeriesChart({
     () => ({
       markLine,
       markArea,
+      animation,
       data: processedData,
       type: chartType,
       smooth: true,
@@ -152,7 +154,7 @@ export default function TimeSeriesChart({
         }
       }
     }),
-    [markLine, markArea, processedData, theme, chartType]
+    [markLine, markArea, processedData, theme, chartType, animation]
   );
 
   const options = useMemo(() => {
