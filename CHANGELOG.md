@@ -18,12 +18,9 @@
 - Allow PieWidget labels to be overwritten [#177](https://github.com/CartoDB/carto-react/pull/177)
 - Fix legit 0 values being excluded from numeric filters [#204](https://github.com/CartoDB/carto-react/pull/204)
 - Fix histogram widget filter, using closed-open intervals [#205](https://github.com/CartoDB/carto-react/pull/205)
-<<<<<<< HEAD
-- Adapt executeSQL to the new SQL API response [#207](https://github.com/CartoDB/carto-react/pull/207)
-=======
 - Adapt executeSQL to the new SQL API v3 response [#207](https://github.com/CartoDB/carto-react/pull/207)
 - Fix missing connection arg in executeSQL / createRequest for POST requests [#206](https://github.com/CartoDB/carto-react/pull/206)
->>>>>>> 98e9b5658213b582eb413f934f126cae40e506c7
+- Return hint message for errors [#208](https://github.com/CartoDB/carto-react/pull/208/) 
 
 ## 1.1.0-beta.1 (2021-10-14)
 
