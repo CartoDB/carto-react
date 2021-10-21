@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Not released
+
 - Fix warning console when LegendIcon is used [#170](https://github.com/CartoDB/carto-react/pull/170)
 - Fix useTimeSeriesInteractivity error in TimeSeries widget [#200](https://github.com/CartoDB/carto-react/pull/200)
 - Fix viewState sync bug in GoogleMap component [#199](https://github.com/CartoDB/carto-react/pull/199)
@@ -12,7 +13,11 @@
 - Fix the WrapperWidget breaking with headers of two lines [#179](https://github.com/CartoDB/carto-react/pull/179)
 - Fix lack of animation in PieWidget [#180](https://github.com/CartoDB/carto-react/pull/180)
 - Fix lack of animation in HistogramWidget [#182](https://github.com/CartoDB/carto-react/pull/182)
-
+- Fix WrapperWidgetUI header justify content [#203](https://github.com/CartoDB/carto-react/pull/203)
+- Add optional parameter to remove animation from widgets [#181](https://github.com/CartoDB/carto-react/pull/181)
+- Allow PieWidget labels to be overwritten [#177](https://github.com/CartoDB/carto-react/pull/177)
+- Fix legit 0 values being excluded from numeric filters [#204](https://github.com/CartoDB/carto-react/pull/204)
+- Fix histogram widget filter, using closed-open intervals [#205](https://github.com/CartoDB/carto-react/pull/205)
 
 ## 1.1.0-beta.1 (2021-10-14)
 

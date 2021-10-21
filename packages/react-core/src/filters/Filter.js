@@ -1,4 +1,4 @@
-import { makeClosedInterval } from '../utils/makeClosedInterval';
+import { makeIntervalComplete } from '../utils/makeIntervalComplete';
 import { FilterTypes } from './FilterQueryBuilder';
 
 function between(filterValues, featureValue) {
@@ -7,7 +7,16 @@ function between(filterValues, featureValue) {
     return featureValue >= lowerBound && featureValue <= upperBound;
   };
 
-  return makeClosedInterval(filterValues).some(checkRange);
+  return makeIntervalComplete(filterValues).some(checkRange);
+}
+
+function closedOpen(filterValues, featureValue) {
+  const checkRange = (range) => {
+    const [lowerBound, upperBound] = range;
+    return featureValue >= lowerBound && featureValue < upperBound;
+  };
+
+  return makeIntervalComplete(filterValues).some(checkRange);
 }
 
 const filterFunctions = {
@@ -22,7 +31,8 @@ const filterFunctions = {
     } else {
       throw new Error(`Column used to filter by time isn't well formatted.`);
     }
-  }
+  },
+  [FilterTypes.CLOSED_OPEN]: closedOpen
 };
 
 function passesFilter(columns, filters, feature) {
@@ -30,7 +40,7 @@ function passesFilter(columns, filters, feature) {
     const columnFilters = filters[column];
     const columnFilterTypes = Object.keys(columnFilters);
 
-    if (!feature || !feature[column]) {
+    if (!feature || feature[column] === null || feature[column] === undefined) {
       return false;
     }
 

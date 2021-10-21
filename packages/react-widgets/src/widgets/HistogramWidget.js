@@ -20,6 +20,7 @@ import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {Function} [props.xAxisformatter] - Function to format X axis values.
  * @param  {Function} [props.formatter] - Function to format Y axis values.
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
+ * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -36,6 +37,7 @@ function HistogramWidget(props) {
     dataAxis,
     formatter,
     tooltip,
+    animation,
     onError,
     wrapperProps,
     noDataAlertProps
@@ -106,13 +108,16 @@ function HistogramWidget(props) {
 
       if (bars && bars.length) {
         const thresholds = bars.map((i) => {
-          return [ticks[i - 1], ticks.length !== i + 1 ? ticks[i] : undefined];
+          let left = ticks[i - 1];
+          let right = ticks.length !== i + 1 ? ticks[i] : undefined;
+
+          return [left, right];
         });
         dispatch(
           addFilter({
             id: dataSource,
             column,
-            type: FilterTypes.BETWEEN,
+            type: FilterTypes.CLOSED_OPEN,
             values: thresholds,
             owner: id
           })
@@ -129,18 +134,29 @@ function HistogramWidget(props) {
     [column, dataSource, id, setSelectedBars, dispatch, ticks]
   );
 
+  const ticksForDataAxis = ticks.reduce((acc, tick, i) => {
+    if (acc.length === 0) {
+      return [`< ${tick}`];
+    }
+    if (i === ticks.length - 1) {
+      return [...acc, `< ${tick}`, `>= ${tick}`];
+    }
+    return [...acc, `< ${tick}`];
+  }, []);
+
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
       {histogramData.length || isLoading ? (
         <HistogramWidgetUI
           data={histogramData}
-          dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}
+          dataAxis={dataAxis || ticksForDataAxis}
           selectedBars={selectedBars}
           onSelectedBarsChange={handleSelectedBarsChange}
           tooltip={tooltip}
           tooltipFormatter={tooltipFormatter}
           xAxisFormatter={xAxisFormatter}
           yAxisFormatter={formatter}
+          animation={animation}
         />
       ) : (
         <NoDataAlert {...noDataAlertProps} />
@@ -158,6 +174,7 @@ HistogramWidget.propTypes = {
   xAxisFormatter: PropTypes.func,
   formatter: PropTypes.func,
   tooltip: PropTypes.bool,
+  animation: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
@@ -166,6 +183,7 @@ HistogramWidget.propTypes = {
 
 HistogramWidget.defaultProps = {
   tooltip: true,
+  animation: true,
   wrapperProps: {},
   noDataAlertProps: {}
 };

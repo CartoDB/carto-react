@@ -74,12 +74,17 @@ function __generateDefaultConfig({ tooltipFormatter, formatter }, theme) {
   };
 }
 
-function __generateSerie({ name, data, theme, color, selectedCategories }) {
+function __generateSerie({ name, data, theme, animation, selectedCategories, labels }) {
   return [
     {
       type: 'pie',
       name,
+      animation,
       data: data.map((item) => {
+        if (labels?.[item.name]) {
+          item.name = labels[item.name];
+        }
+
         const disabled =
           selectedCategories?.length && !selectedCategories.includes(item.name);
 
@@ -137,7 +142,9 @@ function PieWidgetUI({
   formatter,
   tooltipFormatter,
   height,
+  labels,
   colors,
+  animation,
   selectedCategories,
   onSelectedCategoriesChange
 }) {
@@ -189,14 +196,25 @@ function PieWidgetUI({
       data: dataWithColor,
       theme,
       color: config.color,
-      selectedCategories
+      selectedCategories,
+      labels,
+      animation
     });
 
     setOptions({
       ...config,
       series
     });
-  }, [dataWithColor, name, theme, tooltipFormatter, formatter, selectedCategories]);
+  }, [
+    dataWithColor,
+    name,
+    theme,
+    tooltipFormatter,
+    formatter,
+    selectedCategories,
+    labels,
+    animation
+  ]);
 
   useEffect(() => {
     const label = elementHover || __getDefaultLabel(options.series[0]?.data);
@@ -220,26 +238,29 @@ function PieWidgetUI({
     echart.setOption(option, true);
   }, [options, defaultLabel]);
 
-  const clickEvent = useCallback((params) => {
-    if (onSelectedCategoriesChange) {
-      const echart = chartInstance.current.getEchartsInstance();
-      const { option, serie } = getChartSerie(echart, params.seriesIndex);
+  const clickEvent = useCallback(
+    (params) => {
+      if (onSelectedCategoriesChange) {
+        const echart = chartInstance.current.getEchartsInstance();
+        const { option, serie } = getChartSerie(echart, params.seriesIndex);
 
-      applyChartFilter(serie, params.dataIndex, theme);
+        applyChartFilter(serie, params.dataIndex, theme);
 
-      echart.setOption(option, true);
+        echart.setOption(option, true);
 
-      const activeCategories = serie.data.filter((category) => !category.disabled);
+        const activeCategories = serie.data.filter((category) => !category.disabled);
 
-      defaultLabel.current = __getDefaultLabel(activeCategories);
+        defaultLabel.current = __getDefaultLabel(activeCategories);
 
-      onSelectedCategoriesChange(
-        activeCategories.length === serie.data.length
-          ? []
-          : activeCategories.map((category) => category.name)
-      );
-    }
-  }, [onSelectedCategoriesChange, theme]);
+        onSelectedCategoriesChange(
+          activeCategories.length === serie.data.length
+            ? []
+            : activeCategories.map((category) => category.name)
+        );
+      }
+    },
+    [onSelectedCategoriesChange, theme]
+  );
 
   const mouseoverEvent = useCallback((params) => {
     setElementHover(params.data);
@@ -299,7 +320,9 @@ PieWidgetUI.defaultProps = {
             )} ${valueHtml} (${params.percent}%)</p>`;
   },
   colors: null,
+  labels: {},
   height: '260px',
+  animation: true,
   selectedCategories: []
 };
 
@@ -311,10 +334,12 @@ PieWidgetUI.propTypes = {
       value: PropTypes.number
     })
   ),
+  labels: PropTypes.object,
   colors: PropTypes.array,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   height: PropTypes.string,
+  animation: PropTypes.bool,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func
 };

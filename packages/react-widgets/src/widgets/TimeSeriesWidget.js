@@ -50,6 +50,7 @@ const STEP_SIZE_RANGE_MAPPING = {
  * @param  {function} [props.formatter] - Function for formatting the value that is represented in the tooltip.
  * @param  {string} [props.height] - Height of the chart.
  * @param  {boolean} [props.showControls] - Enable/disable animation controls (play, pause, stop, speed). True by default.
+ * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -84,6 +85,7 @@ function TimeSeriesWidget({
   formatter,
   height,
   showControls,
+  animation,
   isPlaying,
   onPlay,
   isPaused,
@@ -244,6 +246,7 @@ function TimeSeriesWidget({
             formatter={formatter}
             height={height}
             showControls={showControls}
+            animation={animation}
             isPlaying={isPlaying}
             onPlay={onPlay}
             isPaused={isPaused}
@@ -301,6 +304,7 @@ TimeSeriesWidget.propTypes = {
   tooltipFormatter: PropTypes.func,
   formatter: PropTypes.func,
   height: PropTypes.string,
+  animation: PropTypes.bool,
   isPlaying: PropTypes.bool,
   onPlay: PropTypes.func,
   isPaused: PropTypes.bool,
@@ -325,6 +329,7 @@ TimeSeriesWidget.defaultProps = {
   duration: 20000,
   tooltip: true,
   formatter: (value) => value,
+  animation: true,
   isPlaying: false,
   isPaused: false,
   // timelinePosition: 0,

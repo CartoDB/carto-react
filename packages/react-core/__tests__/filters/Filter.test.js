@@ -123,23 +123,64 @@ describe('Filters', () => {
   describe('feature passes filter - number type', () => {
     const params = { filters, type: 'number' };
 
-    describe('should return 0 if feature column value is falsy', () => {
-      const columnValues = [0, null, undefined, false, ''];
-      for (const value of columnValues) {
-        test(`${value} - with geojson feature`, () => {
-          const feature = makeFeatureWithValueInColumn(value);
-          const isFeatureIncluded = buildFeatureFilter(params)(feature);
+    describe('should return 0 if feature column value is null or undefined', () => {
+      const nullOrUndefinedAreNotValid = {
+        filters: {
+          column1: { between: { owner: 'widgetId1', values: [[-1, 1]] } }
+        },
+        type: 'number'
+      };
+
+      const notIncludedFeatures = [
+        {
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: [0, 0] },
+          properties: { column1: null }
+        },
+        {
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: [0, 0] },
+          properties: { column1: undefined }
+        }
+      ];
+
+      for (const feature of notIncludedFeatures) {
+        test(`${feature.column1} - with geojson feature`, () => {
+          const isFeatureIncluded = buildFeatureFilter(nullOrUndefinedAreNotValid)(
+            feature
+          );
           expect(isFeatureIncluded).toBe(0);
         });
       }
 
-      for (const value of columnValues) {
-        test(`${value} - with geojson feature properties`, () => {
-          const obj = makeObjectWithValueInColumn(value);
-          const isFeatureIncluded = buildFeatureFilter(params)(obj);
+      const notIncludedObjects = [{ column1: null }, { column1: undefined }];
+      for (const obj of notIncludedObjects) {
+        test(`${obj.column1} - with geojson feature properties`, () => {
+          const isFeatureIncluded = buildFeatureFilter(nullOrUndefinedAreNotValid)(obj);
           expect(isFeatureIncluded).toBe(0);
         });
       }
+    });
+
+    describe('should return 1 if feature column value has a legit 0', () => {
+      const zeroIsValidForThisFilter = {
+        filters: {
+          column1: { between: { owner: 'widgetId1', values: [[-1, 1]] } }
+        },
+        type: 'number'
+      };
+
+      test(`ZERO - with geojson feature`, () => {
+        const feature = makeFeatureWithValueInColumn(0);
+        const isFeatureIncluded = buildFeatureFilter(zeroIsValidForThisFilter)(feature);
+        expect(isFeatureIncluded).toBe(1);
+      });
+
+      test(`ZERO - with geojson feature properties`, () => {
+        const obj = makeObjectWithValueInColumn(0);
+        const isFeatureIncluded = buildFeatureFilter(zeroIsValidForThisFilter)(obj);
+        expect(isFeatureIncluded).toBe(1);
+      });
     });
 
     describe('should throw if filter function is not implemented', () => {
@@ -188,6 +229,39 @@ describe('Filters', () => {
       };
       const featureIsIncluded = buildFeatureFilter(params)(feature);
       expect(featureIsIncluded).toBe(0);
+    });
+
+    describe('should manage number filters using ClosedOpen interval checks', () => {
+      const zeroIsValidForThisFilter = {
+        filters: {
+          column1: { closed_open: { owner: 'widgetId1', values: [[10, 20]] } }
+        },
+        type: 'number'
+      };
+
+      test(`left endpoint is ALWAYS included - with geojson feature`, () => {
+        const feature = makeFeatureWithValueInColumn(10);
+        const isFeatureIncluded = buildFeatureFilter(zeroIsValidForThisFilter)(feature);
+        expect(isFeatureIncluded).toBe(1);
+      });
+
+      test(`rigth endpoint is NEVER included - with geojson feature`, () => {
+        const feature = makeFeatureWithValueInColumn(20);
+        const isFeatureIncluded = buildFeatureFilter(zeroIsValidForThisFilter)(feature);
+        expect(isFeatureIncluded).toBe(0);
+      });
+
+      test(`left endpoint is ALWAYS included - with geojson feature properties`, () => {
+        const obj = makeObjectWithValueInColumn(10);
+        const isFeatureIncluded = buildFeatureFilter(zeroIsValidForThisFilter)(obj);
+        expect(isFeatureIncluded).toBe(1);
+      });
+
+      test(`rigth endpoint is NEVER included - with geojson feature properties`, () => {
+        const obj = makeObjectWithValueInColumn(20);
+        const isFeatureIncluded = buildFeatureFilter(zeroIsValidForThisFilter)(obj);
+        expect(isFeatureIncluded).toBe(0);
+      });
     });
   });
 });
