@@ -108,13 +108,16 @@ function HistogramWidget(props) {
 
       if (bars && bars.length) {
         const thresholds = bars.map((i) => {
-          return [ticks[i - 1], ticks.length !== i + 1 ? ticks[i] : undefined];
+          let left = ticks[i - 1];
+          let right = ticks.length !== i + 1 ? ticks[i] : undefined;
+
+          return [left, right];
         });
         dispatch(
           addFilter({
             id: dataSource,
             column,
-            type: FilterTypes.BETWEEN,
+            type: FilterTypes.CLOSED_OPEN,
             values: thresholds,
             owner: id
           })
@@ -131,12 +134,22 @@ function HistogramWidget(props) {
     [column, dataSource, id, setSelectedBars, dispatch, ticks]
   );
 
+  const ticksForDataAxis = ticks.reduce((acc, tick, i) => {
+    if (acc.length === 0) {
+      return [`< ${tick}`];
+    }
+    if (i === ticks.length - 1) {
+      return [...acc, `< ${tick}`, `>= ${tick}`];
+    }
+    return [...acc, `< ${tick}`];
+  }, []);
+
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
       {histogramData.length || isLoading ? (
         <HistogramWidgetUI
           data={histogramData}
-          dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}
+          dataAxis={dataAxis || ticksForDataAxis}
           selectedBars={selectedBars}
           onSelectedBarsChange={handleSelectedBarsChange}
           tooltip={tooltip}
