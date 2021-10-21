@@ -40,7 +40,7 @@ export const executeSQL = async ({ credentials, query, connection, opts }) => {
   const { apiVersion = API_VERSIONS.V2 } = credentials;
 
   if (apiVersion === API_VERSIONS.V3) {
-    return data;
+    return data.rows;
   }
 
   return opts && opts.format === 'geojson' ? data : data.rows; // just rows portion of result object
