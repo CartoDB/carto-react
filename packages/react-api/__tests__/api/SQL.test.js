@@ -80,7 +80,7 @@ describe('should call SqlApi', () => {
         credentials
       });
       await expect(executeSQL({ credentials, query })).rejects.toThrow(
-        `${JSON.stringify(errorResponse.hint)}`
+        `${errorResponse.hint}`
       );
     });
   });
