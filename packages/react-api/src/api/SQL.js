@@ -83,6 +83,6 @@ function createRequest({ credentials, connection, query, opts = {} }) {
   }
 
   // Post request
-  const postUrl = generateApiUrl({ credentials });
+  const postUrl = generateApiUrl({ credentials, connection, parameters: null });
   return postRequest(postUrl, rawParams, requestOpts);
 }
