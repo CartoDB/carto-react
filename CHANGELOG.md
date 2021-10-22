@@ -22,6 +22,7 @@
 - Fix missing connection arg in executeSQL / createRequest for POST requests [#206](https://github.com/CartoDB/carto-react/pull/206)
 - Include new error hint message in API responses [#208](https://github.com/CartoDB/carto-react/pull/208/) 
 - Fix POST requests to SQL API not managing access_token properly [#210](https://github.com/CartoDB/carto-react/pull/210) 
+- Fix echarts update problems [#209](https://github.com/CartoDB/carto-react/pull/209)
 
 ## 1.1.0-beta.1 (2021-10-14)
 
