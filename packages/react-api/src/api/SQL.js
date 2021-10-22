@@ -73,22 +73,25 @@ function createRequest({ credentials, connection, query, opts = {} }) {
   }
 
   // Get request
-  const urlEncodedParams = Object.entries(rawParams).map(([key, value]) =>
+  const urlParamsForGet = Object.entries(rawParams).map(([key, value]) =>
     encodeParameter(key, value)
   );
-
   const getUrl = generateApiUrl({
     credentials,
     connection,
-    parameters: urlEncodedParams
+    parameters: urlParamsForGet
   });
   if (getUrl.length < REQUEST_GET_MAX_URL_LENGTH) {
     return getRequest(getUrl, requestOpts);
   }
 
   // Post request
-  const parameters =
+  const urlParamsForPost =
     apiVersion === API_VERSIONS.V3 ? [`access_token=${credentials.accessToken}`] : null;
-  const postUrl = generateApiUrl({ credentials, connection, parameters });
+  const postUrl = generateApiUrl({
+    credentials,
+    connection,
+    parameters: urlParamsForPost
+  });
   return postRequest(postUrl, rawParams, requestOpts);
 }
