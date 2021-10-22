@@ -188,10 +188,12 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
   ]);
 
   // markLine in echarts
-  const timelineOptions = useMemo(
-    () =>
+  const timelineOptions = useMemo(() => {
+    const xAxis = data?.[Math.max(0, timelinePosition)]?.name;
+    return (
       // Cannot have markLine and markArea at the same time
-      !timeWindow.length && {
+      !timeWindow.length &&
+      xAxis !== undefined && {
         symbol: ['none', 'none'],
         animationDuration: 100,
         animationDurationUpdate: Math.min(300, animationStep / 2),
@@ -208,7 +210,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
                       show: false
                     }
                   },
-                  xAxis: data[Math.max(0, timelinePosition)]?.name,
+                  xAxis,
                   lineStyle: {
                     type: 'solid',
                     color: theme.palette.primary.main,
@@ -219,9 +221,9 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
                 }
               ]
             : []
-      },
-    [isPaused, isPlaying, data, theme, animationStep, timelinePosition, timeWindow]
-  );
+      }
+    );
+  }, [isPaused, isPlaying, data, theme, animationStep, timelinePosition, timeWindow]);
 
   // markArea in echarts
   const timeWindowOptions = useMemo(
