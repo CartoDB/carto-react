@@ -4,6 +4,8 @@ import { API_VERSIONS } from '@deck.gl/carto';
 
 import { dealWithApiError, generateApiUrl } from './common';
 
+const CLIENT = 'carto-react';
+
 /**
  * Executes a SQL query
  *
@@ -56,7 +58,7 @@ function createRequest({ credentials, connection, query, opts = {} }) {
   const { apiVersion = API_VERSIONS.V2 } = credentials;
 
   const rawParams = {
-    client: 'carto-react',
+    client: CLIENT,
     q: query?.trim(),
     ...otherOptions
   };
@@ -73,16 +75,27 @@ function createRequest({ credentials, connection, query, opts = {} }) {
   }
 
   // Get request
-  const encodedParams = Object.entries(rawParams).map(([key, value]) =>
+  const urlParamsForGet = Object.entries(rawParams).map(([key, value]) =>
     encodeParameter(key, value)
   );
-
-  const getUrl = generateApiUrl({ credentials, connection, parameters: encodedParams });
+  const getUrl = generateApiUrl({
+    credentials,
+    connection,
+    parameters: urlParamsForGet
+  });
   if (getUrl.length < REQUEST_GET_MAX_URL_LENGTH) {
     return getRequest(getUrl, requestOpts);
   }
 
   // Post request
-  const postUrl = generateApiUrl({ credentials, connection, parameters: null });
+  const urlParamsForPost =
+    apiVersion === API_VERSIONS.V3
+      ? [`access_token=${credentials.accessToken}`, `client=${CLIENT}`]
+      : null;
+  const postUrl = generateApiUrl({
+    credentials,
+    connection,
+    parameters: urlParamsForPost
+  });
   return postRequest(postUrl, rawParams, requestOpts);
 }
