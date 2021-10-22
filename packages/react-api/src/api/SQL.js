@@ -55,8 +55,10 @@ function createRequest({ credentials, connection, query, opts = {} }) {
 
   const { apiVersion = API_VERSIONS.V2 } = credentials;
 
+  const CLIENT = 'carto-react';
+
   const rawParams = {
-    client: 'carto-react',
+    client: CLIENT,
     q: query?.trim(),
     ...otherOptions
   };
@@ -87,7 +89,9 @@ function createRequest({ credentials, connection, query, opts = {} }) {
 
   // Post request
   const urlParamsForPost =
-    apiVersion === API_VERSIONS.V3 ? [`access_token=${credentials.accessToken}`] : null;
+    apiVersion === API_VERSIONS.V3
+      ? [`access_token=${credentials.accessToken}`, `client=${CLIENT}`]
+      : null;
   const postUrl = generateApiUrl({
     credentials,
     connection,
