@@ -4,6 +4,8 @@ import { API_VERSIONS } from '@deck.gl/carto';
 
 import { dealWithApiError, generateApiUrl } from './common';
 
+const CLIENT = 'carto-react';
+
 /**
  * Executes a SQL query
  *
@@ -54,8 +56,6 @@ function createRequest({ credentials, connection, query, opts = {} }) {
   const { abortController, ...otherOptions } = opts;
 
   const { apiVersion = API_VERSIONS.V2 } = credentials;
-
-  const CLIENT = 'carto-react';
 
   const rawParams = {
     client: CLIENT,
