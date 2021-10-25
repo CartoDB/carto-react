@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Improve TS typings [#213](https://github.com/CartoDB/carto-react/pull/213)
+
 ## 1.1.0-beta.2 (2021-10-22)
 
 - Fix warning console when LegendIcon is used [#170](https://github.com/CartoDB/carto-react/pull/170)
