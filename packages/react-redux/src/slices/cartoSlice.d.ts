@@ -3,7 +3,7 @@ import { SourceProps } from '@carto/react-api/types';
 import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/';
 import { InitialCartoState, Reducer, ViewState } from '../types';
 
-type Source = SourceProps & { id: string };
+type Source = SourceProps & { id: string } & { filters?: any};
 
 type Layer = {
   id: string;
@@ -122,7 +122,7 @@ export function clearFilters(
   payload: { id: string };
 };
 
-export function selectSourceById(state: any, id: string): string;
+export function selectSourceById(state: any, id: string): Source;
 
 export function selectIsViewportFeaturesReadyForSource(state: any, id: string): boolean;
 
