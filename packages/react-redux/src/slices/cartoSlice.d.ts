@@ -1,56 +1,45 @@
 import { Credentials } from '@carto/react-api/';
+import { SourceProps } from '@carto/react-api/types';
 import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/';
 import { InitialCartoState, Reducer, ViewState } from '../types';
 
-type AddSource = {
-  id: string,
-  data: string,
-  type: string,
-  credentials: Credentials
-}
+type Source = SourceProps & { id: string };
 
-type RemoveSource = {
-  sourceId: string
-}
-
-type AddLayer = {
-  id: string,
-  source: string,
-  layerAttributes: object
-}
-
-type UpdateLayer = {
-  id: string,
-  layerAttributes: object
-}
+type Layer = {
+  id: string;
+  source?: string;
+  layerAttributes?: object;
+};
 
 type AllowedBasemaps = CartoBasemapsNames & GMapsBasemapsNames;
 
-type CommonFilterProps = {
-  id: string,
-  column: string
-}
+type FilterBasic = {
+  type: '';
+  values: string[] | number[];
+  owner: string;
+};
 
-type AddFilter = {
-  type: '',
-  values: string[] | number[],
-  owner: string
-}
+type FilterCommonProps = {
+  id: string;
+  column: string;
+};
 
-type ViewportFeaturesDataAction = {
-  sourceId: string,
-  features: []
-}
+type Filter = FilterBasic & FilterCommonProps;
 
-type ViewportFeaturesReadyDataAction = {
-  sourceId: string,
-  ready: boolean
-}
+type ViewportFeaturesData = {
+  sourceId: string;
+  features: [];
+};
+
+type ViewportFeaturesReadyData = {
+  sourceId: string;
+  ready: boolean;
+};
 
 type WidgetLoadingState = {
-  widgetId: string,
-  isLoading: boolean
-}
+  widgetId: string;
+  isLoading: boolean;
+};
 
 declare enum CartoActions {
   ADD_SOURCE = 'carto/addSource',
@@ -70,49 +59,67 @@ declare enum CartoActions {
 
 export function createCartoSlice(initialState: InitialCartoState): Reducer;
 
-export function addSource(arg: AddSource): {
-  type: CartoActions.ADD_SOURCE,
-  payload: AddSource
+export function addSource(
+  source: Source
+): {
+  type: CartoActions.ADD_SOURCE;
+  payload: Source;
 };
 
-export function removeSource(arg: RemoveSource): {
-  type: CartoActions.REMOVE_SOURCE,
-  payload: RemoveSource
+export function removeSource(
+  id: string
+): {
+  type: CartoActions.REMOVE_SOURCE;
+  payload: string;
 };
 
-export function addLayer(arg: AddLayer): {
-  type: CartoActions.ADD_LAYER,
-  payload: AddLayer
+export function addLayer(
+  layer: Layer
+): {
+  type: CartoActions.ADD_LAYER;
+  payload: Layer;
 };
 
-export function updateLayer(arg: UpdateLayer): {
-  type: CartoActions.UPDATE_LAYER,
-  payload: UpdateLayer
+export function updateLayer(
+  layer: Layer
+): {
+  type: CartoActions.UPDATE_LAYER;
+  payload: Layer;
 };
 
-export function removeLayer(id: string): {
-  type: CartoActions.REMOVE_LAYER,
-  payload: string
+export function removeLayer(
+  id: string
+): {
+  type: CartoActions.REMOVE_LAYER;
+  payload: string;
 };
 
-export function setBasemap(id: AllowedBasemaps): {
-  type: CartoActions.SET_BASEMAP,
-  payload: AllowedBasemaps
+export function setBasemap(
+  id: AllowedBasemaps
+): {
+  type: CartoActions.SET_BASEMAP;
+  payload: AllowedBasemaps;
 };
 
-export function addFilter(arg: CommonFilterProps & AddFilter): {
-  type: CartoActions.ADD_LAYER,
-  payload: CommonFilterProps & AddFilter
+export function addFilter(
+  filter: Filter
+): {
+  type: CartoActions.ADD_LAYER;
+  payload: Filter;
 };
 
-export function removeFilter(arg: CommonFilterProps): {
-  type: CartoActions.REMOVE_FILTER,
-  payload: CommonFilterProps
+export function removeFilter(
+  arg: FilterCommonProps
+): {
+  type: CartoActions.REMOVE_FILTER;
+  payload: FilterCommonProps;
 };
 
-export function clearFilters(id: string): {
-  type: CartoActions.CLEAR_FILTERS,
-  payload: { id: string }
+export function clearFilters(
+  id: string
+): {
+  type: CartoActions.CLEAR_FILTERS;
+  payload: { id: string };
 };
 
 export function selectSourceById(state: any, id: string): string;
@@ -121,22 +128,30 @@ export function selectIsViewportFeaturesReadyForSource(state: any, id: string): 
 
 export function setViewState(viewState: ViewState): Function;
 
-export function setViewportFeatures(data: ViewportFeaturesDataAction): {
-  type: CartoActions.SET_VIEWPORT_FEATURES,
-  payload: ViewportFeaturesDataAction
+export function setViewportFeatures(
+  data: ViewportFeaturesData
+): {
+  type: CartoActions.SET_VIEWPORT_FEATURES;
+  payload: ViewportFeaturesData;
 };
 
-export function removeViewportFeatures(sourceId: string): {
-  type: CartoActions.REMOVE_VIEWPORT_FEATURES,
-  payload: string
+export function removeViewportFeatures(
+  sourceId: string
+): {
+  type: CartoActions.REMOVE_VIEWPORT_FEATURES;
+  payload: string;
 };
 
-export function setViewportFeaturesReady(data: ViewportFeaturesReadyDataAction): {
-  type: CartoActions.SET_VIEWPORT_FEATURES_READY,
-  payload: ViewportFeaturesReadyDataAction
+export function setViewportFeaturesReady(
+  data: ViewportFeaturesReadyData
+): {
+  type: CartoActions.SET_VIEWPORT_FEATURES_READY;
+  payload: ViewportFeaturesReadyData;
 };
 
-export function setCredentials(credentials: Credentials): {
-  type: CartoActions.SET_CREDENTIALS,
-  payload: Credentials
+export function setCredentials(
+  credentials: Credentials
+): {
+  type: CartoActions.SET_CREDENTIALS;
+  payload: Credentials;
 };
