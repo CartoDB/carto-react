@@ -1,4 +1,4 @@
-import { Credentials, ExecuteSQL } from '../types';
+import { Credentials, ExecuteSQLResponse } from '../types';
 
 export function executeSQL({
   credentials,
@@ -10,4 +10,4 @@ export function executeSQL({
   query: string;
   connection?: string;
   opts?: unknown;
-}): ExecuteSQL;
+}): ExecuteSQLResponse;
