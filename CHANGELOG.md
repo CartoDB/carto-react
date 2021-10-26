@@ -3,6 +3,7 @@
 ## Not released
 
 - Improve TS typings [#213](https://github.com/CartoDB/carto-react/pull/213)
+- Fix first X axis value partially hidden in Histogram widget [#215](https://github.com/CartoDB/carto-react/pull/215)
 
 ## 1.1.0-beta.2 (2021-10-22)
 
