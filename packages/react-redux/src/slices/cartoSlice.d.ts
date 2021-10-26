@@ -11,7 +11,7 @@ type Layer = {
   layerAttributes?: object;
 };
 
-type AllowedBasemaps = CartoBasemapsNames & GMapsBasemapsNames;
+type BasemapName = CartoBasemapsNames & GMapsBasemapsNames;
 
 type FilterBasic = {
   type: '';
@@ -95,10 +95,10 @@ export function removeLayer(
 };
 
 export function setBasemap(
-  id: AllowedBasemaps
+  id: BasemapName
 ): {
   type: CartoActions.SET_BASEMAP;
-  payload: AllowedBasemaps;
+  payload: BasemapName;
 };
 
 export function addFilter(
