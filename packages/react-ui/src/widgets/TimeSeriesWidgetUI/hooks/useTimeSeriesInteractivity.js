@@ -15,8 +15,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
     timeWindow,
     setTimeWindow,
     setTimelinePosition,
-    stop,
-    animationStep
+    stop
   } = useTimeSeriesContext();
 
   const [isMarkLineSelected, setIsMarkLineSelected] = useState(false);
@@ -196,7 +195,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
       xAxis !== undefined && {
         symbol: ['none', 'none'],
         animationDuration: 100,
-        animationDurationUpdate: Math.min(300, animationStep / 2),
+        animationDurationUpdate: 150,
         animationEasingUpdate: 'linear',
         data:
           isPaused || isPlaying
@@ -223,7 +222,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
             : []
       }
     );
-  }, [isPaused, isPlaying, data, theme, animationStep, timelinePosition, timeWindow]);
+  }, [isPaused, isPlaying, data, theme, timelinePosition, timeWindow]);
 
   // markArea in echarts
   const timeWindowOptions = useMemo(

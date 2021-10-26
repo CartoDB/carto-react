@@ -44,7 +44,6 @@ const STEP_SIZE_RANGE_MAPPING = {
  * @param  {string} props.stepSize - Step applied to group the data. Must be one of those defined in `GroupDateTypes` object.
  * @param  {string[]} [props.stepSizeOptions] - Different steps that can be applied to group the data. If filled, an icon with a menu appears to change between steps. Every value must be one of those defined in `AggregationTypes` object.
  * @param  {string} [props.chartType] - Chart used to represent the time serie. Must be one of those defined in `TIME_SERIES_CHART_TYPES` object.
- * @param  {number} [props.duration] - Duration of the animation in milliseconds. 20s by default.
  * @param  {boolean} [props.tooltip] - Enable/disable tooltip.
  * @param  {function} [props.tooltipFormatter] - Function that returns the HTML for the chart tooltip.
  * @param  {function} [props.formatter] - Function for formatting the value that is represented in the tooltip.
@@ -79,7 +78,6 @@ function TimeSeriesWidget({
   noDataAlertProps,
   // UI
   chartType,
-  duration,
   tooltip,
   tooltipFormatter,
   formatter,
@@ -240,7 +238,6 @@ function TimeSeriesWidget({
             data={timeSeriesData}
             stepSize={selectedStepSize}
             chartType={chartType}
-            duration={duration}
             tooltip={tooltip}
             tooltipFormatter={tooltipFormatter}
             formatter={formatter}
@@ -299,7 +296,6 @@ TimeSeriesWidget.propTypes = {
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
   // UI
-  duration: PropTypes.number,
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
   formatter: PropTypes.func,
@@ -326,7 +322,6 @@ TimeSeriesWidget.defaultProps = {
   wrapperProps: {},
   noDataAlertProps: {},
   // UI
-  duration: 20000,
   tooltip: true,
   formatter: (value) => value,
   animation: true,

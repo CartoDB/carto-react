@@ -9,7 +9,7 @@ import {
   capitalize,
   makeStyles
 } from '@material-ui/core';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import TimeSeriesChart from './components/TimeSeriesChart';
 import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesContext';
 import { CHART_TYPES } from './utils/constants';
@@ -38,7 +38,6 @@ function TimeSeriesWidgetUI({
   data,
   stepSize,
   chartType,
-  duration,
   tooltip,
   tooltipFormatter,
   formatter,
@@ -55,18 +54,8 @@ function TimeSeriesWidgetUI({
   onPause,
   onStop
 }) {
-  const [animationStep, setAnimationStep] = useState(0);
-
-  // Calculate animation step by duration
-  useEffect(() => {
-    if (duration && data.length) {
-      setAnimationStep(duration / data.length);
-    }
-  }, [duration, data, setAnimationStep]);
-
   return (
     <TimeSeriesProvider
-      animationStep={animationStep}
       isPlaying={isPlaying}
       onPlay={onPlay}
       isPaused={isPaused}
@@ -101,7 +90,6 @@ TimeSeriesWidgetUI.propTypes = {
   ).isRequired,
   stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired,
   chartType: PropTypes.oneOf(Object.values(CHART_TYPES)),
-  duration: PropTypes.number,
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
   formatter: PropTypes.func,
@@ -122,7 +110,6 @@ TimeSeriesWidgetUI.propTypes = {
 TimeSeriesWidgetUI.defaultProps = {
   data: [],
   chartType: CHART_TYPES.LINE,
-  duration: 20000,
   tooltip: true,
   tooltipFormatter: defaultTooltipFormatter,
   formatter: (value) => value,
@@ -167,9 +154,9 @@ function TimeSeriesWidgetUIContent({
     setTimelinePosition,
     setTimeWindow,
     stop,
-    togglePlay,
-    animationStep
+    togglePlay
   } = useTimeSeriesContext();
+  const animationRef = useRef({ animationFrameId: null, timeoutId: null });
 
   // If data changes, stop animation. useDidMountEffect is used to avoid
   // being executed in the initial rendering because that cause
@@ -181,52 +168,71 @@ function TimeSeriesWidgetUIContent({
     [data]
   );
 
+  const stopAnimation = () => {
+    const { animationFrameId, timeoutId } = animationRef.current;
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+    }
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  };
+
+  const handleStop = useCallback(() => {
+    stopAnimation();
+    stop();
+  }, [stop]);
+
+  const handleTogglePlay = () => {
+    stopAnimation();
+    togglePlay();
+  };
+
   // Running timeWindow
   useEffect(() => {
     if (isPlaying && timeWindow.length === 2) {
       const timeWindowStep = TIME_WINDOW_STEP_BY_STEP_SIZE[stepSize];
-      const interval = setInterval(() => {
-        const msTimeWindowStep = timeWindowStep * 1000;
-        const newTimeWindow = [
-          timeWindow[0] + msTimeWindowStep,
-          timeWindow[1] + msTimeWindowStep
-        ];
-        if (newTimeWindow[1] > data[data.length - 1].name) {
-          stop();
-          clearInterval(interval);
-        } else {
+      const msTimeWindowStep = timeWindowStep * 1000;
+
+      animateTimeWindow({
+        data,
+        timeWindow,
+        msTimeWindowStep: msTimeWindowStep * speed,
+        drawFrame: (newTimeWindow) => {
           setTimeWindow(newTimeWindow);
-        }
-      }, 100 / speed);
-      return () => clearInterval(interval);
+        },
+        onEnd: () => {
+          // To show the last item, wait a moment
+          setTimeout(handleStop, 500);
+        },
+        animationRef
+      });
+
+      return () => stopAnimation();
     }
-  }, [data, isPlaying, timeWindow, stepSize, setTimeWindow, stop, speed]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, isPlaying, stepSize, setTimeWindow, handleStop, speed]);
 
   // Running timeline
   useEffect(() => {
     if (isPlaying && !timeWindow.length) {
-      const interval = setInterval(() => {
-        const newTimelinePosition = Math.min(data.length, timelinePosition + 1);
-        if (isPlaying && newTimelinePosition === data.length) {
-          clearInterval(interval);
-          // To show the last item, wait an animationStep
-          setTimeout(stop, animationStep);
-        } else {
+      animateTimeline({
+        speed,
+        timelinePosition,
+        data,
+        drawFrame: (newTimelinePosition) => {
           setTimelinePosition(newTimelinePosition);
-        }
-      }, animationStep / speed);
-      return () => clearInterval(interval);
+        },
+        onEnd: () => {
+          setTimeout(handleStop, 500);
+        },
+        animationRef
+      });
+
+      return () => stopAnimation();
     }
-  }, [
-    data,
-    isPlaying,
-    animationStep,
-    speed,
-    timeWindow.length,
-    timelinePosition,
-    stop,
-    setTimelinePosition
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, isPlaying, speed, timeWindow.length, handleStop, setTimelinePosition]);
 
   const currentDate = useMemo(() => {
     if (!data.length) {
@@ -335,7 +341,7 @@ function TimeSeriesWidgetUIContent({
                 size='small'
                 color='primary'
                 disabled={!(isPaused || isPlaying)}
-                onClick={stop}
+                onClick={handleStop}
                 data-testid='stop'
               >
                 <StopIcon />
@@ -346,7 +352,7 @@ function TimeSeriesWidgetUIContent({
                 data-testid='play-pause'
                 size='small'
                 color='primary'
-                onClick={togglePlay}
+                onClick={handleTogglePlay}
               >
                 {isPlaying ? <PauseIcon /> : <PlayIcon />}
               </IconButton>
@@ -469,4 +475,71 @@ function useDidMountEffect(func, deps = []) {
     else didMount.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
+}
+
+function animateTimeWindow({
+  msTimeWindowStep,
+  timeWindow,
+  data,
+  drawFrame,
+  onEnd,
+  animationRef
+}) {
+  let currentTimeWindow = timeWindow;
+
+  const fireAnimation = () => {
+    animationRef.current.animationFrameId = requestAnimationFrame(animate);
+  };
+
+  const animate = () => {
+    currentTimeWindow = [
+      currentTimeWindow[0] + msTimeWindowStep,
+      currentTimeWindow[1] + msTimeWindowStep
+    ];
+    if (currentTimeWindow[1] > data[data.length - 1].name) {
+      onEnd();
+    } else {
+      drawFrame(currentTimeWindow);
+      fireAnimation();
+    }
+  };
+
+  fireAnimation();
+}
+
+const MIN_FPS = 2;
+
+function animateTimeline({
+  speed,
+  timelinePosition,
+  data,
+  drawFrame,
+  onEnd,
+  animationRef
+}) {
+  let currentTimeline = timelinePosition;
+
+  const fpsToUse =
+    Math.max(
+      Math.round(Math.sqrt(data.length) / 2), // FPS based on data length
+      MIN_FPS // Min FPS
+    ) * speed;
+
+  const fireAnimation = () => {
+    animationRef.current.timeoutId = setTimeout(() => {
+      animationRef.current.animationFrameId = requestAnimationFrame(animate);
+    }, 1000 / fpsToUse);
+  };
+
+  const animate = () => {
+    currentTimeline = Math.min(data.length, currentTimeline + 1);
+    if (currentTimeline === data.length) {
+      onEnd();
+    } else {
+      drawFrame(currentTimeline);
+      fireAnimation();
+    }
+  };
+
+  fireAnimation();
 }
