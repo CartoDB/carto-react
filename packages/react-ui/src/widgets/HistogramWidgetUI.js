@@ -45,10 +45,11 @@ function __generateDefaultConfig(
 ) {
   return {
     grid: {
-      left: theme.spacing(0),
+      left: theme.spacing(0.5),
       top: theme.spacing(2),
-      right: theme.spacing(0),
-      bottom: theme.spacing(3)
+      right: theme.spacing(1),
+      bottom: theme.spacing(1),
+      containLabel: true
     },
     axisPointer: {
       lineStyle: {
@@ -104,12 +105,8 @@ function __generateDefaultConfig(
       type: 'value',
       axisLabel: {
         margin: 0,
-        padding: [
-          0,
-          0,
-          theme.typography.charts.fontSize * theme.typography.charts.lineHeight + 4,
-          0
-        ],
+        verticalAlign: 'bottom',
+        padding: [0, 0, theme.typography.charts.fontSize, 0],
         show: true,
         showMaxLabel: true,
         showMinLabel: false,
