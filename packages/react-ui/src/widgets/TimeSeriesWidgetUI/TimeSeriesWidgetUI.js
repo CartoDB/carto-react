@@ -171,7 +171,7 @@ function TimeSeriesWidgetUIContent({
   const stopAnimation = () => {
     const { animationFrameId, timeoutId } = animationRef.current;
     if (animationFrameId) {
-      cancelAnimationFrame(animationFrameId);
+      window.cancelAnimationFrame(animationFrameId);
     }
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -190,7 +190,7 @@ function TimeSeriesWidgetUIContent({
 
   // Running timeWindow
   useEffect(() => {
-    if (isPlaying && timeWindow.length === 2) {
+    if (isPlaying && timeWindow.length === 2 && data.length) {
       const timeWindowStep = TIME_WINDOW_STEP_BY_STEP_SIZE[stepSize];
       const msTimeWindowStep = timeWindowStep * 1000;
 
@@ -203,7 +203,7 @@ function TimeSeriesWidgetUIContent({
         },
         onEnd: () => {
           // To show the last item, wait a moment
-          setTimeout(handleStop, 500);
+          setTimeout(handleStop, 250);
         },
         animationRef
       });
@@ -215,7 +215,7 @@ function TimeSeriesWidgetUIContent({
 
   // Running timeline
   useEffect(() => {
-    if (isPlaying && !timeWindow.length) {
+    if (isPlaying && !timeWindow.length && data.length) {
       animateTimeline({
         speed,
         timelinePosition,
@@ -224,7 +224,7 @@ function TimeSeriesWidgetUIContent({
           setTimelinePosition(newTimelinePosition);
         },
         onEnd: () => {
-          setTimeout(handleStop, 500);
+          setTimeout(handleStop, 250);
         },
         animationRef
       });
@@ -488,7 +488,7 @@ function animateTimeWindow({
   let currentTimeWindow = timeWindow;
 
   const fireAnimation = () => {
-    animationRef.current.animationFrameId = requestAnimationFrame(animate);
+    animationRef.current.animationFrameId = window.requestAnimationFrame(animate);
   };
 
   const animate = () => {
@@ -527,7 +527,7 @@ function animateTimeline({
 
   const fireAnimation = () => {
     animationRef.current.timeoutId = setTimeout(() => {
-      animationRef.current.animationFrameId = requestAnimationFrame(animate);
+      animationRef.current.animationFrameId = window.requestAnimationFrame(animate);
     }, 1000 / fpsToUse);
   };
 

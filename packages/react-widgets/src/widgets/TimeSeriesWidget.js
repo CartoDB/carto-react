@@ -152,37 +152,50 @@ function TimeSeriesWidget({
 
   const handleTimeWindowUpdate = useCallback(
     (timeWindow) => {
-      dispatch(
-        addFilter({
-          id: dataSource,
-          column,
-          type: FilterTypes.TIME,
-          values: [timeWindow.map((date) => date.getTime?.() || date)],
-          owner: id
-        })
-      );
+      if (!isLoading) {
+        dispatch(
+          addFilter({
+            id: dataSource,
+            column,
+            type: FilterTypes.TIME,
+            values: [timeWindow.map((date) => date.getTime?.() || date)],
+            owner: id
+          })
+        );
 
-      if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
+        if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
+      }
     },
-    [column, dataSource, dispatch, id, onTimeWindowUpdate]
+    [column, dataSource, isLoading, dispatch, id, onTimeWindowUpdate]
   );
 
   const handleTimelineUpdate = useCallback(
     (timelinePosition) => {
-      const { name: moment } = timeSeriesData[timelinePosition];
-      dispatch(
-        addFilter({
-          id: dataSource,
-          column,
-          type: FilterTypes.TIME,
-          values: [[moment, moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize]]],
-          owner: id
-        })
-      );
+      if (!isLoading) {
+        const { name: moment } = timeSeriesData[timelinePosition];
+        dispatch(
+          addFilter({
+            id: dataSource,
+            column,
+            type: FilterTypes.TIME,
+            values: [[moment, moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize]]],
+            owner: id
+          })
+        );
 
-      if (onTimelineUpdate) onTimelineUpdate(new Date(moment));
+        if (onTimelineUpdate) onTimelineUpdate(new Date(moment));
+      }
     },
-    [column, dataSource, dispatch, id, onTimelineUpdate, selectedStepSize, timeSeriesData]
+    [
+      column,
+      dataSource,
+      isLoading,
+      dispatch,
+      id,
+      onTimelineUpdate,
+      selectedStepSize,
+      timeSeriesData
+    ]
   );
 
   const handleStop = useCallback(() => {
