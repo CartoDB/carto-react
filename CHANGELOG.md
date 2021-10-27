@@ -2,6 +2,8 @@
 
 ## Not released
 
+## 1.1.0-beta.3 (2021-10-27)
+
 - Improve TS typings [#213](https://github.com/CartoDB/carto-react/pull/213)
 - Fix animation duration not consistent in TimeSeriesWidget [#214](https://github.com/CartoDB/carto-react/pull/214)
 - Fix first X axis value partially hidden in Histogram widget [#215](https://github.com/CartoDB/carto-react/pull/215)
