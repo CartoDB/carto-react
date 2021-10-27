@@ -158,6 +158,7 @@ function PieWidgetUI({
   });
   const [elementHover, setElementHover] = useState();
   let defaultLabel = useRef({});
+  const colorByCategory = useRef({});
 
   const updateLabel = (params) => {
     const echart = chartInstance.current.getEchartsInstance();
@@ -169,31 +170,26 @@ function PieWidgetUI({
     echart.setOption(option, true);
   };
 
-  const [colorByCategory, setColorByCategory] = useState({});
-
-  // Reset color by category when colors changes
+  // Reset colorByCategory when colors changes
   // Spread colors array to avoid reference problems
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => setColorByCategory({}), [...(colors || [])]);
+  useEffect(() => (colorByCategory.current = {}), [...(colors || [])]);
 
   const dataWithColor = useMemo(() => {
     return (data || []).map((item) => {
-      const colorByCategoryCp = { ...colorByCategory };
       const { name } = item;
-      const colorUsed = colorByCategoryCp[name];
+      const colorUsed = colorByCategory.current[name];
       if (colorUsed) {
         item.color = colorUsed;
       } else {
         const paletteToUse = colors || theme.palette.qualitative.bold;
-        const colorToUse = paletteToUse[Object.keys(colorByCategoryCp).length] || '#fff';
-        colorByCategoryCp[name] = colorToUse;
+        const colorToUse =
+          paletteToUse[Object.keys(colorByCategory.current).length] || '#fff';
+        colorByCategory.current[name] = colorToUse;
         item.color = colorToUse;
-        setColorByCategory(colorByCategoryCp);
       }
       return item;
     });
-    // Use colorByCategory as dependency cause unnecesary useEffect repetition
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, colors, theme.palette.qualitative.bold]);
 
   useEffect(() => {
