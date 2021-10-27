@@ -273,7 +273,7 @@ function PieWidgetUI({
 
       const data = {
         ...params,
-        data: defaultLabel
+        data: defaultLabel.current
       };
       updateLabel(data);
     },
