@@ -3,10 +3,11 @@
 ## Not released
 
 - Improve TS typings [#213](https://github.com/CartoDB/carto-react/pull/213)
-- Fix first X axis value partially hidden in Histogram widget [#215](https://github.com/CartoDB/carto-react/pull/215)
 - Fix animation duration not consistent in TimeSeriesWidget [#214](https://github.com/CartoDB/carto-react/pull/214)
+- Fix first X axis value partially hidden in Histogram widget [#215](https://github.com/CartoDB/carto-react/pull/215)
 - Add missing animation default value in CategoryWidgetUI [#216](https://github.com/CartoDB/carto-react/pull/216)
 - Fix PieWidget default label [#217](https://github.com/CartoDB/carto-react/pull/217)
+- Fix PieWidget color assignment when using labels prop [#218](https://github.com/CartoDB/carto-react/pull/218)
 
 ## 1.1.0-beta.2 (2021-10-22)
 
