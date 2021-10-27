@@ -93,9 +93,6 @@ const options = {
         }, {})
       }
     },
-    duration: {
-      control: { type: 'number' }
-    },
     tooltip: {
       control: { type: 'boolean' }
     },
