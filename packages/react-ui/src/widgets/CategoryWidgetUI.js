@@ -558,7 +558,8 @@ CategoryWidgetUI.defaultProps = {
   labels: {},
   maxItems: 5,
   order: CategoryWidgetUI.ORDER_TYPES.RANKING,
-  selectedCategories: []
+  selectedCategories: [],
+  animation: true
 };
 
 CategoryWidgetUI.propTypes = {
@@ -573,7 +574,8 @@ CategoryWidgetUI.propTypes = {
   maxItems: PropTypes.number,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func,
-  order: PropTypes.oneOf(Object.values(CategoryWidgetUI.ORDER_TYPES))
+  order: PropTypes.oneOf(Object.values(CategoryWidgetUI.ORDER_TYPES)),
+  animation: PropTypes.bool
 };
 
 export default CategoryWidgetUI;
