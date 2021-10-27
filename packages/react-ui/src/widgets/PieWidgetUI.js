@@ -81,21 +81,24 @@ function __generateSerie({ name, data, theme, animation, selectedCategories, lab
       name,
       animation,
       data: data.map((item) => {
-        if (labels?.[item.name]) {
-          item.name = labels[item.name];
+        // Avoid modify data item
+        const itemCp = { ...item };
+
+        if (labels?.[itemCp.name]) {
+          itemCp.name = labels[itemCp.name];
         }
 
         const disabled =
-          selectedCategories?.length && !selectedCategories.includes(item.name);
+          selectedCategories?.length && !selectedCategories.includes(itemCp.name);
 
         if (disabled) {
-          disableSerie(item, theme);
-          return item;
+          disableSerie(itemCp, theme);
+          return itemCp;
         }
 
-        setColor(item);
+        setColor(itemCp);
 
-        return item;
+        return itemCp;
       }),
       radius: ['74%', '90%'],
       selectedOffset: 0,
@@ -175,19 +178,23 @@ function PieWidgetUI({
 
   const dataWithColor = useMemo(() => {
     return (data || []).map((item) => {
+      const colorByCategoryCp = { ...colorByCategory };
       const { name } = item;
-      const colorUsed = colorByCategory[name];
+      const colorUsed = colorByCategoryCp[name];
       if (colorUsed) {
         item.color = colorUsed;
       } else {
-        const colorsToUse = colors || theme.palette.qualitative.bold;
-        colorByCategory[name] =
-          colorsToUse[Object.keys(colorByCategory).length] || '#fff';
-        setColorByCategory({ ...colorByCategory });
+        const paletteToUse = colors || theme.palette.qualitative.bold;
+        const colorToUse = paletteToUse[Object.keys(colorByCategoryCp).length] || '#fff';
+        colorByCategoryCp[name] = colorToUse;
+        item.color = colorToUse;
+        setColorByCategory(colorByCategoryCp);
       }
       return item;
     });
-  }, [data, colorByCategory, colors, theme.palette.qualitative.bold]);
+    // Use colorByCategory as dependency cause unnecesary useEffect repetition
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, colors, theme.palette.qualitative.bold]);
 
   useEffect(() => {
     const config = __generateDefaultConfig({ formatter, tooltipFormatter }, theme);
