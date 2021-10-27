@@ -82,23 +82,23 @@ function __generateSerie({ name, data, theme, animation, selectedCategories, lab
       animation,
       data: data.map((item) => {
         // Avoid modify data item
-        const itemCp = { ...item };
+        const clonedItem = { ...item };
 
-        if (labels?.[itemCp.name]) {
-          itemCp.name = labels[itemCp.name];
+        if (labels?.[clonedItem.name]) {
+          clonedItem.name = labels[clonedItem.name];
         }
 
         const disabled =
-          selectedCategories?.length && !selectedCategories.includes(itemCp.name);
+          selectedCategories?.length && !selectedCategories.includes(clonedItem.name);
 
         if (disabled) {
-          disableSerie(itemCp, theme);
-          return itemCp;
+          disableSerie(clonedItem, theme);
+          return clonedItem;
         }
 
-        setColor(itemCp);
+        setColor(clonedItem);
 
-        return itemCp;
+        return clonedItem;
       }),
       radius: ['74%', '90%'],
       selectedOffset: 0,
