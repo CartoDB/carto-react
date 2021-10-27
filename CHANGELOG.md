@@ -5,6 +5,7 @@
 - Improve TS typings [#213](https://github.com/CartoDB/carto-react/pull/213)
 - Fix first X axis value partially hidden in Histogram widget [#215](https://github.com/CartoDB/carto-react/pull/215)
 - Fix animation duration not consistent in TimeSeriesWidget [#214](https://github.com/CartoDB/carto-react/pull/214)
+- Add missing animation default value in CategoryWidgetUI [#216](https://github.com/CartoDB/carto-react/pull/216)
 
 ## 1.1.0-beta.2 (2021-10-22)
 
