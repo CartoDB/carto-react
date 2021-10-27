@@ -66,11 +66,11 @@
     "pgsql-minify": "^1.0.5"
   },
   "peerDependencies": {
-    "@carto/react-api": "^1.1.0-beta.2",
-    "@carto/react-core": "^1.1.0-beta.2",
-    "@carto/react-redux": "^1.1.0-beta.2",
-    "@carto/react-ui": "^1.1.0-beta.2",
-    "@carto/react-workers": "^1.1.0-beta.2",
+    "@carto/react-api": "^1.1.0-beta.3",
+    "@carto/react-core": "^1.1.0-beta.3",
+    "@carto/react-redux": "^1.1.0-beta.3",
+    "@carto/react-ui": "^1.1.0-beta.3",
+    "@carto/react-workers": "^1.1.0-beta.3",
     "@material-ui/core": "^4.11.3",
     "dequal": "^2.0.2",
     "react": "^17.0.1",
