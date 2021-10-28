@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Not released
+- Histogram tooltip formatter receiving dataIndex and ticks [#220](https://github.com/CartoDB/carto-react/pull/220)
 
 ## 1.1.0-beta.3 (2021-10-27)
 
@@ -10,7 +11,6 @@
 - Add missing animation default value in CategoryWidgetUI [#216](https://github.com/CartoDB/carto-react/pull/216)
 - Fix PieWidget default label [#217](https://github.com/CartoDB/carto-react/pull/217)
 - Fix PieWidget color assignment when using labels prop [#218](https://github.com/CartoDB/carto-react/pull/218)
-- Histogram tooltip formatter receiving dataIndex and ticks [#220](https://github.com/CartoDB/carto-react/pull/220)
 
 ## 1.1.0-beta.2 (2021-10-22)
 
