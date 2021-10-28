@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-api",
-  "version": "1.1.0-beta.2",
+  "version": "1.1.0-beta.3",
   "description": "CARTO for React - Api",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -64,9 +64,9 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^1.1.0-beta.1",
-    "@carto/react-redux": "^1.1.0-beta.1",
-    "@carto/react-workers": "^1.1.0-beta.1",
+    "@carto/react-core": "^1.1.0-beta.3",
+    "@carto/react-redux": "^1.1.0-beta.3",
+    "@carto/react-workers": "^1.1.0-beta.3",
     "@deck.gl/carto": "^8.6.0",
     "@deck.gl/core": "^8.6.0",
     "@deck.gl/extensions": "^8.6.0",

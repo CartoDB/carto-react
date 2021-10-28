@@ -14,12 +14,6 @@ export default function TimeSeriesChart({
   const theme = useTheme();
   const [echartsInstance, setEchartInstance] = useState();
 
-  // const echartsInstance = useMemo(
-  //   () => chartInstance?.current?.getEchartsInstance(),
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   [chartInstance?.current]
-  // );
-
   const onChartReady = (_echartsInstance) => setEchartInstance(_echartsInstance);
 
   const { processedData, maxValue } = useMemo(() => {

@@ -58,7 +58,6 @@ export type TimeSeriesWidget = {
   stepSize: string,
   stepSizeOptions?: string[],
   chartType?: string,
-  duration?: number,
   tooltip?: boolean,
   tooltipFormatter?: Function,
   formatter?: Function,

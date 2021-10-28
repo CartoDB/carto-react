@@ -8,7 +8,6 @@ import React, {
 import { getDate, getTimestamp } from '../utils/utilities';
 
 export const TimeSeriesContext = createContext({
-  animationStep: 0,
   isPlaying: false,
   setIsPlaying: (value) => {},
   onPlay: () => {},
@@ -32,7 +31,6 @@ export function useTimeSeriesContext() {
 
 export function TimeSeriesProvider({
   children,
-  animationStep,
   isPlaying,
   isPaused,
   onPlay,
@@ -143,8 +141,7 @@ export function TimeSeriesProvider({
         setTimeWindow,
         onTimeWindowUpdate,
         togglePlay,
-        stop,
-        animationStep
+        stop
       }}
     >
       {children}

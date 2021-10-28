@@ -81,21 +81,24 @@ function __generateSerie({ name, data, theme, animation, selectedCategories, lab
       name,
       animation,
       data: data.map((item) => {
-        if (labels?.[item.name]) {
-          item.name = labels[item.name];
+        // Avoid modify data item
+        const clonedItem = { ...item };
+
+        if (labels?.[clonedItem.name]) {
+          clonedItem.name = labels[clonedItem.name];
         }
 
         const disabled =
-          selectedCategories?.length && !selectedCategories.includes(item.name);
+          selectedCategories?.length && !selectedCategories.includes(clonedItem.name);
 
         if (disabled) {
-          disableSerie(item, theme);
-          return item;
+          disableSerie(clonedItem, theme);
+          return clonedItem;
         }
 
-        setColor(item);
+        setColor(clonedItem);
 
-        return item;
+        return clonedItem;
       }),
       radius: ['74%', '90%'],
       selectedOffset: 0,
@@ -155,6 +158,7 @@ function PieWidgetUI({
   });
   const [elementHover, setElementHover] = useState();
   let defaultLabel = useRef({});
+  const colorByCategory = useRef({});
 
   const updateLabel = (params) => {
     const echart = chartInstance.current.getEchartsInstance();
@@ -166,28 +170,27 @@ function PieWidgetUI({
     echart.setOption(option, true);
   };
 
-  const [colorByCategory, setColorByCategory] = useState({});
-
-  // Reset color by category when colors changes
+  // Reset colorByCategory when colors changes
   // Spread colors array to avoid reference problems
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => setColorByCategory({}), [...(colors || [])]);
+  useEffect(() => (colorByCategory.current = {}), [...(colors || [])]);
 
   const dataWithColor = useMemo(() => {
     return (data || []).map((item) => {
       const { name } = item;
-      const colorUsed = colorByCategory[name];
+      const colorUsed = colorByCategory.current[name];
       if (colorUsed) {
         item.color = colorUsed;
       } else {
-        const colorsToUse = colors || theme.palette.qualitative.bold;
-        colorByCategory[name] =
-          colorsToUse[Object.keys(colorByCategory).length] || '#fff';
-        setColorByCategory({ ...colorByCategory });
+        const paletteToUse = colors || theme.palette.qualitative.bold;
+        const colorToUse =
+          paletteToUse[Object.keys(colorByCategory.current).length] || '#fff';
+        colorByCategory.current[name] = colorToUse;
+        item.color = colorToUse;
       }
       return item;
     });
-  }, [data, colorByCategory, colors, theme.palette.qualitative.bold]);
+  }, [data, colors, theme.palette.qualitative.bold]);
 
   useEffect(() => {
     const config = __generateDefaultConfig({ formatter, tooltipFormatter }, theme);
@@ -273,7 +276,7 @@ function PieWidgetUI({
 
       const data = {
         ...params,
-        data: defaultLabel
+        data: defaultLabel.current
       };
       updateLabel(data);
     },
