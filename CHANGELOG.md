@@ -4,6 +4,7 @@
 
 - Improve TS typings [#213](https://github.com/CartoDB/carto-react/pull/213)
 - Fix first X axis value partially hidden in Histogram widget [#215](https://github.com/CartoDB/carto-react/pull/215)
+- Histogram tooltip formatter receiving dataIndex and ticks [#220](https://github.com/CartoDB/carto-react/pull/220)
 
 ## 1.1.0-beta.2 (2021-10-22)
 
