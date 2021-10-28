@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Not released
+- Histogram tooltip formatter receiving dataIndex and ticks [#220](https://github.com/CartoDB/carto-react/pull/220)
 
 ## 1.1.0-beta.3 (2021-10-27)
 

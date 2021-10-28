@@ -56,16 +56,14 @@ function HistogramWidget(props) {
   const tooltipFormatter = useCallback(
     ([serie]) => {
       const formattedValue = formatter
-        ? formatter(serie.value)
+        ? formatter(serie.value, serie.dataIndex, ticks)
         : { prefix: '', value: serie.value };
 
-      return `${
-        typeof formattedValue === 'object'
-          ? `${formattedValue.prefix}${formattedValue.value}`
-          : formattedValue
-      }`;
+      return typeof formattedValue === 'object'
+        ? `${formattedValue.prefix}${formattedValue.value}`
+        : formattedValue;
     },
-    [formatter]
+    [formatter, ticks]
   );
 
   useEffect(() => {

@@ -14,7 +14,6 @@ describe('TimeSeriesWidgetUI', () => {
     mockEcharts.destroy();
   });
 
-
   const DATA = [
     { name: 1514761200000, value: 310 },
     { name: 1515366000000, value: 406 },
