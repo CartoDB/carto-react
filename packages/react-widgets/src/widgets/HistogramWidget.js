@@ -59,11 +59,9 @@ function HistogramWidget(props) {
         ? formatter(serie.value, serie.dataIndex, ticks)
         : { prefix: '', value: serie.value };
 
-      return `${
-        typeof formattedValue === 'object'
-          ? `${formattedValue.prefix}${formattedValue.value}`
-          : formattedValue
-      }`;
+      return typeof formattedValue === 'object'
+        ? `${formattedValue.prefix}${formattedValue.value}`
+        : formattedValue;
     },
     [formatter, ticks]
   );
