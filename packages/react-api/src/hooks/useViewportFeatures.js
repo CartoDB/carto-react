@@ -1,9 +1,10 @@
-import { useEffect, useCallback, useState, useMemo } from 'react';
+import { useEffect, useCallback, useState, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setViewportFeaturesReady } from '@carto/react-redux';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
+import { Layer } from '@deck.gl/core';
 
 function isGeoJSONLayer(source) {
   return isV3(source) && [MAP_TYPES.QUERY, MAP_TYPES.TABLE].includes(source?.type);
@@ -22,6 +23,14 @@ export default function useViewportFeatures(
   const viewport = useSelector((state) => state.carto.viewport);
   const [tiles, setTiles] = useState([]);
   const [isGeoJSONLoaded, setGeoJSONLoaded] = useState(false);
+  const debounceId = useRef(0);
+
+  const clearDebounce = () => {
+    if (debounceId.current) {
+      clearTimeout(debounceId.current);
+    }
+    debounceId.current = 0;
+  };
 
   const sourceId = source?.id;
 
@@ -61,6 +70,8 @@ export default function useViewportFeatures(
       } catch (error) {
         if (error.name === 'AbortError') return;
         throw error;
+      } finally {
+        clearDebounce();
       }
     }, debounceTimeOut),
     [setSourceViewportFeaturesReady]
@@ -90,8 +101,14 @@ export default function useViewportFeatures(
 
   useEffect(() => {
     if (sourceId && tiles.length && (!isSourceV3 || isSourceTileset)) {
+      clearDebounce();
       setSourceViewportFeaturesReady(false);
-      computeFeaturesTileset({ tiles, viewport, uniqueIdProperty, sourceId });
+      debounceId.current = computeFeaturesTileset({
+        tiles,
+        viewport,
+        uniqueIdProperty,
+        sourceId
+      });
     }
   }, [
     tiles,
@@ -128,6 +145,7 @@ export default function useViewportFeatures(
   }, [source]);
 
   const onViewportLoad = useCallback((tiles) => {
+    clearDebounce();
     setTiles(tiles);
   }, []);
 
@@ -154,5 +172,10 @@ export default function useViewportFeatures(
     [source, setSourceViewportFeaturesReady]
   );
 
-  return [onViewportLoad, onDataLoad];
+  const fetch = useCallback((arg1, arg2) => {
+    clearDebounce();
+    return Layer.defaultProps.fetch.value(arg1, arg2);
+  }, []);
+
+  return [onViewportLoad, onDataLoad, fetch];
 }
