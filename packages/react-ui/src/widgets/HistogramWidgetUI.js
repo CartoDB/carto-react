@@ -112,10 +112,9 @@ function __generateDefaultConfig(
         showMinLabel: false,
         inside: true,
         color: (value) => {
-          // FIXME: Workaround to show only maxlabel
           let col = 'transparent';
           const maxValue = Math.max(...data.map((d) => d || Number.MIN_SAFE_INTEGER));
-          if (value > maxValue) {
+          if (value >= maxValue) {
             col = theme.palette.charts.maxLabel;
           }
 
