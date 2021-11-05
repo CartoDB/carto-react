@@ -31,17 +31,23 @@ export type FormulaWidgetUI = {
   formatter?: Function;
 };
 
-export type HistogramWidgetUIData = number[];
-export type HistogramWidgetUI = {
-  data: HistogramWidgetUIData;
+export type BarWidgetUIData = number[] | number[][];
+export type BarWidgetUI = {
+  data: BarWidgetUIData;
+  xAxisData: (string | number)[];
+  yAxisData?: (string | number)[];
+  colors?: string[];
+  stacked?: boolean;
+  vertical?: boolean;
+  labels?: object;
   tooltip?: boolean;
   tooltipFormatter?: Function;
   xAxisFormatter?: Function;
   yAxisFormatter?: Function;
-  dataAxis?: unknown[];
-  name?: string;
+  selectedBars?: number[][];
   onSelectedBarsChange?: Function;
   height?: number;
+  animation?: Animation;
 };
 
 export type PieWidgetUIData = { name: string; value: number }[];

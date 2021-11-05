@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
-import { WrapperWidgetUI, HistogramWidgetUI, NoDataAlert } from '@carto/react-ui';
+import { WrapperWidgetUI, BarWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getHistogram } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
@@ -34,7 +34,9 @@ function HistogramWidget(props) {
     operation,
     ticks,
     xAxisFormatter,
+    // TODO: Rename as xAxisData
     dataAxis,
+    // TODO: Add yAxisData
     formatter,
     tooltip,
     animation,
@@ -101,11 +103,11 @@ function HistogramWidget(props) {
   ]);
 
   const handleSelectedBarsChange = useCallback(
-    ({ bars }) => {
-      setSelectedBars(bars);
+    (selectedBars) => {
+      setSelectedBars(selectedBars);
 
-      if (bars && bars.length) {
-        const thresholds = bars.map((i) => {
+      if (selectedBars?.length) {
+        const thresholds = selectedBars.map(([i]) => {
           let left = ticks[i - 1];
           let right = ticks.length !== i + 1 ? ticks[i] : undefined;
 
@@ -145,9 +147,9 @@ function HistogramWidget(props) {
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
       {histogramData.length || isLoading ? (
-        <HistogramWidgetUI
+        <BarWidgetUI
           data={histogramData}
-          dataAxis={dataAxis || ticksForDataAxis}
+          xAxisData={dataAxis || ticksForDataAxis}
           selectedBars={selectedBars}
           onSelectedBarsChange={handleSelectedBarsChange}
           tooltip={tooltip}

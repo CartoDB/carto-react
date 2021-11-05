@@ -53,7 +53,7 @@ export const parameters = {
         [
           'CategoryWidgetUI',
           'FormulaWidgetUI',
-          'HistogramWidgetUI',
+          'BarWidgetUI',
           'PieWidgetUI',
           'WrapperWidgetUI'
         ]
