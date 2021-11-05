@@ -141,7 +141,7 @@ export function TimeSeriesProvider({
         setTimeWindow,
         onTimeWindowUpdate,
         togglePlay,
-        stop,
+        stop
       }}
     >
       {children}

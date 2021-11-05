@@ -2,7 +2,12 @@
 
 ## Not released
 
-## 1.1.0-beta.3 (2021-10-27)
+## 1.1.0 (2021-10-29)
+
+- Histogram tooltip formatter receiving dataIndex and ticks [#220](https://github.com/CartoDB/carto-react/pull/220)
+- Histogram yAxis max value should always be shown [#221](https://github.com/CartoDB/carto-react/pull/221)
+
+### 1.1.0-beta.3 (2021-10-27)
 
 - Improve TS typings [#213](https://github.com/CartoDB/carto-react/pull/213)
 - Fix animation duration not consistent in TimeSeriesWidget [#214](https://github.com/CartoDB/carto-react/pull/214)
@@ -11,7 +16,7 @@
 - Fix PieWidget default label [#217](https://github.com/CartoDB/carto-react/pull/217)
 - Fix PieWidget color assignment when using labels prop [#218](https://github.com/CartoDB/carto-react/pull/218)
 
-## 1.1.0-beta.2 (2021-10-22)
+### 1.1.0-beta.2 (2021-10-22)
 
 - Fix warning console when LegendIcon is used [#170](https://github.com/CartoDB/carto-react/pull/170)
 - Fix useTimeSeriesInteractivity error in TimeSeries widget [#200](https://github.com/CartoDB/carto-react/pull/200)
@@ -36,7 +41,7 @@
 - Fix echarts update problems [#209](https://github.com/CartoDB/carto-react/pull/209)
 - Fix issue with TimeSeriesWidget markLine if xAxis is undefined [#211](https://github.com/CartoDB/carto-react/pull/211)
 
-## 1.1.0-beta.1 (2021-10-14)
+### 1.1.0-beta.1 (2021-10-14)
 
 - Update deck.gl version to 8.6.x [#197](https://github.com/CartoDB/carto-react/pull/197)
 - Fix Scatterplot having Y axis values partially hidden [#174](https://github.com/CartoDB/carto-react/pull/174)
@@ -51,11 +56,11 @@
 - Remove widgetsLoadingState and derived actions from cartoSlice [#184](https://github.com/CartoDB/carto-react/pull/184)
 - Fix unnecessary viewportFeatures calculation, after a filter change inside a source [#183](https://github.com/CartoDB/carto-react/pull/183)
 
-## 1.1.0-beta.0 (2021-09-07)
+### 1.1.0-beta.0 (2021-09-07)
 
 - No major changes from 1.1.0-alpha.6. Just move to beta.
 
-## 1.1.0-alpha.6 (2021-08-04)
+### 1.1.0-alpha.6 (2021-08-04)
 
 - **Breaking change**: Allow to disable viewport features calculation. useCartoLayerProps uses now object destructuring. [#164](https://github.com/CartoDB/carto-react/pull/164)
 - Rename Credentials exported types [#159](https://github.com/CartoDB/carto-react/pull/159)
@@ -64,17 +69,17 @@
 - Update deck.gl version to 8.5.0 [#162](https://github.com/CartoDB/carto-react/pull/162)
 - Fix Material-UI warnings on justify property [#162](https://github.com/CartoDB/carto-react/pull/162)
 
-## 1.1.0-alpha.5 (2021-07-12)
+### 1.1.0-alpha.5 (2021-07-12)
 
 - Add and improve typings [#157](https://github.com/CartoDB/carto-react/pull/157)
 - Update to latest 8.5.0-beta.1 deck.gl version [#158](https://github.com/CartoDB/carto-react/pull/158)
 
-## 1.1.0-alpha.4 (2021-06-24)
+### 1.1.0-alpha.4 (2021-06-24)
 
 - Fix ScatterplotWidget filters [#153](https://github.com/CartoDB/carto-react/pull/153)
 - Add LegendWidget [#91](https://github.com/CartoDB/carto-react/pull/91)
 
-## 1.1.0-alpha.3 (2021-06-17)
+### 1.1.0-alpha.3 (2021-06-17)
 
 - Add support to CARTO Cloud Native [#142](https://github.com/CartoDB/carto-react/pull/142)
 - Update TypeScript typings to Cloud Native and remove SourceTypes from react-api public api[#147](https://github.com/CartoDB/carto-react/pull/147)
@@ -83,6 +88,8 @@
 - Update to latest 8.5.0-alpha.10 deck.gl version [#149](https://github.com/CartoDB/carto-react/pull/149)
 - Add support to Cloud Native SQL API [#150](https://github.com/CartoDB/carto-react/pull/150)
 
+
+
 ## 1.0.1 (2021-04-12)
 
 - Add basic Typescript typings [#136](https://github.com/CartoDB/carto-react/pull/136)
@@ -90,13 +97,13 @@
 
 ## 1.0.0 (2021-03-23)
 
-## 1.0.0-rc.3 (2021-03-22)
+### 1.0.0-rc.3 (2021-03-22)
 
 - Fix PieWidget tooltip confining it inside canvas [#130](https://github.com/CartoDB/carto-react/pull/130)
 - Fix FormulaWidgetUI render when data is zero [#128](https://github.com/CartoDB/carto-react/pull/128)
 - Remove viewportFilter boolean property from widgets [#131](https://github.com/CartoDB/carto-react/pull/131)
 
-## 1.0.0-rc.2 (2021-03-19)
+### 1.0.0-rc.2 (2021-03-19)
 
 - Fix material-ui warnings due to wrong styles in theme [#124](https://github.com/CartoDB/carto-react/pull/124)
 - Add Widgets from @carto/react-widgets to StoryBook [#120](https://github.com/CartoDB/carto-react/pull/120)
@@ -104,7 +111,7 @@
 - Fix histogram removing last spurious bin [#123](https://github.com/CartoDB/carto-react/pull/123)
 - Add workers to calculate viewportFeatures [#111](https://github.com/CartoDB/carto-react/pull/111)
 
-## 1.0.0-rc.1 (2021-03-11)
+### 1.0.0-rc.1 (2021-03-11)
 
 - Add new PieWidget component [#36](https://github.com/CartoDB/carto-react/pull/36)
 - Change 'category' in input data for CategoryWidget for a more generic 'name' parameter [#36](https://github.com/CartoDB/carto-react/pull/36)
@@ -120,14 +127,14 @@
 - Return uniqueIdProperty from useCartoLayerProps hook [#113](https://github.com/CartoDB/carto-react/pull/113)
 - Fix lint-staged for multi package [#117](https://github.com/CartoDB/carto-react/pull/117)
 
-## 1.0.0-beta14 (2021-02-08)
+### 1.0.0-beta14 (2021-02-08)
 
 - Fix an issue on histogram's operations when processing a not finite value [#79](https://github.com/CartoDB/carto-react/pull/79)
 - Add sourcemaps and production mode in webpack bundles [#83](https://github.com/CartoDB/carto-react/pull/83)
 - Fix number of categories counter when some are locked on Category Widget [#81](https://github.com/CartoDB/carto-react/pull/81)
 - Fix luma mismatch caused by the use of '@deck.gl/extensions' [#86](https://github.com/CartoDB/carto-react/pull/86)
 
-## 1.0.0-beta13 (2021-02-02)
+### 1.0.0-beta13 (2021-02-02)
 
 - Remove getUserDatasets method from api [#68](https://github.com/CartoDB/carto-react/pull/68)
 - Fix hover color in secondary buttons [#65](https://github.com/CartoDB/carto-react/pull/65)
@@ -136,17 +143,17 @@
 - Fix eventual memory leaks on requestAnimationFrame, on Category and Formula widgets [#77](https://github.com/CartoDB/carto-react/pull/77)
 - Update deck.gl version to 8.4 [#78](https://github.com/CartoDB/carto-react/pull/78)
 
-## 1.0.0-beta12 (2021-01-22)
+### 1.0.0-beta12 (2021-01-22)
 
 - Fix basemap casing in store and action so `basemap` and `setBasemap` are used [#64](https://github.com/CartoDB/carto-react/pull/64)
 
-## 1.0.0-beta10 (2021-01-14)
+### 1.0.0-beta10 (2021-01-14)
 
 - Fix WrapperWidgetUI anchorOrigin error [#55](https://github.com/CartoDB/carto-react/pull/55)
 - Add tooltip to WrapperWidget action buttons [#56](https://github.com/CartoDB/carto-react/pull/56)
 - Extend widget props to WrapperWidgetUI with a better implementation [#57](https://github.com/CartoDB/carto-react/pull/57)
 
-## 1.0.0-beta9 (2020-12-18)
+### 1.0.0-beta9 (2020-12-18)
 
 - Pass actions and options to WrapperWidgetUI from HistogramWidget and CategoryWidget [#50](https://github.com/CartoDB/carto-react/pull/50)
 - Fix addSource in cartoSlice spreading layerAttributes [#52](https://github.com/CartoDB/carto-react/pull/52)
@@ -154,7 +161,7 @@
 - Add new clearFilters action [#58](https://github.com/CartoDB/carto-react/pull/58)
 - Design improvements [#59](https://github.com/CartoDB/carto-react/pull/59)
 
-## 1.0.0-beta8 (2020-12-15)
+### 1.0.0-beta8 (2020-12-15)
 
 - Remove OAuthLogin component (extracted to the template project) [#44](https://github.com/CartoDB/carto-react/pull/44)
 - Add layerAttributes to addLayer and refactor updateLayer to use same destructuring approach [#45](https://github.com/CartoDB/carto-react/pull/45)
@@ -163,13 +170,13 @@
 - Fix Clear button not appearing on iOS devices [#46](https://github.com/CartoDB/carto-react/pull/46)
 - Mobile design improvements [#47](https://github.com/CartoDB/carto-react/pull/47)
 
-## 1.0.0-beta7 (2020-12-04)
+### 1.0.0-beta7 (2020-12-04)
 
 - Add meta value example to List component story [#31](https://github.com/CartoDB/carto-react/pull/31)
 - Mobile fixes and fix loading datasets for free accounts [#38](https://github.com/CartoDB/carto-react/pull/38)
 - Add updateLayer action to cartoSlice [#39](https://github.com/CartoDB/carto-react/pull/39)
 
-## 1.0.0-beta6 (2020-11-27)
+### 1.0.0-beta6 (2020-11-27)
 
 - Added meta value version to List component [#31](https://github.com/CartoDB/carto-react/pull/31)
 - Fix CategoryWidgetUI displaying no data while loading [#26](https://github.com/CartoDB/carto-react/pull/26)
@@ -179,23 +186,23 @@
 - Fix CategoryWidgetUI keeping the order for blocked categories [#32](https://github.com/CartoDB/carto-react/pull/32)
 - Fix bar size in CategoryWidget [#33](https://github.com/CartoDB/carto-react/pull/33)
 
-## 1.0.0-beta5 (2020-11-25)
+### 1.0.0-beta5 (2020-11-25)
 
 - Fix addSource keeping optional credentials property in the payload [#24](https://github.com/CartoDB/carto-react/pull/24)
 
-## 1.0.0-beta4 (2020-11-24)
+### 1.0.0-beta4 (2020-11-24)
 
 - Fix addSource, keeping optional credentials property in the payload [#22](https://github.com/CartoDB/carto-react/pull/22)
 
-## 1.0.0-beta3 (2020-11-24)
+### 1.0.0-beta3 (2020-11-24)
 
 - Improve package.json metadata + README inclusion in npm publication [#20](https://github.com/CartoDB/carto-react/pull/20)
 
-## 1.0.0-beta2 (2020-11-23)
+### 1.0.0-beta2 (2020-11-23)
 
 - Fix missing regenerator runtime in the build [#13](https://github.com/CartoDB/carto-react/pull/13)
 - Doc updates for api reference
 
-## 1.0.0-beta1 (2020-11-20)
+### 1.0.0-beta1 (2020-11-20)
 
 - Initial release: api, basemaps, oauth, redux and ui
