@@ -23,13 +23,13 @@ export default function useViewportFeatures(
   const viewport = useSelector((state) => state.carto.viewport);
   const [tiles, setTiles] = useState([]);
   const [isGeoJSONLoaded, setGeoJSONLoaded] = useState(false);
-  const debounceId = useRef(0);
+  const debounceId = useRef(null);
 
   const clearDebounce = () => {
     if (debounceId.current) {
       clearTimeout(debounceId.current);
     }
-    debounceId.current = 0;
+    debounceId.current = null;
   };
 
   const sourceId = source?.id;
