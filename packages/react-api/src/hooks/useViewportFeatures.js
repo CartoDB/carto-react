@@ -17,7 +17,7 @@ function isV3(source) {
 export default function useViewportFeatures(
   source,
   uniqueIdProperty,
-  debounceTimeOut = 500
+  debounceTimeout = 500
 ) {
   const dispatch = useDispatch();
   const viewport = useSelector((state) => state.carto.viewport);
@@ -73,7 +73,7 @@ export default function useViewportFeatures(
       } finally {
         clearDebounce();
       }
-    }, debounceTimeOut),
+    }, debounceTimeout),
     [setSourceViewportFeaturesReady]
   );
 
@@ -91,7 +91,7 @@ export default function useViewportFeatures(
         if (error.name === 'AbortError') return;
         throw error;
       }
-    }, debounceTimeOut),
+    }, debounceTimeout),
     [setSourceViewportFeaturesReady]
   );
 

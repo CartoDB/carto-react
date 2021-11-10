@@ -7,12 +7,12 @@ export default function useCartoLayerProps({
   source,
   uniqueIdProperty,
   viewportFeatures = true,
-  debounceTimeOut = 500
+  viewporFeaturesDebounceTimeout = 500
 }) {
   const [onViewportLoad, onDataLoad, fetch] = useViewportFeatures(
     source,
     uniqueIdProperty,
-    debounceTimeOut
+    viewporFeaturesDebounceTimeout
   );
 
   let props = {};
