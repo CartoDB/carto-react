@@ -7,6 +7,9 @@ import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core
 import { getCategories } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
+import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
+
+const EMPTY_ARRAY = [];
 
 /**
  * Renders a <PieWidget /> component
@@ -46,7 +49,9 @@ function PieWidget({
   const dispatch = useDispatch();
 
   const [categoryData, setCategoryData] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const selectedCategories =
+    useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
+    EMPTY_ARRAY;
   const [isLoading, setIsLoading] = useState(true);
 
   const isSourceReady = useSelector((state) =>
@@ -90,8 +95,6 @@ function PieWidget({
 
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
-      setSelectedCategories(categories);
-
       if (categories && categories.length) {
         dispatch(
           addFilter({
@@ -111,7 +114,7 @@ function PieWidget({
         );
       }
     },
-    [column, dataSource, id, setSelectedCategories, dispatch]
+    [column, dataSource, id, dispatch]
   );
 
   return (
