@@ -7,6 +7,9 @@ import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core
 import { getCategories } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
+import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
+
+const EMPTY_ARRAY = [];
 
 /**
  * Renders a <CategoryWidget /> component
@@ -46,10 +49,13 @@ function CategoryWidget(props) {
   );
 
   const [categoryData, setCategoryData] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+
   const [isLoading, setIsLoading] = useState(true);
 
   const filters = useSourceFilters({ dataSource, id });
+  const selectedCategories =
+    useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
+    EMPTY_ARRAY;
 
   useEffect(() => {
     setIsLoading(true);
@@ -87,8 +93,6 @@ function CategoryWidget(props) {
 
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
-      setSelectedCategories(categories);
-
       if (categories && categories.length) {
         dispatch(
           addFilter({
@@ -108,7 +112,7 @@ function CategoryWidget(props) {
         );
       }
     },
-    [column, dataSource, id, setSelectedCategories, dispatch]
+    [column, dataSource, id, dispatch]
   );
 
   return (
