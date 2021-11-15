@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Widgets with filters, use filters to derive its own "filter" state from redux state, instead of local state [224](https://github.com/CartoDB/carto-react/pull/224)
+
 ## 1.1.0 (2021-10-29)
 
 - Histogram tooltip formatter receiving dataIndex and ticks [#220](https://github.com/CartoDB/carto-react/pull/220)
