@@ -6,9 +6,14 @@ import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 export default function useCartoLayerProps({
   source,
   uniqueIdProperty,
-  viewportFeatures = true
+  viewportFeatures = true,
+  viewporFeaturesDebounceTimeout = 500
 }) {
-  const [onViewportLoad, onDataLoad] = useViewportFeatures(source, uniqueIdProperty);
+  const [onViewportLoad, onDataLoad, fetch] = useViewportFeatures(
+    source,
+    uniqueIdProperty,
+    viewporFeaturesDebounceTimeout
+  );
 
   let props = {};
 
@@ -18,7 +23,8 @@ export default function useCartoLayerProps({
   ) {
     props = {
       binary: true,
-      onViewportLoad: viewportFeatures ? onViewportLoad : null
+      onViewportLoad: viewportFeatures ? onViewportLoad : null,
+      fetch: viewportFeatures ? fetch : null
     };
   } else if (source?.type === MAP_TYPES.QUERY || source?.type === MAP_TYPES.TABLE) {
     props = {
