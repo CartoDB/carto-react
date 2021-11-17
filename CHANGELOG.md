@@ -2,7 +2,8 @@
 
 ## Not released
 
-- Widgets with filters, use filters to derive its own "filter" state from redux state, instead of local state [224](https://github.com/CartoDB/carto-react/pull/224)
+- `CategoryWidget`, `HistogramWidget`, `PieWidget` use filters in datasource to derive selected
+  items (categories, bars) instead of local react state [224](https://github.com/CartoDB/carto-react/pull/224)
 
 ## 1.1.0 (2021-10-29)
 
