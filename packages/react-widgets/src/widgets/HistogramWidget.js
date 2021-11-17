@@ -7,9 +7,12 @@ import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core
 import { getHistogram } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
+import deprecate from 'util-deprecate';
+import { defaultTooltipFormatter } from '@carto/react-ui/';
 
 /**
  * Renders a <HistogramWidget /> component
+ *
  * @param  {object} props
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
@@ -18,14 +21,16 @@ import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {number[]} props.ticks - Array of thresholds for the X axis.
  * @param  {Function} [props.xAxisformatter] - Function to format X axis values.
- * @param  {Function} [props.formatter] - Function to format Y axis values.
- * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
+ * @param  {string[] | number[]} [props.xAxisData] - Array of values for X axis.
+ * @param  {Function} [props.yAxisformatter] - Function to format Y axis values.
+ * @param  {string[] | number[]} [props.yAxisData] - Array of values for Y axis.
+ * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not.
+ * @param  {Function} [props.tooltipFormatter] - Function that returns HTML to format tooltip.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
- */
-function HistogramWidget(props) {
+ */ function HistogramWidget(props) {
   const {
     id,
     title,
@@ -34,16 +39,19 @@ function HistogramWidget(props) {
     operation,
     ticks,
     xAxisFormatter,
-    // TODO: Rename as xAxisData
-    dataAxis,
-    // TODO: Add yAxisData
-    formatter,
+    xAxisData,
+    dataAxis, // deprecated: use xAxisData instead
+    formatter, // deprecated: use yAxisFormatter instead
+    yAxisFormatter,
+    yAxisData,
     tooltip,
+    tooltipFormatter,
     animation,
     onError,
     wrapperProps,
     noDataAlertProps
   } = props;
+
   const dispatch = useDispatch();
 
   const [histogramData, setHistogramData] = useState([]);
@@ -53,19 +61,6 @@ function HistogramWidget(props) {
   const filters = useSourceFilters({ dataSource, id });
   const isSourceReady = useSelector((state) =>
     selectIsViewportFeaturesReadyForSource(state, dataSource)
-  );
-
-  const tooltipFormatter = useCallback(
-    ([serie]) => {
-      const formattedValue = formatter
-        ? formatter(serie.value, serie.dataIndex, ticks)
-        : { prefix: '', value: serie.value };
-
-      return typeof formattedValue === 'object'
-        ? `${formattedValue.prefix}${formattedValue.value}`
-        : formattedValue;
-    },
-    [formatter, ticks]
   );
 
   useEffect(() => {
@@ -144,18 +139,30 @@ function HistogramWidget(props) {
     return [...acc, `< ${tick}`];
   }, []);
 
+  // Deprecations
+  useEffect(() => {
+    if (dataAxis)
+      console.warn('[HistogramWidget] dataAxis is deprecated, use xAxisData instead.');
+    if (formatter)
+      console.warn(
+        '[HistogramWidget] formatter is deprecated, use yAxisFormatter instead.'
+      );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
       {histogramData.length || isLoading ? (
         <BarWidgetUI
           data={histogramData}
-          xAxisData={dataAxis || ticksForDataAxis}
+          xAxisFormatter={xAxisFormatter}
+          xAxisData={xAxisData || dataAxis || ticksForDataAxis}
+          yAxisFormatter={yAxisFormatter || formatter}
+          yAxisData={yAxisData}
           selectedBars={selectedBars}
           onSelectedBarsChange={handleSelectedBarsChange}
           tooltip={tooltip}
           tooltipFormatter={tooltipFormatter}
-          xAxisFormatter={xAxisFormatter}
-          yAxisFormatter={formatter}
           animation={animation}
         />
       ) : (
@@ -171,9 +178,24 @@ HistogramWidget.propTypes = {
   dataSource: PropTypes.string.isRequired,
   column: PropTypes.string.isRequired,
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
+  // xAxis
   xAxisFormatter: PropTypes.func,
-  formatter: PropTypes.func,
+  dataAxis: PropTypes.arrayOf(PropTypes.string), // deprecated: use dataAxis instead
+  xAxisData: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.arrayOf(PropTypes.number)
+  ]),
+  // yAxis
+  formatter: PropTypes.func, // deprecated: use yAxisFormatter instead
+  yAxisFormatter: PropTypes.func,
+  yAxisData: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.arrayOf(PropTypes.number)
+  ]),
+  // Tooltip
   tooltip: PropTypes.bool,
+  tooltipFormatter: PropTypes.func,
+  // Others
   animation: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
   onError: PropTypes.func,
@@ -185,7 +207,23 @@ HistogramWidget.defaultProps = {
   tooltip: true,
   animation: true,
   wrapperProps: {},
-  noDataAlertProps: {}
+  noDataAlertProps: {},
+  // tooltipFormatter
 };
 
 export default HistogramWidget;
+
+// Aux
+// function tooltipFormatter(xAxisFormatter, yAxisFormatter, ...props) {
+//   const xAxisFormatterWrapper = (value, dataIndex, ticks) => {
+//     return intervalsFormatter(value, dataIndex, ticks, xAxisFormatter)
+//   }
+//   return defaultTooltipFormatter(xAxisFormatterWrapper, yAxisFormatter, ...props);
+// }
+
+// function intervalsFormatter(value, dataIndex, ticks, xAxisFormatter) {
+//   const _value = xAxisFormatter(value);
+//   if (!ticks || dataIndex === undefined) return _value;
+//   const intervals = moneyInterval(dataIndex, ticks);
+//   return `${intervals} <br/> ${CIRCLE_SVG} ${_value}`;
+// }

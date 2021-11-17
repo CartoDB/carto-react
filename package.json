@@ -35,7 +35,8 @@
     "@turf/boolean-intersects": "^6.3.0",
     "webpack": "^5.24.2",
     "webpack-cli": "^4.5.0",
-    "dequal": "^2.0.2"
+    "dequal": "^2.0.2",
+    "util-deprecate": "^1.0.2"
   },
   "scripts": {
     "build": "yarn clean:build && NODE_ENV=production lerna run build --stream",

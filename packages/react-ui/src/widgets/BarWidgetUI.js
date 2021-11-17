@@ -3,34 +3,11 @@ import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles, darken } from '@material-ui/core';
 import detectTouchScreen from './utils/detectTouchScreen';
+import { dequal } from 'dequal';
+import { processFormatterRes } from './utils/formatterUtils';
+import { defaultTooltipFormatter } from './utils/chartUtils';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
-
-const tooltipFormatter = function (params, _ticket, _callback, xAxisFormatter, yAxisFormatter) {
-  if (params instanceof Array) {
-    if (params.length) {
-      let message = '';
-      message += `${xAxisFormatter(params[0].axisValueLabel)}`;
-      params.forEach((param) => {
-        const seriesName = params.length > 1 ? param.seriesName + ':' : '';
-        const item = `<div style="margin-left: 8px; display: inline">${seriesName}${
-          yAxisFormatter(param.value)
-        }${param.data.unit || ''}</div>`;
-        message += `<div style="margin-top: 4px">${param.marker}${item}</div>`;
-      });
-      return message;
-    } else {
-      return null;
-    }
-  } else {
-    let message = '';
-    message += `${params[0].axisValueLabel}`;
-    message += `<br/>${params.marker}${params.seriesName}: ${params.value}${
-      params.data.unit || ''
-    }`;
-    return message;
-  }
-};
 
 const useStyles = makeStyles((theme) => ({
   optionsSelectedBar: {
@@ -51,48 +28,31 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function BarWidgetUI({
-  data,
-  xAxisData,
-  yAxisData,
-  onSelectedBarsChange,
-  selectedBars: _selectedBars,
-  tooltip,
-  tooltipFormatter,
-  labels,
-  colors,
-  xAxisFormatter,
-  yAxisFormatter,
-  stacked,
-  vertical,
-  height,
-  animation
-}) {
+function BarWidgetUI(props) {
   const theme = useTheme();
   const classes = useStyles();
-  // const echartsInstance = useRef();
-  // const zr = useRef();
 
-  if (!height) {
-    height = theme.spacing(22);
-  }
+  const [selectedBars, setSelectedBars] = useState([]);
 
-  // Manage internal state
-  const [selectedBars, setSelectedBars] = useState();
-  useEffect(() => {
-    if (_selectedBars !== selectedBars) {
-      setSelectedBars(_selectedBars);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_selectedBars]);
-
-  // const onChartReady = (_echartsInstance) => {
-  //   echartsInstance.current = _echartsInstance;
-  //   zr.current = _echartsInstance.getZr();
-  // };
-
-  // Use data always as a two-dimensions array
-  const formattedData = useMemo(() => (Array.isArray(data[0]) ? data : [data]), [data]);
+  // Due to BarWidgetUI nature, it props admits multiple shapes.
+  // In useProcessProps we convert those multiple shapes in a common one
+  // to avoid complex logic in the component.
+  const {
+    data,
+    xAxisData,
+    yAxisData,
+    onSelectedBarsChange,
+    tooltip,
+    tooltipFormatter,
+    labels,
+    colors,
+    xAxisFormatter,
+    yAxisFormatter,
+    stacked,
+    vertical,
+    height,
+    animation
+  } = useProcessProps(props, { selectedBars, setSelectedBars });
 
   // Tooltip
   const tooltipOptions = useMemo(
@@ -118,11 +78,11 @@ function BarWidgetUI({
         }
         return position;
       },
-      formatter () {
-        return tooltipFormatter(...arguments, xAxisFormatter, yAxisFormatter);
+      formatter() {
+        return tooltipFormatter(xAxisFormatter, yAxisFormatter, ...arguments);
       }
     }),
-    [theme, tooltip, tooltipFormatter]
+    [theme, tooltip, tooltipFormatter, xAxisFormatter, yAxisFormatter]
   );
 
   // xAxis
@@ -143,12 +103,7 @@ function BarWidgetUI({
       axisLabel: {
         ...theme.typography.charts,
         padding: [theme.spacing(0.5), 0, 0, 0],
-        formatter: (v) => {
-          const formatted = xAxisFormatter(v);
-          return typeof formatted === 'object'
-            ? `${formatted.prefix || ''}${formatted.value}${formatted.suffix || ''}`
-            : formatted;
-        }
+        formatter: (v) => processFormatterRes(xAxisFormatter(v))
       },
       data: xAxisDataWithLabels
     }),
@@ -164,7 +119,7 @@ function BarWidgetUI({
   const maxValue = useMemo(() => {
     let dataValues = [];
     if (stacked) {
-      dataValues = formattedData.reduce((acc, row) => {
+      dataValues = data.reduce((acc, row) => {
         row.forEach(
           (value, idx) =>
             (acc[idx] = (acc[idx] || 0) + (value ?? Number.MIN_SAFE_INTEGER))
@@ -172,10 +127,10 @@ function BarWidgetUI({
         return acc;
       }, []);
     } else {
-      dataValues = formattedData.flat().map((value) => value ?? Number.MIN_SAFE_INTEGER);
+      dataValues = data.flat().map((value) => value ?? Number.MIN_SAFE_INTEGER);
     }
     return Math.max(...dataValues);
-  }, [formattedData, stacked]);
+  }, [data, stacked]);
 
   const yAxisOptions = useMemo(
     () => ({
@@ -198,12 +153,7 @@ function BarWidgetUI({
           return col;
         },
         ...theme.typography.charts,
-        formatter: (v) => {
-          const formatted = yAxisFormatter(v);
-          return typeof formatted === 'object'
-            ? `${formatted.prefix}${formatted.value}${formatted.suffix || ''}`
-            : formatted;
-        }
+        formatter: (v) => processFormatterRes(yAxisFormatter(v))
       },
       axisLine: {
         show: false
@@ -228,31 +178,19 @@ function BarWidgetUI({
     ]
   );
 
-  // Colors
-  const chartColors = useMemo(
-    () =>
-      colors ||
-      (yAxisData.length <= 1
-        ? [theme.palette.secondary.main]
-        : yAxisData.length === 2
-        ? [theme.palette.primary.main, theme.palette.secondary.main]
-        : Object.values(theme.palette.qualitative.bold || {})),
-    [colors, theme, yAxisData]
-  );
-
   // Serie
   const seriesOptions = useMemo(
     () =>
-      formattedData.map((row, componentIdx) => ({
+      data.map((row, componentIdx) => ({
         type: 'bar',
-        name: yAxisDataWithLabels[componentIdx],
+        name: yAxisDataWithLabels[componentIdx] || '',
         animation,
         data: row.map((value, dataIdx) => {
-          const isSelected = selectedBars?.some(
+          const isSelected = selectedBars.some(
             ([sDataIdx, sComponentIdx = 0]) =>
               sDataIdx === dataIdx && sComponentIdx === componentIdx
           );
-          const isDisabled = !!selectedBars?.length && !!!isSelected;
+          const isDisabled = !!selectedBars.length && !!!isSelected;
           return {
             value,
             ...(isDisabled && {
@@ -268,20 +206,12 @@ function BarWidgetUI({
           emphasis: {
             focus: 'series',
             itemStyle: {
-              color: darken(chartColors[componentIdx] || '#000', 0.25)
+              color: darken(colors[componentIdx] || '#000', 0.25)
             }
           }
         })
       })),
-    [
-      animation,
-      chartColors,
-      yAxisDataWithLabels,
-      formattedData,
-      selectedBars,
-      stacked,
-      theme
-    ]
+    [animation, colors, yAxisDataWithLabels, data, selectedBars, stacked, theme]
   );
 
   const options = useMemo(
@@ -298,21 +228,13 @@ function BarWidgetUI({
           color: theme.palette.charts.axisPointer
         }
       },
-      color: chartColors,
+      color: colors,
       tooltip: tooltipOptions,
       xAxis: vertical ? xAxisOptions : yAxisOptions,
       yAxis: vertical ? yAxisOptions : xAxisOptions,
       series: seriesOptions
     }),
-    [
-      theme,
-      chartColors,
-      tooltipOptions,
-      xAxisOptions,
-      yAxisOptions,
-      seriesOptions,
-      vertical
-    ]
+    [theme, colors, tooltipOptions, xAxisOptions, yAxisOptions, seriesOptions, vertical]
   );
 
   const clearBars = () => {
@@ -325,7 +247,7 @@ function BarWidgetUI({
   const clickEvent = useCallback(
     (params) => {
       if (onSelectedBarsChange) {
-        const selectedBarsCp = [...(selectedBars || [])];
+        const selectedBarsCp = [...selectedBars];
         const { dataIndex, componentIndex } = params;
 
         const selectedIdx = selectedBarsCp.findIndex(
@@ -345,13 +267,13 @@ function BarWidgetUI({
           ([sDataIndex, sComponentIndex = 0]) => ({
             xAxis: vertical ? xAxisData[sDataIndex] : yAxisData[sDataIndex],
             yAxis: vertical ? yAxisData[sComponentIndex] : xAxisData[sComponentIndex],
-            value: formattedData[sComponentIndex][sDataIndex]
+            value: data[sComponentIndex][sDataIndex]
           })
         );
         onSelectedBarsChange(selectedBarsCp, selectedBarsAsObject);
       }
     },
-    [formattedData, onSelectedBarsChange, selectedBars, vertical, xAxisData, yAxisData]
+    [data, onSelectedBarsChange, selectedBars, vertical, xAxisData, yAxisData]
   );
 
   const onEvents = useMemo(
@@ -395,10 +317,11 @@ function BarWidgetUI({
 
 BarWidgetUI.defaultProps = {
   tooltip: true,
-  tooltipFormatter,
+  tooltipFormatter: defaultTooltipFormatter,
   yAxisData: [],
   xAxisFormatter: (v) => v,
   yAxisFormatter: (v) => v,
+  selectedBars: [],
   labels: {},
   onSelectedBarsChange: null,
   animation: true,
@@ -427,10 +350,79 @@ BarWidgetUI.propTypes = {
   tooltipFormatter: PropTypes.func,
   xAxisFormatter: PropTypes.func,
   yAxisFormatter: PropTypes.func,
-  selectedBars: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+  selectedBars: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+    PropTypes.arrayOf(PropTypes.number)
+  ]),
   onSelectedBarsChange: PropTypes.func,
   height: PropTypes.number,
   animation: PropTypes.bool
 };
 
 export default BarWidgetUI;
+
+// Aux
+
+function useProcessProps(props, { selectedBars, setSelectedBars }) {
+  const theme = useTheme();
+  const {
+    height,
+    selectedBars: _selectedBars,
+    data: _data,
+    colors: _colors,
+    yAxisData
+  } = props;
+
+  // Selected bars
+  useEffect(() => {
+    const formattedSelectedBars = formatSelectedBars(_selectedBars);
+    if (!dequal(formattedSelectedBars, selectedBars)) {
+      setSelectedBars(formattedSelectedBars);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [_selectedBars]);
+
+  // Use data always as a two-dimensions array
+  const data = useMemo(() => (Array.isArray(_data[0]) ? _data : [_data]), [_data]);
+
+  // Colors
+  const colors = useMemo(
+    () =>
+      _colors ||
+      (data.length <= 1 || (yAxisData.length && yAxisData.length <= 1)
+        ? [theme.palette.secondary.main]
+        : data.length === 2 || (yAxisData.length && yAxisData.length === 2)
+        ? [theme.palette.primary.main, theme.palette.secondary.main]
+        : Object.values(theme.palette.qualitative.bold || {})),
+    [_colors, theme, data, yAxisData]
+  );
+
+  return {
+    ...props,
+    height: height ?? theme.spacing(22),
+    selectedBars,
+    setSelectedBars,
+    data,
+    colors
+  };
+}
+
+function formatSelectedBars(selectedBars) {
+  if (!selectedBars.length) {
+    return [];
+  }
+
+  // Correct formatter is: [[0, 0], [0, 1]] where first element is X and second element is Y
+  return selectedBars.map((barCoords) => {
+    const isWellFormatted = Array.isArray(barCoords) && barCoords.length === 2;
+    if (isWellFormatted) {
+      return barCoords;
+      // It means selectedBars is [0, 1]
+    } else if (!Array.isArray(barCoords)) {
+      return [barCoords, 0];
+      // It means selectedBars is [[0], [1]]
+    } else {
+      return [...Array(2)].map((_, idx) => barCoords[idx] || 0);
+    }
+  });
+}

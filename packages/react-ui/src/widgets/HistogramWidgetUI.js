@@ -10,6 +10,7 @@ import {
   getChartSerie
 } from './utils/chartUtils';
 import detectTouchScreen from './utils/detectTouchScreen';
+import deprecate from 'util-deprecate';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
 
@@ -182,6 +183,10 @@ const EchartsWrapper = React.memo(
   ReactEcharts,
   ({ option: optionPrev }, { option: optionNext }) => isDataEqual(optionPrev, optionNext)
 );
+
+/**
+ * @deprecated - Use BarWidgetUI instead.
+ */
 function HistogramWidgetUI(props) {
   const theme = useTheme();
   const {
@@ -318,4 +323,7 @@ HistogramWidgetUI.propTypes = {
   animation: PropTypes.bool
 };
 
-export default HistogramWidgetUI;
+export default deprecate(
+  HistogramWidgetUI,
+  'HistogramWidgetUI is deprecated, use BarWidgetUI instead'
+);

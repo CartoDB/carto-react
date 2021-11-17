@@ -1,3 +1,5 @@
+import { processFormatterRes } from './formatterUtils';
+
 export function isDataEqual(optionPrev, optionNext) {
   const dataPrev = optionPrev.series[0]?.data;
   const dataNext = optionNext.series[0].data;
@@ -60,4 +62,32 @@ export function getChartSerie(chart, index) {
   const serie = option.series[index];
 
   return { option, serie };
+}
+
+export function defaultTooltipFormatter(xAxisFormatter, yAxisFormatter, params) {
+  if (params instanceof Array) {
+    if (params.length) {
+      let message = '';
+      message += `${processFormatterRes(xAxisFormatter(params[0].axisValueLabel))}`;
+      params.forEach((param) => {
+        const seriesName =
+          params.length > 1 && param.seriesName ? param.seriesName + ': ' : '';
+        const value = processFormatterRes(yAxisFormatter(param.value));
+        const item = `<div style="margin-left: 8px; display: inline">${seriesName}${value}${
+          param.data.unit || ''
+        }</div>`;
+        message += `<div style="margin-top: 4px">${param.marker}${item}</div>`;
+      });
+      return message;
+    } else {
+      return null;
+    }
+  } else {
+    let message = '';
+    message += `${params[0].axisValueLabel}`;
+    message += `<br/>${params.marker}${params.seriesName}: ${params.value}${
+      params.data.unit || ''
+    }`;
+    return message;
+  }
 }
