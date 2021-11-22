@@ -1,7 +1,6 @@
 import { selectSourceById } from '@carto/react-redux/';
 import { useSelector } from 'react-redux';
-import useCustomCompareMemo from './useCustomCompareMemo';
-import { dequal as deepEqual } from 'dequal';
+import { useMemo } from 'react';
 
 /**
  * Obtain widget's filter values.
@@ -13,15 +12,13 @@ import { dequal as deepEqual } from 'dequal';
  * @param  {string} props.type - type of filter
  */
 export function useWidgetFilterValues({ dataSource, id, column, type }) {
-  const columnFilters = useSelector((state) => {
-    const dataSourceState = selectSourceById(state, dataSource);
+  const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
 
-    const filter = dataSourceState?.filters?.[column]?.[type];
+  return useMemo(() => {
+    const filter = filters?.[column]?.[type];
     if (!filter || filter.owner !== id) {
       return null;
     }
     return filter.values;
-  });
-
-  return useCustomCompareMemo(columnFilters, deepEqual);
+  }, [filters, column, type, id]);
 }
