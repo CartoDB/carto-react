@@ -48,6 +48,7 @@ export const createCartoSlice = (initialState) => {
       dataSources: {
         // Auto import dataSources
       },
+      mask: null,
       viewportFeatures: {},
       viewportFeaturesReady: {},
       ...initialState
@@ -92,6 +93,30 @@ export const createCartoSlice = (initialState) => {
       },
       setViewPort: (state) => {
         state.viewport = new WebMercatorViewport(state.viewState).getBounds();
+      },
+      addMask: (state, action) => {
+        const { id, geometry } = action.payload;
+        if (id) {
+          const source = state.dataSources[id];
+
+          if (source) {
+            source.mask = geometry;
+          }
+        } else {
+          state.mask = geometry;
+        }
+      },
+      removeMask: (state, action) => {
+        const { id } = action.payload;
+        if (id) {
+          const source = state.dataSources[id];
+
+          if (source) {
+            source.mask = null;
+          }
+        } else {
+          state.mask = null;
+        }
       },
       addFilter: (state, action) => {
         const { id, column, type, values, owner } = action.payload;
@@ -211,6 +236,27 @@ export const removeLayer = (id) => ({ type: 'carto/removeLayer', payload: id });
 export const setBasemap = (basemap) => ({ type: 'carto/setBasemap', payload: basemap });
 
 /**
+ * Action to add a geometry filter
+ * @param {object} params
+ * @param {string} [params.id] - If indicated, mask is applied to that source. If not, it's applied to every source
+ * @param {GeoJSON} params.geometry - valid geojson object
+ */
+export const addMask = ({ id, geometry }) => ({
+  type: 'carto/addMask',
+  payload: { id, geometry }
+});
+
+/**
+ * Action to remove a geometry filter on a given source
+ * @param {object} params
+ * @param {string} params.id - sourceId of the source to apply the filter on
+ */
+export const removeMask = ({ id }) => ({
+  type: 'carto/removeMask',
+  payload: { id }
+});
+
+/**
  * Action to add a filter on a given source and column
  * @param {string} id - sourceId of the source to apply the filter on
  * @param {string} column - column to use by the filter at the source
@@ -245,6 +291,14 @@ const _setViewPort = (payload) => ({ type: 'carto/setViewPort', payload });
  * Redux selector to get a source by ID
  */
 export const selectSourceById = (state, id) => state.carto.dataSources[id];
+
+/**
+ *
+ */
+export const selectMask = (state, sourceId) =>
+  sourceId
+    ? state.carto.dataSources[sourceId]?.mask || state.carto.mask
+    : state.carto.mask;
 
 /**
  * Redux selector to know if viewport features from a certain source are ready

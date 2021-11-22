@@ -53,8 +53,8 @@ export default function useViewportFeatures(
         })
       );
 
-      const tilesCleaned = tiles.map(({ data, isVisible, bbox }) => ({
-        data,
+      const tilesCleaned = tiles.map(({ data, filteredContent, isVisible, bbox }) => ({
+        data: filteredContent || data,
         isVisible,
         bbox
       }));
