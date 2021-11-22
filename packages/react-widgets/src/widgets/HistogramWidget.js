@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
@@ -7,6 +7,9 @@ import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core
 import { getHistogram } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
+import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
+
+const EMPTY_ARRAY = [];
 
 /**
  * Renders a <HistogramWidget /> component
@@ -45,13 +48,34 @@ function HistogramWidget(props) {
   const dispatch = useDispatch();
 
   const [histogramData, setHistogramData] = useState([]);
-  const [selectedBars, setSelectedBars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const filters = useSourceFilters({ dataSource, id });
   const isSourceReady = useSelector((state) =>
     selectIsViewportFeaturesReadyForSource(state, dataSource)
   );
+
+  const thresholdsFromFilters = useWidgetFilterValues({
+    dataSource,
+    id,
+    column,
+    type: FilterTypes.CLOSED_OPEN
+  });
+
+  const selectedBars = useMemo(() => {
+    return (thresholdsFromFilters || EMPTY_ARRAY)
+      .map(([from, to]) => {
+        if (typeof from === 'undefined') {
+          return 0;
+        } else if (typeof to === 'undefined') {
+          return ticks.length - 1;
+        } else {
+          const idx = ticks.indexOf(from);
+          return idx !== -1 ? idx + 1 : null;
+        }
+      })
+      .filter((v) => v !== null);
+  }, [thresholdsFromFilters, ticks]);
 
   const tooltipFormatter = useCallback(
     ([serie]) => {
@@ -102,8 +126,6 @@ function HistogramWidget(props) {
 
   const handleSelectedBarsChange = useCallback(
     ({ bars }) => {
-      setSelectedBars(bars);
-
       if (bars && bars.length) {
         const thresholds = bars.map((i) => {
           let left = ticks[i - 1];
@@ -129,7 +151,7 @@ function HistogramWidget(props) {
         );
       }
     },
-    [column, dataSource, id, setSelectedBars, dispatch, ticks]
+    [column, dataSource, id, dispatch, ticks]
   );
 
   const ticksForDataAxis = ticks.reduce((acc, tick, i) => {
