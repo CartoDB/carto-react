@@ -3,7 +3,7 @@ import { _buildFeatureFilter, _applyMaskToTile } from '@carto/react-core';
 import useViewportFeatures from './useViewportFeatures';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { GeoJsonLayer } from '@deck.gl/layers';
-import { selectMask } from '@carto/react-redux/slices/cartoSlice';
+import { selectMask } from '@carto/react-redux';
 import { useSelector } from 'react-redux';
 
 export default function useCartoLayerProps({
@@ -13,7 +13,7 @@ export default function useCartoLayerProps({
   viewporFeaturesDebounceTimeout = 500,
   renderSubLayers: _renderSubLayers = (props) => new GeoJsonLayer(props)
 }) {
-  const maskGeometry = useSelector((state) => selectMask(state, source.id));
+  const maskGeometry = useSelector((state) => selectMask(state, source?.id));
 
   const [onViewportLoad, onDataLoad, fetch] = useViewportFeatures(
     source,
