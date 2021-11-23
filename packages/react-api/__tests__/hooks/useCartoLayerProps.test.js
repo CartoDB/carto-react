@@ -7,6 +7,11 @@ import { mockReduxHooks, mockClear } from '../mockReduxHooks';
 describe('useCartoLayerProps', () => {
   mockReduxHooks();
 
+  const SOURCE_WITH_FILTERS = {
+    filters: { cartodb_id: { values: [1] } },
+    credentials: { apiVersion: 'v3' }
+  };
+
   describe('return props', () => {
     const COMMON_PROPS = [
       'uniqueIdProperty',
@@ -14,9 +19,6 @@ describe('useCartoLayerProps', () => {
       'type',
       'connection',
       'credentials',
-      'getFilterValue',
-      'filterRange',
-      'extensions',
       'updateTriggers'
     ];
 
@@ -35,6 +37,7 @@ describe('useCartoLayerProps', () => {
           'binary',
           'onViewportLoad',
           'fetch',
+          'renderSubLayers',
           ...COMMON_PROPS
         ]);
       });
@@ -53,6 +56,7 @@ describe('useCartoLayerProps', () => {
           'binary',
           'onViewportLoad',
           'fetch',
+          'renderSubLayers',
           ...COMMON_PROPS
         ]);
       });
@@ -71,6 +75,7 @@ describe('useCartoLayerProps', () => {
           'binary',
           'onViewportLoad',
           'fetch',
+          'renderSubLayers',
           ...COMMON_PROPS
         ]);
       });
@@ -91,6 +96,7 @@ describe('useCartoLayerProps', () => {
           'binary',
           'onViewportLoad',
           'fetch',
+          'renderSubLayers',
           ...COMMON_PROPS
         ]);
       });
@@ -120,6 +126,18 @@ describe('useCartoLayerProps', () => {
 
         expect(Object.keys(result.current)).toEqual(['onDataLoad', ...COMMON_PROPS]);
       });
+    });
+
+    test('should return correct props when source has filters', () => {
+      const { result } = renderHook(() =>
+        useCartoLayerProps({ source: SOURCE_WITH_FILTERS })
+      );
+      expect(Object.keys(result.current)).toEqual([
+        ...COMMON_PROPS,
+        'getFilterValue',
+        'filterRange',
+        'extensions'
+      ]);
     });
   });
 
@@ -169,35 +187,45 @@ describe('useCartoLayerProps', () => {
       expect(result.current.onDataLoad).toBeInstanceOf(Function);
     });
 
+    test("getFilterValue trigger shouldn't be present if there isn't filters", () => {
+      const { result } = renderHook(() =>
+        useCartoLayerProps({ source: { credentials: { apiVersion: 'v2' } } })
+      );
+
+      expect(result.current.updateTriggers).not.toHaveProperty('getFilterValue');
+    });
+
     test('getFilterValue should be a function', () => {
-      const { result } = renderHook(() => useCartoLayerProps({}));
+      const { result } = renderHook(() =>
+        useCartoLayerProps({ source: SOURCE_WITH_FILTERS })
+      );
 
       expect(result.current.getFilterValue).toBeInstanceOf(Function);
     });
 
     test('filter range should be between 1 and 1', () => {
-      const { result } = renderHook(() => useCartoLayerProps({}));
+      const { result } = renderHook(() =>
+        useCartoLayerProps({ source: SOURCE_WITH_FILTERS })
+      );
 
       expect(result.current.filterRange).toEqual([1, 1]);
     });
 
     test('extensions should have an unique instance of DataFilterExtension', () => {
-      const { result } = renderHook(() => useCartoLayerProps({}));
+      const { result } = renderHook(() =>
+        useCartoLayerProps({ source: SOURCE_WITH_FILTERS })
+      );
 
       expect(result.current.extensions.length).toBe(1);
       expect(result.current.extensions[0]).toBeInstanceOf(DataFilterExtension);
     });
 
     test('filter size should be 1', () => {
-      const { result } = renderHook(() => useCartoLayerProps({}));
+      const { result } = renderHook(() =>
+        useCartoLayerProps({ source: SOURCE_WITH_FILTERS })
+      );
 
       expect(result.current.extensions[0].opts.filterSize).toEqual(1);
-    });
-
-    test('getFilterValue trigger should be present', () => {
-      const { result } = renderHook(() => useCartoLayerProps({}));
-
-      expect(result.current.updateTriggers).toHaveProperty('getFilterValue');
     });
   });
 
