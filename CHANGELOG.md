@@ -2,6 +2,8 @@
 
 ## Not released
 
+## 1.1.1 (2021-11-23)
+
 - Improve Widgets calculations sync with tiles [#223](https://github.com/CartoDB/carto-react/pull/223)
 - `CategoryWidget`, `HistogramWidget`, `PieWidget` use filters in datasource to derive selecteditems (categories, bars) instead of local react state [224](https://github.com/CartoDB/carto-react/pull/224)
 
