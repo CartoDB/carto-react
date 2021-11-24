@@ -2,6 +2,11 @@
 
 ## Not released
 
+## 1.1.1 (2021-11-23)
+
+- Improve Widgets calculations sync with tiles [#223](https://github.com/CartoDB/carto-react/pull/223)
+- `CategoryWidget`, `HistogramWidget`, `PieWidget` use filters in datasource to derive selecteditems (categories, bars) instead of local react state [224](https://github.com/CartoDB/carto-react/pull/224)
+
 ## 1.1.0 (2021-10-29)
 
 - Histogram tooltip formatter receiving dataIndex and ticks [#220](https://github.com/CartoDB/carto-react/pull/220)
@@ -87,8 +92,6 @@
 - Add new ScatterplotWidget component [#149](https://github.com/CartoDB/carto-react/pull/149)
 - Update to latest 8.5.0-alpha.10 deck.gl version [#149](https://github.com/CartoDB/carto-react/pull/149)
 - Add support to Cloud Native SQL API [#150](https://github.com/CartoDB/carto-react/pull/150)
-
-
 
 ## 1.0.1 (2021-04-12)
 
