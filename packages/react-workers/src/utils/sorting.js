@@ -16,21 +16,29 @@ export function applySorting(features, { sortBy = [], sortByDirection = 'asc' } 
     return features;
   }
 
-  const [firstSortOption, ...othersSortOptions] = normalizeSortByOptions({
+  const sortFn = createSortFn({
     sortBy,
     sortByDirection
   });
-
-  // Create sortFn
-  let sortFn = firstBy(...firstSortOption);
-  for (let sortOptions of othersSortOptions) {
-    sortFn = sortFn.thenBy(...sortOptions);
-  }
 
   return features.sort(sortFn);
 }
 
 // Aux
+function createSortFn({ sortBy, sortByDirection }) {
+  const [firstSortOption, ...othersSortOptions] = normalizeSortByOptions({
+    sortBy,
+    sortByDirection
+  });
+
+  let sortFn = firstBy(...firstSortOption);
+  for (let sortOptions of othersSortOptions) {
+    sortFn = sortFn.thenBy(...sortOptions);
+  }
+  
+  return sortFn;
+}
+
 function normalizeSortByOptions({ sortBy, sortByDirection }) {
   if (!Array.isArray(sortBy)) {
     sortBy = [sortBy];
