@@ -1,4 +1,5 @@
-import { buildFeatureFilter } from '../../src/filters/Filter';
+import { buildBinaryFeatureFilter, buildFeatureFilter } from '../../src/filters/Filter';
+import { POINTS_BINARY_DATA, POLYGONS_BINARY_DATA } from './constants';
 
 const filters = {
   column1: {
@@ -262,6 +263,45 @@ describe('Filters', () => {
         const isFeatureIncluded = buildFeatureFilter(zeroIsValidForThisFilter)(obj);
         expect(isFeatureIncluded).toBe(0);
       });
+    });
+  });
+
+  describe('using binary data', () => {
+    test('should filter points binary data', () => {
+      const filterForBinaryData = {
+        state: {
+          in: {
+            values: ['AK']
+          }
+        }
+      };
+      const filterFn = buildBinaryFeatureFilter({ filters: filterForBinaryData });
+
+      const filterRes = POINTS_BINARY_DATA.featureIds.value.map((_, idx) =>
+        filterFn(idx, POINTS_BINARY_DATA)
+      );
+
+      expect(filterRes[0]).toBe(1);
+      expect(filterRes[filterRes.length - 1]).toBe(0);
+    });
+
+    test('should filter polygons/lines binary data', () => {
+      const filterForBinaryData = {
+        cartodb_id: {
+          in: {
+            values: [78]
+          }
+        }
+      };
+
+      const filterFn = buildBinaryFeatureFilter({ filters: filterForBinaryData });
+
+      const filterRes = POLYGONS_BINARY_DATA.featureIds.value.map((_, idx) =>
+        filterFn(idx, POLYGONS_BINARY_DATA)
+      );
+
+      expect(filterRes[0]).toBe(1);
+      expect(filterRes[filterRes.length - 1]).toBe(0);
     });
   });
 });
