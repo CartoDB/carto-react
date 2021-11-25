@@ -160,20 +160,22 @@ function getRawFeatures({
   let numberPages = 0;
 
   if (currentViewportFeatures) {
-    const features = applySorting(getFilteredFeatures(filters), {
+    data = applySorting(getFilteredFeatures(filters), {
       sortBy,
       sortByDirection
     });
 
     if (limit) {
-      numberPages = Math.ceil(features.length / limit);
-      data = features.slice(limit * Math.max(0, page - 1), limit * Math.max(1, page));
-    } else {
-      data = features;
+      numberPages = Math.ceil(data.length / limit);
+      data = applyPagination(data, { limit, page });
     }
   }
 
   postMessage({ result: { data, currentPage: page, pages: numberPages } });
+}
+
+function applyPagination (features, { limit, page }) {
+  return features.slice(limit * Math.max(0, page - 1), limit * Math.max(1, page));
 }
 
 function getFilteredFeatures(filters = {}) {
