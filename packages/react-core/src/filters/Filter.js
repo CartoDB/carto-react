@@ -48,7 +48,7 @@ function passesFilter(columns, filters, feature) {
       const filterFunction = filterFunctions[filter];
 
       if (!filterFunction) {
-        throw new Error(`"${filter}" not implemented`);
+        throw new Error(`"${filter}" filter is not implemented.`);
       }
 
       return filterFunction(columnFilters[filter].values, feature[column]);
@@ -120,9 +120,11 @@ function passesFilterUsingBinary(columns, filters, featureIdIdx, binaryData) {
     const columnFilters = filters[column];
 
     return Object.entries(columnFilters).every(([type, { values }]) => {
+      if (!values) return 0;
+
       const filterFn = filterFunctions[type];
       if (!filterFn) {
-        throw new Error(`"${type}" not implemented`);
+        throw new Error(`"${type}" filter is not implemented.`);
       }
 
       const featureValue = getFeatureValue(featureIdIdx, binaryData, {
@@ -130,6 +132,8 @@ function passesFilterUsingBinary(columns, filters, featureIdIdx, binaryData) {
         type,
         values
       });
+
+      if (featureValue === undefined || featureValue === null) return 0;
 
       return filterFn(values, featureValue);
     });

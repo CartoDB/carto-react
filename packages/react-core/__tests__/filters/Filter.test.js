@@ -86,13 +86,13 @@ describe('Filters', () => {
       test('with geojson feature', () => {
         const filter = buildFeatureFilter(paramsWithFilterFunctionNotImplemented);
         const feature = makeFeatureWithValueInColumn();
-        expect(() => filter(feature)).toThrow('"pow" not implemented');
+        expect(() => filter(feature)).toThrow('"pow" filter is not implemented');
       });
 
       test('with geojson feature properties', () => {
         const filter = buildFeatureFilter(paramsWithFilterFunctionNotImplemented);
         const obj = makeObjectWithValueInColumn();
-        expect(() => filter(obj)).toThrow('"pow" not implemented');
+        expect(() => filter(obj)).toThrow('"pow" filter is not implemented');
       });
     });
 
@@ -198,13 +198,13 @@ describe('Filters', () => {
       test('with geojson feature', () => {
         const filter = buildFeatureFilter(paramsWithFilterFunctionNotImplemented);
         const feature = makeFeatureWithValueInColumn();
-        expect(() => filter(feature)).toThrow('"pow" not implemented');
+        expect(() => filter(feature)).toThrow('"pow" filter is not implemented');
       });
 
       test('with geojson feature properties', () => {
         const filter = buildFeatureFilter(paramsWithFilterFunctionNotImplemented);
         const obj = makeObjectWithValueInColumn();
-        expect(() => filter(obj)).toThrow('"pow" not implemented');
+        expect(() => filter(obj)).toThrow('"pow" filter is not implemented');
       });
     });
 
