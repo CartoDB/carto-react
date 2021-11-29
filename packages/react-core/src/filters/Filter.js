@@ -78,16 +78,8 @@ export function buildBinaryFeatureFilter({ filters = {} }) {
     return () => 1;
   }
 
-  return (featureIdIdx, binaryData) => {
-    const featurePassesFilter = passesFilterUsingBinary(
-      columns,
-      filters,
-      featureIdIdx,
-      binaryData
-    );
-
-    return featurePassesFilter;
-  };
+  return (featureIdIdx, binaryData) =>
+    passesFilterUsingBinary(columns, filters, featureIdIdx, binaryData);
 }
 
 function getValueFromNumericProps(featureIdIdx, binaryData, { column }) {
@@ -120,12 +112,12 @@ function passesFilterUsingBinary(columns, filters, featureIdIdx, binaryData) {
     const columnFilters = filters[column];
 
     return Object.entries(columnFilters).every(([type, { values }]) => {
-      if (!values) return 0;
-
       const filterFn = filterFunctions[type];
       if (!filterFn) {
         throw new Error(`"${type}" filter is not implemented.`);
       }
+
+      if (!values) return 0;
 
       const featureValue = getFeatureValue(featureIdIdx, binaryData, {
         column,

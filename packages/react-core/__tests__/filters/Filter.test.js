@@ -303,5 +303,39 @@ describe('Filters', () => {
       expect(filterRes[0]).toBe(1);
       expect(filterRes[filterRes.length - 1]).toBe(0);
     });
+
+    test('should throw error when filter is unknown', () => {
+      const filterForBinaryData = {
+        cartodb_id: {
+          pow: {
+            values: [1]
+          }
+        }
+      };
+
+      const filterFn = buildBinaryFeatureFilter({ filters: filterForBinaryData });
+
+      expect(() => filterFn(0, POLYGONS_BINARY_DATA)).toThrow(
+        '"pow" filter is not implemented'
+      );
+    });
+
+    test('should returns always 0 when values is nullish', () => {
+      const filterForBinaryData = {
+        cartodb_id: {
+          in: {
+            values: null
+          }
+        }
+      };
+
+      const filterFn = buildBinaryFeatureFilter({ filters: filterForBinaryData });
+
+      const filterRes = POLYGONS_BINARY_DATA.featureIds.value.map((_, idx) =>
+        filterFn(idx, POLYGONS_BINARY_DATA)
+      );
+
+      expect(filterRes.every((el) => el === 0)).toBe(true);
+    });
   });
 });
