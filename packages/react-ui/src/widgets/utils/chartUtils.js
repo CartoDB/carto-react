@@ -65,7 +65,7 @@ export function getChartSerie(chart, index) {
 }
 
 export function defaultTooltipFormatter(xAxisFormatter, yAxisFormatter, params) {
-  if (params instanceof Array) {
+  if (Array.isArray(params)) {
     if (params.length) {
       let message = '';
       message += `${processFormatterRes(xAxisFormatter(params[0].axisValueLabel))}`;
@@ -83,11 +83,6 @@ export function defaultTooltipFormatter(xAxisFormatter, yAxisFormatter, params) 
       return null;
     }
   } else {
-    let message = '';
-    message += `${params[0].axisValueLabel}`;
-    message += `<br/>${params.marker}${params.seriesName}: ${params.value}${
-      params.data.unit || ''
-    }`;
-    return message;
+    return null;
   }
 }
