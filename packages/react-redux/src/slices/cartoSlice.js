@@ -117,6 +117,23 @@ export const createCartoSlice = (initialState) => {
           delete source.filters[column];
         }
       },
+      removeFilterByOwner: (state, action) => {
+        const { id, owner } = action.payload;
+        const filtersToRemove = [];
+
+        Object.entries(state.dataSources[id]?.filters || {}).forEach(
+          ([column, filter]) => {
+            Object.entries(filter || {}).forEach(([, type]) => {
+              if (type.owner === owner) {
+                filtersToRemove.push({ id, column });
+              }
+            });
+          }
+        );
+        filtersToRemove.forEach((filter) => {
+          delete state?.dataSources[filter.id]?.filters[filter.column];
+        });
+      },
       clearFilters: (state, action) => {
         const { id } = action.payload;
         const source = state.dataSources[id];
@@ -231,6 +248,16 @@ export const addFilter = ({ id, column, type, values, owner }) => ({
 export const removeFilter = ({ id, column }) => ({
   type: 'carto/removeFilter',
   payload: { id, column }
+});
+
+/**
+ * Action to remove filter by widget owner
+ * @param {id} - sourceId of the filter to remove
+ * @param {owner} - widgetId of the filter to remove
+ */
+export const removeFilterByOwner = ({ id, owner }) => ({
+  type: 'carto/removeFilterByOwner',
+  payload: { id, owner }
 });
 
 /**
