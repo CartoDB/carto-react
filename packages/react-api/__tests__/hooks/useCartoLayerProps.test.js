@@ -34,6 +34,7 @@ describe('useCartoLayerProps', () => {
         expect(Object.keys(result.current)).toEqual([
           'binary',
           'onViewportLoad',
+          'fetch',
           ...COMMON_PROPS
         ]);
       });
@@ -51,6 +52,7 @@ describe('useCartoLayerProps', () => {
         expect(Object.keys(result.current)).toEqual([
           'binary',
           'onViewportLoad',
+          'fetch',
           ...COMMON_PROPS
         ]);
       });
@@ -68,6 +70,7 @@ describe('useCartoLayerProps', () => {
         expect(Object.keys(result.current)).toEqual([
           'binary',
           'onViewportLoad',
+          'fetch',
           ...COMMON_PROPS
         ]);
       });
@@ -87,6 +90,7 @@ describe('useCartoLayerProps', () => {
         expect(Object.keys(result.current)).toEqual([
           'binary',
           'onViewportLoad',
+          'fetch',
           ...COMMON_PROPS
         ]);
       });
