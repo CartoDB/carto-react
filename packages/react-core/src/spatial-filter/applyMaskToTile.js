@@ -1,7 +1,7 @@
 import asTileCoords from '../projections/asTileCoords';
-import maskLinesBinaryData from './lines';
-import maskPointsBinaryData from './points';
-import maskPolygonsBinaryData from './polygons';
+import { maskLinesBinaryData } from './lines';
+import { maskPointsBinaryData } from './points';
+import { maskPolygonsBinaryData } from './polygons';
 
 export default function applyMaskToTile(
   tile,

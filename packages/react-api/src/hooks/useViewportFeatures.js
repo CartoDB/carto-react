@@ -14,6 +14,8 @@ function isV3(source) {
   return source?.credentials.apiVersion === API_VERSIONS.V3;
 }
 
+const EMPTY_OBJ = {};
+
 export default function useViewportFeatures(
   source,
   uniqueIdProperty,
@@ -23,6 +25,7 @@ export default function useViewportFeatures(
   const viewport = useSelector((state) => state.carto.viewport);
   const [tiles, setTiles] = useState([]);
   const [isGeoJSONLoaded, setGeoJSONLoaded] = useState(false);
+  const [filtersBuffer, setFiltersBuffer] = useState(EMPTY_OBJ);
   const debounceId = useRef(null);
 
   const clearDebounce = () => {
@@ -45,7 +48,7 @@ export default function useViewportFeatures(
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const computeFeaturesTileset = useCallback(
-    debounce(async ({ tiles, viewport, uniqueIdProperty, sourceId }) => {
+    debounce(async ({ tiles, filtersBuffer, viewport, uniqueIdProperty, sourceId }) => {
       dispatch(
         setViewportFeaturesReady({
           sourceId,
@@ -53,8 +56,10 @@ export default function useViewportFeatures(
         })
       );
 
-      const tilesCleaned = tiles.map(({ data, filteredContent, isVisible, bbox }) => ({
-        data: filteredContent || data,
+      const tilesCleaned = tiles.map(({ x, y, z, data, isVisible, bbox }) => ({
+        data,
+        // Generalize Tile ID,
+        filterBuffer: filtersBuffer[`${x}-${y}-${z}`],
         isVisible,
         bbox
       }));
@@ -105,6 +110,7 @@ export default function useViewportFeatures(
       setSourceViewportFeaturesReady(false);
       debounceId.current = computeFeaturesTileset({
         tiles,
+        filtersBuffer,
         viewport,
         uniqueIdProperty,
         sourceId
@@ -118,7 +124,8 @@ export default function useViewportFeatures(
     sourceId,
     isSourceV3,
     isSourceTileset,
-    setSourceViewportFeaturesReady
+    setSourceViewportFeaturesReady,
+    filtersBuffer
   ]);
 
   useEffect(() => {
@@ -177,5 +184,5 @@ export default function useViewportFeatures(
     return Layer.defaultProps.fetch.value(arg1, arg2);
   }, []);
 
-  return [onViewportLoad, onDataLoad, fetch];
+  return [onViewportLoad, onDataLoad, fetch, filtersBuffer, setFiltersBuffer];
 }

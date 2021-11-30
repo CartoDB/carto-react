@@ -1,25 +1,37 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
-import { _buildFeatureFilter, _applyMaskToTile } from '@carto/react-core';
+import {
+  _buildFeatureFilter,
+  _applyMaskToTile,
+  _applyMaskToTile2
+} from '@carto/react-core';
 import useViewportFeatures from './useViewportFeatures';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { GeoJsonLayer } from '@deck.gl/layers';
 import { selectMask } from '@carto/react-redux';
 import { useSelector } from 'react-redux';
+import ExtentedGeoJsonLayer from './extended-geojson-layer/geojson-layer';
+import { useEffect } from 'react';
 
 export default function useCartoLayerProps({
   source,
   uniqueIdProperty,
   viewportFeatures = true,
   viewporFeaturesDebounceTimeout = 500,
-  renderSubLayers: _renderSubLayers = (props) => new GeoJsonLayer(props)
+  renderSubLayers: _renderSubLayers = (props) => new ExtentedGeoJsonLayer(props)
 }) {
   const maskGeometry = useSelector((state) => selectMask(state, source?.id));
 
-  const [onViewportLoad, onDataLoad, fetch] = useViewportFeatures(
-    source,
-    uniqueIdProperty,
-    viewporFeaturesDebounceTimeout
-  );
+  const [
+    onViewportLoad,
+    onDataLoad,
+    fetch,
+    filtersBuffer,
+    setFiltersBuffer
+  ] = useViewportFeatures(source, uniqueIdProperty, viewporFeaturesDebounceTimeout);
+
+  useEffect(() => {
+    setFiltersBuffer({});
+  }, [maskGeometry]);
 
   let props = {};
 
@@ -35,13 +47,53 @@ export default function useCartoLayerProps({
       onViewportLoad: viewportFeatures ? onViewportLoad : null,
       fetch: viewportFeatures ? fetch : null,
       renderSubLayers: (props) => {
-        let newProps = { ...props };
-        if (props.data && maskGeometry) {
-          const filteredTile = _applyMaskToTile(props.tile, maskGeometry);
-          newProps.data = filteredTile.content;
+        let { data, binary } = props;
+        // TODO: Implement to binary as false
+        if (!data || !binary) {
+          return null;
         }
 
-        return _renderSubLayers(newProps);
+        const tileKey = `${props.tile.x}-${props.tile.y}-${props.tile.z}`;
+        if (props.data && maskGeometry) {
+          if (filtersBuffer[tileKey]) {
+            const filterBuffer = filtersBuffer[tileKey];
+            data = {
+              ...props.tile.content,
+              points: {
+                ...props.tile.content.points,
+                attributes: {
+                  getFilterValue: filterBuffer.points
+                }
+              },
+              lines: {
+                ...props.tile.content.lines,
+                attributes: {
+                  getFilterValue: filterBuffer.lines
+                }
+              },
+              polygons: {
+                ...props.tile.content.polygons,
+                attributes: {
+                  getFilterValue: filterBuffer.polygons
+                }
+              }
+            };
+          } else {
+            // console.time(tileKey)
+            data = _applyMaskToTile2(props.tile, maskGeometry);
+            // console.timeEnd(tileKey)
+            // setFiltersBuffer((oldState) => ({
+            //   ...oldState,
+            //   [tileKey]: {
+            //     points: data.points.attributes.getFilterValue,
+            //     lines: data.lines.attributes.getFilterValue,
+            //     polygons: data.polygons.attributes.getFilterValue
+            //   }
+            // }));
+          }
+        }
+
+        return _renderSubLayers(props, { data });
       }
     };
   } else if (useGeoJSON) {
@@ -51,7 +103,7 @@ export default function useCartoLayerProps({
     };
   }
 
-  const hasFilters = !!Object.keys(source?.filters || {}).length;
+  const hasFilters = !!Object.keys(source?.filters || {}).length || !!maskGeometry;
 
   return {
     ...props,
@@ -60,14 +112,15 @@ export default function useCartoLayerProps({
     type: source?.type,
     connection: source?.connection,
     credentials: source?.credentials,
-    updateTriggers: {},
+    // updateTriggers: {},
+    // getFilterValue: _buildFeatureFilter({ filters: source?.filters, type: 'number' }),
     ...(hasFilters && {
-      getFilterValue: _buildFeatureFilter({ filters: source?.filters, type: 'number' }),
+      getFilterValue: 1,
       filterRange: [1, 1],
-      extensions: [new DataFilterExtension({ filterSize: 1 })],
-      updateTriggers: {
-        getFilterValue: source?.filters
-      }
+      extensions: [new DataFilterExtension({ filterSize: 1 })]
     })
+    // updateTriggers: {
+    //   getFilterValue: [source?.filters, maskGeometry]
+    // }
   };
 }

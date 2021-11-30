@@ -1,11 +1,13 @@
 import _asTileCoords from './projections/asTileCoords';
 import _applyMaskToTile from './spatial-filter/applyMaskToTile';
+import _applyMaskToTile2 from './spatial-filter/applyMaskToTile2';
 
 export {
   // Only for advanced users
   _asTileCoords,
   // Used in @carto/react-api
-  _applyMaskToTile
+  _applyMaskToTile,
+  _applyMaskToTile2
 };
 
 export {

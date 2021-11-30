@@ -1,7 +1,7 @@
-import turfIntersects from "@turf/boolean-intersects";
-import { concatTypedArrays, convertCoordinates } from "./helpers";
+import turfIntersects from '@turf/boolean-intersects';
+import { concatTypedArrays, convertCoordinates } from './helpers';
 
-export default function maskPolygonsBinaryData(
+export function maskPolygonsBinaryData(
   currentPolygonsData,
   maskGeometry,
   { uniqueIdProperty, layerUniqueIdsIn = [] }
@@ -26,17 +26,13 @@ export default function maskPolygonsBinaryData(
     let doesIntersects =
       featureIdsIn.has(featureId) || layerUniqueIdsIn.indexOf(uniqueId) !== -1;
     if (!doesIntersects) {
-      const nextLine =
-        currentPolygonsData.primitivePolygonIndices.value[idx + 1];
+      const nextLine = currentPolygonsData.primitivePolygonIndices.value[idx + 1];
       doesIntersects = turfIntersects(
         {
-          type: "Polygon",
+          type: 'Polygon',
           coordinates: [
             convertCoordinates(
-              currentPolygonsData.positions.value.subarray(
-                currentLine * 2,
-                nextLine * 2
-              )
+              currentPolygonsData.positions.value.subarray(currentLine * 2, nextLine * 2)
             )
           ]
         },
@@ -58,7 +54,7 @@ export default function maskPolygonsBinaryData(
 
   if (newPolygonsData.featureIds.value.length) {
     newPolygonsData.properties = currentPolygonsData.properties;
-    ["polygonIndices", "primitivePolygonIndices"].forEach(
+    ['polygonIndices', 'primitivePolygonIndices'].forEach(
       (key) =>
         (newPolygonsData[key].value = concatTypedArrays(
           newPolygonsData[key].value,
@@ -72,13 +68,75 @@ export default function maskPolygonsBinaryData(
   return [newPolygonsData, Array.from(uniqueIdsIn)];
 }
 
+export function maskPolygonsBinaryDataToDFE(
+  currentPolygonsData,
+  filteringGeometry,
+  { uniqueIdProperty, layerUniqueIdsIn = [] }
+) {
+  const res = new Uint16Array(currentPolygonsData.properties.length);
+
+  const uniqueIdsIn = new Set();
+  const featureIdsIn = new Set();
+
+  let idx = 0;
+  for (let currentLine of currentPolygonsData.primitivePolygonIndices.value.slice(
+    0,
+    -1
+  )) {
+    const featureId = currentPolygonsData.featureIds.value[currentLine];
+    if (res[featureId] === -1) {
+      continue;
+    }
+
+    const uniqueId =
+      currentPolygonsData.numericProps[uniqueIdProperty]?.value[currentLine] || // uniqueId can be a number
+      currentPolygonsData.properties[featureId][uniqueIdProperty]; // or a string
+
+    // featureIdsIn.has(featureId) --> for multiline, if one of the lines is already IN, do not analyse any other
+    // layerUniqueIdsIn.indexOf(uniqueId) !== -1 --> for splitted lines between multiple tiles
+    let doesIntersects =
+      featureIdsIn.has(featureId) || layerUniqueIdsIn.indexOf(uniqueId) !== -1;
+    if (!doesIntersects) {
+      const nextLine = currentPolygonsData.primitivePolygonIndices.value[idx + 1];
+      doesIntersects = turfIntersects(
+        {
+          type: 'Polygon',
+          coordinates: [
+            convertCoordinates(
+              currentPolygonsData.positions.value.slice(currentLine * 2, nextLine * 2)
+            )
+          ]
+        },
+        filteringGeometry
+      );
+
+      if (doesIntersects) {
+        uniqueIdsIn.add(uniqueId);
+        featureIdsIn.add(featureId);
+      }
+    }
+
+    if (doesIntersects) {
+      res[featureId] = 1;
+    } else {
+      res[featureId] = -1;
+    }
+
+    idx++;
+  }
+
+  return [
+    currentPolygonsData.featureIds.value.map((id) => res[id]),
+    Array.from(uniqueIdsIn)
+  ];
+}
+
 function addPolygonIndiceToPolygonsData(
   newPolygonsData,
   oldPolygonsData,
   polygonIndicesIdx
 ) {
-  const currentLine =
-    oldPolygonsData.primitivePolygonIndices.value[polygonIndicesIdx];
+  const currentLine = oldPolygonsData.primitivePolygonIndices.value[polygonIndicesIdx];
   const nextLine =
     oldPolygonsData.primitivePolygonIndices.value[polygonIndicesIdx + 1] ||
     oldPolygonsData.featureIds.value.length;
@@ -112,7 +170,7 @@ function addPolygonIndiceToPolygonsData(
     oldPolygonsData.positions.value.slice(currentLine * 2, nextLine * 2)
   );
 
-  ["polygonIndices", "primitivePolygonIndices"].forEach((key) => {
+  ['polygonIndices', 'primitivePolygonIndices'].forEach((key) => {
     newPolygonsData[key].value = concatTypedArrays(
       newPolygonsData[key].value,
       oldPolygonsData[key].value.constructor.of(
@@ -124,10 +182,7 @@ function addPolygonIndiceToPolygonsData(
   for (let numericProp in oldPolygonsData.numericProps) {
     newPolygonsData.numericProps[numericProp].value = concatTypedArrays(
       newPolygonsData.numericProps[numericProp].value,
-      oldPolygonsData.numericProps[numericProp].value.slice(
-        currentLine,
-        nextLine
-      )
+      oldPolygonsData.numericProps[numericProp].value.slice(currentLine, nextLine)
     );
   }
 }

@@ -1,7 +1,7 @@
 import turfIntersects from '@turf/boolean-intersects';
 import { concatTypedArrays } from './helpers';
 
-export default function maskPointsBinaryData(currentPointsData, maskGeometry) {
+export function maskPointsBinaryData(currentPointsData, maskGeometry) {
   const newPointsData = createEmptyPoinstData(currentPointsData);
 
   for (let featureIdx of currentPointsData.featureIds.value) {
@@ -22,6 +22,21 @@ export default function maskPointsBinaryData(currentPointsData, maskGeometry) {
   }
 
   return newPointsData;
+}
+
+export function maskPointsBinaryDataToDFE(currentPointsData, maskGeometry) {
+  return currentPointsData.featureIds.value.map((featureIdx) =>
+    turfIntersects(
+      {
+        type: 'Point',
+        coordinates: currentPointsData.positions.value.subarray(
+          featureIdx * 2,
+          featureIdx * 2 + 2
+        )
+      },
+      maskGeometry
+    )
+  );
 }
 
 function createEmptyPoinstData(pointData) {
