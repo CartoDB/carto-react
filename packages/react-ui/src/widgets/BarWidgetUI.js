@@ -34,7 +34,7 @@ function BarWidgetUI(props) {
 
   const [selectedBars, setSelectedBars] = useState([]);
 
-  // Due to BarWidgetUI nature, it props admits multiple shapes.
+  // Due to BarWidgetUI nature, its props admits multiple shapes.
   // In useProcessProps we convert those multiple shapes in a common one
   // to avoid complex logic in the component.
   const {
