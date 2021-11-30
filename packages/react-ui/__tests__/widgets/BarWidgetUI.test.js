@@ -14,7 +14,7 @@ describe('BarWidgetUI', () => {
 
   const DATA = [1, 2, 3];
 
-  const X_AXIS_DATA = [4, 5, 6];
+  const X_AXIS_DATA = ['column_1', 'column_2', 'column_3'];
 
   const Widget = (props) =>
     getMaterialUIContext(
@@ -26,9 +26,46 @@ describe('BarWidgetUI', () => {
       />
     );
 
+  const DATA_MULTIPLE = [
+    [1, 2, 3],
+    [1, 2, 3]
+  ];
+
+  const Y_AXIS_DATA = ['Row 1', 'Row 2'];
+
+  const LABELS = {
+    4: 'Column 1',
+    5: 'Column 2',
+    6: 'Column 2'
+  };
+
+  const WidgetMultiple = (props) =>
+    getMaterialUIContext(
+      <BarWidgetUI
+        data={DATA_MULTIPLE}
+        xAxisData={X_AXIS_DATA}
+        yAxisData={Y_AXIS_DATA}
+        labels={LABELS}
+        onSelectedBarsChange={() => {}}
+        {...props}
+      />
+    );
+
   test('all selected', () => {
     render(<Widget />);
     expect(screen.getByText(/All selected/)).toBeInTheDocument();
+  });
+
+  test('renders with vertical false and stacked false', () => {
+    render(<Widget vertical={false} stacked={false} />);
+  });
+
+  test('renders with custom colors', () => {
+    render(<Widget colors={['#fff']} />);
+  });
+
+  test('renders with multiple rows', () => {
+    render(<WidgetMultiple />);
   });
 
   test('re-render with different data', () => {
