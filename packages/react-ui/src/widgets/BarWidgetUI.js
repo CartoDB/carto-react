@@ -138,7 +138,7 @@ function BarWidgetUI(props) {
       axisLabel: {
         margin: 0,
         verticalAlign: 'bottom',
-        padding: [0, 0, theme.typography.charts.fontSize, 0],
+        padding: [0, 0, theme.typography.charts.fontSize, vertical ? 0 : 35],
         show: true,
         showMaxLabel: true,
         showMinLabel: false,
@@ -199,9 +199,7 @@ function BarWidgetUI(props) {
             })
           };
         }),
-        ...(stacked
-          ? { barMinWidth: '95%', stack: 'total', barCategoryGap: 1 }
-          : { barGap: 0.025 }),
+        ...(stacked && { stack: 'total' }),
         ...(!IS_TOUCH_SCREEN && {
           emphasis: {
             focus: 'series',
@@ -219,7 +217,7 @@ function BarWidgetUI(props) {
       grid: {
         left: theme.spacing(0.5),
         top: theme.spacing(2),
-        right: theme.spacing(1),
+        right: vertical ? theme.spacing(0.5) : theme.spacing(5),
         bottom: theme.spacing(0),
         containLabel: true
       },
@@ -392,7 +390,7 @@ function useProcessProps(props, { selectedBars, setSelectedBars }) {
       (data.length <= 1 || (yAxisData.length && yAxisData.length <= 1)
         ? [theme.palette.secondary.main]
         : data.length === 2 || (yAxisData.length && yAxisData.length === 2)
-        ? [theme.palette.primary.main, theme.palette.secondary.main]
+        ? [theme.palette.secondary.light, theme.palette.secondary.dark]
         : Object.values(theme.palette.qualitative.bold || {})),
     [_colors, theme, data, yAxisData]
   );
