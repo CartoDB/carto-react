@@ -31,6 +31,19 @@ export type FormulaWidgetUI = {
   formatter?: Function;
 };
 
+export type HistogramWidgetUIData = number[];
+export type HistogramWidgetUI = {
+  data: HistogramWidgetUIData;
+  tooltip?: boolean;
+  tooltipFormatter?: Function;
+  xAxisFormatter?: Function;
+  yAxisFormatter?: Function;
+  dataAxis?: unknown[];
+  name?: string;
+  onSelectedBarsChange?: Function;
+  height?: number;
+};
+
 export type BarWidgetUIData = number[] | number[][];
 export type BarWidgetUI = {
   data: BarWidgetUIData;
