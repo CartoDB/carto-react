@@ -301,6 +301,12 @@ function CategoryWidgetUI(props) {
   );
 
   useEffect(() => {
+    if (selectedCategories.length === 0) {
+      setBlockedCategories([]);
+    }
+  }, [selectedCategories]);
+
+  useEffect(() => {
     if (data) {
       // Ranking
       if (order === CategoryWidgetUI.ORDER_TYPES.RANKING) {
