@@ -50,7 +50,7 @@ export function animateValues({ start, end, duration, drawFrame, requestRef }) {
     if (currentFrame < frames) {
       currentValues = currentValues.map((elem, i) => ({
         ...elem,
-        value: elem.value + steps[i]
+        value: Math.round(elem.value + steps[i])
       }));
       drawFrame(currentValues);
       currentFrame++;
