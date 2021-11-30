@@ -48,10 +48,14 @@ export function animateValues({ start, end, duration, drawFrame, requestRef }) {
 
   const animate = () => {
     if (currentFrame < frames) {
-      currentValues = currentValues.map((elem, i) => ({
-        ...elem,
-        value: Math.round(elem.value + steps[i])
-      }));
+      currentValues = currentValues.map((elem, i) => {
+        const value = Math.floor(elem.value + steps[i]);
+        const prevValue = i > 0 && Math.floor(elem.value + steps[i - 1]);
+        return {
+          ...elem,
+          value: value === prevValue ? end[i]?.value : value
+        };
+      });
       drawFrame(currentValues);
       currentFrame++;
       requestRef.current = requestAnimationFrame(animate);
