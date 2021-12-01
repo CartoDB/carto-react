@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix CategoryWidget values during animation [#230](https://github.com/CartoDB/carto-react/pull/230)
+
 ## 1.1.1 (2021-11-23)
 
 - Improve Widgets calculations sync with tiles [#223](https://github.com/CartoDB/carto-react/pull/223)
