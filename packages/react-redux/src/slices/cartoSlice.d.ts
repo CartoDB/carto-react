@@ -50,7 +50,6 @@ declare enum CartoActions {
   SET_BASEMAP = 'carto/setBasemap',
   ADD_FILTER = 'carto/addFilter',
   REMOVE_FILTER = 'carto/removeFilter',
-  REMOVE_FILTER_BY_OWNER = 'carto/removeFilterByOwner',
   CLEAR_FILTERS = 'carto/clearFilters',
   SET_VIEWPORT_FEATURES = 'carto/setViewportFeatures',
   REMOVE_VIEWPORT_FEATURES = 'carto/removeViewportFeatures',
@@ -114,13 +113,6 @@ export function removeFilter(
 ): {
   type: CartoActions.REMOVE_FILTER;
   payload: FilterCommonProps;
-};
-
-export function removeFilterByOwner(
-  arg: { id: string, owner: string }
-): {
-  type: CartoActions.REMOVE_FILTER_BY_OWNER;
-  payload: { id: string, owner: string };
 };
 
 export function clearFilters(
