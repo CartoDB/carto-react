@@ -34,7 +34,7 @@ describe('Sorting', () => {
       expect(applySorting(features, { sortBy: 'column1' })).toEqual(commonSortedFeatures);
     });
 
-    test('if sortBy is array of string', async () => {
+    test('if sortBy uses 2 columns', async () => {
       expect(applySorting(features, { sortBy: ['column1', 'column2'] })).toEqual(
         commonSortedFeatures
       );
