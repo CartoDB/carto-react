@@ -2,6 +2,8 @@
 
 ## Not released
 
+## 1.1.2 (2021-12-01)
+
 - Fix CategoryWidget values during animation [#230](https://github.com/CartoDB/carto-react/pull/230)
 - Remove lock in CategoryWidget if selected categories change [#231](https://github.com/CartoDB/carto-react/pull/231)
 - Refresh charts widgets when changing tooltip functions [#232](https://github.com/CartoDB/carto-react/pull/232)
