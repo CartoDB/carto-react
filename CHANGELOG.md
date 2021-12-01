@@ -3,6 +3,7 @@
 ## Not released
 
 - Fix CategoryWidget values during animation [#230](https://github.com/CartoDB/carto-react/pull/230)
+- Remove lock in CategoryWidget if selected categories change [#231](https://github.com/CartoDB/carto-react/pull/231)
 
 ## 1.1.1 (2021-11-23)
 
