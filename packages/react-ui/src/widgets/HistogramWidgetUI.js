@@ -5,7 +5,7 @@ import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core'
 import {
   applyChartFilter,
   clearFilter,
-  isDataEqual,
+  areChartPropsEqual,
   disableSerie,
   getChartSerie
 } from './utils/chartUtils';
@@ -180,7 +180,8 @@ function __generateSerie(name, data, selectedBars = [], animation, theme) {
 
 const EchartsWrapper = React.memo(
   ReactEcharts,
-  ({ option: optionPrev }, { option: optionNext }) => isDataEqual(optionPrev, optionNext)
+  ({ option: optionPrev }, { option: optionNext }) =>
+    areChartPropsEqual(optionPrev, optionNext)
 );
 function HistogramWidgetUI(props) {
   const theme = useTheme();
