@@ -10,55 +10,59 @@ const options = {
 export default options;
 
 const Template = (args) => {
-  if (args.yAxisData && !Array.isArray(args.yAxisData)) {
-    args.yAxisData = [];
+  if (args.series && !Array.isArray(args.series)) {
+    args.series = [];
   }
 
   return <BarWidgetUI {...args} />;
 };
 
-const data = [100, 300, 500, 250, 50, 200, 100];
+const yAxisData = [100, 300, 500, 250, 50, 200];
 
-const xAxisData = [100, 200, 300, 400, 500, 600];
+const xAxisData = yAxisData.map((_, idx) => `Store ${idx + 1}`);
 
 export const Empty = Template.bind({});
 const EmptyProps = {
-  data,
+  yAxisData,
   xAxisData,
-  selectedBars: []
+  selectedBars: [],
+  series: ['Visitors']
 };
 Empty.args = EmptyProps;
 Empty.parameters = buildReactPropsAsString(EmptyProps, 'BarWidgetUI');
 
 export const Simple = Template.bind({});
 const SimpleProps = {
-  data,
+  yAxisData,
   xAxisData
 };
 Simple.args = SimpleProps;
 Simple.parameters = buildReactPropsAsString(SimpleProps, 'BarWidgetUI');
 
+export const SimpleWithSerieName = Template.bind({});
+const SimpleWithSerieNameProps = {
+  yAxisData,
+  xAxisData,
+  series: ['Visitors']
+};
+SimpleWithSerieName.args = SimpleWithSerieNameProps;
+SimpleWithSerieName.parameters = buildReactPropsAsString(
+  SimpleWithSerieNameProps,
+  'BarWidgetUI'
+);
+
 export const Horizontal = Template.bind({});
 const HorizontalProps = {
-  data,
+  yAxisData,
   xAxisData,
   vertical: false
 };
 Horizontal.args = HorizontalProps;
 Horizontal.parameters = buildReactPropsAsString(HorizontalProps, 'BarWidgetUI');
 
-export const xAxisFormatter = Template.bind({});
-const xAxisFormatterProps = {
-  data,
-  xAxisData,
-  xAxisFormatter: (v) => `${v / 1000}k $`
-};
-xAxisFormatter.args = xAxisFormatterProps;
-xAxisFormatter.parameters = buildReactPropsAsString(xAxisFormatterProps, 'BarWidgetUI');
-
 export const yAxisFormatter = Template.bind({});
 const yAxisFormatterProps = {
-  data,
+  yAxisData,
   xAxisData,
   yAxisFormatter: (v) => `${v / 1000}k $`
 };
@@ -67,7 +71,7 @@ yAxisFormatter.parameters = buildReactPropsAsString(yAxisFormatterProps, 'BarWid
 
 export const Filtered = Template.bind({});
 const FilteredProps = {
-  data,
+  yAxisData,
   xAxisData,
   selectedBars: [0],
   onSelectedBarsChange: (evt) => {}
@@ -80,19 +84,18 @@ const multipleData = [
   [100, 300, 500, 250, 50, 200, 100],
   [100, 300, 500, 250, 50, 200, 100]
 ];
-const multipleXAxisData = [100, 200, 300, 400, 500, 600];
 export const Multiple = Template.bind({});
 const MultipleProps = {
-  data: multipleData,
-  xAxisData: multipleXAxisData
+  yAxisData: multipleData,
+  xAxisData
 };
 Multiple.args = MultipleProps;
 Multiple.parameters = buildReactPropsAsString(MultipleProps, 'BarWidgetUI');
 
 export const MultipleHorizontal = Template.bind({});
 const MultipleHorizontalProps = {
-  data: multipleData,
-  xAxisData: multipleXAxisData,
+  yAxisData: multipleData,
+  xAxisData,
   vertical: false
 };
 MultipleHorizontal.args = MultipleHorizontalProps;
@@ -101,12 +104,12 @@ MultipleHorizontal.parameters = buildReactPropsAsString(
   'BarWidgetUI'
 );
 
-const multipleYAxisData = ['First', 'Second'];
+const multipleSeries = ['First', 'Second'];
 export const MultipleWithYAxisData = Template.bind({});
 const MultipleWithYAxisDataProps = {
-  data: multipleData,
-  xAxisData: multipleXAxisData,
-  yAxisData: multipleYAxisData
+  yAxisData: multipleData,
+  xAxisData,
+  series: multipleSeries
 };
 MultipleWithYAxisData.args = MultipleWithYAxisDataProps;
 MultipleWithYAxisData.parameters = buildReactPropsAsString(
@@ -114,13 +117,13 @@ MultipleWithYAxisData.parameters = buildReactPropsAsString(
   'BarWidgetUI'
 );
 
-const dirtyMultipleYAxisData = ['pop_m', 'pop_f'];
+const dirtySeries = ['pop_m', 'pop_f'];
 const labels = { pop_m: 'Población hombre', pop_f: 'Población mujer' };
 export const MultipleWithYAxisDataAndLabels = Template.bind({});
 const MultipleWithYAxisDataAndLabelsProps = {
-  data: multipleData,
-  xAxisData: multipleXAxisData,
-  yAxisData: dirtyMultipleYAxisData,
+  yAxisData: multipleData,
+  xAxisData,
+  series: dirtySeries,
   labels
 };
 MultipleWithYAxisDataAndLabels.args = MultipleWithYAxisDataAndLabelsProps;
@@ -131,9 +134,9 @@ MultipleWithYAxisDataAndLabels.parameters = buildReactPropsAsString(
 
 export const MultipleBars = Template.bind({});
 const MultipleBarsProps = {
-  data: multipleData,
-  xAxisData: multipleXAxisData,
-  yAxisData: multipleYAxisData,
+  yAxisData: multipleData,
+  xAxisData,
+  series: multipleSeries,
   stacked: false
 };
 MultipleBars.args = MultipleBarsProps;
@@ -141,9 +144,9 @@ MultipleBars.parameters = buildReactPropsAsString(MultipleBarsProps, 'BarWidgetU
 
 export const MultipleBarsHorizontal = Template.bind({});
 const MultipleBarsHorizontalProps = {
-  data: multipleData,
-  xAxisData: multipleXAxisData,
-  yAxisData: multipleYAxisData,
+  yAxisData: multipleData,
+  xAxisData,
+  series: multipleSeries,
   stacked: false,
   vertical: false
 };

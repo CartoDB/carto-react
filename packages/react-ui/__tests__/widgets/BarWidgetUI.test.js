@@ -12,26 +12,26 @@ describe('BarWidgetUI', () => {
     mockEcharts.destroy();
   });
 
-  const DATA = [1, 2, 3];
+  const Y_AXIS_DATA = [1, 2, 3];
 
   const X_AXIS_DATA = ['column_1', 'column_2', 'column_3'];
 
   const Widget = (props) =>
     getMaterialUIContext(
       <BarWidgetUI
-        data={DATA}
+        yAxisData={Y_AXIS_DATA}
         xAxisData={X_AXIS_DATA}
         onSelectedBarsChange={() => {}}
         {...props}
       />
     );
 
-  const DATA_MULTIPLE = [
+  const Y_AXIS_DATA_MULTIPLE = [
     [1, 2, 3],
     [1, 2, 3]
   ];
 
-  const Y_AXIS_DATA = ['Row 1', 'Row 2'];
+  const SERIES = ['Row 1', 'Row 2'];
 
   const LABELS = {
     4: 'Column 1',
@@ -42,9 +42,9 @@ describe('BarWidgetUI', () => {
   const WidgetMultiple = (props) =>
     getMaterialUIContext(
       <BarWidgetUI
-        data={DATA_MULTIPLE}
+        yAxisData={Y_AXIS_DATA_MULTIPLE}
         xAxisData={X_AXIS_DATA}
-        yAxisData={Y_AXIS_DATA}
+        series={SERIES}
         labels={LABELS}
         onSelectedBarsChange={() => {}}
         {...props}
@@ -68,11 +68,11 @@ describe('BarWidgetUI', () => {
     render(<WidgetMultiple />);
   });
 
-  test('re-render with different data', () => {
+  test('re-render with different yAxisData', () => {
     const { rerender } = render(<Widget />);
 
     rerender(<Widget />);
-    rerender(<Widget data={[...DATA, 1]} />);
+    rerender(<Widget yAxisData={[...Y_AXIS_DATA, 1]} />);
   });
 
   test('with selected bars', () => {

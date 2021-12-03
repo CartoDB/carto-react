@@ -70,8 +70,7 @@ export function defaultTooltipFormatter(xAxisFormatter, yAxisFormatter, params) 
       let message = '';
       message += `${processFormatterRes(xAxisFormatter(params[0].axisValueLabel))}`;
       params.forEach((param) => {
-        const seriesName =
-          params.length > 1 && param.seriesName ? param.seriesName + ': ' : '';
+        const seriesName = param.seriesName ? param.seriesName + ': ' : '';
         const value = processFormatterRes(yAxisFormatter(param.value));
         const item = `<div style="margin-left: 8px; display: inline">${seriesName}${value}${
           param.data.unit || ''
