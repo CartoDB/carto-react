@@ -1,4 +1,7 @@
-import { isDataEqual, applyChartFilter } from '../../../src/widgets/utils/chartUtils';
+import {
+  areChartPropsEqual,
+  applyChartFilter
+} from '../../../src/widgets/utils/chartUtils';
 
 describe('chart utils', () => {
   describe('isDataEqual', () => {
@@ -9,13 +12,13 @@ describe('chart utils', () => {
     test('should be equal', () => {
       const prevData = buildMockedData(1);
       const nextData = buildMockedData(1);
-      expect(isDataEqual(prevData, nextData)).toBe(true);
+      expect(areChartPropsEqual(prevData, nextData)).toBe(true);
     });
 
     test('should not be equal', () => {
       const prevData = buildMockedData(1);
       const nextData = buildMockedData(2);
-      expect(isDataEqual(prevData, nextData)).toBe(false);
+      expect(areChartPropsEqual(prevData, nextData)).toBe(false);
     });
   });
 

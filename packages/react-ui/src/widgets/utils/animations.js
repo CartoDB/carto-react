@@ -48,10 +48,17 @@ export function animateValues({ start, end, duration, drawFrame, requestRef }) {
 
   const animate = () => {
     if (currentFrame < frames) {
-      currentValues = currentValues.map((elem, i) => ({
-        ...elem,
-        value: elem.value + steps[i]
-      }));
+      currentValues = currentValues.map((elem, i) => {
+        // We use Math.floor to avoid displaying a long list of decimals during animation
+        // this happens especially when we don't have a formatting function for the widget
+        // TODO If values are between 0 and 1 we would not have animation effect
+        const value = Math.floor(elem.value + steps[i]);
+        const prevValue = i > 0 && Math.floor(elem.value + steps[i - 1]);
+        return {
+          ...elem,
+          value: value === prevValue ? end[i]?.value : value
+        };
+      });
       drawFrame(currentValues);
       currentFrame++;
       requestRef.current = requestAnimationFrame(animate);
