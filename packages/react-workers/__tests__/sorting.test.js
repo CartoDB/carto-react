@@ -25,35 +25,39 @@ const commonSortedFeatures2 = [
 ];
 
 describe('Sorting', () => {
+  test('should correctly throw error when sortOptions are invalid', () => {
+    expect(() => applySorting(features, { sortBy: 12345 })).toThrowError(Error);
+  });
+
   describe('should correctly understand sortOptions', () => {
-    test('if undefined', async () => {
+    test('if undefined', () => {
       expect(applySorting(features)).toEqual(features);
     });
 
-    test('if sortBy is string', async () => {
+    test('if sortBy is string', () => {
       expect(applySorting(features, { sortBy: 'column1' })).toEqual(commonSortedFeatures);
     });
 
-    test('if sortBy uses 2 columns', async () => {
+    test('if sortBy uses 2 columns', () => {
       expect(applySorting(features, { sortBy: ['column1', 'column2'] })).toEqual(
         commonSortedFeatures
       );
     });
 
-    test('if sortBy is array of arrays', async () => {
+    test('if sortBy is array of arrays', () => {
       expect(applySorting(features, { sortBy: [['column1'], ['column2']] })).toEqual(
         commonSortedFeatures
       );
     });
   });
   describe('should correctly sort', () => {
-    test('if sortByDirection is used', async () => {
+    test('if sortByDirection is used', () => {
       expect(
         applySorting(features, { sortBy: 'column1', sortByDirection: 'desc' })
       ).toEqual(commonSortedFeatures2);
     });
 
-    test('if sort direction is applied inside sortBy', async () => {
+    test('if sort direction is applied inside sortBy', () => {
       expect(applySorting(features, { sortBy: [['column1', 'desc']] })).toEqual(
         commonSortedFeatures2
       );
@@ -63,7 +67,7 @@ describe('Sorting', () => {
       ).toEqual(commonSortedFeatures2);
     });
 
-    test('if sort direction is applied inside sortBy and sortByDirection is also used, sortBy has priority', async () => {
+    test('if sort direction is applied inside sortBy and sortByDirection is also used, sortBy has priority', () => {
       expect(
         applySorting(features, { sortBy: [['column1', 'desc']], sortByDirection: 'asc' })
       ).toEqual(commonSortedFeatures2);

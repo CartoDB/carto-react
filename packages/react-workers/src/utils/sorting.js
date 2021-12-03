@@ -7,13 +7,19 @@ import { firstBy } from 'thenby';
  * @param {string | string[] | object[]} [sortOptions.sortBy] - One or more columns to sort by
  * @param {string} [sortOptions.sortByDirection] - Direction by the columns will be sorted
  */
-export function applySorting(features, { sortBy = [], sortByDirection = 'asc' } = {}) {
+export function applySorting(features, { sortBy, sortByDirection = 'asc' } = {}) {
+  // If sortBy is undefined, pass all features
+  if (sortBy === undefined) {
+    return features;
+  }
+
+  // sortOptions exists, but are bad formatted
   const isValidSortBy =
     (Array.isArray(sortBy) && sortBy.length) || // sortBy can be an array of columns
     typeof sortBy === 'string'; // or just one column
 
   if (!isValidSortBy) {
-    return features;
+    throw new Error('Sorting options are bad formatted');
   }
 
   const sortFn = createSortFn({
@@ -35,7 +41,7 @@ function createSortFn({ sortBy, sortByDirection }) {
   for (let sortOptions of othersSortOptions) {
     sortFn = sortFn.thenBy(...sortOptions);
   }
-  
+
   return sortFn;
 }
 
