@@ -28,11 +28,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function BarWidgetUI(props) {
-  const theme = useTheme();
-  const classes = useStyles();
-
   // Due to BarWidgetUI nature, its props admits multiple shapes.
-  // In useProcessProps we convert those multiple shapes in a common one
+  // With useProcessedProps we convert those multiple shapes in a common one
   // to avoid complex logic in the component.
   const {
     yAxisData,
@@ -50,7 +47,10 @@ function BarWidgetUI(props) {
     vertical,
     height,
     animation
-  } = useProcessProps(props);
+  } = useProcessedProps(props);
+
+  const theme = useTheme();
+  const classes = useStyles();
 
   // Tooltip
   const tooltipOptions = useMemo(
@@ -347,7 +347,7 @@ export default BarWidgetUI;
 
 // Aux
 
-function useProcessProps(props) {
+function useProcessedProps(props) {
   const theme = useTheme();
   const {
     labels,
@@ -372,16 +372,18 @@ function useProcessProps(props) {
 
   // Colors
   const colors = useMemo(() => {
-    // If colors is passed as props
+    // Use colors props if exists
     if (_colors) return _colors;
 
-    //
-    if (yAxisData.length <= 1 || (series.lenght && series.length <= 1))
+    // Use secondary.main, if yAxisData is flat or series has a unique element
+    if (yAxisData.length <= 1 || (series.lenght && series.length === 1))
       return [theme.palette.secondary.main];
 
+    // Use secondary light and dark, if yAxisData is bidimensional or series has two elements
     if (yAxisData.length === 2 || (series.length && series.length === 2))
       return [theme.palette.secondary.light, theme.palette.secondary.dark];
 
+    // Use qualitate palette with mutidimensional bar chart
     return Object.values(theme.palette.qualitative.bold || {});
   }, [_colors, theme, yAxisData, series]);
 
