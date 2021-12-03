@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Not released
+- Histogram takes into account null values in filters for selected bars [#234](https://github.com/CartoDB/carto-react/pull/234)
 
 ## 1.1.2 (2021-12-01)
 
