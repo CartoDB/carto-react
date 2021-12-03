@@ -1,8 +1,15 @@
 import { processFormatterRes } from './formatterUtils';
 
-export function isDataEqual(optionPrev, optionNext) {
+export function areChartPropsEqual(optionPrev, optionNext) {
+  const tooltipFormatterPrev = optionPrev?.tooltip?.formatter;
+  const tooltipFormatterNext = optionNext.tooltip?.formatter;
   const dataPrev = optionPrev.series[0]?.data;
   const dataNext = optionNext.series[0].data;
+
+  if (tooltipFormatterPrev !== tooltipFormatterNext) {
+    return false;
+  }
+
   if (dataPrev && dataNext && dataPrev.length === dataNext.length) {
     return !dataNext.some(({ value }, index) => {
       return !(value === dataPrev[index].value);

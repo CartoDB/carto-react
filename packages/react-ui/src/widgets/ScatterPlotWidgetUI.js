@@ -2,7 +2,7 @@ import { useTheme } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useRef, useState, useEffect } from 'react';
 import ReactEcharts from 'echarts-for-react';
-import { isDataEqual } from './utils/chartUtils';
+import { areChartPropsEqual } from './utils/chartUtils';
 
 function __generateDefaultConfig(
   { tooltipFormatter, xAxisFormatter = (v) => v, yAxisFormatter = (v) => v },
@@ -67,7 +67,8 @@ function __generateSerie({ name, data, animation }) {
 
 const EchartsWrapper = React.memo(
   ReactEcharts,
-  ({ option: optionPrev }, { option: optionNext }) => isDataEqual(optionPrev, optionNext)
+  ({ option: optionPrev }, { option: optionNext }) =>
+    areChartPropsEqual(optionPrev, optionNext)
 );
 
 function ScatterPlotWidgetUI({
