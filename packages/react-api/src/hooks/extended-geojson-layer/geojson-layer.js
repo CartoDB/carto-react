@@ -18,34 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import { POINT_LAYER, LINE_LAYER, POLYGON_LAYER, getDefaultProps } from './sub-layer-map';
 import { GeoJsonLayer } from '@deck.gl/layers';
-
 import { createLayerPropsFromBinary } from './geojson-layer-props';
-
-const defaultProps = {
-  ...getDefaultProps(POINT_LAYER.circle),
-  ...getDefaultProps(POINT_LAYER.icon),
-  ...getDefaultProps(POINT_LAYER.text),
-  ...getDefaultProps(LINE_LAYER),
-  ...getDefaultProps(POLYGON_LAYER),
-
-  // Overwrite sub layer defaults
-  stroked: true,
-  filled: true,
-  extruded: false,
-  wireframe: false,
-  iconAtlas: { type: 'object', value: null },
-  iconMapping: { type: 'object', value: {} },
-  getIcon: { type: 'accessor', value: (f) => f.properties.icon },
-  getText: { type: 'accessor', value: (f) => f.properties.text },
-
-  // Self props
-  pointType: 'circle',
-
-  // TODO: deprecated, remove in v9
-  getRadius: { deprecatedFor: 'getPointRadius' },
-};
 
 export default class ExtendedGeoJsonLayer extends GeoJsonLayer {
   _updateStateBinary({ props, changeFlags }) {
@@ -55,4 +29,4 @@ export default class ExtendedGeoJsonLayer extends GeoJsonLayer {
 }
 
 ExtendedGeoJsonLayer.layerName = 'ExtendedGeoJsonLayer';
-ExtendedGeoJsonLayer.defaultProps = defaultProps;
+ExtendedGeoJsonLayer.defaultProps = GeoJsonLayer.defaultProps;

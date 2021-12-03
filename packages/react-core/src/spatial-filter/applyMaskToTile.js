@@ -1,72 +1,75 @@
 import asTileCoords from '../projections/asTileCoords';
-import { maskLinesBinaryData } from './lines';
-import { maskPointsBinaryData } from './points';
-import { maskPolygonsBinaryData } from './polygons';
+import { maskLinesBinaryDataToDFE } from './lines';
+import { maskPointsBinaryDataToDFE } from './points';
+import { maskPolygonsBinaryDataToDFE } from './polygons';
 
+const EMPTY_ANALYSED_FEATURES = {
+  points: [[], []],
+  polygons: [[], []],
+  lines: [[], []]
+};
+
+// Instead of change tile data, add getFilterValue attribute to tile content.
+// Return tile content!!
 export default function applyMaskToTile(
   tile,
   maskGeometry,
-  { uniqueIdProperty, layerUniqueIdsIn = [], setUniqueIdsByTile } = {}
+  { uniqueIdProperty = 'cartodb_id', analysedFeatures = EMPTY_ANALYSED_FEATURES } = {}
 ) {
   const tileId = `${tile.x}-${tile.y}-${tile.z}`;
-  const maskInTileCoords = asTileCoords(maskGeometry, tile.bbox);
+  const maskGeometryInTileCoords = asTileCoords(maskGeometry, tile.bbox);
+  const { content: data } = tile;
 
-  let polygonsData;
-  if (tile.content?.polygons) {
-    const [_polygonsData, uniqueFeatureIds] = maskPolygonsBinaryData(
-      tile.content.polygons,
-      maskInTileCoords,
-      { uniqueIdProperty, layerUniqueIdsIn }
-    );
-    polygonsData = _polygonsData;
-
-    if (uniqueFeatureIds.length) {
-      setUniqueIdsByTile((oldState) => ({
-        ...oldState,
-        [tileId]: uniqueFeatureIds
-      }));
+  const polygonsFilterRes = maskPolygonsBinaryDataToDFE(
+    data.polygons,
+    maskGeometryInTileCoords,
+    {
+      uniqueIdProperty,
+      analysedPolygonsFeatures: analysedFeatures.polygons
     }
-  }
+  );
 
-  let linesData;
-  if (tile.content?.lines) {
-    const [_linesData, uniqueFeatureIds] = maskLinesBinaryData(
-      tile.content.lines,
-      maskInTileCoords,
-      { uniqueIdProperty, layerUniqueIdsIn }
-    );
-    linesData = _linesData;
+  // const [linesFilterRes, uniqueLinesFeatureIds] = maskLinesBinaryDataToDFE(
+  //   data.lines,
+  //   maskGeometryInTileCoords,
+  //   {
+  //     uniqueIdProperty,
+  //     analysedLinesFeatures: analysedFeatures.lines
+  //   }
+  // );
 
-    if (uniqueFeatureIds.length) {
-      setUniqueIdsByTile((oldState) => ({
-        ...oldState,
-        [tileId]: uniqueFeatureIds
-      }));
-    }
-  }
+  // if (uniqueLinesFeatureIds.length) {
+  //   setUniqueIdsByTile((oldState) => ({
+  //     ...oldState,
+  //     [tileId]: uniqueLinesFeatureIds
+  //   }));
+  // }
 
-  let newTile = {
-    ...tile,
-    ...(tile.content && {
-      content: {
-        ...tile.content,
-        ...(tile.content.points && {
-          points: maskPointsBinaryData(tile.content.points, maskInTileCoords)
-        }),
-        ...(tile.content.lines && {
-          lines: linesData
-        }),
-        ...(tile.content.polygons && {
-          polygons: polygonsData
-        })
+  const pointsFilterRes = maskPointsBinaryDataToDFE(
+    data.points,
+    maskGeometryInTileCoords,
+    { uniqueIdProperty, analysedPointFeatures: analysedFeatures.points }
+  );
+
+  return {
+    ...data,
+    points: {
+      ...data.points,
+      attributes: {
+        getFilterValue: { value: pointsFilterRes, size: 1 }
       }
-    })
+    },
+    lines: {
+      ...data.lines,
+      attributes: {
+        getFilterValue: { value: new Uint16Array(), size: 1 }
+      }
+    },
+    polygons: {
+      ...data.polygons,
+      attributes: {
+        getFilterValue: { value: polygonsFilterRes, size: 1 }
+      }
+    }
   };
-
-  // Modify original tile to use it in onViewportLoad / workers
-  if (newTile) {
-    tile.filteredContent = { ...newTile.content };
-  }
-
-  return newTile;
 }

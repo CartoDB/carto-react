@@ -1,77 +1,10 @@
 import turfIntersects from '@turf/boolean-intersects';
 import { concatTypedArrays, convertCoordinates } from './helpers';
 
-export function maskPolygonsBinaryData(
-  currentPolygonsData,
-  maskGeometry,
-  { uniqueIdProperty, layerUniqueIdsIn = [] }
-) {
-  let newPolygonsData = createEmptyPolygonsData(currentPolygonsData);
-
-  const uniqueIdsIn = new Set();
-  const featureIdsIn = new Set();
-
-  let idx = 0;
-  for (let currentLine of currentPolygonsData.primitivePolygonIndices.value.slice(
-    0,
-    -1
-  )) {
-    const featureId = currentPolygonsData.featureIds.value[currentLine];
-    const uniqueId =
-      currentPolygonsData.numericProps[uniqueIdProperty]?.value[currentLine] || // uniqueId can be a number
-      currentPolygonsData.properties[featureId][uniqueIdProperty]; // or a string
-
-    // featureIdsIn.has(featureId) --> for multiline, if one of the lines is already IN, do not analyse any other
-    // layerUniqueIdsIn.indexOf(uniqueId) !== -1 --> for splitted lines between multiple tiles
-    let doesIntersects =
-      featureIdsIn.has(featureId) || layerUniqueIdsIn.indexOf(uniqueId) !== -1;
-    if (!doesIntersects) {
-      const nextLine = currentPolygonsData.primitivePolygonIndices.value[idx + 1];
-      doesIntersects = turfIntersects(
-        {
-          type: 'Polygon',
-          coordinates: [
-            convertCoordinates(
-              currentPolygonsData.positions.value.subarray(currentLine * 2, nextLine * 2)
-            )
-          ]
-        },
-        maskGeometry
-      );
-
-      if (doesIntersects) {
-        uniqueIdsIn.add(uniqueId);
-        featureIdsIn.add(featureId);
-      }
-    }
-
-    if (doesIntersects) {
-      addPolygonIndiceToPolygonsData(newPolygonsData, currentPolygonsData, idx);
-    }
-
-    idx++;
-  }
-
-  if (newPolygonsData.featureIds.value.length) {
-    newPolygonsData.properties = currentPolygonsData.properties;
-    ['polygonIndices', 'primitivePolygonIndices'].forEach(
-      (key) =>
-        (newPolygonsData[key].value = concatTypedArrays(
-          newPolygonsData[key].value,
-          newPolygonsData[key].value.constructor.of(
-            newPolygonsData.featureIds.value.length
-          )
-        ))
-    );
-  }
-
-  return [newPolygonsData, Array.from(uniqueIdsIn)];
-}
-
 export function maskPolygonsBinaryDataToDFE(
   currentPolygonsData,
   filteringGeometry,
-  { uniqueIdProperty, layerUniqueIdsIn = [] }
+  { uniqueIdProperty, analysedPolygonsFeatures }
 ) {
   const res = new Uint16Array(currentPolygonsData.properties.length);
 
@@ -93,9 +26,9 @@ export function maskPolygonsBinaryDataToDFE(
       currentPolygonsData.properties[featureId][uniqueIdProperty]; // or a string
 
     // featureIdsIn.has(featureId) --> for multiline, if one of the lines is already IN, do not analyse any other
-    // layerUniqueIdsIn.indexOf(uniqueId) !== -1 --> for splitted lines between multiple tiles
+    // analysedPolygonsFeatures.get(uniqueId) --> for splitted lines between multiple tiles
     let doesIntersects =
-      featureIdsIn.has(featureId) || layerUniqueIdsIn.indexOf(uniqueId) !== -1;
+      featureIdsIn.has(featureId) || analysedPolygonsFeatures.get(uniqueId);
     if (!doesIntersects) {
       const nextLine = currentPolygonsData.primitivePolygonIndices.value[idx + 1];
       doesIntersects = turfIntersects(
@@ -116,6 +49,8 @@ export function maskPolygonsBinaryDataToDFE(
       }
     }
 
+    analysedPolygonsFeatures.set(uniqueId, doesIntersects);
+
     if (doesIntersects) {
       res[featureId] = 1;
     } else {
@@ -125,10 +60,7 @@ export function maskPolygonsBinaryDataToDFE(
     idx++;
   }
 
-  return [
-    currentPolygonsData.featureIds.value.map((id) => res[id]),
-    Array.from(uniqueIdsIn)
-  ];
+  return currentPolygonsData.featureIds.value.map((id) => res[id]);
 }
 
 function addPolygonIndiceToPolygonsData(

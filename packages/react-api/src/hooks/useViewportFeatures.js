@@ -5,6 +5,7 @@ import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { Layer } from '@deck.gl/core';
+import { getTileId } from '../utils/tileUtils';
 
 function isGeoJSONLayer(source) {
   return isV3(source) && [MAP_TYPES.QUERY, MAP_TYPES.TABLE].includes(source?.type);
@@ -14,18 +15,16 @@ function isV3(source) {
   return source?.credentials.apiVersion === API_VERSIONS.V3;
 }
 
-const EMPTY_OBJ = {};
-
 export default function useViewportFeatures(
   source,
   uniqueIdProperty,
-  debounceTimeout = 500
+  debounceTimeout = 500,
+  filtersBuffer
 ) {
   const dispatch = useDispatch();
   const viewport = useSelector((state) => state.carto.viewport);
   const [tiles, setTiles] = useState([]);
   const [isGeoJSONLoaded, setGeoJSONLoaded] = useState(false);
-  const [filtersBuffer, setFiltersBuffer] = useState(EMPTY_OBJ);
   const debounceId = useRef(null);
 
   const clearDebounce = () => {
@@ -59,7 +58,7 @@ export default function useViewportFeatures(
       const tilesCleaned = tiles.map(({ x, y, z, data, isVisible, bbox }) => ({
         data,
         // Generalize Tile ID,
-        filterBuffer: filtersBuffer[`${x}-${y}-${z}`],
+        filterBuffer: filtersBuffer[getTileId({ x, y, z })],
         isVisible,
         bbox
       }));
@@ -184,5 +183,5 @@ export default function useViewportFeatures(
     return Layer.defaultProps.fetch.value(arg1, arg2);
   }, []);
 
-  return [onViewportLoad, onDataLoad, fetch, filtersBuffer, setFiltersBuffer];
+  return [onViewportLoad, onDataLoad, fetch];
 }
