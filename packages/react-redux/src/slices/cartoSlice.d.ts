@@ -104,7 +104,7 @@ export function setBasemap(
 export function addFilter(
   filter: Filter
 ): {
-  type: CartoActions.ADD_LAYER;
+  type: CartoActions.ADD_FILTER;
   payload: Filter;
 };
 
