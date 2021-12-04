@@ -2,12 +2,13 @@ import {
   viewportFeaturesBinary,
   viewportFeaturesGeoJSON,
   aggregationFunctions,
-  _buildFeatureFilter,
+  _applyFilters,
   histogram,
   scatterPlot,
   groupValuesByColumn,
   groupValuesByDateColumn
 } from '@carto/react-core';
+import { applySorting } from '../utils/sorting';
 import { Methods } from '../workerMethods';
 
 let currentViewportFeatures;
@@ -32,6 +33,9 @@ onmessage = ({ data: { method, ...params } }) => {
       break;
     case Methods.VIEWPORT_FEATURES_TIME_SERIES:
       getTimeSeries(params);
+      break;
+    case Methods.VIEWPORT_FEATURES_RAW_FEATURES:
+      getRawFeatures(params);
       break;
     case Methods.LOAD_GEOJSON_FEATURES:
       loadGeoJSONFeatures(params);
@@ -144,8 +148,36 @@ function getTimeSeries({ filters, column, stepSize, operation, operationColumn }
   postMessage({ result });
 }
 
-function getFilteredFeatures(filters) {
-  return !Object.keys(currentViewportFeatures).length
-    ? currentViewportFeatures
-    : currentViewportFeatures.filter(_buildFeatureFilter({ filters }));
+// See sorting details in utils/sorting.js
+function getRawFeatures({
+  filters,
+  limit = 10,
+  page = 1,
+  sortBy = [],
+  sortByDirection = 'asc'
+}) {
+  let data = [];
+  let numberPages = 0;
+
+  if (currentViewportFeatures) {
+    data = applySorting(getFilteredFeatures(filters), {
+      sortBy,
+      sortByDirection
+    });
+
+    if (limit) {
+      numberPages = Math.ceil(data.length / limit);
+      data = applyPagination(data, { limit, page });
+    }
+  }
+
+  postMessage({ result: { data, currentPage: page, pages: numberPages } });
+}
+
+function applyPagination (features, { limit, page }) {
+  return features.slice(limit * Math.max(0, page - 1), limit * Math.max(1, page));
+}
+
+function getFilteredFeatures(filters = {}) {
+  return _applyFilters(currentViewportFeatures, filters);
 }
