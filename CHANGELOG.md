@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Return raw feature data from workers [#225](https://github.com/CartoDB/carto-react/pull/225)
+
 ## 1.1.2 (2021-12-01)
 
 - Fix CategoryWidget values during animation [#230](https://github.com/CartoDB/carto-react/pull/230)

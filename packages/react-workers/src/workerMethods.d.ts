@@ -5,4 +5,5 @@ export enum Methods {
   VIEWPORT_FEATURES_SCATTERPLOT = 'viewportFeaturesScatterPlot',
   VIEWPORT_FEATURES_TIME_SERIES = 'viewportFeaturesTimeSeries',
   VIEWPORT_FEATURES_CATEGORY = 'viewportFeaturesCategory',
+  VIEWPORT_FEATURES_RAW_FEATURES = 'viewportFeaturesRawFeatures'
 }
