@@ -24,7 +24,10 @@ export {
   filtersToSQL as _filtersToSQL,
   getApplicableFilters as _getApplicableFilters
 } from './filters/FilterQueryBuilder';
-export { buildFeatureFilter as _buildFeatureFilter } from './filters/Filter';
+export {
+  buildFeatureFilter as _buildFeatureFilter,
+  applyFilters as _applyFilters
+} from './filters/Filter';
 export { viewportFeatures } from './filters/viewportFeatures';
 export { viewportFeaturesBinary } from './filters/viewportFeaturesBinary';
 export { viewportFeaturesGeoJSON } from './filters/viewportFeaturesGeoJSON';
