@@ -1,6 +1,6 @@
 import { _applyMaskToTile } from '@carto/react-core/';
 import { selectMask } from '@carto/react-redux';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getTileId } from '../utils/tileUtils';
 
@@ -17,13 +17,13 @@ export default function useSpatialFilter(
   source,
   { renderSubLayers: _renderSubLayers, uniqueIdProperty = 'cartodb_id' }
 ) {
+  const { current: analysedFeatures } = useRef(EMPTY_ANALYSED_FEATURES);
   const maskGeometry = useSelector((state) => selectMask(state, source?.id));
 
   const [filtersBuffer, setFiltersBuffer] = useState(EMPTY_OBJ);
-  const [analysedFeatures, setAnalysedFeatures] = useState(EMPTY_ANALYSED_FEATURES);
 
   const debouncedSetFiltersBuffer = useCallback(
-    gradualDebounce(setFiltersBuffer, 500),
+    gradualDebounce(setFiltersBuffer, 50),
     []
   );
 

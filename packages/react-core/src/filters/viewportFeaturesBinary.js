@@ -20,10 +20,10 @@ function addIntersectedFeaturesInTile({
   const { positions } = data;
 
   for (let i = 0; i < indices.length - 1; i++) {
-    if (filterBuffer !== undefined && filterBuffer.value[i] === 0) continue;
-
     const startIndex = indices[i];
     const endIndex = indices[i + 1];
+
+    if (filterBuffer !== undefined && filterBuffer.value[startIndex] !== 1) continue;
 
     const tileProps = getPropertiesFromTile(data, startIndex);
     const uniquePropertyValue = getUniquePropertyValue(tileProps, uniqueIdProperty, map);

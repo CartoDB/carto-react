@@ -1,5 +1,5 @@
 import turfIntersects from '@turf/boolean-intersects';
-import { concatTypedArrays, convertCoordinates } from './helpers';
+import { convertCoordinates } from './helpers';
 
 export function maskPolygonsBinaryDataToDFE(
   currentPolygonsData,
@@ -61,98 +61,4 @@ export function maskPolygonsBinaryDataToDFE(
   }
 
   return currentPolygonsData.featureIds.value.map((id) => res[id]);
-}
-
-function addPolygonIndiceToPolygonsData(
-  newPolygonsData,
-  oldPolygonsData,
-  polygonIndicesIdx
-) {
-  const currentLine = oldPolygonsData.primitivePolygonIndices.value[polygonIndicesIdx];
-  const nextLine =
-    oldPolygonsData.primitivePolygonIndices.value[polygonIndicesIdx + 1] ||
-    oldPolygonsData.featureIds.value.length;
-
-  newPolygonsData.triangles.value = concatTypedArrays(
-    newPolygonsData.triangles.value,
-    // reduce isn't faster because it has to concat typedarrays
-    oldPolygonsData.triangles.value
-      .filter((el) => el >= currentLine && el < nextLine)
-      .map((el) => {
-        return (
-          el -
-          (polygonIndicesIdx ? currentLine : 0) +
-          newPolygonsData.featureIds.value.length
-        );
-      })
-  );
-
-  newPolygonsData.featureIds.value = concatTypedArrays(
-    newPolygonsData.featureIds.value,
-    oldPolygonsData.featureIds.value.slice(currentLine, nextLine)
-  );
-
-  newPolygonsData.globalFeatureIds.value = concatTypedArrays(
-    newPolygonsData.globalFeatureIds.value,
-    oldPolygonsData.globalFeatureIds.value.slice(currentLine, nextLine)
-  );
-
-  newPolygonsData.positions.value = concatTypedArrays(
-    newPolygonsData.positions.value,
-    oldPolygonsData.positions.value.slice(currentLine * 2, nextLine * 2)
-  );
-
-  ['polygonIndices', 'primitivePolygonIndices'].forEach((key) => {
-    newPolygonsData[key].value = concatTypedArrays(
-      newPolygonsData[key].value,
-      oldPolygonsData[key].value.constructor.of(
-        newPolygonsData.featureIds.value.length - (nextLine - currentLine)
-      )
-    );
-  });
-
-  for (let numericProp in oldPolygonsData.numericProps) {
-    newPolygonsData.numericProps[numericProp].value = concatTypedArrays(
-      newPolygonsData.numericProps[numericProp].value,
-      oldPolygonsData.numericProps[numericProp].value.slice(currentLine, nextLine)
-    );
-  }
-}
-
-function createEmptyPolygonsData(polygonsData) {
-  return {
-    featureIds: {
-      value: new polygonsData.featureIds.value.constructor(),
-      size: polygonsData.featureIds.size
-    },
-    fields: [],
-    globalFeatureIds: {
-      value: new polygonsData.globalFeatureIds.value.constructor(),
-      size: polygonsData.globalFeatureIds.size
-    },
-    numericProps: Object.entries(polygonsData.numericProps).reduce(
-      (acc, [key, { value, size }]) => {
-        acc[key] = { size, value: new value.constructor() };
-        return acc;
-      },
-      {}
-    ),
-    positions: {
-      value: new polygonsData.positions.value.constructor(),
-      size: polygonsData.positions.size
-    },
-    properties: [],
-    triangles: {
-      value: new polygonsData.triangles.value.constructor(),
-      size: polygonsData.triangles.size
-    },
-    polygonIndices: {
-      value: new polygonsData.polygonIndices.value.constructor(0),
-      size: polygonsData.polygonIndices.size
-    },
-    primitivePolygonIndices: {
-      value: new polygonsData.primitivePolygonIndices.value.constructor(0),
-      size: polygonsData.primitivePolygonIndices.size
-    }
-  };
 }
