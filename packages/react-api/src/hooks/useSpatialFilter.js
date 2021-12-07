@@ -1,6 +1,6 @@
 import { _applyMaskToTile } from '@carto/react-core/';
 import { selectMask } from '@carto/react-redux';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getTileId } from '../utils/tileUtils';
 
@@ -22,6 +22,11 @@ export default function useSpatialFilter(
   const [filtersBuffer, setFiltersBuffer] = useState(EMPTY_OBJ);
   const [analysedFeatures, setAnalysedFeatures] = useState(EMPTY_ANALYSED_FEATURES);
 
+  const debouncedSetFiltersBuffer = useCallback(
+    gradualDebounce(setFiltersBuffer, 500),
+    []
+  );
+
   useEffect(() => {
     setFiltersBuffer({});
   }, [maskGeometry]);
@@ -35,25 +40,22 @@ export default function useSpatialFilter(
 
     const tileId = getTileId(props.tile);
     if (props.data && maskGeometry) {
-      //   if (filtersBuffer[tileId]) {
-      // data = buildDataUsingFilterBuffer(props, filtersBuffer[tileId]);
-      //   } else {
-      data = _applyMaskToTile(props.tile, maskGeometry, {
-        uniqueIdProperty,
-        analysedFeatures
-      });
+      if (filtersBuffer[tileId]) {
+        data = buildDataUsingFilterBuffer(props, filtersBuffer[tileId]);
+      } else {
+        data = _applyMaskToTile(props.tile, maskGeometry, {
+          uniqueIdProperty,
+          analysedFeatures
+        });
 
-      // setAnalysedFeatures({ ...analysedFeatures });
-
-      setFiltersBuffer((oldState) => ({
-        ...oldState,
-        [tileId]: {
-          points: data.points.attributes.getFilterValue,
-          lines: data.lines.attributes.getFilterValue,
-          polygons: data.polygons.attributes.getFilterValue
-        }
-      }));
-      //   }
+        debouncedSetFiltersBuffer({
+          [tileId]: {
+            points: data.points.attributes.getFilterValue,
+            lines: data.lines.attributes.getFilterValue,
+            polygons: data.polygons.attributes.getFilterValue
+          }
+        });
+      }
     }
 
     return _renderSubLayers(props, { data });
@@ -84,5 +86,23 @@ function buildDataUsingFilterBuffer(props, filterBuffer) {
         getFilterValue: filterBuffer.polygons
       }
     }
+  };
+}
+
+export function gradualDebounce(fn, ms) {
+  let timer;
+  let fullNewValue;
+  return (newValue) => {
+    if (!fullNewValue) fullNewValue = newValue;
+    else fullNewValue = { ...fullNewValue, ...newValue };
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      timer = null;
+      fn((oldState) => {
+        return { ...oldState, ...fullNewValue };
+      });
+      fullNewValue = null;
+    }, ms);
+    return timer;
   };
 }
