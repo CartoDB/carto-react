@@ -1,4 +1,5 @@
-import { buildFeatureFilter } from '../../src/filters/Filter';
+import { buildBinaryFeatureFilter, buildFeatureFilter } from '../../src/filters/Filter';
+import { POINTS_BINARY_DATA, POLYGONS_BINARY_DATA } from './constants';
 
 const filters = {
   column1: {
@@ -85,13 +86,13 @@ describe('Filters', () => {
       test('with geojson feature', () => {
         const filter = buildFeatureFilter(paramsWithFilterFunctionNotImplemented);
         const feature = makeFeatureWithValueInColumn();
-        expect(() => filter(feature)).toThrow('"pow" not implemented');
+        expect(() => filter(feature)).toThrow('"pow" filter is not implemented');
       });
 
       test('with geojson feature properties', () => {
         const filter = buildFeatureFilter(paramsWithFilterFunctionNotImplemented);
         const obj = makeObjectWithValueInColumn();
-        expect(() => filter(obj)).toThrow('"pow" not implemented');
+        expect(() => filter(obj)).toThrow('"pow" filter is not implemented');
       });
     });
 
@@ -197,13 +198,13 @@ describe('Filters', () => {
       test('with geojson feature', () => {
         const filter = buildFeatureFilter(paramsWithFilterFunctionNotImplemented);
         const feature = makeFeatureWithValueInColumn();
-        expect(() => filter(feature)).toThrow('"pow" not implemented');
+        expect(() => filter(feature)).toThrow('"pow" filter is not implemented');
       });
 
       test('with geojson feature properties', () => {
         const filter = buildFeatureFilter(paramsWithFilterFunctionNotImplemented);
         const obj = makeObjectWithValueInColumn();
-        expect(() => filter(obj)).toThrow('"pow" not implemented');
+        expect(() => filter(obj)).toThrow('"pow" filter is not implemented');
       });
     });
 
@@ -262,6 +263,79 @@ describe('Filters', () => {
         const isFeatureIncluded = buildFeatureFilter(zeroIsValidForThisFilter)(obj);
         expect(isFeatureIncluded).toBe(0);
       });
+    });
+  });
+
+  describe('using binary data', () => {
+    test('should filter points binary data', () => {
+      const filterForBinaryData = {
+        state: {
+          in: {
+            values: ['AK']
+          }
+        }
+      };
+      const filterFn = buildBinaryFeatureFilter({ filters: filterForBinaryData });
+
+      const filterRes = POINTS_BINARY_DATA.featureIds.value.map((_, idx) =>
+        filterFn(idx, POINTS_BINARY_DATA)
+      );
+
+      expect(filterRes[0]).toBe(1);
+      expect(filterRes[filterRes.length - 1]).toBe(0);
+    });
+
+    test('should filter polygons/lines binary data', () => {
+      const filterForBinaryData = {
+        cartodb_id: {
+          in: {
+            values: [78]
+          }
+        }
+      };
+
+      const filterFn = buildBinaryFeatureFilter({ filters: filterForBinaryData });
+
+      const filterRes = POLYGONS_BINARY_DATA.featureIds.value.map((_, idx) =>
+        filterFn(idx, POLYGONS_BINARY_DATA)
+      );
+
+      expect(filterRes[0]).toBe(1);
+      expect(filterRes[filterRes.length - 1]).toBe(0);
+    });
+
+    test('should throw error when filter is unknown', () => {
+      const filterForBinaryData = {
+        cartodb_id: {
+          pow: {
+            values: [1]
+          }
+        }
+      };
+
+      const filterFn = buildBinaryFeatureFilter({ filters: filterForBinaryData });
+
+      expect(() => filterFn(0, POLYGONS_BINARY_DATA)).toThrow(
+        '"pow" filter is not implemented'
+      );
+    });
+
+    test('should returns always 0 when values is nullish', () => {
+      const filterForBinaryData = {
+        cartodb_id: {
+          in: {
+            values: null
+          }
+        }
+      };
+
+      const filterFn = buildBinaryFeatureFilter({ filters: filterForBinaryData });
+
+      const filterRes = POLYGONS_BINARY_DATA.featureIds.value.map((_, idx) =>
+        filterFn(idx, POLYGONS_BINARY_DATA)
+      );
+
+      expect(filterRes.every((el) => el === 0)).toBe(true);
     });
   });
 });
