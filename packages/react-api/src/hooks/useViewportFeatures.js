@@ -19,7 +19,7 @@ export default function useViewportFeatures(
   source,
   uniqueIdProperty,
   debounceTimeout = 500,
-  filtersBuffer
+  spatialFilterBuffers
 ) {
   const dispatch = useDispatch();
   const viewport = useSelector((state) => state.carto.viewport);
@@ -50,37 +50,39 @@ export default function useViewportFeatures(
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const computeFeaturesTileset = useCallback(
-    debounce(async ({ tiles, filtersBuffer, viewport, uniqueIdProperty, sourceId }) => {
-      dispatch(
-        setViewportFeaturesReady({
-          sourceId,
-          ready: false
-        })
-      );
+    debounce(
+      async ({ tiles, spatialFilterBuffers, viewport, uniqueIdProperty, sourceId }) => {
+        dispatch(
+          setViewportFeaturesReady({
+            sourceId,
+            ready: false
+          })
+        );
 
-      const tilesCleaned = tiles.map(({ x, y, z, data, isVisible, bbox }) => ({
-        data,
-        // Generalize Tile ID,
-        filterBuffer: filtersBuffer[getTileId({ x, y, z })],
-        isVisible,
-        bbox
-      }));
+        const tilesCleaned = tiles.map(({ x, y, z, data, isVisible, bbox }) => ({
+          data,
+          spatialFilterBuffer: spatialFilterBuffers[getTileId({ x, y, z })],
+          isVisible,
+          bbox
+        }));
 
-      try {
-        await executeTask(sourceId, Methods.VIEWPORT_FEATURES, {
-          tiles: tilesCleaned,
-          viewport,
-          uniqueIdProperty
-        });
+        try {
+          await executeTask(sourceId, Methods.VIEWPORT_FEATURES, {
+            tiles: tilesCleaned,
+            viewport,
+            uniqueIdProperty
+          });
 
-        setSourceViewportFeaturesReady(true);
-      } catch (error) {
-        if (error.name === 'AbortError') return;
-        throw error;
-      } finally {
-        clearDebounce();
-      }
-    }, debounceTimeout),
+          setSourceViewportFeaturesReady(true);
+        } catch (error) {
+          if (error.name === 'AbortError') return;
+          throw error;
+        } finally {
+          clearDebounce();
+        }
+      },
+      debounceTimeout
+    ),
     [setSourceViewportFeaturesReady]
   );
 
@@ -113,7 +115,7 @@ export default function useViewportFeatures(
       setSourceViewportFeaturesReady(false);
       debounceId.current = computeFeaturesTileset({
         tiles,
-        filtersBuffer,
+        spatialFilterBuffers,
         viewport,
         uniqueIdProperty,
         sourceId
@@ -128,7 +130,7 @@ export default function useViewportFeatures(
     isSourceV3,
     isSourceTileset,
     setSourceViewportFeaturesReady,
-    filtersBuffer
+    spatialFilterBuffers
   ]);
 
   useEffect(() => {

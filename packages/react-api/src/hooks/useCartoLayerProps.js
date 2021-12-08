@@ -10,15 +10,18 @@ export default function useCartoLayerProps({
   viewporFeaturesDebounceTimeout = 500,
   renderSubLayers // TODO: Provide a default renderSubLayers
 }) {
-  const [_renderSubLayers, filtersBuffer, getFilterValue] = useSpatialFilter(source, {
-    renderSubLayers
-  });
+  const [_renderSubLayers, spatialFilterBuffers, getFilterValue] = useSpatialFilter(
+    source,
+    {
+      renderSubLayers
+    }
+  );
 
   const [onViewportLoad, onDataLoad, fetch] = useViewportFeatures(
     source,
     uniqueIdProperty,
     viewporFeaturesDebounceTimeout,
-    filtersBuffer
+    spatialFilterBuffers
   );
 
   let props = {};

@@ -21,29 +21,34 @@ export default function useSpatialFilter(
   source,
   { renderSubLayers: _renderSubLayers, uniqueIdProperty = 'cartodb_id' }
 ) {
+  // Stores already analysed features. Used to avoid inconsistencies between tiles.
   const { current: analysedFeatures } = useRef(EMPTY_ANALYSED_FEATURES);
   const spatialFilterGeometry = useSelector((state) =>
     selectSpatialFilter(state, source?.id)
   );
 
-  const [spatialFilterBuffer, setSpatialFilterBuffer] = useState(EMPTY_OBJ);
+  // Stores getFilterValue typed array for each tileId
+  const [spatialFilterBuffers, setSpatialFilterBuffers] = useState(EMPTY_OBJ);
 
+  // Check incrementalDebounce definition comments
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSpatialFilterBuffer = useCallback(
-    incrementalDebounce(setSpatialFilterBuffer, 50),
+    incrementalDebounce(setSpatialFilterBuffers, 50),
     []
   );
 
+  // filterFn is only used on GeoJson sources
   const filterFn = useMemo(() => {
     return _buildFeatureFilter({ filters: source?.filters });
   }, [source?.filters]);
 
   useEffect(() => {
-    setSpatialFilterBuffer({});
+    setSpatialFilterBuffers({});
   }, [spatialFilterGeometry]);
 
   // Used when layer uses tiles
   const renderSubLayers = (props) => {
+    // props.data === props.tile.content
     let { data, binary } = props;
     if (!data || !binary) {
       return null;
@@ -51,40 +56,15 @@ export default function useSpatialFilter(
 
     const tileId = getTileId(props.tile);
 
-    data = {
-      ...data,
-      points: {
-        ...data.points,
-        attributes: {
-          getFilterValue: {
-            value: new Uint16Array(data.points.featureIds.value.length).fill(1),
-            size: 1
-          }
-        }
-      },
-      lines: {
-        ...data.lines,
-        attributes: {
-          getFilterValue: {
-            value: new Uint16Array(data.points.featureIds.value.length).fill(1),
-            size: 1
-          }
-        }
-      },
-      polygons: {
-        ...data.polygons,
-        attributes: {
-          getFilterValue: {
-            value: new Uint16Array(data.points.featureIds.value.length).fill(1),
-            size: 1
-          }
-        }
-      }
-    };
+    // We need to add getFilterValue binary attribute
+    // even if there's no filter applied. This is to
+    // avoid weird reactivity bahavior when adding DataFilterExtension.
+    data = addGetFilterValueToTileContent(data);
 
+    // First of all, filter spatially by a certain geometry.
     if (spatialFilterGeometry) {
-      if (spatialFilterBuffer[tileId]) {
-        data = buildDataUsingFilterBuffer(props, spatialFilterBuffer[tileId]);
+      if (spatialFilterBuffers[tileId]) {
+        data = buildDataUsingSpatialFilterBuffer(data, spatialFilterBuffers[tileId]);
       } else {
         data = _applySpatialFilterToTileContent(data, spatialFilterGeometry, {
           tileBbox: props.tile.bbox,
@@ -102,6 +82,9 @@ export default function useSpatialFilter(
       }
     }
 
+    // Finally, apply C4R filters.
+    // This _apply must be done after the one of spatial filter
+    // because that one doesn't use old getFilterValue value.
     if (source?.filters) {
       data = _applyFiltersToTileContent(data, source?.filters);
     }
@@ -121,18 +104,35 @@ export default function useSpatialFilter(
     [filterFn, spatialFilterGeometry]
   );
 
-  return [renderSubLayers, spatialFilterBuffer, getFilterValue];
+  return [renderSubLayers, spatialFilterBuffers, getFilterValue];
 }
 
 // Aux
-function buildDataUsingFilterBuffer(props, filterBuffer) {
+function addGetFilterValueToTileContent(tileContent) {
   return {
-    ...props.data,
+    ...tileContent,
     ...['points', 'lines', 'polygons'].reduce((acc, key) => {
       acc[key] = {
-        ...props.data[key],
+        ...tileContent[key],
         attributes: {
-          getFilterValue: filterBuffer[key]
+          getFilterValue: {
+            value: new Uint16Array(tileContent[key].featureIds.value.length).fill(1),
+            size: 1
+          }
+        }
+      };
+      return acc;
+    }, {})
+  };
+}
+function buildDataUsingSpatialFilterBuffer(data, spatialFilterBuffer) {
+  return {
+    ...data,
+    ...['points', 'lines', 'polygons'].reduce((acc, key) => {
+      acc[key] = {
+        ...data[key],
+        attributes: {
+          getFilterValue: spatialFilterBuffer[key]
         }
       };
       return acc;
@@ -142,8 +142,8 @@ function buildDataUsingFilterBuffer(props, filterBuffer) {
 
 // incrementalDebounce is a variation of classic debounce
 // made to join the arguments of the difference fn calls.
-// In this case, it's special made for useState considering
-// that first argument is always an object
+// In this case, it's special customised for useState considering
+// that first argument is always an object.
 export function incrementalDebounce(fn, ms) {
   let timer;
   let fullNewValue;

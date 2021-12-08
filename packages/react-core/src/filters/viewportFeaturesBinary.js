@@ -11,7 +11,7 @@ const GEOMETRY_TYPES = Object.freeze({
 function addIntersectedFeaturesInTile({
   map,
   data,
-  filterBuffer,
+  spatialFilterBuffer,
   viewportIntersection,
   type,
   uniqueIdProperty
@@ -23,7 +23,12 @@ function addIntersectedFeaturesInTile({
     const startIndex = indices[i];
     const endIndex = indices[i + 1];
 
-    if (filterBuffer !== undefined && filterBuffer.value[startIndex] !== 1) continue;
+    if (
+      spatialFilterBuffer !== undefined &&
+      spatialFilterBuffer.value[startIndex] !== 1
+    ) {
+      continue;
+    }
 
     const tileProps = getPropertiesFromTile(data, startIndex);
     const uniquePropertyValue = getUniquePropertyValue(tileProps, uniqueIdProperty, map);
@@ -113,18 +118,18 @@ function calculateViewportFeatures({
   map,
   tileIsFullyVisible,
   viewportIntersection,
-  filterBuffer,
+  spatialFilterBuffer,
   data,
   type,
   uniqueIdProperty
 }) {
   if (tileIsFullyVisible) {
-    addAllFeaturesInTile({ map, data, filterBuffer, uniqueIdProperty });
+    addAllFeaturesInTile({ map, data, spatialFilterBuffer, uniqueIdProperty });
   } else {
     addIntersectedFeaturesInTile({
       map,
       data,
-      filterBuffer,
+      spatialFilterBuffer,
       viewportIntersection,
       type,
       uniqueIdProperty
@@ -132,11 +137,11 @@ function calculateViewportFeatures({
   }
 }
 
-function addAllFeaturesInTile({ map, data, filterBuffer, uniqueIdProperty }) {
+function addAllFeaturesInTile({ map, data, spatialFilterBuffer, uniqueIdProperty }) {
   const indices = getIndices(data);
 
   for (let i = 0; i < indices.length - 1; i++) {
-    if (filterBuffer !== undefined && filterBuffer.value[i] === 0) continue;
+    if (spatialFilterBuffer !== undefined && spatialFilterBuffer.value[i] === 0) continue;
 
     const startIndex = indices[i];
 
@@ -181,7 +186,7 @@ export function viewportFeaturesBinary({ tiles, viewport, uniqueIdProperty }) {
       tileIsFullyVisible,
       viewportIntersection,
       data: tile.data.points,
-      filterBuffer: tile.filterBuffer?.points,
+      spatialFilterBuffer: tile.spatialFilterBuffer?.points,
       type: GEOMETRY_TYPES['Point'],
       uniqueIdProperty
     });
@@ -190,7 +195,7 @@ export function viewportFeaturesBinary({ tiles, viewport, uniqueIdProperty }) {
       tileIsFullyVisible,
       viewportIntersection,
       data: tile.data.lines,
-      filterBuffer: tile.filterBuffer?.lines,
+      spatialFilterBuffer: tile.spatialFilterBuffer?.lines,
       type: GEOMETRY_TYPES['LineString'],
       uniqueIdProperty
     });
@@ -199,7 +204,7 @@ export function viewportFeaturesBinary({ tiles, viewport, uniqueIdProperty }) {
       tileIsFullyVisible,
       viewportIntersection,
       data: tile.data.polygons,
-      filterBuffer: tile.filterBuffer?.polygons,
+      spatialFilterBuffer: tile.spatialFilterBuffer?.polygons,
       type: GEOMETRY_TYPES['Polygon'],
       uniqueIdProperty
     });
