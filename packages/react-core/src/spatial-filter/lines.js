@@ -1,10 +1,10 @@
-import turfIntersects from "@turf/boolean-intersects";
-import { convertCoordinates } from "./helpers";
+import turfIntersects from '@turf/boolean-intersects';
+import { convertCoordinates } from './helpers';
 
 export function maskLinesBinaryDataToDFE(
   currentLinesData,
   filteringGeometry,
-  { uniqueIdProperty, layerUniqueIdsIn = [] }
+  { uniqueIdProperty, analysedLinesFeatures }
 ) {
   const res = new Uint16Array(currentLinesData.properties.length);
 
@@ -14,7 +14,8 @@ export function maskLinesBinaryDataToDFE(
   let idx = 0;
   for (let currentLine of currentLinesData.pathIndices.value.slice(0, -1)) {
     const featureId = currentLinesData.featureIds.value[currentLine];
-    if (res[featureId] === -1) {
+    if (res[featureId] === 0) {
+      idx++;
       continue;
     }
 
@@ -23,19 +24,16 @@ export function maskLinesBinaryDataToDFE(
       currentLinesData.properties[featureId][uniqueIdProperty]; // or a string
 
     // featureIdsIn.has(featureId) --> for multiline, if one of the lines is already IN, do not analyse any other
-    // layerUniqueIdsIn.indexOf(uniqueId) !== -1 --> for splitted lines between multiple tiles
+    // analysedPolygonsFeatures.get(uniqueId) --> for splitted lines between multiple tiles
     let doesIntersects =
-      featureIdsIn.has(featureId) || layerUniqueIdsIn.indexOf(uniqueId) !== -1;
+      featureIdsIn.has(featureId) || analysedLinesFeatures.get(uniqueId);
     if (!doesIntersects) {
       const nextLine = currentLinesData.pathIndices.value[idx + 1];
       const doesIntersects = turfIntersects(
         {
-          type: "LineString",
+          type: 'LineString',
           coordinates: convertCoordinates(
-            currentLinesData.positions.value.slice(
-              currentLine * 2,
-              nextLine * 2
-            )
+            currentLinesData.positions.value.slice(currentLine * 2, nextLine * 2)
           )
         },
         filteringGeometry
@@ -47,17 +45,16 @@ export function maskLinesBinaryDataToDFE(
       }
     }
 
+    analysedLinesFeatures.set(uniqueId, doesIntersects);
+
     if (doesIntersects) {
       res[featureId] = 1;
     } else {
-      res[featureId] = -1;
+      res[featureId] = 0;
     }
 
     idx++;
   }
 
-  return [
-    currentLinesData.featureIds.value.map((id) => res[id]),
-    Array.from(uniqueIdsIn)
-  ];
+  return currentLinesData.featureIds.value.map((id) => res[id] === 1);
 }

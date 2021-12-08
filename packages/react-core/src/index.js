@@ -1,11 +1,13 @@
 import _asTileCoords from './projections/asTileCoords';
-import _applyMaskToTile from './spatial-filter/applyMaskToTile';
+import _applySpatialFilterToTileContent from './spatial-filter/applySpatialFilterToTileContent';
+import _applyFiltersToTileContent from './filters/applyFiltersToTileContent';
 
 export {
   // Only for advanced users
   _asTileCoords,
   // Used in @carto/react-api
-  _applyMaskToTile
+  _applySpatialFilterToTileContent,
+  _applyFiltersToTileContent
 };
 
 export {
@@ -36,6 +38,7 @@ export {
 } from './filters/FilterQueryBuilder';
 export {
   buildFeatureFilter as _buildFeatureFilter,
+  buildBinaryFeatureFilter as _buildBinaryFeatureFilter,
   applyFilters as _applyFilters
 } from './filters/Filter';
 export { viewportFeatures } from './filters/viewportFeatures';

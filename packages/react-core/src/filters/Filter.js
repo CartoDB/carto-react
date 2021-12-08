@@ -79,7 +79,7 @@ export function applyFilters(features, filters) {
 }
 
 // Binary
-export function buildBinaryFeatureFilter({ filters = {} }) {
+export function buildBinaryFeatureFilter(filters = {}) {
   const columns = Object.keys(filters);
 
   if (!columns.length) {

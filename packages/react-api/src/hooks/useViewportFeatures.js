@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setViewportFeaturesReady } from '@carto/react-redux';
+import { setViewportFeaturesReady, selectSpatialFilter } from '@carto/react-redux';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
@@ -25,6 +25,9 @@ export default function useViewportFeatures(
   const viewport = useSelector((state) => state.carto.viewport);
   const [tiles, setTiles] = useState([]);
   const [isGeoJSONLoaded, setGeoJSONLoaded] = useState(false);
+  const spatialFilterGeometry = useSelector((state) =>
+    selectSpatialFilter(state, source?.id)
+  );
   const debounceId = useRef(null);
 
   const clearDebounce = () => {
@@ -83,10 +86,11 @@ export default function useViewportFeatures(
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const computeFeaturesGeoJSON = useCallback(
-    debounce(async ({ viewport, uniqueIdProperty, sourceId }) => {
+    debounce(async ({ viewport, uniqueIdProperty, spatialFilterGeometry, sourceId }) => {
       try {
         await executeTask(sourceId, Methods.VIEWPORT_FEATURES_GEOJSON, {
           viewport,
+          spatialFilterGeometry,
           uniqueIdProperty
         });
 
@@ -131,7 +135,12 @@ export default function useViewportFeatures(
     if (sourceId && isSourceGeoJSONLayer) {
       setSourceViewportFeaturesReady(false);
       if (isGeoJSONLoaded) {
-        computeFeaturesGeoJSON({ viewport, uniqueIdProperty, sourceId });
+        computeFeaturesGeoJSON({
+          viewport,
+          uniqueIdProperty,
+          spatialFilterGeometry,
+          sourceId
+        });
       }
     }
   }, [
@@ -141,7 +150,8 @@ export default function useViewportFeatures(
     sourceId,
     isSourceGeoJSONLayer,
     isGeoJSONLoaded,
-    setSourceViewportFeaturesReady
+    setSourceViewportFeaturesReady,
+    spatialFilterGeometry
   ]);
 
   useEffect(() => {

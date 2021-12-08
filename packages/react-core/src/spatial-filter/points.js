@@ -5,15 +5,15 @@ let doesIntersects, uniqueId;
 export function maskPointsBinaryDataToDFE(
   currentPointsData,
   maskGeometry,
-  { uniqueIdProperty, analysedPointFeatures }
+  { uniqueIdProperty, analysedPointsFeatures }
 ) {
   return currentPointsData.featureIds.value.map((featureIdx) => {
     uniqueId =
       currentPointsData.numericProps[uniqueIdProperty]?.value[featureIdx] || // uniqueId can be a number
       currentPointsData.properties[featureIdx][uniqueIdProperty]; // or a string
 
-    if (analysedPointFeatures.has(uniqueId)) {
-      return analysedPointFeatures.get(uniqueId);
+    if (analysedPointsFeatures.has(uniqueId)) {
+      return analysedPointsFeatures.get(uniqueId);
     }
 
     doesIntersects = turfIntersects(
@@ -27,7 +27,7 @@ export function maskPointsBinaryDataToDFE(
       maskGeometry
     );
 
-    analysedPointFeatures.set(uniqueId, doesIntersects);
+    analysedPointsFeatures.set(uniqueId, doesIntersects);
 
     return doesIntersects;
   });

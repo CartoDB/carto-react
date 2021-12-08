@@ -1,11 +1,15 @@
-import { _applyMaskToTile } from '@carto/react-core/';
-import { selectMask } from '@carto/react-redux';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  _buildFeatureFilter,
+  _applySpatialFilterToTileContent,
+  _applyFiltersToTileContent
+} from '@carto/react-core/';
+import { selectSpatialFilter } from '@carto/react-redux';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getTileId } from '../utils/tileUtils';
+import turfIntersects from '@turf/boolean-intersects';
 
 const EMPTY_OBJ = {};
-const EMPTY_ARRAY = [];
 
 const EMPTY_ANALYSED_FEATURES = {
   points: new Map(),
@@ -18,37 +22,77 @@ export default function useSpatialFilter(
   { renderSubLayers: _renderSubLayers, uniqueIdProperty = 'cartodb_id' }
 ) {
   const { current: analysedFeatures } = useRef(EMPTY_ANALYSED_FEATURES);
-  const maskGeometry = useSelector((state) => selectMask(state, source?.id));
+  const spatialFilterGeometry = useSelector((state) =>
+    selectSpatialFilter(state, source?.id)
+  );
 
-  const [filtersBuffer, setFiltersBuffer] = useState(EMPTY_OBJ);
+  const [spatialFilterBuffer, setSpatialFilterBuffer] = useState(EMPTY_OBJ);
 
-  const debouncedSetFiltersBuffer = useCallback(
-    gradualDebounce(setFiltersBuffer, 50),
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSetSpatialFilterBuffer = useCallback(
+    incrementalDebounce(setSpatialFilterBuffer, 50),
     []
   );
 
-  useEffect(() => {
-    setFiltersBuffer({});
-  }, [maskGeometry]);
+  const filterFn = useMemo(() => {
+    return _buildFeatureFilter({ filters: source?.filters });
+  }, [source?.filters]);
 
+  useEffect(() => {
+    setSpatialFilterBuffer({});
+  }, [spatialFilterGeometry]);
+
+  // Used when layer uses tiles
   const renderSubLayers = (props) => {
     let { data, binary } = props;
-    // TODO: Implement to binary as false
     if (!data || !binary) {
       return null;
     }
 
     const tileId = getTileId(props.tile);
-    if (props.data && maskGeometry) {
-      if (filtersBuffer[tileId]) {
-        data = buildDataUsingFilterBuffer(props, filtersBuffer[tileId]);
+
+    data = {
+      ...data,
+      points: {
+        ...data.points,
+        attributes: {
+          getFilterValue: {
+            value: new Uint16Array(data.points.featureIds.value.length).fill(1),
+            size: 1
+          }
+        }
+      },
+      lines: {
+        ...data.lines,
+        attributes: {
+          getFilterValue: {
+            value: new Uint16Array(data.points.featureIds.value.length).fill(1),
+            size: 1
+          }
+        }
+      },
+      polygons: {
+        ...data.polygons,
+        attributes: {
+          getFilterValue: {
+            value: new Uint16Array(data.points.featureIds.value.length).fill(1),
+            size: 1
+          }
+        }
+      }
+    };
+
+    if (spatialFilterGeometry) {
+      if (spatialFilterBuffer[tileId]) {
+        data = buildDataUsingFilterBuffer(props, spatialFilterBuffer[tileId]);
       } else {
-        data = _applyMaskToTile(props.tile, maskGeometry, {
+        data = _applySpatialFilterToTileContent(data, spatialFilterGeometry, {
+          tileBbox: props.tile.bbox,
           uniqueIdProperty,
           analysedFeatures
         });
 
-        debouncedSetFiltersBuffer({
+        debouncedSetSpatialFilterBuffer({
           [tileId]: {
             points: data.points.attributes.getFilterValue,
             lines: data.lines.attributes.getFilterValue,
@@ -58,38 +102,49 @@ export default function useSpatialFilter(
       }
     }
 
+    if (source?.filters) {
+      data = _applyFiltersToTileContent(data, source?.filters);
+    }
+
     return _renderSubLayers(props, { data });
   };
 
-  return [!!maskGeometry, renderSubLayers, filtersBuffer];
+  // Used when layer uses GeoJson
+  const getFilterValue = useCallback(
+    (feature) => {
+      return Number(
+        filterFn(feature) &&
+          (!spatialFilterGeometry ||
+            turfIntersects(feature.geometry, spatialFilterGeometry))
+      );
+    },
+    [filterFn, spatialFilterGeometry]
+  );
+
+  return [renderSubLayers, spatialFilterBuffer, getFilterValue];
 }
 
 // Aux
 function buildDataUsingFilterBuffer(props, filterBuffer) {
   return {
     ...props.data,
-    points: {
-      ...props.data.points,
-      attributes: {
-        getFilterValue: filterBuffer.points
-      }
-    },
-    lines: {
-      ...props.data.lines,
-      attributes: {
-        getFilterValue: filterBuffer.lines
-      }
-    },
-    polygons: {
-      ...props.data.polygons,
-      attributes: {
-        getFilterValue: filterBuffer.polygons
-      }
-    }
+    ...['points', 'lines', 'polygons'].reduce((acc, key) => {
+      acc[key] = {
+        ...props.data[key],
+        attributes: {
+          getFilterValue: filterBuffer[key]
+        }
+      };
+      return acc;
+    }, {})
   };
 }
 
-export function gradualDebounce(fn, ms) {
+// incrementalDebounce is a variation of classic debounce
+// made to join the arguments of the difference fn calls.
+// In this case, it's special made for useState considering
+// that first argument is always an object
+export function incrementalDebounce(fn, ms) {
   let timer;
   let fullNewValue;
   return (newValue) => {

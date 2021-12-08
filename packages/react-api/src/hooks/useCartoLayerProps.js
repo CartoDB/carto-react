@@ -1,7 +1,6 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
 import useViewportFeatures from './useViewportFeatures';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
-import ExtentedGeoJsonLayer from './extended-geojson-layer/geojson-layer';
 import useSpatialFilter from './useSpatialFilter';
 
 export default function useCartoLayerProps({
@@ -9,9 +8,9 @@ export default function useCartoLayerProps({
   uniqueIdProperty,
   viewportFeatures = true,
   viewporFeaturesDebounceTimeout = 500,
-  renderSubLayers = (props) => new ExtentedGeoJsonLayer(props)
+  renderSubLayers // TODO: Provide a default renderSubLayers
 }) {
-  const [hasSpatialFilter, _renderSubLayers, filtersBuffer] = useSpatialFilter(source, {
+  const [_renderSubLayers, filtersBuffer, getFilterValue] = useSpatialFilter(source, {
     renderSubLayers
   });
 
@@ -35,16 +34,19 @@ export default function useCartoLayerProps({
       binary: true,
       onViewportLoad: viewportFeatures ? onViewportLoad : null,
       fetch: viewportFeatures ? fetch : null,
-      ...(hasSpatialFilter && { renderSubLayers: _renderSubLayers })
+      renderSubLayers: _renderSubLayers,
+      updateTriggers: {}
     };
   } else if (useGeoJSON) {
     props = {
       // empty function should be removed by null, but need a fix in CartoLayer
-      onDataLoad: viewportFeatures ? onDataLoad : () => null
+      onDataLoad: viewportFeatures ? onDataLoad : () => null,
+      updateTriggers: {
+        getFilterValue
+      },
+      getFilterValue
     };
   }
-
-  const hasFilters = !!Object.keys(source?.filters || {}).length || hasSpatialFilter;
 
   return {
     ...props,
@@ -53,14 +55,8 @@ export default function useCartoLayerProps({
     type: source?.type,
     connection: source?.connection,
     credentials: source?.credentials,
-    updateTriggers: {},
-    // getFilterValue: _buildFeatureFilter({ filters: source?.filters, type: 'number' }),
-    ...(hasFilters && {
-      filterRange: [1, 1],
-      extensions: [new DataFilterExtension({ filterSize: 1 })]
-    })
-    // updateTriggers: {
-    //   getFilterValue: [source?.filters, maskGeometry]
-    // }
+    // Filtering
+    filterRange: [1, 1],
+    extensions: [new DataFilterExtension({ filterSize: 1 })]
   };
 }

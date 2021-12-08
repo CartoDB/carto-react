@@ -62,10 +62,11 @@ function loadGeoJSONFeatures({ geojson }) {
   postMessage({ result: true });
 }
 
-function getViewportFeaturesGeoJSON({ viewport, uniqueIdProperty }) {
+function getViewportFeaturesGeoJSON({ viewport, spatialFilterGeometry, uniqueIdProperty }) {
   if (currentGeoJSON) {
     currentViewportFeatures = viewportFeaturesGeoJSON({
       geojson: currentGeoJSON,
+      spatialFilterGeometry,
       viewport,
       uniqueIdProperty
     });
@@ -73,13 +74,13 @@ function getViewportFeaturesGeoJSON({ viewport, uniqueIdProperty }) {
   postMessage({ result: true });
 }
 
-function getFormula({ filters, operation, column }) {
+function getFormula({ filters, spatialFilter, operation, column }) {
   let result = null;
 
   if (currentViewportFeatures) {
     const targetOperation = aggregationFunctions[operation];
 
-    const filteredFeatures = getFilteredFeatures(filters);
+    const filteredFeatures = getFilteredFeatures(filters, spatialFilter);
 
     result = [{ value: targetOperation(filteredFeatures, column) }];
   }
@@ -174,10 +175,10 @@ function getRawFeatures({
   postMessage({ result: { data, currentPage: page, pages: numberPages } });
 }
 
-function applyPagination (features, { limit, page }) {
+function applyPagination(features, { limit, page }) {
   return features.slice(limit * Math.max(0, page - 1), limit * Math.max(1, page));
 }
 
-function getFilteredFeatures(filters = {}) {
-  return _applyFilters(currentViewportFeatures, filters);
+function getFilteredFeatures(filters = {}, spatialFilter) {
+  return _applyFilters(currentViewportFeatures, filters, spatialFilter);
 }

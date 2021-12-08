@@ -6,7 +6,7 @@ export function maskPolygonsBinaryDataToDFE(
   filteringGeometry,
   { uniqueIdProperty, analysedPolygonsFeatures }
 ) {
-  const res = new Uint16Array(currentPolygonsData.properties.length);
+  const res = new Uint16Array(currentPolygonsData.properties.length).fill(1);
 
   const uniqueIdsIn = new Set();
   const featureIdsIn = new Set();
@@ -17,7 +17,8 @@ export function maskPolygonsBinaryDataToDFE(
     -1
   )) {
     const featureId = currentPolygonsData.featureIds.value[currentLine];
-    if (res[featureId] === -1) {
+    if (res[featureId] === 0) {
+      idx++;
       continue;
     }
 
@@ -54,11 +55,11 @@ export function maskPolygonsBinaryDataToDFE(
     if (doesIntersects) {
       res[featureId] = 1;
     } else {
-      res[featureId] = -1;
+      res[featureId] = 0;
     }
 
     idx++;
   }
 
-  return currentPolygonsData.featureIds.value.map((id) => res[id]);
+  return currentPolygonsData.featureIds.value.map((id) => res[id] === 1);
 }
