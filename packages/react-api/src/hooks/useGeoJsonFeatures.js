@@ -34,7 +34,7 @@ export default function useGeoJsonFeatures(
   const computeFeaturesGeoJson = useCallback(
     ({ viewport, uniqueIdProperty }) => {
       executeTask(sourceId, Methods.VIEWPORT_FEATURES_GEOJSON, {
-        viewport: Int8Array.of(...viewport),
+        viewport: Float32Array.of(...viewport),
         uniqueIdProperty
       })
         .then(() => {

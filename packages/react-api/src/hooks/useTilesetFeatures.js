@@ -42,7 +42,7 @@ export default function useTilesetFeatures(
       setSourceViewportFeaturesReady(false);
 
       executeTask(sourceId, Methods.VIEWPORT_FEATURES, {
-        viewport: Int8Array.of(...viewport),
+        viewport: Float32Array.of(...viewport),
         uniqueIdProperty
       })
         .then(() => {
