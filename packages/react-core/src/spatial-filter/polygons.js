@@ -37,7 +37,7 @@ export function maskPolygonsBinaryDataToDFE(
           type: 'Polygon',
           coordinates: [
             convertCoordinates(
-              currentPolygonsData.positions.value.slice(currentLine * 2, nextLine * 2)
+              currentPolygonsData.positions.value.subarray(currentLine * 2, nextLine * 2)
             )
           ]
         },

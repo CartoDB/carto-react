@@ -107,7 +107,7 @@ function getRingCoordinatesFor(startIndex, endIndex, positions) {
 
   for (let j = startIndex; j < endIndex; j++) {
     ringCoordinates.push(
-      Array.from(positions.value.subarray(j * positions.size, (j + 1) * positions.size))
+      positions.value.subarray(j * positions.size, (j + 1) * positions.size)
     );
   }
 
@@ -123,6 +123,10 @@ function calculateViewportFeatures({
   type,
   uniqueIdProperty
 }) {
+  if (!data?.properties.length) {
+    return;
+  }
+
   if (tileIsFullyVisible) {
     addAllFeaturesInTile({ map, data, spatialFilterBuffer, uniqueIdProperty });
   } else {
@@ -170,11 +174,6 @@ export function viewportFeaturesBinary({ tiles, viewport, uniqueIdProperty }) {
   const map = new Map();
 
   for (const tile of tiles) {
-    // Discard if it's not a visible tile or tile has not data
-    if (!tile.isVisible || !tile.data) {
-      continue;
-    }
-
     const { bbox } = tile;
     const tileIsFullyVisible = isTileFullyVisible(bbox, viewport);
     const viewportIntersection = bboxPolygon(prepareViewport(tile.bbox, viewport));

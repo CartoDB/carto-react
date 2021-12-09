@@ -40,49 +40,50 @@ export default function useViewportFeatures(
   const sourceId = source?.id;
 
   const setSourceViewportFeaturesReady = useCallback(
-    (ready) => {
+    (sourceId, ready) => {
       if (sourceId) {
         dispatch(setViewportFeaturesReady({ sourceId, ready }));
       }
     },
-    [dispatch, sourceId]
+    [dispatch]
+  );
+
+  const computeFeaturesTileset = useCallback(
+    async ({ tiles, spatialFilterBuffers, viewport, uniqueIdProperty, sourceId }) => {
+      setSourceViewportFeaturesReady(sourceId, false);
+
+      const tilesCleaned = tiles.reduce((acc, { x, y, z, data, isVisible, bbox }) => {
+        if (isVisible && data) {
+          acc.push({
+            data,
+            spatialFilterBuffer: spatialFilterBuffers[getTileId({ x, y, z })],
+            bbox
+          });
+        }
+        return acc;
+      }, []);
+
+      try {
+        await executeTask(sourceId, Methods.VIEWPORT_FEATURES, {
+          tiles: tilesCleaned,
+          viewport,
+          uniqueIdProperty
+        });
+
+        setSourceViewportFeaturesReady(sourceId, true);
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        throw error;
+      } finally {
+        clearDebounce();
+      }
+    },
+    [setSourceViewportFeaturesReady]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const computeFeaturesTileset = useCallback(
-    debounce(
-      async ({ tiles, spatialFilterBuffers, viewport, uniqueIdProperty, sourceId }) => {
-        dispatch(
-          setViewportFeaturesReady({
-            sourceId,
-            ready: false
-          })
-        );
-
-        const tilesCleaned = tiles.map(({ x, y, z, data, isVisible, bbox }) => ({
-          data,
-          spatialFilterBuffer: spatialFilterBuffers[getTileId({ x, y, z })],
-          isVisible,
-          bbox
-        }));
-
-        try {
-          await executeTask(sourceId, Methods.VIEWPORT_FEATURES, {
-            tiles: tilesCleaned,
-            viewport,
-            uniqueIdProperty
-          });
-
-          setSourceViewportFeaturesReady(true);
-        } catch (error) {
-          if (error.name === 'AbortError') return;
-          throw error;
-        } finally {
-          clearDebounce();
-        }
-      },
-      debounceTimeout
-    ),
+  const debouncedComputeFeaturesTileset = useCallback(
+    debounce(computeFeaturesTileset, debounceTimeout),
     [setSourceViewportFeaturesReady]
   );
 
@@ -111,9 +112,30 @@ export default function useViewportFeatures(
 
   useEffect(() => {
     if (sourceId && tiles.length && (!isSourceV3 || isSourceTileset)) {
+      computeFeaturesTileset({
+        tiles,
+        spatialFilterBuffers,
+        viewport,
+        uniqueIdProperty,
+        sourceId
+      });
+    }
+  }, [
+    spatialFilterBuffers,
+    computeFeaturesTileset,
+    isSourceTileset,
+    isSourceV3,
+    sourceId,
+    tiles,
+    uniqueIdProperty,
+    viewport
+  ]);
+
+  useEffect(() => {
+    if (sourceId && tiles.length && (!isSourceV3 || isSourceTileset)) {
       clearDebounce();
-      setSourceViewportFeaturesReady(false);
-      debounceId.current = computeFeaturesTileset({
+      setSourceViewportFeaturesReady(sourceId, false);
+      debounceId.current = debouncedComputeFeaturesTileset({
         tiles,
         spatialFilterBuffers,
         viewport,
@@ -125,12 +147,11 @@ export default function useViewportFeatures(
     tiles,
     viewport,
     uniqueIdProperty,
-    computeFeaturesTileset,
+    debouncedComputeFeaturesTileset,
     sourceId,
     isSourceV3,
     isSourceTileset,
-    setSourceViewportFeaturesReady,
-    spatialFilterBuffers
+    setSourceViewportFeaturesReady
   ]);
 
   useEffect(() => {

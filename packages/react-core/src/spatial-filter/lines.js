@@ -33,7 +33,7 @@ export function maskLinesBinaryDataToDFE(
         {
           type: 'LineString',
           coordinates: convertCoordinates(
-            currentLinesData.positions.value.slice(currentLine * 2, nextLine * 2)
+            currentLinesData.positions.value.subarray(currentLine * 2, nextLine * 2)
           )
         },
         filteringGeometry

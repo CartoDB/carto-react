@@ -27,6 +27,16 @@ export default function useSpatialFilter(
   const spatialFilterGeometry = useSelector((state) =>
     selectSpatialFilter(state, source?.id)
   );
+  const currentFilterGeometryRef = useRef(spatialFilterGeometry);
+
+  const hasGeometryChanged = useMemo(() => {
+    if (currentFilterGeometryRef.current !== spatialFilterGeometry) {
+      currentFilterGeometryRef.current = spatialFilterGeometry;
+      return true;
+    } else {
+      return false;
+    }
+  }, [spatialFilterGeometry]);
 
   // Stores getFilterValue typed array for each tileId
   const [spatialFilterBuffers, setSpatialFilterBuffers] = useState(EMPTY_OBJ);
@@ -34,7 +44,7 @@ export default function useSpatialFilter(
   // Check incrementalDebounce definition comments
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSetSpatialFilterBuffer = useCallback(
-    incrementalDebounce(setSpatialFilterBuffers, 50),
+    incrementalDebounce(setSpatialFilterBuffers, 30),
     []
   );
 
@@ -43,12 +53,12 @@ export default function useSpatialFilter(
     return _buildFeatureFilter({ filters: source?.filters });
   }, [source?.filters]);
 
+  // Clean analysed features cache
   useEffect(() => {
     if (spatialFilterBuffersCleanFn.current) {
       spatialFilterBuffersCleanFn.current();
       spatialFilterBuffersCleanFn.current = null;
     }
-    setSpatialFilterBuffers({});
     analysedFeaturesRef.current = createEmptyAnalysedFeatures();
   }, [spatialFilterGeometry]);
 
@@ -69,7 +79,7 @@ export default function useSpatialFilter(
 
     // First of all, filter spatially by a certain geometry.
     if (spatialFilterGeometry) {
-      if (spatialFilterBuffers[tileId]) {
+      if (spatialFilterBuffers[tileId] && !hasGeometryChanged) {
         data = buildDataUsingSpatialFilterBuffer(data, spatialFilterBuffers[tileId]);
       } else {
         data = _applySpatialFilterToTileContent(data, spatialFilterGeometry, {

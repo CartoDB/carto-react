@@ -62,7 +62,11 @@ function loadGeoJSONFeatures({ geojson }) {
   postMessage({ result: true });
 }
 
-function getViewportFeaturesGeoJSON({ viewport, spatialFilterGeometry, uniqueIdProperty }) {
+function getViewportFeaturesGeoJSON({
+  viewport,
+  spatialFilterGeometry,
+  uniqueIdProperty
+}) {
   if (currentGeoJSON) {
     currentViewportFeatures = viewportFeaturesGeoJSON({
       geojson: currentGeoJSON,
