@@ -72,7 +72,7 @@ export function getChartSerie(chart, index) {
 }
 
 export function defaultTooltipFormatter(xAxisFormatter, yAxisFormatter, params) {
-  if (!params) {
+  if (!params || !params?.length) {
     return null;
   }
 
