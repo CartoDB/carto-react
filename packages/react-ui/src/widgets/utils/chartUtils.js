@@ -72,23 +72,23 @@ export function getChartSerie(chart, index) {
 }
 
 export function defaultTooltipFormatter(xAxisFormatter, yAxisFormatter, params) {
-  if (Array.isArray(params)) {
-    if (params.length) {
-      let message = '';
-      message += `${processFormatterRes(xAxisFormatter(params[0].axisValueLabel))}`;
-      params.forEach((param) => {
-        const seriesName = param.seriesName ? param.seriesName + ': ' : '';
-        const value = processFormatterRes(yAxisFormatter(param.value));
-        const item = `<div style="margin-left: 8px; display: inline">${seriesName}${value}${
-          param.data.unit || ''
-        }</div>`;
-        message += `<div style="margin-top: 4px">${param.marker}${item}</div>`;
-      });
-      return message;
-    } else {
-      return null;
-    }
-  } else {
+  if (!params) {
     return null;
+  }
+
+  if (Array.isArray(params) && params.length) {
+    let message = '';
+    message += `${processFormatterRes(xAxisFormatter(params[0].axisValueLabel))}`;
+    message += params
+      .map(({ seriesName, value, data, marker }) => {
+        const formattedSeriesName = seriesName ? seriesName + ': ' : '';
+        const formattedValue = processFormatterRes(yAxisFormatter(value));
+        const item = `<div style="margin-left: 8px; display: inline">
+        ${formattedSeriesName}${formattedValue}${data.unit || ''}
+        </div>`;
+        return `<div style="margin-top: 4px">${marker}${item}</div>`;
+      })
+      .join(' ');
+    return message;
   }
 }
