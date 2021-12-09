@@ -6,7 +6,7 @@ export function maskLinesBinaryDataToDFE(
   filteringGeometry,
   { uniqueIdProperty, analysedLinesFeatures }
 ) {
-  const res = new Uint16Array(currentLinesData.properties.length);
+  const res = new Uint16Array(currentLinesData.properties.length).fill(1);
 
   const uniqueIdsIn = new Set();
   const featureIdsIn = new Set();
