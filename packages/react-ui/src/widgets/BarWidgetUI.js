@@ -66,7 +66,7 @@ function BarWidgetUI(props) {
         color: theme.palette.common.white
       },
       backgroundColor: theme.palette.other.tooltip,
-      position: function (point, params, dom, rect, size) {
+      position: function (point, _params, _dom, _rect, size) {
         const position = { top: 0 };
 
         if (size.contentSize[0] < size.viewSize[0] - point[0]) {
@@ -136,15 +136,8 @@ function BarWidgetUI(props) {
         showMaxLabel: true,
         showMinLabel: false,
         inside: true,
-        color: (value) => {
-          // FIXME: Workaround to show only maxlabel
-          let col = 'transparent';
-          if (value >= maxValue) {
-            col = theme.palette.charts.maxLabel;
-          }
-
-          return col;
-        },
+        color: (value) =>
+          value >= maxValue ? theme.palette.charts.maxLabel : 'transparent',
         ...theme.typography.charts,
         formatter: (v) => processFormatterRes(yAxisFormatter(v))
       },
@@ -184,7 +177,7 @@ function BarWidgetUI(props) {
             ([sDataIdx, sComponentIdx = 0]) =>
               sDataIdx === dataIdx && sComponentIdx === componentIdx
           );
-          const isDisabled = !!selectedBars.length && !!!isSelected;
+          const isDisabled = !!selectedBars.length && !isSelected;
           return {
             value,
             ...(isDisabled && {
@@ -283,7 +276,7 @@ function BarWidgetUI(props) {
           className={classes.optionsSelectedBar}
         >
           <Typography variant='caption'>
-            {selectedBars && selectedBars.length ? selectedBars.length : 'All'} selected
+            {selectedBars?.length || 'All'} selected
           </Typography>
           {selectedBars && selectedBars.length > 0 && (
             <Link className={classes.selectAllButton} onClick={() => clearBars()}>
