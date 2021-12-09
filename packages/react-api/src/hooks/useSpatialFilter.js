@@ -11,18 +11,19 @@ import turfIntersects from '@turf/boolean-intersects';
 
 const EMPTY_OBJ = {};
 
-const EMPTY_ANALYSED_FEATURES = {
+const createEmptyAnalysedFeatures = () => ({
   points: new Map(),
   polygons: new Map(),
   lines: new Map()
-};
+});
 
 export default function useSpatialFilter(
   source,
   { renderSubLayers: _renderSubLayers, uniqueIdProperty = 'cartodb_id' }
 ) {
   // Stores already analysed features. Used to avoid inconsistencies between tiles.
-  const { current: analysedFeatures } = useRef(EMPTY_ANALYSED_FEATURES);
+  const analysedFeaturesRef = useRef(createEmptyAnalysedFeatures);
+  const spatialFilterBuffersCleanFn = useRef(null);
   const spatialFilterGeometry = useSelector((state) =>
     selectSpatialFilter(state, source?.id)
   );
@@ -43,7 +44,12 @@ export default function useSpatialFilter(
   }, [source?.filters]);
 
   useEffect(() => {
+    if (spatialFilterBuffersCleanFn.current) {
+      spatialFilterBuffersCleanFn.current();
+      spatialFilterBuffersCleanFn.current = null;
+    }
     setSpatialFilterBuffers({});
+    analysedFeaturesRef.current = createEmptyAnalysedFeatures();
   }, [spatialFilterGeometry]);
 
   // Used when layer uses tiles
@@ -69,10 +75,10 @@ export default function useSpatialFilter(
         data = _applySpatialFilterToTileContent(data, spatialFilterGeometry, {
           tileBbox: props.tile.bbox,
           uniqueIdProperty,
-          analysedFeatures
+          analysedFeatures: analysedFeaturesRef.current
         });
 
-        debouncedSetSpatialFilterBuffer({
+        spatialFilterBuffersCleanFn.current = debouncedSetSpatialFilterBuffer({
           [tileId]: {
             points: data.points.attributes.getFilterValue,
             lines: data.lines.attributes.getFilterValue,
@@ -158,6 +164,9 @@ export function incrementalDebounce(fn, ms) {
       });
       fullNewValue = null;
     }, ms);
-    return timer;
+    return () => {
+      clearTimeout(timer);
+      fullNewValue = null;
+    };
   };
 }
