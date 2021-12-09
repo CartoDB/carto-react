@@ -1,7 +1,9 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
 import { _buildFeatureFilter } from '@carto/react-core';
-import useViewportFeatures from './useViewportFeatures';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
+import { useSelector } from 'react-redux';
+import useGeoJsonFeatures from './useGeoJsonFeatures';
+import useTilesetFeatures from './useTilesetFeatures';
 
 export default function useCartoLayerProps({
   source,
@@ -9,11 +11,19 @@ export default function useCartoLayerProps({
   viewportFeatures = true,
   viewporFeaturesDebounceTimeout = 500
 }) {
-  const [onViewportLoad, onDataLoad, fetch] = useViewportFeatures(
-    source,
+  const viewport = useSelector((state) => state.carto.viewport);
+
+  const [onDataLoad] = useGeoJsonFeatures(source, {
+    viewport,
     uniqueIdProperty,
-    viewporFeaturesDebounceTimeout
-  );
+    debounceTimeout: viewporFeaturesDebounceTimeout
+  });
+
+  const [onViewportLoad, fetch] = useTilesetFeatures(source, {
+    viewport,
+    uniqueIdProperty,
+    debounceTimeout: viewporFeaturesDebounceTimeout
+  });
 
   let props = {};
 

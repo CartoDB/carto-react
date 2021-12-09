@@ -13,6 +13,7 @@ import { Methods } from '../workerMethods';
 
 let currentViewportFeatures;
 let currentGeoJSON;
+let currentTiles;
 
 onmessage = ({ data: { method, ...params } }) => {
   switch (method) {
@@ -37,6 +38,9 @@ onmessage = ({ data: { method, ...params } }) => {
     case Methods.VIEWPORT_FEATURES_RAW_FEATURES:
       getRawFeatures(params);
       break;
+    case Methods.LOAD_TILES:
+      loadTiles(params);
+      break;
     case Methods.LOAD_GEOJSON_FEATURES:
       loadGeoJSONFeatures(params);
       break;
@@ -48,12 +52,17 @@ onmessage = ({ data: { method, ...params } }) => {
   }
 };
 
-function getViewportFeatures({ tiles, viewport, uniqueIdProperty }) {
+function getViewportFeatures({ viewport, uniqueIdProperty }) {
   currentViewportFeatures = viewportFeaturesBinary({
-    tiles,
+    tiles: currentTiles,
     viewport,
     uniqueIdProperty
   });
+  postMessage({ result: true });
+}
+
+function loadTiles({ tiles }) {
+  currentTiles = tiles;
   postMessage({ result: true });
 }
 
@@ -174,7 +183,7 @@ function getRawFeatures({
   postMessage({ result: { data, currentPage: page, pages: numberPages } });
 }
 
-function applyPagination (features, { limit, page }) {
+function applyPagination(features, { limit, page }) {
   return features.slice(limit * Math.max(0, page - 1), limit * Math.max(1, page));
 }
 

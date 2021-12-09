@@ -114,6 +114,10 @@ function calculateViewportFeatures({
   type,
   uniqueIdProperty
 }) {
+  if (!data?.properties.length) {
+    return;
+  }
+
   if (tileIsFullyVisible) {
     addAllFeaturesInTile({ map, data, uniqueIdProperty });
   } else {
@@ -158,11 +162,6 @@ export function viewportFeaturesBinary({ tiles, viewport, uniqueIdProperty }) {
   const map = new Map();
 
   for (const tile of tiles) {
-    // Discard if it's not a visible tile or tile has not data
-    if (!tile.isVisible || !tile.data) {
-      continue;
-    }
-
     const { bbox } = tile;
     const tileIsFullyVisible = isTileFullyVisible(bbox, viewport);
     const viewportIntersection = bboxPolygon(prepareViewport(tile.bbox, viewport));
