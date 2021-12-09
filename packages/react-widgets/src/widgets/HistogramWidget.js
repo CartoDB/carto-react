@@ -65,9 +65,9 @@ function HistogramWidget(props) {
   const selectedBars = useMemo(() => {
     return (thresholdsFromFilters || EMPTY_ARRAY)
       .map(([from, to]) => {
-        if (typeof from === 'undefined') {
+        if (typeof from === 'undefined' || from === null) {
           return 0;
-        } else if (typeof to === 'undefined') {
+        } else if (typeof to === 'undefined' || to === null) {
           return ticks.length - 1;
         } else {
           const idx = ticks.indexOf(from);
