@@ -33,13 +33,14 @@ export default function useCartoLayerProps({
   ) {
     props = {
       binary: true,
-      onViewportLoad: viewportFeatures ? onViewportLoad : null,
-      fetch: viewportFeatures ? fetch : null
+      ...(viewportFeatures && {
+        onViewportLoad,
+        fetch
+      })
     };
   } else if (source?.type === MAP_TYPES.QUERY || source?.type === MAP_TYPES.TABLE) {
-    props = {
-      // empty function should be removed by null, but need a fix in CartoLayer
-      onDataLoad: viewportFeatures ? onDataLoad : () => null
+    props = viewportFeatures && {
+      onDataLoad
     };
   }
 
