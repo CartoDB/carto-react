@@ -8,7 +8,7 @@ import { throwError } from './utils';
 
 export default function useTilesetFeatures(
   source,
-  { viewport, uniqueIdProperty, debounceTimeout = 500 }
+  { viewport, uniqueIdProperty, debounceTimeout = 250 }
 ) {
   const dispatch = useDispatch();
   const [isTilesetLoaded, setTilesetLoaded] = useState(false);

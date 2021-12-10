@@ -7,7 +7,7 @@ import { throwError } from './utils';
 
 export default function useGeoJsonFeatures(
   source,
-  { viewport, uniqueIdProperty = 'cartodb_id', debounceTimeout = 500 }
+  { viewport, uniqueIdProperty = 'cartodb_id', debounceTimeout = 250 }
 ) {
   const dispatch = useDispatch();
   const [isGeoJsonLoaded, setGeoJsonLoaded] = useState(false);
@@ -38,7 +38,7 @@ export default function useGeoJsonFeatures(
         uniqueIdProperty
       })
         .then(() => {
-          setSourceViewportFeaturesReady(sourceId, true);
+          setSourceViewportFeaturesReady(true);
         })
         .catch(throwError);
     },
