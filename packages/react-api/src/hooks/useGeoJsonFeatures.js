@@ -52,12 +52,10 @@ export default function useGeoJsonFeatures(
   );
 
   useEffect(() => {
-    if (sourceId) {
+    if (sourceId && isGeoJsonLoaded) {
       setSourceViewportFeaturesReady(false);
-      if (isGeoJsonLoaded) {
-        clearDebounce();
-        debouncedComputeFeaturesGeoJson({ viewport, uniqueIdProperty });
-      }
+      clearDebounce();
+      debounceIdRef.current = debouncedComputeFeaturesGeoJson({ viewport, uniqueIdProperty });
     }
   }, [
     viewport,
