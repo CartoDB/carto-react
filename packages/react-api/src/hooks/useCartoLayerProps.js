@@ -13,13 +13,15 @@ export default function useCartoLayerProps({
 }) {
   const viewport = useSelector((state) => state.carto.viewport);
 
-  const [onDataLoad] = useGeoJsonFeatures(source, {
+  const [onDataLoad] = useGeoJsonFeatures({
+    source,
     viewport,
     uniqueIdProperty,
     debounceTimeout: viewporFeaturesDebounceTimeout
   });
 
-  const [onViewportLoad, fetch] = useTilesetFeatures(source, {
+  const [onViewportLoad, fetch] = useTilesetFeatures({
+    source,
     viewport,
     uniqueIdProperty,
     debounceTimeout: viewporFeaturesDebounceTimeout

@@ -5,10 +5,12 @@ import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { throwError } from './utils';
 
-export default function useGeoJsonFeatures(
+export default function useGeoJsonFeatures({
   source,
-  { viewport, uniqueIdProperty = 'cartodb_id', debounceTimeout = 250 }
-) {
+  viewport,
+  uniqueIdProperty = 'cartodb_id',
+  debounceTimeout = 250
+}) {
   const dispatch = useDispatch();
   const [isGeoJsonLoaded, setGeoJsonLoaded] = useState(false);
   const debounceIdRef = useRef(null);
@@ -55,7 +57,10 @@ export default function useGeoJsonFeatures(
     if (sourceId && isGeoJsonLoaded) {
       setSourceViewportFeaturesReady(false);
       clearDebounce();
-      debounceIdRef.current = debouncedComputeFeaturesGeoJson({ viewport, uniqueIdProperty });
+      debounceIdRef.current = debouncedComputeFeaturesGeoJson({
+        viewport,
+        uniqueIdProperty
+      });
     }
   }, [
     viewport,
