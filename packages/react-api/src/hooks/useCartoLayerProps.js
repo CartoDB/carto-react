@@ -1,19 +1,31 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
 import { _buildFeatureFilter } from '@carto/react-core';
-import useViewportFeatures from './useViewportFeatures';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
+import { useSelector } from 'react-redux';
+import useGeoJsonFeatures from './useGeoJsonFeatures';
+import useTilesetFeatures from './useTilesetFeatures';
 
 export default function useCartoLayerProps({
   source,
   uniqueIdProperty,
   viewportFeatures = true,
-  viewporFeaturesDebounceTimeout = 500
+  viewporFeaturesDebounceTimeout = 250
 }) {
-  const [onViewportLoad, onDataLoad, fetch] = useViewportFeatures(
+  const viewport = useSelector((state) => state.carto.viewport);
+
+  const [onDataLoad] = useGeoJsonFeatures({
     source,
+    viewport,
     uniqueIdProperty,
-    viewporFeaturesDebounceTimeout
-  );
+    debounceTimeout: viewporFeaturesDebounceTimeout
+  });
+
+  const [onViewportLoad, fetch] = useTilesetFeatures({
+    source,
+    viewport,
+    uniqueIdProperty,
+    debounceTimeout: viewporFeaturesDebounceTimeout
+  });
 
   let props = {};
 
@@ -23,13 +35,14 @@ export default function useCartoLayerProps({
   ) {
     props = {
       binary: true,
-      onViewportLoad: viewportFeatures ? onViewportLoad : null,
-      fetch: viewportFeatures ? fetch : null
+      ...(viewportFeatures && {
+        onViewportLoad,
+        fetch
+      })
     };
   } else if (source?.type === MAP_TYPES.QUERY || source?.type === MAP_TYPES.TABLE) {
-    props = {
-      // empty function should be removed by null, but need a fix in CartoLayer
-      onDataLoad: viewportFeatures ? onDataLoad : () => null
+    props = viewportFeatures && {
+      onDataLoad
     };
   }
 

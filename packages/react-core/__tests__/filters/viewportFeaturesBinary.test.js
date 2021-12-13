@@ -4,7 +4,7 @@ import { viewportFeaturesBinary } from '../../';
 describe('viewport features with binary mode', () => {
   const viewport = [-10, -10, 10, 10]; // west - south - east - north
   const [west, south, east, north] = viewport;
-
+  
   describe('return no data', () => {
     test('tiles are not visible', () => {
       const mockedTiles = [...Array(10)].map(() => ({ isVisible: false }));

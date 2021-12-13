@@ -4,6 +4,7 @@
 
 - Implement C4R filtering using binary data [#228](https://github.com/CartoDB/carto-react/pull/228)
 - Fix build adding peerDependecy of @carto/react-core to @carto/react-ui [#237](https://github.com/CartoDB/carto-react/pull/237)
+- Refactor useViewportFeatures [#238](https://github.com/CartoDB/carto-react/pull/238)
 
 ## 1.1.3 (2021-12-04)
 
