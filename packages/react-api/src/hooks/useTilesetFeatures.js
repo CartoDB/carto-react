@@ -1,10 +1,9 @@
-import { useEffect, useCallback, useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { setViewportFeaturesReady } from '@carto/react-redux';
+import { useEffect, useCallback } from 'react';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { Layer } from '@deck.gl/core';
 import { throwError } from './utils';
+import useFeaturesCommons from './useFeaturesCommons';
 
 export default function useTilesetFeatures({
   source,
@@ -12,39 +11,22 @@ export default function useTilesetFeatures({
   uniqueIdProperty,
   debounceTimeout = 250
 }) {
-  const dispatch = useDispatch();
-  const [isTilesetLoaded, setTilesetLoaded] = useState(false);
-  const debounceIdRef = useRef(null);
-
-  const clearDebounce = () => {
-    if (debounceIdRef.current) {
-      clearTimeout(debounceIdRef.current);
-    }
-    debounceIdRef.current = null;
-  };
-
-  const stopAnyCompute = useCallback(() => {
-    clearDebounce();
-    setTilesetLoaded(false);
-  }, [setTilesetLoaded]);
+  const [
+    isTilesetLoaded,
+    setTilesetLoaded,
+    clearDebounce,
+    stopAnyCompute,
+    setSourceViewportFeaturesReady
+  ] = useFeaturesCommons({ source });
 
   const sourceId = source?.id;
-
-  const setSourceViewportFeaturesReady = useCallback(
-    (ready) => {
-      if (sourceId) {
-        dispatch(setViewportFeaturesReady({ sourceId, ready }));
-      }
-    },
-    [dispatch, sourceId]
-  );
 
   const computeViewportFeatures = useCallback(
     ({ viewport, uniqueIdProperty }) => {
       setSourceViewportFeaturesReady(false);
 
       executeTask(sourceId, Methods.VIEWPORT_FEATURES, {
-        viewport: Float32Array.of(...viewport),
+        viewport,
         uniqueIdProperty
       })
         .then(() => {
@@ -103,12 +85,6 @@ export default function useTilesetFeatures({
     isTilesetLoaded,
     setSourceViewportFeaturesReady
   ]);
-
-  useEffect(() => {
-    if (!source) {
-      setTilesetLoaded(false);
-    }
-  }, [source]);
 
   const onViewportLoad = useCallback(
     (tiles) => {

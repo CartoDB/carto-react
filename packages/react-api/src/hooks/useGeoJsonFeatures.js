@@ -1,9 +1,8 @@
-import { useEffect, useCallback, useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { setViewportFeaturesReady } from '@carto/react-redux';
+import { useEffect, useCallback } from 'react';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { throwError } from './utils';
+import useFeaturesCommons from './useFeaturesCommons';
 
 export default function useGeoJsonFeatures({
   source,
@@ -11,32 +10,20 @@ export default function useGeoJsonFeatures({
   uniqueIdProperty = 'cartodb_id',
   debounceTimeout = 250
 }) {
-  const dispatch = useDispatch();
-  const [isGeoJsonLoaded, setGeoJsonLoaded] = useState(false);
-  const debounceIdRef = useRef(null);
-
-  const clearDebounce = () => {
-    if (debounceIdRef.current) {
-      clearTimeout(debounceIdRef.current);
-    }
-    debounceIdRef.current = null;
-  };
+  const [
+    isGeoJsonLoaded,
+    setGeoJsonLoaded,
+    clearDebounce,
+    stopAnyCompute,
+    setSourceViewportFeaturesReady
+  ] = useFeaturesCommons({ source });
 
   const sourceId = source?.id;
-
-  const setSourceViewportFeaturesReady = useCallback(
-    (ready) => {
-      if (sourceId) {
-        dispatch(setViewportFeaturesReady({ sourceId, ready }));
-      }
-    },
-    [dispatch, sourceId]
-  );
 
   const computeFeaturesGeoJson = useCallback(
     ({ viewport, uniqueIdProperty }) => {
       executeTask(sourceId, Methods.VIEWPORT_FEATURES_GEOJSON, {
-        viewport: Float32Array.of(...viewport),
+        viewport,
         uniqueIdProperty
       })
         .then(() => {
@@ -55,8 +42,8 @@ export default function useGeoJsonFeatures({
 
   useEffect(() => {
     if (sourceId && isGeoJsonLoaded) {
-      setSourceViewportFeaturesReady(false);
       clearDebounce();
+      setSourceViewportFeaturesReady(false);
       debounceIdRef.current = debouncedComputeFeaturesGeoJson({
         viewport,
         uniqueIdProperty
@@ -71,15 +58,9 @@ export default function useGeoJsonFeatures({
     setSourceViewportFeaturesReady
   ]);
 
-  useEffect(() => {
-    if (!source) {
-      setGeoJsonLoaded(false);
-    }
-  }, [source]);
-
   const onDataLoad = useCallback(
     (geojson) => {
-      clearDebounce();
+      stopAnyCompute();
       setSourceViewportFeaturesReady(false);
       executeTask(sourceId, Methods.LOAD_GEOJSON_FEATURES, { geojson })
         .then(() => setGeoJsonLoaded(true))
