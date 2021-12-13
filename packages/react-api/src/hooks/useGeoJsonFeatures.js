@@ -11,6 +11,7 @@ export default function useGeoJsonFeatures({
   debounceTimeout = 250
 }) {
   const [
+    debounceIdRef,
     isGeoJsonLoaded,
     setGeoJsonLoaded,
     clearDebounce,
@@ -52,10 +53,12 @@ export default function useGeoJsonFeatures({
   }, [
     viewport,
     uniqueIdProperty,
-    debouncedComputeFeaturesGeoJson,
     sourceId,
     isGeoJsonLoaded,
-    setSourceViewportFeaturesReady
+    debouncedComputeFeaturesGeoJson,
+    setSourceViewportFeaturesReady,
+    clearDebounce,
+    debounceIdRef
   ]);
 
   const onDataLoad = useCallback(
@@ -66,7 +69,7 @@ export default function useGeoJsonFeatures({
         .then(() => setGeoJsonLoaded(true))
         .catch(throwError);
     },
-    [sourceId, setSourceViewportFeaturesReady]
+    [sourceId, setSourceViewportFeaturesReady, stopAnyCompute, setGeoJsonLoaded]
   );
 
   return [onDataLoad];

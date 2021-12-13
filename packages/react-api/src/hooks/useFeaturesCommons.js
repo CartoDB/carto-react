@@ -14,17 +14,17 @@ export default function useFeaturesCommons({ source }) {
     }
   }, [source]);
 
-  const clearDebounce = () => {
+  const clearDebounce = useCallback(() => {
     if (debounceIdRef.current) {
       clearTimeout(debounceIdRef.current);
     }
     debounceIdRef.current = null;
-  };
+  }, []);
 
   const stopAnyCompute = useCallback(() => {
     clearDebounce();
     setDataLoaded(false);
-  }, [setDataLoaded]);
+  }, [clearDebounce, setDataLoaded]);
 
   const sourceId = source?.id;
 
@@ -38,6 +38,7 @@ export default function useFeaturesCommons({ source }) {
   );
 
   return [
+    debounceIdRef,
     isDataLoaded,
     setDataLoaded,
     clearDebounce,

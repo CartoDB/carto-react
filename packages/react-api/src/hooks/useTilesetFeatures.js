@@ -12,6 +12,7 @@ export default function useTilesetFeatures({
   debounceTimeout = 250
 }) {
   const [
+    debounceIdRef,
     isTilesetLoaded,
     setTilesetLoaded,
     clearDebounce,
@@ -35,7 +36,7 @@ export default function useTilesetFeatures({
         .catch(throwError)
         .finally(clearDebounce);
     },
-    [setSourceViewportFeaturesReady, sourceId]
+    [setSourceViewportFeaturesReady, sourceId, clearDebounce]
   );
 
   const loadTiles = useCallback(
@@ -54,7 +55,7 @@ export default function useTilesetFeatures({
         .then(() => setTilesetLoaded(true))
         .catch(throwError);
     },
-    [sourceId]
+    [sourceId, setTilesetLoaded]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,7 +84,9 @@ export default function useTilesetFeatures({
     debouncedComputeViewportFeatures,
     sourceId,
     isTilesetLoaded,
-    setSourceViewportFeaturesReady
+    setSourceViewportFeaturesReady,
+    clearDebounce,
+    debounceIdRef
   ]);
 
   const onViewportLoad = useCallback(
@@ -93,7 +96,7 @@ export default function useTilesetFeatures({
 
       debounceIdRef.current = debouncedLoadTiles(tiles);
     },
-    [stopAnyCompute, setSourceViewportFeaturesReady, debouncedLoadTiles]
+    [stopAnyCompute, setSourceViewportFeaturesReady, debouncedLoadTiles, debounceIdRef]
   );
 
   const fetch = useCallback(
