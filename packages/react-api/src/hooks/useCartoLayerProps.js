@@ -12,7 +12,7 @@ export default function useCartoLayerProps({
   source,
   uniqueIdProperty,
   viewportFeatures = true,
-  viewporFeaturesDebounceTimeout = 500,
+  viewporFeaturesDebounceTimeout = 250,
   renderSubLayers // TODO: Provide a default renderSubLayers
 }) {
   const viewport = useSelector((state) => state.carto.viewport);
