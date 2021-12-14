@@ -43,7 +43,6 @@ export default function useGeoJsonFeatures({
 
   useEffect(() => {
     if (sourceId && isGeoJsonLoaded) {
-      clearDebounce();
       setSourceViewportFeaturesReady(false);
       debounceIdRef.current = debouncedComputeFeaturesGeoJson({
         viewport,

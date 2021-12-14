@@ -76,7 +76,6 @@ export default function useTilesetFeatures({
 
   useEffect(() => {
     if (sourceId && isTilesetLoaded) {
-      clearDebounce();
       setSourceViewportFeaturesReady(false);
       debounceIdRef.current = debouncedComputeViewportFeatures({
         viewport,
@@ -108,10 +107,10 @@ export default function useTilesetFeatures({
 
   const fetch = useCallback(
     (...args) => {
-      stopAnyCompute();
+      clearDebounce();
       return Layer.defaultProps.fetch.value(...args);
     },
-    [stopAnyCompute]
+    [clearDebounce]
   );
 
   return [onViewportLoad, fetch];

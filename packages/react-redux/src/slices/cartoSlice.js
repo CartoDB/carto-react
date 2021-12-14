@@ -308,7 +308,7 @@ export const selectIsViewportFeaturesReadyForSource = (state, id) =>
 
 const debouncedSetViewPort = debounce((dispatch, setViewPort) => {
   dispatch(setViewPort());
-}, 100);
+}, 25);
 
 const NOT_ALLOWED_DECK_PROPS = [
   'transitionDuration',
