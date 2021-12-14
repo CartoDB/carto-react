@@ -79,7 +79,6 @@ export default function useSpatialFilterTileset(
 
   const renderSubLayers = useCallback(
     (props) => {
-      console.log('renderSubLayers');
       // props.data is the same as props.tile.content
       let { data, binary } = props;
       if (!data || !binary) {
@@ -136,9 +135,6 @@ export default function useSpatialFilterTileset(
       if (source?.filters) {
         data = _applyFiltersToTileContent(data, source?.filters);
       }
-
-      // let t1 = performance.now();
-      // console.log(t1 - t0);
 
       tilesCacheRef.current = {
         ...tilesCacheRef.current,
