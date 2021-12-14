@@ -21,7 +21,7 @@ describe('useCartoLayerProps', () => {
       'credentials',
       'filterRange',
       'extensions',
-      'updateTriggers'
+      'dataComparator'
     ];
 
     describe('when maps_api_version is V2', () => {
@@ -98,7 +98,7 @@ describe('useCartoLayerProps', () => {
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current).sort()).toEqual(
-          ['onDataLoad', 'getFilterValue', ...COMMON_PROPS].sort()
+          ['onDataLoad', 'getFilterValue', 'updateTriggers', ...COMMON_PROPS].sort()
         );
       });
 
@@ -113,7 +113,7 @@ describe('useCartoLayerProps', () => {
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current).sort()).toEqual(
-          ['onDataLoad', 'getFilterValue', ...COMMON_PROPS].sort()
+          ['onDataLoad', 'getFilterValue', 'updateTriggers', ...COMMON_PROPS].sort()
         );
       });
     });
@@ -196,14 +196,6 @@ describe('useCartoLayerProps', () => {
       const { result } = renderHook(() => useCartoLayerProps({ source }));
 
       expect(result.current.onDataLoad).toBeInstanceOf(Function);
-    });
-
-    test("getFilterValue trigger shouldn't be present if there isn't filters", () => {
-      const { result } = renderHook(() =>
-        useCartoLayerProps({ source: { credentials: { apiVersion: 'v2' } } })
-      );
-
-      expect(result.current.updateTriggers).not.toHaveProperty('getFilterValue');
     });
 
     test('filter range should be between 1 and 1', () => {

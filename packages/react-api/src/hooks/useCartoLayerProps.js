@@ -59,6 +59,9 @@ export default function useCartoLayerProps({
   } else if (useGeoJSON) {
     props = {
       getFilterValue,
+      updateTriggers: {
+        getFilterValue
+      },
       ...(viewportFeatures && { onDataLoad })
     };
   }
