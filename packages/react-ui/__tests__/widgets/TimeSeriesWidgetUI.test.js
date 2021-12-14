@@ -233,4 +233,18 @@ describe('TimeSeriesWidgetUI', () => {
       jest.runAllTimers();
     });
   });
+
+  test('clear when animation is working', () => {
+    const onStop = jest.fn();
+    render(<Widget isPlaying={true} onStop={onStop} />);
+    fireEvent.click(screen.getByText(/Clear/));
+    setTimeout(() => expect(onStop).toHaveBeenCalledTimes(1), 250);
+  });
+
+  test('clear when set a time window', () => {
+    const onStop = jest.fn();
+    render(<Widget timeWindow={[1517785200000, 1528063200000]} onStop={onStop} />);
+    fireEvent.click(screen.getByText(/Clear/));
+    setTimeout(() => expect(onStop).toHaveBeenCalledTimes(1), 250);
+  });
 });
