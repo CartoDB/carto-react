@@ -3,17 +3,17 @@ import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { useSelector } from 'react-redux';
 import useGeoJsonFeatures from './geojson/useGeoJsonFeatures';
 import useTilesetFeatures from './tileset/useTilesetFeatures';
-import useSpatialFilterTileset from './tileset/useSpatialFilterTileset';
 import { dequal as deepEqual } from 'dequal';
 import useFiltersGeoJson from './geojson/useFiltersGeoJson';
 import { useCallback } from 'react';
+import useRenderSubLayers from './tileset/useRenderSubLayers';
 
 export default function useCartoLayerProps({
   source,
   uniqueIdProperty,
   viewportFeatures = true,
   viewporFeaturesDebounceTimeout = 250,
-  renderSubLayers // TODO: Provide a default renderSubLayers
+  renderSubLayers: _renderSubLayers // TODO: Provide a default renderSubLayers
 }) {
   const viewport = useSelector((state) => state.carto.viewport);
 
@@ -28,10 +28,9 @@ export default function useCartoLayerProps({
   });
 
   // For tiles layers
-  const [_renderSubLayers, spatialFilterBuffers] = useSpatialFilterTileset({
+  const [renderSubLayers, spatialFilterBuffers] = useRenderSubLayers({
     source,
-    renderSubLayers,
-    uniqueIdProperty
+    renderSubLayers: _renderSubLayers
   });
 
   const [onViewportLoad, fetch] = useTilesetFeatures({
@@ -53,7 +52,7 @@ export default function useCartoLayerProps({
   if (useMVT) {
     props = {
       binary: true,
-      renderSubLayers: _renderSubLayers,
+      renderSubLayers,
       ...(viewportFeatures && {
         onViewportLoad,
         fetch

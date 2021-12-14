@@ -1,12 +1,8 @@
-import {
-  _applySpatialFilterToTileContent,
-  _applyFiltersToTileContent,
-  debounce
-} from '@carto/react-core/';
+import { _applySpatialFilterToTileContent, debounce } from '@carto/react-core/';
 import { selectSpatialFilter } from '@carto/react-redux';
 import { useCallback, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getTileId } from '../../utils/tileUtils';
+import { getTileId } from '../utils';
 
 const EMPTY_OBJ = {};
 
@@ -16,22 +12,20 @@ const createEmptyAnalysedFeatures = () => ({
   lines: new Map()
 });
 
-export default function useSpatialFilterTileset({
-  source,
-  renderSubLayers: _renderSubLayers,
-  uniqueIdProperty = 'cartodb_id'
-}) {
+export default function useSpatialFilterTileset({ source, tilesCacheRef }) {
   // Stores already analysed features. Used to avoid inconsistencies between tiles.
   const analysedFeaturesRef = useRef(createEmptyAnalysedFeatures());
-  const tilesCacheRef = useRef({});
 
-  // For reloading tile filtering
+  // For forcing tile filtering
   const [reloadCounter, setReloadCounter] = useState(0);
 
   const debounceIdReloadRef = useRef(null);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedReload = useCallback(
-    debounce(() => {
+    debounce((shouldClearTilesCache) => {
+      if (shouldClearTilesCache) {
+        tilesCacheRef.current = {};
+      }
       setReloadCounter((oldState) => (oldState ? 0 : 1));
     }, 25),
     []
@@ -54,15 +48,11 @@ export default function useSpatialFilterTileset({
 
   const currentFilterGeometryRef = useRef(spatialFilterGeometry);
 
-  let hasGeometryChanged = false;
-  if (currentFilterGeometryRef.current !== spatialFilterGeometry) {
-    currentFilterGeometryRef.current = spatialFilterGeometry;
-    hasGeometryChanged = true;
-  }
-
-  // Clean analysed features cache
-  // We
+  let hasGeometryChanged = currentFilterGeometryRef.current !== spatialFilterGeometry;
+  // Reset everything if geom has changed
+  // Do not use useEffect because it's slow for this case
   if (hasGeometryChanged && spatialFilterGeometry) {
+    currentFilterGeometryRef.current = spatialFilterGeometry;
     if (debounceIdReloadRef.current) {
       clearTimeout(debounceIdReloadRef.current);
       debounceIdReloadRef.current = null;
@@ -73,51 +63,36 @@ export default function useSpatialFilterTileset({
     }
     tilesCacheRef.current = {};
     analysedFeaturesRef.current = createEmptyAnalysedFeatures();
-    setReloadCounter(0);
   }
 
-  const renderSubLayers = useCallback(
+  const applySpatialFilter = useCallback(
     (props) => {
       // props.data is the same as props.tile.content
-      let { data, binary } = props;
-      if (!data || !binary) {
-        return null;
-      }
+      let { data, uniqueIdProperty = 'cartodb_id' } = props;
 
-      const tileId = getTileId(props.tile);
-
-      if (tilesCacheRef.current?.[tileId] && reloadCounter === 0) {
-        data = tilesCacheRef.current?.[tileId];
-        return _renderSubLayers(props, { data });
-      }
-
-      // ... If tile isn't cached ...
-
-      // Stop reload if another tile is going to be analysed
-      if (debounceIdReloadRef.current) {
-        clearTimeout(debounceIdReloadRef.current);
-        debounceIdReloadRef.current = null;
-      }
-
-      if (debounceIdSetSpatialFilterBuffersRef.current) {
-        clearTimeout(debounceIdSetSpatialFilterBuffersRef.current);
-        debounceIdSetSpatialFilterBuffersRef.current = null;
-      }
-
-      // We need to add getFilterValue binary attribute
-      // even if there's no filter applied. This is to
-      // avoid weird reactivity bahavior when adding DataFilterExtension.
-      data = addGetFilterValueToTileContent(data);
-
-      // First of all, filter spatially by a certain geometry.
       if (spatialFilterGeometry) {
+        const tileId = getTileId(props.tile);
+
+        // Stop reload if another tile is going to be analysed
+        if (debounceIdReloadRef.current) {
+          clearTimeout(debounceIdReloadRef.current);
+          debounceIdReloadRef.current = null;
+        }
+
+        if (debounceIdSetSpatialFilterBuffersRef.current) {
+          clearTimeout(debounceIdSetSpatialFilterBuffersRef.current);
+          debounceIdSetSpatialFilterBuffersRef.current = null;
+        }
+
+        // First of all, filter spatially by a certain geometry.
         data = _applySpatialFilterToTileContent(data, spatialFilterGeometry, {
           tileBbox: props.tile.bbox,
           uniqueIdProperty,
           analysedFeatures: analysedFeaturesRef.current
         });
 
-        debounceIdReloadRef.current = debouncedReload();
+        const shouldClearTilesCache = reloadCounter === 0;
+        debounceIdReloadRef.current = debouncedReload(shouldClearTilesCache);
 
         debounceIdSetSpatialFilterBuffersRef.current = debouncedSetSpatialFilterBuffers({
           [tileId]: {
@@ -128,43 +103,14 @@ export default function useSpatialFilterTileset({
         });
       }
 
-      // Finally, apply C4R filters.
-      // This _apply must be done after the one of spatial filter
-      // because that one doesn't use old getFilterValue value.
-      if (source?.filters) {
-        data = _applyFiltersToTileContent(data, source?.filters);
-      }
-
-      tilesCacheRef.current = {
-        ...tilesCacheRef.current,
-        [tileId]: data
-      };
-
-      return _renderSubLayers(props, { data });
+      return { ...props, data };
     },
-    [_renderSubLayers, hasGeometryChanged, reloadCounter, uniqueIdProperty]
+    // DO NOT ADD ANYTHING ELSE
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [hasGeometryChanged, reloadCounter]
   );
 
-  return [renderSubLayers, spatialFilterBuffers];
-}
-
-// Aux
-function addGetFilterValueToTileContent(tileContent) {
-  return {
-    ...tileContent,
-    ...['points', 'lines', 'polygons'].reduce((acc, key) => {
-      acc[key] = {
-        ...tileContent[key],
-        attributes: {
-          getFilterValue: {
-            value: new Uint16Array(tileContent[key].featureIds.value.length).fill(1),
-            size: 1
-          }
-        }
-      };
-      return acc;
-    }, {})
-  };
+  return [applySpatialFilter, spatialFilterBuffers];
 }
 
 // incrementalDebounce is a variation of classic debounce

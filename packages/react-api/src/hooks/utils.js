@@ -6,3 +6,7 @@ export function throwError(error) {
   if (error.name === 'AbortError') return;
   throw error;
 }
+
+export function getTileId({ x, y, z }) {
+  return `${x}-${y}-${z}`;
+}
