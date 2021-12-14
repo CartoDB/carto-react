@@ -6,7 +6,6 @@ const webpackBaseConfig = require('../../webpack.base');
 
 const webpackConfig = {
   ...webpackBaseConfig,
-  devtool: false,
   externals: [
     'react', 
     'react-dom',
@@ -26,7 +25,7 @@ webpackConfig.module.rules.push(
     exclude: /(node_modules)/,
     loader: 'worker-loader',
     options: {
-      inline: 'fallback',
+      inline: 'fallback'
     }
   }
 )
