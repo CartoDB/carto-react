@@ -312,7 +312,7 @@ TimeSeriesWidget.propTypes = {
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
   formatter: PropTypes.func,
-  height: PropTypes.number,
+  height: PropTypes.string,
   animation: PropTypes.bool,
   isPlaying: PropTypes.bool,
   onPlay: PropTypes.func,
