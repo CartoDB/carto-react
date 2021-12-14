@@ -1,15 +1,12 @@
 import {
-  _buildFeatureFilter,
   _applySpatialFilterToTileContent,
   _applyFiltersToTileContent,
   debounce
 } from '@carto/react-core/';
 import { selectSpatialFilter } from '@carto/react-redux';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getTileId } from '../utils/tileUtils';
-import turfIntersects from '@turf/boolean-intersects';
-import { dequal } from 'dequal';
 
 const EMPTY_OBJ = {};
 
@@ -20,12 +17,6 @@ const createEmptyAnalysedFeatures = () => ({
   polygons: new Map(),
   lines: new Map()
 });
-
-const EMPTY_ANALYSED_FEATURES = {
-  points: new Map(),
-  polygons: new Map(),
-  lines: new Map()
-};
 
 export default function useSpatialFilterTileset(
   source,
@@ -180,26 +171,12 @@ function addGetFilterValueToTileContent(tileContent) {
     }, {})
   };
 }
-function buildDataUsingSpatialFilterBuffer(data, spatialFilterBuffer) {
-  return {
-    ...data,
-    ...BINARY_DATA_KEYS.reduce((acc, key) => {
-      acc[key] = {
-        ...data[key],
-        attributes: {
-          getFilterValue: spatialFilterBuffer[key]
-        }
-      };
-      return acc;
-    }, {})
-  };
-}
 
 // incrementalDebounce is a variation of classic debounce
 // made to join the arguments of the difference fn calls.
 // In this case, it's special customised for useState considering
 // that first argument is always an object.
-export function incrementalDebounce(fn, ms) {
+function incrementalDebounce(fn, ms) {
   let timer;
   let fullNewValue;
   return (newValue) => {

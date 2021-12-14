@@ -88,13 +88,13 @@ function getViewportFeaturesGeoJSON({
   postMessage({ result: true });
 }
 
-function getFormula({ filters, spatialFilter, operation, column }) {
+function getFormula({ filters, operation, column }) {
   let result = null;
 
   if (currentViewportFeatures) {
     const targetOperation = aggregationFunctions[operation];
 
-    const filteredFeatures = getFilteredFeatures(filters, spatialFilter);
+    const filteredFeatures = getFilteredFeatures(filters);
 
     result = [{ value: targetOperation(filteredFeatures, column) }];
   }
@@ -193,6 +193,6 @@ function applyPagination(features, { limit, page }) {
   return features.slice(limit * Math.max(0, page - 1), limit * Math.max(1, page));
 }
 
-function getFilteredFeatures(filters = {}, spatialFilter) {
-  return _applyFilters(currentViewportFeatures, filters, spatialFilter);
+function getFilteredFeatures(filters = {}) {
+  return _applyFilters(currentViewportFeatures, filters);
 }
