@@ -103,12 +103,7 @@ function WrapperWidgetUI(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles({ ...props, expanded });
   const open = Boolean(anchorEl);
-  const {
-    options = [],
-    actions = [],
-    optionsIcon = <MoreVert />,
-    isLoading = false
-  } = props;
+  const { options = [], actions = [], optionsIcon = <MoreVert /> } = props;
 
   const handleExpandClick = () => {
     if (props.expandable) {
@@ -153,7 +148,7 @@ function WrapperWidgetUI(props) {
 
   return (
     <Box component='section' aria-label={props.title} className={classes.root}>
-      {isLoading ? <LinearProgress className={classes.loading} /> : null}
+      {props.isLoading ? <LinearProgress className={classes.loading} /> : null}
       <Grid container className={classes.header}>
         <Button
           className={classes.button}
