@@ -5,6 +5,7 @@ export default function useFiltersTileset({ source, tilesCacheRef }) {
   const currentFiltersRef = useRef(source?.filters);
   const hasChanged = currentFiltersRef.current !== source?.filters;
 
+  // Do not use useEffect because it's slow for this case
   if (hasChanged) {
     tilesCacheRef.current = {};
     currentFiltersRef.current = source?.filters;
@@ -15,7 +16,7 @@ export default function useFiltersTileset({ source, tilesCacheRef }) {
       let { data } = props;
 
       if (source?.filters) {
-        data = _applyFiltersToTileContent(props.data, source?.filters);
+        data = _applyFiltersToTileContent(data, source?.filters);
       }
 
       return { ...props, data };

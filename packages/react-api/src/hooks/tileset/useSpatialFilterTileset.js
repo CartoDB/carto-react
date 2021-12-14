@@ -70,7 +70,7 @@ export default function useSpatialFilterTileset({ source, tilesCacheRef }) {
       // props.data is the same as props.tile.content
       let { data, uniqueIdProperty = 'cartodb_id' } = props;
 
-      if (spatialFilterGeometry) {
+      if (currentFilterGeometryRef.current) {
         const tileId = getTileId(props.tile);
 
         // Stop reload if another tile is going to be analysed
@@ -85,7 +85,7 @@ export default function useSpatialFilterTileset({ source, tilesCacheRef }) {
         }
 
         // First of all, filter spatially by a certain geometry.
-        data = _applySpatialFilterToTileContent(data, spatialFilterGeometry, {
+        data = _applySpatialFilterToTileContent(data, currentFilterGeometryRef.current, {
           tileBbox: props.tile.bbox,
           uniqueIdProperty,
           analysedFeatures: analysedFeaturesRef.current
@@ -106,6 +106,7 @@ export default function useSpatialFilterTileset({ source, tilesCacheRef }) {
       return { ...props, data };
     },
     // DO NOT ADD ANYTHING ELSE
+    // This fn only changes when geometry changes or forcing it to change using reloadCounter
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [hasGeometryChanged, reloadCounter]
   );
