@@ -8,6 +8,7 @@ const webpackConfig = {
   ...webpackBaseConfig,
   externals: [ 
     /^@material-ui\/.+$/,
+    '@carto/react-core',
     'echarts',
     'echarts-for-react',
     'react',
