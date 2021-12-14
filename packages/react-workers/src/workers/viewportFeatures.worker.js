@@ -13,6 +13,7 @@ import { Methods } from '../workerMethods';
 
 let currentViewportFeatures;
 let currentGeoJSON;
+let currentTiles;
 
 onmessage = ({ data: { method, ...params } }) => {
   switch (method) {
@@ -37,6 +38,9 @@ onmessage = ({ data: { method, ...params } }) => {
     case Methods.VIEWPORT_FEATURES_RAW_FEATURES:
       getRawFeatures(params);
       break;
+    case Methods.LOAD_TILES:
+      loadTiles(params);
+      break;
     case Methods.LOAD_GEOJSON_FEATURES:
       loadGeoJSONFeatures(params);
       break;
@@ -48,12 +52,18 @@ onmessage = ({ data: { method, ...params } }) => {
   }
 };
 
-function getViewportFeatures({ tiles, viewport, uniqueIdProperty }) {
+function getViewportFeatures({ viewport, spatialFilterBuffers, uniqueIdProperty }) {
   currentViewportFeatures = viewportFeaturesBinary({
-    tiles,
+    tiles: currentTiles,
     viewport,
+    spatialFilterBuffers,
     uniqueIdProperty
   });
+  postMessage({ result: true });
+}
+
+function loadTiles({ tiles }) {
+  currentTiles = tiles;
   postMessage({ result: true });
 }
 

@@ -6,7 +6,12 @@ import { maskPolygonsBinaryDataToDFE } from './polygons';
 export default function applySpatialFilterToTileContent(
   tileContent,
   geometry,
-  { tileBbox, uniqueIdProperty = 'cartodb_id', analysedFeatures } = {}
+  {
+    tileBbox,
+    uniqueIdProperty = 'cartodb_id',
+    analysedFeatures,
+    onAnalysedFeaturesUpdate
+  } = {}
 ) {
   const geometryInTileCoords = asTileCoords(geometry, tileBbox);
 

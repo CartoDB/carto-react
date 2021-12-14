@@ -1,7 +1,12 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
-import useViewportFeatures from './useViewportFeatures';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
-import useSpatialFilter from './useSpatialFilter';
+import { useSelector } from 'react-redux';
+import useGeoJsonFeatures from './useGeoJsonFeatures';
+import useTilesetFeatures from './useTilesetFeatures';
+import useSpatialFilterTileset from './useSpatialFilterTileset';
+import { dequal as deepEqual } from 'dequal';
+import useSpatialFilterGeoJson from './useSpatialFilterGeoJson';
+import { useCallback } from 'react';
 
 export default function useCartoLayerProps({
   source,
@@ -10,19 +15,27 @@ export default function useCartoLayerProps({
   viewporFeaturesDebounceTimeout = 500,
   renderSubLayers // TODO: Provide a default renderSubLayers
 }) {
-  const [_renderSubLayers, spatialFilterBuffers, getFilterValue] = useSpatialFilter(
-    source,
-    {
-      renderSubLayers
-    }
-  );
+  const viewport = useSelector((state) => state.carto.viewport);
 
-  const [onViewportLoad, onDataLoad, fetch] = useViewportFeatures(
-    source,
+  const [getFilterValue] = useSpatialFilterGeoJson(source);
+
+  const [onDataLoad] = useGeoJsonFeatures(source, {
+    viewport,
     uniqueIdProperty,
-    viewporFeaturesDebounceTimeout,
-    spatialFilterBuffers
-  );
+    debounceTimeout: viewporFeaturesDebounceTimeout
+  });
+
+  const [_renderSubLayers, spatialFilterBuffers] = useSpatialFilterTileset(source, {
+    renderSubLayers,
+    uniqueIdProperty
+  });
+
+  const [onViewportLoad, fetch] = useTilesetFeatures(source, {
+    viewport,
+    spatialFilterBuffers,
+    uniqueIdProperty,
+    debounceTimeout: viewporFeaturesDebounceTimeout
+  });
 
   let props = {};
 
@@ -35,24 +48,29 @@ export default function useCartoLayerProps({
   if (useMVT) {
     props = {
       binary: true,
-      onViewportLoad: viewportFeatures ? onViewportLoad : null,
-      fetch: viewportFeatures ? fetch : null,
       renderSubLayers: _renderSubLayers,
-      updateTriggers: {}
+      ...(viewportFeatures && {
+        onViewportLoad,
+        fetch
+      })
     };
   } else if (useGeoJSON) {
     props = {
-      // empty function should be removed by null, but need a fix in CartoLayer
-      onDataLoad: viewportFeatures ? onDataLoad : () => null,
-      updateTriggers: {
-        getFilterValue
-      },
-      getFilterValue
+      getFilterValue,
+      ...(viewportFeatures && { onDataLoad })
     };
   }
 
+  const dataComparator = useCallback((a, b) => {
+    if (a.byteLength && b.byteLength) {
+      return deepEqual(a, b);
+    }
+    return a === b;
+  }, []);
+
   return {
     ...props,
+    dataComparator,
     uniqueIdProperty,
     data: source?.data,
     type: source?.type,

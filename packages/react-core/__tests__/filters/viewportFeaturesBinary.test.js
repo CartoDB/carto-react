@@ -5,48 +5,6 @@ describe('viewport features with binary mode', () => {
   const viewport = [-10, -10, 10, 10]; // west - south - east - north
   const [west, south, east, north] = viewport;
 
-  describe('return no data', () => {
-    test('tiles are not visible', () => {
-      const mockedTiles = [...Array(10)].map(() => ({ isVisible: false }));
-
-      const properties = viewportFeaturesBinary({
-        tiles: mockedTiles,
-        viewport
-      });
-      expect(properties).toEqual([]);
-    });
-
-    test('tiles have no data', () => {
-      const mockedTiles = [{ data: null }, { data: undefined }];
-
-      const properties = viewportFeaturesBinary({
-        tiles: mockedTiles,
-        viewport
-      });
-      expect(properties).toEqual([]);
-    });
-
-    test('a tile is visible but it has no data', () => {
-      const mockedTiles = [{ isVisible: true, data: null }];
-
-      const properties = viewportFeaturesBinary({
-        tiles: mockedTiles,
-        viewport
-      });
-      expect(properties).toEqual([]);
-    });
-
-    test('a tile has data but is not visibile', () => {
-      const mockedTiles = [{ isVisible: false, data: [{}] }];
-
-      const properties = viewportFeaturesBinary({
-        tiles: mockedTiles,
-        viewport
-      });
-      expect(properties).toEqual([]);
-    });
-  });
-
   describe('correctly returns data', () => {
     test('should handle linestrings correctly', () => {
       const linestrings = [...Array(3)].map((_, i) => ({

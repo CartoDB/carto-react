@@ -1,4 +1,4 @@
-import React, { useState, createRef } from 'react';
+import React, { useState, createRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -103,7 +103,14 @@ function WrapperWidgetUI(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles({ ...props, expanded });
   const open = Boolean(anchorEl);
-  const { options = [], actions = [], optionsIcon = <MoreVert /> } = props;
+  const {
+    options = [],
+    actions = [],
+    optionsIcon = <MoreVert />,
+    isLoading = false
+  } = props;
+
+  const debouncedIsLoading = useDebouncedLoading(isLoading, 500);
 
   const handleExpandClick = () => {
     if (props.expandable) {
@@ -148,7 +155,7 @@ function WrapperWidgetUI(props) {
 
   return (
     <Box component='section' aria-label={props.title} className={classes.root}>
-      {props.isLoading ? <LinearProgress className={classes.loading} /> : null}
+      {debouncedIsLoading ? <LinearProgress className={classes.loading} /> : null}
       <Grid container className={classes.header}>
         <Button
           className={classes.button}
@@ -271,3 +278,24 @@ WrapperWidgetUI.propTypes = {
 };
 
 export default WrapperWidgetUI;
+
+// Aux
+function useDebouncedLoading(isLoading, delay) {
+  const [currentIsLoading, setDebouncedValue] = useState(isLoading);
+
+  useEffect(() => {
+    if (isLoading !== currentIsLoading) {
+      if (isLoading) {
+        const handler = setTimeout(() => {
+          setDebouncedValue(isLoading);
+        }, delay);
+        return () => clearTimeout(handler);
+      } else {
+        setDebouncedValue(isLoading);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, delay]);
+
+  return currentIsLoading;
+}

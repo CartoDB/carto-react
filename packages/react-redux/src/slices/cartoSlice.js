@@ -3,6 +3,7 @@ import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '@carto/react-core';
 import { removeWorker } from '@carto/react-workers';
 import { setDefaultCredentials } from '@deck.gl/carto';
+import { dequal } from 'dequal';
 
 /**
  *
@@ -88,8 +89,7 @@ export const createCartoSlice = (initialState) => {
         state.basemap = action.payload;
       },
       setViewState: (state, action) => {
-        const viewState = action.payload;
-        state.viewState = { ...state.viewState, ...viewState };
+        state.viewState = action.payload;
       },
       setViewPort: (state) => {
         state.viewport = new WebMercatorViewport(state.viewState).getBounds();
@@ -308,7 +308,7 @@ export const selectIsViewportFeaturesReadyForSource = (state, id) =>
 
 const debouncedSetViewPort = debounce((dispatch, setViewPort) => {
   dispatch(setViewPort());
-}, 200);
+}, 100);
 
 const NOT_ALLOWED_DECK_PROPS = [
   'transitionDuration',
@@ -322,7 +322,7 @@ const NOT_ALLOWED_DECK_PROPS = [
  * @param {Object} viewState
  */
 export const setViewState = (viewState) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     /**
      * "transition" deck props contain non-serializable values, like:
      *  - transitionInterpolator: instance of LinearInterpolator
@@ -334,8 +334,13 @@ export const setViewState = (viewState) => {
       delete viewState[viewProp];
     }
 
-    dispatch(_setViewState(viewState));
-    debouncedSetViewPort(dispatch, _setViewPort);
+    const { carto: currentState } = getState();
+    const newViewState = { ...currentState.viewState, ...viewState };
+    // Deep compare current viewState and the new one.
+    if (!dequal(currentState.viewState, newViewState)) {
+      dispatch(_setViewState(newViewState));
+      debouncedSetViewPort(dispatch, _setViewPort);
+    }
   };
 };
 

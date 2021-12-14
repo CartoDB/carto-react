@@ -29,7 +29,7 @@ export function maskPolygonsBinaryDataToDFE(
     // featureIdsIn.has(featureId) --> for multiline, if one of the lines is already IN, do not analyse any other
     // analysedPolygonsFeatures.get(uniqueId) --> for splitted lines between multiple tiles
     let doesIntersects =
-      featureIdsIn.has(featureId) || analysedPolygonsFeatures.get(uniqueId);
+      featureIdsIn.has(featureId) || analysedPolygonsFeatures.has(uniqueId);
     if (!doesIntersects) {
       const nextLine = currentPolygonsData.primitivePolygonIndices.value[idx + 1];
       doesIntersects = turfIntersects(
@@ -47,16 +47,11 @@ export function maskPolygonsBinaryDataToDFE(
       if (doesIntersects) {
         uniqueIdsIn.add(uniqueId);
         featureIdsIn.add(featureId);
+        analysedPolygonsFeatures.set(uniqueId, doesIntersects);
       }
     }
 
-    analysedPolygonsFeatures.set(uniqueId, doesIntersects);
-
-    if (doesIntersects) {
-      res[featureId] = 1;
-    } else {
-      res[featureId] = 0;
-    }
+    res[featureId] = doesIntersects;
 
     idx++;
   }
