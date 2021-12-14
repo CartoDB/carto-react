@@ -47,7 +47,7 @@ const STEP_SIZE_RANGE_MAPPING = {
  * @param  {boolean} [props.tooltip] - Enable/disable tooltip.
  * @param  {function} [props.tooltipFormatter] - Function that returns the HTML for the chart tooltip.
  * @param  {function} [props.formatter] - Function for formatting the value that is represented in the tooltip.
- * @param  {number} [props.height] - Height of the chart.
+ * @param  {string} [props.height] - Height of the chart.
  * @param  {boolean} [props.showControls] - Enable/disable animation controls (play, pause, stop, speed). True by default.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {function} [props.onError] - Function to handle error messages from the widget.
