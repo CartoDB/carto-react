@@ -275,7 +275,7 @@ describe('Filters', () => {
           }
         }
       };
-      const filterFn = buildBinaryFeatureFilter(filterForBinaryData);
+      const filterFn = buildBinaryFeatureFilter({ filters: filterForBinaryData });
 
       const filterRes = POINTS_BINARY_DATA.featureIds.value.map((_, idx) =>
         filterFn(idx, POINTS_BINARY_DATA)
@@ -294,7 +294,7 @@ describe('Filters', () => {
         }
       };
 
-      const filterFn = buildBinaryFeatureFilter(filterForBinaryData);
+      const filterFn = buildBinaryFeatureFilter({ filters: filterForBinaryData });
 
       const filterRes = POLYGONS_BINARY_DATA.featureIds.value.map((_, idx) =>
         filterFn(idx, POLYGONS_BINARY_DATA)
@@ -313,7 +313,7 @@ describe('Filters', () => {
         }
       };
 
-      const filterFn = buildBinaryFeatureFilter(filterForBinaryData);
+      const filterFn = buildBinaryFeatureFilter({ filters: filterForBinaryData });
 
       expect(() => filterFn(0, POLYGONS_BINARY_DATA)).toThrow(
         '"pow" filter is not implemented'
@@ -329,7 +329,7 @@ describe('Filters', () => {
         }
       };
 
-      const filterFn = buildBinaryFeatureFilter(filterForBinaryData);
+      const filterFn = buildBinaryFeatureFilter({ filters: filterForBinaryData });
 
       const filterRes = POLYGONS_BINARY_DATA.featureIds.value.map((_, idx) =>
         filterFn(idx, POLYGONS_BINARY_DATA)

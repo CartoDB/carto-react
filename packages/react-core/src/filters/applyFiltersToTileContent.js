@@ -5,7 +5,7 @@ export default function applyFiltersToTileContent(tileContent, filters) {
     return tileContent;
   }
 
-  const filterFn = buildBinaryFeatureFilter(filters);
+  const filterFn = buildBinaryFeatureFilter({ filters });
 
   return {
     ...tileContent,
