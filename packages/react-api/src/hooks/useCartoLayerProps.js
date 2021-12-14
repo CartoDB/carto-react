@@ -1,11 +1,11 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { useSelector } from 'react-redux';
-import useGeoJsonFeatures from './useGeoJsonFeatures';
-import useTilesetFeatures from './useTilesetFeatures';
-import useSpatialFilterTileset from './useSpatialFilterTileset';
+import useGeoJsonFeatures from './geojson/useGeoJsonFeatures';
+import useTilesetFeatures from './tileset/useTilesetFeatures';
+import useSpatialFilterTileset from './tileset/useSpatialFilterTileset';
 import { dequal as deepEqual } from 'dequal';
-import useSpatialFilterGeoJson from './useSpatialFilterGeoJson';
+import useFiltersGeoJson from './geojson/useFiltersGeoJson';
 import { useCallback } from 'react';
 
 export default function useCartoLayerProps({
@@ -17,7 +17,8 @@ export default function useCartoLayerProps({
 }) {
   const viewport = useSelector((state) => state.carto.viewport);
 
-  const [getFilterValue] = useSpatialFilterGeoJson(source);
+  // For GeoJson layers
+  const getFilterValue = useFiltersGeoJson({ source });
 
   const [onDataLoad] = useGeoJsonFeatures({
     source,
@@ -26,7 +27,9 @@ export default function useCartoLayerProps({
     debounceTimeout: viewporFeaturesDebounceTimeout
   });
 
-  const [_renderSubLayers, spatialFilterBuffers] = useSpatialFilterTileset(source, {
+  // For tiles layers
+  const [_renderSubLayers, spatialFilterBuffers] = useSpatialFilterTileset({
+    source,
     renderSubLayers,
     uniqueIdProperty
   });
@@ -59,9 +62,7 @@ export default function useCartoLayerProps({
   } else if (useGeoJSON) {
     props = {
       getFilterValue,
-      updateTriggers: {
-        getFilterValue
-      },
+      updateTriggers: { getFilterValue },
       ...(viewportFeatures && { onDataLoad })
     };
   }

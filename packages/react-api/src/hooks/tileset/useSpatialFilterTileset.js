@@ -6,11 +6,9 @@ import {
 import { selectSpatialFilter } from '@carto/react-redux';
 import { useCallback, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getTileId } from '../utils/tileUtils';
+import { getTileId } from '../../utils/tileUtils';
 
 const EMPTY_OBJ = {};
-
-const BINARY_DATA_KEYS = ['points', 'lines', 'polygons'];
 
 const createEmptyAnalysedFeatures = () => ({
   points: new Map(),
@@ -18,10 +16,11 @@ const createEmptyAnalysedFeatures = () => ({
   lines: new Map()
 });
 
-export default function useSpatialFilterTileset(
+export default function useSpatialFilterTileset({
   source,
-  { renderSubLayers: _renderSubLayers, uniqueIdProperty = 'cartodb_id' }
-) {
+  renderSubLayers: _renderSubLayers,
+  uniqueIdProperty = 'cartodb_id'
+}) {
   // Stores already analysed features. Used to avoid inconsistencies between tiles.
   const analysedFeaturesRef = useRef(createEmptyAnalysedFeatures());
   const tilesCacheRef = useRef({});
@@ -153,7 +152,7 @@ export default function useSpatialFilterTileset(
 function addGetFilterValueToTileContent(tileContent) {
   return {
     ...tileContent,
-    ...BINARY_DATA_KEYS.reduce((acc, key) => {
+    ...['points', 'lines', 'polygons'].reduce((acc, key) => {
       acc[key] = {
         ...tileContent[key],
         attributes: {

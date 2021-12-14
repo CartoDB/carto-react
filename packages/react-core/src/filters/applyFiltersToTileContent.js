@@ -1,11 +1,15 @@
 import { buildBinaryFeatureFilter } from './Filter';
 
 export default function applyFiltersToTileContent(tileContent, filters) {
-  if (!filters) {
+  if (!filters || !Object.keys(filters).length || !tileContent) {
     return tileContent;
   }
 
   const filterFn = buildBinaryFeatureFilter({ filters });
+
+  const applyFiltersFn = (data) => (_, idx) =>
+    (!data.attributes || data.attributes.getFilterValue.value[idx]) &&
+    filterFn(idx, data);
 
   return {
     ...tileContent,
@@ -15,10 +19,7 @@ export default function applyFiltersToTileContent(tileContent, filters) {
         attributes: {
           getFilterValue: {
             value: tileContent[key].featureIds.value.map(
-              (_, idx) =>
-                (!tileContent[key].attributes ||
-                  tileContent[key].attributes.getFilterValue.value[idx]) &&
-                filterFn(idx, tileContent[key])
+              applyFiltersFn(tileContent[key])
             ),
             size: 1
           }

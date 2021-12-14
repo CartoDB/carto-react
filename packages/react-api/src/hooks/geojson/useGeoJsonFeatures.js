@@ -1,8 +1,8 @@
 import { useEffect, useCallback } from 'react';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
-import { throwError } from './utils';
-import useFeaturesCommons from './useFeaturesCommons';
+import { throwError } from '../utils';
+import useFeaturesCommons from '../useFeaturesCommons';
 
 export default function useGeoJsonFeatures({
   source,
