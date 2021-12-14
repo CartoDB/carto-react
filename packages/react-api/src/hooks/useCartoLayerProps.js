@@ -19,7 +19,8 @@ export default function useCartoLayerProps({
 
   const [getFilterValue] = useSpatialFilterGeoJson(source);
 
-  const [onDataLoad] = useGeoJsonFeatures(source, {
+  const [onDataLoad] = useGeoJsonFeatures({
+    source,
     viewport,
     uniqueIdProperty,
     debounceTimeout: viewporFeaturesDebounceTimeout
@@ -30,7 +31,8 @@ export default function useCartoLayerProps({
     uniqueIdProperty
   });
 
-  const [onViewportLoad, fetch] = useTilesetFeatures(source, {
+  const [onViewportLoad, fetch] = useTilesetFeatures({
+    source,
     viewport,
     spatialFilterBuffers,
     uniqueIdProperty,

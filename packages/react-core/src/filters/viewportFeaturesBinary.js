@@ -182,7 +182,13 @@ export function viewportFeaturesBinary({
 }) {
   const map = new Map();
 
-  for (const { data, bbox, x, y, z } of tiles) {
+  for (const { data, bbox, x, y, z, isVisible } of tiles) {
+    // Discard if it's not a visible tile (only check false value, not undefined)
+    // or tile has not data
+    if (isVisible === false || !data) {
+      continue;
+    }
+
     const tileId = `${x}-${y}-${z}`;
     const tileIsFullyVisible = isTileFullyVisible(bbox, viewport);
     const viewportIntersection = bboxPolygon(prepareViewport(bbox, viewport));

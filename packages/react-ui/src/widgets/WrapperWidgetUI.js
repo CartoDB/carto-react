@@ -110,8 +110,6 @@ function WrapperWidgetUI(props) {
     isLoading = false
   } = props;
 
-  const debouncedIsLoading = useDebouncedLoading(isLoading, 500);
-
   const handleExpandClick = () => {
     if (props.expandable) {
       setExpanded(!expanded);
@@ -155,7 +153,7 @@ function WrapperWidgetUI(props) {
 
   return (
     <Box component='section' aria-label={props.title} className={classes.root}>
-      {debouncedIsLoading ? <LinearProgress className={classes.loading} /> : null}
+      {isLoading ? <LinearProgress className={classes.loading} /> : null}
       <Grid container className={classes.header}>
         <Button
           className={classes.button}
@@ -278,24 +276,3 @@ WrapperWidgetUI.propTypes = {
 };
 
 export default WrapperWidgetUI;
-
-// Aux
-function useDebouncedLoading(isLoading, delay) {
-  const [currentIsLoading, setDebouncedValue] = useState(isLoading);
-
-  useEffect(() => {
-    if (isLoading !== currentIsLoading) {
-      if (isLoading) {
-        const handler = setTimeout(() => {
-          setDebouncedValue(isLoading);
-        }, delay);
-        return () => clearTimeout(handler);
-      } else {
-        setDebouncedValue(isLoading);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, delay]);
-
-  return currentIsLoading;
-}
