@@ -44,7 +44,7 @@ describe('gpu-filter-utils', () => {
 
     expect(filterValueUpdateTriggers).toEqual(JSON.stringify(filters));
 
-    expect(getFilterValue(featurePassFilter)).toEqual([1, 0, 0, 0]);
+    expect(getFilterValue(featurePassesFilter)).toEqual([1, 0, 0, 0]);
     expect(getFilterValue(featureNotFilter)).toEqual([0, 0, 0, 0]);
   });
 
