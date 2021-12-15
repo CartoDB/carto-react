@@ -20,7 +20,7 @@ describe('gpu-filter-utils', () => {
         }
       }
     };
-    const featurePassFilter = {
+    const featurePassesFilter = {
       properties: {
         storetype: 'Supermarket',
         revenue: 1400001
