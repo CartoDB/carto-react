@@ -5,7 +5,7 @@ describe('gpu-filter-utils', () => {
     expect(MAX_GPU_FILTERS).toEqual(4);
   });
 
-  test('correct values with not time filter', () => {
+  test('correct filter values without time filter', () => {
     const filters = {
       storetype: {
         in: {
