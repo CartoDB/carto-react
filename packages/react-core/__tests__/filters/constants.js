@@ -414,6 +414,29 @@ export const POINTS_BINARY_DATA = {
   fields: []
 };
 
+export const EMPTY_POINTS_BINARY_DATA = {
+  positions: {
+    value: new Float32Array(),
+    size: 2
+  },
+  globalFeatureIds: {
+    value: new Uint16Array(),
+    size: 1
+  },
+  featureIds: {
+    value: new Uint16Array(),
+    size: 1
+  },
+  numericProps: {
+    cartodb_id: {
+      value: new Float32Array(),
+      size: 1
+    }
+  },
+  properties: [],
+  fields: []
+};
+
 export const POLYGONS_BINARY_DATA = {
   polygonIndices: {
     value: Uint16Array.of(0, 5, 10),
@@ -477,4 +500,19 @@ export const POLYGONS_BINARY_DATA = {
     }
   ],
   fields: []
+};
+
+export const EMPTY_LINES_BINARY_DATA = {
+  featureIds: { value: new Uint16Array(), size: 1 },
+  fields: [],
+  globalFeatureIds: { value: new Uint16Array(), size: 1 },
+  numericProps: {
+    cartodb_id: {
+      value: new Float32Array(),
+      size: 1
+    }
+  },
+  pathIndices: { value: Uint16Array.of(0), size: 1 },
+  positions: { value: new Float32Array(), size: 2 },
+  properties: []
 };

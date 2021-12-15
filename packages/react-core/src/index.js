@@ -34,3 +34,5 @@ export { viewportFeaturesGeoJSON } from './filters/viewportFeaturesGeoJSON';
 
 export { GroupDateTypes } from './operations/GroupDateTypes';
 export { groupValuesByDateColumn } from './operations/groupByDate';
+
+export { applyFiltersToTileContent as _applyFiltersToTileContent } from './filters/applyFiltersToTileContent';
