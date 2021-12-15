@@ -34,3 +34,5 @@ export { viewportFeaturesGeoJSON } from './filters/viewportFeaturesGeoJSON';
 
 export { GroupDateTypes } from './operations/GroupDateTypes';
 export { groupValuesByDateColumn } from './operations/groupByDate';
+
+export { transformWGS84ToTileCoords as _transformWGS84ToTileCoords } from './projections/wgs84ToTileCoords';
