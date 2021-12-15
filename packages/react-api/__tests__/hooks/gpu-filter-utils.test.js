@@ -1,9 +1,3 @@
-// import { DataFilterExtension } from '@deck.gl/extensions';
-// import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
-// import { renderHook } from '@testing-library/react-hooks';
-// import useCartoLayerProps from '../../src/hooks/useCartoLayerProps';
-// import { mockReduxHooks, mockClear } from '../mockReduxHooks';
-
 import { getGpuFilter, MAX_GPU_FILTERS } from '../../src/hooks/gpu-filter-utils';
 
 describe('gpu-filter-utils', () => {
