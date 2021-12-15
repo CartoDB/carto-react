@@ -40,7 +40,7 @@ function getFilterRange(timeFilter) {
 function getFilterValueUpdateTriggers(filtersWithoutTimeType, timeFilter) {
   const result = { ...filtersWithoutTimeType };
 
-  // We don't want to change the layer UpdateTriggers evety time that the time filter changes
+  // We don't want to change the layer UpdateTriggers every time that the time filter changes
   // because this filter is changed by the time series widget during its animation
   // so we remove the the time filter value from the UpdateTriggers
   if (Object.keys(timeFilter).length > 0) {
