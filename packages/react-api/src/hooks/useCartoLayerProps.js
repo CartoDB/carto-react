@@ -1,9 +1,8 @@
-import { DataFilterExtension } from '@deck.gl/extensions';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { useSelector } from 'react-redux';
 import useGeoJsonFeatures from './useGeoJsonFeatures';
 import useTilesetFeatures from './useTilesetFeatures';
-import { getDataFilterExtensionProps, MAX_GPU_FILTERS } from './dataFilterExtensionUtil';
+import { getDataFilterExtensionProps } from './dataFilterExtensionUtil';
 
 export default function useCartoLayerProps({
   source,
@@ -46,11 +45,7 @@ export default function useCartoLayerProps({
     };
   }
 
-  const {
-    filterRange,
-    filterValueUpdateTriggers,
-    getFilterValue
-  } = getDataFilterExtensionProps(source?.filters);
+  const dataFilterExtensionProps = getDataFilterExtensionProps(source?.filters);
 
   return {
     ...props,
@@ -59,11 +54,6 @@ export default function useCartoLayerProps({
     type: source?.type,
     connection: source?.connection,
     credentials: source?.credentials,
-    getFilterValue: getFilterValue,
-    filterRange: filterRange,
-    extensions: [new DataFilterExtension({ filterSize: MAX_GPU_FILTERS })],
-    updateTriggers: {
-      getFilterValue: filterValueUpdateTriggers
-    }
+    ...dataFilterExtensionProps
   };
 }

@@ -35,11 +35,9 @@ describe('gpu-filter-utils', () => {
         revenue: 100
       }
     };
-    const {
-      filterRange,
-      filterValueUpdateTriggers,
-      getFilterValue
-    } = getDataFilterExtensionProps(filters);
+    const { filterRange, updateTriggers, getFilterValue } = getDataFilterExtensionProps(
+      filters
+    );
 
     expect(filterRange.length).toEqual(MAX_GPU_FILTERS);
     filterRange.forEach((range, index) => {
@@ -47,7 +45,7 @@ describe('gpu-filter-utils', () => {
       expect(range).toEqual(valueExpected);
     });
 
-    expect(filterValueUpdateTriggers).toEqual(JSON.stringify(filters));
+    expect(updateTriggers.getFilterValue).toEqual(JSON.stringify(filters));
 
     expect(getFilterValue(featurePassesFilter)).toEqual([1, 0, 0, 0]);
     expect(getFilterValue(featureNotFilter)).toEqual([0, 0, 0, 0]);
@@ -76,11 +74,9 @@ describe('gpu-filter-utils', () => {
       }
     };
 
-    const {
-      filterRange,
-      filterValueUpdateTriggers,
-      getFilterValue
-    } = getDataFilterExtensionProps(filters);
+    const { filterRange, updateTriggers, getFilterValue } = getDataFilterExtensionProps(
+      filters
+    );
 
     filterRange.forEach((range, index) => {
       if (index === 0) {
@@ -93,7 +89,7 @@ describe('gpu-filter-utils', () => {
     });
 
     filters.dateTime.time = {};
-    expect(filterValueUpdateTriggers).toEqual(JSON.stringify(filters));
+    expect(updateTriggers.getFilterValue).toEqual(JSON.stringify(filters));
     expect(getFilterValue(feature)).toEqual([1, feature.properties.dateTime, 0, 0]);
   });
 });

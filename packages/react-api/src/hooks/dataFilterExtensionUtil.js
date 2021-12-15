@@ -1,3 +1,4 @@
+import { DataFilterExtension } from '@deck.gl/extensions';
 import { _buildFeatureFilter, _FilterTypes } from '@carto/react-core/';
 
 // Don't change this value to maintain compatibility with builder
@@ -37,7 +38,7 @@ function getFilterRange(timeFilter) {
   return result;
 }
 
-function getFilterValueUpdateTriggers(filtersWithoutTimeType, timeFilter) {
+function getUpdateTriggers(filtersWithoutTimeType, timeFilter) {
   const result = { ...filtersWithoutTimeType };
 
   // We don't want to change the layer UpdateTriggers every time that the time filter changes
@@ -49,7 +50,9 @@ function getFilterValueUpdateTriggers(filtersWithoutTimeType, timeFilter) {
       [timeFilter.type]: {} // this allows working with other filters, without an impact on performance
     };
   }
-  return JSON.stringify(result);
+  return {
+    getFilterValue: JSON.stringify(result)
+  };
 }
 
 function getFilterValue(filtersWithoutTimeType, timeFilter) {
@@ -78,10 +81,8 @@ export function getDataFilterExtensionProps(filters = {}) {
   const { filtersWithoutTimeType, timeFilter } = getFiltersByType(filters);
   return {
     filterRange: getFilterRange(timeFilter),
-    filterValueUpdateTriggers: getFilterValueUpdateTriggers(
-      filtersWithoutTimeType,
-      timeFilter
-    ),
-    getFilterValue: getFilterValue(filtersWithoutTimeType, timeFilter)
+    updateTriggers: getUpdateTriggers(filtersWithoutTimeType, timeFilter),
+    getFilterValue: getFilterValue(filtersWithoutTimeType, timeFilter),
+    extensions: [new DataFilterExtension({ filterSize: MAX_GPU_FILTERS })]
   };
 }
