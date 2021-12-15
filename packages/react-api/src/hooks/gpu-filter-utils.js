@@ -42,7 +42,7 @@ function getFilterValueUpdateTriggers(filtersWithoutTimeType, timeFilter) {
 
   // We don't want to change the layer UpdateTriggers every time that the time filter changes
   // because this filter is changed by the time series widget during its animation
-  // so we remove the the time filter value from the UpdateTriggers
+  // so we remove the time filter value from the `updateTriggers`
   if (Object.keys(timeFilter).length > 0) {
     result[timeFilter.column] = {
       ...result[timeFilter.column],
