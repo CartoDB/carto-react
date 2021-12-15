@@ -7,7 +7,8 @@ import {
   SvgIcon,
   Typography,
   capitalize,
-  makeStyles
+  makeStyles,
+  Link
 } from '@material-ui/core';
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import TimeSeriesChart from './components/TimeSeriesChart';
@@ -261,6 +262,10 @@ function TimeSeriesWidgetUIContent({
     }
   }, [data, stepSize, isPlaying, isPaused, timeWindow, timelinePosition]);
 
+  const showClearButton = useMemo(() => {
+    return isPlaying || isPaused || timeWindow.length > 0;
+  }, [isPaused, isPlaying, timeWindow.length]);
+
   const handleOpenSpeedMenu = (e) => {
     if (e?.currentTarget) {
       setAnchorSpeedEl(e.currentTarget);
@@ -289,27 +294,33 @@ function TimeSeriesWidgetUIContent({
 
   return (
     <Box>
-      {!!currentDate && (
-        <Box>
-          <Typography color='textSecondary' variant='caption'>
-            {currentDate}
-          </Typography>
-          <Typography
-            className={classes.currentStepSize}
-            color='textSecondary'
-            variant='caption'
-          >
-            ({capitalize(stepSize)})
-          </Typography>
-        </Box>
-      )}
+      <Box display='flex' justifyContent='space-between' alignItems='center'>
+        {!!currentDate && (
+          <Box>
+            <Typography color='textSecondary' variant='caption'>
+              {currentDate}
+            </Typography>
+            <Typography
+              className={classes.currentStepSize}
+              color='textSecondary'
+              variant='caption'
+            >
+              ({capitalize(stepSize)})
+            </Typography>
+          </Box>
+        )}
+        {showClearButton && (
+          <Link variant='caption' style={{ cursor: 'pointer' }} onClick={handleStop}>
+            Clear
+          </Link>
+        )}
+      </Box>
       {showControls ? (
         <Grid container alignItems='flex-end'>
           <Grid item xs={1}>
             <IconButton
               size='small'
               color='default'
-              disabled={!(isPaused || isPlaying)}
               onClick={handleOpenSpeedMenu}
               data-testid='clock'
             >
