@@ -46,7 +46,7 @@ function getFilterValueUpdateTriggers(filtersWithoutTimeType, timeFilter) {
   if (Object.keys(timeFilter).length > 0) {
     result[timeFilter.column] = {
       ...result[timeFilter.column],
-      [timeFilter.type]: {}
+      [timeFilter.type]: {} // this allows working with other filters, without an impact on performance
     };
   }
   return JSON.stringify(result);
