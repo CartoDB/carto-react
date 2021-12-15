@@ -1,4 +1,7 @@
-import { getGpuFilter, MAX_GPU_FILTERS } from '../../src/hooks/gpu-filter-utils';
+import {
+  getDataFilterExtensionProps,
+  MAX_GPU_FILTERS
+} from '../../src/hooks/data-filter-extension-util';
 
 describe('gpu-filter-utils', () => {
   test('correct GPU filter size', () => {
@@ -32,9 +35,11 @@ describe('gpu-filter-utils', () => {
         revenue: 100
       }
     };
-    const { filterRange, filterValueUpdateTriggers, getFilterValue } = getGpuFilter(
-      filters
-    );
+    const {
+      filterRange,
+      filterValueUpdateTriggers,
+      getFilterValue
+    } = getDataFilterExtensionProps(filters);
 
     expect(filterRange.length).toEqual(MAX_GPU_FILTERS);
     filterRange.forEach((range, index) => {
@@ -71,9 +76,11 @@ describe('gpu-filter-utils', () => {
       }
     };
 
-    const { filterRange, filterValueUpdateTriggers, getFilterValue } = getGpuFilter(
-      filters
-    );
+    const {
+      filterRange,
+      filterValueUpdateTriggers,
+      getFilterValue
+    } = getDataFilterExtensionProps(filters);
 
     filterRange.forEach((range, index) => {
       if (index === 0) {

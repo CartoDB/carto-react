@@ -4,7 +4,10 @@ import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { useSelector } from 'react-redux';
 import useGeoJsonFeatures from './useGeoJsonFeatures';
 import useTilesetFeatures from './useTilesetFeatures';
-import { getGpuFilter, MAX_GPU_FILTERS } from './gpu-filter-utils';
+import {
+  getDataFilterExtensionProps,
+  MAX_GPU_FILTERS
+} from './data-filter-extension-util';
 
 export default function useCartoLayerProps({
   source,
@@ -47,9 +50,11 @@ export default function useCartoLayerProps({
     };
   }
 
-  const { filterRange, filterValueUpdateTriggers, getFilterValue } = getGpuFilter(
-    source?.filters
-  );
+  const {
+    filterRange,
+    filterValueUpdateTriggers,
+    getFilterValue
+  } = getDataFilterExtensionProps(source?.filters);
 
   return {
     ...props,
