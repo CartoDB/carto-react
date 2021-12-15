@@ -1,13 +1,9 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
-import { _buildFeatureFilter } from '@carto/react-core';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { useSelector } from 'react-redux';
 import useGeoJsonFeatures from './useGeoJsonFeatures';
 import useTilesetFeatures from './useTilesetFeatures';
-import {
-  getDataFilterExtensionProps,
-  MAX_GPU_FILTERS
-} from './data-filter-extension-util';
+import { getDataFilterExtensionProps, MAX_GPU_FILTERS } from './dataFilterExtensionUtil';
 
 export default function useCartoLayerProps({
   source,
