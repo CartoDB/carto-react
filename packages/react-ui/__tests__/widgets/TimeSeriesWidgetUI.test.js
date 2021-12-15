@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, act, fireEvent } from '@testing-library/react';
+import { render, screen, act, fireEvent, waitFor } from '@testing-library/react';
 import TimeSeriesWidgetUI from '../../src/widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import { getMaterialUIContext, mockEcharts } from './testUtils';
 import { GroupDateTypes } from '@carto/react-core';
@@ -234,17 +234,17 @@ describe('TimeSeriesWidgetUI', () => {
     });
   });
 
-  test('clear when animation is working', () => {
+  test('clear when animation is working', async () => {
     const onStop = jest.fn();
     render(<Widget isPlaying={true} onStop={onStop} />);
     fireEvent.click(screen.getByText(/Clear/));
-    setTimeout(() => expect(onStop).toHaveBeenCalledTimes(1), 250);
+    await waitFor(async () => expect(onStop).toHaveBeenCalledTimes(1));
   });
 
-  test('clear when set a time window', () => {
+  test('clear when set a time window', async () => {
     const onStop = jest.fn();
     render(<Widget timeWindow={[1517785200000, 1528063200000]} onStop={onStop} />);
     fireEvent.click(screen.getByText(/Clear/));
-    setTimeout(() => expect(onStop).toHaveBeenCalledTimes(1), 250);
+    await waitFor(async () => expect(onStop).toHaveBeenCalledTimes(1));
   });
 });
