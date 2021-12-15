@@ -2,10 +2,12 @@
 
 ## Not released
 
+## 1.1.4 (2021-12-15)
+
 - Implement C4R filtering using binary data [#228](https://github.com/CartoDB/carto-react/pull/228)
 - Fix build adding peerDependecy of @carto/react-core to @carto/react-ui [#237](https://github.com/CartoDB/carto-react/pull/237)
 - Refactor useViewportFeatures [#238](https://github.com/CartoDB/carto-react/pull/238)
-- Add clear button for TimeSeriesWidget widget and enable the speed button even though the animation has not started  [#239](https://github.com/CartoDB/carto-react/pull/239)
+- Add clear button for TimeSeriesWidget widget and enable the speed button even though the animation has not started [#239](https://github.com/CartoDB/carto-react/pull/239)
 - Improve timeseries animation performance [#243](https://github.com/CartoDB/carto-react/pull/243)
 
 ## 1.1.3 (2021-12-04)
