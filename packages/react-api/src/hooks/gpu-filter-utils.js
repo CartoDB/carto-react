@@ -65,7 +65,8 @@ function getFilterValue(filtersWithoutTimeType, timeFilter) {
     );
 
     if (hastimeFilterValues) {
-      result[1] = feature[timeFilter.column];
+      const f = feature.properties || feature;
+      result[1] = f[timeFilter.column];
     }
     return result;
   };
