@@ -1,9 +1,8 @@
-import { DataFilterExtension } from '@deck.gl/extensions';
-import { _buildFeatureFilter } from '@carto/react-core';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { useSelector } from 'react-redux';
 import useGeoJsonFeatures from './useGeoJsonFeatures';
 import useTilesetFeatures from './useTilesetFeatures';
+import { getDataFilterExtensionProps } from './dataFilterExtensionUtil';
 
 export default function useCartoLayerProps({
   source,
@@ -46,6 +45,8 @@ export default function useCartoLayerProps({
     };
   }
 
+  const dataFilterExtensionProps = getDataFilterExtensionProps(source?.filters);
+
   return {
     ...props,
     uniqueIdProperty,
@@ -53,11 +54,6 @@ export default function useCartoLayerProps({
     type: source?.type,
     connection: source?.connection,
     credentials: source?.credentials,
-    getFilterValue: _buildFeatureFilter({ filters: source?.filters, type: 'number' }),
-    filterRange: [1, 1],
-    extensions: [new DataFilterExtension({ filterSize: 1 })],
-    updateTriggers: {
-      getFilterValue: source?.filters
-    }
+    ...dataFilterExtensionProps
   };
 }

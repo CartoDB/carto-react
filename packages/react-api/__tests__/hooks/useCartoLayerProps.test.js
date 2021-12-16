@@ -3,6 +3,7 @@ import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { renderHook } from '@testing-library/react-hooks';
 import useCartoLayerProps from '../../src/hooks/useCartoLayerProps';
 import { mockReduxHooks, mockClear } from '../mockReduxHooks';
+import { MAX_GPU_FILTERS } from '../../src/hooks/dataFilterExtensionUtil';
 
 describe('useCartoLayerProps', () => {
   mockReduxHooks();
@@ -14,10 +15,10 @@ describe('useCartoLayerProps', () => {
       'type',
       'connection',
       'credentials',
-      'getFilterValue',
       'filterRange',
-      'extensions',
-      'updateTriggers'
+      'updateTriggers',
+      'getFilterValue',
+      'extensions'
     ];
 
     describe('when maps_api_version is V2', () => {
@@ -175,10 +176,15 @@ describe('useCartoLayerProps', () => {
       expect(result.current.getFilterValue).toBeInstanceOf(Function);
     });
 
-    test('filter range should be between 1 and 1', () => {
+    test('filter range should be between 1 and 1 for the first element of the array', () => {
       const { result } = renderHook(() => useCartoLayerProps({}));
 
-      expect(result.current.filterRange).toEqual([1, 1]);
+      expect(result.current.filterRange).toEqual([
+        [1, 1],
+        [0, 0],
+        [0, 0],
+        [0, 0]
+      ]);
     });
 
     test('extensions should have an unique instance of DataFilterExtension', () => {
@@ -188,10 +194,10 @@ describe('useCartoLayerProps', () => {
       expect(result.current.extensions[0]).toBeInstanceOf(DataFilterExtension);
     });
 
-    test('filter size should be 1', () => {
+    test(`filter size should be ${MAX_GPU_FILTERS}`, () => {
       const { result } = renderHook(() => useCartoLayerProps({}));
 
-      expect(result.current.extensions[0].opts.filterSize).toEqual(1);
+      expect(result.current.extensions[0].opts.filterSize).toEqual(MAX_GPU_FILTERS);
     });
 
     test('getFilterValue trigger should be present', () => {
