@@ -2,7 +2,6 @@ import { Credentials } from '@carto/react-api';
 import { OauthApp } from '@carto/react-auth';
 import { CartoBasemapsNames } from '@carto/react-basemaps';
 import { Viewport } from '@carto/react-core';
-import { AnyAction } from 'redux';
 
 export type ViewState = {
   latitude?: number,
@@ -54,8 +53,3 @@ export type OauthState = {
   token: string,
   userInfo: string
 } & InitialOauthState;
-
-export type Reducer = {
-  state: CartoState | OauthState,
-  action: AnyAction
-}
