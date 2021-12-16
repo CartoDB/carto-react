@@ -12,7 +12,7 @@ type Layer = {
   layerAttributes?: object;
 };
 
-type BasemapName = CartoBasemapsNames & GMapsBasemapsNames;
+type BasemapName = CartoBasemapsNames | GMapsBasemapsNames;
 
 type FilterBasic = {
   type: '';
