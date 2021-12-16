@@ -15,7 +15,7 @@ const FEATURES = [
       type: 'Point',
       coordinates: [-71.0643, 42.35392]
     },
-    properties: { cartodb_id: 302 }
+    properties: { cartodb_id: 302, timeCol: 0 }
   },
   {
     type: 'Feature',
@@ -23,7 +23,7 @@ const FEATURES = [
       type: 'Point',
       coordinates: [-71.57506, 44.49876]
     },
-    properties: { cartodb_id: 444 }
+    properties: { cartodb_id: 444, timeCol: 1 }
   },
   {
     type: 'Feature',
@@ -31,7 +31,7 @@ const FEATURES = [
       type: 'Point',
       coordinates: [-76.98689, 41.22844]
     },
-    properties: { cartodb_id: 1993 }
+    properties: { cartodb_id: 1993, timeCol: 2 }
   },
   {
     type: 'Feature',
@@ -39,81 +39,9 @@ const FEATURES = [
       type: 'Point',
       coordinates: [-79.17348, 34.81043]
     },
-    properties: { cartodb_id: 3300 }
-  },
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [-87.67071, 34.7753]
-    },
-    properties: { cartodb_id: 5387 }
-  },
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [-86.11238, 42.80297]
-    },
-    properties: { cartodb_id: 7615 }
-  },
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [-96.66324, 35.75362]
-    },
-    properties: { cartodb_id: 10236 }
-  },
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [-117.20269, 32.89341]
-    },
-    properties: { cartodb_id: 12921 }
-  },
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [-87.01792, 35.63505]
-    },
-    properties: {
-      cartodb_id: 5566
-    }
-  },
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [-96.68754, 43.52982]
-    },
-    properties: { cartodb_id: 7919 }
-  },
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [-116.21464, 43.59429]
-    },
-    properties: { cartodb_id: 11713 }
-  },
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [-92.99341, 43.6801]
-    },
-    properties: { cartodb_id: 7847 }
+    properties: { cartodb_id: 3300, timeCol: 3 }
   }
-].map((feature, idx) => ({
-  ...feature,
-  properties: {
-    ...feature.properties,
-    timeCol: idx
-  }
-}));
+];
 
 const FILTERING_GEOMETRY = {
   type: 'Polygon',
