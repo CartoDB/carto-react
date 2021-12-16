@@ -48,6 +48,7 @@ export const createCartoSlice = (initialState) => {
       dataSources: {
         // Auto import dataSources
       },
+      spatialFilter: null,
       viewportFeatures: {},
       viewportFeaturesReady: {},
       ...initialState
@@ -92,6 +93,30 @@ export const createCartoSlice = (initialState) => {
       },
       setViewPort: (state) => {
         state.viewport = new WebMercatorViewport(state.viewState).getBounds();
+      },
+      addSpatialFilter: (state, action) => {
+        const { sourceId, geometry } = action.payload;
+        if (sourceId) {
+          const source = state.dataSources[sourceId];
+
+          if (source) {
+            source.spatialFilter = geometry;
+          }
+        } else {
+          state.spatialFilter = geometry;
+        }
+      },
+      removeSpatialFilter: (state, action) => {
+        const sourceId = action.payload;
+        if (sourceId) {
+          const source = state.dataSources[sourceId];
+
+          if (source) {
+            source.spatialFilter = null;
+          }
+        } else {
+          state.spatialFilter = null;
+        }
       },
       addFilter: (state, action) => {
         const { id, column, type, values, owner } = action.payload;
@@ -211,6 +236,26 @@ export const removeLayer = (id) => ({ type: 'carto/removeLayer', payload: id });
 export const setBasemap = (basemap) => ({ type: 'carto/setBasemap', payload: basemap });
 
 /**
+ * Action to add a spatial filter
+ * @param {object} params
+ * @param {string} [params.sourceId] - If indicated, mask is applied to that source. If not, it's applied to every source
+ * @param {GeoJSON} params.geometry - valid geojson object
+ */
+export const addSpatialFilter = ({ sourceId, geometry }) => ({
+  type: 'carto/addSpatialFilter',
+  payload: { sourceId, geometry }
+});
+
+/**
+ * Action to remove a spatial filter on a given source
+ * @param {string} [sourceId] - sourceId of the source to apply the filter on. If missing, root spatial filter is removed
+ */
+export const removeSpatialFilter = (sourceId) => ({
+  type: 'carto/removeSpatialFilter',
+  payload: sourceId
+});
+
+/**
  * Action to add a filter on a given source and column
  * @param {string} id - sourceId of the source to apply the filter on
  * @param {string} column - column to use by the filter at the source
@@ -245,6 +290,14 @@ const _setViewPort = (payload) => ({ type: 'carto/setViewPort', payload });
  * Redux selector to get a source by ID
  */
 export const selectSourceById = (state, id) => state.carto.dataSources[id];
+
+/**
+ * Redux selector to select the spatial filter of a given sourceId or the root one
+ */
+ export const selectSpatialFilter = (state, sourceId) =>
+ sourceId
+   ? state.carto.dataSources[sourceId]?.spatialFilter || state.carto.spatialFilter
+   : state.carto.spatialFilter;
 
 /**
  * Redux selector to know if viewport features from a certain source are ready

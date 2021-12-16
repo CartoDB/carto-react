@@ -115,6 +115,41 @@ describe('carto slice', () => {
     });
   });
 
+  describe('spatial filter actions', () => {
+    const spatialFilter = {
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [0, 0],
+            [1, 1]
+          ]
+        ]
+      }
+    };
+    test('should add a spatial filter to a source', () => {
+      const sourceId = 'theSource';
+      store.dispatch(cartoSlice.addSource({ id: sourceId }));
+      store.dispatch(cartoSlice.addSpatialFilter({ sourceId, ...spatialFilter }));
+      const state = store.getState();
+      expect(state.carto.dataSources[sourceId].spatialFilter).toEqual(
+        spatialFilter.geometry
+      );
+      // Now with the selector
+      expect(cartoSlice.selectSpatialFilter(state, sourceId)).toEqual(
+        spatialFilter.geometry
+      );
+    });
+
+    test('should add a spatial filter to root state', () => {
+      store.dispatch(cartoSlice.addSpatialFilter(spatialFilter));
+      const state = store.getState();
+      expect(state.carto.spatialFilter).toEqual(spatialFilter.geometry);
+      // Now with the selector
+      expect(cartoSlice.selectSpatialFilter(state)).toEqual(spatialFilter.geometry);
+    });
+  });
+
   describe('filters actions', () => {
     const filter = {
       id: 'source-test-id-2',

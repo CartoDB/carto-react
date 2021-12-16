@@ -24,6 +24,11 @@ type FilterCommonProps = {
   column: string;
 };
 
+type SpatialFilter = {
+  sourceId?: string;
+  geometry: object
+}
+
 type Filter = FilterBasic & FilterCommonProps;
 
 type ViewportFeaturesData = {
@@ -48,6 +53,8 @@ declare enum CartoActions {
   UPDATE_LAYER = 'carto/updateLayer',
   REMOVE_LAYER = 'carto/removeLayer',
   SET_BASEMAP = 'carto/setBasemap',
+  ADD_SPATIAL_FILTER = 'carto/addSpatialFilter',
+  REMOVE_SPATIAL_FILTER = 'carto/removeSpatialFilter',
   ADD_FILTER = 'carto/addFilter',
   REMOVE_FILTER = 'carto/removeFilter',
   CLEAR_FILTERS = 'carto/clearFilters',
@@ -100,6 +107,21 @@ export function setBasemap(
   type: CartoActions.SET_BASEMAP;
   payload: BasemapName;
 };
+
+export function addSpatialFilter(
+  spatialFilter: SpatialFilter
+): {
+  type: CartoActions.ADD_SPATIAL_FILTER;
+  payload: SpatialFilter;
+};
+
+export function removeSpatialFilter(
+  sourceId?: string
+): {
+  type: CartoActions.REMOVE_SPATIAL_FILTER;
+  payload: string;
+};
+
 
 export function addFilter(
   filter: Filter
