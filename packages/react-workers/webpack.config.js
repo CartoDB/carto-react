@@ -7,6 +7,7 @@ const webpackBaseConfig = require('../../webpack.base');
 const webpackConfig = {
   ...webpackBaseConfig,
   externals: [
+    '@carto/react-core',
     'react', 
     'react-dom',
   ],

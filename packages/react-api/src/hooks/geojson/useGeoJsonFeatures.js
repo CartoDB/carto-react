@@ -1,8 +1,10 @@
 import { useEffect, useCallback } from 'react';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
-import { throwError } from './utils';
-import useFeaturesCommons from './useFeaturesCommons';
+import { throwError } from '../utils';
+import useFeaturesCommons from '../useFeaturesCommons';
+import { useSelector } from 'react-redux';
+import { selectSpatialFilter } from '@carto/react-redux';
 
 export default function useGeoJsonFeatures({
   source,
@@ -18,13 +20,17 @@ export default function useGeoJsonFeatures({
     stopAnyCompute,
     setSourceViewportFeaturesReady
   ] = useFeaturesCommons({ source });
+  const spatialFilterGeometry = useSelector((state) =>
+    selectSpatialFilter(state, source?.id)
+  );
 
   const sourceId = source?.id;
 
   const computeFeaturesGeoJson = useCallback(
-    ({ viewport, uniqueIdProperty }) => {
+    ({ viewport, spatialFilterGeometry, uniqueIdProperty }) => {
       executeTask(sourceId, Methods.VIEWPORT_FEATURES_GEOJSON, {
         viewport,
+        spatialFilterGeometry,
         uniqueIdProperty
       })
         .then(() => {
@@ -47,6 +53,7 @@ export default function useGeoJsonFeatures({
       setSourceViewportFeaturesReady(false);
       debounceIdRef.current = debouncedComputeFeaturesGeoJson({
         viewport,
+        spatialFilterGeometry,
         uniqueIdProperty
       });
     }
@@ -58,7 +65,8 @@ export default function useGeoJsonFeatures({
     debouncedComputeFeaturesGeoJson,
     setSourceViewportFeaturesReady,
     clearDebounce,
-    debounceIdRef
+    debounceIdRef,
+    spatialFilterGeometry
   ]);
 
   const onDataLoad = useCallback(

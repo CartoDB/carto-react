@@ -1,10 +1,10 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
-import { _buildFeatureFilter, _FilterTypes } from '@carto/react-core/';
+import { _FilterTypes } from '@carto/react-core';
 
 // Don't change this value to maintain compatibility with builder
 export const MAX_GPU_FILTERS = 4;
 
-function getFiltersByType(filters) {
+export function getFiltersByType(filters) {
   const filtersWithoutTimeType = {};
   let timeFilter = null;
 
@@ -21,10 +21,7 @@ function getFiltersByType(filters) {
       }
     });
   });
-  return {
-    filtersWithoutTimeType,
-    timeFilter
-  };
+  return [filtersWithoutTimeType, timeFilter];
 }
 
 function getFilterRange(timeFilter) {
@@ -55,34 +52,14 @@ function getUpdateTriggers(filtersWithoutTimeType, timeFilter) {
   };
 }
 
-function getFilterValue(filtersWithoutTimeType, timeFilter) {
-  const result = Array(MAX_GPU_FILTERS).fill(0);
-
-  // We evaluate all filters except the time filter using _buildFeatureFilter function.
-  // For the time filter, we return the value of the feature and we will change the getFilterRange result
-  // every time this filter changes
-  return (feature) => {
-    result[0] = _buildFeatureFilter({ filters: filtersWithoutTimeType, type: 'number' })(
-      feature
-    );
-
-    if (timeFilter) {
-      const f = feature.properties || feature;
-      result[1] = f[timeFilter.column];
-    }
-    return result;
-  };
-}
-
 // The deck.gl DataFilterExtension accepts up to 4 values to filter.
 // We're going to use the first value for all filter except the time filter
 // that will be managed by the second value of the DataFilterExtension
 export function getDataFilterExtensionProps(filters = {}) {
-  const { filtersWithoutTimeType, timeFilter } = getFiltersByType(filters);
+  const [filtersWithoutTimeType, timeFilter] = getFiltersByType(filters);
   return {
     filterRange: getFilterRange(timeFilter),
     updateTriggers: getUpdateTriggers(filtersWithoutTimeType, timeFilter),
-    getFilterValue: getFilterValue(filtersWithoutTimeType, timeFilter),
     extensions: [new DataFilterExtension({ filterSize: MAX_GPU_FILTERS })]
   };
 }

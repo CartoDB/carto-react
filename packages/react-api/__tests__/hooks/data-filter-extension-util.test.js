@@ -1,7 +1,7 @@
 import {
   getDataFilterExtensionProps,
   MAX_GPU_FILTERS
-} from '../../src/hooks/dataFilterExtensionUtil';
+} from '../../src/hooks/dataFilterExtensionUtils';
 
 describe('gpu-filter-utils', () => {
   test('correct GPU filter size', () => {

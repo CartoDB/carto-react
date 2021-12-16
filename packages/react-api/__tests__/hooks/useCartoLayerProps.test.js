@@ -3,7 +3,7 @@ import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { renderHook } from '@testing-library/react-hooks';
 import useCartoLayerProps from '../../src/hooks/useCartoLayerProps';
 import { mockReduxHooks, mockClear } from '../mockReduxHooks';
-import { MAX_GPU_FILTERS } from '../../src/hooks/dataFilterExtensionUtil';
+import { MAX_GPU_FILTERS } from '../../src/hooks/dataFilterExtensionUtils';
 
 describe('useCartoLayerProps', () => {
   mockReduxHooks();
