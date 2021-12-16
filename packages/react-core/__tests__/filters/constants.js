@@ -443,7 +443,7 @@ export const POLYGONS_BINARY_DATA = {
     size: 1
   },
   primitivePolygonIndices: {
-    value: Uint16Array.of(0, 5, 10),
+    value: Uint16Array.of(0, 3, 5, 10),
     size: 1
   },
   positions: {

@@ -60,19 +60,24 @@ function applyToPolygonsLinesData(data, applyFiltersFn) {
 
   let idx = 0,
     start = null;
-  for (const featureId of data.featureIds.value) {
+
+  const indices = data.primitivePolygonIndices || data.pathIndices;
+  for (const featureIdIdx of indices.value) {
+    const end = indices.value[idx + 1];
     if (start === null) {
-      start = idx;
+      start = featureIdIdx;
     }
 
-    // Continue if featureId is the same as current one
-    if (featureId === data.featureIds.value[idx + 1]) {
+    const currentFeatureId = data.featureIds.value[featureIdIdx];
+    const followingFeatureId = data.featureIds.value[end];
+    // Continue if following featureId is the same as current one
+    if (currentFeatureId === followingFeatureId) {
       idx++;
       continue;
     }
 
-    const doesPass = applyFiltersFn(idx, data);
-    if (doesPass) featuresGetFilterValue.fill(doesPass, start, idx + 1);
+    const doesPass = applyFiltersFn(start, data);
+    if (doesPass) featuresGetFilterValue.fill(doesPass, start, end);
 
     start = null;
     idx++;
