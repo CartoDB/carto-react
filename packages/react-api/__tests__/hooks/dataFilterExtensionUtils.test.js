@@ -23,21 +23,8 @@ describe('DataFilterExtensionUtils', () => {
         }
       }
     };
-    // const featurePassesFilter = {
-    //   properties: {
-    //     storetype: 'Supermarket',
-    //     revenue: 1400001
-    //   }
-    // };
-    // const featureNotFilter = {
-    //   properties: {
-    //     storetype: 'Supermarket',
-    //     revenue: 100
-    //   }
-    // };
-    const { filterRange, updateTriggers } = getDataFilterExtensionProps(
-      filters
-    );
+
+    const { filterRange, updateTriggers } = getDataFilterExtensionProps(filters);
 
     expect(filterRange.length).toEqual(MAX_GPU_FILTERS);
     filterRange.forEach((range, index) => {
@@ -46,9 +33,6 @@ describe('DataFilterExtensionUtils', () => {
     });
 
     expect(updateTriggers.getFilterValue).toEqual(JSON.stringify(filters));
-
-    // expect(getFilterValue(featurePassesFilter)).toEqual([1, 0, 0, 0]);
-    // expect(getFilterValue(featureNotFilter)).toEqual([0, 0, 0, 0]);
   });
 
   test('correct values with time filter', () => {
@@ -67,16 +51,7 @@ describe('DataFilterExtensionUtils', () => {
       }
     };
 
-    // const feature = {
-    //   properties: {
-    //     storetype: 'Supermarket',
-    //     dateTime: 473385600001
-    //   }
-    // };
-
-    const { filterRange, updateTriggers } = getDataFilterExtensionProps(
-      filters
-    );
+    const { filterRange, updateTriggers } = getDataFilterExtensionProps(filters);
 
     filterRange.forEach((range, index) => {
       if (index === 0) {
@@ -90,6 +65,5 @@ describe('DataFilterExtensionUtils', () => {
 
     filters.dateTime.time = {};
     expect(updateTriggers.getFilterValue).toEqual(JSON.stringify(filters));
-    // expect(getFilterValue(feature)).toEqual([1, feature.properties.dateTime, 0, 0]);
   });
 });
