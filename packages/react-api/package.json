@@ -64,12 +64,12 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^1.1.0",
-    "@carto/react-redux": "^1.1.0",
-    "@carto/react-workers": "^1.1.0",
-    "@deck.gl/carto": "^8.6.0",
-    "@deck.gl/core": "^8.6.0",
-    "@deck.gl/extensions": "^8.6.0",
+    "@carto/react-core": "^1.1.4",
+    "@carto/react-redux": "^1.1.4",
+    "@carto/react-workers": "^1.1.4",
+    "@deck.gl/carto": "^8.6.5",
+    "@deck.gl/core": "^8.6.5",
+    "@deck.gl/extensions": "^8.6.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",

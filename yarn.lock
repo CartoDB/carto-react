@@ -1172,7 +1172,7 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@deck.gl/carto@^8.6.0":
+"@deck.gl/carto@^8.6.5":
   version "8.6.5"
   resolved "https://registry.yarnpkg.com/@deck.gl/carto/-/carto-8.6.5.tgz#f1c65305660b763ca86f7c6208ad65acbc6e5c64"
   integrity sha512-7T+MjIkJtdViWYmxoO8EMxrGWTzXuBrPceeT/618CGKFgveIim1kkY51poFTCpYl1gCtkwepGPaaIa9sPacmSA==
@@ -1184,7 +1184,7 @@
     cartocolor "^4.0.2"
     d3-scale "^3.2.3"
 
-"@deck.gl/core@^8.6.0":
+"@deck.gl/core@^8.6.5":
   version "8.6.5"
   resolved "https://registry.yarnpkg.com/@deck.gl/core/-/core-8.6.5.tgz#158d145291fd07db7f773279a50858f85e318aea"
   integrity sha512-xqTnW4LFYf1kX91xUJp1lm7QW4NhYglKRTwMejXxzGBcknUq27BYBZNTdeIEVkkQfO/AydhHWaZe3npAsM7cMQ==
@@ -1198,14 +1198,14 @@
     mjolnir.js "^2.5.0"
     probe.gl "^3.4.0"
 
-"@deck.gl/extensions@^8.6.0":
+"@deck.gl/extensions@^8.6.5":
   version "8.6.5"
   resolved "https://registry.yarnpkg.com/@deck.gl/extensions/-/extensions-8.6.5.tgz#bef2413b8104a9483ac7967e419c09c603809d32"
   integrity sha512-4Ljk7exKxp9p7Jcw92p0wH59/UkBpclPIJmM6EjRwyO5qvMSlguzkFSg691K2n38eIcGXXXgdUItWy9q/Wds8w==
   dependencies:
     "@luma.gl/shadertools" "^8.5.10"
 
-"@deck.gl/geo-layers@^8.6.0":
+"@deck.gl/geo-layers@^8.6.5":
   version "8.6.5"
   resolved "https://registry.yarnpkg.com/@deck.gl/geo-layers/-/geo-layers-8.6.5.tgz#d901b1aae1ce74988ae1946883a171c31bd32976"
   integrity sha512-LSHK0oWX8AaxD9QsDOPMmE1vX1vZZqQlIk7vF6JNTREyjZcfGVfldEaFED2qjwzqYa5jpio3FtRFLucYHCcx8Q==
@@ -1223,12 +1223,12 @@
     long "^3.2.0"
     math.gl "^3.5.4"
 
-"@deck.gl/google-maps@^8.6.0":
+"@deck.gl/google-maps@^8.6.5":
   version "8.6.5"
   resolved "https://registry.yarnpkg.com/@deck.gl/google-maps/-/google-maps-8.6.5.tgz#7f8b498e43f95edf40fd9d4622d0302497dadc8c"
   integrity sha512-v+FqDwxNAIDPXb/jxXwB+6xDGx2DfYKMlQSMnK04bqAHoRJ2a864yrmlnCInjNw46IaIe9beoxKVP5D9FYbC7Q==
 
-"@deck.gl/layers@^8.6.0":
+"@deck.gl/layers@^8.6.5":
   version "8.6.5"
   resolved "https://registry.yarnpkg.com/@deck.gl/layers/-/layers-8.6.5.tgz#73b4dcdc6da0410a09e09f30c04178b70df7e9c6"
   integrity sha512-zI/8V66ZeFZ3Q9LAt8KadBDmvLRNjYjszIP7sNjNCr2qzz9JCdc1G7FFxxHUUyWAwWcWOIS/vTaX4OADVjIQqA==
@@ -1238,7 +1238,7 @@
     "@math.gl/polygon" "^3.5.4"
     earcut "^2.0.6"
 
-"@deck.gl/mesh-layers@^8.6.0":
+"@deck.gl/mesh-layers@^8.6.5":
   version "8.6.5"
   resolved "https://registry.yarnpkg.com/@deck.gl/mesh-layers/-/mesh-layers-8.6.5.tgz#9ad231d9d9466af6b29dd853b40d621e31ec34fc"
   integrity sha512-E4jq7keVRaMS+GAvdpw8/jP7YecyrlyEqF0GT75/Dwkfx0XusGa8qqfwFGruZNJfWgCg8aP5kJ2zlupDkMqdxg==

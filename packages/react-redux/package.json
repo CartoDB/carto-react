@@ -63,10 +63,10 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^1.1.0",
-    "@carto/react-workers": "^1.1.0",
-    "@deck.gl/carto": "^8.6.0",
-    "@deck.gl/core": "^8.6.0",
+    "@carto/react-core": "^1.1.4",
+    "@carto/react-workers": "^1.1.4",
+    "@deck.gl/carto": "^8.6.5",
+    "@deck.gl/core": "^8.6.5",
     "@reduxjs/toolkit": "^1.5.0"
   }
 }
