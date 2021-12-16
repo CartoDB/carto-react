@@ -2346,14 +2346,14 @@
     "@math.gl/core" "^3.5.1"
     "@math.gl/geospatial" "^3.5.1"
 
-"@loaders.gl/core@3.1.0", "@loaders.gl/core@^3.0.8":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@loaders.gl/core/-/core-3.1.0.tgz#bd5938a5342cbab68daef4c5fddf18c0bea4dc48"
-  integrity sha512-NJkRmubeW6RNaCReLj6Bm9njAqhgyUVxVUbZvmOUl97rGGxSIWZJ0CDrDaYFVPf0GQ1e14hcSXWHxn8w1EsFBg==
+"@loaders.gl/core@^3.0.8":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@loaders.gl/core/-/core-3.1.1.tgz#760b9835e92c2e74ff14ee7549c79f9c4d28b969"
+  integrity sha512-tCLr5wghwzddjdrE8wifJEVkFgZKnBZ83lQ5N2d6katx82iQh58KSnnlIx8Kxokpc0TnVkPBqVsJZH/b8MNPcA==
   dependencies:
     "@babel/runtime" "^7.3.1"
-    "@loaders.gl/loader-utils" "3.1.0"
-    "@loaders.gl/worker-utils" "3.1.0"
+    "@loaders.gl/loader-utils" "3.1.1"
+    "@loaders.gl/worker-utils" "3.1.1"
     probe.gl "^3.4.0"
 
 "@loaders.gl/draco@3.1.1":
@@ -2411,15 +2411,6 @@
   dependencies:
     "@babel/runtime" "^7.3.1"
     "@probe.gl/stats" "^3.3.0"
-
-"@loaders.gl/loader-utils@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@loaders.gl/loader-utils/-/loader-utils-3.1.0.tgz#65214dbd930faf3f19177e94feda36c655901671"
-  integrity sha512-0OD6uAbVgrW4pWKvDdOMduEQngWlbSzxoiNjadS6uzaohnojooub3w2rI13z4qxJeLNSUUjbIvM50O1Zvwo1MA==
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-    "@loaders.gl/worker-utils" "3.1.0"
-    "@probe.gl/stats" "^3.4.0"
 
 "@loaders.gl/loader-utils@3.1.1", "@loaders.gl/loader-utils@^3.0.8":
   version "3.1.1"
@@ -2490,13 +2481,6 @@
     "@math.gl/geospatial" "^3.5.1"
     "@math.gl/web-mercator" "^3.5.1"
     "@probe.gl/stats" "^3.5.0"
-
-"@loaders.gl/worker-utils@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@loaders.gl/worker-utils/-/worker-utils-3.1.0.tgz#93f7c6c92181d04c6c495695911573ee9370851e"
-  integrity sha512-sw6JcpFRbIWLLMJyE+T6hVZhjTYnJLgrpln4stesKcriq8brJLra1aX4t7BxZ17KLTM4eVGxLAne73EK1WORug==
-  dependencies:
-    "@babel/runtime" "^7.3.1"
 
 "@loaders.gl/worker-utils@3.1.1":
   version "3.1.1"
@@ -3000,7 +2984,7 @@
     "@babel/runtime" "^7.0.0"
     "@probe.gl/env" "3.5.0"
 
-"@probe.gl/stats@3.5.0", "@probe.gl/stats@^3.3.0", "@probe.gl/stats@^3.4.0", "@probe.gl/stats@^3.5.0":
+"@probe.gl/stats@3.5.0", "@probe.gl/stats@^3.3.0", "@probe.gl/stats@^3.5.0":
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/@probe.gl/stats/-/stats-3.5.0.tgz#774495772f06e898aae28c1d315c9edac07f3425"
   integrity sha512-IH2M+F3c8HR1DTroBARePUFG7wIewumtKA0UFqx51Z7S4hKrD60wFbpMmg0AcF4FvHAXMBoC+kYi1UKW9XbAOw==
