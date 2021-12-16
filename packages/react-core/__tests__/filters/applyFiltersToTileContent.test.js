@@ -10,6 +10,11 @@ const FILTERS = {
     in: {
       values: [78]
     }
+  },
+  name: {
+    in: {
+      values: ['North Dakota']
+    }
   }
 };
 
@@ -63,12 +68,15 @@ describe('applyFiltersToTileContent', () => {
       FILTERS
     );
 
-    expect(
-      tileContentWithGetFilterValue.polygons.attributes.getFilterValue.value[0]
-    ).toBe(1);
-    expect(
-      tileContentWithGetFilterValue.polygons.attributes.getFilterValue.value[9]
-    ).toBe(0);
+    // First feature from 0 to 4
+    tileContentWithGetFilterValue.polygons.attributes.getFilterValue.value
+      .subarray(0, 5)
+      .forEach((doesPassed) => expect(doesPassed).toBe(1));
+
+    // Second feature from 5 to 10
+    tileContentWithGetFilterValue.polygons.attributes.getFilterValue.value
+      .subarray(5, 10)
+      .forEach((doesPassed) => expect(doesPassed).toBe(0));
   });
 
   test('should return same tile content if arguments are invalid (filters is null, empty or tile content is empty)', () => {
