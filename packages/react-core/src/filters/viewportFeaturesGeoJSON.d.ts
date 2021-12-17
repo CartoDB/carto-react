@@ -3,7 +3,7 @@ import { Viewport, ViewportFeaturesResponse } from '../types';
 
 type ViewportFeaturesGeoJSONArgs = {
   geojson: FeatureCollection,
-  spatialFilterGeometry: Geometry,
+  spatialFilterGeometry?: Geometry,
   viewport: Viewport,
   uniqueIdProperty?: string
 }
