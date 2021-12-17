@@ -1,8 +1,8 @@
 import { Credentials } from '@carto/react-api/';
 import { SourceProps } from '@carto/react-api/types';
 import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/';
-import { InitialCartoState, ViewState } from '../types';
-import { AnyAction, Reducer } from 'redux';
+import { InitialCartoState, CartoState, ViewState } from '../types';
+import { AnyAction, Reducer, State } from 'redux';
 
 type Source = SourceProps & { id: string } & { filters?: any};
 
@@ -58,7 +58,7 @@ declare enum CartoActions {
   SET_CREDENTIALS = 'carto/setCredentials'
 }
 
-export function createCartoSlice(initialState: InitialCartoState): Reducer<any, AnyAction>;
+export function createCartoSlice(initialState: InitialCartoState): Reducer<CartoState, AnyAction>;
 
 export function addSource(
   source: Source
