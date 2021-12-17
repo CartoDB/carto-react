@@ -5,7 +5,7 @@ import turfIntersects from '@turf/boolean-intersects';
 // Don't change this value to maintain compatibility with builder
 export const MAX_GPU_FILTERS = 4;
 
-export function getFiltersByType(filters) {
+function getFiltersByType(filters) {
   const filtersWithoutTimeType = {};
   let timeFilter = null;
 
@@ -22,6 +22,7 @@ export function getFiltersByType(filters) {
       }
     });
   });
+
   return { filtersWithoutTimeType, timeFilter };
 }
 
