@@ -1,9 +1,9 @@
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { useSelector } from 'react-redux';
-import useGeoJsonFeatures from './geojson/useGeoJsonFeatures';
+import useGeoJsonFeatures from './useGeoJsonFeatures';
 import useTilesetFeatures from './tileset/useTilesetFeatures';
-import { getDataFilterExtensionProps } from './dataFilterExtensionUtils';
-import useFiltersGeoJson from './geojson/useFiltersGeoJson';
+import { getDataFilterExtensionProps } from './dataFilterExtensionUtil';
+import { selectSpatialFilter } from '@carto/react-redux';
 
 export default function useCartoLayerProps({
   source,
@@ -12,12 +12,14 @@ export default function useCartoLayerProps({
   viewporFeaturesDebounceTimeout = 250
 }) {
   const viewport = useSelector((state) => state.carto.viewport);
-
-  const getFilterValue = useFiltersGeoJson({ source });
+  const spatialFilterGeometry = useSelector((state) =>
+    selectSpatialFilter(state, source?.id)
+  );
 
   const [onDataLoad] = useGeoJsonFeatures({
     source,
     viewport,
+    spatialFilterGeometry,
     uniqueIdProperty,
     debounceTimeout: viewporFeaturesDebounceTimeout
   });
@@ -31,17 +33,19 @@ export default function useCartoLayerProps({
 
   let props = {};
 
-  const useMVT =
+  const useTileset =
     source?.credentials.apiVersion === API_VERSIONS.V2 ||
     source?.type === MAP_TYPES.TILESET;
 
   const useGeoJson = source?.type === MAP_TYPES.QUERY || source?.type === MAP_TYPES.TABLE;
 
-  const { updateTriggers, ...dataFilterExtensionProps } = getDataFilterExtensionProps(
-    source?.filters
-  );
+  const {
+    updateTriggers,
+    getFilterValue,
+    ...dataFilterExtensionProps
+  } = getDataFilterExtensionProps(source?.filters, spatialFilterGeometry);
 
-  if (useMVT) {
+  if (useTileset) {
     props = {
       binary: true,
       ...(viewportFeatures && {

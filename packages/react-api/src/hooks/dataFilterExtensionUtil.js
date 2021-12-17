@@ -1,5 +1,6 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
-import { _FilterTypes } from '@carto/react-core';
+import { _buildFeatureFilter, _FilterTypes } from '@carto/react-core';
+import turfIntersects from '@turf/boolean-intersects';
 
 // Don't change this value to maintain compatibility with builder
 export const MAX_GPU_FILTERS = 4;
@@ -52,14 +53,45 @@ function getUpdateTriggers(filtersWithoutTimeType, timeFilter) {
   };
 }
 
+function createGetFilterValue(filtersWithoutTimeType, timeFilter, spatialFilterGeometry) {
+  const result = Array(MAX_GPU_FILTERS).fill(0);
+
+  const filterFn = _buildFeatureFilter({
+    filters: filtersWithoutTimeType,
+    type: 'number'
+  });
+
+  const spatialFilterFn = (f) =>
+    spatialFilterGeometry ? Number(turfIntersects(f.geometry, spatialFilterGeometry)) : 1;
+
+  // We evaluate all filters except the time filter using _buildFeatureFilter function.
+  // For the time filter, we return the value of the feature and we will change the getFilterRange result
+  // every time this filter changes
+  return (feature) => {
+    result[0] = filterFn(feature) && spatialFilterFn(feature);
+
+    if (timeFilter) {
+      const f = feature.properties || feature;
+      result[1] = f[timeFilter.column];
+    }
+
+    return result;
+  };
+}
+
 // The deck.gl DataFilterExtension accepts up to 4 values to filter.
 // We're going to use the first value for all filter except the time filter
 // that will be managed by the second value of the DataFilterExtension
-export function getDataFilterExtensionProps(filters = {}) {
+export function getDataFilterExtensionProps(filters = {}, spatialFilterGeometry) {
   const [filtersWithoutTimeType, timeFilter] = getFiltersByType(filters);
   return {
     filterRange: getFilterRange(timeFilter),
     updateTriggers: getUpdateTriggers(filtersWithoutTimeType, timeFilter),
+    getFilterValue: createGetFilterValue(
+      filtersWithoutTimeType,
+      timeFilter,
+      spatialFilterGeometry
+    ),
     extensions: [new DataFilterExtension({ filterSize: MAX_GPU_FILTERS })]
   };
 }

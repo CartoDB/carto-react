@@ -1,14 +1,13 @@
 import { useEffect, useCallback } from 'react';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
-import { throwError } from '../utils';
-import useFeaturesCommons from '../useFeaturesCommons';
-import { useSelector } from 'react-redux';
-import { selectSpatialFilter } from '@carto/react-redux';
+import { throwError } from './utils';
+import useFeaturesCommons from './useFeaturesCommons';
 
 export default function useGeoJsonFeatures({
   source,
   viewport,
+  spatialFilterGeometry,
   uniqueIdProperty = 'cartodb_id',
   debounceTimeout = 250
 }) {
@@ -20,9 +19,6 @@ export default function useGeoJsonFeatures({
     stopAnyCompute,
     setSourceViewportFeaturesReady
   ] = useFeaturesCommons({ source });
-  const spatialFilterGeometry = useSelector((state) =>
-    selectSpatialFilter(state, source?.id)
-  );
 
   const sourceId = source?.id;
 
