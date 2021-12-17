@@ -22,7 +22,7 @@ export function getFiltersByType(filters) {
       }
     });
   });
-  return [filtersWithoutTimeType, timeFilter];
+  return { filtersWithoutTimeType, timeFilter };
 }
 
 function getFilterRange(timeFilter) {
@@ -83,7 +83,7 @@ function createGetFilterValue(filtersWithoutTimeType, timeFilter, spatialFilterG
 // We're going to use the first value for all filter except the time filter
 // that will be managed by the second value of the DataFilterExtension
 export function getDataFilterExtensionProps(filters = {}, spatialFilterGeometry) {
-  const [filtersWithoutTimeType, timeFilter] = getFiltersByType(filters);
+  const { filtersWithoutTimeType, timeFilter } = getFiltersByType(filters);
   return {
     filterRange: getFilterRange(timeFilter),
     updateTriggers: getUpdateTriggers(filtersWithoutTimeType, timeFilter),
