@@ -9,16 +9,19 @@ import {
 export function applySpatialFilterToPoints(
   currentPointsData,
   maskGeometry,
-  { uniqueIdProperty, analysedPointsFeatures = new Map() }
+  { uniqueIdProperty, analysedPointsFeatures = new Map() } = {}
 ) {
   return currentPointsData.featureIds.value.map((featureIdx) => {
-    const uniqueIdValue = getUniqueIdPropertyValue(
-      currentPointsData,
-      featureIdx,
-      uniqueIdProperty
-    );
+    let uniqueIdValue;
+    if (uniqueIdProperty) {
+      uniqueIdValue = getUniqueIdPropertyValue(
+        currentPointsData,
+        featureIdx,
+        uniqueIdProperty
+      );
+    }
 
-    if (analysedPointsFeatures.has(uniqueIdValue)) {
+    if (uniqueIdValue && analysedPointsFeatures.has(uniqueIdValue)) {
       return analysedPointsFeatures.get(uniqueIdValue);
     }
 
@@ -30,7 +33,7 @@ export function applySpatialFilterToPoints(
       maskGeometry
     );
 
-    analysedPointsFeatures.set(uniqueIdValue, doesIntersects);
+    if (uniqueIdValue) analysedPointsFeatures.set(uniqueIdValue, doesIntersects);
 
     return doesIntersects;
   });
@@ -41,7 +44,7 @@ const NULL_VALUE = 2;
 export function applySpatialFilterToLines(
   currentLinesData,
   filteringGeometry,
-  { uniqueIdProperty, analysedLinesFeatures = new Map() }
+  { uniqueIdProperty, analysedLinesFeatures = new Map() } = {}
 ) {
   const res = new Uint16Array(currentLinesData.properties.length).fill(NULL_VALUE);
 
@@ -50,33 +53,36 @@ export function applySpatialFilterToLines(
   let idx = 0;
   for (let currentLine of currentLinesData.pathIndices.value.slice(0, -1)) {
     const featureId = currentLinesData.featureIds.value[currentLine];
-    const uniqueIdValue = getUniqueIdPropertyValue(
-      currentLinesData,
-      currentLine,
-      uniqueIdProperty
-    );
+
+    let uniqueIdValue;
+    if (uniqueIdProperty) {
+      uniqueIdValue = getUniqueIdPropertyValue(
+        currentLinesData,
+        currentLine,
+        uniqueIdProperty
+      );
+    }
+
     if (res[featureId] !== NULL_VALUE) {
       idx++;
       if (res[featureId] === 1) {
         featureIdsIn.add(featureId);
-        analysedLinesFeatures.set(uniqueIdValue, true);
+        if (uniqueIdValue) analysedLinesFeatures.set(uniqueIdValue, true);
       }
       continue;
     }
 
     // featureIdsIn.has(featureId) --> for multiline, if one of the lines is already IN, do not analyse any other
-    // analysedPolygonsFeatures.get(uniqueId) --> for splitted lines between multiple tiles
+    // analysedLinesFeatures.get(uniqueId) --> for splitted lines between multiple tiles
     let doesIntersects =
-      featureIdsIn.has(featureId) || analysedLinesFeatures.has(uniqueIdValue);
+      featureIdsIn.has(featureId) ||
+      (uniqueIdValue && analysedLinesFeatures.has(uniqueIdValue));
+
     if (!doesIntersects) {
       const nextLine = currentLinesData.pathIndices.value[idx + 1];
-      const doesIntersects = turfIntersects(
+      doesIntersects = turfIntersects(
         buildGeoJson(
-          getRingCoordinatesFor(
-            currentLine * 2,
-            nextLine * 2,
-            currentLinesData.positions
-          ),
+          getRingCoordinatesFor(currentLine, nextLine, currentLinesData.positions),
           GEOMETRY_TYPES['LineString']
         ),
         filteringGeometry
@@ -84,11 +90,9 @@ export function applySpatialFilterToLines(
 
       if (doesIntersects) {
         featureIdsIn.add(featureId);
-        analysedLinesFeatures.set(uniqueIdValue, doesIntersects);
+        if (uniqueIdValue) analysedLinesFeatures.set(uniqueIdValue, doesIntersects);
       }
     }
-
-    analysedLinesFeatures.set(uniqueIdValue, doesIntersects);
 
     res[featureId] = doesIntersects;
 
@@ -101,7 +105,7 @@ export function applySpatialFilterToLines(
 export function applySpatialFilterToPolygons(
   currentPolygonsData,
   filteringGeometry,
-  { uniqueIdProperty, analysedPolygonsFeatures = new Map() }
+  { uniqueIdProperty, analysedPolygonsFeatures = new Map() } = {}
 ) {
   const res = new Uint16Array(currentPolygonsData.properties.length).fill(NULL_VALUE);
 
@@ -135,11 +139,7 @@ export function applySpatialFilterToPolygons(
       const nextLine = currentPolygonsData.primitivePolygonIndices.value[idx + 1];
       doesIntersects = turfIntersects(
         buildGeoJson(
-          getRingCoordinatesFor(
-            currentLine * 2,
-            nextLine * 2,
-            currentPolygonsData.positions
-          ),
+          getRingCoordinatesFor(currentLine, nextLine, currentPolygonsData.positions),
           GEOMETRY_TYPES['Polygon']
         ),
         filteringGeometry

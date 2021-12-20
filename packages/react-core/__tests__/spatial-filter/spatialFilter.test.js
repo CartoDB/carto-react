@@ -170,6 +170,16 @@ function executePointsTests() {
     expect(getFilterValueRes).toEqual(POINTS_RESULTS);
   });
 
+  test('should filter points without uniqueIdProperty', () => {
+    const getFilterValueRes = applySpatialFilterToPoints(
+      { ...POINTS_DATA, numericProps: {} },
+      FILTERING_GEOMETRY_AS_TILE_COORDS
+    );
+
+    expect(getFilterValueRes.length).toEqual(POINTS_DATA.featureIds.value.length);
+    expect(getFilterValueRes).toEqual(POINTS_RESULTS);
+  });
+
   test('should fill analysedPointsFeatures map if provided', () => {
     const analysedPointsFeatures = new Map();
 
@@ -288,6 +298,16 @@ function executePolygonTests() {
     expect(getFilterValueRes).toEqual(POLYGONS_RESULTS);
   });
 
+  test('should filter polygons without uniqueIdProperty', () => {
+    const getFilterValueRes = applySpatialFilterToPolygons(
+      { ...POLYGONS_DATA, numericProps: {} },
+      FILTERING_GEOMETRY_AS_TILE_COORDS
+    );
+
+    expect(getFilterValueRes.length).toEqual(POLYGONS_DATA.featureIds.value.length);
+    expect(getFilterValueRes).toEqual(POLYGONS_RESULTS);
+  });
+
   test('should fill analysedPolygonsFeatures map if provided', () => {
     const analysedPolygonsFeatures = new Map();
 
@@ -381,7 +401,7 @@ const LINES_DATA = {
   properties: [{}]
 };
 
-const LINES_RESULTS = Uint16Array.of(0, 0, 0, 0, 0);
+const LINES_RESULTS = Uint16Array.of(1, 1, 1, 1, 1);
 
 function executeLinesTests() {
   test('should filter lines', () => {
@@ -389,6 +409,16 @@ function executeLinesTests() {
       LINES_DATA,
       FILTERING_GEOMETRY_AS_TILE_COORDS,
       { uniqueIdProperty: UNIQUE_ID_PROPERTY }
+    );
+
+    expect(getFilterValueRes.length).toEqual(LINES_DATA.featureIds.value.length);
+    expect(getFilterValueRes).toEqual(LINES_RESULTS);
+  });
+
+  test('should filter lines without uniqueIdProperty', () => {
+    const getFilterValueRes = applySpatialFilterToLines(
+      { ...LINES_DATA, numericProps: {} },
+      FILTERING_GEOMETRY_AS_TILE_COORDS
     );
 
     expect(getFilterValueRes.length).toEqual(LINES_DATA.featureIds.value.length);
@@ -403,7 +433,7 @@ function executeLinesTests() {
       analysedLinesFeatures
     });
 
-    expect([...analysedLinesFeatures.values()]).toEqual([false]);
+    expect([...analysedLinesFeatures.values()]).toEqual([true]);
     // We don't check key and uniqueIdProperty if string, because it's the same code used in points
   });
 
@@ -412,8 +442,22 @@ function executeLinesTests() {
       [...LINES_DATA.numericProps[UNIQUE_ID_PROPERTY].value].map((el) => [el, 1])
     );
 
+    // This fake data do not intersect, with this test I want to be sure
+    // that even if the lines don't intersect, if analysedLinesFeatures says that lines intersects
+    // the result will be that they intersects
+    const dataDoNotIntersect = {
+      ...LINES_DATA,
+      positions: { value: LINES_DATA.positions.value.map((el) => el - 1), size: 2 }
+    };
+
+    // Minor check to be sure that fake data doesn't intersect
+    applySpatialFilterToLines(
+      dataDoNotIntersect,
+      FILTERING_GEOMETRY_AS_TILE_COORDS
+    ).forEach((doesIntersects) => expect(doesIntersects).toBe(0));
+
     const getFilterValueRes1 = applySpatialFilterToLines(
-      LINES_DATA,
+      dataDoNotIntersect,
       FILTERING_GEOMETRY_AS_TILE_COORDS,
       {
         uniqueIdProperty: UNIQUE_ID_PROPERTY,
@@ -422,7 +466,8 @@ function executeLinesTests() {
     );
 
     // The result is full of 1 because in lines,
-    // if previously the same polygon was intersecting,
+    // if previously the same polygon was intersecting
+    // (we indicate that using analysedLinesFeatures),
     // this will intersect too, or if this don't intersect
     // it's because the polygon is splitted between two tiles
     // and if some of the lines parts intersects, everything intersects
