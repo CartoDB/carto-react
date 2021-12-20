@@ -12,15 +12,10 @@ import {
   TableSortLabel,
   TablePagination
 } from '@material-ui/core';
+import clsx from 'clsx';
 
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
+  return Math.sign(b[orderBy] - a[orderBy]);
 }
 
 function getComparator(order, orderBy) {
@@ -107,20 +102,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // TODO: title and isLoading
-function TableWidgetUI(props) {
-  const {
-    columns,
-    rows,
-    sorting,
-    selecting,
-    order,
-    orderBy,
-    pagination,
-    rowsPerPage,
-    rowsPerPageOptions,
-    clickable,
-    onRowClick
-  } = props;
+function TableWidgetUI({
+  columns,
+  rows,
+  sorting,
+  selecting,
+  order,
+  orderBy,
+  pagination,
+  rowsPerPage,
+  rowsPerPageOptions,
+  clickable,
+  onRowClick
+}) {
   const classes = useStyles();
   const [selected, setSelected] = useState([]);
   const [tableOrder, setOrder] = useState(order);
@@ -239,7 +233,7 @@ function TableHeaderComponent({
 
   return (
     <TableHead
-      className={`${classes.tableHead} ${selecting ? classes.tableHeadSelecting : ''}`}
+      className={clsx(classes.tableHead, { [classes.tableHeadSelecting]: selecting })}
     >
       <TableRow>
         {selecting && (
