@@ -27,7 +27,7 @@ export function applySpatialFilterToPoints(
 
     const doesIntersects = turfIntersects(
       buildGeoJson(
-        [currentPointsData.positions.value.subarray(featureIdx * 2, featureIdx * 2 + 2)],
+        getRingCoordinatesFor(featureIdx, featureIdx + 1, currentPointsData.positions),
         GEOMETRY_TYPES['Point']
       ),
       maskGeometry
