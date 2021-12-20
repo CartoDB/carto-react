@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
       border: 'none'
     },
     '& .MuiTableCell-head, & .MuiTableCell-head span': {
-      ...theme.typography.subtitle2,
-      color: theme.palette.primary.main
+      ...theme.typography.caption,
+      color: theme.palette.text.secondary
     }
   },
   tableHeadSelecting: {
@@ -60,11 +60,10 @@ const useStyles = makeStyles((theme) => ({
     '&.MuiTableRow-hover:hover': {
       cursor: 'pointer',
       backgroundColor: theme.palette.background.default
+    },
+    '&.selected': {
+      backgroundColor: theme.palette.primary.relatedLight
     }
-    // TODO: as prop
-    // '&:nth-of-type(odd)': {
-    //   backgroundColor: fade(theme.palette.primary.relatedLight, 0.05),
-    // },
   },
   tableCell: {
     overflow: 'hidden',
@@ -307,7 +306,7 @@ function TableBodyComponent({
           return (
             <TableRow
               key={row.id}
-              className={classes.tableRow}
+              className={clsx(classes.tableRow, { selected: isItemSelected })}
               hover={clickable}
               onClick={() => clickable && handleRowClick(row)}
             >
