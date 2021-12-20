@@ -1,4 +1,10 @@
 import turfIntersects from '@turf/boolean-intersects';
+import {
+  buildGeoJson,
+  GEOMETRY_TYPES,
+  getRingCoordinatesFor,
+  getUniqueIdPropertyValue
+} from '../utils/binaryDataUtils';
 
 export function applySpatialFilterToPoints(
   currentPointsData,
@@ -6,24 +12,25 @@ export function applySpatialFilterToPoints(
   { uniqueIdProperty, analysedPointsFeatures = new Map() }
 ) {
   return currentPointsData.featureIds.value.map((featureIdx) => {
-    const uniqueId = getUniqueId(currentPointsData, featureIdx, uniqueIdProperty);
+    const uniqueIdValue = getUniqueIdPropertyValue(
+      currentPointsData,
+      featureIdx,
+      uniqueIdProperty
+    );
 
-    if (analysedPointsFeatures.has(uniqueId)) {
-      return analysedPointsFeatures.get(uniqueId);
+    if (analysedPointsFeatures.has(uniqueIdValue)) {
+      return analysedPointsFeatures.get(uniqueIdValue);
     }
 
     const doesIntersects = turfIntersects(
-      {
-        type: 'Point',
-        coordinates: currentPointsData.positions.value.subarray(
-          featureIdx * 2,
-          featureIdx * 2 + 2
-        )
-      },
+      buildGeoJson(
+        [currentPointsData.positions.value.subarray(featureIdx * 2, featureIdx * 2 + 2)],
+        GEOMETRY_TYPES['Point']
+      ),
       maskGeometry
     );
 
-    analysedPointsFeatures.set(uniqueId, doesIntersects);
+    analysedPointsFeatures.set(uniqueIdValue, doesIntersects);
 
     return doesIntersects;
   });
@@ -43,12 +50,16 @@ export function applySpatialFilterToLines(
   let idx = 0;
   for (let currentLine of currentLinesData.pathIndices.value.slice(0, -1)) {
     const featureId = currentLinesData.featureIds.value[currentLine];
-    const uniqueId = getUniqueId(currentLinesData, currentLine, uniqueIdProperty);
+    const uniqueIdValue = getUniqueIdPropertyValue(
+      currentLinesData,
+      currentLine,
+      uniqueIdProperty
+    );
     if (res[featureId] !== NULL_VALUE) {
       idx++;
       if (res[featureId] === 1) {
         featureIdsIn.add(featureId);
-        analysedLinesFeatures.set(uniqueId, true);
+        analysedLinesFeatures.set(uniqueIdValue, true);
       }
       continue;
     }
@@ -56,26 +67,28 @@ export function applySpatialFilterToLines(
     // featureIdsIn.has(featureId) --> for multiline, if one of the lines is already IN, do not analyse any other
     // analysedPolygonsFeatures.get(uniqueId) --> for splitted lines between multiple tiles
     let doesIntersects =
-      featureIdsIn.has(featureId) || analysedLinesFeatures.has(uniqueId);
+      featureIdsIn.has(featureId) || analysedLinesFeatures.has(uniqueIdValue);
     if (!doesIntersects) {
       const nextLine = currentLinesData.pathIndices.value[idx + 1];
       const doesIntersects = turfIntersects(
-        {
-          type: 'LineString',
-          coordinates: convertCoordinates(
-            currentLinesData.positions.value.subarray(currentLine * 2, nextLine * 2)
-          )
-        },
+        buildGeoJson(
+          getRingCoordinatesFor(
+            currentLine * 2,
+            nextLine * 2,
+            currentLinesData.positions
+          ),
+          GEOMETRY_TYPES['LineString']
+        ),
         filteringGeometry
       );
 
       if (doesIntersects) {
         featureIdsIn.add(featureId);
-        analysedLinesFeatures.set(uniqueId, doesIntersects);
+        analysedLinesFeatures.set(uniqueIdValue, doesIntersects);
       }
     }
 
-    analysedLinesFeatures.set(uniqueId, doesIntersects);
+    analysedLinesFeatures.set(uniqueIdValue, doesIntersects);
 
     res[featureId] = doesIntersects;
 
@@ -100,12 +113,16 @@ export function applySpatialFilterToPolygons(
     -1
   )) {
     const featureId = currentPolygonsData.featureIds.value[currentLine];
-    const uniqueId = getUniqueId(currentPolygonsData, currentLine, uniqueIdProperty);
+    const uniqueIdValue = getUniqueIdPropertyValue(
+      currentPolygonsData,
+      currentLine,
+      uniqueIdProperty
+    );
     if (res[featureId] !== NULL_VALUE) {
       idx++;
       if (res[featureId] === 1) {
         featureIdsIn.add(featureId);
-        analysedPolygonsFeatures.set(uniqueId, true);
+        analysedPolygonsFeatures.set(uniqueIdValue, true);
       }
       continue;
     }
@@ -113,24 +130,24 @@ export function applySpatialFilterToPolygons(
     // featureIdsIn.has(featureId) --> for multiline, if one of the lines is already IN, do not analyse any other
     // analysedPolygonsFeatures.get(uniqueId) --> for splitted lines between multiple tiles
     let doesIntersects =
-      featureIdsIn.has(featureId) || analysedPolygonsFeatures.has(uniqueId);
+      featureIdsIn.has(featureId) || analysedPolygonsFeatures.has(uniqueIdValue);
     if (!doesIntersects) {
       const nextLine = currentPolygonsData.primitivePolygonIndices.value[idx + 1];
       doesIntersects = turfIntersects(
-        {
-          type: 'Polygon',
-          coordinates: [
-            convertCoordinates(
-              currentPolygonsData.positions.value.subarray(currentLine * 2, nextLine * 2)
-            )
-          ]
-        },
+        buildGeoJson(
+          getRingCoordinatesFor(
+            currentLine * 2,
+            nextLine * 2,
+            currentPolygonsData.positions
+          ),
+          GEOMETRY_TYPES['Polygon']
+        ),
         filteringGeometry
       );
 
       if (doesIntersects) {
         featureIdsIn.add(featureId);
-        analysedPolygonsFeatures.set(uniqueId, doesIntersects);
+        analysedPolygonsFeatures.set(uniqueIdValue, doesIntersects);
       }
     }
 
@@ -140,20 +157,4 @@ export function applySpatialFilterToPolygons(
   }
 
   return currentPolygonsData.featureIds.value.map((id) => res[id] === 1);
-}
-
-// Aux
-function getUniqueId(data, featureIdx, uniqueIdProperty) {
-  return (
-    data.numericProps[uniqueIdProperty]?.value[featureIdx] || // uniqueId can be a number
-    data.properties[featureIdx][uniqueIdProperty] // or a string
-  );
-}
-
-function convertCoordinates(originalCoordinates) {
-  const cp = [...originalCoordinates];
-  const newArr = [];
-  while (cp.length) newArr.push(cp.splice(0, 2));
-
-  return newArr;
 }

@@ -10,7 +10,7 @@ export function applySpatialFilterToTileContent({
   tileBbox,
   filteringGeometry,
   analysedFeatures,
-  uniqueIdProperty = 'cartodb_id'
+  uniqueIdProperty
 }) {
   const geometryInTileCoords = transformWGS84ToTileCoords(filteringGeometry, tileBbox);
 

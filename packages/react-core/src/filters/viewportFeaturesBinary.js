@@ -1,12 +1,12 @@
 import bboxPolygon from '@turf/bbox-polygon';
 import intersects from '@turf/boolean-intersects';
+import {
+  buildGeoJson,
+  GEOMETRY_TYPES,
+  getRingCoordinatesFor,
+  getUniqueIdPropertyValue
+} from '../utils/binaryDataUtils';
 import { prepareViewport, isTileFullyVisible } from './viewportFeatures';
-
-const GEOMETRY_TYPES = Object.freeze({
-  Point: 0,
-  LineString: 1,
-  Polygon: 2
-});
 
 function addIntersectedFeaturesInTile({
   map,
@@ -16,94 +16,44 @@ function addIntersectedFeaturesInTile({
   uniqueIdProperty
 }) {
   const indices = getIndices(data);
-  const { positions } = data;
 
   for (let i = 0; i < indices.length - 1; i++) {
     const startIndex = indices[i];
     const endIndex = indices[i + 1];
 
-    const tileProps = getPropertiesFromTile(data, startIndex);
-    const uniquePropertyValue = getUniquePropertyValue(tileProps, uniqueIdProperty, map);
+    const uniqueIdPropertyValue = getUniqueIdPropertyValueWrapper(
+      data,
+      startIndex,
+      uniqueIdProperty,
+      map
+    );
 
-    if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
-      const ringCoordinates = getRingCoordinatesFor(startIndex, endIndex, positions);
-      if (intersects(getFeatureByType(ringCoordinates, type), viewportIntersection)) {
-        map.set(uniquePropertyValue, parseProperties(tileProps));
+    if (uniqueIdPropertyValue && !map.has(uniqueIdPropertyValue)) {
+      const ringCoordinates = getRingCoordinatesFor(startIndex, endIndex, data.positions);
+      if (intersects(buildGeoJson(ringCoordinates, type), viewportIntersection)) {
+        map.set(uniqueIdPropertyValue, getFeatureProperties(data, startIndex));
       }
     }
   }
 }
 
-function getIndices(data) {
-  const indices = data.primitivePolygonIndices || data.pathIndices || data.pointIndices;
-  return indices.value;
-}
+function addAllFeaturesInTile({ map, data, uniqueIdProperty }) {
+  const indices = getIndices(data);
 
-function getFeatureId(data, startIndex) {
-  return data.featureIds.value[startIndex];
-}
+  for (let i = 0; i < indices.length - 1; i++) {
+    const startIndex = indices[i];
 
-function getPropertiesFromTile(data, startIndex) {
-  const featureId = getFeatureId(data, startIndex);
-  const { properties, numericProps } = data;
-  const result = {
-    properties: properties[featureId],
-    numericProps: {}
-  };
-
-  for (const key in numericProps) {
-    result.numericProps[key] = numericProps[key].value[startIndex];
-  }
-
-  return result;
-}
-
-function parseProperties(tileProps) {
-  const { properties, numericProps } = tileProps;
-  return Object.assign({}, properties, numericProps);
-}
-
-function getUniquePropertyValue(tileProps, uniqueIdProperty, map) {
-  if (uniqueIdProperty) {
-    return getValueFromTileProps(tileProps, uniqueIdProperty);
-  }
-
-  const artificialId = map.size + 1; // a counter, assumed as a valid new id
-  return (
-    getValueFromTileProps(tileProps, 'cartodb_id') ||
-    getValueFromTileProps(tileProps, 'geoid') ||
-    artificialId
-  );
-}
-
-function getValueFromTileProps(tileProps, propertyName) {
-  const { properties, numericProps } = tileProps;
-  return numericProps[propertyName] || properties[propertyName];
-}
-
-function getFeatureByType(coordinates, type) {
-  switch (type) {
-    case GEOMETRY_TYPES['Polygon']:
-      return { type: 'Polygon', coordinates: [coordinates] };
-    case GEOMETRY_TYPES['LineString']:
-      return { type: 'LineString', coordinates };
-    case GEOMETRY_TYPES['Point']:
-      return { type: 'Point', coordinates: coordinates[0] };
-    default:
-      throw new Error('Invalid geometry type');
-  }
-}
-
-function getRingCoordinatesFor(startIndex, endIndex, positions) {
-  const ringCoordinates = [];
-
-  for (let j = startIndex; j < endIndex; j++) {
-    ringCoordinates.push(
-      Array.from(positions.value.subarray(j * positions.size, (j + 1) * positions.size))
+    const uniqueIdPropertyValue = getUniqueIdPropertyValueWrapper(
+      data,
+      startIndex,
+      uniqueIdProperty,
+      map
     );
-  }
 
-  return ringCoordinates;
+    if (uniqueIdPropertyValue && !map.has(uniqueIdPropertyValue)) {
+      map.set(uniqueIdPropertyValue, getFeatureProperties(data, startIndex));
+    }
+  }
 }
 
 function calculateViewportFeatures({
@@ -131,33 +81,6 @@ function calculateViewportFeatures({
   }
 }
 
-function addAllFeaturesInTile({ map, data, uniqueIdProperty }) {
-  const indices = getIndices(data);
-
-  for (let i = 0; i < indices.length - 1; i++) {
-    const startIndex = indices[i];
-
-    const tileProps = getPropertiesFromTile(data, startIndex);
-    const uniquePropertyValue = getUniquePropertyValue(tileProps, uniqueIdProperty, map);
-
-    if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
-      map.set(uniquePropertyValue, parseProperties(tileProps));
-    }
-  }
-}
-
-function createIndicesForPoints(data) {
-  const featureIds = data.featureIds.value;
-  const lastFeatureId = featureIds[featureIds.length - 1];
-
-  data.pointIndices = {
-    value: new featureIds.constructor(featureIds.length + 1),
-    size: 1
-  };
-  data.pointIndices.value.set(featureIds);
-  data.pointIndices.value.set([lastFeatureId + 1], featureIds.length);
-}
-
 export function viewportFeaturesBinary({ tiles, viewport, uniqueIdProperty }) {
   const map = new Map();
 
@@ -168,11 +91,13 @@ export function viewportFeaturesBinary({ tiles, viewport, uniqueIdProperty }) {
       continue;
     }
 
-    const { bbox } = tile;
-    const tileIsFullyVisible = isTileFullyVisible(bbox, viewport);
+    const tileIsFullyVisible = isTileFullyVisible(tile.bbox, viewport);
     const viewportIntersection = bboxPolygon(prepareViewport(tile.bbox, viewport));
 
-    createIndicesForPoints(tile.data.points);
+    // We might already have it from old analyses due to reference update
+    if (!tile.data.points.pointIndices) {
+      createIndicesForPoints(tile.data.points);
+    }
 
     calculateViewportFeatures({
       map,
@@ -201,4 +126,38 @@ export function viewportFeaturesBinary({ tiles, viewport, uniqueIdProperty }) {
   }
 
   return Array.from(map.values());
+}
+
+// Aux
+function getIndices(data) {
+  // Polygon | Lines | Points
+  return (data.primitivePolygonIndices || data.pathIndices || data.pointIndices).value;
+}
+
+// Due to we use the same code for lines, polygons and points
+// We have to normalise points indices because it differs from others indices
+function createIndicesForPoints(data) {
+  const featureIdsArray = data.featureIds.value;
+
+  data.pointIndices = {
+    value: featureIdsArray.constructor.of(...featureIdsArray, featureIdsArray.length + 1),
+    size: 1
+  };
+}
+
+function getUniqueIdPropertyValueWrapper(data, featureIdIdx, uniqueIdProperty, map) {
+  return (
+    getUniqueIdPropertyValue(data, featureIdIdx, uniqueIdProperty) || map.size + 1 // a counter, assumed as a valid new id
+  );
+}
+
+function getFeatureProperties(data, featureIdIdx) {
+  const featureId = data.featureIds.value[featureIdIdx];
+  const properties = Object.assign({}, data.properties[featureId]);
+
+  for (const key in data.numericProps) {
+    properties[key] = data.numericProps[key].value[featureIdIdx];
+  }
+
+  return properties;
 }
