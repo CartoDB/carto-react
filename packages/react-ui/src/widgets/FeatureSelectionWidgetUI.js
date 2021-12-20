@@ -4,18 +4,14 @@ import {
   Box,
   capitalize,
   Divider,
-  Grid,
-  Icon,
   IconButton,
   makeStyles,
   Menu,
   MenuItem,
   Paper,
-  rgbToHex,
   SvgIcon,
   Tooltip,
-  Typography,
-  useTheme
+  Typography
 } from '@material-ui/core';
 import { ArrowDropDown } from '@material-ui/icons';
 import PropTypes from 'prop-types';
@@ -52,8 +48,6 @@ function FeatureSelectionWidgetUI({
   editable,
   tooltipPlacement
 }) {
-  console.log(activated, selectedDrawMode);
-
   // If selectedDrawMode isn't given, it's the first draw mode by default
   useEffect(() => {
     if (!selectedDrawMode) {
@@ -69,7 +63,7 @@ function FeatureSelectionWidgetUI({
     }
   };
 
-  // Do not render nothing until selectedDrawMode is filled
+  // Do not render until selectedDrawMode is filled
   if (!selectedDrawMode) {
     return null;
   }
@@ -110,7 +104,6 @@ FeatureSelectionWidgetUI.propTypes = {
   onSelectDrawMode: PropTypes.func,
   activated: PropTypes.bool,
   onActivatedChange: PropTypes.func,
-  activated: PropTypes.bool,
   tooltipPlacement: PropTypes.string
 };
 
