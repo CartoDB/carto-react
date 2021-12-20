@@ -139,8 +139,8 @@ const DefaultProps = {
   rows: ROWS
 };
 
-export const Playgound = Template.bind({});
-Playgound.args = { ...DefaultProps, rows: ROWS.slice(0, 5) };
+export const Playground = Template.bind({});
+Playground.args = { ...DefaultProps, rows: ROWS.slice(0, 5) };
 
 export const Sorting = Template.bind({});
 Sorting.args = { ...DefaultProps, rows: ROWS.slice(0, 5), sorting: true };
