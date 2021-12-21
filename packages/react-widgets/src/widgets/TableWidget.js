@@ -52,7 +52,6 @@ function TableWidget({
         sortDirection
       })
         .then((data) => {
-          console.log(data);
           if (data) {
             setRows(data.data);
             setTotalCount(data.totalCount);
