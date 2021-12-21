@@ -13,6 +13,7 @@ import {
 } from './widgets/TimeSeriesWidgetUI/hooks/TimeSeriesContext';
 import useTimeSeriesInteractivity from './widgets/TimeSeriesWidgetUI/hooks/useTimeSeriesInteractivity';
 import { CHART_TYPES } from './widgets/utils/constants';
+import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 
@@ -30,7 +31,9 @@ export {
   TimeSeriesProvider,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
   FeatureSelectionWidgetUI,
+  TableWidgetUI,
   LegendWidgetUI,
   LEGEND_TYPES,
   NoDataAlert
 };
+

@@ -169,6 +169,7 @@ function getRawFeatures({
 }) {
   let data = [];
   let numberPages = 0;
+  let totalCount = 0;
 
   if (currentFeatures) {
     data = applySorting(getFilteredFeatures(filters), {
@@ -176,17 +177,21 @@ function getRawFeatures({
       sortByDirection
     });
 
+    totalCount = data.length;
+
     if (limit) {
       numberPages = Math.ceil(data.length / limit);
       data = applyPagination(data, { limit, page });
     }
   }
 
-  postMessage({ result: { data, currentPage: page, pages: numberPages } });
+  postMessage({
+    result: { data, currentPage: page, pages: numberPages, totalCount }
+  });
 }
 
 function applyPagination(features, { limit, page }) {
-  return features.slice(limit * Math.max(0, page - 1), limit * Math.max(1, page));
+  return features.slice(limit * page, limit * (page + 1));
 }
 
 function getFilteredFeatures(filters = {}) {
