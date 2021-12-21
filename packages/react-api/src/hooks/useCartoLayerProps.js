@@ -1,5 +1,6 @@
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { useSelector } from 'react-redux';
+import { selectSpatialFilter } from '@carto/react-redux';
 import useGeoJsonFeatures from './useGeoJsonFeatures';
 import useTilesetFeatures from './useTilesetFeatures';
 import { getDataFilterExtensionProps } from './dataFilterExtensionUtil';
@@ -11,10 +12,12 @@ export default function useCartoLayerProps({
   viewporFeaturesDebounceTimeout = 250
 }) {
   const viewport = useSelector((state) => state.carto.viewport);
+  const spatialFilter = useSelector((state) => selectSpatialFilter(state, source?.id));
 
   const [onDataLoad] = useGeoJsonFeatures({
     source,
     viewport,
+    spatialFilter,
     uniqueIdProperty,
     debounceTimeout: viewporFeaturesDebounceTimeout
   });
@@ -22,6 +25,7 @@ export default function useCartoLayerProps({
   const [onViewportLoad, fetch] = useTilesetFeatures({
     source,
     viewport,
+    spatialFilter,
     uniqueIdProperty,
     debounceTimeout: viewporFeaturesDebounceTimeout
   });

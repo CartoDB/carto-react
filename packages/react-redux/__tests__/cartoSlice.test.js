@@ -115,6 +115,68 @@ describe('carto slice', () => {
     });
   });
 
+  describe('spatial filter actions', () => {
+    const spatialFilter = {
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [0, 0],
+            [1, 1]
+          ]
+        ]
+      }
+    };
+
+    const sourceId = 'theSource';
+
+    test('should add a spatial filter to a source', () => {
+      store.dispatch(cartoSlice.addSource({ id: sourceId }));
+      store.dispatch(cartoSlice.addSpatialFilter({ sourceId, ...spatialFilter }));
+      const state = store.getState();
+      expect(state.carto.dataSources[sourceId].spatialFilter).toEqual(
+        spatialFilter.geometry
+      );
+      // Now with the selector
+      expect(cartoSlice.selectSpatialFilter(state, sourceId)).toEqual(
+        spatialFilter.geometry
+      );
+    });
+
+    test('should remove spatial filter from a source', () => {
+      // Add
+      store.dispatch(cartoSlice.addSource({ id: sourceId }));
+      store.dispatch(cartoSlice.addSpatialFilter({ sourceId, ...spatialFilter }));
+
+      // Remove
+      store.dispatch(cartoSlice.removeSpatialFilter(sourceId));
+      const state = store.getState();
+      expect(state.carto.dataSources[sourceId].spatialFilter).toEqual(null);
+      // Now with the selector
+      expect(cartoSlice.selectSpatialFilter(state, sourceId)).toEqual(null);
+    });
+
+    test('should add a spatial filter to root state', () => {
+      store.dispatch(cartoSlice.addSpatialFilter(spatialFilter));
+      const state = store.getState();
+      expect(state.carto.spatialFilter).toEqual(spatialFilter.geometry);
+      // Now with the selector
+      expect(cartoSlice.selectSpatialFilter(state)).toEqual(spatialFilter.geometry);
+    });
+
+    test('should remove spatial filter from root state', () => {
+      // Add
+      store.dispatch(cartoSlice.addSpatialFilter(spatialFilter));
+
+      // Remove
+      store.dispatch(cartoSlice.removeSpatialFilter());
+      const state = store.getState();
+      expect(state.carto.dataSources[sourceId].spatialFilter).toEqual(null);
+      // Now with the selector
+      expect(cartoSlice.selectSpatialFilter(state, sourceId)).toEqual(null);
+    });
+  });
+
   describe('filters actions', () => {
     const filter = {
       id: 'source-test-id-2',

@@ -7,6 +7,7 @@ import useFeaturesCommons from './useFeaturesCommons';
 export default function useGeoJsonFeatures({
   source,
   viewport,
+  spatialFilter,
   uniqueIdProperty = 'cartodb_id',
   debounceTimeout = 250
 }) {
@@ -22,9 +23,10 @@ export default function useGeoJsonFeatures({
   const sourceId = source?.id;
 
   const computeFeaturesGeoJson = useCallback(
-    ({ viewport, uniqueIdProperty }) => {
+    ({ viewport, spatialFilter, uniqueIdProperty }) => {
       executeTask(sourceId, Methods.VIEWPORT_FEATURES_GEOJSON, {
         viewport,
+        spatialFilter,
         uniqueIdProperty
       })
         .then(() => {
@@ -47,11 +49,13 @@ export default function useGeoJsonFeatures({
       setSourceViewportFeaturesReady(false);
       debounceIdRef.current = debouncedComputeFeaturesGeoJson({
         viewport,
+        spatialFilter,
         uniqueIdProperty
       });
     }
   }, [
     viewport,
+    spatialFilter,
     uniqueIdProperty,
     sourceId,
     isGeoJsonLoaded,

@@ -8,6 +8,7 @@ import useFeaturesCommons from './useFeaturesCommons';
 export default function useTilesetFeatures({
   source,
   viewport,
+  spatialFilter,
   uniqueIdProperty,
   debounceTimeout = 250
 }) {
@@ -23,11 +24,12 @@ export default function useTilesetFeatures({
   const sourceId = source?.id;
 
   const computeViewportFeatures = useCallback(
-    ({ viewport, uniqueIdProperty }) => {
+    ({ viewport, spatialFilter, uniqueIdProperty }) => {
       setSourceViewportFeaturesReady(false);
 
       executeTask(sourceId, Methods.VIEWPORT_FEATURES, {
         viewport,
+        spatialFilter,
         uniqueIdProperty
       })
         .then(() => {
@@ -75,11 +77,13 @@ export default function useTilesetFeatures({
       setSourceViewportFeaturesReady(false);
       debounceIdRef.current = debouncedComputeViewportFeatures({
         viewport,
+        spatialFilter,
         uniqueIdProperty
       });
     }
   }, [
     viewport,
+    spatialFilter,
     uniqueIdProperty,
     debouncedComputeViewportFeatures,
     sourceId,

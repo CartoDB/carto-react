@@ -1,5 +1,6 @@
 import bboxPolygon from '@turf/bbox-polygon';
 import intersects from '@turf/boolean-intersects';
+import transformToTileCoords from '../utils/transformToTileCoords';
 import { prepareViewport, isTileFullyVisible } from './viewportFeatures';
 
 const GEOMETRY_TYPES = Object.freeze({
@@ -158,7 +159,12 @@ function createIndicesForPoints(data) {
   data.pointIndices.value.set([lastFeatureId + 1], featureIds.length);
 }
 
-export function viewportFeaturesBinary({ tiles, viewport, uniqueIdProperty }) {
+export function viewportFeaturesBinary({
+  tiles,
+  viewport,
+  spatialFilter,
+  uniqueIdProperty
+}) {
   const map = new Map();
 
   for (const tile of tiles) {
@@ -171,6 +177,9 @@ export function viewportFeaturesBinary({ tiles, viewport, uniqueIdProperty }) {
     const { bbox } = tile;
     const tileIsFullyVisible = isTileFullyVisible(bbox, viewport);
     const viewportIntersection = bboxPolygon(prepareViewport(tile.bbox, viewport));
+    const spatialFilterTransformed = spatialFilter
+      ? transformToTileCoords(spatialFilter, tile.bbox)
+      : null;
 
     createIndicesForPoints(tile.data.points);
 

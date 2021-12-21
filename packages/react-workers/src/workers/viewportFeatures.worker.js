@@ -52,10 +52,11 @@ onmessage = ({ data: { method, ...params } }) => {
   }
 };
 
-function getViewportFeatures({ viewport, uniqueIdProperty }) {
+function getViewportFeatures({ viewport, spatialFilter, uniqueIdProperty }) {
   currentViewportFeatures = viewportFeaturesBinary({
     tiles: currentTiles,
     viewport,
+    spatialFilter,
     uniqueIdProperty
   });
   postMessage({ result: true });
@@ -71,11 +72,12 @@ function loadGeoJSONFeatures({ geojson }) {
   postMessage({ result: true });
 }
 
-function getViewportFeaturesGeoJSON({ viewport, uniqueIdProperty }) {
+function getViewportFeaturesGeoJSON({ viewport, spatialFilter, uniqueIdProperty }) {
   if (currentGeoJSON) {
     currentViewportFeatures = viewportFeaturesGeoJSON({
       geojson: currentGeoJSON,
       viewport,
+      spatialFilter,
       uniqueIdProperty
     });
   }

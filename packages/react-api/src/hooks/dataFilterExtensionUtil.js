@@ -57,14 +57,15 @@ function getUpdateTriggers(filtersWithoutTimeType, timeFilter) {
 
 function getFilterValue(filtersWithoutTimeType, timeFilter) {
   const result = Array(MAX_GPU_FILTERS).fill(0);
-
+  const featureFilter = _buildFeatureFilter({
+    filters: filtersWithoutTimeType,
+    type: 'number'
+  });
   // We evaluate all filters except the time filter using _buildFeatureFilter function.
   // For the time filter, we return the value of the feature and we will change the getFilterRange result
   // every time this filter changes
   return (feature) => {
-    result[0] = _buildFeatureFilter({ filters: filtersWithoutTimeType, type: 'number' })(
-      feature
-    );
+    result[0] = featureFilter(feature);
 
     if (timeFilter) {
       const f = feature.properties || feature;

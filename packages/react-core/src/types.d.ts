@@ -1,4 +1,5 @@
 import { AggregationTypes } from './operations/aggregation/AggregationTypes';
+import { Geometry } from 'geojson';
 
 export type AggregationFunctions = {
   [AggregationTypes.COUNT]: Function,
@@ -20,6 +21,7 @@ export type Viewport = [number, number, number, number];
 export type ViewportFeaturesBinary = {
   tiles: any, // TODO: add proper deck.gl type
   viewport: Viewport,
+  spatialFilter?: Geometry,
   uniqueIdProperty?: string
 }
 
