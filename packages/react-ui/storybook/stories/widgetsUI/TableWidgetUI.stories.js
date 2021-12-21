@@ -1,5 +1,5 @@
 import React from 'react';
-import TableWidgetUI from '.../../../src/widgets/TableWidgetUI';
+import TableWidgetUI from '../../../src/widgets/TableWidgetUI/TableWidgetUI';
 import { Box, Typography } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
@@ -144,9 +144,6 @@ Playground.args = { ...DefaultProps, rows: ROWS.slice(0, 5) };
 
 export const Sorting = Template.bind({});
 Sorting.args = { ...DefaultProps, rows: ROWS.slice(0, 5), sorting: true };
-
-export const Selecting = Template.bind({});
-Selecting.args = { ...DefaultProps, rows: ROWS.slice(0, 5), selecting: true };
 
 export const Pagination = Template.bind({});
 Pagination.args = {
