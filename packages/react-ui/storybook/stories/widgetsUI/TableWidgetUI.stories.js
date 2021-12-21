@@ -142,15 +142,15 @@ const DefaultProps = {
 export const Playground = Template.bind({});
 Playground.args = { ...DefaultProps, rows: ROWS.slice(0, 5) };
 
-export const Sorting = Template.bind({});
-Sorting.args = { ...DefaultProps, rows: ROWS.slice(0, 5), sorting: true };
-
 export const Pagination = Template.bind({});
 Pagination.args = {
   ...DefaultProps,
-  rows: ROWS,
+  rowsPerPage: 6,
+  rows: ROWS.slice(0, 6),
+  page: 0,
   pagination: true,
-  rowsPerPageOptions: [4, 6, 8]
+  rowsPerPageOptions: [4, 6, 8],
+  totalCount: ROWS.length
 };
 
 export const RowClick = Template.bind({});
