@@ -1,4 +1,11 @@
-import React, { forwardRef, useCallback, useMemo, useState } from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import {
   alpha,
   Box,
@@ -10,7 +17,8 @@ import {
   Menu,
   MenuItem,
   Tooltip,
-  Typography
+  Typography,
+  useTheme
 } from '@material-ui/core';
 import { ArrowDropDown } from '@material-ui/icons';
 import PropTypes from 'prop-types';
@@ -30,13 +38,19 @@ function FeatureSelectionWidgetUI({
 }) {
   return (
     <Wrapper className={className}>
-      <SelectedModeViewer
-        modes={[...drawModes, ...editModes.map((mode) => ({ ...mode, isEdit: true }))]}
-        selectedMode={selectedMode}
+      <Helper
+        hasMode={!!selectedMode}
+        isEdit={editModes.some((mode) => mode.id === selectedMode)}
         activated={activated}
-        onActivatedChange={onActivatedChange}
-        tooltipPlacement={tooltipPlacement}
-      />
+      >
+        <SelectedModeViewer
+          modes={[...drawModes, ...editModes.map((mode) => ({ ...mode, isEdit: true }))]}
+          selectedMode={selectedMode}
+          activated={activated}
+          onActivatedChange={onActivatedChange}
+          tooltipPlacement={tooltipPlacement}
+        />
+      </Helper>
       <ModesSelector
         drawModes={drawModes}
         editModes={editModes}
@@ -86,6 +100,49 @@ FeatureSelectionWidgetUI.propTypes = {
 export default FeatureSelectionWidgetUI;
 
 // Aux
+function Helper({ hasMode, isEdit, activated, children }) {
+  const alreadyOpenedRef = useRef({});
+  const shouldOpen = hasMode && activated;
+
+  const [open, setOpen] = useState(shouldOpen);
+
+  useEffect(() => {
+    const wasAlreadyOpened = alreadyOpenedRef.current[isEdit];
+    if (wasAlreadyOpened) {
+      if (open) {
+        setOpen(false);
+      }
+      return;
+    }
+
+    if (shouldOpen) {
+      alreadyOpenedRef.current = {
+        ...alreadyOpenedRef.current,
+        [isEdit]: true
+      };
+      setOpen(true);
+      let timeout = setTimeout(() => setOpen(false), 5000);
+
+      return () => clearTimeout(timeout);
+    }
+    // Logic around show/hide helper tooltip is manage by shouldOpen var
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldOpen]);
+
+  return (
+    <Tooltip
+      title={
+        isEdit
+          ? 'Select geometry to move or edit it'
+          : 'Click on the map to define your spatial filter'
+      }
+      open={open}
+    >
+      <Box>{children}</Box>
+    </Tooltip>
+  );
+}
+
 const useGeometriesViewerStyles = makeStyles((theme) => ({
   chip: {
     margin: theme.spacing(0, 0, 0, 1)
@@ -194,6 +251,7 @@ function ModesSelector({
   activated,
   tooltipPlacement
 }) {
+  const theme = useTheme();
   const classes = useModesSelectorStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -252,6 +310,7 @@ function ModesSelector({
         </IconButton>
       </Tooltip>
       <Menu
+        style={{ zIndex: theme.zIndex.tooltip + 1 }}
         id='fade-menu'
         anchorEl={anchorEl}
         open={open}
