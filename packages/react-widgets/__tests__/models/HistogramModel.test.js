@@ -5,7 +5,7 @@ import { Methods, executeTask } from '@carto/react-workers';
 jest.mock('@carto/react-workers', () => ({
   executeTask: jest.fn(),
   Methods: {
-    VIEWPORT_FEATURES_HISTOGRAM: 'viewportFeaturesHistogram'
+    FEATURES_HISTOGRAM: 'featuresHistogram'
   }
 }));
 
@@ -28,11 +28,12 @@ describe('getHistogram', () => {
     test('correctly called', async () => {
       const { column, operation, ticks, filters, dataSource } = histogramParams;
       await getHistogram(histogramParams);
-      expect(executeTask).toHaveBeenCalledWith(
-        dataSource,
-        Methods.VIEWPORT_FEATURES_HISTOGRAM,
-        { column, filters, operation, ticks }
-      );
+      expect(executeTask).toHaveBeenCalledWith(dataSource, Methods.FEATURES_HISTOGRAM, {
+        column,
+        filters,
+        operation,
+        ticks
+      });
     });
   });
 });

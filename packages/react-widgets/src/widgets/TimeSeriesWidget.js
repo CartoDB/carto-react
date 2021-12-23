@@ -4,7 +4,7 @@ import { getTimeSeries } from '../models';
 import {
   addFilter,
   removeFilter,
-  selectIsViewportFeaturesReadyForSource
+  selectAreFeaturesReadyForSource
 } from '@carto/react-redux';
 import {
   TimeSeriesWidgetUI,
@@ -98,7 +98,7 @@ function TimeSeriesWidget({
   const dispatch = useDispatch();
 
   const isSourceReady = useSelector((state) =>
-    selectIsViewportFeaturesReadyForSource(state, dataSource)
+    selectAreFeaturesReadyForSource(state, dataSource)
   );
   const filters = useSourceFilters({ dataSource, id });
 

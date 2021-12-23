@@ -5,7 +5,7 @@ import { Methods, executeTask } from '@carto/react-workers';
 jest.mock('@carto/react-workers', () => ({
   executeTask: jest.fn(),
   Methods: {
-    VIEWPORT_FEATURES_CATEGORY: 'viewportFeaturesCategory'
+    FEATURES_CATEGORY: 'featuresCategory'
   }
 }));
 
@@ -42,11 +42,12 @@ describe('getCategories', () => {
         dataSource
       } = categoriesParams;
       await getCategories(categoriesParams);
-      expect(executeTask).toHaveBeenCalledWith(
-        dataSource,
-        Methods.VIEWPORT_FEATURES_CATEGORY,
-        { column, filters, operation, operationColumn }
-      );
+      expect(executeTask).toHaveBeenCalledWith(dataSource, Methods.FEATURES_CATEGORY, {
+        column,
+        filters,
+        operation,
+        operationColumn
+      });
     });
   });
 });

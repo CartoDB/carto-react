@@ -42,8 +42,7 @@ export type CartoState = {
   error: null, // TODO: remove from state?
   layers: { [key: string]: string },
   dataSources: { [key: string]: string },
-  viewportFeatures: { [key: string]: object },
-  viewportFeaturesReady: { [key: string]: boolean },
+  featuresReady: { [key: string]: boolean },
 } & InitialCartoState;
 
 export type InitialOauthState = {

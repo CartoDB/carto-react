@@ -24,14 +24,19 @@ type FilterCommonProps = {
   column: string;
 };
 
+type SpatialFilter = {
+  sourceId?: string;
+  geometry: object
+}
+
 type Filter = FilterBasic & FilterCommonProps;
 
-type ViewportFeaturesData = {
+type FeaturesData = {
   sourceId: string;
   features: [];
 };
 
-type ViewportFeaturesReadyData = {
+type FeaturesReadyData = {
   sourceId: string;
   ready: boolean;
 };
@@ -48,12 +53,12 @@ declare enum CartoActions {
   UPDATE_LAYER = 'carto/updateLayer',
   REMOVE_LAYER = 'carto/removeLayer',
   SET_BASEMAP = 'carto/setBasemap',
+  ADD_SPATIAL_FILTER = 'carto/addSpatialFilter',
+  REMOVE_SPATIAL_FILTER = 'carto/removeSpatialFilter',
   ADD_FILTER = 'carto/addFilter',
   REMOVE_FILTER = 'carto/removeFilter',
   CLEAR_FILTERS = 'carto/clearFilters',
-  SET_VIEWPORT_FEATURES = 'carto/setViewportFeatures',
-  REMOVE_VIEWPORT_FEATURES = 'carto/removeViewportFeatures',
-  SET_VIEWPORT_FEATURES_READY = 'carto/setViewportFeaturesReady',
+  SET_FEATURES_READY = 'carto/setFeaturesReady',
   SET_CREDENTIALS = 'carto/setCredentials'
 }
 
@@ -101,6 +106,21 @@ export function setBasemap(
   payload: BasemapName;
 };
 
+export function addSpatialFilter(
+  spatialFilter: SpatialFilter
+): {
+  type: CartoActions.ADD_SPATIAL_FILTER;
+  payload: SpatialFilter;
+};
+
+export function removeSpatialFilter(
+  sourceId?: string
+): {
+  type: CartoActions.REMOVE_SPATIAL_FILTER;
+  payload: string;
+};
+
+
 export function addFilter(
   filter: Filter
 ): {
@@ -124,29 +144,15 @@ export function clearFilters(
 
 export function selectSourceById(state: any, id: string): Source;
 
-export function selectIsViewportFeaturesReadyForSource(state: any, id: string): boolean;
+export function selectAreFeaturesReadyForSource(state: any, id: string): boolean;
 
 export function setViewState(viewState: ViewState): Function;
 
-export function setViewportFeatures(
-  data: ViewportFeaturesData
+export function setFeaturesReady(
+  data: FeaturesReadyData
 ): {
-  type: CartoActions.SET_VIEWPORT_FEATURES;
-  payload: ViewportFeaturesData;
-};
-
-export function removeViewportFeatures(
-  sourceId: string
-): {
-  type: CartoActions.REMOVE_VIEWPORT_FEATURES;
-  payload: string;
-};
-
-export function setViewportFeaturesReady(
-  data: ViewportFeaturesReadyData
-): {
-  type: CartoActions.SET_VIEWPORT_FEATURES_READY;
-  payload: ViewportFeaturesReadyData;
+  type: CartoActions.SET_FEATURES_READY;
+  payload: FeaturesReadyData;
 };
 
 export function setCredentials(
