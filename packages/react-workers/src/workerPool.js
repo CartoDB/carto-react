@@ -1,4 +1,4 @@
-import viewportFeaturesWorker from './workers/viewportFeatures.worker';
+import featuresWorker from './workers/features.worker';
 
 const pool = {};
 
@@ -30,7 +30,7 @@ export function removeWorker(source) {
 function getWorker(source) {
   if (!pool[source]) {
     pool[source] = {
-      worker: new viewportFeaturesWorker(),
+      worker: new featuresWorker(),
       tasks: []
     };
     onmessage(pool[source]);

@@ -19,11 +19,10 @@ export { groupValuesByColumn } from './operations/groupby';
 export { histogram } from './operations/histogram';
 export { scatterPlot } from './operations/scatterPlot';
 
-export { viewportFeatures } from './filters/viewportFeatures';
-export { viewportFeaturesBinary } from './filters/viewportFeaturesBinary';
-export { viewportFeaturesGeoJSON } from './filters/viewportFeaturesGeoJSON';
+export { tileFeatures } from './filters/tileFeatures';
+export { geojsonFeatures } from './filters/geojsonFeatures';
 
-export { AggregationFunctions, GroupByFeature, HistogramFeature, Viewport, ViewportFeaturesBinary } from './types';
+export { AggregationFunctions, GroupByFeature, HistogramFeature, Viewport, TileFeatures } from './types';
 
 export { GroupDateTypes } from './operations/GroupDateTypes';
 export { groupValuesByDateColumn } from './operations/groupByDate';

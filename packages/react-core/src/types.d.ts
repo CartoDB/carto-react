@@ -18,11 +18,11 @@ export type HistogramFeature = number[] | [];
 
 export type Viewport = [number, number, number, number];
 
-export type ViewportFeaturesBinary = {
+export type TileFeatures = {
   tiles: any, // TODO: add proper deck.gl type
   viewport: Viewport,
-  spatialFilter?: Geometry,
+  geometry?: Geometry,
   uniqueIdProperty?: string
 }
 
-export type ViewportFeaturesResponse = Record<string, unknown>[] | []
+export type TileFeaturesResponse = Record<string, unknown>[] | []

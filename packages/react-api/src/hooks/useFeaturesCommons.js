@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { setViewportFeaturesReady } from '@carto/react-redux';
+import { setFeaturesReady } from '@carto/react-redux';
 import { useState, useRef, useEffect, useCallback } from 'react';
 
 export default function useFeaturesCommons({ source }) {
@@ -28,10 +28,10 @@ export default function useFeaturesCommons({ source }) {
 
   const sourceId = source?.id;
 
-  const setSourceViewportFeaturesReady = useCallback(
+  const setSourceFeaturesReady = useCallback(
     (ready) => {
       if (sourceId) {
-        dispatch(setViewportFeaturesReady({ sourceId, ready }));
+        dispatch(setFeaturesReady({ sourceId, ready }));
       }
     },
     [dispatch, sourceId]
@@ -43,6 +43,6 @@ export default function useFeaturesCommons({ source }) {
     setDataLoaded,
     clearDebounce,
     stopAnyCompute,
-    setSourceViewportFeaturesReady
+    setSourceFeaturesReady
   ];
 }

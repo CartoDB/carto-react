@@ -49,8 +49,7 @@ export const createCartoSlice = (initialState) => {
         // Auto import dataSources
       },
       spatialFilter: null,
-      viewportFeatures: {},
-      viewportFeaturesReady: {},
+      featuresReady: {},
       ...initialState
     },
     reducers: {
@@ -65,11 +64,11 @@ export const createCartoSlice = (initialState) => {
       addLayer: (state, action) => {
         state.layers[action.payload.id] = action.payload;
       },
-      setViewportFeaturesReady: (state, action) => {
+      setFeaturesReady: (state, action) => {
         const { sourceId, ready } = action.payload;
 
-        state.viewportFeaturesReady = {
-          ...state.viewportFeaturesReady,
+        state.featuresReady = {
+          ...state.featuresReady,
           [sourceId]: ready
         };
       },
@@ -152,21 +151,6 @@ export const createCartoSlice = (initialState) => {
       },
       setGeocoderResult: (state, action) => {
         state.geocoderResult = action.payload;
-      },
-      setViewportFeatures: (state, action) => {
-        const { sourceId, features } = action.payload;
-
-        state.viewportFeatures = {
-          ...state.viewportFeatures,
-          [sourceId]: features
-        };
-      },
-      removeViewportFeatures: (state, action) => {
-        const sourceId = action.payload;
-
-        if (state.viewportFeatures[sourceId]) {
-          delete state.viewportFeatures[sourceId];
-        }
       },
       setCredentials: (state, action) => {
         state.credentials = {
@@ -300,10 +284,10 @@ export const selectSpatialFilter = (state, sourceId) =>
     : state.carto.spatialFilter;
 
 /**
- * Redux selector to know if viewport features from a certain source are ready
+ * Redux selector to know if features from a certain source are ready
  */
-export const selectIsViewportFeaturesReadyForSource = (state, id) =>
-  !!state.carto.viewportFeaturesReady[id];
+export const selectAreFeaturesReadyForSource = (state, id) =>
+  !!state.carto.featuresReady[id];
 
 const debouncedSetViewPort = debounce((dispatch, setViewPort) => {
   dispatch(setViewPort());
@@ -339,31 +323,12 @@ export const setViewState = (viewState) => {
 };
 
 /**
- * Action to set the source features of a layer
- * @param {object} sourceId - the id of the source
- * @param {object} feature - the viewport features
- */
-export const setViewportFeatures = (data) => ({
-  type: 'carto/setViewportFeatures',
-  payload: data
-});
-
-/**
- * Action to remove the source features of a layer
- * @param {String} sourceId - the source id to remove
- */
-export const removeViewportFeatures = (data) => ({
-  type: 'carto/removeViewportFeatures',
-  payload: data
-});
-
-/**
  * Action to set the ready features state of a layer
  * @param {object} sourceId - the id of the source
  * @param {object} ready - Viewport features have been calculated
  */
-export const setViewportFeaturesReady = (data) => ({
-  type: 'carto/setViewportFeaturesReady',
+export const setFeaturesReady = (data) => ({
+  type: 'carto/setFeaturesReady',
   payload: data
 });
 

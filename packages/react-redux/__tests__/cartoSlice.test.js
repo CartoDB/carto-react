@@ -224,28 +224,14 @@ describe('carto slice', () => {
       features: [{ a: 1 }]
     };
 
-    test('should set features', () => {
-      store.dispatch(cartoSlice.setViewportFeatures(featuresInfo));
-      const { carto } = store.getState();
-      expect(carto.viewportFeatures[featuresInfo.sourceId]).toEqual(
-        featuresInfo.features
-      );
-    });
-
-    test('should remove features by sourceId', () => {
-      store.dispatch(cartoSlice.removeViewportFeatures(featuresInfo.sourceId));
-      const { carto } = store.getState();
-      expect(carto.viewportFeatures).not.toHaveProperty(featuresInfo.sourceId);
-    });
-
     test('worker calculations should be finished', () => {
       const sourceInfo = {
         sourceId: 'whatever-source-id',
         ready: true
       };
-      store.dispatch(cartoSlice.setViewportFeaturesReady(sourceInfo));
+      store.dispatch(cartoSlice.setFeaturesReady(sourceInfo));
       const { carto } = store.getState();
-      expect(carto.viewportFeaturesReady[sourceInfo.sourceId]).toBe(true);
+      expect(carto.featuresReady[sourceInfo.sourceId]).toBe(true);
     });
   });
 

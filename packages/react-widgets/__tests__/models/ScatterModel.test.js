@@ -4,7 +4,7 @@ import { Methods, executeTask } from '@carto/react-workers';
 jest.mock('@carto/react-workers', () => ({
   executeTask: jest.fn(),
   Methods: {
-    VIEWPORT_FEATURES_SCATTERPLOT: 'viewportFeaturesScatterPlot'
+    FEATURES_SCATTERPLOT: 'featuresScatterPlot'
   }
 }));
 
@@ -33,8 +33,8 @@ describe('getScatter', () => {
     };
 
     test('correctly returns data', async () => {
-      const viewportFeatures = features('x', 'y');
-      const values = viewportFeatures.map((f) => [f.x, f.y]);
+      const _features = features('x', 'y');
+      const values = _features.map((f) => [f.x, f.y]);
       executeTask.mockImplementation(() => Promise.resolve(values));
 
       const histogram = await getScatter(scatterPlotParams);
@@ -44,11 +44,11 @@ describe('getScatter', () => {
     test('correctly called', async () => {
       const { filters, xAxisColumn, yAxisColumn, dataSource } = scatterPlotParams;
       await getScatter(scatterPlotParams);
-      expect(executeTask).toHaveBeenCalledWith(
-        dataSource,
-        Methods.VIEWPORT_FEATURES_SCATTERPLOT,
-        { filters, xAxisColumn, yAxisColumn }
-      );
+      expect(executeTask).toHaveBeenCalledWith(dataSource, Methods.FEATURES_SCATTERPLOT, {
+        filters,
+        xAxisColumn,
+        yAxisColumn
+      });
     });
   });
 

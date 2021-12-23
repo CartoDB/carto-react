@@ -1,11 +1,12 @@
 export const Methods = Object.freeze({
-  VIEWPORT_FEATURES: 'viewportFeatures',
-  VIEWPORT_FEATURES_FORMULA: 'viewportFeaturesFormula',
-  VIEWPORT_FEATURES_HISTOGRAM: 'viewportFeaturesHistogram',
-  VIEWPORT_FEATURES_CATEGORY: 'viewportFeaturesCategory',
-  VIEWPORT_FEATURES_SCATTERPLOT: 'viewportFeaturesScatterPlot',
-  VIEWPORT_FEATURES_RAW_FEATURES: 'viewportFeaturesRawFeatures',
+  TILE_FEATURES: 'tileFeatures',
+  FEATURES_FORMULA: 'featuresFormula',
+  FEATURES_HISTOGRAM: 'featuresHistogram',
+  FEATURES_CATEGORY: 'featuresCategory',
+  FEATURES_SCATTERPLOT: 'featuresScatterPlot',
+  FEATURES_TIME_SERIES: 'featuresTimeSeries',
+  FEATURES_RAW: 'featuresRawFeatures',
   LOAD_GEOJSON_FEATURES: 'loadGeoJSONFeatures',
-  VIEWPORT_FEATURES_GEOJSON: 'viewportFeaturesGeoJSON',
+  GEOJSON_FEATURES: 'featuresGeoJSON',
   LOAD_TILES: 'loadTiles'
 });

@@ -22,9 +22,9 @@ const mockedData = [...Array(10)].map((_, idx) => ({
   }`,
   'sb-operation-column': idx * 100
 }));
-store.dispatch(
-  cartoSlice.setViewportFeatures({ sourceId: 'sb-data-source', features: mockedData })
-);
+// store.dispatch(
+//   cartoSlice.setViewportFeatures({ sourceId: 'sb-data-source', features: mockedData })
+// );
 
 const options = {
   title: 'Widgets/PieWidget',

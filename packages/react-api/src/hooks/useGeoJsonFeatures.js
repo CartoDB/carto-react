@@ -4,7 +4,7 @@ import { Methods, executeTask } from '@carto/react-workers';
 import { throwError } from './utils';
 import useFeaturesCommons from './useFeaturesCommons';
 
-export default function useGeoJsonFeatures({
+export default function useGeojsonFeatures({
   source,
   viewport,
   spatialFilter,
@@ -17,37 +17,37 @@ export default function useGeoJsonFeatures({
     setGeoJsonLoaded,
     clearDebounce,
     stopAnyCompute,
-    setSourceViewportFeaturesReady
+    setSourceFeaturesReady
   ] = useFeaturesCommons({ source });
 
   const sourceId = source?.id;
 
-  const computeFeaturesGeoJson = useCallback(
+  const computeFeatures = useCallback(
     ({ viewport, spatialFilter, uniqueIdProperty }) => {
-      executeTask(sourceId, Methods.VIEWPORT_FEATURES_GEOJSON, {
+      executeTask(sourceId, Methods.GEOJSON_FEATURES, {
         viewport,
-        spatialFilter,
+        geometry: spatialFilter,
         uniqueIdProperty
       })
         .then(() => {
-          setSourceViewportFeaturesReady(true);
+          setSourceFeaturesReady(true);
         })
         .catch(throwError);
     },
-    [setSourceViewportFeaturesReady, sourceId]
+    [setSourceFeaturesReady, sourceId]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedComputeFeaturesGeoJson = useCallback(
-    debounce(computeFeaturesGeoJson, debounceTimeout),
-    [computeFeaturesGeoJson]
+  const debouncedComputeFeatures = useCallback(
+    debounce(computeFeatures, debounceTimeout),
+    [computeFeatures]
   );
 
   useEffect(() => {
     if (sourceId && isGeoJsonLoaded) {
       clearDebounce();
-      setSourceViewportFeaturesReady(false);
-      debounceIdRef.current = debouncedComputeFeaturesGeoJson({
+      setSourceFeaturesReady(false);
+      debounceIdRef.current = debouncedComputeFeatures({
         viewport,
         spatialFilter,
         uniqueIdProperty
@@ -59,8 +59,8 @@ export default function useGeoJsonFeatures({
     uniqueIdProperty,
     sourceId,
     isGeoJsonLoaded,
-    debouncedComputeFeaturesGeoJson,
-    setSourceViewportFeaturesReady,
+    debouncedComputeFeatures,
+    setSourceFeaturesReady,
     clearDebounce,
     debounceIdRef
   ]);
@@ -68,12 +68,12 @@ export default function useGeoJsonFeatures({
   const onDataLoad = useCallback(
     (geojson) => {
       stopAnyCompute();
-      setSourceViewportFeaturesReady(false);
+      setSourceFeaturesReady(false);
       executeTask(sourceId, Methods.LOAD_GEOJSON_FEATURES, { geojson })
         .then(() => setGeoJsonLoaded(true))
         .catch(throwError);
     },
-    [sourceId, setSourceViewportFeaturesReady, stopAnyCompute, setGeoJsonLoaded]
+    [sourceId, setSourceFeaturesReady, stopAnyCompute, setGeoJsonLoaded]
   );
 
   return [onDataLoad];

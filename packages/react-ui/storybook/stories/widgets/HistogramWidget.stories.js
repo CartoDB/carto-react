@@ -19,9 +19,9 @@ const store = mockAppStoreConfiguration();
 const mockedData = [...Array(40)].map((_, idx) => ({
   'sb-column': idx < 10 ? 100 : idx < 25 ? 200 : idx < 33 ? 300 : idx < 35 ? 400 : 500
 }));
-store.dispatch(
-  cartoSlice.setViewportFeatures({ sourceId: 'sb-data-source', features: mockedData })
-);
+// store.dispatch(
+//   cartoSlice.setViewportFeatures({ sourceId: 'sb-data-source', features: mockedData })
+// );
 
 const options = {
   title: 'Widgets/HistogramWidget',
