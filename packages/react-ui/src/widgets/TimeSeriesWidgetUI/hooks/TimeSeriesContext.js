@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState
 } from 'react';
-import { getDate, getTimestamp } from '../utils/utilities';
+import { getDate, getTimestamp } from '../../utils/timeUtils';
 
 export const TimeSeriesContext = createContext({
   isPlaying: false,

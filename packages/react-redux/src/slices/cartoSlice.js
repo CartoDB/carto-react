@@ -50,6 +50,10 @@ export const createCartoSlice = (initialState) => {
       },
       viewportFeatures: {},
       viewportFeaturesReady: {},
+      featureSelectionState: {
+        mode: null,
+        geometry: null
+      },
       ...initialState
     },
     reducers: {
@@ -149,6 +153,21 @@ export const createCartoSlice = (initialState) => {
           ...action.payload
         };
         setDefaultCredentials(state.credentials);
+      },
+      setFeatureSelectionMode: (state, action) => {
+        state.featureSelectionState.mode = action.payload;
+      },
+      setFeatureSelectionGeometry: (state, action) => {
+        const { sourceId, geometry } = action.payload;
+        if (sourceId) {
+          const source = state.dataSources[sourceId];
+
+          if (source) {
+            source.spatialFilter = geometry;
+          }
+        } else {
+          state.featureSelectionState.geometry = geometry;
+        }
       }
     }
   });
@@ -322,3 +341,36 @@ export const setCredentials = (data) => ({
   type: 'carto/setCredentials',
   payload: data
 });
+
+/**
+ * Action to set feature selection mode
+ * @param {boolean} mode -
+ */
+export const setFeatureSelectionMode = (mode) => ({
+  type: 'carto/setFeatureSelectionMode',
+  payload: mode
+});
+
+/**
+ * Action to add a feature selection geometry
+ * @param {object} [params]
+ * @param {string} [params.sourceId] - If indicated, geometry is applied to that source. If not, it's applied to every source
+ * @param {GeoJSON} params.geometry - valid geojson object
+ */
+export const setFeatureSelectionGeometry = ({ sourceId, geometry } = {}) => ({
+  type: 'carto/setFeatureSelectionGeometry',
+  payload: { sourceId, geometry }
+});
+
+/**
+ * Redux selector to select the spatial filter of a given sourceId or the root one
+ */
+export const selectFeatureSelectionGeometry = (state, sourceId) => {
+  let featureSelectionGeometry = state.carto.featureSelectionState.geometry;
+  if (featureSelectionGeometry?.properties?.disabled) {
+    featureSelectionGeometry = null;
+  }
+  return sourceId
+    ? state.carto.dataSources[sourceId]?.spatialFilter || featureSelectionGeometry
+    : featureSelectionGeometry;
+};

@@ -1,116 +1,140 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useCallback, useMemo, useState } from 'react';
 import {
   alpha,
   Box,
   capitalize,
+  Chip,
   Divider,
   IconButton,
   makeStyles,
   Menu,
   MenuItem,
-  Paper,
-  SvgIcon,
   Tooltip,
   Typography
 } from '@material-ui/core';
 import { ArrowDropDown } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 
-const CursorIcon = (
-  <SvgIcon>
-    <path d='m10.083 19.394.057.113a1 1 0 0 0 1.72.007l2.869-4.786 4.785-2.87a1 1 0 0 0-.12-1.777l-14-6c-.83-.356-1.669.483-1.313 1.313l6.002 14zM6.905 6.904l9.903 4.244-3.322 1.995-.102.069a1 1 0 0 0-.242.274l-1.992 3.321-4.245-9.903z' />
-  </SvgIcon>
-);
-
-const PolygonIcon = (
-  <SvgIcon>
-    <path d='M4 18a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm16 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm-2.829 1a2.995 2.995 0 0 0 0 2H6.829a2.995 2.995 0 0 0 0-2h10.342zm-2.463-5.707 3.998 4a3.012 3.012 0 0 0-1.414 1.414l-4-3.999a3.013 3.013 0 0 0 1.31-1.214l.106-.201zM2.998 6.829a2.995 2.995 0 0 0 2.002 0v10.342a2.995 2.995 0 0 0-2.002 0V6.83zM12 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm1.84-3.919c.464.483 1.09.81 1.79.896l-1.47 2.94a2.992 2.992 0 0 0-1.79-.894l1.47-2.942zM16 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm9.171.998a2.995 2.995 0 0 0 0 2.002H6.829a2.995 2.995 0 0 0 0-2.002h6.342z' />
-  </SvgIcon>
-);
-
-const RectangleIcon = (
-  <SvgIcon>
-    <path d='M4 18a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm16 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm-2.829 1a2.994 2.994 0 0 0-.17.974l-.001.052.007.183c.02.275.075.54.164.79H6.829a2.995 2.995 0 0 0 0-2h10.342zM2.998 6.828a2.995 2.995 0 0 0 2.002 0v10.342a2.995 2.995 0 0 0-2.002 0V6.83zm16.001 0a2.995 2.995 0 0 0 2 0v10.342a2.995 2.995 0 0 0-2 0V6.829zM20 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm13.171.998a2.994 2.994 0 0 0-.17.976L17 4.026l.007.183c.02.275.075.54.164.79H6.829a2.995 2.995 0 0 0 0-2H17.17z' />
-  </SvgIcon>
-);
-
-const DRAW_MODES = [
-  { label: 'polygon', icon: PolygonIcon },
-  { label: 'rectangle', icon: RectangleIcon }
-];
-
 function FeatureSelectionWidgetUI({
+  className,
   drawModes,
-  selectedDrawMode,
-  onSelectDrawMode,
+  editModes,
+  selectedMode,
+  onSelectMode,
   activated,
   onActivatedChange,
-  editable,
+  geometries,
+  onSelectGeometry,
+  onDeleteGeometry,
   tooltipPlacement
 }) {
-  // If selectedDrawMode isn't given, it's the first draw mode by default
-  useEffect(() => {
-    if (!selectedDrawMode) {
-      onSelectDrawMode(drawModes[0]);
-    }
-  }, [drawModes, onSelectDrawMode, selectedDrawMode]);
-
-  const onSelectDrawModeWrapper = (...args) => {
-    onSelectDrawMode(...args);
-    // If the user update selectedDrawMode while it's activated, disable it
-    if (activated) {
-      onActivatedChange(false);
-    }
-  };
-
-  // Do not render until selectedDrawMode is filled
-  if (!selectedDrawMode) {
-    return null;
-  }
-
   return (
-    <Wrapper>
-      <SelectedDrawMode
-        drawMode={selectedDrawMode}
+    <Wrapper className={className}>
+      <SelectedModeViewer
+        modes={[...drawModes, ...editModes.map((mode) => ({ ...mode, isEdit: true }))]}
+        selectedMode={selectedMode}
         activated={activated}
         onActivatedChange={onActivatedChange}
         tooltipPlacement={tooltipPlacement}
       />
-      <DrawModesSelector
+      <ModesSelector
         drawModes={drawModes}
-        onSelectDrawMode={onSelectDrawModeWrapper}
+        editModes={editModes}
+        selectedMode={selectedMode}
+        onSelectMode={onSelectMode}
+        activated={activated}
         tooltipPlacement={tooltipPlacement}
-        editable={editable}
       />
+      {!!geometries?.length && (
+        <GeometriesViewer
+          geometries={geometries}
+          onSelectGeometry={onSelectGeometry}
+          onDeleteGeometry={onDeleteGeometry}
+          tooltipPlacement={tooltipPlacement}
+        />
+      )}
     </Wrapper>
   );
 }
 
 FeatureSelectionWidgetUI.defaultProps = {
-  drawModes: DRAW_MODES,
+  className: '',
   activated: false,
-  editable: true,
+  geometries: [],
   tooltipPlacement: 'bottom'
 };
 
-const drawModeShape = PropTypes.shape({
+const MODE_SHAPE = PropTypes.shape({
+  id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   icon: PropTypes.element.isRequired
 });
 
 FeatureSelectionWidgetUI.propTypes = {
-  drawModes: PropTypes.arrayOf(drawModeShape.isRequired).isRequired,
-  selectedDrawMode: drawModeShape,
-  onSelectDrawMode: PropTypes.func,
+  className: PropTypes.string,
+  drawModes: PropTypes.arrayOf(MODE_SHAPE.isRequired).isRequired,
+  editModes: PropTypes.arrayOf(MODE_SHAPE.isRequired).isRequired,
+  selectedMode: PropTypes.string.isRequired,
+  onSelectMode: PropTypes.func,
   activated: PropTypes.bool,
   onActivatedChange: PropTypes.func,
+  geometries: PropTypes.array,
+  onSelectGeometry: PropTypes.func,
   tooltipPlacement: PropTypes.string
 };
 
 export default FeatureSelectionWidgetUI;
 
 // Aux
-const useSelectedDrawModeStyles = makeStyles((theme) => ({
+const useGeometriesViewerStyles = makeStyles((theme) => ({
+  chip: {
+    margin: theme.spacing(0, 0, 0, 1)
+  }
+}));
+
+function GeometriesViewer({
+  geometries,
+  onSelectGeometry,
+  onDeleteGeometry,
+  tooltipPlacement
+}) {
+  const classes = useGeometriesViewerStyles();
+
+  const chipLabelFn = useCallback(
+    (geometry, idx) => {
+      const addIdx = (label) =>
+        geometries.length > 1 ? label && `${label} ${idx + 1}` : label;
+
+      return geometry.properties?.label || addIdx('Feature');
+    },
+    [geometries]
+  );
+
+  const isDisabled = (geometry) => geometry.properties?.disabled;
+
+  return (
+    <Box ml={2}>
+      {geometries.map((geometry, idx) => (
+        <Tooltip
+          key={idx}
+          title={isDisabled(geometry) ? 'Apply filter' : 'Clear filter'}
+          placement={tooltipPlacement}
+          arrow
+        >
+          <Chip
+            className={idx ? classes.chip : null}
+            label={chipLabelFn(geometry, idx)}
+            color={isDisabled(geometry) ? 'default' : 'secondary'}
+            onClick={() => onSelectGeometry(geometry, idx)}
+            onDelete={() => onDeleteGeometry(geometry, idx)}
+          />
+        </Tooltip>
+      ))}
+    </Box>
+  );
+}
+
+const useSelectedModeViewerStyles = makeStyles((theme) => ({
   btn: {
     color: ({ activated }) =>
       activated ? theme.palette.primary.main : theme.palette.text.secondary,
@@ -119,20 +143,29 @@ const useSelectedDrawModeStyles = makeStyles((theme) => ({
   }
 }));
 
-function SelectedDrawMode({
-  drawMode,
-  activated = false,
+function SelectedModeViewer({
+  modes,
+  selectedMode,
+  activated,
   onActivatedChange,
   tooltipPlacement
 }) {
-  const classes = useSelectedDrawModeStyles({ activated });
+  const classes = useSelectedModeViewerStyles({ activated });
 
-  const { label, icon } = drawMode;
+  const { label, icon, isEdit } = useMemo(() => {
+    if (modes?.length && selectedMode) {
+      return modes.find(({ id: modeId }) => modeId === selectedMode);
+    } else {
+      return {};
+    }
+  }, [modes, selectedMode]);
+
+  const tooltipTitle = isEdit ? label : `Draw a ${label}`;
 
   const onActivatedChangeWrapper = () => onActivatedChange(!activated);
 
   return (
-    <Tooltip title={`Draw a ${label}`} placement={tooltipPlacement} arrow>
+    <Tooltip title={tooltipTitle} placement={tooltipPlacement} arrow>
       <IconButton onClick={onActivatedChangeWrapper} className={classes.btn}>
         {icon}
       </IconButton>
@@ -140,18 +173,28 @@ function SelectedDrawMode({
   );
 }
 
-const useDrawModesSelectorStyles = makeStyles((theme) => ({
+const useModesSelectorStyles = makeStyles((theme) => ({
   btn: {
     color: theme.palette.text.secondary,
     width: 24
   },
   divider: {
     margin: theme.spacing(1, 0)
+  },
+  activatedMenuItem: {
+    backgroundColor: alpha(theme.palette.primary.main, 0.08)
   }
 }));
 
-function DrawModesSelector({ drawModes, onSelectDrawMode, tooltipPlacement, editable }) {
-  const classes = useDrawModesSelectorStyles();
+function ModesSelector({
+  drawModes,
+  editModes,
+  selectedMode,
+  onSelectMode,
+  activated,
+  tooltipPlacement
+}) {
+  const classes = useModesSelectorStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -165,19 +208,34 @@ function DrawModesSelector({ drawModes, onSelectDrawMode, tooltipPlacement, edit
     setAnchorEl(null);
   };
 
-  const handleSelectDrawMode = (newSelectedDrawMode) => {
-    onSelectDrawMode(newSelectedDrawMode);
+  const handleSelectMode = (newSelectedMode) => {
+    onSelectMode(newSelectedMode);
     handleClose();
   };
 
-  const MenuItemWrapper = forwardRef(({ drawMode }, ref) => (
-    <MenuItem ref={ref} onClick={() => handleSelectDrawMode(drawMode)}>
+  const hasDrawModes = !!drawModes.length;
+  const hasEditModes = !!editModes.length;
+
+  const MenuItemWrapper = forwardRef(({ mode, isActivated }, ref) => (
+    <MenuItem
+      className={isActivated ? classes.activatedMenuItem : null}
+      ref={ref}
+      onClick={() => handleSelectMode(mode.id)}
+    >
       <Box display='flex' justifyContent='space-between' alignItems='center'>
-        {drawMode.icon}
-        <Box ml={1}>{capitalize(drawMode.label)}</Box>
+        {mode.icon}
+        <Box ml={1}>{capitalize(mode.label)}</Box>
       </Box>
     </MenuItem>
   ));
+
+  const createMenuItemWrapper = (mode) => (
+    <MenuItemWrapper
+      key={mode.label}
+      mode={mode}
+      isActivated={activated && selectedMode === mode.id}
+    />
+  );
 
   return (
     <Box>
@@ -205,13 +263,9 @@ function DrawModesSelector({ drawModes, onSelectDrawMode, tooltipPlacement, edit
         <MenuItem disabled>
           <Typography variant='caption'>Choose a draw mode</Typography>
         </MenuItem>
-        {drawModes.map((drawMode) => (
-          <MenuItemWrapper key={drawMode.label} drawMode={drawMode} />
-        ))}
-        {editable && <Divider className={classes.divider} />}
-        {editable && (
-          <MenuItemWrapper drawMode={{ label: 'Edit geometry', icon: CursorIcon }} />
-        )}
+        {hasDrawModes && drawModes.map(createMenuItemWrapper)}
+        {hasDrawModes && hasEditModes && <Divider className={classes.divider} />}
+        {hasDrawModes && editModes.map(createMenuItemWrapper)}
       </Menu>
     </Box>
   );
@@ -219,20 +273,26 @@ function DrawModesSelector({ drawModes, onSelectDrawMode, tooltipPlacement, edit
 
 const useWrapperStyles = makeStyles((theme) => ({
   root: {
-    // cursor: 'pointer',
-    // '&:hover': {
-    //   backgroundColor: alpha(theme.palette.common.black, 0.05)
-    // }
+    padding: theme.spacing(0.5),
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.text.primary,
+    borderRadius: theme.shape.borderRadius,
+    boxShadow:
+      '0px 3px 5px -1px rgb(0 0 0 / 16%), 0px 5px 8px 0px rgb(0 0 0 / 8%), 0px 1px 14px 0px rgb(0 0 0 / 4%)'
   }
 }));
 
-function Wrapper({ shadow = 5, children, tooltipPlacement = 'right' }) {
+function Wrapper({ className, children }) {
   const classes = useWrapperStyles();
   return (
-    <Paper className={classes.root} elevation={shadow}>
-      <Box p={0.5} display='flex' alignItems='center' justifyContent='space-between'>
-        {children}
-      </Box>
-    </Paper>
+    <Box
+      className={`${classes.root} ${className}`}
+      p={0.5}
+      display='flex'
+      alignItems='center'
+      justifyContent='space-between'
+    >
+      {children}
+    </Box>
   );
 }

@@ -1,4 +1,4 @@
-import { GroupDateTypes } from '@carto/react-core/operations/GroupDateTypes';
+import { GroupDateTypes } from '@carto/react-core';
 
 export type WrapperWidgetUI = {
   title: string;
@@ -117,4 +117,23 @@ export type TimeSeriesWidgetUI = {
 export type NoDataAlert = {
   title: string;
   body: string;
+};
+
+export type FeatureSelectionWidgetUIData = {
+  id: string;
+  label: string;
+  icon: React.ReactElement;
+};
+export type FeatureSelectionWidgetUI = {
+  drawModes: FeatureSelectionWidgetUIData[];
+  editModes: FeatureSelectionWidgetUIData[];
+  selectedMode: string;
+  onSelectMode?: Function;
+  activated?: boolean;
+  onActivatedChange?: Function;
+  geometries?: any[];
+  onSelectGeometry?: Function;
+  tooltipPlacement?: string;
+  editable?: boolean;
+  className?: string;
 };
