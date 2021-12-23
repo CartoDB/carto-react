@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     maxWidth: '100%',
-    padding: 0
+    padding: ({ margin }) => (margin !== undefined ? margin : theme.spacing(2, 2.5))
   },
   loading: {
     position: 'absolute',
@@ -43,14 +43,14 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: theme.spacing(0.25)
   },
-  header: ({ expanded }) => ({
+  header: ({ expanded, margin }) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    ...(expanded ? { minHeight: '56px' } : { height: 56 }),
-    padding: theme.spacing(1.25, 1.25, 1.25, 3)
+    ...(expanded ? { minHeight: theme.spacing(3) } : { height: theme.spacing(3) }),
+    padding: 0
   }),
   optionsMenu: {
     marginTop: theme.spacing(6),
@@ -90,10 +90,11 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary
   },
   iconAction: {
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    margin: theme.spacing(-1, 0)
   },
   content: {
-    padding: theme.spacing(0, 3, 3, 3)
+    paddingTop: theme.spacing(1.25)
   }
 }));
 
@@ -267,7 +268,8 @@ WrapperWidgetUI.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element.isRequired
-  ])
+  ]),
+  margin: PropTypes.number
 };
 
 export default WrapperWidgetUI;

@@ -181,9 +181,26 @@ WithOptionsAndCustomIcon.parameters = {
   }
 };
 
+export const WithCustomMargins = Template.bind({});
+WithCustomMargins.args = {
+  title: 'Wrapper custom margins',
+  margin: 100
+};
+WithCustomMargins.parameters = {
+  docs: {
+    source: {
+      code: `<WrapperWidgetUI
+  title='Wrapper custom margins'
+  margin={100}
+/>`
+    }
+  }
+};
+
 export const WithActionsTooltip = Template.bind({});
 WithActionsTooltip.args = {
-  title: 'Wrapper with actions tooltip',
+  title:
+    'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.',
   actions: [
     {
       id: 'a1',
