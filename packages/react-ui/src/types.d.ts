@@ -134,6 +134,5 @@ export type FeatureSelectionWidgetUI = {
   geometries?: any[];
   onSelectGeometry?: Function;
   tooltipPlacement?: string;
-  editable?: boolean;
   className?: string;
 };
