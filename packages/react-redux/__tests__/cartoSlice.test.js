@@ -116,7 +116,8 @@ describe('carto slice', () => {
   });
 
   describe('spatial filter actions', () => {
-    const spatialFilter = {
+    const featureSelectionGeometry = {
+      type: 'Feature',
       geometry: {
         type: 'Polygon',
         coordinates: [
@@ -125,55 +126,67 @@ describe('carto slice', () => {
             [1, 1]
           ]
         ]
-      }
+      },
+      properties: {}
     };
 
     const sourceId = 'theSource';
 
-    test('should add a spatial filter to a source', () => {
+    test('should set a feature selection geometry to a source to filter spatially', () => {
       store.dispatch(cartoSlice.addSource({ id: sourceId }));
-      store.dispatch(cartoSlice.addSpatialFilter({ sourceId, ...spatialFilter }));
+      store.dispatch(
+        cartoSlice.setFeatureSelectionGeometry({
+          sourceId,
+          geometry: featureSelectionGeometry
+        })
+      );
       const state = store.getState();
       expect(state.carto.dataSources[sourceId].spatialFilter).toEqual(
-        spatialFilter.geometry
+        featureSelectionGeometry
       );
       // Now with the selector
-      expect(cartoSlice.selectSpatialFilter(state, sourceId)).toEqual(
-        spatialFilter.geometry
+      expect(cartoSlice.selectFeatureSelectionGeometry(state, sourceId)).toEqual(
+        featureSelectionGeometry
       );
     });
 
-    test('should remove spatial filter from a source', () => {
-      // Add
-      store.dispatch(cartoSlice.addSource({ id: sourceId }));
-      store.dispatch(cartoSlice.addSpatialFilter({ sourceId, ...spatialFilter }));
-
-      // Remove
-      store.dispatch(cartoSlice.removeSpatialFilter(sourceId));
+    test('should set a feature selection geometry to root state for applying it to every source', () => {
+      store.dispatch(
+        cartoSlice.setFeatureSelectionGeometry({
+          geometry: featureSelectionGeometry
+        })
+      );
       const state = store.getState();
-      expect(state.carto.dataSources[sourceId].spatialFilter).toEqual(null);
+      expect(state.carto.featureSelectionState.geometry).toEqual(
+        featureSelectionGeometry
+      );
       // Now with the selector
-      expect(cartoSlice.selectSpatialFilter(state, sourceId)).toEqual(null);
+      expect(cartoSlice.selectFeatureSelectionGeometry(state)).toEqual(
+        featureSelectionGeometry
+      );
     });
 
-    test('should add a spatial filter to root state', () => {
-      store.dispatch(cartoSlice.addSpatialFilter(spatialFilter));
+    test("selector shouldn't return geometry if disabled", () => {
+      store.dispatch(
+        cartoSlice.setFeatureSelectionGeometry({
+          geometry: {
+            ...featureSelectionGeometry,
+            properties: {
+              ...featureSelectionGeometry.properties,
+              disabled: true
+            }
+          }
+        })
+      );
       const state = store.getState();
-      expect(state.carto.spatialFilter).toEqual(spatialFilter.geometry);
-      // Now with the selector
-      expect(cartoSlice.selectSpatialFilter(state)).toEqual(spatialFilter.geometry);
+      expect(cartoSlice.selectFeatureSelectionGeometry(state)).toEqual(null);
     });
 
-    test('should remove spatial filter from root state', () => {
-      // Add
-      store.dispatch(cartoSlice.addSpatialFilter(spatialFilter));
-
-      // Remove
-      store.dispatch(cartoSlice.removeSpatialFilter());
+    test('should set feature selection mode', () => {
+      const MODE = 'abracadabra';
+      store.dispatch(cartoSlice.setFeatureSelectionMode(MODE));
       const state = store.getState();
-      expect(state.carto.dataSources[sourceId].spatialFilter).toEqual(null);
-      // Now with the selector
-      expect(cartoSlice.selectSpatialFilter(state, sourceId)).toEqual(null);
+      expect(state.carto.featureSelectionState.mode).toEqual(MODE);
     });
   });
 
