@@ -58,7 +58,7 @@ declare enum CartoActions {
   CLEAR_FILTERS = 'carto/clearFilters',
   SET_FEATURES_READY = 'carto/setFeaturesReady',
   SET_CREDENTIALS = 'carto/setCredentials',
-  SET_FEATURE_SELECTION_GEOMETRY = 'carto/setFeaturesSelectionGeometry',
+  SET_FEATURE_SELECTION_GEOMETRY = 'carto/setFeatureSelectionGeometry',
   SET_FEATURE_SELECTION_MODE = 'carto/setFeatureSelectionMode'
 }
 
