@@ -75,7 +75,8 @@ FeatureSelectionWidgetUI.defaultProps = {
   className: '',
   activated: false,
   geometries: [],
-  tooltipPlacement: 'bottom'
+  tooltipPlacement: 'bottom',
+  editModes: []
 };
 
 const MODE_SHAPE = PropTypes.shape({
@@ -87,7 +88,7 @@ const MODE_SHAPE = PropTypes.shape({
 FeatureSelectionWidgetUI.propTypes = {
   className: PropTypes.string,
   drawModes: PropTypes.arrayOf(MODE_SHAPE.isRequired).isRequired,
-  editModes: PropTypes.arrayOf(MODE_SHAPE.isRequired).isRequired,
+  editModes: PropTypes.arrayOf(MODE_SHAPE.isRequired),
   selectedMode: PropTypes.string.isRequired,
   onSelectMode: PropTypes.func,
   activated: PropTypes.bool,
@@ -183,7 +184,7 @@ function GeometriesViewer({
             label={chipLabelFn(geometry, idx)}
             color={isDisabled(geometry) ? 'default' : 'secondary'}
             onClick={() => onSelectGeometry(geometry, idx)}
-            onDelete={() => onDeleteGeometry(geometry, idx)}
+            onDelete={!!onDeleteGeometry && (() => onDeleteGeometry(geometry, idx))}
           />
         </Tooltip>
       ))}
@@ -211,7 +212,13 @@ function SelectedModeViewer({
 
   const { label, icon, isEdit } = useMemo(() => {
     if (modes?.length && selectedMode) {
-      return modes.find(({ id: modeId }) => modeId === selectedMode);
+      const foundMode = modes.find(({ id: modeId }) => modeId === selectedMode);
+      if (!foundMode) {
+        throw new Error(
+          'Selected mode provided is not found neither in drawing or edit mode'
+        );
+      }
+      return foundMode;
     } else {
       return {};
     }
@@ -297,7 +304,7 @@ function ModesSelector({
 
   return (
     <Box>
-      <Tooltip title='Select draw modes' placement={tooltipPlacement} arrow>
+      <Tooltip title='Select a mode' placement={tooltipPlacement} arrow>
         <IconButton
           id='fade-button'
           aria-controls='fade-menu'
