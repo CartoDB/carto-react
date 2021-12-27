@@ -8,7 +8,7 @@ import LegendWidgetUI, { LEGEND_TYPES } from './widgets/legend/LegendWidgetUI';
 import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
-import { CHART_TYPES } from './widgets/utils/constants';
+import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import NoDataAlert from './widgets/NoDataAlert';
 
 export {
