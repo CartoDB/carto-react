@@ -1,6 +1,8 @@
 import bboxPolygon from '@turf/bbox-polygon';
 import intersects from '@turf/boolean-intersects';
-import { prepareViewport, isTileFullyVisible } from './viewportFeatures';
+import booleanWithin from '@turf/boolean-within';
+import intersect from '@turf/intersect';
+import transformToTileCoords from '../utils/transformToTileCoords';
 
 const GEOMETRY_TYPES = Object.freeze({
   Point: 0,
@@ -11,7 +13,7 @@ const GEOMETRY_TYPES = Object.freeze({
 function addIntersectedFeaturesInTile({
   map,
   data,
-  viewportIntersection,
+  geometryIntersection,
   type,
   uniqueIdProperty
 }) {
@@ -27,7 +29,7 @@ function addIntersectedFeaturesInTile({
 
     if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
       const ringCoordinates = getRingCoordinatesFor(startIndex, endIndex, positions);
-      if (intersects(getFeatureByType(ringCoordinates, type), viewportIntersection)) {
+      if (intersects(getFeatureByType(ringCoordinates, type), geometryIntersection)) {
         map.set(uniquePropertyValue, parseProperties(tileProps));
       }
     }
@@ -106,10 +108,10 @@ function getRingCoordinatesFor(startIndex, endIndex, positions) {
   return ringCoordinates;
 }
 
-function calculateViewportFeatures({
+function calculateFeatures({
   map,
   tileIsFullyVisible,
-  viewportIntersection,
+  geometryIntersection,
   data,
   type,
   uniqueIdProperty
@@ -124,7 +126,7 @@ function calculateViewportFeatures({
     addIntersectedFeaturesInTile({
       map,
       data,
-      viewportIntersection,
+      geometryIntersection,
       type,
       uniqueIdProperty
     });
@@ -158,8 +160,17 @@ function createIndicesForPoints(data) {
   data.pointIndices.value.set([lastFeatureId + 1], featureIds.length);
 }
 
-export function viewportFeaturesBinary({ tiles, viewport, uniqueIdProperty }) {
+export function getGeometryToIntersect(viewport, geometry) {
+  return geometry ? intersect(bboxPolygon(viewport), geometry) : bboxPolygon(viewport);
+}
+
+export function tileFeatures({ tiles, viewport, geometry, uniqueIdProperty }) {
   const map = new Map();
+  const geometryToIntersect = getGeometryToIntersect(viewport, geometry);
+
+  if (!geometryToIntersect) {
+    return [];
+  }
 
   for (const tile of tiles) {
     // Discard if it's not a visible tile (only check false value, not undefined)
@@ -169,31 +180,42 @@ export function viewportFeaturesBinary({ tiles, viewport, uniqueIdProperty }) {
     }
 
     const { bbox } = tile;
-    const tileIsFullyVisible = isTileFullyVisible(bbox, viewport);
-    const viewportIntersection = bboxPolygon(prepareViewport(tile.bbox, viewport));
+    const bboxToGeom = bboxPolygon([bbox.west, bbox.south, bbox.east, bbox.north]);
+    const tileIsFullyVisible = booleanWithin(bboxToGeom, geometryToIntersect);
+    // Clip the geometry to intersect with the tile
+    const clippedGeometryToIntersect = intersect(bboxToGeom, geometryToIntersect);
+
+    if (!clippedGeometryToIntersect) {
+      continue;
+    }
+    // Transform the geometry to intersect to tile coordinates [0..1]
+    const transformedGeomtryToIntersect = {
+      type: 'Feature',
+      geometry: transformToTileCoords(clippedGeometryToIntersect.geometry, bbox)
+    };
 
     createIndicesForPoints(tile.data.points);
 
-    calculateViewportFeatures({
+    calculateFeatures({
       map,
       tileIsFullyVisible,
-      viewportIntersection,
+      geometryIntersection: transformedGeomtryToIntersect,
       data: tile.data.points,
       type: GEOMETRY_TYPES['Point'],
       uniqueIdProperty
     });
-    calculateViewportFeatures({
+    calculateFeatures({
       map,
       tileIsFullyVisible,
-      viewportIntersection,
+      geometryIntersection: transformedGeomtryToIntersect,
       data: tile.data.lines,
       type: GEOMETRY_TYPES['LineString'],
       uniqueIdProperty
     });
-    calculateViewportFeatures({
+    calculateFeatures({
       map,
       tileIsFullyVisible,
-      viewportIntersection,
+      geometryIntersection: transformedGeomtryToIntersect,
       data: tile.data.polygons,
       type: GEOMETRY_TYPES['Polygon'],
       uniqueIdProperty

@@ -1,4 +1,4 @@
-import { viewportFeaturesGeoJSON } from '../../src/filters/viewportFeaturesGeoJSON';
+import { geojsonFeatures } from '../../src/filters/geojsonFeatures';
 
 describe('viewport features with geojson data', () => {
   const viewport = [-10, -10, 10, 10]; // west - south - east - north
@@ -10,7 +10,7 @@ describe('viewport features with geojson data', () => {
         features: []
       };
 
-      const properties = viewportFeaturesGeoJSON({
+      const properties = geojsonFeatures({
         geojson,
         viewport
       });
@@ -37,7 +37,7 @@ describe('viewport features with geojson data', () => {
         }))
       };
 
-      const properties = viewportFeaturesGeoJSON({
+      const properties = geojsonFeatures({
         geojson: linestrings,
         viewport,
         uniqueIdProperty: 'cartodb_id'
@@ -68,7 +68,7 @@ describe('viewport features with geojson data', () => {
         }))
       };
 
-      const properties = viewportFeaturesGeoJSON({
+      const properties = geojsonFeatures({
         geojson: multilinestrings,
         viewport,
         uniqueIdProperty: 'cartodb_id'
@@ -99,7 +99,7 @@ describe('viewport features with geojson data', () => {
         }))
       };
 
-      const properties = viewportFeaturesGeoJSON({
+      const properties = geojsonFeatures({
         geojson: polygons,
         viewport,
         uniqueIdProperty: 'cartodb_id'
@@ -133,7 +133,7 @@ describe('viewport features with geojson data', () => {
         }))
       };
 
-      const properties = viewportFeaturesGeoJSON({
+      const properties = geojsonFeatures({
         geojson: multipolygons,
         viewport,
         uniqueIdProperty: 'cartodb_id'
@@ -165,7 +165,7 @@ describe('viewport features with geojson data', () => {
         }))
       };
 
-      const properties = viewportFeaturesGeoJSON({
+      const properties = geojsonFeatures({
         geojson: points,
         viewport,
         uniqueIdProperty: 'cartodb_id'
@@ -191,7 +191,7 @@ describe('viewport features with geojson data', () => {
         }))
       };
 
-      const properties = viewportFeaturesGeoJSON({
+      const properties = geojsonFeatures({
         geojson: linestrings,
         viewport,
         uniqueIdProperty: 'cartodb_id'
@@ -217,7 +217,7 @@ describe('viewport features with geojson data', () => {
         }))
       };
 
-      const properties = viewportFeaturesGeoJSON({
+      const properties = geojsonFeatures({
         geojson: multilinestrings,
         viewport,
         uniqueIdProperty: 'cartodb_id'
@@ -243,7 +243,7 @@ describe('viewport features with geojson data', () => {
         }))
       };
 
-      const properties = viewportFeaturesGeoJSON({
+      const properties = geojsonFeatures({
         geojson: polygons,
         viewport,
         uniqueIdProperty: 'cartodb_id'
@@ -272,7 +272,7 @@ describe('viewport features with geojson data', () => {
         }))
       };
 
-      const properties = viewportFeaturesGeoJSON({
+      const properties = geojsonFeatures({
         geojson: multipolygons,
         viewport,
         uniqueIdProperty: 'cartodb_id'

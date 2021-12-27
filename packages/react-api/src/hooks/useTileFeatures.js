@@ -5,9 +5,10 @@ import { Layer } from '@deck.gl/core';
 import { throwError } from './utils';
 import useFeaturesCommons from './useFeaturesCommons';
 
-export default function useTilesetFeatures({
+export default function useTileFeatures({
   source,
   viewport,
+  spatialFilter,
   uniqueIdProperty,
   debounceTimeout = 250
 }) {
@@ -17,26 +18,27 @@ export default function useTilesetFeatures({
     setTilesetLoaded,
     clearDebounce,
     stopAnyCompute,
-    setSourceViewportFeaturesReady
+    setSourceFeaturesReady
   ] = useFeaturesCommons({ source });
 
   const sourceId = source?.id;
 
-  const computeViewportFeatures = useCallback(
-    ({ viewport, uniqueIdProperty }) => {
-      setSourceViewportFeaturesReady(false);
+  const computeFeatures = useCallback(
+    ({ viewport, spatialFilter, uniqueIdProperty }) => {
+      setSourceFeaturesReady(false);
 
-      executeTask(sourceId, Methods.VIEWPORT_FEATURES, {
+      executeTask(sourceId, Methods.TILE_FEATURES, {
         viewport,
+        geometry: spatialFilter,
         uniqueIdProperty
       })
         .then(() => {
-          setSourceViewportFeaturesReady(true);
+          setSourceFeaturesReady(true);
         })
         .catch(throwError)
         .finally(clearDebounce);
     },
-    [setSourceViewportFeaturesReady, sourceId, clearDebounce]
+    [setSourceFeaturesReady, sourceId, clearDebounce]
   );
 
   const loadTiles = useCallback(
@@ -59,9 +61,9 @@ export default function useTilesetFeatures({
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedComputeViewportFeatures = useCallback(
-    debounce(computeViewportFeatures, debounceTimeout),
-    [computeViewportFeatures]
+  const debouncedComputeFeatures = useCallback(
+    debounce(computeFeatures, debounceTimeout),
+    [computeFeatures]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,19 +74,21 @@ export default function useTilesetFeatures({
   useEffect(() => {
     if (sourceId && isTilesetLoaded) {
       clearDebounce();
-      setSourceViewportFeaturesReady(false);
-      debounceIdRef.current = debouncedComputeViewportFeatures({
+      setSourceFeaturesReady(false);
+      debounceIdRef.current = debouncedComputeFeatures({
         viewport,
+        spatialFilter,
         uniqueIdProperty
       });
     }
   }, [
     viewport,
+    spatialFilter,
     uniqueIdProperty,
-    debouncedComputeViewportFeatures,
+    debouncedComputeFeatures,
     sourceId,
     isTilesetLoaded,
-    setSourceViewportFeaturesReady,
+    setSourceFeaturesReady,
     clearDebounce,
     debounceIdRef
   ]);
@@ -92,11 +96,11 @@ export default function useTilesetFeatures({
   const onViewportLoad = useCallback(
     (tiles) => {
       stopAnyCompute();
-      setSourceViewportFeaturesReady(false);
+      setSourceFeaturesReady(false);
 
       debounceIdRef.current = debouncedLoadTiles(tiles);
     },
-    [stopAnyCompute, setSourceViewportFeaturesReady, debouncedLoadTiles, debounceIdRef]
+    [stopAnyCompute, setSourceFeaturesReady, debouncedLoadTiles, debounceIdRef]
   );
 
   const fetch = useCallback(

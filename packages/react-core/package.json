@@ -65,6 +65,8 @@
   },
   "peerDependencies": {
     "@turf/bbox-polygon": "^6.3.0",
-    "@turf/boolean-intersects": "^6.3.0"
+    "@turf/boolean-intersects": "^6.3.0",
+    "@turf/boolean-within": "^6.3.0",
+    "@turf/intersect": "^6.3.0"
   }
 }
