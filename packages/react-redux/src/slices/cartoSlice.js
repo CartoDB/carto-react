@@ -3,6 +3,7 @@ import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '@carto/react-core';
 import { removeWorker } from '@carto/react-workers';
 import { setDefaultCredentials } from '@deck.gl/carto';
+import { DRAW_MODES } from '@carto/react-core';
 
 /**
  *
@@ -49,6 +50,8 @@ export const createCartoSlice = (initialState) => {
         // Auto import dataSources
       },
       spatialFilter: null,
+      drawingToolMode: DRAW_MODES.POLYGON,
+      drawingToolEnabled: false,
       featuresReady: {},
       ...initialState
     },
@@ -158,6 +161,12 @@ export const createCartoSlice = (initialState) => {
           ...action.payload
         };
         setDefaultCredentials(state.credentials);
+      },
+      setDrawingToolMode: (state, action) => {
+        state.drawingToolMode = action.payload;
+      },
+      setDrawingToolEnabled: (state, action) => {
+        state.drawingToolEnabled = action.payload;
       }
     }
   });
@@ -278,10 +287,21 @@ export const selectSourceById = (state, id) => state.carto.dataSources[id];
 /**
  * Redux selector to select the spatial filter of a given sourceId or the root one
  */
-export const selectSpatialFilter = (state, sourceId) =>
-  sourceId
-    ? state.carto.dataSources[sourceId]?.spatialFilter || state.carto.spatialFilter
-    : state.carto.spatialFilter;
+export const selectSpatialFilter = (state, sourceId) => {
+  let spatialFilterGeometry = state.carto.spatialFilter;
+  if (spatialFilterGeometry?.properties?.disabled) {
+    spatialFilterGeometry = null;
+  }
+  return sourceId
+    ? state.carto.dataSources[sourceId]?.spatialFilter || spatialFilterGeometry
+    : spatialFilterGeometry;
+};
+
+/**
+ * Redux selector to select the selected drawing tool mode based on if it's enabled
+ */
+export const selectDrawingToolMode = (state) =>
+  state.carto.drawingToolEnabled && state.carto.drawingToolMode;
 
 /**
  * Redux selector to know if features from a certain source are ready
@@ -339,4 +359,22 @@ export const setFeaturesReady = (data) => ({
 export const setCredentials = (data) => ({
   type: 'carto/setCredentials',
   payload: data
+});
+
+/**
+ * Action to set drawing tool mode
+ * @param {boolean} mode
+ */
+export const setDrawingToolMode = (mode) => ({
+  type: 'carto/setDrawingToolMode',
+  payload: mode
+});
+
+/**
+ * Action to set if drawing tool is enabled
+ * @param {boolean} enabled
+ */
+export const setDrawingToolEnabled = (enabled) => ({
+  type: 'carto/setDrawingToolEnabled',
+  payload: enabled
 });

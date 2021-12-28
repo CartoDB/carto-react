@@ -26,3 +26,5 @@ export { AggregationFunctions, GroupByFeature, HistogramFeature, Viewport, TileF
 
 export { GroupDateTypes } from './operations/GroupDateTypes';
 export { groupValuesByDateColumn } from './operations/groupByDate';
+
+export { DRAW_MODES, EDIT_MODES } from './utils/drawingToolConstants';

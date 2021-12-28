@@ -117,6 +117,7 @@ describe('carto slice', () => {
 
   describe('spatial filter actions', () => {
     const spatialFilter = {
+      type: 'Feature',
       geometry: {
         type: 'Polygon',
         coordinates: [
@@ -125,55 +126,69 @@ describe('carto slice', () => {
             [1, 1]
           ]
         ]
-      }
+      },
+      properties: {}
     };
 
     const sourceId = 'theSource';
 
-    test('should add a spatial filter to a source', () => {
+    test('should add/remove a spatial filter to a source', () => {
       store.dispatch(cartoSlice.addSource({ id: sourceId }));
-      store.dispatch(cartoSlice.addSpatialFilter({ sourceId, ...spatialFilter }));
-      const state = store.getState();
-      expect(state.carto.dataSources[sourceId].spatialFilter).toEqual(
-        spatialFilter.geometry
+      store.dispatch(
+        cartoSlice.addSpatialFilter({
+          sourceId,
+          geometry: spatialFilter
+        })
       );
+      let state = store.getState();
+      expect(state.carto.dataSources[sourceId].spatialFilter).toEqual(spatialFilter);
       // Now with the selector
-      expect(cartoSlice.selectSpatialFilter(state, sourceId)).toEqual(
-        spatialFilter.geometry
-      );
-    });
-
-    test('should remove spatial filter from a source', () => {
-      // Add
-      store.dispatch(cartoSlice.addSource({ id: sourceId }));
-      store.dispatch(cartoSlice.addSpatialFilter({ sourceId, ...spatialFilter }));
-
-      // Remove
+      expect(cartoSlice.selectSpatialFilter(state, sourceId)).toEqual(spatialFilter);
+      // Once it's added, remove it
       store.dispatch(cartoSlice.removeSpatialFilter(sourceId));
-      const state = store.getState();
-      expect(state.carto.dataSources[sourceId].spatialFilter).toEqual(null);
-      // Now with the selector
-      expect(cartoSlice.selectSpatialFilter(state, sourceId)).toEqual(null);
+      state = store.getState();
+      expect(state.carto.dataSources[sourceId].spatialFilter).toBe(null);
     });
 
-    test('should add a spatial filter to root state', () => {
-      store.dispatch(cartoSlice.addSpatialFilter(spatialFilter));
-      const state = store.getState();
-      expect(state.carto.spatialFilter).toEqual(spatialFilter.geometry);
+    test('should add/remove a spatial filter to root state for applying it to every source', () => {
+      store.dispatch(
+        cartoSlice.addSpatialFilter({
+          geometry: spatialFilter
+        })
+      );
+      let state = store.getState();
+      expect(state.carto.spatialFilter).toEqual(spatialFilter);
       // Now with the selector
-      expect(cartoSlice.selectSpatialFilter(state)).toEqual(spatialFilter.geometry);
-    });
-
-    test('should remove spatial filter from root state', () => {
-      // Add
-      store.dispatch(cartoSlice.addSpatialFilter(spatialFilter));
-
-      // Remove
+      expect(cartoSlice.selectSpatialFilter(state)).toEqual(spatialFilter);
+      // Once it's added, remove it
       store.dispatch(cartoSlice.removeSpatialFilter());
+      state = store.getState();
+      expect(state.carto.spatialFilter).toBe(null);
+    });
+
+    test("selector shouldn't return root spatial filter geometry if disabled", () => {
+      store.dispatch(
+        cartoSlice.addSpatialFilter({
+          geometry: {
+            ...spatialFilter,
+            properties: {
+              ...spatialFilter.properties,
+              disabled: true
+            }
+          }
+        })
+      );
       const state = store.getState();
-      expect(state.carto.dataSources[sourceId].spatialFilter).toEqual(null);
-      // Now with the selector
-      expect(cartoSlice.selectSpatialFilter(state, sourceId)).toEqual(null);
+      expect(cartoSlice.selectSpatialFilter(state)).toBe(null);
+    });
+  });
+
+  describe('drawing tool mode', () => {
+    test('should set drawing tool mode', () => {
+      const MODE = 'abracadabra';
+      store.dispatch(cartoSlice.setDrawingToolMode(MODE));
+      const state = store.getState();
+      expect(state.carto.drawingToolMode).toEqual(MODE);
     });
   });
 

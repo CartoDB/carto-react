@@ -9,7 +9,8 @@ const webpackConfig = {
   externals: [
     /^@carto\/react-.+$/,
     /^@material-ui\/.+$/,
-    'react', 
+    /^@nebula.gl\/.+$/,
+    'react',
     'react-dom',
     'react-redux',
     'redux'

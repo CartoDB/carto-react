@@ -2,6 +2,11 @@
 
 ## Not released
 
+- Add spatial filter to allow ramdom geometry filters in widgets[#250](https://github.com/CartoDB/carto-react/pull/250)
+- DrawingToolWidget [#249](https://github.com/CartoDB/carto-react/pull/249)
+- Fix: remove sortBy prop default value [#252](https://github.com/CartoDB/carto-react/pull/252)
+- Fix TS type declarations for BasemapName and CartoSlice [#248](https://github.com/CartoDB/carto-react/pull/248)
+
 ## 1.1.4 (2021-12-16)
 
 - Implement C4R filtering using binary data [#228](https://github.com/CartoDB/carto-react/pull/228)
