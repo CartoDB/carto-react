@@ -27,7 +27,7 @@ function TableWidget({
   onError
 }) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
   const [sortBy, setSortBy] = useState(undefined);

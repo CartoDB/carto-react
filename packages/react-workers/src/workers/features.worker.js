@@ -191,7 +191,7 @@ function getRawFeatures({
 }
 
 function applyPagination(features, { limit, page }) {
-  return features.slice(limit * page, limit * (page + 1));
+  return features.slice(limit * Math.max(0, page - 1), limit * Math.max(1, page));
 }
 
 function getFilteredFeatures(filters = {}) {
