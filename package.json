@@ -37,7 +37,9 @@
     "@turf/intersect": "^6.3.0",
     "webpack": "^5.24.2",
     "webpack-cli": "^4.5.0",
-    "dequal": "^2.0.2"
+    "dequal": "^2.0.2",
+    "@nebula.gl/edit-modes": "^1.0.2-alpha.0",
+    "@nebula.gl/layers": "^1.0.2-alpha.0"
   },
   "scripts": {
     "build": "yarn clean:build && NODE_ENV=production lerna run build --stream",
