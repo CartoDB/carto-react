@@ -10,6 +10,19 @@ import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI'
 import DrawingToolWidgetUI from './widgets/DrawingToolWidgetUI';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import NoDataAlert from './widgets/NoDataAlert';
+import CursorIcon from './assets/CursorIcon';
+import PolygonIcon from './assets/PolygonIcon';
+import RectangleIcon from './assets/RectangleIcon';
+import LassoIcon from './assets/LassoIcon';
+import CircleIcon from './assets/CircleIcon';
+
+const drawingToolIcons = {
+  CursorIcon,
+  PolygonIcon,
+  RectangleIcon,
+  LassoIcon,
+  CircleIcon
+};
 
 export {
   cartoThemeOptions,
@@ -24,5 +37,6 @@ export {
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
   LegendWidgetUI,
   LEGEND_TYPES,
-  NoDataAlert
+  NoDataAlert,
+  drawingToolIcons
 };
