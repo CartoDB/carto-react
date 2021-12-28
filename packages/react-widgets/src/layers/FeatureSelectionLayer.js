@@ -25,20 +25,11 @@ export default function FeatureSelectionLayer() {
   const hasSelected = selectedFeatureIndex !== null;
 
   useEffect(() => {
-    if (hasSelected) {
+    // When the user changes mode or finishes drawing a geometry, remove selected feature
+    if (!isEdit && hasSelected) {
       setSelectedFeatureIndex(null);
     }
-    // If hasSelected is added, when a feature is selected, it will be deselected
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedMode]);
-
-  useEffect(() => {
-    if (hasSelected && !geometry) {
-      setSelectedFeatureIndex(null);
-    }
-    // If hasSelected is added, when a feature is selected, it will be deselected
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geometry]);
+  }, [isEdit, geometry, hasSelected]);
 
   const mode = useMemo(() => {
     if (selectedMode) {
