@@ -2,7 +2,7 @@ import { FeatureSelectionWidgetUI } from '@carto/react-ui/';
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFeatureSelectionMode, setFeatureSelectionGeometry } from '@carto/react-redux';
+import { setDrawingToolMode, addSpatialFilter, removeSpatialFilter } from '@carto/react-redux';
 import { SvgIcon } from '@material-ui/core';
 import {
   DRAW_MODES as DRAW_MODES_KEYS,
@@ -76,7 +76,7 @@ function FeatureSelectionWidget({
   const dispatch = useDispatch();
   const [activated, setActivated] = useState(defaultActivated);
   const [selectedMode, setSelectedMode] = useState(defaultSelectedMode);
-  const geometry = useSelector((state) => state.carto.featureSelectionState.geometry);
+  const geometry = useSelector((state) => state.carto.spatialFilter);
 
   const drawModes = useMemo(() => {
     return drawModesKeys
@@ -91,7 +91,7 @@ function FeatureSelectionWidget({
   }, [editModesKeys]);
 
   const handleActivatedChange = (newActivated) => {
-    dispatch(setFeatureSelectionMode(newActivated ? selectedMode : null));
+    dispatch(setDrawingToolMode(newActivated ? selectedMode : null));
     setActivated(newActivated);
   };
 
@@ -109,13 +109,13 @@ function FeatureSelectionWidget({
   const handleSelectMode = (newSelectedMode) => {
     setSelectedMode(newSelectedMode);
     // If the user update selectedMode, activate it by default
-    dispatch(setFeatureSelectionMode(newSelectedMode));
+    dispatch(setDrawingToolMode(newSelectedMode));
     if (!activated) setActivated(true);
   };
 
   const handleSelectGeometry = (selectedGeometry) => {
     dispatch(
-      setFeatureSelectionGeometry({
+      addSpatialFilter({
         geometry: {
           ...selectedGeometry,
           properties: {
@@ -128,7 +128,7 @@ function FeatureSelectionWidget({
   };
 
   const handleDeleteGeometry = () => {
-    dispatch(setFeatureSelectionGeometry());
+    dispatch(removeSpatialFilter());
   };
 
   return (

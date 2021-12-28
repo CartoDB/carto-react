@@ -1,9 +1,6 @@
 import { EditableGeoJsonLayer } from '@nebula.gl/layers';
 import * as nebulaModes from '@nebula.gl/edit-modes';
-import {
-  setFeatureSelectionGeometry,
-  selectFeatureSelectionGeometry
-} from '@carto/react-redux';
+import { addSpatialFilter, selectSpatialFilter } from '@carto/react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { EDIT_MODES } from '../utils/constants';
 import { hexToRgb, useTheme } from '@material-ui/core';
@@ -17,11 +14,11 @@ export default function FeatureSelectionLayer() {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null);
-  const selectedMode = useSelector((state) => state.carto.featureSelectionState.mode);
-  const geometry = useSelector((state) => selectFeatureSelectionGeometry(state));
+  const selectedMode = useSelector((state) => state.carto.drawingToolMode);
+  const spatialFilterGeometry = useSelector((state) => selectSpatialFilter(state));
 
   const isEdit = isEditMode(selectedMode);
-  const hasGeometry = !!geometry;
+  const hasGeometry = !!spatialFilterGeometry;
   const isSelected = selectedFeatureIndex !== null;
 
   useEffect(() => {
@@ -29,7 +26,7 @@ export default function FeatureSelectionLayer() {
     if (!isEdit && isSelected) {
       setSelectedFeatureIndex(null);
     }
-  }, [isEdit, geometry, isSelected]);
+  }, [isEdit, spatialFilterGeometry, isSelected]);
 
   const mode = useMemo(() => {
     if (selectedMode) {
@@ -52,7 +49,7 @@ export default function FeatureSelectionLayer() {
     id: 'FeatureSelectionLayer',
     data: {
       type: 'FeatureCollection',
-      features: geometry ? [geometry] : []
+      features: spatialFilterGeometry ? [spatialFilterGeometry] : []
     },
     mode,
     selectedFeatureIndexes: isFinite(selectedFeatureIndex) ? [selectedFeatureIndex] : [],
@@ -60,7 +57,7 @@ export default function FeatureSelectionLayer() {
       const [lastFeature] = updatedData.features.slice(-1);
       if (lastFeature) {
         dispatch(
-          setFeatureSelectionGeometry({
+          addSpatialFilter({
             geometry: lastFeature
           })
         );

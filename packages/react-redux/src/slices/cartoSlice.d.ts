@@ -53,13 +53,14 @@ declare enum CartoActions {
   UPDATE_LAYER = 'carto/updateLayer',
   REMOVE_LAYER = 'carto/removeLayer',
   SET_BASEMAP = 'carto/setBasemap',
+  ADD_SPATIAL_FILTER = 'carto/addSpatialFilter',
+  REMOVE_SPATIAL_FILTER = 'carto/removeSpatialFilter',
   ADD_FILTER = 'carto/addFilter',
   REMOVE_FILTER = 'carto/removeFilter',
   CLEAR_FILTERS = 'carto/clearFilters',
   SET_FEATURES_READY = 'carto/setFeaturesReady',
   SET_CREDENTIALS = 'carto/setCredentials',
-  SET_FEATURE_SELECTION_GEOMETRY = 'carto/setFeatureSelectionGeometry',
-  SET_FEATURE_SELECTION_MODE = 'carto/setFeatureSelectionMode'
+  SET_DRAWING_TOOL_MODE = 'carto/setDrawingToolMode'
 }
 
 export function createCartoSlice(initialState: InitialCartoState): Reducer;
@@ -94,6 +95,16 @@ export function setBasemap(id: BasemapName): {
   payload: BasemapName;
 };
 
+export function addSpatialFilter(spatialFilter: SpatialFilter): {
+  type: CartoActions.ADD_SPATIAL_FILTER;
+  payload: SpatialFilter;
+};
+
+export function removeSpatialFilter(sourceId?: string): {
+  type: CartoActions.REMOVE_SPATIAL_FILTER;
+  payload: string;
+};
+
 export function addFilter(filter: Filter): {
   type: CartoActions.ADD_FILTER;
   payload: Filter;
@@ -125,12 +136,9 @@ export function setCredentials(credentials: Credentials): {
   payload: Credentials;
 };
 
-export function setFeatureSelectionMode(mode: string): {
-  type: CartoActions.SET_FEATURE_SELECTION_MODE;
+export function setDrawingToolMode(mode: string): {
+  type: CartoActions.SET_DRAWING_TOOL_MODE;
   payload: string;
 };
 
-export function setFeatureSelectionGeometry(payload?: SpatialFilter): {
-  type: CartoActions.SET_FEATURE_SELECTION_GEOMETRY;
-  payload: SpatialFilter;
-};
+export function selectSpatialFilter(state: any, sourceId?: string): object | null;

@@ -48,10 +48,8 @@ export const createCartoSlice = (initialState) => {
       dataSources: {
         // Auto import dataSources
       },
-      featureSelectionState: {
-        mode: null,
-        geometry: null
-      },
+      spatialFilter: null,
+      drawingToolMode: null,
       featuresReady: {},
       ...initialState
     },
@@ -96,6 +94,30 @@ export const createCartoSlice = (initialState) => {
       setViewPort: (state) => {
         state.viewport = new WebMercatorViewport(state.viewState).getBounds();
       },
+      addSpatialFilter: (state, action) => {
+        const { sourceId, geometry } = action.payload;
+        if (sourceId) {
+          const source = state.dataSources[sourceId];
+
+          if (source) {
+            source.spatialFilter = geometry;
+          }
+        } else {
+          state.spatialFilter = geometry;
+        }
+      },
+      removeSpatialFilter: (state, action) => {
+        const sourceId = action.payload;
+        if (sourceId) {
+          const source = state.dataSources[sourceId];
+
+          if (source) {
+            source.spatialFilter = null;
+          }
+        } else {
+          state.spatialFilter = null;
+        }
+      },
       addFilter: (state, action) => {
         const { id, column, type, values, owner } = action.payload;
         const source = state.dataSources[id];
@@ -138,20 +160,8 @@ export const createCartoSlice = (initialState) => {
         };
         setDefaultCredentials(state.credentials);
       },
-      setFeatureSelectionMode: (state, action) => {
-        state.featureSelectionState.mode = action.payload;
-      },
-      setFeatureSelectionGeometry: (state, action) => {
-        const { sourceId, geometry } = action.payload;
-        if (sourceId) {
-          const source = state.dataSources[sourceId];
-
-          if (source) {
-            source.spatialFilter = geometry;
-          }
-        } else {
-          state.featureSelectionState.geometry = geometry;
-        }
+      setDrawingToolMode: (state, action) => {
+        state.drawingToolMode = action.payload;
       }
     }
   });
@@ -214,6 +224,26 @@ export const removeLayer = (id) => ({ type: 'carto/removeLayer', payload: id });
 export const setBasemap = (basemap) => ({ type: 'carto/setBasemap', payload: basemap });
 
 /**
+ * Action to add a spatial filter
+ * @param {object} params
+ * @param {string} [params.sourceId] - If indicated, mask is applied to that source. If not, it's applied to every source
+ * @param {GeoJSON} params.geometry - valid geojson object
+ */
+export const addSpatialFilter = ({ sourceId, geometry }) => ({
+  type: 'carto/addSpatialFilter',
+  payload: { sourceId, geometry }
+});
+
+/**
+ * Action to remove a spatial filter on a given source
+ * @param {string} [sourceId] - sourceId of the source to apply the filter on. If missing, root spatial filter is removed
+ */
+export const removeSpatialFilter = (sourceId) => ({
+  type: 'carto/removeSpatialFilter',
+  payload: sourceId
+});
+
+/**
  * Action to add a filter on a given source and column
  * @param {string} id - sourceId of the source to apply the filter on
  * @param {string} column - column to use by the filter at the source
@@ -248,6 +278,19 @@ const _setViewPort = (payload) => ({ type: 'carto/setViewPort', payload });
  * Redux selector to get a source by ID
  */
 export const selectSourceById = (state, id) => state.carto.dataSources[id];
+
+/**
+ * Redux selector to select the spatial filter of a given sourceId or the root one
+ */
+export const selectSpatialFilter = (state, sourceId) => {
+  let spatialFilterGeometry = state.carto.spatialFilter;
+  if (spatialFilterGeometry?.properties?.disabled) {
+    spatialFilterGeometry = null;
+  }
+  return sourceId
+    ? state.carto.dataSources[sourceId]?.spatialFilter || spatialFilterGeometry
+    : spatialFilterGeometry;
+};
 
 /**
  * Redux selector to know if features from a certain source are ready
@@ -308,34 +351,10 @@ export const setCredentials = (data) => ({
 });
 
 /**
- * Action to set feature selection mode
+ * Action to set drawing tool mode
  * @param {boolean} mode -
  */
-export const setFeatureSelectionMode = (mode) => ({
-  type: 'carto/setFeatureSelectionMode',
+export const setDrawingToolMode = (mode) => ({
+  type: 'carto/setDrawingToolMode',
   payload: mode
 });
-
-/**
- * Action to add a feature selection geometry
- * @param {object} [params]
- * @param {string} [params.sourceId] - If indicated, geometry is applied to that source. If not, it's applied to every source
- * @param {GeoJSON} params.geometry - valid geojson object
- */
-export const setFeatureSelectionGeometry = ({ sourceId, geometry } = {}) => ({
-  type: 'carto/setFeatureSelectionGeometry',
-  payload: { sourceId, geometry }
-});
-
-/**
- * Redux selector to select the spatial filter of a given sourceId or the root one
- */
-export const selectFeatureSelectionGeometry = (state, sourceId) => {
-  let featureSelectionGeometry = state.carto.featureSelectionState.geometry;
-  if (featureSelectionGeometry?.properties?.disabled) {
-    featureSelectionGeometry = null;
-  }
-  return sourceId
-    ? state.carto.dataSources[sourceId]?.spatialFilter || featureSelectionGeometry
-    : featureSelectionGeometry;
-};
