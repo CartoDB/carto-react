@@ -3,6 +3,7 @@ import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '@carto/react-core';
 import { removeWorker } from '@carto/react-workers';
 import { setDefaultCredentials } from '@deck.gl/carto';
+import { DRAW_MODES } from '@carto/react-core';
 
 /**
  *
@@ -49,7 +50,7 @@ export const createCartoSlice = (initialState) => {
         // Auto import dataSources
       },
       spatialFilter: null,
-      drawingToolMode: null,
+      drawingToolMode: DRAW_MODES.POLYGON,
       drawingToolEnabled: false,
       featuresReady: {},
       ...initialState

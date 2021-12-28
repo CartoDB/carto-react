@@ -7,7 +7,7 @@ import {
   selectDrawingToolMode
 } from '@carto/react-redux';
 import { useDispatch, useSelector } from 'react-redux';
-import { EDIT_MODES } from '../utils/constants';
+import { EDIT_MODES } from '@carto/react-core';
 import { hexToRgb, useTheme } from '@material-ui/core';
 import { useEffect, useMemo, useState } from 'react';
 

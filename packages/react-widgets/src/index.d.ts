@@ -14,4 +14,3 @@ export {
 } from './models';
 export { default as TimeSeriesWidget } from './widgets/TimeSeriesWidget';
 export { default as useSourceFilters } from './hooks/useSourceFilters';
-export { DRAW_MODES, EDIT_MODES } from './utils/constants';

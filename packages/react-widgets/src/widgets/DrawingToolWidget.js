@@ -11,7 +11,7 @@ import {
 import {
   DRAW_MODES as DRAW_MODES_KEYS,
   EDIT_MODES as EDIT_MODES_KEYS
-} from '../utils/constants';
+} from '@carto/react-core';
 
 const { PolygonIcon, RectangleIcon, CircleIcon, LassoIcon, CursorIcon } =
   drawingToolIcons;
