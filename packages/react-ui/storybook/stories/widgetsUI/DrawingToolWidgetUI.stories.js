@@ -7,7 +7,7 @@ const options = {
   title: 'Widgets UI/DrawingToolWidgetUI',
   component: DrawingToolWidgetUI,
   argTypes: {
-    activated: {
+    enabled: {
       control: { type: 'boolean' }
     }
   }
@@ -43,7 +43,7 @@ const DRAW_MODES = [
 const EDIT_MODES = [{ id: 'edit', label: 'Edit geometry', icon: CursorIcon }];
 
 const Template = (args) => {
-  const [activated, setActivated] = useState(args.activated ?? false);
+  const [enabled, setEnabled] = useState(args.enabled ?? false);
   const [selectedMode, setSelectedMode] = useState(DRAW_MODES[0].id);
 
   return (
@@ -54,8 +54,8 @@ const Template = (args) => {
         {...args}
         selectedMode={selectedMode}
         onSelectMode={setSelectedMode}
-        activated={activated}
-        onActivatedChange={setActivated}
+        enabled={enabled}
+        onEnabledChange={setEnabled}
       />
     </Box>
   );
@@ -66,12 +66,12 @@ const DefaultProps = {};
 Default.args = DefaultProps;
 Default.parameters = buildReactPropsAsString(DefaultProps, 'DrawingToolWidgetUI');
 
-export const Activated = Template.bind({});
-const ActivatedProps = {
-  activated: true
+export const Enabled = Template.bind({});
+const EnabledProps = {
+  enabled: true
 };
-Activated.args = ActivatedProps;
-Activated.parameters = buildReactPropsAsString(ActivatedProps, 'DrawingToolWidgetUI');
+Enabled.args = EnabledProps;
+Enabled.parameters = buildReactPropsAsString(EnabledProps, 'DrawingToolWidgetUI');
 
 export const WithoutEdit = Template.bind({});
 const WithoutEditProps = {

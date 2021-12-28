@@ -66,23 +66,23 @@ describe('DrawingToolWidgetUI', () => {
   });
 
   test('activate selected mode event is correctly raised', () => {
-    const onActivatedChange = jest.fn();
+    const onEnabledChange = jest.fn();
     const rendered = render(
-      <CommonDrawingToolWidgetUI onActivatedChange={onActivatedChange} />
+      <CommonDrawingToolWidgetUI onEnabledChange={onEnabledChange} />
     );
 
     const selectedModeBtn = getById(rendered.container, POLYGON_ICON_ID);
     expect(selectedModeBtn).toBeDefined();
 
     fireEvent.click(selectedModeBtn);
-    expect(onActivatedChange).toHaveBeenCalledWith(true);
+    expect(onEnabledChange).toHaveBeenCalledWith(true);
 
     rendered.rerender(
-      <CommonDrawingToolWidgetUI onActivatedChange={onActivatedChange} activated={true} />
+      <CommonDrawingToolWidgetUI onEnabledChange={onEnabledChange} enabled={true} />
     );
 
     fireEvent.click(selectedModeBtn);
-    expect(onActivatedChange).toHaveBeenCalledWith(false);
+    expect(onEnabledChange).toHaveBeenCalledWith(false);
   });
 
   test('drawModes and editModes are rendered correctly in modes menu', () => {

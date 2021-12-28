@@ -16,3 +16,4 @@ export {
 } from './models';
 export { default as useSourceFilters } from './hooks/useSourceFilters';
 export { default as DrawingToolLayer } from './layers/DrawingToolLayer';
+export { DRAW_MODES, EDIT_MODES } from './utils/constants';

@@ -1,8 +1,13 @@
 import { DrawingToolWidgetUI } from '@carto/react-ui/';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDrawingToolMode, addSpatialFilter, removeSpatialFilter } from '@carto/react-redux';
+import {
+  setDrawingToolMode,
+  addSpatialFilter,
+  removeSpatialFilter,
+  setDrawingToolEnabled
+} from '@carto/react-redux';
 import { SvgIcon } from '@material-ui/core';
 import {
   DRAW_MODES as DRAW_MODES_KEYS,
@@ -69,14 +74,12 @@ function DrawingToolWidget({
   className,
   drawModes: drawModesKeys,
   editModes: editModesKeys,
-  defaultActivated,
-  defaultSelectedMode,
   tooltipPlacement
 }) {
   const dispatch = useDispatch();
-  const [activated, setActivated] = useState(defaultActivated);
-  const [selectedMode, setSelectedMode] = useState(defaultSelectedMode);
   const geometry = useSelector((state) => state.carto.spatialFilter);
+  const selectedMode = useSelector((state) => state.carto.drawingToolMode);
+  const enabled = useSelector((state) => state.carto.drawingToolEnabled);
 
   const drawModes = useMemo(() => {
     return drawModesKeys
@@ -90,27 +93,14 @@ function DrawingToolWidget({
       .map((key) => ({ id: key, ...EDIT_MODES_MAP[key] }));
   }, [editModesKeys]);
 
-  const handleActivatedChange = (newActivated) => {
-    dispatch(setDrawingToolMode(newActivated ? selectedMode : null));
-    setActivated(newActivated);
+  const handleEnabledChange = (newEnabled) => {
+    dispatch(setDrawingToolEnabled(newEnabled));
   };
 
-  useEffect(() => {
-    // After drawing, when the geometry is created, disactivated the mode
-    const wasGeometryRecentlyCreated = geometry?.properties.disabled === undefined;
-    if (DRAW_MODES_MAP[selectedMode] && wasGeometryRecentlyCreated) {
-      handleActivatedChange(false);
-    }
-    // If selectedMode is added, each time the mode changes,
-    // it breaks the activated by default behavior
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geometry]);
-
   const handleSelectMode = (newSelectedMode) => {
-    setSelectedMode(newSelectedMode);
-    // If the user update selectedMode, activate it by default
     dispatch(setDrawingToolMode(newSelectedMode));
-    if (!activated) setActivated(true);
+    // If the user update selectedMode, activate it by default
+    handleEnabledChange(true);
   };
 
   const handleSelectGeometry = () => {
@@ -138,8 +128,8 @@ function DrawingToolWidget({
       editModes={editModes}
       selectedMode={selectedMode}
       onSelectMode={handleSelectMode}
-      activated={activated}
-      onActivatedChange={handleActivatedChange}
+      enabled={enabled}
+      onEnabledChange={handleEnabledChange}
       tooltipPlacement={tooltipPlacement}
       geometry={geometry}
       onSelectGeometry={handleSelectGeometry}
@@ -152,7 +142,7 @@ DrawingToolWidget.defaultProps = {
   drawModes: Object.values(DRAW_MODES_KEYS),
   editModes: Object.values(EDIT_MODES_KEYS),
   defaultSelectedMode: Object.values(DRAW_MODES_KEYS)[0],
-  defaultActivated: DrawingToolWidgetUI.defaultProps.activated,
+  defaultEnabled: DrawingToolWidgetUI.defaultProps.enabled,
   tooltipPlacement: DrawingToolWidgetUI.defaultProps.tooltipPlacement
 };
 
@@ -160,7 +150,7 @@ DrawingToolWidget.propTypes = {
   className: DrawingToolWidgetUI.propTypes.className,
   drawModes: PropTypes.arrayOf(PropTypes.oneOf(Object.values(DRAW_MODES_KEYS))),
   editModes: PropTypes.arrayOf(PropTypes.oneOf(Object.values(EDIT_MODES_KEYS))),
-  defaultActivated: DrawingToolWidgetUI.propTypes.activated,
+  defaultEnabled: DrawingToolWidgetUI.propTypes.enabled,
   defaultSelectedMode: PropTypes.oneOf([
     ...Object.values(DRAW_MODES_KEYS),
     ...Object.values(EDIT_MODES_KEYS)

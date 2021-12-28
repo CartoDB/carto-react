@@ -22,8 +22,8 @@ function DrawingToolWidgetUI({
   editModes,
   selectedMode,
   onSelectMode,
-  activated,
-  onActivatedChange,
+  enabled,
+  onEnabledChange,
   geometry,
   onSelectGeometry,
   onDeleteGeometry,
@@ -34,13 +34,13 @@ function DrawingToolWidgetUI({
       <Helper
         hasMode={!!selectedMode}
         isEdit={editModes.some((mode) => mode.id === selectedMode)}
-        activated={activated}
+        enabled={enabled}
       >
         <SelectedModeViewer
           modes={[...drawModes, ...editModes.map((mode) => ({ ...mode, isEdit: true }))]}
           selectedMode={selectedMode}
-          activated={activated}
-          onActivatedChange={onActivatedChange}
+          enabled={enabled}
+          onEnabledChange={onEnabledChange}
           tooltipPlacement={tooltipPlacement}
         />
       </Helper>
@@ -49,7 +49,7 @@ function DrawingToolWidgetUI({
         editModes={editModes}
         selectedMode={selectedMode}
         onSelectMode={onSelectMode}
-        activated={activated}
+        enabled={enabled}
         tooltipPlacement={tooltipPlacement}
       />
       {!!geometry && (
@@ -66,7 +66,7 @@ function DrawingToolWidgetUI({
 
 DrawingToolWidgetUI.defaultProps = {
   className: '',
-  activated: false,
+  enabled: false,
   tooltipPlacement: 'bottom',
   editModes: []
 };
@@ -83,8 +83,8 @@ DrawingToolWidgetUI.propTypes = {
   editModes: PropTypes.arrayOf(MODE_SHAPE.isRequired),
   selectedMode: PropTypes.string.isRequired,
   onSelectMode: PropTypes.func,
-  activated: PropTypes.bool,
-  onActivatedChange: PropTypes.func,
+  enabled: PropTypes.bool,
+  onEnabledChange: PropTypes.func,
   geometry: PropTypes.any,
   onSelectGeometry: PropTypes.func,
   tooltipPlacement: PropTypes.string
@@ -93,9 +93,9 @@ DrawingToolWidgetUI.propTypes = {
 export default DrawingToolWidgetUI;
 
 // Aux
-function Helper({ hasMode, activated, isEdit, children }) {
+function Helper({ hasMode, enabled, isEdit, children }) {
   const alreadyOpenedRef = useRef({});
-  const shouldOpen = hasMode && activated;
+  const shouldOpen = hasMode && enabled;
 
   const [open, setOpen] = useState(shouldOpen);
 
@@ -161,21 +161,21 @@ function GeometryViewer({
 
 const useSelectedModeViewerStyles = makeStyles((theme) => ({
   btn: {
-    color: ({ activated }) =>
-      activated ? theme.palette.primary.main : theme.palette.text.secondary,
-    backgroundColor: ({ activated }) =>
-      activated ? alpha(theme.palette.primary.main, 0.05) : null
+    color: ({ enabled }) =>
+      enabled ? theme.palette.primary.main : theme.palette.text.secondary,
+    backgroundColor: ({ enabled }) =>
+      enabled ? alpha(theme.palette.primary.main, 0.05) : null
   }
 }));
 
 function SelectedModeViewer({
   modes,
   selectedMode,
-  activated,
-  onActivatedChange,
+  enabled,
+  onEnabledChange,
   tooltipPlacement
 }) {
-  const classes = useSelectedModeViewerStyles({ activated });
+  const classes = useSelectedModeViewerStyles({ enabled });
 
   const { label, icon, isEdit } = useMemo(() => {
     if (modes?.length && selectedMode) {
@@ -193,11 +193,11 @@ function SelectedModeViewer({
 
   const tooltipTitle = isEdit ? label : `Draw a ${label}`;
 
-  const onActivatedChangeWrapper = () => onActivatedChange(!activated);
+  const onEnabledChangeWrapper = () => onEnabledChange(!enabled);
 
   return (
     <Tooltip title={tooltipTitle} placement={tooltipPlacement} arrow>
-      <IconButton onClick={onActivatedChangeWrapper} className={classes.btn}>
+      <IconButton onClick={onEnabledChangeWrapper} className={classes.btn}>
         {icon}
       </IconButton>
     </Tooltip>
@@ -212,7 +212,7 @@ const useModesSelectorStyles = makeStyles((theme) => ({
   divider: {
     margin: theme.spacing(1, 0)
   },
-  activatedMenuItem: {
+  enabledMenuItem: {
     backgroundColor: alpha(theme.palette.primary.main, 0.08)
   }
 }));
@@ -222,7 +222,7 @@ function ModesSelector({
   editModes,
   selectedMode,
   onSelectMode,
-  activated,
+  enabled,
   tooltipPlacement
 }) {
   const theme = useTheme();
@@ -248,9 +248,9 @@ function ModesSelector({
   const hasDrawModes = !!drawModes.length;
   const hasEditModes = !!editModes.length;
 
-  const MenuItemWrapper = forwardRef(({ mode, isActivated }, ref) => (
+  const MenuItemWrapper = forwardRef(({ mode, isEnabled }, ref) => (
     <MenuItem
-      className={isActivated ? classes.activatedMenuItem : null}
+      className={isEnabled ? classes.enabledMenuItem : null}
       ref={ref}
       onClick={() => handleSelectMode(mode.id)}
     >
@@ -265,7 +265,7 @@ function ModesSelector({
     <MenuItemWrapper
       key={mode.label}
       mode={mode}
-      isActivated={activated && selectedMode === mode.id}
+      isEnabled={enabled && selectedMode === mode.id}
     />
   );
 

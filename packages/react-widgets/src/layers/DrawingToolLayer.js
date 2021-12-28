@@ -1,6 +1,11 @@
 import { EditableGeoJsonLayer } from '@nebula.gl/layers';
 import * as nebulaModes from '@nebula.gl/edit-modes';
-import { addSpatialFilter, selectSpatialFilter } from '@carto/react-redux';
+import {
+  addSpatialFilter,
+  selectSpatialFilter,
+  setDrawingToolEnabled,
+  selectDrawingToolMode
+} from '@carto/react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { EDIT_MODES } from '../utils/constants';
 import { hexToRgb, useTheme } from '@material-ui/core';
@@ -14,7 +19,7 @@ export default function DrawingToolLayer() {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null);
-  const selectedMode = useSelector((state) => state.carto.drawingToolMode);
+  const selectedMode = useSelector((state) => selectDrawingToolMode(state));
   const spatialFilterGeometry = useSelector((state) => selectSpatialFilter(state));
 
   const isEdit = isEditMode(selectedMode);
@@ -53,7 +58,11 @@ export default function DrawingToolLayer() {
     },
     mode,
     selectedFeatureIndexes: isFinite(selectedFeatureIndex) ? [selectedFeatureIndex] : [],
-    onEdit: ({ updatedData }) => {
+    onEdit: ({ updatedData, editType }) => {
+      // Once the geometry is drawed, disable the tool
+      if (editType === 'addFeature') {
+        dispatch(setDrawingToolEnabled(false));
+      }
       const [lastFeature] = updatedData.features.slice(-1);
       if (lastFeature) {
         dispatch(

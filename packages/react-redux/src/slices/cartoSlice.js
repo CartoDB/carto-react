@@ -50,6 +50,7 @@ export const createCartoSlice = (initialState) => {
       },
       spatialFilter: null,
       drawingToolMode: null,
+      drawingToolEnabled: false,
       featuresReady: {},
       ...initialState
     },
@@ -162,6 +163,9 @@ export const createCartoSlice = (initialState) => {
       },
       setDrawingToolMode: (state, action) => {
         state.drawingToolMode = action.payload;
+      },
+      setDrawingToolEnabled: (state, action) => {
+        state.drawingToolEnabled = action.payload;
       }
     }
   });
@@ -293,6 +297,12 @@ export const selectSpatialFilter = (state, sourceId) => {
 };
 
 /**
+ * Redux selector to select the selected drawing tool mode based on if it's enabled
+ */
+export const selectDrawingToolMode = (state) =>
+  state.carto.drawingToolEnabled && state.carto.drawingToolMode;
+
+/**
  * Redux selector to know if features from a certain source are ready
  */
 export const selectAreFeaturesReadyForSource = (state, id) =>
@@ -352,9 +362,18 @@ export const setCredentials = (data) => ({
 
 /**
  * Action to set drawing tool mode
- * @param {boolean} mode -
+ * @param {boolean} mode
  */
 export const setDrawingToolMode = (mode) => ({
   type: 'carto/setDrawingToolMode',
   payload: mode
+});
+
+/**
+ * Action to set if drawing tool is enabled
+ * @param {boolean} enabled
+ */
+export const setDrawingToolEnabled = (enabled) => ({
+  type: 'carto/setDrawingToolEnabled',
+  payload: enabled
 });
