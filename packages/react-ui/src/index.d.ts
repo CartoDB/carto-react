@@ -14,7 +14,7 @@ import {
 import useTimeSeriesInteractivity from './widgets/TimeSeriesWidgetUI/hooks/useTimeSeriesInteractivity';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import NoDataAlert from './widgets/NoDataAlert';
-import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
+import DrawingToolWidgetUI from './widgets/DrawingToolWidgetUI';
 
 export {
   cartoThemeOptions,
@@ -29,7 +29,7 @@ export {
   useTimeSeriesInteractivity,
   TimeSeriesProvider,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
-  FeatureSelectionWidgetUI,
+  DrawingToolWidgetUI,
   LegendWidgetUI,
   LEGEND_TYPES,
   NoDataAlert

@@ -119,14 +119,14 @@ export type NoDataAlert = {
   body: string;
 };
 
-export type FeatureSelectionWidgetUIData = {
+export type DrawingToolWidgetUIData = {
   id: string;
   label: string;
   icon: React.ReactElement;
 };
-export type FeatureSelectionWidgetUI = {
-  drawModes: FeatureSelectionWidgetUIData[];
-  editModes: FeatureSelectionWidgetUIData[];
+export type DrawingToolWidgetUI = {
+  drawModes: DrawingToolWidgetUIData[];
+  editModes: DrawingToolWidgetUIData[];
   selectedMode: string;
   onSelectMode?: Function;
   activated?: boolean;

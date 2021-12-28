@@ -7,7 +7,7 @@ import PieWidgetUI from './widgets/PieWidgetUI';
 import LegendWidgetUI, { LEGEND_TYPES } from './widgets/legend/LegendWidgetUI';
 import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
-import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
+import DrawingToolWidgetUI from './widgets/DrawingToolWidgetUI';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import NoDataAlert from './widgets/NoDataAlert';
 
@@ -20,7 +20,7 @@ export {
   PieWidgetUI,
   ScatterPlotWidgetUI,
   TimeSeriesWidgetUI,
-  FeatureSelectionWidgetUI,
+  DrawingToolWidgetUI,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
   LegendWidgetUI,
   LEGEND_TYPES,

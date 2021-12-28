@@ -10,7 +10,7 @@ const { ViewMode, TranslateMode, ModifyMode, CompositeMode } = nebulaModes;
 
 const EditMode = new CompositeMode([new TranslateMode(), new ModifyMode()]);
 
-export default function FeatureSelectionLayer() {
+export default function DrawingToolLayer() {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null);
@@ -46,7 +46,7 @@ export default function FeatureSelectionLayer() {
   const mainColor = hasGeometry && !isSelected ? secondaryAsRgba : primaryAsRgba;
 
   return new EditableGeoJsonLayer({
-    id: 'FeatureSelectionLayer',
+    id: 'DrawingToolLayer',
     data: {
       type: 'FeatureCollection',
       features: spatialFilterGeometry ? [spatialFilterGeometry] : []

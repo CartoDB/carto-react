@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, queryByAttribute, fireEvent } from '@testing-library/react';
-import FeatureSelectionWidgetUI from '../../src/widgets/FeatureSelectionWidgetUI';
+import DrawingToolWidgetUI from '../../src/widgets/DrawingToolWidgetUI';
 import { capitalize, SvgIcon } from '@material-ui/core';
 
 const CURSOR_ICON_ID = 'cursor-icon';
@@ -34,8 +34,8 @@ const DRAW_MODES = [
 
 const EDIT_MODES = [{ id: 'edit', label: 'Edit geometry', icon: CursorIcon }];
 
-const CommonFeatureSelectionWidgetUI = (props) => (
-  <FeatureSelectionWidgetUI
+const CommonDrawingToolWidgetUI = (props) => (
+  <DrawingToolWidgetUI
     drawModes={DRAW_MODES}
     editModes={EDIT_MODES}
     selectedMode={DRAW_MODES[0].id}
@@ -45,16 +45,16 @@ const CommonFeatureSelectionWidgetUI = (props) => (
 
 const getById = queryByAttribute.bind(null, 'id');
 
-describe('FeatureSelectionWidgetUI', () => {
+describe('DrawingToolWidgetUI', () => {
   beforeAll(() => jest.spyOn(console, 'error').mockImplementation(() => jest.fn()));
   afterAll(() => jest.restoreMocks());
   test('renders selectedMode correctly', () => {
     const { container } = render(
-      <FeatureSelectionWidgetUI drawModes={DRAW_MODES} selectedMode={DRAW_MODES[0].id} />
+      <DrawingToolWidgetUI drawModes={DRAW_MODES} selectedMode={DRAW_MODES[0].id} />
     );
     expect(getById(container, POLYGON_ICON_ID)).toBeInTheDocument();
     const { container: container2 } = render(
-      <FeatureSelectionWidgetUI drawModes={DRAW_MODES} selectedMode={DRAW_MODES[1].id} />
+      <DrawingToolWidgetUI drawModes={DRAW_MODES} selectedMode={DRAW_MODES[1].id} />
     );
     expect(getById(container2, RECTANGLE_ICON_ID)).toBeInTheDocument();
   });
@@ -62,7 +62,7 @@ describe('FeatureSelectionWidgetUI', () => {
   test('throw error if selectedMode is not found neither in draw modes or edit modes', () => {
     expect(() =>
       render(
-        <FeatureSelectionWidgetUI drawModes={DRAW_MODES} selectedMode={'IInvented'} />
+        <DrawingToolWidgetUI drawModes={DRAW_MODES} selectedMode={'IInvented'} />
       )
     ).toThrowError('Selected mode provided is not found neither in drawing or edit mode');
   });
@@ -70,7 +70,7 @@ describe('FeatureSelectionWidgetUI', () => {
   test('activate selected mode event is correctly raised', () => {
     const onActivatedChange = jest.fn();
     const rendered = render(
-      <CommonFeatureSelectionWidgetUI onActivatedChange={onActivatedChange} />
+      <CommonDrawingToolWidgetUI onActivatedChange={onActivatedChange} />
     );
 
     const selectedModeBtn = getById(rendered.container, POLYGON_ICON_ID);
@@ -80,7 +80,7 @@ describe('FeatureSelectionWidgetUI', () => {
     expect(onActivatedChange).toHaveBeenCalledWith(true);
 
     rendered.rerender(
-      <CommonFeatureSelectionWidgetUI
+      <CommonDrawingToolWidgetUI
         onActivatedChange={onActivatedChange}
         activated={true}
       />
@@ -91,7 +91,7 @@ describe('FeatureSelectionWidgetUI', () => {
   });
 
   test('drawModes and editModes are rendered correctly in modes menu', () => {
-    const rendered = render(<CommonFeatureSelectionWidgetUI />);
+    const rendered = render(<CommonDrawingToolWidgetUI />);
     const menuBtn = rendered.getByTitle('Select a mode');
     // Open menu
     fireEvent.click(menuBtn);
@@ -104,7 +104,7 @@ describe('FeatureSelectionWidgetUI', () => {
   test('select mode event is correctly raised', () => {
     const onSelectMode = jest.fn();
     const rendered = render(
-      <CommonFeatureSelectionWidgetUI onSelectMode={onSelectMode} />
+      <CommonDrawingToolWidgetUI onSelectMode={onSelectMode} />
     );
 
     const menuBtn = rendered.getByTitle('Select a mode');
@@ -122,14 +122,14 @@ describe('FeatureSelectionWidgetUI', () => {
 
   const GEOMETRY = { geometry: 1 };
   test('one geometry is rendered correctly', () => {
-    const rendered = render(<CommonFeatureSelectionWidgetUI geometries={[GEOMETRY]} />);
+    const rendered = render(<CommonDrawingToolWidgetUI geometries={[GEOMETRY]} />);
     expect(rendered.getByText('Feature')).toBeDefined();
   });
 
   const MULTIPLE_GEOMETRIES = [GEOMETRY, GEOMETRY];
   test('multiple geometries are rendered correctly', () => {
     const rendered = render(
-      <CommonFeatureSelectionWidgetUI geometries={MULTIPLE_GEOMETRIES} />
+      <CommonDrawingToolWidgetUI geometries={MULTIPLE_GEOMETRIES} />
     );
     MULTIPLE_GEOMETRIES.forEach((_, idx) =>
       expect(rendered.getByText(`Feature ${idx + 1}`)).toBeDefined()
@@ -140,7 +140,7 @@ describe('FeatureSelectionWidgetUI', () => {
     const onSelectGeometry = jest.fn();
 
     const rendered = render(
-      <CommonFeatureSelectionWidgetUI
+      <CommonDrawingToolWidgetUI
         geometries={[GEOMETRY]}
         onSelectGeometry={onSelectGeometry}
       />
@@ -162,7 +162,7 @@ describe('FeatureSelectionWidgetUI', () => {
     const onDeleteGeometry = jest.fn();
 
     const rendered = render(
-      <CommonFeatureSelectionWidgetUI
+      <CommonDrawingToolWidgetUI
         geometries={[GEOMETRY]}
         onDeleteGeometry={onDeleteGeometry}
       />

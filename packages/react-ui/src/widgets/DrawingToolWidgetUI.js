@@ -23,7 +23,7 @@ import {
 import { ArrowDropDown } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 
-function FeatureSelectionWidgetUI({
+function DrawingToolWidgetUI({
   className,
   drawModes,
   editModes,
@@ -71,7 +71,7 @@ function FeatureSelectionWidgetUI({
   );
 }
 
-FeatureSelectionWidgetUI.defaultProps = {
+DrawingToolWidgetUI.defaultProps = {
   className: '',
   activated: false,
   geometries: [],
@@ -85,7 +85,7 @@ const MODE_SHAPE = PropTypes.shape({
   icon: PropTypes.element.isRequired
 });
 
-FeatureSelectionWidgetUI.propTypes = {
+DrawingToolWidgetUI.propTypes = {
   className: PropTypes.string,
   drawModes: PropTypes.arrayOf(MODE_SHAPE.isRequired).isRequired,
   editModes: PropTypes.arrayOf(MODE_SHAPE.isRequired),
@@ -98,7 +98,7 @@ FeatureSelectionWidgetUI.propTypes = {
   tooltipPlacement: PropTypes.string
 };
 
-export default FeatureSelectionWidgetUI;
+export default DrawingToolWidgetUI;
 
 // Aux
 function Helper({ hasMode, activated, isEdit, children }) {

@@ -1,4 +1,4 @@
-import { FeatureSelectionWidgetUI } from '@carto/react-ui/';
+import { DrawingToolWidgetUI } from '@carto/react-ui/';
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -65,7 +65,7 @@ const EDIT_MODES_MAP = {
   }
 };
 
-function FeatureSelectionWidget({
+function DrawingToolWidget({
   className,
   drawModes: drawModesKeys,
   editModes: editModesKeys,
@@ -132,7 +132,7 @@ function FeatureSelectionWidget({
   };
 
   return (
-    <FeatureSelectionWidgetUI
+    <DrawingToolWidgetUI
       className={className}
       drawModes={drawModes}
       editModes={editModes}
@@ -148,24 +148,24 @@ function FeatureSelectionWidget({
   );
 }
 
-FeatureSelectionWidget.defaultProps = {
+DrawingToolWidget.defaultProps = {
   drawModes: Object.values(DRAW_MODES_KEYS),
   editModes: Object.values(EDIT_MODES_KEYS),
   defaultSelectedMode: Object.values(DRAW_MODES_KEYS)[0],
-  defaultActivated: FeatureSelectionWidgetUI.defaultProps.activated,
-  tooltipPlacement: FeatureSelectionWidgetUI.defaultProps.tooltipPlacement
+  defaultActivated: DrawingToolWidgetUI.defaultProps.activated,
+  tooltipPlacement: DrawingToolWidgetUI.defaultProps.tooltipPlacement
 };
 
-FeatureSelectionWidget.propTypes = {
-  className: FeatureSelectionWidgetUI.propTypes.className,
+DrawingToolWidget.propTypes = {
+  className: DrawingToolWidgetUI.propTypes.className,
   drawModes: PropTypes.arrayOf(PropTypes.oneOf(Object.values(DRAW_MODES_KEYS))),
   editModes: PropTypes.arrayOf(PropTypes.oneOf(Object.values(EDIT_MODES_KEYS))),
-  defaultActivated: FeatureSelectionWidgetUI.propTypes.activated,
+  defaultActivated: DrawingToolWidgetUI.propTypes.activated,
   defaultSelectedMode: PropTypes.oneOf([
     ...Object.values(DRAW_MODES_KEYS),
     ...Object.values(EDIT_MODES_KEYS)
   ]),
-  tooltipPlacement: FeatureSelectionWidgetUI.propTypes.tooltipPlacement
+  tooltipPlacement: DrawingToolWidgetUI.propTypes.tooltipPlacement
 };
 
-export default FeatureSelectionWidget;
+export default DrawingToolWidget;

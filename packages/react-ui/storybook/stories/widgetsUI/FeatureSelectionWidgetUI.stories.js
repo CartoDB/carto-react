@@ -1,11 +1,11 @@
 import { Box, makeStyles, SvgIcon } from '@material-ui/core';
 import React, { useState } from 'react';
-import FeatureSelectionWidgetUI from '../../../src/widgets/FeatureSelectionWidgetUI';
+import DrawingToolWidgetUI from '../../../src/widgets/DrawingToolWidgetUI';
 import { buildReactPropsAsString } from '../../utils';
 
 const options = {
-  title: 'Widgets UI/FeatureSelectionWidgetUI',
-  component: FeatureSelectionWidgetUI,
+  title: 'Widgets UI/DrawingToolWidgetUI',
+  component: DrawingToolWidgetUI,
   argTypes: {
     activated: {
       control: { type: 'boolean' }
@@ -48,7 +48,7 @@ const Template = (args) => {
 
   return (
     <Box display='inline-block' minWidth={72}>
-      <FeatureSelectionWidgetUI
+      <DrawingToolWidgetUI
         drawModes={DRAW_MODES}
         editModes={EDIT_MODES}
         {...args}
@@ -64,7 +64,7 @@ const Template = (args) => {
 export const Default = Template.bind({});
 const DefaultProps = {};
 Default.args = DefaultProps;
-Default.parameters = buildReactPropsAsString(DefaultProps, 'FeatureSelectionWidgetUI');
+Default.parameters = buildReactPropsAsString(DefaultProps, 'DrawingToolWidgetUI');
 
 export const Activated = Template.bind({});
 const ActivatedProps = {
@@ -73,7 +73,7 @@ const ActivatedProps = {
 Activated.args = ActivatedProps;
 Activated.parameters = buildReactPropsAsString(
   ActivatedProps,
-  'FeatureSelectionWidgetUI'
+  'DrawingToolWidgetUI'
 );
 
 export const WithoutEdit = Template.bind({});
@@ -83,7 +83,7 @@ const WithoutEditProps = {
 WithoutEdit.args = WithoutEditProps;
 WithoutEdit.parameters = buildReactPropsAsString(
   WithoutEditProps,
-  'FeatureSelectionWidgetUI'
+  'DrawingToolWidgetUI'
 );
 
 export const WithGeometry = Template.bind({});
@@ -95,7 +95,7 @@ const WithGeometryProps = {
 WithGeometry.args = WithGeometryProps;
 WithGeometry.parameters = buildReactPropsAsString(
   WithGeometryProps,
-  'FeatureSelectionWidgetUI'
+  'DrawingToolWidgetUI'
 );
 
 export const WithMultipleGeometries = Template.bind({});
@@ -110,7 +110,7 @@ const WithMultipleGeometriesProps = {
 WithMultipleGeometries.args = WithMultipleGeometriesProps;
 WithMultipleGeometries.parameters = buildReactPropsAsString(
   WithMultipleGeometriesProps,
-  'FeatureSelectionWidgetUI'
+  'DrawingToolWidgetUI'
 );
 
 export const WithGeometriesUsingCustomLabels = Template.bind({});
@@ -133,5 +133,5 @@ const WithGeometriesUsingCustomLabelsProps = {
 WithGeometriesUsingCustomLabels.args = WithGeometriesUsingCustomLabelsProps;
 WithGeometriesUsingCustomLabels.parameters = buildReactPropsAsString(
   WithGeometriesUsingCustomLabelsProps,
-  'FeatureSelectionWidgetUI'
+  'DrawingToolWidgetUI'
 );
