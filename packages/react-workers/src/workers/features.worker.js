@@ -164,7 +164,7 @@ function getRawFeatures({
   filters,
   limit = 10,
   page = 1,
-  sortBy = [],
+  sortBy,
   sortByDirection = 'asc'
 }) {
   let data = [];

@@ -1,11 +1,4 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from 'react';
+import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import {
   alpha,
   Box,
@@ -31,7 +24,7 @@ function DrawingToolWidgetUI({
   onSelectMode,
   activated,
   onActivatedChange,
-  geometries,
+  geometry,
   onSelectGeometry,
   onDeleteGeometry,
   tooltipPlacement
@@ -59,9 +52,9 @@ function DrawingToolWidgetUI({
         activated={activated}
         tooltipPlacement={tooltipPlacement}
       />
-      {!!geometries?.length && (
-        <GeometriesViewer
-          geometries={geometries}
+      {!!geometry && (
+        <GeometryViewer
+          geometry={geometry}
           onSelectGeometry={onSelectGeometry}
           onDeleteGeometry={onDeleteGeometry}
           tooltipPlacement={tooltipPlacement}
@@ -74,7 +67,6 @@ function DrawingToolWidgetUI({
 DrawingToolWidgetUI.defaultProps = {
   className: '',
   activated: false,
-  geometries: [],
   tooltipPlacement: 'bottom',
   editModes: []
 };
@@ -93,7 +85,7 @@ DrawingToolWidgetUI.propTypes = {
   onSelectMode: PropTypes.func,
   activated: PropTypes.bool,
   onActivatedChange: PropTypes.func,
-  geometries: PropTypes.array,
+  geometry: PropTypes.any,
   onSelectGeometry: PropTypes.func,
   tooltipPlacement: PropTypes.string
 };
@@ -141,50 +133,28 @@ function Helper({ hasMode, activated, isEdit, children }) {
   );
 }
 
-const useGeometriesViewerStyles = makeStyles((theme) => ({
-  chip: {
-    margin: theme.spacing(0, 0, 0, 1)
-  }
-}));
-
-function GeometriesViewer({
-  geometries,
+function GeometryViewer({
+  geometry,
   onSelectGeometry,
   onDeleteGeometry,
   tooltipPlacement
 }) {
-  const classes = useGeometriesViewerStyles();
-
-  const chipLabelFn = useCallback(
-    (geometry, idx) => {
-      const addIdx = (label) =>
-        geometries.length > 1 ? label && `${label} ${idx + 1}` : label;
-
-      return geometry.properties?.label || addIdx('Feature');
-    },
-    [geometries]
-  );
-
-  const isDisabled = (geometry) => geometry.properties?.disabled;
+  const isDisabled = geometry.properties?.disabled;
 
   return (
     <Box ml={2}>
-      {geometries.map((geometry, idx) => (
-        <Tooltip
-          key={idx}
-          title={isDisabled(geometry) ? 'Apply filter' : 'Clear filter'}
-          placement={tooltipPlacement}
-          arrow
-        >
-          <Chip
-            className={idx ? classes.chip : null}
-            label={chipLabelFn(geometry, idx)}
-            color={isDisabled(geometry) ? 'default' : 'secondary'}
-            onClick={() => onSelectGeometry(geometry, idx)}
-            onDelete={!!onDeleteGeometry && (() => onDeleteGeometry(geometry, idx))}
-          />
-        </Tooltip>
-      ))}
+      <Tooltip
+        title={isDisabled ? 'Apply filter' : 'Clear filter'}
+        placement={tooltipPlacement}
+        arrow
+      >
+        <Chip
+          label='Feature'
+          color={isDisabled ? 'default' : 'secondary'}
+          onClick={() => onSelectGeometry()}
+          onDelete={!!onDeleteGeometry && (() => onDeleteGeometry())}
+        />
+      </Tooltip>
     </Box>
   );
 }

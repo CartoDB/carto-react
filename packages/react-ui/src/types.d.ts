@@ -131,7 +131,7 @@ export type DrawingToolWidgetUI = {
   onSelectMode?: Function;
   activated?: boolean;
   onActivatedChange?: Function;
-  geometries?: any[];
+  geometry?: any;
   onSelectGeometry?: Function;
   tooltipPlacement?: string;
   className?: string;

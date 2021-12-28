@@ -71,67 +71,23 @@ const ActivatedProps = {
   activated: true
 };
 Activated.args = ActivatedProps;
-Activated.parameters = buildReactPropsAsString(
-  ActivatedProps,
-  'DrawingToolWidgetUI'
-);
+Activated.parameters = buildReactPropsAsString(ActivatedProps, 'DrawingToolWidgetUI');
 
 export const WithoutEdit = Template.bind({});
 const WithoutEditProps = {
   editModes: []
 };
 WithoutEdit.args = WithoutEditProps;
-WithoutEdit.parameters = buildReactPropsAsString(
-  WithoutEditProps,
-  'DrawingToolWidgetUI'
-);
+WithoutEdit.parameters = buildReactPropsAsString(WithoutEditProps, 'DrawingToolWidgetUI');
 
 export const WithGeometry = Template.bind({});
 const WithGeometryProps = {
-  geometries: [{ geometry: 1 }],
-  onSelectGeometry: (geometry) => console.log('onSelectGeometry', geometry),
-  onDeleteGeometry: (geometry) => console.log('onDeleteGeometry', geometry)
+  geometry: [{ geometry: 1 }],
+  onSelectGeometry: () => console.log('onSelectGeometry'),
+  onDeleteGeometry: () => console.log('onDeleteGeometry')
 };
 WithGeometry.args = WithGeometryProps;
 WithGeometry.parameters = buildReactPropsAsString(
   WithGeometryProps,
-  'DrawingToolWidgetUI'
-);
-
-export const WithMultipleGeometries = Template.bind({});
-const WithMultipleGeometriesProps = {
-  geometries: [
-    { type: 'Polygon', coordinates: [] },
-    { type: 'Polygon', coordinates: [] }
-  ],
-  onSelectGeometry: (geometry) => console.log('onSelectGeometry', geometry),
-  onDeleteGeometry: (geometry) => console.log('onDeleteGeometry', geometry)
-};
-WithMultipleGeometries.args = WithMultipleGeometriesProps;
-WithMultipleGeometries.parameters = buildReactPropsAsString(
-  WithMultipleGeometriesProps,
-  'DrawingToolWidgetUI'
-);
-
-export const WithGeometriesUsingCustomLabels = Template.bind({});
-const WithGeometriesUsingCustomLabelsProps = {
-  geometries: [
-    {
-      type: 'Feature',
-      geometry: { type: 'Polygon', coordinates: [] },
-      properties: { label: 'The first polygon' }
-    },
-    {
-      type: 'Feature',
-      geometry: { type: 'Polygon', coordinates: [] },
-      properties: { label: 'The second polygon' }
-    }
-  ],
-  onSelectGeometry: (geometry) => console.log('onSelectGeometry', geometry),
-  onDeleteGeometry: (geometry) => console.log('onDeleteGeometry', geometry)
-};
-WithGeometriesUsingCustomLabels.args = WithGeometriesUsingCustomLabelsProps;
-WithGeometriesUsingCustomLabels.parameters = buildReactPropsAsString(
-  WithGeometriesUsingCustomLabelsProps,
   'DrawingToolWidgetUI'
 );

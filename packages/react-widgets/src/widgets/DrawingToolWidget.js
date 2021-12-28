@@ -113,14 +113,14 @@ function DrawingToolWidget({
     if (!activated) setActivated(true);
   };
 
-  const handleSelectGeometry = (selectedGeometry) => {
+  const handleSelectGeometry = () => {
     dispatch(
       addSpatialFilter({
         geometry: {
-          ...selectedGeometry,
+          ...geometry,
           properties: {
-            ...selectedGeometry.properties,
-            disabled: !selectedGeometry.properties.disabled
+            ...geometry.properties,
+            disabled: !geometry.properties.disabled
           }
         }
       })
@@ -141,7 +141,7 @@ function DrawingToolWidget({
       activated={activated}
       onActivatedChange={handleActivatedChange}
       tooltipPlacement={tooltipPlacement}
-      geometries={geometry ? [geometry] : []}
+      geometry={geometry}
       onSelectGeometry={handleSelectGeometry}
       onDeleteGeometry={handleDeleteGeometry}
     />

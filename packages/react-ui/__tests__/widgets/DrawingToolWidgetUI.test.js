@@ -61,9 +61,7 @@ describe('DrawingToolWidgetUI', () => {
 
   test('throw error if selectedMode is not found neither in draw modes or edit modes', () => {
     expect(() =>
-      render(
-        <DrawingToolWidgetUI drawModes={DRAW_MODES} selectedMode={'IInvented'} />
-      )
+      render(<DrawingToolWidgetUI drawModes={DRAW_MODES} selectedMode={'IInvented'} />)
     ).toThrowError('Selected mode provided is not found neither in drawing or edit mode');
   });
 
@@ -80,10 +78,7 @@ describe('DrawingToolWidgetUI', () => {
     expect(onActivatedChange).toHaveBeenCalledWith(true);
 
     rendered.rerender(
-      <CommonDrawingToolWidgetUI
-        onActivatedChange={onActivatedChange}
-        activated={true}
-      />
+      <CommonDrawingToolWidgetUI onActivatedChange={onActivatedChange} activated={true} />
     );
 
     fireEvent.click(selectedModeBtn);
@@ -103,9 +98,7 @@ describe('DrawingToolWidgetUI', () => {
 
   test('select mode event is correctly raised', () => {
     const onSelectMode = jest.fn();
-    const rendered = render(
-      <CommonDrawingToolWidgetUI onSelectMode={onSelectMode} />
-    );
+    const rendered = render(<CommonDrawingToolWidgetUI onSelectMode={onSelectMode} />);
 
     const menuBtn = rendered.getByTitle('Select a mode');
     // Open menu
@@ -121,27 +114,17 @@ describe('DrawingToolWidgetUI', () => {
   });
 
   const GEOMETRY = { geometry: 1 };
-  test('one geometry is rendered correctly', () => {
-    const rendered = render(<CommonDrawingToolWidgetUI geometries={[GEOMETRY]} />);
+  test('geometry is rendered correctly', () => {
+    const rendered = render(<CommonDrawingToolWidgetUI geometry={GEOMETRY} />);
     expect(rendered.getByText('Feature')).toBeDefined();
   });
 
-  const MULTIPLE_GEOMETRIES = [GEOMETRY, GEOMETRY];
-  test('multiple geometries are rendered correctly', () => {
-    const rendered = render(
-      <CommonDrawingToolWidgetUI geometries={MULTIPLE_GEOMETRIES} />
-    );
-    MULTIPLE_GEOMETRIES.forEach((_, idx) =>
-      expect(rendered.getByText(`Feature ${idx + 1}`)).toBeDefined()
-    );
-  });
-
-  test('geometries select event is raised correctly', () => {
+  test('geometry select event is raised correctly', () => {
     const onSelectGeometry = jest.fn();
 
     const rendered = render(
       <CommonDrawingToolWidgetUI
-        geometries={[GEOMETRY]}
+        geometry={GEOMETRY}
         onSelectGeometry={onSelectGeometry}
       />
     );
@@ -158,12 +141,12 @@ describe('DrawingToolWidgetUI', () => {
     expect(removeBtn).toBe(null);
   });
 
-  test('geometries delete event is raised correctly', () => {
+  test('geometry delete event is raised correctly', () => {
     const onDeleteGeometry = jest.fn();
 
     const rendered = render(
       <CommonDrawingToolWidgetUI
-        geometries={[GEOMETRY]}
+        geometry={GEOMETRY}
         onDeleteGeometry={onDeleteGeometry}
       />
     );
