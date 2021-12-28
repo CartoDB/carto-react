@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { WrapperWidgetUI, TableWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getTableData } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
-import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
+import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
  * Renders a <TableWidget /> component
@@ -37,7 +37,7 @@ function TableWidget({
   const [isLoading, setIsLoading] = useState(true);
   const filters = useSourceFilters({ dataSource, id });
   const isSourceReady = useSelector((state) =>
-    selectIsViewportFeaturesReadyForSource(state, dataSource)
+    selectAreFeaturesReadyForSource(state, dataSource)
   );
 
   useEffect(() => {
