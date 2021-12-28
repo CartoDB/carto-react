@@ -22,31 +22,31 @@ export default function FeatureSelectionLayer() {
 
   const isEdit = isEditMode(selectedMode);
   const hasGeometry = !!geometry;
-  const hasSelected = selectedFeatureIndex !== null;
+  const isSelected = selectedFeatureIndex !== null;
 
   useEffect(() => {
     // When the user changes mode or finishes drawing a geometry, remove selected feature
-    if (!isEdit && hasSelected) {
+    if (!isEdit && isSelected) {
       setSelectedFeatureIndex(null);
     }
-  }, [isEdit, geometry, hasSelected]);
+  }, [isEdit, geometry, isSelected]);
 
   const mode = useMemo(() => {
     if (selectedMode) {
-      if (isEdit && hasSelected) {
+      if (isEdit && isSelected) {
         return EditMode;
-      } else if (!isEdit && !hasSelected) {
+      } else if (!isEdit && !isSelected) {
         return nebulaModes[selectedMode];
       }
     }
 
     return ViewMode;
-  }, [hasSelected, isEdit, selectedMode]);
+  }, [isSelected, isEdit, selectedMode]);
 
   const primaryAsRgba = formatRGBA(hexToRgb(theme.palette.primary.main));
   const secondaryAsRgba = formatRGBA(hexToRgb(theme.palette.secondary.main));
 
-  const mainColor = hasGeometry && !hasSelected ? secondaryAsRgba : primaryAsRgba;
+  const mainColor = hasGeometry && !isSelected ? secondaryAsRgba : primaryAsRgba;
 
   return new EditableGeoJsonLayer({
     id: 'FeatureSelectionLayer',
