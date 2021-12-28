@@ -70,7 +70,6 @@ function TableWidgetUI({
   rowsPerPage,
   rowsPerPageOptions,
   onSetRowsPerPage,
-  clickable,
   onRowClick
 }) {
   const classes = useStyles();
@@ -81,17 +80,13 @@ function TableWidgetUI({
     onSetSortBy(sortField);
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (_event, newPage) => {
     onSetPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
     onSetRowsPerPage(parseInt(event.target.value, 10));
     onSetPage(0);
-  };
-
-  const handleRowClick = (row) => {
-    onRowClick(row);
   };
 
   return (
@@ -105,12 +100,7 @@ function TableWidgetUI({
             sortDirection={sortDirection}
             onSort={handleSort}
           />
-          <TableBodyComponent
-            columns={columns}
-            rows={rows}
-            clickable={clickable}
-            onRowClick={handleRowClick}
-          />
+          <TableBodyComponent columns={columns} rows={rows} onRowClick={onRowClick} />
         </Table>
       </TableContainer>
       {pagination && (
@@ -135,18 +125,18 @@ function TableHeaderComponent({ columns, sorting, sortBy, sortDirection, onSort 
   return (
     <TableHead className={classes.tableHead}>
       <TableRow>
-        {columns.map((headCell) => (
-          <TableCell key={headCell.field} align={headCell.align || 'left'}>
+        {columns.map(({ field, headerName, align }) => (
+          <TableCell key={field} align={align || 'left'}>
             {sorting ? (
               <TableSortLabel
-                active={sortBy === headCell.field}
-                direction={sortBy === headCell.field ? sortDirection : 'asc'}
-                onClick={() => onSort(headCell.field)}
+                active={sortBy === field}
+                direction={sortBy === field ? sortDirection : 'asc'}
+                onClick={() => onSort(field)}
               >
-                {headCell.headerName}
+                {headerName}
               </TableSortLabel>
             ) : (
-              headCell.headerName
+              headerName
             )}
           </TableCell>
         ))}
@@ -155,35 +145,37 @@ function TableHeaderComponent({ columns, sorting, sortBy, sortDirection, onSort 
   );
 }
 
-function TableBodyComponent({ columns, rows, clickable, onRowClick }) {
+function TableBodyComponent({ columns, rows, onRowClick }) {
   const classes = useStyles();
 
   return (
     <TableBody>
-      {rows.map((row) => (
-        <TableRow
-          key={row.cartodb_id}
-          className={classes.tableRow}
-          hover={clickable}
-          onClick={() => clickable && onRowClick(row)}
-        >
-          {columns.map(
-            (column) =>
-              column.headerName && (
-                <TableCell
-                  key={`${row.cartodb_id}_${column.field}`}
-                  scope='row'
-                  align={column.align || 'left'}
-                  className={classes.tableCell}
-                >
-                  {column.component
-                    ? column.component(row[column.field])
-                    : row[column.field]}
-                </TableCell>
-              )
-          )}
-        </TableRow>
-      ))}
+      {rows.map((row, i) => {
+        const rowKey = row.cartodb_id || row.id || i;
+
+        return (
+          <TableRow
+            key={rowKey}
+            className={classes.tableRow}
+            hover={!!onRowClick}
+            onClick={() => onRowClick && onRowClick(row)}
+          >
+            {columns.map(
+              ({ field, headerName, align, component }) =>
+                headerName && (
+                  <TableCell
+                    key={`${rowKey}_${field}`}
+                    scope='row'
+                    align={align || 'left'}
+                    className={classes.tableCell}
+                  >
+                    {component ? component(row[field]) : row[field]}
+                  </TableCell>
+                )
+            )}
+          </TableRow>
+        );
+      })}
     </TableBody>
   );
 }
@@ -193,8 +185,7 @@ TableWidgetUI.defaultProps = {
   sortDirection: 'asc',
   pagination: false,
   rowsPerPage: 10,
-  rowsPerPageOptions: [5, 10, 25],
-  clickable: false
+  rowsPerPageOptions: [5, 10, 25]
 };
 
 TableWidgetUI.propTypes = {
@@ -212,7 +203,6 @@ TableWidgetUI.propTypes = {
   rowsPerPage: PropTypes.number,
   rowsPerPageOptions: PropTypes.array,
   onSetRowsPerPage: PropTypes.func,
-  clickable: PropTypes.bool,
   onRowClick: PropTypes.func
 };
 
