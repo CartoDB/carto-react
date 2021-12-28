@@ -9,6 +9,7 @@
 - Refactor useViewportFeatures [#238](https://github.com/CartoDB/carto-react/pull/238)
 - Add clear button for TimeSeriesWidget widget and enable the speed button even though the animation has not started [#239](https://github.com/CartoDB/carto-react/pull/239)
 - Improve timeseries animation performance [#243](https://github.com/CartoDB/carto-react/pull/243)
+- Fix TS type declarations for BasemapName and CartoSlice [#248](https://github.com/CartoDB/carto-react/pull/248) 
 
 ## 1.1.3 (2021-12-04)
 
