@@ -101,7 +101,7 @@ FeatureSelectionWidgetUI.propTypes = {
 export default FeatureSelectionWidgetUI;
 
 // Aux
-function Helper({ hasMode, isEdit, activated, children }) {
+function Helper({ hasMode, activated, isEdit, children }) {
   const alreadyOpenedRef = useRef({});
   const shouldOpen = hasMode && activated;
 
@@ -110,9 +110,7 @@ function Helper({ hasMode, isEdit, activated, children }) {
   useEffect(() => {
     const wasAlreadyOpened = alreadyOpenedRef.current[isEdit];
     if (wasAlreadyOpened) {
-      if (open) {
-        setOpen(false);
-      }
+      setOpen(false);
       return;
     }
 
@@ -122,13 +120,12 @@ function Helper({ hasMode, isEdit, activated, children }) {
         [isEdit]: true
       };
       setOpen(true);
-      let timeout = setTimeout(() => setOpen(false), 5000);
+      const timeout = setTimeout(() => setOpen(false), 5000);
 
       return () => clearTimeout(timeout);
     }
     // Logic around show/hide helper tooltip is manage by shouldOpen var
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shouldOpen]);
+  }, [shouldOpen, isEdit]);
 
   return (
     <Tooltip
