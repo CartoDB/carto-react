@@ -63,13 +63,19 @@ export default function DrawingToolLayer() {
       if (editType === 'addFeature') {
         dispatch(setDrawingToolEnabled(false));
       }
-      const [lastFeature] = updatedData.features.slice(-1);
-      if (lastFeature) {
-        dispatch(
-          addSpatialFilter({
-            geometry: lastFeature
-          })
-        );
+
+      // Do not update spatial filter if
+      //     1. updatedData is empty
+      //     2. editType includes tentative, that means it's being drawn
+      if (updatedData.features.length !== 0 && !editType.includes('Tentative')) {
+        const [lastFeature] = updatedData.features.slice(-1);
+        if (lastFeature) {
+          dispatch(
+            addSpatialFilter({
+              geometry: lastFeature
+            })
+          );
+        }
       }
     },
     onClick: ({ index, object }) => {
