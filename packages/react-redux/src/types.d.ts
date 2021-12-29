@@ -1,7 +1,7 @@
 import { Credentials } from '@carto/react-api';
 import { OauthApp } from '@carto/react-auth';
 import { CartoBasemapsNames } from '@carto/react-basemaps';
-import { Viewport } from '@carto/react-core';
+import { DRAW_MODES, Viewport } from '@carto/react-core';
 
 export type ViewState = {
   latitude?: number,
@@ -42,6 +42,8 @@ export type CartoState = {
   layers: { [key: string]: string },
   dataSources: { [key: string]: string },
   featuresReady: { [key: string]: boolean },
+  drawingToolEnabled: boolean,
+  drawingToolMode: typeof DRAW_MODES
 } & InitialCartoState;
 
 export type InitialOauthState = {
