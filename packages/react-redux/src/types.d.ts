@@ -2,6 +2,7 @@ import { Credentials } from '@carto/react-api';
 import { OauthApp } from '@carto/react-auth';
 import { CartoBasemapsNames } from '@carto/react-basemaps';
 import { DRAW_MODES, Viewport } from '@carto/react-core';
+import { Geometry } from 'geojson';
 
 export type ViewState = {
   latitude?: number,
@@ -41,6 +42,7 @@ export type CartoState = {
   error: null, // TODO: remove from state?
   layers: { [key: string]: string },
   dataSources: { [key: string]: string },
+  spatialFilter: Geometry,
   featuresReady: { [key: string]: boolean },
   drawingToolEnabled: boolean,
   drawingToolMode: typeof DRAW_MODES
