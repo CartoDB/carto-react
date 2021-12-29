@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: theme.spacing(0.25)
   },
-  header: ({ expanded, margin }) => ({
+  header: ({ expanded }) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
