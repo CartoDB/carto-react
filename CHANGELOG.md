@@ -4,7 +4,6 @@
 
 ## 1.2.0-alpha.0 (2021-12-29)
 - WRAPPER WIDGET Configurable margin in widgets [#251](https://github.com/CartoDB/carto-react/pull/251)
-- ```
 - Add spatial filter to allow ramdom geometry filters in widgets[#250](https://github.com/CartoDB/carto-react/pull/250)
 - DrawingToolWidget [#249](https://github.com/CartoDB/carto-react/pull/249)
 - Fix: remove sortBy prop default value [#252](https://github.com/CartoDB/carto-react/pull/252)
