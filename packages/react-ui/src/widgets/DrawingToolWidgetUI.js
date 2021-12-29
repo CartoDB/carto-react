@@ -256,7 +256,9 @@ function ModesSelector({
     >
       <Box display='flex' justifyContent='space-between' alignItems='center'>
         {mode.icon}
-        <Box ml={1}>{capitalize(mode.label)}</Box>
+        <Box ml={2}>
+          <Typography variant='body2'>{capitalize(mode.label)}</Typography>
+        </Box>
       </Box>
     </MenuItem>
   ));
