@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { WrapperWidgetUI, TableWidgetUI, NoDataAlert } from '@carto/react-ui';
-import { getTableData } from '../models';
+import { getTable } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
 
@@ -43,7 +43,7 @@ function TableWidget({
   useEffect(() => {
     if (isSourceReady) {
       setIsLoading(true);
-      getTableData({
+      getTable({
         filters,
         dataSource,
         rowsPerPage,
