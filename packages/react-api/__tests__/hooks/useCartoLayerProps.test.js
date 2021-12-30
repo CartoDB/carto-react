@@ -15,6 +15,7 @@ describe('useCartoLayerProps', () => {
       'type',
       'connection',
       'credentials',
+      'clientId',
       'filterRange',
       'updateTriggers',
       'getFilterValue',

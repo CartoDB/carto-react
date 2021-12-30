@@ -15,7 +15,7 @@ export default function transformToTileCoords(geometry, bbox) {
 
   const transformFn = availableTransformations[geometry.type];
   if (!transformFn) {
-    return geometry;
+    throw new Error(`Unrecognized geometry type ${geometry.type}`);
   }
 
   return {
