@@ -2,8 +2,13 @@
 
 ## Not released
 
+## 1.2.0-alpha.0 (2021-12-30)
+
 - Track clientId for tracing purposes [#261](https://github.com/CartoDB/carto-react/pull/261)
+- Update deck.gl version to 8.7.0-alpha.11 [#254](https://github.com/CartoDB/carto-react/pull/254)
+
 ## 1.2.0-alpha.0 (2021-12-29)
+
 - WRAPPER WIDGET Configurable margin in widgets [#251](https://github.com/CartoDB/carto-react/pull/251)
 - Add spatial filter to allow ramdom geometry filters in widgets[#250](https://github.com/CartoDB/carto-react/pull/250)
 - DrawingToolWidget [#249](https://github.com/CartoDB/carto-react/pull/249)
