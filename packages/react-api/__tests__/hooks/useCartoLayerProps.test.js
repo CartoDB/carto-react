@@ -18,7 +18,8 @@ describe('useCartoLayerProps', () => {
       'filterRange',
       'updateTriggers',
       'getFilterValue',
-      'extensions'
+      'extensions',
+      'clientId'
     ];
 
     describe('when maps_api_version is V2', () => {
