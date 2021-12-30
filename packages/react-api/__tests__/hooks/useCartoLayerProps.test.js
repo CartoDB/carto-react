@@ -15,11 +15,11 @@ describe('useCartoLayerProps', () => {
       'type',
       'connection',
       'credentials',
+      'clientId',
       'filterRange',
       'updateTriggers',
       'getFilterValue',
-      'extensions',
-      'clientId'
+      'extensions'
     ];
 
     describe('when maps_api_version is V2', () => {
