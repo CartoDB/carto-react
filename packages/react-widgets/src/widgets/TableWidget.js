@@ -41,6 +41,13 @@ function TableWidget({
   );
 
   useEffect(() => {
+    // will reset the page when the viewport changes
+    if (!isSourceReady) {
+      setPage(1);
+    }
+  }, [isSourceReady]);
+
+  useEffect(() => {
     if (isSourceReady) {
       setIsLoading(true);
       getTable({
