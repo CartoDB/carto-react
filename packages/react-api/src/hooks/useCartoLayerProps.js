@@ -58,6 +58,7 @@ export default function useCartoLayerProps({
     type: source?.type,
     connection: source?.connection,
     credentials: source?.credentials,
+    clientId: 'carto-for-react',
     ...dataFilterExtensionProps
   };
 }
