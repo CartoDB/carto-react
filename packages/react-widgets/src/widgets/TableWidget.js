@@ -41,11 +41,9 @@ function TableWidget({
   );
 
   useEffect(() => {
-    // will reset the page when the viewport changes
-    if (!isSourceReady) {
-      setPage(1);
-    }
-  }, [isSourceReady]);
+    // force reset the page to 1 when the viewport or filters change
+    setPage(1);
+  }, [isSourceReady, filters]);
 
   useEffect(() => {
     if (isSourceReady) {
