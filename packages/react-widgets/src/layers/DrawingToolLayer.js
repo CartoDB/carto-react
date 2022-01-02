@@ -52,6 +52,7 @@ export default function DrawingToolLayer() {
 
   return new EditableGeoJsonLayer({
     id: 'DrawingToolLayer',
+    pickable: isEdit,
     data: {
       type: 'FeatureCollection',
       features: spatialFilterGeometry ? [spatialFilterGeometry] : []
