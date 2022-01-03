@@ -7,6 +7,7 @@ export { default as LegendWidget } from './widgets/LegendWidget';
 export { default as ScatterPlotWidget } from './widgets/ScatterPlotWidget';
 export { default as TimeSeriesWidget } from './widgets/TimeSeriesWidget';
 export { default as DrawingToolWidget } from './widgets/DrawingToolWidget';
+export { default as TableWidget } from './widgets/TableWidget';
 export {
   getFormula,
   getHistogram,

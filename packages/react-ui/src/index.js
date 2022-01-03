@@ -9,6 +9,7 @@ import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import DrawingToolWidgetUI from './widgets/DrawingToolWidgetUI';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
+import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
 import CursorIcon from './assets/CursorIcon';
 import PolygonIcon from './assets/PolygonIcon';
@@ -35,6 +36,7 @@ export {
   TimeSeriesWidgetUI,
   DrawingToolWidgetUI,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
+  TableWidgetUI,
   LegendWidgetUI,
   LEGEND_TYPES,
   NoDataAlert,

@@ -169,6 +169,7 @@ function getRawFeatures({
 }) {
   let data = [];
   let numberPages = 0;
+  let totalCount = 0;
 
   if (currentFeatures) {
     data = applySorting(getFilteredFeatures(filters), {
@@ -176,13 +177,17 @@ function getRawFeatures({
       sortByDirection
     });
 
+    totalCount = data.length;
+
     if (limit) {
       numberPages = Math.ceil(data.length / limit);
       data = applyPagination(data, { limit, page });
     }
   }
 
-  postMessage({ result: { data, currentPage: page, pages: numberPages } });
+  postMessage({
+    result: { data, currentPage: page, pages: numberPages, totalCount }
+  });
 }
 
 function applyPagination(features, { limit, page }) {
