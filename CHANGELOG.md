@@ -2,10 +2,12 @@
 
 ## Not released
 
+## 1.2.0-alpha.2 (2022-01-03)
+
 - Fix: DrawingToolLayer disables interactivity of the layers behind it [#263](https://github.com/CartoDB/carto-react/pull/263)
 - Add TableWidget [#154](https://github.com/CartoDB/carto-react/pull/154)
 
-## 1.2.0-alpha.0 (2021-12-30)
+## 1.2.0-alpha.1 (2021-12-30)
 
 - Track clientId for tracing purposes [#261](https://github.com/CartoDB/carto-react/pull/261)
 - Update deck.gl version to 8.7.0-alpha.11 [#254](https://github.com/CartoDB/carto-react/pull/254)
