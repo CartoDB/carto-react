@@ -27,7 +27,7 @@ function TableWidget({
   onError
 }) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
 
   const [sortBy, setSortBy] = useState(undefined);
@@ -41,8 +41,8 @@ function TableWidget({
   );
 
   useEffect(() => {
-    // force reset the page to 1 when the viewport or filters change
-    setPage(1);
+    // force reset the page to 0 when the viewport or filters change
+    setPage(0);
   }, [dataSource, isSourceReady, filters]);
 
   useEffect(() => {

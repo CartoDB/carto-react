@@ -81,12 +81,12 @@ function TableWidgetUI({
   };
 
   const handleChangePage = (_event, newPage) => {
-    onSetPage(newPage + 1);
+    onSetPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
     onSetRowsPerPage(parseInt(event.target.value, 10));
-    onSetPage(1);
+    onSetPage(0);
   };
 
   return (
@@ -110,7 +110,7 @@ function TableWidgetUI({
           component='div'
           count={totalCount}
           rowsPerPage={rowsPerPage}
-          page={page - 1}
+          page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
