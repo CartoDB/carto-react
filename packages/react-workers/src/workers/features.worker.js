@@ -163,7 +163,7 @@ function getTimeSeries({ filters, column, stepSize, operation, operationColumn }
 function getRawFeatures({
   filters,
   limit = 10,
-  page = 1,
+  page = 0,
   sortBy,
   sortByDirection = 'asc'
 }) {
@@ -191,7 +191,7 @@ function getRawFeatures({
 }
 
 function applyPagination(features, { limit, page }) {
-  return features.slice(limit * Math.max(0, page - 1), limit * Math.max(1, page));
+  return features.slice(limit * Math.max(0, page), limit * Math.max(1, page + 1));
 }
 
 function getFilteredFeatures(filters = {}) {
