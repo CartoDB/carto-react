@@ -43,7 +43,7 @@ function TableWidget({
   useEffect(() => {
     // force reset the page to 1 when the viewport or filters change
     setPage(1);
-  }, [isSourceReady, filters]);
+  }, [dataSource, isSourceReady, filters]);
 
   useEffect(() => {
     if (isSourceReady) {
