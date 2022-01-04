@@ -75,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   buttonText: ({ expanded }) => ({
+    wordBreak: 'break-all',
     ...(!expanded && {
       whiteSpace: 'nowrap',
       overflow: 'hidden',
