@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     maxWidth: '100%',
+    background: '#eee',
     padding: ({ margin }) => (margin !== undefined ? margin : theme.spacing(2, 2.5))
   },
   loading: {
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   header: ({ expanded }) => ({
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
     width: '100%',
     ...(expanded ? { minHeight: theme.spacing(3) } : { height: theme.spacing(3) }),
@@ -76,12 +77,21 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonText: ({ expanded }) => ({
     wordBreak: 'break-all',
+    overflow: 'hidden',
+    ...(expanded && {
+      display: '-webkit-box',
+      WebkitLineClamp: 2,
+      WebkitBoxOrient: 'vertical'
+    }),
     ...(!expanded && {
       whiteSpace: 'nowrap',
-      overflow: 'hidden',
       textOverflow: 'ellipsis'
     })
   }),
+  actions: {
+    display: 'flex',
+    marginLeft: theme.spacing(1)
+  },
   iconToggle: {
     display: 'flex',
     alignItems: 'center',
@@ -92,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
   },
   iconAction: {
     color: theme.palette.text.secondary,
-    margin: theme.spacing(-1, 0)
+    margin: theme.spacing(-0.75, 0)
   },
   content: {
     paddingTop: theme.spacing(1.25)
@@ -176,7 +186,7 @@ function WrapperWidgetUI(props) {
           )}
         </Button>
 
-        <Grid item style={{ display: 'flex' }}>
+        <Grid className={classes.actions} item>
           {actions.length > 0 &&
             actions.map((action) => {
               return action.tooltip ? (
