@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Disable filtering for widgets [#268](https://github.com/CartoDB/carto-react/pull/268)
 - Fix: use 0-based pagination in raw feature access and TableWidget [#265](https://github.com/CartoDB/carto-react/pull/265)
 
 ## 1.2.0-alpha.2 (2022-01-03)
