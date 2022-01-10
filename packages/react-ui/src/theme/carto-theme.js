@@ -783,10 +783,11 @@ export const cartoThemeOptions = {
             padding: spacing(0, 1.25, 0.5)
           }
         },
-        '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense': {
-          paddingTop: spacing(0.25),
-          paddingBottom: spacing(0.25)
-        }
+        '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense':
+          {
+            paddingTop: spacing(0.25),
+            paddingBottom: spacing(0.25)
+          }
       }
     },
 
@@ -1110,8 +1111,51 @@ export const cartoThemeOptions = {
           padding: spacing(1, 0)
         }
       }
+    },
+
+    // MuiToggleButtonGroup
+    MuiToggleButtonGroup: {
+      groupedHorizontal: {
+        '&:not(:last-child)': {
+          marginRight: spacing(0.25),
+          borderTopRightRadius: spacing(0.5),
+          borderBottomRightRadius: spacing(0.5)
+        },
+        '&:not(:first-child)': {
+          borderTopLeftRadius: spacing(0.5),
+          borderBottomLeftRadius: spacing(0.5)
+        }
+      },
+      groupedVertical: {
+        '&:not(:last-child)': {
+          marginBottom: spacing(0.25),
+          borderBottomLeftRadius: spacing(0.5),
+          borderBottomRightRadius: spacing(0.5)
+        },
+        '&:not(:first-child)': {
+          borderTopLeftRadius: spacing(0.5),
+          borderTopRightRadius: spacing(0.5)
+        }
+      }
+    },
+    // MuiToggleButton
+    MuiToggleButton: {
+      root: {
+        border: 'none',
+        borderRadius: spacing(0.5),
+        color: variables.palette.grey[500],
+        '&$selected': {
+          color: variables.palette.primary.main,
+          backgroundColor: variables.palette.primary.relatedLight,
+          '&:hover': {
+            backgroundColor: variables.palette.primary.relatedLight
+          }
+        }
+      }
     }
   },
+
+  // Props
   props: {
     MuiButtonBase: {
       disableRipple: true
@@ -1174,6 +1218,11 @@ export const cartoThemeOptions = {
     },
     MuiDialogContentText: {
       variant: 'body2'
+    },
+    MuiToggleButtonGroup: {
+      size: 'small',
+      orientation: 'horizontal',
+      exclusive: true
     }
   }
 };
@@ -1181,7 +1230,14 @@ export const cartoThemeOptions = {
 export function createTheme(options = {}) {
   const themeOptions = {
     ...cartoThemeOptions,
-    ...options
+    ...options,
+    components: {
+      MuiToggleButton: {
+        root: {
+          border: 'none'
+        }
+      }
+    }
   };
 
   let theme = createMuiTheme(themeOptions);
