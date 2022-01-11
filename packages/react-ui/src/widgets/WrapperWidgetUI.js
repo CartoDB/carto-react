@@ -152,12 +152,6 @@ function WrapperWidgetUI(props) {
     );
   };
 
-  const Title = (
-    <Typography className={classes.buttonText} align='left' variant='subtitle1'>
-      {props.title}
-    </Typography>
-  );
-
   return (
     <Box component='section' aria-label={props.title} className={classes.root}>
       {props.isLoading ? <LinearProgress className={classes.loading} /> : null}
@@ -177,13 +171,11 @@ function WrapperWidgetUI(props) {
           }
           onClick={handleExpandClick}
         >
-          {expanded ? (
-            Title
-          ) : (
-            <Tooltip title={props.title} placement='top' arrow>
-              {Title}
-            </Tooltip>
-          )}
+          <Tooltip title={props.title} placement='top' arrow>
+            <Typography className={classes.buttonText} align='left' variant='subtitle1'>
+              {props.title}
+            </Typography>
+          </Tooltip>
         </Button>
 
         <Grid className={classes.actions} item>
