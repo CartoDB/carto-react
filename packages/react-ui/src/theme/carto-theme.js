@@ -1223,6 +1223,9 @@ export const cartoThemeOptions = {
       size: 'small',
       orientation: 'horizontal',
       exclusive: true
+    },
+    MuiToggleButton: {
+      size: 'small'
     }
   }
 };
