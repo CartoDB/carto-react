@@ -1,4 +1,4 @@
-import React, { useState, createRef } from 'react';
+import React, { useState, createRef, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -17,7 +17,7 @@ import {
 import { ExpandLess, ExpandMore, MoreVert } from '@material-ui/icons';
 
 /*
-Options props must have this format:
+Options props must be a custom component or have this format:
 [
   { id: 'o0', name: 'Option 1', action: null },
   ...
@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
 
 function WrapperWidgetUI(props) {
   const wrapper = createRef();
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(props.expanded);
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles({ ...props, expanded });
   const open = Boolean(anchorEl);
@@ -190,8 +190,7 @@ function WrapperWidgetUI(props) {
                 iconButtonTooltip(action)
               );
             })}
-
-          {options.length > 0 && (
+          {(options || options.length > 0) && (
             <div>
               <IconButton
                 aria-label='options'
@@ -219,15 +218,17 @@ function WrapperWidgetUI(props) {
                 onClose={handleClose}
                 PaperProps={{ className: classes.optionsMenu }}
               >
-                {options.map((option) => (
-                  <MenuItem
-                    key={option.id}
-                    selected={option.selected}
-                    onClick={() => handleOptionAction(option.action)}
-                  >
-                    {option.name}
-                  </MenuItem>
-                ))}
+                {isValidElement(options)
+                  ? options
+                  : options.map((option) => (
+                      <MenuItem
+                        key={option.id}
+                        selected={option.selected}
+                        onClick={() => handleOptionAction(option.action)}
+                      >
+                        {option.name}
+                      </MenuItem>
+                    ))}
               </Menu>
             </div>
           )}
@@ -243,12 +244,14 @@ function WrapperWidgetUI(props) {
 
 WrapperWidgetUI.defaultProps = {
   expandable: true,
+  expanded: false,
   isLoading: false
 };
 
 WrapperWidgetUI.propTypes = {
   title: PropTypes.string.isRequired,
   expandable: PropTypes.bool,
+  expanded: PropTypes.bool,
   isLoading: PropTypes.bool,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
@@ -258,13 +261,16 @@ WrapperWidgetUI.propTypes = {
       action: PropTypes.func.isRequired
     })
   ),
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      action: PropTypes.func.isRequired
-    })
-  ),
+  options: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        action: PropTypes.func.isRequired
+      })
+    ),
+    PropTypes.element
+  ]),
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element.isRequired

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Box, Divider, Menu, MenuItem, Typography } from '@material-ui/core';
 import ColorizeIcon from '@material-ui/icons/Colorize';
 import MenuIcon from '@material-ui/icons/Menu';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
@@ -117,6 +117,24 @@ WithOptions.parameters = {
 />`
     }
   }
+};
+
+const CustomOptionsComponent = React.forwardRef(() => (
+  <div style={{ width: 200 }}>
+    <MenuItem>by revenue</MenuItem>
+    <MenuItem>by size</MenuItem>
+    <MenuItem>by name</MenuItem>
+    <Box my={1}>
+      <Divider />
+    </Box>
+    <MenuItem>Descending</MenuItem>
+    <MenuItem>Ascending</MenuItem>
+  </div>
+));
+export const WithCustomOptionsComponent = Template.bind({});
+WithCustomOptionsComponent.args = {
+  title: 'Wrapper with custom options component',
+  options: <CustomOptionsComponent />
 };
 
 export const WithActionsAndOptions = Template.bind({});
