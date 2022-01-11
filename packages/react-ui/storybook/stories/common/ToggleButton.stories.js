@@ -10,21 +10,21 @@ const options = {
   component: ToggleButtonGroup,
   argTypes: {
     size: {
-      default: 'small',
+      defaultValue: 'small',
       control: {
         type: 'select',
         options: ['small', 'medium', 'large']
       }
     },
     orientation: {
-      default: 'horizontal',
+      defaultValue: 'horizontal',
       control: {
         type: 'select',
         options: ['vertical', 'horizontal']
       }
     },
     exclusive: {
-      default: true,
+      defaultValue: true,
       control: {
         type: 'boolean'
       }
