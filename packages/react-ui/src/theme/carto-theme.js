@@ -1122,6 +1122,8 @@ export const cartoThemeOptions = {
           borderBottomRightRadius: spacing(0.5)
         },
         '&:not(:first-child)': {
+          marginLeft: 0,
+          borderLeft: 'none',
           borderTopLeftRadius: spacing(0.5),
           borderBottomLeftRadius: spacing(0.5)
         }
@@ -1141,6 +1143,8 @@ export const cartoThemeOptions = {
     // MuiToggleButton
     MuiToggleButton: {
       root: {
+        width: spacing(4.5),
+        height: spacing(4.5),
         border: 'none',
         borderRadius: spacing(0.5),
         color: variables.palette.grey[500],
@@ -1151,6 +1155,18 @@ export const cartoThemeOptions = {
             backgroundColor: variables.palette.primary.relatedLight
           }
         }
+      },
+      sizeSmall: {
+        width: spacing(3),
+        height: spacing(3),
+        '& .MuiSvgIcon-root': {
+          maxWidth: spacing(2.5),
+          maxHeight: spacing(2.5)
+        }
+      },
+      sizeLarge: {
+        width: spacing(7),
+        height: spacing(7)
       }
     }
   },
