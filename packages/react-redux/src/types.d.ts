@@ -1,7 +1,7 @@
 import { Credentials } from '@carto/react-api';
 import { OauthApp } from '@carto/react-auth';
 import { CartoBasemapsNames } from '@carto/react-basemaps';
-import { DRAW_MODES, Viewport } from '@carto/react-core';
+import { Viewport } from '@carto/react-core';
 import { Geometry } from 'geojson';
 
 export type ViewState = {
@@ -45,7 +45,7 @@ export type CartoState = {
   spatialFilter: Geometry,
   featuresReady: { [key: string]: boolean },
   drawingToolEnabled: boolean,
-  drawingToolMode: typeof DRAW_MODES
+  drawingToolMode: string
 } & InitialCartoState;
 
 export type InitialOauthState = {

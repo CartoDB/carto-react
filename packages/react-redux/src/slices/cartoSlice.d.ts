@@ -149,3 +149,5 @@ export function setDrawingToolEnabled(enabled: boolean): {
 };
 
 export function selectSpatialFilter(state: any, sourceId?: string): object | null;
+
+export function selectDrawingToolMode(state: any): string | false;

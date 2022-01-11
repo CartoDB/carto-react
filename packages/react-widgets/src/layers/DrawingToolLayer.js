@@ -10,12 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { EDIT_MODES } from '@carto/react-core';
 import { hexToRgb, useTheme } from '@material-ui/core';
 import { useEffect, useMemo, useState } from 'react';
+import EditableCartoGeoJsonLayer from './EditableCartoGeoJsonLayer';
 
 const { ViewMode, TranslateMode, ModifyMode, CompositeMode } = nebulaModes;
 
 const EditMode = new CompositeMode([new TranslateMode(), new ModifyMode()]);
 
-export default function DrawingToolLayer() {
+export default function DrawingToolLayer({ eventManager }) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null);
@@ -50,7 +51,8 @@ export default function DrawingToolLayer() {
 
   const mainColor = hasGeometry && !isSelected ? secondaryAsRgba : primaryAsRgba;
 
-  return new EditableGeoJsonLayer({
+  return new EditableCartoGeoJsonLayer({
+    eventManager,
     id: 'DrawingToolLayer',
     pickable: !!selectedMode,
     data: {
