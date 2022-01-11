@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     maxWidth: '100%',
-    background: '#eee',
     padding: ({ margin }) => (margin !== undefined ? margin : theme.spacing(2, 2.5))
   },
   loading: {
