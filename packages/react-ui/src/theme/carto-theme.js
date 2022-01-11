@@ -783,10 +783,11 @@ export const cartoThemeOptions = {
             padding: spacing(0, 1.25, 0.5)
           }
         },
-        '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense': {
-          paddingTop: spacing(0.25),
-          paddingBottom: spacing(0.25)
-        }
+        '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense':
+          {
+            paddingTop: spacing(0.25),
+            paddingBottom: spacing(0.25)
+          }
       }
     },
 
@@ -1174,6 +1175,10 @@ export const cartoThemeOptions = {
     },
     MuiDialogContentText: {
       variant: 'body2'
+    },
+    CircularProgress: {
+      size: 40,
+      thickness: 4
     }
   }
 };
