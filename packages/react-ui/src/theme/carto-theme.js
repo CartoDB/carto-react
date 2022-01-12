@@ -1329,10 +1329,7 @@ export const cartoThemeOptions = {
       marks: false
     },
     MuiDialog: {
-      disableEscapeKeyDown: false,
-      fullScreen: false,
-      fullWidth: false,
-      maxWidth: 'sm'
+      maxWidth: 'md'
     }
   }
 };
