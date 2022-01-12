@@ -1,4 +1,5 @@
 import React from 'react';
+import { Meta } from '@storybook/react';
 import {
   Button,
   Dialog,
@@ -8,12 +9,46 @@ import {
   DialogActions,
   FormGroup,
   Grid,
+  Slide,
   TextField
 } from '@material-ui/core';
 
 const options = {
   title: 'Common/Dialog',
-  component: Dialog
+  component: Dialog,
+  argTypes: {
+    disableEscapeKeyDown: {
+      description: 'If `true`, hitting escape will not fire the `onClose` callback.',
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
+    fullScreen: {
+      description: 'If `true`, the dialog will be full-screen',
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
+    fullWidth: {
+      description:
+        'If `true`, the dialog stretches to `maxWidth`. Notice that the dialog width grow is limited by the default margin.',
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
+    maxWidth: {
+      description:
+        'Determine the max-width of the dialog. The dialog width grows with the size of the screen. Set to `false` to disable `maxWidth`.',
+      defaultValue: 'md',
+      control: {
+        type: 'select',
+        options: ['lg', 'md', 'sm', 'xl', 'xs', false]
+      }
+    }
+  }
 };
 export default options;
 
@@ -31,16 +66,16 @@ const Template = ({ content, ...args }) => {
   return (
     <div>
       <Button variant='outlined' color='primary' onClick={handleClickOpen}>
-        Open alert dialog
+        Open dialog
       </Button>
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
+        aria-labelledby='dialog-title'
+        aria-describedby='dialog-description'
         {...args}
       >
-        <DialogTitle id='alert-dialog-title'>Dialog title</DialogTitle>
+        <DialogTitle id='dialog-title'>Dialog title</DialogTitle>
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color='primary'>
@@ -86,3 +121,21 @@ Default.args = { content: <TextContent /> };
 
 export const Form = Template.bind({});
 Form.args = { content: <FormContent /> };
+
+export const DisableEscapeKeyDown = Template.bind({});
+DisableEscapeKeyDown.args = { content: <TextContent />, disableEscapeKeyDown: true };
+
+export const SlideTransition = Template.bind({});
+SlideTransition.args = {
+  content: <TextContent />,
+  TransitionComponent: Slide,
+  TransitionProps: { direction: 'up', timeout: 300 }
+};
+
+export const FullScren = Template.bind({});
+FullScren.args = {
+  content: <TextContent />,
+  fullScreen: true,
+  TransitionComponent: Slide,
+  TransitionProps: { direction: 'up', timeout: 300 }
+};

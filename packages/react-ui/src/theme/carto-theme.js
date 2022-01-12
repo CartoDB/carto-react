@@ -1327,6 +1327,12 @@ export const cartoThemeOptions = {
     MuiSlider: {
       color: 'primary',
       marks: false
+    },
+    MuiDialog: {
+      disableEscapeKeyDown: false,
+      fullScreen: false,
+      fullWidth: false,
+      maxWidth: 'sm'
     }
   }
 };
