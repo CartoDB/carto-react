@@ -16,7 +16,7 @@ const { ViewMode, TranslateMode, ModifyMode, CompositeMode } = nebulaModes;
 
 const EditMode = new CompositeMode([new TranslateMode(), new ModifyMode()]);
 
-export default function DrawingToolLayer({ eventManager }) {
+export default function DrawingToolLayer({ eventManager } = { eventManager: null }) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null);
