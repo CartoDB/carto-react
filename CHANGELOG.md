@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Remove uniqueIdProperty by default value in useGeojsonFeatures [#273](https://github.com/CartoDB/carto-react/pull/273)
+- Remove uniqueIdProperty default value in useGeojsonFeatures [#273](https://github.com/CartoDB/carto-react/pull/273)
 - Allow disable widgets filtering [#268](https://github.com/CartoDB/carto-react/pull/268)
 - Fix: use 0-based pagination in raw feature access and TableWidget [#265](https://github.com/CartoDB/carto-react/pull/265)
 
