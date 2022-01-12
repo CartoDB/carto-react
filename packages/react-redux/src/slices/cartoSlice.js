@@ -301,7 +301,7 @@ export const selectSpatialFilter = (state, sourceId) => {
  * Redux selector to select the selected drawing tool mode based on if it's enabled
  */
 export const selectDrawingToolMode = (state) =>
-  state.carto.drawingToolEnabled && state.carto.drawingToolMode;
+  (state.carto.drawingToolEnabled && state.carto.drawingToolMode) || null;
 
 /**
  * Redux selector to know if features from a certain source are ready

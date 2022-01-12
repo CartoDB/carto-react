@@ -1,5 +1,10 @@
 import { EditableGeoJsonLayer } from '@nebula.gl/layers';
 
+// EditableGeoJsonLayer extends EditableLayer and it's its code https://github.com/uber/nebula.gl/blob/master/modules/layers/src/layers/editable-layer.ts#L75
+// We've overwritten _addEventHandlers and _removeEventHandlers to be able to use an eventManager sent it as a property instead of use
+// the default (this.context.deck.eventManager). We need to do this to get the compatibility with Google maps because GoogleMapsOverlay
+// uses its own event system
+
 const EVENT_TYPES = ['anyclick', 'pointermove', 'panstart', 'panmove', 'panend', 'keyup'];
 
 export default class EditableCartoGeoJsonLayer extends EditableGeoJsonLayer {
