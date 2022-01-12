@@ -8,7 +8,7 @@ export default function useGeojsonFeatures({
   source,
   viewport,
   spatialFilter,
-  uniqueIdProperty = 'cartodb_id',
+  uniqueIdProperty,
   debounceTimeout = 250
 }) {
   const [
