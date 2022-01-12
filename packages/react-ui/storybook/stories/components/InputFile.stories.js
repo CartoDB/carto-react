@@ -54,4 +54,4 @@ export default options;
 const Template = ({ ...args }) => <InputFile {...args} />;
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = { accept: 'image/*', multiple: true };

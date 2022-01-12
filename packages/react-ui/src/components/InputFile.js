@@ -1,8 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   InputLabel,
   makeStyles,
@@ -19,58 +20,87 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    flexGrow: 1,
+    justifyContent: 'flex-start',
+    flex: 1,
     height: theme.spacing(4.5),
     marginRight: theme.spacing(1.5),
     padding: theme.spacing(0, 2),
     border: `2px dashed ${theme.palette.common.black}44`,
-    borderRadius: theme.spacing(0.5)
+    borderRadius: theme.spacing(0.5),
+    transition: theme.transitions.create(['border'], {
+      duration: theme.transitions.duration.short,
+      easing: theme.transitions.easing.easeInOut
+    })
   },
-  input: {
-    position: 'absolute',
-    widht: '100%',
-    height: '100%',
-    opacity: 0,
-    visibility: 'hidden'
+  inputWrapperOver: {
+    border: `2px solid ${theme.palette.primary.light}`
+  },
+  placeholder: {
+    marginLeft: theme.spacing(1.5),
+    maxWidth: 'calc(100% - 110px)'
   }
 }));
 
 function InputFile(props) {
   const classes = useStyles();
   const uploadInputRef = useRef(null);
+  const [filesText, setFilesText] = useState('');
+  const [canUpload, setCanUpload] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [over, setOver] = useState(false);
+  const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    setCanUpload(true);
+
+    if (files.length === 0) {
+      setCanUpload(false);
+      setFilesText('');
+    } else if (files.length === 1) {
+      setFilesText(files[0].name);
+    } else {
+      setFilesText(`${files.length} files selected`);
+    }
+  }, [files]);
 
   const handleBrowse = () => {
-    if (uploadInputRef.current) {
-      uploadInputRef.current.click();
-    }
+    uploadInputRef.current?.click();
   };
 
   const handleDragOver = (event) => {
     event.preventDefault();
-    console.log('handleDragOver');
-    console.log(event);
+    setOver(true);
+  };
+
+  const handleDragLeave = (event) => {
+    event.preventDefault();
+    setOver(false);
   };
 
   const handleDrop = (event) => {
     event.preventDefault();
     // TODO: validate file/s
 
-    if (event.dataTransfer.items) {
-      for (let i = 0; i < event.dataTransfer.items.length; i++) {
-        if (event.dataTransfer.items[i].kind === 'file') {
-          const file = event.dataTransfer.items[i].getAsFile();
-          console.log('... file[' + i + '].name = ' + file.name);
-        }
-      }
-    } else {
-      for (let i = 0; i < event.dataTransfer.files.length; i++) {
-        console.log('... file[' + i + '].name = ' + event.dataTransfer.files[i].name);
+    const newFiles = [];
+    const items = event.dataTransfer.items;
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].kind === 'file') {
+        const file = items[i].getAsFile();
+        newFiles.push(file);
       }
     }
+
+    setFiles(newFiles);
   };
 
   const handleFiles = (event) => {
-    console.log(event.target.files);
+    const newFiles = Array.from(event.target.files);
+    setFiles(newFiles);
+  };
+
+  const handleUpload = () => {
+    setUploading(true);
   };
 
   return (
@@ -84,21 +114,24 @@ function InputFile(props) {
           alignItems='center'
         >
           <Box
-            className={classes.inputWrapper}
+            className={`${classes.inputWrapper} ${over ? classes.inputWrapperOver : ''}`}
             onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
             onDrop={handleDrop}
           >
             <Button size='small' variant='text' color='primary' onClick={handleBrowse}>
               {props.browseButtonText}
             </Button>
-            <Box ml={1.5}>
-              <Typography variant='body2' color='textSecondary'>
-                {props.placeholder}
-              </Typography>
-            </Box>
+            <Typography
+              variant='body2'
+              color='textSecondary'
+              noWrap
+              className={classes.placeholder}
+            >
+              {filesText || props.placeholder}
+            </Typography>
             <input
               ref={uploadInputRef}
-              // className={classes.input}
               style={{ display: 'none' }}
               type='file'
               accept={props.accept}
@@ -106,7 +139,13 @@ function InputFile(props) {
               onChange={handleFiles}
             />
           </Box>
-          <Button color='primary' size='small' startIcon={<UploadIcon />}>
+          <Button
+            color='primary'
+            size='small'
+            startIcon={uploading ? <CircularProgress size={16} /> : <UploadIcon />}
+            disabled={!canUpload}
+            onClick={handleUpload}
+          >
             {props.buttonText}
           </Button>
         </Box>
