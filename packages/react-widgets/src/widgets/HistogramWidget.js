@@ -24,6 +24,7 @@ const EMPTY_ARRAY = [];
  * @param  {Function} [props.formatter] - Function to format Y axis values.
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
+ * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -41,6 +42,7 @@ function HistogramWidget(props) {
     formatter,
     tooltip,
     animation,
+    filterable,
     onError,
     wrapperProps,
     noDataAlertProps
@@ -177,6 +179,7 @@ function HistogramWidget(props) {
           xAxisFormatter={xAxisFormatter}
           yAxisFormatter={formatter}
           animation={animation}
+          filterable={filterable}
         />
       ) : (
         <NoDataAlert {...noDataAlertProps} />
@@ -195,6 +198,7 @@ HistogramWidget.propTypes = {
   formatter: PropTypes.func,
   tooltip: PropTypes.bool,
   animation: PropTypes.bool,
+  filterable: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
@@ -204,6 +208,7 @@ HistogramWidget.propTypes = {
 HistogramWidget.defaultProps = {
   tooltip: true,
   animation: true,
+  filterable: true,
   wrapperProps: {},
   noDataAlertProps: {}
 };
