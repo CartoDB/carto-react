@@ -783,10 +783,11 @@ export const cartoThemeOptions = {
             padding: spacing(0, 1.25, 0.5)
           }
         },
-        '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense': {
-          paddingTop: spacing(0.25),
-          paddingBottom: spacing(0.25)
-        }
+        '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense':
+          {
+            paddingTop: spacing(0.25),
+            paddingBottom: spacing(0.25)
+          }
       }
     },
 
@@ -1110,6 +1111,11 @@ export const cartoThemeOptions = {
           padding: spacing(1, 0)
         }
       }
+    },
+
+    // Slider
+    MuiSlider: {
+      root: {}
     }
   },
   props: {
@@ -1174,6 +1180,10 @@ export const cartoThemeOptions = {
     },
     MuiDialogContentText: {
       variant: 'body2'
+    },
+    MuiSlider: {
+      color: 'primary',
+      marks: false
     }
   }
 };
