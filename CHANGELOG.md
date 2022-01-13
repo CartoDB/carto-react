@@ -2,6 +2,10 @@
 
 ## Not released
 
+## 1.1.5 (2022-01-13)
+
+- Remove uniqueIdProperty default value in useGeojsonFeatures [#273](https://github.com/CartoDB/carto-react/pull/273)
+
 ## 1.1.4 (2021-12-16)
 
 - Implement C4R filtering using binary data [#228](https://github.com/CartoDB/carto-react/pull/228)

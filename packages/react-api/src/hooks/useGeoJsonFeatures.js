@@ -7,7 +7,7 @@ import useFeaturesCommons from './useFeaturesCommons';
 export default function useGeoJsonFeatures({
   source,
   viewport,
-  uniqueIdProperty = 'cartodb_id',
+  uniqueIdProperty,
   debounceTimeout = 250
 }) {
   const [
