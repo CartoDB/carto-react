@@ -21,14 +21,21 @@ const options = {
     },
     buttonText: {
       defaultValue: 'Upload',
-      description: 'Text to display on the upload button',
+      description: 'Text to display on the upload button.',
       control: {
         type: 'text'
       }
     },
     browseButtonText: {
       defaultValue: 'Browse',
-      description: 'Text to display on the browse button',
+      description: 'Text to display on the browse button.',
+      control: {
+        type: 'text'
+      }
+    },
+    label: {
+      defaultValue: '',
+      description: 'Text to display below the component.',
       control: {
         type: 'text'
       }
@@ -54,4 +61,8 @@ export default options;
 const Template = ({ ...args }) => <InputFile {...args} />;
 
 export const Default = Template.bind({});
-Default.args = { accept: 'image/*', multiple: true };
+Default.args = {
+  label: 'Upload a CSV or GeoJSON file, or a zip package with your Shapefile',
+  accept: 'image/*',
+  multiple: true
+};

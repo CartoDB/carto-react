@@ -10,6 +10,7 @@ import {
   Typography
 } from '@material-ui/core';
 import UploadIcon from '../assets/UploadIcon';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   inputFile: {
@@ -48,6 +49,12 @@ function InputFile(props) {
   const [canUpload, setCanUpload] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [over, setOver] = useState(false);
+  const [alert, setAlert] = useState({
+    severity: 'error',
+    message: 'Oops! We seem to have a problem with the format of your dataset.',
+    actionText: 'Close',
+    action: () => {}
+  });
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
@@ -150,6 +157,34 @@ function InputFile(props) {
           </Button>
         </Box>
       </FormControl>
+      {props.label && (
+        <Box mt={1}>
+          <Typography
+            variant='caption'
+            color='textSecondary'
+            style={{ fontWeight: 'normal' }}
+          >
+            {props.label}
+          </Typography>
+        </Box>
+      )}
+      {alert && (
+        <Box mt={1}>
+          <Alert
+            severity={alert.severity}
+            onClose={() => setAlert(null)}
+            // action={
+            //   alert.action && (
+            //     <Button color='inherit' size='small' onClick={alert.action}>
+            //       {alert.actionText}
+            //     </Button>
+            //   )
+            // }
+          >
+            {alert.message}
+          </Alert>
+        </Box>
+      )}
     </div>
   );
 }
@@ -159,6 +194,7 @@ InputFile.defaultProps = {
   placeholder: 'Drag and drop your file or click to browse',
   buttonText: 'Upload',
   browseButtonText: 'Browse',
+  label: '',
   accept: 'application/JSON',
   multiple: false
 };
@@ -168,6 +204,7 @@ InputFile.propTypes = {
   placeholder: PropTypes.string,
   buttonText: PropTypes.string,
   browseButtonText: PropTypes.string,
+  label: PropTypes.string,
   accept: PropTypes.string,
   multiple: PropTypes.bool
 };
