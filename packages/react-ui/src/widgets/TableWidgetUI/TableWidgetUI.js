@@ -97,7 +97,7 @@ function TableWidgetUI({
   const fixedHeightStyle = {};
   if (height) {
     const paginationHeight = paginationRef?.current?.clientHeight || 0;
-    fixedHeightStyle.height = `${height - paginationHeight}px`;
+    fixedHeightStyle.height = `calc(${height} - ${paginationHeight}px)`;
   }
 
   return (
@@ -216,7 +216,7 @@ TableWidgetUI.propTypes = {
   rowsPerPageOptions: PropTypes.array,
   onSetRowsPerPage: PropTypes.func,
   onRowClick: PropTypes.func,
-  height: PropTypes.number
+  height: PropTypes.string
 };
 
 export default TableWidgetUI;

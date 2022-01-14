@@ -17,7 +17,7 @@ import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
  * @param  {number} [props.initialPageSize] - Initial number of rows per page
- * @param  {number} [props.height] - Static widget height, required for scrollable table content
+ * @param  {string} [props.height] - Static widget height, required for scrollable table content
  */
 function TableWidget({
   id,
@@ -126,7 +126,7 @@ TableWidget.propTypes = {
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
   initialPageSize: PropTypes.number,
-  height: PropTypes.number
+  height: PropTypes.string
 };
 
 export default TableWidget;
