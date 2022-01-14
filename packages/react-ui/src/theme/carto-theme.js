@@ -601,6 +601,53 @@ export const cartoThemeOptions = {
       }
     },
 
+    MuiButtonGroup: {
+      groupedOutlined: {
+        '&$disabled': {
+          borderColor: variables.palette.common.black
+        }
+      },
+      groupedOutlinedPrimary: {
+        '&$disabled': {
+          borderColor: variables.palette.primary.main
+        }
+      },
+      groupedOutlinedSecondary: {
+        '&$disabled': {
+          borderColor: variables.palette.secondary.main
+        }
+      },
+      contained: {
+        boxShadow: 'none',
+        '& .MuiButton-root:hover': {
+          boxShadow: 'none'
+        }
+      },
+      groupedOutlinedHorizontal: {
+        '&:not(:last-child)': {
+          borderRight: 'none'
+        }
+      },
+      groupedContainedHorizontal: {
+        '&:not(:last-child)': {
+          borderWidth: 2
+        }
+      },
+      groupedText: {
+        borderColor: variables.palette.divider
+      },
+      groupedTextPrimary: {
+        '&:not(:last-child)': {
+          borderColor: variables.palette.divider
+        }
+      },
+      groupedTextSecondary: {
+        '&:not(:last-child)': {
+          borderColor: variables.palette.divider
+        }
+      }
+    },
+
     MuiInputBase: {
       root: {
         '&$disabled .MuiInputAdornment-root': {
@@ -783,10 +830,11 @@ export const cartoThemeOptions = {
             padding: spacing(0, 1.25, 0.5)
           }
         },
-        '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense': {
-          paddingTop: spacing(0.25),
-          paddingBottom: spacing(0.25)
-        }
+        '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense':
+          {
+            paddingTop: spacing(0.25),
+            paddingBottom: spacing(0.25)
+          }
       }
     },
 
@@ -1118,6 +1166,9 @@ export const cartoThemeOptions = {
     },
     MuiButton: {
       disableElevation: true
+    },
+    MuiButtonGroup: {
+      size: 'small'
     },
     MuiTextField: {
       variant: 'outlined'

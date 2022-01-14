@@ -1,5 +1,8 @@
 import React from 'react';
-import { Button, Grid, ButtonGroup } from '@material-ui/core';
+import { Button, Grid, ButtonGroup, IconButton } from '@material-ui/core';
+import ReplyIcon from '@material-ui/icons/Reply';
+import EditIcon from '@material-ui/icons/Edit';
+import CloseIcon from '@material-ui/icons/Close';
 
 const options = {
   title: 'Common/Button Group',
@@ -26,7 +29,7 @@ const options = {
     size: {
       control: {
         type: 'select',
-        options: ['small', 'medium', 'large']
+        options: ['small', 'medium']
       }
     },
     disabled: {
@@ -44,19 +47,36 @@ const options = {
 export default options;
 
 const PlaygroundTemplate = ({ label, icon, ...rest }) => (
-  <Grid container spacing={2}>
-    <ButtonGroup {...rest}>
-      <Button>{label}</Button>
-      <Button>{label}</Button>
-      <Button>{label}</Button>
-    </ButtonGroup>
+  <Grid container spacing={2} direction='column'>
+    <Grid item>
+      <ButtonGroup {...rest}>
+        <Button>{label}</Button>
+        <Button>{label}</Button>
+        <Button>{label}</Button>
+        <Button disabled>{label}</Button>
+      </ButtonGroup>
+    </Grid>
+    <Grid item>
+      <ButtonGroup {...rest}>
+        <Button>
+          <ReplyIcon />
+        </Button>
+        <Button>
+          <EditIcon />
+        </Button>
+        <Button>
+          <CloseIcon />
+        </Button>
+        <Button disabled>
+          <CloseIcon />
+        </Button>
+      </ButtonGroup>
+    </Grid>
   </Grid>
 );
 const ButtonTemplate = ({ label, icon, ...rest }) => {
   const smallLabel = label ? label : 'Small button';
   const mediumLabel = label ? label : 'Normal button';
-  const largeLabel = label ? label : 'Large button';
-  const disabledLabel = label ? label : 'Disabled button';
 
   return (
     <Grid container spacing={2}>
@@ -65,6 +85,7 @@ const ButtonTemplate = ({ label, icon, ...rest }) => {
           <Button>{smallLabel}</Button>
           <Button>{smallLabel}</Button>
           <Button>{smallLabel}</Button>
+          <Button disabled>{smallLabel}</Button>
         </ButtonGroup>
       </Grid>
       <Grid item container>
@@ -72,22 +93,11 @@ const ButtonTemplate = ({ label, icon, ...rest }) => {
           <Button>{mediumLabel}</Button>
           <Button>{mediumLabel}</Button>
           <Button>{mediumLabel}</Button>
+          <Button disabled>{smallLabel}</Button>
         </ButtonGroup>
       </Grid>
-      <Grid item container>
-        <ButtonGroup {...rest} size='large'>
-          <Button>{largeLabel}</Button>
-          <Button>{largeLabel}</Button>
-          <Button>{largeLabel}</Button>
-        </ButtonGroup>
-      </Grid>
-      <Grid item container>
-        <ButtonGroup {...rest} size='large'>
-          <Button>{largeLabel}</Button>
-          <Button disabled>{disabledLabel}</Button>
-          <Button>{largeLabel}</Button>
-        </ButtonGroup>
-      </Grid>
+
+      <Grid item container></Grid>
     </Grid>
   );
 };
