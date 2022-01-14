@@ -3,6 +3,7 @@ import { _buildFeatureFilter, _FilterTypes } from '@carto/react-core/';
 
 // Don't change this value to maintain compatibility with builder
 export const MAX_GPU_FILTERS = 4;
+const dataFilterExtension = new DataFilterExtension({ filterSize: MAX_GPU_FILTERS });
 
 function getFiltersByType(filters) {
   const filtersWithoutTimeType = {};
@@ -84,6 +85,6 @@ export function getDataFilterExtensionProps(filters = {}) {
     filterRange: getFilterRange(timeFilter),
     updateTriggers: getUpdateTriggers(filtersWithoutTimeType, timeFilter),
     getFilterValue: getFilterValue(filtersWithoutTimeType, timeFilter),
-    extensions: [new DataFilterExtension({ filterSize: MAX_GPU_FILTERS })]
+    extensions: [dataFilterExtension]
   };
 }

@@ -67,7 +67,7 @@ export function GoogleMap(props) {
     const mapNotConnected = containerRef.current.children.length === 0;
     if (!window.cartoGmap || mapNotConnected) {
       const map = new window.google.maps.Map(containerRef.current, options);
-      const deckOverlay = new GoogleMapsOverlay({ layers, getTooltip });
+      const deckOverlay = new GoogleMapsOverlay({ getTooltip });
 
       const handleViewportChange = () => {
         const center = map.getCenter();
@@ -104,6 +104,7 @@ export function GoogleMap(props) {
 
       window.cartoGmap = map;
       window.cartoDeck = deckOverlay;
+      window.cartoDeck.setMap(window.cartoGmap);
     } else {
       const { center, heading, tilt, zoom, ...rest } = options;
       const newViewState = {
@@ -120,11 +121,15 @@ export function GoogleMap(props) {
         window.cartoGmap.setZoom(zoom);
       }
       window.cartoGmap.setOptions(rest);
-      window.cartoDeck.setProps({ layers, getTooltip });
+      window.cartoDeck.setProps({ getTooltip });
     }
-
-    window.cartoDeck.setMap(window.cartoGmap);
   };
+
+  // Set layers should be outside of the useEffect to avoid problems with layers that changes
+  // dinamically with move events like the DrawingToolLayer
+  if (window.cartoDeck) {
+    window.cartoDeck.setProps({ layers });
+  }
 
   useEffect(() => {
     if (!document.querySelector('#gmaps')) {

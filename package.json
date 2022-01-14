@@ -53,6 +53,8 @@
     "test:coverage": "lerna run --parallel test:coverage && node scripts/mergeCoverage.js",
     "link-all": "lerna exec --parallel yarn link",
     "unlink-all": "lerna exec --parallel yarn unlink",
+    "link-deck": "yarn link @deck.gl/core @deck.gl/layers @deck.gl/geo-layers @deck.gl/google-maps @deck.gl/carto @deck.gl/extensions",
+    "unlink-deck": "yarn unlink  @deck.gl/core @deck.gl/layers @deck.gl/geo-layers @deck.gl/google-maps @deck.gl/carto @deck.gl/extensions",
     "storybook:start": "lerna --scope @carto/react-ui exec -- npm run storybook:start",
     "storybook:build": "lerna --scope @carto/react-ui exec -- npm run storybook:build",
     "storybook:publish": "lerna --scope @carto/react-ui exec -- npm run storybook:publish",

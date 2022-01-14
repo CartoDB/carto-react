@@ -4,6 +4,7 @@ import { selectSpatialFilter } from '@carto/react-redux';
 import useGeojsonFeatures from './useGeojsonFeatures';
 import useTileFeatures from './useTileFeatures';
 import { getDataFilterExtensionProps } from './dataFilterExtensionUtil';
+import { getMaskExtensionProps } from './maskExtensionUtil';
 
 export default function useCartoLayerProps({
   source,
@@ -50,6 +51,11 @@ export default function useCartoLayerProps({
   }
 
   const dataFilterExtensionProps = getDataFilterExtensionProps(source?.filters);
+  const maskExtensionProps = getMaskExtensionProps(spatialFilter?.geometry?.coordinates);
+  const extensions = [
+    ...dataFilterExtensionProps.extensions,
+    ...maskExtensionProps.extensions
+  ];
 
   return {
     ...props,
@@ -59,6 +65,8 @@ export default function useCartoLayerProps({
     connection: source?.connection,
     credentials: source?.credentials,
     clientId: 'carto-for-react',
-    ...dataFilterExtensionProps
+    ...dataFilterExtensionProps,
+    ...maskExtensionProps,
+    extensions
   };
 }

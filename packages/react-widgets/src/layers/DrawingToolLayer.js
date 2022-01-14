@@ -1,4 +1,3 @@
-import { EditableGeoJsonLayer } from '@nebula.gl/layers';
 import * as nebulaModes from '@nebula.gl/edit-modes';
 import {
   addSpatialFilter,
@@ -11,9 +10,11 @@ import { EDIT_MODES } from '@carto/react-core';
 import { hexToRgb, useTheme } from '@material-ui/core';
 import { useEffect, useMemo, useState } from 'react';
 import EditableCartoGeoJsonLayer from './EditableCartoGeoJsonLayer';
+import useEventManager from './useEventManager';
 
 const { ViewMode, TranslateMode, ModifyMode, CompositeMode } = nebulaModes;
 
+// const EditMode = new CompositeMode([new TranslateMode(), new ModifyMode()]);
 const EditMode = new CompositeMode([new TranslateMode(), new ModifyMode()]);
 
 export default function DrawingToolLayer({ eventManager } = { eventManager: null }) {
@@ -26,6 +27,13 @@ export default function DrawingToolLayer({ eventManager } = { eventManager: null
   const isEdit = isEditMode(selectedMode);
   const hasGeometry = !!spatialFilterGeometry;
   const isSelected = selectedFeatureIndex !== null;
+
+  const customEventManager = useEventManager({
+    eventManager,
+    isEdit,
+    isSelected,
+    selectedMode
+  });
 
   useEffect(() => {
     // When the user changes mode or finishes drawing a geometry, remove selected feature
@@ -52,7 +60,7 @@ export default function DrawingToolLayer({ eventManager } = { eventManager: null
   const mainColor = hasGeometry && !isSelected ? secondaryAsRgba : primaryAsRgba;
 
   return new EditableCartoGeoJsonLayer({
-    eventManager,
+    eventManager: customEventManager,
     id: 'DrawingToolLayer',
     pickable: !!selectedMode,
     data: {

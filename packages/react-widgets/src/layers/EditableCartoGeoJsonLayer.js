@@ -8,6 +8,15 @@ import { EditableGeoJsonLayer } from '@nebula.gl/layers';
 const EVENT_TYPES = ['anyclick', 'pointermove', 'panstart', 'panmove', 'panend', 'keyup'];
 
 export default class EditableCartoGeoJsonLayer extends EditableGeoJsonLayer {
+  updateState({ props, oldProps, context, changeFlags }) {
+    if (props.eventManager !== oldProps.eventManager) {
+      this._removeEventHandlers(props.eventManager);
+      this._removeEventHandlers(oldProps.eventManager);
+      this._addEventHandlers();
+    }
+    super.updateState({ props, oldProps, context, changeFlags });
+  }
+
   _addEventHandlers() {
     const eventManager = this._getEventManager();
     const { eventHandler } = this.state._editableLayerState;
@@ -20,8 +29,8 @@ export default class EditableCartoGeoJsonLayer extends EditableGeoJsonLayer {
     }
   }
 
-  _removeEventHandlers() {
-    const eventManager = this._getEventManager();
+  _removeEventHandlers(_eventManager = undefined) {
+    const eventManager = _eventManager || this._getEventManager();
     const { eventHandler } = this.state._editableLayerState;
 
     for (const eventType of EVENT_TYPES) {
