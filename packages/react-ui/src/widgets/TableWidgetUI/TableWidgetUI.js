@@ -103,7 +103,7 @@ function TableWidgetUI({
   return (
     <>
       <TableContainer style={fixedHeightStyle}>
-        <Table stickyHeader>
+        <Table stickyHeader size='small'>
           <TableHeaderComponent
             columns={columns}
             sorting={sorting}
