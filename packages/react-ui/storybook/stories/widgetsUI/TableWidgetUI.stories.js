@@ -20,6 +20,13 @@ const DefaultProps = { columns, rows };
 export const Playground = Template.bind({});
 Playground.args = { ...DefaultProps, rows: rows.slice(0, 5) };
 
+export const DenseLayout = Template.bind({});
+DenseLayout.args = {
+  ...DefaultProps,
+  rows: rows.slice(0, 5),
+  dense: true
+};
+
 export const Pagination = Template.bind({});
 Pagination.args = {
   ...DefaultProps,
