@@ -29,7 +29,9 @@ export const filtersToSQL = (filters = {}) => {
       switch (operator) {
         case FilterTypes.IN:
           result.push(
-            `${column} ${operator}(${params.values.map((v) => `'${v}'`).join(',')})`
+            `${column} ${operator}(${params.values
+              .map((v) => (isFinite(v) ? v : `'${v}'`))
+              .join(',')})`
           );
           break;
         case FilterTypes.BETWEEN:
