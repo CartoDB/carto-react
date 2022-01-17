@@ -14,10 +14,6 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   tableHead: {
-    backgroundColor: theme.palette.common.white,
-    '& .MuiTableCell-head': {
-      border: 'none'
-    },
     '& .MuiTableCell-head, & .MuiTableCell-head span': {
       ...theme.typography.caption,
       color: theme.palette.text.secondary
