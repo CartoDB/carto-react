@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   Table,
@@ -91,11 +91,15 @@ function TableWidgetUI({
     onSetPage(0);
   };
 
-  const fixedHeightStyle = {};
-  if (height) {
+  const fixedHeightStyle = useMemo(() => {
+    if (!height) {
+      return {};
+    }
     const paginationHeight = paginationRef?.current?.clientHeight || 0;
-    fixedHeightStyle.height = `calc(${height} - ${paginationHeight}px)`;
-  }
+    return {
+      height: `calc(${height} - ${paginationHeight}px)`
+    };
+  }, [height, paginationRef]);
 
   return (
     <>
