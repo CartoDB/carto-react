@@ -38,8 +38,18 @@ describe('Filters to SQL', () => {
   });
 
   test('should return a SQL WHERE clause', () => {
-    expect(filtersToSQL(filters)).toEqual(
-      "WHERE (column1 in('a','b','c')) AND ((column2 >= 1  and  column2 < 2))"
+    const customFilters = {
+      ...filters,
+      // This third case is to test when IN operation has numeric values
+      column3: {
+        in: {
+          owner: 'widgetId3',
+          values: [1, 2, 3]
+        }
+      }
+    };
+    expect(filtersToSQL(customFilters)).toEqual(
+      "WHERE (column1 in('a','b','c')) AND ((column2 >= 1  and  column2 < 2)) AND (column3 in(1,2,3))"
     );
   });
 
