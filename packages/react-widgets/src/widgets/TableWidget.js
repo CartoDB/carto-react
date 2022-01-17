@@ -17,6 +17,8 @@ import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
  * @param  {number} [props.initialPageSize] - Initial number of rows per page
+ * @param  {string} [props.height] - Static widget height, required for scrollable table content
+ * @param  {boolean} [props.dense] - Whether the table should use a compact layout with smaller cell paddings
  */
 function TableWidget({
   id,
@@ -26,7 +28,9 @@ function TableWidget({
   wrapperProps,
   noDataAlertProps,
   onError,
-  initialPageSize = 10
+  initialPageSize = 10,
+  height,
+  dense
 }) {
   const [rowsPerPage, setRowsPerPage] = useState(initialPageSize);
   const [page, setPage] = useState(0);
@@ -100,6 +104,8 @@ function TableWidget({
           sortDirection={sortDirection}
           onSetSortBy={setSortBy}
           onSetSortDirection={setSortDirection}
+          height={height}
+          dense={dense}
         />
       ) : (
         <NoDataAlert {...noDataAlertProps} />
@@ -122,7 +128,9 @@ TableWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
-  initialPageSize: PropTypes.number
+  initialPageSize: PropTypes.number,
+  height: PropTypes.string,
+  dense: PropTypes.bool
 };
 
 export default TableWidget;
