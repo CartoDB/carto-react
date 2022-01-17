@@ -16,6 +16,7 @@ import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
+ * @param  {number} [props.initialPageSize] - Initial number of rows per page
  */
 function TableWidget({
   id,
@@ -24,9 +25,10 @@ function TableWidget({
   columns,
   wrapperProps,
   noDataAlertProps,
-  onError
+  onError,
+  initialPageSize = 10
 }) {
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(initialPageSize);
   const [page, setPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
 
@@ -119,7 +121,8 @@ TableWidget.propTypes = {
   ).isRequired,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
-  noDataAlertProps: PropTypes.object
+  noDataAlertProps: PropTypes.object,
+  initialPageSize: PropTypes.number
 };
 
 export default TableWidget;
