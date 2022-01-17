@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Allow table body scrolling in TableWidget [#279](https://github.com/CartoDB/carto-react/pull/279)
+- Expose height and dense prop in TableWidget [#279](https://github.com/CartoDB/carto-react/pull/279)
 - Expose initialPageSize prop in TableWidget [#281](https://github.com/CartoDB/carto-react/pull/281)
 - Fix filtersToSQL output when IN filter has numeric values [#277](https://github.com/CartoDB/carto-react/pull/277)
 - Remove uniqueIdProperty default value in useGeojsonFeatures [#273](https://github.com/CartoDB/carto-react/pull/273)

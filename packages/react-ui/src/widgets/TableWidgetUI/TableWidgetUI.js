@@ -74,7 +74,8 @@ function TableWidgetUI({
   rowsPerPageOptions,
   onSetRowsPerPage,
   onRowClick,
-  height
+  height,
+  dense
 }) {
   const classes = useStyles();
   const paginationRef = useRef(null);
@@ -103,7 +104,7 @@ function TableWidgetUI({
   return (
     <>
       <TableContainer style={fixedHeightStyle}>
-        <Table stickyHeader size='small'>
+        <Table stickyHeader size={dense ? 'small' : 'medium'}>
           <TableHeaderComponent
             columns={columns}
             sorting={sorting}
@@ -197,7 +198,8 @@ TableWidgetUI.defaultProps = {
   sortDirection: 'asc',
   pagination: false,
   rowsPerPage: 10,
-  rowsPerPageOptions: [5, 10, 25]
+  rowsPerPageOptions: [5, 10, 25],
+  dense: false
 };
 
 TableWidgetUI.propTypes = {
@@ -216,7 +218,8 @@ TableWidgetUI.propTypes = {
   rowsPerPageOptions: PropTypes.array,
   onSetRowsPerPage: PropTypes.func,
   onRowClick: PropTypes.func,
-  height: PropTypes.string
+  height: PropTypes.string,
+  dense: PropTypes.bool
 };
 
 export default TableWidgetUI;
