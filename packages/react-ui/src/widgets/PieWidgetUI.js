@@ -149,6 +149,7 @@ function PieWidgetUI({
   labels,
   colors,
   animation,
+  filterable,
   selectedCategories,
   onSelectedCategoriesChange
 }) {
@@ -286,11 +287,11 @@ function PieWidgetUI({
 
   const onEvents = useMemo(
     () => ({
-      click: clickEvent,
+      ...(filterable && { click: clickEvent }),
       mouseover: mouseoverEvent,
       mouseout: mouseoutEvent
     }),
-    [clickEvent, mouseoverEvent, mouseoutEvent]
+    [filterable, clickEvent, mouseoverEvent, mouseoutEvent]
   );
 
   return (

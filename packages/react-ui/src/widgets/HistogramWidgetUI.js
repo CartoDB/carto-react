@@ -196,7 +196,8 @@ function HistogramWidgetUI(props) {
     xAxisFormatter,
     yAxisFormatter,
     height = theme.spacing(22),
-    animation
+    animation,
+    filterable
   } = props;
 
   const classes = useStyles();
@@ -264,7 +265,7 @@ function HistogramWidgetUI(props) {
 
   return (
     <div>
-      {onSelectedBarsChange && (
+      {filterable && onSelectedBarsChange && (
         <Grid
           container
           direction='row'
@@ -287,7 +288,7 @@ function HistogramWidgetUI(props) {
           ref={chartInstance}
           option={options}
           lazyUpdate={true}
-          onEvents={onEvents}
+          onEvents={filterable && onEvents}
           style={{ height }}
         />
       )}
@@ -303,7 +304,8 @@ HistogramWidgetUI.defaultProps = {
   dataAxis: [],
   name: null,
   onSelectedBarsChange: null,
-  animation: true
+  animation: true,
+  filterable: true
 };
 
 HistogramWidgetUI.propTypes = {
@@ -316,7 +318,8 @@ HistogramWidgetUI.propTypes = {
   name: PropTypes.string,
   onSelectedBarsChange: PropTypes.func,
   height: PropTypes.number,
-  animation: PropTypes.bool
+  animation: PropTypes.bool,
+  filterable: PropTypes.bool
 };
 
 export default HistogramWidgetUI;
