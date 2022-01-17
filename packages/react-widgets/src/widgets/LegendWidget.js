@@ -32,9 +32,6 @@ function LegendWidget({ className, initialCollapsed }) {
     );
   };
 
-  const handleCollapsedChange = (newCollapsedValue) => {
-    setCollapsed(newCollapsedValue);
-  };
 
   return (
     <LegendWidgetUI
@@ -42,7 +39,7 @@ function LegendWidget({ className, initialCollapsed }) {
       layers={layers}
       onChangeVisibility={handleChangeVisibility}
       collapsed={collapsed}
-      onCollapsedChange={handleCollapsedChange}
+      onCollapsedChange={setCollapsed}
     />
   );
 }
