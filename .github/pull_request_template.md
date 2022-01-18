@@ -30,6 +30,7 @@ If feature deals with theme / UI or internal elements used also in CARTO 3, plea
 
 - Good PR name
 - Shortcut link
+- Changelog entry
 - Just one issue per PR
 - GitHub labels
 - Proper status & reviewers
