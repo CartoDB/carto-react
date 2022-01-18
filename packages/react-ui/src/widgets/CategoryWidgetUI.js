@@ -472,7 +472,6 @@ function CategoryWidgetUI(props) {
             <Grid container item xs zeroMinWidth>
               <Grid container item direction='row' justifyContent='space-between'>
                 <Typography variant='body2' noWrap>
-                  plop
                   <Skeleton variant='text' width={100} />
                 </Typography>
                 <Typography variant='body2'>
