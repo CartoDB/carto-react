@@ -3,6 +3,7 @@
 ## Not released
 
 - Add initialCollapsed prop to LegendWidget [#282](https://github.com/CartoDB/carto-react/pull/282)
+- Fix executeSQL typing [#280](https://github.com/CartoDB/carto-react/pull/280)
 
 ## 1.2.1-alpha.3 (2022-01-18)
 
