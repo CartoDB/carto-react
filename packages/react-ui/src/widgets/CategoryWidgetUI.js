@@ -10,7 +10,8 @@ import {
   SvgIcon,
   TextField,
   Typography,
-  makeStyles
+  makeStyles,
+  Tooltip
 } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
   selectable: {
     cursor: 'pointer',
+    flexWrap: 'nowrap',
 
     '&:hover $progressbar div': {
       backgroundColor: theme.palette.secondary.dark
@@ -50,7 +52,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   label: {
-    fontWeight: theme.typography.fontWeightBold
+    fontWeight: theme.typography.fontWeightBold,
+    marginRight: theme.spacing(2)
   },
 
   progressbar: {
@@ -369,6 +372,22 @@ function CategoryWidgetUI(props) {
   const CategoryItem = (props) => {
     const { data, onCategoryClick } = props;
     const value = formatter(data.value || 0);
+    const [isOverflowed, setIsOverflowed] = useState(false);
+    const textElementRef = useRef();
+
+    const compareSize = () => {
+      const compare =
+        textElementRef?.current?.scrollWidth > textElementRef?.current?.clientWidth;
+      setIsOverflowed(compare);
+    };
+
+    useEffect(() => {
+      compareSize();
+      window.addEventListener('resize', compareSize);
+      return () => {
+        window.removeEventListener('resize', compareSize);
+      };
+    }, []);
 
     return (
       <Grid
@@ -395,8 +414,27 @@ function CategoryWidgetUI(props) {
           </Grid>
         )}
         <Grid container item xs>
-          <Grid container item direction='row' justifyContent='space-between'>
-            <span className={classes.label}>{getCategoryLabel(data.name)}</span>
+          <Grid
+            container
+            item
+            direction='row'
+            justifyContent='space-between'
+            wrap='nowrap'
+          >
+            <Tooltip
+              title={getCategoryLabel(data.name)}
+              disableHoverListener={!isOverflowed}
+            >
+              <Typography
+                variant='body2'
+                className={classes.label}
+                noWrap
+                zeroMinWidth
+                ref={textElementRef}
+              >
+                {getCategoryLabel(data.name)}
+              </Typography>
+            </Tooltip>
             {typeof value === 'object' && value !== null ? (
               <span>
                 {value.prefix}
@@ -431,9 +469,9 @@ function CategoryWidgetUI(props) {
       <Grid container item className={classes.categoriesWrapper}>
         {[...Array(4)].map((_, i) => (
           <Grid key={i} container direction='row' spacing={1} className={classes.element}>
-            <Grid container item xs>
+            <Grid container item xs zeroMinWidth>
               <Grid container item direction='row' justifyContent='space-between'>
-                <Typography variant='body2'>
+                <Typography variant='body2' noWrap>
                   <Skeleton variant='text' width={100} />
                 </Typography>
                 <Typography variant='body2'>
