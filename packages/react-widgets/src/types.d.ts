@@ -72,3 +72,8 @@ export type TimeSeriesWidget = {
   onTimelineUpdate?: Function,
   onTimeWindowUpdate?: Function
 } & CommonWidgetProps & MonoColumnWidgetProps;
+
+export type LegendWidget = {
+  className?: string;
+  initialCollapsed?: boolean;
+}
