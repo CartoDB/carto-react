@@ -13,9 +13,7 @@ import PropTypes from 'prop-types';
 function LegendWidget({ className, initialCollapsed }) {
   const dispatch = useDispatch();
   const layers = useSelector((state) =>
-    [...Object.values(state.carto.layers), ...Object.values(state.carto.layers)].filter(
-      (layer) => !!layer.legend
-    )
+    Object.values(state.carto.layers).filter((layer) => !!layer.legend)
   );
   const [collapsed, setCollapsed] = useState(initialCollapsed);
 
@@ -31,7 +29,6 @@ function LegendWidget({ className, initialCollapsed }) {
       })
     );
   };
-
 
   return (
     <LegendWidgetUI
