@@ -1,33 +1,26 @@
 import { Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import LegendWidgetUI from '../../../src/widgets/legend/LegendWidgetUI';
 
 const options = {
   title: 'Widgets UI/LegendWidgetUI',
   component: LegendWidgetUI,
   argTypes: {
-    title: {
-      defaultValue: 'Legend title',
+    className: {
       control: {
         type: 'text'
-      }
-    },
-    switchable: {
-      defaultValue: true,
-      control: {
-        type: 'boolean'
-      }
-    },
-    visible: {
-      defaultValue: true,
-      control: {
-        type: 'boolean'
       }
     },
     layers: {
       defaultValue: [],
       control: {
         type: 'array'
+      }
+    },
+    collapsed: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
       }
     }
   }
@@ -88,6 +81,32 @@ const LegendMultiTemplate = () => {
     }
   ];
   return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+};
+
+const LegendMultiTemplateCollapsed = () => {
+  const [collapsed, setCollapsed] = useState(true);
+  
+  const layers = [
+    {
+      id: 0,
+      title: 'Multi Layer',
+      visible: true,
+      legend: {
+        children: <Typography>Your Content</Typography>
+      }
+    },
+    {
+      id: 1,
+      title: 'Multi Layer',
+      visible: false,
+      collapsible: false,
+      legend: {
+        children: <Typography>Your Content</Typography>
+      }
+    }
+  ];
+
+  return <LegendWidgetUI layers={layers} collapsed={collapsed} onCollapsedChange={setCollapsed} />;
 };
 
 const LegendCategoriesTemplate = () => {
@@ -208,6 +227,7 @@ export const Playground = Template.bind({});
 
 export const SingleLayer = LegendTemplate.bind({});
 export const MultiLayer = LegendMultiTemplate.bind({});
+export const MultiLayerCollapsed = LegendMultiTemplateCollapsed.bind({});
 export const NotFound = LegendNotFoundTemplate.bind({});
 export const Categories = LegendCategoriesTemplate.bind({});
 export const Icon = LegendIconTemplate.bind({});
