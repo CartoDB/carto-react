@@ -1,7 +1,5 @@
-import { Credentials } from '../types';
+import { Credentials, ExecuteSQLResponse } from '../types';
 import { FeatureCollection } from 'geojson';
-
-export type ExecuteSQLResponse<Response = FeatureCollection | {}[]> = Promise<Response>;
 
 export function executeSQL<Response = FeatureCollection | {}[]>({
   credentials,

@@ -1,5 +1,6 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
+import { FeatureCollection } from 'geojson';
 
 interface CredentialsCarto2 {
   apiVersion: API_VERSIONS.V1 | API_VERSIONS.V2;
@@ -38,3 +39,4 @@ export type UseCartoLayerFilterProps = {
   };
 } & SourceProps;
 
+export type ExecuteSQLResponse<Response = FeatureCollection | {}[]> = Promise<Response>;
