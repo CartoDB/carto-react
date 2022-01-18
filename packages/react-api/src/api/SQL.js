@@ -9,13 +9,14 @@ const CLIENT = 'carto-react';
 /**
  * Executes a SQL query
  *
- * @param { Object } credentials - CARTO user credentials
- * @param { string } credentials.username - CARTO username
- * @param { string } credentials.apiKey - CARTO API Key
- * @param { string } credentials.serverUrlTemplate - CARTO server URL template
- * @param { string } query - SQL query to be executed
- * @param { string } connection - connection name required for CARTO cloud native
- * @param { Object } opts - Additional options for the HTTP request
+ * @param { object } props
+ * @param { Object } props.credentials - CARTO user credentials
+ * @param { string } props.credentials.username - CARTO username
+ * @param { string } props.credentials.apiKey - CARTO API Key
+ * @param { string } props.credentials.serverUrlTemplate - CARTO server URL template
+ * @param { string } props.query - SQL query to be executed
+ * @param { string } props.connection - connection name required for CARTO cloud native
+ * @param { Object } props.opts - Additional options for the HTTP request
  */
 export const executeSQL = async ({ credentials, query, connection, opts }) => {
   let response;
