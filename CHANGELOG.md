@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fix: TableWidget fixed height with pagination [#286](https://github.com/CartoDB/carto-react/pull/286)
 - Add initialCollapsed prop to LegendWidget [#282](https://github.com/CartoDB/carto-react/pull/282)
 - Fix executeSQL typing [#280](https://github.com/CartoDB/carto-react/pull/280)
 - Fix widget long name going out of the frame [#266](https://github.com/CartoDB/carto-react/pull/266)
