@@ -7,6 +7,7 @@
 - Fix executeSQL typing [#280](https://github.com/CartoDB/carto-react/pull/280)
 - Fix widget long name going out of the frame [#266](https://github.com/CartoDB/carto-react/pull/266)
 - Fix too long labels in CategoryWidget [#267](https://github.com/CartoDB/carto-react/pull/267)
+- Improve styles for for MaterialUI CircularProgress component [#270](https://github.com/CartoDB/carto-react/pull/270)
 
 ## 1.2
 
