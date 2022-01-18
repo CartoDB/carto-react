@@ -13,7 +13,8 @@ export {
   getHistogram,
   getCategories,
   geocodeStreetPoint,
-  getScatter
+  getScatter,
+  getTable
 } from './models';
 export { default as useSourceFilters } from './hooks/useSourceFilters';
 export { default as DrawingToolLayer } from './layers/DrawingToolLayer';

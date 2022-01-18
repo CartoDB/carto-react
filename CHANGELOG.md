@@ -3,6 +3,10 @@
 ## Not released
 
 - Add initialCollapsed prop to LegendWidget [#282](https://github.com/CartoDB/carto-react/pull/282)
+
+## 1.2.1-alpha.3 (2022-01-18)
+
+- Export getTable method for TableWidget model [#283](https://github.com/CartoDB/carto-react/pull/283)
 - Expose height and dense prop in TableWidget [#279](https://github.com/CartoDB/carto-react/pull/279)
 - Expose initialPageSize prop in TableWidget [#281](https://github.com/CartoDB/carto-react/pull/281)
 - Fix filtersToSQL output when IN filter has numeric values [#277](https://github.com/CartoDB/carto-react/pull/277)
@@ -10,7 +14,7 @@
 - Allow disable widgets filtering [#268](https://github.com/CartoDB/carto-react/pull/268)
 - Fix: use 0-based pagination in raw feature access and TableWidget [#265](https://github.com/CartoDB/carto-react/pull/265)
 
-## 1.2.0-alpha.2 (2022-01-03)
+## 1.2.1-alpha.2 (2022-01-03)
 
 - Fix: DrawingToolLayer disables interactivity of the layers behind it [#263](https://github.com/CartoDB/carto-react/pull/263)
 - Add TableWidget [#154](https://github.com/CartoDB/carto-react/pull/154)
