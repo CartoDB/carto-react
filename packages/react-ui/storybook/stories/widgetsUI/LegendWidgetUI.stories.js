@@ -85,7 +85,7 @@ const LegendMultiTemplate = () => {
 
 const LegendMultiTemplateCollapsed = () => {
   const [collapsed, setCollapsed] = useState(true);
-  
+
   const layers = [
     {
       id: 0,
@@ -106,7 +106,13 @@ const LegendMultiTemplateCollapsed = () => {
     }
   ];
 
-  return <LegendWidgetUI layers={layers} collapsed={collapsed} onCollapsedChange={setCollapsed} />;
+  return (
+    <LegendWidgetUI
+      layers={layers}
+      collapsed={collapsed}
+      onCollapsedChange={setCollapsed}
+    />
+  );
 };
 
 const LegendCategoriesTemplate = () => {
