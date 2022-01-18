@@ -81,6 +81,13 @@ describe('LegendWidgetUI', () => {
   test('multiple legends', () => {
     render(<Widget layers={DATA}></Widget>);
     expect(screen.queryByText('Layers')).toBeInTheDocument();
+    expect(screen.queryByTestId('categories-legend')).toBeInTheDocument();
+  });
+
+  test('multiple legends with collapsed as true', () => {
+    render(<Widget layers={DATA} collapsed={true}></Widget>);
+    expect(screen.queryByText('Layers')).toBeInTheDocument();
+    expect(screen.queryByTestId('categories-legend')).not.toBeInTheDocument();
   });
 
   test('Category legend', () => {
