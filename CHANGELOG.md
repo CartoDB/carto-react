@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix executeSQL typing [#280](https://github.com/CartoDB/carto-react/pull/280)
+
 ## 1.2.1-alpha.3 (2022-01-18)
 
 - Export getTable method for TableWidget model [#283](https://github.com/CartoDB/carto-react/pull/283)
