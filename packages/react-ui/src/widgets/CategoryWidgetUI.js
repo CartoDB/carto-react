@@ -28,10 +28,16 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 1, 1, 0)
   },
 
-  element: {
+  selectable: {
     cursor: 'pointer',
     flexWrap: 'nowrap',
 
+    '&:hover $progressbar div': {
+      backgroundColor: theme.palette.secondary.dark
+    }
+  },
+
+  element: {
     '&$unselected': {
       color: theme.palette.text.disabled,
 
@@ -42,10 +48,6 @@ const useStyles = makeStyles((theme) => ({
 
     '&$rest $progressbar div': {
       backgroundColor: theme.palette.text.disabled
-    },
-
-    '&:hover $progressbar div': {
-      backgroundColor: theme.palette.secondary.dark
     }
   },
 
@@ -135,11 +137,11 @@ function CategoryWidgetUI(props) {
     data,
     formatter,
     labels,
-    isLoading,
     maxItems,
     order,
     selectedCategories,
-    animation
+    animation,
+    filterable
   } = props;
   const [sortedData, setSortedData] = useState([]);
   const [maxValue, setMaxValue] = useState(1);
@@ -151,7 +153,7 @@ function CategoryWidgetUI(props) {
   const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
-  const classes = useStyles();
+  const classes = useStyles({ filterable });
 
   // Get blockedCategories in the same order as original data
   const sortBlockedSameAsData = (blockedCategories) =>
@@ -392,9 +394,10 @@ function CategoryWidgetUI(props) {
         container
         direction='row'
         spacing={1}
-        onClick={onCategoryClick}
+        onClick={filterable ? onCategoryClick : () => {}}
         className={`
           ${classes.element}
+          ${filterable ? classes.selectable : ''}
           ${
             !showAll &&
             selectedCategories.length > 0 &&
@@ -405,7 +408,7 @@ function CategoryWidgetUI(props) {
           ${data.name === REST_CATEGORY ? classes.rest : ''}
         `}
       >
-        {showAll && (
+        {filterable && showAll && (
           <Grid item>
             <Checkbox checked={tempBlockedCategories.indexOf(data.name) !== -1} />
           </Grid>
@@ -488,7 +491,7 @@ function CategoryWidgetUI(props) {
     <div className={classes.root}>
       {data?.length > 0 ? (
         <>
-          {sortedData.length > 0 && (
+          {filterable && sortedData.length > 0 && (
             <Grid
               container
               direction='row'
@@ -604,7 +607,8 @@ CategoryWidgetUI.defaultProps = {
   maxItems: 5,
   order: CategoryWidgetUI.ORDER_TYPES.RANKING,
   selectedCategories: [],
-  animation: true
+  animation: true,
+  filterable: true
 };
 
 CategoryWidgetUI.propTypes = {

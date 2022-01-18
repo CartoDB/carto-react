@@ -2,6 +2,11 @@
 
 ## Not released
 
+- Expose height and dense prop in TableWidget [#279](https://github.com/CartoDB/carto-react/pull/279)
+- Expose initialPageSize prop in TableWidget [#281](https://github.com/CartoDB/carto-react/pull/281)
+- Fix filtersToSQL output when IN filter has numeric values [#277](https://github.com/CartoDB/carto-react/pull/277)
+- Remove uniqueIdProperty default value in useGeojsonFeatures [#273](https://github.com/CartoDB/carto-react/pull/273)
+- Allow disable widgets filtering [#268](https://github.com/CartoDB/carto-react/pull/268)
 - Fix: use 0-based pagination in raw feature access and TableWidget [#265](https://github.com/CartoDB/carto-react/pull/265)
 
 ## 1.2.0-alpha.2 (2022-01-03)
