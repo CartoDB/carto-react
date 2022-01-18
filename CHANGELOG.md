@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Improve styles for MaterialUI Dialog component [#272](https://github.com/CartoDB/carto-react/pull/272)
+
 ## 1.2
 
 ### 1.2.1-alpha.5 (2022-01-20)
