@@ -1173,6 +1173,82 @@ export const cartoThemeOptions = {
         width: spacing(7),
         height: spacing(7)
       }
+    },
+
+    MuiChip: {
+      root: {
+        backgroundColor: variables.palette.grey[100],
+        '&:hover': {
+          backgroundColor: variables.palette.grey[200]
+        },
+        '& .MuiAvatar-root': {
+          backgroundColor: '#7f3c8d',
+          color: variables.palette.common.white
+        }
+      },
+      colorPrimary: {
+        '&$disabled': {
+          backgroundColor: variables.palette.grey[100],
+          color: variables.palette.text.primary
+        },
+        '&:hover': {
+          backgroundColor: variables.palette.primary.dark
+        }
+      },
+      colorSecondary: {
+        '&$disabled': {
+          backgroundColor: variables.palette.grey[100]
+        },
+        '&:hover': {
+          backgroundColor: variables.palette.secondary.light
+        }
+      },
+      label: {
+        fontFamily: '"Open Sans", sans-serif',
+        letterSpacing: 0.25
+      },
+      labelSmall: {
+        fontSize: variables.typography.caption.fontSize,
+        fontWeight: variables.typography.fontWeightLight
+      },
+      outlined: {
+        transition: `border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1)`,
+        '&$disabled': {
+          backgroundColor: 'transparent'
+        },
+        '&:hover': {
+          backgroundColor: 'transparent',
+          borderColor: variables.palette.grey[200],
+          '&$clickable': {
+            backgroundColor: 'transparent'
+          }
+        }
+      },
+      outlinedPrimary: {
+        '&:hover': {
+          backgroundColor: 'transparent',
+          borderColor: variables.palette.primary.dark,
+          color: variables.palette.primary.dark,
+          '&$clickable': {
+            backgroundColor: 'transparent'
+          }
+        }
+      },
+      outlinedSecondary: {
+        '&:hover': {
+          backgroundColor: 'transparent',
+          borderColor: variables.palette.secondary.dark,
+          color: variables.palette.secondary.dark,
+          '&$clickable': {
+            backgroundColor: 'transparent'
+          }
+        }
+      },
+      clickable: {
+        '&:focus': {
+          webkitTapHighlightColor: 'none'
+        }
+      }
     }
   },
 
