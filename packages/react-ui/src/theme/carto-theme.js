@@ -1242,6 +1242,10 @@ export const cartoThemeOptions = {
     },
     MuiToggleButton: {
       size: 'small'
+    },
+    CircularProgress: {
+      size: 40,
+      thickness: 4
     }
   }
 };

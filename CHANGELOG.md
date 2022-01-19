@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Improve styles for for MaterialUI CircularProgress component [#270](https://github.com/CartoDB/carto-react/pull/270)
+
 ## 1.2
 
 ### 1.2.1-alpha.4 (2022-01-19)
