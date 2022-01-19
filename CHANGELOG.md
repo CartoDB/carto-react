@@ -2,14 +2,18 @@
 
 ## Not released
 
+- Improve styles for for MaterialUI CircularProgress component [#270](https://github.com/CartoDB/carto-react/pull/270)
+
+## 1.2
+
+### 1.2.1-alpha.4 (2022-01-19)
+
 - Fix: TableWidget fixed height with pagination [#286](https://github.com/CartoDB/carto-react/pull/286)
 - Add initialCollapsed prop to LegendWidget [#282](https://github.com/CartoDB/carto-react/pull/282)
 - Fix executeSQL typing [#280](https://github.com/CartoDB/carto-react/pull/280)
 - Fix widget long name going out of the frame [#266](https://github.com/CartoDB/carto-react/pull/266)
 - Fix too long labels in CategoryWidget [#267](https://github.com/CartoDB/carto-react/pull/267)
-- Improve styles for for MaterialUI CircularProgress component [#270](https://github.com/CartoDB/carto-react/pull/270)
-
-## 1.2
+- Improve styles for MaterialUI ToggleButton & ToggleButtonGroup components [#269](https://github.com/CartoDB/carto-react/pull/269)
 
 ### 1.2.1-alpha.3 (2022-01-18)
 
