@@ -1116,8 +1116,67 @@ export const cartoThemeOptions = {
     // Slider
     MuiSlider: {
       root: {}
+    },
+
+    // MuiToggleButtonGroup
+    MuiToggleButtonGroup: {
+      groupedHorizontal: {
+        '&:not(:last-child)': {
+          marginRight: spacing(0.25),
+          borderTopRightRadius: spacing(0.5),
+          borderBottomRightRadius: spacing(0.5)
+        },
+        '&:not(:first-child)': {
+          marginLeft: 0,
+          borderLeft: 'none',
+          borderTopLeftRadius: spacing(0.5),
+          borderBottomLeftRadius: spacing(0.5)
+        }
+      },
+      groupedVertical: {
+        '&:not(:last-child)': {
+          marginBottom: spacing(0.25),
+          borderBottomLeftRadius: spacing(0.5),
+          borderBottomRightRadius: spacing(0.5)
+        },
+        '&:not(:first-child)': {
+          borderTopLeftRadius: spacing(0.5),
+          borderTopRightRadius: spacing(0.5)
+        }
+      }
+    },
+    // MuiToggleButton
+    MuiToggleButton: {
+      root: {
+        width: spacing(4.5),
+        height: spacing(4.5),
+        border: 'none',
+        borderRadius: spacing(0.5),
+        color: variables.palette.grey[500],
+        '&$selected': {
+          color: variables.palette.primary.main,
+          backgroundColor: variables.palette.primary.relatedLight,
+          '&:hover': {
+            backgroundColor: variables.palette.primary.relatedLight
+          }
+        }
+      },
+      sizeSmall: {
+        width: spacing(3),
+        height: spacing(3),
+        '& .MuiSvgIcon-root': {
+          maxWidth: spacing(2.5),
+          maxHeight: spacing(2.5)
+        }
+      },
+      sizeLarge: {
+        width: spacing(7),
+        height: spacing(7)
+      }
     }
   },
+
+  // Props
   props: {
     MuiButtonBase: {
       disableRipple: true
@@ -1181,6 +1240,18 @@ export const cartoThemeOptions = {
     MuiDialogContentText: {
       variant: 'body2'
     },
+    MuiToggleButtonGroup: {
+      size: 'small',
+      orientation: 'horizontal',
+      exclusive: true
+    },
+    MuiToggleButton: {
+      size: 'small'
+    },
+    CircularProgress: {
+      size: 40,
+      thickness: 4
+    },
     MuiSlider: {
       color: 'primary',
       marks: false
@@ -1191,7 +1262,14 @@ export const cartoThemeOptions = {
 export function createTheme(options = {}) {
   const themeOptions = {
     ...cartoThemeOptions,
-    ...options
+    ...options,
+    components: {
+      MuiToggleButton: {
+        root: {
+          border: 'none'
+        }
+      }
+    }
   };
 
   let theme = createMuiTheme(themeOptions);
