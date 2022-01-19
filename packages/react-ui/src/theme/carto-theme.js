@@ -1113,6 +1113,11 @@ export const cartoThemeOptions = {
       }
     },
 
+    // Slider
+    MuiSlider: {
+      root: {}
+    },
+
     // MuiToggleButtonGroup
     MuiToggleButtonGroup: {
       groupedHorizontal: {
@@ -1246,6 +1251,10 @@ export const cartoThemeOptions = {
     CircularProgress: {
       size: 40,
       thickness: 4
+    },
+    MuiSlider: {
+      color: 'primary',
+      marks: false
     }
   }
 };
