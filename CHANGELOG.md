@@ -3,6 +3,7 @@
 ## Not released
 
 - Add missing filterable default value [#291](https://github.com/CartoDB/carto-react/pull/291)
+- Remove custom ToggleButtonGroup and ToggleButton default size value [#289](https://github.com/CartoDB/carto-react/pull/289)
 - Improve styles for for MaterialUI CircularProgress component [#270](https://github.com/CartoDB/carto-react/pull/270)
 - Improve styles for MaterialUI Slider component [#274](https://github.com/CartoDB/carto-react/pull/274)
 - Improve styles for MaterialUI Chip component [#275](https://github.com/CartoDB/carto-react/pull/275)

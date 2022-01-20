@@ -1317,12 +1317,8 @@ export const cartoThemeOptions = {
       variant: 'body2'
     },
     MuiToggleButtonGroup: {
-      size: 'small',
       orientation: 'horizontal',
       exclusive: true
-    },
-    MuiToggleButton: {
-      size: 'small'
     },
     CircularProgress: {
       size: 40,
