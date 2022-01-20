@@ -6,6 +6,8 @@
 - Improve styles for for MaterialUI CircularProgress component [#270](https://github.com/CartoDB/carto-react/pull/270)
 - Improve styles for MaterialUI Slider component [#274](https://github.com/CartoDB/carto-react/pull/274)
 - Improve styles for MaterialUI Chip component [#275](https://github.com/CartoDB/carto-react/pull/275)
+- Fix wrong word break in widgets title [#290](https://github.com/CartoDB/carto-react/pull/290)
+- Fix JS error in category label [#290](https://github.com/CartoDB/carto-react/pull/290)
 
 ## 1.2
 
