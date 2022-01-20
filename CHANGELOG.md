@@ -2,6 +2,10 @@
 
 ## Not released
 
+## 1.2
+
+### 1.2.1-alpha.5 (2022-01-20)
+
 - Fix size default value in ToggleButton storybook [#292](https://github.com/CartoDB/carto-react/pull/292)
 - Add missing filterable default value [#291](https://github.com/CartoDB/carto-react/pull/291)
 - Remove custom ToggleButtonGroup and ToggleButton default size value [#289](https://github.com/CartoDB/carto-react/pull/289)
@@ -10,8 +14,6 @@
 - Improve styles for MaterialUI Chip component [#275](https://github.com/CartoDB/carto-react/pull/275)
 - Fix wrong word break in widgets title [#290](https://github.com/CartoDB/carto-react/pull/290)
 - Fix JS error in category label [#290](https://github.com/CartoDB/carto-react/pull/290)
-
-## 1.2
 
 ### 1.2.1-alpha.4 (2022-01-19)
 
