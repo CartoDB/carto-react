@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   buttonText: ({ expanded }) => ({
-    wordBreak: 'break-all',
+    wordBreak: 'break-word',
     overflow: 'hidden',
     ...(expanded && {
       display: '-webkit-box',

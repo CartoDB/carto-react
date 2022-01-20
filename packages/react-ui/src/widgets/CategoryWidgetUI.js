@@ -429,7 +429,6 @@ function CategoryWidgetUI(props) {
                 variant='body2'
                 className={classes.label}
                 noWrap
-                zeroMinWidth
                 ref={textElementRef}
               >
                 {getCategoryLabel(data.name)}
