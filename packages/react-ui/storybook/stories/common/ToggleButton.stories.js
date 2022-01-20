@@ -10,7 +10,7 @@ const options = {
   component: ToggleButtonGroup,
   argTypes: {
     size: {
-      defaultValue: 'small',
+      defaultValue: 'medium',
       control: {
         type: 'select',
         options: ['small', 'medium', 'large']
@@ -72,7 +72,6 @@ const DefaultPropsTemplate = () => {
 
   return (
     <ToggleButtonGroup
-      size='small'
       orientation='horizontal'
       exclusive={false}
       value={selected}
