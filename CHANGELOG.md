@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fix size default value in ToggleButton storybook [#292](https://github.com/CartoDB/carto-react/pull/292)
 - Add missing filterable default value [#291](https://github.com/CartoDB/carto-react/pull/291)
 - Remove custom ToggleButtonGroup and ToggleButton default size value [#289](https://github.com/CartoDB/carto-react/pull/289)
 - Improve styles for for MaterialUI CircularProgress component [#270](https://github.com/CartoDB/carto-react/pull/270)
