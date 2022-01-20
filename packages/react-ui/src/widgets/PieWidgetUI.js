@@ -328,6 +328,7 @@ PieWidgetUI.defaultProps = {
   labels: {},
   height: '260px',
   animation: true,
+  filterable: true,
   selectedCategories: []
 };
 
@@ -345,6 +346,7 @@ PieWidgetUI.propTypes = {
   tooltipFormatter: PropTypes.func,
   height: PropTypes.string,
   animation: PropTypes.bool,
+  filterable: PropTypes.bool,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func
 };
