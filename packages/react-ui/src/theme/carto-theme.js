@@ -1327,6 +1327,9 @@ export const cartoThemeOptions = {
     MuiSlider: {
       color: 'primary',
       marks: false
+    },
+    MuiDialog: {
+      maxWidth: 'md'
     }
   }
 };
