@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Use LegendComponent in LegendWidgetUI as JSX component to avoid react errors [#295](https://github.com/CartoDB/carto-react/pull/295)
 - Improve styles for MaterialUI Dialog component [#272](https://github.com/CartoDB/carto-react/pull/272)
 
 ## 1.2
