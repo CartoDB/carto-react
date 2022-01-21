@@ -51,7 +51,7 @@ const options = {
 };
 export default options;
 
-const Template = ({ content, ...args }) => {
+const Template = ({ content = <TextContent />, ...args }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -116,24 +116,21 @@ const FormContent = () => (
 );
 
 export const Default = Template.bind({});
-Default.args = { content: <TextContent /> };
 
 export const Form = Template.bind({});
 Form.args = { content: <FormContent /> };
 
 export const DisableEscapeKeyDown = Template.bind({});
-DisableEscapeKeyDown.args = { content: <TextContent />, disableEscapeKeyDown: true };
+DisableEscapeKeyDown.args = { disableEscapeKeyDown: true };
 
 export const SlideTransition = Template.bind({});
 SlideTransition.args = {
-  content: <TextContent />,
   TransitionComponent: Slide,
   TransitionProps: { direction: 'up', timeout: 300 }
 };
 
 export const FullScren = Template.bind({});
 FullScren.args = {
-  content: <TextContent />,
   fullScreen: true,
   TransitionComponent: Slide,
   TransitionProps: { direction: 'up', timeout: 300 }
