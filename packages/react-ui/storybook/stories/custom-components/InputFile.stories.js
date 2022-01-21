@@ -125,10 +125,6 @@ const ExampleTemplate = ({ ...args }) => {
 };
 
 export const Default = Template.bind({});
-Default.args = {
-  accept: 'image/*',
-  multiple: true
-};
 
 export const Example = ExampleTemplate.bind({});
 Example.args = {

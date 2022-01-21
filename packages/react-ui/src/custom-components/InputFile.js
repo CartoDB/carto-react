@@ -68,17 +68,21 @@ function InputFile(props) {
   const handleDrop = (event) => {
     event.preventDefault();
 
-    const newFiles = [];
     const items = event.dataTransfer.items;
+    const newFiles = getAllFiles(items);
+    props.onChange(newFiles);
+  };
 
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].kind === 'file') {
-        const file = items[i].getAsFile();
+  const getAllFiles = (items) => {
+    const newFiles = [];
+    for (let item of items) {
+      if (item.kind === 'file') {
+        const file = item.getAsFile();
         newFiles.push(file);
       }
     }
 
-    props.onChange(newFiles);
+    return newFiles;
   };
 
   const handleFiles = (event) => {
