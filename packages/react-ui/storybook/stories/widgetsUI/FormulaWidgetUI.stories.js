@@ -11,6 +11,13 @@ const options = {
         disable: true
       }
     }
+  },
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
+    }
   }
 };
 

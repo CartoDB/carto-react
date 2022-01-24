@@ -23,6 +23,13 @@ const options = {
         type: 'boolean'
       }
     }
+  },
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
+    }
   }
 };
 export default options;

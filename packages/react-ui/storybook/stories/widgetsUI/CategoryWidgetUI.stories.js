@@ -19,6 +19,13 @@ const options = {
         options: ['ranking', 'fixed']
       }
     }
+  },
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
+    }
   }
 };
 

@@ -7,7 +7,14 @@ import { columns, rows } from '../../../src/widgets/TableWidgetUI/mockData';
 const options = {
   title: 'Widgets UI/TableWidgetUI',
   component: TableWidgetUI,
-  argTypes: {}
+  argTypes: {},
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
+    }
+  }
 };
 export default options;
 

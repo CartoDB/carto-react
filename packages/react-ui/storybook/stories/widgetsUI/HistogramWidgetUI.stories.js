@@ -4,7 +4,14 @@ import { buildReactPropsAsString } from '../../utils';
 
 const options = {
   title: 'Widgets UI/HistogramWidgetUI',
-  component: HistogramWidgetUI
+  component: HistogramWidgetUI,
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
+    }
+  }
 };
 
 export default options;

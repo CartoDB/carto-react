@@ -4,7 +4,14 @@ import { buildReactPropsAsString } from '../../utils';
 
 const options = {
   title: 'Widgets UI/PieWidgetUI',
-  component: PieWidgetUI
+  component: PieWidgetUI,
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
+    }
+  }
 };
 
 export default options;

@@ -13,6 +13,13 @@ const options = {
     enabled: {
       control: { type: 'boolean' }
     }
+  },
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
+    }
   }
 };
 
