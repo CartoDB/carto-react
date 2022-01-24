@@ -2,7 +2,9 @@
 
 ## Not released
 
+- Align legend icon with its label [#300](https://github.com/CartoDB/carto-react/pull/300)
 - Align legend expand icon with title [#299](https://github.com/CartoDB/carto-react/pull/299)
+- Use LegendComponent in LegendWidgetUI as JSX component to avoid react errors [#295](https://github.com/CartoDB/carto-react/pull/295)
 - Improve styles for MaterialUI Dialog component [#272](https://github.com/CartoDB/carto-react/pull/272)
 - Add and export CartoTheme type that describe our custom theme [#298](https://github.com/CartoDB/carto-react/pull/298)
 
