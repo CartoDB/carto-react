@@ -202,8 +202,8 @@ function LegendRows({ layers = [], onChangeVisibility }) {
             attr={attr}
             onChangeVisibility={onChangeVisibility}
           >
-            {LegendComponent({
-              legend: {
+            <LegendComponent
+              legend={{
                 type,
                 collapsible,
                 note,
@@ -212,8 +212,8 @@ function LegendRows({ layers = [], onChangeVisibility }) {
                 labels,
                 icons,
                 stats
-              }
-            })}
+              }}
+            />
           </LegendWrapper>
           {!isSingle && !isLast && <Divider />}
         </Fragment>
