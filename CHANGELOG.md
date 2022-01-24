@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Support hours and minutes as step size in the time series widget [#297](https://github.com/CartoDB/carto-react/pull/297)
 - Improve styles for MaterialUI Dialog component [#272](https://github.com/CartoDB/carto-react/pull/272)
 
 ## 1.2
