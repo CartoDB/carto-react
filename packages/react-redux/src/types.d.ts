@@ -20,6 +20,7 @@ type InitialCarto2State = {
   basemap: CartoBasemapsNames,
   credentials: Credentials,
   googleApiKey: string,
+  googleMapId: string,
 }
 
 type OauthCarto3 = {
