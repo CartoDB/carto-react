@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Align legend icon with its label [#300](https://github.com/CartoDB/carto-react/pull/300)
 - Align legend expand icon with title [#299](https://github.com/CartoDB/carto-react/pull/299)
 - Improve styles for MaterialUI Dialog component [#272](https://github.com/CartoDB/carto-react/pull/272)
 
