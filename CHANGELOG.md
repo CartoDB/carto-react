@@ -2,19 +2,51 @@
 
 ## Not released
 
+- Improve styles for MaterialUI Dialog component [#272](https://github.com/CartoDB/carto-react/pull/272)
+
+## 1.2
+
+### 1.2.1-alpha.5 (2022-01-20)
+
+- Fix size default value in ToggleButton storybook [#292](https://github.com/CartoDB/carto-react/pull/292)
+- Add missing filterable default value [#291](https://github.com/CartoDB/carto-react/pull/291)
+- Remove custom ToggleButtonGroup and ToggleButton default size value [#289](https://github.com/CartoDB/carto-react/pull/289)
+- Improve styles for for MaterialUI CircularProgress component [#270](https://github.com/CartoDB/carto-react/pull/270)
+- Improve styles for MaterialUI Slider component [#274](https://github.com/CartoDB/carto-react/pull/274)
+- Improve styles for MaterialUI Chip component [#275](https://github.com/CartoDB/carto-react/pull/275)
+- Fix wrong word break in widgets title [#290](https://github.com/CartoDB/carto-react/pull/290)
+- Fix JS error in category label [#290](https://github.com/CartoDB/carto-react/pull/290)
+
+### 1.2.1-alpha.4 (2022-01-19)
+
+- Fix: TableWidget fixed height with pagination [#286](https://github.com/CartoDB/carto-react/pull/286)
+- Add initialCollapsed prop to LegendWidget [#282](https://github.com/CartoDB/carto-react/pull/282)
+- Fix executeSQL typing [#280](https://github.com/CartoDB/carto-react/pull/280)
+- Fix widget long name going out of the frame [#266](https://github.com/CartoDB/carto-react/pull/266)
+- Fix too long labels in CategoryWidget [#267](https://github.com/CartoDB/carto-react/pull/267)
+- Improve styles for MaterialUI ToggleButton & ToggleButtonGroup components [#269](https://github.com/CartoDB/carto-react/pull/269)
+
+### 1.2.1-alpha.3 (2022-01-18)
+
+- Export getTable method for TableWidget model [#283](https://github.com/CartoDB/carto-react/pull/283)
+- Expose height and dense prop in TableWidget [#279](https://github.com/CartoDB/carto-react/pull/279)
+- Expose initialPageSize prop in TableWidget [#281](https://github.com/CartoDB/carto-react/pull/281)
+- Fix filtersToSQL output when IN filter has numeric values [#277](https://github.com/CartoDB/carto-react/pull/277)
+- Remove uniqueIdProperty default value in useGeojsonFeatures [#273](https://github.com/CartoDB/carto-react/pull/273)
+- Allow disable widgets filtering [#268](https://github.com/CartoDB/carto-react/pull/268)
 - Fix: use 0-based pagination in raw feature access and TableWidget [#265](https://github.com/CartoDB/carto-react/pull/265)
 
-## 1.2.0-alpha.2 (2022-01-03)
+### 1.2.1-alpha.2 (2022-01-03)
 
 - Fix: DrawingToolLayer disables interactivity of the layers behind it [#263](https://github.com/CartoDB/carto-react/pull/263)
 - Add TableWidget [#154](https://github.com/CartoDB/carto-react/pull/154)
 
-## 1.2.0-alpha.1 (2021-12-30)
+### 1.2.1-alpha.1 (2021-12-30)
 
 - Track clientId for tracing purposes [#261](https://github.com/CartoDB/carto-react/pull/261)
 - Update deck.gl version to 8.7.0-alpha.11 [#254](https://github.com/CartoDB/carto-react/pull/254)
 
-## 1.2.0-alpha.0 (2021-12-29)
+### 1.2.1-alpha.0 (2021-12-29)
 
 - WRAPPER WIDGET Configurable margin in widgets [#251](https://github.com/CartoDB/carto-react/pull/251)
 - Add spatial filter to allow ramdom geometry filters in widgets[#250](https://github.com/CartoDB/carto-react/pull/250)
@@ -22,7 +54,9 @@
 - Fix: remove sortBy prop default value [#252](https://github.com/CartoDB/carto-react/pull/252)
 - Fix TS type declarations for BasemapName and CartoSlice [#248](https://github.com/CartoDB/carto-react/pull/248)
 
-## 1.1.4 (2021-12-16)
+## 1.1
+
+### 1.1.4 (2021-12-16)
 
 - Implement C4R filtering using binary data [#228](https://github.com/CartoDB/carto-react/pull/228)
 - Fix build adding peerDependecy of @carto/react-core to @carto/react-ui [#237](https://github.com/CartoDB/carto-react/pull/237)
@@ -31,23 +65,23 @@
 - Improve timeseries animation performance [#243](https://github.com/CartoDB/carto-react/pull/243)
 - Fix TS type declarations for BasemapName and CartoSlice [#248](https://github.com/CartoDB/carto-react/pull/248)
 
-## 1.1.3 (2021-12-04)
+### 1.1.3 (2021-12-04)
 
 - Histogram takes into account null values in filters for selected bars [#234](https://github.com/CartoDB/carto-react/pull/234)
 - Return raw feature data from workers [#225](https://github.com/CartoDB/carto-react/pull/225)
 
-## 1.1.2 (2021-12-01)
+### 1.1.2 (2021-12-01)
 
 - Fix CategoryWidget values during animation [#230](https://github.com/CartoDB/carto-react/pull/230)
 - Remove lock in CategoryWidget if selected categories change [#231](https://github.com/CartoDB/carto-react/pull/231)
 - Refresh charts widgets when changing tooltip functions [#232](https://github.com/CartoDB/carto-react/pull/232)
 
-## 1.1.1 (2021-11-23)
+### 1.1.1 (2021-11-23)
 
 - Improve Widgets calculations sync with tiles [#223](https://github.com/CartoDB/carto-react/pull/223)
 - `CategoryWidget`, `HistogramWidget`, `PieWidget` use filters in datasource to derive selecteditems (categories, bars) instead of local react state [224](https://github.com/CartoDB/carto-react/pull/224)
 
-## 1.1.0 (2021-10-29)
+### 1.1.0 (2021-10-29)
 
 - Histogram tooltip formatter receiving dataIndex and ticks [#220](https://github.com/CartoDB/carto-react/pull/220)
 - Histogram yAxis max value should always be shown [#221](https://github.com/CartoDB/carto-react/pull/221)
@@ -133,12 +167,14 @@
 - Update to latest 8.5.0-alpha.10 deck.gl version [#149](https://github.com/CartoDB/carto-react/pull/149)
 - Add support to Cloud Native SQL API [#150](https://github.com/CartoDB/carto-react/pull/150)
 
-## 1.0.1 (2021-04-12)
+## 1.0
+
+### 1.0.1 (2021-04-12)
 
 - Add basic Typescript typings [#136](https://github.com/CartoDB/carto-react/pull/136)
 - Remove debugger in googlemap and clean code [#137](https://github.com/CartoDB/carto-react/pull/137)
 
-## 1.0.0 (2021-03-23)
+### 1.0.0 (2021-03-23)
 
 ### 1.0.0-rc.3 (2021-03-22)
 

@@ -149,6 +149,7 @@ function PieWidgetUI({
   labels,
   colors,
   animation,
+  filterable,
   selectedCategories,
   onSelectedCategoriesChange
 }) {
@@ -286,11 +287,11 @@ function PieWidgetUI({
 
   const onEvents = useMemo(
     () => ({
-      click: clickEvent,
+      ...(filterable && { click: clickEvent }),
       mouseover: mouseoverEvent,
       mouseout: mouseoutEvent
     }),
-    [clickEvent, mouseoverEvent, mouseoutEvent]
+    [filterable, clickEvent, mouseoverEvent, mouseoutEvent]
   );
 
   return (
@@ -327,6 +328,7 @@ PieWidgetUI.defaultProps = {
   labels: {},
   height: '260px',
   animation: true,
+  filterable: true,
   selectedCategories: []
 };
 
@@ -344,6 +346,7 @@ PieWidgetUI.propTypes = {
   tooltipFormatter: PropTypes.func,
   height: PropTypes.string,
   animation: PropTypes.bool,
+  filterable: PropTypes.bool,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func
 };

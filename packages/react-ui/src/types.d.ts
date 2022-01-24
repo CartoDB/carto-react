@@ -80,8 +80,11 @@ export type LegendWidgetUIData = {
 };
 
 export type LegendWidgetUI = {
-  layers: LegendWidgetUIData[];
-  onChangeVisibility: ({ id: string, visible: boolean }) => void;
+  className?: string;
+  layers?: LegendWidgetUIData[];
+  collapsed?: boolean;
+  onCollapsedChange?: (value: boolean) => void;
+  onChangeVisibility?: ({ id: string, visible: boolean }) => void;
 };
 
 export type ScatterPlotWidgetUIData = number[][];

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   Table,
@@ -14,13 +14,12 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   tableHead: {
-    backgroundColor: theme.palette.common.white,
-    '& .MuiTableCell-head': {
-      border: 'none'
-    },
     '& .MuiTableCell-head, & .MuiTableCell-head span': {
       ...theme.typography.caption,
       color: theme.palette.text.secondary
+    },
+    '& th.MuiTableCell-stickyHeader': {
+      backgroundColor: theme.palette.common.white
     }
   },
   tableRow: {
@@ -70,9 +69,12 @@ function TableWidgetUI({
   rowsPerPage,
   rowsPerPageOptions,
   onSetRowsPerPage,
-  onRowClick
+  onRowClick,
+  height,
+  dense
 }) {
   const classes = useStyles();
+  const paginationRef = useRef(null);
 
   const handleSort = (sortField) => {
     const isAsc = sortBy === sortField && sortDirection === 'asc';
@@ -89,10 +91,16 @@ function TableWidgetUI({
     onSetPage(0);
   };
 
+  const fixedHeightStyle = {};
+  if (height) {
+    const paginationHeight = paginationRef?.current?.clientHeight || 0;
+    fixedHeightStyle.height = `calc(${height} - ${paginationHeight}px)`;
+  }
+
   return (
     <>
-      <TableContainer>
-        <Table>
+      <TableContainer style={fixedHeightStyle}>
+        <Table stickyHeader size={dense ? 'small' : 'medium'}>
           <TableHeaderComponent
             columns={columns}
             sorting={sorting}
@@ -105,6 +113,7 @@ function TableWidgetUI({
       </TableContainer>
       {pagination && (
         <TablePagination
+          ref={paginationRef}
           className={classes.pagination}
           rowsPerPageOptions={rowsPerPageOptions}
           component='div'
@@ -185,7 +194,8 @@ TableWidgetUI.defaultProps = {
   sortDirection: 'asc',
   pagination: false,
   rowsPerPage: 10,
-  rowsPerPageOptions: [5, 10, 25]
+  rowsPerPageOptions: [5, 10, 25],
+  dense: false
 };
 
 TableWidgetUI.propTypes = {
@@ -203,7 +213,9 @@ TableWidgetUI.propTypes = {
   rowsPerPage: PropTypes.number,
   rowsPerPageOptions: PropTypes.array,
   onSetRowsPerPage: PropTypes.func,
-  onRowClick: PropTypes.func
+  onRowClick: PropTypes.func,
+  height: PropTypes.string,
+  dense: PropTypes.bool
 };
 
 export default TableWidgetUI;

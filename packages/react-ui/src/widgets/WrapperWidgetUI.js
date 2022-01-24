@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   header: ({ expanded }) => ({
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
     width: '100%',
     ...(expanded ? { minHeight: theme.spacing(3) } : { height: theme.spacing(3) }),
@@ -75,12 +75,22 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   buttonText: ({ expanded }) => ({
+    wordBreak: 'break-word',
+    overflow: 'hidden',
+    ...(expanded && {
+      display: '-webkit-box',
+      WebkitLineClamp: 2,
+      WebkitBoxOrient: 'vertical'
+    }),
     ...(!expanded && {
       whiteSpace: 'nowrap',
-      overflow: 'hidden',
       textOverflow: 'ellipsis'
     })
   }),
+  actions: {
+    display: 'flex',
+    marginLeft: theme.spacing(1)
+  },
   iconToggle: {
     display: 'flex',
     alignItems: 'center',
@@ -91,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
   },
   iconAction: {
     color: theme.palette.text.secondary,
-    margin: theme.spacing(-1, 0)
+    margin: theme.spacing(-0.75, 0)
   },
   content: {
     paddingTop: theme.spacing(1.25)
@@ -141,12 +151,6 @@ function WrapperWidgetUI(props) {
     );
   };
 
-  const Title = (
-    <Typography className={classes.buttonText} align='left' variant='subtitle1'>
-      {props.title}
-    </Typography>
-  );
-
   return (
     <Box component='section' aria-label={props.title} className={classes.root}>
       {props.isLoading ? <LinearProgress className={classes.loading} /> : null}
@@ -166,16 +170,14 @@ function WrapperWidgetUI(props) {
           }
           onClick={handleExpandClick}
         >
-          {expanded ? (
-            Title
-          ) : (
-            <Tooltip title={props.title} placement='top' arrow>
-              {Title}
-            </Tooltip>
-          )}
+          <Tooltip title={props.title} placement='top' arrow>
+            <Typography className={classes.buttonText} align='left' variant='subtitle1'>
+              {props.title}
+            </Typography>
+          </Tooltip>
         </Button>
 
-        <Grid item style={{ display: 'flex' }}>
+        <Grid className={classes.actions} item>
           {actions.length > 0 &&
             actions.map((action) => {
               return action.tooltip ? (
