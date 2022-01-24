@@ -34,7 +34,7 @@ const Template = (args) => {
   return (
     <Box display='inline-block' minWidth={72}>
       <FeatureSelectionWidgetUI
-        drawModes={FEATURE_SELECTION_MODES}
+        selectionModes={FEATURE_SELECTION_MODES}
         editModes={EDIT_MODES}
         {...args}
         selectedMode={selectedMode}
