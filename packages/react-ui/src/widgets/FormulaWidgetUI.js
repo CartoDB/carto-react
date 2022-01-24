@@ -31,14 +31,14 @@ function usePrevious(value) {
 
 function FormulaWidgetUI(props) {
   const classes = useStyles();
-  const { data, formatter } = props;
+  const { data, formatter, animation } = props;
   const [value, setValue] = useState('-');
   const requestRef = useRef();
   const prevValue = usePrevious(value);
   const referencedPrevValue = useRef(prevValue);
 
   useEffect(() => {
-    if (typeof data === 'number') {
+    if (typeof data === 'number' && animation) {
       animateValue({
         start: referencedPrevValue.current || 0,
         end: data,
@@ -48,6 +48,7 @@ function FormulaWidgetUI(props) {
       });
     } else if (
       typeof data === 'object' &&
+      animation &&
       data &&
       referencedPrevValue.current &&
       data.value !== null &&
@@ -65,7 +66,7 @@ function FormulaWidgetUI(props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => cancelAnimationFrame(requestRef.current);
-  }, [data, setValue]);
+  }, [animation, data, setValue]);
 
   const formattedValue = formatter(value);
 
@@ -89,7 +90,8 @@ function FormulaWidgetUI(props) {
 FormulaWidgetUI.defaultProps = {
   data: '-',
   formatter: (v) => v,
-  unitBefore: false
+  unitBefore: false,
+  animation: true
 };
 
 FormulaWidgetUI.propTypes = {
@@ -102,7 +104,8 @@ FormulaWidgetUI.propTypes = {
     })
   ]),
   unitBefore: PropTypes.bool,
-  formatter: PropTypes.func
+  formatter: PropTypes.func,
+  animation: PropTypes.bool
 };
 
 export default FormulaWidgetUI;

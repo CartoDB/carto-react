@@ -6,5 +6,6 @@ export function debounce(fn, ms) {
       timer = null;
       fn.apply(this, args);
     }, ms);
+    return timer;
   };
 }

@@ -5,7 +5,7 @@ import { Methods, executeTask } from '@carto/react-workers';
 jest.mock('@carto/react-workers', () => ({
   executeTask: jest.fn(),
   Methods: {
-    VIEWPORT_FEATURES_FORMULA: 'viewportFeaturesFormula'
+    FEATURES_FORMULA: 'featuresFormula'
   }
 }));
 
@@ -27,11 +27,11 @@ describe('getFormula', () => {
     test('correctly called', async () => {
       const { operation, column, filters, dataSource } = formulaParams;
       await getFormula(formulaParams);
-      expect(executeTask).toHaveBeenCalledWith(
-        dataSource,
-        Methods.VIEWPORT_FEATURES_FORMULA,
-        { column, filters, operation }
-      );
+      expect(executeTask).toHaveBeenCalledWith(dataSource, Methods.FEATURES_FORMULA, {
+        column,
+        filters,
+        operation
+      });
     });
   });
 });

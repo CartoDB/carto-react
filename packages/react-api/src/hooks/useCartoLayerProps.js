@@ -1,14 +1,34 @@
-import { DataFilterExtension } from '@deck.gl/extensions';
-import { _buildFeatureFilter } from '@carto/react-core';
-import useViewportFeatures from './useViewportFeatures';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
+import { useSelector } from 'react-redux';
+import { selectSpatialFilter } from '@carto/react-redux';
+import useGeojsonFeatures from './useGeojsonFeatures';
+import useTileFeatures from './useTileFeatures';
+import { getDataFilterExtensionProps } from './dataFilterExtensionUtil';
 
 export default function useCartoLayerProps({
   source,
   uniqueIdProperty,
-  viewportFeatures = true
+  viewportFeatures = true,
+  viewporFeaturesDebounceTimeout = 250
 }) {
-  const [onViewportLoad, onDataLoad] = useViewportFeatures(source, uniqueIdProperty);
+  const viewport = useSelector((state) => state.carto.viewport);
+  const spatialFilter = useSelector((state) => selectSpatialFilter(state, source?.id));
+
+  const [onDataLoad] = useGeojsonFeatures({
+    source,
+    viewport,
+    spatialFilter,
+    uniqueIdProperty,
+    debounceTimeout: viewporFeaturesDebounceTimeout
+  });
+
+  const [onViewportLoad, fetch] = useTileFeatures({
+    source,
+    viewport,
+    spatialFilter,
+    uniqueIdProperty,
+    debounceTimeout: viewporFeaturesDebounceTimeout
+  });
 
   let props = {};
 
@@ -18,27 +38,27 @@ export default function useCartoLayerProps({
   ) {
     props = {
       binary: true,
-      onViewportLoad: viewportFeatures ? onViewportLoad : null
+      ...(viewportFeatures && {
+        onViewportLoad,
+        fetch
+      })
     };
   } else if (source?.type === MAP_TYPES.QUERY || source?.type === MAP_TYPES.TABLE) {
-    props = {
-      // empty function should be removed by null, but need a fix in CartoLayer
-      onDataLoad: viewportFeatures ? onDataLoad : () => null
+    props = viewportFeatures && {
+      onDataLoad
     };
   }
+
+  const dataFilterExtensionProps = getDataFilterExtensionProps(source?.filters);
 
   return {
     ...props,
     uniqueIdProperty,
-    data: source && source.data,
-    type: source && source.type,
-    connection: source && source.connection,
-    credentials: source && source.credentials,
-    getFilterValue: _buildFeatureFilter({ filters: source?.filters, type: 'number' }),
-    filterRange: [1, 1],
-    extensions: [new DataFilterExtension({ filterSize: 1 })],
-    updateTriggers: {
-      getFilterValue: source?.filters
-    }
+    data: source?.data,
+    type: source?.type,
+    connection: source?.connection,
+    credentials: source?.credentials,
+    clientId: 'carto-for-react',
+    ...dataFilterExtensionProps
   };
 }

@@ -36,8 +36,9 @@ export type HistogramWidget = {
 export type PieWidget = {
   height: string,
   operationColumn?: string,
-  tooltipFormatter?: Function
-}
+  tooltipFormatter?: Function,
+  colors?: string[];
+} & CommonWidgetProps & MonoColumnWidgetProps;
 
 export type ScatterPlotWidget = {
   xAxisColumn: string,
@@ -57,7 +58,6 @@ export type TimeSeriesWidget = {
   stepSize: string,
   stepSizeOptions?: string[],
   chartType?: string,
-  duration?: number,
   tooltip?: boolean,
   tooltipFormatter?: Function,
   formatter?: Function,
@@ -72,3 +72,8 @@ export type TimeSeriesWidget = {
   onTimelineUpdate?: Function,
   onTimeWindowUpdate?: Function
 } & CommonWidgetProps & MonoColumnWidgetProps;
+
+export type LegendWidget = {
+  className?: string;
+  initialCollapsed?: boolean;
+}

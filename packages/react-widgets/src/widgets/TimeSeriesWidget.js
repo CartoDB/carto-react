@@ -4,7 +4,7 @@ import { getTimeSeries } from '../models';
 import {
   addFilter,
   removeFilter,
-  selectIsViewportFeaturesReadyForSource
+  selectAreFeaturesReadyForSource
 } from '@carto/react-redux';
 import {
   TimeSeriesWidgetUI,
@@ -44,12 +44,12 @@ const STEP_SIZE_RANGE_MAPPING = {
  * @param  {string} props.stepSize - Step applied to group the data. Must be one of those defined in `GroupDateTypes` object.
  * @param  {string[]} [props.stepSizeOptions] - Different steps that can be applied to group the data. If filled, an icon with a menu appears to change between steps. Every value must be one of those defined in `AggregationTypes` object.
  * @param  {string} [props.chartType] - Chart used to represent the time serie. Must be one of those defined in `TIME_SERIES_CHART_TYPES` object.
- * @param  {number} [props.duration] - Duration of the animation in milliseconds. 20s by default.
  * @param  {boolean} [props.tooltip] - Enable/disable tooltip.
  * @param  {function} [props.tooltipFormatter] - Function that returns the HTML for the chart tooltip.
  * @param  {function} [props.formatter] - Function for formatting the value that is represented in the tooltip.
  * @param  {string} [props.height] - Height of the chart.
  * @param  {boolean} [props.showControls] - Enable/disable animation controls (play, pause, stop, speed). True by default.
+ * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -78,12 +78,12 @@ function TimeSeriesWidget({
   noDataAlertProps,
   // UI
   chartType,
-  duration,
   tooltip,
   tooltipFormatter,
   formatter,
   height,
   showControls,
+  animation,
   isPlaying,
   onPlay,
   isPaused,
@@ -98,7 +98,7 @@ function TimeSeriesWidget({
   const dispatch = useDispatch();
 
   const isSourceReady = useSelector((state) =>
-    selectIsViewportFeaturesReadyForSource(state, dataSource)
+    selectAreFeaturesReadyForSource(state, dataSource)
   );
   const filters = useSourceFilters({ dataSource, id });
 
@@ -152,37 +152,50 @@ function TimeSeriesWidget({
 
   const handleTimeWindowUpdate = useCallback(
     (timeWindow) => {
-      dispatch(
-        addFilter({
-          id: dataSource,
-          column,
-          type: FilterTypes.TIME,
-          values: [timeWindow.map((date) => date.getTime?.() || date)],
-          owner: id
-        })
-      );
+      if (!isLoading) {
+        dispatch(
+          addFilter({
+            id: dataSource,
+            column,
+            type: FilterTypes.TIME,
+            values: [timeWindow.map((date) => date.getTime?.() || date)],
+            owner: id
+          })
+        );
 
-      if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
+        if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
+      }
     },
-    [column, dataSource, dispatch, id, onTimeWindowUpdate]
+    [column, dataSource, isLoading, dispatch, id, onTimeWindowUpdate]
   );
 
   const handleTimelineUpdate = useCallback(
     (timelinePosition) => {
-      const { name: moment } = timeSeriesData[timelinePosition];
-      dispatch(
-        addFilter({
-          id: dataSource,
-          column,
-          type: FilterTypes.TIME,
-          values: [[moment, moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize]]],
-          owner: id
-        })
-      );
+      if (!isLoading) {
+        const { name: moment } = timeSeriesData[timelinePosition];
+        dispatch(
+          addFilter({
+            id: dataSource,
+            column,
+            type: FilterTypes.TIME,
+            values: [[moment, moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize]]],
+            owner: id
+          })
+        );
 
-      if (onTimelineUpdate) onTimelineUpdate(new Date(moment));
+        if (onTimelineUpdate) onTimelineUpdate(new Date(moment));
+      }
     },
-    [column, dataSource, dispatch, id, onTimelineUpdate, selectedStepSize, timeSeriesData]
+    [
+      column,
+      dataSource,
+      isLoading,
+      dispatch,
+      id,
+      onTimelineUpdate,
+      selectedStepSize,
+      timeSeriesData
+    ]
   );
 
   const handleStop = useCallback(() => {
@@ -238,12 +251,12 @@ function TimeSeriesWidget({
             data={timeSeriesData}
             stepSize={selectedStepSize}
             chartType={chartType}
-            duration={duration}
             tooltip={tooltip}
             tooltipFormatter={tooltipFormatter}
             formatter={formatter}
             height={height}
             showControls={showControls}
+            animation={animation}
             isPlaying={isPlaying}
             onPlay={onPlay}
             isPaused={isPaused}
@@ -296,11 +309,11 @@ TimeSeriesWidget.propTypes = {
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
   // UI
-  duration: PropTypes.number,
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
   formatter: PropTypes.func,
   height: PropTypes.string,
+  animation: PropTypes.bool,
   isPlaying: PropTypes.bool,
   onPlay: PropTypes.func,
   isPaused: PropTypes.bool,
@@ -322,9 +335,9 @@ TimeSeriesWidget.defaultProps = {
   wrapperProps: {},
   noDataAlertProps: {},
   // UI
-  duration: 20000,
   tooltip: true,
   formatter: (value) => value,
+  animation: true,
   isPlaying: false,
   isPaused: false,
   // timelinePosition: 0,

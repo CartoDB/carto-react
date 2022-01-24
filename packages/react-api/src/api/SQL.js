@@ -4,16 +4,19 @@ import { API_VERSIONS } from '@deck.gl/carto';
 
 import { dealWithApiError, generateApiUrl } from './common';
 
+const CLIENT = 'carto-react';
+
 /**
  * Executes a SQL query
  *
- * @param { Object } credentials - CARTO user credentials
- * @param { string } credentials.username - CARTO username
- * @param { string } credentials.apiKey - CARTO API Key
- * @param { string } credentials.serverUrlTemplate - CARTO server URL template
- * @param { string } query - SQL query to be executed
- * @param { string } connection - connection name required for CARTO cloud native
- * @param { Object } opts - Additional options for the HTTP request
+ * @param { object } props
+ * @param { Object } props.credentials - CARTO user credentials
+ * @param { string } props.credentials.username - CARTO username
+ * @param { string } props.credentials.apiKey - CARTO API Key
+ * @param { string } props.credentials.serverUrlTemplate - CARTO server URL template
+ * @param { string } props.query - SQL query to be executed
+ * @param { string } props.connection - connection name required for CARTO cloud native
+ * @param { Object } props.opts - Additional options for the HTTP request
  */
 export const executeSQL = async ({ credentials, query, connection, opts }) => {
   let response;
@@ -40,7 +43,7 @@ export const executeSQL = async ({ credentials, query, connection, opts }) => {
   const { apiVersion = API_VERSIONS.V2 } = credentials;
 
   if (apiVersion === API_VERSIONS.V3) {
-    return data;
+    return data.rows;
   }
 
   return opts && opts.format === 'geojson' ? data : data.rows; // just rows portion of result object
@@ -56,7 +59,7 @@ function createRequest({ credentials, connection, query, opts = {} }) {
   const { apiVersion = API_VERSIONS.V2 } = credentials;
 
   const rawParams = {
-    client: 'carto-react',
+    client: CLIENT,
     q: query?.trim(),
     ...otherOptions
   };
@@ -73,16 +76,27 @@ function createRequest({ credentials, connection, query, opts = {} }) {
   }
 
   // Get request
-  const encodedParams = Object.entries(rawParams).map(([key, value]) =>
+  const urlParamsForGet = Object.entries(rawParams).map(([key, value]) =>
     encodeParameter(key, value)
   );
-
-  const getUrl = generateApiUrl({ credentials, connection, parameters: encodedParams });
+  const getUrl = generateApiUrl({
+    credentials,
+    connection,
+    parameters: urlParamsForGet
+  });
   if (getUrl.length < REQUEST_GET_MAX_URL_LENGTH) {
     return getRequest(getUrl, requestOpts);
   }
 
   // Post request
-  const postUrl = generateApiUrl({ credentials });
+  const urlParamsForPost =
+    apiVersion === API_VERSIONS.V3
+      ? [`access_token=${credentials.accessToken}`, `client=${CLIENT}`]
+      : null;
+  const postUrl = generateApiUrl({
+    credentials,
+    connection,
+    parameters: urlParamsForPost
+  });
   return postRequest(postUrl, rawParams, requestOpts);
 }

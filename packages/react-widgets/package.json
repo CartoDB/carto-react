@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-widgets",
-  "version": "1.1.0-beta.1",
+  "version": "1.2.1-alpha.6",
   "description": "CARTO for React - Widgets",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -66,12 +66,14 @@
     "pgsql-minify": "^1.0.5"
   },
   "peerDependencies": {
-    "@carto/react-api": "^1.1.0-beta.0",
-    "@carto/react-core": "^1.1.0-beta.0",
-    "@carto/react-redux": "^1.1.0-beta.0",
-    "@carto/react-ui": "^1.1.0-beta.0",
-    "@carto/react-workers": "^1.1.0-beta.0",
+    "@carto/react-api": "^1.1.4",
+    "@carto/react-core": "^1.1.4",
+    "@carto/react-redux": "^1.1.4",
+    "@carto/react-ui": "^1.1.4",
+    "@carto/react-workers": "^1.1.4",
     "@material-ui/core": "^4.11.3",
+    "@nebula.gl/edit-modes": "^1.0.2-alpha.0",
+    "@nebula.gl/layers": "^1.0.2-alpha.0",
     "dequal": "^2.0.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

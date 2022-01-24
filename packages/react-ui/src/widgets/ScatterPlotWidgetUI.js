@@ -2,7 +2,8 @@ import { useTheme } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useRef, useState, useEffect } from 'react';
 import ReactEcharts from 'echarts-for-react';
-import { isDataEqual } from './utils/chartUtils';
+import { areChartPropsEqual } from './utils/chartUtils';
+
 function __generateDefaultConfig(
   { tooltipFormatter, xAxisFormatter = (v) => v, yAxisFormatter = (v) => v },
   theme
@@ -53,24 +54,27 @@ function __generateDefaultConfig(
   };
 }
 
-function __generateSerie({ name, data, theme }) {
+function __generateSerie({ name, data, animation }) {
   return [
     {
       type: 'scatter',
       name,
-      data: data
+      data: data,
+      animation
     }
   ];
 }
 
 const EchartsWrapper = React.memo(
   ReactEcharts,
-  ({ option: optionPrev }, { option: optionNext }) => isDataEqual(optionPrev, optionNext)
+  ({ option: optionPrev }, { option: optionNext }) =>
+    areChartPropsEqual(optionPrev, optionNext)
 );
 
 function ScatterPlotWidgetUI({
   name,
   data = [],
+  animation,
   xAxisFormatter,
   yAxisFormatter,
   tooltipFormatter
@@ -88,13 +92,15 @@ function ScatterPlotWidgetUI({
     );
     const series = __generateSerie({
       name,
-      data: data || []
+      data: data || [],
+      animation
     });
     setOptions({
       ...config,
       series
     });
-  }, [data, name, theme, xAxisFormatter, yAxisFormatter, tooltipFormatter]);
+  }, [data, name, animation, theme, xAxisFormatter, yAxisFormatter, tooltipFormatter]);
+
   return (
     <EchartsWrapper
       ref={chartInstance}
@@ -107,6 +113,7 @@ function ScatterPlotWidgetUI({
 
 ScatterPlotWidgetUI.defaultProps = {
   name: null,
+  animation: true,
   tooltipFormatter: (v) => `[${v.value[0]}, ${v.value[1]})`,
   xAxisFormatter: (v) => v,
   yAxisFormatter: (v) => v
@@ -115,6 +122,7 @@ ScatterPlotWidgetUI.defaultProps = {
 ScatterPlotWidgetUI.propTypes = {
   name: PropTypes.string,
   data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+  animation: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
   xAxisFormatter: PropTypes.func,
   yAxisFormatter: PropTypes.func

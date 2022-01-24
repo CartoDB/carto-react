@@ -14,7 +14,8 @@ import { debounce } from '@carto/react-core';
  * @param { function } props.onResize - (Optional) onResize handler
  * @param { function } props.onViewStateChange - (Optional) onViewStateChange handler
  * @param { string } props.apiKey - Google Maps API Key
- * @returns { Object } - Data returned from the SQL query execution
+ * @param { string } props.mapId - Google Maps custom mapId
+ * @returns { JSX.Element } - Data returned from the SQL query execution
  */
 export function GoogleMap(props) {
   const {

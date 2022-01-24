@@ -71,7 +71,7 @@ describe('should call SqlApi', () => {
     });
 
     test('should throw due to unknown error', async () => {
-      const errorResponse = { ...response, error: {} };
+      const errorResponse = { ...response, hint: '' };
       mockSqlApiRequest({
         response: errorResponse,
         status: 1123,
@@ -80,7 +80,7 @@ describe('should call SqlApi', () => {
         credentials
       });
       await expect(executeSQL({ credentials, query })).rejects.toThrow(
-        `${JSON.stringify(errorResponse.error)}`
+        `${errorResponse.hint}`
       );
     });
   });

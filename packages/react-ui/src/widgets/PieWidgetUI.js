@@ -1,16 +1,16 @@
-import React, { useMemo, useRef, useEffect, useState } from 'react';
+import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { useTheme } from '@material-ui/core';
 import {
   getChartSerie,
   applyChartFilter,
-  isDataEqual,
+  areChartPropsEqual,
   disableSerie,
   setColor
 } from './utils/chartUtils';
 
-function __generateDefaultConfig({ tooltipFormatter, formatter, colors }, theme) {
+function __generateDefaultConfig({ tooltipFormatter, formatter }, theme) {
   return {
     grid: {
       left: theme.spacing(0),
@@ -18,7 +18,6 @@ function __generateDefaultConfig({ tooltipFormatter, formatter, colors }, theme)
       right: theme.spacing(0),
       bottom: theme.spacing(0)
     },
-    color: colors || Object.values(theme.palette.qualitative.bold),
     tooltip: {
       trigger: 'item',
       showDelay: 1000,
@@ -75,25 +74,31 @@ function __generateDefaultConfig({ tooltipFormatter, formatter, colors }, theme)
   };
 }
 
-function __generateSerie({ name, data, theme, color, selectedCategories }) {
+function __generateSerie({ name, data, theme, animation, selectedCategories, labels }) {
   return [
     {
       type: 'pie',
       name,
-      data: data.map((item, index) => {
-        item.color = color[index];
+      animation,
+      data: data.map((item) => {
+        // Avoid modify data item
+        const clonedItem = { ...item };
 
-        const disabled =
-          selectedCategories?.length && !selectedCategories.includes(item.name);
-
-        if (disabled) {
-          disableSerie(item, theme);
-          return item;
+        if (labels?.[clonedItem.name]) {
+          clonedItem.name = labels[clonedItem.name];
         }
 
-        setColor(item);
+        const disabled =
+          selectedCategories?.length && !selectedCategories.includes(clonedItem.name);
 
-        return item;
+        if (disabled) {
+          disableSerie(clonedItem, theme);
+          return clonedItem;
+        }
+
+        setColor(clonedItem);
+
+        return clonedItem;
       }),
       radius: ['74%', '90%'],
       selectedOffset: 0,
@@ -131,7 +136,8 @@ function __getDefaultLabel(data = []) {
 
 const EchartsWrapper = React.memo(
   ReactEcharts,
-  ({ option: optionPrev }, { option: optionNext }) => isDataEqual(optionPrev, optionNext)
+  ({ option: optionPrev }, { option: optionNext }) =>
+    areChartPropsEqual(optionPrev, optionNext)
 );
 
 function PieWidgetUI({
@@ -140,7 +146,10 @@ function PieWidgetUI({
   formatter,
   tooltipFormatter,
   height,
+  labels,
   colors,
+  animation,
+  filterable,
   selectedCategories,
   onSelectedCategoriesChange
 }) {
@@ -150,7 +159,8 @@ function PieWidgetUI({
     series: []
   });
   const [elementHover, setElementHover] = useState();
-  let defaultLabel = useMemo(() => ({}), []);
+  let defaultLabel = useRef({});
+  const colorByCategory = useRef({});
 
   const updateLabel = (params) => {
     const echart = chartInstance.current.getEchartsInstance();
@@ -162,36 +172,66 @@ function PieWidgetUI({
     echart.setOption(option, true);
   };
 
+  // Reset colorByCategory when colors changes
+  // Spread colors array to avoid reference problems
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => (colorByCategory.current = {}), [...(colors || [])]);
+
+  const dataWithColor = useMemo(() => {
+    return (data || []).map((item) => {
+      const { name } = item;
+      const colorUsed = colorByCategory.current[name];
+      if (colorUsed) {
+        item.color = colorUsed;
+      } else {
+        const paletteToUse = colors || theme.palette.qualitative.bold;
+        const colorToUse =
+          paletteToUse[Object.keys(colorByCategory.current).length] || '#fff';
+        colorByCategory.current[name] = colorToUse;
+        item.color = colorToUse;
+      }
+      return item;
+    });
+  }, [data, colors, theme.palette.qualitative.bold]);
+
   useEffect(() => {
-    const config = __generateDefaultConfig(
-      { formatter, tooltipFormatter, colors },
-      theme
-    );
+    const config = __generateDefaultConfig({ formatter, tooltipFormatter }, theme);
     const series = __generateSerie({
       name,
-      data: data || [],
+      data: dataWithColor,
       theme,
       color: config.color,
-      selectedCategories
+      selectedCategories,
+      labels,
+      animation
     });
 
     setOptions({
       ...config,
       series
     });
-  }, [data, name, theme, tooltipFormatter, formatter, selectedCategories, colors]);
+  }, [
+    dataWithColor,
+    name,
+    theme,
+    tooltipFormatter,
+    formatter,
+    selectedCategories,
+    labels,
+    animation
+  ]);
 
   useEffect(() => {
     const label = elementHover || __getDefaultLabel(options.series[0]?.data);
+    defaultLabel.current = label;
     // eslint-disable-next-line
-    defaultLabel = label;
   }, [options]);
 
   useEffect(() => {
     const echart = chartInstance.current.getEchartsInstance();
     const { option, serie } = getChartSerie(echart, 0);
     serie?.data.forEach((category) => {
-      if (category.name === defaultLabel.name) {
+      if (category.name === defaultLabel.current.name) {
         category.label = { show: true };
         category.emphasis = { label: { show: true } };
       } else {
@@ -203,47 +243,56 @@ function PieWidgetUI({
     echart.setOption(option, true);
   }, [options, defaultLabel]);
 
-  const clickEvent = (params) => {
-    if (onSelectedCategoriesChange) {
-      const echart = chartInstance.current.getEchartsInstance();
-      const { option, serie } = getChartSerie(echart, params.seriesIndex);
+  const clickEvent = useCallback(
+    (params) => {
+      if (onSelectedCategoriesChange) {
+        const echart = chartInstance.current.getEchartsInstance();
+        const { option, serie } = getChartSerie(echart, params.seriesIndex);
 
-      applyChartFilter(serie, params.dataIndex, theme);
+        applyChartFilter(serie, params.dataIndex, theme);
 
-      echart.setOption(option, true);
+        echart.setOption(option, true);
 
-      const activeCategories = serie.data.filter((category) => !category.disabled);
+        const activeCategories = serie.data.filter((category) => !category.disabled);
 
-      defaultLabel = __getDefaultLabel(activeCategories);
+        defaultLabel.current = __getDefaultLabel(activeCategories);
 
-      onSelectedCategoriesChange(
-        activeCategories.length === serie.data.length
-          ? []
-          : activeCategories.map((category) => category.name)
-      );
-    }
-  };
+        onSelectedCategoriesChange(
+          activeCategories.length === serie.data.length
+            ? []
+            : activeCategories.map((category) => category.name)
+        );
+      }
+    },
+    [onSelectedCategoriesChange, theme]
+  );
 
-  const mouseoverEvent = (params) => {
+  const mouseoverEvent = useCallback((params) => {
     setElementHover(params.data);
     updateLabel(params);
-  };
+  }, []);
 
-  const mouseoutEvent = (params) => {
-    setElementHover();
+  const mouseoutEvent = useCallback(
+    (params) => {
+      setElementHover();
 
-    const data = {
-      ...params,
-      data: defaultLabel
-    };
-    updateLabel(data);
-  };
+      const data = {
+        ...params,
+        data: defaultLabel.current
+      };
+      updateLabel(data);
+    },
+    [defaultLabel]
+  );
 
-  const onEvents = {
-    click: clickEvent,
-    mouseover: mouseoverEvent,
-    mouseout: mouseoutEvent
-  };
+  const onEvents = useMemo(
+    () => ({
+      ...(filterable && { click: clickEvent }),
+      mouseover: mouseoverEvent,
+      mouseout: mouseoutEvent
+    }),
+    [filterable, clickEvent, mouseoverEvent, mouseoutEvent]
+  );
 
   return (
     <EchartsWrapper
@@ -276,7 +325,10 @@ PieWidgetUI.defaultProps = {
             )} ${valueHtml} (${params.percent}%)</p>`;
   },
   colors: null,
+  labels: {},
   height: '260px',
+  animation: true,
+  filterable: true,
   selectedCategories: []
 };
 
@@ -288,10 +340,13 @@ PieWidgetUI.propTypes = {
       value: PropTypes.number
     })
   ),
+  labels: PropTypes.object,
   colors: PropTypes.array,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   height: PropTypes.string,
+  animation: PropTypes.bool,
+  filterable: PropTypes.bool,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func
 };

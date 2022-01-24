@@ -1,4 +1,4 @@
-import { cartoThemeOptions } from './theme/carto-theme';
+import { cartoThemeOptions, CartoTheme } from './theme/carto-theme';
 import WrapperWidgetUI from './widgets/WrapperWidgetUI';
 import CategoryWidgetUI from './widgets/CategoryWidgetUI';
 import FormulaWidgetUI from './widgets/FormulaWidgetUI';
@@ -12,11 +12,14 @@ import {
   TimeSeriesProvider
 } from './widgets/TimeSeriesWidgetUI/hooks/TimeSeriesContext';
 import useTimeSeriesInteractivity from './widgets/TimeSeriesWidgetUI/hooks/useTimeSeriesInteractivity';
-import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
+import { CHART_TYPES } from './widgets/utils/constants';
+import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
+import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 
 export {
   cartoThemeOptions,
+  CartoTheme,
   WrapperWidgetUI,
   CategoryWidgetUI,
   FormulaWidgetUI,
@@ -28,7 +31,10 @@ export {
   useTimeSeriesInteractivity,
   TimeSeriesProvider,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
+  FeatureSelectionWidgetUI,
+  TableWidgetUI,
   LegendWidgetUI,
   LEGEND_TYPES,
   NoDataAlert
 };
+

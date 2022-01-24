@@ -1,5 +1,6 @@
 import { OauthApp } from '@carto/react-auth/';
-import { InitialOauthState, Reducer } from '../types';
+import { InitialOauthState, OauthState } from '../types';
+import { AnyAction, Reducer } from 'redux';
 
 type OauthParams = {
   accessToken: string,
@@ -18,7 +19,7 @@ declare enum OauthActions {
   LOGOUT = 'oauth/logout'
 }
 
-export function createOauthCartoSlice(initialState: InitialOauthState): Reducer;
+export function createOauthCartoSlice(initialState: InitialOauthState): Reducer<OauthState, AnyAction>;
 
 export function setOAuthApp(arg: OauthApp): {
   type: OauthActions.SET_OAUTH_APP,

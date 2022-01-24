@@ -1,5 +1,5 @@
 import { useTheme } from '@material-ui/core';
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useState } from 'react';
 import ReactEcharts from 'echarts-for-react';
 import useTimeSeriesInteractivity from '../hooks/useTimeSeriesInteractivity';
 
@@ -8,16 +8,13 @@ export default function TimeSeriesChart({
   tooltip,
   tooltipFormatter,
   data,
-  height
+  height,
+  animation
 }) {
   const theme = useTheme();
-  const chartInstance = useRef();
+  const [echartsInstance, setEchartInstance] = useState();
 
-  const echartsInstance = useMemo(
-    () => chartInstance?.current?.getEchartsInstance(),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [chartInstance?.current]
-  );
+  const onChartReady = (_echartsInstance) => setEchartInstance(_echartsInstance);
 
   const { processedData, maxValue } = useMemo(() => {
     return data.reduce(
@@ -125,18 +122,17 @@ export default function TimeSeriesChart({
     [theme, maxValue]
   );
 
-  const {
-    timelineOptions: markLine,
-    timeWindowOptions: markArea
-  } = useTimeSeriesInteractivity({
-    echartsInstance,
-    data
-  });
+  const { timelineOptions: markLine, timeWindowOptions: markArea } =
+    useTimeSeriesInteractivity({
+      echartsInstance,
+      data
+    });
 
   const serieOptions = useMemo(
     () => ({
       markLine,
       markArea,
+      animation,
       data: processedData,
       type: chartType,
       smooth: true,
@@ -152,11 +148,11 @@ export default function TimeSeriesChart({
         }
       }
     }),
-    [markLine, markArea, processedData, theme, chartType]
+    [markLine, markArea, processedData, theme, chartType, animation]
   );
 
-  const options = useMemo(() => {
-    return {
+  const options = useMemo(
+    () => ({
       grid: {
         left: theme.spacing(2),
         top: theme.spacing(4),
@@ -167,14 +163,14 @@ export default function TimeSeriesChart({
       tooltip: tooltipOptions,
       ...axisOptions,
       series: [serieOptions]
-    };
-  }, [axisOptions, serieOptions, theme, tooltipOptions]);
+    }),
+    [axisOptions, serieOptions, theme, tooltipOptions]
+  );
 
   return (
     <ReactEcharts
-      ref={chartInstance}
       option={options}
-      lazyUpdate={true}
+      onChartReady={onChartReady}
       style={{ height: height || theme.spacing(22) }}
     />
   );

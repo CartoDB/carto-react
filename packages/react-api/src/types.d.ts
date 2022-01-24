@@ -39,4 +39,4 @@ export type UseCartoLayerFilterProps = {
   };
 } & SourceProps;
 
-export type ExecuteSQL = Promise<FeatureCollection | {}[]>;
+export type ExecuteSQLResponse<Response = FeatureCollection | {}[]> = Promise<Response>;

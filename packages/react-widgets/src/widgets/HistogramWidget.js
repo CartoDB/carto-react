@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
@@ -6,7 +6,10 @@ import { WrapperWidgetUI, HistogramWidgetUI, NoDataAlert } from '@carto/react-ui
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getHistogram } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
-import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
+import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
+import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
+
+const EMPTY_ARRAY = [];
 
 /**
  * Renders a <HistogramWidget /> component
@@ -20,6 +23,8 @@ import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {Function} [props.xAxisformatter] - Function to format X axis values.
  * @param  {Function} [props.formatter] - Function to format Y axis values.
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
+ * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
+ * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -36,6 +41,8 @@ function HistogramWidget(props) {
     dataAxis,
     formatter,
     tooltip,
+    animation,
+    filterable,
     onError,
     wrapperProps,
     noDataAlertProps
@@ -43,27 +50,46 @@ function HistogramWidget(props) {
   const dispatch = useDispatch();
 
   const [histogramData, setHistogramData] = useState([]);
-  const [selectedBars, setSelectedBars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const filters = useSourceFilters({ dataSource, id });
   const isSourceReady = useSelector((state) =>
-    selectIsViewportFeaturesReadyForSource(state, dataSource)
+    selectAreFeaturesReadyForSource(state, dataSource)
   );
+
+  const thresholdsFromFilters = useWidgetFilterValues({
+    dataSource,
+    id,
+    column,
+    type: FilterTypes.CLOSED_OPEN
+  });
+
+  const selectedBars = useMemo(() => {
+    return (thresholdsFromFilters || EMPTY_ARRAY)
+      .map(([from, to]) => {
+        if (typeof from === 'undefined' || from === null) {
+          return 0;
+        } else if (typeof to === 'undefined' || to === null) {
+          return ticks.length - 1;
+        } else {
+          const idx = ticks.indexOf(from);
+          return idx !== -1 ? idx + 1 : null;
+        }
+      })
+      .filter((v) => v !== null);
+  }, [thresholdsFromFilters, ticks]);
 
   const tooltipFormatter = useCallback(
     ([serie]) => {
       const formattedValue = formatter
-        ? formatter(serie.value)
+        ? formatter(serie.value, serie.dataIndex, ticks)
         : { prefix: '', value: serie.value };
 
-      return `${
-        typeof formattedValue === 'object'
-          ? `${formattedValue.prefix}${formattedValue.value}`
-          : formattedValue
-      }`;
+      return typeof formattedValue === 'object'
+        ? `${formattedValue.prefix}${formattedValue.value}`
+        : formattedValue;
     },
-    [formatter]
+    [formatter, ticks]
   );
 
   useEffect(() => {
@@ -102,17 +128,18 @@ function HistogramWidget(props) {
 
   const handleSelectedBarsChange = useCallback(
     ({ bars }) => {
-      setSelectedBars(bars);
-
       if (bars && bars.length) {
         const thresholds = bars.map((i) => {
-          return [ticks[i - 1], ticks.length !== i + 1 ? ticks[i] : undefined];
+          let left = ticks[i - 1];
+          let right = ticks.length !== i + 1 ? ticks[i] : undefined;
+
+          return [left, right];
         });
         dispatch(
           addFilter({
             id: dataSource,
             column,
-            type: FilterTypes.BETWEEN,
+            type: FilterTypes.CLOSED_OPEN,
             values: thresholds,
             owner: id
           })
@@ -126,21 +153,33 @@ function HistogramWidget(props) {
         );
       }
     },
-    [column, dataSource, id, setSelectedBars, dispatch, ticks]
+    [column, dataSource, id, dispatch, ticks]
   );
+
+  const ticksForDataAxis = ticks.reduce((acc, tick, i) => {
+    if (acc.length === 0) {
+      return [`< ${tick}`];
+    }
+    if (i === ticks.length - 1) {
+      return [...acc, `< ${tick}`, `>= ${tick}`];
+    }
+    return [...acc, `< ${tick}`];
+  }, []);
 
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
       {histogramData.length || isLoading ? (
         <HistogramWidgetUI
           data={histogramData}
-          dataAxis={dataAxis || [...ticks, `> ${ticks[ticks.length - 1]}`]}
+          dataAxis={dataAxis || ticksForDataAxis}
           selectedBars={selectedBars}
           onSelectedBarsChange={handleSelectedBarsChange}
           tooltip={tooltip}
           tooltipFormatter={tooltipFormatter}
           xAxisFormatter={xAxisFormatter}
           yAxisFormatter={formatter}
+          animation={animation}
+          filterable={filterable}
         />
       ) : (
         <NoDataAlert {...noDataAlertProps} />
@@ -158,6 +197,8 @@ HistogramWidget.propTypes = {
   xAxisFormatter: PropTypes.func,
   formatter: PropTypes.func,
   tooltip: PropTypes.bool,
+  animation: PropTypes.bool,
+  filterable: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
@@ -166,6 +207,8 @@ HistogramWidget.propTypes = {
 
 HistogramWidget.defaultProps = {
   tooltip: true,
+  animation: true,
+  filterable: true,
   wrapperProps: {},
   noDataAlertProps: {}
 };

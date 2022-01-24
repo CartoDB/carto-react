@@ -7,8 +7,23 @@ import PieWidgetUI from './widgets/PieWidgetUI';
 import LegendWidgetUI, { LEGEND_TYPES } from './widgets/legend/LegendWidgetUI';
 import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
+import DrawingToolWidgetUI from './widgets/DrawingToolWidgetUI';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
+import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
+import CursorIcon from './assets/CursorIcon';
+import PolygonIcon from './assets/PolygonIcon';
+import RectangleIcon from './assets/RectangleIcon';
+import LassoIcon from './assets/LassoIcon';
+import CircleIcon from './assets/CircleIcon';
+
+const drawingToolIcons = {
+  CursorIcon,
+  PolygonIcon,
+  RectangleIcon,
+  LassoIcon,
+  CircleIcon
+};
 
 export {
   cartoThemeOptions,
@@ -19,8 +34,11 @@ export {
   PieWidgetUI,
   ScatterPlotWidgetUI,
   TimeSeriesWidgetUI,
+  DrawingToolWidgetUI,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
+  TableWidgetUI,
   LegendWidgetUI,
   LEGEND_TYPES,
-  NoDataAlert
+  NoDataAlert,
+  drawingToolIcons
 };

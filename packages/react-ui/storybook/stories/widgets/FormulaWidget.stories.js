@@ -16,12 +16,12 @@ import { buildReactPropsAsString } from '../../utils';
 
 const store = mockAppStoreConfiguration();
 
-store.dispatch(
-  cartoSlice.setViewportFeatures({
-    sourceId: 'sb-data-source',
-    features: [{ 'sb-column': 5000 }, { 'sb-column': 5000 }]
-  })
-);
+// store.dispatch(
+//   cartoSlice.setViewportFeatures({
+//     sourceId: 'sb-data-source',
+//     features: [{ 'sb-column': 5000 }, { 'sb-column': 5000 }]
+//   })
+// );
 
 const options = {
   title: 'Widgets/FormulaWidget',

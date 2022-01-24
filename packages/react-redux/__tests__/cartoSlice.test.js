@@ -115,6 +115,83 @@ describe('carto slice', () => {
     });
   });
 
+  describe('spatial filter actions', () => {
+    const spatialFilter = {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [0, 0],
+            [1, 1]
+          ]
+        ]
+      },
+      properties: {}
+    };
+
+    const sourceId = 'theSource';
+
+    test('should add/remove a spatial filter to a source', () => {
+      store.dispatch(cartoSlice.addSource({ id: sourceId }));
+      store.dispatch(
+        cartoSlice.addSpatialFilter({
+          sourceId,
+          geometry: spatialFilter
+        })
+      );
+      let state = store.getState();
+      expect(state.carto.dataSources[sourceId].spatialFilter).toEqual(spatialFilter);
+      // Now with the selector
+      expect(cartoSlice.selectSpatialFilter(state, sourceId)).toEqual(spatialFilter);
+      // Once it's added, remove it
+      store.dispatch(cartoSlice.removeSpatialFilter(sourceId));
+      state = store.getState();
+      expect(state.carto.dataSources[sourceId].spatialFilter).toBe(null);
+    });
+
+    test('should add/remove a spatial filter to root state for applying it to every source', () => {
+      store.dispatch(
+        cartoSlice.addSpatialFilter({
+          geometry: spatialFilter
+        })
+      );
+      let state = store.getState();
+      expect(state.carto.spatialFilter).toEqual(spatialFilter);
+      // Now with the selector
+      expect(cartoSlice.selectSpatialFilter(state)).toEqual(spatialFilter);
+      // Once it's added, remove it
+      store.dispatch(cartoSlice.removeSpatialFilter());
+      state = store.getState();
+      expect(state.carto.spatialFilter).toBe(null);
+    });
+
+    test("selector shouldn't return root spatial filter geometry if disabled", () => {
+      store.dispatch(
+        cartoSlice.addSpatialFilter({
+          geometry: {
+            ...spatialFilter,
+            properties: {
+              ...spatialFilter.properties,
+              disabled: true
+            }
+          }
+        })
+      );
+      const state = store.getState();
+      expect(cartoSlice.selectSpatialFilter(state)).toBe(null);
+    });
+  });
+
+  describe('drawing tool mode', () => {
+    test('should set drawing tool mode', () => {
+      const MODE = 'abracadabra';
+      store.dispatch(cartoSlice.setDrawingToolMode(MODE));
+      const state = store.getState();
+      expect(state.carto.drawingToolMode).toEqual(MODE);
+    });
+  });
+
   describe('filters actions', () => {
     const filter = {
       id: 'source-test-id-2',
@@ -162,28 +239,14 @@ describe('carto slice', () => {
       features: [{ a: 1 }]
     };
 
-    test('should set features', () => {
-      store.dispatch(cartoSlice.setViewportFeatures(featuresInfo));
-      const { carto } = store.getState();
-      expect(carto.viewportFeatures[featuresInfo.sourceId]).toEqual(
-        featuresInfo.features
-      );
-    });
-
-    test('should remove features by sourceId', () => {
-      store.dispatch(cartoSlice.removeViewportFeatures(featuresInfo.sourceId));
-      const { carto } = store.getState();
-      expect(carto.viewportFeatures).not.toHaveProperty(featuresInfo.sourceId);
-    });
-
     test('worker calculations should be finished', () => {
       const sourceInfo = {
         sourceId: 'whatever-source-id',
         ready: true
       };
-      store.dispatch(cartoSlice.setViewportFeaturesReady(sourceInfo));
+      store.dispatch(cartoSlice.setFeaturesReady(sourceInfo));
       const { carto } = store.getState();
-      expect(carto.viewportFeaturesReady[sourceInfo.sourceId]).toBe(true);
+      expect(carto.featuresReady[sourceInfo.sourceId]).toBe(true);
     });
   });
 

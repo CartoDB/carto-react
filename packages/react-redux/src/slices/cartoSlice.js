@@ -3,6 +3,7 @@ import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '@carto/react-core';
 import { removeWorker } from '@carto/react-workers';
 import { setDefaultCredentials } from '@deck.gl/carto';
+import { DRAW_MODES } from '@carto/react-core';
 
 /**
  *
@@ -48,8 +49,10 @@ export const createCartoSlice = (initialState) => {
       dataSources: {
         // Auto import dataSources
       },
-      viewportFeatures: {},
-      viewportFeaturesReady: {},
+      spatialFilter: null,
+      drawingToolMode: DRAW_MODES.POLYGON,
+      drawingToolEnabled: false,
+      featuresReady: {},
       ...initialState
     },
     reducers: {
@@ -64,11 +67,11 @@ export const createCartoSlice = (initialState) => {
       addLayer: (state, action) => {
         state.layers[action.payload.id] = action.payload;
       },
-      setViewportFeaturesReady: (state, action) => {
+      setFeaturesReady: (state, action) => {
         const { sourceId, ready } = action.payload;
 
-        state.viewportFeaturesReady = {
-          ...state.viewportFeaturesReady,
+        state.featuresReady = {
+          ...state.featuresReady,
           [sourceId]: ready
         };
       },
@@ -92,6 +95,30 @@ export const createCartoSlice = (initialState) => {
       },
       setViewPort: (state) => {
         state.viewport = new WebMercatorViewport(state.viewState).getBounds();
+      },
+      addSpatialFilter: (state, action) => {
+        const { sourceId, geometry } = action.payload;
+        if (sourceId) {
+          const source = state.dataSources[sourceId];
+
+          if (source) {
+            source.spatialFilter = geometry;
+          }
+        } else {
+          state.spatialFilter = geometry;
+        }
+      },
+      removeSpatialFilter: (state, action) => {
+        const sourceId = action.payload;
+        if (sourceId) {
+          const source = state.dataSources[sourceId];
+
+          if (source) {
+            source.spatialFilter = null;
+          }
+        } else {
+          state.spatialFilter = null;
+        }
       },
       addFilter: (state, action) => {
         const { id, column, type, values, owner } = action.payload;
@@ -128,27 +155,18 @@ export const createCartoSlice = (initialState) => {
       setGeocoderResult: (state, action) => {
         state.geocoderResult = action.payload;
       },
-      setViewportFeatures: (state, action) => {
-        const { sourceId, features } = action.payload;
-
-        state.viewportFeatures = {
-          ...state.viewportFeatures,
-          [sourceId]: features
-        };
-      },
-      removeViewportFeatures: (state, action) => {
-        const sourceId = action.payload;
-
-        if (state.viewportFeatures[sourceId]) {
-          delete state.viewportFeatures[sourceId];
-        }
-      },
       setCredentials: (state, action) => {
         state.credentials = {
           ...state.credentials,
           ...action.payload
         };
         setDefaultCredentials(state.credentials);
+      },
+      setDrawingToolMode: (state, action) => {
+        state.drawingToolMode = action.payload;
+      },
+      setDrawingToolEnabled: (state, action) => {
+        state.drawingToolEnabled = action.payload;
       }
     }
   });
@@ -211,6 +229,26 @@ export const removeLayer = (id) => ({ type: 'carto/removeLayer', payload: id });
 export const setBasemap = (basemap) => ({ type: 'carto/setBasemap', payload: basemap });
 
 /**
+ * Action to add a spatial filter
+ * @param {object} params
+ * @param {string} [params.sourceId] - If indicated, mask is applied to that source. If not, it's applied to every source
+ * @param {GeoJSON} params.geometry - valid geojson object
+ */
+export const addSpatialFilter = ({ sourceId, geometry }) => ({
+  type: 'carto/addSpatialFilter',
+  payload: { sourceId, geometry }
+});
+
+/**
+ * Action to remove a spatial filter on a given source
+ * @param {string} [sourceId] - sourceId of the source to apply the filter on. If missing, root spatial filter is removed
+ */
+export const removeSpatialFilter = (sourceId) => ({
+  type: 'carto/removeSpatialFilter',
+  payload: sourceId
+});
+
+/**
  * Action to add a filter on a given source and column
  * @param {string} id - sourceId of the source to apply the filter on
  * @param {string} column - column to use by the filter at the source
@@ -247,10 +285,29 @@ const _setViewPort = (payload) => ({ type: 'carto/setViewPort', payload });
 export const selectSourceById = (state, id) => state.carto.dataSources[id];
 
 /**
- * Redux selector to know if viewport features from a certain source are ready
+ * Redux selector to select the spatial filter of a given sourceId or the root one
  */
-export const selectIsViewportFeaturesReadyForSource = (state, id) =>
-  !!state.carto.viewportFeaturesReady[id];
+export const selectSpatialFilter = (state, sourceId) => {
+  let spatialFilterGeometry = state.carto.spatialFilter;
+  if (spatialFilterGeometry?.properties?.disabled) {
+    spatialFilterGeometry = null;
+  }
+  return sourceId
+    ? state.carto.dataSources[sourceId]?.spatialFilter || spatialFilterGeometry
+    : spatialFilterGeometry;
+};
+
+/**
+ * Redux selector to select the selected drawing tool mode based on if it's enabled
+ */
+export const selectDrawingToolMode = (state) =>
+  state.carto.drawingToolEnabled && state.carto.drawingToolMode;
+
+/**
+ * Redux selector to know if features from a certain source are ready
+ */
+export const selectAreFeaturesReadyForSource = (state, id) =>
+  !!state.carto.featuresReady[id];
 
 const debouncedSetViewPort = debounce((dispatch, setViewPort) => {
   dispatch(setViewPort());
@@ -286,31 +343,12 @@ export const setViewState = (viewState) => {
 };
 
 /**
- * Action to set the source features of a layer
- * @param {object} sourceId - the id of the source
- * @param {object} feature - the viewport features
- */
-export const setViewportFeatures = (data) => ({
-  type: 'carto/setViewportFeatures',
-  payload: data
-});
-
-/**
- * Action to remove the source features of a layer
- * @param {String} sourceId - the source id to remove
- */
-export const removeViewportFeatures = (data) => ({
-  type: 'carto/removeViewportFeatures',
-  payload: data
-});
-
-/**
  * Action to set the ready features state of a layer
  * @param {object} sourceId - the id of the source
  * @param {object} ready - Viewport features have been calculated
  */
-export const setViewportFeaturesReady = (data) => ({
-  type: 'carto/setViewportFeaturesReady',
+export const setFeaturesReady = (data) => ({
+  type: 'carto/setFeaturesReady',
   payload: data
 });
 
@@ -321,4 +359,22 @@ export const setViewportFeaturesReady = (data) => ({
 export const setCredentials = (data) => ({
   type: 'carto/setCredentials',
   payload: data
+});
+
+/**
+ * Action to set drawing tool mode
+ * @param {boolean} mode
+ */
+export const setDrawingToolMode = (mode) => ({
+  type: 'carto/setDrawingToolMode',
+  payload: mode
+});
+
+/**
+ * Action to set if drawing tool is enabled
+ * @param {boolean} enabled
+ */
+export const setDrawingToolEnabled = (enabled) => ({
+  type: 'carto/setDrawingToolEnabled',
+  payload: enabled
 });

@@ -783,10 +783,11 @@ export const cartoThemeOptions = {
             padding: spacing(0, 1.25, 0.5)
           }
         },
-        '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense': {
-          paddingTop: spacing(0.25),
-          paddingBottom: spacing(0.25)
-        }
+        '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense':
+          {
+            paddingTop: spacing(0.25),
+            paddingBottom: spacing(0.25)
+          }
       }
     },
 
@@ -1110,8 +1111,148 @@ export const cartoThemeOptions = {
           padding: spacing(1, 0)
         }
       }
+    },
+
+    // Slider
+    MuiSlider: {
+      root: {}
+    },
+
+    // MuiToggleButtonGroup
+    MuiToggleButtonGroup: {
+      groupedHorizontal: {
+        '&:not(:last-child)': {
+          marginRight: spacing(0.25),
+          borderTopRightRadius: spacing(0.5),
+          borderBottomRightRadius: spacing(0.5)
+        },
+        '&:not(:first-child)': {
+          marginLeft: 0,
+          borderLeft: 'none',
+          borderTopLeftRadius: spacing(0.5),
+          borderBottomLeftRadius: spacing(0.5)
+        }
+      },
+      groupedVertical: {
+        '&:not(:last-child)': {
+          marginBottom: spacing(0.25),
+          borderBottomLeftRadius: spacing(0.5),
+          borderBottomRightRadius: spacing(0.5)
+        },
+        '&:not(:first-child)': {
+          borderTopLeftRadius: spacing(0.5),
+          borderTopRightRadius: spacing(0.5)
+        }
+      }
+    },
+    // MuiToggleButton
+    MuiToggleButton: {
+      root: {
+        width: spacing(4.5),
+        height: spacing(4.5),
+        border: 'none',
+        borderRadius: spacing(0.5),
+        color: variables.palette.grey[500],
+        '&$selected': {
+          color: variables.palette.primary.main,
+          backgroundColor: variables.palette.primary.relatedLight,
+          '&:hover': {
+            backgroundColor: variables.palette.primary.relatedLight
+          }
+        }
+      },
+      sizeSmall: {
+        width: spacing(3),
+        height: spacing(3),
+        '& .MuiSvgIcon-root': {
+          maxWidth: spacing(2.5),
+          maxHeight: spacing(2.5)
+        }
+      },
+      sizeLarge: {
+        width: spacing(7),
+        height: spacing(7)
+      }
+    },
+
+    MuiChip: {
+      root: {
+        backgroundColor: variables.palette.grey[100],
+        '&:hover': {
+          backgroundColor: variables.palette.grey[200]
+        },
+        '& .MuiAvatar-root': {
+          backgroundColor: '#7f3c8d',
+          color: variables.palette.common.white
+        }
+      },
+      colorPrimary: {
+        '&$disabled': {
+          backgroundColor: variables.palette.grey[100],
+          color: variables.palette.text.primary
+        },
+        '&:hover': {
+          backgroundColor: variables.palette.primary.dark
+        }
+      },
+      colorSecondary: {
+        '&$disabled': {
+          backgroundColor: variables.palette.grey[100]
+        },
+        '&:hover': {
+          backgroundColor: variables.palette.secondary.light
+        }
+      },
+      label: {
+        fontFamily: '"Open Sans", sans-serif',
+        letterSpacing: 0.25
+      },
+      labelSmall: {
+        fontSize: variables.typography.caption.fontSize,
+        fontWeight: variables.typography.fontWeightLight
+      },
+      outlined: {
+        transition: `border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1)`,
+        '&$disabled': {
+          backgroundColor: 'transparent'
+        },
+        '&:hover': {
+          backgroundColor: 'transparent',
+          borderColor: variables.palette.grey[200],
+          '&$clickable': {
+            backgroundColor: 'transparent'
+          }
+        }
+      },
+      outlinedPrimary: {
+        '&:hover': {
+          backgroundColor: 'transparent',
+          borderColor: variables.palette.primary.dark,
+          color: variables.palette.primary.dark,
+          '&$clickable': {
+            backgroundColor: 'transparent'
+          }
+        }
+      },
+      outlinedSecondary: {
+        '&:hover': {
+          backgroundColor: 'transparent',
+          borderColor: variables.palette.secondary.dark,
+          color: variables.palette.secondary.dark,
+          '&$clickable': {
+            backgroundColor: 'transparent'
+          }
+        }
+      },
+      clickable: {
+        '&:focus': {
+          webkitTapHighlightColor: 'none'
+        }
+      }
     }
   },
+
+  // Props
   props: {
     MuiButtonBase: {
       disableRipple: true
@@ -1174,6 +1315,21 @@ export const cartoThemeOptions = {
     },
     MuiDialogContentText: {
       variant: 'body2'
+    },
+    MuiToggleButtonGroup: {
+      orientation: 'horizontal',
+      exclusive: true
+    },
+    CircularProgress: {
+      size: 40,
+      thickness: 4
+    },
+    MuiSlider: {
+      color: 'primary',
+      marks: false
+    },
+    MuiDialog: {
+      maxWidth: 'md'
     }
   }
 };
@@ -1181,7 +1337,14 @@ export const cartoThemeOptions = {
 export function createTheme(options = {}) {
   const themeOptions = {
     ...cartoThemeOptions,
-    ...options
+    ...options,
+    components: {
+      MuiToggleButton: {
+        root: {
+          border: 'none'
+        }
+      }
+    }
   };
 
   let theme = createMuiTheme(themeOptions);

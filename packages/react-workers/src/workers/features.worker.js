@@ -1,55 +1,69 @@
 import {
-  viewportFeaturesBinary,
-  viewportFeaturesGeoJSON,
+  tileFeatures,
+  geojsonFeatures,
   aggregationFunctions,
-  _buildFeatureFilter,
+  _applyFilters,
   histogram,
   scatterPlot,
   groupValuesByColumn,
   groupValuesByDateColumn
 } from '@carto/react-core';
+import { applySorting } from '../utils/sorting';
 import { Methods } from '../workerMethods';
 
-let currentViewportFeatures;
+let currentFeatures;
 let currentGeoJSON;
+let currentTiles;
 
 onmessage = ({ data: { method, ...params } }) => {
   switch (method) {
-    case Methods.VIEWPORT_FEATURES:
-      getViewportFeatures(params);
+    case Methods.TILE_FEATURES:
+      getTileFeatures(params);
       break;
-    case Methods.VIEWPORT_FEATURES_FORMULA:
+    case Methods.FEATURES_FORMULA:
       getFormula(params);
       break;
-    case Methods.VIEWPORT_FEATURES_HISTOGRAM:
+    case Methods.FEATURES_HISTOGRAM:
       getHistogram(params);
       break;
-    case Methods.VIEWPORT_FEATURES_CATEGORY:
+    case Methods.FEATURES_CATEGORY:
       getCategories(params);
       break;
-    case Methods.VIEWPORT_FEATURES_SCATTERPLOT:
+    case Methods.FEATURES_SCATTERPLOT:
       getScatterPlot(params);
       break;
-    case Methods.VIEWPORT_FEATURES_TIME_SERIES:
+    case Methods.FEATURES_TIME_SERIES:
       getTimeSeries(params);
+      break;
+    case Methods.FEATURES_RAW:
+      getRawFeatures(params);
+      break;
+    case Methods.LOAD_TILES:
+      loadTiles(params);
       break;
     case Methods.LOAD_GEOJSON_FEATURES:
       loadGeoJSONFeatures(params);
       break;
-    case Methods.VIEWPORT_FEATURES_GEOJSON:
-      getViewportFeaturesGeoJSON(params);
+    case Methods.GEOJSON_FEATURES:
+      getGeojsonFeatures(params);
       break;
     default:
       throw new Error('Invalid worker method');
   }
 };
 
-function getViewportFeatures({ tiles, viewport, uniqueIdProperty }) {
-  currentViewportFeatures = viewportFeaturesBinary({
-    tiles,
+function getTileFeatures({ viewport, geometry, uniqueIdProperty }) {
+  currentFeatures = tileFeatures({
+    tiles: currentTiles,
     viewport,
+    geometry,
     uniqueIdProperty
   });
+  postMessage({ result: true });
+}
+
+function loadTiles({ tiles }) {
+  currentTiles = tiles;
   postMessage({ result: true });
 }
 
@@ -58,11 +72,12 @@ function loadGeoJSONFeatures({ geojson }) {
   postMessage({ result: true });
 }
 
-function getViewportFeaturesGeoJSON({ viewport, uniqueIdProperty }) {
+function getGeojsonFeatures({ viewport, geometry, uniqueIdProperty }) {
   if (currentGeoJSON) {
-    currentViewportFeatures = viewportFeaturesGeoJSON({
+    currentFeatures = geojsonFeatures({
       geojson: currentGeoJSON,
       viewport,
+      geometry,
       uniqueIdProperty
     });
   }
@@ -72,7 +87,7 @@ function getViewportFeaturesGeoJSON({ viewport, uniqueIdProperty }) {
 function getFormula({ filters, operation, column }) {
   let result = null;
 
-  if (currentViewportFeatures) {
+  if (currentFeatures) {
     const targetOperation = aggregationFunctions[operation];
 
     const filteredFeatures = getFilteredFeatures(filters);
@@ -86,7 +101,7 @@ function getFormula({ filters, operation, column }) {
 function getHistogram({ filters, operation, column, ticks }) {
   let result = null;
 
-  if (currentViewportFeatures) {
+  if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
 
     result = histogram(filteredFeatures, column, ticks, operation);
@@ -98,7 +113,7 @@ function getHistogram({ filters, operation, column, ticks }) {
 function getCategories({ filters, operation, column, operationColumn }) {
   let result = null;
 
-  if (currentViewportFeatures) {
+  if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
 
     const groups = groupValuesByColumn(
@@ -116,7 +131,7 @@ function getCategories({ filters, operation, column, operationColumn }) {
 
 function getScatterPlot({ filters, xAxisColumn, yAxisColumn }) {
   let result = [];
-  if (currentViewportFeatures) {
+  if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
     result = scatterPlot(filteredFeatures, xAxisColumn, yAxisColumn);
   }
@@ -127,7 +142,7 @@ function getScatterPlot({ filters, xAxisColumn, yAxisColumn }) {
 function getTimeSeries({ filters, column, stepSize, operation, operationColumn }) {
   let result = [];
 
-  if (currentViewportFeatures) {
+  if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
 
     const groups = groupValuesByDateColumn(
@@ -144,8 +159,41 @@ function getTimeSeries({ filters, column, stepSize, operation, operationColumn }
   postMessage({ result });
 }
 
-function getFilteredFeatures(filters) {
-  return !Object.keys(currentViewportFeatures).length
-    ? currentViewportFeatures
-    : currentViewportFeatures.filter(_buildFeatureFilter({ filters }));
+// See sorting details in utils/sorting.js
+function getRawFeatures({
+  filters,
+  limit = 10,
+  page = 0,
+  sortBy,
+  sortByDirection = 'asc'
+}) {
+  let data = [];
+  let numberPages = 0;
+  let totalCount = 0;
+
+  if (currentFeatures) {
+    data = applySorting(getFilteredFeatures(filters), {
+      sortBy,
+      sortByDirection
+    });
+
+    totalCount = data.length;
+
+    if (limit) {
+      numberPages = Math.ceil(data.length / limit);
+      data = applyPagination(data, { limit, page });
+    }
+  }
+
+  postMessage({
+    result: { data, currentPage: page, pages: numberPages, totalCount }
+  });
+}
+
+function applyPagination(features, { limit, page }) {
+  return features.slice(limit * Math.max(0, page), limit * Math.max(1, page + 1));
+}
+
+function getFilteredFeatures(filters = {}) {
+  return _applyFilters(currentFeatures, filters);
 }

@@ -6,7 +6,10 @@ import { WrapperWidgetUI, PieWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
-import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
+import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
+import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
+
+const EMPTY_ARRAY = [];
 
 /**
  * Renders a <PieWidget /> component
@@ -19,7 +22,10 @@ import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.formatter] - Function to format the value that appears in the tooltip.
  * @param  {Function} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
+ * @param  {object} props.labels - Object that maps category name with a chosen label
  * @param  {string} props.height - Height of the chart
+ * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
+ * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -34,6 +40,10 @@ function PieWidget({
   operation,
   formatter,
   tooltipFormatter,
+  labels,
+  animation,
+  filterable,
+  colors,
   onError,
   wrapperProps,
   noDataAlertProps
@@ -41,11 +51,13 @@ function PieWidget({
   const dispatch = useDispatch();
 
   const [categoryData, setCategoryData] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const selectedCategories =
+    useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
+    EMPTY_ARRAY;
   const [isLoading, setIsLoading] = useState(true);
 
   const isSourceReady = useSelector((state) =>
-    selectIsViewportFeaturesReadyForSource(state, dataSource)
+    selectAreFeaturesReadyForSource(state, dataSource)
   );
   const filters = useSourceFilters({ dataSource, id });
 
@@ -85,8 +97,6 @@ function PieWidget({
 
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
-      setSelectedCategories(categories);
-
       if (categories && categories.length) {
         dispatch(
           addFilter({
@@ -106,7 +116,7 @@ function PieWidget({
         );
       }
     },
-    [column, dataSource, id, setSelectedCategories, dispatch]
+    [column, dataSource, id, dispatch]
   );
 
   return (
@@ -117,6 +127,10 @@ function PieWidget({
           formatter={formatter}
           height={height}
           tooltipFormatter={tooltipFormatter}
+          colors={colors}
+          labels={labels}
+          animation={animation}
+          filterable={filterable}
           selectedCategories={selectedCategories}
           onSelectedCategoriesChange={handleSelectedCategoriesChange}
         />
@@ -137,12 +151,18 @@ PieWidget.propTypes = {
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
+  labels: PropTypes.object,
+  animation: PropTypes.bool,
+  filterable: PropTypes.bool,
   onError: PropTypes.func,
+  colors: PropTypes.arrayOf(PropTypes.string),
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object
 };
 
 PieWidget.defaultProps = {
+  animation: true,
+  filterable: true,
   wrapperProps: {},
   noDataAlertProps: {}
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux';
+import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
 import { WrapperWidgetUI, ScatterPlotWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getScatter } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
@@ -14,6 +14,7 @@ import useSourceFilters from '../hooks/useSourceFilters';
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.xAxisColumn - Name of the data source's column to get the x axis from.
  * @param  {string} props.yAxisColumn - Name of the data source's column to get the y axis from.
+ * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {formatterCallback} [props.xAxisFormatter] - Function to format X axis values.
  * @param  {formatterCallback} [props.yAxisFormatter] - Function to format Y axis values.
  * @param  {formatterCallback} [props.tooltipFormatter] - Function to format Y axis values.
@@ -28,6 +29,7 @@ function ScatterPlotWidget(props) {
     dataSource,
     xAxisColumn,
     yAxisColumn,
+    animation,
     yAxisFormatter,
     xAxisFormatter,
     tooltipFormatter,
@@ -40,7 +42,7 @@ function ScatterPlotWidget(props) {
   const [isLoading, setIsLoading] = useState(true);
 
   const isSourceReady = useSelector((state) =>
-    selectIsViewportFeaturesReadyForSource(state, dataSource)
+    selectAreFeaturesReadyForSource(state, dataSource)
   );
   const filters = useSourceFilters({ dataSource, id });
 
@@ -84,6 +86,7 @@ function ScatterPlotWidget(props) {
           tooltipFormatter={tooltipFormatter}
           xAxisFormatter={xAxisFormatter}
           yAxisFormatter={yAxisFormatter}
+          animation={animation}
         />
       ) : (
         <NoDataAlert {...noDataAlertProps} />
@@ -98,6 +101,7 @@ ScatterPlotWidget.propTypes = {
   dataSource: PropTypes.string.isRequired,
   xAxisColumn: PropTypes.string.isRequired,
   yAxisColumn: PropTypes.string.isRequired,
+  animation: PropTypes.bool,
   xAxisFormatter: PropTypes.func,
   yAxisFormatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
@@ -108,6 +112,7 @@ ScatterPlotWidget.propTypes = {
 
 ScatterPlotWidget.defaultProps = {
   tooltip: true,
+  animation: true,
   wrapperProps: {},
   noDataAlertProps: {},
   tooltipFormatter: (v) => `[${v.value[0]}, ${v.value[1]})`,

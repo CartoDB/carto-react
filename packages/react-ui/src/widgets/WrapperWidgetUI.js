@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     maxWidth: '100%',
-    padding: 0
+    padding: ({ margin }) => (margin !== undefined ? margin : theme.spacing(2, 2.5))
   },
   loading: {
     position: 'absolute',
@@ -43,22 +43,25 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: theme.spacing(0.25)
   },
-  header: {
+  header: ({ expanded }) => ({
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
     width: '100%',
-    height: '56px',
-    padding: theme.spacing(1.25, 1.25, 1.25, 3)
-  },
+    ...(expanded ? { minHeight: theme.spacing(3) } : { height: theme.spacing(3) }),
+    padding: 0
+  }),
   optionsMenu: {
     marginTop: theme.spacing(6),
     maxHeight: theme.spacing(21),
     minWidth: theme.spacing(16)
   },
   button: {
+    flex: 1,
     padding: 0,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
     cursor: (props) => (props.expandable ? 'pointer' : 'default'),
     '& .MuiButton-label': {
       ...theme.typography.body1,
@@ -71,6 +74,23 @@ const useStyles = makeStyles((theme) => ({
       background: 'none'
     }
   },
+  buttonText: ({ expanded }) => ({
+    wordBreak: 'break-word',
+    overflow: 'hidden',
+    ...(expanded && {
+      display: '-webkit-box',
+      WebkitLineClamp: 2,
+      WebkitBoxOrient: 'vertical'
+    }),
+    ...(!expanded && {
+      whiteSpace: 'nowrap',
+      textOverflow: 'ellipsis'
+    })
+  }),
+  actions: {
+    display: 'flex',
+    marginLeft: theme.spacing(1)
+  },
   iconToggle: {
     display: 'flex',
     alignItems: 'center',
@@ -80,18 +100,19 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary
   },
   iconAction: {
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    margin: theme.spacing(-0.75, 0)
   },
   content: {
-    padding: theme.spacing(0, 3, 3, 3)
+    paddingTop: theme.spacing(1.25)
   }
 }));
 
 function WrapperWidgetUI(props) {
   const wrapper = createRef();
-  const classes = useStyles(props);
   const [expanded, setExpanded] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
+  const classes = useStyles({ ...props, expanded });
   const open = Boolean(anchorEl);
   const { options = [], actions = [], optionsIcon = <MoreVert /> } = props;
 
@@ -149,10 +170,14 @@ function WrapperWidgetUI(props) {
           }
           onClick={handleExpandClick}
         >
-          <Typography variant='subtitle1'>{props.title}</Typography>
+          <Tooltip title={props.title} placement='top' arrow>
+            <Typography className={classes.buttonText} align='left' variant='subtitle1'>
+              {props.title}
+            </Typography>
+          </Tooltip>
         </Button>
 
-        <Grid item style={{ display: 'flex' }}>
+        <Grid className={classes.actions} item>
           {actions.length > 0 &&
             actions.map((action) => {
               return action.tooltip ? (
@@ -245,7 +270,8 @@ WrapperWidgetUI.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element.isRequired
-  ])
+  ]),
+  margin: PropTypes.number
 };
 
 export default WrapperWidgetUI;

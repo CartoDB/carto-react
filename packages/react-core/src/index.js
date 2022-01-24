@@ -11,7 +11,7 @@ export { debounce } from './utils/debounce';
 export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';
 
-export { makeClosedInterval } from './utils/makeClosedInterval';
+export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
 export { AggregationTypes } from './operations/aggregation/AggregationTypes';
 export { aggregationFunctions } from './operations/aggregation/values';
@@ -24,10 +24,15 @@ export {
   filtersToSQL as _filtersToSQL,
   getApplicableFilters as _getApplicableFilters
 } from './filters/FilterQueryBuilder';
-export { buildFeatureFilter as _buildFeatureFilter } from './filters/Filter';
-export { viewportFeatures } from './filters/viewportFeatures';
-export { viewportFeaturesBinary } from './filters/viewportFeaturesBinary';
-export { viewportFeaturesGeoJSON } from './filters/viewportFeaturesGeoJSON';
+export {
+  buildFeatureFilter as _buildFeatureFilter,
+  applyFilters as _applyFilters
+} from './filters/Filter';
+
+export { tileFeatures } from './filters/tileFeatures';
+export { geojsonFeatures } from './filters/geojsonFeatures';
 
 export { GroupDateTypes } from './operations/GroupDateTypes';
 export { groupValuesByDateColumn } from './operations/groupByDate';
+
+export { DRAW_MODES, EDIT_MODES } from './utils/drawingToolConstants';

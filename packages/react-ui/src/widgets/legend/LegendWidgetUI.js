@@ -1,4 +1,4 @@
-import React, { createRef, Fragment, useState } from 'react';
+import React, { createRef, Fragment } from 'react';
 import {
   Box,
   Button,
@@ -14,6 +14,7 @@ import LegendCategories from './LegendCategories';
 import LegendIcon from './LegendIcon';
 import LegendRamp from './LegendRamp';
 import LegendProportion from './LegendProportion';
+import PropTypes from 'prop-types';
 
 const LayersIcon = () => (
   <SvgIcon width='24' height='24' viewBox='0 0 24 24'>
@@ -43,18 +44,43 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LegendWidgetUI({ className, layers = [], onChangeVisibility }) {
+function LegendWidgetUI({
+  className,
+  layers = [],
+  collapsed,
+  onCollapsedChange,
+  onChangeVisibility
+}) {
   const classes = useStyles();
   const isSingle = layers.length === 1;
 
   return (
     <Box className={`${classes.legend} ${className}`}>
-      <LegendContainer isSingle={isSingle}>
+      <LegendContainer
+        isSingle={isSingle}
+        collapsed={collapsed}
+        onCollapsedChange={onCollapsedChange}
+      >
         <LegendRows layers={layers} onChangeVisibility={onChangeVisibility} />
       </LegendContainer>
     </Box>
   );
 }
+
+LegendWidgetUI.defaultProps = {
+  layers: [],
+  collapsed: false
+};
+
+LegendWidgetUI.propTypes = {
+  className: PropTypes.string,
+  layers: PropTypes.array,
+  collapsed: PropTypes.bool,
+  onCollapsedChange: PropTypes.func,
+  onChangeVisibility: PropTypes.func
+};
+
+export default LegendWidgetUI;
 
 const useStylesLegendContainer = makeStyles((theme) => ({
   header: {
@@ -67,8 +93,8 @@ const useStylesLegendContainer = makeStyles((theme) => ({
     flex: '1 1 auto',
     justifyContent: 'space-between',
     padding: theme.spacing(0.75, 1.25, 0.75, 3),
-    borderTop: ({ expanded }) =>
-      !expanded ? 'none' : `1px solid ${theme.palette.divider}`,
+    borderTop: ({ collapsed }) =>
+      collapsed ? 'none' : `1px solid ${theme.palette.divider}`,
     cursor: 'pointer',
     '& .MuiButton-label': {
       ...theme.typography.body1
@@ -81,15 +107,14 @@ const useStylesLegendContainer = makeStyles((theme) => ({
   }
 }));
 
-function LegendContainer({ isSingle, children }) {
+function LegendContainer({ isSingle, children, collapsed, onCollapsedChange }) {
   const wrapper = createRef();
-  const [expanded, setExpanded] = useState(true);
   const classes = useStylesLegendContainer({
-    expanded
+    collapsed
   });
 
   const handleExpandClick = () => {
-    setExpanded(!expanded);
+    onCollapsedChange(!collapsed);
   };
 
   return isSingle ? (
@@ -98,7 +123,7 @@ function LegendContainer({ isSingle, children }) {
     <>
       <Collapse
         ref={wrapper}
-        in={expanded}
+        in={!collapsed}
         timeout='auto'
         unmountOnExit
         classes={{
@@ -177,8 +202,8 @@ function LegendRows({ layers = [], onChangeVisibility }) {
             attr={attr}
             onChangeVisibility={onChangeVisibility}
           >
-            {LegendComponent({
-              legend: {
+            <LegendComponent
+              legend={{
                 type,
                 collapsible,
                 note,
@@ -187,8 +212,8 @@ function LegendRows({ layers = [], onChangeVisibility }) {
                 labels,
                 icons,
                 stats
-              }
-            })}
+              }}
+            />
           </LegendWrapper>
           {!isSingle && !isLast && <Divider />}
         </Fragment>

@@ -1,11 +1,11 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
 import {
   applyChartFilter,
   clearFilter,
-  isDataEqual,
+  areChartPropsEqual,
   disableSerie,
   getChartSerie
 } from './utils/chartUtils';
@@ -45,10 +45,11 @@ function __generateDefaultConfig(
 ) {
   return {
     grid: {
-      left: theme.spacing(0),
+      left: theme.spacing(0.5),
       top: theme.spacing(2),
-      right: theme.spacing(0),
-      bottom: theme.spacing(3)
+      right: theme.spacing(1),
+      bottom: theme.spacing(1),
+      containLabel: true
     },
     axisPointer: {
       lineStyle: {
@@ -104,21 +105,16 @@ function __generateDefaultConfig(
       type: 'value',
       axisLabel: {
         margin: 0,
-        padding: [
-          0,
-          0,
-          theme.typography.charts.fontSize * theme.typography.charts.lineHeight + 4,
-          0
-        ],
+        verticalAlign: 'bottom',
+        padding: [0, 0, theme.typography.charts.fontSize, 0],
         show: true,
         showMaxLabel: true,
         showMinLabel: false,
         inside: true,
         color: (value) => {
-          // FIXME: Workaround to show only maxlabel
           let col = 'transparent';
           const maxValue = Math.max(...data.map((d) => d || Number.MIN_SAFE_INTEGER));
-          if (value > maxValue) {
+          if (value >= maxValue) {
             col = theme.palette.charts.maxLabel;
           }
 
@@ -149,11 +145,12 @@ function __generateDefaultConfig(
   };
 }
 
-function __generateSerie(name, data, selectedBars = [], theme) {
+function __generateSerie(name, data, selectedBars = [], animation, theme) {
   return [
     {
       type: 'bar',
       name,
+      animation,
       data: data.map((value, index) => {
         const bar = {
           value,
@@ -183,7 +180,8 @@ function __generateSerie(name, data, selectedBars = [], theme) {
 
 const EchartsWrapper = React.memo(
   ReactEcharts,
-  ({ option: optionPrev }, { option: optionNext }) => isDataEqual(optionPrev, optionNext)
+  ({ option: optionPrev }, { option: optionNext }) =>
+    areChartPropsEqual(optionPrev, optionNext)
 );
 function HistogramWidgetUI(props) {
   const theme = useTheme();
@@ -197,7 +195,9 @@ function HistogramWidgetUI(props) {
     tooltipFormatter,
     xAxisFormatter,
     yAxisFormatter,
-    height = theme.spacing(22)
+    height = theme.spacing(22),
+    animation,
+    filterable
   } = props;
 
   const classes = useStyles();
@@ -208,7 +208,7 @@ function HistogramWidgetUI(props) {
       data,
       theme
     );
-    const series = __generateSerie(name, data, selectedBars, theme);
+    const series = __generateSerie(name, data, selectedBars, animation, theme);
     return Object.assign({}, config, { series });
   }, [
     data,
@@ -219,7 +219,8 @@ function HistogramWidgetUI(props) {
     tooltipFormatter,
     xAxisFormatter,
     yAxisFormatter,
-    selectedBars
+    selectedBars,
+    animation
   ]);
 
   const clearBars = () => {
@@ -231,34 +232,40 @@ function HistogramWidgetUI(props) {
     onSelectedBarsChange({ bars: [], chartInstance });
   };
 
-  const clickEvent = (params) => {
-    if (onSelectedBarsChange) {
-      const echart = chartInstance.current.getEchartsInstance();
+  const clickEvent = useCallback(
+    (params) => {
+      if (onSelectedBarsChange) {
+        const echart = chartInstance.current.getEchartsInstance();
 
-      const { option, serie } = getChartSerie(echart, params.seriesIndex);
-      applyChartFilter(serie, params.dataIndex, theme);
-      echart.setOption(option);
+        const { option, serie } = getChartSerie(echart, params.seriesIndex);
+        applyChartFilter(serie, params.dataIndex, theme);
+        echart.setOption(option);
 
-      const activeBars = [];
-      serie.data.forEach((d, index) => {
-        if (!d.disabled) {
-          activeBars.push(index);
-        }
-      });
-      onSelectedBarsChange({
-        bars: activeBars.length === serie.data.length ? [] : activeBars,
-        chartInstance
-      });
-    }
-  };
+        const activeBars = [];
+        serie.data.forEach((d, index) => {
+          if (!d.disabled) {
+            activeBars.push(index);
+          }
+        });
+        onSelectedBarsChange({
+          bars: activeBars.length === serie.data.length ? [] : activeBars,
+          chartInstance
+        });
+      }
+    },
+    [onSelectedBarsChange, theme]
+  );
 
-  const onEvents = {
-    click: clickEvent
-  };
+  const onEvents = useMemo(
+    () => ({
+      click: clickEvent
+    }),
+    [clickEvent]
+  );
 
   return (
     <div>
-      {onSelectedBarsChange && (
+      {filterable && onSelectedBarsChange && (
         <Grid
           container
           direction='row'
@@ -281,7 +288,7 @@ function HistogramWidgetUI(props) {
           ref={chartInstance}
           option={options}
           lazyUpdate={true}
-          onEvents={onEvents}
+          onEvents={filterable && onEvents}
           style={{ height }}
         />
       )}
@@ -296,7 +303,9 @@ HistogramWidgetUI.defaultProps = {
   yAxisFormatter: (v) => v,
   dataAxis: [],
   name: null,
-  onSelectedBarsChange: null
+  onSelectedBarsChange: null,
+  animation: true,
+  filterable: true
 };
 
 HistogramWidgetUI.propTypes = {
@@ -308,7 +317,9 @@ HistogramWidgetUI.propTypes = {
   dataAxis: PropTypes.array,
   name: PropTypes.string,
   onSelectedBarsChange: PropTypes.func,
-  height: PropTypes.number
+  height: PropTypes.number,
+  animation: PropTypes.bool,
+  filterable: PropTypes.bool
 };
 
 export default HistogramWidgetUI;

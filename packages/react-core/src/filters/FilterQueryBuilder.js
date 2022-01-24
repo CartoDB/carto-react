@@ -1,6 +1,7 @@
 export const FilterTypes = Object.freeze({
   IN: 'in',
-  BETWEEN: 'between',
+  BETWEEN: 'between', // [a, b] both are included
+  CLOSED_OPEN: 'closed_open', // [a, b) a is included, b is not
   TIME: 'time'
 });
 
@@ -28,7 +29,9 @@ export const filtersToSQL = (filters = {}) => {
       switch (operator) {
         case FilterTypes.IN:
           result.push(
-            `${column} ${operator}(${params.values.map((v) => `'${v}'`).join(',')})`
+            `${column} ${operator}(${params.values
+              .map((v) => (isFinite(v) ? v : `'${v}'`))
+              .join(',')})`
           );
           break;
         case FilterTypes.BETWEEN:
