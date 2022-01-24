@@ -1,35 +1,35 @@
-import { DrawingToolWidgetUI, drawingToolIcons } from '@carto/react-ui';
+import { FeatureSelectionWidgetUI, featureSelectionIcons } from '@carto/react-ui';
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  setDrawingToolMode,
+  setFeatureSelectionMode,
   addSpatialFilter,
   removeSpatialFilter,
-  setDrawingToolEnabled
+  setFeatureSelectionEnabled
 } from '@carto/react-redux';
 import {
-  DRAW_MODES as DRAW_MODES_KEYS,
+  FEATURE_SELECTION_MODES,
   EDIT_MODES as EDIT_MODES_KEYS
 } from '@carto/react-core';
 
 const { PolygonIcon, RectangleIcon, CircleIcon, LassoIcon, CursorIcon } =
-  drawingToolIcons;
+  featureSelectionIcons;
 
-const DRAW_MODES_MAP = {
-  [DRAW_MODES_KEYS.POLYGON]: {
+const FEATURE_SELECTION_MODES_MAP = {
+  [FEATURE_SELECTION_MODES.POLYGON]: {
     label: 'Polygon',
     icon: <PolygonIcon />
   },
-  [DRAW_MODES_KEYS.RECTANGLE]: {
+  [FEATURE_SELECTION_MODES.RECTANGLE]: {
     label: 'Rectangle',
     icon: <RectangleIcon />
   },
-  [DRAW_MODES_KEYS.CIRCLE]: {
+  [FEATURE_SELECTION_MODES.CIRCLE]: {
     label: 'Circle',
     icon: <CircleIcon />
   },
-  [DRAW_MODES_KEYS.LASSO_TOOL]: {
+  [FEATURE_SELECTION_MODES.LASSO_TOOL]: {
     label: 'Lasso tool',
     icon: <LassoIcon />
   }
@@ -42,22 +42,22 @@ const EDIT_MODES_MAP = {
   }
 };
 
-function DrawingToolWidget({
+function FeatureSelectionWidget({
   className,
-  drawModes: drawModesKeys,
+  selectionModes: selectionModesKeys,
   editModes: editModesKeys,
   tooltipPlacement
 }) {
   const dispatch = useDispatch();
   const geometry = useSelector((state) => state.carto.spatialFilter);
-  const selectedMode = useSelector((state) => state.carto.drawingToolMode);
-  const enabled = useSelector((state) => state.carto.drawingToolEnabled);
+  const selectedMode = useSelector((state) => state.carto.featureSelectionMode);
+  const enabled = useSelector((state) => state.carto.featureSelectionEnabled);
 
-  const drawModes = useMemo(() => {
-    return drawModesKeys
-      .filter((key) => DRAW_MODES_MAP[key])
-      .map((key) => ({ id: key, ...DRAW_MODES_MAP[key] }));
-  }, [drawModesKeys]);
+  const selectionModes = useMemo(() => {
+    return selectionModesKeys
+      .filter((key) => FEATURE_SELECTION_MODES_MAP[key])
+      .map((key) => ({ id: key, ...FEATURE_SELECTION_MODES_MAP[key] }));
+  }, [selectionModesKeys]);
 
   const editModes = useMemo(() => {
     return editModesKeys
@@ -66,11 +66,11 @@ function DrawingToolWidget({
   }, [editModesKeys]);
 
   const handleEnabledChange = (newEnabled) => {
-    dispatch(setDrawingToolEnabled(newEnabled));
+    dispatch(setFeatureSelectionEnabled(newEnabled));
   };
 
   const handleSelectMode = (newSelectedMode) => {
-    dispatch(setDrawingToolMode(newSelectedMode));
+    dispatch(setFeatureSelectionMode(newSelectedMode));
     // If the user update selectedMode, activate it by default
     handleEnabledChange(true);
   };
@@ -94,9 +94,9 @@ function DrawingToolWidget({
   };
 
   return (
-    <DrawingToolWidgetUI
+    <FeatureSelectionWidgetUI
       className={className}
-      drawModes={drawModes}
+      selectionModes={selectionModes}
       editModes={editModes}
       selectedMode={selectedMode}
       onSelectMode={handleSelectMode}
@@ -110,24 +110,26 @@ function DrawingToolWidget({
   );
 }
 
-DrawingToolWidget.defaultProps = {
-  drawModes: Object.values(DRAW_MODES_KEYS),
+FeatureSelectionWidget.defaultProps = {
+  selectionModes: Object.values(FEATURE_SELECTION_MODES),
   editModes: Object.values(EDIT_MODES_KEYS),
-  defaultSelectedMode: Object.values(DRAW_MODES_KEYS)[0],
-  defaultEnabled: DrawingToolWidgetUI.defaultProps.enabled,
-  tooltipPlacement: DrawingToolWidgetUI.defaultProps.tooltipPlacement
+  defaultSelectedMode: Object.values(FEATURE_SELECTION_MODES)[0],
+  defaultEnabled: FeatureSelectionWidgetUI.defaultProps.enabled,
+  tooltipPlacement: FeatureSelectionWidgetUI.defaultProps.tooltipPlacement
 };
 
-DrawingToolWidget.propTypes = {
-  className: DrawingToolWidgetUI.propTypes.className,
-  drawModes: PropTypes.arrayOf(PropTypes.oneOf(Object.values(DRAW_MODES_KEYS))),
+FeatureSelectionWidget.propTypes = {
+  className: FeatureSelectionWidgetUI.propTypes.className,
+  selectionModes: PropTypes.arrayOf(
+    PropTypes.oneOf(Object.values(FEATURE_SELECTION_MODES))
+  ),
   editModes: PropTypes.arrayOf(PropTypes.oneOf(Object.values(EDIT_MODES_KEYS))),
-  defaultEnabled: DrawingToolWidgetUI.propTypes.enabled,
+  defaultEnabled: FeatureSelectionWidgetUI.propTypes.enabled,
   defaultSelectedMode: PropTypes.oneOf([
-    ...Object.values(DRAW_MODES_KEYS),
+    ...Object.values(FEATURE_SELECTION_MODES),
     ...Object.values(EDIT_MODES_KEYS)
   ]),
-  tooltipPlacement: DrawingToolWidgetUI.propTypes.tooltipPlacement
+  tooltipPlacement: FeatureSelectionWidgetUI.propTypes.tooltipPlacement
 };
 
-export default DrawingToolWidget;
+export default FeatureSelectionWidget;

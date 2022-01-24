@@ -16,9 +16,9 @@ import {
 import { ArrowDropDown } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 
-function DrawingToolWidgetUI({
+function FeatureSelectionWidgetUI({
   className,
-  drawModes,
+  selectionModes,
   editModes,
   selectedMode,
   onSelectMode,
@@ -37,7 +37,10 @@ function DrawingToolWidgetUI({
         enabled={enabled}
       >
         <SelectedModeViewer
-          modes={[...drawModes, ...editModes.map((mode) => ({ ...mode, isEdit: true }))]}
+          modes={[
+            ...selectionModes,
+            ...editModes.map((mode) => ({ ...mode, isEdit: true }))
+          ]}
           selectedMode={selectedMode}
           enabled={enabled}
           onEnabledChange={onEnabledChange}
@@ -45,7 +48,7 @@ function DrawingToolWidgetUI({
         />
       </Helper>
       <ModesSelector
-        drawModes={drawModes}
+        selectionModes={selectionModes}
         editModes={editModes}
         selectedMode={selectedMode}
         onSelectMode={onSelectMode}
@@ -64,7 +67,7 @@ function DrawingToolWidgetUI({
   );
 }
 
-DrawingToolWidgetUI.defaultProps = {
+FeatureSelectionWidgetUI.defaultProps = {
   className: '',
   enabled: false,
   tooltipPlacement: 'bottom',
@@ -77,9 +80,9 @@ const MODE_SHAPE = PropTypes.shape({
   icon: PropTypes.element.isRequired
 });
 
-DrawingToolWidgetUI.propTypes = {
+FeatureSelectionWidgetUI.propTypes = {
   className: PropTypes.string,
-  drawModes: PropTypes.arrayOf(MODE_SHAPE.isRequired).isRequired,
+  selectionModes: PropTypes.arrayOf(MODE_SHAPE.isRequired).isRequired,
   editModes: PropTypes.arrayOf(MODE_SHAPE.isRequired),
   selectedMode: PropTypes.string.isRequired,
   onSelectMode: PropTypes.func,
@@ -90,7 +93,7 @@ DrawingToolWidgetUI.propTypes = {
   tooltipPlacement: PropTypes.string
 };
 
-export default DrawingToolWidgetUI;
+export default FeatureSelectionWidgetUI;
 
 // Aux
 function Helper({ hasMode, enabled, isEdit, children }) {
@@ -182,7 +185,7 @@ function SelectedModeViewer({
       const foundMode = modes.find(({ id: modeId }) => modeId === selectedMode);
       if (!foundMode) {
         throw new Error(
-          'Selected mode provided is not found neither in drawing or edit mode'
+          'Selected mode provided is not found neither in selecting or edit mode'
         );
       }
       return foundMode;
@@ -191,7 +194,7 @@ function SelectedModeViewer({
     }
   }, [modes, selectedMode]);
 
-  const tooltipTitle = isEdit ? label : `Draw a ${label}`;
+  const tooltipTitle = isEdit ? label : `Select a ${label}`;
 
   const onEnabledChangeWrapper = () => onEnabledChange(!enabled);
 
@@ -218,7 +221,7 @@ const useModesSelectorStyles = makeStyles((theme) => ({
 }));
 
 function ModesSelector({
-  drawModes,
+  selectionModes,
   editModes,
   selectedMode,
   onSelectMode,
@@ -245,7 +248,7 @@ function ModesSelector({
     handleClose();
   };
 
-  const hasDrawModes = !!drawModes.length;
+  const hasSelectionModes = !!selectionModes.length;
   const hasEditModes = !!editModes.length;
 
   const MenuItemWrapper = forwardRef(({ mode, isEnabled }, ref) => (
@@ -296,11 +299,11 @@ function ModesSelector({
         }}
       >
         <MenuItem disabled>
-          <Typography variant='caption'>Choose a draw mode</Typography>
+          <Typography variant='caption'>Choose a selection mode</Typography>
         </MenuItem>
-        {hasDrawModes && drawModes.map(createMenuItemWrapper)}
-        {hasDrawModes && hasEditModes && <Divider className={classes.divider} />}
-        {hasDrawModes && editModes.map(createMenuItemWrapper)}
+        {hasSelectionModes && selectionModes.map(createMenuItemWrapper)}
+        {hasSelectionModes && hasEditModes && <Divider className={classes.divider} />}
+        {hasSelectionModes && editModes.map(createMenuItemWrapper)}
       </Menu>
     </Box>
   );

@@ -186,9 +186,9 @@ describe('carto slice', () => {
   describe('drawing tool mode', () => {
     test('should set drawing tool mode', () => {
       const MODE = 'abracadabra';
-      store.dispatch(cartoSlice.setDrawingToolMode(MODE));
+      store.dispatch(cartoSlice.setFeatureSelectionMode(MODE));
       const state = store.getState();
-      expect(state.carto.drawingToolMode).toEqual(MODE);
+      expect(state.carto.featureSelectionMode).toEqual(MODE);
     });
   });
 

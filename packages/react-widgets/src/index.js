@@ -6,7 +6,7 @@ export { default as PieWidget } from './widgets/PieWidget';
 export { default as LegendWidget } from './widgets/LegendWidget';
 export { default as ScatterPlotWidget } from './widgets/ScatterPlotWidget';
 export { default as TimeSeriesWidget } from './widgets/TimeSeriesWidget';
-export { default as DrawingToolWidget } from './widgets/DrawingToolWidget';
+export { default as FeatureSelectionWidget } from './widgets/FeatureSelectionWidget';
 export { default as TableWidget } from './widgets/TableWidget';
 export {
   getFormula,
@@ -17,4 +17,4 @@ export {
   getTable
 } from './models';
 export { default as useSourceFilters } from './hooks/useSourceFilters';
-export { default as DrawingToolLayer } from './layers/DrawingToolLayer';
+export { default as FeatureSelectionLayer } from './layers/FeatureSelectionLayer';

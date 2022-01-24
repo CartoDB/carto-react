@@ -126,7 +126,7 @@ export function GoogleMap(props) {
   };
 
   // Set layers should be outside of the useEffect to avoid problems with layers that changes
-  // dinamically with move events like the DrawingToolLayer
+  // dinamically with move events like the FeatureSelectionLayer
   if (window.cartoDeck) {
     window.cartoDeck.setProps({ layers });
   }

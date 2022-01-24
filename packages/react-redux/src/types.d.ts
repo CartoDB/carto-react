@@ -44,8 +44,8 @@ export type CartoState = {
   dataSources: { [key: string]: string },
   spatialFilter: Geometry,
   featuresReady: { [key: string]: boolean },
-  drawingToolEnabled: boolean,
-  drawingToolMode: string
+  featureSelectionEnabled: boolean,
+  featureSelectionMode: string
 } & InitialCartoState;
 
 export type InitialOauthState = {

@@ -2,8 +2,8 @@ import * as nebulaModes from '@nebula.gl/edit-modes';
 import {
   addSpatialFilter,
   selectSpatialFilter,
-  setDrawingToolEnabled,
-  selectDrawingToolMode
+  setFeatureSelectionEnabled,
+  selectFeatureSelectionMode
 } from '@carto/react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { EDIT_MODES } from '@carto/react-core';
@@ -17,11 +17,11 @@ const { ViewMode, TranslateMode, ModifyMode, CompositeMode } = nebulaModes;
 // const EditMode = new CompositeMode([new TranslateMode(), new ModifyMode()]);
 const EditMode = new CompositeMode([new TranslateMode(), new ModifyMode()]);
 
-export default function DrawingToolLayer({ eventManager } = { eventManager: null }) {
+export default function FeatureSelectionLayer({ eventManager } = { eventManager: null }) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null);
-  const selectedMode = useSelector((state) => selectDrawingToolMode(state));
+  const selectedMode = useSelector((state) => selectFeatureSelectionMode(state));
   const spatialFilterGeometry = useSelector((state) => selectSpatialFilter(state));
 
   const isEdit = isEditMode(selectedMode);
@@ -61,7 +61,7 @@ export default function DrawingToolLayer({ eventManager } = { eventManager: null
 
   return new EditableCartoGeoJsonLayer({
     eventManager: customEventManager,
-    id: 'DrawingToolLayer',
+    id: 'FeatureSelectionLayer',
     pickable: !!selectedMode,
     data: {
       type: 'FeatureCollection',
@@ -72,7 +72,7 @@ export default function DrawingToolLayer({ eventManager } = { eventManager: null
     onEdit: ({ updatedData, editType }) => {
       // Once the geometry is drawed, disable the tool
       if (editType === 'addFeature') {
-        dispatch(setDrawingToolEnabled(false));
+        dispatch(setFeatureSelectionEnabled(false));
       }
 
       // Do not update spatial filter if

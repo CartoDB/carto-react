@@ -61,8 +61,8 @@ declare enum CartoActions {
   CLEAR_FILTERS = 'carto/clearFilters',
   SET_FEATURES_READY = 'carto/setFeaturesReady',
   SET_CREDENTIALS = 'carto/setCredentials',
-  SET_DRAWING_TOOL_MODE = 'carto/setDrawingToolMode',
-  SET_DRAWING_TOOL_ENABLED = 'carto/setDrawingToolEnabled',
+  SET_FEATURE_SELECTION_MODE = 'carto/setFeatureSelectionMode',
+  SET_FEATURE_SELECTION_ENABLED = 'carto/setFeatureSelectionEnabled',
 }
 
 export function createCartoSlice(initialState: InitialCartoState): Reducer<CartoState, AnyAction>;
@@ -138,16 +138,16 @@ export function setCredentials(credentials: Credentials): {
   payload: Credentials;
 };
 
-export function setDrawingToolMode(mode: string): {
-  type: CartoActions.SET_DRAWING_TOOL_MODE;
+export function setFeatureSelectionMode(mode: string): {
+  type: CartoActions.SET_FEATURE_SELECTION_MODE;
   payload: string;
 };
 
-export function setDrawingToolEnabled(enabled: boolean): {
-  type: CartoActions.SET_DRAWING_TOOL_MODE;
+export function setFeatureSelectionEnabled(enabled: boolean): {
+  type: CartoActions.SET_FEATURE_SELECTION_ENABLED;
   payload: boolean;
 };
 
 export function selectSpatialFilter(state: any, sourceId?: string): object | null;
 
-export function selectDrawingToolMode(state: any): string | null;
+export function selectFeatureSelectionMode(state: any): string | null;

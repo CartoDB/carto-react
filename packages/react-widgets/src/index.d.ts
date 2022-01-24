@@ -16,5 +16,5 @@ export {
 } from './models';
 export { default as TimeSeriesWidget } from './widgets/TimeSeriesWidget';
 export { default as useSourceFilters } from './hooks/useSourceFilters';
-export { default as DrawingToolWidget } from './widgets/DrawingToolWidget';
-export { default as DrawingToolLayer } from './layers/DrawingToolLayer';
+export { default as FeatureSelectionWidget } from './widgets/FeatureSelectionWidget';
+export { default as FeatureSelectionLayer } from './layers/FeatureSelectionLayer';
