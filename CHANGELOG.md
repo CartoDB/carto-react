@@ -3,6 +3,7 @@
 ## Not released
 
 - Improve styles for MaterialUI Dialog component [#272](https://github.com/CartoDB/carto-react/pull/272)
+- Add and export CartoTheme type that describe our custom theme [#298](https://github.com/CartoDB/carto-react/pull/298)
 
 ## 1.2
 
