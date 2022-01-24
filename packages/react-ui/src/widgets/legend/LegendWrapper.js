@@ -106,10 +106,8 @@ const useHeaderStyles = makeStyles((theme) => ({
       background: 'none'
     }
   },
-  iconToggle: {
-    marginTop: '-6px'
-  },
   expandIcon: {
+    display: 'block',
     fill: theme.palette.text.secondary
   }
 }));
@@ -131,7 +129,7 @@ function Header({
         className={classes.button}
         startIcon={
           collapsible && (
-            <Icon className={classes.iconToggle}>
+            <Icon>
               {expanded ? (
                 <ExpandLess className={classes.expandIcon} />
               ) : (
