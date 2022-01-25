@@ -1,6 +1,4 @@
 import { DataFilterExtension } from '@deck.gl/extensions';
-// TODO change this after publish a new version of Deck GL @types
-import * as extensions from '@deck.gl/extensions';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { FeatureCollection } from 'geojson';
 
@@ -35,7 +33,7 @@ export type UseCartoLayerFilterProps = {
   onDataLoad?: Function;
   getFilterValue: Function;
   filterRange: [number, number];
-  extensions: [DataFilterExtension, extensions.MaskExtension];
+  extensions: [DataFilterExtension];
   updateTriggers: {
     getFilterValue: Record<string, unknown>;
   };
