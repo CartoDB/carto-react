@@ -75,7 +75,6 @@ export default function FeatureSelectionLayer({ eventManager } = { eventManager:
 
   return [
     maskLayer,
-    // @ts-ignore
     new EditableCartoGeoJsonLayer({
       eventManager: customEventManager,
       id: 'FeatureSelectionLayer',
