@@ -1,5 +1,6 @@
 import { Credentials } from '@carto/react-api/';
 import { SourceProps } from '@carto/react-api/types';
+import { _FilterTypes } from '@carto/react-core'
 import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/';
 import { InitialCartoState, CartoState, ViewState } from '../types';
 import { AnyAction, Reducer } from 'redux';
@@ -15,9 +16,9 @@ type Layer = {
 type BasemapName = CartoBasemapsNames | GMapsBasemapsNames;
 
 type FilterBasic = {
-  type: '';
+  type: _FilterTypes;
   values: string[] | number[];
-  owner: string;
+  owner?: string;
 };
 
 type FilterCommonProps = {
