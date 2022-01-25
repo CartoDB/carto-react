@@ -1,3 +1,7 @@
+import {
+  FilterTypes
+} from './filters/FilterQueryBuilder';
+
 export {
   getRequest,
   postRequest,
@@ -28,3 +32,5 @@ export { GroupDateTypes } from './operations/GroupDateTypes';
 export { groupValuesByDateColumn } from './operations/groupByDate';
 
 export { DRAW_MODES, EDIT_MODES } from './utils/drawingToolConstants';
+
+export type _FilterTypes = typeof FilterTypes;
