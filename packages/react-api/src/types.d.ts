@@ -39,8 +39,7 @@ export type UseCartoLayerFilterProps = {
   updateTriggers: {
     getFilterValue: Record<string, unknown>;
   };
-  maskPolygon: Array<Array<number>>;
-  maskEnabled: boolean;
+  maskId?: string
 } & SourceProps;
 
 export type ExecuteSQLResponse<Response = FeatureCollection | {}[]> = Promise<Response>;

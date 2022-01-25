@@ -1,14 +1,19 @@
+import { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+// @ts-ignore
 import * as nebulaModes from '@nebula.gl/edit-modes';
+// @ts-ignore
+import { OPERATION } from '@deck.gl/core';
+// @ts-ignore
+import { SolidPolygonLayer } from '@deck.gl/layers';
 import {
   addSpatialFilter,
   selectSpatialFilter,
   setFeatureSelectionEnabled,
   selectFeatureSelectionMode
 } from '@carto/react-redux';
-import { useDispatch, useSelector } from 'react-redux';
-import { EDIT_MODES } from '@carto/react-core';
+import { EDIT_MODES, MASK_ID } from '@carto/react-core';
 import { hexToRgb, useTheme } from '@material-ui/core';
-import { useEffect, useMemo, useState } from 'react';
 import EditableCartoGeoJsonLayer from './EditableCartoGeoJsonLayer';
 import useEventManager from './useEventManager';
 
@@ -59,53 +64,69 @@ export default function FeatureSelectionLayer({ eventManager } = { eventManager:
 
   const mainColor = hasGeometry && !isSelected ? secondaryAsRgba : primaryAsRgba;
 
-  return new EditableCartoGeoJsonLayer({
-    eventManager: customEventManager,
-    id: 'FeatureSelectionLayer',
-    pickable: !!selectedMode,
-    data: {
-      type: 'FeatureCollection',
-      features: spatialFilterGeometry ? [spatialFilterGeometry] : []
-    },
-    mode,
-    selectedFeatureIndexes: isFinite(selectedFeatureIndex) ? [selectedFeatureIndex] : [],
-    onEdit: ({ updatedData, editType }) => {
-      // Once the geometry is drawed, disable the tool
-      if (editType === 'addFeature') {
-        dispatch(setFeatureSelectionEnabled(false));
-      }
+  const maskLayer =
+    hasGeometry &&
+    new SolidPolygonLayer({
+      id: MASK_ID,
+      operation: OPERATION.MASK,
+      data: [{ polygon: spatialFilterGeometry?.geometry.coordinates }],
+      getFillColor: [255, 255, 255, 255]
+    });
 
-      // Do not update spatial filter if
-      //     1. updatedData is empty
-      //     2. editType includes tentative, that means it's being drawn
-      if (updatedData.features.length !== 0 && !editType.includes('Tentative')) {
-        const [lastFeature] = updatedData.features.slice(-1);
-        if (lastFeature) {
-          dispatch(
-            addSpatialFilter({
-              geometry: lastFeature
-            })
-          );
+  return [
+    maskLayer,
+    // @ts-ignore
+    new EditableCartoGeoJsonLayer({
+      eventManager: customEventManager,
+      id: 'FeatureSelectionLayer',
+      pickable: !!selectedMode,
+      data: {
+        type: 'FeatureCollection',
+        features: spatialFilterGeometry ? [spatialFilterGeometry] : []
+      },
+      mode,
+      // @ts-ignore
+      selectedFeatureIndexes: isFinite(selectedFeatureIndex)
+        ? [selectedFeatureIndex]
+        : [],
+      onEdit: ({ updatedData, editType }) => {
+        // Once the geometry is drawed, disable the tool
+        if (editType === 'addFeature') {
+          dispatch(setFeatureSelectionEnabled(false));
         }
-      }
-    },
-    onClick: ({ index, object }) => {
-      if (isEdit && object?.geometry.type === 'Polygon') {
-        setSelectedFeatureIndex(index);
-      }
-    },
-    // Styles once geometry is created or it's being edited
-    getLineColor: mainColor,
-    getFillColor: isEdit ? [...mainColor.slice(0, 3), 255 * 0.08] : [0, 0, 0, 0],
-    // Styles while drawing geometry
-    getTentativeFillColor: [...primaryAsRgba.slice(0, 3), 255 * 0.08],
-    getTentativeLineColor: primaryAsRgba,
-    // Point styles while drawing
-    getEditHandlePointColor: [0xff, 0xff, 0xff],
-    getEditHandlePointOutlineColor: primaryAsRgba,
-    editHandlePointStrokeWidth: 5,
-    getEditHandlePointRadius: 2
-  });
+
+        // Do not update spatial filter if
+        //     1. updatedData is empty
+        //     2. editType includes tentative, that means it's being drawn
+        if (updatedData.features.length !== 0 && !editType.includes('Tentative')) {
+          const [lastFeature] = updatedData.features.slice(-1);
+          if (lastFeature) {
+            dispatch(
+              addSpatialFilter({
+                geometry: lastFeature
+              })
+            );
+          }
+        }
+      },
+      onClick: ({ index, object }) => {
+        if (isEdit && object?.geometry.type === 'Polygon') {
+          setSelectedFeatureIndex(index);
+        }
+      },
+      // Styles once geometry is created or it's being edited
+      getLineColor: mainColor,
+      getFillColor: isEdit ? [...mainColor.slice(0, 3), 255 * 0.08] : [0, 0, 0, 0],
+      // Styles while drawing geometry
+      getTentativeFillColor: [...primaryAsRgba.slice(0, 3), 255 * 0.08],
+      getTentativeLineColor: primaryAsRgba,
+      // Point styles while drawing
+      getEditHandlePointColor: [0xff, 0xff, 0xff],
+      getEditHandlePointOutlineColor: primaryAsRgba,
+      editHandlePointStrokeWidth: 5,
+      getEditHandlePointRadius: 2
+    })
+  ];
 }
 
 // Aux

@@ -9,3 +9,5 @@ export const FEATURE_SELECTION_MODES = Object.freeze({
 export const EDIT_MODES = Object.freeze({
   EDIT: 'edit'
 });
+
+export const MASK_ID = 'feature_selection_mask';

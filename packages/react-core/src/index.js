@@ -35,4 +35,8 @@ export { geojsonFeatures } from './filters/geojsonFeatures';
 export { GroupDateTypes } from './operations/GroupDateTypes';
 export { groupValuesByDateColumn } from './operations/groupByDate';
 
-export { FEATURE_SELECTION_MODES, EDIT_MODES } from './utils/featureSelectionConstants';
+export {
+  FEATURE_SELECTION_MODES,
+  EDIT_MODES,
+  MASK_ID
+} from './utils/featureSelectionConstants';
