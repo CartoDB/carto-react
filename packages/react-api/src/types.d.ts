@@ -33,11 +33,11 @@ export type UseCartoLayerFilterProps = {
   onDataLoad?: Function;
   getFilterValue: Function;
   filterRange: [number, number];
-  extensions: [DataFilterExtension];
+  extensions: DataFilterExtension[];
   updateTriggers: {
     getFilterValue: Record<string, unknown>;
   };
-  maskId?: string
+  maskId?: string;
 } & SourceProps;
 
 export type ExecuteSQLResponse<Response = FeatureCollection | {}[]> = Promise<Response>;
