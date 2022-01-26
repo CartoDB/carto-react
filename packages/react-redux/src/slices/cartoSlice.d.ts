@@ -1,5 +1,6 @@
 import { Credentials } from '@carto/react-api/';
 import { SourceProps } from '@carto/react-api/types';
+import { _FilterTypes } from '@carto/react-core/types';
 import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/';
 import { InitialCartoState, CartoState, ViewState } from '../types';
 import { AnyAction, Reducer } from 'redux';
@@ -15,9 +16,9 @@ type Layer = {
 type BasemapName = CartoBasemapsNames | GMapsBasemapsNames;
 
 type FilterBasic = {
-  type: '';
+  type: _FilterTypes;
   values: string[] | number[];
-  owner: string;
+  owner?: string;
 };
 
 type FilterCommonProps = {
@@ -62,10 +63,12 @@ declare enum CartoActions {
   SET_FEATURES_READY = 'carto/setFeaturesReady',
   SET_CREDENTIALS = 'carto/setCredentials',
   SET_DRAWING_TOOL_MODE = 'carto/setDrawingToolMode',
-  SET_DRAWING_TOOL_ENABLED = 'carto/setDrawingToolEnabled',
+  SET_DRAWING_TOOL_ENABLED = 'carto/setDrawingToolEnabled'
 }
 
-export function createCartoSlice(initialState: InitialCartoState): Reducer<CartoState, AnyAction>;
+export function createCartoSlice(
+  initialState: InitialCartoState
+): Reducer<CartoState, AnyAction>;
 
 export function addSource(source: Source): {
   type: CartoActions.ADD_SOURCE;
