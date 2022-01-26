@@ -7,7 +7,7 @@ import WrapperWidgetUI from '.../../../src/widgets/WrapperWidgetUI';
 import { buildReactPropsAsString } from '../../utils';
 
 const options = {
-  title: 'Widgets UI/WrapperWidgetUI',
+  title: 'Custom Components/WrapperWidgetUI',
   component: WrapperWidgetUI,
   argTypes: {
     actions: {
@@ -19,39 +19,41 @@ const options = {
     children: {
       table: { disable: true }
     }
+  },
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
+    }
   }
 };
 export default options;
 
 const Template = (args) => (
   <WrapperWidgetUI {...args}>
-    <Typography>Your Content</Typography>
+    <div>Your Content</div>
   </WrapperWidgetUI>
 );
 
 export const Default = Template.bind({});
 const DefaultProps = { title: 'Default wrapper' };
 Default.args = DefaultProps;
-Default.parameters = buildReactPropsAsString(DefaultProps, 'WrapperWidgetUI');
 
 export const OnlyTitle = Template.bind({});
 OnlyTitle.args = DefaultProps;
-OnlyTitle.parameters = buildReactPropsAsString(DefaultProps, 'WrapperWidgetUI');
 
 export const Expandable = Template.bind({});
 const ExpandableProps = { title: 'Expandable', expandable: true };
 Expandable.args = ExpandableProps;
-Expandable.parameters = buildReactPropsAsString(ExpandableProps, 'WrapperWidgetUI');
 
 export const NotExpandable = Template.bind({});
 const NotExpandableProps = { title: 'Not Expandable', expandable: false };
 NotExpandable.args = NotExpandableProps;
-NotExpandable.parameters = buildReactPropsAsString(NotExpandableProps, 'WrapperWidgetUI');
 
 export const Loading = Template.bind({});
 const LoadingProps = { title: 'Loading', loading: true };
 Loading.args = LoadingProps;
-Loading.parameters = buildReactPropsAsString(LoadingProps, 'WrapperWidgetUI');
 
 export const WithActions = Template.bind({});
 WithActions.args = {

@@ -1,9 +1,8 @@
-import { Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 import LegendWidgetUI from '../../../src/widgets/legend/LegendWidgetUI';
 
 const options = {
-  title: 'Widgets UI/LegendWidgetUI',
+  title: 'Custom Components/LegendWidgetUI',
   component: LegendWidgetUI,
   argTypes: {
     className: {
@@ -37,7 +36,7 @@ export default options;
 const Template = ({ ...args }) => {
   return (
     <LegendWidgetUI {...args}>
-      <Typography>Your Content</Typography>
+      <div>Your Content</div>
     </LegendWidgetUI>
   );
 };
@@ -49,7 +48,7 @@ const LegendTemplate = () => {
       title: 'Single Layer',
       visible: true,
       legend: {
-        children: <Typography>Your Content</Typography>
+        children: <div>Your Content</div>
       }
     }
   ];
@@ -74,7 +73,7 @@ const LegendMultiTemplate = () => {
       title: 'Multi Layer',
       visible: true,
       legend: {
-        children: <Typography>Your Content</Typography>
+        children: <div>Your Content</div>
       }
     },
     {
@@ -83,7 +82,7 @@ const LegendMultiTemplate = () => {
       visible: false,
       collapsible: false,
       legend: {
-        children: <Typography>Your Content</Typography>
+        children: <div>Your Content</div>
       }
     }
   ];
@@ -99,7 +98,7 @@ const LegendMultiTemplateCollapsed = () => {
       title: 'Multi Layer',
       visible: true,
       legend: {
-        children: <Typography>Your Content</Typography>
+        children: <div>Your Content</div>
       }
     },
     {
@@ -108,7 +107,7 @@ const LegendMultiTemplateCollapsed = () => {
       visible: false,
       collapsible: false,
       legend: {
-        children: <Typography>Your Content</Typography>
+        children: <div>Your Content</div>
       }
     }
   ];
@@ -217,7 +216,7 @@ const LegendCustomTemplate = () => {
       title: 'Single Layer',
       visible: true,
       legend: {
-        children: <Typography>Legend custom</Typography>
+        children: <div>Legend custom</div>
       }
     }
   ];

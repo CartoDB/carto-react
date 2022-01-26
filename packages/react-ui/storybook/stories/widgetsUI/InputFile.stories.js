@@ -44,13 +44,20 @@ const options = {
         type: 'boolean'
       }
     }
+  },
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
+    }
   }
 };
 export default options;
 
 const Template = ({ ...args }) => <InputFile {...args} />;
 
-const ExampleTemplate = ({ ...args }) => {
+const ExampleTemplate = () => {
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [alert, setAlert] = useState();
@@ -91,7 +98,12 @@ const ExampleTemplate = ({ ...args }) => {
           justifyContent='space-between'
           alignItems='center'
         >
-          <InputFile {...args} files={files} onChange={handleInputFileChange} />
+          <InputFile
+            accept='image/*'
+            multiple
+            files={files}
+            onChange={handleInputFileChange}
+          />
           <Button
             color='primary'
             size='small'
@@ -127,7 +139,10 @@ const ExampleTemplate = ({ ...args }) => {
 export const Default = Template.bind({});
 
 export const Example = ExampleTemplate.bind({});
-Example.args = {
-  accept: 'image/*',
-  multiple: true
+Example.parameters = {
+  docs: {
+    source: {
+      type: 'code'
+    }
+  }
 };
