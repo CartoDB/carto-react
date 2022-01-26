@@ -252,7 +252,7 @@ export const removeSpatialFilter = (sourceId) => ({
  * Action to add a filter on a given source and column
  * @param {string} id - sourceId of the source to apply the filter on
  * @param {string} column - column to use by the filter at the source
- * @param {FilterType} type - FilterTypes.IN and FilterTypes.BETWEEN
+ * @param {FilterTypes} type - FilterTypes.IN, FilterTypes.BETWEEN, FilterTypes.CLOSED_OPEN and FilterTypes.TIME
  * @param {array} values -  Values for the filter (eg: ['a', 'b'] for IN or [10, 20] for BETWEEN)
  * @param {string} owner - (optional) id of the widget triggering the filter (to be excluded)
  */
