@@ -1,5 +1,6 @@
 import React from 'react';
 import { Avatar, Chip, Grid } from '@material-ui/core';
+import { replaceWithStyleForwardRef } from '../../utils';
 
 const options = {
   title: 'Common/Chip',
@@ -67,13 +68,24 @@ const options = {
         options: ['default', 'outlined']
       }
     }
+  },
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
+    },
+    jsx: {
+      showFunctions: true,
+      displayName: (el) => {
+        return replaceWithStyleForwardRef(el.type.displayName);
+      }
+    }
   }
 };
+
 export default options;
 
-// const Template = ({ ...args }) => {
-//   return <Chip { ...args } />
-// };
 const Template = ({ ...args }) => {
   return (
     <Grid container direction='row' alignItems='center'>

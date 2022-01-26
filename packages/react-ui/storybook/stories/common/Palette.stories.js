@@ -363,6 +363,61 @@ const GreyTemplate = (args) => {
 
 export const Default = ColorTemplate.bind({});
 Default.args = { colorVariant: 'primary' };
+// This is just an example
+Default.parameters = {
+  docs: {
+    source: {
+      language: 'jsx',
+      code: `
+const theme = useTheme();
+const colorDef = theme.palette.primary;
+
+return (
+  <Grid container>
+    <Box style={{ backgroundColor: colorDef.light, ...boxStyle }} {...args}>
+      <Typography variant='caption' style={{ color: colorDef.contrastText }}>
+        Light
+        <br />
+        {colorDef.light}
+      </Typography>
+    </Box>
+    <Box style={{ backgroundColor: colorDef.main, ...boxStyle }} {...args}>
+      <Typography variant='caption' style={{ color: colorDef.contrastText }}>
+        Main
+        <br />
+        {colorDef.main}
+      </Typography>
+    </Box>
+    <Box style={{ backgroundColor: colorDef.dark, ...boxStyle }} {...args}>
+      <Typography variant='caption' style={{ color: colorDef.contrastText }}>
+        Dark
+        <br />
+        {colorDef.dark}
+      </Typography>
+    </Box>
+    {colorDef.relatedDark && (
+      <Box style={{ backgroundColor: colorDef.relatedDark, ...boxStyle }} {...args}>
+        <Typography variant='caption' style={{ color: theme.palette.common.white }}>
+          Related Dark
+          <br />
+          {colorDef.relatedDark}
+        </Typography>
+      </Box>
+    )}
+    {colorDef.relatedLight && (
+      <Box style={{ backgroundColor: colorDef.relatedLight, ...boxStyle }} {...args}>
+        <Typography variant='caption' style={{ color: colorDef.dark }}>
+          Related Light
+          <br />
+          {colorDef.relatedLight}
+        </Typography>
+      </Box>
+    )}
+  </Grid>
+);`
+    }
+  }
+};
 
 export const Primary = ColorTemplate.bind({});
 Primary.args = { colorVariant: 'primary' };

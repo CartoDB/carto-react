@@ -56,3 +56,7 @@ export function buildReactPropsAsString(props, componentName) {
     }
   };
 }
+
+export function replaceWithStyleForwardRef(displayName) {
+  return displayName.replace(/WithStyles\(ForwardRef\(([\w]*)\){2}/, '$1');
+}
