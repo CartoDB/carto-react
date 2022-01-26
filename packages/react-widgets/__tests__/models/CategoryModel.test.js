@@ -34,13 +34,8 @@ describe('getCategories', () => {
     });
 
     test('correctly called', async () => {
-      const {
-        column,
-        operationColumn,
-        operation,
-        filters,
-        dataSource
-      } = categoriesParams;
+      const { column, operationColumn, operation, filters, dataSource } =
+        categoriesParams;
       await getCategories(categoriesParams);
       expect(executeTask).toHaveBeenCalledWith(dataSource, Methods.FEATURES_CATEGORY, {
         column,

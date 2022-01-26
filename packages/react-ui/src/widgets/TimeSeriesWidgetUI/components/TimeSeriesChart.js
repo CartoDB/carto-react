@@ -122,13 +122,11 @@ export default function TimeSeriesChart({
     [theme, maxValue]
   );
 
-  const {
-    timelineOptions: markLine,
-    timeWindowOptions: markArea
-  } = useTimeSeriesInteractivity({
-    echartsInstance,
-    data
-  });
+  const { timelineOptions: markLine, timeWindowOptions: markArea } =
+    useTimeSeriesInteractivity({
+      echartsInstance,
+      data
+    });
 
   const serieOptions = useMemo(
     () => ({

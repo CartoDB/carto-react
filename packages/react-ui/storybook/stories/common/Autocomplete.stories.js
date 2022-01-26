@@ -50,7 +50,7 @@ const top100Films = [
   { title: 'The Lord of the Rings: The Two Towers', year: 2002 }
 ];
 
-const Template = ({ label = 'Choose films', disabled, ...args }) => (
+const Template = ({ label = 'Choose films', disabled = false, ...args }) => (
   <Autocomplete
     id='combo-box-demo'
     options={top100Films}
@@ -60,7 +60,7 @@ const Template = ({ label = 'Choose films', disabled, ...args }) => (
   />
 );
 
-const AutocompleteTemplate = ({ disabled, size, ...args }) => {
+const AutocompleteTemplate = ({ disabled = false, size = 'medium', ...args }) => {
   const options = top100Films.map((option) => {
     const firstLetter = option.title[0].toUpperCase();
     return {

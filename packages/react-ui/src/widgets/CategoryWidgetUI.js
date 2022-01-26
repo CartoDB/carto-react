@@ -623,7 +623,7 @@ CategoryWidgetUI.propTypes = {
   onSelectedCategoriesChange: PropTypes.func,
   order: PropTypes.oneOf(Object.values(CategoryWidgetUI.ORDER_TYPES)),
   animation: PropTypes.bool,
-  filterable: PropTypes.bool,
+  filterable: PropTypes.bool
 };
 
 export default CategoryWidgetUI;

@@ -47,7 +47,7 @@ const options = {
 };
 export default options;
 
-const Template = ({ label = 'Age', required, size, ...args }) => (
+const Template = ({ label = 'Age', required = false, size = 'medium', ...args }) => (
   <FormControl size={size} required={required}>
     <InputLabel id='age-native-simple-label'>{label}</InputLabel>
     <Select labelId='age-native-simple-label' {...args}>
@@ -58,7 +58,7 @@ const Template = ({ label = 'Age', required, size, ...args }) => (
   </FormControl>
 );
 
-const SelectTemplate = ({ size, ...rest }) => {
+const SelectTemplate = ({ size = 'medium', ...rest }) => {
   const adornment = {
     startAdornment: <InputAdornment position='start'>Kg</InputAdornment>,
     endAdornment: (

@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix Storybook showing args instead of properties [#172](https://github.com/CartoDB/carto-react/pull/172)
+
 ## 1.2
 
 ### 1.2.1-alpha.7 (2022-01-26)

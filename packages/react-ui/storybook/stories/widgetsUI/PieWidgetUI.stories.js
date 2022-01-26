@@ -1,6 +1,5 @@
 import React from 'react';
 import PieWidgetUI from '../../../src/widgets/PieWidgetUI';
-import { buildReactPropsAsString } from '../../utils';
 
 const options = {
   title: 'Widgets UI/PieWidgetUI',
@@ -19,7 +18,6 @@ const Template = (args) => <PieWidgetUI {...args} />;
 export const Default = Template.bind({});
 const DefaultProps = { data: dataDefault };
 Default.args = DefaultProps;
-Default.parameters = buildReactPropsAsString(DefaultProps, 'PieWidgetUI');
 
 export const CustomColors = Template.bind({});
 const CustomColorsProps = {
@@ -51,7 +49,6 @@ const CustomColorsProps = {
   ]
 };
 CustomColors.args = CustomColorsProps;
-CustomColors.parameters = buildReactPropsAsString(CustomColorsProps, 'PieWidgetUI');
 
 export const SelectedCategories = Template.bind({});
 const SelectedCategoriesProps = {
@@ -66,7 +63,3 @@ const SelectedCategoriesProps = {
   onSelectedCategoriesChange: (categories) => console.log(categories)
 };
 SelectedCategories.args = SelectedCategoriesProps;
-SelectedCategories.parameters = buildReactPropsAsString(
-  SelectedCategoriesProps,
-  'PieWidgetUI'
-);

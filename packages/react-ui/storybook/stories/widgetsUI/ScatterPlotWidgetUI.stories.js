@@ -1,6 +1,5 @@
 import React from 'react';
 import ScatterPlotWidgetUI from '../../../src/widgets/ScatterPlotWidgetUI';
-import { buildReactPropsAsString } from '../../utils';
 
 const options = {
   title: 'Widgets UI/ScatterPlotWidgetUI',
@@ -19,7 +18,6 @@ const Template = (args) => <ScatterPlotWidgetUI {...args} />;
 export const Default = Template.bind({});
 const DefaultProps = { data: dataDefault, name: 'name' };
 Default.args = DefaultProps;
-Default.parameters = buildReactPropsAsString(DefaultProps, 'ScatterPlotWidgetUI');
 
 export const xAxisFormatter = Template.bind({});
 const xAxisFormatterProps = {
@@ -28,10 +26,6 @@ const xAxisFormatterProps = {
   xAxisFormatter: (v) => `${v / 1000}k`
 };
 xAxisFormatter.args = xAxisFormatterProps;
-xAxisFormatter.parameters = buildReactPropsAsString(
-  xAxisFormatterProps,
-  'ScatterPlotWidgetUI'
-);
 
 export const yAxisFormatter = Template.bind({});
 const yAxisFormatterProps = {
@@ -40,10 +34,6 @@ const yAxisFormatterProps = {
   yAxisFormatter: (v) => ({ prefix: `$`, value: v })
 };
 yAxisFormatter.args = yAxisFormatterProps;
-yAxisFormatter.parameters = buildReactPropsAsString(
-  yAxisFormatterProps,
-  'ScatterPlotWidgetUI'
-);
 
 export const tooltipFormatter = Template.bind({});
 const tooltipFormatterProps = {
@@ -53,7 +43,3 @@ const tooltipFormatterProps = {
 };
 
 tooltipFormatter.args = tooltipFormatterProps;
-tooltipFormatter.parameters = buildReactPropsAsString(
-  tooltipFormatterProps,
-  'ScatterPlotWidgetUI'
-);

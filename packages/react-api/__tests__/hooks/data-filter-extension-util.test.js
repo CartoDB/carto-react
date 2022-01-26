@@ -35,9 +35,8 @@ describe('gpu-filter-utils', () => {
         revenue: 100
       }
     };
-    const { filterRange, updateTriggers, getFilterValue } = getDataFilterExtensionProps(
-      filters
-    );
+    const { filterRange, updateTriggers, getFilterValue } =
+      getDataFilterExtensionProps(filters);
 
     expect(filterRange.length).toEqual(MAX_GPU_FILTERS);
     filterRange.forEach((range, index) => {
@@ -74,9 +73,8 @@ describe('gpu-filter-utils', () => {
       }
     };
 
-    const { filterRange, updateTriggers, getFilterValue } = getDataFilterExtensionProps(
-      filters
-    );
+    const { filterRange, updateTriggers, getFilterValue } =
+      getDataFilterExtensionProps(filters);
 
     filterRange.forEach((range, index) => {
       if (index === 0) {
