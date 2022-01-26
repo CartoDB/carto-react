@@ -29,7 +29,9 @@ const STEP_SIZE_RANGE_MAPPING = {
   [GroupDateTypes.YEARS]: 60 * 60 * 24 * 365 * 1000,
   [GroupDateTypes.MONTHS]: 60 * 60 * 24 * 30 * 1000,
   [GroupDateTypes.WEEKS]: 60 * 60 * 24 * 7 * 1000,
-  [GroupDateTypes.DAYS]: 60 * 60 * 24 * 1000
+  [GroupDateTypes.DAYS]: 60 * 60 * 24 * 1000,
+  [GroupDateTypes.HOURS]: 60 * 60 * 1000,
+  [GroupDateTypes.MINUTES]: 60 * 1000
 };
 
 /**

@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Support hours and minutes as step size in the time series widget [#297](https://github.com/CartoDB/carto-react/pull/297)
+
 ## 1.2
 
 ### 1.2.1-alpha.6 (2022-01-24)
