@@ -48,10 +48,8 @@ export const parameters = {
         ['Palette', 'Typography'],
         'Common',
         'Custom Components',
-        'Widgets',
-        ['CategoryWidget', 'FormulaWidget', , 'HistogramWidget', 'PieWidget'],
-        'Widgets UI',
         [
+          'InputFile',
           'CategoryWidgetUI',
           'FormulaWidgetUI',
           'HistogramWidgetUI',

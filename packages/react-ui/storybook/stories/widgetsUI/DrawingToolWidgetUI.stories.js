@@ -7,11 +7,18 @@ import PolygonIcon from '../../../src/assets/PolygonIcon';
 import RectangleIcon from '../../../src/assets/RectangleIcon';
 
 const options = {
-  title: 'Widgets UI/DrawingToolWidgetUI',
+  title: 'Custom Components/DrawingToolWidgetUI',
   component: DrawingToolWidgetUI,
   argTypes: {
     enabled: {
       control: { type: 'boolean' }
+    }
+  },
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
     }
   }
 };
@@ -49,21 +56,18 @@ const Template = (args) => {
 export const Default = Template.bind({});
 const DefaultProps = {};
 Default.args = DefaultProps;
-Default.parameters = buildReactPropsAsString(DefaultProps, 'DrawingToolWidgetUI');
 
 export const Enabled = Template.bind({});
 const EnabledProps = {
   enabled: true
 };
 Enabled.args = EnabledProps;
-Enabled.parameters = buildReactPropsAsString(EnabledProps, 'DrawingToolWidgetUI');
 
 export const WithoutEdit = Template.bind({});
 const WithoutEditProps = {
   editModes: []
 };
 WithoutEdit.args = WithoutEditProps;
-WithoutEdit.parameters = buildReactPropsAsString(WithoutEditProps, 'DrawingToolWidgetUI');
 
 export const WithGeometry = Template.bind({});
 const WithGeometryProps = {
@@ -72,7 +76,3 @@ const WithGeometryProps = {
   onDeleteGeometry: () => console.log('onDeleteGeometry')
 };
 WithGeometry.args = WithGeometryProps;
-WithGeometry.parameters = buildReactPropsAsString(
-  WithGeometryProps,
-  'DrawingToolWidgetUI'
-);
