@@ -3,6 +3,9 @@
 ## Not released
 
 - Upgrade storybook and fix custom-component stories [#303](https://github.com/CartoDB/carto-react/pull/303)
+- Name refactor (DrawingTool for FeatureSelection)
+- Add compatibility between Google Maps and FeatureSelectionLayer
+- MaskExtension integration
 
 ## 1.2
 
