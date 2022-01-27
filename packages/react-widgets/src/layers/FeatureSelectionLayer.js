@@ -1,15 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as nebulaModes from '@nebula.gl/edit-modes';
-import { OPERATION } from '@deck.gl/core';
-import { SolidPolygonLayer } from '@deck.gl/layers';
 import {
   addSpatialFilter,
   selectSpatialFilter,
   setFeatureSelectionEnabled,
   selectFeatureSelectionMode
 } from '@carto/react-redux';
-import { EDIT_MODES, MASK_ID } from '@carto/react-core';
+import { EDIT_MODES } from '@carto/react-core';
 import { hexToRgb, useTheme } from '@material-ui/core';
 import EditableCartoGeoJsonLayer from './EditableCartoGeoJsonLayer';
 import useEventManager from './useEventManager';
