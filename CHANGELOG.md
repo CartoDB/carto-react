@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Upgrade storybook and fix custom-component stories [#303](https://github.com/CartoDB/carto-react/pull/303)
+
 ## 1.2
 
 ### 1.2.1-alpha.7 (2022-01-26)
