@@ -4,6 +4,11 @@
 
 ## 1.2
 
+### 1.2.1-alpha.7 (2022-01-26)
+
+- Support hours and minutes as step size in the time series widget [#297](https://github.com/CartoDB/carto-react/pull/297)
+- Fix react-redux FilterBasic typing [#302](https://github.com/CartoDB/carto-react/pull/302)
+
 ### 1.2.1-alpha.6 (2022-01-24)
 
 - Align legend icon with its label [#300](https://github.com/CartoDB/carto-react/pull/300)
