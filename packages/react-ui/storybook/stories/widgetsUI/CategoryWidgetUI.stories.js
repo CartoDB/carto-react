@@ -1,9 +1,8 @@
 import React from 'react';
 import CategoryWidgetUI from '../../../src/widgets/CategoryWidgetUI';
-import { buildReactPropsAsString } from '../../utils';
 
 const options = {
-  title: 'Widgets UI/CategoryWidgetUI',
+  title: 'Custom Components/CategoryWidgetUI',
   component: CategoryWidgetUI,
   argTypes: {
     selectedCategories: {
@@ -19,12 +18,21 @@ const options = {
         options: ['ranking', 'fixed']
       }
     }
+  },
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
+    }
   }
 };
 
 export default options;
 
-const Template = (args) => <CategoryWidgetUI {...args} />;
+const Template = (args) => {
+  return <CategoryWidgetUI {...args} />;
+};
 
 const data = [...Array(7)].map((_, idx) => ({
   name: `Category ${idx + 1}`,
@@ -38,19 +46,16 @@ const filteredData = data.slice(0, 4).map((cat, idx) => {
 export const Default = Template.bind({});
 const DefaultProps = { data };
 Default.args = DefaultProps;
-Default.parameters = buildReactPropsAsString(DefaultProps, 'CategoryWidgetUI');
 
 export const OnlyData = Template.bind({});
 OnlyData.args = DefaultProps;
-OnlyData.parameters = buildReactPropsAsString(DefaultProps, 'CategoryWidgetUI');
 
 export const WithFormatter = Template.bind({});
 WithFormatter.args = DefaultProps;
-WithFormatter.parameters = buildReactPropsAsString(DefaultProps, 'CategoryWidgetUI');
 
 export const WithCustomLabels = Template.bind({});
 const WithCustomLabelsProps = {
-  data,
+  ...DefaultProps,
   labels: {
     'Category 1': 'Cat. 1',
     'Category 2': 'Cat. 2',
@@ -59,10 +64,6 @@ const WithCustomLabelsProps = {
   }
 };
 WithCustomLabels.args = WithCustomLabelsProps;
-WithCustomLabels.parameters = buildReactPropsAsString(
-  WithCustomLabelsProps,
-  'CategoryWidgetUI'
-);
 
 export const WithSelectedCategories = Template.bind({});
 const WithSelectedCategoriesProps = {
@@ -71,7 +72,3 @@ const WithSelectedCategoriesProps = {
   onSelectedCategoriesChange: (categories) => console.log(categories)
 };
 WithSelectedCategories.args = WithSelectedCategoriesProps;
-WithSelectedCategories.parameters = buildReactPropsAsString(
-  WithSelectedCategoriesProps,
-  'CategoryWidgetUI'
-);

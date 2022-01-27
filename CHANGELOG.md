@@ -2,9 +2,23 @@
 
 ## Not released
 
-- Improve styles for MaterialUI Dialog component [#272](https://github.com/CartoDB/carto-react/pull/272)
+- Upgrade storybook and fix custom-component stories [#303](https://github.com/CartoDB/carto-react/pull/303)
 
 ## 1.2
+
+### 1.2.1-alpha.7 (2022-01-26)
+
+- Support hours and minutes as step size in the time series widget [#297](https://github.com/CartoDB/carto-react/pull/297)
+- Fix react-redux FilterBasic typing [#302](https://github.com/CartoDB/carto-react/pull/302)
+
+### 1.2.1-alpha.6 (2022-01-24)
+
+- Align legend icon with its label [#300](https://github.com/CartoDB/carto-react/pull/300)
+- Align legend expand icon with title [#299](https://github.com/CartoDB/carto-react/pull/299)
+- Use LegendComponent in LegendWidgetUI as JSX component to avoid react errors [#295](https://github.com/CartoDB/carto-react/pull/295)
+- Add missing property (`googleMapId`) to `InitialCarto2State` [#294](https://github.com/CartoDB/carto-react/pull/294)
+- Improve styles for MaterialUI Dialog component [#272](https://github.com/CartoDB/carto-react/pull/272)
+- Add and export CartoTheme type that describe our custom theme [#298](https://github.com/CartoDB/carto-react/pull/298)
 
 ### 1.2.1-alpha.5 (2022-01-20)
 

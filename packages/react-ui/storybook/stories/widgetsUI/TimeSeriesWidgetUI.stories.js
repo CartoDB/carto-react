@@ -66,7 +66,7 @@ const data = [
 ];
 
 const options = {
-  title: 'Widgets UI/TimeSeriesWidgetUI',
+  title: 'Custom Components/TimeSeriesWidgetUI',
   component: TimeSeriesWidgetUI,
   argTypes: {
     data: {
@@ -133,6 +133,13 @@ const options = {
     onTimeWindowUpdate: {
       description:
         'Event emitted when timeWindow is updated. TimeSeriesWidget is responsible of applying the filter.'
+    }
+  },
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
     }
   }
 };

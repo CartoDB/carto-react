@@ -1,17 +1,23 @@
 import { Box } from '@material-ui/core';
 import React, { useState } from 'react';
 import FeatureSelectionWidgetUI from '../../../src/widgets/FeatureSelectionWidgetUI';
-import { buildReactPropsAsString } from '../../utils';
 import CursorIcon from '../../../src/assets/CursorIcon';
 import PolygonIcon from '../../../src/assets/PolygonIcon';
 import RectangleIcon from '../../../src/assets/RectangleIcon';
 
 const options = {
-  title: 'Widgets UI/FeatureSelectionWidgetUI',
+  title: 'Custom Components/FeatureSelectionWidgetUI',
   component: FeatureSelectionWidgetUI,
   argTypes: {
     enabled: {
       control: { type: 'boolean' }
+    }
+  },
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
     }
   }
 };
@@ -49,24 +55,18 @@ const Template = (args) => {
 export const Default = Template.bind({});
 const DefaultProps = {};
 Default.args = DefaultProps;
-Default.parameters = buildReactPropsAsString(DefaultProps, 'FeatureSelectionWidgetUI');
 
 export const Enabled = Template.bind({});
 const EnabledProps = {
   enabled: true
 };
 Enabled.args = EnabledProps;
-Enabled.parameters = buildReactPropsAsString(EnabledProps, 'FeatureSelectionWidgetUI');
 
 export const WithoutEdit = Template.bind({});
 const WithoutEditProps = {
   editModes: []
 };
 WithoutEdit.args = WithoutEditProps;
-WithoutEdit.parameters = buildReactPropsAsString(
-  WithoutEditProps,
-  'FeatureSelectionWidgetUI'
-);
 
 export const WithGeometry = Template.bind({});
 const WithGeometryProps = {
@@ -75,7 +75,3 @@ const WithGeometryProps = {
   onDeleteGeometry: () => console.log('onDeleteGeometry')
 };
 WithGeometry.args = WithGeometryProps;
-WithGeometry.parameters = buildReactPropsAsString(
-  WithGeometryProps,
-  'FeatureSelectionWidgetUI'
-);

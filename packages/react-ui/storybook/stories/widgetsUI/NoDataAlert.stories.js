@@ -3,7 +3,7 @@ import React from 'react';
 import { buildReactPropsAsString } from '../../utils';
 
 const options = {
-  title: 'Widgets UI/NoDataAlert',
+  title: 'Custom Components/NoDataAlert',
   component: NoDataAlert,
   argTypes: {
     title: {

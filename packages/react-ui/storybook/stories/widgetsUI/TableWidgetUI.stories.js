@@ -5,9 +5,16 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { columns, rows } from '../../../src/widgets/TableWidgetUI/mockData';
 
 const options = {
-  title: 'Widgets UI/TableWidgetUI',
+  title: 'Custom Components/TableWidgetUI',
   component: TableWidgetUI,
-  argTypes: {}
+  argTypes: {},
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
+    }
+  }
 };
 export default options;
 
