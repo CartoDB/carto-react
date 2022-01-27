@@ -48,7 +48,9 @@ export function TimeSeriesProvider({
 
   useEffect(() => {
     if (_timeWindow.length === 2 && onTimeWindowUpdate) {
-      onTimeWindowUpdate(_timeWindow.sort().map(getDate));
+      onTimeWindowUpdate(
+        _timeWindow.sort((timeA, timeB) => (timeA < timeB ? -1 : 1)).map(getDate)
+      );
     }
     // Only executed when timeWindow changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
