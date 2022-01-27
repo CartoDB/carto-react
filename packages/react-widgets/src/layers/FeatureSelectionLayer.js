@@ -13,13 +13,16 @@ import { EDIT_MODES, MASK_ID } from '@carto/react-core';
 import { hexToRgb, useTheme } from '@material-ui/core';
 import EditableCartoGeoJsonLayer from './EditableCartoGeoJsonLayer';
 import useEventManager from './useEventManager';
+import MaskLayer from './MaskLayer';
 
 const { ViewMode, TranslateMode, ModifyMode, CompositeMode } = nebulaModes;
 
 // const EditMode = new CompositeMode([new TranslateMode(), new ModifyMode()]);
 const EditMode = new CompositeMode([new TranslateMode(), new ModifyMode()]);
 
-export default function FeatureSelectionLayer({ eventManager } = { eventManager: null }) {
+export default function FeatureSelectionLayer(
+  { eventManager, mask } = { eventManager: null, mask: true }
+) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [selectedFeatureIndex, setSelectedFeatureIndex] = useState(null);
@@ -61,18 +64,8 @@ export default function FeatureSelectionLayer({ eventManager } = { eventManager:
 
   const mainColor = hasGeometry && !isSelected ? secondaryAsRgba : primaryAsRgba;
 
-  const maskData = hasGeometry
-    ? [{ polygon: spatialFilterGeometry?.geometry.coordinates }]
-    : [];
-  const maskLayer = new SolidPolygonLayer({
-    id: MASK_ID,
-    operation: OPERATION.MASK,
-    data: maskData,
-    getFillColor: [255, 255, 255, 255]
-  });
-
   return [
-    maskLayer,
+    mask && MaskLayer(),
     // @ts-ignore
     new EditableCartoGeoJsonLayer({
       eventManager: customEventManager,
