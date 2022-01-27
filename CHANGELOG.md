@@ -2,10 +2,12 @@
 
 ## Not released
 
+## 1.2
+
+### 1.2.1-alpha.8 (2022-01-27)
+
 - Upgrade storybook and fix custom-component stories [#303](https://github.com/CartoDB/carto-react/pull/303)
 - Fix Timeseries wrong filtering with time window [#306](https://github.com/CartoDB/carto-react/pull/306)
-
-## 1.2
 
 ### 1.2.1-alpha.7 (2022-01-26)
 
