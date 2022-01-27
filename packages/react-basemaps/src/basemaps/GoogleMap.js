@@ -15,7 +15,6 @@ import { debounce } from '@carto/react-core';
  * @param { function } props.onViewStateChange - (Optional) onViewStateChange handler
  * @param { string } props.apiKey - Google Maps API Key
  * @param { string } props.mapId - Google Maps custom mapId
- * @param { Object[] } props.effects - The deck gl array of effects to be rendered
  * @returns { JSX.Element } - Data returned from the SQL query execution
  */
 export function GoogleMap(props) {
@@ -27,8 +26,7 @@ export function GoogleMap(props) {
     onResize,
     onViewStateChange,
     apiKey,
-    mapId,
-    effects = []
+    mapId
   } = props;
   // based on https://publiuslogic.com/blog/google-maps+react-hooks/
   const containerRef = useRef();
@@ -69,7 +67,7 @@ export function GoogleMap(props) {
     const mapNotConnected = containerRef.current.children.length === 0;
     if (!window.cartoGmap || mapNotConnected) {
       const map = new window.google.maps.Map(containerRef.current, options);
-      const deckOverlay = new GoogleMapsOverlay({ getTooltip, effects });
+      const deckOverlay = new GoogleMapsOverlay({ getTooltip });
 
       const handleViewportChange = () => {
         const center = map.getCenter();
@@ -123,7 +121,7 @@ export function GoogleMap(props) {
         window.cartoGmap.setZoom(zoom);
       }
       window.cartoGmap.setOptions(rest);
-      window.cartoDeck.setProps({ getTooltip, effects });
+      window.cartoDeck.setProps({ getTooltip });
     }
   };
 

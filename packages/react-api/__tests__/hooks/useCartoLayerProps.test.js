@@ -1,5 +1,4 @@
-import * as redux from 'react-redux';
-import { DataFilterExtension } from '@deck.gl/extensions';
+import { DataFilterExtension, MaskExtension } from '@deck.gl/extensions';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { MASK_ID } from '@carto/react-core/';
 import { renderHook } from '@testing-library/react-hooks';
@@ -22,7 +21,8 @@ describe('useCartoLayerProps', () => {
       'updateTriggers',
       'getFilterValue',
       'extensions',
-      'maskId'
+      'maskId',
+      'maskEnabled'
     ];
 
     describe('when maps_api_version is V2', () => {
@@ -191,11 +191,12 @@ describe('useCartoLayerProps', () => {
       ]);
     });
 
-    test('extensions should have an instance of DataFilterExtension', () => {
+    test('extensions should have an instance of DataFilterExtension and MaskExtension', () => {
       const { result } = renderHook(() => useCartoLayerProps({}));
 
-      expect(result.current.extensions.length).toBe(1);
+      expect(result.current.extensions.length).toBe(2);
       expect(result.current.extensions[0]).toBeInstanceOf(DataFilterExtension);
+      expect(result.current.extensions[1]).toBeInstanceOf(MaskExtension);
     });
 
     test(`filter size should be ${MAX_GPU_FILTERS}`, () => {
@@ -210,20 +211,15 @@ describe('useCartoLayerProps', () => {
       expect(result.current.updateTriggers).toHaveProperty('getFilterValue');
     });
 
-    test('maskId should have a correct value', () => {
+    test('maskEnabled should be present and be false by default', () => {
       const { result } = renderHook(() => useCartoLayerProps({}));
-      expect(result.current.maskId).toEqual(MASK_ID);
+      expect(result.current.maskEnabled).toEqual(false);
     });
 
-    test('maskId not should be returned if there is no spatial filter', () => {
-      const useSelectorSpy = jest.spyOn(redux, 'useSelector');
-      useSelectorSpy.mockReturnValue(false);
-
+    test('maskId should be present and should have the correct value', () => {
       const { result } = renderHook(() => useCartoLayerProps({}));
-      expect(result.current).not.toHaveProperty('maskId');
 
-      useSelectorSpy.mockClear();
-      mockReduxHooks();
+      expect(result.current.maskId).toEqual(MASK_ID);
     });
   });
 

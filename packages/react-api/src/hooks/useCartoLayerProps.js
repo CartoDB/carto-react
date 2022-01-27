@@ -1,10 +1,10 @@
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { useSelector } from 'react-redux';
-import { MASK_ID } from '@carto/react-core/';
 import { selectSpatialFilter } from '@carto/react-redux';
 import useGeojsonFeatures from './useGeojsonFeatures';
 import useTileFeatures from './useTileFeatures';
 import { getDataFilterExtensionProps } from './dataFilterExtensionUtil';
+import { getMaskExtensionProps } from './maskExtensionUtil';
 
 export default function useCartoLayerProps({
   source,
@@ -51,6 +51,11 @@ export default function useCartoLayerProps({
   }
 
   const dataFilterExtensionProps = getDataFilterExtensionProps(source?.filters);
+  const maskExtensionProps = getMaskExtensionProps(spatialFilter?.geometry?.coordinates);
+  const extensions = [
+    ...dataFilterExtensionProps.extensions,
+    ...maskExtensionProps.extensions
+  ];
 
   return {
     ...props,
@@ -61,6 +66,7 @@ export default function useCartoLayerProps({
     credentials: source?.credentials,
     clientId: 'carto-for-react',
     ...dataFilterExtensionProps,
-    ...(spatialFilter && { maskId: MASK_ID })
+    ...maskExtensionProps,
+    extensions
   };
 }

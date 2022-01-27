@@ -1,10 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// @ts-ignore
 import * as nebulaModes from '@nebula.gl/edit-modes';
-// @ts-ignore
 import { OPERATION } from '@deck.gl/core';
-// @ts-ignore
 import { SolidPolygonLayer } from '@deck.gl/layers';
 import {
   addSpatialFilter,
@@ -64,17 +61,19 @@ export default function FeatureSelectionLayer({ eventManager } = { eventManager:
 
   const mainColor = hasGeometry && !isSelected ? secondaryAsRgba : primaryAsRgba;
 
-  const maskLayer =
-    hasGeometry &&
-    new SolidPolygonLayer({
-      id: MASK_ID,
-      operation: OPERATION.MASK,
-      data: [{ polygon: spatialFilterGeometry?.geometry.coordinates }],
-      getFillColor: [255, 255, 255, 255]
-    });
+  const maskData = hasGeometry
+    ? [{ polygon: spatialFilterGeometry?.geometry.coordinates }]
+    : [];
+  const maskLayer = new SolidPolygonLayer({
+    id: MASK_ID,
+    operation: OPERATION.MASK,
+    data: maskData,
+    getFillColor: [255, 255, 255, 255]
+  });
 
   return [
     maskLayer,
+    // @ts-ignore
     new EditableCartoGeoJsonLayer({
       eventManager: customEventManager,
       id: 'FeatureSelectionLayer',
