@@ -15,7 +15,6 @@ import MaskLayer from './MaskLayer';
 
 const { ViewMode, TranslateMode, ModifyMode, CompositeMode } = nebulaModes;
 
-// const EditMode = new CompositeMode([new TranslateMode(), new ModifyMode()]);
 const EditMode = new CompositeMode([new TranslateMode(), new ModifyMode()]);
 
 export default function FeatureSelectionLayer(
