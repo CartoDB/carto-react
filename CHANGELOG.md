@@ -3,8 +3,8 @@
 ## Not released
 
 - Upgrade storybook and fix custom-component stories [#303](https://github.com/CartoDB/carto-react/pull/303)
-- Name refactor (DrawingTool for FeatureSelection)
-- Add compatibility between Google Maps and FeatureSelectionLayer
+- Name refactor (DrawingTool for FeatureSelection) [#271](https://github.com/CartoDB/carto-react/pull/271)
+- Add compatibility between Google Maps and FeatureSelectionLayer [#271](https://github.com/CartoDB/carto-react/pull/271)
 - Update deck.gl version to 8.7.0-beta.2 and integrate new deck.gl MaskExtension, required by FeatureSelectionLayer [#271](https://github.com/CartoDB/carto-react/pull/271)
 
 ## 1.2
