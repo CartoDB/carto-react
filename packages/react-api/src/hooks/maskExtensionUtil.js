@@ -5,8 +5,7 @@ const maskExtension = new MaskExtension();
 
 export function getMaskExtensionProps(maskPolygon) {
   return {
-    maskId: MASK_ID,
-    maskEnabled: Boolean(maskPolygon && maskPolygon.length),
+    maskId: Boolean(maskPolygon && maskPolygon.length) && MASK_ID,
     extensions: [maskExtension]
   };
 }

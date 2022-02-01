@@ -5,10 +5,9 @@ import { getMaskExtensionProps } from '../../src/hooks/maskExtensionUtil';
 describe('mask-extension-util', () => {
   test('correct values without maskPolygon', () => {
     const myMaskPolygon = undefined;
-    const { maskId, maskEnabled, extensions } = getMaskExtensionProps(myMaskPolygon);
+    const { maskId, extensions } = getMaskExtensionProps(myMaskPolygon);
 
-    expect(maskId).toEqual(MASK_ID);
-    expect(maskEnabled).toEqual(false);
+    expect(maskId).toEqual(false);
     expect(extensions[0]).toBeInstanceOf(MaskExtension);
   });
 
@@ -20,10 +19,9 @@ describe('mask-extension-util', () => {
       [-41.484375, 53.330872983017066],
       [-41.484375, 35.17380831799959]
     ];
-    const { maskId, maskEnabled, extensions } = getMaskExtensionProps(myMaskPolygon);
+    const { maskId, extensions } = getMaskExtensionProps(myMaskPolygon);
 
     expect(maskId).toEqual(MASK_ID);
-    expect(maskEnabled).toEqual(true);
     expect(extensions[0]).toBeInstanceOf(MaskExtension);
   });
 });
