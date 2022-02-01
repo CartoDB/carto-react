@@ -2,12 +2,14 @@
 
 ## Not released
 
+## 1.2
+
+### 1.2.1-beta.1 (2022-02-01)
+
 - Upgrade storybook and fix custom-component stories [#303](https://github.com/CartoDB/carto-react/pull/303)
 - Name refactor in DrawingTool for FeatureSelection [#271](https://github.com/CartoDB/carto-react/pull/271)
 - Add compatibility between Google Maps and FeatureSelectionLayer [#271](https://github.com/CartoDB/carto-react/pull/271)
 - Update deck.gl version to 8.7.0-beta.2 and integrate new deck.gl MaskExtension, required by FeatureSelectionLayer [#271](https://github.com/CartoDB/carto-react/pull/271)
-
-## 1.2
 
 ### 1.2.1-alpha.8 (2022-01-27)
 
