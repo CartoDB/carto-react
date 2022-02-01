@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-basemaps",
-  "version": "1.2.1-alpha.8",
+  "version": "1.2.1-beta.0",
   "description": "CARTO for React - Basemaps",
   "keywords": [
     "carto",
