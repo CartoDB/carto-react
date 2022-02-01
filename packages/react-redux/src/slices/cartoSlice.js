@@ -3,7 +3,7 @@ import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '@carto/react-core';
 import { removeWorker } from '@carto/react-workers';
 import { setDefaultCredentials } from '@deck.gl/carto';
-import { DRAW_MODES } from '@carto/react-core';
+import { FEATURE_SELECTION_MODES } from '@carto/react-core';
 
 /**
  *
@@ -50,8 +50,8 @@ export const createCartoSlice = (initialState) => {
         // Auto import dataSources
       },
       spatialFilter: null,
-      drawingToolMode: DRAW_MODES.POLYGON,
-      drawingToolEnabled: false,
+      featureSelectionMode: FEATURE_SELECTION_MODES.POLYGON,
+      featureSelectionEnabled: false,
       featuresReady: {},
       ...initialState
     },
@@ -162,11 +162,11 @@ export const createCartoSlice = (initialState) => {
         };
         setDefaultCredentials(state.credentials);
       },
-      setDrawingToolMode: (state, action) => {
-        state.drawingToolMode = action.payload;
+      setFeatureSelectionMode: (state, action) => {
+        state.featureSelectionMode = action.payload;
       },
-      setDrawingToolEnabled: (state, action) => {
-        state.drawingToolEnabled = action.payload;
+      setFeatureSelectionEnabled: (state, action) => {
+        state.featureSelectionEnabled = action.payload;
       }
     }
   });
@@ -298,10 +298,10 @@ export const selectSpatialFilter = (state, sourceId) => {
 };
 
 /**
- * Redux selector to select the selected drawing tool mode based on if it's enabled
+ * Redux selector to select the feature selection mode based on if it's enabled
  */
-export const selectDrawingToolMode = (state) =>
-  state.carto.drawingToolEnabled && state.carto.drawingToolMode;
+export const selectFeatureSelectionMode = (state) =>
+  (state.carto.featureSelectionEnabled && state.carto.featureSelectionMode) || null;
 
 /**
  * Redux selector to know if features from a certain source are ready
@@ -362,19 +362,19 @@ export const setCredentials = (data) => ({
 });
 
 /**
- * Action to set drawing tool mode
+ * Action to set feature selection mode
  * @param {boolean} mode
  */
-export const setDrawingToolMode = (mode) => ({
-  type: 'carto/setDrawingToolMode',
+export const setFeatureSelectionMode = (mode) => ({
+  type: 'carto/setFeatureSelectionMode',
   payload: mode
 });
 
 /**
- * Action to set if drawing tool is enabled
+ * Action to set if feature selection tool is enabled
  * @param {boolean} enabled
  */
-export const setDrawingToolEnabled = (enabled) => ({
-  type: 'carto/setDrawingToolEnabled',
+export const setFeatureSelectionEnabled = (enabled) => ({
+  type: 'carto/setFeatureSelectionEnabled',
   payload: enabled
 });

@@ -1,4 +1,5 @@
-export const DRAW_MODES = Object.freeze({
+// Don't rename values. These values come from nebula.
+export const FEATURE_SELECTION_MODES = Object.freeze({
   POLYGON: 'DrawPolygonMode',
   RECTANGLE: 'DrawRectangleMode',
   CIRCLE: 'DrawCircleFromCenterMode',
@@ -8,3 +9,5 @@ export const DRAW_MODES = Object.freeze({
 export const EDIT_MODES = Object.freeze({
   EDIT: 'edit'
 });
+
+export const MASK_ID = 'feature_selection_mask';

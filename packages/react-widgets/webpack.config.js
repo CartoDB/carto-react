@@ -8,6 +8,7 @@ const webpackConfig = {
   ...webpackBaseConfig,
   externals: [
     /^@carto\/react-.+$/,
+    /^@deck.gl\/.+$/,
     /^@material-ui\/.+$/,
     /^@nebula.gl\/.+$/,
     'react',
