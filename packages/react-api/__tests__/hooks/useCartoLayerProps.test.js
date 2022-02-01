@@ -1,6 +1,5 @@
 import { DataFilterExtension, MaskExtension } from '@deck.gl/extensions';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
-import { MASK_ID } from '@carto/react-core/';
 import { renderHook } from '@testing-library/react-hooks';
 import useCartoLayerProps from '../../src/hooks/useCartoLayerProps';
 import { mockReduxHooks, mockClear } from '../mockReduxHooks';
@@ -21,8 +20,7 @@ describe('useCartoLayerProps', () => {
       'updateTriggers',
       'getFilterValue',
       'extensions',
-      'maskId',
-      'maskEnabled'
+      'maskId'
     ];
 
     describe('when maps_api_version is V2', () => {
@@ -211,15 +209,10 @@ describe('useCartoLayerProps', () => {
       expect(result.current.updateTriggers).toHaveProperty('getFilterValue');
     });
 
-    test('maskEnabled should be present and be false by default', () => {
-      const { result } = renderHook(() => useCartoLayerProps({}));
-      expect(result.current.maskEnabled).toEqual(false);
-    });
-
-    test('maskId should be present and should have the correct value', () => {
+    test('maskId should be present should be present and be false by default', () => {
       const { result } = renderHook(() => useCartoLayerProps({}));
 
-      expect(result.current.maskId).toEqual(MASK_ID);
+      expect(result.current.maskId).toEqual(false);
     });
   });
 
