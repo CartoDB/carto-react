@@ -4,7 +4,7 @@
 
 ## 1.2
 
-### 1.2.1-beta.1 (2022-02-01)
+### 1.2.1-beta.0 (2022-02-01)
 
 - Upgrade storybook and fix custom-component stories [#303](https://github.com/CartoDB/carto-react/pull/303)
 - Name refactor in DrawingTool for FeatureSelection [#271](https://github.com/CartoDB/carto-react/pull/271)
