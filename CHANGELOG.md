@@ -2,9 +2,11 @@
 
 ## Not released
 
-Remove maskEnabled property and control the mask extension activation by maskId [#309](https://github.com/CartoDB/carto-react/pull/309)
-
 ## 1.2
+
+### 1.2.1-beta.1 (2022-02-01)
+
+- Remove maskEnabled property and control the mask extension activation by maskId [#309](https://github.com/CartoDB/carto-react/pull/309)
 
 ### 1.2.1-beta.0 (2022-02-01)
 
