@@ -7,12 +7,18 @@ export default function LegendCategories({ legend }) {
     return null;
   }
 
-  const { labels = [], colors = [] } = legend;
+  const { labels = [], colors = [], isStrokeColor = false } = legend;
 
   const palette = getPalette(colors, labels.length);
 
   const Rows = labels.map((label, idx) => (
-    <Row key={label + idx} isMax={false} label={label} color={palette[idx]} />
+    <Row
+      key={label + idx}
+      isMax={false}
+      label={label}
+      color={palette[idx]}
+      isStrokeColor={isStrokeColor}
+    />
   ));
 
   return (
@@ -31,10 +37,11 @@ const useStyles = makeStyles((theme) => ({
   },
   circle: {
     display: 'block',
-    width: '8px',
-    height: '8px',
+    width: '12px',
+    height: '12px',
     borderRadius: '50%',
     position: 'relative',
+    border: '2px solid transparent',
     '&::after': {
       position: 'absolute',
       display: ({ isMax }) => (isMax ? 'block' : 'none'),
@@ -49,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Row({ label, isMax, color = '#000' }) {
+function Row({ label, isMax, isStrokeColor, color = '#000' }) {
   const classes = useStyles({ isMax });
 
   return (
@@ -59,7 +66,7 @@ function Row({ label, isMax, color = '#000' }) {
           mr={1.5}
           component='span'
           className={classes.circle}
-          style={{ backgroundColor: color }}
+          style={isStrokeColor ? { borderColor: color } : { backgroundColor: color }}
         />
       </Tooltip>
       <Typography variant='overline'>{label}</Typography>
