@@ -5,6 +5,10 @@ import FormulaWidgetUI from './widgets/FormulaWidgetUI';
 import HistogramWidgetUI from './widgets/HistogramWidgetUI';
 import PieWidgetUI from './widgets/PieWidgetUI';
 import LegendWidgetUI, { LEGEND_TYPES } from './widgets/legend/LegendWidgetUI';
+import LegendCategories from './widgets/legend/LegendCategories';
+import LegendIcon from './widgets/legend/LegendIcon';
+import LegendProportion from './widgets/legend/LegendProportion';
+import LegendRamp from './widgets/legend/LegendRamp';
 import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
@@ -40,5 +44,10 @@ export {
   LegendWidgetUI,
   LEGEND_TYPES,
   NoDataAlert,
-  featureSelectionIcons
+  featureSelectionIcons,
+  // undocumented components
+  LegendCategories as _LegendCategories,
+  LegendIcon as _LegendIcon,
+  LegendProportion as _LegendProportion,
+  LegendRamp as _LegendRamp
 };
