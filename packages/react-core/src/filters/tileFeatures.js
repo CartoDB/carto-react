@@ -164,7 +164,13 @@ export function getGeometryToIntersect(viewport, geometry) {
   return geometry ? intersect(bboxPolygon(viewport), geometry) : bboxPolygon(viewport);
 }
 
-export function tileFeatures({ tiles, viewport, geometry, uniqueIdProperty }) {
+export function tileFeatures({
+  tiles,
+  viewport,
+  geometry,
+  uniqueIdProperty,
+  tileFormat
+}) {
   const map = new Map();
   const geometryToIntersect = getGeometryToIntersect(viewport, geometry);
 
@@ -188,10 +194,13 @@ export function tileFeatures({ tiles, viewport, geometry, uniqueIdProperty }) {
     if (!clippedGeometryToIntersect) {
       continue;
     }
-    // Transform the geometry to intersect to tile coordinates [0..1]
+    // Transform the geometry to intersect to tile coordinates [0..1] if the tileFormat is MVT
     const transformedGeomtryToIntersect = {
       type: 'Feature',
-      geometry: transformToTileCoords(clippedGeometryToIntersect.geometry, bbox)
+      geometry:
+        tileFormat === 'mvt'
+          ? transformToTileCoords(clippedGeometryToIntersect.geometry, bbox)
+          : clippedGeometryToIntersect.geometry
     };
 
     createIndicesForPoints(tile.data.points);
@@ -221,6 +230,5 @@ export function tileFeatures({ tiles, viewport, geometry, uniqueIdProperty }) {
       uniqueIdProperty
     });
   }
-
   return Array.from(map.values());
 }

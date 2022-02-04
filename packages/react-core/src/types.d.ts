@@ -25,7 +25,8 @@ export type TileFeatures = {
   tiles: any, // TODO: add proper deck.gl type
   viewport: Viewport,
   geometry?: Geometry,
-  uniqueIdProperty?: string
+  uniqueIdProperty?: string,
+  tileFormat: string
 }
 
 export type TileFeaturesResponse = Record<string, unknown>[] | []
