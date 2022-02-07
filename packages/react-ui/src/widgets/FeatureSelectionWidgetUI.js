@@ -126,8 +126,8 @@ function Helper({ hasMode, enabled, isEdit, children }) {
     <Tooltip
       title={
         isEdit
-          ? 'Select a mask to move or edit it'
-          : 'Click on the map to define your spatial filter'
+          ? 'Click on the mask to edit it'
+          : 'Click on the map to create a mask'
       }
       open={open}
     >
@@ -147,7 +147,7 @@ function GeometryViewer({
   return (
     <Box ml={2}>
       <Tooltip
-        title={isDisabled ? 'Apply filter' : 'Clear filter'}
+        title={isDisabled ? 'Apply mask' : 'Clear mask'}
         placement={tooltipPlacement}
         arrow
       >
@@ -185,7 +185,7 @@ function SelectedModeViewer({
       const foundMode = modes.find(({ id: modeId }) => modeId === selectedMode);
       if (!foundMode) {
         throw new Error(
-          'Selected mode provided is not found neither in selecting or edit mode'
+          'Selected mode not supported'
         );
       }
       return foundMode;
