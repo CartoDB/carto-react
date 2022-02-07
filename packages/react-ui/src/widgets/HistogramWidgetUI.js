@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
@@ -32,22 +32,53 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+export function __calculateTextWidth(text, fontSize = 8) {
+  let span = document.getElementById('computedTextWidth');
+  if (!span) {
+    span = document.createElement('span');
+    span.id = 'computedTextWidth';
+    span.style.cssText = 'visibility:hidden;position: absolute;left: -999em;top:-999em;';
+    document.body.appendChild(span);
+  }
+  span.style.fontSize = `${fontSize}px`;
+  span.innerHTML = text;
+  return span.offsetWidth;
+}
+
+function __formatter(v, xAxisFormatter) {
+  const formatted = xAxisFormatter(v);
+  return typeof formatted === 'object'
+    ? `${formatted.prefix || ''}${formatted.value}${formatted.suffix || ''}`
+    : formatted;
+}
+
+function __getTextWidth(dataAxis, xAxisFormatter) {
+  return dataAxis.reduce((value, current) => {
+    const formattedValue = __formatter(current, xAxisFormatter);
+    return value + __calculateTextWidth(formattedValue);
+  }, 0);
+}
+
 function __generateDefaultConfig(
   {
     dataAxis,
     tooltip,
     tooltipFormatter,
     xAxisFormatter = (v) => v,
-    yAxisFormatter = (v) => v
+    yAxisFormatter = (v) => v,
+    chartWidth
   },
   data,
   theme
 ) {
+  const textWidth = __getTextWidth(dataAxis, xAxisFormatter);
+  const hasLongText = textWidth > chartWidth;
+
   return {
     grid: {
-      left: theme.spacing(0.5),
+      ...(!hasLongText ? { left: theme.spacing(1) } : {}),
+      ...(!hasLongText ? { right: theme.spacing(1) } : {}),
       top: theme.spacing(2),
-      right: theme.spacing(1),
       bottom: theme.spacing(1),
       containLabel: true
     },
@@ -78,7 +109,7 @@ function __generateDefaultConfig(
         }
         return position;
       },
-      ...(tooltipFormatter ? { formatter: tooltipFormatter } : {})
+      formatter: (a) => (tooltipFormatter ? tooltipFormatter(a) : a[0].name)
     },
     color: [theme.palette.secondary.main],
     xAxis: {
@@ -92,12 +123,7 @@ function __generateDefaultConfig(
       axisLabel: {
         ...theme.typography.charts,
         padding: [theme.spacing(0.5), 0, 0, 0],
-        formatter: (v) => {
-          const formatted = xAxisFormatter(v);
-          return typeof formatted === 'object'
-            ? `${formatted.prefix || ''}${formatted.value}${formatted.suffix || ''}`
-            : formatted;
-        }
+        formatter: (v) => __formatter(v, xAxisFormatter)
       },
       data: dataAxis
     },
@@ -202,9 +228,10 @@ function HistogramWidgetUI(props) {
 
   const classes = useStyles();
   const chartInstance = useRef();
+  const [chartWidth, setChartWidth] = useState(0);
   const options = useMemo(() => {
     const config = __generateDefaultConfig(
-      { dataAxis, tooltip, tooltipFormatter, xAxisFormatter, yAxisFormatter },
+      { dataAxis, tooltip, tooltipFormatter, xAxisFormatter, yAxisFormatter, chartWidth },
       data,
       theme
     );
@@ -220,8 +247,27 @@ function HistogramWidgetUI(props) {
     xAxisFormatter,
     yAxisFormatter,
     selectedBars,
-    animation
+    animation,
+    chartWidth
   ]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (chartInstance.current) {
+        const echart = chartInstance.current?.getEchartsInstance();
+        if (!chartWidth && echart?.getWidth()) {
+          setChartWidth(echart.getWidth());
+        }
+        if (chartWidth) {
+          clearInterval(timer);
+        }
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [chartWidth]);
 
   const clearBars = () => {
     const echart = chartInstance.current.getEchartsInstance();
