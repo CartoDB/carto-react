@@ -126,7 +126,7 @@ function Helper({ hasMode, enabled, isEdit, children }) {
     <Tooltip
       title={
         isEdit
-          ? 'Select geometry to move or edit it'
+          ? 'Select a mask to move or edit it'
           : 'Click on the map to define your spatial filter'
       }
       open={open}
@@ -152,7 +152,7 @@ function GeometryViewer({
         arrow
       >
         <Chip
-          label='Feature'
+          label='Mask'
           color={isDisabled ? 'default' : 'secondary'}
           onClick={() => onSelectGeometry()}
           onDelete={!!onDeleteGeometry && (() => onDeleteGeometry())}
