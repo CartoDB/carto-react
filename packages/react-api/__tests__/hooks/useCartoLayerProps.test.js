@@ -10,6 +10,7 @@ describe('useCartoLayerProps', () => {
 
   describe('return props', () => {
     const COMMON_PROPS = [
+      'onDataLoad',
       'uniqueIdProperty',
       'data',
       'type',
@@ -108,7 +109,7 @@ describe('useCartoLayerProps', () => {
 
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
-        expect(Object.keys(result.current)).toEqual(['onDataLoad', ...COMMON_PROPS]);
+        expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
 
       test('should return correct props when source type is table', () => {
@@ -121,7 +122,7 @@ describe('useCartoLayerProps', () => {
 
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
-        expect(Object.keys(result.current)).toEqual(['onDataLoad', ...COMMON_PROPS]);
+        expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
     });
   });

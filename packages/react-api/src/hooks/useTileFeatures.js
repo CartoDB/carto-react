@@ -1,7 +1,8 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { Layer } from '@deck.gl/core';
+import { TILE_FORMATS } from '@deck.gl/carto';
 import { throwError } from './utils';
 import useFeaturesCommons from './useFeaturesCommons';
 
@@ -21,16 +22,23 @@ export default function useTileFeatures({
     setSourceFeaturesReady
   ] = useFeaturesCommons({ source });
 
+  const [tileFormat, setTileFormat] = useState('');
+
   const sourceId = source?.id;
 
   const computeFeatures = useCallback(
     ({ viewport, spatialFilter, uniqueIdProperty }) => {
+      if (!tileFormat) {
+        return null;
+      }
+
       setSourceFeaturesReady(false);
 
       executeTask(sourceId, Methods.TILE_FEATURES, {
         viewport,
         geometry: spatialFilter,
-        uniqueIdProperty
+        uniqueIdProperty,
+        tileFormat
       })
         .then(() => {
           setSourceFeaturesReady(true);
@@ -38,7 +46,7 @@ export default function useTileFeatures({
         .catch(throwError)
         .finally(clearDebounce);
     },
-    [setSourceFeaturesReady, sourceId, clearDebounce]
+    [setSourceFeaturesReady, sourceId, tileFormat, clearDebounce]
   );
 
   const loadTiles = useCallback(
@@ -111,5 +119,10 @@ export default function useTileFeatures({
     [stopAnyCompute]
   );
 
-  return [onViewportLoad, fetch];
+  const onDataLoad = useCallback(({ tiles: [tile] }) => {
+    const tilesFormat = new URLSearchParams(tile).get('format');
+    setTileFormat(tilesFormat || TILE_FORMATS.MVT);
+  }, []);
+
+  return [onDataLoad, onViewportLoad, fetch];
 }
