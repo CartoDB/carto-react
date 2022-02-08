@@ -2,9 +2,12 @@
 
 ## Not released
 
-- Improve lasso tool copies [#313](https://github.com/CartoDB/carto-react/pull/313)
-
 ## 1.2
+
+### 1.2.1-beta.2 (2022-02-08)
+
+- Improve lasso tool copies [#313](https://github.com/CartoDB/carto-react/pull/313)
+- Support for tiles in WGS84 [#312](https://github.com/CartoDB/carto-react/pull/312)
 
 ### 1.2.1-beta.1 (2022-02-01)
 
