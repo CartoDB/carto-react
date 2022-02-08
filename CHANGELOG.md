@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Export FilterTypes enum [#314](https://github.com/CartoDB/carto-react/pull/314)
 - Improve lasso tool copies [#313](https://github.com/CartoDB/carto-react/pull/313)
 
 ## 1.2
