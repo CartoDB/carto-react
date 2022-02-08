@@ -1,5 +1,7 @@
+import { TILE_FORMATS } from '@deck.gl/carto';
 import { geojsonToBinary } from '@loaders.gl/gis';
 import { tileFeatures } from '../../src';
+import * as transformToTileCoords from '../../src/utils/transformToTileCoords';
 
 describe('viewport features with binary mode', () => {
   const viewport = [-10, -10, 10, 10]; // west - south - east - north
@@ -489,6 +491,51 @@ describe('viewport features with binary mode', () => {
         { 'user_id': 2, 'other_prop': 1 },
         { 'user_id': 3, 'other_prop': 2 }
       ]);
+    });
+  });
+
+  describe('Different tile formats', () => {
+    test('transformToTileCoords should only be called if format is mvt', () => {
+      const transformToTileCoordsSpy = jest.spyOn(transformToTileCoords, 'default');
+
+      const points = [...Array(3)].map((_, i) => ({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [i, i]
+        }
+      }));
+
+      const mockedTile = [
+        {
+          isVisible: true,
+          data: geojsonToBinary(points),
+          bbox: { west, east, north, south }
+        }
+      ];
+
+      tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        tileFormat: TILE_FORMATS.GEOJSON
+      });
+      expect(transformToTileCoordsSpy).toHaveBeenCalledTimes(0);
+
+      tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        tileFormat: TILE_FORMATS.BINARY
+      });
+      expect(transformToTileCoordsSpy).toHaveBeenCalledTimes(0);
+
+      tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        tileFormat: TILE_FORMATS.MVT
+      });
+      expect(transformToTileCoordsSpy).toHaveBeenCalledTimes(1);
+
+      transformToTileCoordsSpy.mockRestore();
     });
   });
 });
