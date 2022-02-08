@@ -2,10 +2,9 @@
 
 ## Not released
 
+- TimeSeriesWidget applying received formatter to yAxis [#315](https://github.com/CartoDB/carto-react/pull/315)
 - Export FilterTypes enum [#314](https://github.com/CartoDB/carto-react/pull/314)
 - Improve lasso tool copies [#313](https://github.com/CartoDB/carto-react/pull/313)
-
-- TimeSeriesWidget applying received formatter to yAxis [#315](https://github.com/CartoDB/carto-react/pull/315) 
 
 ## 1.2
 
