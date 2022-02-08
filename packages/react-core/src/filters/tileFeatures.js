@@ -1,3 +1,4 @@
+import { TILE_FORMATS } from '@deck.gl/carto';
 import bboxPolygon from '@turf/bbox-polygon';
 import intersects from '@turf/boolean-intersects';
 import booleanWithin from '@turf/boolean-within';
@@ -194,11 +195,12 @@ export function tileFeatures({
     if (!clippedGeometryToIntersect) {
       continue;
     }
-    // Transform the geometry to intersect to tile coordinates [0..1] if the tileFormat is MVT
+    // We assume that MVT tileFormat uses local coordinates so we transform the geometry to intersect to tile coordinates [0..1],
+    // while in the case of 'geojson' or binary, the geometries are already in WGS84
     const transformedGeomtryToIntersect = {
       type: 'Feature',
       geometry:
-        tileFormat === 'mvt'
+        tileFormat === TILE_FORMATS.MVT
           ? transformToTileCoords(clippedGeometryToIntersect.geometry, bbox)
           : clippedGeometryToIntersect.geometry
     };

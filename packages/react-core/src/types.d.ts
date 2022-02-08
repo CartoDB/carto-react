@@ -1,3 +1,4 @@
+import { TILE_FORMATS } from '@deck.gl/carto'
 import { AggregationTypes } from './operations/aggregation/AggregationTypes';
 import { Geometry } from 'geojson';
 import {
@@ -26,7 +27,7 @@ export type TileFeatures = {
   viewport: Viewport,
   geometry?: Geometry,
   uniqueIdProperty?: string,
-  tileFormat: string
+  tileFormat: TILE_FORMATS
 }
 
 export type TileFeaturesResponse = Record<string, unknown>[] | []
