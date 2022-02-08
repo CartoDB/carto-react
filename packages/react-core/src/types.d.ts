@@ -1,8 +1,5 @@
 import { AggregationTypes } from './operations/aggregation/AggregationTypes';
 import { Geometry } from 'geojson';
-import {
-  FilterTypes
-} from './filters/FilterQueryBuilder';
 
 export type AggregationFunctions = {
   [AggregationTypes.COUNT]: Function,
@@ -29,5 +26,3 @@ export type TileFeatures = {
 }
 
 export type TileFeaturesResponse = Record<string, unknown>[] | []
-
-export type _FilterTypes = typeof FilterTypes;
