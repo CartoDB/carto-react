@@ -68,3 +68,25 @@ export function getChartSerie(chart, index) {
 
   return { option, serie };
 }
+
+export function getChartData(chart) {
+  let data = [];
+  if (chart) {
+    const option = chart.getOption();
+    data = option.series[0]?.data;
+  }
+  return data;
+}
+
+export function calculateTextSize(text, fontSize = 8) {
+  let span = document.getElementById('computedTextWidth');
+  if (!span) {
+    span = document.createElement('span');
+    span.id = 'computedTextWidth';
+    span.style.cssText = 'visibility:hidden;position: absolute;left: -999em;top:-999em;';
+    document.body.appendChild(span);
+  }
+  span.style.fontSize = `${fontSize}px`;
+  span.innerHTML = text;
+  return { width: span.offsetWidth, height: span.offsetHeight };
+}
