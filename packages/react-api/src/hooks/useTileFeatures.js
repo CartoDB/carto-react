@@ -2,6 +2,7 @@ import { useEffect, useCallback, useState } from 'react';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { Layer } from '@deck.gl/core';
+import { TILE_FORMATS } from '@deck.gl/carto';
 import { throwError } from './utils';
 import useFeaturesCommons from './useFeaturesCommons';
 
@@ -120,7 +121,7 @@ export default function useTileFeatures({
 
   const onDataLoad = useCallback(({ tiles: [tile] }) => {
     const tilesFormat = new URLSearchParams(tile).get('format');
-    setTileFormat(tilesFormat || 'mvt');
+    setTileFormat(tilesFormat || TILE_FORMATS.MVT);
   }, []);
 
   return [onDataLoad, onViewportLoad, fetch];
