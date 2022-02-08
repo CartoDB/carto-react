@@ -9,7 +9,7 @@ import {
   disableSerie,
   getChartSerie,
   getChartData,
-  calculateTextSize
+  getElementComputedSize
 } from './utils/chartUtils';
 import detectTouchScreen from './utils/detectTouchScreen';
 
@@ -50,7 +50,7 @@ function __formatter(v, xAxisFormatter) {
 function __getTextSize(dataAxis, xAxisFormatter) {
   return dataAxis.reduce((value, current) => {
     const formattedValue = __formatter(current, xAxisFormatter);
-    const size = calculateTextSize(formattedValue);
+    const size = getElementComputedSize(formattedValue, 'xAxis-label');
     return typeof value === 'object'
       ? { width: value.width + size.width, height: value.height + size.height }
       : { width: size.width, height: size.height };

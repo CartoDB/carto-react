@@ -78,15 +78,18 @@ export function getChartData(chart) {
   return data;
 }
 
-export function calculateTextSize(text, fontSize = 8) {
-  let span = document.getElementById('computedTextWidth');
+export function getElementComputedSize(text, id, fontSize = 8) {
+  let span = document.getElementById(id);
   if (!span) {
     span = document.createElement('span');
-    span.id = 'computedTextWidth';
+    span.id = id;
     span.style.cssText = 'visibility:hidden;position: absolute;left: -999em;top:-999em;';
     document.body.appendChild(span);
   }
   span.style.fontSize = `${fontSize}px`;
   span.innerHTML = text;
-  return { width: span.offsetWidth, height: span.offsetHeight };
+  const elementWidthAndHeight = { width: span.offsetWidth, height: span.offsetHeight };
+  span.remove();
+
+  return elementWidthAndHeight;
 }
