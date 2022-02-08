@@ -13,14 +13,9 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-  tableHead: {
-    '& .MuiTableCell-head, & .MuiTableCell-head span': {
-      ...theme.typography.caption,
-      color: theme.palette.text.secondary
-    },
-    '& th.MuiTableCell-stickyHeader': {
-      backgroundColor: theme.palette.common.white
-    }
+  tableHeadCellLabel: {
+    ...theme.typography.caption,
+    color: theme.palette.text.secondary
   },
   tableRow: {
     maxHeight: theme.spacing(6.5),
@@ -37,19 +32,6 @@ const useStyles = makeStyles((theme) => ({
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis'
-    }
-  },
-  pagination: {
-    '& .MuiTablePagination-caption': {
-      ...theme.typography.caption
-    },
-    '& .MuiTablePagination-caption:first-of-type': {
-      color: theme.palette.text.secondary
-    },
-    '& .MuiTablePagination-input': {
-      minHeight: theme.spacing(4.5),
-      border: `2px solid ${theme.palette.divider}`,
-      borderRadius: theme.spacing(0.5)
     }
   }
 }));
@@ -132,7 +114,7 @@ function TableHeaderComponent({ columns, sorting, sortBy, sortDirection, onSort 
   const classes = useStyles();
 
   return (
-    <TableHead className={classes.tableHead}>
+    <TableHead>
       <TableRow>
         {columns.map(({ field, headerName, align }) => (
           <TableCell key={field} align={align || 'left'}>
@@ -141,6 +123,7 @@ function TableHeaderComponent({ columns, sorting, sortBy, sortDirection, onSort 
                 active={sortBy === field}
                 direction={sortBy === field ? sortDirection : 'asc'}
                 onClick={() => onSort(field)}
+                className={classes.tableHeadCellLabel}
               >
                 {headerName}
               </TableSortLabel>
