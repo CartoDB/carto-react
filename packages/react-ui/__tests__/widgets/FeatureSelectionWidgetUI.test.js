@@ -15,7 +15,7 @@ const FEATURE_SELECTION_MODES = [
   { id: 'rectangle', label: 'rectangle', icon: <RectangleIcon id={RECTANGLE_ICON_ID} /> }
 ];
 
-const EDIT_MODES = [{ id: 'edit', label: 'Edit geometry', icon: <CursorIcon /> }];
+const EDIT_MODES = [{ id: 'edit', label: 'Edit mask', icon: <CursorIcon /> }];
 
 const CommonFeatureSelectionWidgetUI = (props) => (
   <FeatureSelectionWidgetUI
@@ -56,9 +56,7 @@ describe('FeatureSelectionWidgetUI', () => {
           selectedMode={'IInvented'}
         />
       )
-    ).toThrowError(
-      'Selected mode provided is not found neither in selecting or edit mode'
-    );
+    ).toThrowError('Selected mode not supported');
   });
 
   test('activate selected mode event is correctly raised', () => {
@@ -114,7 +112,7 @@ describe('FeatureSelectionWidgetUI', () => {
   const GEOMETRY = { geometry: 1 };
   test('geometry is rendered correctly', () => {
     const rendered = render(<CommonFeatureSelectionWidgetUI geometry={GEOMETRY} />);
-    expect(rendered.getByText('Feature')).toBeDefined();
+    expect(rendered.getByText('Mask')).toBeDefined();
   });
 
   test('geometry select event is raised correctly', () => {
@@ -127,7 +125,7 @@ describe('FeatureSelectionWidgetUI', () => {
       />
     );
 
-    const geometryBtn = rendered.getByText('Feature');
+    const geometryBtn = rendered.getByText('Mask');
     expect(geometryBtn).toBeDefined();
 
     // Test select geometry
