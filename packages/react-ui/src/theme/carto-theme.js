@@ -1145,6 +1145,52 @@ export const cartoThemeOptions = {
         }
       }
     },
+
+    MuiTablePagination: {
+      select: {
+        paddingRight: spacing(7.5),
+        paddingLeft: spacing(1.5)
+      },
+      input: {
+        height: spacing(4),
+        border: `2px solid ${variables.palette.other.divider}`,
+        borderRadius: spacing(0.5),
+        fontWeight: variables.typography.fontWeightMedium,
+        '& .MuiSelect-icon': {
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: spacing(2.25),
+          height: spacing(2.25),
+          right: spacing(0.75)
+        }
+      },
+      caption: {
+        ...variables.typography.caption,
+        '&:first-of-type': {
+          color: variables.palette.text.secondary
+        }
+      },
+      toolbar: {
+        minHeight: 0,
+        marginTop: spacing(1)
+      },
+      actions: {
+        '& button:last-child': {
+          marginLeft: spacing(2)
+        }
+      }
+    },
+
+    MuiTableCell: {
+      head: {
+        ...variables.typography.caption,
+        color: variables.palette.text.secondary
+      },
+      stickyHeader: {
+        backgroundColor: variables.palette.common.white
+      }
+    },
+
     // MuiToggleButton
     MuiToggleButton: {
       root: {
