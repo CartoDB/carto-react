@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from 'echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
@@ -7,7 +7,9 @@ import {
   clearFilter,
   areChartPropsEqual,
   disableSerie,
-  getChartSerie
+  getChartSerie,
+  getChartData,
+  getElementComputedSize
 } from './utils/chartUtils';
 import detectTouchScreen from './utils/detectTouchScreen';
 
@@ -32,22 +34,63 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function __truncateText(v) {
+  return v.length > 9 ? `${v.slice(0, 9)}...` : v;
+}
+
+function __formatter(v, xAxisFormatter) {
+  const formatted = xAxisFormatter(v);
+  return typeof formatted === 'object'
+    ? `${formatted.prefix || ''}${__truncateText(formatted.value)}${
+        formatted.suffix || ''
+      }`
+    : __truncateText(formatted);
+}
+
+function __getTextSize(dataAxis, xAxisFormatter) {
+  return dataAxis.reduce((value, current) => {
+    const formattedValue = __formatter(current, xAxisFormatter);
+    const size = getElementComputedSize(formattedValue, 'xAxis-label');
+    return typeof value === 'object'
+      ? { width: value.width + size.width, height: value.height + size.height }
+      : { width: size.width, height: size.height };
+  }, 0);
+}
+
 function __generateDefaultConfig(
   {
     dataAxis,
     tooltip,
     tooltipFormatter,
     xAxisFormatter = (v) => v,
-    yAxisFormatter = (v) => v
+    yAxisFormatter = (v) => v,
+    chartWidth,
+    chartInstance
   },
   data,
   theme
 ) {
+  const echart = chartInstance.current?.getEchartsInstance();
+  const initialized = getChartData(echart)?.length > 0 && chartWidth;
+  const { width, height } = __getTextSize(dataAxis, xAxisFormatter);
+
+  let chartHeight = theme.spacing(22);
+  const deg = 45;
+  const hasLongText = width > chartWidth;
+  const rotate = !chartWidth || chartWidth > width ? 0 : deg;
+  if (rotate) {
+    const rotatedTextHeight =
+      (height / dataAxis.length) * Math.abs(Math.cos(rotate)) +
+      (width / dataAxis.length) * Math.abs(Math.sin(deg));
+    chartHeight = theme.spacing(22 + rotatedTextHeight / 8);
+  }
+
   return {
     grid: {
-      left: theme.spacing(0.5),
+      ...(!hasLongText || !initialized
+        ? { left: theme.spacing(1), right: theme.spacing(0) }
+        : { left: theme.spacing(6) }),
       top: theme.spacing(2),
-      right: theme.spacing(1),
       bottom: theme.spacing(1),
       containLabel: true
     },
@@ -78,7 +121,7 @@ function __generateDefaultConfig(
         }
         return position;
       },
-      ...(tooltipFormatter ? { formatter: tooltipFormatter } : {})
+      formatter: (a) => (tooltipFormatter ? tooltipFormatter(a) : a[0].name)
     },
     color: [theme.palette.secondary.main],
     xAxis: {
@@ -92,11 +135,14 @@ function __generateDefaultConfig(
       axisLabel: {
         ...theme.typography.charts,
         padding: [theme.spacing(0.5), 0, 0, 0],
-        formatter: (v) => {
-          const formatted = xAxisFormatter(v);
-          return typeof formatted === 'object'
-            ? `${formatted.prefix || ''}${formatted.value}${formatted.suffix || ''}`
-            : formatted;
+        ...(initialized && rotate ? { rotate, interval: 1 } : {}),
+        formatter: (v) => __formatter(v, xAxisFormatter),
+        color: (value) => {
+          let color = 'transparent';
+          if (initialized) {
+            color = theme.palette.charts.maxLabel;
+          }
+          return color;
         }
       },
       data: dataAxis
@@ -141,7 +187,8 @@ function __generateDefaultConfig(
           color: theme.palette.charts.axisLine
         }
       }
-    }
+    },
+    customHeight: chartHeight
   };
 }
 
@@ -202,9 +249,18 @@ function HistogramWidgetUI(props) {
 
   const classes = useStyles();
   const chartInstance = useRef();
+  const [chartWidth, setChartWidth] = useState(0);
   const options = useMemo(() => {
     const config = __generateDefaultConfig(
-      { dataAxis, tooltip, tooltipFormatter, xAxisFormatter, yAxisFormatter },
+      {
+        dataAxis,
+        tooltip,
+        tooltipFormatter,
+        xAxisFormatter,
+        yAxisFormatter,
+        chartWidth,
+        chartInstance
+      },
       data,
       theme
     );
@@ -220,8 +276,27 @@ function HistogramWidgetUI(props) {
     xAxisFormatter,
     yAxisFormatter,
     selectedBars,
-    animation
+    animation,
+    chartWidth
   ]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (chartInstance.current) {
+        const echart = chartInstance.current?.getEchartsInstance();
+        if (!chartWidth && echart?.getWidth()) {
+          setChartWidth(echart.getWidth());
+        }
+        if (chartWidth) {
+          clearInterval(timer);
+        }
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [chartWidth]);
 
   const clearBars = () => {
     const echart = chartInstance.current.getEchartsInstance();
@@ -289,7 +364,7 @@ function HistogramWidgetUI(props) {
           option={options}
           lazyUpdate={true}
           onEvents={filterable && onEvents}
-          style={{ height }}
+          style={{ height: options.customHeight ? options.customHeight : height }}
         />
       )}
     </div>
