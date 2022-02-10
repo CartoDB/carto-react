@@ -37,7 +37,7 @@ const FEATURE_SELECTION_MODES_MAP = {
 
 const EDIT_MODES_MAP = {
   [EDIT_MODES_KEYS.EDIT]: {
-    label: 'Edit geometry',
+    label: 'Edit mask',
     icon: <CursorIcon />
   }
 };

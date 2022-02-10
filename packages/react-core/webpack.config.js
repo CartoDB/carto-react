@@ -6,9 +6,8 @@ const webpackBaseConfig = require('../../webpack.base');
 
 const webpackConfig = {
   ...webpackBaseConfig,
-  externals: [
-    /^@turf\/.+$/,
-  ],
+  // Be careful what you add as external because it can significantly affect the size of the worker package.
+  externals: [/^@turf\/.+$/],
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'index.js',

@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-core",
-  "version": "1.2.1-beta.1",
+  "version": "1.2.1-beta.3",
   "description": "CARTO for React - Core",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -64,6 +64,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
+    "@deck.gl/carto": "^8.7.0-beta.5",
     "@turf/bbox-polygon": "^6.3.0",
     "@turf/boolean-intersects": "^6.3.0",
     "@turf/boolean-within": "^6.3.0",

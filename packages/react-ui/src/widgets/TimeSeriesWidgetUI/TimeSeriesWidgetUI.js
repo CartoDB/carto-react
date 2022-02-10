@@ -300,6 +300,7 @@ function TimeSeriesWidgetUIContent({
       chartType={chartType}
       data={data}
       tooltip={tooltip}
+      formatter={formatter}
       tooltipFormatter={(params) => tooltipFormatter(params, stepSize, formatter)}
       height={height}
       animation={animation}

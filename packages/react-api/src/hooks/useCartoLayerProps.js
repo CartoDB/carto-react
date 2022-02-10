@@ -15,7 +15,7 @@ export default function useCartoLayerProps({
   const viewport = useSelector((state) => state.carto.viewport);
   const spatialFilter = useSelector((state) => selectSpatialFilter(state, source?.id));
 
-  const [onDataLoad] = useGeojsonFeatures({
+  const [onDataLoadForGeojson] = useGeojsonFeatures({
     source,
     viewport,
     spatialFilter,
@@ -23,7 +23,7 @@ export default function useCartoLayerProps({
     debounceTimeout: viewporFeaturesDebounceTimeout
   });
 
-  const [onViewportLoad, fetch] = useTileFeatures({
+  const [onDataLoadForTile, onViewportLoad, fetch] = useTileFeatures({
     source,
     viewport,
     spatialFilter,
@@ -41,12 +41,13 @@ export default function useCartoLayerProps({
       binary: true,
       ...(viewportFeatures && {
         onViewportLoad,
-        fetch
+        fetch,
+        onDataLoad: onDataLoadForTile
       })
     };
   } else if (source?.type === MAP_TYPES.QUERY || source?.type === MAP_TYPES.TABLE) {
     props = viewportFeatures && {
-      onDataLoad
+      onDataLoad: onDataLoadForGeojson
     };
   }
 

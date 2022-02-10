@@ -165,59 +165,35 @@ const LEGEND_COMPONENT_BY_TYPE = {
 function LegendRows({ layers = [], onChangeVisibility }) {
   const isSingle = layers.length === 1;
 
-  return layers.map(
-    (
-      {
-        id,
-        title,
-        switchable,
-        visible,
-        legend: {
-          children = null,
-          type = '',
-          collapsible = true,
-          note = '',
-          attr = '',
-          colors = [],
-          labels = [],
-          icons = [],
-          stats = undefined
-        } = {}
-      },
-      index
-    ) => {
-      const isLast = layers.length - 1 === index;
-      // TODO: Add validation for layer.type
-      const hasChildren = LEGEND_COMPONENT_BY_TYPE[type] || children;
-      const LegendComponent = LEGEND_COMPONENT_BY_TYPE[type] || (() => children);
-      return (
-        <Fragment key={id}>
-          <LegendWrapper
-            id={id}
-            title={title}
-            collapsible={!!(collapsible && hasChildren)}
-            switchable={switchable}
-            visible={visible}
-            note={note}
-            attr={attr}
-            onChangeVisibility={onChangeVisibility}
-          >
-            <LegendComponent
-              legend={{
-                type,
-                collapsible,
-                note,
-                attr,
-                colors,
-                labels,
-                icons,
-                stats
-              }}
-            />
-          </LegendWrapper>
-          {!isSingle && !isLast && <Divider />}
-        </Fragment>
-      );
-    }
-  );
+  return layers.map(({ id, title, switchable, visible, legend = {} }, index) => {
+    const {
+      children = null,
+      type = '',
+      collapsible = true,
+      note = '',
+      attr = ''
+    } = legend;
+
+    const isLast = layers.length - 1 === index;
+    // TODO: Add validation for layer.type
+    const hasChildren = LEGEND_COMPONENT_BY_TYPE[type] || children;
+    const LegendComponent = LEGEND_COMPONENT_BY_TYPE[type] || (() => children);
+    return (
+      <Fragment key={id}>
+        <LegendWrapper
+          id={id}
+          title={title}
+          collapsible={!!(collapsible && hasChildren)}
+          switchable={switchable}
+          visible={visible}
+          note={note}
+          attr={attr}
+          onChangeVisibility={onChangeVisibility}
+        >
+          <LegendComponent legend={legend} />
+        </LegendWrapper>
+        {!isSingle && !isLast && <Divider />}
+      </Fragment>
+    );
+  });
 }

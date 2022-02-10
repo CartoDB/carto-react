@@ -121,17 +121,34 @@ const LegendMultiTemplateCollapsed = () => {
   );
 };
 
+const categoryLegend = {
+  type: 'category',
+  note: 'lorem',
+  colors: ['#000', '#00F', '#0F0'],
+  labels: ['Category 1', 'Category 2', 'Category 3']
+};
+
 const LegendCategoriesTemplate = () => {
   const layers = [
     {
       id: 0,
       title: 'Category Layer',
       visible: true,
+      legend: categoryLegend
+    }
+  ];
+  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+};
+
+const LegendCategoriesStrokeTemplate = () => {
+  const layers = [
+    {
+      id: 0,
+      title: 'Category Layer as stroke',
+      visible: true,
       legend: {
-        type: 'category',
-        note: 'lorem',
-        colors: ['#000', '#00F', '#0F0'],
-        labels: ['Category 1', 'Category 2', 'Category 3']
+        ...categoryLegend,
+        isStrokeColor: true
       }
     }
   ];
@@ -242,6 +259,7 @@ export const MultiLayer = LegendMultiTemplate.bind({});
 export const MultiLayerCollapsed = LegendMultiTemplateCollapsed.bind({});
 export const NotFound = LegendNotFoundTemplate.bind({});
 export const Categories = LegendCategoriesTemplate.bind({});
+export const CategoriesAsStroke = LegendCategoriesStrokeTemplate.bind({});
 export const Icon = LegendIconTemplate.bind({});
 export const Ramp = LegendRampTemplate.bind({});
 export const Proportion = LegendProportionTemplate.bind({});
