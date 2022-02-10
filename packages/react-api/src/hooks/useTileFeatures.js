@@ -120,7 +120,7 @@ export default function useTileFeatures({
   );
 
   const onDataLoad = useCallback(({ tiles: [tile] }) => {
-    const tilesFormat = new URLSearchParams(tile).get('formatTiles');
+    const tilesFormat = new URL(tile).searchParams.get('formatTiles');
     setTileFormat(tilesFormat || TILE_FORMATS.MVT);
   }, []);
 
