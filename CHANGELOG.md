@@ -2,13 +2,15 @@
 
 ## Not released
 
+## 1.2
+
+### 1.2.1-beta.4 (2022-02-10)
+
 - HistogramWidget improve xAxis labels [#317](https://github.com/CartoDB/carto-react/pull/317)
 - Add option in LegendCategories to draw color strokes [#311](https://github.com/CartoDB/carto-react/pull/311)
 - Expose individual legend type components [#311](https://github.com/CartoDB/carto-react/pull/311)
 - Fix how to read format tiles param from Maps API [#321](https://github.com/CartoDB/carto-react/pull/321)
 - Fix Table Widget style issues [#318](https://github.com/CartoDB/carto-react/pull/318)
-
-## 1.2
 
 ### 1.2.1-beta.3 (2022-02-09)
 
