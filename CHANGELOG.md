@@ -1,7 +1,9 @@
 # CHANGELOG
 
 ## Not released
+
 - Fix how to read format tiles param from Maps API [#321](https://github.com/CartoDB/carto-react/pull/321)
+- Fix Table Widget style issues [#318](https://github.com/CartoDB/carto-react/pull/318)
 
 ## 1.2
 
