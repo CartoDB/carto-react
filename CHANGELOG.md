@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix Switch input width [#323](https://github.com/CartoDB/carto-react/pull/323)
+
 ## 1.2
 
 ### 1.2.1-beta.4 (2022-02-10)

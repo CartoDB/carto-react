@@ -926,6 +926,11 @@ export const cartoThemeOptions = {
         boxShadow: 'none'
       },
 
+      input: {
+        width: spacing(6),
+        left: spacing(-1.5)
+      },
+
       track: {
         height: 'auto',
         border: `2px solid ${variables.palette.text.secondary}`,
