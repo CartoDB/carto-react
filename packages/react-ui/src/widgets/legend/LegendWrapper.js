@@ -262,35 +262,6 @@ function OpacityControl({ opacity, onChangeOpacity }) {
           </Grid>
         </Grid>
       </Box>
-      {/* <Grid
-        container
-        wrap='nowrap'
-        direction='row'
-        alignItems='center'
-        justifyContent='space-between'
-      >
-        <Grid item xs={6}>
-          <Slider
-            value={Math.round(opacity * 100)}
-            aria-labelledby='opacity-slider'
-            min={0}
-            max={100}
-            step={1}
-            onChange={(_, value) => onChangeOpacity(value / 100)}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            size='small'
-            id='opacity-text'
-            value={Math.round(opacity * 100)}
-            onChange={handleTextFieldChange}
-            InputProps={{
-              endAdornment: <InputAdornment position='end'>%</InputAdornment>
-            }}
-          />
-        </Grid>
-      </Grid>*/}
     </LayerOptionWrapper>
   );
 }

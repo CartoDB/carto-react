@@ -41,22 +41,6 @@ const Template = ({ ...args }) => {
   );
 };
 
-const LegendWithOpacityTemplate = () => {
-  const layers = [
-    {
-      id: 0,
-      title: 'Single Layer',
-      visible: true,
-      showOpacityControl: true,
-      opacity: 0.5,
-      legend: {
-        children: <div>Your Content</div>,
-      }
-    }
-  ];
-  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
-};
-
 
 const LegendTemplate = () => {
   const layers = [
@@ -78,6 +62,22 @@ const LegendNotFoundTemplate = () => {
       id: 0,
       title: 'Single Layer',
       visible: true
+    }
+  ];
+  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+};
+
+const LegendWithOpacityTemplate = () => {
+  const layers = [
+    {
+      id: 0,
+      title: 'Single Layer',
+      visible: true,
+      showOpacityControl: true,
+      opacity: 0.5,
+      legend: {
+        children: <div>Your Content</div>,
+      }
     }
   ];
   return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
@@ -272,10 +272,10 @@ const LegendNoChildrenTemplate = () => {
 export const Playground = Template.bind({});
 
 export const SingleLayer = LegendTemplate.bind({});
-export const LegendWithOpacityControl = LegendWithOpacityTemplate.bind({});
 export const MultiLayer = LegendMultiTemplate.bind({});
 export const MultiLayerCollapsed = LegendMultiTemplateCollapsed.bind({});
 export const NotFound = LegendNotFoundTemplate.bind({});
+export const LegendWithOpacityControl = LegendWithOpacityTemplate.bind({});
 export const Categories = LegendCategoriesTemplate.bind({});
 export const CategoriesAsStroke = LegendCategoriesStrokeTemplate.bind({});
 export const Icon = LegendIconTemplate.bind({});
