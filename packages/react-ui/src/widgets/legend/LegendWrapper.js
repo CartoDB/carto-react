@@ -255,7 +255,8 @@ function OpacityControl({ opacity, onChangeOpacity }) {
                 min: 0,
                 max: 100,
                 type: 'number',
-                'aria-labelledby': 'input-slider',
+                inputProps: { 'data-testid': 'opacity-slider' },
+                'aria-labelledby': 'opacity-slider',
                 endAdornment: <InputAdornment position='end'>%</InputAdornment>
               }}
             />
