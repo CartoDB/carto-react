@@ -5,13 +5,20 @@ import {
   Collapse,
   Grid,
   Icon,
+  Input,
+  InputAdornment,
   makeStyles,
+  Slider,
   Switch,
+  TextField,
   Tooltip,
   Typography
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import Note from './Note';
+import LayerIcon from '../../assets/LayerIcon';
+import LayerOptionWrapper from './LayerOptionWrapper';
+import { ToggleButton } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   legendWrapper: {
@@ -24,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   },
   attr: {
     marginBottom: theme.spacing(1)
+  },
+  layerOptionsWrapper: {
+    backgroundColor: theme.palette.grey[50]
   }
 }));
 
@@ -36,11 +46,19 @@ export default function LegendWrapper({
   note,
   attr,
   children,
+  showOpacityControl,
+  opacity,
+  onChangeOpacity,
   onChangeVisibility
 }) {
   const wrapper = createRef();
   const classes = useStyles();
   const [expanded, setExpanded] = useState(true);
+  const [isLayerOptionsExpanded, setIsLayerOptionsExpanded] = useState(false);
+
+  const handleChangeOpacity = (newOpacity) => {
+    if (onChangeOpacity) onChangeOpacity({ id, opacity: newOpacity });
+  };
 
   const handleExpandClick = () => {
     if (collapsible) {
@@ -50,6 +68,10 @@ export default function LegendWrapper({
 
   const handleChangeVisibility = () => {
     if (onChangeVisibility) onChangeVisibility({ id, visible: !visible });
+  };
+
+  const handleToggleLayerOptions = () => {
+    setIsLayerOptionsExpanded((oldState) => !oldState);
   };
 
   return (
@@ -62,6 +84,8 @@ export default function LegendWrapper({
         collapsible={collapsible}
         onExpandClick={handleExpandClick}
         onChangeVisibility={handleChangeVisibility}
+        onToggleLayerOptions={showOpacityControl && handleToggleLayerOptions}
+        isLayerOptionsExpanded={isLayerOptionsExpanded}
       />
       {!!children && (
         <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
@@ -73,6 +97,14 @@ export default function LegendWrapper({
                 </Typography>
               )}
               {children}
+              <Collapse in={isLayerOptionsExpanded} timeout='auto' unmountOnExit>
+                <Box className={classes.layerOptionsWrapper} mt={2}>
+                  <OpacityControl
+                    opacity={opacity}
+                    onChangeOpacity={handleChangeOpacity}
+                  />
+                </Box>
+              </Collapse>
               <Note>{note}</Note>
             </Grid>
           </Box>
@@ -119,9 +151,12 @@ function Header({
   collapsible,
   expanded,
   onExpandClick,
-  onChangeVisibility
+  onChangeVisibility,
+  onToggleLayerOptions,
+  isLayerOptionsExpanded
 }) {
   const classes = useHeaderStyles({ collapsible });
+  const ExpandIcon = expanded ? ExpandLess : ExpandMore;
 
   return (
     <Grid container alignItems='center' className={classes.header}>
@@ -130,11 +165,7 @@ function Header({
         startIcon={
           collapsible && (
             <Icon>
-              {expanded ? (
-                <ExpandLess className={classes.expandIcon} />
-              ) : (
-                <ExpandMore className={classes.expandIcon} />
-              )}
+              <ExpandIcon className={classes.expandIcon} />
             </Icon>
           )
         }
@@ -142,11 +173,124 @@ function Header({
       >
         <Typography variant='subtitle1'>{title}</Typography>
       </Button>
+      {!!onToggleLayerOptions && (
+        <Tooltip title='Layer options' placement='top' arrow>
+          <ToggleButton
+            selected={isLayerOptionsExpanded}
+            onClick={onToggleLayerOptions}
+            value='check'
+          >
+            <LayerIcon />
+          </ToggleButton>
+        </Tooltip>
+      )}
       {switchable && (
         <Tooltip title={(visible ? 'Hide' : 'Show') + ' layer'} placement='top' arrow>
           <Switch checked={visible} onChange={onChangeVisibility} />
         </Tooltip>
       )}
     </Grid>
+  );
+}
+
+const useOpacityControlStyles = makeStyles(({ spacing }) => ({
+  content: {
+    height: 'auto',
+    flex: 1
+  },
+  slider: {
+    marginTop: spacing(1)
+  },
+  input: {
+    width: spacing(8),
+    '& input': {
+      '&[type=number]': {
+        appearance: 'textfield'
+      },
+      '&::-webkit-outer-spin-button': {
+        appearance: 'none',
+        margin: 0
+      },
+      '&::-webkit-inner-spin-button': {
+        appearance: 'none',
+        margin: 0
+      }
+    },
+    '& .MuiInputAdornment-positionEnd': {
+      margin: 0
+    }
+  }
+}));
+
+function OpacityControl({ opacity, onChangeOpacity }) {
+  const classes = useOpacityControlStyles();
+  const handleTextFieldChange = (e) => {
+    const newOpacity = parseInt(e.target.value || '0');
+    onChangeOpacity(Math.max(0, Math.min(100, newOpacity)) / 100);
+  };
+
+  return (
+    <LayerOptionWrapper label='Opacity'>
+      <Box className={classes.content}>
+        <Grid container spacing={2} direction='row' alignItems='center'>
+          <Grid item xs>
+            <Slider
+              value={Math.round(opacity * 100)}
+              min={0}
+              max={100}
+              step={1}
+              onChange={(_, value) => onChangeOpacity(value / 100)}
+              aria-labelledby='input-slider'
+              className={classes.slider}
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              className={classes.input}
+              value={Math.round(opacity * 100)}
+              margin='dense'
+              onChange={handleTextFieldChange}
+              InputProps={{
+                step: 1,
+                min: 0,
+                max: 100,
+                type: 'number',
+                'aria-labelledby': 'input-slider',
+                endAdornment: <InputAdornment position='end'>%</InputAdornment>
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Box>
+      {/* <Grid
+        container
+        wrap='nowrap'
+        direction='row'
+        alignItems='center'
+        justifyContent='space-between'
+      >
+        <Grid item xs={6}>
+          <Slider
+            value={Math.round(opacity * 100)}
+            aria-labelledby='opacity-slider'
+            min={0}
+            max={100}
+            step={1}
+            onChange={(_, value) => onChangeOpacity(value / 100)}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            size='small'
+            id='opacity-text'
+            value={Math.round(opacity * 100)}
+            onChange={handleTextFieldChange}
+            InputProps={{
+              endAdornment: <InputAdornment position='end'>%</InputAdornment>
+            }}
+          />
+        </Grid>
+      </Grid>*/}
+    </LayerOptionWrapper>
   );
 }
