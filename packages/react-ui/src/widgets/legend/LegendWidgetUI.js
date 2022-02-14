@@ -35,6 +35,23 @@ const LayersIcon = () => (
   </SvgIcon>
 );
 
+export const LEGEND_TYPES = Object.freeze({
+  CATEGORY: 'category',
+  ICON: 'icon',
+  CONTINUOUS_RAMP: 'continuous_ramp',
+  BINS: 'bins',
+  PROPORTION: 'proportion',
+  CUSTOM: 'custom'
+});
+
+const LEGEND_COMPONENT_BY_TYPE = {
+  [LEGEND_TYPES.CATEGORY]: LegendCategories,
+  [LEGEND_TYPES.ICON]: LegendIcon,
+  [LEGEND_TYPES.CONTINUOUS_RAMP]: (args) => LegendRamp({ ...args, isContinuous: true }),
+  [LEGEND_TYPES.BINS]: (args) => LegendRamp({ ...args, isContinuous: false }),
+  [LEGEND_TYPES.PROPORTION]: LegendProportion
+};
+
 const useStyles = makeStyles((theme) => ({
   legend: {
     minWidth: '240px',
@@ -46,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 
 function LegendWidgetUI({
   className,
+  legendTypes,
   layers = [],
   collapsed,
   onCollapsedChange,
@@ -61,7 +79,7 @@ function LegendWidgetUI({
         collapsed={collapsed}
         onCollapsedChange={onCollapsedChange}
       >
-        <LegendRows layers={layers} onChangeVisibility={onChangeVisibility} />
+        <LegendRows legendTypes={{...LEGEND_COMPONENT_BY_TYPE, ...legendTypes}} layers={layers} onChangeVisibility={onChangeVisibility} />
       </LegendContainer>
     </Box>
   );
@@ -74,6 +92,7 @@ LegendWidgetUI.defaultProps = {
 
 LegendWidgetUI.propTypes = {
   className: PropTypes.string,
+  legendTypes: PropTypes.objectOf(PropTypes.func),
   layers: PropTypes.array,
   collapsed: PropTypes.bool,
   onCollapsedChange: PropTypes.func,
@@ -145,24 +164,7 @@ function LegendContainer({ isSingle, children, collapsed, onCollapsedChange }) {
   );
 }
 
-export const LEGEND_TYPES = {
-  CATEGORY: 'category',
-  ICON: 'icon',
-  CONTINUOUS_RAMP: 'continuous_ramp',
-  BINS: 'bins',
-  PROPORTION: 'proportion',
-  CUSTOM: 'custom'
-};
-
-const LEGEND_COMPONENT_BY_TYPE = {
-  [LEGEND_TYPES.CATEGORY]: LegendCategories,
-  [LEGEND_TYPES.ICON]: LegendIcon,
-  [LEGEND_TYPES.CONTINUOUS_RAMP]: (args) => LegendRamp({ ...args, isContinuous: true }),
-  [LEGEND_TYPES.BINS]: (args) => LegendRamp({ ...args, isContinuous: false }),
-  [LEGEND_TYPES.PROPORTION]: LegendProportion
-};
-
-function LegendRows({ layers = [], onChangeVisibility }) {
+function LegendRows({ legendTypes, layers = [], onChangeVisibility }) {
   const isSingle = layers.length === 1;
 
   return layers.map(({ id, title, switchable, visible, legend = {} }, index) => {
@@ -176,8 +178,8 @@ function LegendRows({ layers = [], onChangeVisibility }) {
 
     const isLast = layers.length - 1 === index;
     // TODO: Add validation for layer.type
-    const hasChildren = LEGEND_COMPONENT_BY_TYPE[type] || children;
-    const LegendComponent = LEGEND_COMPONENT_BY_TYPE[type] || (() => children);
+    const hasChildren = legendTypes[type] || children;
+    const LegendComponent = legendTypes[type] || (() => children);
     return (
       <Fragment key={id}>
         <LegendWrapper

@@ -8,9 +8,10 @@ import PropTypes from 'prop-types';
  * Renders a <LegendWidget /> component
  * @param  {object} props
  * @param  {string} props.className - CSS class name
+ * @param  {Object.<string, function>} props.legendTypes - 
  * @param  {string} props.initialCollapsed - Define initial collapsed value. false by default.
  */
-function LegendWidget({ className, initialCollapsed }) {
+function LegendWidget({ className, legendTypes, initialCollapsed }) {
   const dispatch = useDispatch();
   const layers = useSelector((state) =>
     Object.values(state.carto.layers).filter((layer) => !!layer.legend)
@@ -33,6 +34,7 @@ function LegendWidget({ className, initialCollapsed }) {
   return (
     <LegendWidgetUI
       className={className}
+      legendTypes={legendTypes}
       layers={layers}
       onChangeVisibility={handleChangeVisibility}
       collapsed={collapsed}
@@ -43,6 +45,7 @@ function LegendWidget({ className, initialCollapsed }) {
 
 LegendWidget.propTypes = {
   className: PropTypes.string,
+  legendTypes: PropTypes.objectOf(PropTypes.func),
   initialCollapsed: PropTypes.bool
 };
 

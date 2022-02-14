@@ -1,6 +1,6 @@
 import React from 'react';
 import { getMaterialUIContext } from './testUtils';
-import LegendWidgetUI from '../../src/widgets/legend/LegendWidgetUI';
+import LegendWidgetUI, { LEGEND_TYPES } from '../../src/widgets/legend/LegendWidgetUI';
 import { render, screen } from '@testing-library/react';
 import { Typography } from '@material-ui/core';
 
@@ -118,5 +118,19 @@ describe('LegendWidgetUI', () => {
   test('Custom legend', () => {
     render(<Widget layers={[DATA[5]]}></Widget>);
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
+  });
+
+  test('with custom legend types', () => {
+    const CustomCategoryComponent = jest.fn();
+    CustomCategoryComponent.mockReturnValue(<p>Test</p>);
+    render(
+      <Widget
+        layers={[DATA[0]]}
+        legendTypes={{ [LEGEND_TYPES.CATEGORY]: CustomCategoryComponent }}
+      ></Widget>
+    );
+    expect(CustomCategoryComponent).toHaveBeenCalled();
+    expect(CustomCategoryComponent).toHaveBeenCalledWith({ legend: DATA[0].legend }, {});
+    expect(screen.getByText('Test')).toBeInTheDocument();
   });
 });
