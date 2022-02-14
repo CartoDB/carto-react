@@ -136,12 +136,30 @@ describe('groupValuesByColumn', () => {
   });
 
   describe('invalid features', () => {
-    test('should return all groups values to 0 due to invalid column data', () => {
+    test('should count nulls when operation is COUNT', () => {
       const groups = groupValuesByColumn(
         buildInvalidFeatures(COLUMN),
         `${COLUMN}_quantitative`,
         `${COLUMN}_qualitative`,
         AggregationTypes.COUNT
+      );
+      expect(groups).toEqual([
+        {
+          name: 'Category 1',
+          value: 1
+        },
+        {
+          name: 'Category 2',
+          value: 0
+        }
+      ]);
+    });
+    test('should return all groups values to 0 due to invalid column data for operations other than COUNT', () => {
+      const groups = groupValuesByColumn(
+        buildInvalidFeatures(COLUMN),
+        `${COLUMN}_quantitative`,
+        `${COLUMN}_qualitative`,
+        AggregationTypes.SUM
       );
       expect(groups).toEqual([
         {
