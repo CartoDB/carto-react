@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Add LegendTypes prop to customise covered legend types [#325](https://github.com/CartoDB/carto-react/pull/325)
 - Fix Switch input width [#323](https://github.com/CartoDB/carto-react/pull/323)
 
 ## 1.2
