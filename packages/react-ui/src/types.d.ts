@@ -148,3 +148,10 @@ export type LegendCategories = {
     isStrokeColor?: boolean;
   };
 };
+
+export type LegendIcon = {
+  legend: {
+    labels?: string[];
+    icons?: string[]
+  };
+};

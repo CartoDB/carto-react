@@ -41,8 +41,8 @@ export {
   LEGEND_TYPES,
   NoDataAlert,
   LegendCategories,
+  LegendIcon,
   // undocumented components
-  LegendIcon as _LegendIcon,
   LegendProportion as _LegendProportion,
   LegendRamp as _LegendRamp
 };
