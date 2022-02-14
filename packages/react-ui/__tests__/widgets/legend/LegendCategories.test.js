@@ -1,10 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import LegendCategories from '../../../src/widgets/legend/LegendCategories';
+import { getPalette } from '../../../src/utils/palette';
+
+const COLOR = 'TealGrn';
 
 const DEFAULT_LEGEND = {
   labels: ['Category 1', 'Category 2'],
-  colors: 'TealGrn'
+  colors: COLOR
 };
 
 describe('LegendCategories', () => {
@@ -15,10 +18,10 @@ describe('LegendCategories', () => {
   });
   test('renders colors (CARTOColors) correctly', () => {
     render(<LegendCategories legend={DEFAULT_LEGEND} />);
-    const [firstCategory, secondCategory] =
-      document.querySelectorAll('[class*="circle"]');
-    expect(firstCategory).toHaveStyle('background-color: rgb(176, 242, 188);');
-    expect(secondCategory).toHaveStyle('background-color: rgb(137, 232, 172);');
+    const elements = document.querySelectorAll('[class*="circle"]');
+    getPalette(COLOR, 2).forEach((color, idx) =>
+      expect(elements[idx]).toHaveStyle(`background-color: ${color}`)
+    );
   });
   test('renders colors (hex) correctly', () => {
     render(<LegendCategories legend={{ ...DEFAULT_LEGEND, colors: ['#000', '#fff'] }} />);
@@ -29,9 +32,9 @@ describe('LegendCategories', () => {
   });
   test('renders stroked colors correctly', () => {
     render(<LegendCategories legend={{ ...DEFAULT_LEGEND, isStrokeColor: true }} />);
-    const [firstCategory, secondCategory] =
-      document.querySelectorAll('[class*="circle"]');
-    expect(firstCategory).toHaveStyle('border-color: #b0f2bc;');
-    expect(secondCategory).toHaveStyle('border-color: #89e8ac;');
+    const elements = document.querySelectorAll('[class*="circle"]');
+    getPalette(COLOR, 2).forEach((color, idx) =>
+      expect(elements[idx]).toHaveStyle(`border-color: ${color}`)
+    );
   });
 });

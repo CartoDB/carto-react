@@ -43,6 +43,5 @@ export {
   LegendCategories,
   LegendIcon,
   LegendProportion,
-  // undocumented components
-  LegendRamp as _LegendRamp
+  LegendRamp
 };

@@ -165,3 +165,15 @@ export type LegendProportion = {
     };
   };
 };
+
+export type LegendRamp = {
+  isContinuous?: boolean;
+  legend: {
+    labels?: (number | string)[];
+    stats?: {
+      min: number | string;
+      max: number | string;
+    };
+    icons?: string[];
+  };
+};

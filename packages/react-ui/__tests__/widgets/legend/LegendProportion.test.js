@@ -8,6 +8,7 @@ const LEGEND_WITH_STATS = {
     max: 200
   }
 };
+
 const LEGEND_WITH_LABELS = {
   labels: ['0', '200']
 };
@@ -26,5 +27,13 @@ describe('LegendProportion', () => {
     expect(screen.queryByText('150')).toBeInTheDocument();
     expect(screen.queryByText('50')).toBeInTheDocument();
     expect(screen.queryByText('Min: 0')).toBeInTheDocument();
+  });
+  test('renders error if neither labels and stats is defined', () => {
+    render(<LegendProportion legend={{}} />);
+    expect(
+      screen.queryByText(
+        'You need to specify valid numbers for the labels/stats property'
+      )
+    ).toBeInTheDocument();
   });
 });

@@ -48,7 +48,7 @@ function LegendProportion({ legend }) {
         {error ? (
           <Grid item className={classes.errorContainer}>
             <Typography variant='overline'>
-              You need to specify valid numbers for the labels property
+              You need to specify valid numbers for the labels/stats property
             </Typography>
           </Grid>
         ) : (
@@ -90,21 +90,9 @@ LegendProportion.propTypes = {
 export default LegendProportion;
 
 // Aux
-
-function calculateRange({ labels, stats }) {
-  let max;
-  let min;
-  let error = false;
-
-  if (stats) {
-    min = stats.min;
-    max = stats.max;
-  } else if (labels) {
-    min = labels[0];
-    max = labels[labels.length - 1];
-  } else {
-    error = true;
-  }
+export function getMinMax({ labels, stats }) {
+  let max = stats?.max ?? labels?.[labels.length - 1];
+  let min = stats?.min ?? labels?.[0];
 
   if (!Number.isFinite(min)) {
     min = parseInt(min, 10);
@@ -113,6 +101,13 @@ function calculateRange({ labels, stats }) {
   if (!Number.isFinite(max)) {
     max = parseInt(max, 10);
   }
+
+  return [min, max];
+}
+
+function calculateRange(legend) {
+  let error = false;
+  const [min, max] = getMinMax(legend);
 
   if (Number.isNaN(min) || Number.isNaN(max)) {
     error = true;

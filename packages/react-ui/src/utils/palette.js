@@ -36,7 +36,7 @@ export function getPaletteFromCartoColors (name, domainSize) {
 
 export function getPalette(colors, domainSize) {
   if (typeof colors === 'string') {
-    return getPaletteFromCartoColors(colors, domainSize.length)
+    return getPaletteFromCartoColors(colors, domainSize)
   } else {
     return colors.map((c) => {
       if (Array.isArray(c)) {
