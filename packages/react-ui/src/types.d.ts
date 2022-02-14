@@ -152,6 +152,16 @@ export type LegendCategories = {
 export type LegendIcon = {
   legend: {
     labels?: string[];
-    icons?: string[]
+    icons?: string[];
+  };
+};
+
+export type LegendProportion = {
+  legend: {
+    labels?: (number | string)[];
+    stats?: {
+      min: number | string;
+      max: number | string;
+    };
   };
 };

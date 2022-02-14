@@ -42,7 +42,7 @@ export {
   NoDataAlert,
   LegendCategories,
   LegendIcon,
+  LegendProportion,
   // undocumented components
-  LegendProportion as _LegendProportion,
   LegendRamp as _LegendRamp
 };
