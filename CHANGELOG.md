@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Dynamic tiling integration [#327](https://github.com/CartoDB/carto-react/pull/327)
 - Fix Switch input width [#323](https://github.com/CartoDB/carto-react/pull/323)
 
 ## 1.2
