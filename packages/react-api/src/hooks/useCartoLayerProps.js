@@ -43,6 +43,9 @@ export default function useCartoLayerProps({
     [onDataLoadForGeojson, onDataLoadForTile]
   );
 
+  // Due to dyamic tiling integration we cannot know if we're going to load a geojson or a tileset
+  // until onDataLoad be executed so we return binary, onViewportLoad and fetch that will be ignored
+  // for NOT Tileset layer
   const props = {
     binary: true,
     ...(viewportFeatures && {
