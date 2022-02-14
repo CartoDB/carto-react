@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  * Renders a <LegendWidget /> component
  * @param  {object} props
  * @param  {string} props.className - CSS class name
- * @param  {Object.<string, function>} props.legendTypes - 
+ * @param  {Object.<string, function>} props.legendTypes - Allow to customise by default legend types that can be rendered
  * @param  {string} props.initialCollapsed - Define initial collapsed value. false by default.
  */
 function LegendWidget({ className, legendTypes, initialCollapsed }) {
