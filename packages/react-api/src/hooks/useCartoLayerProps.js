@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { useSelector } from 'react-redux';
 import { selectSpatialFilter } from '@carto/react-redux';
@@ -31,25 +32,25 @@ export default function useCartoLayerProps({
     debounceTimeout: viewporFeaturesDebounceTimeout
   });
 
-  let props = {};
+  const onDataLoad = useCallback(
+    (data) => {
+      if (data?.tilejson) {
+        return onDataLoadForTile(data);
+      }
 
-  if (
-    source?.credentials.apiVersion === API_VERSIONS.V2 ||
-    source?.type === MAP_TYPES.TILESET
-  ) {
-    props = {
-      binary: true,
-      ...(viewportFeatures && {
-        onViewportLoad,
-        fetch,
-        onDataLoad: onDataLoadForTile
-      })
-    };
-  } else if (source?.type === MAP_TYPES.QUERY || source?.type === MAP_TYPES.TABLE) {
-    props = viewportFeatures && {
-      onDataLoad: onDataLoadForGeojson
-    };
-  }
+      return onDataLoadForGeojson(data);
+    },
+    [onDataLoadForGeojson, onDataLoadForTile]
+  );
+
+  const props = {
+    binary: true,
+    ...(viewportFeatures && {
+      onViewportLoad,
+      fetch,
+      onDataLoad
+    })
+  };
 
   const dataFilterExtensionProps = getDataFilterExtensionProps(source?.filters);
   const maskExtensionProps = getMaskExtensionProps(spatialFilter?.geometry?.coordinates);

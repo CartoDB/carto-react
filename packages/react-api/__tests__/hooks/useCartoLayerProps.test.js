@@ -10,6 +10,9 @@ describe('useCartoLayerProps', () => {
 
   describe('return props', () => {
     const COMMON_PROPS = [
+      'binary',
+      'onViewportLoad',
+      'fetch',
       'onDataLoad',
       'uniqueIdProperty',
       'data',
@@ -36,9 +39,9 @@ describe('useCartoLayerProps', () => {
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual([
-          'binary',
-          'onViewportLoad',
-          'fetch',
+          // 'binary',
+          // 'onViewportLoad',
+          // 'fetch',
           ...COMMON_PROPS
         ]);
       });
@@ -54,9 +57,9 @@ describe('useCartoLayerProps', () => {
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual([
-          'binary',
-          'onViewportLoad',
-          'fetch',
+          // 'binary',
+          // 'onViewportLoad',
+          // 'fetch',
           ...COMMON_PROPS
         ]);
       });
@@ -72,9 +75,9 @@ describe('useCartoLayerProps', () => {
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual([
-          'binary',
-          'onViewportLoad',
-          'fetch',
+          // 'binary',
+          // 'onViewportLoad',
+          // 'fetch',
           ...COMMON_PROPS
         ]);
       });
@@ -92,9 +95,9 @@ describe('useCartoLayerProps', () => {
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
         expect(Object.keys(result.current)).toEqual([
-          'binary',
-          'onViewportLoad',
-          'fetch',
+          // 'binary',
+          // 'onViewportLoad',
+          // 'fetch',
           ...COMMON_PROPS
         ]);
       });
