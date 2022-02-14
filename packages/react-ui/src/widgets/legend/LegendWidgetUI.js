@@ -49,7 +49,8 @@ function LegendWidgetUI({
   layers = [],
   collapsed,
   onCollapsedChange,
-  onChangeVisibility
+  onChangeVisibility,
+  onChangeOpacity
 }) {
   const classes = useStyles();
   const isSingle = layers.length === 1;
@@ -61,7 +62,11 @@ function LegendWidgetUI({
         collapsed={collapsed}
         onCollapsedChange={onCollapsedChange}
       >
-        <LegendRows layers={layers} onChangeVisibility={onChangeVisibility} />
+        <LegendRows
+          layers={layers}
+          onChangeVisibility={onChangeVisibility}
+          onChangeOpacity={onChangeOpacity}
+        />
       </LegendContainer>
     </Box>
   );
@@ -77,7 +82,8 @@ LegendWidgetUI.propTypes = {
   layers: PropTypes.array,
   collapsed: PropTypes.bool,
   onCollapsedChange: PropTypes.func,
-  onChangeVisibility: PropTypes.func
+  onChangeVisibility: PropTypes.func,
+  onChangeOpacity: PropTypes.func
 };
 
 export default LegendWidgetUI;
@@ -157,43 +163,63 @@ export const LEGEND_TYPES = {
 const LEGEND_COMPONENT_BY_TYPE = {
   [LEGEND_TYPES.CATEGORY]: LegendCategories,
   [LEGEND_TYPES.ICON]: LegendIcon,
-  [LEGEND_TYPES.CONTINUOUS_RAMP]: (args) => LegendRamp({ ...args, isContinuous: true }),
-  [LEGEND_TYPES.BINS]: (args) => LegendRamp({ ...args, isContinuous: false }),
+  [LEGEND_TYPES.CONTINUOUS_RAMP]: (args) => <LegendRamp {...args} isContinuous={true} />,
+  [LEGEND_TYPES.BINS]: (args) => <LegendRamp {...args} isContinuous={false} />,
   [LEGEND_TYPES.PROPORTION]: LegendProportion
 };
 
-function LegendRows({ layers = [], onChangeVisibility }) {
+function LegendRows({ layers = [], onChangeVisibility, onChangeOpacity }) {
   const isSingle = layers.length === 1;
 
-  return layers.map(({ id, title, switchable, visible, legend = {} }, index) => {
-    const {
-      children = null,
-      type = '',
-      collapsible = true,
-      note = '',
-      attr = ''
-    } = legend;
+  return (
+    <>
+      {layers.map(
+        (
+          {
+            id,
+            title,
+            switchable,
+            visible,
+            showOpacityControl = false,
+            opacity = 1,
+            legend = {}
+          },
+          index
+        ) => {
+          const {
+            children = null,
+            type = '',
+            collapsible = true,
+            note = '',
+            attr = ''
+          } = legend;
 
-    const isLast = layers.length - 1 === index;
-    // TODO: Add validation for layer.type
-    const hasChildren = LEGEND_COMPONENT_BY_TYPE[type] || children;
-    const LegendComponent = LEGEND_COMPONENT_BY_TYPE[type] || (() => children);
-    return (
-      <Fragment key={id}>
-        <LegendWrapper
-          id={id}
-          title={title}
-          collapsible={!!(collapsible && hasChildren)}
-          switchable={switchable}
-          visible={visible}
-          note={note}
-          attr={attr}
-          onChangeVisibility={onChangeVisibility}
-        >
-          <LegendComponent legend={legend} />
-        </LegendWrapper>
-        {!isSingle && !isLast && <Divider />}
-      </Fragment>
-    );
-  });
+          const isLast = layers.length - 1 === index;
+          // TODO: Add validation for layer.type
+          const hasChildren = LEGEND_COMPONENT_BY_TYPE[type] || children;
+          const LegendComponent = LEGEND_COMPONENT_BY_TYPE[type] || (() => children);
+          return (
+            <Fragment key={id}>
+              <LegendWrapper
+                id={id}
+                title={title}
+                collapsible={!!(collapsible && hasChildren)}
+                switchable={switchable}
+                visible={visible}
+                note={note}
+                attr={attr}
+                showOpacityControl={showOpacityControl}
+                opacity={opacity}
+                onChangeOpacity={onChangeOpacity}
+                onChangeVisibility={onChangeVisibility}
+              >
+                <LegendComponent legend={legend} />
+              </LegendWrapper>
+              {!isSingle && !isLast && <Divider />}
+            </Fragment>
+          );
+        }
+      )}
+    </>
+  );
 }
