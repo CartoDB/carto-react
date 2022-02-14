@@ -139,3 +139,12 @@ export type FeatureSelectionWidgetUI = {
   tooltipPlacement?: string;
   className?: string;
 };
+
+// Legends
+export type LegendCategories = {
+  legend: {
+    labels?: string[];
+    colors?: string | string[];
+    isStrokeColor?: boolean;
+  };
+};

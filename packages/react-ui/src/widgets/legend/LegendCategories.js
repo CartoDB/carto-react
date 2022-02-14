@@ -1,12 +1,9 @@
 import React from 'react';
 import { Box, Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
 import { getPalette } from '../../utils/palette';
+import PropTypes from 'prop-types';
 
-export default function LegendCategories({ legend }) {
-  if (!legend) {
-    return null;
-  }
-
+function LegendCategories({ legend }) {
   const { labels = [], colors = [], isStrokeColor = false } = legend;
 
   const palette = getPalette(colors, labels.length);
@@ -28,6 +25,25 @@ export default function LegendCategories({ legend }) {
   );
 }
 
+LegendCategories.defaultProps = {
+  legend: {
+    labels: [],
+    colors: [],
+    isStrokeColor: false
+  }
+};
+
+LegendCategories.propTypes = {
+  legend: PropTypes.shape({
+    labels: PropTypes.arrayOf(PropTypes.string),
+    colors: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
+    isStrokeColor: PropTypes.bool
+  }).isRequired
+};
+
+export default LegendCategories;
+
+// Aux
 const useStyles = makeStyles((theme) => ({
   legendCategories: {
     alignItems: 'center',
