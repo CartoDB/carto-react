@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix duplicated logic for category selection in PieWidgetUI [#332] (https://github.com/CartoDB/carto-react/pull/332)
+
 ## 1.2
 
 ### 1.2.1-beta.5 (2022-02-15)
