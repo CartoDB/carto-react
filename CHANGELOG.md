@@ -3,6 +3,7 @@
 ## Not released
 
 - Fix Switch input width [#323](https://github.com/CartoDB/carto-react/pull/323)
+- Add optional slider to modify layer opacity in Legend widget [#324](https://github.com/CartoDB/carto-react/pull/324)
 
 ## 1.2
 
