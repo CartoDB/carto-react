@@ -35,7 +35,7 @@ LegendCategories.defaultProps = {
 
 LegendCategories.propTypes = {
   legend: PropTypes.shape({
-    labels: PropTypes.arrayOf(PropTypes.string),
+    labels: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
     colors: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
     isStrokeColor: PropTypes.bool
   }).isRequired

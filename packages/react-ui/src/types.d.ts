@@ -139,7 +139,7 @@ export type FeatureSelectionWidgetUI = {
 // Legends
 export type LegendCategories = {
   legend: {
-    labels?: string[];
+    labels?: (string | number)[];
     colors?: string | string[];
     isStrokeColor?: boolean;
   };
