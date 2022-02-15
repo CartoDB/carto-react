@@ -25,6 +25,12 @@ const filters = {
       owner: 'widgetId4',
       values: ['Álcàlâ dë Guadaíra']
     }
+  },
+  column5: {
+    stringSearch: {
+      owner: 'widgetId5',
+      values: [12345]
+    }
   }
 };
 
@@ -108,7 +114,8 @@ describe('Filters', () => {
           column1: 'a',
           column2: 1.5,
           column3: 1,
-          column4: 'Alcalá de Guadaíra'
+          column4: 'Alcalá de Guadaíra',
+          column5: 123456
         }
       };
       const featureIsIncluded = buildFeatureFilter(params)(feature);
@@ -121,7 +128,8 @@ describe('Filters', () => {
           column1: 'a',
           column2: 3,
           column3: '1999',
-          column4: 'test'
+          column4: 'test',
+          column5: 0
         }
       };
       const featureIsIncluded = buildFeatureFilter(params)(feature);
@@ -222,7 +230,8 @@ describe('Filters', () => {
           column1: 'a',
           column2: 1.5,
           column3: '1970',
-          column4: 'Alcalá de Guadaíra'
+          column4: 'Alcalá de Guadaíra',
+          column5: 123456
         }
       };
       const featureIsIncluded = buildFeatureFilter(params)(feature);
@@ -235,7 +244,8 @@ describe('Filters', () => {
           column1: 'a',
           column2: 3,
           column3: -1,
-          column4: 'test'
+          column4: 'test',
+          column5: 0
         }
       };
       const featureIsIncluded = buildFeatureFilter(params)(feature);

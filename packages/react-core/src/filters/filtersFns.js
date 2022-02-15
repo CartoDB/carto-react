@@ -31,12 +31,12 @@ export function stringSearch(filterValues, featureValue) {
 }
 
 // Aux
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function normalize(data) {
-  return data
+  return ('' + data)
     .toLocaleLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
