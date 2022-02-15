@@ -4,7 +4,6 @@ import ReactEcharts from 'echarts-for-react';
 import { useTheme } from '@material-ui/core';
 import {
   getChartSerie,
-  applyChartFilter,
   areChartPropsEqual,
   disableSerie,
   setColor
@@ -81,15 +80,15 @@ function __generateSerie({ name, data, theme, animation, selectedCategories, lab
       name,
       animation,
       data: data.map((item) => {
-        // Avoid modify data item
-        const clonedItem = { ...item };
+        // Avoid modifying data item
+        const clonedItem = {
+          ...item,
+          name: labels?.[item.name] || item.name,
+          key: item.name
+        };
 
         const disabled =
           selectedCategories?.length && !selectedCategories.includes(clonedItem.name);
-
-        if (labels?.[clonedItem.name]) {
-          clonedItem.name = labels[clonedItem.name];
-        }
 
         if (disabled) {
           disableSerie(clonedItem, theme);
@@ -246,7 +245,16 @@ function PieWidgetUI({
   const clickEvent = useCallback(
     (params) => {
       if (onSelectedCategoriesChange) {
-        const newSelectedCategories = [...selectedCategories];
+        const echart = chartInstance.current.getEchartsInstance();
+        const { serie } = getChartSerie(echart, params.seriesIndex);
+        let newSelectedCategories = serie.data
+          .filter((category) => !category.disabled)
+          .map((category) => category.key);
+
+        if (newSelectedCategories.length === serie.data.length) {
+          newSelectedCategories = [];
+        }
+
         const { name } = data[params.dataIndex];
 
         const selectedCategoryIdx = newSelectedCategories.indexOf(name);
@@ -259,8 +267,27 @@ function PieWidgetUI({
         onSelectedCategoriesChange(newSelectedCategories);
       }
     },
-    [data, onSelectedCategoriesChange, selectedCategories]
+    [data, onSelectedCategoriesChange]
   );
+
+  // const clickEvent = useCallback(
+  //   (params) => {
+  //     if (onSelectedCategoriesChange) {
+  //       const newSelectedCategories = [...selectedCategories];
+  //       const { name } = data[params.dataIndex];
+
+  //       const selectedCategoryIdx = newSelectedCategories.indexOf(name);
+  //       if (selectedCategoryIdx === -1) {
+  //         newSelectedCategories.push(name);
+  //       } else {
+  //         newSelectedCategories.splice(selectedCategoryIdx, 1);
+  //       }
+
+  //       onSelectedCategoriesChange(newSelectedCategories);
+  //     }
+  //   },
+  //   [data, onSelectedCategoriesChange, selectedCategories]
+  // );
 
   const mouseoverEvent = useCallback((params) => {
     setElementHover(params.data);
