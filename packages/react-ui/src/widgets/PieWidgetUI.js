@@ -270,25 +270,6 @@ function PieWidgetUI({
     [data, onSelectedCategoriesChange]
   );
 
-  // const clickEvent = useCallback(
-  //   (params) => {
-  //     if (onSelectedCategoriesChange) {
-  //       const newSelectedCategories = [...selectedCategories];
-  //       const { name } = data[params.dataIndex];
-
-  //       const selectedCategoryIdx = newSelectedCategories.indexOf(name);
-  //       if (selectedCategoryIdx === -1) {
-  //         newSelectedCategories.push(name);
-  //       } else {
-  //         newSelectedCategories.splice(selectedCategoryIdx, 1);
-  //       }
-
-  //       onSelectedCategoriesChange(newSelectedCategories);
-  //     }
-  //   },
-  //   [data, onSelectedCategoriesChange, selectedCategories]
-  // );
-
   const mouseoverEvent = useCallback((params) => {
     setElementHover(params.data);
     updateLabel(params);
