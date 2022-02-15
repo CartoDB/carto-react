@@ -14,9 +14,7 @@ describe('LegendRamp', () => {
   test('renders error if neither labels is defined', () => {
     render(<LegendRamp legend={{}} />);
     expect(
-      screen.queryByText(
-        'You need to specify valid numbers for the labels property'
-      )
+      screen.queryByText('You need to specify valid numbers for the labels property')
     ).toBeInTheDocument();
   });
   describe('discontinuous', () => {
@@ -40,7 +38,9 @@ describe('LegendRamp', () => {
 
       const ramp = document.querySelector('[class*="step"]');
       const palette = getPalette(COLOR, 2);
-      expect(ramp).toHaveStyle(`background-image: linear-gradient(to right, ${palette.join()})`);
+      expect(ramp).toHaveStyle(
+        `background-image: linear-gradient(to right, ${palette.join()})`
+      );
     });
   });
 });

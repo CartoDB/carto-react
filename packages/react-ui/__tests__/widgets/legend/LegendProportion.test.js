@@ -17,9 +17,7 @@ describe('LegendProportion', () => {
   test('renders error if neither labels is defined', () => {
     render(<LegendProportion legend={{}} />);
     expect(
-      screen.queryByText(
-        'You need to specify valid numbers for the labels property'
-      )
+      screen.queryByText('You need to specify valid numbers for the labels property')
     ).toBeInTheDocument();
   });
 });

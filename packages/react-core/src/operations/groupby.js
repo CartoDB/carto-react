@@ -1,3 +1,4 @@
+import { AggregationTypes } from './aggregation/AggregationTypes';
 import { aggregationFunctions } from './aggregation/values';
 
 export function groupValuesByColumn(data, valuesColumn, keysColumn, operation) {
@@ -10,7 +11,9 @@ export function groupValuesByColumn(data, valuesColumn, keysColumn, operation) {
 
     accumulator[group] = accumulator[group] || [];
 
-    const isValid = item[valuesColumn] !== null && item[valuesColumn] !== undefined;
+    const isValid =
+      (operation === AggregationTypes.COUNT ? true : item[valuesColumn] !== null) &&
+      item[valuesColumn] !== undefined;
 
     if (isValid) {
       accumulator[group].push(item[valuesColumn]);
