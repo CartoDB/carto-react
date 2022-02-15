@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Fix duplicated logic for category selection in PieWidgetUI [#332] (https://github.com/CartoDB/carto-react/pull/332)
+- Fix duplicated logic for category selection in PieWidgetUI [#332](https://github.com/CartoDB/carto-react/pull/332)
 
 ## 1.2
 
