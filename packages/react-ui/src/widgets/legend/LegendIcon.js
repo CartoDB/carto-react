@@ -10,7 +10,7 @@ function LegendIcon({ legend }) {
   const Icons = labels.map((label, idx) => (
     <Grid key={label} container item alignItems='center'>
       <Box mr={1.5} width={ICON_SIZE} height={ICON_SIZE}>
-        <img src={icons[idx]} alt={icons[idx]} width={ICON_SIZE} height={ICON_SIZE} />
+        <img src={icons[idx]} alt={label} width={ICON_SIZE} height={ICON_SIZE} />
       </Box>
       <Typography variant='overline'>{label}</Typography>
     </Grid>
