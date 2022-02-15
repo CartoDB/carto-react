@@ -30,11 +30,21 @@ function LegendWidget({ className, initialCollapsed }) {
     );
   };
 
+  const handleChangeOpacity = ({ id, opacity }) => {
+    dispatch(
+      updateLayer({
+        id,
+        layerAttributes: { opacity }
+      })
+    );
+  };
+
   return (
     <LegendWidgetUI
       className={className}
       layers={layers}
       onChangeVisibility={handleChangeVisibility}
+      onChangeOpacity={handleChangeOpacity}
       collapsed={collapsed}
       onCollapsedChange={setCollapsed}
     />

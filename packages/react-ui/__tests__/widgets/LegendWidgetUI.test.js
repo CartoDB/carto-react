@@ -1,8 +1,8 @@
 import React from 'react';
 import { getMaterialUIContext } from './testUtils';
 import LegendWidgetUI from '../../src/widgets/legend/LegendWidgetUI';
-import { render, screen } from '@testing-library/react';
-import { Typography } from '@material-ui/core';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { TextField, Typography } from '@material-ui/core';
 
 const CUSTOM_CHILDREN = <Typography>Legend custom</Typography>;
 
@@ -69,6 +69,16 @@ describe('LegendWidgetUI', () => {
       legend: {
         children: CUSTOM_CHILDREN
       }
+    },
+    {
+      id: 'custom',
+      title: 'Single Layer',
+      visible: true,
+      showOpacityControl: true,
+      opacity: 0.6,
+      legend: {
+        children: CUSTOM_CHILDREN
+      }
     }
   ];
   const Widget = (props) => getMaterialUIContext(<LegendWidgetUI {...props} />);
@@ -114,9 +124,28 @@ describe('LegendWidgetUI', () => {
     render(<Widget layers={[DATA[4]]}></Widget>);
     expect(screen.getByTestId('proportion-legend')).toBeInTheDocument();
   });
-
+  
   test('Custom legend', () => {
     render(<Widget layers={[DATA[5]]}></Widget>);
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
+  });
+  
+  test('legend with opacity control', () => {
+    const legendConfig = DATA[6];
+    const onChangeOpacity = jest.fn();
+    const container = render(<Widget layers={[legendConfig]} onChangeOpacity={onChangeOpacity}></Widget>);
+    const layerOptionsBtn = screen.getByTitle('Layer options')
+    expect(layerOptionsBtn).toBeInTheDocument();
+    layerOptionsBtn.click()
+    expect(screen.getByText('Opacity')).toBeInTheDocument();
+
+    const opacitySelectorInput = container.getByTestId('opacity-slider')
+    expect(opacitySelectorInput.value).toBe('' + (legendConfig.opacity * 100));
+    
+    fireEvent.change(opacitySelectorInput, { target: { value: '50' } })
+  
+
+    expect(onChangeOpacity).toHaveBeenCalledTimes(1)
+    expect(onChangeOpacity).toHaveBeenCalledWith({ id: legendConfig.id, opacity: 0.5 })
   });
 });
