@@ -41,7 +41,6 @@ const Template = ({ ...args }) => {
   );
 };
 
-
 const LegendTemplate = () => {
   const layers = [
     {
@@ -76,7 +75,7 @@ const LegendWithOpacityTemplate = () => {
       showOpacityControl: true,
       opacity: 0.5,
       legend: {
-        children: <div>Your Content</div>,
+        children: <div>Your Content</div>
       }
     }
   ];

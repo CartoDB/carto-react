@@ -2,6 +2,11 @@
 
 ## Not released
 
+- Fix duplicated logic for category selection in PieWidgetUI [#332] (https://github.com/CartoDB/carto-react/pull/332)
+- Fix aggr operation considering null as valid for count [#326](https://github.com/CartoDB/carto-react/pull/326)
+- Add legends tests/stories/types [#328](https://github.com/CartoDB/carto-react/pull/328)
+- Fix error in getPalette, causing wrong colors when using CARTOColors [#328](https://github.com/CartoDB/carto-react/pull/328)
+- Fix errors in LegendRamp with wrong labels [#328](https://github.com/CartoDB/carto-react/pull/328)
 - Dynamic tiling integration [#327](https://github.com/CartoDB/carto-react/pull/327)
 - Add customLegendTypes prop to customise covered legend types [#325](https://github.com/CartoDB/carto-react/pull/325)
 - Fix Switch input width [#323](https://github.com/CartoDB/carto-react/pull/323)
