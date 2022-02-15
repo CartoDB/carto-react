@@ -2,7 +2,12 @@
 
 ## Not released
 
-- Fix duplicated logic for category selection in PieWidgetUI [#332] (https://github.com/CartoDB/carto-react/pull/332)
+- Fix duplicated logic for category selection in PieWidgetUI [#332](https://github.com/CartoDB/carto-react/pull/332)
+
+## 1.2
+
+### 1.2.1-beta.5 (2022-02-15)
+
 - Fix aggr operation considering null as valid for count [#326](https://github.com/CartoDB/carto-react/pull/326)
 - Add legends tests/stories/types [#328](https://github.com/CartoDB/carto-react/pull/328)
 - Fix error in getPalette, causing wrong colors when using CARTOColors [#328](https://github.com/CartoDB/carto-react/pull/328)
@@ -10,8 +15,6 @@
 - Dynamic tiling integration [#327](https://github.com/CartoDB/carto-react/pull/327)
 - Fix Switch input width [#323](https://github.com/CartoDB/carto-react/pull/323)
 - Add optional slider to modify layer opacity in Legend widget [#324](https://github.com/CartoDB/carto-react/pull/324)
-
-## 1.2
 
 ### 1.2.1-beta.4 (2022-02-10)
 
