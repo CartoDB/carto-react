@@ -145,6 +145,12 @@ describe('LegendWidgetUI', () => {
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
   });
 
+  test('renders an error message if legend is unknown', () => {
+    const UNKNOWN_KEY = 'unknown';
+    render(<Widget layers={[{ id: UNKNOWN_KEY, legend: { type: UNKNOWN_KEY } }]}></Widget>);
+    expect(screen.getByText(`${UNKNOWN_KEY} is not a known legend type.`)).toBeInTheDocument();
+  });
+
   test('with custom legend types', () => {
     const MyCustomLegendComponent = jest.fn();
     MyCustomLegendComponent.mockReturnValue(<p>Test</p>);

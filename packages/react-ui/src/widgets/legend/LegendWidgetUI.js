@@ -233,11 +233,10 @@ function LegendRows({
   );
 }
 
-function UnknownLegend({ type }) {
+function UnknownLegend({ legend }) {
   return (
-    <Typography>
-      {type} is not a known legend type. You can customise legend types using
-      `customLegendTypes` prop.
+    <Typography variant='body2'>
+      {legend.type} is not a known legend type.
     </Typography>
   );
 }
