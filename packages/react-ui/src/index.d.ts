@@ -40,9 +40,8 @@ export {
   LegendWidgetUI,
   LEGEND_TYPES,
   NoDataAlert,
-  // undocumented components
-  LegendCategories as _LegendCategories,
-  LegendIcon as _LegendIcon,
-  LegendProportion as _LegendProportion,
-  LegendRamp as _LegendRamp
+  LegendCategories,
+  LegendIcon,
+  LegendProportion,
+  LegendRamp
 };

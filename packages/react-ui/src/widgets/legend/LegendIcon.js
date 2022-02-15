@@ -1,25 +1,16 @@
 import React from 'react';
-import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Box, Grid, Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
-const useStyles = makeStyles((theme) => ({
-  legendIcon: {
-    alignItems: 'center'
-  }
-}));
+const ICON_SIZE = 16;
 
-export default function LegendIcon({ legend }) {
-  const classes = useStyles();
-
-  if (!legend) {
-    return null;
-  }
-
+function LegendIcon({ legend }) {
   const { labels = [], icons = [] } = legend;
 
   const Icons = labels.map((label, idx) => (
-    <Grid key={label} container item className={classes.legendIcon}>
-      <Box mr={1.5} width={16} height={16}>
-        <img src={icons[idx]} alt={icons[idx]} />
+    <Grid key={label} container item alignItems='center'>
+      <Box mr={1.5} width={ICON_SIZE} height={ICON_SIZE}>
+        <img src={icons[idx]} alt={label} width={ICON_SIZE} height={ICON_SIZE} />
       </Box>
       <Typography variant='overline'>{label}</Typography>
     </Grid>
@@ -31,3 +22,19 @@ export default function LegendIcon({ legend }) {
     </Grid>
   );
 }
+
+LegendIcon.defaultProps = {
+  legend: {
+    labels: [],
+    icons: []
+  }
+};
+
+LegendIcon.propTypes = {
+  legend: PropTypes.shape({
+    labels: PropTypes.arrayOf(PropTypes.string),
+    icons: PropTypes.arrayOf(PropTypes.string)
+  }).isRequired
+};
+
+export default LegendIcon;
