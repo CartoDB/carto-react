@@ -64,10 +64,15 @@ LegendRamp.defaultProps = {
   isContinuous: false
 };
 
+const ColorType = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.arrayOf(PropTypes.number)
+]);
+
 LegendRamp.propTypes = {
   legend: PropTypes.shape({
     ...LegendProportion.propTypes.legend,
-    colors: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string])
+    colors: PropTypes.oneOfType([PropTypes.arrayOf(ColorType), PropTypes.string])
   }).isRequired,
   isContinuous: PropTypes.bool
 };

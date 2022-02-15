@@ -33,10 +33,15 @@ LegendCategories.defaultProps = {
   }
 };
 
+const ColorType = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.arrayOf(PropTypes.number)
+]);
+
 LegendCategories.propTypes = {
   legend: PropTypes.shape({
     labels: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-    colors: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
+    colors: PropTypes.oneOfType([PropTypes.arrayOf(ColorType), PropTypes.string]),
     isStrokeColor: PropTypes.bool
   }).isRequired
 };
