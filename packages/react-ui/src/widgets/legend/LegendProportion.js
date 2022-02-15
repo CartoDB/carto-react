@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   circles: {
@@ -22,43 +23,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function calculateRange({ labels, stats }) {
-  let max;
-  let min;
-  let error = false;
-
-  if (stats) {
-    min = stats.min;
-    max = stats.max;
-  } else {
-    min = labels[0];
-    max = labels[labels.length - 1];
-  }
-
-  if (typeof min !== 'number') {
-    min = parseInt(min, 10);
-  }
-
-  if (typeof max !== 'number') {
-    max = parseInt(max, 10);
-  }
-
-  if (Number.isNaN(min) || Number.isNaN(max)) {
-    error = true;
-  }
-
-  return { min, max, error };
-}
-
-function calculateSteps(min, max) {
-  const gap = (max + min) / 4;
-  const step1 = min + gap;
-  const step2 = max - gap;
-
-  return [step1, step2];
-}
-
-export default function LegendProportion({ legend }) {
+function LegendProportion({ legend }) {
   const classes = useStyles();
 
   const { min, max, error } = calculateRange(legend);
@@ -105,6 +70,55 @@ export default function LegendProportion({ legend }) {
       </Grid>
     </Grid>
   );
+}
+
+LegendProportion.defaultProps = {
+  legend: {
+    labels: []
+  }
+};
+
+LegendProportion.propTypes = {
+  legend: PropTypes.shape({
+    labels: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]))
+  }).isRequired
+};
+
+export default LegendProportion;
+
+// Aux
+export function getMinMax({ labels }) {
+  let max = labels?.[labels.length - 1];
+  let min = labels?.[0];
+
+  if (!Number.isFinite(min)) {
+    min = parseInt(min, 10);
+  }
+
+  if (!Number.isFinite(max)) {
+    max = parseInt(max, 10);
+  }
+
+  return [min, max];
+}
+
+function calculateRange(legend) {
+  let error = false;
+  const [min, max] = getMinMax(legend);
+
+  if (Number.isNaN(min) || Number.isNaN(max)) {
+    error = true;
+  }
+
+  return { min, max, error };
+}
+
+function calculateSteps(min, max) {
+  const gap = (max + min) / 4;
+  const step1 = min + gap;
+  const step2 = max - gap;
+
+  return [step1, step2];
 }
 
 const useStylesCircle = makeStyles((theme) => ({
