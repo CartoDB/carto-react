@@ -13,14 +13,14 @@ const useStyles = makeStyles(() => ({
 function LegendRamp({ isContinuous = false, legend }) {
   const classes = useStyles();
 
-  const { labels = [], colors = [], stats = {} } = legend;
+  const { labels = [], colors = [] } = legend;
 
   const palette = getPalette(
     colors,
     !labels.length || isContinuous ? 2 : labels.length + 1
   );
 
-  let [min, max] = getMinMax({ labels, stats });
+  let [min, max] = getMinMax({ labels });
 
   const error = Number.isNaN(min) || Number.isNaN(max);
 
@@ -36,7 +36,7 @@ function LegendRamp({ isContinuous = false, legend }) {
       {error ? (
         <Grid item className={classes.errorContainer}>
           <Typography variant='overline'>
-            You need to specify valid numbers for the labels/stats property
+            You need to specify valid numbers for the labels property
           </Typography>
         </Grid>
       ) : (
@@ -64,8 +64,7 @@ function LegendRamp({ isContinuous = false, legend }) {
 LegendRamp.defaultProps = {
   legend: {
     labels: [],
-    colors: [],
-    stats: {}
+    colors: []
   },
   isContinuous: false
 };

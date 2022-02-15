@@ -3,10 +3,7 @@ import LegendProportion from '../../../../src/widgets/legend/LegendProportion';
 
 const DEFAULT_LEGEND = {
   legend: {
-    stats: {
-      min: 0,
-      max: 200
-    }
+    labels: [0, 200]
   }
 };
 
@@ -34,7 +31,3 @@ const Template = (args) => {
 export const Default = Template.bind({});
 const DefaultProps = { ...DEFAULT_LEGEND };
 Default.args = DefaultProps;
-
-export const UseLabelsAsMinMax = Template.bind({});
-const UseLabelsAsMinMaxProps = { legend: { labels: [0, 200] } };
-UseLabelsAsMinMax.args = UseLabelsAsMinMaxProps;

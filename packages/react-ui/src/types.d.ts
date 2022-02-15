@@ -73,10 +73,6 @@ export type LegendWidgetUIData = {
   colors?: string[];
   labels?: (string | number)[];
   icons?: string[];
-  stats?: {
-    min: number | string;
-    max: number | string;
-  };
 };
 
 export type LegendWidgetUI = {
@@ -159,10 +155,6 @@ export type LegendIcon = {
 export type LegendProportion = {
   legend: {
     labels?: (number | string)[];
-    stats?: {
-      min: number | string;
-      max: number | string;
-    };
   };
 };
 
@@ -170,10 +162,6 @@ export type LegendRamp = {
   isContinuous?: boolean;
   legend: {
     labels?: (number | string)[];
-    stats?: {
-      min: number | string;
-      max: number | string;
-    };
     icons?: string[];
   };
 };

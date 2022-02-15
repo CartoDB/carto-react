@@ -48,7 +48,7 @@ function LegendProportion({ legend }) {
         {error ? (
           <Grid item className={classes.errorContainer}>
             <Typography variant='overline'>
-              You need to specify valid numbers for the labels/stats property
+              You need to specify valid numbers for the labels property
             </Typography>
           </Grid>
         ) : (
@@ -73,26 +73,23 @@ function LegendProportion({ legend }) {
 }
 
 LegendProportion.defaultProps = {
-  legend: {}
+  legend: {
+    labels: []
+  }
 };
 
-const TypeNumberOrString = PropTypes.oneOfType([PropTypes.number, PropTypes.string]);
 LegendProportion.propTypes = {
   legend: PropTypes.shape({
-    labels: PropTypes.arrayOf(TypeNumberOrString),
-    stats: PropTypes.shape({
-      min: TypeNumberOrString,
-      max: TypeNumberOrString
-    })
+    labels: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]))
   }).isRequired
 };
 
 export default LegendProportion;
 
 // Aux
-export function getMinMax({ labels, stats }) {
-  let max = stats?.max ?? labels?.[labels.length - 1];
-  let min = stats?.min ?? labels?.[0];
+export function getMinMax({ labels }) {
+  let max = labels?.[labels.length - 1];
+  let min = labels?.[0];
 
   if (!Number.isFinite(min)) {
     min = parseInt(min, 10);
