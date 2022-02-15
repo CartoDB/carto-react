@@ -1,10 +1,12 @@
 import React from 'react';
 import { getMaterialUIContext } from './testUtils';
 import LegendWidgetUI, { LEGEND_TYPES } from '../../src/widgets/legend/LegendWidgetUI';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Typography } from '@material-ui/core';
 
 const CUSTOM_CHILDREN = <Typography>Legend custom</Typography>;
+
+const MY_CUSTOM_LEGEND_KEY = 'my-custom-legend';
 
 describe('LegendWidgetUI', () => {
   const DATA = [
@@ -69,6 +71,29 @@ describe('LegendWidgetUI', () => {
       legend: {
         children: CUSTOM_CHILDREN
       }
+    },
+    {
+      id: 'custom',
+      title: 'Single Layer',
+      visible: true,
+      showOpacityControl: true,
+      opacity: 0.6,
+      legend: {
+        type: MY_CUSTOM_LEGEND_KEY,
+        note: 'lorem',
+        colors: ['#000', '#00F', '#0F0'],
+        labels: ['Category 1', 'Category 2', 'Category 3']
+      }
+    },
+    {
+      id: 'custom',
+      title: 'Single Layer',
+      visible: true,
+      showOpacityControl: true,
+      opacity: 0.6,
+      legend: {
+        children: CUSTOM_CHILDREN
+      }
     }
   ];
   const Widget = (props) => getMaterialUIContext(<LegendWidgetUI {...props} />);
@@ -121,16 +146,36 @@ describe('LegendWidgetUI', () => {
   });
 
   test('with custom legend types', () => {
-    const CustomCategoryComponent = jest.fn();
-    CustomCategoryComponent.mockReturnValue(<p>Test</p>);
+    const MyCustomLegendComponent = jest.fn();
+    MyCustomLegendComponent.mockReturnValue(<p>Test</p>);
     render(
       <Widget
-        layers={[DATA[0]]}
-        legendTypes={{ [LEGEND_TYPES.CATEGORY]: CustomCategoryComponent }}
+        layers={[DATA[6]]}
+        customLegendTypes={{ [MY_CUSTOM_LEGEND_KEY]: MyCustomLegendComponent }}
       ></Widget>
     );
-    expect(CustomCategoryComponent).toHaveBeenCalled();
-    expect(CustomCategoryComponent).toHaveBeenCalledWith({ legend: DATA[0].legend }, {});
+    expect(MyCustomLegendComponent).toHaveBeenCalled();
+    expect(MyCustomLegendComponent).toHaveBeenCalledWith({ legend: DATA[6].legend }, {});
     expect(screen.getByText('Test')).toBeInTheDocument();
+  });
+
+  test('legend with opacity control', () => {
+    const legendConfig = DATA[7];
+    const onChangeOpacity = jest.fn();
+    const container = render(
+      <Widget layers={[legendConfig]} onChangeOpacity={onChangeOpacity}></Widget>
+    );
+    const layerOptionsBtn = screen.getByTitle('Layer options');
+    expect(layerOptionsBtn).toBeInTheDocument();
+    layerOptionsBtn.click();
+    expect(screen.getByText('Opacity')).toBeInTheDocument();
+
+    const opacitySelectorInput = container.getByTestId('opacity-slider');
+    expect(opacitySelectorInput.value).toBe('' + legendConfig.opacity * 100);
+
+    fireEvent.change(opacitySelectorInput, { target: { value: '50' } });
+
+    expect(onChangeOpacity).toHaveBeenCalledTimes(1);
+    expect(onChangeOpacity).toHaveBeenCalledWith({ id: legendConfig.id, opacity: 0.5 });
   });
 });

@@ -35,23 +35,6 @@ const LayersIcon = () => (
   </SvgIcon>
 );
 
-export const LEGEND_TYPES = Object.freeze({
-  CATEGORY: 'category',
-  ICON: 'icon',
-  CONTINUOUS_RAMP: 'continuous_ramp',
-  BINS: 'bins',
-  PROPORTION: 'proportion',
-  CUSTOM: 'custom'
-});
-
-const LEGEND_COMPONENT_BY_TYPE = {
-  [LEGEND_TYPES.CATEGORY]: LegendCategories,
-  [LEGEND_TYPES.ICON]: LegendIcon,
-  [LEGEND_TYPES.CONTINUOUS_RAMP]: (args) => LegendRamp({ ...args, isContinuous: true }),
-  [LEGEND_TYPES.BINS]: (args) => LegendRamp({ ...args, isContinuous: false }),
-  [LEGEND_TYPES.PROPORTION]: LegendProportion
-};
-
 const useStyles = makeStyles((theme) => ({
   legend: {
     minWidth: '240px',
@@ -63,11 +46,12 @@ const useStyles = makeStyles((theme) => ({
 
 function LegendWidgetUI({
   className,
-  legendTypes,
+  customLegendTypes,
   layers = [],
   collapsed,
   onCollapsedChange,
-  onChangeVisibility
+  onChangeVisibility,
+  onChangeOpacity
 }) {
   const classes = useStyles();
   const isSingle = layers.length === 1;
@@ -79,7 +63,12 @@ function LegendWidgetUI({
         collapsed={collapsed}
         onCollapsedChange={onCollapsedChange}
       >
-        <LegendRows legendTypes={{...LEGEND_COMPONENT_BY_TYPE, ...legendTypes}} layers={layers} onChangeVisibility={onChangeVisibility} />
+        <LegendRows
+          layers={layers}
+          customLegendTypes={customLegendTypes}
+          onChangeVisibility={onChangeVisibility}
+          onChangeOpacity={onChangeOpacity}
+        />
       </LegendContainer>
     </Box>
   );
@@ -87,16 +76,18 @@ function LegendWidgetUI({
 
 LegendWidgetUI.defaultProps = {
   layers: [],
+  customLegendTypes: {},
   collapsed: false
 };
 
 LegendWidgetUI.propTypes = {
   className: PropTypes.string,
-  legendTypes: PropTypes.objectOf(PropTypes.func),
+  customLegendTypes: PropTypes.objectOf(PropTypes.func),
   layers: PropTypes.array,
   collapsed: PropTypes.bool,
   onCollapsedChange: PropTypes.func,
-  onChangeVisibility: PropTypes.func
+  onChangeVisibility: PropTypes.func,
+  onChangeOpacity: PropTypes.func
 };
 
 export default LegendWidgetUI;
@@ -164,38 +155,89 @@ function LegendContainer({ isSingle, children, collapsed, onCollapsedChange }) {
   );
 }
 
-function LegendRows({ legendTypes, layers = [], onChangeVisibility }) {
+export const LEGEND_TYPES = {
+  CATEGORY: 'category',
+  ICON: 'icon',
+  CONTINUOUS_RAMP: 'continuous_ramp',
+  BINS: 'bins',
+  PROPORTION: 'proportion',
+  CUSTOM: 'custom'
+};
+
+const LEGEND_COMPONENT_BY_TYPE = {
+  [LEGEND_TYPES.CATEGORY]: LegendCategories,
+  [LEGEND_TYPES.ICON]: LegendIcon,
+  [LEGEND_TYPES.CONTINUOUS_RAMP]: (args) => <LegendRamp {...args} isContinuous={true} />,
+  [LEGEND_TYPES.BINS]: (args) => <LegendRamp {...args} isContinuous={false} />,
+  [LEGEND_TYPES.PROPORTION]: LegendProportion,
+  [LEGEND_TYPES.CUSTOM]: ({ legend }) => legend.children
+};
+
+function LegendRows({
+  layers = [],
+  customLegendTypes,
+  onChangeVisibility,
+  onChangeOpacity
+}) {
   const isSingle = layers.length === 1;
 
-  return layers.map(({ id, title, switchable, visible, legend = {} }, index) => {
-    const {
-      children = null,
-      type = '',
-      collapsible = true,
-      note = '',
-      attr = ''
-    } = legend;
+  return (
+    <>
+      {layers.map(
+        (
+          {
+            id,
+            title,
+            switchable,
+            visible,
+            showOpacityControl = false,
+            opacity = 1,
+            legend = {}
+          },
+          index
+        ) => {
+          const {
+            type = LEGEND_TYPES.CUSTOM,
+            collapsible = true,
+            note = '',
+            attr = ''
+          } = legend;
 
-    const isLast = layers.length - 1 === index;
-    // TODO: Add validation for layer.type
-    const hasChildren = legendTypes[type] || children;
-    const LegendComponent = legendTypes[type] || (() => children);
-    return (
-      <Fragment key={id}>
-        <LegendWrapper
-          id={id}
-          title={title}
-          collapsible={!!(collapsible && hasChildren)}
-          switchable={switchable}
-          visible={visible}
-          note={note}
-          attr={attr}
-          onChangeVisibility={onChangeVisibility}
-        >
-          <LegendComponent legend={legend} />
-        </LegendWrapper>
-        {!isSingle && !isLast && <Divider />}
-      </Fragment>
-    );
-  });
+          const isLast = layers.length - 1 === index;
+          const LegendComponent =
+            LEGEND_COMPONENT_BY_TYPE[type] || customLegendTypes[type] || UnknownLegend;
+
+          return (
+            <Fragment key={id}>
+              <LegendWrapper
+                id={id}
+                title={title}
+                collapsible={!!(collapsible && !!LegendComponent)}
+                switchable={switchable}
+                visible={visible}
+                note={note}
+                attr={attr}
+                showOpacityControl={showOpacityControl}
+                opacity={opacity}
+                onChangeOpacity={onChangeOpacity}
+                onChangeVisibility={onChangeVisibility}
+              >
+                <LegendComponent legend={legend} />
+              </LegendWrapper>
+              {!isSingle && !isLast && <Divider />}
+            </Fragment>
+          );
+        }
+      )}
+    </>
+  );
+}
+
+function UnknownLegend({ type }) {
+  return (
+    <Typography>
+      {type} is not a known legend type. You can customise legend types using
+      `customLegendTypes` prop.
+    </Typography>
+  );
 }
