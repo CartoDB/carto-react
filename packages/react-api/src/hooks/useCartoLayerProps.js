@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { useSelector } from 'react-redux';
 import { selectSpatialFilter } from '@carto/react-redux';
 import useGeojsonFeatures from './useGeojsonFeatures';
