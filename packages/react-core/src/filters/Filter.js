@@ -1,23 +1,5 @@
-import { makeIntervalComplete } from '../utils/makeIntervalComplete';
 import { FilterTypes } from './FilterQueryBuilder';
-
-function between(filterValues, featureValue) {
-  const checkRange = (range) => {
-    const [lowerBound, upperBound] = range;
-    return featureValue >= lowerBound && featureValue <= upperBound;
-  };
-
-  return makeIntervalComplete(filterValues).some(checkRange);
-}
-
-function closedOpen(filterValues, featureValue) {
-  const checkRange = (range) => {
-    const [lowerBound, upperBound] = range;
-    return featureValue >= lowerBound && featureValue < upperBound;
-  };
-
-  return makeIntervalComplete(filterValues).some(checkRange);
-}
+import { between, closedOpen, stringSearch } from './filtersFns';
 
 const filterFunctions = {
   [FilterTypes.IN](filterValues, featureValue) {
@@ -32,7 +14,8 @@ const filterFunctions = {
       throw new Error(`Column used to filter by time isn't well formatted.`);
     }
   },
-  [FilterTypes.CLOSED_OPEN]: closedOpen
+  [FilterTypes.CLOSED_OPEN]: closedOpen,
+  [FilterTypes.STRING_SEARCH]: stringSearch
 };
 
 function passesFilter(columns, filters, feature) {
