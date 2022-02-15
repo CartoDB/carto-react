@@ -73,10 +73,6 @@ export type LegendWidgetUIData = {
   colors?: string[];
   labels?: (string | number)[];
   icons?: string[];
-  stats?: {
-    min: number | string;
-    max: number | string;
-  };
 };
 
 export type LegendWidgetUI = {
@@ -138,4 +134,34 @@ export type FeatureSelectionWidgetUI = {
   onSelectGeometry?: Function;
   tooltipPlacement?: string;
   className?: string;
+};
+
+// Legends
+export type LegendCategories = {
+  legend: {
+    labels?: (string | number)[];
+    colors?: string | string[];
+    isStrokeColor?: boolean;
+  };
+};
+
+export type LegendIcon = {
+  legend: {
+    labels?: string[];
+    icons?: string[];
+  };
+};
+
+export type LegendProportion = {
+  legend: {
+    labels?: (number | string)[];
+  };
+};
+
+export type LegendRamp = {
+  isContinuous?: boolean;
+  legend: {
+    labels?: (number | string)[];
+    icons?: string[];
+  };
 };

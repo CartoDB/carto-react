@@ -124,28 +124,29 @@ describe('LegendWidgetUI', () => {
     render(<Widget layers={[DATA[4]]}></Widget>);
     expect(screen.getByTestId('proportion-legend')).toBeInTheDocument();
   });
-  
+
   test('Custom legend', () => {
     render(<Widget layers={[DATA[5]]}></Widget>);
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
   });
-  
+
   test('legend with opacity control', () => {
     const legendConfig = DATA[6];
     const onChangeOpacity = jest.fn();
-    const container = render(<Widget layers={[legendConfig]} onChangeOpacity={onChangeOpacity}></Widget>);
-    const layerOptionsBtn = screen.getByTitle('Layer options')
+    const container = render(
+      <Widget layers={[legendConfig]} onChangeOpacity={onChangeOpacity}></Widget>
+    );
+    const layerOptionsBtn = screen.getByTitle('Layer options');
     expect(layerOptionsBtn).toBeInTheDocument();
-    layerOptionsBtn.click()
+    layerOptionsBtn.click();
     expect(screen.getByText('Opacity')).toBeInTheDocument();
 
-    const opacitySelectorInput = container.getByTestId('opacity-slider')
-    expect(opacitySelectorInput.value).toBe('' + (legendConfig.opacity * 100));
-    
-    fireEvent.change(opacitySelectorInput, { target: { value: '50' } })
-  
+    const opacitySelectorInput = container.getByTestId('opacity-slider');
+    expect(opacitySelectorInput.value).toBe('' + legendConfig.opacity * 100);
 
-    expect(onChangeOpacity).toHaveBeenCalledTimes(1)
-    expect(onChangeOpacity).toHaveBeenCalledWith({ id: legendConfig.id, opacity: 0.5 })
+    fireEvent.change(opacitySelectorInput, { target: { value: '50' } });
+
+    expect(onChangeOpacity).toHaveBeenCalledTimes(1);
+    expect(onChangeOpacity).toHaveBeenCalledWith({ id: legendConfig.id, opacity: 0.5 });
   });
 });
