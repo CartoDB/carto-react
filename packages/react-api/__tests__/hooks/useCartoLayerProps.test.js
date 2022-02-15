@@ -10,6 +10,9 @@ describe('useCartoLayerProps', () => {
 
   describe('return props', () => {
     const COMMON_PROPS = [
+      'binary',
+      'onViewportLoad',
+      'fetch',
       'onDataLoad',
       'uniqueIdProperty',
       'data',
@@ -35,12 +38,7 @@ describe('useCartoLayerProps', () => {
 
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
-        expect(Object.keys(result.current)).toEqual([
-          'binary',
-          'onViewportLoad',
-          'fetch',
-          ...COMMON_PROPS
-        ]);
+        expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
 
       test('should return correct props when source type is sql', () => {
@@ -53,12 +51,7 @@ describe('useCartoLayerProps', () => {
 
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
-        expect(Object.keys(result.current)).toEqual([
-          'binary',
-          'onViewportLoad',
-          'fetch',
-          ...COMMON_PROPS
-        ]);
+        expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
 
       test('should return correct props when source type is table', () => {
@@ -71,12 +64,7 @@ describe('useCartoLayerProps', () => {
 
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
-        expect(Object.keys(result.current)).toEqual([
-          'binary',
-          'onViewportLoad',
-          'fetch',
-          ...COMMON_PROPS
-        ]);
+        expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
     });
 
@@ -91,12 +79,7 @@ describe('useCartoLayerProps', () => {
 
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
-        expect(Object.keys(result.current)).toEqual([
-          'binary',
-          'onViewportLoad',
-          'fetch',
-          ...COMMON_PROPS
-        ]);
+        expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
 
       test('should return correct props when source type is sql', () => {

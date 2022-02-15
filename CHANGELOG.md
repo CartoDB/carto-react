@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Dynamic tiling integration [#327](https://github.com/CartoDB/carto-react/pull/327)
 - Add customLegendTypes prop to customise covered legend types [#325](https://github.com/CartoDB/carto-react/pull/325)
 - Fix Switch input width [#323](https://github.com/CartoDB/carto-react/pull/323)
 - Add optional slider to modify layer opacity in Legend widget [#324](https://github.com/CartoDB/carto-react/pull/324)
