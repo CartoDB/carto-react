@@ -246,25 +246,20 @@ function PieWidgetUI({
   const clickEvent = useCallback(
     (params) => {
       if (onSelectedCategoriesChange) {
-        const echart = chartInstance.current.getEchartsInstance();
-        const { option, serie } = getChartSerie(echart, params.seriesIndex);
+        const newSelectedCategories = [...selectedCategories];
+        const { name } = data[params.dataIndex];
 
-        applyChartFilter(serie, params.dataIndex, theme);
+        const selectedCategoryIdx = newSelectedCategories.indexOf(name);
+        if (selectedCategoryIdx === -1) {
+          newSelectedCategories.push(name);
+        } else {
+          newSelectedCategories.splice(selectedCategoryIdx, 1);
+        }
 
-        echart.setOption(option, true);
-
-        const activeCategories = serie.data.filter((category) => !category.disabled);
-
-        defaultLabel.current = __getDefaultLabel(activeCategories);
-
-        onSelectedCategoriesChange(
-          activeCategories.length === serie.data.length
-            ? []
-            : activeCategories.map((category) => category.name)
-        );
+        onSelectedCategoriesChange(newSelectedCategories);
       }
     },
-    [onSelectedCategoriesChange, theme]
+    [data, onSelectedCategoriesChange, selectedCategories]
   );
 
   const mouseoverEvent = useCallback((params) => {
