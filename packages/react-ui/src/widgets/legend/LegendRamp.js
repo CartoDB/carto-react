@@ -29,8 +29,6 @@ function LegendRamp({ isContinuous = false, legend }) {
     max = '≥ ' + max;
   }
 
-  // const avgPerc = (avg / (max + min)) * 100;
-
   return (
     <Grid container item direction='column' spacing={1} data-testid='ramp-legend'>
       {error ? (
@@ -48,9 +46,6 @@ function LegendRamp({ isContinuous = false, legend }) {
               <StepsDiscontinuous labels={labels} palette={palette} max={max} min={min} />
             )}
           </Grid>
-          {/* <Tooltip title={'AVG: ' + avg} placement='top' arrow>
-        <Box className={classes.avg} style={{ left: `${avgPerc}%` }} />
-      </Tooltip> */}
           <Grid container item justifyContent='space-between'>
             <Typography variant='overline'>{min}</Typography>
             <Typography variant='overline'>{max}</Typography>
