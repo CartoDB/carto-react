@@ -88,7 +88,7 @@ function __generateSerie({ name, data, theme, animation, selectedCategories, lab
         };
 
         const disabled =
-          selectedCategories?.length && !selectedCategories.includes(clonedItem.name);
+          selectedCategories?.length && !selectedCategories.includes(clonedItem.key);
 
         if (disabled) {
           disableSerie(clonedItem, theme);
