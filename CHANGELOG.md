@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fix aggr operation considering null as valid for count [#326](https://github.com/CartoDB/carto-react/pull/326)
 - Add legends tests/stories/types [#328](https://github.com/CartoDB/carto-react/pull/328)
 - Fix error in getPalette, causing wrong colors when using CARTOColors [#328](https://github.com/CartoDB/carto-react/pull/328)
 - Fix errors in LegendRamp with wrong labels [#328](https://github.com/CartoDB/carto-react/pull/328)
