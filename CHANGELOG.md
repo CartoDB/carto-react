@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fix PieWidgetUI click event [#332] (https://github.com/CartoDB/carto-react/pull/332)
 - Fix Switch input width [#323](https://github.com/CartoDB/carto-react/pull/323)
 
 ## 1.2
