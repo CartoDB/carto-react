@@ -84,12 +84,12 @@ function __generateSerie({ name, data, theme, animation, selectedCategories, lab
         // Avoid modify data item
         const clonedItem = { ...item };
 
+        const disabled =
+          selectedCategories?.length && !selectedCategories.includes(clonedItem.name);
+
         if (labels?.[clonedItem.name]) {
           clonedItem.name = labels[clonedItem.name];
         }
-
-        const disabled =
-          selectedCategories?.length && !selectedCategories.includes(clonedItem.name);
 
         if (disabled) {
           disableSerie(clonedItem, theme);
