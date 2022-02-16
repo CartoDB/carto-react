@@ -50,7 +50,8 @@ function LegendWidgetUI({
   collapsed,
   onChangeCollapsed,
   onChangeVisibility,
-  onChangeOpacity
+  onChangeOpacity,
+  onChangeLegendRowCollapsed
 }) {
   const classes = useStyles();
   const isSingle = layers.length === 1;
@@ -66,7 +67,7 @@ function LegendWidgetUI({
           layers={layers}
           onChangeVisibility={onChangeVisibility}
           onChangeOpacity={onChangeOpacity}
-          onChangeCollapsed={onChangeCollapsed}
+          onChangeCollapsed={onChangeLegendRowCollapsed}
         />
       </LegendContainer>
     </Box>
@@ -83,6 +84,7 @@ LegendWidgetUI.propTypes = {
   layers: PropTypes.array,
   collapsed: PropTypes.bool,
   onChangeCollapsed: PropTypes.func,
+  onChangeLegendRowCollapsed: PropTypes.func,
   onChangeVisibility: PropTypes.func,
   onChangeOpacity: PropTypes.func
 };

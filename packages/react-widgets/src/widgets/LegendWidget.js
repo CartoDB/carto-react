@@ -39,17 +39,13 @@ function LegendWidget({ className, initialCollapsed }) {
     );
   };
 
-  const handleChangeCollapsed = ({ id, collapsed }) => {
-    if (id) {
-      dispatch(
-        updateLayer({
-          id,
-          layerAttributes: { legend: { collapsed } }
-        })
-      );
-    } else {
-      setCollapsed(collapsed);
-    }
+  const handleChangeLegendRowCollapsed = ({ id, collapsed }) => {
+    dispatch(
+      updateLayer({
+        id,
+        layerAttributes: { legend: { collapsed } }
+      })
+    );
   };
 
   return (
@@ -59,7 +55,8 @@ function LegendWidget({ className, initialCollapsed }) {
       onChangeVisibility={handleChangeVisibility}
       onChangeOpacity={handleChangeOpacity}
       collapsed={collapsed}
-      onChangeCollapsed={handleChangeCollapsed}
+      onChangeCollapsed={setCollapsed}
+      onChangeLegendRowCollapsed={handleChangeLegendRowCollapsed}
     />
   );
 }
