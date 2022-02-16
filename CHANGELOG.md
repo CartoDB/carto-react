@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Set expanded/collapsed value of each legend row [#337](https://github.com/CartoDB/carto-react/pull/337)
 - Fix legends typings [#335](https://github.com/CartoDB/carto-react/pull/335)
 - Fix legends export [#334](https://github.com/CartoDB/carto-react/pull/334)
 - Fix duplicated logic for category selection in PieWidgetUI [#332](https://github.com/CartoDB/carto-react/pull/332)
