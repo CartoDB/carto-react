@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  * Renders a <LegendWidget /> component
  * @param  {object} props
  * @param  {string} props.className - CSS class name
- * @param  {string} props.initialCollapsed - Define initial collapsed value. false by default.
+ * @param  {boolean} props.initialCollapsed - Define initial collapsed value. false by default.
  */
 function LegendWidget({ className, initialCollapsed }) {
   const dispatch = useDispatch();
@@ -39,14 +39,24 @@ function LegendWidget({ className, initialCollapsed }) {
     );
   };
 
+  const handleChangeLegendCollapsed = ({ id, collapsed }) => {
+    dispatch(
+      updateLayer({
+        id,
+        layerAttributes: { legend: { collapsed } }
+      })
+    );
+  };
+
   return (
     <LegendWidgetUI
       className={className}
       layers={layers}
       onChangeVisibility={handleChangeVisibility}
       onChangeOpacity={handleChangeOpacity}
+      onChangeLegendCollapsed={handleChangeLegendCollapsed}
       collapsed={collapsed}
-      onCollapsedChange={setCollapsed}
+      onChangeCollapsed={setCollapsed}
     />
   );
 }
