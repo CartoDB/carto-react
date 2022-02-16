@@ -14,6 +14,9 @@ describe('useCartoLayerProps', () => {
       'onViewportLoad',
       'fetch',
       'onDataLoad',
+      'id',
+      'visible',
+      'opacity',
       'uniqueIdProperty',
       'data',
       'type',
@@ -26,6 +29,20 @@ describe('useCartoLayerProps', () => {
       'extensions',
       'maskId'
     ];
+
+    test('should return correct props when layerConfig is passed', () => {
+      const layerConfig = {
+        id: '__test__',
+        visible: true,
+        opacity: 0.5
+      };
+
+      const { result } = renderHook(() => useCartoLayerProps({ layerConfig }));
+
+      expect(result.current.id).toBe(layerConfig.id);
+      expect(result.current.visible).toBe(layerConfig.visible);
+      expect(result.current.opacity).toBe(layerConfig.opacity);
+    });
 
     describe('when maps_api_version is V2', () => {
       test('should return correct props when source type is tileset', () => {

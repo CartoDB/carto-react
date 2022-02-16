@@ -26,6 +26,14 @@ export type SourceProps = {
   credentials: Credentials;
 };
 
+export type LayerConfig = {
+  id: string;
+  source?: string;
+  visible?: boolean;
+  opacity?: number;
+  [key: string]: unknown;
+};
+
 export type UseCartoLayerFilterProps = {
   binary?: boolean;
   uniqueIdProperty?: string;
