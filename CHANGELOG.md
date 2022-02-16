@@ -7,7 +7,6 @@
 - Fix legends export [#334](https://github.com/CartoDB/carto-react/pull/334)
 - Fix duplicated logic for category selection in PieWidgetUI [#332](https://github.com/CartoDB/carto-react/pull/332)
 - Add customLegendTypes prop to customise covered legend types [#325](https://github.com/CartoDB/carto-react/pull/325)
-- Add error label if legend type is unknown [#325](https://github.com/CartoDB/carto-react/pull/325)
 
 ## 1.2
 
