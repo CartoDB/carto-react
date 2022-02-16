@@ -4,7 +4,6 @@ import ReactEcharts from 'echarts-for-react';
 import { useTheme } from '@material-ui/core';
 import {
   getChartSerie,
-  applyChartFilter,
   areChartPropsEqual,
   disableSerie,
   setColor
@@ -81,15 +80,15 @@ function __generateSerie({ name, data, theme, animation, selectedCategories, lab
       name,
       animation,
       data: data.map((item) => {
-        // Avoid modify data item
-        const clonedItem = { ...item };
-
-        if (labels?.[clonedItem.name]) {
-          clonedItem.name = labels[clonedItem.name];
-        }
+        // Avoid modifying data item
+        const clonedItem = {
+          ...item,
+          name: labels?.[item.name] || item.name,
+          key: item.name
+        };
 
         const disabled =
-          selectedCategories?.length && !selectedCategories.includes(clonedItem.name);
+          selectedCategories?.length && !selectedCategories.includes(clonedItem.key);
 
         if (disabled) {
           disableSerie(clonedItem, theme);
@@ -247,24 +246,28 @@ function PieWidgetUI({
     (params) => {
       if (onSelectedCategoriesChange) {
         const echart = chartInstance.current.getEchartsInstance();
-        const { option, serie } = getChartSerie(echart, params.seriesIndex);
+        const { serie } = getChartSerie(echart, params.seriesIndex);
+        let newSelectedCategories = serie.data
+          .filter((category) => !category.disabled)
+          .map((category) => category.key);
 
-        applyChartFilter(serie, params.dataIndex, theme);
+        if (newSelectedCategories.length === serie.data.length) {
+          newSelectedCategories = [];
+        }
 
-        echart.setOption(option, true);
+        const { name } = data[params.dataIndex];
 
-        const activeCategories = serie.data.filter((category) => !category.disabled);
+        const selectedCategoryIdx = newSelectedCategories.indexOf(name);
+        if (selectedCategoryIdx === -1) {
+          newSelectedCategories.push(name);
+        } else {
+          newSelectedCategories.splice(selectedCategoryIdx, 1);
+        }
 
-        defaultLabel.current = __getDefaultLabel(activeCategories);
-
-        onSelectedCategoriesChange(
-          activeCategories.length === serie.data.length
-            ? []
-            : activeCategories.map((category) => category.name)
-        );
+        onSelectedCategoriesChange(newSelectedCategories);
       }
     },
-    [onSelectedCategoriesChange, theme]
+    [data, onSelectedCategoriesChange]
   );
 
   const mouseoverEvent = useCallback((params) => {
