@@ -186,7 +186,7 @@ describe('LegendWidgetUI', () => {
   });
 
   test('should manage legend collapsed state correctly', () => {
-    let legendConfig = { ...DATA[6], legend: { ...DATA[6].legend, collapsed: true } };
+    let legendConfig = { ...DATA[7], legend: { ...DATA[7].legend, collapsed: true } };
     const onChangeLegendRowCollapsed = jest.fn();
 
     const { rerender } = render(
@@ -208,7 +208,7 @@ describe('LegendWidgetUI', () => {
       collapsed: false
     });
 
-    legendConfig = { ...DATA[6], legend: { ...DATA[6].legend, collapsed: false } };
+    legendConfig = { ...DATA[7], legend: { ...DATA[7].legend, collapsed: false } };
     rerender(
       <Widget
         layers={[legendConfig]}
