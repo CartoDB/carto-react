@@ -48,7 +48,7 @@ function LegendWidgetUI({
   className,
   layers = [],
   collapsed,
-  onChangeCollapsed,
+  onCollapsedChange,
   onChangeVisibility,
   onChangeOpacity,
   onChangeLegendCollapsed
@@ -61,7 +61,7 @@ function LegendWidgetUI({
       <LegendContainer
         isSingle={isSingle}
         collapsed={collapsed}
-        onChangeCollapsed={onChangeCollapsed}
+        onCollapsedChange={onCollapsedChange}
       >
         <LegendRows
           layers={layers}
@@ -83,10 +83,10 @@ LegendWidgetUI.propTypes = {
   className: PropTypes.string,
   layers: PropTypes.array,
   collapsed: PropTypes.bool,
-  onChangeCollapsed: PropTypes.func,
+  onCollapsedChange: PropTypes.func,
   onChangeVisibility: PropTypes.func,
   onChangeOpacity: PropTypes.func,
-  onChangeLegendOpacity: PropTypes.func,
+  onChangeLegendOpacity: PropTypes.func
 };
 
 export default LegendWidgetUI;
@@ -116,14 +116,14 @@ const useStylesLegendContainer = makeStyles((theme) => ({
   }
 }));
 
-function LegendContainer({ isSingle, children, collapsed, onChangeCollapsed }) {
+function LegendContainer({ isSingle, children, collapsed, onCollapsedChange }) {
   const wrapper = createRef();
   const classes = useStylesLegendContainer({
     collapsed
   });
 
   const handleExpandClick = () => {
-    onChangeCollapsed(!collapsed);
+    onCollapsedChange(!collapsed);
   };
 
   return isSingle ? (
@@ -171,7 +171,12 @@ const LEGEND_COMPONENT_BY_TYPE = {
   [LEGEND_TYPES.PROPORTION]: LegendProportion
 };
 
-function LegendRows({ layers = [], onChangeVisibility, onChangeOpacity, onChangeCollapsed }) {
+function LegendRows({
+  layers = [],
+  onChangeVisibility,
+  onChangeOpacity,
+  onChangeCollapsed
+}) {
   const isSingle = layers.length === 1;
 
   return (

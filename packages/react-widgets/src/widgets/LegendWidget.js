@@ -56,7 +56,7 @@ function LegendWidget({ className, initialCollapsed }) {
       onChangeOpacity={handleChangeOpacity}
       onChangeLegendCollapsed={handleChangeLegendCollapsed}
       collapsed={collapsed}
-      onChangeCollapsed={setCollapsed}
+      onCollapsedChange={setCollapsed}
     />
   );
 }
