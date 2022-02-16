@@ -123,7 +123,7 @@ function LegendContainer({ isSingle, children, collapsed, onChangeCollapsed }) {
   });
 
   const handleExpandClick = () => {
-    if (onChangeCollapsed) onChangeCollapsed({ collapsed: !collapsed });
+    if (onChangeCollapsed) onChangeCollapsed(!collapsed);
   };
 
   return isSingle ? (
