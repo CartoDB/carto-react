@@ -3,6 +3,7 @@
 ## Not released
 
 - Add searchable prop in CategoryWidget to optionally use the search functionality [#338](https://github.com/CartoDB/carto-react/pull/338)
+- Use layerConfig in useCartoLayerProps [#336](https://github.com/CartoDB/carto-react/pull/336)
 - Fix legends typings [#335](https://github.com/CartoDB/carto-react/pull/335)
 - Fix legends export [#334](https://github.com/CartoDB/carto-react/pull/334)
 - Fix duplicated logic for category selection in PieWidgetUI [#332](https://github.com/CartoDB/carto-react/pull/332)
