@@ -141,7 +141,8 @@ function CategoryWidgetUI(props) {
     order,
     selectedCategories,
     animation,
-    filterable
+    filterable,
+    searchable
   } = props;
   const [sortedData, setSortedData] = useState([]);
   const [maxValue, setMaxValue] = useState(1);
@@ -569,7 +570,7 @@ function CategoryWidgetUI(props) {
               </>
             )}
           </Grid>
-          {data.length > maxItems ? (
+          {data.length > maxItems && searchable ? (
             showAll ? (
               <Button size='small' color='primary' onClick={handleCancelClicked}>
                 Cancel
@@ -606,7 +607,8 @@ CategoryWidgetUI.defaultProps = {
   order: CategoryWidgetUI.ORDER_TYPES.RANKING,
   selectedCategories: [],
   animation: true,
-  filterable: true
+  filterable: true,
+  searchable: true
 };
 
 CategoryWidgetUI.propTypes = {
@@ -624,6 +626,7 @@ CategoryWidgetUI.propTypes = {
   order: PropTypes.oneOf(Object.values(CategoryWidgetUI.ORDER_TYPES)),
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
+  searchable: PropTypes.bool
 };
 
 export default CategoryWidgetUI;
