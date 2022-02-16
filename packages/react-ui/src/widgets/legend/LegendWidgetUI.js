@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 function LegendWidgetUI({
   className,
+  customLegendTypes,
   layers = [],
   collapsed,
   onChangeCollapsed,
@@ -65,6 +66,7 @@ function LegendWidgetUI({
       >
         <LegendRows
           layers={layers}
+          customLegendTypes={customLegendTypes}
           onChangeVisibility={onChangeVisibility}
           onChangeOpacity={onChangeOpacity}
           onChangeCollapsed={onChangeLegendRowCollapsed}
@@ -76,11 +78,13 @@ function LegendWidgetUI({
 
 LegendWidgetUI.defaultProps = {
   layers: [],
+  customLegendTypes: {},
   collapsed: false
 };
 
 LegendWidgetUI.propTypes = {
   className: PropTypes.string,
+  customLegendTypes: PropTypes.objectOf(PropTypes.func),
   layers: PropTypes.array,
   collapsed: PropTypes.bool,
   onChangeCollapsed: PropTypes.func,
@@ -168,11 +172,13 @@ const LEGEND_COMPONENT_BY_TYPE = {
   [LEGEND_TYPES.ICON]: LegendIcon,
   [LEGEND_TYPES.CONTINUOUS_RAMP]: (args) => <LegendRamp {...args} isContinuous={true} />,
   [LEGEND_TYPES.BINS]: (args) => <LegendRamp {...args} isContinuous={false} />,
-  [LEGEND_TYPES.PROPORTION]: LegendProportion
+  [LEGEND_TYPES.PROPORTION]: LegendProportion,
+  [LEGEND_TYPES.CUSTOM]: ({ legend }) => legend.children
 };
 
 function LegendRows({
   layers = [],
+  customLegendTypes,
   onChangeVisibility,
   onChangeOpacity,
   onChangeCollapsed
@@ -195,8 +201,7 @@ function LegendRows({
           index
         ) => {
           const {
-            children = null,
-            type = '',
+            type = LEGEND_TYPES.CUSTOM,
             collapsible = true,
             collapsed = false,
             note = '',
@@ -204,15 +209,15 @@ function LegendRows({
           } = legend;
 
           const isLast = layers.length - 1 === index;
-          // TODO: Add validation for layer.type
-          const hasChildren = LEGEND_COMPONENT_BY_TYPE[type] || children;
-          const LegendComponent = LEGEND_COMPONENT_BY_TYPE[type] || (() => children);
+          const LegendComponent =
+            LEGEND_COMPONENT_BY_TYPE[type] || customLegendTypes[type] || UnknownLegend;
+
           return (
             <Fragment key={id}>
               <LegendWrapper
                 id={id}
                 title={title}
-                collapsible={!!(collapsible && hasChildren)}
+                collapsible={!!(collapsible && !!LegendComponent)}
                 collapsed={collapsed}
                 switchable={switchable}
                 visible={visible}
@@ -232,5 +237,13 @@ function LegendRows({
         }
       )}
     </>
+  );
+}
+
+function UnknownLegend({ legend }) {
+  return (
+    <Typography variant='body2'>
+      {legend.type} is not a known legend type.
+    </Typography>
   );
 }
