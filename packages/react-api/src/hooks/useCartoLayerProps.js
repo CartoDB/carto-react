@@ -8,6 +8,7 @@ import { getMaskExtensionProps } from './maskExtensionUtil';
 
 export default function useCartoLayerProps({
   source,
+  layerConfig,
   uniqueIdProperty,
   viewportFeatures = true,
   viewporFeaturesDebounceTimeout = 250
@@ -63,6 +64,9 @@ export default function useCartoLayerProps({
 
   return {
     ...props,
+    id: layerConfig?.id,
+    visible: layerConfig?.visible ?? false,
+    opacity: layerConfig?.opacity ?? 1,
     uniqueIdProperty,
     data: source?.data,
     type: source?.type,
