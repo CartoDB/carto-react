@@ -141,7 +141,7 @@ export type FeatureSelectionWidgetUI = {
 export type LegendCategories = {
   legend: {
     labels?: (string | number)[];
-    colors?: string | string[];
+    colors?: string | string[] | number[][];
     isStrokeColor?: boolean;
   };
 };
@@ -163,6 +163,6 @@ export type LegendRamp = {
   isContinuous?: boolean;
   legend: {
     labels?: (number | string)[];
-    icons?: string[];
+    colors?: string | string[] | number[][];
   };
 };
