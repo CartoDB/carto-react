@@ -152,13 +152,10 @@ describe('LegendWidgetUI', () => {
 
   test('should manage legend collapsed state correctly', () => {
     let legendConfig = { ...DATA[6], legend: { ...DATA[6].legend, collapsed: true } };
-    const onChangeLegendCollapsed = jest.fn();
+    const onChangeCollapsed = jest.fn();
 
     const { rerender } = render(
-      <Widget
-        layers={[legendConfig]}
-        onChangeLegendCollapsed={onChangeLegendCollapsed}
-      ></Widget>
+      <Widget layers={[legendConfig]} onChangeCollapsed={onChangeCollapsed}></Widget>
     );
 
     expect(screen.queryByText('Legend custom')).not.toBeInTheDocument();
@@ -167,18 +164,15 @@ describe('LegendWidgetUI', () => {
     expect(layerOptionsBtn).toBeInTheDocument();
     layerOptionsBtn.click();
 
-    expect(onChangeLegendCollapsed).toHaveBeenCalledTimes(1);
-    expect(onChangeLegendCollapsed).toHaveBeenCalledWith({
+    expect(onChangeCollapsed).toHaveBeenCalledTimes(1);
+    expect(onChangeCollapsed).toHaveBeenCalledWith({
       id: legendConfig.id,
       collapsed: false
     });
 
     legendConfig = { ...DATA[6], legend: { ...DATA[6].legend, collapsed: false } };
     rerender(
-      <Widget
-        layers={[legendConfig]}
-        onChangeLegendCollapsed={onChangeLegendCollapsed}
-      ></Widget>
+      <Widget layers={[legendConfig]} onChangeCollapsed={onChangeCollapsed}></Widget>
     );
 
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
