@@ -65,7 +65,7 @@ export default function useCartoLayerProps({
   return {
     ...props,
     id: layerConfig?.id,
-    visible: layerConfig?.visible ?? false,
+    visible: layerConfig?.visible !== undefined ? layerConfig.visible : true,
     opacity: layerConfig?.opacity ?? 1,
     uniqueIdProperty,
     data: source?.data,
