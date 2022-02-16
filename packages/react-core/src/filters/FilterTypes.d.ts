@@ -5,3 +5,12 @@ export enum FilterTypes {
   TIME = 'time',
   STRING_SEARCH = 'stringSearch'
 }
+
+export const filterFunctions: Record<
+  string,
+  (
+    filterValues: unknown[],
+    featureValue: unknown,
+    params?: Record<string, unknown>
+  ) => boolean
+>;
