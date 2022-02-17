@@ -8,9 +8,10 @@ import PropTypes from 'prop-types';
  * Renders a <LegendWidget /> component
  * @param  {object} props
  * @param  {string} props.className - CSS class name
- * @param  {string} props.initialCollapsed - Define initial collapsed value. false by default.
+ * @param  {Object.<string, function>} props.customLegendTypes - Allow to customise by default legend types that can be rendered
+ * @param  {boolean} props.initialCollapsed - Define initial collapsed value. false by default.
  */
-function LegendWidget({ className, initialCollapsed }) {
+function LegendWidget({ className, customLegendTypes, initialCollapsed }) {
   const dispatch = useDispatch();
   const layers = useSelector((state) =>
     Object.values(state.carto.layers).filter((layer) => !!layer.legend)
@@ -39,20 +40,32 @@ function LegendWidget({ className, initialCollapsed }) {
     );
   };
 
+  const handleChangeLegendRowCollapsed = ({ id, collapsed }) => {
+    dispatch(
+      updateLayer({
+        id,
+        layerAttributes: { legend: { collapsed } }
+      })
+    );
+  };
+
   return (
     <LegendWidgetUI
       className={className}
+      customLegendTypes={customLegendTypes}
       layers={layers}
       onChangeVisibility={handleChangeVisibility}
       onChangeOpacity={handleChangeOpacity}
       collapsed={collapsed}
-      onCollapsedChange={setCollapsed}
+      onChangeCollapsed={setCollapsed}
+      onChangeLegendRowCollapsed={handleChangeLegendRowCollapsed}
     />
   );
 }
 
 LegendWidget.propTypes = {
   className: PropTypes.string,
+  customLegendTypes: PropTypes.objectOf(PropTypes.func),
   initialCollapsed: PropTypes.bool
 };
 

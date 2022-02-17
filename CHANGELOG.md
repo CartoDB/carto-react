@@ -2,14 +2,19 @@
 
 ## Not released
 
-- Use layerConfig in useCartoLayerProps [#336](https://github.com/CartoDB/carto-react/pull/336)
-- Fix legends typings [#335](https://github.com/CartoDB/carto-react/pull/335)
-- Fix legends export [#334](https://github.com/CartoDB/carto-react/pull/334)
-- Fix duplicated logic for category selection in PieWidgetUI [#332](https://github.com/CartoDB/carto-react/pull/332)
+- Set expanded/collapsed value of each legend row [#337](https://github.com/CartoDB/carto-react/pull/337)
 - Implement stringSearch filter [#331](https://github.com/CartoDB/carto-react/pull/331)
 - Add filters tests [#331](https://github.com/CartoDB/carto-react/pull/331)
 
 ## 1.2
+
+### 1.2.1-beta.6 (2022-02-16)
+
+- Use layerConfig in useCartoLayerProps [#336](https://github.com/CartoDB/carto-react/pull/336)
+- Fix legends typings [#335](https://github.com/CartoDB/carto-react/pull/335)
+- Fix legends export [#334](https://github.com/CartoDB/carto-react/pull/334)
+- Fix duplicated logic for category selection in PieWidgetUI [#332](https://github.com/CartoDB/carto-react/pull/332)
+- Add customLegendTypes prop to customise covered legend types [#325](https://github.com/CartoDB/carto-react/pull/325)
 
 ### 1.2.1-beta.5 (2022-02-15)
 
