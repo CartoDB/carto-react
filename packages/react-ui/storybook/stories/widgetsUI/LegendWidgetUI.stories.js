@@ -132,7 +132,7 @@ const LegendMultiTemplateCollapsed = () => {
     <LegendWidgetUI
       layers={layers}
       collapsed={collapsed}
-      onCollapsedChange={setCollapsed}
+      onChangeCollapsed={({ collapsed }) => setCollapsed(collapsed)}
     />
   );
 };

@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Set expanded/collapsed value of each legend row [#337](https://github.com/CartoDB/carto-react/pull/337)
+
 ## 1.2
 
 ### 1.2.1-beta.6 (2022-02-16)

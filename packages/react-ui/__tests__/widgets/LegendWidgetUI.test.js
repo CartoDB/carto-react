@@ -184,4 +184,38 @@ describe('LegendWidgetUI', () => {
     expect(onChangeOpacity).toHaveBeenCalledTimes(1);
     expect(onChangeOpacity).toHaveBeenCalledWith({ id: legendConfig.id, opacity: 0.5 });
   });
+
+  test('should manage legend collapsed state correctly', () => {
+    let legendConfig = { ...DATA[7], legend: { ...DATA[7].legend, collapsed: true } };
+    const onChangeLegendRowCollapsed = jest.fn();
+
+    const { rerender } = render(
+      <Widget
+        layers={[legendConfig]}
+        onChangeLegendRowCollapsed={onChangeLegendRowCollapsed}
+      ></Widget>
+    );
+
+    expect(screen.queryByText('Legend custom')).not.toBeInTheDocument();
+
+    const layerOptionsBtn = screen.getByText('Single Layer');
+    expect(layerOptionsBtn).toBeInTheDocument();
+    layerOptionsBtn.click();
+
+    expect(onChangeLegendRowCollapsed).toHaveBeenCalledTimes(1);
+    expect(onChangeLegendRowCollapsed).toHaveBeenCalledWith({
+      id: legendConfig.id,
+      collapsed: false
+    });
+
+    legendConfig = { ...DATA[7], legend: { ...DATA[7].legend, collapsed: false } };
+    rerender(
+      <Widget
+        layers={[legendConfig]}
+        onChangeLegendRowCollapsed={onChangeLegendRowCollapsed}
+      ></Widget>
+    );
+
+    expect(screen.getByText('Legend custom')).toBeInTheDocument();
+  });
 });

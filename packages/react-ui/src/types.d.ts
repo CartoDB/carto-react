@@ -80,8 +80,10 @@ export type LegendWidgetUI = {
   customLegendTypes?: Record<string, Function>
   layers?: LegendWidgetUIData[];
   collapsed?: boolean;
-  onCollapsedChange?: (value: boolean) => void;
-  onChangeVisibility?: ({ id: string, visible: boolean }) => void;
+  onChangeCollapsed?: (collapsed: boolean) => void;
+  onChangeVisibility?: (args: { id: string; visible: boolean }) => void;
+  onChangeOpacity?: (args: { id: string; visible: boolean }) => void;
+  onChangeLegendRowCollapsed?: (args: { id: string; collapsed: boolean }) => void;
 };
 
 export type ScatterPlotWidgetUIData = number[][];

@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
  * @param  {object} props
  * @param  {string} props.className - CSS class name
  * @param  {Object.<string, function>} props.customLegendTypes - Allow to customise by default legend types that can be rendered
- * @param  {string} props.initialCollapsed - Define initial collapsed value. false by default.
+ * @param  {boolean} props.initialCollapsed - Define initial collapsed value. false by default.
  */
 function LegendWidget({ className, customLegendTypes, initialCollapsed }) {
   const dispatch = useDispatch();
@@ -40,6 +40,15 @@ function LegendWidget({ className, customLegendTypes, initialCollapsed }) {
     );
   };
 
+  const handleChangeLegendRowCollapsed = ({ id, collapsed }) => {
+    dispatch(
+      updateLayer({
+        id,
+        layerAttributes: { legend: { collapsed } }
+      })
+    );
+  };
+
   return (
     <LegendWidgetUI
       className={className}
@@ -48,7 +57,8 @@ function LegendWidget({ className, customLegendTypes, initialCollapsed }) {
       onChangeVisibility={handleChangeVisibility}
       onChangeOpacity={handleChangeOpacity}
       collapsed={collapsed}
-      onCollapsedChange={setCollapsed}
+      onChangeCollapsed={setCollapsed}
+      onChangeLegendRowCollapsed={handleChangeLegendRowCollapsed}
     />
   );
 }
