@@ -1,3 +1,5 @@
+import { processFormatterRes } from './formatterUtils';
+
 export function areChartPropsEqual(optionPrev, optionNext) {
   const tooltipFormatterPrev = optionPrev?.tooltip?.formatter;
   const tooltipFormatterNext = optionNext.tooltip?.formatter;
@@ -92,4 +94,36 @@ export function getElementComputedSize(text, id, fontSize = 8) {
   span.remove();
 
   return elementWidthAndHeight;
+}
+
+// Tooltip formatter
+const TOOLTIP_FORMATTER_BY_CHART_TYPE = {
+  pie: () => {}
+};
+
+export function defaultTooltipFormatter(params) {
+  if (!params || !params?.length) {
+    return null;
+  }
+
+  if (Array.isArray(params) && params.length) {
+    let message = '';
+    const valueLabel = params[0].axisValueLabel || params[0].name;
+    message += `${processFormatterRes(
+      params.titleFormatter?.(valueLabel) ?? valueLabel
+    )}`;
+    message += params
+      .map(({ seriesName, value, data, marker }) => {
+        const formattedSeriesName = seriesName ? seriesName + ': ' : '';
+        const formattedValue = processFormatterRes(
+          params.valueFormatter?.(value) ?? value
+        );
+        const item = `<div style="margin-left: 8px; display: inline">
+        ${formattedSeriesName}${formattedValue}${data.unit || ''}
+        </div>`;
+        return `<div style="margin-top: 4px">${marker}${item}</div>`;
+      })
+      .join(' ');
+    return message;
+  }
 }
