@@ -38,6 +38,7 @@ export default function LegendWrapper({
   title,
   switchable = true,
   collapsible = true,
+  collapsed = false,
   visible = true,
   note,
   attr,
@@ -45,11 +46,12 @@ export default function LegendWrapper({
   showOpacityControl,
   opacity,
   onChangeOpacity,
-  onChangeVisibility
+  onChangeVisibility,
+  onChangeCollapsed
 }) {
   const wrapper = createRef();
   const classes = useStyles();
-  const [expanded, setExpanded] = useState(true);
+  const expanded = !collapsed;
   const [isLayerOptionsExpanded, setIsLayerOptionsExpanded] = useState(false);
 
   const handleChangeOpacity = (newOpacity) => {
@@ -57,9 +59,7 @@ export default function LegendWrapper({
   };
 
   const handleExpandClick = () => {
-    if (collapsible) {
-      setExpanded(!expanded);
-    }
+    if (collapsible) onChangeCollapsed({ id, collapsed: !collapsed });
   };
 
   const handleChangeVisibility = () => {

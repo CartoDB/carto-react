@@ -1,10 +1,12 @@
 import React from 'react';
 import { getMaterialUIContext } from './testUtils';
-import LegendWidgetUI from '../../src/widgets/legend/LegendWidgetUI';
+import LegendWidgetUI, { LEGEND_TYPES } from '../../src/widgets/legend/LegendWidgetUI';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { TextField, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 const CUSTOM_CHILDREN = <Typography>Legend custom</Typography>;
+
+const MY_CUSTOM_LEGEND_KEY = 'my-custom-legend';
 
 describe('LegendWidgetUI', () => {
   const DATA = [
@@ -77,6 +79,19 @@ describe('LegendWidgetUI', () => {
       showOpacityControl: true,
       opacity: 0.6,
       legend: {
+        type: MY_CUSTOM_LEGEND_KEY,
+        note: 'lorem',
+        colors: ['#000', '#00F', '#0F0'],
+        labels: ['Category 1', 'Category 2', 'Category 3']
+      }
+    },
+    {
+      id: 'custom',
+      title: 'Single Layer',
+      visible: true,
+      showOpacityControl: true,
+      opacity: 0.6,
+      legend: {
         children: CUSTOM_CHILDREN
       }
     }
@@ -130,8 +145,28 @@ describe('LegendWidgetUI', () => {
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
   });
 
+  test('renders an error message if legend is unknown', () => {
+    const UNKNOWN_KEY = 'unknown';
+    render(<Widget layers={[{ id: UNKNOWN_KEY, legend: { type: UNKNOWN_KEY } }]}></Widget>);
+    expect(screen.getByText(`${UNKNOWN_KEY} is not a known legend type.`)).toBeInTheDocument();
+  });
+
+  test('with custom legend types', () => {
+    const MyCustomLegendComponent = jest.fn();
+    MyCustomLegendComponent.mockReturnValue(<p>Test</p>);
+    render(
+      <Widget
+        layers={[DATA[6]]}
+        customLegendTypes={{ [MY_CUSTOM_LEGEND_KEY]: MyCustomLegendComponent }}
+      ></Widget>
+    );
+    expect(MyCustomLegendComponent).toHaveBeenCalled();
+    expect(MyCustomLegendComponent).toHaveBeenCalledWith({ legend: DATA[6].legend }, {});
+    expect(screen.getByText('Test')).toBeInTheDocument();
+  });
+
   test('legend with opacity control', () => {
-    const legendConfig = DATA[6];
+    const legendConfig = DATA[7];
     const onChangeOpacity = jest.fn();
     const container = render(
       <Widget layers={[legendConfig]} onChangeOpacity={onChangeOpacity}></Widget>
@@ -148,5 +183,39 @@ describe('LegendWidgetUI', () => {
 
     expect(onChangeOpacity).toHaveBeenCalledTimes(1);
     expect(onChangeOpacity).toHaveBeenCalledWith({ id: legendConfig.id, opacity: 0.5 });
+  });
+
+  test('should manage legend collapsed state correctly', () => {
+    let legendConfig = { ...DATA[7], legend: { ...DATA[7].legend, collapsed: true } };
+    const onChangeLegendRowCollapsed = jest.fn();
+
+    const { rerender } = render(
+      <Widget
+        layers={[legendConfig]}
+        onChangeLegendRowCollapsed={onChangeLegendRowCollapsed}
+      ></Widget>
+    );
+
+    expect(screen.queryByText('Legend custom')).not.toBeInTheDocument();
+
+    const layerOptionsBtn = screen.getByText('Single Layer');
+    expect(layerOptionsBtn).toBeInTheDocument();
+    layerOptionsBtn.click();
+
+    expect(onChangeLegendRowCollapsed).toHaveBeenCalledTimes(1);
+    expect(onChangeLegendRowCollapsed).toHaveBeenCalledWith({
+      id: legendConfig.id,
+      collapsed: false
+    });
+
+    legendConfig = { ...DATA[7], legend: { ...DATA[7].legend, collapsed: false } };
+    rerender(
+      <Widget
+        layers={[legendConfig]}
+        onChangeLegendRowCollapsed={onChangeLegendRowCollapsed}
+      ></Widget>
+    );
+
+    expect(screen.getByText('Legend custom')).toBeInTheDocument();
   });
 });

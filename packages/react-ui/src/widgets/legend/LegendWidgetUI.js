@@ -46,11 +46,13 @@ const useStyles = makeStyles((theme) => ({
 
 function LegendWidgetUI({
   className,
+  customLegendTypes,
   layers = [],
   collapsed,
-  onCollapsedChange,
+  onChangeCollapsed,
   onChangeVisibility,
-  onChangeOpacity
+  onChangeOpacity,
+  onChangeLegendRowCollapsed
 }) {
   const classes = useStyles();
   const isSingle = layers.length === 1;
@@ -60,12 +62,14 @@ function LegendWidgetUI({
       <LegendContainer
         isSingle={isSingle}
         collapsed={collapsed}
-        onCollapsedChange={onCollapsedChange}
+        onChangeCollapsed={onChangeCollapsed}
       >
         <LegendRows
           layers={layers}
+          customLegendTypes={customLegendTypes}
           onChangeVisibility={onChangeVisibility}
           onChangeOpacity={onChangeOpacity}
+          onChangeCollapsed={onChangeLegendRowCollapsed}
         />
       </LegendContainer>
     </Box>
@@ -74,14 +78,17 @@ function LegendWidgetUI({
 
 LegendWidgetUI.defaultProps = {
   layers: [],
+  customLegendTypes: {},
   collapsed: false
 };
 
 LegendWidgetUI.propTypes = {
   className: PropTypes.string,
+  customLegendTypes: PropTypes.objectOf(PropTypes.func),
   layers: PropTypes.array,
   collapsed: PropTypes.bool,
-  onCollapsedChange: PropTypes.func,
+  onChangeCollapsed: PropTypes.func,
+  onChangeLegendRowCollapsed: PropTypes.func,
   onChangeVisibility: PropTypes.func,
   onChangeOpacity: PropTypes.func
 };
@@ -113,14 +120,14 @@ const useStylesLegendContainer = makeStyles((theme) => ({
   }
 }));
 
-function LegendContainer({ isSingle, children, collapsed, onCollapsedChange }) {
+function LegendContainer({ isSingle, children, collapsed, onChangeCollapsed }) {
   const wrapper = createRef();
   const classes = useStylesLegendContainer({
     collapsed
   });
 
   const handleExpandClick = () => {
-    onCollapsedChange(!collapsed);
+    if (onChangeCollapsed) onChangeCollapsed(!collapsed);
   };
 
   return isSingle ? (
@@ -165,10 +172,17 @@ const LEGEND_COMPONENT_BY_TYPE = {
   [LEGEND_TYPES.ICON]: LegendIcon,
   [LEGEND_TYPES.CONTINUOUS_RAMP]: (args) => <LegendRamp {...args} isContinuous={true} />,
   [LEGEND_TYPES.BINS]: (args) => <LegendRamp {...args} isContinuous={false} />,
-  [LEGEND_TYPES.PROPORTION]: LegendProportion
+  [LEGEND_TYPES.PROPORTION]: LegendProportion,
+  [LEGEND_TYPES.CUSTOM]: ({ legend }) => legend.children
 };
 
-function LegendRows({ layers = [], onChangeVisibility, onChangeOpacity }) {
+function LegendRows({
+  layers = [],
+  customLegendTypes,
+  onChangeVisibility,
+  onChangeOpacity,
+  onChangeCollapsed
+}) {
   const isSingle = layers.length === 1;
 
   return (
@@ -187,23 +201,24 @@ function LegendRows({ layers = [], onChangeVisibility, onChangeOpacity }) {
           index
         ) => {
           const {
-            children = null,
-            type = '',
+            type = LEGEND_TYPES.CUSTOM,
             collapsible = true,
+            collapsed = false,
             note = '',
             attr = ''
           } = legend;
 
           const isLast = layers.length - 1 === index;
-          // TODO: Add validation for layer.type
-          const hasChildren = LEGEND_COMPONENT_BY_TYPE[type] || children;
-          const LegendComponent = LEGEND_COMPONENT_BY_TYPE[type] || (() => children);
+          const LegendComponent =
+            LEGEND_COMPONENT_BY_TYPE[type] || customLegendTypes[type] || UnknownLegend;
+
           return (
             <Fragment key={id}>
               <LegendWrapper
                 id={id}
                 title={title}
-                collapsible={!!(collapsible && hasChildren)}
+                collapsible={!!(collapsible && !!LegendComponent)}
+                collapsed={collapsed}
                 switchable={switchable}
                 visible={visible}
                 note={note}
@@ -212,6 +227,7 @@ function LegendRows({ layers = [], onChangeVisibility, onChangeOpacity }) {
                 opacity={opacity}
                 onChangeOpacity={onChangeOpacity}
                 onChangeVisibility={onChangeVisibility}
+                onChangeCollapsed={onChangeCollapsed}
               >
                 <LegendComponent legend={legend} />
               </LegendWrapper>
@@ -221,5 +237,13 @@ function LegendRows({ layers = [], onChangeVisibility, onChangeOpacity }) {
         }
       )}
     </>
+  );
+}
+
+function UnknownLegend({ legend }) {
+  return (
+    <Typography variant='body2'>
+      {legend.type} is not a known legend type.
+    </Typography>
   );
 }
