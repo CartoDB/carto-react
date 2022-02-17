@@ -284,15 +284,20 @@ function CategoryWidgetUI(props) {
     [blockedCategories, labels, maxItems, searchValue, showAll]
   );
 
+  const getCategoriesCount = useCallback(() => {
+    const blocked = blockedCategories.length;
+    return blocked ? data.length - blocked : data.length - maxItems;
+  }, [data, maxItems, blockedCategories]);
+
   const getCategoryLabel = useCallback(
     (name) => {
       if (name === REST_CATEGORY) {
-        return 'Others';
+        return `Others ${searchable ? '' : `(${getCategoriesCount()})`}`;
       } else {
         return labels[name] || name;
       }
     },
-    [labels]
+    [getCategoriesCount, labels, searchable]
   );
 
   const getProgressbarLength = useCallback(
@@ -363,11 +368,6 @@ function CategoryWidgetUI(props) {
       setAnimValues(sortedData);
     }
   }, [animation, sortedData]);
-
-  const getCategoriesCount = useCallback(() => {
-    const blocked = blockedCategories.length;
-    return blocked ? data.length - blocked : data.length - maxItems;
-  }, [data, maxItems, blockedCategories]);
 
   // Separated to simplify the widget layout but inside the main component to avoid passing all dependencies
   const CategoryItem = (props) => {
