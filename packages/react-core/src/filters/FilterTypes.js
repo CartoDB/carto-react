@@ -48,27 +48,35 @@ function closedOpen(filterValues, featureValue) {
 // FilterTypes.STRING_SEARCH
 function stringSearch(filterValues, featureValue, params = {}) {
   const normalizedFeatureValue = normalize(featureValue, params);
+  const stringRegExp = filterValues
+    .map((filterValue) => {
+      let stringRegExp = escapeRegExp(normalize(filterValue, params));
 
-  return filterValues.some((filterValue) => {
-    let stringRegExp = escapeRegExp(normalize(filterValue, params));
+      if (params.mustStart) stringRegExp = `^${stringRegExp}`;
+      if (params.mustEnd) stringRegExp = `${stringRegExp}$`;
 
-    if (params.mustStart) stringRegExp = `^${stringRegExp}`;
-    if (params.mustEnd) stringRegExp = `${stringRegExp}$`;
+      return stringRegExp;
+    })
+    .join('|');
 
-    const regex = new RegExp(stringRegExp, 'g');
-    return !!normalizedFeatureValue.match(regex);
-  });
+  const regex = new RegExp(stringRegExp, 'g');
+  return !!normalizedFeatureValue.match(regex);
 }
 
 // Aux
+const specialCharRegExp = /[.*+?^${}()|[\]\\]/g;
+const normalizeRegExp = /\p{Diacritic}/gu;
+
 function escapeRegExp(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return value.replace(specialCharRegExp, '\\$&');
 }
 
 function normalize(data, params) {
   let normalizedData = '' + data;
 
   if (!params.caseSensitive) normalizedData = normalizedData.toLocaleLowerCase();
+  if (!params.keepSpecialCharacters)
+    normalizedData = normalizedData.normalize('NFD').replace(normalizeRegExp, '');
 
-  return normalizedData.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  return normalizedData;
 }

@@ -82,6 +82,15 @@ describe('FilterTypes', () => {
       expect(stringSearchFilter(['cart'], featureValue, { mustStart: true })).toBe(true);
       expect(stringSearchFilter(['cart'], featureValue, { mustEnd: true })).toBe(false);
       expect(stringSearchFilter(['arto'], featureValue, { mustEnd: true })).toBe(true);
+
+      // With accents
+      expect(stringSearchFilter(['Sévïllà'], 'Sevilla')).toBe(true);
+      expect(
+        stringSearchFilter(['Sévïllà'], 'Sevilla', { keepSpecialCharacters: true })
+      ).toBe(false);
+
+      // Multiples filter values (OR)
+      expect(stringSearchFilter(['_test_', 'carto'], featureValue)).toBe(true);
     });
   });
 });
