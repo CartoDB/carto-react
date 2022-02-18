@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix legend render with only visibility toggle [#342](https://github.com/CartoDB/carto-react/pull/342)
+- Fix LegendWidget types [#343](https://github.com/CartoDB/carto-react/pull/343)
 - Add searchable prop in CategoryWidget to optionally use the search functionality [#338](https://github.com/CartoDB/carto-react/pull/338)
 - Set expanded/collapsed value of each legend row [#337](https://github.com/CartoDB/carto-react/pull/337)
 
