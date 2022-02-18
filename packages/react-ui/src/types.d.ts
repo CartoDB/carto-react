@@ -77,7 +77,7 @@ export type LegendWidgetUIData = {
 
 export type LegendWidgetUI = {
   className?: string;
-  customLegendTypes?: Record<string, Function>
+  customLegendTypes?: Record<string, Function>;
   layers?: LegendWidgetUIData[];
   collapsed?: boolean;
   onChangeCollapsed?: (collapsed: boolean) => void;
