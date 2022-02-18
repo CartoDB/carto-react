@@ -173,7 +173,7 @@ const LEGEND_COMPONENT_BY_TYPE = {
   [LEGEND_TYPES.CONTINUOUS_RAMP]: (args) => <LegendRamp {...args} isContinuous={true} />,
   [LEGEND_TYPES.BINS]: (args) => <LegendRamp {...args} isContinuous={false} />,
   [LEGEND_TYPES.PROPORTION]: LegendProportion,
-  [LEGEND_TYPES.CUSTOM]: ({ legend }) => legend.children || null
+  [LEGEND_TYPES.CUSTOM]: ({ legend }) => legend.children
 };
 
 function LegendRows({
