@@ -40,6 +40,7 @@ export default function LegendWrapper({
   collapsible = true,
   collapsed = false,
   visible = true,
+  hasChildren = true,
   note,
   attr,
   children,
@@ -59,7 +60,8 @@ export default function LegendWrapper({
   };
 
   const handleExpandClick = () => {
-    if (collapsible) onChangeCollapsed({ id, collapsed: !collapsed });
+    if (collapsible && onChangeCollapsed)
+      onChangeCollapsed({ id, collapsed: !collapsed });
   };
 
   const handleChangeVisibility = () => {
@@ -77,13 +79,13 @@ export default function LegendWrapper({
         switchable={switchable}
         visible={visible}
         expanded={expanded}
-        collapsible={collapsible}
+        collapsible={hasChildren && collapsible}
         onExpandClick={handleExpandClick}
         onChangeVisibility={handleChangeVisibility}
         onToggleLayerOptions={showOpacityControl && handleToggleLayerOptions}
         isLayerOptionsExpanded={isLayerOptionsExpanded}
       />
-      {!!children && (
+      {hasChildren && !!children && (
         <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
           <Box className={classes.content}>
             <Grid container direction='column' pb={16} spacing={1}>

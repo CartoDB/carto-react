@@ -145,10 +145,20 @@ describe('LegendWidgetUI', () => {
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
   });
 
+  test('Empty legend', () => {
+    const EMPTY_LAYER = { id: 'empty', title: 'Empty Layer', legend: {} };
+    render(<Widget layers={[EMPTY_LAYER]}></Widget>);
+    expect(screen.getByText(EMPTY_LAYER.title)).toBeInTheDocument();
+  });
+
   test('renders an error message if legend is unknown', () => {
     const UNKNOWN_KEY = 'unknown';
-    render(<Widget layers={[{ id: UNKNOWN_KEY, legend: { type: UNKNOWN_KEY } }]}></Widget>);
-    expect(screen.getByText(`${UNKNOWN_KEY} is not a known legend type.`)).toBeInTheDocument();
+    render(
+      <Widget layers={[{ id: UNKNOWN_KEY, legend: { type: UNKNOWN_KEY } }]}></Widget>
+    );
+    expect(
+      screen.getByText(`${UNKNOWN_KEY} is not a known legend type.`)
+    ).toBeInTheDocument();
   });
 
   test('with custom legend types', () => {
