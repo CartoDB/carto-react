@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import ReactEcharts from 'echarts-for-react';
+import ReactEcharts from '../custom-components/echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
 import {
   applyChartFilter,
