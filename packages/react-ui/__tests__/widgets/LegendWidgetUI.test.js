@@ -94,11 +94,6 @@ describe('LegendWidgetUI', () => {
       legend: {
         children: CUSTOM_CHILDREN
       }
-    },
-    {
-      id: 'empty',
-      title: 'Empty legend',
-      legend: {}
     }
   ];
   const Widget = (props) => getMaterialUIContext(<LegendWidgetUI {...props} />);
@@ -148,6 +143,12 @@ describe('LegendWidgetUI', () => {
   test('Custom legend', () => {
     render(<Widget layers={[DATA[5]]}></Widget>);
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
+  });
+
+  test('Empty legend', () => {
+    const EMPTY_LAYER = { id: 'empty', title: 'Empty Layer', legend: {} };
+    render(<Widget layers={[EMPTY_LAYER]}></Widget>);
+    expect(screen.getByText(EMPTY_LAYER.title)).toBeInTheDocument();
   });
 
   test('renders an error message if legend is unknown', () => {
