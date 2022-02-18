@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import ReactEcharts from '../custom-components/echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles } from '@material-ui/core';
 import {
-  applyChartFilter,
   clearFilter,
   areChartPropsEqual,
   disableSerie,
@@ -311,23 +310,29 @@ function HistogramWidgetUI(props) {
     (params) => {
       if (onSelectedBarsChange) {
         const echart = chartInstance.current.getEchartsInstance();
-
         const { serie } = getChartSerie(echart, params.seriesIndex);
-        applyChartFilter(serie, params.dataIndex, theme);
+        let newSelectedCategories = serie.data
+          .filter((category) => !category.disabled)
+          .map((d, i) => i);
 
-        const activeBars = [];
-        serie.data.forEach((d, index) => {
-          if (!d.disabled) {
-            activeBars.push(index);
-          }
-        });
+        if (newSelectedCategories.length === serie.data.length) {
+          newSelectedCategories = [];
+        }
+
+        const selectedCategoryIdx = newSelectedCategories.indexOf(params.dataIndex);
+        if (selectedCategoryIdx === -1) {
+          newSelectedCategories.push(params.dataIndex);
+        } else {
+          newSelectedCategories.splice(selectedCategoryIdx, 1);
+        }
+
         onSelectedBarsChange({
-          bars: activeBars.length === serie.data.length ? [] : activeBars,
+          bars: newSelectedCategories,
           chartInstance
         });
       }
     },
-    [onSelectedBarsChange, theme]
+    [onSelectedBarsChange]
   );
 
   const onEvents = useMemo(
