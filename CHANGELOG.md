@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix duplicated logic for category selection in HistogramWidgetUI [#345](https://github.com/CartoDB/carto-react/pull/345)
+
 ## 1.2
 
 ### 1.2.1-beta.7 (2022-02-18)
