@@ -11,11 +11,6 @@ const MY_CUSTOM_LEGEND_KEY = 'my-custom-legend';
 describe('LegendWidgetUI', () => {
   const DATA = [
     {
-      id: 'empty',
-      title: 'Empty legend',
-      legend: {}
-    },
-    {
       id: 'category',
       title: 'Category Layer',
       visible: true,
@@ -99,6 +94,11 @@ describe('LegendWidgetUI', () => {
       legend: {
         children: CUSTOM_CHILDREN
       }
+    },
+    {
+      id: 'empty',
+      title: 'Empty legend',
+      legend: {}
     }
   ];
   const Widget = (props) => getMaterialUIContext(<LegendWidgetUI {...props} />);
