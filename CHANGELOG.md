@@ -3,6 +3,7 @@
 ## Not released
 
 - Fix LegendWidget types [#343](https://github.com/CartoDB/carto-react/pull/343)
+- Fix echarts-for-react events bug [#340](https://github.com/CartoDB/carto-react/pull/340)
 - Set expanded/collapsed value of each legend row [#337](https://github.com/CartoDB/carto-react/pull/337)
 
 ## 1.2
