@@ -173,7 +173,7 @@ const LEGEND_COMPONENT_BY_TYPE = {
   [LEGEND_TYPES.CONTINUOUS_RAMP]: (args) => <LegendRamp {...args} isContinuous={true} />,
   [LEGEND_TYPES.BINS]: (args) => <LegendRamp {...args} isContinuous={false} />,
   [LEGEND_TYPES.PROPORTION]: LegendProportion,
-  [LEGEND_TYPES.CUSTOM]: () => null
+  [LEGEND_TYPES.CUSTOM]: ({ legend }) => legend.children || null
 };
 
 function LegendRows({
@@ -242,8 +242,6 @@ function LegendRows({
 
 function UnknownLegend({ legend }) {
   return (
-    <Typography variant='body2'>
-      {legend.type} is not a known legend type.
-    </Typography>
+    <Typography variant='body2'>{legend.type} is not a known legend type.</Typography>
   );
 }
