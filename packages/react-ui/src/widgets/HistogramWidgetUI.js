@@ -312,9 +312,8 @@ function HistogramWidgetUI(props) {
       if (onSelectedBarsChange) {
         const echart = chartInstance.current.getEchartsInstance();
 
-        const { option, serie } = getChartSerie(echart, params.seriesIndex);
+        const { serie } = getChartSerie(echart, params.seriesIndex);
         applyChartFilter(serie, params.dataIndex, theme);
-        echart.setOption(option);
 
         const activeBars = [];
         serie.data.forEach((d, index) => {
