@@ -76,4 +76,5 @@ export type TimeSeriesWidget = {
 export type LegendWidget = {
   className?: string;
   initialCollapsed?: boolean;
+  customLegendTypes?: Record<string, Function>;
 }
