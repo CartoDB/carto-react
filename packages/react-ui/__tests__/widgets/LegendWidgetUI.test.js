@@ -11,6 +11,11 @@ const MY_CUSTOM_LEGEND_KEY = 'my-custom-legend';
 describe('LegendWidgetUI', () => {
   const DATA = [
     {
+      id: 'empty',
+      title: 'Empty legend',
+      legend: {}
+    },
+    {
       id: 'category',
       title: 'Category Layer',
       visible: true,
@@ -147,8 +152,12 @@ describe('LegendWidgetUI', () => {
 
   test('renders an error message if legend is unknown', () => {
     const UNKNOWN_KEY = 'unknown';
-    render(<Widget layers={[{ id: UNKNOWN_KEY, legend: { type: UNKNOWN_KEY } }]}></Widget>);
-    expect(screen.getByText(`${UNKNOWN_KEY} is not a known legend type.`)).toBeInTheDocument();
+    render(
+      <Widget layers={[{ id: UNKNOWN_KEY, legend: { type: UNKNOWN_KEY } }]}></Widget>
+    );
+    expect(
+      screen.getByText(`${UNKNOWN_KEY} is not a known legend type.`)
+    ).toBeInTheDocument();
   });
 
   test('with custom legend types', () => {
