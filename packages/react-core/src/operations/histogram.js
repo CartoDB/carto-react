@@ -1,4 +1,4 @@
-import { aggregationFunctions } from './aggregation/values';
+import { aggregationFunctions } from './aggregation';
 
 export function histogram(features, columnName, ticks, operation) {
   if (Array.isArray(features) && features.length === 0) {

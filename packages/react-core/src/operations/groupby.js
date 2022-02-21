@@ -1,5 +1,5 @@
-import { AggregationTypes } from './aggregation/AggregationTypes';
-import { aggregationFunctions } from './aggregation/values';
+import { AggregationTypes } from './constants/AggregationTypes';
+import { aggregationFunctions } from './aggregation';
 
 export function groupValuesByColumn(data, valuesColumn, keysColumn, operation) {
   if (Array.isArray(data) && data.length === 0) {

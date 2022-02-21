@@ -1,4 +1,4 @@
-import { AggregationTypes } from './aggregation/AggregationTypes';
+import { AggregationTypes } from './constants/AggregationTypes';
 import { HistogramFeature } from '../types';
 
 export function histogram(

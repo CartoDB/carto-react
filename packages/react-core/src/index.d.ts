@@ -13,8 +13,8 @@ export { randomString } from './utils/randomString';
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
-export { AggregationTypes } from './operations/aggregation/AggregationTypes';
-export { aggregationFunctions } from './operations/aggregation/values';
+export { AggregationTypes } from './operations/constants/AggregationTypes';
+export { aggregationFunctions } from './operations/aggregation';
 export { groupValuesByColumn } from './operations/groupby';
 export { histogram } from './operations/histogram';
 export { scatterPlot } from './operations/scatterPlot';
@@ -26,7 +26,7 @@ export { geojsonFeatures } from './filters/geojsonFeatures';
 
 export { AggregationFunctions, GroupByFeature, HistogramFeature, Viewport, TileFeatures } from './types';
 
-export { GroupDateTypes } from './operations/GroupDateTypes';
+export { GroupDateTypes } from './operations/constants/GroupDateTypes';
 export { groupValuesByDateColumn } from './operations/groupByDate';
 
 export { FEATURE_SELECTION_MODES, EDIT_MODES, MASK_ID } from './utils/featureSelectionConstants';

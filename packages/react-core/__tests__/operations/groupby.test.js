@@ -1,5 +1,5 @@
 import { groupValuesByColumn } from '../../src/operations/groupby';
-import { AggregationTypes } from '../../src/operations/aggregation/AggregationTypes';
+import { AggregationTypes } from '../../src/operations/constants/AggregationTypes';
 
 const VALUES = [1, 2, 3, 4, 5];
 

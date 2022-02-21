@@ -1,4 +1,4 @@
-import { AggregationTypes } from './aggregation/AggregationTypes';
+import { AggregationTypes } from './constants/AggregationTypes';
 import { GroupByFeature } from '../types';
 
 export function groupValuesByColumn(

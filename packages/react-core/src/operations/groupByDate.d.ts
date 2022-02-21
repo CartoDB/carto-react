@@ -1,5 +1,5 @@
 import { GroupByFeature } from '../types';
-import { GroupDateTypes } from './GroupDateTypes';
+import { GroupDateTypes } from './constants/GroupDateTypes';
 
 export function groupValuesByDateColumn(
   data: [],

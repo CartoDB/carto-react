@@ -1,5 +1,5 @@
-import { AggregationTypes } from '../../src/operations/aggregation/AggregationTypes';
-import { GroupDateTypes } from '../../src/operations/GroupDateTypes';
+import { AggregationTypes } from '../../src/operations/constants/AggregationTypes';
+import { GroupDateTypes } from '../../src/operations/constants/GroupDateTypes';
 import { groupValuesByDateColumn } from '../../src/operations/groupByDate';
 
 const REVENUE = 50;

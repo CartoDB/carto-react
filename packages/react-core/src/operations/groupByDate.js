@@ -1,6 +1,6 @@
 import { getMonday } from '../utils/dateUtils';
-import { aggregationFunctions } from './aggregation/values';
-import { GroupDateTypes } from './GroupDateTypes';
+import { aggregationFunctions } from './aggregation';
+import { GroupDateTypes } from './constants/GroupDateTypes';
 
 const GROUP_KEY_FN_MAPPING = {
   // @ts-ignore

@@ -1,3 +1,3 @@
-import { AggregationFunctions } from '../../types';
+import { AggregationFunctions } from '../types';
 
 export const aggregationFunctions: AggregationFunctions;
