@@ -1,8 +1,8 @@
 import { useTheme } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useRef, useState, useEffect } from 'react';
-import ReactEcharts from 'echarts-for-react';
 import { areChartPropsEqual } from './utils/chartUtils';
+import ReactEcharts from '../custom-components/echarts-for-react';
 
 function __generateDefaultConfig(
   { tooltipFormatter, xAxisFormatter = (v) => v, yAxisFormatter = (v) => v },

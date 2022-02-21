@@ -2,13 +2,18 @@
 
 ## Not released
 
+- Add groupByDate tests [#346](https://github.com/CartoDB/carto-react/pull/346)
+
+## 1.2
+
+### 1.2.1-beta.7 (2022-02-18)
+
 - Fix legend render with only visibility toggle [#342](https://github.com/CartoDB/carto-react/pull/342)
 - Fix LegendWidget types [#343](https://github.com/CartoDB/carto-react/pull/343)
+- Fix echarts-for-react events bug [#340](https://github.com/CartoDB/carto-react/pull/340)
 - Set expanded/collapsed value of each legend row [#337](https://github.com/CartoDB/carto-react/pull/337)
 - Implement stringSearch filter [#331](https://github.com/CartoDB/carto-react/pull/331)
 - Add filters tests [#331](https://github.com/CartoDB/carto-react/pull/331)
-
-## 1.2
 
 ### 1.2.1-beta.6 (2022-02-16)
 

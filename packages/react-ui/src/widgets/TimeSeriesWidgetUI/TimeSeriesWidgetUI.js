@@ -421,7 +421,7 @@ function daysCurrentDateRange(date) {
 }
 
 function weeksCurrentDateRange(date) {
-  return `Week of ${getMonday(date).toLocaleDateString()}`;
+  return `Week of ${new Date(getMonday(date)).toLocaleDateString()}`;
 }
 
 function yearCurrentDateRange(date) {
