@@ -46,19 +46,21 @@ export function groupValuesByDateColumn(
   const groups = data.reduce((acc, item) => {
     const value = item[keysColumn];
     const formattedValue = new Date(value);
-    const group = groupKeyFn(formattedValue);
+    const groupKey = groupKeyFn(formattedValue);
 
-    let groupedValues = acc.get(group);
-    if (!groupedValues) {
-      groupedValues = [];
-      acc.set(group, groupedValues);
-    }
+    if (!isNaN(groupKey)) {
+      let groupedValues = acc.get(groupKey);
+      if (!groupedValues) {
+        groupedValues = [];
+        acc.set(groupKey, groupedValues);
+      }
 
-    const isValid = item[valuesColumn] !== null && item[valuesColumn] !== undefined;
+      const isValid = item[valuesColumn] !== null && item[valuesColumn] !== undefined;
 
-    if (isValid) {
-      groupedValues.push(item[valuesColumn]);
-      acc.set(group, groupedValues);
+      if (isValid) {
+        groupedValues.push(item[valuesColumn]);
+        acc.set(groupKey, groupedValues);
+      }
     }
 
     return acc;
@@ -76,4 +78,9 @@ export function groupValuesByDateColumn(
   }
 
   return [];
+}
+
+// Aux
+function isValidDate(d) {
+  return typeof d === 'number' || (d instanceof Date && !isNaN(d));
 }

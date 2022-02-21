@@ -119,6 +119,19 @@ describe('groupValuesByDateColumn', () => {
       });
     });
   });
+
+  describe('invalid features', () => {
+    test('invalid date columns are not taken into consideration', () => {
+      const h = groupValuesByDateColumn(
+        [{ [DATE_COLUMN]: '__non_number__', [OPERATION_COLUMN]: 100 }],
+        OPERATION_COLUMN,
+        DATE_COLUMN,
+        GroupDateTypes.DAYS,
+        AggregationTypes.COUNT
+      );
+      expect(h).toEqual([]);
+    });
+  });
 });
 
 // Aux
