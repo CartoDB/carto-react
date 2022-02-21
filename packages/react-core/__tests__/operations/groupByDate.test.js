@@ -51,19 +51,25 @@ describe('groupValuesByDateColumn', () => {
     });
 
     describe('grouping operation tests', () => {
-      const ARGS = [FEATURES, OPERATION_COLUMN, DATE_COLUMN, GroupDateTypes.YEARS];
+      const params = {
+        features: FEATURES,
+        valuesColumn: OPERATION_COLUMN,
+        keysColumn: DATE_COLUMN
+      };
 
       test(GroupDateTypes.YEARS, () => {
+        params.operation = GroupDateTypes.YEARS;
+
         const RESULT = [
           { name: Date.UTC(1970, 0, 1), value: 4 },
           { name: Date.UTC(1971, 0, 1), value: 1 }
         ];
 
-        executeGroupByDateFnTests(ARGS, RESULT);
+        executeGroupByDateFnTests(params, RESULT);
       });
 
       test(GroupDateTypes.MONTHS, () => {
-        ARGS[3] = GroupDateTypes.MONTHS;
+        params.operation = GroupDateTypes.MONTHS;
 
         const RESULT = [
           { name: Date.UTC(1970, 0, 1), value: 2 },
@@ -71,11 +77,11 @@ describe('groupValuesByDateColumn', () => {
           { name: Date.UTC(1971, 0, 1), value: 1 }
         ];
 
-        executeGroupByDateFnTests(ARGS, RESULT);
+        executeGroupByDateFnTests(params, RESULT);
       });
 
       test(GroupDateTypes.WEEKS, () => {
-        ARGS[3] = GroupDateTypes.WEEKS;
+        params.operation = GroupDateTypes.WEEKS;
 
         const RESULT = [
           { name: Date.UTC(1969, 11, 29), value: 2 },
@@ -83,11 +89,11 @@ describe('groupValuesByDateColumn', () => {
           { name: Date.UTC(1970, 11, 28), value: 1 }
         ];
 
-        executeGroupByDateFnTests(ARGS, RESULT);
+        executeGroupByDateFnTests(params, RESULT);
       });
 
       test(GroupDateTypes.DAYS, () => {
-        ARGS[3] = GroupDateTypes.DAYS;
+        params.operation = GroupDateTypes.DAYS;
 
         const RESULT = [
           { name: Date.UTC(1970, 0, 1), value: 2 },
@@ -95,11 +101,11 @@ describe('groupValuesByDateColumn', () => {
           { name: Date.UTC(1971, 0, 1), value: 1 }
         ];
 
-        executeGroupByDateFnTests(ARGS, RESULT);
+        executeGroupByDateFnTests(params, RESULT);
       });
 
       test(GroupDateTypes.HOURS, () => {
-        ARGS[3] = GroupDateTypes.HOURS;
+        params.operation = GroupDateTypes.HOURS;
 
         const RESULT = [
           { name: Date.UTC(1970, 0, 1, 0, 0), value: 2 },
@@ -107,15 +113,15 @@ describe('groupValuesByDateColumn', () => {
           { name: Date.UTC(1971, 0, 1, 1, 0), value: 1 }
         ];
 
-        executeGroupByDateFnTests(ARGS, RESULT);
+        executeGroupByDateFnTests(params, RESULT);
       });
 
       test(GroupDateTypes.MINUTES, () => {
-        ARGS[3] = GroupDateTypes.MINUTES;
+        params.operation = GroupDateTypes.MINUTES;
 
         const RESULT = DATES_VALUES.map((dateValue) => ({ name: dateValue, value: 1 }));
 
-        executeGroupByDateFnTests(ARGS, RESULT);
+        executeGroupByDateFnTests(params, RESULT);
       });
     });
   });
@@ -142,7 +148,7 @@ function executeGroupByDateFnTests(args, result) {
   }));
 
   [AggregationTypes.COUNT, AggregationTypes.SUM].forEach((aggregation, idx) =>
-    expect(groupValuesByDateColumn(...args, aggregation)).toEqual(
+    expect(groupValuesByDateColumn(...Object.values(args), aggregation)).toEqual(
       idx ? sumResult : result
     )
   );
