@@ -79,8 +79,3 @@ export function groupValuesByDateColumn(
 
   return [];
 }
-
-// Aux
-function isValidDate(d) {
-  return typeof d === 'number' || (d instanceof Date && !isNaN(d));
-}
