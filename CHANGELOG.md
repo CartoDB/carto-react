@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Add groupByDate tests [#346](https://github.com/CartoDB/carto-react/pull/346)
+
 ## 1.2
 
 ### 1.2.1-beta.7 (2022-02-18)
