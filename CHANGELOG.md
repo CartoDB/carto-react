@@ -2,9 +2,9 @@
 
 ## Not released
 
-## 1.2
-
 - Refactor PieWidgetUI [#341](https://github.com/CartoDB/carto-react/pull/341)
+
+## 1.2
 
 ### 1.2.1-beta.7 (2022-02-18)
 
