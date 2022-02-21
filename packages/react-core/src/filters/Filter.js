@@ -1,39 +1,4 @@
-import { makeIntervalComplete } from '../utils/makeIntervalComplete';
-import { FilterTypes } from './FilterQueryBuilder';
-
-function between(filterValues, featureValue) {
-  const checkRange = (range) => {
-    const [lowerBound, upperBound] = range;
-    return featureValue >= lowerBound && featureValue <= upperBound;
-  };
-
-  return makeIntervalComplete(filterValues).some(checkRange);
-}
-
-function closedOpen(filterValues, featureValue) {
-  const checkRange = (range) => {
-    const [lowerBound, upperBound] = range;
-    return featureValue >= lowerBound && featureValue < upperBound;
-  };
-
-  return makeIntervalComplete(filterValues).some(checkRange);
-}
-
-const filterFunctions = {
-  [FilterTypes.IN](filterValues, featureValue) {
-    return filterValues.includes(featureValue);
-  },
-  [FilterTypes.BETWEEN]: between,
-  [FilterTypes.TIME](filterValues, featureValue) {
-    const featureValueAsTimestamp = new Date(featureValue).getTime();
-    if (isFinite(featureValueAsTimestamp)) {
-      return between(filterValues, featureValueAsTimestamp);
-    } else {
-      throw new Error(`Column used to filter by time isn't well formatted.`);
-    }
-  },
-  [FilterTypes.CLOSED_OPEN]: closedOpen
-};
+import { filterFunctions } from './FilterTypes';
 
 function passesFilter(columns, filters, feature) {
   return columns.every((column) => {
@@ -51,7 +16,11 @@ function passesFilter(columns, filters, feature) {
         throw new Error(`"${filter}" filter is not implemented.`);
       }
 
-      return filterFunction(columnFilters[filter].values, feature[column]);
+      return filterFunction(
+        columnFilters[filter].values,
+        feature[column],
+        columnFilters[filter].params
+      );
     });
   });
 }
