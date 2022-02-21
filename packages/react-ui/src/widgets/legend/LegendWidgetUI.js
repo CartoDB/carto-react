@@ -205,19 +205,23 @@ function LegendRows({
             collapsible = true,
             collapsed = false,
             note = '',
-            attr = ''
+            attr = '',
+            children
           } = legend;
 
           const isLast = layers.length - 1 === index;
           const LegendComponent =
             LEGEND_COMPONENT_BY_TYPE[type] || customLegendTypes[type] || UnknownLegend;
+          const hasChildren =
+            type === LEGEND_TYPES.CUSTOM ? !!children : !!LegendComponent;
 
           return (
             <Fragment key={id}>
               <LegendWrapper
                 id={id}
                 title={title}
-                collapsible={!!(collapsible && !!LegendComponent)}
+                hasChildren={hasChildren}
+                collapsible={collapsible}
                 collapsed={collapsed}
                 switchable={switchable}
                 visible={visible}
@@ -242,8 +246,6 @@ function LegendRows({
 
 function UnknownLegend({ legend }) {
   return (
-    <Typography variant='body2'>
-      {legend.type} is not a known legend type.
-    </Typography>
+    <Typography variant='body2'>{legend.type} is not a known legend type.</Typography>
   );
 }
