@@ -3,6 +3,8 @@
 ## Not released
 
 - Add groupByDate tests [#346](https://github.com/CartoDB/carto-react/pull/346)
+- Implement stringSearch filter [#331](https://github.com/CartoDB/carto-react/pull/331)
+- Add filters tests [#331](https://github.com/CartoDB/carto-react/pull/331)
 
 ## 1.2
 
