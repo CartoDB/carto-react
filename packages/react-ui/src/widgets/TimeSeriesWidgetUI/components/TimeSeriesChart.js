@@ -1,6 +1,6 @@
 import { useTheme } from '@material-ui/core';
 import React, { useMemo, useState } from 'react';
-import ReactEcharts from 'echarts-for-react';
+import ReactEcharts from '../../../custom-components/echarts-for-react';
 import useTimeSeriesInteractivity from '../hooks/useTimeSeriesInteractivity';
 
 export default function TimeSeriesChart({
