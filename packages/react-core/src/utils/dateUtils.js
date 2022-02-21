@@ -1,8 +1,7 @@
 export function getMonday(date) {
-  const day = date.getDay();
-  const diff = date.getDate() - day + (day ? 1 : -6); // adjust when day is sunday
-  date.setDate(diff);
-  // Ignore hours
-  date.setHours(0, 0, 0, 0);
-  return date;
+  const dateCp = new Date(date);
+  const day = dateCp.getDay();
+  const diff = dateCp.getDate() - day + (day ? 1 : -6); // adjust when day is sunday
+  dateCp.setDate(diff);
+  return Date.UTC(dateCp.getUTCFullYear(), dateCp.getUTCMonth(), dateCp.getUTCDate());
 }

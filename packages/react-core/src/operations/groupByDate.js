@@ -4,25 +4,25 @@ import { GroupDateTypes } from './GroupDateTypes';
 
 const GROUP_KEY_FN_MAPPING = {
   // @ts-ignore
-  [GroupDateTypes.YEARS]: (date) => new Date(Date.UTC(date.getFullYear())),
-  [GroupDateTypes.MONTHS]: (date) =>
-    new Date(Date.UTC(date.getFullYear(), date.getMonth())),
+  [GroupDateTypes.YEARS]: (date) => Date.UTC(date.getUTCFullYear()),
+  [GroupDateTypes.MONTHS]: (date) => Date.UTC(date.getUTCFullYear(), date.getUTCMonth()),
   [GroupDateTypes.WEEKS]: (date) => getMonday(date),
   [GroupDateTypes.DAYS]: (date) =>
-    new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())),
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()),
   [GroupDateTypes.HOURS]: (date) =>
-    new Date(
-      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours())
+    Date.UTC(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+      date.getUTCHours()
     ),
   [GroupDateTypes.MINUTES]: (date) =>
-    new Date(
-      Date.UTC(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes()
-      )
+    Date.UTC(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+      date.getUTCHours(),
+      date.getUTCMinutes()
     )
 };
 
@@ -46,19 +46,21 @@ export function groupValuesByDateColumn(
   const groups = data.reduce((acc, item) => {
     const value = item[keysColumn];
     const formattedValue = new Date(value);
-    const group = groupKeyFn(formattedValue).getTime();
+    const groupKey = groupKeyFn(formattedValue);
 
-    let groupedValues = acc.get(group);
-    if (!groupedValues) {
-      groupedValues = [];
-      acc.set(group, groupedValues);
-    }
+    if (!isNaN(groupKey)) {
+      let groupedValues = acc.get(groupKey);
+      if (!groupedValues) {
+        groupedValues = [];
+        acc.set(groupKey, groupedValues);
+      }
 
-    const isValid = item[valuesColumn] !== null && item[valuesColumn] !== undefined;
+      const isValid = item[valuesColumn] !== null && item[valuesColumn] !== undefined;
 
-    if (isValid) {
-      groupedValues.push(item[valuesColumn]);
-      acc.set(group, groupedValues);
+      if (isValid) {
+        groupedValues.push(item[valuesColumn]);
+        acc.set(groupKey, groupedValues);
+      }
     }
 
     return acc;

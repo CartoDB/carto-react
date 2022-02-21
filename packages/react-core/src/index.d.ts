@@ -19,7 +19,7 @@ export { groupValuesByColumn } from './operations/groupby';
 export { histogram } from './operations/histogram';
 export { scatterPlot } from './operations/scatterPlot';
 
-export { FilterTypes as _FilterTypes } from './filters/FilterQueryBuilder';
+export { FilterTypes as _FilterTypes } from './filters/FilterTypes';
 
 export { tileFeatures } from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';
