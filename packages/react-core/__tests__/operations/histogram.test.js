@@ -5,7 +5,8 @@ const VALUES = [1, 2, 2, 3, 3, 3, 4, 4, 5];
 
 const buildValidFeatures = (columnName) =>
   [...Array(VALUES.length)].map((_, idx) => ({
-    [columnName]: VALUES[idx]
+    [columnName]: VALUES[idx],
+    [columnName + '_2']: VALUES[idx]
   }));
 
 const buildInvalidFeatures = (columnName) => [
@@ -18,87 +19,91 @@ const buildInvalidFeatures = (columnName) => [
 ];
 
 const COLUMN = 'test';
+const COLUMN_2 = 'test_2';
 const ticks = Array.from(new Set(VALUES));
 
 describe('histogram', () => {
   test('should return an empty array due to empty features array', () => {
-    expect(histogram([])).toEqual([]);
+    expect(histogram({ data: [] })).toEqual([]);
   });
 
   describe('valid features', () => {
     test('should return an empty array due to invalid operation', () => {
-      expect(histogram(buildValidFeatures(COLUMN), COLUMN, ticks, 'pow')).toEqual([]);
+      expect(
+        histogram({
+          data: buildValidFeatures(COLUMN),
+          valuesColumns: [COLUMN],
+          ticks,
+          // @ts-ignore
+          operation: 'pow'
+        })
+      ).toEqual([]);
     });
 
     test('should return an array of bins with same length as ticks plus two, due to the addition of extreme values', () => {
-      const h = histogram(
-        buildValidFeatures(COLUMN),
-        COLUMN,
+      const h = histogram({
+        data: buildValidFeatures(COLUMN),
+        valuesColumns: [COLUMN],
         ticks,
-        AggregationTypes.COUNT
-      );
+        operation: AggregationTypes.COUNT
+      });
       expect(h.length).toBe(1 + ticks.length);
     });
 
-    test(AggregationTypes.COUNT, () => {
-      const h = histogram(
-        buildValidFeatures(COLUMN),
-        COLUMN,
-        ticks,
-        AggregationTypes.COUNT
-      );
-      expect(h).toEqual([0, 1, 2, 3, 2, 1]);
+    const RESULTS = [
+      [0, 1, 2, 3, 2, 1],
+      [0, 1, 2, 3, 4, 5],
+      [0, 1, 2, 3, 4, 5],
+      [0, 1, 2, 3, 4, 5],
+      [0, 1, 4, 9, 8, 5]
+    ];
+
+    describe('one valuesColumns', () => {
+      Object.values(AggregationTypes).forEach((operation, idx) => {
+        test(operation, () => {
+          const groups = histogram({
+            data: buildValidFeatures(COLUMN),
+            valuesColumns: [COLUMN],
+            ticks,
+            operation
+          });
+          expect(groups).toEqual(RESULTS[idx]);
+        });
+      });
     });
 
-    test(AggregationTypes.AVG, () => {
-      const h = histogram(
-        buildValidFeatures(COLUMN),
-        COLUMN,
-        ticks,
-        AggregationTypes.AVG
+    describe('multiple valuesColumns', () => {
+      const RESULTS_FOR_MULTIPLE = RESULTS.map((result, idx) =>
+        result.map(
+          (value) =>
+            // === 0 is AggregationTypes.COUNT
+            value * (idx === 0 ? 1 : 2)
+        )
       );
-      expect(h).toEqual([0, 1, 2, 3, 4, 5]);
-    });
 
-    test(AggregationTypes.MIN, () => {
-      const h = histogram(
-        buildValidFeatures(COLUMN),
-        COLUMN,
-        ticks,
-        AggregationTypes.MIN
-      );
-      expect(h).toEqual([0, 1, 2, 3, 4, 5]);
-    });
-
-    test(AggregationTypes.MAX, () => {
-      const h = histogram(
-        buildValidFeatures(COLUMN),
-        COLUMN,
-        ticks,
-        AggregationTypes.MAX
-      );
-      expect(h).toEqual([0, 1, 2, 3, 4, 5]);
-    });
-
-    test(AggregationTypes.SUM, () => {
-      const h = histogram(
-        buildValidFeatures(COLUMN),
-        COLUMN,
-        ticks,
-        AggregationTypes.SUM
-      );
-      expect(h).toEqual([0, 1, 4, 9, 8, 5]);
+      Object.values(AggregationTypes).forEach((operation, idx) => {
+        test(operation, () => {
+          const groups = histogram({
+            data: buildValidFeatures(COLUMN),
+            valuesColumns: [COLUMN, COLUMN_2],
+            joinOperation: AggregationTypes.SUM,
+            ticks: ticks.map((tick) => tick * 2),
+            operation
+          });
+          expect(groups).toEqual(RESULTS_FOR_MULTIPLE[idx]);
+        });
+      });
     });
   });
 
   describe('invalid features', () => {
     test('should return all bins values to 0 due to invalid column data', () => {
-      const h = histogram(
-        buildInvalidFeatures(COLUMN),
-        COLUMN,
+      const h = histogram({
+        data: buildInvalidFeatures(COLUMN),
+        valuesColumns: [COLUMN],
         ticks,
-        AggregationTypes.COUNT
-      );
+        operation: AggregationTypes.COUNT
+      });
       expect(h).toEqual([0, 0, 0, 0, 0, 0]);
     });
   });
