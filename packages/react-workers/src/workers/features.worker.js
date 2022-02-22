@@ -117,12 +117,12 @@ function getCategories({ filters, operation, column, operationColumn }) {
   if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
 
-    const groups = groupValuesByColumn(
-      filteredFeatures,
-      operationColumn,
-      column,
+    const groups = groupValuesByColumn({
+      data: filteredFeatures,
+      valuesColumns: [operationColumn].flat(),
+      keysColumn: column,
       operation
-    );
+    });
 
     result = groups || [];
   }

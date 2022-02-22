@@ -1,5 +1,7 @@
 import { AggregationTypes } from './constants/AggregationTypes';
 
+const dummyFn = ([value]) => value;
+
 export const aggregationFunctions = {
   [AggregationTypes.COUNT]: (values) => values.length,
   [AggregationTypes.MIN]: min,
@@ -7,6 +9,18 @@ export const aggregationFunctions = {
   [AggregationTypes.SUM]: sum,
   [AggregationTypes.AVG]: avg
 };
+
+export function aggregate(feature, keys, operation) {
+  const normalizedKeys = Array.isArray(keys) ? keys : normalizeKeys(keys);
+
+  if (!normalizedKeys?.length) {
+    throw new Error('Cannot aggregate a feature without having keys');
+  }
+
+  const aggregationFn = aggregationFunctions[operation] || dummyFn;
+
+  return aggregationFn(normalizedKeys.map((column) => feature[column]));
+}
 
 // Aggregation functions
 function avg(values, ...args) {
@@ -18,8 +32,7 @@ function sum(values, keys, joinOperation) {
 
   let sumFn = (a, b) => a + b;
   if (normalizedKeys) {
-    const calcTempValue = getCalcTempValueFn(normalizedKeys, joinOperation);
-    sumFn = (a, b) => a + calcTempValue(b);
+    sumFn = (a, b) => a + aggregate(b, normalizedKeys, joinOperation);
   }
 
   return values.reduce(sumFn, 0);
@@ -28,8 +41,10 @@ function sum(values, keys, joinOperation) {
 function min(values, keys, joinOperation) {
   const normalizedKeys = normalizeKeys(keys);
   if (normalizedKeys) {
-    const calcTempValue = getCalcTempValueFn(normalizedKeys, joinOperation);
-    return values.reduce((a, b) => Math.min(a, calcTempValue(b)), Infinity);
+    return values.reduce(
+      (a, b) => Math.min(a, aggregate(b, normalizedKeys, joinOperation)),
+      Infinity
+    );
   } else {
     return Math.min(...values);
   }
@@ -38,8 +53,10 @@ function min(values, keys, joinOperation) {
 function max(values, keys, joinOperation) {
   const normalizedKeys = normalizeKeys(keys);
   if (normalizedKeys) {
-    const calcTempValue = getCalcTempValueFn(normalizedKeys, joinOperation);
-    return values.reduce((a, b) => Math.max(a, calcTempValue(b)), -Infinity);
+    return values.reduce(
+      (a, b) => Math.max(a, aggregate(b, normalizedKeys, joinOperation)),
+      -Infinity
+    );
   } else {
     return Math.max(...values);
   }
@@ -51,9 +68,4 @@ function max(values, keys, joinOperation) {
 // Use always an array to make the code easier
 function normalizeKeys(keys) {
   return keys?.length ? [keys].flat() : undefined;
-}
-
-function getCalcTempValueFn(keys, joinOperation) {
-  const joinFn = aggregationFunctions[joinOperation] || (([value]) => value);
-  return (feature) => joinFn(keys.map((column) => feature[column]));
 }
