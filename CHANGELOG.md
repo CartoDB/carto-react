@@ -2,6 +2,10 @@
 
 ## Not released
 
+## 1.2
+
+### 1.2.1-beta.8 (2022-02-22)
+
 - Bump deck.gl to 8.7.0-beta.6 [#348](https://github.com/CartoDB/carto-react/pull/348)
 - Fix duplicated logic for category selection in HistogramWidgetUI [#345](https://github.com/CartoDB/carto-react/pull/345)
 - Add groupByDate tests [#346](https://github.com/CartoDB/carto-react/pull/346)
@@ -9,8 +13,6 @@
 - Add searchable prop in CategoryWidget to optionally use the search functionality [#338](https://github.com/CartoDB/carto-react/pull/338)
 - Implement stringSearch filter [#331](https://github.com/CartoDB/carto-react/pull/331)
 - Add filters tests [#331](https://github.com/CartoDB/carto-react/pull/331)
-
-## 1.2
 
 ### 1.2.1-beta.7 (2022-02-18)
 
