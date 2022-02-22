@@ -65,8 +65,8 @@
   "peerDependencies": {
     "@carto/react-core": "^1.2.1-alpha.8",
     "@carto/react-workers": "^1.2.1-alpha.8",
-    "@deck.gl/carto": "^8.7.0-beta.5",
-    "@deck.gl/core": "^8.7.0-beta.5",
+    "@deck.gl/carto": "^8.7.0-beta.6",
+    "@deck.gl/core": "^8.7.0-beta.6",
     "@reduxjs/toolkit": "^1.5.0"
   }
 }
