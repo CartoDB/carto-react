@@ -161,5 +161,11 @@ describe('CategoryWidgetUI', () => {
       fireEvent.click(screen.getByText(/Search in 4 elements/));
       fireEvent.click(screen.getByText(/Cancel/));
     });
+
+    test('searchable prop', () => {
+      render(<CategoryWidgetUI data={DATA} maxItems={1} searchable={false} />);
+      expect(screen.queryByText('Search in 4 elements')).not.toBeInTheDocument();
+      expect(screen.getByText('Others (4)')).toBeInTheDocument();
+    });
   });
 });
