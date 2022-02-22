@@ -19,6 +19,12 @@ const filters = {
       owner: 'widgetId3',
       values: [[0, 1]]
     }
+  },
+  column4: {
+    stringSearch: {
+      owner: 'widgetId4',
+      values: ['Álcàlâ dë Guadaíra']
+    }
   }
 };
 
@@ -101,7 +107,8 @@ describe('Filters', () => {
         properties: {
           column1: 'a',
           column2: 1.5,
-          column3: 1
+          column3: 1,
+          column4: 'Alcalá de Guadaíra'
         }
       };
       const featureIsIncluded = buildFeatureFilter(params)(feature);
@@ -113,7 +120,8 @@ describe('Filters', () => {
         properties: {
           column1: 'a',
           column2: 3,
-          column3: '1999'
+          column3: '1999',
+          column4: 'test'
         }
       };
       const featureIsIncluded = buildFeatureFilter(params)(feature);
@@ -213,7 +221,8 @@ describe('Filters', () => {
         properties: {
           column1: 'a',
           column2: 1.5,
-          column3: '1970'
+          column3: '1970',
+          column4: 'Alcalá de Guadaíra'
         }
       };
       const featureIsIncluded = buildFeatureFilter(params)(feature);
@@ -225,7 +234,8 @@ describe('Filters', () => {
         properties: {
           column1: 'a',
           column2: 3,
-          column3: -1
+          column3: -1,
+          column4: 'test'
         }
       };
       const featureIsIncluded = buildFeatureFilter(params)(feature);
