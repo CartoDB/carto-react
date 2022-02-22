@@ -141,7 +141,8 @@ function CategoryWidgetUI(props) {
     order,
     selectedCategories,
     animation,
-    filterable
+    filterable,
+    searchable
   } = props;
   const [sortedData, setSortedData] = useState([]);
   const [maxValue, setMaxValue] = useState(1);
@@ -283,15 +284,20 @@ function CategoryWidgetUI(props) {
     [blockedCategories, labels, maxItems, searchValue, showAll]
   );
 
+  const getCategoriesCount = useCallback(() => {
+    const blocked = blockedCategories.length;
+    return blocked ? data.length - blocked : data.length - maxItems;
+  }, [data, maxItems, blockedCategories]);
+
   const getCategoryLabel = useCallback(
     (name) => {
       if (name === REST_CATEGORY) {
-        return 'Others';
+        return `Others ${searchable ? '' : `(${getCategoriesCount()})`}`;
       } else {
         return labels[name] || name;
       }
     },
-    [labels]
+    [getCategoriesCount, labels, searchable]
   );
 
   const getProgressbarLength = useCallback(
@@ -362,11 +368,6 @@ function CategoryWidgetUI(props) {
       setAnimValues(sortedData);
     }
   }, [animation, sortedData]);
-
-  const getCategoriesCount = useCallback(() => {
-    const blocked = blockedCategories.length;
-    return blocked ? data.length - blocked : data.length - maxItems;
-  }, [data, maxItems, blockedCategories]);
 
   // Separated to simplify the widget layout but inside the main component to avoid passing all dependencies
   const CategoryItem = (props) => {
@@ -569,7 +570,7 @@ function CategoryWidgetUI(props) {
               </>
             )}
           </Grid>
-          {data.length > maxItems ? (
+          {data.length > maxItems && searchable ? (
             showAll ? (
               <Button size='small' color='primary' onClick={handleCancelClicked}>
                 Cancel
@@ -606,7 +607,8 @@ CategoryWidgetUI.defaultProps = {
   order: CategoryWidgetUI.ORDER_TYPES.RANKING,
   selectedCategories: [],
   animation: true,
-  filterable: true
+  filterable: true,
+  searchable: true
 };
 
 CategoryWidgetUI.propTypes = {
@@ -624,6 +626,7 @@ CategoryWidgetUI.propTypes = {
   order: PropTypes.oneOf(Object.values(CategoryWidgetUI.ORDER_TYPES)),
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
+  searchable: PropTypes.bool
 };
 
 export default CategoryWidgetUI;
