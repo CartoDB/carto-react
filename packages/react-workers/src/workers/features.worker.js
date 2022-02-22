@@ -105,7 +105,12 @@ function getHistogram({ filters, operation, column, ticks }) {
   if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
 
-    result = histogram(filteredFeatures, column, ticks, operation);
+    result = histogram({
+      data: filteredFeatures,
+      valuesColumns: [column].flat(),
+      ticks,
+      operation
+    });
   }
 
   postMessage({ result });
