@@ -155,13 +155,13 @@ function getTimeSeries({ filters, column, stepSize, operation, operationColumn }
   if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
 
-    const groups = groupValuesByDateColumn(
-      filteredFeatures,
-      operationColumn,
-      column,
-      stepSize,
+    const groups = groupValuesByDateColumn({
+      data: filteredFeatures,
+      valuesColumns: [operationColumn].flat(),
+      keysColumn: column,
+      groupType: stepSize,
       operation
-    );
+    });
 
     result = groups || [];
   }

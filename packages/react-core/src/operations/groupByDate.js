@@ -1,5 +1,5 @@
 import { getMonday } from '../utils/dateUtils';
-import { aggregationFunctions } from './aggregation';
+import { aggregate, aggregationFunctions } from './aggregation';
 import { GroupDateTypes } from './constants/GroupDateTypes';
 
 const GROUP_KEY_FN_MAPPING = {
@@ -26,13 +26,14 @@ const GROUP_KEY_FN_MAPPING = {
     )
 };
 
-export function groupValuesByDateColumn(
+export function groupValuesByDateColumn({
   data,
-  valuesColumn,
+  valuesColumns,
+  joinOperation,
   keysColumn,
   groupType,
   operation
-) {
+}) {
   if (Array.isArray(data) && data.length === 0) {
     return null;
   }
@@ -55,10 +56,12 @@ export function groupValuesByDateColumn(
         acc.set(groupKey, groupedValues);
       }
 
-      const isValid = item[valuesColumn] !== null && item[valuesColumn] !== undefined;
+      const tempValue = aggregate(item, valuesColumns, joinOperation);
+
+      const isValid = tempValue !== null && tempValue !== undefined;
 
       if (isValid) {
-        groupedValues.push(item[valuesColumn]);
+        groupedValues.push(tempValue);
         acc.set(groupKey, groupedValues);
       }
     }
