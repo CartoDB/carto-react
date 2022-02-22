@@ -19,6 +19,7 @@ type FilterBasic = {
   type: _FilterTypes;
   values: string[] | number[];
   owner?: string;
+  params?: Record<string, unknown>
 };
 
 type FilterCommonProps = {

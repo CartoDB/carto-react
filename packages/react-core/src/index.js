@@ -19,8 +19,9 @@ export { groupValuesByColumn } from './operations/groupby';
 export { histogram } from './operations/histogram';
 export { scatterPlot } from './operations/scatterPlot';
 
+export { FilterTypes as _FilterTypes } from './filters/FilterTypes';
+
 export {
-  FilterTypes as _FilterTypes,
   filtersToSQL as _filtersToSQL,
   getApplicableFilters as _getApplicableFilters
 } from './filters/FilterQueryBuilder';
