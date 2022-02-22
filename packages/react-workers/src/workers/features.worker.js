@@ -139,7 +139,11 @@ function getScatterPlot({ filters, xAxisColumn, yAxisColumn }) {
   let result = [];
   if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
-    result = scatterPlot(filteredFeatures, xAxisColumn, yAxisColumn);
+    result = scatterPlot({
+      data: filteredFeatures,
+      xAxisColumns: [xAxisColumn].flat(),
+      yAxisColumns: [yAxisColumn].flat()
+    });
   }
 
   postMessage({ result });

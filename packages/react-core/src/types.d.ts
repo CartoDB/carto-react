@@ -20,6 +20,8 @@ export type GroupByFeature =
 
 export type HistogramFeature = number[] | [];
 
+export type ScatterPlotFeature = [number, number][];
+
 export type Viewport = [number, number, number, number];
 
 export type TileFeatures = {
