@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Bump deck.gl to 8.7.0-beta.6 [#348](https://github.com/CartoDB/carto-react/pull/348)
 - Fix duplicated logic for category selection in HistogramWidgetUI [#345](https://github.com/CartoDB/carto-react/pull/345)
 - Add groupByDate tests [#346](https://github.com/CartoDB/carto-react/pull/346)
 - Refactor PieWidgetUI [#341](https://github.com/CartoDB/carto-react/pull/341)
