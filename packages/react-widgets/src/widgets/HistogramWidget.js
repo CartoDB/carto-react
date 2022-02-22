@@ -70,7 +70,7 @@ function HistogramWidget(props) {
         if (typeof from === 'undefined' || from === null) {
           return 0;
         } else if (typeof to === 'undefined' || to === null) {
-          return ticks.length - 1;
+          return ticks.length;
         } else {
           const idx = ticks.indexOf(from);
           return idx !== -1 ? idx + 1 : null;
