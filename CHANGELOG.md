@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fix duplicated logic for category selection in HistogramWidgetUI [#345](https://github.com/CartoDB/carto-react/pull/345)
 - Add groupByDate tests [#346](https://github.com/CartoDB/carto-react/pull/346)
 - Refactor PieWidgetUI [#341](https://github.com/CartoDB/carto-react/pull/341)
 - Add searchable prop in CategoryWidget to optionally use the search functionality [#338](https://github.com/CartoDB/carto-react/pull/338)
