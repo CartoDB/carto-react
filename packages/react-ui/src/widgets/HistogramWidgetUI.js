@@ -313,7 +313,7 @@ function HistogramWidgetUI(props) {
         const { serie } = getChartSerie(echart, params.seriesIndex);
         let newSelectedCategories = serie.data
           .filter((category) => !category.disabled)
-          .map((d, i) => i);
+          .map((d) => serie.data.indexOf(d));
 
         if (newSelectedCategories.length === serie.data.length) {
           newSelectedCategories = [];
