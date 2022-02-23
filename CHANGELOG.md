@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fix unchecked switch width [#351](https://github.com/CartoDB/carto-react/pull/351)
 - Fix opacity selector input [#350](https://github.com/CartoDB/carto-react/pull/350)
 
 ## 1.2
