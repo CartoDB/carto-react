@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix opacity selector input [#350](https://github.com/CartoDB/carto-react/pull/350)
+
 ## 1.2
 
 ### 1.2.1-beta.8 (2022-02-22)
