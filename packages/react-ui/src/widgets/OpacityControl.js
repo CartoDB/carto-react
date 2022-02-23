@@ -31,10 +31,10 @@ const useOpacityControlStyles = makeStyles(({ spacing }) => ({
         appearance: 'none',
         margin: 0
       }
-    },
-    '& .MuiInputAdornment-positionEnd': {
-      margin: 0
     }
+  },
+  noMargin: {
+    margin: 0
   }
 }));
 
@@ -73,7 +73,14 @@ export default function OpacityControl({ opacity, onChangeOpacity }) {
                 type: 'number',
                 inputProps: { 'data-testid': 'opacity-slider' },
                 'aria-labelledby': 'opacity-slider',
-                endAdornment: <InputAdornment position='end'>%</InputAdornment>
+                endAdornment: (
+                  <InputAdornment
+                    classes={{ positionEnd: classes.noMargin }}
+                    position='end'
+                  >
+                    %
+                  </InputAdornment>
+                )
               }}
             />
           </Grid>
