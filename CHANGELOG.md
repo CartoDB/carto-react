@@ -2,11 +2,14 @@
 
 ## Not released
 
+
+## 1.2
+
+### 1.2.1-beta.9 (2022-02-24)
+
 - Bump deck.gl to 8.7.0-beta.7 [#352](https://github.com/CartoDB/carto-react/pull/352)
 - Fix unchecked switch width [#351](https://github.com/CartoDB/carto-react/pull/351)
 - Fix opacity selector input [#350](https://github.com/CartoDB/carto-react/pull/350)
-
-## 1.2
 
 ### 1.2.1-beta.8 (2022-02-22)
 
