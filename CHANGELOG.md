@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Bump deck.gl to 8.7.0 [#355](https://github.com/CartoDB/carto-react/pull/355)
 - Typings fix: Include GMapsBasemaps in InitialCarto2State [#354](https://github.com/CartoDB/carto-react/pull/354)
 
 ## 1.2
