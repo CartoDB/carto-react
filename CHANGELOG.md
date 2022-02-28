@@ -2,10 +2,12 @@
 
 ## Not released
 
+## 1.2
+
+### 1.2.1 (2022-02-28)
+
 - Bump deck.gl to 8.7.0 [#355](https://github.com/CartoDB/carto-react/pull/355)
 - Typings fix: Include GMapsBasemaps in InitialCarto2State [#354](https://github.com/CartoDB/carto-react/pull/354)
-
-## 1.2
 
 ### 1.2.1-beta.9 (2022-02-24)
 
