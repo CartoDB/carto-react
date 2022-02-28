@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Typings fix: Include GMapsBasemaps in InitialCarto2State [#354](https://github.com/CartoDB/carto-react/pull/354)
 
 ## 1.2
 
