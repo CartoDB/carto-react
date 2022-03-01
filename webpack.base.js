@@ -11,7 +11,7 @@ module.exports = {
   // on final bundle.
   mode,
   devtool: mode === 'development' ? 'eval-source-map' : 'source-map',
-  entry: './src/index.js',
+  entry: './src/index.ts',
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
