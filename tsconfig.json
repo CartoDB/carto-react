@@ -9,7 +9,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "watch": true,
     "paths": {
         "@carto/react-api/*": ["packages/react-api/src/*"],
         "@carto/react-auth/*": ["packages/react-auth/src/*"],
