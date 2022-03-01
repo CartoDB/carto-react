@@ -13,7 +13,7 @@ module.exports = {
   devtool: mode === 'development' ? 'eval-source-map' : 'source-map',
   entry: './src/index.ts',
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.js']
   },
   module: {
     rules: [
@@ -24,9 +24,9 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
+        exclude: [/(node_modules)/, /(dist)/],
+        use: 'ts-loader'
+      }
     ]
   },
   plugins: [

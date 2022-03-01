@@ -7,5 +7,5 @@ export {
   InitialOauthState,
   OauthState,
   ViewState,
-  InitialCarto3State,
+  InitialCarto3State
 } from './types';
