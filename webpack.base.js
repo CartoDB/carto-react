@@ -11,13 +11,21 @@ module.exports = {
   // on final bundle.
   mode,
   devtool: mode === 'development' ? 'eval-source-map' : 'source-map',
-  entry: './src/index.js',
+  entry: './src/index.ts',
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
+  },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         exclude: [/(node_modules)/, /(dist)/],
         loader: 'babel-loader'
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: [/(node_modules)/, /(dist)/],
+        use: 'ts-loader'
       }
     ]
   },

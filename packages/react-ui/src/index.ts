@@ -1,4 +1,4 @@
-import { cartoThemeOptions } from './theme/carto-theme';
+import { cartoThemeOptions, CartoTheme } from './theme/carto-theme';
 import WrapperWidgetUI from './widgets/WrapperWidgetUI';
 import CategoryWidgetUI from './widgets/CategoryWidgetUI';
 import FormulaWidgetUI from './widgets/FormulaWidgetUI';
@@ -11,10 +11,15 @@ import LegendProportion from './widgets/legend/LegendProportion';
 import LegendRamp from './widgets/legend/LegendRamp';
 import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
-import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
+import {
+  useTimeSeriesContext,
+  TimeSeriesProvider
+} from './widgets/TimeSeriesWidgetUI/hooks/TimeSeriesContext';
+import useTimeSeriesInteractivity from './widgets/TimeSeriesWidgetUI/hooks/useTimeSeriesInteractivity';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
+import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import CursorIcon from './assets/CursorIcon';
 import PolygonIcon from './assets/PolygonIcon';
 import RectangleIcon from './assets/RectangleIcon';
@@ -31,6 +36,7 @@ const featureSelectionIcons = {
 
 export {
   cartoThemeOptions,
+  CartoTheme,
   WrapperWidgetUI,
   CategoryWidgetUI,
   FormulaWidgetUI,
@@ -38,6 +44,9 @@ export {
   PieWidgetUI,
   ScatterPlotWidgetUI,
   TimeSeriesWidgetUI,
+  useTimeSeriesContext,
+  useTimeSeriesInteractivity,
+  TimeSeriesProvider,
   FeatureSelectionWidgetUI,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
   TableWidgetUI,

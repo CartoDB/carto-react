@@ -1,7 +1,7 @@
 import { Credentials } from '@carto/react-api';
 import { OauthApp } from '@carto/react-auth';
 import { CartoBasemapsNames, GMapsBasemaps } from '@carto/react-basemaps';
-import { Viewport } from '@carto/react-core';
+import { Viewport } from '@carto/react-core/types';
 import { Geometry } from 'geojson';
 
 export type ViewState = {
@@ -31,7 +31,7 @@ type OauthCarto3 = {
   authorizeEndPoint: string
 }
 
-type InitialCarto3State = {
+export type InitialCarto3State = {
   oauth?: OauthCarto3
 } & InitialCarto2State;
 
