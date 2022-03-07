@@ -30,7 +30,7 @@ export {
   applyFilters as _applyFilters
 } from './filters/Filter';
 
-export { tileFeatures } from './filters/tileFeatures';
+export { processTiles } from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';
 
 export { GroupDateTypes } from './operations/GroupDateTypes';
@@ -41,3 +41,5 @@ export {
   EDIT_MODES,
   MASK_ID
 } from './utils/featureSelectionConstants';
+
+export { transformToTileCoords } from './utils/transformToTileCoords';
