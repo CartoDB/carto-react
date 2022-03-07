@@ -41,62 +41,68 @@ describe('groupValuesByColumn', () => {
       ).toEqual([]);
     });
 
-    const RESULTS = [
-      [
+    const RESULTS = {
+      [AggregationTypes.COUNT]: [
         { name: 'Category 2', value: 3 },
         { name: 'Category 1', value: 2 }
       ],
-      [
+      [AggregationTypes.AVG]: [
         { name: 'Category 2', value: 3 },
         { name: 'Category 1', value: 3 }
       ],
-      [
+      [AggregationTypes.MIN]: [
         { name: 'Category 2', value: 1 },
         { name: 'Category 1', value: 2 }
       ],
-      [
+      [AggregationTypes.MAX]: [
         { name: 'Category 2', value: 5 },
         { name: 'Category 1', value: 4 }
       ],
-      [
+      [AggregationTypes.SUM]: [
         { name: 'Category 2', value: 9 },
         { name: 'Category 1', value: 6 }
       ]
-    ];
+    };
 
     describe('one valuesColumns', () => {
-      Object.values(AggregationTypes).forEach((operation, idx) => {
+      Object.entries(RESULTS).forEach(([operation, result]) => {
         test(operation, () => {
           const groups = groupValuesByColumn({
             data: buildValidFeatures(COLUMN),
             valuesColumns: [`${COLUMN}_quantitative`],
             keysColumn: `${COLUMN}_qualitative`,
+            // @ts-ignore
             operation
           });
-          expect(groups).toEqual(RESULTS[idx]);
+          expect(groups).toEqual(result);
         });
       });
     });
 
     describe('multiple valuesColumns', () => {
-      const RESULTS_FOR_MULTIPLE = RESULTS.map((result, idx) =>
-        result.map(({ name, value }) => ({
-          name,
-          // === 0 is AggregationTypes.COUNT
-          value: value * (idx === 0 ? 1 : 2)
-        }))
+      const RESULTS_FOR_MULTIPLE = Object.entries(RESULTS).reduce(
+        (acc, [operation, result], idx) => {
+          acc[operation] = result.map(({ name, value }) => ({
+            name,
+            // === 0 is AggregationTypes.COUNT
+            value: value * (idx === 0 ? 1 : 2)
+          }));
+          return acc;
+        },
+        {}
       );
 
-      Object.values(AggregationTypes).forEach((operation, idx) => {
+      Object.entries(RESULTS_FOR_MULTIPLE).forEach(([operation, result]) => {
         test(operation, () => {
           const groups = groupValuesByColumn({
             data: buildValidFeatures(COLUMN),
             valuesColumns: [`${COLUMN}_quantitative`, `${COLUMN}_quantitative_2`],
             joinOperation: AggregationTypes.SUM,
             keysColumn: `${COLUMN}_qualitative`,
+            // @ts-ignore
             operation
           });
-          expect(groups).toEqual(RESULTS_FOR_MULTIPLE[idx]);
+          expect(groups).toEqual(result);
         });
       });
     });

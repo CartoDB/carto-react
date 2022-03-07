@@ -50,47 +50,53 @@ describe('histogram', () => {
       expect(h.length).toBe(1 + ticks.length);
     });
 
-    const RESULTS = [
-      [0, 1, 2, 3, 2, 1],
-      [0, 1, 2, 3, 4, 5],
-      [0, 1, 2, 3, 4, 5],
-      [0, 1, 2, 3, 4, 5],
-      [0, 1, 4, 9, 8, 5]
-    ];
+    const RESULTS = {
+      [AggregationTypes.COUNT]: [0, 1, 2, 3, 2, 1],
+      [AggregationTypes.AVG]: [0, 1, 2, 3, 4, 5],
+      [AggregationTypes.MIN]: [0, 1, 2, 3, 4, 5],
+      [AggregationTypes.MAX]: [0, 1, 2, 3, 4, 5],
+      [AggregationTypes.SUM]: [0, 1, 4, 9, 8, 5]
+    };
 
     describe('one valuesColumns', () => {
-      Object.values(AggregationTypes).forEach((operation, idx) => {
+      Object.entries(RESULTS).forEach(([operation, result]) => {
         test(operation, () => {
           const groups = histogram({
             data: buildValidFeatures(COLUMN),
             valuesColumns: [COLUMN],
             ticks,
+            // @ts-ignore
             operation
           });
-          expect(groups).toEqual(RESULTS[idx]);
+          expect(groups).toEqual(result);
         });
       });
     });
 
     describe('multiple valuesColumns', () => {
-      const RESULTS_FOR_MULTIPLE = RESULTS.map((result, idx) =>
-        result.map(
-          (value) =>
-            // === 0 is AggregationTypes.COUNT
-            value * (idx === 0 ? 1 : 2)
-        )
+      const RESULTS_FOR_MULTIPLE = Object.entries(RESULTS).reduce(
+        (acc, [operation, result], idx) => {
+          acc[operation] = result.map(
+            (value) =>
+              // === 0 is AggregationTypes.COUNT
+              value * (idx === 0 ? 1 : 2)
+          );
+          return acc;
+        },
+        {}
       );
 
-      Object.values(AggregationTypes).forEach((operation, idx) => {
+      Object.entries(RESULTS_FOR_MULTIPLE).forEach(([operation, result]) => {
         test(operation, () => {
           const groups = histogram({
             data: buildValidFeatures(COLUMN),
             valuesColumns: [COLUMN, COLUMN_2],
             joinOperation: AggregationTypes.SUM,
             ticks: ticks.map((tick) => tick * 2),
+            // @ts-ignore
             operation
           });
-          expect(groups).toEqual(RESULTS_FOR_MULTIPLE[idx]);
+          expect(groups).toEqual(result);
         });
       });
     });

@@ -61,38 +61,41 @@ describe('groupValuesByDateColumn', () => {
         keysColumn: DATE_COLUMN
       };
 
-      const RESULTS = [
-        [
+      const RESULTS = {
+        [GroupDateTypes.YEARS]: [
           { name: Date.UTC(1970, 0, 1), value: 4 },
           { name: Date.UTC(1971, 0, 1), value: 1 }
         ],
-        [
+        [GroupDateTypes.MONTHS]: [
           { name: Date.UTC(1970, 0, 1), value: 2 },
           { name: Date.UTC(1970, 1, 1), value: 2 },
           { name: Date.UTC(1971, 0, 1), value: 1 }
         ],
-        [
+        [GroupDateTypes.WEEKS]: [
           { name: Date.UTC(1969, 11, 29), value: 2 },
           { name: Date.UTC(1970, 0, 26), value: 2 },
           { name: Date.UTC(1970, 11, 28), value: 1 }
         ],
-        [
+        [GroupDateTypes.DAYS]: [
           { name: Date.UTC(1970, 0, 1), value: 2 },
           { name: Date.UTC(1970, 1, 1), value: 2 },
           { name: Date.UTC(1971, 0, 1), value: 1 }
         ],
-        [
+        [GroupDateTypes.HOURS]: [
           { name: Date.UTC(1970, 0, 1, 0, 0), value: 2 },
           { name: Date.UTC(1970, 1, 1, 0, 0), value: 2 },
           { name: Date.UTC(1971, 0, 1, 1, 0), value: 1 }
         ],
-        DATES_VALUES.map((dateValue) => ({ name: dateValue, value: 1 }))
-      ];
+        [GroupDateTypes.MINUTES]: DATES_VALUES.map((dateValue) => ({
+          name: dateValue,
+          value: 1
+        }))
+      };
 
       describe('one valuesColumns', () => {
-        Object.values(GroupDateTypes).forEach((groupType, idx) => {
+        Object.entries(RESULTS).forEach(([groupType, result]) => {
           test(groupType, () => {
-            executeGroupByDateFnTests({ ...COMMON_PARAMS, groupType }, RESULTS[idx]);
+            executeGroupByDateFnTests({ ...COMMON_PARAMS, groupType }, result);
           });
         });
       });
@@ -104,27 +107,29 @@ describe('groupValuesByDateColumn', () => {
           joinOperation: AggregationTypes.SUM
         };
 
-        Object.values(GroupDateTypes).forEach((groupType, idx) => {
+        Object.entries(RESULTS).forEach(([groupType, result]) => {
           describe(groupType, () => {
             test(AggregationTypes.COUNT, () =>
               expect(
                 groupValuesByDateColumn({
                   ...COMMON_PARAMS_FOR_MULTIPLE,
+                  // @ts-ignore
                   groupType,
                   operation: AggregationTypes.COUNT
                 })
-              ).toEqual(RESULTS[idx])
+              ).toEqual(result)
             );
 
             test(AggregationTypes.SUM, () =>
               expect(
                 groupValuesByDateColumn({
                   ...COMMON_PARAMS_FOR_MULTIPLE,
+                  // @ts-ignore
                   groupType,
                   operation: AggregationTypes.SUM
                 })
               ).toEqual(
-                RESULTS[idx].map((item) => ({
+                result.map((item) => ({
                   ...item,
                   value: item.value * REVENUE * 2
                 }))
