@@ -30,7 +30,7 @@ export {
   applyFilters as _applyFilters
 } from './filters/Filter';
 
-export { processTiles } from './filters/tileFeatures';
+export { tileFeatures } from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';
 
 export { GroupDateTypes } from './operations/GroupDateTypes';

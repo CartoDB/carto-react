@@ -1,6 +1,6 @@
 import { buildGeoJson, GEOMETRY_TYPES } from '../utils/geometryUtils';
 
-export function processTiles({ tiles, uniqueIdProperty }) {
+export function tileFeatures({ tiles, uniqueIdProperty }) {
   const map = new Map();
 
   for (let tile of tiles) {

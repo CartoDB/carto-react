@@ -1,5 +1,5 @@
 import {
-  processTiles,
+  tileFeatures,
   geojsonFeatures,
   aggregationFunctions,
   _applyFilters,
@@ -105,7 +105,7 @@ function getTileFeatures({ viewport, geometry, tileFormat }) {
 
 function loadTiles({ tiles, uniqueIdProperty }) {
   // let t0 = performance.now();
-  currentTiles = processTiles({ tiles, uniqueIdProperty });
+  currentTiles = tileFeatures({ tiles, uniqueIdProperty });
   // let t1 = performance.now();
   // console.log('Load tiles', t1 - t0);
   postMessage({ result: true });
