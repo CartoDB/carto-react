@@ -58,7 +58,7 @@ onmessage = ({ data: { method, ...params } }) => {
 };
 
 function getTileFeatures({ viewport, geometry, tileFormat }) {
-  let t0 = performance.now();
+  // let t0 = performance.now();
   const viewportPolygon = bboxPolygon(viewport);
   const geometryToIntersect = flatGeometries(viewportPolygon, geometry);
   currentFeatures = [];
@@ -97,17 +97,17 @@ function getTileFeatures({ viewport, geometry, tileFormat }) {
     currentFeatures = currentFeatures.concat(foundFeatures);
   }
 
-  let t1 = performance.now();
-  console.log('Process tiles by viewport', t1 - t0);
+  // let t1 = performance.now();
+  // console.log('Process tiles by viewport', t1 - t0);
 
   postMessage({ result: true });
 }
 
 function loadTiles({ tiles, uniqueIdProperty }) {
-  let t0 = performance.now();
+  // let t0 = performance.now();
   currentTiles = processTiles({ tiles, uniqueIdProperty });
-  let t1 = performance.now();
-  console.log('Load tiles', t1 - t0);
+  // let t1 = performance.now();
+  // console.log('Load tiles', t1 - t0);
   postMessage({ result: true });
 }
 
