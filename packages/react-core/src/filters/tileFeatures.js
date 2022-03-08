@@ -1,45 +1,53 @@
-import { buildGeoJson, GEOMETRY_TYPES } from '../utils/geometryUtils';
+import bboxPolygon from '@turf/bbox-polygon';
+import booleanWithin from '@turf/boolean-within';
+import intersect from '@turf/intersect';
+import { buildGeoJson, flatGeometries, GEOMETRY_TYPES } from '../utils/geometryUtils';
+import { TILE_FORMATS } from '@deck.gl/carto';
+import { geojsonFeatures } from './geojsonFeatures';
+import transformToTileCoords from '../utils/transformToTileCoords';
+
+let map;
 
 export function tileFeatures({ tiles, uniqueIdProperty }) {
-  const map = new Map();
+  map = new Map();
 
   for (let tile of tiles) {
     // Discard if it's not a visible tile (only check false value, not undefined) or tile has not data
     if (tile.isVisible === false || !tile.data) continue;
 
-    let processedFeatures = [];
+    const processedFeatures = [];
 
     if (hasData(tile.data.points)) {
-      if (!tile.data.pointIndices) createIndicesForPoints(tile.data.points);
+      createIndicesForPoints(tile.data.points);
 
-      processedFeatures = processedFeatures.concat(
+      Array.prototype.push.apply(
+        processedFeatures,
         processTileFeatures({
-          map,
           data: tile.data.points,
-          type: GEOMETRY_TYPES['Point'],
-          uniqueIdProperty
+          uniqueIdProperty,
+          geometryType: GEOMETRY_TYPES['Point']
         })
       );
     }
 
     if (hasData(tile.data.lines)) {
-      processedFeatures = processedFeatures.concat(
+      Array.prototype.push.apply(
+        processedFeatures,
         processTileFeatures({
-          map,
           data: tile.data.lines,
-          type: GEOMETRY_TYPES['LineString'],
-          uniqueIdProperty
+          uniqueIdProperty,
+          geometryType: GEOMETRY_TYPES['LineString']
         })
       );
     }
 
     if (hasData(tile.data.polygons)) {
-      processedFeatures = processedFeatures.concat(
+      Array.prototype.push.apply(
+        processedFeatures,
         processTileFeatures({
-          map,
           data: tile.data.polygons,
-          type: GEOMETRY_TYPES['Polygon'],
-          uniqueIdProperty
+          uniqueIdProperty,
+          geometryType: GEOMETRY_TYPES['Polygon']
         })
       );
     }
@@ -50,7 +58,47 @@ export function tileFeatures({ tiles, uniqueIdProperty }) {
   return tiles;
 }
 
-function processTileFeatures({ map, data, type, uniqueIdProperty }) {
+export function filterProcessedTilesSpatially({ tiles, viewport, geometry, tileFormat }) {
+  const viewportPolygon = bboxPolygon(viewport);
+  const geometryToIntersect = flatGeometries(viewportPolygon, geometry);
+  const currentFeatures = [];
+
+  for (let tile of tiles) {
+    const { bbox } = tile;
+    const bboxAsGeom = bboxPolygon([bbox.west, bbox.south, bbox.east, bbox.north]);
+    const tileIsFullyVisible = booleanWithin(bboxAsGeom, geometryToIntersect);
+
+    let foundFeatures = [];
+    if (tileIsFullyVisible) {
+      for (let feature of tile.data) currentFeatures.push(feature.properties);
+    } else {
+      // Clip the geometry to intersect with the tile
+      const clippedGeometryToIntersect = intersect(bboxAsGeom, geometryToIntersect);
+
+      if (!clippedGeometryToIntersect) {
+        continue;
+      }
+
+      // We assume that MVT tileFormat uses local coordinates so we transform the geometry to intersect to tile coordinates [0..1],
+      // while in the case of 'geojson' or binary, the geometries are already in WGS84
+      const transformedGeometryToIntersect =
+        tileFormat === TILE_FORMATS.MVT
+          ? transformToTileCoords(clippedGeometryToIntersect.geometry, bbox)
+          : clippedGeometryToIntersect.geometry;
+
+      foundFeatures = geojsonFeatures({
+        geojson: { features: tile.data },
+        geometry: transformedGeometryToIntersect
+      });
+
+      Array.prototype.push.apply(currentFeatures, foundFeatures);
+    }
+  }
+
+  return currentFeatures;
+}
+
+function processTileFeatures({ data, geometryType, uniqueIdProperty }) {
   const indices = getIndices(data);
 
   const processedFeatures = [];
@@ -62,15 +110,16 @@ function processTileFeatures({ map, data, type, uniqueIdProperty }) {
     const uniqueIdPropertyValue =
       getUniqueIdPropertyValue(data, startIndex, uniqueIdProperty) ?? map.size + 1; // a counter, assumed as a valid new id
 
-    if (uniqueIdPropertyValue && !map.has(uniqueIdPropertyValue)) {
+    if (!map.has(uniqueIdPropertyValue)) {
       map.set(uniqueIdPropertyValue, null);
+
       const feature = {};
       Object.defineProperty(feature, 'geometry', {
         get: () => {
           if (!feature._geometry) {
             feature._geometry = buildGeoJson(
               getRingCoordinatesFor(startIndex, endIndex, data.positions),
-              type
+              geometryType
             );
           }
           return feature._geometry;
@@ -134,8 +183,8 @@ function getUniqueIdPropertyValue(tileContent, featureIdIdx, uniqueIdProperty) {
   }
 
   return (
-    getPropertyValue(tileContent, featureId, featureIdIdx, 'cartodb_id') ||
-    getPropertyValue(tileContent, featureId, featureIdIdx, 'geoid')
+    getPropertyValue(tileContent, featureId, featureIdIdx, 'geoid') ||
+    getPropertyValue(tileContent, featureId, featureIdIdx, 'cartodb_id')
   );
 }
 

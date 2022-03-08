@@ -19,7 +19,7 @@ export function geojsonFeatures({ geojson, viewport, geometry, uniqueIdProperty 
     const uniqueId = uniqueIdProperty
       ? feature.properties[uniqueIdProperty]
       : ++uniqueIdx;
-    if (!map.has(uniqueId) && intersects(geometryToIntersect, feature)) {
+    if (!map.has(uniqueId) && intersects(geometryToIntersect, feature.geometry)) {
       map.set(uniqueId, feature.properties);
     }
   }

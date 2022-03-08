@@ -8,7 +8,7 @@ import { lngLatToWorld } from '@math.gl/web-mercator';
  * @param {{ west: number, east: number, north: number, south: number }} bbox - tile bbox as used in deck.gl
  * @returns {GeoJSON}
  */
-export function transformToTileCoords(geometry, bbox) {
+export default function transformToTileCoords(geometry, bbox) {
   const nw = projectFlat([bbox.west, bbox.north]);
   const se = projectFlat([bbox.east, bbox.south]);
   const projectedBbox = [nw, se];

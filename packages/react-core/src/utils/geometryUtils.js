@@ -1,10 +1,10 @@
 import intersect from '@turf/intersect';
 
-export function flatGeometries(...geometries) {
-  const validGeometries = geometries.filter(Boolean);
+export function flatGeometries(geometry1, geometry2) {
+  const validGeometries = [geometry1, geometry2].filter(Boolean);
   return validGeometries.length === 2
-    ? intersect(geometries[0], geometries[1])
-    : geometries[0];
+    ? intersect(validGeometries[0], validGeometries[1])
+    : validGeometries[0];
 }
 
 export const GEOMETRY_TYPES = Object.freeze({

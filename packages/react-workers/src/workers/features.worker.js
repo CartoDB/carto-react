@@ -7,14 +7,10 @@ import {
   scatterPlot,
   groupValuesByColumn,
   groupValuesByDateColumn,
-  transformToTileCoords
+  filterProcessedTilesSpatially
 } from '@carto/react-core';
-import { TILE_FORMATS } from '@deck.gl/carto';
-import bboxPolygon from '@turf/bbox-polygon';
-import booleanWithin from '@turf/boolean-within';
 import { applySorting } from '../utils/sorting';
 import { Methods } from '../workerMethods';
-import intersect from '@turf/intersect';
 
 let currentFeatures;
 let currentGeoJSON;
@@ -59,44 +55,12 @@ onmessage = ({ data: { method, ...params } }) => {
 
 function getTileFeatures({ viewport, geometry, tileFormat }) {
   // let t0 = performance.now();
-  const viewportPolygon = bboxPolygon(viewport);
-  const geometryToIntersect = flatGeometries(viewportPolygon, geometry);
-  currentFeatures = [];
-
-  for (let tile of currentTiles) {
-    const { bbox } = tile;
-    const bboxToGeom = bboxPolygon([bbox.west, bbox.south, bbox.east, bbox.north]);
-    const tileIsFullyVisible = booleanWithin(bboxToGeom, geometryToIntersect);
-
-    let foundFeatures = [];
-    if (tileIsFullyVisible) {
-      for (let feature of tile.data) foundFeatures.push(feature.properties);
-    } else {
-      // Clip the geometry to intersect with the tile
-      const clippedGeometryToIntersect = intersect(bboxToGeom, geometryToIntersect);
-
-      if (!clippedGeometryToIntersect) {
-        continue;
-      }
-
-      // We assume that MVT tileFormat uses local coordinates so we transform the geometry to intersect to tile coordinates [0..1],
-      // while in the case of 'geojson' or binary, the geometries are already in WGS84
-      const transformedGeometryToIntersect = {
-        geometry:
-          tileFormat === TILE_FORMATS.MVT
-            ? transformToTileCoords(clippedGeometryToIntersect.geometry, bbox)
-            : clippedGeometryToIntersect.geometry
-      };
-
-      foundFeatures = geojsonFeatures({
-        geojson: { features: tile.data },
-        geometry: transformedGeometryToIntersect
-      });
-    }
-
-    currentFeatures = currentFeatures.concat(foundFeatures);
-  }
-
+  currentFeatures = filterProcessedTilesSpatially({
+    tiles: currentTiles,
+    viewport,
+    geometry,
+    tileFormat
+  });
   // let t1 = performance.now();
   // console.log('Process tiles by viewport', t1 - t0);
 
@@ -240,11 +204,4 @@ function applyPagination(features, { limit, page }) {
 
 function getFilteredFeatures(filters = {}) {
   return _applyFilters(currentFeatures, filters);
-}
-
-function flatGeometries(...geometries) {
-  const validGeometries = geometries.filter(Boolean);
-  return validGeometries.length === 2
-    ? intersect(geometries[0], geometries[1])
-    : geometries[0];
 }
