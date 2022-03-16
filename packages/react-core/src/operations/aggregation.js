@@ -11,7 +11,7 @@ export const aggregationFunctions = {
 };
 
 export function aggregate(feature, keys, operation) {
-  const normalizedKeys = Array.isArray(keys) ? keys : normalizeKeys(keys);
+  const normalizedKeys = normalizeKeys(keys);
 
   if (!normalizedKeys?.length) {
     throw new Error('Cannot aggregate a feature without having keys');
