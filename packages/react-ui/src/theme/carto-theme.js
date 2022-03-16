@@ -911,6 +911,10 @@ export const cartoThemeOptions = {
         color: variables.palette.text.secondary,
 
         '&$checked': {
+          '& input': {
+            left: spacing(-1.5)
+          },
+
           transform: 'translate(13px, 1px)',
           color: variables.palette.common.white,
 
@@ -928,7 +932,7 @@ export const cartoThemeOptions = {
 
       input: {
         width: spacing(6),
-        left: spacing(-1.5)
+        left: 0
       },
 
       track: {

@@ -2,13 +2,28 @@
 
 ## Not released
 
+## 1.2
+
+### 1.2.1 (2022-02-28)
+
+- Bump deck.gl to 8.7.0 [#355](https://github.com/CartoDB/carto-react/pull/355)
+- Typings fix: Include GMapsBasemaps in InitialCarto2State [#354](https://github.com/CartoDB/carto-react/pull/354)
+
+### 1.2.1-beta.9 (2022-02-24)
+
+- Bump deck.gl to 8.7.0-beta.7 [#352](https://github.com/CartoDB/carto-react/pull/352)
+- Fix unchecked switch width [#351](https://github.com/CartoDB/carto-react/pull/351)
+- Fix opacity selector input [#350](https://github.com/CartoDB/carto-react/pull/350)
+
+### 1.2.1-beta.8 (2022-02-22)
+
+- Bump deck.gl to 8.7.0-beta.6 [#348](https://github.com/CartoDB/carto-react/pull/348)
+- Fix duplicated logic for category selection in HistogramWidgetUI [#345](https://github.com/CartoDB/carto-react/pull/345)
 - Add groupByDate tests [#346](https://github.com/CartoDB/carto-react/pull/346)
 - Refactor PieWidgetUI [#341](https://github.com/CartoDB/carto-react/pull/341)
 - Add searchable prop in CategoryWidget to optionally use the search functionality [#338](https://github.com/CartoDB/carto-react/pull/338)
 - Implement stringSearch filter [#331](https://github.com/CartoDB/carto-react/pull/331)
 - Add filters tests [#331](https://github.com/CartoDB/carto-react/pull/331)
-
-## 1.2
 
 ### 1.2.1-beta.7 (2022-02-18)
 
