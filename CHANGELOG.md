@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Implement multiple operationColumn in core functions [#347](https://github.com/CartoDB/carto-react/pull/347)
+
 ## 1.2
 
 ### 1.2.1 (2022-02-28)

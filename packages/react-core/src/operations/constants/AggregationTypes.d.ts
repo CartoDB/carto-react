@@ -5,5 +5,3 @@ export enum AggregationTypes {
   MAX = 'max',
   SUM = 'sum'
 }
-
-  

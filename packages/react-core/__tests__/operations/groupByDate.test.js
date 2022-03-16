@@ -1,5 +1,5 @@
-import { AggregationTypes } from '../../src/operations/aggregation/AggregationTypes';
-import { GroupDateTypes } from '../../src/operations/GroupDateTypes';
+import { AggregationTypes } from '../../src/operations/constants/AggregationTypes';
+import { GroupDateTypes } from '../../src/operations/constants/GroupDateTypes';
 import { groupValuesByDateColumn } from '../../src/operations/groupByDate';
 
 const REVENUE = 50;
@@ -14,127 +14,141 @@ const DATES_VALUES = [
 
 const DATE_COLUMN = 'test_date';
 const OPERATION_COLUMN = 'test_revenue';
+const OPERATION_COLUMN_2 = 'test_revenue_2';
 
 const FEATURES = DATES_VALUES.map((value) => ({
   [DATE_COLUMN]: value,
-  [OPERATION_COLUMN]: REVENUE
+  [OPERATION_COLUMN]: REVENUE,
+  [OPERATION_COLUMN_2]: REVENUE
 }));
 
 describe('groupValuesByDateColumn', () => {
   test('should return null due to empty data array', () => {
-    expect(groupValuesByDateColumn([])).toEqual(null);
+    expect(groupValuesByDateColumn({ data: [] })).toEqual(null);
   });
 
   describe('valid features', () => {
     test('should return null due to invalid grouping operation', () => {
       expect(
-        groupValuesByDateColumn(
-          FEATURES,
-          OPERATION_COLUMN,
-          DATE_COLUMN,
-          '__fake_group_type__',
-          AggregationTypes.COUNT
-        )
+        groupValuesByDateColumn({
+          data: FEATURES,
+          valuesColumns: [OPERATION_COLUMN],
+          keysColumn: DATE_COLUMN,
+          // @ts-ignore
+          groupType: '__fake_group_type__',
+          operation: AggregationTypes.COUNT
+        })
       ).toEqual(null);
     });
 
     test('should return an empty array due to invalid operation', () => {
       expect(
-        groupValuesByDateColumn(
-          FEATURES,
-          OPERATION_COLUMN,
-          DATE_COLUMN,
-          GroupDateTypes.DAYS,
-          '__fake_operation__'
-        )
+        groupValuesByDateColumn({
+          data: FEATURES,
+          valuesColumns: [OPERATION_COLUMN],
+          keysColumn: DATE_COLUMN,
+          groupType: GroupDateTypes.DAYS,
+          // @ts-ignore
+          operation: '__fake_operation__'
+        })
       ).toEqual([]);
     });
 
     describe('grouping operation tests', () => {
-      const params = {
-        features: FEATURES,
-        valuesColumn: OPERATION_COLUMN,
+      const COMMON_PARAMS = {
+        data: FEATURES,
+        valuesColumns: [OPERATION_COLUMN],
         keysColumn: DATE_COLUMN
       };
 
-      test(GroupDateTypes.YEARS, () => {
-        params.operation = GroupDateTypes.YEARS;
-
-        const RESULT = [
+      const RESULTS = {
+        [GroupDateTypes.YEARS]: [
           { name: Date.UTC(1970, 0, 1), value: 4 },
           { name: Date.UTC(1971, 0, 1), value: 1 }
-        ];
-
-        executeGroupByDateFnTests(params, RESULT);
-      });
-
-      test(GroupDateTypes.MONTHS, () => {
-        params.operation = GroupDateTypes.MONTHS;
-
-        const RESULT = [
+        ],
+        [GroupDateTypes.MONTHS]: [
           { name: Date.UTC(1970, 0, 1), value: 2 },
           { name: Date.UTC(1970, 1, 1), value: 2 },
           { name: Date.UTC(1971, 0, 1), value: 1 }
-        ];
-
-        executeGroupByDateFnTests(params, RESULT);
-      });
-
-      test(GroupDateTypes.WEEKS, () => {
-        params.operation = GroupDateTypes.WEEKS;
-
-        const RESULT = [
+        ],
+        [GroupDateTypes.WEEKS]: [
           { name: Date.UTC(1969, 11, 29), value: 2 },
           { name: Date.UTC(1970, 0, 26), value: 2 },
           { name: Date.UTC(1970, 11, 28), value: 1 }
-        ];
-
-        executeGroupByDateFnTests(params, RESULT);
-      });
-
-      test(GroupDateTypes.DAYS, () => {
-        params.operation = GroupDateTypes.DAYS;
-
-        const RESULT = [
+        ],
+        [GroupDateTypes.DAYS]: [
           { name: Date.UTC(1970, 0, 1), value: 2 },
           { name: Date.UTC(1970, 1, 1), value: 2 },
           { name: Date.UTC(1971, 0, 1), value: 1 }
-        ];
-
-        executeGroupByDateFnTests(params, RESULT);
-      });
-
-      test(GroupDateTypes.HOURS, () => {
-        params.operation = GroupDateTypes.HOURS;
-
-        const RESULT = [
+        ],
+        [GroupDateTypes.HOURS]: [
           { name: Date.UTC(1970, 0, 1, 0, 0), value: 2 },
           { name: Date.UTC(1970, 1, 1, 0, 0), value: 2 },
           { name: Date.UTC(1971, 0, 1, 1, 0), value: 1 }
-        ];
+        ],
+        [GroupDateTypes.MINUTES]: DATES_VALUES.map((dateValue) => ({
+          name: dateValue,
+          value: 1
+        }))
+      };
 
-        executeGroupByDateFnTests(params, RESULT);
+      describe('one valuesColumns', () => {
+        Object.entries(RESULTS).forEach(([groupType, result]) => {
+          test(groupType, () => {
+            executeGroupByDateFnTests({ ...COMMON_PARAMS, groupType }, result);
+          });
+        });
       });
 
-      test(GroupDateTypes.MINUTES, () => {
-        params.operation = GroupDateTypes.MINUTES;
+      describe('multiple valuesColumns', () => {
+        const COMMON_PARAMS_FOR_MULTIPLE = {
+          ...COMMON_PARAMS,
+          valuesColumns: [OPERATION_COLUMN, OPERATION_COLUMN_2],
+          joinOperation: AggregationTypes.SUM
+        };
 
-        const RESULT = DATES_VALUES.map((dateValue) => ({ name: dateValue, value: 1 }));
+        Object.entries(RESULTS).forEach(([groupType, result]) => {
+          describe(groupType, () => {
+            test(AggregationTypes.COUNT, () =>
+              expect(
+                groupValuesByDateColumn({
+                  ...COMMON_PARAMS_FOR_MULTIPLE,
+                  // @ts-ignore
+                  groupType,
+                  operation: AggregationTypes.COUNT
+                })
+              ).toEqual(result)
+            );
 
-        executeGroupByDateFnTests(params, RESULT);
+            test(AggregationTypes.SUM, () =>
+              expect(
+                groupValuesByDateColumn({
+                  ...COMMON_PARAMS_FOR_MULTIPLE,
+                  // @ts-ignore
+                  groupType,
+                  operation: AggregationTypes.SUM
+                })
+              ).toEqual(
+                result.map((item) => ({
+                  ...item,
+                  value: item.value * REVENUE * 2
+                }))
+              )
+            );
+          });
+        });
       });
     });
   });
 
   describe('invalid features', () => {
     test('invalid date columns are not taken into consideration', () => {
-      const h = groupValuesByDateColumn(
-        [{ [DATE_COLUMN]: '__non_number__', [OPERATION_COLUMN]: 100 }],
-        OPERATION_COLUMN,
-        DATE_COLUMN,
-        GroupDateTypes.DAYS,
-        AggregationTypes.COUNT
-      );
+      const h = groupValuesByDateColumn({
+        data: [{ [DATE_COLUMN]: '__non_number__', [OPERATION_COLUMN]: 100 }],
+        valuesColumns: [OPERATION_COLUMN],
+        keysColumn: DATE_COLUMN,
+        groupType: GroupDateTypes.DAYS
+      });
       expect(h).toEqual([]);
     });
   });
@@ -147,8 +161,8 @@ function executeGroupByDateFnTests(args, result) {
     value: item.value * REVENUE
   }));
 
-  [AggregationTypes.COUNT, AggregationTypes.SUM].forEach((aggregation, idx) =>
-    expect(groupValuesByDateColumn(...Object.values(args), aggregation)).toEqual(
+  [AggregationTypes.COUNT, AggregationTypes.SUM].forEach((operation, idx) =>
+    expect(groupValuesByDateColumn({ ...args, operation })).toEqual(
       idx ? sumResult : result
     )
   );

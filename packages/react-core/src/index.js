@@ -13,9 +13,9 @@ export { randomString } from './utils/randomString';
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
-export { AggregationTypes } from './operations/aggregation/AggregationTypes';
-export { aggregationFunctions } from './operations/aggregation/values';
-export { groupValuesByColumn } from './operations/groupby';
+export { AggregationTypes } from './operations/constants/AggregationTypes';
+export { aggregationFunctions } from './operations/aggregation';
+export { groupValuesByColumn } from './operations/groupBy';
 export { histogram } from './operations/histogram';
 export { scatterPlot } from './operations/scatterPlot';
 
@@ -33,7 +33,7 @@ export {
 export { tileFeatures } from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';
 
-export { GroupDateTypes } from './operations/GroupDateTypes';
+export { GroupDateTypes } from './operations/constants/GroupDateTypes';
 export { groupValuesByDateColumn } from './operations/groupByDate';
 
 export {

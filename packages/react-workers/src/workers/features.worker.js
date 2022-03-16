@@ -85,7 +85,7 @@ function getGeojsonFeatures({ viewport, geometry, uniqueIdProperty }) {
   postMessage({ result: true });
 }
 
-function getFormula({ filters, operation, column }) {
+function getFormula({ filters, operation, column, joinOperation }) {
   let result = null;
 
   if (currentFeatures) {
@@ -93,36 +93,43 @@ function getFormula({ filters, operation, column }) {
 
     const filteredFeatures = getFilteredFeatures(filters);
 
-    result = [{ value: targetOperation(filteredFeatures, column) }];
+    result = [{ value: targetOperation(filteredFeatures, column, joinOperation) }];
   }
 
   postMessage({ result });
 }
 
-function getHistogram({ filters, operation, column, ticks }) {
+function getHistogram({ filters, operation, column, ticks, joinOperation }) {
   let result = null;
 
   if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
 
-    result = histogram(filteredFeatures, column, ticks, operation);
-  }
-
-  postMessage({ result });
-}
-
-function getCategories({ filters, operation, column, operationColumn }) {
-  let result = null;
-
-  if (currentFeatures) {
-    const filteredFeatures = getFilteredFeatures(filters);
-
-    const groups = groupValuesByColumn(
-      filteredFeatures,
-      operationColumn,
-      column,
+    result = histogram({
+      data: filteredFeatures,
+      valuesColumns: [column].flat(),
+      joinOperation,
+      ticks,
       operation
-    );
+    });
+  }
+
+  postMessage({ result });
+}
+
+function getCategories({ filters, operation, column, operationColumn, joinOperation }) {
+  let result = null;
+
+  if (currentFeatures) {
+    const filteredFeatures = getFilteredFeatures(filters);
+
+    const groups = groupValuesByColumn({
+      data: filteredFeatures,
+      valuesColumns: [operationColumn].flat(),
+      joinOperation,
+      keysColumn: column,
+      operation
+    });
 
     result = groups || [];
   }
@@ -130,29 +137,42 @@ function getCategories({ filters, operation, column, operationColumn }) {
   postMessage({ result });
 }
 
-function getScatterPlot({ filters, xAxisColumn, yAxisColumn }) {
+function getScatterPlot({ filters, xAxisColumn, yAxisColumn, joinOperation }) {
   let result = [];
   if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
-    result = scatterPlot(filteredFeatures, xAxisColumn, yAxisColumn);
+    result = scatterPlot({
+      data: filteredFeatures,
+      xAxisColumns: [xAxisColumn].flat(),
+      yAxisColumns: [yAxisColumn].flat(),
+      joinOperation
+    });
   }
 
   postMessage({ result });
 }
 
-function getTimeSeries({ filters, column, stepSize, operation, operationColumn }) {
+function getTimeSeries({
+  filters,
+  column,
+  stepSize,
+  operation,
+  operationColumn,
+  joinOperation
+}) {
   let result = [];
 
   if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
 
-    const groups = groupValuesByDateColumn(
-      filteredFeatures,
-      operationColumn,
-      column,
-      stepSize,
-      operation
-    );
+    const groups = groupValuesByDateColumn({
+      data: filteredFeatures,
+      valuesColumns: [operationColumn].flat(),
+      keysColumn: column,
+      groupType: stepSize,
+      operation,
+      joinOperation
+    });
 
     result = groups || [];
   }

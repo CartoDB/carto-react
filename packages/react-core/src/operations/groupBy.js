@@ -1,7 +1,13 @@
-import { AggregationTypes } from './aggregation/AggregationTypes';
-import { aggregationFunctions } from './aggregation/values';
+import { AggregationTypes } from './constants/AggregationTypes';
+import { aggregationFunctions, aggregate } from './aggregation';
 
-export function groupValuesByColumn(data, valuesColumn, keysColumn, operation) {
+export function groupValuesByColumn({
+  data,
+  valuesColumns,
+  joinOperation,
+  keysColumn,
+  operation
+}) {
   if (Array.isArray(data) && data.length === 0) {
     return null;
   }
@@ -11,12 +17,14 @@ export function groupValuesByColumn(data, valuesColumn, keysColumn, operation) {
 
     accumulator[group] = accumulator[group] || [];
 
+    const aggregatedValue = aggregate(item, valuesColumns, joinOperation);
+
     const isValid =
-      (operation === AggregationTypes.COUNT ? true : item[valuesColumn] !== null) &&
-      item[valuesColumn] !== undefined;
+      (operation === AggregationTypes.COUNT ? true : aggregatedValue !== null) &&
+      aggregatedValue !== undefined;
 
     if (isValid) {
-      accumulator[group].push(item[valuesColumn]);
+      accumulator[group].push(aggregatedValue);
     }
 
     return accumulator;

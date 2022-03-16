@@ -1,10 +1,10 @@
 import { AggregationTypes } from './constants/AggregationTypes';
-import { HistogramFeature } from '../types';
+import { GroupByFeature } from '../types';
 
-export function histogram(args: {
+export function groupValuesByColumn(args: {
   data: Record<string, unknown>[];
   valuesColumns?: string[];
   joinOperation?: AggregationTypes;
-  ticks?: number[];
+  keysColumn?: string;
   operation?: AggregationTypes;
-}): HistogramFeature;
+}): GroupByFeature;

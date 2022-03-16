@@ -1,7 +1,7 @@
-import { aggregationFunctions } from './aggregation/values';
+import { aggregate, aggregationFunctions } from './aggregation';
 
-export function histogram(features, columnName, ticks, operation) {
-  if (Array.isArray(features) && features.length === 0) {
+export function histogram({ data, valuesColumns, joinOperation, ticks, operation }) {
+  if (Array.isArray(data) && data.length === 0) {
     return [];
   }
 
@@ -14,8 +14,8 @@ export function histogram(features, columnName, ticks, operation) {
     values: []
   }));
 
-  features.forEach((feature) => {
-    const featureValue = feature[columnName];
+  data.forEach((feature) => {
+    const featureValue = aggregate(feature, valuesColumns, joinOperation);
 
     const isValid = featureValue !== null && featureValue !== undefined;
 
