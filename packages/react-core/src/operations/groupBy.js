@@ -17,14 +17,14 @@ export function groupValuesByColumn({
 
     accumulator[group] = accumulator[group] || [];
 
-    const tempValue = aggregate(item, valuesColumns, joinOperation);
+    const aggregatedValue = aggregate(item, valuesColumns, joinOperation);
 
     const isValid =
-      (operation === AggregationTypes.COUNT ? true : tempValue !== null) &&
-      tempValue !== undefined;
+      (operation === AggregationTypes.COUNT ? true : aggregatedValue !== null) &&
+      aggregatedValue !== undefined;
 
     if (isValid) {
-      accumulator[group].push(tempValue);
+      accumulator[group].push(aggregatedValue);
     }
 
     return accumulator;

@@ -56,12 +56,12 @@ export function groupValuesByDateColumn({
         acc.set(groupKey, groupedValues);
       }
 
-      const tempValue = aggregate(item, valuesColumns, joinOperation);
+      const aggregatedValue = aggregate(item, valuesColumns, joinOperation);
 
-      const isValid = tempValue !== null && tempValue !== undefined;
+      const isValid = aggregatedValue !== null && aggregatedValue !== undefined;
 
       if (isValid) {
-        groupedValues.push(tempValue);
+        groupedValues.push(aggregatedValue);
         acc.set(groupKey, groupedValues);
       }
     }
