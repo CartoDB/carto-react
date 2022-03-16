@@ -15,7 +15,7 @@ export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
 export { AggregationTypes } from './operations/constants/AggregationTypes';
 export { aggregationFunctions } from './operations/aggregation';
-export { groupValuesByColumn } from './operations/groupby';
+export { groupValuesByColumn } from './operations/groupby_';
 export { histogram } from './operations/histogram';
 export { scatterPlot } from './operations/scatterPlot';
 
