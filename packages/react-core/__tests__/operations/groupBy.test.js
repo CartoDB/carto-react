@@ -1,27 +1,10 @@
 import { groupValuesByColumn } from '../../src/operations/groupBy';
 import { AggregationTypes } from '../../src/operations/constants/AggregationTypes';
 
-const VALUES = [1, 2, 3, 4, 5];
-
-const buildValidFeatures = (columnName) =>
-  [...Array(VALUES.length)].map((_, idx) => ({
-    [`${columnName}_qualitative`]: `Category ${idx % 2 === 0 ? 2 : 1}`, // 2 categories === 'Category 1' && 3 categories === 'Category 2'
-    [`${columnName}_quantitative`]: VALUES[idx],
-    [`${columnName}_quantitative_2`]: VALUES[idx]
-  }));
-
-const buildInvalidFeatures = (columnName) => [
-  {
-    [`${columnName}_qualitative`]: 'Category 1',
-    [`${columnName}_quantitative`]: null
-  },
-  {
-    [`${columnName}_qualitative`]: 'Category 2',
-    [`${columnName}_quantitative`]: undefined
-  }
-];
-
 const COLUMN = 'test';
+
+const VALID_DATA = buildValidData(COLUMN);
+const INVALID_DATA = buildInvalidData(COLUMN);
 
 describe('groupValuesByColumn', () => {
   test('should return null due to empty data array', () => {
@@ -32,7 +15,7 @@ describe('groupValuesByColumn', () => {
     test('should return an empty array due to invalid operation', () => {
       expect(
         groupValuesByColumn({
-          data: buildValidFeatures(COLUMN),
+          data: VALID_DATA,
           valuesColumns: [`${COLUMN}_quantitative`],
           keysColumn: `${COLUMN}_qualitative`,
           // @ts-ignore
@@ -68,7 +51,7 @@ describe('groupValuesByColumn', () => {
       Object.entries(RESULTS).forEach(([operation, result]) => {
         test(operation, () => {
           const groups = groupValuesByColumn({
-            data: buildValidFeatures(COLUMN),
+            data: VALID_DATA,
             valuesColumns: [`${COLUMN}_quantitative`],
             keysColumn: `${COLUMN}_qualitative`,
             // @ts-ignore
@@ -95,7 +78,7 @@ describe('groupValuesByColumn', () => {
       Object.entries(RESULTS_FOR_MULTIPLE).forEach(([operation, result]) => {
         test(operation, () => {
           const groups = groupValuesByColumn({
-            data: buildValidFeatures(COLUMN),
+            data: VALID_DATA,
             valuesColumns: [`${COLUMN}_quantitative`, `${COLUMN}_quantitative_2`],
             joinOperation: AggregationTypes.SUM,
             keysColumn: `${COLUMN}_qualitative`,
@@ -111,7 +94,7 @@ describe('groupValuesByColumn', () => {
   describe('invalid features', () => {
     test('should count nulls when operation is COUNT', () => {
       const groups = groupValuesByColumn({
-        data: buildInvalidFeatures(COLUMN),
+        data: INVALID_DATA,
         valuesColumns: [`${COLUMN}_quantitative`],
         keysColumn: `${COLUMN}_qualitative`,
         operation: AggregationTypes.COUNT
@@ -129,7 +112,7 @@ describe('groupValuesByColumn', () => {
     });
     test('should return all groups values to 0 due to invalid column data for operations other than COUNT', () => {
       const groups = groupValuesByColumn({
-        data: buildInvalidFeatures(COLUMN),
+        data: INVALID_DATA,
         valuesColumns: [`${COLUMN}_quantitative`],
         keysColumn: `${COLUMN}_qualitative`,
         operation: AggregationTypes.SUM
@@ -147,3 +130,27 @@ describe('groupValuesByColumn', () => {
     });
   });
 });
+
+// Aux
+
+function buildValidData(columnName) {
+  const VALUES = [1, 2, 3, 4, 5];
+  return [...Array(VALUES.length)].map((_, idx) => ({
+    [`${columnName}_qualitative`]: `Category ${idx % 2 === 0 ? 2 : 1}`, // 2 categories === 'Category 1' && 3 categories === 'Category 2'
+    [`${columnName}_quantitative`]: VALUES[idx],
+    [`${columnName}_quantitative_2`]: VALUES[idx]
+  }));
+}
+
+function buildInvalidData(columnName) {
+  return [
+    {
+      [`${columnName}_qualitative`]: 'Category 1',
+      [`${columnName}_quantitative`]: null
+    },
+    {
+      [`${columnName}_qualitative`]: 'Category 2',
+      [`${columnName}_quantitative`]: undefined
+    }
+  ];
+}

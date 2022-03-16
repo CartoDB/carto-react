@@ -3,23 +3,15 @@ import { AggregationTypes } from '../../src/operations/constants/AggregationType
 
 const VALUES = [1, 2, 2, 3, 3, 3, 4, 4, 5];
 
-const buildValidFeatures = (columnName) =>
-  [...Array(VALUES.length)].map((_, idx) => ({
-    [columnName]: VALUES[idx],
-    [columnName + '_2']: VALUES[idx]
-  }));
-
-const buildInvalidFeatures = (columnName) => [
-  {
-    [columnName]: null
-  },
-  {
-    [columnName]: undefined
-  }
-];
-
 const COLUMN = 'test';
-const COLUMN_2 = 'test_2';
+
+const VALID_DATA = [...Array(VALUES.length)].map((_, idx) => ({
+  [COLUMN]: VALUES[idx],
+  [COLUMN + '_2']: VALUES[idx]
+}));
+
+const INVALID_DATA = [{ [COLUMN]: null }, { [COLUMN]: undefined }];
+
 const ticks = Array.from(new Set(VALUES));
 
 describe('histogram', () => {
@@ -31,7 +23,7 @@ describe('histogram', () => {
     test('should return an empty array due to invalid operation', () => {
       expect(
         histogram({
-          data: buildValidFeatures(COLUMN),
+          data: VALID_DATA,
           valuesColumns: [COLUMN],
           ticks,
           // @ts-ignore
@@ -42,7 +34,7 @@ describe('histogram', () => {
 
     test('should return an array of bins with same length as ticks plus two, due to the addition of extreme values', () => {
       const h = histogram({
-        data: buildValidFeatures(COLUMN),
+        data: VALID_DATA,
         valuesColumns: [COLUMN],
         ticks,
         operation: AggregationTypes.COUNT
@@ -62,7 +54,7 @@ describe('histogram', () => {
       Object.entries(RESULTS).forEach(([operation, result]) => {
         test(operation, () => {
           const groups = histogram({
-            data: buildValidFeatures(COLUMN),
+            data: VALID_DATA,
             valuesColumns: [COLUMN],
             ticks,
             // @ts-ignore
@@ -89,8 +81,8 @@ describe('histogram', () => {
       Object.entries(RESULTS_FOR_MULTIPLE).forEach(([operation, result]) => {
         test(operation, () => {
           const groups = histogram({
-            data: buildValidFeatures(COLUMN),
-            valuesColumns: [COLUMN, COLUMN_2],
+            data: VALID_DATA,
+            valuesColumns: [COLUMN, `${COLUMN}_2`],
             joinOperation: AggregationTypes.SUM,
             ticks: ticks.map((tick) => tick * 2),
             // @ts-ignore
@@ -105,7 +97,7 @@ describe('histogram', () => {
   describe('invalid features', () => {
     test('should return all bins values to 0 due to invalid column data', () => {
       const h = histogram({
-        data: buildInvalidFeatures(COLUMN),
+        data: INVALID_DATA,
         valuesColumns: [COLUMN],
         ticks,
         operation: AggregationTypes.COUNT
