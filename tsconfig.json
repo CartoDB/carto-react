@@ -9,15 +9,18 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
+    "declaration": true,
+    "declarationDir": "dist",
+    "sourceMap": true,
     "paths": {
-        "@carto/react-api/*": ["packages/react-api/src/*"],
-        "@carto/react-auth/*": ["packages/react-auth/src/*"],
-        "@carto/react-basemaps/*": ["packages/react-basemaps/src/*"],
-        "@carto/react-core/*": ["packages/react-core/src/*"],
-        "@carto/react-ui/*": ["packages/react-ui/src/*"],
-        "@carto/react-redux/*": ["packages/react-redux/src/*"],
-        "@carto/react-widgets/*": ["packages/react-widgets/src/*"],
-        "@carto/react-workers/*": ["packages/react-workers/src/*"]
+      "@carto/react-api/*": ["packages/react-api/src/*"],
+      "@carto/react-auth/*": ["packages/react-auth/src/*"],
+      "@carto/react-basemaps/*": ["packages/react-basemaps/src/*"],
+      "@carto/react-core/*": ["packages/react-core/src/*"],
+      "@carto/react-ui/*": ["packages/react-ui/src/*"],
+      "@carto/react-redux/*": ["packages/react-redux/src/*"],
+      "@carto/react-widgets/*": ["packages/react-widgets/src/*"],
+      "@carto/react-workers/*": ["packages/react-workers/src/*"]
     }
   }
 }
