@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Bump deck.gl to 8.7.3 [#360](https://github.com/CartoDB/carto-react/pull/360)
 
 ## 1.3
 
