@@ -18,7 +18,7 @@ const EMPTY_ARRAY = [];
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's column to get the data from.
- * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
+ * @param  {string} props.operation - Operation to apply to the column. Must be one of those defined in `AggregationTypes` object.
  * @param  {number[]} props.ticks - Array of thresholds for the X axis.
  * @param  {Function} [props.xAxisformatter] - Function to format X axis values.
  * @param  {Function} [props.formatter] - Function to format Y axis values.

@@ -13,25 +13,26 @@ import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
- * @param  {string} props.column - Name of the data source's column to get the data from.
- * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
+ * @param  {string | string[]} props.column - Name of the data source's column(s) to get the data from. If multiples are provided, they will be merged into a single one using joinOperation property.
+ * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple columns into a single one.
+ * @param  {AggregationTypes} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.formatter] - Function to format each value returned.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
-function FormulaWidget(props) {
-  const {
-    id,
-    title,
-    dataSource,
-    column,
-    operation,
-    formatter,
-    animation,
-    onError,
-    wrapperProps
-  } = props;
+function FormulaWidget({
+  id,
+  title,
+  dataSource,
+  column,
+  operation,
+  joinOperation,
+  formatter,
+  animation,
+  onError,
+  wrapperProps
+}) {
   const isSourceReady = useSelector((state) =>
     selectAreFeaturesReadyForSource(state, dataSource)
   );
@@ -47,6 +48,7 @@ function FormulaWidget(props) {
       getFormula({
         operation,
         column,
+        joinOperation,
         filters,
         dataSource
       })
@@ -61,7 +63,7 @@ function FormulaWidget(props) {
           if (onError) onError(error);
         });
     }
-  }, [operation, column, filters, dataSource, setIsLoading, onError, isSourceReady]);
+  }, [operation, column, joinOperation, filters, dataSource, setIsLoading, onError, isSourceReady]);
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
@@ -79,8 +81,10 @@ FormulaWidget.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
-  column: PropTypes.string.isRequired,
+  column: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
+    .isRequired,
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
+  joinOperation: PropTypes.oneOf(Object.values(AggregationTypes)),
   formatter: PropTypes.func,
   animation: PropTypes.bool,
   onError: PropTypes.func,
