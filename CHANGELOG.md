@@ -3,7 +3,7 @@
 ## Not released
 
 - Implement multiple operationColumn in core functions [#347](https://github.com/CartoDB/carto-react/pull/347)
-- Add regex string filtering capabilities [#362](https://github.com/CartoDB/carto-react/pull/362)
+- Add RegExp string filtering capabilities [#362](https://github.com/CartoDB/carto-react/pull/362)
 
 ## 1.2
 
