@@ -50,15 +50,15 @@ function stringSearch(filterValues, featureValue, params = {}) {
   const normalizedFeatureValue = normalize(featureValue, params);
   const stringRegExp = filterValues
     .map((filterValue) => {
-      let stringRegExp = normalize(filterValue, params);
+      let formattedValue = filterValue;
 
       if (!params.useRegExp) {
-        stringRegExp = escapeRegExp(stringRegExp);
-        if (params.mustStart) stringRegExp = `^${stringRegExp}`;
-        if (params.mustEnd) stringRegExp = `${stringRegExp}$`;
+        formattedValue = escapeRegExp(normalize(filterValue, params));
+        if (params.mustStart) formattedValue = `^${formattedValue}`;
+        if (params.mustEnd) formattedValue = `${formattedValue}$`;
       }
 
-      return stringRegExp;
+      return formattedValue;
     })
     .join('|');
 
