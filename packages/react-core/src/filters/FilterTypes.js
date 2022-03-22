@@ -48,21 +48,18 @@ function closedOpen(filterValues, featureValue) {
 // FilterTypes.STRING_SEARCH
 function stringSearch(filterValues, featureValue, params = {}) {
   const normalizedFeatureValue = normalize(featureValue, params);
-  const stringRegExp = filterValues
-    .map((filterValue) => {
-      let formattedValue = filterValue;
+  const stringRegExp = params.useRegExp
+    ? filterValues
+    : filterValues.map((filterValue) => {
+        let stringRegExp = escapeRegExp(normalize(filterValue, params));
 
-      if (!params.useRegExp) {
-        formattedValue = escapeRegExp(normalize(filterValue, params));
-        if (params.mustStart) formattedValue = `^${formattedValue}`;
-        if (params.mustEnd) formattedValue = `${formattedValue}$`;
-      }
+        if (params.mustStart) stringRegExp = `^${stringRegExp}`;
+        if (params.mustEnd) stringRegExp = `${stringRegExp}$`;
 
-      return formattedValue;
-    })
-    .join('|');
+        return stringRegExp;
+      });
 
-  const regex = new RegExp(stringRegExp, 'g');
+  const regex = new RegExp(stringRegExp.join('|'), params.caseSensitive ? 'g' : 'gi');
   return !!normalizedFeatureValue.match(regex);
 }
 
@@ -75,9 +72,7 @@ function escapeRegExp(value) {
 }
 
 function normalize(data, params) {
-  let normalizedData = '' + data;
-
-  if (!params.caseSensitive) normalizedData = normalizedData.toLocaleLowerCase();
+  let normalizedData = String(data);
   if (!params.keepSpecialCharacters)
     normalizedData = normalizedData.normalize('NFD').replace(normalizeRegExp, '');
 
