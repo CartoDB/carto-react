@@ -66,8 +66,8 @@ function max(values, keys, joinOperation) {
 
 // Aux
 
-// Keys can come as a string (one column) or a string array (multiple column)
+// Keys can come as a string (one column) or a strings array (multiple column)
 // Use always an array to make the code easier
 function normalizeKeys(keys) {
-  return keys?.length ? [keys].flat() : undefined;
+  return Array.isArray(keys) ? keys : typeof keys === 'string' ? [keys] : undefined;
 }
