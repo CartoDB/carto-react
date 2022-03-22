@@ -52,9 +52,11 @@ function stringSearch(filterValues, featureValue, params = {}) {
     .map((filterValue) => {
       let stringRegExp = normalize(filterValue, params);
 
-      if (!params.useRegExp) stringRegExp = escapeRegExp(stringRegExp);
-      if (params.mustStart) stringRegExp = `^${stringRegExp}`;
-      if (params.mustEnd) stringRegExp = `${stringRegExp}$`;
+      if (!params.useRegExp) {
+        stringRegExp = escapeRegExp(stringRegExp);
+        if (params.mustStart) stringRegExp = `^${stringRegExp}`;
+        if (params.mustEnd) stringRegExp = `${stringRegExp}$`;
+      }
 
       return stringRegExp;
     })
