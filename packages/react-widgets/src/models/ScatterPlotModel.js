@@ -1,5 +1,4 @@
 import { Methods, executeTask } from '@carto/react-workers';
-import checkParams from './utils/checkParams';
 
 export const getScatter = async (props) => {
   const {
@@ -10,9 +9,6 @@ export const getScatter = async (props) => {
     filters,
     dataSource
   } = props;
-
-  checkParams({ joinOperation: xAxisJoinOperation, operationColumn: xAxisColumn });
-  checkParams({ joinOperation: yAxisJoinOperation, operationColumn: yAxisColumn });
 
   return executeTask(dataSource, Methods.FEATURES_SCATTERPLOT, {
     filters,

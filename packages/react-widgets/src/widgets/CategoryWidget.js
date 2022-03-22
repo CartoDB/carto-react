@@ -8,6 +8,7 @@ import { getCategories } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
+import { columnAggregationOn } from './utils/propTypesFns';
 
 const EMPTY_ARRAY = [];
 
@@ -152,7 +153,7 @@ CategoryWidget.propTypes = {
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string)
   ]),
-  joinOperation: PropTypes.oneOf(Object.values(AggregationTypes)),
+  joinOperation: columnAggregationOn('operationColumn'),
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   labels: PropTypes.object,

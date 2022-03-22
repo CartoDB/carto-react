@@ -6,6 +6,7 @@ import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
+import { columnAggregationOn } from './utils/propTypesFns';
 
 /**
  * Renders a <FormulaWidget /> component
@@ -83,8 +84,8 @@ FormulaWidget.propTypes = {
   dataSource: PropTypes.string.isRequired,
   column: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
     .isRequired,
+  joinOperation: columnAggregationOn('column'),
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
-  joinOperation: PropTypes.oneOf(Object.values(AggregationTypes)),
   formatter: PropTypes.func,
   animation: PropTypes.bool,
   onError: PropTypes.func,

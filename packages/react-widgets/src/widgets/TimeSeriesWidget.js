@@ -20,6 +20,7 @@ import {
 import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import useSourceFilters from '../hooks/useSourceFilters';
+import { columnAggregationOn } from './utils/propTypesFns';
 
 // Due to the widget groups the data by a certain stepSize, when filtering
 // the filter applied must be a range that represent the grouping range.
@@ -312,7 +313,7 @@ TimeSeriesWidget.propTypes = {
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string)
   ]),
-  joinOperation: PropTypes.oneOf(Object.values(AggregationTypes)),
+  joinOperation: columnAggregationOn('operationColumn'),
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   stepSizeOptions: PropTypes.arrayOf(PropTypes.oneOf(Object.values(GroupDateTypes))),
   onError: PropTypes.func,

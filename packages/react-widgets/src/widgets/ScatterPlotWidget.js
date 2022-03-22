@@ -6,6 +6,7 @@ import { WrapperWidgetUI, ScatterPlotWidgetUI, NoDataAlert } from '@carto/react-
 import { getScatter } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { AggregationTypes } from '@carto/react-core';
+import { columnAggregationOn } from './utils/propTypesFns';
 
 /**
  * Renders a <ScatterPlotWidget /> component
@@ -112,12 +113,12 @@ ScatterPlotWidget.propTypes = {
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string)
   ]).isRequired,
-  xAxisJoinOperation: PropTypes.oneOf(Object.values(AggregationTypes)),
+  xAxisJoinOperation: columnAggregationOn('xAxisColumn'),
   yAxisColumn: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string)
   ]).isRequired,
-  yAxisJoinOperation: PropTypes.oneOf(Object.values(AggregationTypes)),
+  yAxisJoinOperation: columnAggregationOn('yAxisColumn'),
   animation: PropTypes.bool,
   xAxisFormatter: PropTypes.func,
   yAxisFormatter: PropTypes.func,
