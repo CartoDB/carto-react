@@ -5,7 +5,6 @@ import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
 import { WrapperWidgetUI, ScatterPlotWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getScatter } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
-import { AggregationTypes } from '@carto/react-core';
 import { columnAggregationOn } from './utils/propTypesFns';
 
 /**

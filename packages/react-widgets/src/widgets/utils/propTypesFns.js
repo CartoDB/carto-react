@@ -1,7 +1,7 @@
 import { AggregationTypes } from '@carto/react-core';
 
 export const columnAggregationOn = (columnPropName) => (props, propName) => {
-  if (Array.isArray(props[columnPropName])) {
+  if (Array.isArray(props[columnPropName]) && props[columnPropName].length >= 2) {
     if (!props[propName]) {
       return new Error(
         `Prop ${propName} must be defined if ${columnPropName} is an array`
