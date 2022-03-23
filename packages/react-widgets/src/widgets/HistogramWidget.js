@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { addFilter, removeFilter } from '@carto/react-redux';
+import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getHistogram } from '../models';
@@ -53,6 +53,7 @@ function HistogramWidget(props) {
   const [isLoading, setIsLoading] = useState(true);
 
   const filters = useSourceFilters({ dataSource, id });
+  const source = useSelector((state) => selectSourceById(state, dataSource));
   const isSourceReady = useSelector((state) =>
     selectAreFeaturesReadyForSource(state, dataSource)
   );
@@ -101,6 +102,7 @@ function HistogramWidget(props) {
         operation,
         ticks,
         filters,
+        filtersLogicalOperator: source?.filtersLogicalOperator,
         dataSource
       })
         .then((data) => {
@@ -121,6 +123,7 @@ function HistogramWidget(props) {
     ticks,
     dataSource,
     filters,
+    source?.filtersLogicalOperator,
     setIsLoading,
     onError,
     isSourceReady

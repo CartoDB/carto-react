@@ -1,10 +1,11 @@
 import { Methods, executeTask } from '@carto/react-workers';
 
 export const getHistogram = async (props) => {
-  const { column, operation, ticks, filters, dataSource } = props;
+  const { column, operation, ticks, filters, filtersLogicalOperator, dataSource } = props;
 
   return executeTask(dataSource, Methods.FEATURES_HISTOGRAM, {
     filters,
+    filtersLogicalOperator,
     operation,
     column,
     ticks
