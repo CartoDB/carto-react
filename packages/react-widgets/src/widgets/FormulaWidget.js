@@ -5,7 +5,7 @@ import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
 import useSourceFilters from '../hooks/useSourceFilters';
-import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
+import { selectAreFeaturesReadyForSource, selectSourceById } from '@carto/react-redux';
 
 /**
  * Renders a <FormulaWidget /> component
@@ -32,6 +32,8 @@ function FormulaWidget(props) {
     onError,
     wrapperProps
   } = props;
+
+  const source = useSelector((state) => selectSourceById(state, dataSource));
   const isSourceReady = useSelector((state) =>
     selectAreFeaturesReadyForSource(state, dataSource)
   );
@@ -48,6 +50,7 @@ function FormulaWidget(props) {
         operation,
         column,
         filters,
+        filtersLogicalOperator: source?.filtersLogicalOperator,
         dataSource
       })
         .then((data) => {
@@ -61,7 +64,16 @@ function FormulaWidget(props) {
           if (onError) onError(error);
         });
     }
-  }, [operation, column, filters, dataSource, setIsLoading, onError, isSourceReady]);
+  }, [
+    operation,
+    column,
+    filters,
+    source?.filtersLogicalOperator,
+    dataSource,
+    setIsLoading,
+    onError,
+    isSourceReady
+  ]);
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
