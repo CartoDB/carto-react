@@ -91,6 +91,7 @@ function CategoryWidget(props) {
     operationColumn,
     operation,
     filters,
+    source?.filtersLogicalOperator,
     dataSource,
     setIsLoading,
     onError,
