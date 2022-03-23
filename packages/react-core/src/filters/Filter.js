@@ -1,13 +1,13 @@
 import { filterFunctions } from './FilterTypes';
 import { FiltersLogicalOperators } from '../operations/constants/FiltersLogicalOperators';
 
-const logicalOperatorMethods = {
+const LOGICAL_OPERATOR_METHODS = {
   [FiltersLogicalOperators.AND]: 'every',
   [FiltersLogicalOperators.OR]: 'some'
 };
 
 function passesFilter(columns, filters, feature, filtersLogicalOperator) {
-  const method = logicalOperatorMethods[filtersLogicalOperator];
+  const method = LOGICAL_OPERATOR_METHODS[filtersLogicalOperator];
   return columns[method]((column) => {
     const columnFilters = filters[column];
     const columnFilterTypes = Object.keys(columnFilters);
