@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { WrapperWidgetUI, TableWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getTable } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
-import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
+import { selectAreFeaturesReadyForSource, selectSourceById } from '@carto/react-redux/';
 
 /**
  * Renders a <TableWidget /> component
@@ -42,6 +42,7 @@ function TableWidget({
   const [rows, setRows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const filters = useSourceFilters({ dataSource, id });
+  const source = useSelector((state) => selectSourceById(state, dataSource));
   const isSourceReady = useSelector((state) =>
     selectAreFeaturesReadyForSource(state, dataSource)
   );
@@ -56,6 +57,7 @@ function TableWidget({
       setIsLoading(true);
       getTable({
         filters,
+        filtersLogicalOperator: source?.filtersLogicalOperator,
         dataSource,
         rowsPerPage,
         page,
@@ -79,6 +81,7 @@ function TableWidget({
     id,
     dataSource,
     filters,
+    source?.filtersLogicalOperator,
     sortBy,
     sortDirection,
     page,
