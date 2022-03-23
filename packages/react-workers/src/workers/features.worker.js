@@ -85,13 +85,19 @@ function getGeojsonFeatures({ viewport, geometry, uniqueIdProperty }) {
   postMessage({ result: true });
 }
 
-function getFormula({ filters, operation, column, joinOperation }) {
+function getFormula({
+  filters,
+  filtersLogicalOperator,
+  operation,
+  column,
+  joinOperation
+}) {
   let result = null;
 
   if (currentFeatures) {
     const targetOperation = aggregationFunctions[operation];
 
-    const filteredFeatures = getFilteredFeatures(filters);
+    const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
 
     result = [{ value: targetOperation(filteredFeatures, column, joinOperation) }];
   }
@@ -99,11 +105,18 @@ function getFormula({ filters, operation, column, joinOperation }) {
   postMessage({ result });
 }
 
-function getHistogram({ filters, operation, column, ticks, joinOperation }) {
+function getHistogram({
+  filters,
+  filtersLogicalOperator,
+  operation,
+  column,
+  ticks,
+  joinOperation
+}) {
   let result = null;
 
   if (currentFeatures) {
-    const filteredFeatures = getFilteredFeatures(filters);
+    const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
 
     result = histogram({
       data: filteredFeatures,
@@ -117,11 +130,18 @@ function getHistogram({ filters, operation, column, ticks, joinOperation }) {
   postMessage({ result });
 }
 
-function getCategories({ filters, operation, column, operationColumn, joinOperation }) {
+function getCategories({
+  filters,
+  filtersLogicalOperator,
+  operation,
+  column,
+  operationColumn,
+  joinOperation
+}) {
   let result = null;
 
   if (currentFeatures) {
-    const filteredFeatures = getFilteredFeatures(filters);
+    const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
 
     const groups = groupValuesByColumn({
       data: filteredFeatures,
@@ -137,10 +157,16 @@ function getCategories({ filters, operation, column, operationColumn, joinOperat
   postMessage({ result });
 }
 
-function getScatterPlot({ filters, xAxisColumn, yAxisColumn, joinOperation }) {
+function getScatterPlot({
+  filters,
+  filtersLogicalOperator,
+  xAxisColumn,
+  yAxisColumn,
+  joinOperation
+}) {
   let result = [];
   if (currentFeatures) {
-    const filteredFeatures = getFilteredFeatures(filters);
+    const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
     result = scatterPlot({
       data: filteredFeatures,
       xAxisColumns: [xAxisColumn].flat(),
@@ -154,6 +180,7 @@ function getScatterPlot({ filters, xAxisColumn, yAxisColumn, joinOperation }) {
 
 function getTimeSeries({
   filters,
+  filtersLogicalOperator,
   column,
   stepSize,
   operation,
@@ -163,7 +190,7 @@ function getTimeSeries({
   let result = [];
 
   if (currentFeatures) {
-    const filteredFeatures = getFilteredFeatures(filters);
+    const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
 
     const groups = groupValuesByDateColumn({
       data: filteredFeatures,
@@ -183,6 +210,7 @@ function getTimeSeries({
 // See sorting details in utils/sorting.js
 function getRawFeatures({
   filters,
+  filtersLogicalOperator,
   limit = 10,
   page = 0,
   sortBy,
@@ -193,7 +221,7 @@ function getRawFeatures({
   let totalCount = 0;
 
   if (currentFeatures) {
-    data = applySorting(getFilteredFeatures(filters), {
+    data = applySorting(getFilteredFeatures(filters, filtersLogicalOperator), {
       sortBy,
       sortByDirection
     });
@@ -215,6 +243,6 @@ function applyPagination(features, { limit, page }) {
   return features.slice(limit * Math.max(0, page), limit * Math.max(1, page + 1));
 }
 
-function getFilteredFeatures(filters = {}) {
-  return _applyFilters(currentFeatures, filters);
+function getFilteredFeatures(filters = {}, filtersLogicalOperator) {
+  return _applyFilters(currentFeatures, filters, filtersLogicalOperator);
 }

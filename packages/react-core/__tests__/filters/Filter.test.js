@@ -1,5 +1,6 @@
 import { buildBinaryFeatureFilter, buildFeatureFilter } from '../../src/filters/Filter';
 import { POINTS_BINARY_DATA, POLYGONS_BINARY_DATA } from './constants';
+import { FiltersLogicalOperators } from '../../src/operations/constants/FiltersLogicalOperators';
 
 const filters = {
   column1: {
@@ -273,6 +274,45 @@ describe('Filters', () => {
         const isFeatureIncluded = buildFeatureFilter(zeroIsValidForThisFilter)(obj);
         expect(isFeatureIncluded).toBe(0);
       });
+    });
+  });
+
+  describe('feature passes filter - logical OR operator', () => {
+    const params = {
+      filtersLogicalOperator: FiltersLogicalOperators.OR,
+      filters: {
+        column1: {
+          in: {
+            values: [1]
+          }
+        },
+        column2: {
+          in: {
+            values: [2]
+          }
+        }
+      }
+    };
+
+    test('should pass if only first column passes', () => {
+      const feature = { properties: { column1: 1, column2: null } };
+      const result = buildFeatureFilter(params)(feature);
+      expect(result).toBe(true);
+    });
+    test('should pass if only second column passes', () => {
+      const feature = { properties: { column1: null, column2: 2 } };
+      const result = buildFeatureFilter(params)(feature);
+      expect(result).toBe(true);
+    });
+    test('should pass if both columns pass', () => {
+      const feature = { properties: { column1: 1, column2: 2 } };
+      const result = buildFeatureFilter(params)(feature);
+      expect(result).toBe(true);
+    });
+    test('should not pass if none of the columns pass', () => {
+      const feature = { properties: { column1: null, column2: null } };
+      const result = buildFeatureFilter(params)(feature);
+      expect(result).toBe(false);
     });
   });
 

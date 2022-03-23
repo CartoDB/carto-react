@@ -55,7 +55,10 @@ export default function useCartoLayerProps({
     })
   };
 
-  const dataFilterExtensionProps = getDataFilterExtensionProps(source?.filters);
+  const dataFilterExtensionProps = getDataFilterExtensionProps(
+    source?.filters,
+    source?.filtersLogicalOperator
+  );
   const maskExtensionProps = getMaskExtensionProps(spatialFilter?.geometry?.coordinates);
   const extensions = [
     ...dataFilterExtensionProps.extensions,

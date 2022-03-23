@@ -3,7 +3,7 @@ import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '@carto/react-core';
 import { removeWorker } from '@carto/react-workers';
 import { setDefaultCredentials } from '@deck.gl/carto';
-import { FEATURE_SELECTION_MODES } from '@carto/react-core';
+import { FEATURE_SELECTION_MODES, FiltersLogicalOperators } from '@carto/react-core';
 
 /**
  *
@@ -187,10 +187,19 @@ export const createCartoSlice = (initialState) => {
  * @param {string} data - data definition for the source. Query for SQL dataset or the name of the tileset for BigQuery Tileset
  * @param {string} type - type of source. Posible values are sql or bigquery
  * @param {Object} credentials - (optional) Custom credentials to be used in the source
+ * @param {string} connection - connection name for carto 3 source
+ * @param {FiltersLogicalOperators} filtersLogicalOperator - logical operator that defines how filters for different columns are joined together
  */
-export const addSource = ({ id, data, type, credentials, connection }) => ({
+export const addSource = ({
+  id,
+  data,
+  type,
+  credentials,
+  connection,
+  filtersLogicalOperator = FiltersLogicalOperators.AND
+}) => ({
   type: 'carto/addSource',
-  payload: { id, data, type, credentials, connection }
+  payload: { id, data, type, credentials, connection, filtersLogicalOperator }
 });
 
 /**
