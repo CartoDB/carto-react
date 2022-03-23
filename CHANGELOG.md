@@ -2,6 +2,10 @@
 
 ## Not released
 
+## 1.3
+
+### 1.3.0-alpha.0 (2022-03-23)
+
 - Implement multiple operationColumn in core functions [#347](https://github.com/CartoDB/carto-react/pull/347)
 - Add RegExp string filtering capabilities [#362](https://github.com/CartoDB/carto-react/pull/362)
 - Use multiple operationColumn in widgets [#361](https://github.com/CartoDB/carto-react/pull/361)
