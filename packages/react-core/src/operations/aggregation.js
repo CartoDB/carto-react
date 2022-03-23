@@ -1,7 +1,5 @@
 import { AggregationTypes } from './constants/AggregationTypes';
 
-const dummyFn = ([value]) => value;
-
 export const aggregationFunctions = {
   [AggregationTypes.COUNT]: (values) => values.length,
   [AggregationTypes.MIN]: min,
@@ -11,15 +9,19 @@ export const aggregationFunctions = {
 };
 
 export function aggregate(feature, keys, operation) {
-  const normalizedKeys = normalizeKeys(keys);
-
-  if (!normalizedKeys?.length) {
+  if (!keys?.length) {
     throw new Error('Cannot aggregate a feature without having keys');
+  } else if (keys.length === 1) {
+    return feature[keys[0]];
   }
 
-  const aggregationFn = aggregationFunctions[operation] || dummyFn;
+  const aggregationFn = aggregationFunctions[operation];
 
-  return aggregationFn(normalizedKeys.map((column) => feature[column]));
+  if (!aggregationFn) {
+    throw new Error(`${operation} isn't a valid aggregation function`);
+  }
+
+  return aggregationFn(keys.map((column) => feature[column]));
 }
 
 // Aggregation functions
@@ -64,8 +66,8 @@ function max(values, keys, joinOperation) {
 
 // Aux
 
-// Keys can come as a string (one column) or a string array (multiple column)
+// Keys can come as a string (one column) or a strings array (multiple column)
 // Use always an array to make the code easier
 function normalizeKeys(keys) {
-  return keys?.length ? [keys].flat() : undefined;
+  return Array.isArray(keys) ? keys : typeof keys === 'string' ? [keys] : undefined;
 }

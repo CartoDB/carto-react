@@ -20,6 +20,7 @@ import {
 import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import useSourceFilters from '../hooks/useSourceFilters';
+import { columnAggregationOn } from './utils/propTypesFns';
 
 // Due to the widget groups the data by a certain stepSize, when filtering
 // the filter applied must be a range that represent the grouping range.
@@ -41,7 +42,8 @@ const STEP_SIZE_RANGE_MAPPING = {
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's date column for grouping the data.
- * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
+ * @param  {string | string[]} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`. If multiples are provided, they will be merged into a single one using joinOperation property.
+ * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple operation columns into a single one.
  * @param  {string} [props.operation] - Operation to apply to the operationColumn. Operation used by default is COUNT. Must be one of those defined in `AggregationTypes` object.
  * @param  {string} props.stepSize - Step applied to group the data. Must be one of those defined in `GroupDateTypes` object.
  * @param  {string[]} [props.stepSizeOptions] - Different steps that can be applied to group the data. If filled, an icon with a menu appears to change between steps. Every value must be one of those defined in `AggregationTypes` object.
@@ -73,6 +75,7 @@ function TimeSeriesWidget({
   dataSource,
   column,
   operationColumn,
+  joinOperation,
   operation,
   stepSizeOptions,
   onError,
@@ -124,6 +127,7 @@ function TimeSeriesWidget({
         filters,
         dataSource,
         column,
+        joinOperation,
         stepSize: selectedStepSize,
         operationColumn,
         operation
@@ -148,6 +152,7 @@ function TimeSeriesWidget({
     isSourceReady,
     setIsLoading,
     operationColumn,
+    joinOperation,
     operation,
     onError
   ]);
@@ -304,7 +309,11 @@ TimeSeriesWidget.propTypes = {
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
   column: PropTypes.string.isRequired,
-  operationColumn: PropTypes.string,
+  operationColumn: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+  ]),
+  joinOperation: columnAggregationOn('operationColumn'),
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   stepSizeOptions: PropTypes.arrayOf(PropTypes.oneOf(Object.values(GroupDateTypes))),
   onError: PropTypes.func,

@@ -4,6 +4,7 @@
 
 - Implement multiple operationColumn in core functions [#347](https://github.com/CartoDB/carto-react/pull/347)
 - Add RegExp string filtering capabilities [#362](https://github.com/CartoDB/carto-react/pull/362)
+- Use multiple operationColumn in widgets [#361](https://github.com/CartoDB/carto-react/pull/361)
 
 ## 1.2
 

@@ -137,15 +137,22 @@ function getCategories({ filters, operation, column, operationColumn, joinOperat
   postMessage({ result });
 }
 
-function getScatterPlot({ filters, xAxisColumn, yAxisColumn, joinOperation }) {
+function getScatterPlot({
+  filters,
+  xAxisColumn,
+  yAxisColumn,
+  xAxisJoinOperation,
+  yAxisJoinOperation
+}) {
   let result = [];
   if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters);
     result = scatterPlot({
       data: filteredFeatures,
       xAxisColumns: [xAxisColumn].flat(),
+      xAxisJoinOperation,
       yAxisColumns: [yAxisColumn].flat(),
-      joinOperation
+      yAxisJoinOperation
     });
   }
 

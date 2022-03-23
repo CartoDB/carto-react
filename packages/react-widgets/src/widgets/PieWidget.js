@@ -8,6 +8,7 @@ import { getCategories } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
+import { columnAggregationOn } from './utils/propTypesFns';
 
 const EMPTY_ARRAY = [];
 
@@ -18,7 +19,8 @@ const EMPTY_ARRAY = [];
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's column to get the data from.
- * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
+ * @param  {string | string[]} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`. If multiples are provided, they will be merged into a single one using joinOperation property.
+ * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple operation columns into a single one.
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.formatter] - Function to format the value that appears in the tooltip.
  * @param  {Function} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
@@ -37,6 +39,7 @@ function PieWidget({
   dataSource,
   column,
   operationColumn,
+  joinOperation,
   operation,
   formatter,
   tooltipFormatter,
@@ -69,6 +72,7 @@ function PieWidget({
         column,
         operation,
         operationColumn,
+        joinOperation,
         filters,
         dataSource
       })
@@ -87,6 +91,7 @@ function PieWidget({
     id,
     column,
     operationColumn,
+    joinOperation,
     operation,
     filters,
     dataSource,
@@ -147,7 +152,11 @@ PieWidget.propTypes = {
   height: PropTypes.number,
   dataSource: PropTypes.string.isRequired,
   column: PropTypes.string.isRequired,
-  operationColumn: PropTypes.string,
+  operationColumn: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+  ]),
+  joinOperation: columnAggregationOn('operationColumn'),
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
