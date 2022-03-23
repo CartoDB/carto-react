@@ -5,6 +5,7 @@ import { selectAreFeaturesReadyForSource, selectSourceById } from '@carto/react-
 import { WrapperWidgetUI, ScatterPlotWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getScatter } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
+import { columnAggregationOn } from './utils/propTypesFns';
 
 /**
  * Renders a <ScatterPlotWidget /> component
@@ -12,8 +13,10 @@ import useSourceFilters from '../hooks/useSourceFilters';
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
- * @param  {string} props.xAxisColumn - Name of the data source's column to get the x axis from.
- * @param  {string} props.yAxisColumn - Name of the data source's column to get the y axis from.
+ * @param  {string | string[]} props.xAxisColumn - Name of the data source's column to get the x axis from. If multiples are provided, they will be merged into a single one using xAxisJoinOperation property.
+ * @param  {AggregationTypes} [props.xAxisJoinOperation] - Operation applied to aggregate multiple xAxis columns into a single one.
+ * @param  {string | string[]} props.yAxisColumn - Name of the data source's column to get the y axis from. If multiples are provided, they will be merged into a single one using yAxisJoinOperation property.
+ * @param  {AggregationTypes} [props.yAxisJoinOperation] - Operation applied to aggregate multiple yAxis columns into a single one.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {formatterCallback} [props.xAxisFormatter] - Function to format X axis values.
  * @param  {formatterCallback} [props.yAxisFormatter] - Function to format Y axis values.
@@ -28,7 +31,9 @@ function ScatterPlotWidget(props) {
     title,
     dataSource,
     xAxisColumn,
+    xAxisJoinOperation,
     yAxisColumn,
+    yAxisJoinOperation,
     animation,
     yAxisFormatter,
     xAxisFormatter,
@@ -53,7 +58,9 @@ function ScatterPlotWidget(props) {
     if (isSourceReady) {
       getScatter({
         xAxisColumn,
+        xAxisJoinOperation,
         yAxisColumn,
+        yAxisJoinOperation,
         filters,
         filtersLogicalOperator: source?.filtersLogicalOperator,
         dataSource
@@ -72,7 +79,9 @@ function ScatterPlotWidget(props) {
   }, [
     id,
     xAxisColumn,
+    xAxisJoinOperation,
     yAxisColumn,
+    yAxisJoinOperation,
     dataSource,
     filters,
     source?.filtersLogicalOperator,
@@ -102,8 +111,16 @@ ScatterPlotWidget.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
-  xAxisColumn: PropTypes.string.isRequired,
-  yAxisColumn: PropTypes.string.isRequired,
+  xAxisColumn: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+  ]).isRequired,
+  xAxisJoinOperation: columnAggregationOn('xAxisColumn'),
+  yAxisColumn: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+  ]).isRequired,
+  yAxisJoinOperation: columnAggregationOn('yAxisColumn'),
   animation: PropTypes.bool,
   xAxisFormatter: PropTypes.func,
   yAxisFormatter: PropTypes.func,

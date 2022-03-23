@@ -162,7 +162,8 @@ function getScatterPlot({
   filtersLogicalOperator,
   xAxisColumn,
   yAxisColumn,
-  joinOperation
+  xAxisJoinOperation,
+  yAxisJoinOperation
 }) {
   let result = [];
   if (currentFeatures) {
@@ -170,8 +171,9 @@ function getScatterPlot({
     result = scatterPlot({
       data: filteredFeatures,
       xAxisColumns: [xAxisColumn].flat(),
+      xAxisJoinOperation,
       yAxisColumns: [yAxisColumn].flat(),
-      joinOperation
+      yAxisJoinOperation
     });
   }
 

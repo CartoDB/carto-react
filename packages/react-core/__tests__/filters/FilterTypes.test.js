@@ -91,6 +91,11 @@ describe('FilterTypes', () => {
 
       // Multiples filter values (OR)
       expect(stringSearchFilter(['_test_', 'carto'], featureValue)).toBe(true);
+
+      // Regexp filtering
+      expect(stringSearchFilter(['\\w+RT\\w'], featureValue, { useRegExp: true })).toBe(
+        true
+      );
     });
   });
 });

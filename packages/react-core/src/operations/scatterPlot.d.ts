@@ -4,6 +4,7 @@ import { ScatterPlotFeature } from '../types';
 export function scatterPlot(args: {
   data: Record<string, unknown>[];
   xAxisColumns: string[];
+  xAxisJoinOperation?: AggregationTypes;
   yAxisColumns: string[];
-  joinOperation?: AggregationTypes;
+  yAxisJoinOperation?: AggregationTypes;
 }): ScatterPlotFeature;

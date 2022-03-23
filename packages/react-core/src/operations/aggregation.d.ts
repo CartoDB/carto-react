@@ -5,6 +5,6 @@ export const aggregationFunctions: AggregationFunctions;
 
 export function aggregate(
   feature: Record<string, unknown>,
-  keys?: string | string[],
+  keys?: string[],
   joinOperation?: AggregationTypes
 );

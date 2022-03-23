@@ -32,8 +32,9 @@ describe('scatterPlot', () => {
       scatterPlot({
         data,
         xAxisColumns: ['x', 'y'],
+        xAxisJoinOperation: AggregationTypes.SUM,
         yAxisColumns: ['x', 'y'],
-        joinOperation: AggregationTypes.SUM
+        yAxisJoinOperation: AggregationTypes.SUM
       })
     ).toEqual([
       [0, 0],

@@ -5,6 +5,7 @@ export const getCategories = async (props) => {
     column,
     operationColumn,
     operation,
+    joinOperation,
     filters,
     filtersLogicalOperator,
     dataSource
@@ -14,6 +15,7 @@ export const getCategories = async (props) => {
     filters,
     filtersLogicalOperator,
     operation,
+    joinOperation,
     column,
     operationColumn: operationColumn || column
   });
