@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { WrapperWidgetUI, TableWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getTable } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
-import { selectAreFeaturesReadyForSource, selectSourceById } from '@carto/react-redux/';
+import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
 
 /**
  * Renders a <TableWidget /> component

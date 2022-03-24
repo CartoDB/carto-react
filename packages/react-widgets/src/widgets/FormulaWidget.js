@@ -5,7 +5,7 @@ import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
 import useSourceFilters from '../hooks/useSourceFilters';
-import { selectAreFeaturesReadyForSource, selectSourceById } from '@carto/react-redux';
+import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
 import { columnAggregationOn } from './utils/propTypesFns';
 
 /**
