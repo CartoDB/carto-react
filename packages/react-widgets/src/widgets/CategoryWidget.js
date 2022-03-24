@@ -51,7 +51,6 @@ function CategoryWidget(props) {
   } = props;
   const dispatch = useDispatch();
 
-  const source = useSelector((state) => selectSourceById(state, dataSource));
   const isSourceReady = useSelector((state) =>
     selectAreFeaturesReadyForSource(state, dataSource)
   );
@@ -60,7 +59,7 @@ function CategoryWidget(props) {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const filters = useSourceFilters({ dataSource, id });
+  const { filters, filtersLogicalOperator } = useSourceFilters({ dataSource, id });
   const selectedCategories =
     useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
     EMPTY_ARRAY;
@@ -75,7 +74,7 @@ function CategoryWidget(props) {
         joinOperation,
         operation,
         filters,
-        filtersLogicalOperator: source?.filtersLogicalOperator,
+        filtersLogicalOperator,
         dataSource
       })
         .then((data) => {
@@ -96,7 +95,7 @@ function CategoryWidget(props) {
     joinOperation,
     operation,
     filters,
-    source?.filtersLogicalOperator,
+    filtersLogicalOperator,
     dataSource,
     setIsLoading,
     onError,

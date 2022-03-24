@@ -52,8 +52,7 @@ function HistogramWidget(props) {
   const [histogramData, setHistogramData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const filters = useSourceFilters({ dataSource, id });
-  const source = useSelector((state) => selectSourceById(state, dataSource));
+  const { filters, filtersLogicalOperator } = useSourceFilters({ dataSource, id });
   const isSourceReady = useSelector((state) =>
     selectAreFeaturesReadyForSource(state, dataSource)
   );
@@ -102,7 +101,7 @@ function HistogramWidget(props) {
         operation,
         ticks,
         filters,
-        filtersLogicalOperator: source?.filtersLogicalOperator,
+        filtersLogicalOperator,
         dataSource
       })
         .then((data) => {
@@ -123,7 +122,7 @@ function HistogramWidget(props) {
     ticks,
     dataSource,
     filters,
-    source?.filtersLogicalOperator,
+    filtersLogicalOperator,
     setIsLoading,
     onError,
     isSourceReady

@@ -34,11 +34,10 @@ function FormulaWidget({
   onError,
   wrapperProps
 }) {
-  const source = useSelector((state) => selectSourceById(state, dataSource));
   const isSourceReady = useSelector((state) =>
     selectAreFeaturesReadyForSource(state, dataSource)
   );
-  const filters = useSourceFilters({ dataSource, id });
+  const { filters, filtersLogicalOperator } = useSourceFilters({ dataSource, id });
 
   const [formulaData, setFormulaData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -52,7 +51,7 @@ function FormulaWidget({
         column,
         joinOperation,
         filters,
-        filtersLogicalOperator: source?.filtersLogicalOperator,
+        filtersLogicalOperator,
         dataSource
       })
         .then((data) => {
@@ -71,7 +70,7 @@ function FormulaWidget({
     column,
     joinOperation,
     filters,
-    source?.filtersLogicalOperator,
+    filtersLogicalOperator,
     dataSource,
     setIsLoading,
     onError,

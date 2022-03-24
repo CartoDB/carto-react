@@ -105,7 +105,7 @@ function TimeSeriesWidget({
   const isSourceReady = useSelector((state) =>
     selectAreFeaturesReadyForSource(state, dataSource)
   );
-  const filters = useSourceFilters({ dataSource, id });
+  const { filters } = useSourceFilters({ dataSource, id });
 
   const [timeSeriesData, setTimeSeriesData] = useState([]);
   const [selectedStepSize, setSelectedStepSize] = useState(stepSize);
