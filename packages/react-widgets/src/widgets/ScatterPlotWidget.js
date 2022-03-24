@@ -49,7 +49,7 @@ function ScatterPlotWidget(props) {
   const isSourceReady = useSelector((state) =>
     selectAreFeaturesReadyForSource(state, dataSource)
   );
-  const filters = useSourceFilters({ dataSource, id });
+  const { filters, filtersLogicalOperator } = useSourceFilters({ dataSource, id });
 
   useEffect(() => {
     setIsLoading(true);
@@ -61,6 +61,7 @@ function ScatterPlotWidget(props) {
         yAxisColumn,
         yAxisJoinOperation,
         filters,
+        filtersLogicalOperator,
         dataSource
       })
         .then((data) => {
@@ -82,6 +83,7 @@ function ScatterPlotWidget(props) {
     yAxisJoinOperation,
     dataSource,
     filters,
+    filtersLogicalOperator,
     setIsLoading,
     isSourceReady,
     onError

@@ -13,6 +13,7 @@ export { randomString } from './utils/randomString';
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
+export { FiltersLogicalOperators } from './operations/constants/FiltersLogicalOperators';
 export { AggregationTypes } from './operations/constants/AggregationTypes';
 export { aggregationFunctions } from './operations/aggregation';
 export { groupValuesByColumn } from './operations/groupBy';

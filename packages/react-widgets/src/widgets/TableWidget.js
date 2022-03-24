@@ -41,7 +41,7 @@ function TableWidget({
 
   const [rows, setRows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const filters = useSourceFilters({ dataSource, id });
+  const { filters, filtersLogicalOperator } = useSourceFilters({ dataSource, id });
   const isSourceReady = useSelector((state) =>
     selectAreFeaturesReadyForSource(state, dataSource)
   );
@@ -56,6 +56,7 @@ function TableWidget({
       setIsLoading(true);
       getTable({
         filters,
+        filtersLogicalOperator,
         dataSource,
         rowsPerPage,
         page,
@@ -79,6 +80,7 @@ function TableWidget({
     id,
     dataSource,
     filters,
+    filtersLogicalOperator,
     sortBy,
     sortDirection,
     page,

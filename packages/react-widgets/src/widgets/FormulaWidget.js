@@ -37,7 +37,7 @@ function FormulaWidget({
   const isSourceReady = useSelector((state) =>
     selectAreFeaturesReadyForSource(state, dataSource)
   );
-  const filters = useSourceFilters({ dataSource, id });
+  const { filters, filtersLogicalOperator } = useSourceFilters({ dataSource, id });
 
   const [formulaData, setFormulaData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -51,6 +51,7 @@ function FormulaWidget({
         column,
         joinOperation,
         filters,
+        filtersLogicalOperator,
         dataSource
       })
         .then((data) => {
@@ -64,7 +65,17 @@ function FormulaWidget({
           if (onError) onError(error);
         });
     }
-  }, [operation, column, joinOperation, filters, dataSource, setIsLoading, onError, isSourceReady]);
+  }, [
+    operation,
+    column,
+    joinOperation,
+    filters,
+    filtersLogicalOperator,
+    dataSource,
+    setIsLoading,
+    onError,
+    isSourceReady
+  ]);
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>

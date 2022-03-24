@@ -62,7 +62,7 @@ function PieWidget({
   const isSourceReady = useSelector((state) =>
     selectAreFeaturesReadyForSource(state, dataSource)
   );
-  const filters = useSourceFilters({ dataSource, id });
+  const { filters, filtersLogicalOperator } = useSourceFilters({ dataSource, id });
 
   useEffect(() => {
     setIsLoading(true);
@@ -74,6 +74,7 @@ function PieWidget({
         operationColumn,
         joinOperation,
         filters,
+        filtersLogicalOperator,
         dataSource
       })
         .then((data) => {
@@ -94,6 +95,7 @@ function PieWidget({
     joinOperation,
     operation,
     filters,
+    filtersLogicalOperator,
     dataSource,
     setIsLoading,
     onError,

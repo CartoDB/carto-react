@@ -7,11 +7,13 @@ export const getScatter = async (props) => {
     yAxisColumn,
     yAxisJoinOperation,
     filters,
+    filtersLogicalOperator,
     dataSource
   } = props;
 
   return executeTask(dataSource, Methods.FEATURES_SCATTERPLOT, {
     filters,
+    filtersLogicalOperator,
     xAxisColumn,
     xAxisJoinOperation,
     yAxisColumn,

@@ -12,12 +12,20 @@ import { dequal as deepEqual } from 'dequal';
  * @param  {string} props.id - ID of the widget that apply the filter you want to exclude.
  */
 export default function useSourceFilters({ dataSource, id }) {
-  const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
+  const { filters, filtersLogicalOperator } = useSelector(
+    (state) => selectSourceById(state, dataSource) || {}
+  );
 
-  const applicableFilters = useMemo(() => getApplicableFilters(filters, id), [
-    filters,
-    id
-  ]);
+  const applicableFilters = useMemo(
+    () => getApplicableFilters(filters, id),
+    [filters, id]
+  );
 
-  return useCustomCompareMemo(applicableFilters, deepEqual);
+  return useCustomCompareMemo(
+    {
+      filters: applicableFilters,
+      filtersLogicalOperator
+    },
+    deepEqual
+  );
 }
