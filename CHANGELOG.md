@@ -2,9 +2,12 @@
 
 ## Not released
 
-- Add filters logical operator prop to source object [#363](https://github.com/CartoDB/carto-react/pull/363)
 
 ## 1.3
+
+### 1.3.0-alpha.1 (2022-03-25)
+
+- Add filters logical operator prop to source object [#363](https://github.com/CartoDB/carto-react/pull/363)
 
 ### 1.3.0-alpha.0 (2022-03-23)
 
