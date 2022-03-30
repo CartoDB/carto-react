@@ -10,7 +10,6 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "declaration": true,
-    "declarationDir": "dist",
     "sourceMap": true,
     "paths": {
       "@carto/react-api/*": ["packages/react-api/src/*"],
