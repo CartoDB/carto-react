@@ -39,9 +39,9 @@ function filterFalsyElements(values, keys) {
 
   if (!keys?.length) {
     return values.filter(filterFn);
-  } else if (keys.length === 1) {
-    return values.filter((v) => filterFn(v[keys[0]]));
   }
+
+  return values.filter((v) => filterFn(v[keys[0]]));
 }
 
 // Aggregation functions
