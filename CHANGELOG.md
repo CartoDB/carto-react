@@ -3,6 +3,7 @@
 ## Not released
 
 - Bump deck.gl to 8.7.3 [#360](https://github.com/CartoDB/carto-react/pull/360)
+- Fix aggregation to ignore NULL values [#367](https://github.com/CartoDB/carto-react/pull/367)
 
 ## 1.3
 
