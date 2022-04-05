@@ -4,9 +4,9 @@ import { PropTypes } from 'prop-types';
 import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
-import useSourceFilters from '../hooks/useSourceFilters';
-import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
+import { selectAreFeaturesReadyForSource, selectSpatialFilter } from '@carto/react-redux';
 import { columnAggregationOn } from './utils/propTypesFns';
+import useWidgetSource from '../hooks/useWidgetSource';
 
 /**
  * Renders a <FormulaWidget /> component
@@ -19,6 +19,7 @@ import { columnAggregationOn } from './utils/propTypesFns';
  * @param  {AggregationTypes} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.formatter] - Function to format each value returned.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
+ * @param  {boolean} [props.global] - 
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
@@ -31,28 +32,35 @@ function FormulaWidget({
   joinOperation,
   formatter,
   animation,
+  global,
   onError,
   wrapperProps
 }) {
   const isSourceReady = useSelector((state) =>
     selectAreFeaturesReadyForSource(state, dataSource)
   );
-  const { filters, filtersLogicalOperator } = useSourceFilters({ dataSource, id });
+  const source = useWidgetSource({ dataSource, id });
 
   const [formulaData, setFormulaData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const spatialFilter = useSelector((state) =>
+    global ? selectSpatialFilter(state, source?.id) : null
+  );
+
+  const isReady = global ? true : isSourceReady;
+
   useEffect(() => {
     setIsLoading(true);
 
-    if (isSourceReady) {
+    if (source && isReady) {
       getFormula({
+        source,
         operation,
         column,
         joinOperation,
-        filters,
-        filtersLogicalOperator,
-        dataSource
+        spatialFilter,
+        global
       })
         .then((data) => {
           if (data && data[0]) {
@@ -69,12 +77,12 @@ function FormulaWidget({
     operation,
     column,
     joinOperation,
-    filters,
-    filtersLogicalOperator,
-    dataSource,
+    source,
     setIsLoading,
     onError,
-    isSourceReady
+    spatialFilter,
+    isReady,
+    global
   ]);
 
   return (
@@ -99,12 +107,14 @@ FormulaWidget.propTypes = {
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   animation: PropTypes.bool,
+  global: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object
 };
 
 FormulaWidget.defaultProps = {
   animation: true,
+  global: false,
   wrapperProps: {}
 };
 
