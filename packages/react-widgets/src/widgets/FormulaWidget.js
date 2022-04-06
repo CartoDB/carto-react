@@ -41,8 +41,8 @@ function FormulaWidget({
       operation,
       column,
       joinOperation,
-      global
     },
+    global,
     onError
   });
 

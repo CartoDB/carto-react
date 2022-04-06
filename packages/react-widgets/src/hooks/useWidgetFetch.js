@@ -5,13 +5,16 @@ import { useSelector } from 'react-redux';
 import useCustomCompareEffect from './useCustomCompareEffect';
 import useWidgetSource from './useWidgetSource';
 
-export default function useWidgetFetch(modelFn, { id, dataSource, params, onError }) {
+export default function useWidgetFetch(
+  modelFn,
+  { id, dataSource, params, global, onError }
+) {
   // State
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const isSourceReady = useSelector((state) =>
-    global ? true : selectAreFeaturesReadyForSource(state, dataSource)
+  const isSourceReady = useSelector(
+    (state) => global || selectAreFeaturesReadyForSource(state, dataSource)
   );
   const source = useWidgetSource({ dataSource, id });
 
@@ -22,7 +25,8 @@ export default function useWidgetFetch(modelFn, { id, dataSource, params, onErro
       if (source && isSourceReady) {
         modelFn({
           source,
-          ...params
+          ...params,
+          global
         })
           .then((data) => {
             if (data !== null && data !== undefined) {
