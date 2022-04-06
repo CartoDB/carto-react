@@ -33,10 +33,13 @@ export function formatTableNameWithFilters(props) {
 }
 
 // Operation columns & Join operation
+const sumColumns = (operationColumns) =>
+  operationColumns.map((column) => `COALESCE(${column}, 0)`).join(' + ');
+
 const SELECT_CLAUSE_BY_JOIN_OPERATION = {
   [AggregationTypes.AVG]: (operationColumns) =>
-    `SAFE_ADD(${operationColumns.join()}) / ${operationColumns.length}`,
-  [AggregationTypes.SUM]: (operationColumns) => `SAFE_ADD(${operationColumns.join()})`,
+    `(${sumColumns(operationColumns)}) / ${operationColumns.length}`,
+  [AggregationTypes.SUM]: (operationColumns) => sumColumns(operationColumns),
   [AggregationTypes.COUNT]: (operationColumns) => operationColumns[0],
   [AggregationTypes.MIN]: (operationColumns) => `LEAST(${operationColumns.join()})`,
   [AggregationTypes.MAX]: (operationColumns) => `GREATEST(${operationColumns.join()})`
