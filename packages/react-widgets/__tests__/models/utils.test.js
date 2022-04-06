@@ -24,7 +24,7 @@ const V3_SOURCE = {
   }
 };
 
-const SOURCE_WITH_FILTES = {
+const SOURCE_WITH_FILTERS = {
   ...V3_SOURCE,
   filters: {
     column_1: {
