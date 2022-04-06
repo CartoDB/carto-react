@@ -40,7 +40,7 @@ export default function useWidgetFetch(
           });
       }
     },
-    [params, source, setIsLoading, onError, isSourceReady, global],
+    [params, source, onError, isSourceReady, global],
     dequal
   );
 

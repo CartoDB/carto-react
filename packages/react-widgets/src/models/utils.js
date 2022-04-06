@@ -24,12 +24,12 @@ export function formatTableNameWithFilters(props) {
   const { source } = props;
   const { data, filters, filtersLogicalOperator } = source;
 
-  const whereClause = _filtersToSQL(filters, filtersLogicalOperator) || 'TRUE';
+  const whereClause = _filtersToSQL(filters, filtersLogicalOperator);
 
   const formattedSourceData =
     source.type === MAP_TYPES.QUERY ? `(${data.replace(';', '')})` : data;
 
-  return `${formattedSourceData} WHERE ${whereClause}`;
+  return `${formattedSourceData} ${whereClause}`.trim();
 }
 
 // Operation columns & Join operation
@@ -46,8 +46,12 @@ const SELECT_CLAUSE_BY_JOIN_OPERATION = {
 };
 
 export function formatOperationColumn(operationColumn, joinOperation) {
-  if (typeof operationColumn === 'string') {
+  if (!Array.isArray(operationColumn)) {
     return operationColumn || '*';
+  }
+
+  if (operationColumn.length <= 1) {
+    return operationColumn[0];
   }
 
   const selectClauseFormatter = SELECT_CLAUSE_BY_JOIN_OPERATION[joinOperation];

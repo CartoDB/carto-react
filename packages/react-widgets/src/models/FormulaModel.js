@@ -1,4 +1,4 @@
-import { executeSQL } from '@carto/react-api/';
+import { executeSQL } from '@carto/react-api';
 import { Methods, executeTask } from '@carto/react-workers';
 import {
   formatOperationColumn,

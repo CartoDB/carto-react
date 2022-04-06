@@ -51,5 +51,5 @@ export const filtersToSQL = (
     });
   });
 
-  return result.length ? `(${result.join(`) ${filtersLogicalOperator} (`)})` : '';
+  return result.length ? `WHERE (${result.join(`) ${filtersLogicalOperator} (`)})` : '';
 };
