@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useMemo } from 'react';
 import { PropTypes } from 'prop-types';
 import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
-import { selectAreFeaturesReadyForSource, selectSpatialFilter } from '@carto/react-redux';
 import { columnAggregationOn } from './utils/propTypesFns';
-import useWidgetSource from '../hooks/useWidgetSource';
+import useWidgetFetch from '../hooks/useWidgetFetch';
 
 /**
  * Renders a <FormulaWidget /> component
@@ -19,7 +17,7 @@ import useWidgetSource from '../hooks/useWidgetSource';
  * @param  {AggregationTypes} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.formatter] - Function to format each value returned.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
- * @param  {boolean} [props.global] - 
+ * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  */
@@ -36,59 +34,22 @@ function FormulaWidget({
   onError,
   wrapperProps
 }) {
-  const isSourceReady = useSelector((state) =>
-    selectAreFeaturesReadyForSource(state, dataSource)
-  );
-  const source = useWidgetSource({ dataSource, id });
-
-  const [formulaData, setFormulaData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const spatialFilter = useSelector((state) =>
-    global ? selectSpatialFilter(state, source?.id) : null
-  );
-
-  const isReady = global ? true : isSourceReady;
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    if (source && isReady) {
-      getFormula({
-        source,
-        operation,
-        column,
-        joinOperation,
-        spatialFilter,
-        global
-      })
-        .then((data) => {
-          if (data && data[0]) {
-            setIsLoading(false);
-            setFormulaData(data[0].value);
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          if (onError) onError(error);
-        });
-    }
-  }, [
-    operation,
-    column,
-    joinOperation,
-    source,
-    setIsLoading,
-    onError,
-    spatialFilter,
-    isReady,
-    global
-  ]);
+  const { data, isLoading } = useWidgetFetch(getFormula, {
+    id,
+    dataSource,
+    params: {
+      operation,
+      column,
+      joinOperation,
+      global
+    },
+    onError
+  });
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <FormulaWidgetUI
-        data={formulaData}
+        data={data}
         formatter={formatter}
         unitBefore={true}
         animation={animation}

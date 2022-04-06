@@ -1,13 +1,16 @@
 import { executeSQL } from '@carto/react-api/';
 import { Methods, executeTask } from '@carto/react-workers';
-import { formatOperationColumn, formatTableNameWithFilters } from './utils';
+import {
+  formatOperationColumn,
+  formatTableNameWithFilters,
+  wrapModelCall
+} from './utils';
 
 export function getFormula(props) {
-  return props.global ? fromRemote(props) : fromLocal(props);
+  return wrapModelCall(props, fromLocal, fromRemote);
 }
 
-// Aux
-
+// From local
 function fromLocal(props) {
   const { source, operation, column, joinOperation } = props;
 
@@ -20,6 +23,7 @@ function fromLocal(props) {
   });
 }
 
+// From remote
 function fromRemote(props) {
   const { source, abortController } = props;
   const { credentials, connection } = source;
@@ -31,7 +35,7 @@ function fromRemote(props) {
     query,
     connection,
     opts: { abortController }
-  }); // .then((data) => data[0]);
+  }).then((data) => data[0].value);
 }
 
 const buildSqlQueryToGetFormula = (props) => {

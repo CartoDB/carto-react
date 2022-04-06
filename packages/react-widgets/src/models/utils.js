@@ -1,20 +1,29 @@
 import { AggregationTypes, _filtersToSQL } from '@carto/react-core';
+import { MAP_TYPES } from '@deck.gl/carto';
 
-export function formatTableNameWithFilters(props) {
-  const { source, spatialFilter } = props;
-  const { data, filters, filtersLogicalOperator } = source;
+export function wrapModelCall(props, fromLocal, fromRemote) {
+  const { source, global } = props;
 
-  const filtersClause = _filtersToSQL(filters, filtersLogicalOperator);
+  if (source.type === MAP_TYPES.TILESET)
+    throw new Error('Tileset sources are not supported');
 
-  let query = `(${data} ${filtersClause}) foo`;
-
-  if (spatialFilter) {
-    const spatialFilterString = JSON.stringify(spatialFilter);
-    const spatialFilterClause = `ST_Intersects(geom, ST_GEOGFROMGEOJSON("""${spatialFilterString}"""))`;
-    query += ` WHERE ${spatialFilterClause}`;
+  if (global) {
+    return fromRemote(props);
   }
 
-  return query;
+  return fromLocal(props);
+}
+
+export function formatTableNameWithFilters(props) {
+  const { source } = props;
+  const { data, filters, filtersLogicalOperator } = source;
+
+  const whereClause = _filtersToSQL(filters, filtersLogicalOperator) || 'TRUE';
+
+  const formattedSourceData =
+    source.type === MAP_TYPES.QUERY ? `(${data.replace(';', '')})` : data;
+
+  return `${formattedSourceData} WHERE ${whereClause}`;
 }
 
 // Operation columns & Join operation
@@ -29,7 +38,7 @@ const SELECT_CLAUSE_BY_JOIN_OPERATION = {
 
 export function formatOperationColumn(operationColumn, joinOperation) {
   if (typeof operationColumn === 'string') {
-    return operationColumn;
+    return operationColumn || '*';
   }
 
   const selectClauseFormatter = SELECT_CLAUSE_BY_JOIN_OPERATION[joinOperation];
@@ -38,5 +47,5 @@ export function formatOperationColumn(operationColumn, joinOperation) {
     throw new Error(`${joinOperation} isn't valid.`);
   }
 
-  return SELECT_CLAUSE_BY_JOIN_OPERATION[joinOperation](operationColumn);
+  return selectClauseFormatter(operationColumn);
 }
