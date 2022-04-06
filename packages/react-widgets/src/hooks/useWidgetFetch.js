@@ -1,6 +1,6 @@
 import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
 import { dequal } from 'dequal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import useCustomCompareEffect from './useCustomCompareEffect';
 import useWidgetSource from './useWidgetSource';

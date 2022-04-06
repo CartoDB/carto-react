@@ -29,11 +29,11 @@ export function formatTableNameWithFilters(props) {
 // Operation columns & Join operation
 const SELECT_CLAUSE_BY_JOIN_OPERATION = {
   [AggregationTypes.AVG]: (operationColumns) =>
-    `(${operationColumns.join(' + ')} / ${operationColumns.length})`,
-  [AggregationTypes.SUM]: (operationColumns) => `(${operationColumns.join(' + ')})`,
+    `SAFE_ADD(${operationColumns.join()}) / ${operationColumns.length}`,
+  [AggregationTypes.SUM]: (operationColumns) => `SAFE_ADD(${operationColumns.join()})`,
   [AggregationTypes.COUNT]: (operationColumns) => operationColumns[0],
-  [AggregationTypes.MIN]: (operationColumns) => `(${operationColumns.join(' + ')})`,
-  [AggregationTypes.MAX]: (operationColumns) => `(${operationColumns.join(' + ')})`
+  [AggregationTypes.MIN]: (operationColumns) => `LEAST(${operationColumns.join()})`,
+  [AggregationTypes.MAX]: (operationColumns) => `GREATEST(${operationColumns.join()})`
 };
 
 export function formatOperationColumn(operationColumn, joinOperation) {
