@@ -86,11 +86,11 @@ describe('utils', () => {
     });
 
     test('should format source with filters correctly', () => {
-      const query = formatTableNameWithFilters({ source: SOURCE_WITH_FILTES });
+      const query = formatTableNameWithFilters({ source: SOURCE_WITH_FILTERS });
 
-      const whereClause = _filtersToSQL(SOURCE_WITH_FILTES.filters);
+      const whereClause = _filtersToSQL(SOURCE_WITH_FILTERS.filters);
 
-      expect(query).toBe(`${V3_SOURCE.data} ${whereClause}`);
+      expect(query).toBe(`${SOURCE_WITH_FILTERS.data} ${whereClause}`);
     });
   });
 
