@@ -1,11 +1,21 @@
 import { AggregationTypes } from './constants/AggregationTypes';
 
+const applyAggregationFunction = (aggFn, ...args) => {
+  const [values, keys, operation] = args;
+  const normalizedKeys = normalizeKeys(keys);
+  const elements =
+    (normalizedKeys?.length || 0) <= 1
+      ? filterFalsyElements(values, normalizedKeys)
+      : values;
+  return aggFn(elements, keys, operation);
+};
+
 export const aggregationFunctions = {
   [AggregationTypes.COUNT]: (values) => values.length,
-  [AggregationTypes.MIN]: min,
-  [AggregationTypes.MAX]: max,
-  [AggregationTypes.SUM]: sum,
-  [AggregationTypes.AVG]: avg
+  [AggregationTypes.MIN]: (...args) => applyAggregationFunction(min, ...args),
+  [AggregationTypes.MAX]: (...args) => applyAggregationFunction(max, ...args),
+  [AggregationTypes.SUM]: (...args) => applyAggregationFunction(sum, ...args),
+  [AggregationTypes.AVG]: (...args) => applyAggregationFunction(avg, ...args)
 };
 
 export function aggregate(feature, keys, operation) {
@@ -22,6 +32,16 @@ export function aggregate(feature, keys, operation) {
   }
 
   return aggregationFn(keys.map((column) => feature[column]));
+}
+
+function filterFalsyElements(values, keys) {
+  const filterFn = (value) => value !== null && value !== undefined;
+
+  if (!keys?.length) {
+    return values.filter(filterFn);
+  }
+
+  return values.filter((v) => filterFn(v[keys[0]]));
 }
 
 // Aggregation functions

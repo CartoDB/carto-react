@@ -11,6 +11,11 @@ const features = [...Array(VALUES.length)].map((_, idx) => ({
   [COLUMN_2]: VALUES[idx] - 1
 }));
 
+const featuresIncludingNull = [...Array(VALUES.length)].map((_, idx) => ({
+  [COLUMN]: VALUES[idx],
+  [COLUMN_2]: idx === 0 ? null : VALUES[idx]
+}));
+
 describe('aggregation', () => {
   describe('aggregationFunctions', () => {
     const RESULTS = {
@@ -53,6 +58,61 @@ describe('aggregation', () => {
           test(operation, () => {
             const func = aggregationFunctions[operation];
             expect(func(features, [COLUMN, COLUMN_2], operation)).toEqual(result);
+          });
+        });
+      });
+
+      describe('when value is null', () => {
+        describe('by values', () => {
+          const RESULTS = {
+            [AggregationTypes.COUNT]: VALUES.length,
+            [AggregationTypes.AVG]: 3,
+            [AggregationTypes.MIN]: 1,
+            [AggregationTypes.MAX]: 5,
+            [AggregationTypes.SUM]: 12
+          };
+
+          Object.entries(RESULTS).forEach(([operation, result]) => {
+            test(operation, () => {
+              const func = aggregationFunctions[operation];
+              expect(func([1, 2, null, 4, 5])).toEqual(result);
+            });
+          });
+        });
+
+        describe('by features', () => {
+          const RESULTS = {
+            [AggregationTypes.COUNT]: VALUES.length,
+            [AggregationTypes.AVG]: 3.5,
+            [AggregationTypes.MIN]: 2,
+            [AggregationTypes.MAX]: 5,
+            [AggregationTypes.SUM]: 14
+          };
+
+          Object.entries(RESULTS).forEach(([operation, result]) => {
+            test(operation, () => {
+              const func = aggregationFunctions[operation];
+              expect(func(featuresIncludingNull, [COLUMN_2], operation)).toEqual(result);
+            });
+          });
+        });
+
+        describe('multiple keys', () => {
+          const RESULTS_FOR_MULTIPLE_KEYS = {
+            [AggregationTypes.COUNT]: VALUES.length,
+            [AggregationTypes.AVG]: 3,
+            [AggregationTypes.MIN]: 1,
+            [AggregationTypes.MAX]: 5,
+            [AggregationTypes.SUM]: 29
+          };
+
+          Object.entries(RESULTS_FOR_MULTIPLE_KEYS).forEach(([operation, result]) => {
+            test(operation, () => {
+              const func = aggregationFunctions[operation];
+              expect(func(featuresIncludingNull, [COLUMN, COLUMN_2], operation)).toEqual(
+                result
+              );
+            });
           });
         });
       });
