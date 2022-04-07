@@ -23,7 +23,7 @@ jest.mock('@carto/react-workers', () => ({
   }
 }));
 
-describe('getCategory', () => {
+describe('getCategories', () => {
   describe('local mode', () => {
     test('should work correctly', async () => {
       const props = {
