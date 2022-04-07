@@ -20,13 +20,22 @@ function LegendRamp({ isContinuous = false, legend }) {
     !labels.length || isContinuous ? 2 : labels.length + 1
   );
 
-  let [min, max] = getMinMax({ labels });
+  // If labels is complex, its type is { value: number, label: string }[]
+  const isComplexLabels = !!labels[0]?.label;
+
+  const values = isComplexLabels ? labels.map(({ value }) => value) : labels;
+  const formattedLabels = isComplexLabels ? labels.map(({ label }) => label) : labels;
+
+  const [min, max] = getMinMax({ labels: values });
 
   const error = Number.isNaN(min) || Number.isNaN(max);
 
+  let maxLabel = formattedLabels[formattedLabels.length - 1];
+  let minLabel = formattedLabels[0];
+
   if (!isContinuous) {
-    min = '< ' + min;
-    max = '≥ ' + max;
+    minLabel = '< ' + minLabel;
+    maxLabel = '≥ ' + maxLabel;
   }
 
   return (
@@ -43,12 +52,17 @@ function LegendRamp({ isContinuous = false, legend }) {
             {isContinuous ? (
               <StepsContinuous palette={palette} />
             ) : (
-              <StepsDiscontinuous labels={labels} palette={palette} max={max} min={min} />
+              <StepsDiscontinuous
+                labels={formattedLabels}
+                palette={palette}
+                max={maxLabel}
+                min={minLabel}
+              />
             )}
           </Grid>
           <Grid container item justifyContent='space-between'>
-            <Typography variant='overline'>{min}</Typography>
-            <Typography variant='overline'>{max}</Typography>
+            <Typography variant='overline'>{minLabel}</Typography>
+            <Typography variant='overline'>{maxLabel}</Typography>
           </Grid>
         </>
       )}
