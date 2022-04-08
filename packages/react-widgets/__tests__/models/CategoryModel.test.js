@@ -83,7 +83,7 @@ describe('getCategories', () => {
 
       expect(executeSQL).toHaveBeenCalledWith({
         credentials: props.source.credentials,
-        query: `SELECT column_1 as name, sum(column_2) as value FROM __test__ GROUP BY column_1`,
+        query: `SELECT COALESCE(column_1, 'null') as name, sum(column_2) as value FROM __test__ GROUP BY column_1`,
         connection: props.source.connection,
         opts: {
           abortController: undefined
