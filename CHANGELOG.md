@@ -6,6 +6,7 @@
 - Fix aggregation to ignore NULL values [#367](https://github.com/CartoDB/carto-react/pull/367)
 - Fix regression for PieWidgetUI category selection logic [#369](https://github.com/CartoDB/carto-react/pull/369)
 - Add support for formatted labels in LegendRamp [#372](https://github.com/CartoDB/carto-react/pull/372)
+- Bump deck.gl to 8.7.5 [#373](https://github.com/CartoDB/carto-react/pull/373)
 
 ## 1.3
 
