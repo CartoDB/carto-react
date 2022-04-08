@@ -1,4 +1,5 @@
 import { executeSQL } from '@carto/react-api/';
+import { AggregationTypes } from '@carto/react-core/';
 import { Methods, executeTask } from '@carto/react-workers';
 import {
   formatOperationColumn,
@@ -42,12 +43,13 @@ function fromRemote(props) {
 function buildSqlQueryToGetCategories(props) {
   const { column, operation, operationColumn, joinOperation } = props;
 
-  const selectValueClause = `${operation}(${formatOperationColumn(
-    operationColumn || column,
-    joinOperation
-  )}) as value`;
+  const selectValueClause = `${operation}(${
+    operation === AggregationTypes.COUNT
+      ? '*'
+      : formatOperationColumn(operationColumn || column, joinOperation)
+  }) as value`;
 
-  return `SELECT ${column} as name, ${selectValueClause} FROM ${formatTableNameWithFilters(
+  return `SELECT COALESCE(${column}, 'null') as name, ${selectValueClause} FROM ${formatTableNameWithFilters(
     props
   )} GROUP BY ${column}`.trim();
 }
