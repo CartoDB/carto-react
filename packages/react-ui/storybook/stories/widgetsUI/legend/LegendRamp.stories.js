@@ -8,6 +8,17 @@ const DEFAULT_LEGEND = {
   }
 };
 
+const DEFAULT_LEGEND_WITH_FORMATTED_LABELS = {
+  legend: {
+    labels: [
+      { value: 0, label: '0 km' },
+      { value: 100, label: '100 km' },
+      { value: 200, label: '200 km' }
+    ],
+    colors: 'TealGrn'
+  }
+};
+
 const options = {
   title: 'Custom Components/Legends/LegendRamp',
   component: LegendRamp,
@@ -29,10 +40,17 @@ const Template = (args) => {
   return <LegendRamp {...args} />;
 };
 
-export const Default = Template.bind({});
-const DefaultProps = { ...DEFAULT_LEGEND };
-Default.args = DefaultProps;
+export const Discontinuous = Template.bind({});
+Discontinuous.args = { ...DEFAULT_LEGEND };
+
+export const DiscontinuousWithFormattedLabels = Template.bind({});
+DiscontinuousWithFormattedLabels.args = { ...DEFAULT_LEGEND_WITH_FORMATTED_LABELS };
 
 export const Continuous = Template.bind({});
-const ContinuousProps = { ...DEFAULT_LEGEND, isContinuous: true };
-Continuous.args = ContinuousProps;
+Continuous.args = { ...DEFAULT_LEGEND, isContinuous: true };
+
+export const ContinuousWithFormattedLabels = Template.bind({});
+ContinuousWithFormattedLabels.args = {
+  ...DEFAULT_LEGEND_WITH_FORMATTED_LABELS,
+  isContinuous: true
+};
