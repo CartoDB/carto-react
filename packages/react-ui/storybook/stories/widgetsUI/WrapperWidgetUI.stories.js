@@ -47,6 +47,10 @@ export const Expandable = Template.bind({});
 const ExpandableProps = { title: 'Expandable', expandable: true };
 Expandable.args = ExpandableProps;
 
+export const NotExpanded = Template.bind({});
+const NotExpandedProps = { title: 'Not expanded/collapsed', expanded: false };
+NotExpanded.args = NotExpandedProps;
+
 export const NotExpandable = Template.bind({});
 const NotExpandableProps = { title: 'Not Expandable', expandable: false };
 NotExpandable.args = NotExpandableProps;
