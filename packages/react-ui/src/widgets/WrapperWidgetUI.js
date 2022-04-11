@@ -116,7 +116,7 @@ function WrapperWidgetUI(props) {
     typeof props.expanded === 'boolean' && typeof props.onExpandedChange === 'function';
   const expanded =
     props.expandable !== false ? (externalExpanded ? props.expanded : expandedInt) : true;
-  const setExpanded = externalExpanded ? setExpandedInt : props.onExpandedChange;
+  const setExpanded = externalExpanded ? props.onExpandedChange : setExpandedInt;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles({ ...props, expanded });
