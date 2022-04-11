@@ -65,11 +65,11 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-api": "^1.3.0-alpha.0",
-    "@carto/react-core": "^1.3.0-alpha.0",
-    "@carto/react-redux": "^1.3.0-alpha.0",
-    "@carto/react-ui": "^1.3.0-alpha.0",
-    "@carto/react-workers": "^1.3.0-alpha.0",
+    "@carto/react-api": "^1.3.0-alpha.1",
+    "@carto/react-core": "^1.3.0-alpha.1",
+    "@carto/react-redux": "^1.3.0-alpha.1",
+    "@carto/react-ui": "^1.3.0-alpha.1",
+    "@carto/react-workers": "^1.3.0-alpha.1",
     "@deck.gl/core": "^8.7.5",
     "@deck.gl/layers": "^8.7.5",
     "@material-ui/core": "^4.11.3",
