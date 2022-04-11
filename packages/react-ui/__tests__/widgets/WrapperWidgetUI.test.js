@@ -50,7 +50,7 @@ describe('WrapperWidgetUI', () => {
       });
     });
 
-    describe('extenally controlled', () => {
+    describe('externally controlled `expanded` state', () => {
       const onExpandedChange = jest.fn();
       test('should obey `expanded=false` with `onExpandedChange` set', () => {
         render(
@@ -66,7 +66,7 @@ describe('WrapperWidgetUI', () => {
         expect(onExpandedChange).not.toBeCalled();
       });
 
-      test('should close', async () => {
+      test('should attempt to close using `onExpandedChange`', async () => {
         render(
           <WrapperWidgetUI
             expanded={true}
@@ -81,7 +81,7 @@ describe('WrapperWidgetUI', () => {
         expect(onExpandedChange).toBeCalledWith(false);
       });
 
-      test('should open', async () => {
+      test('should attempt to open using `onExpandedChange', async () => {
         render(
           <WrapperWidgetUI
             expanded={false}
