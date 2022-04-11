@@ -4,6 +4,8 @@ export type WrapperWidgetUI = {
   title: string;
   isLoading?: boolean;
   expandable?: boolean;
+  expanded?: boolean;
+  setExpanded?: (v: boolean) => void;
   actions?: { id: string; name: string; icon: React.ReactElement; action: Function }[];
   options?: { id: string; name: string; action: Function }[];
   children?: React.ReactNode;

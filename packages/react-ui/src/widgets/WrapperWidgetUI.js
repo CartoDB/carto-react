@@ -110,7 +110,9 @@ const useStyles = makeStyles((theme) => ({
 
 function WrapperWidgetUI(props) {
   const wrapper = createRef();
-  const [expanded, setExpanded] = useState(true);
+  const [expandedInt, setExpandedInt] = useState(true);
+  const expanded = props.expandable !== false ? props.expanded ?? expandedInt : true;
+  const setExpanded = props.setExpanded ?? setExpandedInt;
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles({ ...props, expanded });
   const open = Boolean(anchorEl);
