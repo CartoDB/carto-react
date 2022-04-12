@@ -2,9 +2,11 @@
 
 ## Not released
 
-- WrapperWidgetUI support externally controlled `expanded` attribute [#375](https://github.com/CartoDB/carto-react/pull/375)
-
 ## 1.3
+
+### 1.3.0-alpha.3 (2022-04-12)
+
+- WrapperWidgetUI support externally controlled `expanded` attribute [#375](https://github.com/CartoDB/carto-react/pull/375)
 
 ### 1.3.0-alpha.2 (2022-04-11)
 
