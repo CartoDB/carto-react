@@ -10,7 +10,7 @@ export default function useWidgetFetch(
   { id, dataSource, params, global, onError }
 ) {
   // State
-  const [data, setData] = useState(null);
+  const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
   const isSourceReady = useSelector(

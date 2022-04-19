@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getHistogram } from '../models';
-import useSourceFilters from '../hooks/useSourceFilters';
-import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
+import useWidgetFetch from '../hooks/useWidgetFetch';
 
 const EMPTY_ARRAY = [];
 
@@ -25,6 +24,7 @@ const EMPTY_ARRAY = [];
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
+ * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -43,19 +43,24 @@ function HistogramWidget(props) {
     tooltip,
     animation,
     filterable,
+    global,
     onError,
     wrapperProps,
     noDataAlertProps
   } = props;
   const dispatch = useDispatch();
 
-  const [histogramData, setHistogramData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const { filters, filtersLogicalOperator } = useSourceFilters({ dataSource, id });
-  const isSourceReady = useSelector((state) =>
-    selectAreFeaturesReadyForSource(state, dataSource)
-  );
+  const { data = [], isLoading } = useWidgetFetch(getHistogram, {
+    id,
+    dataSource,
+    params: {
+      column,
+      operation,
+      ticks
+    },
+    global,
+    onError
+  });
 
   const thresholdsFromFilters = useWidgetFilterValues({
     dataSource,
@@ -91,42 +96,6 @@ function HistogramWidget(props) {
     },
     [formatter, ticks]
   );
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    if (isSourceReady) {
-      getHistogram({
-        column,
-        operation,
-        ticks,
-        filters,
-        filtersLogicalOperator,
-        dataSource
-      })
-        .then((data) => {
-          if (data) {
-            setIsLoading(false);
-            setHistogramData(data);
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          if (onError) onError(error);
-        });
-    }
-  }, [
-    id,
-    column,
-    operation,
-    ticks,
-    dataSource,
-    filters,
-    filtersLogicalOperator,
-    setIsLoading,
-    onError,
-    isSourceReady
-  ]);
 
   const handleSelectedBarsChange = useCallback(
     ({ bars }) => {
@@ -170,9 +139,9 @@ function HistogramWidget(props) {
 
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
-      {histogramData.length || isLoading ? (
+      {data.length || isLoading ? (
         <HistogramWidgetUI
-          data={histogramData}
+          data={data}
           dataAxis={dataAxis || ticksForDataAxis}
           selectedBars={selectedBars}
           onSelectedBarsChange={handleSelectedBarsChange}
@@ -201,6 +170,7 @@ HistogramWidget.propTypes = {
   tooltip: PropTypes.bool,
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
+  global: PropTypes.bool,
   ticks: PropTypes.array.isRequired,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
@@ -211,6 +181,7 @@ HistogramWidget.defaultProps = {
   tooltip: true,
   animation: true,
   filterable: true,
+  global: false,
   wrapperProps: {},
   noDataAlertProps: {}
 };

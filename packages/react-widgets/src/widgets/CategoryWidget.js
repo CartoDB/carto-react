@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, CategoryWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
-import useSourceFilters from '../hooks/useSourceFilters';
-import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import { columnAggregationOn } from './utils/propTypesFns';
+import useWidgetFetch from '../hooks/useWidgetFetch';
 
 const EMPTY_ARRAY = [];
 
@@ -27,6 +26,7 @@ const EMPTY_ARRAY = [];
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
  * @param  {boolean} [props.searchable] - Enable/disable widget searching capabilities. Enabled by default.
+ * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -45,62 +45,29 @@ function CategoryWidget(props) {
     animation,
     filterable,
     searchable,
+    global,
     onError,
     wrapperProps,
     noDataAlertProps
   } = props;
   const dispatch = useDispatch();
 
-  const isSourceReady = useSelector((state) =>
-    selectAreFeaturesReadyForSource(state, dataSource)
-  );
-
-  const [categoryData, setCategoryData] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  const { filters, filtersLogicalOperator } = useSourceFilters({ dataSource, id });
   const selectedCategories =
     useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
     EMPTY_ARRAY;
 
-  useEffect(() => {
-    setIsLoading(true);
-
-    if (isSourceReady) {
-      getCategories({
-        column,
-        operationColumn,
-        joinOperation,
-        operation,
-        filters,
-        filtersLogicalOperator,
-        dataSource
-      })
-        .then((data) => {
-          if (data) {
-            setIsLoading(false);
-            setCategoryData(data);
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          if (onError) onError(error);
-        });
-    }
-  }, [
+  const { data = [], isLoading } = useWidgetFetch(getCategories, {
     id,
-    column,
-    operationColumn,
-    joinOperation,
-    operation,
-    filters,
-    filtersLogicalOperator,
     dataSource,
-    setIsLoading,
-    onError,
-    isSourceReady
-  ]);
+    params: {
+      column,
+      operationColumn,
+      joinOperation,
+      operation
+    },
+    global,
+    onError
+  });
 
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
@@ -128,9 +95,9 @@ function CategoryWidget(props) {
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      {categoryData.length || isLoading ? (
+      {data.length || isLoading ? (
         <CategoryWidgetUI
-          data={categoryData}
+          data={data}
           formatter={formatter}
           labels={labels}
           selectedCategories={selectedCategories}
@@ -162,6 +129,7 @@ CategoryWidget.propTypes = {
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   searchable: PropTypes.bool,
+  global: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object
@@ -172,6 +140,7 @@ CategoryWidget.defaultProps = {
   animation: true,
   filterable: true,
   searchable: true,
+  global: false,
   wrapperProps: {},
   noDataAlertProps: {}
 };
