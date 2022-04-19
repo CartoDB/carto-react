@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Add Global mode to FormulaWidget (#368)[https://github.com/CartoDB/carto-react/pull/368]
+
 ## 1.3
 
 ### 1.3.0-alpha.3 (2022-04-12)
