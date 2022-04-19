@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Add Global mode to FormulaWidget (#368)[https://github.com/CartoDB/carto-react/pull/368]
+- Add Global mode to FormulaWidget [#368](https://github.com/CartoDB/carto-react/pull/368)
 
 ## 1.3
 
