@@ -17,6 +17,7 @@ import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
  * @param  {number} [props.initialPageSize] - Initial number of rows per page
+ * @param  {Function} [props.onPageSizeChange] - Function called when the page size is changed internally
  * @param  {string} [props.height] - Static widget height, required for scrollable table content
  * @param  {boolean} [props.dense] - Whether the table should use a compact layout with smaller cell paddings
  */
@@ -29,6 +30,7 @@ function TableWidget({
   noDataAlertProps,
   onError,
   initialPageSize = 10,
+  onPageSizeChange,
   height,
   dense
 }) {
@@ -50,6 +52,12 @@ function TableWidget({
     // force reset the page to 0 when the viewport or filters change
     setPage(0);
   }, [dataSource, isSourceReady, filters]);
+
+  useEffect(() => {
+    if (typeof onPageSizeChange === 'function') {
+      onPageSizeChange(rowsPerPage);
+    }
+  }, [onPageSizeChange, rowsPerPage]);
 
   useEffect(() => {
     if (isSourceReady) {
@@ -131,6 +139,7 @@ TableWidget.propTypes = {
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
   initialPageSize: PropTypes.number,
+  onPageSizeChange: PropTypes.func,
   height: PropTypes.string,
   dense: PropTypes.bool
 };
