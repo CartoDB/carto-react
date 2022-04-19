@@ -110,7 +110,14 @@ const useStyles = makeStyles((theme) => ({
 
 function WrapperWidgetUI(props) {
   const wrapper = createRef();
-  const [expanded, setExpanded] = useState(true);
+
+  const [expandedInt, setExpandedInt] = useState(true);
+  const externalExpanded =
+    typeof props.expanded === 'boolean' && typeof props.onExpandedChange === 'function';
+  const expanded =
+    props.expandable !== false ? (externalExpanded ? props.expanded : expandedInt) : true;
+  const setExpanded = externalExpanded ? props.onExpandedChange : setExpandedInt;
+
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles({ ...props, expanded });
   const open = Boolean(anchorEl);
@@ -244,6 +251,7 @@ function WrapperWidgetUI(props) {
 }
 
 WrapperWidgetUI.defaultProps = {
+  expanded: true,
   expandable: true,
   isLoading: false
 };
@@ -251,6 +259,8 @@ WrapperWidgetUI.defaultProps = {
 WrapperWidgetUI.propTypes = {
   title: PropTypes.string.isRequired,
   expandable: PropTypes.bool,
+  expanded: PropTypes.bool,
+  onExpandedChange: PropTypes.func,
   isLoading: PropTypes.bool,
   actions: PropTypes.arrayOf(
     PropTypes.shape({

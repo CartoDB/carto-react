@@ -6,7 +6,15 @@ import { getPalette } from '../../../src/utils/palette';
 const COLOR = 'TealGrn';
 
 const DEFAULT_LEGEND = {
-  labels: ['0', '200'],
+  labels: [0, 200],
+  colors: COLOR
+};
+
+const DEFAULT_LEGEND_WITH_FORMATTED_LABELS = {
+  labels: [
+    { value: 0, label: '0 km' },
+    { value: 200, label: '200 km' }
+  ],
   colors: COLOR
 };
 
@@ -29,12 +37,34 @@ describe('LegendRamp', () => {
         expect(elements[idx]).toHaveStyle(`background-color: ${color}`)
       );
     });
+    test('renders formatted labels correctly', () => {
+      render(<LegendRamp legend={DEFAULT_LEGEND_WITH_FORMATTED_LABELS} />);
+      expect(screen.queryByText('< 0 km')).toBeInTheDocument();
+      expect(screen.queryByText('≥ 200 km')).toBeInTheDocument();
+
+      const elements = document.querySelectorAll('[class*="step"]');
+      expect(elements.length).toBe(3);
+      getPalette(COLOR, 3).forEach((color, idx) =>
+        expect(elements[idx]).toHaveStyle(`background-color: ${color}`)
+      );
+    });
   });
   describe('continuous', () => {
     test('renders correctly', () => {
       render(<LegendRamp legend={DEFAULT_LEGEND} isContinuous={true} />);
       expect(screen.queryByText('0')).toBeInTheDocument();
       expect(screen.queryByText('200')).toBeInTheDocument();
+
+      const ramp = document.querySelector('[class*="step"]');
+      const palette = getPalette(COLOR, 2);
+      expect(ramp).toHaveStyle(
+        `background-image: linear-gradient(to right, ${palette.join()})`
+      );
+    });
+    test('renders formatted labels correctly', () => {
+      render(<LegendRamp legend={DEFAULT_LEGEND_WITH_FORMATTED_LABELS} isContinuous={true} />);
+      expect(screen.queryByText('0 km')).toBeInTheDocument();
+      expect(screen.queryByText('200 km')).toBeInTheDocument();
 
       const ramp = document.querySelector('[class*="step"]');
       const palette = getPalette(COLOR, 2);
