@@ -1,8 +1,8 @@
 export enum GroupDateTypes {
-  YEARS = 'years',
-  MONTHS = 'months',
-  WEEKS = 'weeks',
-  DAYS = 'days',
-  HOURS = 'hours',
-  MINUTES = 'minutes'
+  YEARS = 'year',
+  MONTHS = 'month',
+  WEEKS = 'week',
+  DAYS = 'day',
+  HOURS = 'hour',
+  MINUTES = 'minute'
 }

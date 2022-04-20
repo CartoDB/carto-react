@@ -1,11 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getTimeSeries } from '../models';
-import {
-  addFilter,
-  removeFilter,
-  selectAreFeaturesReadyForSource
-} from '@carto/react-redux';
+import { addFilter, removeFilter } from '@carto/react-redux';
 import {
   TimeSeriesWidgetUI,
   WrapperWidgetUI,
@@ -19,8 +15,8 @@ import {
 } from '@carto/react-core';
 import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
-import useSourceFilters from '../hooks/useSourceFilters';
 import { columnAggregationOn } from './utils/propTypesFns';
+import useWidgetFetch from '../hooks/useWidgetFetch';
 
 // Due to the widget groups the data by a certain stepSize, when filtering
 // the filter applied must be a range that represent the grouping range.
@@ -54,6 +50,7 @@ const STEP_SIZE_RANGE_MAPPING = {
  * @param  {string} [props.height] - Height of the chart.
  * @param  {boolean} [props.showControls] - Enable/disable animation controls (play, pause, stop, speed). True by default.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
+ * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -78,6 +75,7 @@ function TimeSeriesWidget({
   joinOperation,
   operation,
   stepSizeOptions,
+  global,
   onError,
   wrapperProps,
   noDataAlertProps,
@@ -102,14 +100,7 @@ function TimeSeriesWidget({
 }) {
   const dispatch = useDispatch();
 
-  const isSourceReady = useSelector((state) =>
-    selectAreFeaturesReadyForSource(state, dataSource)
-  );
-  const { filters } = useSourceFilters({ dataSource, id });
-
-  const [timeSeriesData, setTimeSeriesData] = useState([]);
   const [selectedStepSize, setSelectedStepSize] = useState(stepSize);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (stepSize !== selectedStepSize) {
@@ -119,43 +110,19 @@ function TimeSeriesWidget({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepSize]);
 
-  useEffect(() => {
-    setIsLoading(true);
-
-    if (isSourceReady) {
-      getTimeSeries({
-        filters,
-        dataSource,
-        column,
-        joinOperation,
-        stepSize: selectedStepSize,
-        operationColumn,
-        operation
-      })
-        .then((data) => {
-          if (data) {
-            setIsLoading(false);
-            setTimeSeriesData(data);
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          if (onError) onError(error);
-        });
-    }
-  }, [
+  const { data = [], isLoading } = useWidgetFetch(getTimeSeries, {
     id,
-    filters,
     dataSource,
-    column,
-    selectedStepSize,
-    isSourceReady,
-    setIsLoading,
-    operationColumn,
-    joinOperation,
-    operation,
+    params: {
+      column,
+      joinOperation,
+      stepSize: selectedStepSize,
+      operationColumn,
+      operation
+    },
+    global,
     onError
-  ]);
+  });
 
   const handleTimeWindowUpdate = useCallback(
     (timeWindow) => {
@@ -179,7 +146,7 @@ function TimeSeriesWidget({
   const handleTimelineUpdate = useCallback(
     (timelinePosition) => {
       if (!isLoading) {
-        const { name: moment } = timeSeriesData[timelinePosition];
+        const { name: moment } = data[timelinePosition];
         dispatch(
           addFilter({
             id: dataSource,
@@ -201,7 +168,7 @@ function TimeSeriesWidget({
       id,
       onTimelineUpdate,
       selectedStepSize,
-      timeSeriesData
+      data
     ]
   );
 
@@ -253,9 +220,9 @@ function TimeSeriesWidget({
             : [])
         ]}
       >
-        {timeSeriesData.length || isLoading ? (
+        {data.length || isLoading ? (
           <TimeSeriesWidgetUI
-            data={timeSeriesData}
+            data={data}
             stepSize={selectedStepSize}
             chartType={chartType}
             tooltip={tooltip}
