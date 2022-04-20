@@ -5,20 +5,20 @@
  */
 export const GroupDateTypes = Object.freeze({
   /** Years */
-  YEARS: 'years',
+  YEARS: 'year',
 
   /** Months */
-  MONTHS: 'months',
+  MONTHS: 'month',
 
   /** Weeks */
-  WEEKS: 'weeks',
+  WEEKS: 'week',
 
   /** Days */
-  DAYS: 'days',
+  DAYS: 'day',
 
   /** Hours */
-  HOURS: 'hours',
+  HOURS: 'hour',
 
   /** Minutes */
-  MINUTES: 'minutes'
+  MINUTES: 'minute'
 });
