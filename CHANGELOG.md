@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Bump deck.gl to 8.7.7 [#378](https://github.com/CartoDB/carto-react/pull/378)
 - Add Global mode to TimeSeriesWidget [#377](https://github.com/CartoDB/carto-react/pull/377)
 - Add Global mode to HistogramWidget [#371](https://github.com/CartoDB/carto-react/pull/371)
 - Add Global mode to CategoryWidget & PieWidget [#370](https://github.com/CartoDB/carto-react/pull/370)
