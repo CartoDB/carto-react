@@ -49,7 +49,7 @@ describe('Filters to SQL', () => {
       }
     };
     expect(filtersToSQL(customFilters)).toEqual(
-      "WHERE (column1 in('a','b','c')) AND ((column2 >= 1  and  column2 < 2)) AND (column3 in(1,2,3))"
+      "WHERE (column1 in('a','b','c')) and ((column2 >= 1  and  column2 < 2)) and (column3 in(1,2,3))"
     );
   });
 

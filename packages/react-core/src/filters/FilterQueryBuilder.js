@@ -1,3 +1,4 @@
+import { FiltersLogicalOperators } from '../operations/constants/FiltersLogicalOperators';
 import { FilterTypes } from './FilterTypes';
 
 export const getApplicableFilters = (filters = {}, owner) => {
@@ -16,7 +17,10 @@ export const getApplicableFilters = (filters = {}, owner) => {
   return filtersCopy;
 };
 
-export const filtersToSQL = (filters = {}) => {
+export const filtersToSQL = (
+  filters = {},
+  filtersLogicalOperator = FiltersLogicalOperators.AND
+) => {
   const result = [];
 
   Object.entries(filters).forEach(([column, filter]) => {
@@ -47,5 +51,5 @@ export const filtersToSQL = (filters = {}) => {
     });
   });
 
-  return result.length ? `WHERE (${result.join(') AND (')})` : '';
+  return result.length ? `WHERE (${result.join(`) ${filtersLogicalOperator} (`)})` : '';
 };

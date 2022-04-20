@@ -2,6 +2,10 @@
 
 ## Not released
 
+- Add Global mode to HistogramWidget [#371](https://github.com/CartoDB/carto-react/pull/371)
+- Add Global mode to CategoryWidget & PieWidget [#370](https://github.com/CartoDB/carto-react/pull/370)
+- Add Global mode to FormulaWidget [#368](https://github.com/CartoDB/carto-react/pull/368)
+
 ## 1.3
 
 ### 1.3.0-alpha.3 (2022-04-12)
