@@ -62,32 +62,32 @@ const STEP_SIZE_TO_GROUP_QUERY_MAP = {
 
 const FORMAT_NAME_BY_STEP_SIZE = {
   [GroupDateTypes.YEARS]: (row) =>
-    Date.UTC(row[formatStepSizeColumn(GroupDateTypes.YEARS)], 0),
+    Date.UTC(row[stepSizeQueryColumn(GroupDateTypes.YEARS)], 0),
   [GroupDateTypes.MONTHS]: (row) =>
     Date.UTC(
-      row[formatStepSizeColumn(GroupDateTypes.YEARS)],
-      row[formatStepSizeColumn(GroupDateTypes.MONTHS)] - 1
+      row[stepSizeQueryColumn(GroupDateTypes.YEARS)],
+      row[stepSizeQueryColumn(GroupDateTypes.MONTHS)] - 1
     ),
   [GroupDateTypes.DAYS]: (row) =>
     Date.UTC(
-      row[formatStepSizeColumn(GroupDateTypes.YEARS)],
-      row[formatStepSizeColumn(GroupDateTypes.MONTHS)] - 1,
-      row[formatStepSizeColumn(GroupDateTypes.DAYS)]
+      row[stepSizeQueryColumn(GroupDateTypes.YEARS)],
+      row[stepSizeQueryColumn(GroupDateTypes.MONTHS)] - 1,
+      row[stepSizeQueryColumn(GroupDateTypes.DAYS)]
     ),
   [GroupDateTypes.HOURS]: (row) =>
     Date.UTC(
-      row[formatStepSizeColumn(GroupDateTypes.YEARS)],
-      row[formatStepSizeColumn(GroupDateTypes.MONTHS)] - 1,
-      row[formatStepSizeColumn(GroupDateTypes.DAYS)],
-      row[formatStepSizeColumn(GroupDateTypes.HOURS)]
+      row[stepSizeQueryColumn(GroupDateTypes.YEARS)],
+      row[stepSizeQueryColumn(GroupDateTypes.MONTHS)] - 1,
+      row[stepSizeQueryColumn(GroupDateTypes.DAYS)],
+      row[stepSizeQueryColumn(GroupDateTypes.HOURS)]
     ),
   [GroupDateTypes.MINUTES]: (row) =>
     Date.UTC(
-      row[formatStepSizeColumn(GroupDateTypes.YEARS)],
-      row[formatStepSizeColumn(GroupDateTypes.MONTHS)] - 1,
-      row[formatStepSizeColumn(GroupDateTypes.DAYS)],
-      row[formatStepSizeColumn(GroupDateTypes.HOURS)],
-      row[formatStepSizeColumn(GroupDateTypes.MINUTES)]
+      row[stepSizeQueryColumn(GroupDateTypes.YEARS)],
+      row[stepSizeQueryColumn(GroupDateTypes.MONTHS)] - 1,
+      row[stepSizeQueryColumn(GroupDateTypes.DAYS)],
+      row[stepSizeQueryColumn(GroupDateTypes.HOURS)],
+      row[stepSizeQueryColumn(GroupDateTypes.MINUTES)]
     )
 };
 
@@ -104,12 +104,14 @@ function groupWeeklyAverageValuesByDateColumn(data) {
         acc.set(groupKey, groupedValues);
       }
 
-      const aggregatedValue = item.value * item._grouped_count;
+      // In order to calculate the weighted average, we need to multiply the aggregated value by the weight that
+      // is the number of elements that were grouped (_grouped_count)
+      const weightedValue = item.value * item._grouped_count;
 
-      const isValid = aggregatedValue !== null && aggregatedValue !== undefined;
+      const isValid = weightedValue !== null && weightedValue !== undefined;
 
       if (isValid) {
-        groupedValues.push([aggregatedValue, item._grouped_count]);
+        groupedValues.push([weightedValue, item._grouped_count]);
         acc.set(groupKey, groupedValues);
       }
     }
@@ -117,12 +119,16 @@ function groupWeeklyAverageValuesByDateColumn(data) {
     return acc;
   }, new Map());
 
-  return [...groups.entries()].map(([name, value]) => ({
-    name,
-    value:
-      value.filter((_, idx) => idx % 2 === 0).reduce((acc, [val]) => acc + val, 0) /
-      value.filter((_, idx) => idx % 2 !== 0).reduce((acc, [val]) => acc + val, 0)
-  }));
+  return [...groups.entries()].map(([name, value]) => {
+    const weightedValues = value.flat().filter((_, idx) => idx % 2 === 0);
+    const weights = value.flat().filter((_, idx) => idx % 2 !== 0);
+
+    return {
+      name,
+      // Pondered average is the sum of the weighted values divided by the sum of the weights
+      value: sum(weightedValues) / sum(weights)
+    };
+  });
 }
 
 // In order to keep compatibility with the different providers, we group the data in the query using
@@ -135,26 +141,32 @@ function formatRemoteData(data, props) {
       stepSize === GroupDateTypes.WEEKS ? GroupDateTypes.DAYS : stepSize
     ];
 
-  const formattedData = data.map((row) => ({
-    value: row.value,
-    name: dateFormatter(row),
-    _grouped_count: row._grouped_count
-  }));
-
   // For weeks, each provider behavies differently, so we need to group the data in the local
-  if (stepSize === GroupDateTypes.WEEKS) {
-    // For any other AggregationTypes it's easy, but AVG should be made using a pondered average
-    if (operation === AggregationTypes.AVG) {
-      return groupWeeklyAverageValuesByDateColumn(formattedData);
-    } else {
+  // For any other AggregationTypes it's easy, but AVG should be made using a weighted average
+  if (stepSize === GroupDateTypes.WEEKS && operation === AggregationTypes.AVG) {
+    const formattedData = data.map((row) => ({
+      value: row.value,
+      name: dateFormatter(row),
+      _grouped_count: row._grouped_count
+    }));
+
+    return groupWeeklyAverageValuesByDateColumn(formattedData);
+  } else {
+    const formattedData = data.map((row) => ({
+      value: row.value,
+      name: dateFormatter(row)
+    }));
+
+    if (stepSize === GroupDateTypes.WEEKS) {
       return groupValuesByDateColumn({
         data: formattedData,
         keysColumn: 'name',
         valuesColumns: ['value'],
-        operation: stepSize === AggregationTypes.COUNT ? AggregationTypes.SUM : stepSize
+        groupType: stepSize,
+        operation: operation === AggregationTypes.COUNT ? AggregationTypes.SUM : operation
       });
     }
-  } else {
+
     return formattedData;
   }
 }
@@ -178,19 +190,23 @@ async function fromRemote(props) {
 function buildSqlQueryToGetTimeSeries(props) {
   const { column, operation, operationColumn, joinOperation, stepSize } = props;
 
+  const isWeekly = stepSize === GroupDateTypes.WEEKS;
+
   const stepSizesToGroupBy =
     STEP_SIZE_TO_GROUP_QUERY_MAP[
-      stepSize === GroupDateTypes.WEEKS ? GroupDateTypes.DAYS : stepSize
+      // In weeks, group by days and then group by weeks in local
+      isWeekly ? GroupDateTypes.DAYS : stepSize
     ];
 
   if (!stepSizesToGroupBy) throw new Error(`${stepSize} not supported`);
 
-  const selectClause = stepSizesToGroupBy
-    .map((_stepSize) => {
-      return `extract(${_stepSize} from cast(${column} as timestamp)) as ${formatStepSizeColumn(
-        _stepSize
-      )}`;
-    })
+  const selectDateClause = stepSizesToGroupBy
+    .map(
+      (step) =>
+        `extract(${step} from cast(${column} as timestamp)) as ${stepSizeQueryColumn(
+          step
+        )}`
+    )
     .join();
 
   const selectValueClause = `${operation}(${
@@ -199,14 +215,27 @@ function buildSqlQueryToGetTimeSeries(props) {
       : formatOperationColumn(operationColumn || column, joinOperation)
   }) as value`;
 
-  const byColumns = stepSizesToGroupBy.map(formatStepSizeColumn).join();
+  const selectClause = [
+    selectDateClause,
+    selectValueClause,
+    ...(isWeekly && operation === AggregationTypes.AVG
+      ? // _grouped_count is needed for weighted average
+        [`count(*) as _grouped_count`]
+      : [])
+  ];
 
-  return `SELECT ${selectClause}, ${selectValueClause}, COUNT(*) as _grouped_count FROM ${formatTableNameWithFilters(
-    props
-  )} GROUP BY ${byColumns} ORDER BY ${byColumns}`.trim();
+  const byColumns = stepSizesToGroupBy.map(stepSizeQueryColumn);
+
+  const tableName = formatTableNameWithFilters(props);
+
+  return `SELECT ${selectClause} FROM ${tableName} GROUP BY ${byColumns} ORDER BY ${byColumns}`.trim();
 }
 
 // Aux
-function formatStepSizeColumn(stepSize) {
+function sum(data) {
+  return data.reduce((acc, item) => (acc += item), 0);
+}
+
+function stepSizeQueryColumn(stepSize) {
   return `_agg_${stepSize}`;
 }
