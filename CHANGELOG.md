@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Add Global mode to TimeSeriesWidget [#377](https://github.com/CartoDB/carto-react/pull/377)
 - Add Global mode to HistogramWidget [#371](https://github.com/CartoDB/carto-react/pull/371)
 - Add Global mode to CategoryWidget & PieWidget [#370](https://github.com/CartoDB/carto-react/pull/370)
 - Add Global mode to FormulaWidget [#368](https://github.com/CartoDB/carto-react/pull/368)
