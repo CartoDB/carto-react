@@ -54,7 +54,7 @@ function TableWidget({
   }, [dataSource, isSourceReady, filters]);
 
   useEffect(() => {
-    if (typeof onPageSizeChange === 'function') {
+    if (onPageSizeChange) {
       onPageSizeChange(rowsPerPage);
     }
   }, [onPageSizeChange, rowsPerPage]);
