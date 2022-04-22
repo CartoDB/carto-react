@@ -25,37 +25,74 @@ const filterFunctions = {
     return `${column} in(${formattedValues})`;
   },
   [FilterTypes.BETWEEN](column, filterValues) {
-    const queryFilters = filterValues.map(
-      ([left, right]) =>
-        `${left ? `${column} >= ${left}` : ``} ${left && right ? ' and ' : ''} ${
-          right ? `${column} <= ${right}` : ``
-        }`
-    );
+    const queryFilters = filterValues.map(([left, right]) => {
+      const hasLeft = isFinite(left);
+      const hasRight = isFinite(right);
+
+      let query = '';
+
+      if (hasLeft) {
+        query += `${column} >= ${left}`;
+      }
+
+      if (hasLeft && hasRight) {
+        query += ' and ';
+      }
+
+      if (hasRight) {
+        query += `${column} <= ${right}`;
+      }
+
+      return query;
+    });
 
     return joinFilters(queryFilters);
   },
   [FilterTypes.TIME](column, filterValues) {
-    const formattedValues = filterValues.map((values) => [
-      `cast('${new Date(values[0]).toISOString()}' as timestamp)`,
-      `cast('${new Date(values[1]).toISOString()}' as timestamp)`
-    ]);
     const tsColumn = `cast(${column} as timestamp)`;
-    const queryFilters = formattedValues.map(
-      ([left, right]) =>
-        `${left ? `${tsColumn} >= ${left}` : ``} ${left && right ? ' and ' : ''} ${
-          right ? `${tsColumn} <= ${right}` : ``
-        }`
-    );
+    const queryFilters = filterValues.map(([left, right]) => {
+      const hasLeft = isFinite(left);
+      const hasRight = isFinite(right);
+
+      let query = '';
+      if (hasLeft) {
+        query += `${tsColumn} >= cast('${new Date(left).toISOString()}' as timestamp)`;
+      }
+
+      if (hasLeft && hasRight) {
+        query += ' and ';
+      }
+
+      if (hasRight) {
+        query += `${tsColumn} <= cast('${new Date(right).toISOString()}' as timestamp)`;
+      }
+
+      return query;
+    });
 
     return joinFilters(queryFilters);
   },
   [FilterTypes.CLOSED_OPEN](column, filterValues) {
-    const queryFilters = filterValues.map(
-      ([left, right]) =>
-        `${left ? `${column} >= ${left}` : ``} ${left && right ? ' and ' : ''} ${
-          right ? `${column} < ${right}` : ``
-        }`
-    );
+    const queryFilters = filterValues.map(([left, right]) => {
+      const hasLeft = isFinite(left);
+      const hasRight = isFinite(right);
+
+      let query = '';
+
+      if (hasLeft) {
+        query += `${column} >= ${left}`;
+      }
+
+      if (hasLeft && hasRight) {
+        query += ' and ';
+      }
+
+      if (hasRight) {
+        query += `${column} < ${right}`;
+      }
+
+      return query;
+    });
 
     return joinFilters(queryFilters);
   }

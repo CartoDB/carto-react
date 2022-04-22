@@ -63,7 +63,7 @@ describe('Filters to SQL', () => {
       }
     };
     expect(filtersToSQL(customFilters)).toEqual(
-      "WHERE (column1 in('a','b','c')) and ((column2 >= 1  and  column2 <= 2)) and (column3 in(1,2,3)) and ((cast(column4 as timestamp) >= cast('1970-01-01T00:00:00.000Z' as timestamp)  and  cast(column4 as timestamp) <= cast('1970-01-01T00:00:00.001Z' as timestamp))) and ((  column5 < 1))"
+      "WHERE (column1 in('a','b','c')) and ((column2 >= 1 and column2 <= 2)) and (column3 in(1,2,3)) and ((cast(column4 as timestamp) >= cast('1970-01-01T00:00:00.000Z' as timestamp) and cast(column4 as timestamp) <= cast('1970-01-01T00:00:00.001Z' as timestamp))) and ((column5 >= 0 and column5 < 1))"
     );
   });
 
