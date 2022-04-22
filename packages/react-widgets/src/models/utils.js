@@ -32,6 +32,18 @@ export function formatTableNameWithFilters(props) {
   return `${formattedSourceData} ${whereClause}`.trim();
 }
 
+export function normalizeObjectKeys(el) {
+  if (Array.isArray(el)) {
+    return el.map(normalizeObjectKeys);
+  }
+
+  return Object.entries(el).reduce((acc, [key, value]) => {
+    acc[key.toLowerCase()] =
+      typeof value === 'object' ? normalizeObjectKeys(value) : value;
+    return acc;
+  }, {});
+}
+
 // Operation columns & Join operation
 const sumColumns = (operationColumns) =>
   operationColumns.map((column) => `COALESCE(${column}, 0)`).join(' + ');

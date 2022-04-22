@@ -1,6 +1,6 @@
 import { executeSQL } from '@carto/react-api';
 import { Methods, executeTask } from '@carto/react-workers';
-import { formatTableNameWithFilters, wrapModelCall } from './utils';
+import { formatTableNameWithFilters, normalizeObjectKeys, wrapModelCall } from './utils';
 
 export function getHistogram(props) {
   return wrapModelCall(props, fromLocal, fromRemote);
@@ -31,7 +31,7 @@ async function fromRemote(props) {
     query,
     connection,
     opts: { abortController }
-  });
+  }).then(normalizeObjectKeys);
 
   const result = Array(ticks.length + 1).fill(0);
   data.forEach(({ tick, value }) => (result[tick] = value));

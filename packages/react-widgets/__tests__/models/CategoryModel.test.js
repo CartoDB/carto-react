@@ -41,7 +41,7 @@ describe('getCategories', () => {
 
       const data = await getCategories(props);
 
-      expect(data).toBe(RESULT);
+      expect(data).toEqual(RESULT);
 
       expect(executeTask).toHaveBeenCalledWith(
         props.source.id,
@@ -79,7 +79,7 @@ describe('getCategories', () => {
 
       const data = await getCategories(props);
 
-      expect(data).toBe(RESULT);
+      expect(data).toEqual(RESULT);
 
       expect(executeSQL).toHaveBeenCalledWith({
         credentials: props.source.credentials,
