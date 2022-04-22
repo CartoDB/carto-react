@@ -46,10 +46,24 @@ describe('Filters to SQL', () => {
           owner: 'widgetId3',
           values: [1, 2, 3]
         }
+      },
+      // Time filter
+      column4: {
+        time: {
+          owner: 'widgetId3',
+          values: [[0, 1]]
+        }
+      },
+      // Closed open
+      column5: {
+        closed_open: {
+          owner: 'widgetId3',
+          values: [[0, 1]]
+        }
       }
     };
     expect(filtersToSQL(customFilters)).toEqual(
-      "WHERE (column1 in('a','b','c')) and ((column2 >= 1  and  column2 < 2)) and (column3 in(1,2,3))"
+      "WHERE (column1 in('a','b','c')) and ((column2 >= 1 and column2 <= 2)) and (column3 in(1,2,3)) and ((cast(column4 as timestamp) >= cast('1970-01-01T00:00:00.000Z' as timestamp) and cast(column4 as timestamp) <= cast('1970-01-01T00:00:00.001Z' as timestamp))) and ((column5 >= 0 and column5 < 1))"
     );
   });
 
@@ -60,6 +74,6 @@ describe('Filters to SQL', () => {
         pow: {}
       }
     };
-    expect(() => filtersToSQL(param)).toThrow(`Not valid operator has provided: pow`);
+    expect(() => filtersToSQL(param)).toThrow(`Filter pow is not defined`);
   });
 });
