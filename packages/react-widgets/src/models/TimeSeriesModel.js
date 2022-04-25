@@ -9,6 +9,7 @@ import { Methods, executeTask } from '@carto/react-workers';
 import {
   formatOperationColumn,
   formatTableNameWithFilters,
+  normalizeObjectKeys,
   wrapModelCall
 } from './utils';
 
@@ -182,7 +183,7 @@ async function fromRemote(props) {
     query,
     connection,
     opts: { abortController }
-  });
+  }).then(normalizeObjectKeys);
 
   return formatRemoteData(data, props);
 }

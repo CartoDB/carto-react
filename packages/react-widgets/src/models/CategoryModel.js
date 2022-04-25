@@ -4,6 +4,7 @@ import { Methods, executeTask } from '@carto/react-workers';
 import {
   formatOperationColumn,
   formatTableNameWithFilters,
+  normalizeObjectKeys,
   wrapModelCall
 } from './utils';
 
@@ -37,7 +38,7 @@ function fromRemote(props) {
     query,
     connection,
     opts: { abortController }
-  });
+  }).then(normalizeObjectKeys);
 }
 
 function buildSqlQueryToGetCategories(props) {

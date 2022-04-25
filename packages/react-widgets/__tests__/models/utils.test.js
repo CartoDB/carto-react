@@ -2,7 +2,8 @@ import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import {
   formatTableNameWithFilters,
   wrapModelCall,
-  formatOperationColumn
+  formatOperationColumn,
+  normalizeObjectKeys
 } from '../../src/models/utils';
 import { AggregationTypes, _filtersToSQL } from '@carto/react-core';
 
@@ -90,6 +91,24 @@ describe('utils', () => {
 
       expect(query).toBe(
         `${SOURCE_WITH_FILTERS.data} WHERE (column_1 in('value_1','value_2'))`
+      );
+    });
+  });
+
+  describe('normalizeObjectKeys', () => {
+    test('should work correctly', () => {
+      const test = { VALUE: 1 };
+      const test2 = [{ TICK: 0, VALUE: 1 }];
+      const test3 = [{ TICK: [{ VALUE: 0 }], VALUE: 1 }];
+
+      expect(JSON.stringify(normalizeObjectKeys(test))).toEqual(
+        JSON.stringify(test).toLowerCase()
+      );
+      expect(JSON.stringify(normalizeObjectKeys(test2))).toEqual(
+        JSON.stringify(test2).toLowerCase()
+      );
+      expect(JSON.stringify(normalizeObjectKeys(test3))).toEqual(
+        JSON.stringify(test3).toLowerCase()
       );
     });
   });
