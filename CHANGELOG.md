@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Normalize SQL API response due to providers inconsistency [#382](https://github.com/CartoDB/carto-react/pull/382)
 - Implement CLOSED_OPEN and TIME filters for SQL to allow proper filtering [#381](https://github.com/CartoDB/carto-react/pull/381)
 
 ## 1.3
