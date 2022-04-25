@@ -32,6 +32,8 @@ export function formatTableNameWithFilters(props) {
   return `${formattedSourceData} ${whereClause}`.trim();
 }
 
+// Due to each data warehouse has its own behavior with columns,
+// we need to normalize them and transform every key to lowercase
 export function normalizeObjectKeys(el) {
   if (Array.isArray(el)) {
     return el.map(normalizeObjectKeys);
