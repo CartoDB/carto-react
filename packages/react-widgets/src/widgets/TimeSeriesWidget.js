@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getTimeSeries } from '../models';
-import { addFilter, removeFilter } from '@carto/react-redux';
+import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
 import {
   TimeSeriesWidgetUI,
   WrapperWidgetUI,
@@ -99,6 +99,8 @@ function TimeSeriesWidget({
   stepSize
 }) {
   const dispatch = useDispatch();
+  const source = useSelector((state) => selectSourceById(state, dataSource))
+  const isDroppingFeatures = source?.isDroppingFeatures
 
   const [selectedStepSize, setSelectedStepSize] = useState(stepSize);
 
@@ -220,7 +222,7 @@ function TimeSeriesWidget({
             : [])
         ]}
       >
-        {data.length || isLoading ? (
+        {(data.length && !isDroppingFeatures) || isLoading ? (
           <TimeSeriesWidgetUI
             data={data}
             stepSize={selectedStepSize}
@@ -242,7 +244,7 @@ function TimeSeriesWidget({
             onTimeWindowUpdate={handleTimeWindowUpdate}
           />
         ) : (
-          <NoDataAlert {...noDataAlertProps} />
+          <NoDataAlert {...noDataAlertProps} {...(isDroppingFeatures ? { severity: 'warning', body: 'Some rows have been filtered at this zoom level. Zoom in to ensure you see all rows in the map.' } : {})}/>
         )}
       </WrapperWidgetUI>
       <Menu

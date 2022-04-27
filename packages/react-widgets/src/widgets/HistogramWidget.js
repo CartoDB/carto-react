@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { addFilter, removeFilter } from '@carto/react-redux';
+import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getHistogram } from '../models';
@@ -49,6 +49,8 @@ function HistogramWidget(props) {
     noDataAlertProps
   } = props;
   const dispatch = useDispatch();
+  const source = useSelector((state) => selectSourceById(state, dataSource))
+  const isDroppingFeatures = source?.isDroppingFeatures
 
   const { data = [], isLoading } = useWidgetFetch(getHistogram, {
     id,
@@ -139,7 +141,7 @@ function HistogramWidget(props) {
 
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
-      {data.length || isLoading ? (
+      {(data.length && !isDroppingFeatures) || isLoading ? (
         <HistogramWidgetUI
           data={data}
           dataAxis={dataAxis || ticksForDataAxis}
@@ -153,7 +155,7 @@ function HistogramWidget(props) {
           filterable={filterable}
         />
       ) : (
-        <NoDataAlert {...noDataAlertProps} />
+        <NoDataAlert {...noDataAlertProps} {...(isDroppingFeatures ? { severity: 'warning', body: 'Some rows have been filtered at this zoom level. Zoom in to ensure you see all rows in the map.' } : {})}/>
       )}
     </WrapperWidgetUI>
   );

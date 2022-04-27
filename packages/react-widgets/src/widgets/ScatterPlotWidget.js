@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
+import { selectAreFeaturesReadyForSource, selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, ScatterPlotWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getScatter } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
@@ -42,6 +42,8 @@ function ScatterPlotWidget(props) {
     wrapperProps,
     noDataAlertProps
   } = props;
+  const source = useSelector((state) => selectSourceById(state, dataSource))
+  const isDroppingFeatures = source?.isDroppingFeatures
 
   const [scatterData, setScatterData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -91,7 +93,7 @@ function ScatterPlotWidget(props) {
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      {scatterData.length || isLoading ? (
+      {(scatterData.length && !isDroppingFeatures) || isLoading ? (
         <ScatterPlotWidgetUI
           data={scatterData}
           tooltipFormatter={tooltipFormatter}
@@ -100,7 +102,7 @@ function ScatterPlotWidget(props) {
           animation={animation}
         />
       ) : (
-        <NoDataAlert {...noDataAlertProps} />
+        <NoDataAlert {...noDataAlertProps} {...(isDroppingFeatures ? { severity: 'warning', body: 'Some rows have been filtered at this zoom level. Zoom in to ensure you see all rows in the map.' } : {})}/>
       )}
     </WrapperWidgetUI>
   );

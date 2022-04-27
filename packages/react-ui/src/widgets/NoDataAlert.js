@@ -1,16 +1,33 @@
 import React from 'react';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
+
+function AlertBody ({ color = undefined, children }) {
+  return children ? (
+  <Box mt={0.5}>
+    <Typography variant="caption" color={color || 'inherit'} style={{ fontWeight: 'normal' }}>{children}</Typography>
+  </Box>
+) : (
+  <Box mt={-1} />
+)}
 
 function NoDataAlert({
   title = 'No data available',
-  body = 'There are no results for the combination of filters applied to your data. Try tweaking your filters, or zoom and pan the map to adjust the Map View.'
+  body = 'There are no results for the combination of filters applied to your data. Try tweaking your filters, or zoom and pan the map to adjust the Map View.',
+  severity = undefined
 }) {
-  return (
-    <Alert severity='warning'>
-      {title && <AlertTitle>{title}</AlertTitle>}
-      {body || <Box mt={-1} />}
-    </Alert>
+
+  return severity ? (
+      <Alert severity={severity}>
+        {title && <AlertTitle>{title}</AlertTitle>}
+        <AlertBody>{body}</AlertBody>
+      </Alert>
+    ) : (
+      <Box>
+        {title && <Typography variant="body2">{title}</Typography>}
+        <AlertBody color="textSecondary">{body}</AlertBody>
+      </Box>
+    )
   );
 }
 

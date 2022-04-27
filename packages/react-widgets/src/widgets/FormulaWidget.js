@@ -5,6 +5,9 @@ import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
+import { useSelector } from 'react-redux';
+import { selectSourceById } from '@carto/react-redux/';
+import { NoDataAlert } from '@carto/react-ui/';
 
 /**
  * Renders a <FormulaWidget /> component
@@ -34,6 +37,8 @@ function FormulaWidget({
   onError,
   wrapperProps
 }) {
+  const source = useSelector((state) => selectSourceById(state, dataSource))
+  const isDroppingFeatures = source?.isDroppingFeatures
   const { data, isLoading } = useWidgetFetch(getFormula, {
     id,
     dataSource,
@@ -48,12 +53,16 @@ function FormulaWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      <FormulaWidgetUI
-        data={data}
-        formatter={formatter}
-        unitBefore={true}
-        animation={animation}
-      />
+      {isDroppingFeatures ? (
+        <NoDataAlert severity="warning" body="Some rows have been filtered at this zoom level. Zoom in to ensure you see all rows in the map." />
+      ) : (
+        <FormulaWidgetUI
+          data={data}
+          formatter={formatter}
+          unitBefore={true}
+          animation={animation}
+        />
+      )}
     </WrapperWidgetUI>
   );
 }

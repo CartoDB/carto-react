@@ -60,6 +60,11 @@ export const createCartoSlice = (initialState) => {
         action.payload.credentials = action.payload.credentials || state.credentials;
         state.dataSources[action.payload.id] = action.payload;
       },
+      setIsDroppingFeatures: (state, action) => {
+        const source = state.dataSources[action.payload.id];
+        source.isDroppingFeatures = action.payload.isDroppingFeatures;
+        state.dataSources[action.payload.id] = source;
+      },
       removeSource: (state, action) => {
         delete state.dataSources[action.payload];
         removeWorker(action.payload);
@@ -201,6 +206,13 @@ export const addSource = ({
   type: 'carto/addSource',
   payload: { id, data, type, credentials, connection, filtersLogicalOperator }
 });
+
+/**
+ * Action to set the `isDroppingFeature` flag
+ * @param {string} id - unique id for the source
+ * @param {boolean} isDroppingFeatures - flag that indicate if tiles are generated using a dropping feature strategy
+ */
+export const setIsDroppingFeatures = ({id, isDroppingFeatures}) => ({ type: 'carto/setIsDroppingFeatures', payload: { id, isDroppingFeatures }})
 
 /**
  * Action to remove a source from the store

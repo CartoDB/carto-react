@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addFilter, removeFilter } from '@carto/react-redux';
+import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
 import { WrapperWidgetUI, PieWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
@@ -53,6 +53,8 @@ function PieWidget({
   noDataAlertProps
 }) {
   const dispatch = useDispatch();
+  const source = useSelector((state) => selectSourceById(state, dataSource))
+  const isDroppingFeatures = source?.isDroppingFeatures
 
   const selectedCategories =
     useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
@@ -97,7 +99,7 @@ function PieWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      {data.length || isLoading ? (
+      {(data.length && !isDroppingFeatures) || isLoading ? (
         <PieWidgetUI
           data={data}
           formatter={formatter}
@@ -111,7 +113,7 @@ function PieWidget({
           onSelectedCategoriesChange={handleSelectedCategoriesChange}
         />
       ) : (
-        <NoDataAlert {...noDataAlertProps} />
+        <NoDataAlert {...noDataAlertProps} {...(isDroppingFeatures ? { severity: 'warning', body: 'Some rows have been filtered at this zoom level. Zoom in to ensure you see all rows in the map.' } : {})}/>
       )}
     </WrapperWidgetUI>
   );

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { WrapperWidgetUI, TableWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getTable } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
-import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
+import { selectAreFeaturesReadyForSource, selectSourceById } from '@carto/react-redux';
 
 /**
  * Renders a <TableWidget /> component
@@ -34,6 +34,9 @@ function TableWidget({
   height,
   dense
 }) {
+  const source = useSelector((state) => selectSourceById(state, dataSource))
+  const isDroppingFeatures = source?.isDroppingFeatures
+
   const [rowsPerPage, setRowsPerPage] = useState(initialPageSize);
   const [page, setPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
@@ -99,7 +102,7 @@ function TableWidget({
 
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
-      {rows.length || isLoading ? (
+      {(rows.length && !isDroppingFeatures) || isLoading ? (
         <TableWidgetUI
           columns={columns}
           rows={rows}
@@ -118,7 +121,7 @@ function TableWidget({
           dense={dense}
         />
       ) : (
-        <NoDataAlert {...noDataAlertProps} />
+        <NoDataAlert {...noDataAlertProps} {...(isDroppingFeatures ? { severity: 'warning', body: 'Some rows have been filtered at this zoom level. Zoom in to ensure you see all rows in the map.' } : {})}/>
       )}
     </WrapperWidgetUI>
   );

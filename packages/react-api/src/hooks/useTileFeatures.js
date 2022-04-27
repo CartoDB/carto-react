@@ -1,10 +1,12 @@
 import { useEffect, useCallback, useState } from 'react';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
-import { Layer } from '@deck.gl/core';
+import { setIsDroppingFeatures } from '@carto/react-redux';
+import { parse } from '@loaders.gl/core';
 import { TILE_FORMATS } from '@deck.gl/carto';
 import { throwError } from './utils';
 import useFeaturesCommons from './useFeaturesCommons';
+import { useDispatch } from 'react-redux';
 
 export default function useTileFeatures({
   source,
@@ -13,6 +15,7 @@ export default function useTileFeatures({
   uniqueIdProperty,
   debounceTimeout = 250
 }) {
+  const dispatch = useDispatch()
   const [
     debounceIdRef,
     isTilesetLoaded,
@@ -107,14 +110,16 @@ export default function useTileFeatures({
       setSourceFeaturesReady(false);
 
       debounceIdRef.current = debouncedLoadTiles(tiles);
+      const isDroppingFeatures = tiles?.some(tile => tile.content?.isDroppingFeatures)
+      dispatch(setIsDroppingFeatures({ id: source.id, isDroppingFeatures }))
     },
-    [stopAnyCompute, setSourceFeaturesReady, debouncedLoadTiles, debounceIdRef]
+    [source, stopAnyCompute, setSourceFeaturesReady, debouncedLoadTiles, debounceIdRef, dispatch]
   );
 
   const fetch = useCallback(
     (...args) => {
       stopAnyCompute();
-      return Layer.defaultProps.fetch.value(...args);
+      return customFetch(...args)
     },
     [stopAnyCompute]
   );
@@ -125,4 +130,15 @@ export default function useTileFeatures({
   }, []);
 
   return [onDataLoad, onViewportLoad, fetch];
+}
+
+// TODO: Comentario => https://github.com/visgl/loaders.gl/pull/2128
+const customFetch = async (url, {layer, loaders, loadOptions, signal}) => {
+  loadOptions = loadOptions || layer.getLoadOptions();
+  loaders = loaders || layer.props.loaders;
+
+  const response = await fetch(url, { signal })
+  const isDroppingFeatures = response.headers.get('Features-Dropped-From-Tile') === 'true'
+  const result = await parse(response, loaders, loadOptions)
+  return result ? { ...result, isDroppingFeatures } : null
 }
