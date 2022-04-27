@@ -18,17 +18,16 @@ function NoDataAlert({
 }) {
 
   return severity ? (
-      <Alert severity={severity}>
-        {title && <AlertTitle>{title}</AlertTitle>}
-        <AlertBody>{body}</AlertBody>
-      </Alert>
-    ) : (
-      <Box>
-        {title && <Typography variant="body2">{title}</Typography>}
-        <AlertBody color="textSecondary">{body}</AlertBody>
-      </Box>
-    )
-  );
+    <Alert severity={severity}>
+      {title && <AlertTitle>{title}</AlertTitle>}
+      <AlertBody>{body}</AlertBody>
+    </Alert>
+  ) : (
+    <Box>
+      {title && <Typography variant="body2">{title}</Typography>}
+      <AlertBody color="textSecondary">{body}</AlertBody>
+    </Box>
+  )
 }
 
 export default NoDataAlert;
