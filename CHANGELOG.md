@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix histogram bar selection [#384](https://github.com/CartoDB/carto-react/pull/384)
+
 ## 1.3
 
 ### 1.3.0-alpha.5 (2022-04-25)
