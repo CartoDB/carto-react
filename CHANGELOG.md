@@ -2,10 +2,14 @@
 
 ## Not released
 
-- GeocoderWidget support for LDS queries in CARTO 3 [#387](https://github.com/CartoDB/carto-react/pull/387)
-- Display warning when tilesets are dropping features [#385](https://github.com/CartoDB/carto-react/pull/385)
+- Improve "No Data" UI state for FormulaWidget [#389](https://github.com/CartoDB/carto-react/pull/389)
 
 ## 1.3
+
+### 1.3.0-alpha.7 (2022-04-28)
+
+- GeocoderWidget support for LDS queries in CARTO 3 [#387](https://github.com/CartoDB/carto-react/pull/387)
+- Display warning when tilesets are dropping features [#385](https://github.com/CartoDB/carto-react/pull/385)
 
 ### 1.3.0-alpha.6 (2022-04-27)
 
