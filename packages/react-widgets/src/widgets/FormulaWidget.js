@@ -25,6 +25,7 @@ import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeatur
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
+ * @param  {Object} [props.noDataPlaceholder] - String to display when there is no feature to compute value.
  */
 function FormulaWidget({
   id,
@@ -38,16 +39,19 @@ function FormulaWidget({
   global,
   onError,
   wrapperProps,
-  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps,
+  noDataPlaceholder
 }) {
-  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
+  const isDroppingFeatures = useSelector((state) =>
+    checkIfSourceIsDroppingFeature(state, dataSource)
+  );
   const { data, isLoading } = useWidgetFetch(getFormula, {
     id,
     dataSource,
     params: {
       operation,
       column,
-      joinOperation,
+      joinOperation
     },
     global,
     onError
@@ -59,8 +63,8 @@ function FormulaWidget({
         <NoDataAlert {...droppingFeaturesAlertProps} />
       ) : (
         <FormulaWidgetUI
-          data={data}
-          formatter={formatter}
+          data={data?.feature_count ? data.value : noDataPlaceholder}
+          formatter={data?.feature_count ? formatter : undefined}
           unitBefore={true}
           animation={animation}
         />
@@ -82,13 +86,15 @@ FormulaWidget.propTypes = {
   global: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object
+  droppingFeaturesAlertProps: PropTypes.object,
+  noDataPlaceholder: PropTypes.string
 };
 
 FormulaWidget.defaultProps = {
   animation: true,
   global: false,
-  wrapperProps: {}
+  wrapperProps: {},
+  noDataPlaceholder: '-'
 };
 
 export default FormulaWidget;
