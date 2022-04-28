@@ -1,0 +1,351 @@
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useMemo } from 'react';
+import ReactEcharts from '../../custom-components/echarts-for-react';
+import { darken, Grid, Link, makeStyles, Typography, useTheme } from '@material-ui/core';
+import { processFormatterRes } from '../utils/formatterUtils';
+import detectTouchscreen from '../utils/detectTouchScreen';
+import useHistogramInteractivity from './useHistogramInteractivity';
+
+const IS_TOUCH_SCREEN = detectTouchscreen();
+
+const useStyles = makeStyles((theme) => ({
+  optionsSelectedBar: {
+    marginBottom: theme.spacing(2),
+
+    '& .MuiTypography-caption': {
+      color: theme.palette.text.secondary
+    },
+
+    '& .MuiButton-label': {
+      ...theme.typography.caption
+    }
+  },
+  clearButton: {
+    ...theme.typography.caption,
+    cursor: 'pointer'
+  }
+}));
+
+function HistogramWidgetUI({
+  data,
+  ticks,
+  min,
+  max,
+  xAxisFormatter,
+  yAxisFormatter,
+  selectedBars,
+  onSelectedBarsChange,
+  tooltip,
+  tooltipFormatter,
+  animation,
+  filterable: _filterable,
+  height
+}) {
+  const classes = useStyles();
+  const theme = useTheme();
+
+  const filterable = _filterable && !!onSelectedBarsChange;
+
+  const [echartsInstance, setEchartInstance] = useState();
+  const onChartReady = (_echartsInstance) => setEchartInstance(_echartsInstance);
+
+  const formattedData = useMemo(
+    () => formatData(data, ticks, min, max),
+    [data, ticks, min, max]
+  );
+
+  const { onEvents, markAreaOptions } = useHistogramInteractivity({
+    data: formattedData,
+    filterable,
+    selectedBars,
+    onSelectedBarsChange,
+    echartsInstance
+  });
+
+  // Tooltip
+  const tooltipOptions = useMemo(
+    () => ({
+      show: tooltip,
+      trigger: 'item',
+      padding: [theme.spacing(0.5), theme.spacing(1)],
+      borderWidth: 0,
+      textStyle: {
+        ...theme.typography.caption,
+        fontSize: 12,
+        lineHeight: 16,
+        color: theme.palette.common.white
+      },
+      backgroundColor: theme.palette.other.tooltip,
+      confine: true,
+      position: 'top',
+      formatter(params) {
+        return tooltipFormatter(params, xAxisFormatter, yAxisFormatter);
+      }
+    }),
+    [theme, tooltip, tooltipFormatter, xAxisFormatter, yAxisFormatter]
+  );
+
+  // xAxis
+  const xAxisOptions = useMemo(
+    () => ({
+      min,
+      max,
+      interval: (max - min) / formattedData.length,
+      axisLine: {
+        show: false
+      },
+      splitLine: {
+        show: true,
+        lineStyle: {
+          color: theme.palette.charts.axisLine
+        }
+      },
+      axisTick: {
+        show: false
+      },
+      axisLabel: {
+        showMinLabel: true,
+        showMaxLabel: true,
+        ...theme.typography.charts,
+        hideOverlap: true,
+        padding: [theme.spacing(0.5), theme.spacing(0.5), 0, theme.spacing(0.5)],
+        formatter: (value) => {
+          const formattedValue = xAxisFormatter(value);
+          return value === min
+            ? formatMin(formattedValue)
+            : value === max
+            ? formatMax(formattedValue)
+            : formattedValue;
+        },
+        color: theme.palette.charts.maxLabel
+      }
+    }),
+    [min, max, formattedData.length, theme, xAxisFormatter]
+  );
+
+  // yAxis
+  const yAxisOptions = useMemo(
+    () => ({
+      type: 'value',
+      axisLine: {
+        show: false
+      },
+      splitLine: {
+        show: true,
+        lineStyle: {
+          color: theme.palette.charts.axisLine
+        }
+      },
+      axisTick: {
+        show: false
+      },
+      axisLabel: {
+        margin: 0,
+        verticalAlign: 'bottom',
+        padding: [0, 0, theme.typography.charts.fontSize, 0],
+        show: true,
+        showMaxLabel: true,
+        showMinLabel: false,
+        inside: true,
+        color: (value) => {
+          const maxValue = Math.max(...data.map((d) => d || Number.MIN_SAFE_INTEGER));
+          let col = 'transparent';
+          if (value >= maxValue) {
+            col = theme.palette.charts.maxLabel;
+          }
+
+          return col;
+        },
+        ...theme.typography.charts,
+        formatter: (v) => processFormatterRes(yAxisFormatter(v))
+      }
+    }),
+    [
+      theme.palette.charts.axisLine,
+      theme.palette.charts.maxLabel,
+      theme.typography.charts,
+      data,
+      yAxisFormatter
+    ]
+  );
+
+  // Series
+  const seriesOptions = useMemo(() => {
+    const dataWithColor = formattedData.map((item, idx) => {
+      const isDisabled = selectedBars.length && selectedBars.indexOf(idx) === -1;
+      const color = isDisabled
+        ? theme.palette.charts.disabled
+        : theme.palette.secondary.main;
+
+      return { value: item, itemStyle: { color } };
+    });
+
+    return {
+      type: 'custom',
+      cursor: 'pointer',
+      markArea: markAreaOptions,
+      renderItem: function (params, api) {
+        const isLast = params.dataIndex === formattedData.length - 1;
+        var yValue = api.value(2);
+        var start = api.coord([api.value(0), yValue]);
+        var size = api.size([api.value(1) - api.value(0), yValue]);
+        var style = api.style();
+        return {
+          type: 'rect',
+          shape: {
+            x: start[0],
+            y: start[1],
+            width: size[0] - (isLast ? 0 : 1),
+            height: size[1]
+          },
+          style,
+          ...(!IS_TOUCH_SCREEN && {
+            emphasis: {
+              style: {
+                fill: darken(style.fill, 0.25)
+              }
+            }
+          })
+        };
+      },
+      encode: {
+        x: [0, 1],
+        y: 2,
+        tooltip: [0, 1, 2]
+      },
+      data: dataWithColor,
+      animation
+    };
+  }, [
+    formattedData,
+    markAreaOptions,
+    theme.palette.charts.disabled,
+    theme.palette.secondary.main,
+    selectedBars,
+    animation
+  ]);
+
+  const options = useMemo(
+    () => ({
+      grid: {
+        left: theme.spacing(0.1),
+        right: theme.spacing(0.1),
+        top: theme.spacing(2),
+        bottom: theme.spacing(0.5),
+        containLabel: true
+      },
+      tooltip: tooltipOptions,
+      xAxis: xAxisOptions,
+      yAxis: yAxisOptions,
+      series: [seriesOptions]
+    }),
+    [tooltipOptions, xAxisOptions, yAxisOptions, seriesOptions, theme]
+  );
+
+  const countSelectedElements = selectedBars.reduce(
+    (acc, barIndex) => (acc += data[barIndex] || 0),
+    0
+  );
+
+  return (
+    <div>
+      {filterable && (
+        <Grid
+          container
+          direction='row'
+          justifyContent='space-between'
+          alignItems='center'
+          className={classes.optionsSelectedBar}
+        >
+          <Typography variant='caption'>
+            {selectedBars.length ? yAxisFormatter(countSelectedElements) : 'All'} selected
+          </Typography>
+          {selectedBars.length > 0 && (
+            <Link
+              className={classes.clearButton}
+              onClick={() => onSelectedBarsChange([])}
+            >
+              Clear
+            </Link>
+          )}
+        </Grid>
+      )}
+      <ReactEcharts
+        option={options}
+        onEvents={onEvents}
+        lazyUpdate={true}
+        onChartReady={onChartReady}
+        style={{ maxHeight: height }}
+      />
+    </div>
+  );
+}
+
+HistogramWidgetUI.defaultProps = {
+  tooltip: true,
+  tooltipFormatter: defaultTooltipFormatter,
+  xAxisFormatter: (v) => v,
+  yAxisFormatter: (v) => v,
+  selectedBars: [],
+  animation: true,
+  filterable: true,
+  height: 200
+};
+
+HistogramWidgetUI.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.number).isRequired,
+  ticks: PropTypes.arrayOf(PropTypes.number).isRequired,
+  min: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
+  tooltip: PropTypes.bool,
+  tooltipFormatter: PropTypes.func,
+  xAxisFormatter: PropTypes.func,
+  yAxisFormatter: PropTypes.func,
+  selectedBars: PropTypes.arrayOf(PropTypes.number),
+  onSelectedBarsChange: PropTypes.func,
+  animation: PropTypes.bool,
+  filterable: PropTypes.bool,
+  height: PropTypes.number
+};
+
+export default HistogramWidgetUI;
+
+// Aux
+function formatMin(value) {
+  const spaces = Array(String(value).length).fill('  ').join('');
+  return `${spaces}${value}`;
+}
+
+function formatMax(value) {
+  const spaces = Array(String(value).length).fill('  ').join('');
+  return `${value}${spaces}`;
+}
+
+function formatData(data, ticks, min, max) {
+  return data.map((value, idx) => [
+    idx === 0 ? min : ticks[idx - 1],
+    idx === data.length - 1 ? max : ticks[idx],
+    value
+  ]);
+}
+
+function defaultTooltipFormatter(params, xAxisFormatter, yAxisFormatter) {
+  if (Array.isArray(params)) {
+    params = params[0];
+  }
+
+  if (params.data.value === undefined) {
+    return;
+  }
+
+  const [left, right, value] = params.data.value;
+  const title = `${processFormatterRes(xAxisFormatter(left))} - ${processFormatterRes(
+    xAxisFormatter(right)
+  )}`;
+  const formattedValue = processFormatterRes(yAxisFormatter(value));
+  const item = `<div style="margin-left: 8px; display: inline">
+        ${formattedValue}
+        </div>`;
+  return `${title} <div style="margin-top: 4px">${params.marker}${item}</div>`;
+}

@@ -17,8 +17,9 @@ const EMPTY_ARRAY = [];
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's column to get the data from.
- * @param  {string} props.operation - Operation to apply to the column. Must be one of those defined in `AggregationTypes` object.
- * @param  {number[]} props.ticks - Array of thresholds for the X axis.
+ * @param  {string} [props.operation] - Operation to apply to the column. Must be one of those defined in `AggregationTypes` object.
+ * @param  {number[]} [props.ticks] - Array of thresholds for the X axis.
+ * @param  {number} [props.bins] - Number of bins to calculate the ticks.
  * @param  {Function} [props.xAxisformatter] - Function to format X axis values.
  * @param  {Function} [props.formatter] - Function to format Y axis values.
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
@@ -29,38 +30,46 @@ const EMPTY_ARRAY = [];
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
  */
-function HistogramWidget(props) {
-  const {
-    id,
-    title,
-    dataSource,
-    column,
-    operation,
-    ticks,
-    xAxisFormatter,
-    dataAxis,
-    formatter,
-    tooltip,
-    animation,
-    filterable,
-    global,
-    onError,
-    wrapperProps,
-    noDataAlertProps
-  } = props;
+function HistogramWidget({
+  id,
+  title,
+  dataSource,
+  column,
+  operation,
+  ticks: _ticks,
+  xAxisFormatter,
+  bins,
+  formatter,
+  tooltip,
+  tooltipFormatter,
+  animation,
+  filterable,
+  global,
+  onError,
+  wrapperProps,
+  noDataAlertProps
+}) {
   const dispatch = useDispatch();
 
-  const { data = [], isLoading } = useWidgetFetch(getHistogram, {
+  const { data: _data, isLoading } = useWidgetFetch(getHistogram, {
     id,
     dataSource,
     params: {
       column,
       operation,
-      ticks
+      ticks: _ticks,
+      bins
     },
     global,
     onError
   });
+
+  const {
+    min = Number.MIN_SAFE_INTEGER,
+    max = Number.MAX_SAFE_INTEGER,
+    data = [],
+    ticks = _ticks
+  } = _data || {};
 
   const thresholdsFromFilters = useWidgetFilterValues({
     dataSource,
@@ -84,23 +93,10 @@ function HistogramWidget(props) {
       .filter((v) => v !== null);
   }, [thresholdsFromFilters, ticks]);
 
-  const tooltipFormatter = useCallback(
-    ([serie]) => {
-      const formattedValue = formatter
-        ? formatter(serie.value, serie.dataIndex, ticks)
-        : { prefix: '', value: serie.value };
-
-      return typeof formattedValue === 'object'
-        ? `${formattedValue.prefix}${formattedValue.value}`
-        : formattedValue;
-    },
-    [formatter, ticks]
-  );
-
   const handleSelectedBarsChange = useCallback(
-    ({ bars }) => {
-      if (bars && bars.length) {
-        const thresholds = bars.map((i) => {
+    (selectedBars) => {
+      if (selectedBars?.length) {
+        const thresholds = selectedBars.map((i) => {
           let left = ticks[i - 1];
           let right = ticks.length !== i ? ticks[i] : undefined;
 
@@ -127,22 +123,14 @@ function HistogramWidget(props) {
     [column, dataSource, id, dispatch, ticks]
   );
 
-  const ticksForDataAxis = ticks.reduce((acc, tick, i) => {
-    if (acc.length === 0) {
-      return [`< ${tick}`];
-    }
-    if (i === ticks.length - 1) {
-      return [...acc, `< ${tick}`, `>= ${tick}`];
-    }
-    return [...acc, `< ${tick}`];
-  }, []);
-
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
       {data.length || isLoading ? (
         <HistogramWidgetUI
           data={data}
-          dataAxis={dataAxis || ticksForDataAxis}
+          min={min}
+          max={max}
+          ticks={ticks}
           selectedBars={selectedBars}
           onSelectedBarsChange={handleSelectedBarsChange}
           tooltip={tooltip}
@@ -164,20 +152,24 @@ HistogramWidget.propTypes = {
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
   column: PropTypes.string.isRequired,
-  operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
+  ticks: PropTypes.arrayOf(PropTypes.number),
+  bins: PropTypes.number,
+  operation: PropTypes.oneOf(Object.values(AggregationTypes)),
   xAxisFormatter: PropTypes.func,
   formatter: PropTypes.func,
   tooltip: PropTypes.bool,
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   global: PropTypes.bool,
-  ticks: PropTypes.array.isRequired,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object
 };
 
 HistogramWidget.defaultProps = {
+  bins: 15,
+  ticks: [],
+  operation: AggregationTypes.COUNT,
   tooltip: true,
   animation: true,
   filterable: true,

@@ -1,13 +1,31 @@
 import { aggregate, aggregationFunctions } from './aggregation';
+import { AggregationTypes } from './constants/AggregationTypes';
 
-export function histogram({ data, valuesColumns, joinOperation, ticks, operation }) {
+export function histogram({
+  data,
+  valuesColumns,
+  joinOperation,
+  bins = 7,
+  ticks = [],
+  operation
+}) {
   if (Array.isArray(data) && data.length === 0) {
-    return [];
+    return {};
+  }
+  const useBins = !ticks.length && bins;
+
+  let min = Number.MAX_SAFE_INTEGER;
+  let max = Number.MIN_SAFE_INTEGER;
+
+  if (useBins) {
+    min = aggregationFunctions[AggregationTypes.MIN](data, valuesColumns, joinOperation);
+    max = aggregationFunctions[AggregationTypes.MAX](data, valuesColumns, joinOperation);
+    for (let i = 1; i < bins; i += 1) {
+      ticks.push(min + (max - min) * (i / bins));
+    }
   }
 
-  ticks = [Number.MIN_SAFE_INTEGER, ...ticks];
-
-  const binsContainer = ticks.map((tick, index, arr) => ({
+  const binsContainer = [Number.MIN_SAFE_INTEGER, ...ticks].map((tick, index, arr) => ({
     bin: index,
     start: tick,
     end: index === arr.length - 1 ? Number.MAX_SAFE_INTEGER : arr[index + 1],
@@ -21,6 +39,14 @@ export function histogram({ data, valuesColumns, joinOperation, ticks, operation
 
     if (!isValid) {
       return;
+    }
+
+    if (!useBins) {
+      if (featureValue < min) {
+        min = featureValue;
+      } else if (featureValue > max) {
+        max = featureValue;
+      }
     }
 
     const binContainer = binsContainer.find(
@@ -38,8 +64,13 @@ export function histogram({ data, valuesColumns, joinOperation, ticks, operation
 
   if (targetOperation) {
     const transformedBins = binsContainer.map((binContainer) => binContainer.values);
-    return transformedBins.map((values) => (values.length ? targetOperation(values) : 0));
+    return {
+      min,
+      max,
+      ticks,
+      data: transformedBins.map((values) => (values.length ? targetOperation(values) : 0))
+    };
   }
 
-  return [];
+  return {};
 }

@@ -18,7 +18,7 @@ export function areChartPropsEqual(optionPrev, optionNext) {
 
 export function disableSerie(serie, theme) {
   serie.disabled = true;
-  serie.itemStyle = { color: theme.palette.charts.disabled };
+  serie.itemStyle = { color: theme.palette.charts?.disabled };
 }
 
 export function clearFilter(serie) {
