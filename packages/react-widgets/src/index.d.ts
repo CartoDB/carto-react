@@ -18,3 +18,4 @@ export { default as TimeSeriesWidget } from './widgets/TimeSeriesWidget';
 export { default as useSourceFilters } from './hooks/useSourceFilters';
 export { default as FeatureSelectionWidget } from './widgets/FeatureSelectionWidget';
 export { default as FeatureSelectionLayer } from './layers/FeatureSelectionLayer';
+export { default as useGeocoderWidgetController } from './hooks/useGeocoderWidgetController';

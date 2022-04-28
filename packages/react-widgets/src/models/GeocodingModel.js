@@ -1,15 +1,47 @@
 // Geocoding / Data Services https://carto.com/developers/data-services-api/reference/
 
-import { executeSQL } from '@carto/react-api';
+import { executeSQL, ldsGeocode } from '@carto/react-api';
+import { API_VERSIONS } from '@deck.gl/carto';
 
 /**
- * Street-Level Geocoder
- * @param {*} credentials
- * @param {*} { searchText, city, state, country } all optional but searchText
+ * Street-Level Geocoder.
  *
+ * Geocode street given as address and optionally country into geo location (latitude, longitude).
+ * Only first result is returned.
  *
+ * @param {object} credentials
+ * @param { object } props
+ * @param { string } props.searchText - searched address to be executed
+ * @param { string= } props.country - optional, limit search scope to country as ISO-3166 alpha-2 code, example, ES, DE
+ * @param { string= } props.state - optional, limit search scope to state (only V2 api)
+ * @param { string= } props.city - optional, limit search scope to city (only V2 api)
  */
-export const geocodeStreetPoint = async (
+export const geocodeStreetPoint = async (credentials, props, opts = {}) => {
+  const { searchText, city, state, country } = props;
+  if (credentials.apiVersion === API_VERSIONS.V3) {
+    return geocodeStreetPointLds(credentials, { searchText, country }, opts);
+  }
+
+  return geocodeStreetPointSql(credentials, { searchText, city, state, country }, opts);
+};
+
+export const geocodeStreetPointLds = async (
+  credentials,
+  { searchText, country },
+  opts = {}
+) => {
+  const results = await ldsGeocode({
+    credentials,
+    address: searchText,
+    country,
+    limit: 1,
+    opts
+  });
+
+  return results?.[0];
+};
+
+export const geocodeStreetPointSql = async (
   credentials,
   { searchText, city, state, country },
   opts = {}
