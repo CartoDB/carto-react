@@ -81,7 +81,8 @@ FormulaWidget.propTypes = {
   animation: PropTypes.bool,
   global: PropTypes.bool,
   onError: PropTypes.func,
-  wrapperProps: PropTypes.object
+  wrapperProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object
 };
 
 FormulaWidget.defaultProps = {

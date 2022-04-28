@@ -64,11 +64,14 @@ export default function useTileFeatures({
         return acc;
       }, []);
 
+      const isDroppingFeatures = tiles?.some(tile => tile.content?.isDroppingFeatures)
+      dispatch(setIsDroppingFeatures({ id: sourceId, isDroppingFeatures }))
+
       executeTask(sourceId, Methods.LOAD_TILES, { tiles: cleanedTiles })
         .then(() => setTilesetLoaded(true))
         .catch(throwError);
     },
-    [sourceId, setTilesetLoaded]
+    [sourceId, setTilesetLoaded, dispatch]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -110,10 +113,8 @@ export default function useTileFeatures({
       setSourceFeaturesReady(false);
 
       debounceIdRef.current = debouncedLoadTiles(tiles);
-      const isDroppingFeatures = tiles?.some(tile => tile.content?.isDroppingFeatures)
-      dispatch(setIsDroppingFeatures({ id: sourceId, isDroppingFeatures }))
     },
-    [sourceId, stopAnyCompute, setSourceFeaturesReady, debouncedLoadTiles, debounceIdRef, dispatch]
+    [stopAnyCompute, setSourceFeaturesReady, debouncedLoadTiles, debounceIdRef]
   );
 
   const fetch = useCallback(

@@ -142,7 +142,8 @@ PieWidget.propTypes = {
   onError: PropTypes.func,
   colors: PropTypes.arrayOf(PropTypes.string),
   wrapperProps: PropTypes.object,
-  noDataAlertProps: PropTypes.object
+  noDataAlertProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object
 };
 
 PieWidget.defaultProps = {

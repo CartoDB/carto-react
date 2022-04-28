@@ -81,6 +81,7 @@ function TimeSeriesWidget({
   onError,
   wrapperProps,
   noDataAlertProps,
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps,
   // UI
   chartType,
   tooltip,
@@ -98,8 +99,7 @@ function TimeSeriesWidget({
   timeWindow,
   onTimeWindowUpdate,
   // Both
-  stepSize,
-  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
+  stepSize
 }) {
   const dispatch = useDispatch();
   const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
@@ -290,6 +290,7 @@ TimeSeriesWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object,
   // UI
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,

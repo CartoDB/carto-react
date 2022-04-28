@@ -130,7 +130,8 @@ ScatterPlotWidget.propTypes = {
   tooltipFormatter: PropTypes.func,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
-  noDataAlertProps: PropTypes.object
+  noDataAlertProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object
 };
 
 ScatterPlotWidget.defaultProps = {

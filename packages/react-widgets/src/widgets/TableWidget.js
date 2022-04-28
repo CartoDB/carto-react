@@ -143,6 +143,7 @@ TableWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object,
   initialPageSize: PropTypes.number,
   onPageSizeChange: PropTypes.func,
   height: PropTypes.string,
