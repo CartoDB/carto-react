@@ -9,6 +9,7 @@ type Source = SourceProps & {
   id: string
   filters?: any
   filtersLogicalOperator?: FiltersLogicalOperators
+  isDroppingFeatures?: boolean
 };
 
 type Layer = {

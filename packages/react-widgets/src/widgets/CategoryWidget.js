@@ -1,13 +1,14 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addFilter, removeFilter } from '@carto/react-redux';
+import { addFilter, removeFilter, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
 import { WrapperWidgetUI, CategoryWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 const EMPTY_ARRAY = [];
 
@@ -30,6 +31,7 @@ const EMPTY_ARRAY = [];
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
 function CategoryWidget(props) {
   const {
@@ -48,10 +50,12 @@ function CategoryWidget(props) {
     global,
     onError,
     wrapperProps,
-    noDataAlertProps
+    noDataAlertProps,
+    droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
   } = props;
   const dispatch = useDispatch();
 
+  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
   const selectedCategories =
     useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
     EMPTY_ARRAY;
@@ -95,7 +99,7 @@ function CategoryWidget(props) {
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      {data.length || isLoading ? (
+      {(data.length && !isDroppingFeatures) || isLoading ? (
         <CategoryWidgetUI
           data={data}
           formatter={formatter}
@@ -107,7 +111,7 @@ function CategoryWidget(props) {
           searchable={searchable}
         />
       ) : (
-        <NoDataAlert {...noDataAlertProps} />
+       <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
       )}
     </WrapperWidgetUI>
   );
@@ -132,7 +136,8 @@ CategoryWidget.propTypes = {
   global: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
-  noDataAlertProps: PropTypes.object
+  noDataAlertProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object
 };
 
 CategoryWidget.defaultProps = {

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
+import { selectAreFeaturesReadyForSource, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
 import { WrapperWidgetUI, ScatterPlotWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getScatter } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { columnAggregationOn } from './utils/propTypesFns';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 /**
  * Renders a <ScatterPlotWidget /> component
@@ -24,6 +25,7 @@ import { columnAggregationOn } from './utils/propTypesFns';
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
 function ScatterPlotWidget(props) {
   const {
@@ -40,8 +42,10 @@ function ScatterPlotWidget(props) {
     tooltipFormatter,
     onError,
     wrapperProps,
-    noDataAlertProps
+    noDataAlertProps,
+    droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
   } = props;
+  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
 
   const [scatterData, setScatterData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -91,7 +95,7 @@ function ScatterPlotWidget(props) {
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      {scatterData.length || isLoading ? (
+      {(scatterData.length && !isDroppingFeatures) || isLoading ? (
         <ScatterPlotWidgetUI
           data={scatterData}
           tooltipFormatter={tooltipFormatter}
@@ -100,7 +104,7 @@ function ScatterPlotWidget(props) {
           animation={animation}
         />
       ) : (
-        <NoDataAlert {...noDataAlertProps} />
+        <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
       )}
     </WrapperWidgetUI>
   );
@@ -126,7 +130,8 @@ ScatterPlotWidget.propTypes = {
   tooltipFormatter: PropTypes.func,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
-  noDataAlertProps: PropTypes.object
+  noDataAlertProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object
 };
 
 ScatterPlotWidget.defaultProps = {

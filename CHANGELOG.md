@@ -3,6 +3,7 @@
 ## Not released
 
 - GeocoderWidget support for LDS queries in CARTO 3 [#387](https://github.com/CartoDB/carto-react/pull/387)
+- Display warning when tilesets are dropping features [#385](https://github.com/CartoDB/carto-react/pull/385)
 
 ## 1.3
 
