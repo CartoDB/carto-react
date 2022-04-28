@@ -244,7 +244,7 @@ function TimeSeriesWidget({
             onTimeWindowUpdate={handleTimeWindowUpdate}
           />
         ) : (
-          <NoDataAlert {...noDataAlertProps} {...(isDroppingFeatures ? { severity: 'warning', body: 'Some rows have been filtered at this zoom level. Zoom in to ensure you see all rows in the map.' } : {})}/>
+          <NoDataAlert {...noDataAlertProps} {...(isDroppingFeatures ? { body: 'Some rows have been filtered at this zoom level. Zoom in to ensure you see all rows in the map.' } : {})}/>
         )}
       </WrapperWidgetUI>
       <Menu

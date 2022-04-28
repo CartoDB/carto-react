@@ -132,7 +132,8 @@ export default function useTileFeatures({
   return [onDataLoad, onViewportLoad, fetch];
 }
 
-// TODO: Comentario => https://github.com/visgl/loaders.gl/pull/2128
+// WORKAROUND: To read headers and know if the tile is dropping features. 
+// Remove when the new loader is ready => https://github.com/visgl/loaders.gl/pull/2128
 const customFetch = async (url, {layer, loaders, loadOptions, signal}) => {
   loadOptions = loadOptions || layer.getLoadOptions();
   loaders = loaders || layer.props.loaders;
