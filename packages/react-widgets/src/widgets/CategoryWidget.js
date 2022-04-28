@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
+import { addFilter, removeFilter, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
 import { WrapperWidgetUI, CategoryWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
@@ -52,8 +52,7 @@ function CategoryWidget(props) {
   } = props;
   const dispatch = useDispatch();
 
-  const source = useSelector((state) => selectSourceById(state, dataSource))
-  const isDroppingFeatures = source?.isDroppingFeatures
+  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
   const selectedCategories =
     useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
     EMPTY_ARRAY;

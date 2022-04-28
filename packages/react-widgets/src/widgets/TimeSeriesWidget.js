@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTimeSeries } from '../models';
-import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
+import { addFilter, removeFilter, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
 import {
   TimeSeriesWidgetUI,
   WrapperWidgetUI,
@@ -99,8 +99,7 @@ function TimeSeriesWidget({
   stepSize
 }) {
   const dispatch = useDispatch();
-  const source = useSelector((state) => selectSourceById(state, dataSource))
-  const isDroppingFeatures = source?.isDroppingFeatures
+  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
 
   const [selectedStepSize, setSelectedStepSize] = useState(stepSize);
 

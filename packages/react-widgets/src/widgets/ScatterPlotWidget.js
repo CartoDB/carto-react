@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { selectAreFeaturesReadyForSource, selectSourceById } from '@carto/react-redux';
+import { selectAreFeaturesReadyForSource, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
 import { WrapperWidgetUI, ScatterPlotWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getScatter } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
@@ -42,8 +42,7 @@ function ScatterPlotWidget(props) {
     wrapperProps,
     noDataAlertProps
   } = props;
-  const source = useSelector((state) => selectSourceById(state, dataSource))
-  const isDroppingFeatures = source?.isDroppingFeatures
+  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
 
   const [scatterData, setScatterData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

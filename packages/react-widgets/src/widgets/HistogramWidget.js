@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
+import { addFilter, removeFilter, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getHistogram } from '../models';
@@ -49,8 +49,7 @@ function HistogramWidget(props) {
     noDataAlertProps
   } = props;
   const dispatch = useDispatch();
-  const source = useSelector((state) => selectSourceById(state, dataSource))
-  const isDroppingFeatures = source?.isDroppingFeatures
+  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
 
   const { data = [], isLoading } = useWidgetFetch(getHistogram, {
     id,

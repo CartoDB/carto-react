@@ -311,6 +311,7 @@ const _setViewPort = (payload) => ({ type: 'carto/setViewPort', payload });
  * Redux selector to get a source by ID
  */
 export const selectSourceById = (state, id) => state.carto.dataSources[id];
+export const checkIfSourceIsDroppingFeature = (state, id) => state.carto.dataSources[id]?.isDroppingFeatures;
 
 /**
  * Redux selector to select the spatial filter of a given sourceId or the root one

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { WrapperWidgetUI, TableWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getTable } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
-import { selectAreFeaturesReadyForSource, selectSourceById } from '@carto/react-redux';
+import { selectAreFeaturesReadyForSource, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
 
 /**
  * Renders a <TableWidget /> component
@@ -34,8 +34,7 @@ function TableWidget({
   height,
   dense
 }) {
-  const source = useSelector((state) => selectSourceById(state, dataSource))
-  const isDroppingFeatures = source?.isDroppingFeatures
+  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
 
   const [rowsPerPage, setRowsPerPage] = useState(initialPageSize);
   const [page, setPage] = useState(0);

@@ -6,7 +6,7 @@ import { AggregationTypes } from '@carto/react-core';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import { useSelector } from 'react-redux';
-import { selectSourceById } from '@carto/react-redux/';
+import { checkIfSourceIsDroppingFeature } from '@carto/react-redux/';
 import { NoDataAlert } from '@carto/react-ui/';
 
 /**
@@ -37,8 +37,7 @@ function FormulaWidget({
   onError,
   wrapperProps
 }) {
-  const source = useSelector((state) => selectSourceById(state, dataSource))
-  const isDroppingFeatures = source?.isDroppingFeatures
+  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
   const { data, isLoading } = useWidgetFetch(getFormula, {
     id,
     dataSource,

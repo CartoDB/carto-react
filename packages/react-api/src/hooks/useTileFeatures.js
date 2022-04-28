@@ -111,9 +111,9 @@ export default function useTileFeatures({
 
       debounceIdRef.current = debouncedLoadTiles(tiles);
       const isDroppingFeatures = tiles?.some(tile => tile.content?.isDroppingFeatures)
-      dispatch(setIsDroppingFeatures({ id: source.id, isDroppingFeatures }))
+      dispatch(setIsDroppingFeatures({ id: sourceId, isDroppingFeatures }))
     },
-    [source, stopAnyCompute, setSourceFeaturesReady, debouncedLoadTiles, debounceIdRef, dispatch]
+    [sourceId, stopAnyCompute, setSourceFeaturesReady, debouncedLoadTiles, debounceIdRef, dispatch]
   );
 
   const fetch = useCallback(
