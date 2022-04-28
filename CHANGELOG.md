@@ -2,7 +2,7 @@
 
 ## Not released
 
-- GeocoderWidget support for LDS queries [#387](https://github.com/CartoDB/carto-react/pull/387)
+- GeocoderWidget support for LDS queries in CARTO 3 [#387](https://github.com/CartoDB/carto-react/pull/387)
 
 ## 1.3
 
