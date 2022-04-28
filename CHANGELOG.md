@@ -2,12 +2,20 @@
 
 ## Not released
 
+- GeocoderWidget support for LDS queries in CARTO 3 [#387](https://github.com/CartoDB/carto-react/pull/387)
+
+## 1.3
+
+### 1.3.0-alpha.6 (2022-04-27)
+
+- Fix histogram bar selection [#384](https://github.com/CartoDB/carto-react/pull/384)
+
+### 1.3.0-alpha.5 (2022-04-25)
+
 - Add callback prop to TableWidget to know when page size changed [#380](https://github.com/CartoDB/carto-react/pull/380)
 - Normalize SQL API response due to providers inconsistency [#382](https://github.com/CartoDB/carto-react/pull/382)
 - Implement CLOSED_OPEN and TIME filters for SQL to allow proper filtering [#381](https://github.com/CartoDB/carto-react/pull/381)
 - Display warning when tilesets are dropping features [#385](https://github.com/CartoDB/carto-react/pull/385)
-
-## 1.3
 
 ### 1.3.0-alpha.4 (2022-04-20)
 
