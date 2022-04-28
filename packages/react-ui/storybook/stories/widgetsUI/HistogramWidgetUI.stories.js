@@ -53,3 +53,11 @@ const FilteredProps = {
   tooltipFormatter: (params) => params[0].value + ' $'
 };
 Filtered.args = FilteredProps;
+
+
+export const NonEqualSizeBins = Template.bind({});
+const NonEqualSizeBinsProps = {
+  ...defaultProps,
+  ticks: [100, 200, 250, 450, 500, 600],
+};
+NonEqualSizeBins.args = NonEqualSizeBinsProps;
