@@ -1,19 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import { geocodeStreetPoint } from '../models';
-import { addLayer, selectOAuthCredentials, setViewState } from '@carto/react-redux';
+import { addLayer } from '@carto/react-redux';
 
 import { CircularProgress, InputBase, Paper, SvgIcon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
-const DEFAULT_COUNTRY = ''; // 'SPAIN', 'USA'
-
-const setGeocoderResult = (payload) => ({
-  type: 'carto/setGeocoderResult',
-  payload
-});
+import useGeocoderWidgetController from '../hooks/useGeocoderWidgetController';
 
 const useStyles = makeStyles((theme) => ({
   paperInput: {
@@ -54,19 +47,13 @@ const SearchIcon = (args) => (
  * @param  {Object} [props.className] - Material-UI withStyle class for styling
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Boolean=} [props.zoomToResult] - Optional, default true. Whether control should zoom map on result.
- *
- * @see geocodeStreetPoint
  */
 function GeocoderWidget(props) {
-  const inputRef = useRef();
-  const oauthCredentials = useSelector(selectOAuthCredentials);
-  const globalCredentials = useSelector((state) => state.carto.credentials);
-  const credentials = oauthCredentials || globalCredentials;
-  // Component local state and events handling
-  const [searchText, setSearchText] = useState('');
-  const [loading, setIsLoading] = useState(false);
-  // Actions dispatched
+  const classes = useStyles();
   const dispatch = useDispatch();
+
+  const { searchText, loading, handleChange, handleInput, handleKeyPress, handleBlur } =
+    useGeocoderWidgetController(props);
 
   useEffect(() => {
     // layer to display the geocoded direction marker
@@ -77,75 +64,6 @@ function GeocoderWidget(props) {
     );
   }, [dispatch]);
 
-  const classes = useStyles();
-
-  const handleChange = (e) => {
-    setSearchText(e.target.value);
-  };
-
-  const handleInput = (e) => {
-    if (e.target.value === '') {
-      updateMarker(null);
-    }
-  };
-
-  const handleKeyPress = async (e) => {
-    if (e.keyCode === 13) {
-      // Force blur to hide virtual keyboards on mobile and search
-      e.target.blur();
-    }
-  };
-
-  // Needed to handle keyboard "Done" button on iOS
-  const handleBlur = async () => {
-    if (searchText.length) {
-      handleSearch();
-    }
-  };
-
-  const handleSearch = async () => {
-    if (credentials) {
-      try {
-        setIsLoading(true);
-        const result = await geocodeStreetPoint(credentials, {
-          searchText,
-          country: DEFAULT_COUNTRY
-        });
-        if (result) {
-          if (props.zoomToResult !== false) {
-            zoomToResult(result);
-          }
-          updateMarker(result);
-        }
-      } catch (e) {
-        handleGeocodeError(e);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const zoomToResult = (result) => {
-    dispatch(
-      setViewState({
-        longitude: result.longitude,
-        latitude: result.latitude,
-        zoom: 16,
-        transitionDuration: 500
-      })
-    );
-  };
-
-  const updateMarker = (result) => {
-    dispatch(setGeocoderResult(result));
-  };
-
-  const handleGeocodeError = (error) => {
-    if (props.onError) {
-      props.onError(error);
-    }
-  };
-
   return (
     <Paper className={`${props.className} ${classes.paperInput}`} elevation={2}>
       {loading ? (
@@ -153,10 +71,10 @@ function GeocoderWidget(props) {
       ) : (
         <SearchIcon className={classes.icon} />
       )}
+
       <InputBase
         type='search'
         tabIndex={-1}
-        inputRef={inputRef}
         size='small'
         placeholder='Search address'
         className={classes.input}
@@ -173,7 +91,8 @@ function GeocoderWidget(props) {
 
 GeocoderWidget.propTypes = {
   className: PropTypes.string,
-  onError: PropTypes.func
+  onError: PropTypes.func,
+  zoomToResult: PropTypes.bool
 };
 
 GeocoderWidget.defaultProps = {};
