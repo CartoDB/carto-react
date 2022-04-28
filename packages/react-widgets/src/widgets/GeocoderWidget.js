@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import { addLayer } from '@carto/react-redux';
+import { addLayer, setViewState } from '@carto/react-redux';
 
 import { CircularProgress, InputBase, Paper, SvgIcon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -46,11 +46,11 @@ const SearchIcon = (args) => (
  * @param  {object} props
  * @param  {Object} [props.className] - Material-UI withStyle class for styling
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Boolean=} [props.zoomToResult] - Optional, default true. Whether control should zoom map on result.
  */
-function GeocoderWidget(props) {
+function GeocoderWidget(props = {}) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const geocoderResult = useSelector((state) => state.carto.geocoderResult);
 
   const { searchText, loading, handleChange, handleInput, handleKeyPress, handleBlur } =
     useGeocoderWidgetController(props);
@@ -63,6 +63,19 @@ function GeocoderWidget(props) {
       })
     );
   }, [dispatch]);
+
+  useEffect(() => {
+    if (geocoderResult) {
+      dispatch(
+        setViewState({
+          longitude: geocoderResult.longitude,
+          latitude: geocoderResult.latitude,
+          zoom: 16,
+          transitionDuration: 500
+        })
+      );
+    }
+  }, [geocoderResult, dispatch]);
 
   return (
     <Paper className={`${props.className} ${classes.paperInput}`} elevation={2}>
@@ -91,8 +104,7 @@ function GeocoderWidget(props) {
 
 GeocoderWidget.propTypes = {
   className: PropTypes.string,
-  onError: PropTypes.func,
-  zoomToResult: PropTypes.bool
+  onError: PropTypes.func
 };
 
 GeocoderWidget.defaultProps = {};

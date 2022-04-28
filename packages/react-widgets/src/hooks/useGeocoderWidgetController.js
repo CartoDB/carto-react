@@ -1,4 +1,3 @@
-import { selectOAuthCredentials, setViewState } from '@carto/react-redux/';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { geocodeStreetPoint } from '../models/GeocodingModel';
@@ -14,13 +13,10 @@ const setGeocoderResult = (payload) => ({
  * Controller for <GeocoderWidget /> component.
  *
  * @param  {object} props
- * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Boolean=} [props.zoomToResult] - Optional, default true. Whether control should zoom map on result.
+ * @param  {Function=} [props.onError] - Function to handle error messages from the widget.
  */
-export default function useGeocoderWidgetController(props) {
-  const oauthCredentials = useSelector(selectOAuthCredentials);
-  const globalCredentials = useSelector((state) => state.carto.credentials);
-  const credentials = oauthCredentials || globalCredentials;
+export default function useGeocoderWidgetController(props = {}) {
+  const credentials = useSelector((state) => state.carto.credentials);
   // Component local state and events handling
   const [searchText, setSearchText] = useState('');
   const [loading, setIsLoading] = useState(false);
@@ -53,36 +49,23 @@ export default function useGeocoderWidgetController(props) {
   };
 
   const handleSearch = async () => {
-    if (credentials) {
-      try {
-        setIsLoading(true);
-        const result = await geocodeStreetPoint(credentials, {
-          searchText,
-          country: DEFAULT_COUNTRY
-        });
-        if (result) {
-          if (props.zoomToResult !== false) {
-            zoomToResult(result);
-          }
-          updateMarker(result);
-        }
-      } catch (e) {
-        handleGeocodeError(e);
-      } finally {
-        setIsLoading(false);
-      }
+    if (!credentials) {
+      return;
     }
-  };
-
-  const zoomToResult = (result) => {
-    dispatch(
-      setViewState({
-        longitude: result.longitude,
-        latitude: result.latitude,
-        zoom: 16,
-        transitionDuration: 500
-      })
-    );
+    try {
+      setIsLoading(true);
+      const result = await geocodeStreetPoint(credentials, {
+        searchText,
+        country: DEFAULT_COUNTRY
+      });
+      if (result) {
+        updateMarker(result);
+      }
+    } catch (e) {
+      handleGeocodeError(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const updateMarker = (result) => {
