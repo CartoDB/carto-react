@@ -6,6 +6,7 @@ import { WrapperWidgetUI, ScatterPlotWidgetUI, NoDataAlert } from '@carto/react-
 import { getScatter } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { columnAggregationOn } from './utils/propTypesFns';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 /**
  * Renders a <ScatterPlotWidget /> component
@@ -24,6 +25,7 @@ import { columnAggregationOn } from './utils/propTypesFns';
  * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
 function ScatterPlotWidget(props) {
   const {
@@ -40,7 +42,8 @@ function ScatterPlotWidget(props) {
     tooltipFormatter,
     onError,
     wrapperProps,
-    noDataAlertProps
+    noDataAlertProps,
+    droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
   } = props;
   const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
 
@@ -101,7 +104,7 @@ function ScatterPlotWidget(props) {
           animation={animation}
         />
       ) : (
-        <NoDataAlert {...noDataAlertProps} {...(isDroppingFeatures ? { body: 'Some rows have been filtered at this zoom level. Zoom in to ensure you see all rows in the map.' } : {})}/>
+        <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
       )}
     </WrapperWidgetUI>
   );

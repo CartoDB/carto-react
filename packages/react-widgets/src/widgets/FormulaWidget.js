@@ -8,6 +8,7 @@ import useWidgetFetch from '../hooks/useWidgetFetch';
 import { useSelector } from 'react-redux';
 import { checkIfSourceIsDroppingFeature } from '@carto/react-redux/';
 import { NoDataAlert } from '@carto/react-ui/';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 /**
  * Renders a <FormulaWidget /> component
@@ -23,6 +24,7 @@ import { NoDataAlert } from '@carto/react-ui/';
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
 function FormulaWidget({
   id,
@@ -35,7 +37,8 @@ function FormulaWidget({
   animation,
   global,
   onError,
-  wrapperProps
+  wrapperProps,
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
 }) {
   const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
   const { data, isLoading } = useWidgetFetch(getFormula, {
@@ -53,7 +56,7 @@ function FormulaWidget({
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       {isDroppingFeatures ? (
-        <NoDataAlert body="Some rows have been filtered at this zoom level. Zoom in to ensure you see all rows in the map." />
+        <NoDataAlert {...droppingFeaturesAlertProps} />
       ) : (
         <FormulaWidgetUI
           data={data}

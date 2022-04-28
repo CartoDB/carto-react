@@ -5,6 +5,7 @@ import { WrapperWidgetUI, TableWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getTable } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { selectAreFeaturesReadyForSource, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 /**
  * Renders a <TableWidget /> component
@@ -20,6 +21,7 @@ import { selectAreFeaturesReadyForSource, checkIfSourceIsDroppingFeature } from 
  * @param  {Function} [props.onPageSizeChange] - Function called when the page size is changed internally
  * @param  {string} [props.height] - Static widget height, required for scrollable table content
  * @param  {boolean} [props.dense] - Whether the table should use a compact layout with smaller cell paddings
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
 function TableWidget({
   id,
@@ -32,7 +34,8 @@ function TableWidget({
   initialPageSize = 10,
   onPageSizeChange,
   height,
-  dense
+  dense,
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
 }) {
   const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
 
@@ -120,7 +123,7 @@ function TableWidget({
           dense={dense}
         />
       ) : (
-        <NoDataAlert {...noDataAlertProps} {...(isDroppingFeatures ? { body: 'Some rows have been filtered at this zoom level. Zoom in to ensure you see all rows in the map.' } : {})}/>
+        <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
       )}
     </WrapperWidgetUI>
   );

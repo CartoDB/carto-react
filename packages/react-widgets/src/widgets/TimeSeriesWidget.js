@@ -17,6 +17,7 @@ import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/co
 import { PropTypes } from 'prop-types';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 // Due to the widget groups the data by a certain stepSize, when filtering
 // the filter applied must be a range that represent the grouping range.
@@ -64,6 +65,7 @@ const STEP_SIZE_RANGE_MAPPING = {
  * @param  {function} [props.onStop] - Event raised when the animation is stopped.
  * @param  {function} [props.onTimelineUpdate] - Event raised when the timeline is updated. It happens when the animation is playing. The function receive as param the date that is being shown.
  * @param  {function} [props.onTimeWindowUpdate] - Event raised when the timeWindow is updated. It happens when the animation is playing with a timeWindow enabled. The function receive as param an array of two date objects.
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
 function TimeSeriesWidget({
   // Widget
@@ -96,7 +98,8 @@ function TimeSeriesWidget({
   timeWindow,
   onTimeWindowUpdate,
   // Both
-  stepSize
+  stepSize,
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
 }) {
   const dispatch = useDispatch();
   const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
@@ -243,7 +246,7 @@ function TimeSeriesWidget({
             onTimeWindowUpdate={handleTimeWindowUpdate}
           />
         ) : (
-          <NoDataAlert {...noDataAlertProps} {...(isDroppingFeatures ? { body: 'Some rows have been filtered at this zoom level. Zoom in to ensure you see all rows in the map.' } : {})}/>
+          <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
         )}
       </WrapperWidgetUI>
       <Menu

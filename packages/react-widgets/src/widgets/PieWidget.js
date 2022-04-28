@@ -8,6 +8,7 @@ import { getCategories } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 const EMPTY_ARRAY = [];
 
@@ -31,6 +32,7 @@ const EMPTY_ARRAY = [];
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
 function PieWidget({
   id,
@@ -50,7 +52,8 @@ function PieWidget({
   colors,
   onError,
   wrapperProps,
-  noDataAlertProps
+  noDataAlertProps,
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
 }) {
   const dispatch = useDispatch();
   const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
@@ -112,7 +115,7 @@ function PieWidget({
           onSelectedCategoriesChange={handleSelectedCategoriesChange}
         />
       ) : (
-        <NoDataAlert {...noDataAlertProps} {...(isDroppingFeatures ? { body: 'Some rows have been filtered at this zoom level. Zoom in to ensure you see all rows in the map.' } : {})}/>
+        <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
       )}
     </WrapperWidgetUI>
   );
