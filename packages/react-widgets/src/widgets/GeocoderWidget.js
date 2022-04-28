@@ -53,9 +53,7 @@ const SearchIcon = (args) => (
  * @param  {object} props
  * @param  {Object} [props.className] - Material-UI withStyle class for styling
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Object=} [props.credentials] - Credentials to use, otherwise widgets checks redus state.
- * @param  {string=} props.method - method, either `sql` or `lds`, see geocodeStreetPoint
- * @param  {Boolean=} [props.zoomControl] - Optional, default true. Whether control should zoom map on result.
+ * @param  {Boolean=} [props.zoomToResult] - Optional, default true. Whether control should zoom map on result.
  *
  * @see geocodeStreetPoint
  */
@@ -63,7 +61,7 @@ function GeocoderWidget(props) {
   const inputRef = useRef();
   const oauthCredentials = useSelector(selectOAuthCredentials);
   const globalCredentials = useSelector((state) => state.carto.credentials);
-  const credentials = props.credentials || oauthCredentials || globalCredentials;
+  const credentials = oauthCredentials || globalCredentials;
   // Component local state and events handling
   const [searchText, setSearchText] = useState('');
   const [loading, setIsLoading] = useState(false);
@@ -111,11 +109,10 @@ function GeocoderWidget(props) {
         setIsLoading(true);
         const result = await geocodeStreetPoint(credentials, {
           searchText,
-          method: props.method,
           country: DEFAULT_COUNTRY
         });
         if (result) {
-          if (props.zoomControl !== false) {
+          if (props.zoomToResult !== false) {
             zoomToResult(result);
           }
           updateMarker(result);

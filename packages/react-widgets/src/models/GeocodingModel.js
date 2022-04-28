@@ -6,28 +6,19 @@ import { API_VERSIONS } from '@deck.gl/carto';
 /**
  * Street-Level Geocoder.
  *
- * Geocode street given as address and optionally county into geo location (latitude, longitute).
+ * Geocode street given as address and optionally country into geo location (latitude, longitude).
  * Only first result is returned.
- *
- * Method:
- *  * `sql` default for Carto v2 credentials, execute `ST_AsGeoJSON` against connection specified in credentials
- *  * `lds` default for Carto v3 credentials, execute query against Carto Location Data Services
  *
  * @param {object} credentials
  * @param { object } props
- * @param { string= } props.method - method, either `sql` or `lds`
  * @param { string } props.searchText - searched address to be executed
  * @param { string= } props.country - optional, limit search scope to country as ISO-3166 alpha-2 code, example, ES, DE
  * @param { string= } props.state - optional, limit search scope to state (only V2 api)
  * @param { string= } props.city - optional, limit search scope to city (only V2 api)
- * @param { number= } props.limit - optional, limit of answers
  */
 export const geocodeStreetPoint = async (credentials, props, opts = {}) => {
   const { searchText, city, state, country } = props;
-  if (
-    props.method === 'lds' ||
-    (!props.method && credentials.apiVersion === API_VERSIONS.V3)
-  ) {
+  if (credentials.apiVersion === API_VERSIONS.V3) {
     return geocodeStreetPointLds(credentials, { searchText, country }, opts);
   }
 

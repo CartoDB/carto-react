@@ -39,7 +39,7 @@ export type InitialCartoState = InitialCarto2State | InitialCarto3State;
 
 export type CartoState = {
   viewport: Viewport | undefined,
-  geocoderResult: object | null,
+  geocoderResult: Record<string,any> | null,
   error: null, // TODO: remove from state?
   layers: { [key: string]: string },
   dataSources: { [key: string]: string },
