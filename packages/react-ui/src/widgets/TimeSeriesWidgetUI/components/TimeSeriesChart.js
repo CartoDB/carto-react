@@ -46,7 +46,7 @@ export default function TimeSeriesChart({
         color: theme.palette.common.white
       },
       borderWidth: 0,
-      backgroundColor: theme.palette.other?.tooltip,
+      backgroundColor: theme.palette.other.tooltip,
       position: (point, params, dom, rect, size) => {
         const position = { top: 0 };
 
@@ -66,7 +66,7 @@ export default function TimeSeriesChart({
     () => ({
       axisPointer: {
         lineStyle: {
-          color: theme.palette.charts?.axisPointer
+          color: theme.palette.charts.axisPointer
         }
       },
       xAxis: {
@@ -88,7 +88,7 @@ export default function TimeSeriesChart({
         axisLabel: {
           margin: 0,
           verticalAlign: 'bottom',
-          padding: [0, 0, theme.typography.charts?.fontSize, 0],
+          padding: [0, 0, theme.typography.charts.fontSize, 0],
           show: true,
           showMaxLabel: true,
           showMinLabel: false,
@@ -97,7 +97,7 @@ export default function TimeSeriesChart({
             // FIXME: Workaround to show only maxlabel
             let col = 'transparent';
             if (value >= maxValue) {
-              col = theme.palette.charts?.maxLabel;
+              col = theme.palette.charts.maxLabel;
             }
 
             return col;
@@ -115,7 +115,7 @@ export default function TimeSeriesChart({
           show: true,
           onZero: false,
           lineStyle: {
-            color: theme.palette.charts?.axisLine
+            color: theme.palette.charts.axisLine
           }
         },
         max: maxValue
