@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { WrapperWidgetUI, TableWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getTable } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
-import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
+import { selectAreFeaturesReadyForSource, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 /**
  * Renders a <TableWidget /> component
@@ -20,6 +21,7 @@ import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
  * @param  {Function} [props.onPageSizeChange] - Function called when the page size is changed internally
  * @param  {string} [props.height] - Static widget height, required for scrollable table content
  * @param  {boolean} [props.dense] - Whether the table should use a compact layout with smaller cell paddings
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
 function TableWidget({
   id,
@@ -32,8 +34,11 @@ function TableWidget({
   initialPageSize = 10,
   onPageSizeChange,
   height,
-  dense
+  dense,
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
 }) {
+  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
+
   const [rowsPerPage, setRowsPerPage] = useState(initialPageSize);
   const [page, setPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
@@ -99,7 +104,7 @@ function TableWidget({
 
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
-      {rows.length || isLoading ? (
+      {(rows.length && !isDroppingFeatures) || isLoading ? (
         <TableWidgetUI
           columns={columns}
           rows={rows}
@@ -118,7 +123,7 @@ function TableWidget({
           dense={dense}
         />
       ) : (
-        <NoDataAlert {...noDataAlertProps} />
+        <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
       )}
     </WrapperWidgetUI>
   );
@@ -138,6 +143,7 @@ TableWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object,
   initialPageSize: PropTypes.number,
   onPageSizeChange: PropTypes.func,
   height: PropTypes.string,

@@ -92,8 +92,8 @@ export const setTokenAndUserInfoAsync = createAsyncThunk(
 export const logout = () => ({ type: 'oauth/logout', payload: {} });
 
 // Get the credentials, from curren token & userInfo
-const selectToken = (state) => state.oauth.token;
-const selectUserInfo = (state) => state.oauth.userInfo;
+const selectToken = (state) => state.oauth?.token;
+const selectUserInfo = (state) => state.oauth?.userInfo;
 
 /**
  * Selector to fetch the current OAuth credentials from the store

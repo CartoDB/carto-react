@@ -1,12 +1,17 @@
 import React, { useCallback, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { addFilter, removeFilter } from '@carto/react-redux';
+import {
+  addFilter,
+  removeFilter,
+  checkIfSourceIsDroppingFeature
+} from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getHistogram } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import useWidgetFetch from '../hooks/useWidgetFetch';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 const EMPTY_ARRAY = [];
 
@@ -29,6 +34,7 @@ const EMPTY_ARRAY = [];
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
 function HistogramWidget({
   id,
@@ -47,9 +53,13 @@ function HistogramWidget({
   global,
   onError,
   wrapperProps,
-  noDataAlertProps
+  noDataAlertProps,
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
 }) {
   const dispatch = useDispatch();
+  const isDroppingFeatures = useSelector((state) =>
+    checkIfSourceIsDroppingFeature(state, dataSource)
+  );
 
   const { data: _data, isLoading } = useWidgetFetch(getHistogram, {
     id,
@@ -125,7 +135,7 @@ function HistogramWidget({
 
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
-      {data.length || isLoading ? (
+      {(data.length && !isDroppingFeatures) || isLoading ? (
         <HistogramWidgetUI
           data={data}
           min={min}
@@ -141,7 +151,9 @@ function HistogramWidget({
           filterable={filterable}
         />
       ) : (
-        <NoDataAlert {...noDataAlertProps} />
+        <NoDataAlert
+          {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}
+        />
       )}
     </WrapperWidgetUI>
   );
@@ -163,7 +175,8 @@ HistogramWidget.propTypes = {
   global: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
-  noDataAlertProps: PropTypes.object
+  noDataAlertProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object
 };
 
 HistogramWidget.defaultProps = {

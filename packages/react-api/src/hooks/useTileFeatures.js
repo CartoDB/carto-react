@@ -1,10 +1,12 @@
 import { useEffect, useCallback, useState } from 'react';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
-import { Layer } from '@deck.gl/core';
+import { setIsDroppingFeatures } from '@carto/react-redux';
+import { parse } from '@loaders.gl/core';
 import { TILE_FORMATS } from '@deck.gl/carto';
 import { throwError } from './utils';
 import useFeaturesCommons from './useFeaturesCommons';
+import { useDispatch } from 'react-redux';
 
 export default function useTileFeatures({
   source,
@@ -13,6 +15,7 @@ export default function useTileFeatures({
   uniqueIdProperty,
   debounceTimeout = 250
 }) {
+  const dispatch = useDispatch()
   const [
     debounceIdRef,
     isTilesetLoaded,
@@ -61,11 +64,14 @@ export default function useTileFeatures({
         return acc;
       }, []);
 
+      const isDroppingFeatures = tiles?.some(tile => tile.content?.isDroppingFeatures)
+      dispatch(setIsDroppingFeatures({ id: sourceId, isDroppingFeatures }))
+
       executeTask(sourceId, Methods.LOAD_TILES, { tiles: cleanedTiles })
         .then(() => setTilesetLoaded(true))
         .catch(throwError);
     },
-    [sourceId, setTilesetLoaded]
+    [sourceId, setTilesetLoaded, dispatch]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,7 +120,7 @@ export default function useTileFeatures({
   const fetch = useCallback(
     (...args) => {
       stopAnyCompute();
-      return Layer.defaultProps.fetch.value(...args);
+      return customFetch(...args)
     },
     [stopAnyCompute]
   );
@@ -125,4 +131,16 @@ export default function useTileFeatures({
   }, []);
 
   return [onDataLoad, onViewportLoad, fetch];
+}
+
+// WORKAROUND: To read headers and know if the tile is dropping features. 
+// Remove when the new loader is ready => https://github.com/visgl/loaders.gl/pull/2128
+const customFetch = async (url, {layer, loaders, loadOptions, signal}) => {
+  loadOptions = loadOptions || layer.getLoadOptions();
+  loaders = loaders || layer.props.loaders;
+
+  const response = await fetch(url, { signal })
+  const isDroppingFeatures = response.headers.get('Features-Dropped-From-Tile') === 'true'
+  const result = await parse(response, loaders, loadOptions)
+  return result ? { ...result, isDroppingFeatures } : null
 }

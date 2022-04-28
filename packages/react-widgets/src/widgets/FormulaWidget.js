@@ -5,6 +5,10 @@ import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
+import { useSelector } from 'react-redux';
+import { checkIfSourceIsDroppingFeature } from '@carto/react-redux/';
+import { NoDataAlert } from '@carto/react-ui/';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 /**
  * Renders a <FormulaWidget /> component
@@ -20,6 +24,7 @@ import useWidgetFetch from '../hooks/useWidgetFetch';
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
 function FormulaWidget({
   id,
@@ -32,8 +37,10 @@ function FormulaWidget({
   animation,
   global,
   onError,
-  wrapperProps
+  wrapperProps,
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
 }) {
+  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
   const { data, isLoading } = useWidgetFetch(getFormula, {
     id,
     dataSource,
@@ -48,12 +55,16 @@ function FormulaWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      <FormulaWidgetUI
-        data={data}
-        formatter={formatter}
-        unitBefore={true}
-        animation={animation}
-      />
+      {isDroppingFeatures ? (
+        <NoDataAlert {...droppingFeaturesAlertProps} />
+      ) : (
+        <FormulaWidgetUI
+          data={data}
+          formatter={formatter}
+          unitBefore={true}
+          animation={animation}
+        />
+      )}
     </WrapperWidgetUI>
   );
 }
@@ -70,7 +81,8 @@ FormulaWidget.propTypes = {
   animation: PropTypes.bool,
   global: PropTypes.bool,
   onError: PropTypes.func,
-  wrapperProps: PropTypes.object
+  wrapperProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object
 };
 
 FormulaWidget.defaultProps = {
