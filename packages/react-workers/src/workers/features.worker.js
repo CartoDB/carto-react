@@ -6,7 +6,8 @@ import {
   histogram,
   scatterPlot,
   groupValuesByColumn,
-  groupValuesByDateColumn
+  groupValuesByDateColumn,
+  AggregationTypes
 } from '@carto/react-core';
 import { applySorting } from '../utils/sorting';
 import { Methods } from '../workerMethods';
@@ -99,10 +100,11 @@ function getFormula({
 
     const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
 
-    result = {
-      feature_count: filteredFeatures.length,
-      value: targetOperation(filteredFeatures, column, joinOperation)
-    };
+    if (filteredFeatures.length === 0 && operation !== AggregationTypes.COUNT) {
+      result = { value: null };
+    } else {
+      result = { value: targetOperation(filteredFeatures, column, joinOperation) };
+    }
   }
 
   postMessage({ result });
