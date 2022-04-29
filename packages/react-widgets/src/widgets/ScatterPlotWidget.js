@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { selectAreFeaturesReadyForSource, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
+import {
+  selectAreFeaturesReadyForSource,
+  checkIfSourceIsDroppingFeature
+} from '@carto/react-redux';
 import { WrapperWidgetUI, ScatterPlotWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getScatter } from '../models';
 import useSourceFilters from '../hooks/useSourceFilters';
 import { columnAggregationOn } from './utils/propTypesFns';
 import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
+import useWidgetFetch from '../hooks/useWidgetFetch';
 
 /**
  * Renders a <ScatterPlotWidget /> component
@@ -27,84 +31,55 @@ import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeatur
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
  * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
-function ScatterPlotWidget(props) {
-  const {
-    id,
-    title,
-    dataSource,
-    xAxisColumn,
-    xAxisJoinOperation,
-    yAxisColumn,
-    yAxisJoinOperation,
-    animation,
-    yAxisFormatter,
-    xAxisFormatter,
-    tooltipFormatter,
-    onError,
-    wrapperProps,
-    noDataAlertProps,
-    droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
-  } = props;
-  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
-
-  const [scatterData, setScatterData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const isSourceReady = useSelector((state) =>
-    selectAreFeaturesReadyForSource(state, dataSource)
+function ScatterPlotWidget({
+  id,
+  title,
+  dataSource,
+  xAxisColumn,
+  xAxisJoinOperation,
+  yAxisColumn,
+  yAxisJoinOperation,
+  animation,
+  yAxisFormatter,
+  xAxisFormatter,
+  tooltipFormatter,
+  global,
+  onError,
+  wrapperProps,
+  noDataAlertProps,
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
+}) {
+  const isDroppingFeatures = useSelector((state) =>
+    checkIfSourceIsDroppingFeature(state, dataSource)
   );
-  const { filters, filtersLogicalOperator } = useSourceFilters({ dataSource, id });
 
-  useEffect(() => {
-    setIsLoading(true);
-
-    if (isSourceReady) {
-      getScatter({
-        xAxisColumn,
-        xAxisJoinOperation,
-        yAxisColumn,
-        yAxisJoinOperation,
-        filters,
-        filtersLogicalOperator,
-        dataSource
-      })
-        .then((data) => {
-          if (data) {
-            setIsLoading(false);
-            setScatterData(data);
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          if (onError) onError(error);
-        });
-    }
-  }, [
+  const { data = [], isLoading } = useWidgetFetch(getScatter, {
     id,
-    xAxisColumn,
-    xAxisJoinOperation,
-    yAxisColumn,
-    yAxisJoinOperation,
     dataSource,
-    filters,
-    filtersLogicalOperator,
-    setIsLoading,
-    isSourceReady,
+    params: {
+      xAxisColumn,
+      xAxisJoinOperation,
+      yAxisColumn,
+      yAxisJoinOperation
+    },
+    global,
     onError
-  ]);
+  });
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      {(scatterData.length && !isDroppingFeatures) || isLoading ? (
+      {(data.length && !isDroppingFeatures) || isLoading ? (
         <ScatterPlotWidgetUI
-          data={scatterData}
+          data={data}
           tooltipFormatter={tooltipFormatter}
           xAxisFormatter={xAxisFormatter}
           yAxisFormatter={yAxisFormatter}
           animation={animation}
         />
       ) : (
-        <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
+        <NoDataAlert
+          {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}
+        />
       )}
     </WrapperWidgetUI>
   );

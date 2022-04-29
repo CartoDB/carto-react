@@ -3,9 +3,11 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { WrapperWidgetUI, TableWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getTable } from '../models';
-import useSourceFilters from '../hooks/useSourceFilters';
-import { selectAreFeaturesReadyForSource, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
+import { checkIfSourceIsDroppingFeature } from '@carto/react-redux';
 import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
+import useWidgetFetch from '../hooks/useWidgetFetch';
+
+const EMPTY_ARRAY = [];
 
 /**
  * Renders a <TableWidget /> component
@@ -33,74 +35,49 @@ function TableWidget({
   onError,
   initialPageSize = 10,
   onPageSizeChange,
+  global,
   height,
   dense,
   droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
 }) {
-  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
+  const isDroppingFeatures = useSelector((state) =>
+    checkIfSourceIsDroppingFeature(state, dataSource)
+  );
 
   const [rowsPerPage, setRowsPerPage] = useState(initialPageSize);
   const [page, setPage] = useState(0);
-  const [totalCount, setTotalCount] = useState(0);
 
   const [sortBy, setSortBy] = useState(undefined);
   const [sortDirection, setSortDirection] = useState('asc');
 
-  const [rows, setRows] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { filters, filtersLogicalOperator } = useSourceFilters({ dataSource, id });
-  const isSourceReady = useSelector((state) =>
-    selectAreFeaturesReadyForSource(state, dataSource)
+  const { data = { data: EMPTY_ARRAY, totalCount: 0 }, isLoading } = useWidgetFetch(
+    getTable,
+    {
+      id,
+      dataSource,
+      params: {
+        rowsPerPage,
+        page,
+        sortBy,
+        sortDirection
+      },
+      global,
+      onError
+    }
   );
+
+  const { data: rows, totalCount } = data;
 
   useEffect(() => {
     // force reset the page to 0 when the viewport or filters change
     setPage(0);
-  }, [dataSource, isSourceReady, filters]);
+  }, [rows]);
 
   useEffect(() => {
     if (onPageSizeChange) {
       onPageSizeChange(rowsPerPage);
     }
   }, [onPageSizeChange, rowsPerPage]);
-
-  useEffect(() => {
-    if (isSourceReady) {
-      setIsLoading(true);
-      getTable({
-        filters,
-        filtersLogicalOperator,
-        dataSource,
-        rowsPerPage,
-        page,
-        sortBy,
-        sortDirection
-      })
-        .then((data) => {
-          if (data) {
-            setRows(data.data);
-            setTotalCount(data.totalCount);
-          }
-        })
-        .catch((error) => {
-          if (onError) onError(error);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-  }, [
-    id,
-    dataSource,
-    filters,
-    filtersLogicalOperator,
-    sortBy,
-    sortDirection,
-    page,
-    rowsPerPage,
-    onError,
-    isSourceReady
-  ]);
 
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
@@ -123,7 +100,9 @@ function TableWidget({
           dense={dense}
         />
       ) : (
-        <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
+        <NoDataAlert
+          {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}
+        />
       )}
     </WrapperWidgetUI>
   );
