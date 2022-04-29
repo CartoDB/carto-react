@@ -2,6 +2,7 @@
 
 ## Not released
 
+- HistogramWidget/HistogramWidgetUI refactor [#338](https://github.com/CartoDB/carto-react/pull/388)
 - Improve "No Data" UI state for FormulaWidget [#389](https://github.com/CartoDB/carto-react/pull/389) and [#391](https://github.com/CartoDB/carto-react/pull/391)
 
 ## 1.3
