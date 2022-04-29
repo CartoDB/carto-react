@@ -6,12 +6,13 @@ export function histogram({
   valuesColumns,
   joinOperation,
   bins = 15,
-  ticks = [],
+  ticks: _ticks = [],
   operation
 }) {
   if (Array.isArray(data) && data.length === 0) {
     return {};
   }
+  const ticks = [..._ticks];
   const useBins = !ticks.length && bins;
 
   let min = Number.MAX_SAFE_INTEGER;
