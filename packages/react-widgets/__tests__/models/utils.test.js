@@ -77,7 +77,7 @@ describe('utils', () => {
       };
       const query = formatTableNameWithFilters({ source });
 
-      expect(query).toBe(`(${source.data.replace(';', '')})`);
+      expect(query).toBe(`(SELECT * FROM test) foo`);
     });
 
     test('should format table sources correctly', () => {
