@@ -43,7 +43,7 @@ function FormulaWidget({
   const isDroppingFeatures = useSelector((state) =>
     checkIfSourceIsDroppingFeature(state, dataSource)
   );
-  const { data, isLoading } = useWidgetFetch(getFormula, {
+  const { data = { value: undefined }, isLoading } = useWidgetFetch(getFormula, {
     id,
     dataSource,
     params: {
@@ -61,7 +61,7 @@ function FormulaWidget({
         <NoDataAlert {...droppingFeaturesAlertProps} />
       ) : (
         <FormulaWidgetUI
-          data={data?.value !== null ? data?.value : undefined}
+          data={Number.isFinite(data?.value) ? data.value : undefined}
           formatter={formatter}
           unitBefore={true}
           animation={animation}
