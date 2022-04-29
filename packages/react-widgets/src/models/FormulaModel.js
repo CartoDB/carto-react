@@ -38,7 +38,7 @@ function fromRemote(props) {
     opts: { abortController }
   })
     .then(normalizeObjectKeys)
-    .then((data) => data[0].value);
+    .then((data) => data[0]);
 }
 
 const buildSqlQueryToGetFormula = (props) => {
@@ -49,5 +49,7 @@ const buildSqlQueryToGetFormula = (props) => {
     joinOperation
   )}) as value`;
 
-  return `SELECT ${selectClause} FROM ${formatTableNameWithFilters(props)}`;
+  return `SELECT ${selectClause}, count(1) as feature_count FROM ${formatTableNameWithFilters(
+    props
+  )}`;
 };

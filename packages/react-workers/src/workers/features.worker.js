@@ -99,7 +99,10 @@ function getFormula({
 
     const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
 
-    result = targetOperation(filteredFeatures, column, joinOperation);
+    result = {
+      feature_count: filteredFeatures.length,
+      value: targetOperation(filteredFeatures, column, joinOperation)
+    };
   }
 
   postMessage({ result });
