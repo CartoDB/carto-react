@@ -40,14 +40,16 @@ function FormulaWidget({
   wrapperProps,
   droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
 }) {
-  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
-  const { data, isLoading } = useWidgetFetch(getFormula, {
+  const isDroppingFeatures = useSelector((state) =>
+    checkIfSourceIsDroppingFeature(state, dataSource)
+  );
+  const { data = { value: undefined }, isLoading } = useWidgetFetch(getFormula, {
     id,
     dataSource,
     params: {
       operation,
       column,
-      joinOperation,
+      joinOperation
     },
     global,
     onError
@@ -59,7 +61,7 @@ function FormulaWidget({
         <NoDataAlert {...droppingFeaturesAlertProps} />
       ) : (
         <FormulaWidgetUI
-          data={data}
+          data={Number.isFinite(data?.value) ? data.value : undefined}
           formatter={formatter}
           unitBefore={true}
           animation={animation}

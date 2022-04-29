@@ -1,7 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { addFilter, removeFilter, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
+import {
+  addFilter,
+  removeFilter,
+  checkIfSourceIsDroppingFeature
+} from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getHistogram } from '../models';
@@ -52,7 +56,9 @@ function HistogramWidget(props) {
     droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
   } = props;
   const dispatch = useDispatch();
-  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
+  const isDroppingFeatures = useSelector((state) =>
+    checkIfSourceIsDroppingFeature(state, dataSource)
+  );
 
   const { data = [], isLoading } = useWidgetFetch(getHistogram, {
     id,
@@ -106,7 +112,7 @@ function HistogramWidget(props) {
       if (bars && bars.length) {
         const thresholds = bars.map((i) => {
           let left = ticks[i - 1];
-          let right = ticks.length !== i + 1 ? ticks[i] : undefined;
+          let right = ticks.length !== i ? ticks[i] : undefined;
 
           return [left, right];
         });
@@ -157,7 +163,9 @@ function HistogramWidget(props) {
           filterable={filterable}
         />
       ) : (
-        <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)} />
+        <NoDataAlert
+          {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}
+        />
       )}
     </WrapperWidgetUI>
   );

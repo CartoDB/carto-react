@@ -38,7 +38,7 @@ function fromRemote(props) {
     opts: { abortController }
   })
     .then(normalizeObjectKeys)
-    .then((data) => data[0].value);
+    .then((data) => data[0]);
 }
 
 const buildSqlQueryToGetFormula = (props) => {
