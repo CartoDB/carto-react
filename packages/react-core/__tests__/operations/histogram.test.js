@@ -60,30 +60,30 @@ describe('histogram', () => {
       ).toEqual({});
     });
 
-    describe('should return an array of bins with same length as ticks plus one, due to the addition of extreme values', () => {
-      test('using ticks', () => {
-        const h = histogram({
-          data: VALID_DATA,
-          valuesColumns: [COLUMN],
-          ticks,
-          operation: AggregationTypes.COUNT
-        });
-
-        expect(h.data?.length).toBe(ticks.length + 1);
+    test('should return an object where the bins array has the same length as ticks plus one, due to the addition of extreme values', () => {
+      const h = histogram({
+        data: VALID_DATA,
+        valuesColumns: [COLUMN],
+        ticks,
+        operation: AggregationTypes.COUNT
       });
 
-      test('using bins', () => {
-        const nBins = 15;
+      expect(h.data?.length).toBe(ticks.length + 1);
+      expect(h.ticks).toEqual(ticks);
+    });
 
-        const h = histogram({
-          data: VALID_DATA,
-          valuesColumns: [COLUMN],
-          bins: nBins,
-          operation: AggregationTypes.COUNT
-        });
+    test('should return an object where the ticks property has the same length as bins minus one ', () => {
+      const nBins = 15;
 
-        expect(h.data?.length).toBe(nBins);
+      const h = histogram({
+        data: VALID_DATA,
+        valuesColumns: [COLUMN],
+        bins: nBins,
+        operation: AggregationTypes.COUNT
       });
+
+      expect(h.ticks?.length).toBe(nBins - 1);
+      expect(h.data?.length).toBe(nBins);
     });
 
     describe('one valuesColumns', () => {
@@ -199,8 +199,8 @@ describe('histogram', () => {
           });
           expect(h).toEqual({
             data: [0, 0, 0, 0, 0, 0],
-            max: -9007199254740991,
-            min: 9007199254740991,
+            max: Number.MIN_SAFE_INTEGER,
+            min: Number.MAX_SAFE_INTEGER,
             ticks: [1, 2, 3, 4, 5]
           });
         });
