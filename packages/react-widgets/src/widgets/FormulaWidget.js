@@ -25,7 +25,6 @@ import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeatur
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
- * @param  {Object} [props.noDataPlaceholder] - String to display when there is no feature to compute value.
  */
 function FormulaWidget({
   id,
@@ -39,8 +38,7 @@ function FormulaWidget({
   global,
   onError,
   wrapperProps,
-  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps,
-  noDataPlaceholder
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
 }) {
   const isDroppingFeatures = useSelector((state) =>
     checkIfSourceIsDroppingFeature(state, dataSource)
@@ -63,8 +61,8 @@ function FormulaWidget({
         <NoDataAlert {...droppingFeaturesAlertProps} />
       ) : (
         <FormulaWidgetUI
-          data={data?.value !== null ? data?.value : noDataPlaceholder}
-          formatter={data?.value !== null ? formatter : undefined}
+          data={data?.value !== null ? data?.value : undefined}
+          formatter={formatter}
           unitBefore={true}
           animation={animation}
         />
@@ -86,15 +84,13 @@ FormulaWidget.propTypes = {
   global: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object,
-  noDataPlaceholder: PropTypes.string
+  droppingFeaturesAlertProps: PropTypes.object
 };
 
 FormulaWidget.defaultProps = {
   animation: true,
   global: false,
-  wrapperProps: {},
-  noDataPlaceholder: '-'
+  wrapperProps: {}
 };
 
 export default FormulaWidget;
