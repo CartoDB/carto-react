@@ -3,21 +3,18 @@ import { AggregationTypes } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { executeSQL } from '@carto/react-api';
 
-const RESULT = {
-  value: 3.14,
-  feature_count: 42
-};
+const RESULT = 3.14;
 
 jest.mock('@carto/react-api', () => ({
   executeSQL: jest
     .fn()
-    .mockImplementation(() => new Promise((resolve) => resolve([RESULT])))
+    .mockImplementation(() => new Promise((resolve) => resolve([{ value: RESULT }])))
 }));
 
 jest.mock('@carto/react-workers', () => ({
   executeTask: jest
     .fn()
-    .mockImplementation(() => new Promise((resolve) => resolve(RESULT))),
+    .mockImplementation(() => new Promise((resolve) => resolve({ value: RESULT }))),
   Methods: {
     FEATURES_FORMULA: 'featuresFormula'
   }
@@ -41,7 +38,7 @@ describe('getFormula', () => {
 
       const data = await getFormula(props);
 
-      expect(data).toStrictEqual(RESULT);
+      expect(data).toStrictEqual({ value: RESULT });
 
       expect(executeTask).toHaveBeenCalledWith(
         props.source.id,
@@ -77,11 +74,11 @@ describe('getFormula', () => {
 
       const data = await getFormula(props);
 
-      expect(data).toStrictEqual(RESULT);
+      expect(data).toStrictEqual({ value: RESULT });
 
       expect(executeSQL).toHaveBeenCalledWith({
         credentials: props.source.credentials,
-        query: `SELECT sum(column_1) as value, count(1) as feature_count FROM __test__`,
+        query: `SELECT sum(column_1) as value FROM __test__`,
         connection: props.source.connection,
         opts: {
           abortController: undefined

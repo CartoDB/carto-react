@@ -63,12 +63,8 @@ function FormulaWidget({
         <NoDataAlert {...droppingFeaturesAlertProps} />
       ) : (
         <FormulaWidgetUI
-          data={
-            data?.feature_count || operation === AggregationTypes.COUNT
-              ? data?.value
-              : noDataPlaceholder
-          }
-          formatter={data?.feature_count ? formatter : undefined}
+          data={data?.value !== null ? data?.value : noDataPlaceholder}
+          formatter={data?.value !== null ? formatter : undefined}
           unitBefore={true}
           animation={animation}
         />
