@@ -50,28 +50,30 @@ function TableWidget({
   const [sortBy, setSortBy] = useState(undefined);
   const [sortDirection, setSortDirection] = useState('asc');
 
-  const { data = { data: EMPTY_ARRAY, totalCount: 0 }, isLoading } = useWidgetFetch(
-    getTable,
-    {
-      id,
-      dataSource,
-      params: {
-        rowsPerPage,
-        page,
-        sortBy,
-        sortDirection
-      },
-      global,
-      onError
-    }
-  );
+  const {
+    data = { data: EMPTY_ARRAY, totalCount: 0 },
+    isLoading,
+    isSourceReady,
+    source
+  } = useWidgetFetch(getTable, {
+    id,
+    dataSource,
+    params: {
+      rowsPerPage,
+      page,
+      sortBy,
+      sortDirection
+    },
+    global,
+    onError
+  });
 
   const { data: rows, totalCount } = data;
 
   useEffect(() => {
     // force reset the page to 0 when the viewport or filters change
     setPage(0);
-  }, [rows]);
+  }, [dataSource, isSourceReady, source?.filters]);
 
   useEffect(() => {
     if (onPageSizeChange) {

@@ -30,13 +30,14 @@ export default function useWidgetFetch(
         })
           .then((data) => {
             if (data !== null && data !== undefined) {
-              setIsLoading(false);
               setData(data);
             }
           })
           .catch((error) => {
-            setIsLoading(false);
             if (onError) onError(error);
+          })
+          .finally(() => {
+            setIsLoading(false);
           });
       }
     },
@@ -44,5 +45,5 @@ export default function useWidgetFetch(
     dequal
   );
 
-  return { data, isLoading };
+  return { data, isLoading, isSourceReady, source };
 }
