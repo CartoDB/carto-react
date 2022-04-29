@@ -51,6 +51,12 @@ describe('utils', () => {
       expect(fromRemote).toHaveBeenCalledWith(props2);
     });
 
+    test('should throw error if global is true but fromRemote is missing', () => {
+      expect(() =>
+        wrapModelCall({ source: V2_SOURCE, global: true }, fromLocal)
+      ).toThrowError();
+    });
+
     test('should throw error if source v2 is provided for global mode', () => {
       expect(() =>
         wrapModelCall({ source: V2_SOURCE, global: true }, fromLocal, fromRemote)

@@ -11,8 +11,15 @@ jest.mock('@carto/react-workers', () => ({
 describe('getTable', () => {
   describe('should correctly handle viewport features', () => {
     const tableParams = {
-      dataSource: 'whatever-data-source',
-      filters: {},
+      source: {
+        id: '__test__',
+        type: 'query',
+        data: 'SELECT * FROM test',
+        filters: {},
+        credentials: {
+          apiVersion: 'v2'
+        }
+      },
       rowsPerPage: 10,
       page: 1,
       sortBy: 'city',
@@ -34,16 +41,19 @@ describe('getTable', () => {
     });
 
     test('correctly called', async () => {
-      const { dataSource, filters, rowsPerPage, page, sortBy, sortDirection } =
-        tableParams;
       await getTable(tableParams);
-      expect(executeTask).toHaveBeenCalledWith(dataSource, Methods.FEATURES_RAW, {
-        filters,
-        limit: rowsPerPage,
-        page,
-        sortBy,
-        sortByDirection: sortDirection
-      });
+      expect(executeTask).toHaveBeenCalledWith(
+        tableParams.source.id,
+        Methods.FEATURES_RAW,
+        {
+          filters: tableParams.source.filters,
+          filtersLogicalOperator: tableParams.source.filtersLogicalOperator,
+          limit: tableParams.rowsPerPage,
+          page: tableParams.page,
+          sortBy: tableParams.sortBy,
+          sortByDirection: tableParams.sortDirection
+        }
+      );
     });
   });
 });

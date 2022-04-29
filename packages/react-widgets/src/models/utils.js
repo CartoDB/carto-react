@@ -14,6 +14,10 @@ export function wrapModelCall(props, fromLocal, fromRemote) {
       );
     }
 
+    if (!fromRemote) {
+      throw new Error(`Global mode isn't supported for this widget`);
+    }
+
     return fromRemote(props);
   }
 

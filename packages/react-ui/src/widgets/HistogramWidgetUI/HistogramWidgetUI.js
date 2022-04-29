@@ -111,7 +111,7 @@ function HistogramWidgetUI({
         hideOverlap: true,
         padding: [theme.spacing(0.5), theme.spacing(0.5), 0, theme.spacing(0.5)],
         formatter: (value) => {
-          const formattedValue = xAxisFormatter(value);
+          const formattedValue = processFormatterRes(xAxisFormatter(value));
           return value === min
             ? formatMin(formattedValue)
             : value === max
@@ -314,12 +314,12 @@ export default HistogramWidgetUI;
 
 // Aux
 function formatMin(value) {
-  const spaces = Array(String(value).length).fill('  ').join('');
+  const spaces = Array(String(value).replace(/\./g, '').length).fill('  ').join('');
   return `${spaces}${value}`;
 }
 
 function formatMax(value) {
-  const spaces = Array(String(value).length).fill('  ').join('');
+  const spaces = Array(String(value).replace(/\./g, '').length).fill('  ').join('');
   return `${value}${spaces}`;
 }
 

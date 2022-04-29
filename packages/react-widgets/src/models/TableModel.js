@@ -1,22 +1,19 @@
 import { Methods, executeTask } from '@carto/react-workers';
+import { wrapModelCall } from './utils';
 
-export const getTable = async (props) => {
-  const {
-    filters,
-    filtersLogicalOperator,
-    dataSource,
-    rowsPerPage,
-    page,
-    sortBy,
-    sortDirection
-  } = props;
+export function getTable(props) {
+  return wrapModelCall(props, fromLocal);
+}
 
-  return executeTask(dataSource, Methods.FEATURES_RAW, {
-    filters,
-    filtersLogicalOperator,
+function fromLocal(props) {
+  const { source, rowsPerPage, page, sortBy, sortDirection } = props;
+
+  return executeTask(source.id, Methods.FEATURES_RAW, {
+    filters: source.filters,
+    filtersLogicalOperator: source.filtersLogicalOperator,
     limit: rowsPerPage,
     page,
     sortBy,
     sortByDirection: sortDirection
   });
-};
+}
