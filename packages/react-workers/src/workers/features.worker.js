@@ -115,6 +115,7 @@ function getHistogram({
   filtersLogicalOperator,
   operation,
   column,
+  bins,
   ticks,
   joinOperation
 }) {
@@ -128,6 +129,7 @@ function getHistogram({
       valuesColumns: [column].flat(),
       joinOperation,
       ticks,
+      bins,
       operation
     });
   }

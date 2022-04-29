@@ -18,7 +18,7 @@ export type GroupByFeature =
     }[]
   | [];
 
-export type HistogramFeature = number[] | [];
+export type HistogramFeature = { min?: number; max?: number; data?: number[]; ticks?: number[] };
 
 export type ScatterPlotFeature = [number, number][];
 
