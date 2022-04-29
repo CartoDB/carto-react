@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import {
-  selectAreFeaturesReadyForSource,
-  checkIfSourceIsDroppingFeature
-} from '@carto/react-redux';
+import { checkIfSourceIsDroppingFeature } from '@carto/react-redux';
 import { WrapperWidgetUI, ScatterPlotWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { getScatter } from '../models';
-import useSourceFilters from '../hooks/useSourceFilters';
 import { columnAggregationOn } from './utils/propTypesFns';
 import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 import useWidgetFetch from '../hooks/useWidgetFetch';
