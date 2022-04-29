@@ -5,7 +5,7 @@ export function histogram({
   data,
   valuesColumns,
   joinOperation,
-  bins = 7,
+  bins = 15,
   ticks = [],
   operation
 }) {
@@ -20,6 +20,11 @@ export function histogram({
   if (useBins) {
     min = aggregationFunctions[AggregationTypes.MIN](data, valuesColumns, joinOperation);
     max = aggregationFunctions[AggregationTypes.MAX](data, valuesColumns, joinOperation);
+
+    if (!isFinite(min) || !isFinite(max)) {
+      throw new Error('Cannot calculate histogram without valid data');
+    }
+
     for (let i = 1; i < bins; i += 1) {
       ticks.push(min + (max - min) * (i / bins));
     }

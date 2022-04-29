@@ -187,6 +187,7 @@ function HistogramWidgetUI({
       markArea: markAreaOptions,
       renderItem: function (params, api) {
         const isLast = params.dataIndex === formattedData.length - 1;
+        const isFirst = params.dataIndex === 0;
         var yValue = api.value(2);
         var start = api.coord([api.value(0), yValue]);
         var size = api.size([api.value(1) - api.value(0), yValue]);
@@ -194,7 +195,7 @@ function HistogramWidgetUI({
         return {
           type: 'rect',
           shape: {
-            x: start[0],
+            x: start[0] + (isFirst ? 0 : 1),
             y: start[1],
             width: size[0] - (isLast ? 0 : 1),
             height: size[1]
