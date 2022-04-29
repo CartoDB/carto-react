@@ -188,17 +188,17 @@ function HistogramWidgetUI({
       renderItem: function (params, api) {
         const isLast = params.dataIndex === formattedData.length - 1;
         const isFirst = params.dataIndex === 0;
-        var yValue = api.value(2);
-        var start = api.coord([api.value(0), yValue]);
-        var size = api.size([api.value(1) - api.value(0), yValue]);
-        var style = api.style();
+        const yValue = api.value(2);
+        const [x, y] = api.coord([api.value(0), yValue]);
+        const [width, height] = api.size([api.value(1) - api.value(0), yValue]);
+        const style = api.style();
         return {
           type: 'rect',
           shape: {
-            x: start[0] + (isFirst ? 0 : 1),
-            y: start[1],
-            width: size[0] - (isLast ? 0 : 1),
-            height: size[1]
+            x: x + (isFirst ? 0 : 1),
+            y,
+            width: width - (isLast ? 0 : 1),
+            height
           },
           style,
           ...(!IS_TOUCH_SCREEN && {
