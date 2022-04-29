@@ -26,10 +26,16 @@ const features = (xColumn, yColumn) => [
 describe('getScatter', () => {
   describe('should correctly handle viewport features', () => {
     const scatterPlotParams = {
+      source: {
+        id: '__test__',
+        type: 'query',
+        data: 'SELECT * FROM test',
+        credentials: {
+          apiVersion: 'v2'
+        }
+      },
       xAxisColumn: 'x',
-      yAxisColumn: 'y',
-      filters: {},
-      dataSource: 'whatever-data-source'
+      yAxisColumn: 'y'
     };
 
     test('correctly returns data', async () => {
@@ -42,13 +48,17 @@ describe('getScatter', () => {
     });
 
     test('correctly called', async () => {
-      const { filters, xAxisColumn, yAxisColumn, dataSource } = scatterPlotParams;
       await getScatter(scatterPlotParams);
-      expect(executeTask).toHaveBeenCalledWith(dataSource, Methods.FEATURES_SCATTERPLOT, {
-        filters,
-        xAxisColumn,
-        yAxisColumn
-      });
+      expect(executeTask).toHaveBeenCalledWith(
+        scatterPlotParams.source.id,
+        Methods.FEATURES_SCATTERPLOT,
+        {
+          filters: scatterPlotParams.source.filters,
+          filtersLogicalOperator: scatterPlotParams.source.filtersLogicalOperator,
+          xAxisColumn: scatterPlotParams.xAxisColumn,
+          yAxisColumn: scatterPlotParams.yAxisColumn
+        }
+      );
     });
   });
 
