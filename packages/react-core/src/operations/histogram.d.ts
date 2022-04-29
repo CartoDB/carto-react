@@ -6,5 +6,6 @@ export function histogram(args: {
   valuesColumns?: string[];
   joinOperation?: AggregationTypes;
   ticks?: number[];
+  bins?: number;
   operation?: AggregationTypes;
 }): HistogramFeature;

@@ -31,7 +31,7 @@ export function formatTableNameWithFilters(props) {
   const whereClause = _filtersToSQL(filters, filtersLogicalOperator);
 
   const formattedSourceData =
-    source.type === MAP_TYPES.QUERY ? `(${data.replace(';', '')})` : data;
+    source.type === MAP_TYPES.QUERY ? `(${data.replace(';', '')}) foo` : data;
 
   return `${formattedSourceData} ${whereClause}`.trim();
 }

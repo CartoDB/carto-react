@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import HistogramWidgetUI from '../../src/widgets/HistogramWidgetUI';
+import HistogramWidgetUI from '../../src/widgets/HistogramWidgetUI/HistogramWidgetUI';
 import { getMaterialUIContext, mockEcharts } from './testUtils';
 
 describe('HistogramWidgetUI', () => {
@@ -12,11 +12,18 @@ describe('HistogramWidgetUI', () => {
     mockEcharts.destroy();
   });
 
-  const DATA = [1, 2, 3];
+  const onSelectedBarsChange = jest.fn();
+
+  const defaultProps = {
+    data: [1, 2, 3, 4],
+    min: 0,
+    max: 5,
+    ticks: [0, 1, 2],
+    onSelectedBarsChange
+  };
+
   const Widget = (props) =>
-    getMaterialUIContext(
-      <HistogramWidgetUI data={DATA} onSelectedBarsChange={() => {}} {...props} />
-    );
+    getMaterialUIContext(<HistogramWidgetUI {...defaultProps} {...props} />);
 
   test('all selected', () => {
     render(<Widget />);
@@ -27,14 +34,13 @@ describe('HistogramWidgetUI', () => {
     const { rerender } = render(<Widget />);
 
     rerender(<Widget />);
-    rerender(<Widget data={[...DATA, 1]} />);
+    rerender(<Widget data={[...defaultProps.data, 1]} />);
   });
 
   test('with selected bars', () => {
-    const mockOnSelectedBarsChange = jest.fn();
-    render(<Widget selectedBars={[1]} onSelectedBarsChange={mockOnSelectedBarsChange} />);
-    expect(screen.getByText(/1 selected/)).toBeInTheDocument();
+    render(<Widget selectedBars={[1]} />);
+    expect(screen.getByText(/2 selected/)).toBeInTheDocument();
     fireEvent.click(screen.getByText(/Clear/));
-    expect(mockOnSelectedBarsChange).toHaveBeenCalledTimes(1);
+    expect(onSelectedBarsChange).toHaveBeenCalledTimes(1);
   });
 });

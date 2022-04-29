@@ -61,35 +61,3 @@ export function applyChartFilter(serie, clickedSerieIndex, theme) {
 
   return serie;
 }
-
-export function getChartSerie(chart, index) {
-  const option = chart.getOption();
-  const serie = option.series[index];
-
-  return { option, serie };
-}
-
-export function getChartData(chart) {
-  let data = [];
-  if (chart) {
-    const option = chart.getOption();
-    data = option.series[0]?.data;
-  }
-  return data;
-}
-
-export function getElementComputedSize(text, id, fontSize = 8) {
-  let span = document.getElementById(id);
-  if (!span) {
-    span = document.createElement('span');
-    span.id = id;
-    span.style.cssText = 'visibility:hidden;position: absolute;left: -999em;top:-999em;';
-    document.body.appendChild(span);
-  }
-  span.style.fontSize = `${fontSize}px`;
-  span.innerHTML = text;
-  const elementWidthAndHeight = { width: span.offsetWidth, height: span.offsetHeight };
-  span.remove();
-
-  return elementWidthAndHeight;
-}
