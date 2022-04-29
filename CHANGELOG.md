@@ -2,12 +2,14 @@
 
 ## Not released
 
+## 1.3
+
+### 1.3.0-alpha.8 (2022-04-29)
+
 - Throw error if global mode isn't supported [#393](https://github.com/CartoDB/carto-react/pull/393)
 - Use alias in query sources [#394](https://github.com/CartoDB/carto-react/pull/394)
 - HistogramWidget/HistogramWidgetUI refactor [#338](https://github.com/CartoDB/carto-react/pull/388)
 - Improve "No Data" UI state for FormulaWidget [#389](https://github.com/CartoDB/carto-react/pull/389) and [#391](https://github.com/CartoDB/carto-react/pull/391)
-
-## 1.3
 
 ### 1.3.0-alpha.7 (2022-04-28)
 
