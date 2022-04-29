@@ -49,7 +49,5 @@ const buildSqlQueryToGetFormula = (props) => {
     joinOperation
   )}) as value`;
 
-  return `SELECT ${selectClause}, count(1) as feature_count FROM ${formatTableNameWithFilters(
-    props
-  )}`;
+  return `SELECT ${selectClause} FROM ${formatTableNameWithFilters(props)}`;
 };
