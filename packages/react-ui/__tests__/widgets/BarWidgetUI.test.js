@@ -56,8 +56,8 @@ describe('BarWidgetUI', () => {
     expect(screen.getByText(/All selected/)).toBeInTheDocument();
   });
 
-  test('renders with vertical false and stacked false', () => {
-    render(<Widget vertical={false} stacked={false} />);
+  test('renders with stacked false', () => {
+    render(<Widget stacked={false} />);
   });
 
   test('renders with custom colors', () => {

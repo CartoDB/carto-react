@@ -1,10 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import ReactEcharts from 'echarts-for-react';
+import ReactEcharts from '../custom-components/echarts-for-react';
 import { Grid, Link, Typography, useTheme, makeStyles, darken } from '@material-ui/core';
 import detectTouchScreen from './utils/detectTouchScreen';
 import { processFormatterRes } from './utils/formatterUtils';
-import { defaultTooltipFormatter } from './utils/chartUtils';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
 
@@ -44,7 +43,6 @@ function BarWidgetUI(props) {
     xAxisFormatter,
     yAxisFormatter,
     stacked,
-    vertical,
     height,
     animation
   } = useProcessedProps(props);
@@ -131,7 +129,7 @@ function BarWidgetUI(props) {
       axisLabel: {
         margin: 0,
         verticalAlign: 'bottom',
-        padding: [0, 0, theme.typography.charts.fontSize, vertical ? 0 : 35],
+        padding: [0, 0, theme.typography.charts.fontSize, 0],
         show: true,
         showMaxLabel: true,
         showMinLabel: false,
@@ -160,7 +158,6 @@ function BarWidgetUI(props) {
       theme.palette.charts.axisLine,
       theme.palette.charts.maxLabel,
       theme.typography.charts,
-      vertical,
       yAxisFormatter
     ]
   );
@@ -204,7 +201,7 @@ function BarWidgetUI(props) {
       grid: {
         left: theme.spacing(0.5),
         top: theme.spacing(2),
-        right: vertical ? theme.spacing(0.5) : theme.spacing(5),
+        right: theme.spacing(0.5),
         bottom: theme.spacing(0),
         containLabel: true
       },
@@ -215,11 +212,11 @@ function BarWidgetUI(props) {
       },
       color: colors,
       tooltip: tooltipOptions,
-      xAxis: vertical ? xAxisOptions : yAxisOptions,
-      yAxis: vertical ? yAxisOptions : xAxisOptions,
+      xAxis: xAxisOptions,
+      yAxis: yAxisOptions,
       series: seriesOptions
     }),
-    [theme, colors, tooltipOptions, xAxisOptions, yAxisOptions, seriesOptions, vertical]
+    [theme, colors, tooltipOptions, xAxisOptions, yAxisOptions, seriesOptions]
   );
 
   const clearBars = () => {
@@ -247,15 +244,15 @@ function BarWidgetUI(props) {
 
         const selectedBarsAsObject = selectedBarsCp.map(
           ([sDataIndex, sComponentIndex = 0]) => ({
-            xAxis: vertical ? xAxisData[sDataIndex] : series[sDataIndex],
-            yAxis: vertical ? series[sComponentIndex] : xAxisData[sComponentIndex],
+            xAxis: xAxisData[sDataIndex],
+            yAxis: series[sComponentIndex],
             value: yAxisData[sComponentIndex][sDataIndex]
           })
         );
         onSelectedBarsChange(selectedBarsCp, selectedBarsAsObject);
       }
     },
-    [yAxisData, onSelectedBarsChange, selectedBars, vertical, xAxisData, series]
+    [yAxisData, onSelectedBarsChange, selectedBars, xAxisData, series]
   );
 
   const onEvents = useMemo(
@@ -308,7 +305,6 @@ BarWidgetUI.defaultProps = {
   labels: {},
   onSelectedBarsChange: null,
   animation: true,
-  vertical: true,
   stacked: true
 };
 
@@ -321,7 +317,6 @@ BarWidgetUI.propTypes = {
   series: PropTypes.arrayOf(PropTypes.string),
   colors: PropTypes.arrayOf(PropTypes.string),
   stacked: PropTypes.bool,
-  vertical: PropTypes.bool,
   labels: PropTypes.object,
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
@@ -339,6 +334,29 @@ BarWidgetUI.propTypes = {
 export default BarWidgetUI;
 
 // Aux
+function defaultTooltipFormatter(params, xAxisFormatter, yAxisFormatter) {
+  if (!params || !params?.length) {
+    return null;
+  }
+
+  if (Array.isArray(params) && params.length) {
+    let message = '';
+    message += `${processFormatterRes(
+      xAxisFormatter(params[0].axisValueLabel),
+    )}`;
+    message += params
+      .map(({ seriesName, value, data, marker }) => {
+        const formattedSeriesName = seriesName ? seriesName + ': ' : '';
+        const formattedValue = processFormatterRes(yAxisFormatter(value));
+        const item = `<div style="margin-left: 8px; display: inline">
+        ${formattedSeriesName}${formattedValue}${data.unit || ''}
+        </div>`;
+        return `<div style="margin-top: 4px">${marker}${item}</div>`;
+      })
+      .join(' ');
+    return message;
+  }
+}
 
 function useProcessedProps(props) {
   const theme = useTheme();
@@ -352,10 +370,10 @@ function useProcessedProps(props) {
   } = props;
 
   // Format series with labels, we don't need original series labels in the widget
-  const series = useMemo(() => _series.map((name) => labels[name] || name), [
-    _series,
-    labels
-  ]);
+  const series = useMemo(
+    () => _series.map((name) => labels[name] || name),
+    [_series, labels]
+  );
 
   // Use yAxisData always as a two-dimensions array
   const yAxisData = useMemo(

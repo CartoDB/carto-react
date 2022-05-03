@@ -3,7 +3,7 @@ import BarWidgetUI from '../../../src/widgets/BarWidgetUI';
 import { buildReactPropsAsString } from '../../utils';
 
 const options = {
-  title: 'Widgets UI/BarWidgetUI',
+  title: 'Custom Components/BarWidgetUI',
   component: BarWidgetUI
 };
 
@@ -51,15 +51,6 @@ SimpleWithSerieName.parameters = buildReactPropsAsString(
   'BarWidgetUI'
 );
 
-export const Horizontal = Template.bind({});
-const HorizontalProps = {
-  yAxisData,
-  xAxisData,
-  vertical: false
-};
-Horizontal.args = HorizontalProps;
-Horizontal.parameters = buildReactPropsAsString(HorizontalProps, 'BarWidgetUI');
-
 export const yAxisFormatter = Template.bind({});
 const yAxisFormatterProps = {
   yAxisData,
@@ -91,18 +82,6 @@ const MultipleProps = {
 };
 Multiple.args = MultipleProps;
 Multiple.parameters = buildReactPropsAsString(MultipleProps, 'BarWidgetUI');
-
-export const MultipleHorizontal = Template.bind({});
-const MultipleHorizontalProps = {
-  yAxisData: multipleData,
-  xAxisData,
-  vertical: false
-};
-MultipleHorizontal.args = MultipleHorizontalProps;
-MultipleHorizontal.parameters = buildReactPropsAsString(
-  MultipleHorizontalProps,
-  'BarWidgetUI'
-);
 
 const multipleSeries = ['First', 'Second'];
 export const MultipleWithYAxisData = Template.bind({});
@@ -141,17 +120,3 @@ const MultipleBarsProps = {
 };
 MultipleBars.args = MultipleBarsProps;
 MultipleBars.parameters = buildReactPropsAsString(MultipleBarsProps, 'BarWidgetUI');
-
-export const MultipleBarsHorizontal = Template.bind({});
-const MultipleBarsHorizontalProps = {
-  yAxisData: multipleData,
-  xAxisData,
-  series: multipleSeries,
-  stacked: false,
-  vertical: false
-};
-MultipleBarsHorizontal.args = MultipleBarsHorizontalProps;
-MultipleBarsHorizontal.parameters = buildReactPropsAsString(
-  MultipleBarsHorizontalProps,
-  'BarWidgetUI'
-);

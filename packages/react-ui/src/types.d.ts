@@ -53,7 +53,6 @@ export type BarWidgetUI = {
   yAxisData?: (string | number)[];
   colors?: string[];
   stacked?: boolean;
-  vertical?: boolean;
   labels?: object;
   tooltip?: boolean;
   tooltipFormatter?: Function;
