@@ -314,12 +314,12 @@ export default HistogramWidgetUI;
 
 // Aux
 function formatMin(value) {
-  const spaces = Array(String(value).replace(/\./g, '').length).fill('  ').join('');
+  const spaces = Array(String(value).length).fill('  ').join('');
   return `${spaces}${value}`;
 }
 
 function formatMax(value) {
-  const spaces = Array(String(value).replace(/\./g, '').length).fill('  ').join('');
+  const spaces = Array(String(value).length).fill('  ').join('');
   return `${value}${spaces}`;
 }
 

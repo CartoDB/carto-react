@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import HistogramWidgetUI from '../../../src/widgets/HistogramWidgetUI/HistogramWidgetUI';
 
 const options = {
