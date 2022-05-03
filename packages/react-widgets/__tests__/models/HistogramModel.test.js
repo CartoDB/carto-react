@@ -1,5 +1,5 @@
 import { getHistogram } from '../../src/models/HistogramModel';
-import { AggregationTypes } from '@carto/react-core';
+import { AggregationTypes, _FilterTypes } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { executeSQL } from '@carto/react-api/';
 
@@ -141,6 +141,51 @@ describe('getHistogram', () => {
       expect(executeSQL).toHaveBeenCalledWith({
         credentials: props.source.credentials,
         query: `SELECT tick, count(column_1) as value, MIN(q._min) _min, MAX(q._max) _max FROM (SELECT CASE WHEN column_1 < (minMax._min + (minMax._max - minMax._min) * (1 / 4)) THEN 0 WHEN column_1 < (minMax._min + (minMax._max - minMax._min) * (2 / 4)) THEN 1 WHEN column_1 < (minMax._min + (minMax._max - minMax._min) * (3 / 4)) THEN 2 ELSE 3 END as tick, column_1, minMax.* FROM __test__, (SELECT MIN(column_1) _min, MAX(column_1) _max FROM __test__) minMax) q GROUP BY tick`,
+        connection: props.source.connection,
+        opts: {
+          abortController: undefined
+        }
+      });
+    });
+
+    test('should work correctly using filters', async () => {
+      const props = {
+        source: {
+          id: '__test__',
+          type: 'table',
+          data: '__test__',
+          filters: {
+            column_1: {
+              [_FilterTypes.BETWEEN]: {
+                values: [[0, 1]]
+              }
+            }
+          },
+          credentials: {
+            apiVersion: 'v3',
+            accessToken: '__test_token__'
+          },
+          connection: '__test_connection__'
+        },
+        ticks: [],
+        bins: 4,
+        operation: AggregationTypes.COUNT,
+        column: 'column_1',
+        global: true
+      };
+
+      const data = await getHistogram(props);
+
+      expect(data).toEqual({
+        data: RESULT,
+        min: 0,
+        max: 4,
+        ticks: TICKS
+      });
+
+      expect(executeSQL).toHaveBeenCalledWith({
+        credentials: props.source.credentials,
+        query: `SELECT tick, count(column_1) as value, MIN(q._min) _min, MAX(q._max) _max FROM (SELECT CASE WHEN column_1 < (minMax._min + (minMax._max - minMax._min) * (1 / 4)) THEN 0 WHEN column_1 < (minMax._min + (minMax._max - minMax._min) * (2 / 4)) THEN 1 WHEN column_1 < (minMax._min + (minMax._max - minMax._min) * (3 / 4)) THEN 2 ELSE 3 END as tick, column_1, minMax.* FROM __test__, (SELECT MIN(column_1) _min, MAX(column_1) _max FROM __test__ WHERE ((column_1 >= 0 and column_1 <= 1))) minMax WHERE ((column_1 >= 0 and column_1 <= 1))) q GROUP BY tick`,
         connection: props.source.connection,
         opts: {
           abortController: undefined
