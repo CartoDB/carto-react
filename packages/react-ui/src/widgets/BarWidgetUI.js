@@ -47,6 +47,8 @@ function BarWidgetUI(props) {
     animation
   } = useProcessedProps(props);
 
+  const isMultiSeries = series.length > 1;
+
   const theme = useTheme();
   const classes = useStyles();
 
@@ -74,8 +76,8 @@ function BarWidgetUI(props) {
         }
         return position;
       },
-      formatter() {
-        return tooltipFormatter(xAxisFormatter, yAxisFormatter, ...arguments);
+      formatter(params) {
+        return tooltipFormatter(params, xAxisFormatter, yAxisFormatter);
       }
     }),
     [theme, tooltip, tooltipFormatter, xAxisFormatter, yAxisFormatter]
@@ -228,7 +230,7 @@ function BarWidgetUI(props) {
   const clickEvent = useCallback(
     (params) => {
       if (onSelectedBarsChange) {
-        const selectedBarsCp = [...selectedBars];
+        let selectedBarsCp = [...selectedBars];
         const { dataIndex, componentIndex } = params;
 
         const selectedIdx = selectedBarsCp.findIndex(
@@ -249,10 +251,17 @@ function BarWidgetUI(props) {
             value: yAxisData[sComponentIndex][sDataIndex]
           })
         );
+
+        if (!isMultiSeries) {
+          selectedBarsCp = selectedBarsCp.map(
+            (selectedBarPosition) => selectedBarPosition[0]
+          );
+        }
+
         onSelectedBarsChange(selectedBarsCp, selectedBarsAsObject);
       }
     },
-    [yAxisData, onSelectedBarsChange, selectedBars, xAxisData, series]
+    [yAxisData, onSelectedBarsChange, selectedBars, xAxisData, series, isMultiSeries]
   );
 
   const onEvents = useMemo(
@@ -341,9 +350,7 @@ function defaultTooltipFormatter(params, xAxisFormatter, yAxisFormatter) {
 
   if (Array.isArray(params) && params.length) {
     let message = '';
-    message += `${processFormatterRes(
-      xAxisFormatter(params[0].axisValueLabel),
-    )}`;
+    message += `${processFormatterRes(xAxisFormatter(params[0].axisValueLabel))}`;
     message += params
       .map(({ seriesName, value, data, marker }) => {
         const formattedSeriesName = seriesName ? seriesName + ': ' : '';
@@ -358,16 +365,16 @@ function defaultTooltipFormatter(params, xAxisFormatter, yAxisFormatter) {
   }
 }
 
-function useProcessedProps(props) {
+function useProcessedProps({
+  labels,
+  height,
+  selectedBars: _selectedBars,
+  yAxisData: _yAxisData,
+  colors: _colors,
+  series: _series,
+  ...props
+}) {
   const theme = useTheme();
-  const {
-    labels,
-    height,
-    selectedBars: _selectedBars,
-    yAxisData: _yAxisData,
-    colors: _colors,
-    series: _series
-  } = props;
 
   // Format series with labels, we don't need original series labels in the widget
   const series = useMemo(
@@ -400,6 +407,7 @@ function useProcessedProps(props) {
 
   return {
     ...props,
+    labels,
     height: height ?? theme.spacing(22),
     selectedBars: formatSelectedBars(_selectedBars),
     yAxisData,

@@ -25,6 +25,7 @@ export const Empty = Template.bind({});
 const EmptyProps = {
   yAxisData,
   xAxisData,
+  onSelectedBarsChange: (newSelectedBars) => console.log(newSelectedBars),
   selectedBars: [],
   series: ['Visitors']
 };
