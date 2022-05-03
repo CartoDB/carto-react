@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix HistogramWidgetUI min/max placement [#397](https://github.com/CartoDB/carto-react/pull/397)
+
 ## 1.3
 
 ### 1.3.0-alpha.8 (2022-04-29)
