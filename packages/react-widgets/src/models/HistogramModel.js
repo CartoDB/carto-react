@@ -75,7 +75,15 @@ function buildSqlQueryToGetHistogram(props) {
 
   const minMaxQuery = `SELECT MIN(${column}) _min, MAX(${column}) _max FROM ${tableName}`;
 
-  const subQuery = `SELECT ${selectTickClause}, ${column}, minMax.* FROM ${tableName}, (${minMaxQuery}) minMax`;
+  const subQueryFrom = formatTableNameWithFilters({
+    ...props,
+    source: {
+      ...props.source,
+      data: `${props.source.data}, (${minMaxQuery}) minMax`
+    }
+  });
+
+  const subQuery = `SELECT ${selectTickClause}, ${column}, minMax.* FROM ${subQueryFrom}`;
 
   return `SELECT tick, ${selectValueClause}, MIN(q._min) _min, MAX(q._max) _max FROM (${subQuery}) q GROUP BY tick`;
 }
