@@ -63,32 +63,3 @@ export function applyChartFilter(serie, clickedSerieIndex, theme) {
 
   return serie;
 }
-
-export function getChartSerie(chart, index) {
-  const option = chart.getOption();
-  const serie = option.series[index];
-
-  return { option, serie };
-}
-
-export function defaultTooltipFormatter(xAxisFormatter, yAxisFormatter, params) {
-  if (!params || !params?.length) {
-    return null;
-  }
-
-  if (Array.isArray(params) && params.length) {
-    let message = '';
-    message += `${processFormatterRes(xAxisFormatter(params[0].axisValueLabel))}`;
-    message += params
-      .map(({ seriesName, value, data, marker }) => {
-        const formattedSeriesName = seriesName ? seriesName + ': ' : '';
-        const formattedValue = processFormatterRes(yAxisFormatter(value));
-        const item = `<div style="margin-left: 8px; display: inline">
-        ${formattedSeriesName}${formattedValue}${data.unit || ''}
-        </div>`;
-        return `<div style="margin-top: 4px">${marker}${item}</div>`;
-      })
-      .join(' ');
-    return message;
-  }
-}

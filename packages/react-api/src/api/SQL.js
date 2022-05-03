@@ -2,20 +2,22 @@ import { encodeParameter, getRequest, postRequest } from '@carto/react-core';
 import { REQUEST_GET_MAX_URL_LENGTH } from '@carto/react-core';
 import { API_VERSIONS } from '@deck.gl/carto';
 
-import { dealWithApiError, generateApiUrl } from './common';
+import { dealWithApiError } from './common';
 
 const CLIENT = 'carto-react';
+const DEFAULT_USER_COMPONENT_IN_URL = '{user}';
 
 /**
  * Executes a SQL query
  *
- * @param { Object } credentials - CARTO user credentials
- * @param { string } credentials.username - CARTO username
- * @param { string } credentials.apiKey - CARTO API Key
- * @param { string } credentials.serverUrlTemplate - CARTO server URL template
- * @param { string } query - SQL query to be executed
- * @param { string } connection - connection name required for CARTO cloud native
- * @param { Object } opts - Additional options for the HTTP request
+ * @param { object } props
+ * @param { Object } props.credentials - CARTO user credentials
+ * @param { string } props.credentials.username - CARTO username
+ * @param { string } props.credentials.apiKey - CARTO API Key
+ * @param { string } props.credentials.serverUrlTemplate - CARTO server URL template
+ * @param { string } props.query - SQL query to be executed
+ * @param { string } props.connection - connection name required for CARTO cloud native
+ * @param { Object } props.opts - Additional options for the HTTP request
  */
 export const executeSQL = async ({ credentials, query, connection, opts }) => {
   let response;
@@ -98,4 +100,48 @@ function createRequest({ credentials, connection, query, opts = {} }) {
     parameters: urlParamsForPost
   });
   return postRequest(postUrl, rawParams, requestOpts);
+}
+
+/**
+ * Generate a valid API url for a request
+ */
+export function generateApiUrl({ credentials, connection, parameters }) {
+  const { apiVersion = API_VERSIONS.V2, apiBaseUrl } = credentials;
+
+  let url;
+  switch (apiVersion) {
+    case API_VERSIONS.V1:
+    case API_VERSIONS.V2:
+      url = `${sqlApiUrl(credentials)}api/v2/sql`;
+      break;
+
+    case API_VERSIONS.V3:
+      url = `${apiBaseUrl}/v3/sql/${connection}/query`;
+      break;
+
+    default:
+      throw new Error(`Unknown apiVersion ${apiVersion}`);
+  }
+
+  if (!parameters) {
+    return url;
+  }
+
+  return `${url}?${parameters.join('&')}`;
+}
+
+/**
+ * Prepare a url valid for the specified user, from the serverUrlTemplate
+ */
+function sqlApiUrl(credentials) {
+  let url = credentials.serverUrlTemplate.replace(
+    DEFAULT_USER_COMPONENT_IN_URL,
+    credentials.username
+  );
+
+  if (!url.endsWith('/')) {
+    url += '/';
+  }
+
+  return url;
 }

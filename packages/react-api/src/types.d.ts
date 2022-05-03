@@ -1,4 +1,4 @@
-import { DataFilterExtension } from '@deck.gl/extensions';
+import { DataFilterExtension, MaskExtension } from '@deck.gl/extensions';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { FeatureCollection } from 'geojson';
 
@@ -26,6 +26,14 @@ export type SourceProps = {
   credentials: Credentials;
 };
 
+export type LayerConfig = {
+  id: string;
+  source?: string;
+  visible?: boolean;
+  opacity?: number;
+  [key: string]: unknown;
+};
+
 export type UseCartoLayerFilterProps = {
   binary?: boolean;
   uniqueIdProperty?: string;
@@ -33,10 +41,12 @@ export type UseCartoLayerFilterProps = {
   onDataLoad?: Function;
   getFilterValue: Function;
   filterRange: [number, number];
-  extensions: DataFilterExtension[];
+  extensions: [DataFilterExtension, MaskExtension];
   updateTriggers: {
     getFilterValue: Record<string, unknown>;
   };
+  maskEnabled: boolean;
+  maskId: string;
 } & SourceProps;
 
-export type ExecuteSQLResponse = Promise<FeatureCollection | {}[]>;
+export type ExecuteSQLResponse<Response = FeatureCollection | {}[]> = Promise<Response>;

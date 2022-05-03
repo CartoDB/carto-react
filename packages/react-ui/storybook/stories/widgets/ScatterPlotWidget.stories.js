@@ -15,15 +15,15 @@ import { buildReactPropsAsString } from '../../utils';
 
 const store = mockAppStoreConfiguration();
 
-store.dispatch(
-  cartoSlice.setViewportFeatures({
-    sourceId: 'sb-data-source',
-    features: [
-      { 'sb-x-column': 5000, 'sb-y-column': 3000 },
-      { 'sb-x-column': 2000, 'sb-y-column': 1000 }
-    ]
-  })
-);
+// store.dispatch(
+//   cartoSlice.setViewportFeatures({
+//     sourceId: 'sb-data-source',
+//     features: [
+//       { 'sb-x-column': 5000, 'sb-y-column': 3000 },
+//       { 'sb-x-column': 2000, 'sb-y-column': 1000 }
+//     ]
+//   })
+// );
 
 const options = {
   title: 'Widgets/ScatterPlotWidget',

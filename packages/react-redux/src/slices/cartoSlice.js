@@ -3,6 +3,7 @@ import { WebMercatorViewport } from '@deck.gl/core';
 import { debounce } from '@carto/react-core';
 import { removeWorker } from '@carto/react-workers';
 import { setDefaultCredentials } from '@deck.gl/carto';
+import { FEATURE_SELECTION_MODES, FiltersLogicalOperators } from '@carto/react-core';
 
 /**
  *
@@ -48,14 +49,21 @@ export const createCartoSlice = (initialState) => {
       dataSources: {
         // Auto import dataSources
       },
-      viewportFeatures: {},
-      viewportFeaturesReady: {},
+      spatialFilter: null,
+      featureSelectionMode: FEATURE_SELECTION_MODES.POLYGON,
+      featureSelectionEnabled: false,
+      featuresReady: {},
       ...initialState
     },
     reducers: {
       addSource: (state, action) => {
         action.payload.credentials = action.payload.credentials || state.credentials;
         state.dataSources[action.payload.id] = action.payload;
+      },
+      setIsDroppingFeatures: (state, action) => {
+        const source = state.dataSources[action.payload.id];
+        source.isDroppingFeatures = action.payload.isDroppingFeatures;
+        state.dataSources[action.payload.id] = source;
       },
       removeSource: (state, action) => {
         delete state.dataSources[action.payload];
@@ -64,20 +72,27 @@ export const createCartoSlice = (initialState) => {
       addLayer: (state, action) => {
         state.layers[action.payload.id] = action.payload;
       },
-      setViewportFeaturesReady: (state, action) => {
+      setFeaturesReady: (state, action) => {
         const { sourceId, ready } = action.payload;
 
-        state.viewportFeaturesReady = {
-          ...state.viewportFeaturesReady,
+        state.featuresReady = {
+          ...state.featuresReady,
           [sourceId]: ready
         };
       },
       updateLayer: (state, action) => {
         const layer = state.layers[action.payload.id];
         if (layer)
+          // TODO: Study if we should use a deepmerge fn
           state.layers[action.payload.id] = {
             ...layer,
-            ...action.payload.layerAttributes
+            ...action.payload.layerAttributes,
+            ...(layer.legend && {
+              legend: {
+                ...layer.legend,
+                ...action.payload.layerAttributes.legend
+              }
+            })
           };
       },
       removeLayer: (state, action) => {
@@ -93,8 +108,32 @@ export const createCartoSlice = (initialState) => {
       setViewPort: (state) => {
         state.viewport = new WebMercatorViewport(state.viewState).getBounds();
       },
+      addSpatialFilter: (state, action) => {
+        const { sourceId, geometry } = action.payload;
+        if (sourceId) {
+          const source = state.dataSources[sourceId];
+
+          if (source) {
+            source.spatialFilter = geometry;
+          }
+        } else {
+          state.spatialFilter = geometry;
+        }
+      },
+      removeSpatialFilter: (state, action) => {
+        const sourceId = action.payload;
+        if (sourceId) {
+          const source = state.dataSources[sourceId];
+
+          if (source) {
+            source.spatialFilter = null;
+          }
+        } else {
+          state.spatialFilter = null;
+        }
+      },
       addFilter: (state, action) => {
-        const { id, column, type, values, owner } = action.payload;
+        const { id, column, type, values, owner, params } = action.payload;
         const source = state.dataSources[id];
 
         if (source) {
@@ -106,7 +145,7 @@ export const createCartoSlice = (initialState) => {
             source.filters[column] = {};
           }
 
-          source.filters[column][type] = { values, owner };
+          source.filters[column][type] = { values, owner, params };
         }
       },
       removeFilter: (state, action) => {
@@ -128,27 +167,18 @@ export const createCartoSlice = (initialState) => {
       setGeocoderResult: (state, action) => {
         state.geocoderResult = action.payload;
       },
-      setViewportFeatures: (state, action) => {
-        const { sourceId, features } = action.payload;
-
-        state.viewportFeatures = {
-          ...state.viewportFeatures,
-          [sourceId]: features
-        };
-      },
-      removeViewportFeatures: (state, action) => {
-        const sourceId = action.payload;
-
-        if (state.viewportFeatures[sourceId]) {
-          delete state.viewportFeatures[sourceId];
-        }
-      },
       setCredentials: (state, action) => {
         state.credentials = {
           ...state.credentials,
           ...action.payload
         };
         setDefaultCredentials(state.credentials);
+      },
+      setFeatureSelectionMode: (state, action) => {
+        state.featureSelectionMode = action.payload;
+      },
+      setFeatureSelectionEnabled: (state, action) => {
+        state.featureSelectionEnabled = action.payload;
       }
     }
   });
@@ -162,11 +192,27 @@ export const createCartoSlice = (initialState) => {
  * @param {string} data - data definition for the source. Query for SQL dataset or the name of the tileset for BigQuery Tileset
  * @param {string} type - type of source. Posible values are sql or bigquery
  * @param {Object} credentials - (optional) Custom credentials to be used in the source
+ * @param {string} connection - connection name for carto 3 source
+ * @param {FiltersLogicalOperators} filtersLogicalOperator - logical operator that defines how filters for different columns are joined together
  */
-export const addSource = ({ id, data, type, credentials, connection }) => ({
+export const addSource = ({
+  id,
+  data,
+  type,
+  credentials,
+  connection,
+  filtersLogicalOperator = FiltersLogicalOperators.AND
+}) => ({
   type: 'carto/addSource',
-  payload: { id, data, type, credentials, connection }
+  payload: { id, data, type, credentials, connection, filtersLogicalOperator }
 });
+
+/**
+ * Action to set the `isDroppingFeature` flag
+ * @param {string} id - unique id for the source
+ * @param {boolean} isDroppingFeatures - flag that indicate if tiles are generated using a dropping feature strategy
+ */
+export const setIsDroppingFeatures = ({id, isDroppingFeatures}) => ({ type: 'carto/setIsDroppingFeatures', payload: { id, isDroppingFeatures }})
 
 /**
  * Action to remove a source from the store
@@ -211,16 +257,36 @@ export const removeLayer = (id) => ({ type: 'carto/removeLayer', payload: id });
 export const setBasemap = (basemap) => ({ type: 'carto/setBasemap', payload: basemap });
 
 /**
+ * Action to add a spatial filter
+ * @param {object} params
+ * @param {string} [params.sourceId] - If indicated, mask is applied to that source. If not, it's applied to every source
+ * @param {GeoJSON} params.geometry - valid geojson object
+ */
+export const addSpatialFilter = ({ sourceId, geometry }) => ({
+  type: 'carto/addSpatialFilter',
+  payload: { sourceId, geometry }
+});
+
+/**
+ * Action to remove a spatial filter on a given source
+ * @param {string} [sourceId] - sourceId of the source to apply the filter on. If missing, root spatial filter is removed
+ */
+export const removeSpatialFilter = (sourceId) => ({
+  type: 'carto/removeSpatialFilter',
+  payload: sourceId
+});
+
+/**
  * Action to add a filter on a given source and column
  * @param {string} id - sourceId of the source to apply the filter on
  * @param {string} column - column to use by the filter at the source
- * @param {FilterType} type - FilterTypes.IN and FilterTypes.BETWEEN
+ * @param {FilterTypes} type - FilterTypes.IN, FilterTypes.BETWEEN, FilterTypes.CLOSED_OPEN and FilterTypes.TIME
  * @param {array} values -  Values for the filter (eg: ['a', 'b'] for IN or [10, 20] for BETWEEN)
  * @param {string} owner - (optional) id of the widget triggering the filter (to be excluded)
  */
-export const addFilter = ({ id, column, type, values, owner }) => ({
+export const addFilter = ({ id, column, type, values, owner, params }) => ({
   type: 'carto/addFilter',
-  payload: { id, column, type, values, owner }
+  payload: { id, column, type, values, owner, params }
 });
 
 /**
@@ -245,12 +311,32 @@ const _setViewPort = (payload) => ({ type: 'carto/setViewPort', payload });
  * Redux selector to get a source by ID
  */
 export const selectSourceById = (state, id) => state.carto.dataSources[id];
+export const checkIfSourceIsDroppingFeature = (state, id) => state.carto.dataSources[id]?.isDroppingFeatures;
 
 /**
- * Redux selector to know if viewport features from a certain source are ready
+ * Redux selector to select the spatial filter of a given sourceId or the root one
  */
-export const selectIsViewportFeaturesReadyForSource = (state, id) =>
-  !!state.carto.viewportFeaturesReady[id];
+export const selectSpatialFilter = (state, sourceId) => {
+  let spatialFilterGeometry = state.carto.spatialFilter;
+  if (spatialFilterGeometry?.properties?.disabled) {
+    spatialFilterGeometry = null;
+  }
+  return sourceId
+    ? state.carto.dataSources[sourceId]?.spatialFilter || spatialFilterGeometry
+    : spatialFilterGeometry;
+};
+
+/**
+ * Redux selector to select the feature selection mode based on if it's enabled
+ */
+export const selectFeatureSelectionMode = (state) =>
+  (state.carto.featureSelectionEnabled && state.carto.featureSelectionMode) || null;
+
+/**
+ * Redux selector to know if features from a certain source are ready
+ */
+export const selectAreFeaturesReadyForSource = (state, id) =>
+  !!state.carto.featuresReady[id];
 
 const debouncedSetViewPort = debounce((dispatch, setViewPort) => {
   dispatch(setViewPort());
@@ -286,31 +372,12 @@ export const setViewState = (viewState) => {
 };
 
 /**
- * Action to set the source features of a layer
- * @param {object} sourceId - the id of the source
- * @param {object} feature - the viewport features
- */
-export const setViewportFeatures = (data) => ({
-  type: 'carto/setViewportFeatures',
-  payload: data
-});
-
-/**
- * Action to remove the source features of a layer
- * @param {String} sourceId - the source id to remove
- */
-export const removeViewportFeatures = (data) => ({
-  type: 'carto/removeViewportFeatures',
-  payload: data
-});
-
-/**
  * Action to set the ready features state of a layer
  * @param {object} sourceId - the id of the source
  * @param {object} ready - Viewport features have been calculated
  */
-export const setViewportFeaturesReady = (data) => ({
-  type: 'carto/setViewportFeaturesReady',
+export const setFeaturesReady = (data) => ({
+  type: 'carto/setFeaturesReady',
   payload: data
 });
 
@@ -321,4 +388,22 @@ export const setViewportFeaturesReady = (data) => ({
 export const setCredentials = (data) => ({
   type: 'carto/setCredentials',
   payload: data
+});
+
+/**
+ * Action to set feature selection mode
+ * @param {boolean} mode
+ */
+export const setFeatureSelectionMode = (mode) => ({
+  type: 'carto/setFeatureSelectionMode',
+  payload: mode
+});
+
+/**
+ * Action to set if feature selection tool is enabled
+ * @param {boolean} enabled
+ */
+export const setFeatureSelectionEnabled = (enabled) => ({
+  type: 'carto/setFeatureSelectionEnabled',
+  payload: enabled
 });

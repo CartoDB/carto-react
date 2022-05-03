@@ -1,42 +1,14 @@
-import { makeIntervalComplete } from '../utils/makeIntervalComplete';
-import { FilterTypes } from './FilterQueryBuilder';
+import { filterFunctions } from './FilterTypes';
+import { FiltersLogicalOperators } from '../operations/constants/FiltersLogicalOperators';
 
-function between(filterValues, featureValue) {
-  const checkRange = (range) => {
-    const [lowerBound, upperBound] = range;
-    return featureValue >= lowerBound && featureValue <= upperBound;
-  };
-
-  return makeIntervalComplete(filterValues).some(checkRange);
-}
-
-function closedOpen(filterValues, featureValue) {
-  const checkRange = (range) => {
-    const [lowerBound, upperBound] = range;
-    return featureValue >= lowerBound && featureValue < upperBound;
-  };
-
-  return makeIntervalComplete(filterValues).some(checkRange);
-}
-
-const filterFunctions = {
-  [FilterTypes.IN](filterValues, featureValue) {
-    return filterValues.includes(featureValue);
-  },
-  [FilterTypes.BETWEEN]: between,
-  [FilterTypes.TIME](filterValues, featureValue) {
-    const featureValueAsTimestamp = new Date(featureValue).getTime();
-    if (isFinite(featureValueAsTimestamp)) {
-      return between(filterValues, featureValueAsTimestamp);
-    } else {
-      throw new Error(`Column used to filter by time isn't well formatted.`);
-    }
-  },
-  [FilterTypes.CLOSED_OPEN]: closedOpen
+const LOGICAL_OPERATOR_METHODS = {
+  [FiltersLogicalOperators.AND]: 'every',
+  [FiltersLogicalOperators.OR]: 'some'
 };
 
-function passesFilter(columns, filters, feature) {
-  return columns.every((column) => {
+function passesFilter(columns, filters, feature, filtersLogicalOperator) {
+  const method = LOGICAL_OPERATOR_METHODS[filtersLogicalOperator];
+  return columns[method]((column) => {
     const columnFilters = filters[column];
     const columnFilterTypes = Object.keys(columnFilters);
 
@@ -51,12 +23,20 @@ function passesFilter(columns, filters, feature) {
         throw new Error(`"${filter}" filter is not implemented.`);
       }
 
-      return filterFunction(columnFilters[filter].values, feature[column]);
+      return filterFunction(
+        columnFilters[filter].values,
+        feature[column],
+        columnFilters[filter].params
+      );
     });
   });
 }
 
-export function buildFeatureFilter({ filters = {}, type = 'boolean' }) {
+export function buildFeatureFilter({
+  filters = {},
+  type = 'boolean',
+  filtersLogicalOperator = FiltersLogicalOperators.AND
+}) {
   const columns = Object.keys(filters);
 
   if (!columns.length) {
@@ -65,16 +45,16 @@ export function buildFeatureFilter({ filters = {}, type = 'boolean' }) {
 
   return (feature) => {
     const f = feature.properties || feature;
-    const featurePassesFilter = passesFilter(columns, filters, f);
+    const featurePassesFilter = passesFilter(columns, filters, f, filtersLogicalOperator);
 
     return type === 'number' ? Number(featurePassesFilter) : featurePassesFilter;
   };
 }
 
 // Apply certain filters to a collection of features
-export function applyFilters(features, filters) {
+export function applyFilters(features, filters, filtersLogicalOperator) {
   return Object.keys(filters).length
-    ? features.filter(buildFeatureFilter({ filters }))
+    ? features.filter(buildFeatureFilter({ filters, filtersLogicalOperator }))
     : features;
 }
 

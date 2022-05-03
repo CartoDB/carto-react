@@ -1,9 +1,5 @@
-export const FilterTypes = Object.freeze({
-  IN: 'in',
-  BETWEEN: 'between', // [a, b] both are included
-  CLOSED_OPEN: 'closed_open', // [a, b) a is included, b is not
-  TIME: 'time'
-});
+import { FiltersLogicalOperators } from '../operations/constants/FiltersLogicalOperators';
+import { FilterTypes } from './FilterTypes';
 
 export const getApplicableFilters = (filters = {}, owner) => {
   const filtersCopy = {};
@@ -21,34 +17,105 @@ export const getApplicableFilters = (filters = {}, owner) => {
   return filtersCopy;
 };
 
-export const filtersToSQL = (filters = {}) => {
+// Filters to SQL
+
+const filterFunctions = {
+  [FilterTypes.IN](column, filterValues) {
+    const formattedValues = filterValues.map((v) => (isFinite(v) ? v : `'${v}'`));
+    return `${column} in(${formattedValues})`;
+  },
+  [FilterTypes.BETWEEN](column, filterValues) {
+    const queryFilters = filterValues.map(([left, right]) => {
+      const hasLeft = isFinite(left);
+      const hasRight = isFinite(right);
+
+      let query = '';
+
+      if (hasLeft) {
+        query += `${column} >= ${left}`;
+      }
+
+      if (hasLeft && hasRight) {
+        query += ' and ';
+      }
+
+      if (hasRight) {
+        query += `${column} <= ${right}`;
+      }
+
+      return query;
+    });
+
+    return joinFilters(queryFilters);
+  },
+  [FilterTypes.TIME](column, filterValues) {
+    const tsColumn = `cast(${column} as timestamp)`;
+    const queryFilters = filterValues.map(([left, right]) => {
+      const hasLeft = isFinite(left);
+      const hasRight = isFinite(right);
+
+      let query = '';
+      if (hasLeft) {
+        query += `${tsColumn} >= cast('${new Date(left).toISOString()}' as timestamp)`;
+      }
+
+      if (hasLeft && hasRight) {
+        query += ' and ';
+      }
+
+      if (hasRight) {
+        query += `${tsColumn} <= cast('${new Date(right).toISOString()}' as timestamp)`;
+      }
+
+      return query;
+    });
+
+    return joinFilters(queryFilters);
+  },
+  [FilterTypes.CLOSED_OPEN](column, filterValues) {
+    const queryFilters = filterValues.map(([left, right]) => {
+      const hasLeft = isFinite(left);
+      const hasRight = isFinite(right);
+
+      let query = '';
+
+      if (hasLeft) {
+        query += `${column} >= ${left}`;
+      }
+
+      if (hasLeft && hasRight) {
+        query += ' and ';
+      }
+
+      if (hasRight) {
+        query += `${column} < ${right}`;
+      }
+
+      return query;
+    });
+
+    return joinFilters(queryFilters);
+  }
+};
+
+export const filtersToSQL = (
+  filters = {},
+  filtersLogicalOperator = FiltersLogicalOperators.AND
+) => {
   const result = [];
 
-  Object.entries(filters).forEach(([column, filter]) => {
-    Object.entries(filter).forEach(([operator, params]) => {
-      switch (operator) {
-        case FilterTypes.IN:
-          result.push(
-            `${column} ${operator}(${params.values.map((v) => `'${v}'`).join(',')})`
-          );
-          break;
-        case FilterTypes.BETWEEN:
-          result.push(
-            `(${params.values
-              .map(
-                ([left, right]) =>
-                  `${left ? `${column} >= ${left}` : ``} ${
-                    left && right ? ' and ' : ''
-                  } ${right ? `${column} < ${right}` : ``}`
-              )
-              .join(') OR (')})`
-          );
-          break;
-        default:
-          throw new Error(`Not valid operator has provided: ${operator}`);
-      }
+  Object.entries(filters).forEach(([column, filters]) => {
+    Object.entries(filters).forEach(([operator, filter]) => {
+      const filterFn = filterFunctions[operator];
+      if (!filterFn) throw new Error(`Filter ${operator} is not defined.`);
+      result.push(filterFn(column, filter.values, filter.params));
     });
   });
 
-  return result.length ? `WHERE (${result.join(') AND (')})` : '';
+  return result.length ? `WHERE ${joinFilters(result, filtersLogicalOperator)}` : '';
 };
+
+// Aux
+function joinFilters(queryFilters, operator = FiltersLogicalOperators.OR) {
+  return queryFilters.map((queryFilter) => `(${queryFilter})`).join(` ${operator} `);
+}

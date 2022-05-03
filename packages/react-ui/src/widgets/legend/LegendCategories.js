@@ -1,18 +1,21 @@
 import React from 'react';
 import { Box, Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
 import { getPalette } from '../../utils/palette';
+import PropTypes from 'prop-types';
 
-export default function LegendCategories({ legend }) {
-  if (!legend) {
-    return null;
-  }
-
-  const { labels = [], colors = [] } = legend;
+function LegendCategories({ legend }) {
+  const { labels = [], colors = [], isStrokeColor = false } = legend;
 
   const palette = getPalette(colors, labels.length);
 
   const Rows = labels.map((label, idx) => (
-    <Row key={label + idx} isMax={false} label={label} color={palette[idx]} />
+    <Row
+      key={label + idx}
+      isMax={false}
+      label={label}
+      color={palette[idx]}
+      isStrokeColor={isStrokeColor}
+    />
   ));
 
   return (
@@ -22,6 +25,30 @@ export default function LegendCategories({ legend }) {
   );
 }
 
+LegendCategories.defaultProps = {
+  legend: {
+    labels: [],
+    colors: [],
+    isStrokeColor: false
+  }
+};
+
+const ColorType = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.arrayOf(PropTypes.number)
+]);
+
+LegendCategories.propTypes = {
+  legend: PropTypes.shape({
+    labels: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    colors: PropTypes.oneOfType([PropTypes.arrayOf(ColorType), PropTypes.string]),
+    isStrokeColor: PropTypes.bool
+  }).isRequired
+};
+
+export default LegendCategories;
+
+// Aux
 const useStyles = makeStyles((theme) => ({
   legendCategories: {
     alignItems: 'center',
@@ -31,10 +58,11 @@ const useStyles = makeStyles((theme) => ({
   },
   circle: {
     display: 'block',
-    width: '8px',
-    height: '8px',
+    width: '12px',
+    height: '12px',
     borderRadius: '50%',
     position: 'relative',
+    border: '2px solid transparent',
     '&::after': {
       position: 'absolute',
       display: ({ isMax }) => (isMax ? 'block' : 'none'),
@@ -49,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Row({ label, isMax, color = '#000' }) {
+function Row({ label, isMax, isStrokeColor, color = '#000' }) {
   const classes = useStyles({ isMax });
 
   return (
@@ -59,7 +87,7 @@ function Row({ label, isMax, color = '#000' }) {
           mr={1.5}
           component='span'
           className={classes.circle}
-          style={{ backgroundColor: color }}
+          style={isStrokeColor ? { borderColor: color } : { backgroundColor: color }}
         />
       </Tooltip>
       <Typography variant='overline'>{label}</Typography>

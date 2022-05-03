@@ -1,8 +1,8 @@
 import { Credentials } from '@carto/react-api';
 import { OauthApp } from '@carto/react-auth';
-import { CartoBasemapsNames } from '@carto/react-basemaps';
+import { CartoBasemapsNames, GMapsBasemaps } from '@carto/react-basemaps';
 import { Viewport } from '@carto/react-core';
-import { AnyAction } from 'redux';
+import { Geometry } from 'geojson';
 
 export type ViewState = {
   latitude?: number,
@@ -17,9 +17,10 @@ export type ViewState = {
 
 type InitialCarto2State = {
   viewState: ViewState,
-  basemap: CartoBasemapsNames,
+  basemap: CartoBasemapsNames | GMapsBasemaps,
   credentials: Credentials,
   googleApiKey: string,
+  googleMapId: string,
 }
 
 type OauthCarto3 = {
@@ -38,12 +39,14 @@ export type InitialCartoState = InitialCarto2State | InitialCarto3State;
 
 export type CartoState = {
   viewport: Viewport | undefined,
-  geocoderResult: object | null,
+  geocoderResult: Record<string,any> | null,
   error: null, // TODO: remove from state?
   layers: { [key: string]: string },
   dataSources: { [key: string]: string },
-  viewportFeatures: { [key: string]: object },
-  viewportFeaturesReady: { [key: string]: boolean },
+  spatialFilter: Geometry,
+  featuresReady: { [key: string]: boolean },
+  featureSelectionEnabled: boolean,
+  featureSelectionMode: string
 } & InitialCartoState;
 
 export type InitialOauthState = {
@@ -54,8 +57,3 @@ export type OauthState = {
   token: string,
   userInfo: string
 } & InitialOauthState;
-
-export type Reducer = {
-  state: CartoState | OauthState,
-  action: AnyAction
-}

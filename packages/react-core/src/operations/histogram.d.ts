@@ -1,9 +1,11 @@
-import { AggregationTypes } from './aggregation/AggregationTypes';
+import { AggregationTypes } from './constants/AggregationTypes';
 import { HistogramFeature } from '../types';
 
-export function histogram(
-  features: [],
-  columnName: string,
-  ticks: number[],
-  operation: AggregationTypes
-): HistogramFeature;
+export function histogram(args: {
+  data: Record<string, unknown>[];
+  valuesColumns?: string[];
+  joinOperation?: AggregationTypes;
+  ticks?: number[];
+  bins?: number;
+  operation?: AggregationTypes;
+}): HistogramFeature;

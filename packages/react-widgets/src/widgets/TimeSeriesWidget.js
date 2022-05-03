@@ -1,11 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTimeSeries } from '../models';
-import {
-  addFilter,
-  removeFilter,
-  selectIsViewportFeaturesReadyForSource
-} from '@carto/react-redux';
+import { addFilter, removeFilter, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
 import {
   TimeSeriesWidgetUI,
   WrapperWidgetUI,
@@ -19,7 +15,9 @@ import {
 } from '@carto/react-core';
 import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
-import useSourceFilters from '../hooks/useSourceFilters';
+import { columnAggregationOn } from './utils/propTypesFns';
+import useWidgetFetch from '../hooks/useWidgetFetch';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 // Due to the widget groups the data by a certain stepSize, when filtering
 // the filter applied must be a range that represent the grouping range.
@@ -29,7 +27,9 @@ const STEP_SIZE_RANGE_MAPPING = {
   [GroupDateTypes.YEARS]: 60 * 60 * 24 * 365 * 1000,
   [GroupDateTypes.MONTHS]: 60 * 60 * 24 * 30 * 1000,
   [GroupDateTypes.WEEKS]: 60 * 60 * 24 * 7 * 1000,
-  [GroupDateTypes.DAYS]: 60 * 60 * 24 * 1000
+  [GroupDateTypes.DAYS]: 60 * 60 * 24 * 1000,
+  [GroupDateTypes.HOURS]: 60 * 60 * 1000,
+  [GroupDateTypes.MINUTES]: 60 * 1000
 };
 
 /**
@@ -39,7 +39,8 @@ const STEP_SIZE_RANGE_MAPPING = {
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's date column for grouping the data.
- * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
+ * @param  {string | string[]} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`. If multiples are provided, they will be merged into a single one using joinOperation property.
+ * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple operation columns into a single one.
  * @param  {string} [props.operation] - Operation to apply to the operationColumn. Operation used by default is COUNT. Must be one of those defined in `AggregationTypes` object.
  * @param  {string} props.stepSize - Step applied to group the data. Must be one of those defined in `GroupDateTypes` object.
  * @param  {string[]} [props.stepSizeOptions] - Different steps that can be applied to group the data. If filled, an icon with a menu appears to change between steps. Every value must be one of those defined in `AggregationTypes` object.
@@ -50,6 +51,7 @@ const STEP_SIZE_RANGE_MAPPING = {
  * @param  {string} [props.height] - Height of the chart.
  * @param  {boolean} [props.showControls] - Enable/disable animation controls (play, pause, stop, speed). True by default.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
+ * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -63,6 +65,7 @@ const STEP_SIZE_RANGE_MAPPING = {
  * @param  {function} [props.onStop] - Event raised when the animation is stopped.
  * @param  {function} [props.onTimelineUpdate] - Event raised when the timeline is updated. It happens when the animation is playing. The function receive as param the date that is being shown.
  * @param  {function} [props.onTimeWindowUpdate] - Event raised when the timeWindow is updated. It happens when the animation is playing with a timeWindow enabled. The function receive as param an array of two date objects.
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
 function TimeSeriesWidget({
   // Widget
@@ -71,11 +74,14 @@ function TimeSeriesWidget({
   dataSource,
   column,
   operationColumn,
+  joinOperation,
   operation,
   stepSizeOptions,
+  global,
   onError,
   wrapperProps,
   noDataAlertProps,
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps,
   // UI
   chartType,
   tooltip,
@@ -96,15 +102,9 @@ function TimeSeriesWidget({
   stepSize
 }) {
   const dispatch = useDispatch();
+  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
 
-  const isSourceReady = useSelector((state) =>
-    selectIsViewportFeaturesReadyForSource(state, dataSource)
-  );
-  const filters = useSourceFilters({ dataSource, id });
-
-  const [timeSeriesData, setTimeSeriesData] = useState([]);
   const [selectedStepSize, setSelectedStepSize] = useState(stepSize);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (stepSize !== selectedStepSize) {
@@ -114,41 +114,19 @@ function TimeSeriesWidget({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepSize]);
 
-  useEffect(() => {
-    setIsLoading(true);
-
-    if (isSourceReady) {
-      getTimeSeries({
-        filters,
-        dataSource,
-        column,
-        stepSize: selectedStepSize,
-        operationColumn,
-        operation
-      })
-        .then((data) => {
-          if (data) {
-            setIsLoading(false);
-            setTimeSeriesData(data);
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          if (onError) onError(error);
-        });
-    }
-  }, [
+  const { data = [], isLoading } = useWidgetFetch(getTimeSeries, {
     id,
-    filters,
     dataSource,
-    column,
-    selectedStepSize,
-    isSourceReady,
-    setIsLoading,
-    operationColumn,
-    operation,
+    params: {
+      column,
+      joinOperation,
+      stepSize: selectedStepSize,
+      operationColumn,
+      operation
+    },
+    global,
     onError
-  ]);
+  });
 
   const handleTimeWindowUpdate = useCallback(
     (timeWindow) => {
@@ -172,7 +150,7 @@ function TimeSeriesWidget({
   const handleTimelineUpdate = useCallback(
     (timelinePosition) => {
       if (!isLoading) {
-        const { name: moment } = timeSeriesData[timelinePosition];
+        const { name: moment } = data[timelinePosition];
         dispatch(
           addFilter({
             id: dataSource,
@@ -194,7 +172,7 @@ function TimeSeriesWidget({
       id,
       onTimelineUpdate,
       selectedStepSize,
-      timeSeriesData
+      data
     ]
   );
 
@@ -246,9 +224,9 @@ function TimeSeriesWidget({
             : [])
         ]}
       >
-        {timeSeriesData.length || isLoading ? (
+        {(data.length && !isDroppingFeatures) || isLoading ? (
           <TimeSeriesWidgetUI
-            data={timeSeriesData}
+            data={data}
             stepSize={selectedStepSize}
             chartType={chartType}
             tooltip={tooltip}
@@ -268,7 +246,7 @@ function TimeSeriesWidget({
             onTimeWindowUpdate={handleTimeWindowUpdate}
           />
         ) : (
-          <NoDataAlert {...noDataAlertProps} />
+          <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
         )}
       </WrapperWidgetUI>
       <Menu
@@ -302,12 +280,17 @@ TimeSeriesWidget.propTypes = {
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
   column: PropTypes.string.isRequired,
-  operationColumn: PropTypes.string,
+  operationColumn: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+  ]),
+  joinOperation: columnAggregationOn('operationColumn'),
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   stepSizeOptions: PropTypes.arrayOf(PropTypes.oneOf(Object.values(GroupDateTypes))),
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object,
   // UI
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,

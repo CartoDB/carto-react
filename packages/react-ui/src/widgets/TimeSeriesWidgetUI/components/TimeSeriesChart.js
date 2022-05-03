@@ -1,10 +1,11 @@
 import { useTheme } from '@material-ui/core';
 import React, { useMemo, useState } from 'react';
-import ReactEcharts from 'echarts-for-react';
+import ReactEcharts from '../../../custom-components/echarts-for-react';
 import useTimeSeriesInteractivity from '../hooks/useTimeSeriesInteractivity';
 
 export default function TimeSeriesChart({
   chartType,
+  formatter,
   tooltip,
   tooltipFormatter,
   data,
@@ -101,6 +102,7 @@ export default function TimeSeriesChart({
 
             return col;
           },
+          ...(formatter ? { formatter: (v) => formatter(v) } : {}),
           ...theme.typography.charts
         },
         axisLine: {
@@ -119,16 +121,14 @@ export default function TimeSeriesChart({
         max: maxValue
       }
     }),
-    [theme, maxValue]
+    [theme, maxValue, formatter]
   );
 
-  const {
-    timelineOptions: markLine,
-    timeWindowOptions: markArea
-  } = useTimeSeriesInteractivity({
-    echartsInstance,
-    data
-  });
+  const { timelineOptions: markLine, timeWindowOptions: markArea } =
+    useTimeSeriesInteractivity({
+      echartsInstance,
+      data
+    });
 
   const serieOptions = useMemo(
     () => ({

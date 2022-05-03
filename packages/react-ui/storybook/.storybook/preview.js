@@ -47,10 +47,9 @@ export const parameters = {
         'CARTO Theme',
         ['Palette', 'Typography'],
         'Common',
-        'Widgets',
-        ['CategoryWidget', 'FormulaWidget', , 'HistogramWidget', 'PieWidget'],
-        'Widgets UI',
+        'Custom Components',
         [
+          'InputFile',
           'CategoryWidgetUI',
           'FormulaWidgetUI',
           'HistogramWidgetUI',

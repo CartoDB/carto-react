@@ -783,10 +783,11 @@ export const cartoThemeOptions = {
             padding: spacing(0, 1.25, 0.5)
           }
         },
-        '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense': {
-          paddingTop: spacing(0.25),
-          paddingBottom: spacing(0.25)
-        }
+        '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense':
+          {
+            paddingTop: spacing(0.25),
+            paddingBottom: spacing(0.25)
+          }
       }
     },
 
@@ -910,6 +911,10 @@ export const cartoThemeOptions = {
         color: variables.palette.text.secondary,
 
         '&$checked': {
+          '& input': {
+            left: spacing(-1.5)
+          },
+
           transform: 'translate(13px, 1px)',
           color: variables.palette.common.white,
 
@@ -923,6 +928,11 @@ export const cartoThemeOptions = {
         width: spacing(1.25),
         height: spacing(1.25),
         boxShadow: 'none'
+      },
+
+      input: {
+        width: spacing(6),
+        left: 0
       },
 
       track: {
@@ -1110,8 +1120,194 @@ export const cartoThemeOptions = {
           padding: spacing(1, 0)
         }
       }
+    },
+
+    // Slider
+    MuiSlider: {
+      root: {}
+    },
+
+    // MuiToggleButtonGroup
+    MuiToggleButtonGroup: {
+      groupedHorizontal: {
+        '&:not(:last-child)': {
+          marginRight: spacing(0.25),
+          borderTopRightRadius: spacing(0.5),
+          borderBottomRightRadius: spacing(0.5)
+        },
+        '&:not(:first-child)': {
+          marginLeft: 0,
+          borderLeft: 'none',
+          borderTopLeftRadius: spacing(0.5),
+          borderBottomLeftRadius: spacing(0.5)
+        }
+      },
+      groupedVertical: {
+        '&:not(:last-child)': {
+          marginBottom: spacing(0.25),
+          borderBottomLeftRadius: spacing(0.5),
+          borderBottomRightRadius: spacing(0.5)
+        },
+        '&:not(:first-child)': {
+          borderTopLeftRadius: spacing(0.5),
+          borderTopRightRadius: spacing(0.5)
+        }
+      }
+    },
+
+    MuiTablePagination: {
+      select: {
+        paddingRight: spacing(7.5),
+        paddingLeft: spacing(1.5)
+      },
+      input: {
+        height: spacing(4),
+        border: `2px solid ${variables.palette.other.divider}`,
+        borderRadius: spacing(0.5),
+        fontWeight: variables.typography.fontWeightMedium,
+        '& .MuiSelect-icon': {
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: spacing(2.25),
+          height: spacing(2.25),
+          right: spacing(0.75)
+        }
+      },
+      caption: {
+        ...variables.typography.caption,
+        '&:first-of-type': {
+          color: variables.palette.text.secondary
+        }
+      },
+      toolbar: {
+        minHeight: 0,
+        marginTop: spacing(1)
+      },
+      actions: {
+        '& button:last-child': {
+          marginLeft: spacing(2)
+        }
+      }
+    },
+
+    MuiTableCell: {
+      head: {
+        ...variables.typography.caption,
+        color: variables.palette.text.secondary
+      },
+      stickyHeader: {
+        backgroundColor: variables.palette.common.white
+      }
+    },
+
+    // MuiToggleButton
+    MuiToggleButton: {
+      root: {
+        width: spacing(4.5),
+        height: spacing(4.5),
+        border: 'none',
+        borderRadius: spacing(0.5),
+        color: variables.palette.grey[500],
+        '&$selected': {
+          color: variables.palette.primary.main,
+          backgroundColor: variables.palette.primary.relatedLight,
+          '&:hover': {
+            backgroundColor: variables.palette.primary.relatedLight
+          }
+        }
+      },
+      sizeSmall: {
+        width: spacing(3),
+        height: spacing(3),
+        '& .MuiSvgIcon-root': {
+          maxWidth: spacing(2.5),
+          maxHeight: spacing(2.5)
+        }
+      },
+      sizeLarge: {
+        width: spacing(7),
+        height: spacing(7)
+      }
+    },
+
+    MuiChip: {
+      root: {
+        backgroundColor: variables.palette.grey[100],
+        '&:hover': {
+          backgroundColor: variables.palette.grey[200]
+        },
+        '& .MuiAvatar-root': {
+          backgroundColor: '#7f3c8d',
+          color: variables.palette.common.white
+        }
+      },
+      colorPrimary: {
+        '&$disabled': {
+          backgroundColor: variables.palette.grey[100],
+          color: variables.palette.text.primary
+        },
+        '&:hover': {
+          backgroundColor: variables.palette.primary.dark
+        }
+      },
+      colorSecondary: {
+        '&$disabled': {
+          backgroundColor: variables.palette.grey[100]
+        },
+        '&:hover': {
+          backgroundColor: variables.palette.secondary.light
+        }
+      },
+      label: {
+        fontFamily: '"Open Sans", sans-serif',
+        letterSpacing: 0.25
+      },
+      labelSmall: {
+        fontSize: variables.typography.caption.fontSize,
+        fontWeight: variables.typography.fontWeightLight
+      },
+      outlined: {
+        transition: `border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1)`,
+        '&$disabled': {
+          backgroundColor: 'transparent'
+        },
+        '&:hover': {
+          backgroundColor: 'transparent',
+          borderColor: variables.palette.grey[200],
+          '&$clickable': {
+            backgroundColor: 'transparent'
+          }
+        }
+      },
+      outlinedPrimary: {
+        '&:hover': {
+          backgroundColor: 'transparent',
+          borderColor: variables.palette.primary.dark,
+          color: variables.palette.primary.dark,
+          '&$clickable': {
+            backgroundColor: 'transparent'
+          }
+        }
+      },
+      outlinedSecondary: {
+        '&:hover': {
+          backgroundColor: 'transparent',
+          borderColor: variables.palette.secondary.dark,
+          color: variables.palette.secondary.dark,
+          '&$clickable': {
+            backgroundColor: 'transparent'
+          }
+        }
+      },
+      clickable: {
+        '&:focus': {
+          webkitTapHighlightColor: 'none'
+        }
+      }
     }
   },
+
+  // Props
   props: {
     MuiButtonBase: {
       disableRipple: true
@@ -1174,6 +1370,21 @@ export const cartoThemeOptions = {
     },
     MuiDialogContentText: {
       variant: 'body2'
+    },
+    MuiToggleButtonGroup: {
+      orientation: 'horizontal',
+      exclusive: true
+    },
+    CircularProgress: {
+      size: 40,
+      thickness: 4
+    },
+    MuiSlider: {
+      color: 'primary',
+      marks: false
+    },
+    MuiDialog: {
+      maxWidth: 'md'
     }
   }
 };
@@ -1181,7 +1392,14 @@ export const cartoThemeOptions = {
 export function createTheme(options = {}) {
   const themeOptions = {
     ...cartoThemeOptions,
-    ...options
+    ...options,
+    components: {
+      MuiToggleButton: {
+        root: {
+          border: 'none'
+        }
+      }
+    }
   };
 
   let theme = createMuiTheme(themeOptions);

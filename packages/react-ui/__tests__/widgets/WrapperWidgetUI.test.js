@@ -50,6 +50,53 @@ describe('WrapperWidgetUI', () => {
       });
     });
 
+    describe('externally controlled `expanded` state', () => {
+      const onExpandedChange = jest.fn();
+      test('should obey `expanded=false` with `onExpandedChange` set', () => {
+        render(
+          <WrapperWidgetUI
+            expanded={false}
+            title={TITLE}
+            onExpandedChange={onExpandedChange}
+          >
+            <div>CONTENT</div>
+          </WrapperWidgetUI>
+        );
+        expect(screen.queryByText('CONTENT')).not.toBeInTheDocument();
+        expect(onExpandedChange).not.toBeCalled();
+      });
+
+      test('should attempt to close using `onExpandedChange`', async () => {
+        render(
+          <WrapperWidgetUI
+            expanded={true}
+            title={TITLE}
+            onExpandedChange={onExpandedChange}
+          >
+            <div>CONTENT</div>
+          </WrapperWidgetUI>
+        );
+        expect(screen.getByText('CONTENT')).toBeInTheDocument();
+        fireEvent.click(screen.getByText(TITLE));
+        expect(onExpandedChange).toBeCalledWith(false);
+      });
+
+      test('should attempt to open using `onExpandedChange', async () => {
+        render(
+          <WrapperWidgetUI
+            expanded={false}
+            title={TITLE}
+            onExpandedChange={onExpandedChange}
+          >
+            <div>CONTENT</div>
+          </WrapperWidgetUI>
+        );
+        expect(screen.queryByText('CONTENT')).not.toBeInTheDocument();
+        fireEvent.click(screen.getByText(TITLE));
+        expect(onExpandedChange).toBeCalledWith(true);
+      });
+    });
+
     describe('with options', () => {
       const NUMBER_OF_OPTIONS = 3;
       const OPTIONS = [...Array(NUMBER_OF_OPTIONS)].map((_, idx) => ({

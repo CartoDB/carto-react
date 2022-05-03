@@ -1,13 +1,17 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useCallback, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { addFilter, removeFilter } from '@carto/react-redux';
+import {
+  addFilter,
+  removeFilter,
+  checkIfSourceIsDroppingFeature
+} from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getHistogram } from '../models';
-import useSourceFilters from '../hooks/useSourceFilters';
-import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
+import useWidgetFetch from '../hooks/useWidgetFetch';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 const EMPTY_ARRAY = [];
 
@@ -18,42 +22,64 @@ const EMPTY_ARRAY = [];
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's column to get the data from.
- * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
- * @param  {number[]} props.ticks - Array of thresholds for the X axis.
+ * @param  {string} [props.operation] - Operation to apply to the column. Must be one of those defined in `AggregationTypes` object.
+ * @param  {number[]} [props.ticks] - Array of thresholds for the X axis.
+ * @param  {number} [props.bins] - Number of bins to calculate the ticks.
  * @param  {Function} [props.xAxisformatter] - Function to format X axis values.
  * @param  {Function} [props.formatter] - Function to format Y axis values.
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
+ * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
+ * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
-function HistogramWidget(props) {
-  const {
-    id,
-    title,
-    dataSource,
-    column,
-    operation,
-    ticks,
-    xAxisFormatter,
-    dataAxis,
-    formatter,
-    tooltip,
-    animation,
-    onError,
-    wrapperProps,
-    noDataAlertProps
-  } = props;
+function HistogramWidget({
+  id,
+  title,
+  dataSource,
+  column,
+  operation,
+  ticks: _ticks,
+  xAxisFormatter,
+  bins,
+  formatter,
+  tooltip,
+  tooltipFormatter,
+  animation,
+  filterable,
+  global,
+  onError,
+  wrapperProps,
+  noDataAlertProps,
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
+}) {
   const dispatch = useDispatch();
-
-  const [histogramData, setHistogramData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const filters = useSourceFilters({ dataSource, id });
-  const isSourceReady = useSelector((state) =>
-    selectIsViewportFeaturesReadyForSource(state, dataSource)
+  const isDroppingFeatures = useSelector((state) =>
+    checkIfSourceIsDroppingFeature(state, dataSource)
   );
+
+  const { data: _data, isLoading } = useWidgetFetch(getHistogram, {
+    id,
+    dataSource,
+    params: {
+      column,
+      operation,
+      ticks: _ticks,
+      bins
+    },
+    global,
+    onError
+  });
+
+  const {
+    min = Number.MIN_SAFE_INTEGER,
+    max = Number.MAX_SAFE_INTEGER,
+    data = [],
+    ticks = _ticks
+  } = _data || {};
 
   const thresholdsFromFilters = useWidgetFilterValues({
     dataSource,
@@ -68,7 +94,7 @@ function HistogramWidget(props) {
         if (typeof from === 'undefined' || from === null) {
           return 0;
         } else if (typeof to === 'undefined' || to === null) {
-          return ticks.length - 1;
+          return ticks.length;
         } else {
           const idx = ticks.indexOf(from);
           return idx !== -1 ? idx + 1 : null;
@@ -77,59 +103,12 @@ function HistogramWidget(props) {
       .filter((v) => v !== null);
   }, [thresholdsFromFilters, ticks]);
 
-  const tooltipFormatter = useCallback(
-    ([serie]) => {
-      const formattedValue = formatter
-        ? formatter(serie.value, serie.dataIndex, ticks)
-        : { prefix: '', value: serie.value };
-
-      return typeof formattedValue === 'object'
-        ? `${formattedValue.prefix}${formattedValue.value}`
-        : formattedValue;
-    },
-    [formatter, ticks]
-  );
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    if (isSourceReady) {
-      getHistogram({
-        column,
-        operation,
-        ticks,
-        filters,
-        dataSource
-      })
-        .then((data) => {
-          if (data) {
-            setIsLoading(false);
-            setHistogramData(data);
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          if (onError) onError(error);
-        });
-    }
-  }, [
-    id,
-    column,
-    operation,
-    ticks,
-    dataSource,
-    filters,
-    setIsLoading,
-    onError,
-    isSourceReady
-  ]);
-
   const handleSelectedBarsChange = useCallback(
-    ({ bars }) => {
-      if (bars && bars.length) {
-        const thresholds = bars.map((i) => {
+    (selectedBars) => {
+      if (selectedBars?.length) {
+        const thresholds = selectedBars.map((i) => {
           let left = ticks[i - 1];
-          let right = ticks.length !== i + 1 ? ticks[i] : undefined;
+          let right = ticks.length !== i ? ticks[i] : undefined;
 
           return [left, right];
         });
@@ -154,22 +133,14 @@ function HistogramWidget(props) {
     [column, dataSource, id, dispatch, ticks]
   );
 
-  const ticksForDataAxis = ticks.reduce((acc, tick, i) => {
-    if (acc.length === 0) {
-      return [`< ${tick}`];
-    }
-    if (i === ticks.length - 1) {
-      return [...acc, `< ${tick}`, `>= ${tick}`];
-    }
-    return [...acc, `< ${tick}`];
-  }, []);
-
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
-      {histogramData.length || isLoading ? (
+      {(data.length && !isDroppingFeatures) || isLoading ? (
         <HistogramWidgetUI
-          data={histogramData}
-          dataAxis={dataAxis || ticksForDataAxis}
+          data={data}
+          min={min}
+          max={max}
+          ticks={ticks}
           selectedBars={selectedBars}
           onSelectedBarsChange={handleSelectedBarsChange}
           tooltip={tooltip}
@@ -177,9 +148,12 @@ function HistogramWidget(props) {
           xAxisFormatter={xAxisFormatter}
           yAxisFormatter={formatter}
           animation={animation}
+          filterable={filterable}
         />
       ) : (
-        <NoDataAlert {...noDataAlertProps} />
+        <NoDataAlert
+          {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}
+        />
       )}
     </WrapperWidgetUI>
   );
@@ -190,20 +164,29 @@ HistogramWidget.propTypes = {
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
   column: PropTypes.string.isRequired,
-  operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
+  ticks: PropTypes.arrayOf(PropTypes.number),
+  bins: PropTypes.number,
+  operation: PropTypes.oneOf(Object.values(AggregationTypes)),
   xAxisFormatter: PropTypes.func,
   formatter: PropTypes.func,
   tooltip: PropTypes.bool,
   animation: PropTypes.bool,
-  ticks: PropTypes.array.isRequired,
+  filterable: PropTypes.bool,
+  global: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
-  noDataAlertProps: PropTypes.object
+  noDataAlertProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object
 };
 
 HistogramWidget.defaultProps = {
+  bins: 15,
+  ticks: [],
+  operation: AggregationTypes.COUNT,
   tooltip: true,
   animation: true,
+  filterable: true,
+  global: false,
   wrapperProps: {},
   noDataAlertProps: {}
 };

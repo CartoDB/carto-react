@@ -13,14 +13,16 @@ export { randomString } from './utils/randomString';
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
-export { AggregationTypes } from './operations/aggregation/AggregationTypes';
-export { aggregationFunctions } from './operations/aggregation/values';
-export { groupValuesByColumn } from './operations/groupby';
+export { FiltersLogicalOperators } from './operations/constants/FiltersLogicalOperators';
+export { AggregationTypes } from './operations/constants/AggregationTypes';
+export { aggregationFunctions } from './operations/aggregation';
+export { groupValuesByColumn } from './operations/groupBy';
 export { histogram } from './operations/histogram';
 export { scatterPlot } from './operations/scatterPlot';
 
+export { FilterTypes as _FilterTypes } from './filters/FilterTypes';
+
 export {
-  FilterTypes as _FilterTypes,
   filtersToSQL as _filtersToSQL,
   getApplicableFilters as _getApplicableFilters
 } from './filters/FilterQueryBuilder';
@@ -28,9 +30,15 @@ export {
   buildFeatureFilter as _buildFeatureFilter,
   applyFilters as _applyFilters
 } from './filters/Filter';
-export { viewportFeatures } from './filters/viewportFeatures';
-export { viewportFeaturesBinary } from './filters/viewportFeaturesBinary';
-export { viewportFeaturesGeoJSON } from './filters/viewportFeaturesGeoJSON';
 
-export { GroupDateTypes } from './operations/GroupDateTypes';
+export { tileFeatures } from './filters/tileFeatures';
+export { geojsonFeatures } from './filters/geojsonFeatures';
+
+export { GroupDateTypes } from './operations/constants/GroupDateTypes';
 export { groupValuesByDateColumn } from './operations/groupByDate';
+
+export {
+  FEATURE_SELECTION_MODES,
+  EDIT_MODES,
+  MASK_ID
+} from './utils/featureSelectionConstants';

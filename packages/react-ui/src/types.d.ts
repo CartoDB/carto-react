@@ -1,9 +1,11 @@
-import { GroupDateTypes } from '@carto/react-core/operations/GroupDateTypes';
+import { GroupDateTypes } from '@carto/react-core';
 
 export type WrapperWidgetUI = {
   title: string;
   isLoading?: boolean;
   expandable?: boolean;
+  expanded?: boolean;
+  onExpandedChange?: (v: boolean) => void;
   actions?: { id: string; name: string; icon: React.ReactElement; action: Function }[];
   options?: { id: string; name: string; action: Function }[];
   children?: React.ReactNode;
@@ -92,15 +94,17 @@ export type LegendWidgetUIData = {
   colors?: string[];
   labels?: (string | number)[];
   icons?: string[];
-  stats?: {
-    min: number | string;
-    max: number | string;
-  };
 };
 
 export type LegendWidgetUI = {
-  layers: LegendWidgetUIData[];
-  onChangeVisibility: ({ id: string, visible: boolean }) => void;
+  className?: string;
+  customLegendTypes?: Record<string, Function>;
+  layers?: LegendWidgetUIData[];
+  collapsed?: boolean;
+  onChangeCollapsed?: (collapsed: boolean) => void;
+  onChangeVisibility?: (args: { id: string; visible: boolean }) => void;
+  onChangeOpacity?: (args: { id: string; visible: boolean }) => void;
+  onChangeLegendRowCollapsed?: (args: { id: string; collapsed: boolean }) => void;
 };
 
 export type ScatterPlotWidgetUIData = number[][];
@@ -136,4 +140,52 @@ export type TimeSeriesWidgetUI = {
 export type NoDataAlert = {
   title: string;
   body: string;
+};
+
+export type FeatureSelectionWidgetUIData = {
+  id: string;
+  label: string;
+  icon: React.ReactElement;
+};
+export type FeatureSelectionWidgetUI = {
+  selectionModes: FeatureSelectionWidgetUIData[];
+  editModes: FeatureSelectionWidgetUIData[];
+  selectedMode: string;
+  onSelectMode?: Function;
+  activated?: boolean;
+  onActivatedChange?: Function;
+  geometry?: any;
+  onSelectGeometry?: Function;
+  tooltipPlacement?: string;
+  className?: string;
+};
+
+// Legends
+export type LegendCategories = {
+  legend: {
+    labels?: (string | number)[];
+    colors?: string | string[] | number[][];
+    isStrokeColor?: boolean;
+  };
+};
+
+export type LegendIcon = {
+  legend: {
+    labels?: string[];
+    icons?: string[];
+  };
+};
+
+export type LegendProportion = {
+  legend: {
+    labels?: (number | string)[];
+  };
+};
+
+export type LegendRamp = {
+  isContinuous?: boolean;
+  legend: {
+    labels?: (number | string)[];
+    colors?: string | string[] | number[][];
+  };
 };

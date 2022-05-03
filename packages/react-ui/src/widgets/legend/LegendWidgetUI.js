@@ -1,4 +1,4 @@
-import React, { createRef, Fragment, useState } from 'react';
+import React, { createRef, Fragment } from 'react';
 import {
   Box,
   Button,
@@ -14,6 +14,7 @@ import LegendCategories from './LegendCategories';
 import LegendIcon from './LegendIcon';
 import LegendRamp from './LegendRamp';
 import LegendProportion from './LegendProportion';
+import PropTypes from 'prop-types';
 
 const LayersIcon = () => (
   <SvgIcon width='24' height='24' viewBox='0 0 24 24'>
@@ -43,18 +44,56 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LegendWidgetUI({ className, layers = [], onChangeVisibility }) {
+function LegendWidgetUI({
+  className,
+  customLegendTypes,
+  layers = [],
+  collapsed,
+  onChangeCollapsed,
+  onChangeVisibility,
+  onChangeOpacity,
+  onChangeLegendRowCollapsed
+}) {
   const classes = useStyles();
   const isSingle = layers.length === 1;
 
   return (
     <Box className={`${classes.legend} ${className}`}>
-      <LegendContainer isSingle={isSingle}>
-        <LegendRows layers={layers} onChangeVisibility={onChangeVisibility} />
+      <LegendContainer
+        isSingle={isSingle}
+        collapsed={collapsed}
+        onChangeCollapsed={onChangeCollapsed}
+      >
+        <LegendRows
+          layers={layers}
+          customLegendTypes={customLegendTypes}
+          onChangeVisibility={onChangeVisibility}
+          onChangeOpacity={onChangeOpacity}
+          onChangeCollapsed={onChangeLegendRowCollapsed}
+        />
       </LegendContainer>
     </Box>
   );
 }
+
+LegendWidgetUI.defaultProps = {
+  layers: [],
+  customLegendTypes: {},
+  collapsed: false
+};
+
+LegendWidgetUI.propTypes = {
+  className: PropTypes.string,
+  customLegendTypes: PropTypes.objectOf(PropTypes.func),
+  layers: PropTypes.array,
+  collapsed: PropTypes.bool,
+  onChangeCollapsed: PropTypes.func,
+  onChangeLegendRowCollapsed: PropTypes.func,
+  onChangeVisibility: PropTypes.func,
+  onChangeOpacity: PropTypes.func
+};
+
+export default LegendWidgetUI;
 
 const useStylesLegendContainer = makeStyles((theme) => ({
   header: {
@@ -67,8 +106,8 @@ const useStylesLegendContainer = makeStyles((theme) => ({
     flex: '1 1 auto',
     justifyContent: 'space-between',
     padding: theme.spacing(0.75, 1.25, 0.75, 3),
-    borderTop: ({ expanded }) =>
-      !expanded ? 'none' : `1px solid ${theme.palette.divider}`,
+    borderTop: ({ collapsed }) =>
+      collapsed ? 'none' : `1px solid ${theme.palette.divider}`,
     cursor: 'pointer',
     '& .MuiButton-label': {
       ...theme.typography.body1
@@ -81,15 +120,14 @@ const useStylesLegendContainer = makeStyles((theme) => ({
   }
 }));
 
-function LegendContainer({ isSingle, children }) {
+function LegendContainer({ isSingle, children, collapsed, onChangeCollapsed }) {
   const wrapper = createRef();
-  const [expanded, setExpanded] = useState(true);
   const classes = useStylesLegendContainer({
-    expanded
+    collapsed
   });
 
   const handleExpandClick = () => {
-    setExpanded(!expanded);
+    if (onChangeCollapsed) onChangeCollapsed(!collapsed);
   };
 
   return isSingle ? (
@@ -98,7 +136,7 @@ function LegendContainer({ isSingle, children }) {
     <>
       <Collapse
         ref={wrapper}
-        in={expanded}
+        in={!collapsed}
         timeout='auto'
         unmountOnExit
         classes={{
@@ -132,67 +170,82 @@ export const LEGEND_TYPES = {
 const LEGEND_COMPONENT_BY_TYPE = {
   [LEGEND_TYPES.CATEGORY]: LegendCategories,
   [LEGEND_TYPES.ICON]: LegendIcon,
-  [LEGEND_TYPES.CONTINUOUS_RAMP]: (args) => LegendRamp({ ...args, isContinuous: true }),
-  [LEGEND_TYPES.BINS]: (args) => LegendRamp({ ...args, isContinuous: false }),
-  [LEGEND_TYPES.PROPORTION]: LegendProportion
+  [LEGEND_TYPES.CONTINUOUS_RAMP]: (args) => <LegendRamp {...args} isContinuous={true} />,
+  [LEGEND_TYPES.BINS]: (args) => <LegendRamp {...args} isContinuous={false} />,
+  [LEGEND_TYPES.PROPORTION]: LegendProportion,
+  [LEGEND_TYPES.CUSTOM]: ({ legend }) => legend.children
 };
 
-function LegendRows({ layers = [], onChangeVisibility }) {
+function LegendRows({
+  layers = [],
+  customLegendTypes,
+  onChangeVisibility,
+  onChangeOpacity,
+  onChangeCollapsed
+}) {
   const isSingle = layers.length === 1;
 
-  return layers.map(
-    (
-      {
-        id,
-        title,
-        switchable,
-        visible,
-        legend: {
-          children = null,
-          type = '',
-          collapsible = true,
-          note = '',
-          attr = '',
-          colors = [],
-          labels = [],
-          icons = [],
-          stats = undefined
-        } = {}
-      },
-      index
-    ) => {
-      const isLast = layers.length - 1 === index;
-      // TODO: Add validation for layer.type
-      const hasChildren = LEGEND_COMPONENT_BY_TYPE[type] || children;
-      const LegendComponent = LEGEND_COMPONENT_BY_TYPE[type] || (() => children);
-      return (
-        <Fragment key={id}>
-          <LegendWrapper
-            id={id}
-            title={title}
-            collapsible={!!(collapsible && hasChildren)}
-            switchable={switchable}
-            visible={visible}
-            note={note}
-            attr={attr}
-            onChangeVisibility={onChangeVisibility}
-          >
-            {LegendComponent({
-              legend: {
-                type,
-                collapsible,
-                note,
-                attr,
-                colors,
-                labels,
-                icons,
-                stats
-              }
-            })}
-          </LegendWrapper>
-          {!isSingle && !isLast && <Divider />}
-        </Fragment>
-      );
-    }
+  return (
+    <>
+      {layers.map(
+        (
+          {
+            id,
+            title,
+            switchable,
+            visible,
+            showOpacityControl = false,
+            opacity = 1,
+            legend = {}
+          },
+          index
+        ) => {
+          const {
+            type = LEGEND_TYPES.CUSTOM,
+            collapsible = true,
+            collapsed = false,
+            note = '',
+            attr = '',
+            children
+          } = legend;
+
+          const isLast = layers.length - 1 === index;
+          const LegendComponent =
+            LEGEND_COMPONENT_BY_TYPE[type] || customLegendTypes[type] || UnknownLegend;
+          const hasChildren =
+            type === LEGEND_TYPES.CUSTOM ? !!children : !!LegendComponent;
+
+          return (
+            <Fragment key={id}>
+              <LegendWrapper
+                id={id}
+                title={title}
+                hasChildren={hasChildren}
+                collapsible={collapsible}
+                collapsed={collapsed}
+                switchable={switchable}
+                visible={visible}
+                note={note}
+                attr={attr}
+                showOpacityControl={showOpacityControl}
+                opacity={opacity}
+                onChangeOpacity={onChangeOpacity}
+                onChangeVisibility={onChangeVisibility}
+                onChangeCollapsed={onChangeCollapsed}
+              >
+                <LegendComponent legend={legend} />
+              </LegendWrapper>
+              {!isSingle && !isLast && <Divider />}
+            </Fragment>
+          );
+        }
+      )}
+    </>
+  );
+}
+
+function UnknownLegend({ legend }) {
+  return (
+    <Typography variant='body2'>{legend.type} is not a known legend type.</Typography>
   );
 }

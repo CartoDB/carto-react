@@ -7,7 +7,8 @@ import {
   SvgIcon,
   Typography,
   capitalize,
-  makeStyles
+  makeStyles,
+  Link
 } from '@material-ui/core';
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import TimeSeriesChart from './components/TimeSeriesChart';
@@ -20,7 +21,18 @@ const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.YEARS]: yearCurrentDateRange,
   [GroupDateTypes.MONTHS]: monthsCurrentDateRange,
   [GroupDateTypes.WEEKS]: weeksCurrentDateRange,
-  [GroupDateTypes.DAYS]: daysCurrentDateRange
+  [GroupDateTypes.DAYS]: daysCurrentDateRange,
+  [GroupDateTypes.HOURS]: hoursCurrentDateRange,
+  [GroupDateTypes.MINUTES]: minutesCurrentDateRange
+};
+
+const FORMAT_DATE_BY_STEP_SIZE_FOR_TIME_WINDOW = {
+  [GroupDateTypes.YEARS]: daysCurrentDateRange,
+  [GroupDateTypes.MONTHS]: daysCurrentDateRange,
+  [GroupDateTypes.WEEKS]: daysCurrentDateRange,
+  [GroupDateTypes.DAYS]: daysCurrentDateRange,
+  [GroupDateTypes.HOURS]: hoursCurrentDateRange,
+  [GroupDateTypes.MINUTES]: minutesCurrentDateRange
 };
 
 // TimeWindow step is the amount of time (in seconds) that pass in every iteration during the animation.
@@ -29,7 +41,9 @@ const TIME_WINDOW_STEP_BY_STEP_SIZE = {
   [GroupDateTypes.YEARS]: 60 * 60 * 24 * 7, // Week
   [GroupDateTypes.MONTHS]: 60 * 60 * 24, // Day
   [GroupDateTypes.WEEKS]: 60 * 60 * 24, // Day
-  [GroupDateTypes.DAYS]: 60 * 60 * 12 // Half day
+  [GroupDateTypes.DAYS]: 60 * 60 * 12, // Half day
+  [GroupDateTypes.HOURS]: 60 * 60, // Hour
+  [GroupDateTypes.MINUTES]: 60 * 15 // Quarter hour
 };
 
 const SPEED_FACTORS = [0.5, 1, 2, 3];
@@ -241,7 +255,8 @@ function TimeSeriesWidgetUIContent({
 
     // If timeWindow is activated
     if (timeWindow.length) {
-      return timeWindow.map((time) => daysCurrentDateRange(new Date(time))).join(' - ');
+      const timeWindowformatter = FORMAT_DATE_BY_STEP_SIZE_FOR_TIME_WINDOW[stepSize];
+      return timeWindow.map((time) => timeWindowformatter(new Date(time))).join(' - ');
     }
 
     const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
@@ -260,6 +275,10 @@ function TimeSeriesWidgetUIContent({
       return formatter(currentDate);
     }
   }, [data, stepSize, isPlaying, isPaused, timeWindow, timelinePosition]);
+
+  const showClearButton = useMemo(() => {
+    return isPlaying || isPaused || timeWindow.length > 0;
+  }, [isPaused, isPlaying, timeWindow.length]);
 
   const handleOpenSpeedMenu = (e) => {
     if (e?.currentTarget) {
@@ -281,6 +300,7 @@ function TimeSeriesWidgetUIContent({
       chartType={chartType}
       data={data}
       tooltip={tooltip}
+      formatter={formatter}
       tooltipFormatter={(params) => tooltipFormatter(params, stepSize, formatter)}
       height={height}
       animation={animation}
@@ -289,27 +309,33 @@ function TimeSeriesWidgetUIContent({
 
   return (
     <Box>
-      {!!currentDate && (
-        <Box>
-          <Typography color='textSecondary' variant='caption'>
-            {currentDate}
-          </Typography>
-          <Typography
-            className={classes.currentStepSize}
-            color='textSecondary'
-            variant='caption'
-          >
-            ({capitalize(stepSize)})
-          </Typography>
-        </Box>
-      )}
+      <Box display='flex' justifyContent='space-between' alignItems='center'>
+        {!!currentDate && (
+          <Box>
+            <Typography color='textSecondary' variant='caption'>
+              {currentDate}
+            </Typography>
+            <Typography
+              className={classes.currentStepSize}
+              color='textSecondary'
+              variant='caption'
+            >
+              ({capitalize(stepSize)})
+            </Typography>
+          </Box>
+        )}
+        {showClearButton && (
+          <Link variant='caption' style={{ cursor: 'pointer' }} onClick={handleStop}>
+            Clear
+          </Link>
+        )}
+      </Box>
       {showControls ? (
         <Grid container alignItems='flex-end'>
           <Grid item xs={1}>
             <IconButton
               size='small'
               color='default'
-              disabled={!(isPaused || isPlaying)}
               onClick={handleOpenSpeedMenu}
               data-testid='clock'
             >
@@ -370,12 +396,32 @@ function TimeSeriesWidgetUIContent({
 }
 
 // Auxiliary fns
+function minutesCurrentDateRange(date) {
+  return (
+    date.toLocaleDateString() +
+    ' ' +
+    date.toLocaleTimeString(undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    })
+  );
+}
+
+function hoursCurrentDateRange(date) {
+  return (
+    date.toLocaleDateString() +
+    ' ' +
+    date.toLocaleTimeString(undefined, { hour: 'numeric', hour12: true })
+  );
+}
+
 function daysCurrentDateRange(date) {
   return date.toLocaleDateString();
 }
 
 function weeksCurrentDateRange(date) {
-  return `Week of ${getMonday(date).toLocaleDateString()}`;
+  return `Week of ${new Date(getMonday(date)).toLocaleDateString()}`;
 }
 
 function yearCurrentDateRange(date) {

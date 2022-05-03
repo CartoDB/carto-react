@@ -1,24 +1,48 @@
-import { DataFilterExtension } from '@deck.gl/extensions';
+import { DataFilterExtension, MaskExtension } from '@deck.gl/extensions';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { renderHook } from '@testing-library/react-hooks';
 import useCartoLayerProps from '../../src/hooks/useCartoLayerProps';
 import { mockReduxHooks, mockClear } from '../mockReduxHooks';
+import { MAX_GPU_FILTERS } from '../../src/hooks/dataFilterExtensionUtil';
 
 describe('useCartoLayerProps', () => {
   mockReduxHooks();
 
   describe('return props', () => {
     const COMMON_PROPS = [
+      'binary',
+      'onViewportLoad',
+      'fetch',
+      'onDataLoad',
+      'id',
+      'visible',
+      'opacity',
       'uniqueIdProperty',
       'data',
       'type',
       'connection',
       'credentials',
-      'getFilterValue',
+      'clientId',
       'filterRange',
+      'updateTriggers',
+      'getFilterValue',
       'extensions',
-      'updateTriggers'
+      'maskId'
     ];
+
+    test('should return correct props when layerConfig is passed', () => {
+      const layerConfig = {
+        id: '__test__',
+        visible: true,
+        opacity: 0.5
+      };
+
+      const { result } = renderHook(() => useCartoLayerProps({ layerConfig }));
+
+      expect(result.current.id).toBe(layerConfig.id);
+      expect(result.current.visible).toBe(layerConfig.visible);
+      expect(result.current.opacity).toBe(layerConfig.opacity);
+    });
 
     describe('when maps_api_version is V2', () => {
       test('should return correct props when source type is tileset', () => {
@@ -31,12 +55,7 @@ describe('useCartoLayerProps', () => {
 
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
-        expect(Object.keys(result.current)).toEqual([
-          'binary',
-          'onViewportLoad',
-          'fetch',
-          ...COMMON_PROPS
-        ]);
+        expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
 
       test('should return correct props when source type is sql', () => {
@@ -49,12 +68,7 @@ describe('useCartoLayerProps', () => {
 
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
-        expect(Object.keys(result.current)).toEqual([
-          'binary',
-          'onViewportLoad',
-          'fetch',
-          ...COMMON_PROPS
-        ]);
+        expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
 
       test('should return correct props when source type is table', () => {
@@ -67,12 +81,7 @@ describe('useCartoLayerProps', () => {
 
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
-        expect(Object.keys(result.current)).toEqual([
-          'binary',
-          'onViewportLoad',
-          'fetch',
-          ...COMMON_PROPS
-        ]);
+        expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
     });
 
@@ -87,12 +96,7 @@ describe('useCartoLayerProps', () => {
 
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
-        expect(Object.keys(result.current)).toEqual([
-          'binary',
-          'onViewportLoad',
-          'fetch',
-          ...COMMON_PROPS
-        ]);
+        expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
 
       test('should return correct props when source type is sql', () => {
@@ -105,7 +109,7 @@ describe('useCartoLayerProps', () => {
 
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
-        expect(Object.keys(result.current)).toEqual(['onDataLoad', ...COMMON_PROPS]);
+        expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
 
       test('should return correct props when source type is table', () => {
@@ -118,7 +122,7 @@ describe('useCartoLayerProps', () => {
 
         const { result } = renderHook(() => useCartoLayerProps({ source }));
 
-        expect(Object.keys(result.current)).toEqual(['onDataLoad', ...COMMON_PROPS]);
+        expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
     });
   });
@@ -175,29 +179,41 @@ describe('useCartoLayerProps', () => {
       expect(result.current.getFilterValue).toBeInstanceOf(Function);
     });
 
-    test('filter range should be between 1 and 1', () => {
+    test('filter range should be between 1 and 1 for the first element of the array', () => {
       const { result } = renderHook(() => useCartoLayerProps({}));
 
-      expect(result.current.filterRange).toEqual([1, 1]);
+      expect(result.current.filterRange).toEqual([
+        [1, 1],
+        [0, 0],
+        [0, 0],
+        [0, 0]
+      ]);
     });
 
-    test('extensions should have an unique instance of DataFilterExtension', () => {
+    test('extensions should have an instance of DataFilterExtension and MaskExtension', () => {
       const { result } = renderHook(() => useCartoLayerProps({}));
 
-      expect(result.current.extensions.length).toBe(1);
+      expect(result.current.extensions.length).toBe(2);
       expect(result.current.extensions[0]).toBeInstanceOf(DataFilterExtension);
+      expect(result.current.extensions[1]).toBeInstanceOf(MaskExtension);
     });
 
-    test('filter size should be 1', () => {
+    test(`filter size should be ${MAX_GPU_FILTERS}`, () => {
       const { result } = renderHook(() => useCartoLayerProps({}));
 
-      expect(result.current.extensions[0].opts.filterSize).toEqual(1);
+      expect(result.current.extensions[0].opts.filterSize).toEqual(MAX_GPU_FILTERS);
     });
 
     test('getFilterValue trigger should be present', () => {
       const { result } = renderHook(() => useCartoLayerProps({}));
 
       expect(result.current.updateTriggers).toHaveProperty('getFilterValue');
+    });
+
+    test('maskId should be present should be present and be false by default', () => {
+      const { result } = renderHook(() => useCartoLayerProps({}));
+
+      expect(result.current.maskId).toEqual(false);
     });
   });
 

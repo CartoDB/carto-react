@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { PropTypes } from 'prop-types';
 import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
-import useSourceFilters from '../hooks/useSourceFilters';
-import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux';
+import { columnAggregationOn } from './utils/propTypesFns';
+import useWidgetFetch from '../hooks/useWidgetFetch';
+import { useSelector } from 'react-redux';
+import { checkIfSourceIsDroppingFeature } from '@carto/react-redux/';
+import { NoDataAlert } from '@carto/react-ui/';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 /**
  * Renders a <FormulaWidget /> component
@@ -13,64 +16,57 @@ import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux';
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
- * @param  {string} props.column - Name of the data source's column to get the data from.
- * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
+ * @param  {string | string[]} props.column - Name of the data source's column(s) to get the data from. If multiples are provided, they will be merged into a single one using joinOperation property.
+ * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple columns into a single one.
+ * @param  {AggregationTypes} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.formatter] - Function to format each value returned.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
+ * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
-function FormulaWidget(props) {
-  const {
-    id,
-    title,
-    dataSource,
-    column,
-    operation,
-    formatter,
-    animation,
-    onError,
-    wrapperProps
-  } = props;
-  const isSourceReady = useSelector((state) =>
-    selectIsViewportFeaturesReadyForSource(state, dataSource)
+function FormulaWidget({
+  id,
+  title,
+  dataSource,
+  column,
+  operation,
+  joinOperation,
+  formatter,
+  animation,
+  global,
+  onError,
+  wrapperProps,
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
+}) {
+  const isDroppingFeatures = useSelector((state) =>
+    checkIfSourceIsDroppingFeature(state, dataSource)
   );
-  const filters = useSourceFilters({ dataSource, id });
-
-  const [formulaData, setFormulaData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    if (isSourceReady) {
-      getFormula({
-        operation,
-        column,
-        filters,
-        dataSource
-      })
-        .then((data) => {
-          if (data && data[0]) {
-            setIsLoading(false);
-            setFormulaData(data[0].value);
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          if (onError) onError(error);
-        });
-    }
-  }, [operation, column, filters, dataSource, setIsLoading, onError, isSourceReady]);
+  const { data = { value: undefined }, isLoading } = useWidgetFetch(getFormula, {
+    id,
+    dataSource,
+    params: {
+      operation,
+      column,
+      joinOperation
+    },
+    global,
+    onError
+  });
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      <FormulaWidgetUI
-        data={formulaData}
-        formatter={formatter}
-        unitBefore={true}
-        animation={animation}
-      />
+      {isDroppingFeatures ? (
+        <NoDataAlert {...droppingFeaturesAlertProps} />
+      ) : (
+        <FormulaWidgetUI
+          data={Number.isFinite(data?.value) ? data.value : undefined}
+          formatter={formatter}
+          unitBefore={true}
+          animation={animation}
+        />
+      )}
     </WrapperWidgetUI>
   );
 }
@@ -79,16 +75,21 @@ FormulaWidget.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
-  column: PropTypes.string.isRequired,
+  column: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
+    .isRequired,
+  joinOperation: columnAggregationOn('column'),
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   animation: PropTypes.bool,
+  global: PropTypes.bool,
   onError: PropTypes.func,
-  wrapperProps: PropTypes.object
+  wrapperProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object
 };
 
 FormulaWidget.defaultProps = {
   animation: true,
+  global: false,
   wrapperProps: {}
 };
 

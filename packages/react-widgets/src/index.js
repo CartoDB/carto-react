@@ -6,11 +6,16 @@ export { default as PieWidget } from './widgets/PieWidget';
 export { default as LegendWidget } from './widgets/LegendWidget';
 export { default as ScatterPlotWidget } from './widgets/ScatterPlotWidget';
 export { default as TimeSeriesWidget } from './widgets/TimeSeriesWidget';
+export { default as FeatureSelectionWidget } from './widgets/FeatureSelectionWidget';
+export { default as TableWidget } from './widgets/TableWidget';
 export {
   getFormula,
   getHistogram,
   getCategories,
   geocodeStreetPoint,
-  getScatter
+  getScatter,
+  getTable
 } from './models';
 export { default as useSourceFilters } from './hooks/useSourceFilters';
+export { default as FeatureSelectionLayer } from './layers/FeatureSelectionLayer';
+export { default as useGeocoderWidgetController } from './hooks/useGeocoderWidgetController';

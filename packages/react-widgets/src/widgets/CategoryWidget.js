@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addFilter, removeFilter } from '@carto/react-redux';
+import { addFilter, removeFilter, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
 import { WrapperWidgetUI, CategoryWidgetUI, NoDataAlert } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
-import useSourceFilters from '../hooks/useSourceFilters';
-import { selectIsViewportFeaturesReadyForSource } from '@carto/react-redux/';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
+import { columnAggregationOn } from './utils/propTypesFns';
+import useWidgetFetch from '../hooks/useWidgetFetch';
+import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 
 const EMPTY_ARRAY = [];
 
@@ -18,14 +19,19 @@ const EMPTY_ARRAY = [];
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's column to get the data from.
- * @param  {string} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`.
+ * @param  {string | string[]} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`. If multiples are provided, they will be merged into a single one using joinOperation property.
+ * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple operation columns into a single one.
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.formatter] - Function to format each value returned.
  * @param  {Object} [props.labels] - Overwrite category labels.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
+ * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
+ * @param  {boolean} [props.searchable] - Enable/disable widget searching capabilities. Enabled by default.
+ * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
+ * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
 function CategoryWidget(props) {
   const {
@@ -34,62 +40,38 @@ function CategoryWidget(props) {
     dataSource,
     column,
     operationColumn,
+    joinOperation,
     operation,
     formatter,
     labels,
     animation,
+    filterable,
+    searchable,
+    global,
     onError,
     wrapperProps,
-    noDataAlertProps
+    noDataAlertProps,
+    droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
   } = props;
   const dispatch = useDispatch();
 
-  const isSourceReady = useSelector((state) =>
-    selectIsViewportFeaturesReadyForSource(state, dataSource)
-  );
-
-  const [categoryData, setCategoryData] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  const filters = useSourceFilters({ dataSource, id });
+  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
   const selectedCategories =
     useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
     EMPTY_ARRAY;
 
-  useEffect(() => {
-    setIsLoading(true);
-
-    if (isSourceReady) {
-      getCategories({
-        column,
-        operationColumn,
-        operation,
-        filters,
-        dataSource
-      })
-        .then((data) => {
-          if (data) {
-            setIsLoading(false);
-            setCategoryData(data);
-          }
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          if (onError) onError(error);
-        });
-    }
-  }, [
+  const { data = [], isLoading } = useWidgetFetch(getCategories, {
     id,
-    column,
-    operationColumn,
-    operation,
-    filters,
     dataSource,
-    setIsLoading,
-    onError,
-    isSourceReady
-  ]);
+    params: {
+      column,
+      operationColumn,
+      joinOperation,
+      operation
+    },
+    global,
+    onError
+  });
 
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
@@ -117,17 +99,19 @@ function CategoryWidget(props) {
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      {categoryData.length || isLoading ? (
+      {(data.length && !isDroppingFeatures) || isLoading ? (
         <CategoryWidgetUI
-          data={categoryData}
+          data={data}
           formatter={formatter}
           labels={labels}
           selectedCategories={selectedCategories}
           onSelectedCategoriesChange={handleSelectedCategoriesChange}
           animation={animation}
+          filterable={filterable}
+          searchable={searchable}
         />
       ) : (
-        <NoDataAlert {...noDataAlertProps} />
+       <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
       )}
     </WrapperWidgetUI>
   );
@@ -138,19 +122,30 @@ CategoryWidget.propTypes = {
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
   column: PropTypes.string.isRequired,
-  operationColumn: PropTypes.string,
+  operationColumn: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+  ]),
+  joinOperation: columnAggregationOn('operationColumn'),
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   labels: PropTypes.object,
   animation: PropTypes.bool,
+  filterable: PropTypes.bool,
+  searchable: PropTypes.bool,
+  global: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
-  noDataAlertProps: PropTypes.object
+  noDataAlertProps: PropTypes.object,
+  droppingFeaturesAlertProps: PropTypes.object
 };
 
 CategoryWidget.defaultProps = {
   labels: {},
   animation: true,
+  filterable: true,
+  searchable: true,
+  global: false,
   wrapperProps: {},
   noDataAlertProps: {}
 };

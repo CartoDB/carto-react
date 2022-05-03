@@ -10,7 +10,8 @@ import {
   SvgIcon,
   TextField,
   Typography,
-  makeStyles
+  makeStyles,
+  Tooltip
 } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
@@ -27,9 +28,16 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 1, 1, 0)
   },
 
-  element: {
+  selectable: {
     cursor: 'pointer',
+    flexWrap: 'nowrap',
 
+    '&:hover $progressbar div': {
+      backgroundColor: theme.palette.secondary.dark
+    }
+  },
+
+  element: {
     '&$unselected': {
       color: theme.palette.text.disabled,
 
@@ -40,15 +48,12 @@ const useStyles = makeStyles((theme) => ({
 
     '&$rest $progressbar div': {
       backgroundColor: theme.palette.text.disabled
-    },
-
-    '&:hover $progressbar div': {
-      backgroundColor: theme.palette.secondary.dark
     }
   },
 
   label: {
-    fontWeight: theme.typography.fontWeightBold
+    fontWeight: theme.typography.fontWeightBold,
+    marginRight: theme.spacing(2)
   },
 
   progressbar: {
@@ -132,11 +137,12 @@ function CategoryWidgetUI(props) {
     data,
     formatter,
     labels,
-    isLoading,
     maxItems,
     order,
     selectedCategories,
-    animation
+    animation,
+    filterable,
+    searchable
   } = props;
   const [sortedData, setSortedData] = useState([]);
   const [maxValue, setMaxValue] = useState(1);
@@ -148,7 +154,7 @@ function CategoryWidgetUI(props) {
   const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
-  const classes = useStyles();
+  const classes = useStyles({ filterable });
 
   // Get blockedCategories in the same order as original data
   const sortBlockedSameAsData = (blockedCategories) =>
@@ -278,15 +284,20 @@ function CategoryWidgetUI(props) {
     [blockedCategories, labels, maxItems, searchValue, showAll]
   );
 
+  const getCategoriesCount = useCallback(() => {
+    const blocked = blockedCategories.length;
+    return blocked ? data.length - blocked : data.length - maxItems;
+  }, [data, maxItems, blockedCategories]);
+
   const getCategoryLabel = useCallback(
     (name) => {
       if (name === REST_CATEGORY) {
-        return 'Others';
+        return `Others ${searchable ? '' : `(${getCategoriesCount()})`}`;
       } else {
         return labels[name] || name;
       }
     },
-    [labels]
+    [getCategoriesCount, labels, searchable]
   );
 
   const getProgressbarLength = useCallback(
@@ -358,24 +369,36 @@ function CategoryWidgetUI(props) {
     }
   }, [animation, sortedData]);
 
-  const getCategoriesCount = useCallback(() => {
-    const blocked = blockedCategories.length;
-    return blocked ? data.length - blocked : data.length - maxItems;
-  }, [data, maxItems, blockedCategories]);
-
   // Separated to simplify the widget layout but inside the main component to avoid passing all dependencies
   const CategoryItem = (props) => {
     const { data, onCategoryClick } = props;
     const value = formatter(data.value || 0);
+    const [isOverflowed, setIsOverflowed] = useState(false);
+    const textElementRef = useRef();
+
+    const compareSize = () => {
+      const compare =
+        textElementRef?.current?.scrollWidth > textElementRef?.current?.clientWidth;
+      setIsOverflowed(compare);
+    };
+
+    useEffect(() => {
+      compareSize();
+      window.addEventListener('resize', compareSize);
+      return () => {
+        window.removeEventListener('resize', compareSize);
+      };
+    }, []);
 
     return (
       <Grid
         container
         direction='row'
         spacing={1}
-        onClick={onCategoryClick}
+        onClick={filterable ? onCategoryClick : () => {}}
         className={`
           ${classes.element}
+          ${filterable ? classes.selectable : ''}
           ${
             !showAll &&
             selectedCategories.length > 0 &&
@@ -386,14 +409,32 @@ function CategoryWidgetUI(props) {
           ${data.name === REST_CATEGORY ? classes.rest : ''}
         `}
       >
-        {showAll && (
+        {filterable && showAll && (
           <Grid item>
             <Checkbox checked={tempBlockedCategories.indexOf(data.name) !== -1} />
           </Grid>
         )}
         <Grid container item xs>
-          <Grid container item direction='row' justifyContent='space-between'>
-            <span className={classes.label}>{getCategoryLabel(data.name)}</span>
+          <Grid
+            container
+            item
+            direction='row'
+            justifyContent='space-between'
+            wrap='nowrap'
+          >
+            <Tooltip
+              title={getCategoryLabel(data.name)}
+              disableHoverListener={!isOverflowed}
+            >
+              <Typography
+                variant='body2'
+                className={classes.label}
+                noWrap
+                ref={textElementRef}
+              >
+                {getCategoryLabel(data.name)}
+              </Typography>
+            </Tooltip>
             {typeof value === 'object' && value !== null ? (
               <span>
                 {value.prefix}
@@ -428,9 +469,9 @@ function CategoryWidgetUI(props) {
       <Grid container item className={classes.categoriesWrapper}>
         {[...Array(4)].map((_, i) => (
           <Grid key={i} container direction='row' spacing={1} className={classes.element}>
-            <Grid container item xs>
+            <Grid container item xs zeroMinWidth>
               <Grid container item direction='row' justifyContent='space-between'>
-                <Typography variant='body2'>
+                <Typography variant='body2' noWrap>
                   <Skeleton variant='text' width={100} />
                 </Typography>
                 <Typography variant='body2'>
@@ -449,7 +490,7 @@ function CategoryWidgetUI(props) {
     <div className={classes.root}>
       {data?.length > 0 ? (
         <>
-          {sortedData.length > 0 && (
+          {filterable && sortedData.length > 0 && (
             <Grid
               container
               direction='row'
@@ -529,7 +570,7 @@ function CategoryWidgetUI(props) {
               </>
             )}
           </Grid>
-          {data.length > maxItems ? (
+          {data.length > maxItems && searchable ? (
             showAll ? (
               <Button size='small' color='primary' onClick={handleCancelClicked}>
                 Cancel
@@ -565,7 +606,9 @@ CategoryWidgetUI.defaultProps = {
   maxItems: 5,
   order: CategoryWidgetUI.ORDER_TYPES.RANKING,
   selectedCategories: [],
-  animation: true
+  animation: true,
+  filterable: true,
+  searchable: true
 };
 
 CategoryWidgetUI.propTypes = {
@@ -581,7 +624,9 @@ CategoryWidgetUI.propTypes = {
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func,
   order: PropTypes.oneOf(Object.values(CategoryWidgetUI.ORDER_TYPES)),
-  animation: PropTypes.bool
+  animation: PropTypes.bool,
+  filterable: PropTypes.bool,
+  searchable: PropTypes.bool
 };
 
 export default CategoryWidgetUI;

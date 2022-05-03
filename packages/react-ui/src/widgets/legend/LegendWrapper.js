@@ -12,6 +12,9 @@ import {
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import Note from './Note';
+import LayerIcon from '../../assets/LayerIcon';
+import { ToggleButton } from '@material-ui/lab';
+import OpacityControl from '../OpacityControl';
 
 const useStyles = makeStyles((theme) => ({
   legendWrapper: {
@@ -24,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
   },
   attr: {
     marginBottom: theme.spacing(1)
+  },
+  layerOptionsWrapper: {
+    backgroundColor: theme.palette.grey[50]
   }
 }));
 
@@ -32,24 +38,38 @@ export default function LegendWrapper({
   title,
   switchable = true,
   collapsible = true,
+  collapsed = false,
   visible = true,
+  hasChildren = true,
   note,
   attr,
   children,
-  onChangeVisibility
+  showOpacityControl,
+  opacity,
+  onChangeOpacity,
+  onChangeVisibility,
+  onChangeCollapsed
 }) {
   const wrapper = createRef();
   const classes = useStyles();
-  const [expanded, setExpanded] = useState(true);
+  const expanded = !collapsed;
+  const [isLayerOptionsExpanded, setIsLayerOptionsExpanded] = useState(false);
+
+  const handleChangeOpacity = (newOpacity) => {
+    if (onChangeOpacity) onChangeOpacity({ id, opacity: newOpacity });
+  };
 
   const handleExpandClick = () => {
-    if (collapsible) {
-      setExpanded(!expanded);
-    }
+    if (collapsible && onChangeCollapsed)
+      onChangeCollapsed({ id, collapsed: !collapsed });
   };
 
   const handleChangeVisibility = () => {
     if (onChangeVisibility) onChangeVisibility({ id, visible: !visible });
+  };
+
+  const handleToggleLayerOptions = () => {
+    setIsLayerOptionsExpanded((oldState) => !oldState);
   };
 
   return (
@@ -59,11 +79,13 @@ export default function LegendWrapper({
         switchable={switchable}
         visible={visible}
         expanded={expanded}
-        collapsible={collapsible}
+        collapsible={hasChildren && collapsible}
         onExpandClick={handleExpandClick}
         onChangeVisibility={handleChangeVisibility}
+        onToggleLayerOptions={showOpacityControl && handleToggleLayerOptions}
+        isLayerOptionsExpanded={isLayerOptionsExpanded}
       />
-      {!!children && (
+      {hasChildren && !!children && (
         <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
           <Box className={classes.content}>
             <Grid container direction='column' pb={16} spacing={1}>
@@ -73,6 +95,14 @@ export default function LegendWrapper({
                 </Typography>
               )}
               {children}
+              <Collapse in={isLayerOptionsExpanded} timeout='auto' unmountOnExit>
+                <Box className={classes.layerOptionsWrapper} mt={2}>
+                  <OpacityControl
+                    opacity={opacity}
+                    onChangeOpacity={handleChangeOpacity}
+                  />
+                </Box>
+              </Collapse>
               <Note>{note}</Note>
             </Grid>
           </Box>
@@ -106,10 +136,8 @@ const useHeaderStyles = makeStyles((theme) => ({
       background: 'none'
     }
   },
-  iconToggle: {
-    marginTop: '-6px'
-  },
   expandIcon: {
+    display: 'block',
     fill: theme.palette.text.secondary
   }
 }));
@@ -121,9 +149,12 @@ function Header({
   collapsible,
   expanded,
   onExpandClick,
-  onChangeVisibility
+  onChangeVisibility,
+  onToggleLayerOptions,
+  isLayerOptionsExpanded
 }) {
   const classes = useHeaderStyles({ collapsible });
+  const ExpandIcon = expanded ? ExpandLess : ExpandMore;
 
   return (
     <Grid container alignItems='center' className={classes.header}>
@@ -131,12 +162,8 @@ function Header({
         className={classes.button}
         startIcon={
           collapsible && (
-            <Icon className={classes.iconToggle}>
-              {expanded ? (
-                <ExpandLess className={classes.expandIcon} />
-              ) : (
-                <ExpandMore className={classes.expandIcon} />
-              )}
+            <Icon>
+              <ExpandIcon className={classes.expandIcon} />
             </Icon>
           )
         }
@@ -144,6 +171,17 @@ function Header({
       >
         <Typography variant='subtitle1'>{title}</Typography>
       </Button>
+      {!!onToggleLayerOptions && (
+        <Tooltip title='Layer options' placement='top' arrow>
+          <ToggleButton
+            selected={isLayerOptionsExpanded}
+            onClick={onToggleLayerOptions}
+            value='check'
+          >
+            <LayerIcon />
+          </ToggleButton>
+        </Tooltip>
+      )}
       {switchable && (
         <Tooltip title={(visible ? 'Hide' : 'Show') + ' layer'} placement='top' arrow>
           <Switch checked={visible} onChange={onChangeVisibility} />

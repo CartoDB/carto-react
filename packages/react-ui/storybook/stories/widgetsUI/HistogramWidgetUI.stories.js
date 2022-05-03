@@ -1,79 +1,63 @@
 import React from 'react';
-import HistogramWidgetUI from '../../../src/widgets/HistogramWidgetUI';
-import { buildReactPropsAsString } from '../../utils';
+import HistogramWidgetUI from '../../../src/widgets/HistogramWidgetUI/HistogramWidgetUI';
 
 const options = {
-  title: 'Widgets UI/HistogramWidgetUI',
-  component: HistogramWidgetUI
+  title: 'Custom Components/HistogramWidgetUI',
+  component: HistogramWidgetUI,
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
+      }
+    }
+  }
 };
 
 export default options;
 
-const Template = (args) => <HistogramWidgetUI {...args} />;
+const Template = (args) => {
+  return <HistogramWidgetUI {...args} />;
+};
 
-const data = [100, 300, 500, 250, 50, 200, 100];
-
-const dataAxis = [100, 200, 300, 400, 500, 600];
+const defaultProps = {
+  data: [100, 300, 500, 250, 50, 200, 100],
+  ticks: [100, 200, 300, 400, 500, 600],
+  min: 0,
+  max: 700
+};
 
 export const Empty = Template.bind({});
 const EmptyProps = {
-  name: 'STORE',
-  data,
-  dataAxis,
-  selectedBars: [],
-  tooltipFormatter: () => {}
+  ...defaultProps
 };
 Empty.args = EmptyProps;
-Empty.parameters = buildReactPropsAsString(EmptyProps, 'HistogramWidgetUI');
-
-export const Simple = Template.bind({});
-const SimpleProps = {
-  name: 'STORE',
-  data,
-  onSelectedBarsChange: (evt) => console.log(evt),
-  selectedBars: [],
-  dataAxis,
-  tooltipFormatter: (params) => params[0].value + ' $'
-};
-Simple.args = SimpleProps;
-Simple.parameters = buildReactPropsAsString(SimpleProps, 'HistogramWidgetUI');
 
 export const xAxisFormatter = Template.bind({});
 const xAxisFormatterProps = {
-  name: 'STORE',
-  data,
-  dataAxis,
-  xAxisFormatter: (v) => `${v / 1000}k`,
-  tooltipFormatter: (params) => params[0].value + ' $'
+  ...defaultProps,
+  xAxisFormatter: (v) => `${v / 1000}k`
 };
 xAxisFormatter.args = xAxisFormatterProps;
-xAxisFormatter.parameters = buildReactPropsAsString(
-  xAxisFormatterProps,
-  'HistogramWidgetUI'
-);
 
 export const yAxisFormatter = Template.bind({});
 const yAxisFormatterProps = {
-  name: 'STORE',
-  data,
-  dataAxis,
-  yAxisFormatter: (v) => `${v / 1000}k`,
-  tooltipFormatter: (params) => params[0].value + ' $'
+  ...defaultProps,
+  yAxisFormatter: (v) => `${v / 1000}k`
 };
 yAxisFormatter.args = yAxisFormatterProps;
-yAxisFormatter.parameters = buildReactPropsAsString(
-  yAxisFormatterProps,
-  'HistogramWidgetUI'
-);
 
 export const Filtered = Template.bind({});
 const FilteredProps = {
-  name: 'STORE',
-  data,
-  dataAxis,
+  ...defaultProps,
   selectedBars: [1, 2],
-  tooltipFormatter: (params) => params[0].value + ' $',
-  onSelectedBarsChange: (evt) => {}
+  tooltipFormatter: (params) => params[0].value + ' $'
 };
 Filtered.args = FilteredProps;
-Filtered.parameters = buildReactPropsAsString(FilteredProps, 'HistogramWidgetUI');
+
+
+export const NonEqualSizeBins = Template.bind({});
+const NonEqualSizeBinsProps = {
+  ...defaultProps,
+  ticks: [100, 200, 250, 450, 500, 600],
+};
+NonEqualSizeBins.args = NonEqualSizeBinsProps;

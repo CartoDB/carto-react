@@ -1,11 +1,20 @@
 import { Methods, executeTask } from '@carto/react-workers';
+import { wrapModelCall } from './utils';
 
-export const getScatter = async (props) => {
-  const { xAxisColumn, yAxisColumn, filters, dataSource } = props;
+export function getScatter(props) {
+  return wrapModelCall(props, fromLocal);
+}
 
-  return executeTask(dataSource, Methods.VIEWPORT_FEATURES_SCATTERPLOT, {
-    filters,
+function fromLocal(props) {
+  const { source, xAxisColumn, xAxisJoinOperation, yAxisColumn, yAxisJoinOperation } =
+    props;
+
+  return executeTask(source.id, Methods.FEATURES_SCATTERPLOT, {
+    filters: source.filters,
+    filtersLogicalOperator: source.filtersLogicalOperator,
     xAxisColumn,
-    yAxisColumn
+    xAxisJoinOperation,
+    yAxisColumn,
+    yAxisJoinOperation
   });
-};
+}

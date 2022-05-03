@@ -1,33 +1,32 @@
-import { Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import LegendWidgetUI from '../../../src/widgets/legend/LegendWidgetUI';
 
 const options = {
-  title: 'Widgets UI/LegendWidgetUI',
+  title: 'Custom Components/LegendWidgetUI',
   component: LegendWidgetUI,
   argTypes: {
-    title: {
-      defaultValue: 'Legend title',
+    className: {
       control: {
         type: 'text'
-      }
-    },
-    switchable: {
-      defaultValue: true,
-      control: {
-        type: 'boolean'
-      }
-    },
-    visible: {
-      defaultValue: true,
-      control: {
-        type: 'boolean'
       }
     },
     layers: {
       defaultValue: [],
       control: {
         type: 'array'
+      }
+    },
+    collapsed: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    }
+  },
+  parameters: {
+    docs: {
+      source: {
+        type: 'auto'
       }
     }
   }
@@ -37,7 +36,7 @@ export default options;
 const Template = ({ ...args }) => {
   return (
     <LegendWidgetUI {...args}>
-      <Typography>Your Content</Typography>
+      <div>Your Content</div>
     </LegendWidgetUI>
   );
 };
@@ -49,7 +48,7 @@ const LegendTemplate = () => {
       title: 'Single Layer',
       visible: true,
       legend: {
-        children: <Typography>Your Content</Typography>
+        children: <div>Your Content</div>
       }
     }
   ];
@@ -67,6 +66,22 @@ const LegendNotFoundTemplate = () => {
   return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
 };
 
+const LegendWithOpacityTemplate = () => {
+  const layers = [
+    {
+      id: 0,
+      title: 'Single Layer',
+      visible: true,
+      showOpacityControl: true,
+      opacity: 0.5,
+      legend: {
+        children: <div>Your Content</div>
+      }
+    }
+  ];
+  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+};
+
 const LegendMultiTemplate = () => {
   const layers = [
     {
@@ -74,7 +89,7 @@ const LegendMultiTemplate = () => {
       title: 'Multi Layer',
       visible: true,
       legend: {
-        children: <Typography>Your Content</Typography>
+        children: <div>Your Content</div>
       }
     },
     {
@@ -83,11 +98,50 @@ const LegendMultiTemplate = () => {
       visible: false,
       collapsible: false,
       legend: {
-        children: <Typography>Your Content</Typography>
+        children: <div>Your Content</div>
       }
     }
   ];
   return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+};
+
+const LegendMultiTemplateCollapsed = () => {
+  const [collapsed, setCollapsed] = useState(true);
+
+  const layers = [
+    {
+      id: 0,
+      title: 'Multi Layer',
+      visible: true,
+      legend: {
+        children: <div>Your Content</div>
+      }
+    },
+    {
+      id: 1,
+      title: 'Multi Layer',
+      visible: false,
+      collapsible: false,
+      legend: {
+        children: <div>Your Content</div>
+      }
+    }
+  ];
+
+  return (
+    <LegendWidgetUI
+      layers={layers}
+      collapsed={collapsed}
+      onChangeCollapsed={({ collapsed }) => setCollapsed(collapsed)}
+    />
+  );
+};
+
+const categoryLegend = {
+  type: 'category',
+  note: 'lorem',
+  colors: ['#000', '#00F', '#0F0'],
+  labels: ['Category 1', 'Category 2', 'Category 3']
 };
 
 const LegendCategoriesTemplate = () => {
@@ -96,11 +150,21 @@ const LegendCategoriesTemplate = () => {
       id: 0,
       title: 'Category Layer',
       visible: true,
+      legend: categoryLegend
+    }
+  ];
+  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+};
+
+const LegendCategoriesStrokeTemplate = () => {
+  const layers = [
+    {
+      id: 0,
+      title: 'Category Layer as stroke',
+      visible: true,
       legend: {
-        type: 'category',
-        note: 'lorem',
-        colors: ['#000', '#00F', '#0F0'],
-        labels: ['Category 1', 'Category 2', 'Category 3']
+        ...categoryLegend,
+        isStrokeColor: true
       }
     }
   ];
@@ -185,7 +249,7 @@ const LegendCustomTemplate = () => {
       title: 'Single Layer',
       visible: true,
       legend: {
-        children: <Typography>Legend custom</Typography>
+        children: <div>Legend custom</div>
       }
     }
   ];
@@ -208,8 +272,11 @@ export const Playground = Template.bind({});
 
 export const SingleLayer = LegendTemplate.bind({});
 export const MultiLayer = LegendMultiTemplate.bind({});
+export const MultiLayerCollapsed = LegendMultiTemplateCollapsed.bind({});
 export const NotFound = LegendNotFoundTemplate.bind({});
+export const LegendWithOpacityControl = LegendWithOpacityTemplate.bind({});
 export const Categories = LegendCategoriesTemplate.bind({});
+export const CategoriesAsStroke = LegendCategoriesStrokeTemplate.bind({});
 export const Icon = LegendIconTemplate.bind({});
 export const Ramp = LegendRampTemplate.bind({});
 export const Proportion = LegendProportionTemplate.bind({});
