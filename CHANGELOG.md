@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix histogram query with filters [#396](https://github.com/CartoDB/carto-react/pull/396)
+
 ## 1.3
 
 ### 1.3.0-alpha.8 (2022-04-29)
