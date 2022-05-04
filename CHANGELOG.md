@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Pass layer obj to LegendComponent [#398](https://github.com/CartoDB/carto-react/pull/398)
 - Fix HistogramWidgetUI min/max placement [#397](https://github.com/CartoDB/carto-react/pull/397)
 - Fix histogram query with filters [#396](https://github.com/CartoDB/carto-react/pull/396)
 

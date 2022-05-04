@@ -1,6 +1,6 @@
 import React from 'react';
 import { getMaterialUIContext } from './testUtils';
-import LegendWidgetUI, { LEGEND_TYPES } from '../../src/widgets/legend/LegendWidgetUI';
+import LegendWidgetUI from '../../src/widgets/legend/LegendWidgetUI';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Typography } from '@material-ui/core';
 
@@ -171,7 +171,7 @@ describe('LegendWidgetUI', () => {
       ></Widget>
     );
     expect(MyCustomLegendComponent).toHaveBeenCalled();
-    expect(MyCustomLegendComponent).toHaveBeenCalledWith({ legend: DATA[6].legend }, {});
+    expect(MyCustomLegendComponent).toHaveBeenCalledWith({ layer: DATA[6], legend: DATA[6].legend }, {});
     expect(screen.getByText('Test')).toBeInTheDocument();
   });
 
