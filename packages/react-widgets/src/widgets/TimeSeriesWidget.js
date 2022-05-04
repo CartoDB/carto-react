@@ -106,6 +106,13 @@ function TimeSeriesWidget({
 
   const [selectedStepSize, setSelectedStepSize] = useState(stepSize);
 
+  if (showControls && global) {
+    console.warn(
+      'TimeSeriesWidget cannot show controls while using global mode. Controls will be hidden.'
+    );
+    showControls = false;
+  }
+
   useEffect(() => {
     if (stepSize !== selectedStepSize) {
       setSelectedStepSize(stepSize);
