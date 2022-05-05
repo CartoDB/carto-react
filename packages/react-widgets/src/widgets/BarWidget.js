@@ -86,8 +86,10 @@ function BarWidget({
   const sortedData = useMemo(() => {
     if (!_data.length) return _data;
 
+    const sortedByValue = _data.sort((a, b) => b.value - a.value);
+
     if (order.length) {
-      return _data.sort((a, b) => {
+      return sortedByValue.sort((a, b) => {
         const aIndex = order.indexOf(a.name);
         const bIndex = order.indexOf(b.name);
 
@@ -95,7 +97,7 @@ function BarWidget({
       });
     }
 
-    return _data.sort((a, b) => b.value - a.value);
+    return sortedByValue;
   }, [order, _data]);
 
   // For selecting bars, BarWidgetUI uses the index of the bar
