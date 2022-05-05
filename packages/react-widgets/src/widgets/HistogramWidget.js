@@ -95,10 +95,6 @@ function HistogramWidget({
     onError
   });
 
-  if (data.length && data.length - 1 !== ticks.length) {
-    data = Array(ticks.length).fill(0);
-  }
-
   const thresholdsFromFilters = useWidgetFilterValues({
     dataSource,
     id,
