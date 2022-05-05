@@ -31,7 +31,6 @@ const EMPTY_ARRAY = [];
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
  * @param  {Function} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
  * @param  {string[]} [props.order] - Set a custom order for the categories. By default, they are ordered by the axis Y.
- * @param  {string} [props.color] - Color for the bars. If not defined, secondary color is used.
  * @param  {Object} [props.labels] - Overwrite category labels.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
@@ -56,7 +55,6 @@ function BarWidget({
   labels,
   tooltip,
   tooltipFormatter,
-  color,
   height,
   animation,
   filterable,
@@ -145,7 +143,6 @@ function BarWidget({
           xAxisFormatter={xAxisFormatter}
           yAxisFormatter={yAxisFormatter}
           labels={labels}
-          colors={color}
           tooltip={tooltip}
           tooltipFormatter={tooltipFormatter}
           selectedBars={selectedBars}
@@ -177,7 +174,6 @@ BarWidget.propTypes = {
   xAxisFormatter: PropTypes.func,
   yAxisFormatter: PropTypes.func,
   order: PropTypes.arrayOf(PropTypes.string),
-  color: PropTypes.string,
   labels: PropTypes.object,
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,

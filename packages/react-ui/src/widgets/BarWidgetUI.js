@@ -172,6 +172,7 @@ function BarWidgetUI(props) {
         type: 'bar',
         name: series[componentIdx] || '',
         animation,
+        barCategoryGap: '10px',
         data: row.map((value, dataIdx) => {
           const isSelected = selectedBars.some(
             ([sDataIdx, sComponentIdx = 0]) =>
