@@ -17,3 +17,28 @@ export function checkCredentials(credentials) {
     throw new Error('Missing or bad credentials provided');
   }
 }
+
+export async function makeCall({ url, credentials, opts }) {
+  let response;
+  let data;
+  try {
+    response = await fetch(url.toString(), {
+      headers: {
+        Authorization: `Bearer ${credentials.accessToken}`
+      },
+      signal: opts?.abortController?.signal,
+      ...opts?.otherOptions
+    });
+    data = await response.json();
+  } catch (error) {
+    if (error.name === 'AbortError') throw error;
+
+    throw new Error(`Failed request: ${error}`);
+  }
+
+  if (!response.ok) {
+    dealWithApiError({ response, data });
+  }
+
+  return data;
+}

@@ -1,4 +1,4 @@
-import { checkCredentials, dealWithApiError } from './common';
+import { checkCredentials, dealWithApiError, makeCall } from './common';
 
 /**
  * Execute a LDS geocoding service geocode request.
@@ -28,29 +28,10 @@ export async function ldsGeocode({ credentials, address, country, limit, opts })
     url.searchParams.set('limit', String(limit));
   }
 
-  const { abortController, ...otherOptions } = opts || {};
+  let data = await makeCall({ url, credentials, opts });
 
-  let response;
-  let data;
-  try {
-    response = await fetch(url.toString(), {
-      headers: {
-        Authorization: `Bearer ${credentials.accessToken}`
-      },
-      signal: abortController?.signal,
-      ...otherOptions
-    });
-    data = await response.json();
-  } catch (error) {
-    if (error.name === 'AbortError') throw error;
-
-    throw new Error(`Failed to connect to LDS API: ${error}`);
-  }
   if (Array.isArray(data)) {
     data = data[0];
-  }
-  if (!response.ok) {
-    dealWithApiError({ response, data });
   }
 
   return data.value;

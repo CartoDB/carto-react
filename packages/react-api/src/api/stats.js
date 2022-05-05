@@ -1,4 +1,4 @@
-import { checkCredentials, dealWithApiError } from './common';
+import { checkCredentials, dealWithApiError, makeCall } from './common';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 
 const mandatoryProps = ['source', 'column'];
@@ -28,30 +28,7 @@ export async function callStats(props) {
 
   const url = buildUrl(source, column);
 
-  const { abortController, ...otherOptions } = opts || {};
-
-  let response;
-  let data;
-  try {
-    response = await fetch(url.toString(), {
-      headers: {
-        Authorization: `Bearer ${source.credentials.accessToken}`
-      },
-      signal: abortController?.signal,
-      ...otherOptions
-    });
-    data = await response.json();
-  } catch (error) {
-    if (error.name === 'AbortError') throw error;
-
-    throw new Error(`Failed to connect to LDS API: ${error}`);
-  }
-
-  if (!response.ok) {
-    dealWithApiError({ response, data });
-  }
-
-  return data;
+  return makeCall({ url, credentials: source.credentials, opts });
 }
 
 // Aux
@@ -64,7 +41,7 @@ function buildUrl(source, column) {
     }`
   );
 
-  if (source.type === MAP_TYPES.QUERY) {
+  if (isQuery) {
     url.searchParams.set('q', source.data);
   }
 
