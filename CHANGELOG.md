@@ -2,7 +2,8 @@
 
 ## Not released
 
-- Use static bins in HistogramWidget [#402](https://github.com/CartoDB/carto-react/pull/402)
+- Fix filters with null as upper or lower bound [#403](https://github.com/CartoDB/carto-react/pull/403)
+- - Use static bins in HistogramWidget [#402](https://github.com/CartoDB/carto-react/pull/402)
 - Fix deprecated warning in HistogramWidgetUI [#401](https://github.com/CartoDB/carto-react/pull/401)
 - TimeSeries - Restrict animation when using global mode [#399](https://github.com/CartoDB/carto-react/pull/399)
 - Pass layer obj to LegendComponent [#398](https://github.com/CartoDB/carto-react/pull/398)
