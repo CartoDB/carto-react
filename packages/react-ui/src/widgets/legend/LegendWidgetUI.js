@@ -189,7 +189,10 @@ function LegendRows({
     <>
       {layers.map(
         (
-          {
+          layer,
+          index
+        ) => {
+          const {
             id,
             title,
             switchable,
@@ -197,9 +200,8 @@ function LegendRows({
             showOpacityControl = false,
             opacity = 1,
             legend = {}
-          },
-          index
-        ) => {
+          } = layer;
+
           const {
             type = LEGEND_TYPES.CUSTOM,
             collapsible = true,
@@ -233,7 +235,7 @@ function LegendRows({
                 onChangeVisibility={onChangeVisibility}
                 onChangeCollapsed={onChangeCollapsed}
               >
-                <LegendComponent legend={legend} />
+                <LegendComponent layer={layer} legend={legend} />
               </LegendWrapper>
               {!isSingle && !isLast && <Divider />}
             </Fragment>
