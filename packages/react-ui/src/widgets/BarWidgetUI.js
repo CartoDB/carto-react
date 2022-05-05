@@ -348,21 +348,19 @@ function defaultTooltipFormatter(params, xAxisFormatter, yAxisFormatter) {
     return null;
   }
 
-  if (Array.isArray(params) && params.length) {
-    let message = '';
-    message += `${processFormatterRes(xAxisFormatter(params[0].axisValueLabel))}`;
-    message += params
-      .map(({ seriesName, value, data, marker }) => {
-        const formattedSeriesName = seriesName ? seriesName + ': ' : '';
-        const formattedValue = processFormatterRes(yAxisFormatter(value));
-        const item = `<div style="margin-left: 8px; display: inline">
+  let message = '';
+  message += `${processFormatterRes(xAxisFormatter(params[0].axisValueLabel))}`;
+  message += params
+    .map(({ seriesName, value, data, marker }) => {
+      const formattedSeriesName = seriesName ? seriesName + ': ' : '';
+      const formattedValue = processFormatterRes(yAxisFormatter(value));
+      const item = `<div style="margin-left: 8px; display: inline">
         ${formattedSeriesName}${formattedValue}${data.unit || ''}
         </div>`;
-        return `<div style="margin-top: 4px">${marker}${item}</div>`;
-      })
-      .join(' ');
-    return message;
-  }
+      return `<div style="margin-top: 4px">${marker}${item}</div>`;
+    })
+    .join(' ');
+  return message;
 }
 
 function useProcessedProps({
@@ -394,11 +392,11 @@ function useProcessedProps({
     if (_colors) return _colors;
 
     // Use secondary.main, if yAxisData is flat or series has a unique element
-    if (yAxisData.length <= 1 || (series.lenght && series.length === 1))
+    if (yAxisData.length <= 1 || series.length === 1)
       return [theme.palette.secondary.main];
 
     // Use secondary light and dark, if yAxisData is bidimensional or series has two elements
-    if (yAxisData.length === 2 || (series.length && series.length === 2))
+    if (yAxisData.length === 2 || series.length === 2)
       return [theme.palette.secondary.light, theme.palette.secondary.dark];
 
     // Use qualitate palette with mutidimensional bar chart

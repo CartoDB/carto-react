@@ -121,3 +121,14 @@ const MultipleBarsProps = {
 };
 MultipleBars.args = MultipleBarsProps;
 MultipleBars.parameters = buildReactPropsAsString(MultipleBarsProps, 'BarWidgetUI');
+
+export const MultipleBarsCustomColors = Template.bind({});
+const MultipleBarsCustomColorsProps = {
+  yAxisData: multipleData,
+  xAxisData,
+  series: multipleSeries,
+  stacked: false,
+  colors: ['#f00', '#00f']
+};
+MultipleBarsCustomColors.args = MultipleBarsCustomColorsProps;
+MultipleBarsCustomColors.parameters = buildReactPropsAsString(MultipleBarsCustomColorsProps, 'BarWidgetUI');
