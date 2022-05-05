@@ -7,6 +7,7 @@ type CommonWidgetProps = {
   onError?: Function,
   wrapperProps?: object,
   noDataAlertProps?: object
+  droppingFeaturesAlertProps?: object
 }
 
 type MonoColumnWidgetProps = {
@@ -19,6 +20,23 @@ export type CategoryWidget = {
   operationColumn?: string,
   labels?: object,
 } & CommonWidgetProps & MonoColumnWidgetProps;
+
+export type BarWidget = {
+  operationColumn?: string | string[],
+  labels?: object,
+  column: string,
+  operation?: AggregationTypes,
+  joinOperation?: AggregationTypes,
+  xAxisFormatter?: Function,
+  yAxisFormatter?: Function,
+  tooltip?: boolean,
+  tooltipFormatter?: Function,
+  order?: string[],
+  animation?: boolean;
+  filterable?: boolean;
+  global?: boolean,
+  height?: string | number,
+} & CommonWidgetProps;
 
 export type FormulaWidget = CommonWidgetProps & MonoColumnWidgetProps;
 
