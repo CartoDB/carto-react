@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fix deprecated warning in HistogramWidgetUI [#401](https://github.com/CartoDB/carto-react/pull/401)
 - TimeSeries - Restrict animation when using global mode [#399](https://github.com/CartoDB/carto-react/pull/399)
 - Pass layer obj to LegendComponent [#398](https://github.com/CartoDB/carto-react/pull/398)
 - Fix HistogramWidgetUI min/max placement [#397](https://github.com/CartoDB/carto-react/pull/397)
