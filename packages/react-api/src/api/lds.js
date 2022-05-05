@@ -1,4 +1,4 @@
-import { dealWithApiError } from './common';
+import { checkCredentials, dealWithApiError } from './common';
 
 /**
  * Execute a LDS geocoding service geocode request.
@@ -13,9 +13,8 @@ import { dealWithApiError } from './common';
  * @param { Object= } props.opts - Additional options for the HTTP request
  */
 export async function ldsGeocode({ credentials, address, country, limit, opts }) {
-  if (!credentials || !credentials.apiBaseUrl || !credentials.accessToken) {
-    throw new Error('ldsGeocode: Missing or bad credentials provided');
-  }
+  checkCredentials(credentials);
+
   if (!address) {
     throw new Error('ldsGeocode: No address provided');
   }
@@ -51,7 +50,7 @@ export async function ldsGeocode({ credentials, address, country, limit, opts })
     data = data[0];
   }
   if (!response.ok) {
-    dealWithApiError({ credentials, response, data });
+    dealWithApiError({ response, data });
   }
 
   return data.value;
