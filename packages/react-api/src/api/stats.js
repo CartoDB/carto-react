@@ -1,4 +1,4 @@
-import { checkCredentials, dealWithApiError, makeCall } from './common';
+import { checkCredentials, makeCall } from './common';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 
 const mandatoryProps = ['source', 'column'];

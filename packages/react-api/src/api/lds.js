@@ -1,4 +1,4 @@
-import { checkCredentials, dealWithApiError, makeCall } from './common';
+import { checkCredentials, makeCall } from './common';
 
 /**
  * Execute a LDS geocoding service geocode request.
