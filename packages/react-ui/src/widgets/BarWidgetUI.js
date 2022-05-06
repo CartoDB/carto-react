@@ -354,8 +354,8 @@ export default BarWidgetUI;
 
 // Aux
 function calculateMargin(label = '') {
-  // For less than 6 characters, the margin isn't necessary
-  if (label.length <= 6) return 0;
+  // For less than 8 characters, the margin isn't necessary
+  if (label.length <= 8) return 0;
   // Calculated manually. For each 6 characters, the margin should be 6.5px
   return (label.length * 6.5) / 6;
 }
