@@ -69,7 +69,7 @@ function HistogramWidget({
     if (_ticks?.length) return _ticks;
 
     if (bins) {
-      if (!isFinite(min) || !isFinite(max)) {
+      if (!Number.isFinite(min) || !Number.isFinite(max)) {
         throw new Error('Cannot calculate histogram without valid data');
       }
 
