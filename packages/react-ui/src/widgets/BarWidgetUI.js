@@ -203,10 +203,10 @@ function BarWidgetUI(props) {
   const options = useMemo(
     () => ({
       grid: {
-        left: xAxisData.length >= 4 ? calculateMargin(xAxisData[0]) : 0,
+        left: xAxisData.length >= 4 ? calculateMargin(xAxisFormatter(xAxisData[0])) : 0,
         top: theme.spacing(2),
         right:
-          xAxisData.length >= 4 ? calculateMargin(xAxisData[xAxisData.length - 1]) : 0,
+          xAxisData.length >= 4 ? calculateMargin(xAxisFormatter(xAxisData[xAxisData.length - 1])) : 0,
         bottom: theme.spacing(0),
         containLabel: true
       },
@@ -221,7 +221,7 @@ function BarWidgetUI(props) {
       yAxis: yAxisOptions,
       series: seriesOptions
     }),
-    [xAxisData, theme, colors, tooltipOptions, xAxisOptions, yAxisOptions, seriesOptions]
+    [xAxisData, theme, colors, tooltipOptions, xAxisOptions, yAxisOptions, seriesOptions, xAxisFormatter]
   );
 
   const clearBars = () => {
@@ -354,6 +354,8 @@ export default BarWidgetUI;
 
 // Aux
 function calculateMargin(label = '') {
+  // For less than 6 characters, the margin isn't necessary
+  if (label.length <= 6) return 0;
   // Calculated manually. For each 6 characters, the margin should be 6.5px
   return (label.length * 6.5) / 6;
 }
