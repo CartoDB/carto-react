@@ -1,7 +1,5 @@
-import { checkCredentials, makeCall } from './common';
+import { assert, checkCredentials, makeCall } from './common';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
-
-const mandatoryProps = ['source', 'column'];
 
 /**
  * Execute a stats service request.
@@ -12,19 +10,20 @@ const mandatoryProps = ['source', 'column'];
  * @param { object= } props.opts - Additional options for the HTTP request
  */
 export async function callStats(props) {
-  mandatoryProps.forEach((prop) => {
-    if (!props[prop]) throw new Error('callStats: Missing source');
-  });
+  assert(props.source, 'callStats: missing source');
+  assert(props.column, 'callStats: missing column');
 
   const { source, column, opts } = props;
 
   checkCredentials(source.credentials);
+
   if (source.type === MAP_TYPES.TILESET) {
     throw new Error('callStats cannot be used with static tilesets');
   }
-  if (source.credentials.apiVersion === API_VERSIONS.V2) {
-    throw new Error('callStats cannot be used with CARTO 2.');
-  }
+  assert(
+    source.credentials.apiVersion === API_VERSIONS.V3,
+    'Stats API is a feature only available in CARTO 3.'
+  );
 
   const url = buildUrl(source, column);
 
