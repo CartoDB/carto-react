@@ -13,8 +13,10 @@ const DEFAULT_LEGEND = {
 describe('LegendCategories', () => {
   test('renders labels correctly', () => {
     render(<LegendCategories legend={DEFAULT_LEGEND} />);
-    expect(screen.queryByText('Category 1')).toBeInTheDocument();
-    expect(screen.queryByText('Category 2')).toBeInTheDocument();
+    const categoryOne = screen.getAllByText(/Category 1/);
+    const categoryTwo = screen.getAllByText(/Category 2/);
+    expect(categoryOne[0]).toBeInTheDocument();
+    expect(categoryTwo[0]).toBeInTheDocument();
   });
   test('renders colors (CARTOColors) correctly', () => {
     render(<LegendCategories legend={DEFAULT_LEGEND} />);
