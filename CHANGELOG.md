@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fixes in HistogramWidgetUI [#407](https://github.com/CartoDB/carto-react/pull/407)
 - Display ellipsis and tooltip for long labels in Legend [#408](https://github.com/CartoDB/carto-react/pull/408)
 
 ## 1.3

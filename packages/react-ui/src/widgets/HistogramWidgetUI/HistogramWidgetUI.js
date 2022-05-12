@@ -46,12 +46,6 @@ function HistogramWidgetUI({
   const classes = useStyles();
   const theme = useTheme();
 
-  // TODO: JUST FOR BUILDER LINK
-  theme.typography.charts = cartoThemeOptions.typography.charts;
-  theme.palette.charts = cartoThemeOptions.palette.charts;
-  theme.palette.secondary.main = cartoThemeOptions.palette.secondary.main;
-  theme.palette.other = cartoThemeOptions.palette.other;
-
   const filterable = _filterable && !!onSelectedBarsChange;
 
   const [echartsInstance, setEchartInstance] = useState();
@@ -180,6 +174,15 @@ function HistogramWidgetUI({
 
   // Series
   const seriesOptions = useMemo(() => {
+    const dataWithColor = formattedData.map((item, idx) => {
+      const isDisabled = selectedBars.length && selectedBars.indexOf(idx) === -1;
+      const color = isDisabled
+        ? theme.palette.charts.disabled
+        : theme.palette.secondary.main;
+
+      return { value: item, itemStyle: { color } };
+    });
+
     return {
       type: 'custom',
       cursor: 'pointer',
@@ -188,12 +191,7 @@ function HistogramWidgetUI({
         const isLast = params.dataIndex === formattedData.length - 1;
         const isFirst = params.dataIndex === 0;
 
-        // Fill
-        const isDisabled =
-          selectedBars.length && selectedBars.indexOf(params.dataIndex) === -1;
-        const fill = isDisabled
-          ? theme.palette.charts.disabled
-          : theme.palette.secondary.main;
+        const fill = dataWithColor[params.dataIndex].itemStyle.color;
 
         // Coords to build the bar
         const yValue = api.value(2);
@@ -223,7 +221,7 @@ function HistogramWidgetUI({
         y: 2,
         tooltip: [0, 1, 2]
       },
-      data: formattedData,
+      data: dataWithColor,
       animation
     };
   }, [
