@@ -46,6 +46,24 @@ export type HistogramWidgetUI = {
   height?: number;
 };
 
+export type BarWidgetUI = {
+  xAxisData: (string | number)[];
+  yAxisData: (string | number)[] | (string | number)[][];
+  series?: string[]
+  colors?: string | string[];
+  stacked?: boolean;
+  labels?: object;
+  tooltip?: boolean;
+  tooltipFormatter?: Function;
+  xAxisFormatter?: Function;
+  yAxisFormatter?: Function;
+  selectedBars?: number[] | [number, number][];
+  onSelectedBarsChange?: Function;
+  height?: string | number;
+  filterable?: boolean;
+  animation?: boolean;
+};
+
 export type PieWidgetUIData = { name: string; value: number }[];
 export type PieWidgetUI = {
   name: string;

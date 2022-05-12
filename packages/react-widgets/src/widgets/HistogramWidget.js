@@ -30,6 +30,7 @@ const EMPTY_ARRAY = [];
  * @param  {Function} [props.xAxisformatter] - Function to format X axis values.
  * @param  {Function} [props.formatter] - Function to format Y axis values.
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
+ * @param  {Function} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
@@ -186,6 +187,7 @@ HistogramWidget.propTypes = {
   xAxisFormatter: PropTypes.func,
   formatter: PropTypes.func,
   tooltip: PropTypes.bool,
+  tooltipFormatter: PropTypes.func,
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   global: PropTypes.bool,
