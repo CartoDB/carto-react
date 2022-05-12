@@ -1,5 +1,6 @@
 import { assert, checkCredentials, makeCall } from './common';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
+import { getTileJson } from './tilejson';
 
 /**
  * Execute a stats service request.
@@ -17,17 +18,22 @@ export async function getStats(props) {
 
   checkCredentials(source.credentials);
 
-  if (source.type === MAP_TYPES.TILESET) {
-    throw new Error('getStats cannot be used with static tilesets');
-  }
   assert(
     source.credentials.apiVersion === API_VERSIONS.V3,
     'Stats API is a feature only available in CARTO 3.'
   );
 
-  const url = buildUrl(source, column);
+  if (source.type === MAP_TYPES.TILESET) {
+    const tileJson = await getTileJson({ source });
+    const tileStatsAttributes = tileJson.tilestats.layers[0].attributes;
+    const columnStats = tileStatsAttributes.find(({ attribute }) => attribute === column);
+    assert(columnStats, 'getStats: column not found in tileset attributes');
+    return columnStats;
+  } else {
+    const url = buildUrl(source, column);
 
-  return makeCall({ url, credentials: source.credentials, opts });
+    return makeCall({ url, credentials: source.credentials, opts });
+  }
 }
 
 // Aux
