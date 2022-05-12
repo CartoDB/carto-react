@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
 import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   circle: {
+    whiteSpace: 'nowrap',
     display: 'block',
     width: '12px',
     height: '12px',
@@ -74,23 +75,67 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: '50%',
       boxSizing: 'content-box'
     }
+  },
+  flexParent: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  longTruncate: {
+    flex: 1,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
+  },
+  titlePhantom: {
+    opacity: 0,
+    position: 'absolute',
+    whiteSpace: 'nowrap',
+    pointerEvents: 'none'
   }
 }));
 
 function Row({ label, isMax, isStrokeColor, color = '#000' }) {
   const classes = useStyles({ isMax });
 
+  const [showTooltip, setShowTooltip] = useState(false);
+  const labelRef = useRef(null);
+  const labelPhantomRef = useRef(null);
+
+  useEffect(() => {
+    if (!labelPhantomRef?.current || !labelRef?.current) {
+      return;
+    }
+    const labelSizes = labelRef?.current.getBoundingClientRect();
+    const labelPhantomSizes = labelPhantomRef?.current.getBoundingClientRect();
+    setShowTooltip(labelPhantomSizes.width > labelSizes.width);
+  }, [setShowTooltip, labelPhantomRef, labelRef]);
+
   return (
-    <Grid container item className={classes.legendCategories}>
-      <Tooltip title={isMax ? 'Most representative' : ''} placement='right' arrow>
-        <Box
-          mr={1.5}
-          component='span'
-          className={classes.circle}
-          style={isStrokeColor ? { borderColor: color } : { backgroundColor: color }}
-        />
-      </Tooltip>
-      <Typography variant='overline'>{label}</Typography>
-    </Grid>
+    <Tooltip title={showTooltip ? label : ''} placement='left' arrow>
+      <Grid
+        container
+        item
+        className={[classes.legendCategories, classes.flexParent].join(' ')}
+      >
+        <Tooltip title={isMax ? 'Most representative' : ''} placement='top' arrow>
+          <Box
+            mr={1.5}
+            component='span'
+            className={classes.circle}
+            style={isStrokeColor ? { borderColor: color } : { backgroundColor: color }}
+          />
+        </Tooltip>
+        <Typography ref={labelRef} variant='overline' className={classes.longTruncate}>
+          {label}
+        </Typography>
+        <Typography
+          ref={labelPhantomRef}
+          variant='overline'
+          className={[classes.longTruncate, classes.titlePhantom].join(' ')}
+        >
+          {label}
+        </Typography>
+      </Grid>
+    </Tooltip>
   );
 }

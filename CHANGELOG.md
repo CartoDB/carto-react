@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Display ellipsis and tooltip for long labels in Legend [#408](https://github.com/CartoDB/carto-react/pull/408)
+
 ## 1.3
 
 ### 1.3.0-alpha.9 (2022-05-12)
