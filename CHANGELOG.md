@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Bump deck.gl 8.7.9 [#405](https://github.com/CartoDB/carto-react/pull/405)
 - Fix filters with null as upper or lower bound [#403](https://github.com/CartoDB/carto-react/pull/403)
 - Use static bins in HistogramWidget [#402](https://github.com/CartoDB/carto-react/pull/402)
 - Fix deprecated warning in HistogramWidgetUI [#401](https://github.com/CartoDB/carto-react/pull/401)
