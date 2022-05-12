@@ -9,16 +9,16 @@ import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
  * @param { object } props.source -
  * @param { object= } props.opts - Additional options for the HTTP request
  */
-export async function callStats(props) {
-  assert(props.source, 'callStats: missing source');
-  assert(props.column, 'callStats: missing column');
+export async function getStats(props) {
+  assert(props.source, 'getStats: missing source');
+  assert(props.column, 'getStats: missing column');
 
   const { source, column, opts } = props;
 
   checkCredentials(source.credentials);
 
   if (source.type === MAP_TYPES.TILESET) {
-    throw new Error('callStats cannot be used with static tilesets');
+    throw new Error('getStats cannot be used with static tilesets');
   }
   assert(
     source.credentials.apiVersion === API_VERSIONS.V3,
