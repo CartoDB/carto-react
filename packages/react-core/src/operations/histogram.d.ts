@@ -5,7 +5,6 @@ export function histogram(args: {
   data: Record<string, unknown>[];
   valuesColumns?: string[];
   joinOperation?: AggregationTypes;
-  ticks?: number[];
-  bins?: number;
+  ticks: number[];
   operation?: AggregationTypes;
 }): HistogramFeature;

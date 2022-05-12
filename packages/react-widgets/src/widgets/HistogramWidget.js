@@ -22,6 +22,8 @@ const EMPTY_ARRAY = [];
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's column to get the data from.
+ * @param  {number} props.min - Min value of the indicated column
+ * @param  {number} props.max - Max value of the indicated column
  * @param  {string} [props.operation] - Operation to apply to the column. Must be one of those defined in `AggregationTypes` object.
  * @param  {number[]} [props.ticks] - Array of thresholds for the X axis.
  * @param  {number} [props.bins] - Number of bins to calculate the ticks.
@@ -42,7 +44,9 @@ function HistogramWidget({
   dataSource,
   column,
   operation,
-  ticks: _ticks,
+  ticks: _ticks = [],
+  min,
+  max,
   xAxisFormatter,
   bins,
   formatter,
@@ -61,25 +65,35 @@ function HistogramWidget({
     checkIfSourceIsDroppingFeature(state, dataSource)
   );
 
-  const { data: _data, isLoading } = useWidgetFetch(getHistogram, {
+  const ticks = useMemo(() => {
+    if (_ticks?.length) return _ticks;
+
+    if (bins) {
+      if (!Number.isFinite(min) || !Number.isFinite(max)) {
+        throw new Error('Cannot calculate histogram without valid data');
+      }
+
+      const result = [];
+      for (let i = 1; i < bins; i += 1) {
+        ticks.push(min + (max - min) * (i / bins));
+      }
+      return result;
+    }
+
+    throw new Error('You must specify either ticks or bins.');
+  }, [min, max, _ticks, bins]);
+
+  let { data = EMPTY_ARRAY, isLoading } = useWidgetFetch(getHistogram, {
     id,
     dataSource,
     params: {
       column,
       operation,
-      ticks: _ticks,
-      bins
+      ticks
     },
     global,
     onError
   });
-
-  const {
-    min = Number.MIN_SAFE_INTEGER,
-    max = Number.MAX_SAFE_INTEGER,
-    data = [],
-    ticks = _ticks
-  } = _data || {};
 
   const thresholdsFromFilters = useWidgetFilterValues({
     dataSource,
@@ -164,6 +178,8 @@ HistogramWidget.propTypes = {
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
   column: PropTypes.string.isRequired,
+  min: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
   ticks: PropTypes.arrayOf(PropTypes.number),
   bins: PropTypes.number,
   operation: PropTypes.oneOf(Object.values(AggregationTypes)),
