@@ -44,6 +44,7 @@ function BarWidgetUI(props) {
     yAxisFormatter,
     stacked,
     height,
+    filterable,
     animation
   } = useProcessedProps(props);
 
@@ -171,6 +172,7 @@ function BarWidgetUI(props) {
         type: 'bar',
         name: series[componentIdx] || '',
         animation,
+        barCategoryGap: '10px',
         data: row.map((value, dataIdx) => {
           const isSelected = selectedBars.some(
             ([sDataIdx, sComponentIdx = 0]) =>
@@ -201,9 +203,10 @@ function BarWidgetUI(props) {
   const options = useMemo(
     () => ({
       grid: {
-        left: theme.spacing(0.5),
+        left: xAxisData.length >= 4 ? calculateMargin(xAxisFormatter(xAxisData[0])) : 0,
         top: theme.spacing(2),
-        right: theme.spacing(0.5),
+        right:
+          xAxisData.length >= 4 ? calculateMargin(xAxisFormatter(xAxisData[xAxisData.length - 1])) : 0,
         bottom: theme.spacing(0),
         containLabel: true
       },
@@ -218,7 +221,7 @@ function BarWidgetUI(props) {
       yAxis: yAxisOptions,
       series: seriesOptions
     }),
-    [theme, colors, tooltipOptions, xAxisOptions, yAxisOptions, seriesOptions]
+    [xAxisData, theme, colors, tooltipOptions, xAxisOptions, yAxisOptions, seriesOptions, xAxisFormatter]
   );
 
   const clearBars = () => {
@@ -244,11 +247,11 @@ function BarWidgetUI(props) {
           selectedBarsCp.splice(selectedIdx, 1);
         }
 
-        const selectedBarsAsObject = selectedBarsCp.map(
+        let selectedBarsAsObject = selectedBarsCp.map(
           ([sDataIndex, sComponentIndex = 0]) => ({
             xAxis: xAxisData[sDataIndex],
-            yAxis: series[sComponentIndex],
-            value: yAxisData[sComponentIndex][sDataIndex]
+            serie: series[sComponentIndex],
+            yAxis: yAxisData[sComponentIndex][sDataIndex]
           })
         );
 
@@ -265,10 +268,13 @@ function BarWidgetUI(props) {
   );
 
   const onEvents = useMemo(
-    () => ({
-      click: clickEvent
-    }),
-    [clickEvent]
+    () =>
+      filterable
+        ? {
+            click: clickEvent
+          }
+        : {},
+    [filterable, clickEvent]
   );
 
   return (
@@ -314,17 +320,20 @@ BarWidgetUI.defaultProps = {
   labels: {},
   onSelectedBarsChange: null,
   animation: true,
+  filterable: true,
   stacked: true
 };
 
+const numberOrString = PropTypes.oneOfType([PropTypes.number, PropTypes.string]);
+
 BarWidgetUI.propTypes = {
   yAxisData: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-    PropTypes.arrayOf(PropTypes.number)
+    PropTypes.arrayOf(PropTypes.arrayOf(numberOrString)),
+    PropTypes.arrayOf(numberOrString)
   ]).isRequired,
-  xAxisData: PropTypes.arrayOf(PropTypes.string).isRequired,
+  xAxisData: PropTypes.arrayOf(numberOrString).isRequired,
   series: PropTypes.arrayOf(PropTypes.string),
-  colors: PropTypes.arrayOf(PropTypes.string),
+  colors: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   stacked: PropTypes.bool,
   labels: PropTypes.object,
   tooltip: PropTypes.bool,
@@ -336,13 +345,21 @@ BarWidgetUI.propTypes = {
     PropTypes.arrayOf(PropTypes.number)
   ]),
   onSelectedBarsChange: PropTypes.func,
-  height: PropTypes.number,
+  height: numberOrString,
+  filterable: PropTypes.bool,
   animation: PropTypes.bool
 };
 
 export default BarWidgetUI;
 
 // Aux
+function calculateMargin(label = '') {
+  // For less than 8 characters, the margin isn't necessary
+  if (label.length <= 8) return 0;
+  // Calculated manually. For each 6 characters, the margin should be 6.5px
+  return (label.length * 6.5) / 6;
+}
+
 function defaultTooltipFormatter(params, xAxisFormatter, yAxisFormatter) {
   if (!params || !params?.length) {
     return null;
@@ -389,7 +406,8 @@ function useProcessedProps({
   // Colors
   const colors = useMemo(() => {
     // Use colors props if exists
-    if (_colors) return _colors;
+    if (typeof _colors === 'string') return [_colors];
+    if (Array.isArray(_colors) && _colors.length) return _colors;
 
     // Use secondary.main, if yAxisData is flat or series has a unique element
     if (yAxisData.length <= 1 || series.length === 1)

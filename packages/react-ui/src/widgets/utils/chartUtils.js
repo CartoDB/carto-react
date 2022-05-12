@@ -1,5 +1,3 @@
-import { processFormatterRes } from './formatterUtils';
-
 export function areChartPropsEqual(optionPrev, optionNext) {
   const tooltipFormatterPrev = optionPrev?.tooltip?.formatter;
   const tooltipFormatterNext = optionNext.tooltip?.formatter;
