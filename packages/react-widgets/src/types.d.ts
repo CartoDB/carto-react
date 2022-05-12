@@ -46,7 +46,10 @@ export type GeocoderWidget = {
 }
 
 export type HistogramWidget = {
-  ticks: number[],
+  ticks?: number[],
+  bins?: number;
+  min: number;
+  max: number;
   xAxisformatter?: Function,
   tooltip?: boolean,
 } & CommonWidgetProps & MonoColumnWidgetProps;

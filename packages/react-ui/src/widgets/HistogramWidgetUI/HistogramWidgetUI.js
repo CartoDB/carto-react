@@ -6,6 +6,7 @@ import { darken, Grid, Link, makeStyles, Typography, useTheme } from '@material-
 import { processFormatterRes } from '../utils/formatterUtils';
 import detectTouchscreen from '../utils/detectTouchScreen';
 import useHistogramInteractivity from './useHistogramInteractivity';
+import { cartoThemeOptions } from '../..';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 
@@ -44,6 +45,12 @@ function HistogramWidgetUI({
 }) {
   const classes = useStyles();
   const theme = useTheme();
+
+  // TODO: JUST FOR BUILDER LINK
+  theme.typography.charts = cartoThemeOptions.typography.charts;
+  theme.palette.charts = cartoThemeOptions.palette.charts;
+  theme.palette.secondary.main = cartoThemeOptions.palette.secondary.main;
+  theme.palette.other = cartoThemeOptions.palette.other;
 
   const filterable = _filterable && !!onSelectedBarsChange;
 
@@ -149,7 +156,8 @@ function HistogramWidgetUI({
         showMinLabel: false,
         inside: true,
         color: (value) => {
-          const maxValue = Math.max(...data.map((d) => d || Number.MIN_SAFE_INTEGER));
+          const maxValue =
+            Math.max(...data.map((d) => d ?? Number.MIN_SAFE_INTEGER)) || 1;
           let col = 'transparent';
           if (value >= maxValue) {
             col = theme.palette.charts.maxLabel;
@@ -172,15 +180,6 @@ function HistogramWidgetUI({
 
   // Series
   const seriesOptions = useMemo(() => {
-    const dataWithColor = formattedData.map((item, idx) => {
-      const isDisabled = selectedBars.length && selectedBars.indexOf(idx) === -1;
-      const color = isDisabled
-        ? theme.palette.charts.disabled
-        : theme.palette.secondary.main;
-
-      return { value: item, itemStyle: { color } };
-    });
-
     return {
       type: 'custom',
       cursor: 'pointer',
@@ -188,10 +187,19 @@ function HistogramWidgetUI({
       renderItem: function (params, api) {
         const isLast = params.dataIndex === formattedData.length - 1;
         const isFirst = params.dataIndex === 0;
+
+        // Fill
+        const isDisabled =
+          selectedBars.length && selectedBars.indexOf(params.dataIndex) === -1;
+        const fill = isDisabled
+          ? theme.palette.charts.disabled
+          : theme.palette.secondary.main;
+
+        // Coords to build the bar
         const yValue = api.value(2);
         const [x, y] = api.coord([api.value(0), yValue]);
         const [width, height] = api.size([api.value(1) - api.value(0), yValue]);
-        const style = api.style();
+
         return {
           type: 'rect',
           shape: {
@@ -200,11 +208,11 @@ function HistogramWidgetUI({
             width: width - (isLast ? 0 : 1),
             height
           },
-          style,
+          style: { fill },
           ...(!IS_TOUCH_SCREEN && {
             emphasis: {
               style: {
-                fill: darken(style.fill, 0.25)
+                fill: darken(fill, 0.25)
               }
             }
           })
@@ -215,7 +223,7 @@ function HistogramWidgetUI({
         y: 2,
         tooltip: [0, 1, 2]
       },
-      data: dataWithColor,
+      data: formattedData,
       animation
     };
   }, [
