@@ -111,31 +111,31 @@ function Row({ label, isMax, isStrokeColor, color = '#000' }) {
   }, [setShowTooltip, labelPhantomRef, labelRef]);
 
   return (
-    <Grid
-      container
-      item
-      className={[classes.legendCategories, classes.flexParent].join(' ')}
-    >
-      <Tooltip title={isMax ? 'Most representative' : ''} placement='right' arrow>
-        <Box
-          mr={1.5}
-          component='span'
-          className={classes.circle}
-          style={isStrokeColor ? { borderColor: color } : { backgroundColor: color }}
-        />
-      </Tooltip>
-      <Tooltip title={showTooltip ? label : ''} placement='right' arrow>
+    <Tooltip title={showTooltip ? label : ''} placement='left' arrow>
+      <Grid
+        container
+        item
+        className={[classes.legendCategories, classes.flexParent].join(' ')}
+      >
+        <Tooltip title={isMax ? 'Most representative' : ''} placement='top' arrow>
+          <Box
+            mr={1.5}
+            component='span'
+            className={classes.circle}
+            style={isStrokeColor ? { borderColor: color } : { backgroundColor: color }}
+          />
+        </Tooltip>
         <Typography ref={labelRef} variant='overline' className={classes.longTruncate}>
           {label}
         </Typography>
-      </Tooltip>
-      <Typography
-        ref={labelPhantomRef}
-        variant='overline'
-        className={[classes.longTruncate, classes.titlePhantom].join(' ')}
-      >
-        {label}
-      </Typography>
-    </Grid>
+        <Typography
+          ref={labelPhantomRef}
+          variant='overline'
+          className={[classes.longTruncate, classes.titlePhantom].join(' ')}
+        >
+          {label}
+        </Typography>
+      </Grid>
+    </Tooltip>
   );
 }
