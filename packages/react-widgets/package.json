@@ -35,7 +35,7 @@
     "precommit": "lint-staged"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.8",
+    "@babel/core": "^7.17.10",
     "@babel/plugin-proposal-optional-chaining": "^7.13.8",
     "@babel/plugin-transform-runtime": "^7.13.9",
     "@babel/preset-env": "^7.13.9",
