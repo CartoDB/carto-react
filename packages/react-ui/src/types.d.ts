@@ -11,7 +11,7 @@ export type WrapperWidgetUI = {
   children?: React.ReactNode;
 };
 
-export type CategoryWidgetUIData = { name: string; value: number }[];
+export type CategoryWidgetUIData = { name: number | string | boolean; value: number }[];
 export type CategoryWidgetUI = {
   data: CategoryWidgetUIData;
   isLoading?: boolean;

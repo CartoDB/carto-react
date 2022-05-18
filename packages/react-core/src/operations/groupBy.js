@@ -29,7 +29,7 @@ export function groupValuesByColumn({
     }
 
     return accumulator;
-  }, new Map());
+  }, new Map()); // We use a map to be able to maintain the type in the key value
 
 
   const targetOperation = aggregationFunctions[operation];
