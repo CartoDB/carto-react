@@ -2,6 +2,9 @@
 
 ## Not released
 
+- Fix map filtering with CategoryWidget using boolean values [#411](https://github.com/CartoDB/carto-react/pull/411)
+
+
 ## 1.3
 
 ### 1.3.0-alpha.10 (2022-05-12)
