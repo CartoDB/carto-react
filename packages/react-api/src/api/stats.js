@@ -6,8 +6,8 @@ import { getTileJson } from './tilejson';
  * Execute a stats service request.
  *
  * @param { object } props
- * @param { string } props.column -
- * @param { object } props.source -
+ * @param { string } props.column - column to get stats for
+ * @param { object } props.source - source that owns the column
  * @param { object= } props.opts - Additional options for the HTTP request
  */
 export async function getStats(props) {
