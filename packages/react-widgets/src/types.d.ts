@@ -48,8 +48,8 @@ export type GeocoderWidget = {
 export type HistogramWidget = {
   ticks?: number[],
   bins?: number;
-  min: number;
-  max: number;
+  min?: number;
+  max?: number;
   xAxisformatter?: Function,
   tooltip?: boolean,
 } & CommonWidgetProps & MonoColumnWidgetProps;

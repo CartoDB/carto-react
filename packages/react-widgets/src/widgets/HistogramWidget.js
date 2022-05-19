@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import {
@@ -12,6 +12,8 @@ import { getHistogram } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
+import { getStats } from '@carto/react-api';
+import useWidgetSource from '../hooks/useWidgetSource';
 
 const EMPTY_ARRAY = [];
 
@@ -46,8 +48,8 @@ function HistogramWidget({
   column,
   operation,
   ticks: _ticks = [],
-  min,
-  max,
+  min: _min,
+  max: _max,
   xAxisFormatter,
   bins,
   formatter,
@@ -66,23 +68,40 @@ function HistogramWidget({
     checkIfSourceIsDroppingFeature(state, dataSource)
   );
 
+  const [[min, max], setMinMax] = useState([_min, _max]);
+
+  const source = useWidgetSource({ dataSource, id });
+
+  const hasMinMax =
+    Number.isFinite(min) &&
+    min !== Number.MIN_SAFE_INTEGER &&
+    Number.isFinite(max) &&
+    max !== Number.MAX_SAFE_INTEGER;
+
+  useEffect(() => {
+    if (!hasMinMax) {
+      getStats({ column, source })
+        .then((res) => {
+          const { min, max } = res;
+          setMinMax([min, max]);
+        })
+        .catch((err) => onError?.(err));
+    }
+  }, [column, source, onError, hasMinMax]);
+
   const ticks = useMemo(() => {
     if (_ticks?.length) return _ticks;
 
-    if (bins) {
-      if (!Number.isFinite(min) || !Number.isFinite(max)) {
-        throw new Error('Cannot calculate histogram without valid data');
-      }
-
+    if (bins && hasMinMax) {
       const result = [];
       for (let i = 1; i < bins; i += 1) {
-        ticks.push(min + (max - min) * (i / bins));
+        result.push(min + (max - min) * (i / bins));
       }
       return result;
     }
 
-    throw new Error('You must specify either ticks or bins.');
-  }, [min, max, _ticks, bins]);
+    return [];
+  }, [min, max, _ticks, bins, hasMinMax]);
 
   let { data = EMPTY_ARRAY, isLoading } = useWidgetFetch(getHistogram, {
     id,
@@ -93,7 +112,8 @@ function HistogramWidget({
       ticks
     },
     global,
-    onError
+    onError,
+    enabled: !!ticks.length
   });
 
   const thresholdsFromFilters = useWidgetFilterValues({
@@ -179,8 +199,8 @@ HistogramWidget.propTypes = {
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
   column: PropTypes.string.isRequired,
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
+  min: PropTypes.number,
+  max: PropTypes.number,
   ticks: PropTypes.arrayOf(PropTypes.number),
   bins: PropTypes.number,
   operation: PropTypes.oneOf(Object.values(AggregationTypes)),
@@ -200,6 +220,8 @@ HistogramWidget.propTypes = {
 HistogramWidget.defaultProps = {
   bins: 15,
   ticks: [],
+  min: Number.MIN_SAFE_INTEGER,
+  max: Number.MAX_SAFE_INTEGER,
   operation: AggregationTypes.COUNT,
   tooltip: true,
   animation: true,
