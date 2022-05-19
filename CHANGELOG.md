@@ -2,6 +2,19 @@
 
 ## Not released
 
+- Fix map filtering with CategoryWidget using boolean values [#411](https://github.com/CartoDB/carto-react/pull/411)
+
+
+## 1.3
+
+### 1.3.0-alpha.10 (2022-05-12)
+
+- Fixes in HistogramWidgetUI [#407](https://github.com/CartoDB/carto-react/pull/407)
+- Display ellipsis and tooltip for long labels in Legend [#408](https://github.com/CartoDB/carto-react/pull/408)
+
+### 1.3.0-alpha.9 (2022-05-12)
+
+- Add BarWidget/BarWidgetUI [#229](https://github.com/CartoDB/carto-react/pull/229)
 - Bump deck.gl 8.7.9 [#405](https://github.com/CartoDB/carto-react/pull/405)
 - Fix filters with null as upper or lower bound [#403](https://github.com/CartoDB/carto-react/pull/403)
 - Use static bins in HistogramWidget [#402](https://github.com/CartoDB/carto-react/pull/402)
@@ -10,8 +23,6 @@
 - Pass layer obj to LegendComponent [#398](https://github.com/CartoDB/carto-react/pull/398)
 - Fix HistogramWidgetUI min/max placement [#397](https://github.com/CartoDB/carto-react/pull/397)
 - Fix histogram query with filters [#396](https://github.com/CartoDB/carto-react/pull/396)
-
-## 1.3
 
 ### 1.3.0-alpha.8 (2022-04-29)
 

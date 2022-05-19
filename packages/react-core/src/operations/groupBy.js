@@ -11,11 +11,11 @@ export function groupValuesByColumn({
   if (Array.isArray(data) && data.length === 0) {
     return null;
   }
-
   const groups = data.reduce((accumulator, item) => {
     const group = item[keysColumn];
 
-    accumulator[group] = accumulator[group] || [];
+    const values = accumulator.get(group) || []
+    accumulator.set(group, values)
 
     const aggregatedValue = aggregate(item, valuesColumns, joinOperation);
 
@@ -24,16 +24,18 @@ export function groupValuesByColumn({
       aggregatedValue !== undefined;
 
     if (isValid) {
-      accumulator[group].push(aggregatedValue);
+      values.push(aggregatedValue)
+      accumulator.set(group, values);
     }
 
     return accumulator;
-  }, {});
+  }, new Map()); // We use a map to be able to maintain the type in the key value
+
 
   const targetOperation = aggregationFunctions[operation];
 
   if (targetOperation) {
-    return Object.entries(groups).map(([name, value]) => ({
+    return Array.from(groups).map(([name, value]) => ({
       name,
       value: targetOperation(value)
     }));

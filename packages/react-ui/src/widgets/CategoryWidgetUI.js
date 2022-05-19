@@ -294,7 +294,7 @@ function CategoryWidgetUI(props) {
       if (name === REST_CATEGORY) {
         return `Others ${searchable ? '' : `(${getCategoriesCount()})`}`;
       } else {
-        return labels[name] || name;
+        return labels[name] || `${name}`;
       }
     },
     [getCategoriesCount, labels, searchable]
@@ -614,7 +614,7 @@ CategoryWidgetUI.defaultProps = {
 CategoryWidgetUI.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      name: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]).isRequired,
       value: PropTypes.number
     })
   ),

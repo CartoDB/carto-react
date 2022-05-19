@@ -2,6 +2,7 @@ import { cartoThemeOptions } from './theme/carto-theme';
 import WrapperWidgetUI from './widgets/WrapperWidgetUI';
 import CategoryWidgetUI from './widgets/CategoryWidgetUI';
 import FormulaWidgetUI from './widgets/FormulaWidgetUI';
+import BarWidgetUI from './widgets/BarWidgetUI';
 import HistogramWidgetUI from './widgets/HistogramWidgetUI/HistogramWidgetUI';
 import PieWidgetUI from './widgets/PieWidgetUI';
 import LegendWidgetUI, { LEGEND_TYPES } from './widgets/legend/LegendWidgetUI';
@@ -35,6 +36,7 @@ export {
   CategoryWidgetUI,
   FormulaWidgetUI,
   HistogramWidgetUI,
+  BarWidgetUI,
   PieWidgetUI,
   ScatterPlotWidgetUI,
   TimeSeriesWidgetUI,
