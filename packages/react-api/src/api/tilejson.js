@@ -11,6 +11,8 @@ export async function getTileJson(props) {
   const { source } = props;
 
   assert(source, 'getTileJson: missing source');
+  assert(source.connection, 'getTileJson: missing connection');
+  assert(source.data, 'getTileJson: missing data');
   assert(
     source.type === MAP_TYPES.TILESET,
     'getTileJson: source must be a static tileset'
