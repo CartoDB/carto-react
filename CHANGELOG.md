@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Autocalculate min/max in HistogramWidget [#412](https://github.com/CartoDB/carto-react/pull/412)
 - Implement Stats API fn [#404](https://github.com/CartoDB/carto-react/pull/404)
 - Fix map filtering with CategoryWidget using boolean values [#411](https://github.com/CartoDB/carto-react/pull/411)
 

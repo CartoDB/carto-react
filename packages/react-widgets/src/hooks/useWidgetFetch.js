@@ -7,7 +7,7 @@ import useWidgetSource from './useWidgetSource';
 
 export default function useWidgetFetch(
   modelFn,
-  { id, dataSource, params, global, onError }
+  { id, dataSource, params, global, onError, enabled = true }
 ) {
   // State
   const [data, setData] = useState();
@@ -22,7 +22,7 @@ export default function useWidgetFetch(
     () => {
       setIsLoading(true);
 
-      if (source && isSourceReady) {
+      if (source && isSourceReady && enabled) {
         modelFn({
           source,
           ...params,
@@ -41,7 +41,7 @@ export default function useWidgetFetch(
           });
       }
     },
-    [params, source, onError, isSourceReady, global],
+    [params, source, onError, isSourceReady, global, enabled],
     dequal
   );
 

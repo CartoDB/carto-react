@@ -6,7 +6,6 @@ import { darken, Grid, Link, makeStyles, Typography, useTheme } from '@material-
 import { processFormatterRes } from '../utils/formatterUtils';
 import detectTouchscreen from '../utils/detectTouchScreen';
 import useHistogramInteractivity from './useHistogramInteractivity';
-import { cartoThemeOptions } from '../..';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 
