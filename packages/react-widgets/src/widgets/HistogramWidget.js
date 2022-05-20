@@ -12,7 +12,7 @@ import { getHistogram } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
-import { getStats } from '@carto/react-api';
+import { _getStats } from '@carto/react-api';
 import useWidgetSource from '../hooks/useWidgetSource';
 
 const EMPTY_ARRAY = [];
@@ -80,7 +80,7 @@ function HistogramWidget({
 
   useEffect(() => {
     if (!hasMinMax) {
-      getStats({ column, source })
+      _getStats({ column, source })
         .then((res) => {
           const { min, max } = res;
           setMinMax([min, max]);
