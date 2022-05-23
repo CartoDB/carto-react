@@ -1,12 +1,6 @@
-import { executeSQL } from '@carto/react-api/';
-import { AggregationTypes } from '@carto/react-core/';
+import { _executeModel } from '@carto/react-api/';
 import { Methods, executeTask } from '@carto/react-workers';
-import {
-  formatOperationColumn,
-  formatTableNameWithFilters,
-  normalizeObjectKeys,
-  wrapModelCall
-} from './utils';
+import { normalizeObjectKeys, wrapModelCall } from './utils';
 
 export function getCategories(props) {
   return wrapModelCall(props, fromLocal, fromRemote);
@@ -28,29 +22,15 @@ function fromLocal(props) {
 
 // From remote
 function fromRemote(props) {
-  const { source, abortController } = props;
-  const { credentials, connection } = source;
+  const { source, abortController, ...params } = props;
 
-  const query = buildSqlQueryToGetCategories(props);
-
-  return executeSQL({
-    credentials,
-    query,
-    connection,
+  return _executeModel({
+    model: 'category',
+    source,
+    params: {
+      ...params,
+      operationColumn: params.operationColumn || params.column
+    },
     opts: { abortController }
-  }).then(normalizeObjectKeys);
-}
-
-function buildSqlQueryToGetCategories(props) {
-  const { column, operation, operationColumn, joinOperation } = props;
-
-  const selectValueClause = `${operation}(${
-    operation === AggregationTypes.COUNT
-      ? '*'
-      : formatOperationColumn(operationColumn || column, joinOperation)
-  }) as value`;
-
-  return `SELECT COALESCE(${column}, 'null') as name, ${selectValueClause} FROM ${formatTableNameWithFilters(
-    props
-  )} GROUP BY ${column}`.trim();
+  }).then((res) => normalizeObjectKeys(res.rows));
 }

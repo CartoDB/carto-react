@@ -1,4 +1,5 @@
 import { getStats } from '../../src/api/stats';
+import { QUERY_SOURCE, TABLE_SOURCE, TILESET_SOURCE } from '../dataMocks';
 
 const TABLE_AND_QUERY_STATS = {
   attribute: 'injuries',
@@ -76,7 +77,7 @@ describe('stats', () => {
       const TABLE_TEST = {
         input: {
           source: {
-            type: 'table',
+            type: TABLE_SOURCE,
             data: 'cartobq.public_account.seattle_collisions',
             connection: 'carto-ps-bq-developers',
             credentials: {
@@ -115,16 +116,7 @@ describe('stats', () => {
     test('query source - should return stats', async () => {
       const QUERY_TEST = {
         input: {
-          source: {
-            type: 'query',
-            data: 'SELECT * FROM `cartobq.public_account.seattle_collisions`',
-            connection: 'carto-ps-bq-developers',
-            credentials: {
-              accessToken: '__test_api_key__',
-              apiBaseUrl: 'https://gcp-us-east1.api.carto.com',
-              apiVersion: 'v3'
-            }
-          },
+          source: QUERY_SOURCE,
           column: 'injuries'
         },
         url: `https://gcp-us-east1.api.carto.com/v3/stats/carto-ps-bq-developers/injuries?q=SELECT+*+FROM+%60cartobq.public_account.seattle_collisions%60`,
@@ -155,16 +147,7 @@ describe('stats', () => {
     test('tileset source - should return stats', async () => {
       const TILESET_TEST = {
         input: {
-          source: {
-            type: 'tileset',
-            data: 'cartobq.public_account.pois',
-            connection: 'carto-ps-bq-developers',
-            credentials: {
-              accessToken: '__test_api_key__',
-              apiBaseUrl: 'https://gcp-us-east1.api.carto.com',
-              apiVersion: 'v3'
-            }
-          },
+          source: TILESET_SOURCE,
           column: 'name'
         },
         output: mockTilestats.layers[0].attributes[0]
