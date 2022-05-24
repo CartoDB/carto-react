@@ -1,6 +1,6 @@
-import { executeSQL, _executeModel } from '@carto/react-api';
+import { _executeModel } from '@carto/react-api';
 import { Methods, executeTask } from '@carto/react-workers';
-import { formatTableNameWithFilters, normalizeObjectKeys, wrapModelCall } from './utils';
+import { normalizeObjectKeys, wrapModelCall } from './utils';
 
 export function getHistogram(props) {
   return wrapModelCall(props, fromLocal, fromRemote);
@@ -23,12 +23,12 @@ function fromLocal(props) {
 async function fromRemote(props) {
   const { source, abortController, ...params } = props;
 
-  const { ticks } = params;
+  const { column, operation, ticks } = params;
 
   const data = await _executeModel({
     model: 'histogram',
     source,
-    params,
+    params: { column, operation, ticks },
     opts: { abortController }
   }).then((res) => normalizeObjectKeys(res.rows));
 

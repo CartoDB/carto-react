@@ -23,13 +23,15 @@ function fromLocal(props) {
 // From remote
 function fromRemote(props) {
   const { source, abortController, ...params } = props;
+  const { column, operation, operationColumn } = params;
 
   return _executeModel({
     model: 'category',
     source,
     params: {
-      ...params,
-      operationColumn: params.operationColumn || params.column
+      column,
+      operation,
+      operationColumn: operationColumn || column
     },
     opts: { abortController }
   }).then((res) => normalizeObjectKeys(res.rows));
