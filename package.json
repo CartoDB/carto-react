@@ -13,6 +13,7 @@
     "@deck.gl/google-maps": "^8.8.0-alpha.4",
     "@deck.gl/layers": "^8.8.0-alpha.4",
     "@deck.gl/mesh-layers": "^8.8.0-alpha.4",
+    "@mapbox/tile-cover": "^3.0.2",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
@@ -28,10 +29,12 @@
     "dequal": "^2.0.2",
     "echarts": "^5.2.0",
     "echarts-for-react": "^3.0.1",
+    "h3-js": "^3.7.2",
     "husky": "^4.3.8",
     "lerna": "^4.0.0",
     "lint-staged": "^10.5.3",
     "nyc": "^15.1.0",
+    "patch-package": "6.4.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
@@ -60,7 +63,8 @@
     "storybook:build": "lerna --scope @carto/react-ui exec -- npm run storybook:build",
     "storybook:publish": "lerna --scope @carto/react-ui exec -- npm run storybook:publish",
     "publish:prerelease": "yarn run build:clean && lerna publish --dist-tag prerelease --force-publish --preid rc",
-    "publish:release": "yarn run build:clean && lerna publish --force-publish"
+    "publish:release": "yarn run build:clean && lerna publish --force-publish",
+    "postinstall": "patch-package"
   },
   "husky": {
     "hooks": {

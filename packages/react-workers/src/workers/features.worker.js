@@ -12,6 +12,10 @@ import {
 import { applySorting } from '../utils/sorting';
 import { Methods } from '../workerMethods';
 
+// It's necessary to solve a known h3-js issue. More information in https://github.com/uber/h3-js/issues/35
+// const document = {};
+// debugger
+
 let currentFeatures;
 let currentGeoJSON;
 let currentTiles;
@@ -53,13 +57,20 @@ onmessage = ({ data: { method, ...params } }) => {
   }
 };
 
-function getTileFeatures({ viewport, geometry, uniqueIdProperty, tileFormat }) {
+function getTileFeatures({
+  viewport,
+  geometry,
+  uniqueIdProperty,
+  tileFormat,
+  spatialIndex
+}) {
   currentFeatures = tileFeatures({
     tiles: currentTiles,
     viewport,
     geometry,
     uniqueIdProperty,
-    tileFormat
+    tileFormat,
+    spatialIndex
   });
   postMessage({ result: true });
 }

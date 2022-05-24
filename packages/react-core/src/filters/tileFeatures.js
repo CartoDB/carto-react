@@ -4,6 +4,7 @@ import intersects from '@turf/boolean-intersects';
 import booleanWithin from '@turf/boolean-within';
 import intersect from '@turf/intersect';
 import transformToTileCoords from '../utils/transformToTileCoords';
+import tileFeaturesSpatialIndex from './tileFeaturesSpatialIndex';
 
 const GEOMETRY_TYPES = Object.freeze({
   Point: 0,
@@ -170,13 +171,18 @@ export function tileFeatures({
   viewport,
   geometry,
   uniqueIdProperty,
-  tileFormat
+  tileFormat,
+  spatialIndex
 }) {
   const map = new Map();
   const geometryToIntersect = getGeometryToIntersect(viewport, geometry);
 
   if (!geometryToIntersect) {
     return [];
+  }
+
+  if (spatialIndex) {
+    return tileFeaturesSpatialIndex({ tiles, geometryToIntersect, spatialIndex });
   }
 
   for (const tile of tiles) {
