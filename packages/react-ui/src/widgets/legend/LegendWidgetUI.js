@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 function LegendWidgetUI({
   className,
   customLegendTypes,
+  customLayerOptions,
   layers = [],
   collapsed,
   onChangeCollapsed,
@@ -67,6 +68,7 @@ function LegendWidgetUI({
         <LegendRows
           layers={layers}
           customLegendTypes={customLegendTypes}
+          customLayerOptions={customLayerOptions}
           onChangeVisibility={onChangeVisibility}
           onChangeOpacity={onChangeOpacity}
           onChangeCollapsed={onChangeLegendRowCollapsed}
@@ -179,6 +181,7 @@ const LEGEND_COMPONENT_BY_TYPE = {
 function LegendRows({
   layers = [],
   customLegendTypes,
+  customLayerOptions,
   onChangeVisibility,
   onChangeOpacity,
   onChangeCollapsed
@@ -187,61 +190,58 @@ function LegendRows({
 
   return (
     <>
-      {layers.map(
-        (
-          layer,
-          index
-        ) => {
-          const {
-            id,
-            title,
-            switchable,
-            visible,
-            showOpacityControl = false,
-            opacity = 1,
-            legend = {}
-          } = layer;
+      {layers.map((layer, index) => {
+        const {
+          id,
+          title,
+          switchable,
+          visible,
+          options,
+          showOpacityControl = false,
+          opacity = 1,
+          legend = {}
+        } = layer;
 
-          const {
-            type = LEGEND_TYPES.CUSTOM,
-            collapsible = true,
-            collapsed = false,
-            note = '',
-            attr = '',
-            children
-          } = legend;
+        const {
+          type = LEGEND_TYPES.CUSTOM,
+          collapsible = true,
+          collapsed = false,
+          note = '',
+          attr = '',
+          children
+        } = legend;
 
-          const isLast = layers.length - 1 === index;
-          const LegendComponent =
-            LEGEND_COMPONENT_BY_TYPE[type] || customLegendTypes[type] || UnknownLegend;
-          const hasChildren =
-            type === LEGEND_TYPES.CUSTOM ? !!children : !!LegendComponent;
+        const isLast = layers.length - 1 === index;
+        const LegendComponent =
+          LEGEND_COMPONENT_BY_TYPE[type] || customLegendTypes[type] || UnknownLegend;
+        const hasChildren = type === LEGEND_TYPES.CUSTOM ? !!children : !!LegendComponent;
 
-          return (
-            <Fragment key={id}>
-              <LegendWrapper
-                id={id}
-                title={title}
-                hasChildren={hasChildren}
-                collapsible={collapsible}
-                collapsed={collapsed}
-                switchable={switchable}
-                visible={visible}
-                note={note}
-                attr={attr}
-                showOpacityControl={showOpacityControl}
-                opacity={opacity}
-                onChangeOpacity={onChangeOpacity}
-                onChangeVisibility={onChangeVisibility}
-                onChangeCollapsed={onChangeCollapsed}
-              >
-                <LegendComponent layer={layer} legend={legend} />
-              </LegendWrapper>
-              {!isSingle && !isLast && <Divider />}
-            </Fragment>
-          );
-        }
-      )}
+        return (
+          <Fragment key={id}>
+            <LegendWrapper
+              id={id}
+              title={title}
+              selectedLayerOptions={options}
+              customLayerOptions={customLayerOptions}
+              hasChildren={hasChildren}
+              collapsible={collapsible}
+              collapsed={collapsed}
+              switchable={switchable}
+              visible={visible}
+              note={note}
+              attr={attr}
+              showOpacityControl={showOpacityControl}
+              opacity={opacity}
+              onChangeOpacity={onChangeOpacity}
+              onChangeVisibility={onChangeVisibility}
+              onChangeCollapsed={onChangeCollapsed}
+            >
+              <LegendComponent layer={layer} legend={legend} />
+            </LegendWrapper>
+            {!isSingle && !isLast && <Divider />}
+          </Fragment>
+        );
+      })}
     </>
   );
 }
