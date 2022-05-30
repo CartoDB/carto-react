@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Use Model API in global widgets [#415](https://github.com/CartoDB/carto-react/pull/415)
+- Use new Query Models in SQL API for global widgets [#415](https://github.com/CartoDB/carto-react/pull/415)
 
 ## 1.3
 
