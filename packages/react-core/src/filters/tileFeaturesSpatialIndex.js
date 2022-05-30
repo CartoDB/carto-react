@@ -3,6 +3,7 @@ import { indexes } from '@mapbox/tile-cover';
 // it we're overwriting the node_module package after install it (check postinstall script in package.json)
 // To know more about the h3-js issue check https://github.com/uber/h3-js/issues/117
 import { h3GetResolution, polyfill } from 'h3-js';
+import bboxClip from '@turf/bbox-clip';
 import { SpatialIndex } from '../operations/constants/SpatialIndexTypes';
 
 export default function tileFeaturesSpatialIndex({
@@ -70,6 +71,23 @@ function getCellsCoverGeometry(geometry, spatialIndex, resolution) {
   }
 
   if (spatialIndex === SpatialIndex.H3) {
-    return polyfill(geometry.coordinates, resolution, true);
+    const bboxWest = [-180, -90, 0, 90];
+    const bboxEast = [0, -90, 180, 90];
+
+    // The current H3 polyfill algorithm can't deal with polygon segments of greater than 180 degrees longitude
+    // so we clip the geometry to be sure that none of them is greater than 180 degrees
+    return polyfill(
+      // @ts-ignore
+      bboxClip(geometry, bboxWest).geometry.coordinates,
+      resolution,
+      true
+    ).concat(
+      polyfill(
+        // @ts-ignore
+        bboxClip(geometry, bboxEast).geometry.coordinates,
+        resolution,
+        true
+      )
+    );
   }
 }
