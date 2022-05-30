@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Use Model API in global widgets [#415](https://github.com/CartoDB/carto-react/pull/415)
+
 ## 1.3
 
 ### 1.3.0-alpha.11 (2022-05-20)
