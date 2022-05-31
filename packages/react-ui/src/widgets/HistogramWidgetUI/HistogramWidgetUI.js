@@ -6,7 +6,6 @@ import { darken, Grid, Link, makeStyles, Typography, useTheme } from '@material-
 import { processFormatterRes } from '../utils/formatterUtils';
 import detectTouchscreen from '../utils/detectTouchScreen';
 import useHistogramInteractivity from './useHistogramInteractivity';
-import { cartoThemeOptions } from '../..';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 
@@ -45,12 +44,6 @@ function HistogramWidgetUI({
 }) {
   const classes = useStyles();
   const theme = useTheme();
-
-  // TODO: JUST FOR BUILDER LINK
-  theme.typography.charts = cartoThemeOptions.typography.charts;
-  theme.palette.charts = cartoThemeOptions.palette.charts;
-  theme.palette.secondary.main = cartoThemeOptions.palette.secondary.main;
-  theme.palette.other = cartoThemeOptions.palette.other;
 
   const filterable = _filterable && !!onSelectedBarsChange;
 
