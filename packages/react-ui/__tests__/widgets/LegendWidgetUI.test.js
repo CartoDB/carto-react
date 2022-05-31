@@ -254,7 +254,7 @@ describe('LegendWidgetUI', () => {
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
   });
 
-  test('with custom layer options', async () => {
+  test('with custom layer options', () => {
     const layer = DATA[8];
     render(
       <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
