@@ -9,7 +9,7 @@ const mockedExecuteModel = jest.fn();
 jest.mock('@carto/react-api', () => ({
   _executeModel: (props) => {
     mockedExecuteModel(props);
-    return Promise.resolve({ rows: { VALUE: RESULT } });
+    return Promise.resolve({ rows: [{ VALUE: RESULT }] });
   }
 }));
 

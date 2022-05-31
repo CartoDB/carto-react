@@ -29,5 +29,5 @@ function fromRemote(props) {
     source,
     params: { column: column || '*', operation },
     opts: { abortController }
-  }).then((res) => normalizeObjectKeys(res.rows));
+  }).then((res) => normalizeObjectKeys(res.rows[0]));
 }
