@@ -12,10 +12,6 @@ import {
 import { applySorting } from '../utils/sorting';
 import { Methods } from '../workerMethods';
 
-// It's necessary to solve a known h3-js issue. More information in https://github.com/uber/h3-js/issues/35
-// const document = {};
-// debugger
-
 let currentFeatures;
 let currentGeoJSON;
 let currentTiles;
