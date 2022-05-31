@@ -1,17 +1,6 @@
-import { executeSQL, _executeModel } from '@carto/react-api/';
-import {
-  AggregationTypes,
-  getMonday,
-  GroupDateTypes,
-  groupValuesByDateColumn
-} from '@carto/react-core/';
+import { _executeModel } from '@carto/react-api/';
 import { Methods, executeTask } from '@carto/react-workers';
-import {
-  formatOperationColumn,
-  formatTableNameWithFilters,
-  normalizeObjectKeys,
-  wrapModelCall
-} from './utils';
+import { normalizeObjectKeys, wrapModelCall } from './utils';
 
 export function getTimeSeries(props) {
   return wrapModelCall(props, fromLocal, fromRemote);
