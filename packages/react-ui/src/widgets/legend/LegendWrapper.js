@@ -83,7 +83,8 @@ export default function LegendWrapper({
         collapsible={hasChildren && collapsible}
         onExpandClick={handleExpandClick}
         onChangeVisibility={handleChangeVisibility}
-        onToggleLayerOptions={showOpacityControl && handleToggleLayerOptions}
+        layerOptionsEnabled={showOpacityControl || layerOptions.length > 0}
+        onToggleLayerOptions={handleToggleLayerOptions}
         isLayerOptionsExpanded={isLayerOptionsExpanded}
       />
       {hasChildren && !!children && (
@@ -152,6 +153,7 @@ function Header({
   expanded,
   onExpandClick,
   onChangeVisibility,
+  layerOptionsEnabled,
   onToggleLayerOptions,
   isLayerOptionsExpanded
 }) {
@@ -173,7 +175,7 @@ function Header({
       >
         <Typography variant='subtitle1'>{title}</Typography>
       </Button>
-      {!!onToggleLayerOptions && (
+      {!!layerOptionsEnabled && (
         <Tooltip title='Layer options' placement='top' arrow>
           <ToggleButton
             selected={isLayerOptionsExpanded}
