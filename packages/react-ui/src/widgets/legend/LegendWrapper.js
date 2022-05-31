@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 export default function LegendWrapper({
   id,
   title,
-  layerOptions = [],
+  layerOptions,
   switchable = true,
   collapsible = true,
   collapsed = false,

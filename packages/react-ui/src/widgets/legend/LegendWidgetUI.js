@@ -207,7 +207,7 @@ function LegendRows({
           title,
           switchable,
           visible,
-          options,
+          options = [],
           showOpacityControl = false,
           opacity = 1,
           legend = {}
