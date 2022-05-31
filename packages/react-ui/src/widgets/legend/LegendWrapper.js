@@ -33,22 +33,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function UnknownLayerOption({ optionKey, layerId }) {
-  return (
-    <p>
-      Unknown layer option{' '}
-      <em>
-        <strong>{optionKey}</strong>
-      </em>
-    </p>
-  );
-}
-
 export default function LegendWrapper({
   id,
   title,
-  selectedLayerOptions = [],
-  customLayerOptions = {},
+  layerOptions = [],
   switchable = true,
   collapsible = true,
   collapsed = false,
@@ -114,10 +102,7 @@ export default function LegendWrapper({
                     opacity={opacity}
                     onChangeOpacity={handleChangeOpacity}
                   />
-                  {selectedLayerOptions.map((key) => {
-                    const Component = customLayerOptions[key] || UnknownLayerOption;
-                    return <Component key={key} optionKey={key} layerId={id} />;
-                  })}
+                  {layerOptions}
                 </Box>
               </Collapse>
               <Note>{note}</Note>

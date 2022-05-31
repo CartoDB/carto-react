@@ -178,6 +178,17 @@ const LEGEND_COMPONENT_BY_TYPE = {
   [LEGEND_TYPES.CUSTOM]: ({ legend }) => legend.children
 };
 
+function UnknownLayerOption({ optionKey }) {
+  return (
+    <p>
+      Unknown layer option{' '}
+      <em>
+        <strong>{optionKey}</strong>
+      </em>
+    </p>
+  );
+}
+
 function LegendRows({
   layers = [],
   customLegendTypes,
@@ -216,13 +227,17 @@ function LegendRows({
           LEGEND_COMPONENT_BY_TYPE[type] || customLegendTypes[type] || UnknownLegend;
         const hasChildren = type === LEGEND_TYPES.CUSTOM ? !!children : !!LegendComponent;
 
+        const layerOptions = options.map((key) => {
+          const Component = customLayerOptions[key] || UnknownLayerOption;
+          return <Component key={key} optionKey={key} layer={layer} />;
+        });
+
         return (
           <Fragment key={id}>
             <LegendWrapper
               id={id}
               title={title}
-              selectedLayerOptions={options}
-              customLayerOptions={customLayerOptions}
+              layerOptions={layerOptions}
               hasChildren={hasChildren}
               collapsible={collapsible}
               collapsed={collapsed}
