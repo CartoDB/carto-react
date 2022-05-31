@@ -8,6 +8,18 @@ const CUSTOM_CHILDREN = <Typography>Legend custom</Typography>;
 
 const MY_CUSTOM_LEGEND_KEY = 'my-custom-legend';
 
+const LAYER_OPTIONS = {
+  PALETTE_SELECTOR: 'PALETTE_SELECTOR'
+};
+
+const LAYER_OPTIONS_COMPONENTS = {
+  [LAYER_OPTIONS.PALETTE_SELECTOR]: PaletteSelector
+};
+
+function PaletteSelector() {
+  return <p>PaletteSelector</p>;
+}
+
 describe('LegendWidgetUI', () => {
   const DATA = [
     {
@@ -94,6 +106,20 @@ describe('LegendWidgetUI', () => {
       legend: {
         children: CUSTOM_CHILDREN
       }
+    },
+    {
+      title: 'Store types',
+      visible: true,
+      options: [LAYER_OPTIONS.PALETTE_SELECTOR],
+      legend: {
+        type: 'category',
+        labels: ['category1', 'category2', 'other'],
+        colors: [
+          [80, 20, 85],
+          [128, 186, 90],
+          [231, 63, 116]
+        ]
+      }
     }
   ];
   const Widget = (props) => getMaterialUIContext(<LegendWidgetUI {...props} />);
@@ -171,7 +197,10 @@ describe('LegendWidgetUI', () => {
       ></Widget>
     );
     expect(MyCustomLegendComponent).toHaveBeenCalled();
-    expect(MyCustomLegendComponent).toHaveBeenCalledWith({ layer: DATA[6], legend: DATA[6].legend }, {});
+    expect(MyCustomLegendComponent).toHaveBeenCalledWith(
+      { layer: DATA[6], legend: DATA[6].legend },
+      {}
+    );
     expect(screen.getByText('Test')).toBeInTheDocument();
   });
 
@@ -227,5 +256,10 @@ describe('LegendWidgetUI', () => {
     );
 
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
+  });
+
+  test('custom layer options', () => {
+    render(<Widget layers={[DATA[8]]} customLayerOptions={LAYER_OPTIONS_COMPONENTS} />);
+    expect(screen.queryByText('PaletteSelector')).toBeInTheDocument();
   });
 });
