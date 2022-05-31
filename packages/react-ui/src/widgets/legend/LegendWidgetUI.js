@@ -81,12 +81,14 @@ function LegendWidgetUI({
 LegendWidgetUI.defaultProps = {
   layers: [],
   customLegendTypes: {},
+  customLayerOptions: {},
   collapsed: false
 };
 
 LegendWidgetUI.propTypes = {
   className: PropTypes.string,
   customLegendTypes: PropTypes.objectOf(PropTypes.func),
+  customLayerOptions: PropTypes.objectOf(PropTypes.func),
   layers: PropTypes.array,
   collapsed: PropTypes.bool,
   onChangeCollapsed: PropTypes.func,
