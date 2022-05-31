@@ -85,7 +85,7 @@ describe('LegendWidgetUI', () => {
       }
     },
     {
-      id: 'custom',
+      id: 'custom_key',
       title: 'Single Layer',
       visible: true,
       showOpacityControl: true,
@@ -98,7 +98,7 @@ describe('LegendWidgetUI', () => {
       }
     },
     {
-      id: 'custom',
+      id: 'custom_children',
       title: 'Single Layer',
       visible: true,
       showOpacityControl: true,
@@ -108,11 +108,11 @@ describe('LegendWidgetUI', () => {
       }
     },
     {
+      id: 'palette',
       title: 'Store types',
       visible: true,
       options: [LAYER_OPTIONS.PALETTE_SELECTOR],
       legend: {
-        type: 'category',
         labels: ['category1', 'category2', 'other'],
         colors: [
           [80, 20, 85],
@@ -121,6 +121,20 @@ describe('LegendWidgetUI', () => {
         ]
       }
     }
+    // {
+    //   id: 'unknown',
+    //   title: 'Store types',
+    //   visible: true,
+    //   options: ['unknown'],
+    //   legend: {
+    //     labels: ['category1', 'category2', 'other'],
+    //     colors: [
+    //       [80, 20, 85],
+    //       [128, 186, 90],
+    //       [231, 63, 116]
+    //     ]
+    //   }
+    // }
   ];
   const Widget = (props) => getMaterialUIContext(<LegendWidgetUI {...props} />);
 
@@ -258,8 +272,25 @@ describe('LegendWidgetUI', () => {
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
   });
 
-  test('custom layer options', () => {
-    render(<Widget layers={[DATA[8]]} customLayerOptions={LAYER_OPTIONS_COMPONENTS} />);
-    expect(screen.queryByText('PaletteSelector')).toBeInTheDocument();
+  test('with custom layer options', () => {
+    const layer = DATA[8];
+    const LegendOptionComponent = jest.fn();
+    LegendOptionComponent.mockReturnValue(<p>PaletteSelector</p>);
+    render(
+      <Widget
+        layers={[layer]}
+        customLayerOptions={{ [LAYER_OPTIONS.PALETTE_SELECTOR]: LegendOptionComponent }}
+      ></Widget>
+    );
+    expect(LegendOptionComponent).toHaveBeenCalled();
+    expect(LegendOptionComponent).toHaveBeenCalledWith(
+      { layer, optionKey: LAYER_OPTIONS.PALETTE_SELECTOR },
+      {}
+    );
+    expect(screen.getByText('PaletteSelector')).toBeInTheDocument();
   });
+  // test('with custom layer options - unknown option', () => {
+  //   render(<LegendWidgetUI layers={[DATA[9]]} customLayerOptions={LAYER_OPTIONS_COMPONENTS} />);
+  //   expect(screen.queryByText('Unknown layer option unknown')).toBeInTheDocument();
+  // });
 });

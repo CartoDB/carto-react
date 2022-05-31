@@ -99,10 +99,12 @@ export default function LegendWrapper({
               {children}
               <Collapse in={isLayerOptionsExpanded} timeout='auto' unmountOnExit>
                 <Box className={classes.layerOptionsWrapper} mt={2}>
-                  <OpacityControl
-                    opacity={opacity}
-                    onChangeOpacity={handleChangeOpacity}
-                  />
+                  {showOpacityControl && (
+                    <OpacityControl
+                      opacity={opacity}
+                      onChangeOpacity={handleChangeOpacity}
+                    />
+                  )}
                   {layerOptions}
                 </Box>
               </Collapse>
