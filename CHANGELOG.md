@@ -2,11 +2,12 @@
 
 ## Not released
 
+- Add layer options extension mechanism in legend [#416](https://github.com/CartoDB/carto-react/pull/416) 
+
 ## 1.3
 
 ### 1.3.0-alpha.11 (2022-05-20)
 
-- Add layer options extension mechanism in legend [#416](https://github.com/CartoDB/carto-react/pull/416) 
 - Bump deck.gl 8.8.0-alpha.4 [#413](https://github.com/CartoDB/carto-react/pull/413)
 - Autocalculate min/max in HistogramWidget [#412](https://github.com/CartoDB/carto-react/pull/412)
 - Implement Stats API fn [#404](https://github.com/CartoDB/carto-react/pull/404)
