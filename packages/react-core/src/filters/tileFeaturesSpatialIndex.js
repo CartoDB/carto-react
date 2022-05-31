@@ -76,6 +76,7 @@ function getCellsCoverGeometry(geometry, spatialIndex, resolution) {
 
     // The current H3 polyfill algorithm can't deal with polygon segments of greater than 180 degrees longitude
     // so we clip the geometry to be sure that none of them is greater than 180 degrees
+    // https://github.com/uber/h3-js/issues/24#issuecomment-431893796
     return polyfill(
       // @ts-ignore
       bboxClip(geometry, bboxWest).geometry.coordinates,
