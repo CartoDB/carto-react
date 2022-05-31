@@ -3,6 +3,7 @@ import { getMaterialUIContext } from './testUtils';
 import LegendWidgetUI from '../../src/widgets/legend/LegendWidgetUI';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Typography } from '@material-ui/core';
+import { act } from '@testing-library/react-hooks';
 
 const CUSTOM_CHILDREN = <Typography>Legend custom</Typography>;
 
@@ -113,28 +114,9 @@ describe('LegendWidgetUI', () => {
       visible: true,
       options: [LAYER_OPTIONS.PALETTE_SELECTOR],
       legend: {
-        labels: ['category1', 'category2', 'other'],
-        colors: [
-          [80, 20, 85],
-          [128, 186, 90],
-          [231, 63, 116]
-        ]
+        children: CUSTOM_CHILDREN
       }
     }
-    // {
-    //   id: 'unknown',
-    //   title: 'Store types',
-    //   visible: true,
-    //   options: ['unknown'],
-    //   legend: {
-    //     labels: ['category1', 'category2', 'other'],
-    //     colors: [
-    //       [80, 20, 85],
-    //       [128, 186, 90],
-    //       [231, 63, 116]
-    //     ]
-    //   }
-    // }
   ];
   const Widget = (props) => getMaterialUIContext(<LegendWidgetUI {...props} />);
 
@@ -272,25 +254,24 @@ describe('LegendWidgetUI', () => {
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
   });
 
-  test('with custom layer options', () => {
+  test('with custom layer options', async () => {
     const layer = DATA[8];
-    const LegendOptionComponent = jest.fn();
-    LegendOptionComponent.mockReturnValue(<p>PaletteSelector</p>);
     render(
-      <Widget
-        layers={[layer]}
-        customLayerOptions={{ [LAYER_OPTIONS.PALETTE_SELECTOR]: LegendOptionComponent }}
-      ></Widget>
+      <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
     );
-    expect(LegendOptionComponent).toHaveBeenCalled();
-    expect(LegendOptionComponent).toHaveBeenCalledWith(
-      { layer, optionKey: LAYER_OPTIONS.PALETTE_SELECTOR },
-      {}
-    );
+    const layerOptionsBtn = screen.getByTitle('Layer options');
+    expect(layerOptionsBtn).toBeInTheDocument();
+    layerOptionsBtn.click();
     expect(screen.getByText('PaletteSelector')).toBeInTheDocument();
   });
-  // test('with custom layer options - unknown option', () => {
-  //   render(<LegendWidgetUI layers={[DATA[9]]} customLayerOptions={LAYER_OPTIONS_COMPONENTS} />);
-  //   expect(screen.queryByText('Unknown layer option unknown')).toBeInTheDocument();
-  // });
+  test('with custom layer options - unknown option', () => {
+    const layer = { ...DATA[8], options: ['unknown'] };
+    render(
+      <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
+    );
+    const layerOptionsBtn = screen.getByTitle('Layer options');
+    expect(layerOptionsBtn).toBeInTheDocument();
+    layerOptionsBtn.click();
+    expect(screen.getByText('Unknown layer option')).toBeInTheDocument();
+  });
 });
