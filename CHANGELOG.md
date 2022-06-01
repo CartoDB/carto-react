@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Use new Query Models in SQL API for global widgets [#415](https://github.com/CartoDB/carto-react/pull/415)
+
 ## 1.3
 
 ### 1.3.0-alpha.11 (2022-05-20)

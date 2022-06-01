@@ -1,17 +1,19 @@
 import { getCategories } from '../../src/models/CategoryModel';
 import { AggregationTypes } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
-import { executeSQL } from '@carto/react-api/';
 
 const RESULT = [
   { name: 'a', value: 2 },
   { name: 'b', value: 1 }
 ];
 
+const mockedExecuteModel = jest.fn();
+
 jest.mock('@carto/react-api', () => ({
-  executeSQL: jest
-    .fn()
-    .mockImplementation(() => new Promise((resolve) => resolve(RESULT)))
+  _executeModel: (props) => {
+    mockedExecuteModel(props);
+    return Promise.resolve({ rows: RESULT });
+  }
 }));
 
 jest.mock('@carto/react-workers', () => ({
@@ -81,13 +83,15 @@ describe('getCategories', () => {
 
       expect(data).toEqual(RESULT);
 
-      expect(executeSQL).toHaveBeenCalledWith({
-        credentials: props.source.credentials,
-        query: `SELECT COALESCE(column_1, 'null') as name, sum(column_2) as value FROM __test__ GROUP BY column_1`,
-        connection: props.source.connection,
-        opts: {
-          abortController: undefined
-        }
+      expect(mockedExecuteModel).toHaveBeenCalledWith({
+        model: 'category',
+        opts: { abortController: undefined },
+        params: {
+          column: props.column,
+          operation: props.operation,
+          operationColumn: props.operationColumn
+        },
+        source: props.source
       });
     });
   });
