@@ -1,6 +1,7 @@
 import { TILE_FORMATS } from '@deck.gl/carto';
 import { AggregationTypes } from './operations/constants/AggregationTypes';
 import { Geometry } from 'geojson';
+import { SpatialIndex } from './operations/constants/SpatialIndexTypes';
 
 export type AggregationFunctions = Record<
   AggregationTypes,
@@ -30,6 +31,7 @@ export type TileFeatures = {
   geometry?: Geometry;
   uniqueIdProperty?: string;
   tileFormat: TILE_FORMATS;
+  spatialIndex?: SpatialIndex
 };
 
 export type TileFeaturesResponse = Record<string, unknown>[] | [];

@@ -53,13 +53,20 @@ onmessage = ({ data: { method, ...params } }) => {
   }
 };
 
-function getTileFeatures({ viewport, geometry, uniqueIdProperty, tileFormat }) {
+function getTileFeatures({
+  viewport,
+  geometry,
+  uniqueIdProperty,
+  tileFormat,
+  spatialIndex
+}) {
   currentFeatures = tileFeatures({
     tiles: currentTiles,
     viewport,
     geometry,
     uniqueIdProperty,
-    tileFormat
+    tileFormat,
+    spatialIndex
   });
   postMessage({ result: true });
 }
