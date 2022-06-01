@@ -3,6 +3,7 @@
 ## Not released
 
 - Tiles features calculation for spatial indexes [#417](https://github.com/CartoDB/carto-react/pull/417)
+- Add layer options extension mechanism in LegendWidget [#416](https://github.com/CartoDB/carto-react/pull/416) 
 - Use new Query Models in SQL API for global widgets [#415](https://github.com/CartoDB/carto-react/pull/415)
 
 ## 1.3

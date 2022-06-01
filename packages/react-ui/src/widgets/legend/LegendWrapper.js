@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 export default function LegendWrapper({
   id,
   title,
+  layerOptions,
   switchable = true,
   collapsible = true,
   collapsed = false,
@@ -82,7 +83,8 @@ export default function LegendWrapper({
         collapsible={hasChildren && collapsible}
         onExpandClick={handleExpandClick}
         onChangeVisibility={handleChangeVisibility}
-        onToggleLayerOptions={showOpacityControl && handleToggleLayerOptions}
+        layerOptionsEnabled={showOpacityControl || layerOptions.length > 0}
+        onToggleLayerOptions={handleToggleLayerOptions}
         isLayerOptionsExpanded={isLayerOptionsExpanded}
       />
       {hasChildren && !!children && (
@@ -97,10 +99,13 @@ export default function LegendWrapper({
               {children}
               <Collapse in={isLayerOptionsExpanded} timeout='auto' unmountOnExit>
                 <Box className={classes.layerOptionsWrapper} mt={2}>
-                  <OpacityControl
-                    opacity={opacity}
-                    onChangeOpacity={handleChangeOpacity}
-                  />
+                  {showOpacityControl && (
+                    <OpacityControl
+                      opacity={opacity}
+                      onChangeOpacity={handleChangeOpacity}
+                    />
+                  )}
+                  {layerOptions}
                 </Box>
               </Collapse>
               <Note>{note}</Note>
@@ -150,6 +155,7 @@ function Header({
   expanded,
   onExpandClick,
   onChangeVisibility,
+  layerOptionsEnabled,
   onToggleLayerOptions,
   isLayerOptionsExpanded
 }) {
@@ -171,7 +177,7 @@ function Header({
       >
         <Typography variant='subtitle1'>{title}</Typography>
       </Button>
-      {!!onToggleLayerOptions && (
+      {!!layerOptionsEnabled && (
         <Tooltip title='Layer options' placement='top' arrow>
           <ToggleButton
             selected={isLayerOptionsExpanded}

@@ -3,10 +3,23 @@ import { getMaterialUIContext } from './testUtils';
 import LegendWidgetUI from '../../src/widgets/legend/LegendWidgetUI';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Typography } from '@material-ui/core';
+import { act } from '@testing-library/react-hooks';
 
 const CUSTOM_CHILDREN = <Typography>Legend custom</Typography>;
 
 const MY_CUSTOM_LEGEND_KEY = 'my-custom-legend';
+
+const LAYER_OPTIONS = {
+  PALETTE_SELECTOR: 'PALETTE_SELECTOR'
+};
+
+const LAYER_OPTIONS_COMPONENTS = {
+  [LAYER_OPTIONS.PALETTE_SELECTOR]: PaletteSelector
+};
+
+function PaletteSelector() {
+  return <p>PaletteSelector</p>;
+}
 
 describe('LegendWidgetUI', () => {
   const DATA = [
@@ -73,7 +86,7 @@ describe('LegendWidgetUI', () => {
       }
     },
     {
-      id: 'custom',
+      id: 'custom_key',
       title: 'Single Layer',
       visible: true,
       showOpacityControl: true,
@@ -86,11 +99,20 @@ describe('LegendWidgetUI', () => {
       }
     },
     {
-      id: 'custom',
+      id: 'custom_children',
       title: 'Single Layer',
       visible: true,
       showOpacityControl: true,
       opacity: 0.6,
+      legend: {
+        children: CUSTOM_CHILDREN
+      }
+    },
+    {
+      id: 'palette',
+      title: 'Store types',
+      visible: true,
+      options: [LAYER_OPTIONS.PALETTE_SELECTOR],
       legend: {
         children: CUSTOM_CHILDREN
       }
@@ -171,7 +193,10 @@ describe('LegendWidgetUI', () => {
       ></Widget>
     );
     expect(MyCustomLegendComponent).toHaveBeenCalled();
-    expect(MyCustomLegendComponent).toHaveBeenCalledWith({ layer: DATA[6], legend: DATA[6].legend }, {});
+    expect(MyCustomLegendComponent).toHaveBeenCalledWith(
+      { layer: DATA[6], legend: DATA[6].legend },
+      {}
+    );
     expect(screen.getByText('Test')).toBeInTheDocument();
   });
 
@@ -227,5 +252,26 @@ describe('LegendWidgetUI', () => {
     );
 
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
+  });
+
+  test('with custom layer options', () => {
+    const layer = DATA[8];
+    render(
+      <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
+    );
+    const layerOptionsBtn = screen.getByTitle('Layer options');
+    expect(layerOptionsBtn).toBeInTheDocument();
+    layerOptionsBtn.click();
+    expect(screen.getByText('PaletteSelector')).toBeInTheDocument();
+  });
+  test('with custom layer options - unknown option', () => {
+    const layer = { ...DATA[8], options: ['unknown'] };
+    render(
+      <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
+    );
+    const layerOptionsBtn = screen.getByTitle('Layer options');
+    expect(layerOptionsBtn).toBeInTheDocument();
+    layerOptionsBtn.click();
+    expect(screen.getByText('Unknown layer option')).toBeInTheDocument();
   });
 });
