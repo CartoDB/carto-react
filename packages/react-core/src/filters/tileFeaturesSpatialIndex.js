@@ -1,6 +1,6 @@
 import { indexes } from '@mapbox/tile-cover';
 // h3-js has a known problem that does not allow us to use it in a web-worker. To solve
-// it we're overwriting the node_module package after install it (check postinstall script in package.json)
+// it we're overwriting the node_module package after install it (check postinstall script in the package.json and the patches/h3-js+3.7.2.patch file)
 // To know more about the h3-js issue check https://github.com/uber/h3-js/issues/117
 import { h3GetResolution, polyfill } from 'h3-js';
 import bboxClip from '@turf/bbox-clip';
@@ -62,6 +62,9 @@ function getResolution(tiles, spatialIndex) {
   }
 }
 
+const bboxWest = [-180, -90, 0, 90];
+const bboxEast = [0, -90, 180, 90];
+
 function getCellsCoverGeometry(geometry, spatialIndex, resolution) {
   if (spatialIndex === SpatialIndex.QUADINT || spatialIndex === SpatialIndex.QUADKEY) {
     return indexes(geometry, {
@@ -71,9 +74,6 @@ function getCellsCoverGeometry(geometry, spatialIndex, resolution) {
   }
 
   if (spatialIndex === SpatialIndex.H3) {
-    const bboxWest = [-180, -90, 0, 90];
-    const bboxEast = [0, -90, 180, 90];
-
     // The current H3 polyfill algorithm can't deal with polygon segments of greater than 180 degrees longitude
     // so we clip the geometry to be sure that none of them is greater than 180 degrees
     // https://github.com/uber/h3-js/issues/24#issuecomment-431893796

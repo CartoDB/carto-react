@@ -7,7 +7,7 @@ const webpackBaseConfig = require('../../webpack.base');
 const webpackConfig = {
   ...webpackBaseConfig,
   // Be careful what you add as external because it can significantly affect the size of the worker package.
-  externals: [/^@turf\/.+$/, /^@mapbox\/.+$/, 'h3-js'],
+  externals: [/^@turf\/.+$/, '@mapbox/tile-cover', 'h3-js'],
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'index.js',
