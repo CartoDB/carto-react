@@ -1,14 +1,16 @@
 import { getFormula } from '../../src/models/FormulaModel';
 import { AggregationTypes } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
-import { executeSQL } from '@carto/react-api';
 
 const RESULT = 3.14;
 
+const mockedExecuteModel = jest.fn();
+
 jest.mock('@carto/react-api', () => ({
-  executeSQL: jest
-    .fn()
-    .mockImplementation(() => new Promise((resolve) => resolve([{ value: RESULT }])))
+  _executeModel: (props) => {
+    mockedExecuteModel(props);
+    return Promise.resolve({ rows: [{ VALUE: RESULT }] });
+  }
 }));
 
 jest.mock('@carto/react-workers', () => ({
@@ -76,12 +78,16 @@ describe('getFormula', () => {
 
       expect(data).toStrictEqual({ value: RESULT });
 
-      expect(executeSQL).toHaveBeenCalledWith({
-        credentials: props.source.credentials,
-        query: `SELECT sum(column_1) as value FROM __test__`,
-        connection: props.source.connection,
-        opts: {
-          abortController: undefined
+      expect(mockedExecuteModel).toHaveBeenCalledWith({
+        model: 'formula',
+        opts: { abortController: undefined },
+        params: { column: 'column_1', operation: 'sum' },
+        source: {
+          connection: '__test_connection__',
+          credentials: { accessToken: '__test_token__', apiVersion: 'v3' },
+          data: '__test__',
+          id: '__test__',
+          type: 'table'
         }
       });
     });

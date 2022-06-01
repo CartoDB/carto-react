@@ -1,11 +1,6 @@
-import { executeSQL } from '@carto/react-api';
+import { _executeModel } from '@carto/react-api';
 import { Methods, executeTask } from '@carto/react-workers';
-import {
-  formatOperationColumn,
-  formatTableNameWithFilters,
-  normalizeObjectKeys,
-  wrapModelCall
-} from './utils';
+import { normalizeObjectKeys, wrapModelCall } from './utils';
 
 export function getFormula(props) {
   return wrapModelCall(props, fromLocal, fromRemote);
@@ -26,28 +21,13 @@ function fromLocal(props) {
 
 // From remote
 function fromRemote(props) {
-  const { source, abortController } = props;
-  const { credentials, connection } = source;
+  const { source, abortController, ...params } = props;
+  const { column, operation } = params;
 
-  const query = buildSqlQueryToGetFormula(props);
-
-  return executeSQL({
-    credentials,
-    query,
-    connection,
+  return _executeModel({
+    model: 'formula',
+    source,
+    params: { column: column || '*', operation },
     opts: { abortController }
-  })
-    .then(normalizeObjectKeys)
-    .then((data) => data[0]);
+  }).then((res) => normalizeObjectKeys(res.rows[0]));
 }
-
-const buildSqlQueryToGetFormula = (props) => {
-  const { column, joinOperation, operation } = props;
-
-  const selectClause = `${operation}(${formatOperationColumn(
-    column,
-    joinOperation
-  )}) as value`;
-
-  return `SELECT ${selectClause} FROM ${formatTableNameWithFilters(props)}`;
-};
