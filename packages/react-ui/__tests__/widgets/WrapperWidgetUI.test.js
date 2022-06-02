@@ -22,7 +22,7 @@ describe('WrapperWidgetUI', () => {
         <p>__test__</p>
       </WrapperWidgetUI>
     );
-    expect(screen.queryByText('test')).not.toBeInTheDocument();
+    expect(screen.queryByText(TITLE)).not.toBeInTheDocument();
     expect(screen.getByText('__test__')).toBeInTheDocument();
   });
 
