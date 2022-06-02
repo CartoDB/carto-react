@@ -60,7 +60,7 @@ const LoadingProps = { title: 'Loading', loading: true };
 Loading.args = LoadingProps;
 
 export const Disabled = Template.bind({});
-const DisabledProps = { title: 'Loading', disabled: true };
+const DisabledProps = { title: 'Disabled', disabled: true };
 Disabled.args = DisabledProps;
 
 export const WithActions = Template.bind({});
