@@ -10,7 +10,7 @@ import useWidgetFetch from '../hooks/useWidgetFetch';
 
 /**
  * Renders a <ScatterPlotWidget /> component
- * @param  props
+ * @param  {object} props
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
@@ -19,10 +19,10 @@ import useWidgetFetch from '../hooks/useWidgetFetch';
  * @param  {string | string[]} props.yAxisColumn - Name of the data source's column to get the y axis from. If multiples are provided, they will be merged into a single one using yAxisJoinOperation property.
  * @param  {AggregationTypes} [props.yAxisJoinOperation] - Operation applied to aggregate multiple yAxis columns into a single one.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
- * @param  {formatterCallback} [props.xAxisFormatter] - Function to format X axis values.
- * @param  {formatterCallback} [props.yAxisFormatter] - Function to format Y axis values.
- * @param  {formatterCallback} [props.tooltipFormatter] - Function to format Y axis values.
- * @param  {errorCallback} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Function} [props.xAxisFormatter] - Function to format X axis values.
+ * @param  {Function} [props.yAxisFormatter] - Function to format Y axis values.
+ * @param  {Function} [props.tooltipFormatter] - Function to format Y axis values.
+ * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
  * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature

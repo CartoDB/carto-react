@@ -121,7 +121,12 @@ function WrapperWidgetUI(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const classes = useStyles({ ...props, expanded });
   const open = Boolean(anchorEl);
-  const { options = [], actions = [], optionsIcon = <MoreVert /> } = props;
+  const {
+    disabled = false,
+    options = [],
+    actions = [],
+    optionsIcon = <MoreVert />
+  } = props;
 
   const handleExpandClick = () => {
     if (props.expandable) {
@@ -157,6 +162,10 @@ function WrapperWidgetUI(props) {
       </IconButton>
     );
   };
+
+  if (disabled) {
+    return props.children;
+  }
 
   return (
     <Box component='section' aria-label={props.title} className={classes.root}>
@@ -253,7 +262,8 @@ function WrapperWidgetUI(props) {
 WrapperWidgetUI.defaultProps = {
   expanded: true,
   expandable: true,
-  isLoading: false
+  isLoading: false,
+  disabled: false
 };
 
 WrapperWidgetUI.propTypes = {
@@ -262,6 +272,7 @@ WrapperWidgetUI.propTypes = {
   expanded: PropTypes.bool,
   onExpandedChange: PropTypes.func,
   isLoading: PropTypes.bool,
+  disabled: PropTypes.bool,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
