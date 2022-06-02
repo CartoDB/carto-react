@@ -2,10 +2,12 @@
 
 ## Not released
 
+## 1.3
+
+### 1.3.0-alpha.13 (2022-06-02)
+
 - Bump deck.gl to 8.8.0-alpha.5 [#421](https://github.com/CartoDB/carto-react/pull/421)
 - Allow to disable WrapperWidgetUI [#420](https://github.com/CartoDB/carto-react/pull/420)
-
-## 1.3
 
 ### 1.3.0-alpha.12 (2022-06-01)
 
