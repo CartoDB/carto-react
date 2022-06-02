@@ -16,6 +16,16 @@ describe('WrapperWidgetUI', () => {
     expect(screen.getByText(/test/)).toBeInTheDocument();
   });
 
+  test('should not appear if disabled', () => {
+    render(
+      <WrapperWidgetUI title={TITLE} disabled={true}>
+        <p>__test__</p>
+      </WrapperWidgetUI>
+    );
+    expect(screen.queryByText('test')).not.toBeInTheDocument();
+    expect(screen.getByText('__test__')).toBeInTheDocument();
+  });
+
   describe('events', () => {
     const FORMULA_DATA = '1234';
     const WrappedWithFormulaWidget = ({ numberOfChilds = 1 }) => (

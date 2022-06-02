@@ -262,7 +262,8 @@ function WrapperWidgetUI(props) {
 WrapperWidgetUI.defaultProps = {
   expanded: true,
   expandable: true,
-  isLoading: false
+  isLoading: false,
+  disabled: false
 };
 
 WrapperWidgetUI.propTypes = {
@@ -271,6 +272,7 @@ WrapperWidgetUI.propTypes = {
   expanded: PropTypes.bool,
   onExpandedChange: PropTypes.func,
   isLoading: PropTypes.bool,
+  disabled: PropTypes.bool,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

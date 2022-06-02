@@ -59,6 +59,10 @@ export const Loading = Template.bind({});
 const LoadingProps = { title: 'Loading', loading: true };
 Loading.args = LoadingProps;
 
+export const Disabled = Template.bind({});
+const DisabledProps = { title: 'Loading', disabled: true };
+Disabled.args = DisabledProps;
+
 export const WithActions = Template.bind({});
 WithActions.args = {
   title: 'Wrapper with actions',
