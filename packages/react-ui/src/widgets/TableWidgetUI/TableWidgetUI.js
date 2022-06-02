@@ -197,7 +197,7 @@ TableWidgetUI.propTypes = {
   rowsPerPageOptions: PropTypes.array,
   onSetRowsPerPage: PropTypes.func,
   onRowClick: PropTypes.func,
-  height: PropTypes.string,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   dense: PropTypes.bool
 };
 
