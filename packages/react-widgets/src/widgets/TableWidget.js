@@ -24,6 +24,7 @@ const EMPTY_ARRAY = [];
  * @param  {string} [props.height] - Static widget height, required for scrollable table content
  * @param  {boolean} [props.dense] - Whether the table should use a compact layout with smaller cell paddings
  * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
+ * @param  {number} [props.pageSize] - Number of rows per page. This is used to manage internal state externally
  */
 function TableWidget({
   id,
@@ -38,7 +39,9 @@ function TableWidget({
   global,
   height,
   dense,
-  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
+  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps,
+  // Internal state
+  pageSize
 }) {
   const isDroppingFeatures = useSelector((state) =>
     checkIfSourceIsDroppingFeature(state, dataSource)
@@ -71,15 +74,18 @@ function TableWidget({
   const { data: rows, totalCount } = data;
 
   useEffect(() => {
+    if (pageSize !== undefined) setRowsPerPage(pageSize);
+  }, [pageSize]);
+
+  useEffect(() => {
     // force reset the page to 0 when the viewport or filters change
     setPage(0);
   }, [dataSource, isSourceReady, source?.filters]);
 
-  useEffect(() => {
-    if (onPageSizeChange) {
-      onPageSizeChange(rowsPerPage);
-    }
-  }, [onPageSizeChange, rowsPerPage]);
+  const handleRowsPerPageChange = (newRowsPerPage) => {
+    setRowsPerPage(newRowsPerPage);
+    if (onPageSizeChange) onPageSizeChange(newRowsPerPage);
+  };
 
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
@@ -91,7 +97,7 @@ function TableWidget({
           totalCount={totalCount}
           page={page}
           onSetPage={setPage}
-          onSetRowsPerPage={setRowsPerPage}
+          onSetRowsPerPage={handleRowsPerPageChange}
           rowsPerPage={rowsPerPage}
           sorting
           sortBy={sortBy}
@@ -128,7 +134,9 @@ TableWidget.propTypes = {
   initialPageSize: PropTypes.number,
   onPageSizeChange: PropTypes.func,
   height: PropTypes.string,
-  dense: PropTypes.bool
+  dense: PropTypes.bool,
+  // Internal state
+  pageSize: PropTypes.number
 };
 
 export default TableWidget;
