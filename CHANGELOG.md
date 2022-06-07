@@ -2,9 +2,12 @@
 
 ## Not released
 
-- Allow to manage TableWidget pageSize state externally [#423](https://github.com/CartoDB/carto-react/pull/423)
 
 ## 1.3
+
+### 1.3.0-alpha.14 (2022-06-07)
+
+- Allow to manage TableWidget pageSize state externally [#423](https://github.com/CartoDB/carto-react/pull/423)
 
 ### 1.3.0-alpha.13 (2022-06-02)
 
