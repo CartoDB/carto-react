@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Spatial index support for useCartoLayerProps [#425](https://github.com/CartoDB/carto-react/pull/425)
 
 ## 1.3
 
