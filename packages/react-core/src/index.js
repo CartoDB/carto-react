@@ -37,6 +37,8 @@ export { geojsonFeatures } from './filters/geojsonFeatures';
 export { GroupDateTypes } from './operations/constants/GroupDateTypes';
 export { groupValuesByDateColumn } from './operations/groupByDate';
 
+export { SpatialIndex } from './operations/constants/SpatialIndexTypes';
+
 export {
   FEATURE_SELECTION_MODES,
   EDIT_MODES,

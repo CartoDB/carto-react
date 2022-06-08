@@ -30,4 +30,6 @@ export { AggregationFunctions, GroupByFeature, HistogramFeature, Viewport, TileF
 export { GroupDateTypes } from './operations/constants/GroupDateTypes';
 export { groupValuesByDateColumn } from './operations/groupByDate';
 
+export { SpatialIndex } from './operations/constants/SpatialIndexTypes'
+
 export { FEATURE_SELECTION_MODES, EDIT_MODES, MASK_ID } from './utils/featureSelectionConstants';
