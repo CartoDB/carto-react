@@ -79,7 +79,7 @@ function HistogramWidget({
     max !== Number.MAX_SAFE_INTEGER;
 
   useEffect(() => {
-    if (!hasMinMax) {
+    if (!hasMinMax && source) {
       _getStats({ column, source })
         .then((res) => {
           const { min, max } = res;
