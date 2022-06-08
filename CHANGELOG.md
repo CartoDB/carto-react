@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Ensure source exists in HistogramWidget before getting stats [#426](https://github.com/CartoDB/carto-react/pull/426)
 
 ## 1.3
 
