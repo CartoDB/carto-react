@@ -3,6 +3,7 @@ import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { setIsDroppingFeatures } from '@carto/react-redux';
 import { parse } from '@loaders.gl/core';
+import { Layer } from '@deck.gl/core';
 import { TILE_FORMATS } from '@deck.gl/carto';
 import { throwError } from './utils';
 import useFeaturesCommons from './useFeaturesCommons';
@@ -13,9 +14,10 @@ export default function useTileFeatures({
   viewport,
   spatialFilter,
   uniqueIdProperty,
-  debounceTimeout = 250
+  debounceTimeout = 250,
+  spatialIndex
 }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [
     debounceIdRef,
     isTilesetLoaded,
@@ -41,7 +43,8 @@ export default function useTileFeatures({
         viewport,
         geometry: spatialFilter,
         uniqueIdProperty,
-        tileFormat
+        tileFormat,
+        spatialIndex
       })
         .then(() => {
           setSourceFeaturesReady(true);
@@ -49,7 +52,7 @@ export default function useTileFeatures({
         .catch(throwError)
         .finally(clearDebounce);
     },
-    [setSourceFeaturesReady, sourceId, tileFormat, clearDebounce]
+    [tileFormat, setSourceFeaturesReady, sourceId, spatialIndex, clearDebounce]
   );
 
   const loadTiles = useCallback(
@@ -64,8 +67,8 @@ export default function useTileFeatures({
         return acc;
       }, []);
 
-      const isDroppingFeatures = tiles?.some(tile => tile.content?.isDroppingFeatures)
-      dispatch(setIsDroppingFeatures({ id: sourceId, isDroppingFeatures }))
+      const isDroppingFeatures = tiles?.some((tile) => tile.content?.isDroppingFeatures);
+      dispatch(setIsDroppingFeatures({ id: sourceId, isDroppingFeatures }));
 
       executeTask(sourceId, Methods.LOAD_TILES, { tiles: cleanedTiles })
         .then(() => setTilesetLoaded(true))
@@ -120,9 +123,13 @@ export default function useTileFeatures({
   const fetch = useCallback(
     (...args) => {
       stopAnyCompute();
-      return customFetch(...args)
+
+      if (spatialIndex) {
+        return Layer.defaultProps.fetch.value(...args);
+      }
+      return customFetch(...args);
     },
-    [stopAnyCompute]
+    [stopAnyCompute, spatialIndex]
   );
 
   const onDataLoad = useCallback(({ tiles: [tile] }) => {
@@ -133,14 +140,15 @@ export default function useTileFeatures({
   return [onDataLoad, onViewportLoad, fetch];
 }
 
-// WORKAROUND: To read headers and know if the tile is dropping features. 
+// WORKAROUND: To read headers and know if the tile is dropping features.
 // Remove when the new loader is ready => https://github.com/visgl/loaders.gl/pull/2128
-const customFetch = async (url, {layer, loaders, loadOptions, signal}) => {
+const customFetch = async (url, { layer, loaders, loadOptions, signal }) => {
   loadOptions = loadOptions || layer.getLoadOptions();
   loaders = loaders || layer.props.loaders;
 
-  const response = await fetch(url, { signal })
-  const isDroppingFeatures = response.headers.get('Features-Dropped-From-Tile') === 'true'
-  const result = await parse(response, loaders, loadOptions)
-  return result ? { ...result, isDroppingFeatures } : null
-}
+  const response = await fetch(url, { signal });
+  const isDroppingFeatures =
+    response.headers.get('Features-Dropped-From-Tile') === 'true';
+  const result = await parse(response, loaders, loadOptions);
+  return result ? { ...result, isDroppingFeatures } : null;
+};

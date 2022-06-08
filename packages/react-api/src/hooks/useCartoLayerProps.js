@@ -1,10 +1,11 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectSpatialFilter } from '@carto/react-redux';
 import useGeojsonFeatures from './useGeojsonFeatures';
 import useTileFeatures from './useTileFeatures';
 import { getDataFilterExtensionProps } from './dataFilterExtensionUtil';
 import { getMaskExtensionProps } from './maskExtensionUtil';
+import { SpatialIndex } from '@carto/react-core';
 
 export default function useCartoLayerProps({
   source,
@@ -15,6 +16,7 @@ export default function useCartoLayerProps({
 }) {
   const viewport = useSelector((state) => state.carto.viewport);
   const spatialFilter = useSelector((state) => selectSpatialFilter(state, source?.id));
+  const [spatialIndex, setSpatialIndex] = useState();
 
   const [onDataLoadForGeojson] = useGeojsonFeatures({
     source,
@@ -29,12 +31,16 @@ export default function useCartoLayerProps({
     viewport,
     spatialFilter,
     uniqueIdProperty,
-    debounceTimeout: viewporFeaturesDebounceTimeout
+    debounceTimeout: viewporFeaturesDebounceTimeout,
+    spatialIndex
   });
 
   const onDataLoad = useCallback(
     (data) => {
       if (data?.tilejson) {
+        setSpatialIndex(
+          Object.values(SpatialIndex).includes(data.scheme) ? data.scheme : undefined
+        );
         return onDataLoadForTile(data);
       }
 
