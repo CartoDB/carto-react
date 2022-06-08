@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useState } from 'react';
-import { debounce } from '@carto/react-core';
+import { debounce, SpatialIndex } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { setIsDroppingFeatures } from '@carto/react-redux';
 import { parse } from '@loaders.gl/core';
@@ -14,8 +14,7 @@ export default function useTileFeatures({
   viewport,
   spatialFilter,
   uniqueIdProperty,
-  debounceTimeout = 250,
-  spatialIndex
+  debounceTimeout = 250
 }) {
   const dispatch = useDispatch();
   const [
@@ -28,6 +27,7 @@ export default function useTileFeatures({
   ] = useFeaturesCommons({ source });
 
   const [tileFormat, setTileFormat] = useState('');
+  const [spatialIndex, setSpatialIndex] = useState();
 
   const sourceId = source?.id;
 
@@ -132,9 +132,10 @@ export default function useTileFeatures({
     [stopAnyCompute, spatialIndex]
   );
 
-  const onDataLoad = useCallback(({ tiles: [tile] }) => {
+  const onDataLoad = useCallback(({ tiles: [tile], scheme }) => {
     const tilesFormat = new URL(tile).searchParams.get('formatTiles');
     setTileFormat(tilesFormat || TILE_FORMATS.MVT);
+    setSpatialIndex(Object.values(SpatialIndex).includes(scheme) ? scheme : undefined);
   }, []);
 
   return [onDataLoad, onViewportLoad, fetch];
