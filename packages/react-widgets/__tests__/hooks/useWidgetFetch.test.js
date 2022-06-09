@@ -1,3 +1,4 @@
+import { InvalidColumnError } from '@carto/react-core/';
 import { act, render, screen } from '@testing-library/react';
 import React from 'react';
 import useWidgetFetch from '../../src/hooks/useWidgetFetch';
@@ -79,17 +80,45 @@ describe('useWidgetFetch', () => {
     await act(() => sleep(250));
     expect(screen.queryByText('loading')).not.toBeInTheDocument();
 
-    expect(onError).toBeCalled();
+    expect(onError).toBeCalledTimes(1);
+
+    modelFn.mockRejectedValue(
+      new InvalidColumnError('Uncaught InvalidColumnError: Invalid column')
+    );
+
+    rerender(
+      <TestComponent
+        modelFn={modelFn}
+        args={{
+          id: 'test',
+          dataSource: 'test',
+          params: PARAMS_MOCK,
+          global: false,
+          onError
+        }}
+      />
+    );
+
+    expect(screen.getByText('loading')).toBeInTheDocument();
+    await act(() => sleep(250));
+    expect(screen.queryByText('loading')).not.toBeInTheDocument();
+    expect(onError).toBeCalledTimes(1);
+    expect(screen.queryByText('Invalid column')).toBeInTheDocument();
   });
 });
 
 // Aux
 function TestComponent({ modelFn, args }) {
-  const { data, isLoading } = useWidgetFetch(modelFn, args);
+  const { data, isLoading, warning } = useWidgetFetch(modelFn, args);
 
   if (isLoading) {
     return <div>loading</div>;
   }
+
+  if (warning) {
+    return <div>{warning}</div>;
+  }
+
   return <div>{data}</div>;
 }
 

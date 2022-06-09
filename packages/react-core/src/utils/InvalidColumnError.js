@@ -8,7 +8,7 @@ export class InvalidColumnError extends Error {
   }
 
   static is(error) {
-    return error.message.startsWith(MESSAGE_START);
+    return error.message?.startsWith(MESSAGE_START);
   }
 
   static getMessage(error) {
