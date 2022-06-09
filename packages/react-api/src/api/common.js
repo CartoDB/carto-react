@@ -1,7 +1,13 @@
+import { InvalidColumnError } from '@carto/react-core/';
+
 /**
  * Return more descriptive error from API
  */
 export function dealWithApiError({ response, data }) {
+  if (data.error === 'Column not found') {
+    throw new InvalidColumnError(`${data.error} ${data.column_name}`);
+  }
+
   switch (response.status) {
     case 401:
       throw new Error('Unauthorized access. Invalid credentials');

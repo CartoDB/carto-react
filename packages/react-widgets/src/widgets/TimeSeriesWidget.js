@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getTimeSeries } from '../models';
-import { addFilter, removeFilter, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
+import { addFilter, removeFilter } from '@carto/react-redux';
 import {
   TimeSeriesWidgetUI,
   WrapperWidgetUI,
-  TIME_SERIES_CHART_TYPES,
-  NoDataAlert
+  TIME_SERIES_CHART_TYPES
 } from '@carto/react-ui';
 import {
   GroupDateTypes,
@@ -17,7 +16,7 @@ import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/co
 import { PropTypes } from 'prop-types';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
-import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
+import WidgetWithAlert from './utils/WidgetWithAlert';
 
 // Due to the widget groups the data by a certain stepSize, when filtering
 // the filter applied must be a range that represent the grouping range.
@@ -34,7 +33,7 @@ const STEP_SIZE_RANGE_MAPPING = {
 
 /**
  * Renders a <TimeSeriesWidget /> component
- * @param  props
+ * @param  {object} props
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
@@ -81,7 +80,7 @@ function TimeSeriesWidget({
   onError,
   wrapperProps,
   noDataAlertProps,
-  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps,
+  droppingFeaturesAlertProps,
   // UI
   chartType,
   tooltip,
@@ -102,7 +101,6 @@ function TimeSeriesWidget({
   stepSize
 }) {
   const dispatch = useDispatch();
-  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
 
   const [selectedStepSize, setSelectedStepSize] = useState(stepSize);
 
@@ -121,7 +119,11 @@ function TimeSeriesWidget({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepSize]);
 
-  const { data = [], isLoading } = useWidgetFetch(getTimeSeries, {
+  const {
+    data = [],
+    isLoading,
+    warning
+  } = useWidgetFetch(getTimeSeries, {
     id,
     dataSource,
     params: {
@@ -231,30 +233,35 @@ function TimeSeriesWidget({
             : [])
         ]}
       >
-        {(data.length && !isDroppingFeatures) || isLoading ? (
-          <TimeSeriesWidgetUI
-            data={data}
-            stepSize={selectedStepSize}
-            chartType={chartType}
-            tooltip={tooltip}
-            tooltipFormatter={tooltipFormatter}
-            formatter={formatter}
-            height={height}
-            showControls={showControls}
-            animation={animation}
-            isPlaying={isPlaying}
-            onPlay={onPlay}
-            isPaused={isPaused}
-            onPause={onPause}
-            onStop={handleStop}
-            // timelinePosition={timelinePosition}
-            onTimelineUpdate={handleTimelineUpdate}
-            timeWindow={timeWindow}
-            onTimeWindowUpdate={handleTimeWindowUpdate}
-          />
-        ) : (
-          <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
-        )}
+        <WidgetWithAlert
+          dataSource={dataSource}
+          warning={warning}
+          droppingFeaturesAlertProps={droppingFeaturesAlertProps}
+          noDataAlertProps={noDataAlertProps}
+        >
+          {(!!data.length || isLoading) && (
+            <TimeSeriesWidgetUI
+              data={data}
+              stepSize={selectedStepSize}
+              chartType={chartType}
+              tooltip={tooltip}
+              tooltipFormatter={tooltipFormatter}
+              formatter={formatter}
+              height={height}
+              showControls={showControls}
+              animation={animation}
+              isPlaying={isPlaying}
+              onPlay={onPlay}
+              isPaused={isPaused}
+              onPause={onPause}
+              onStop={handleStop}
+              // timelinePosition={timelinePosition}
+              onTimelineUpdate={handleTimelineUpdate}
+              timeWindow={timeWindow}
+              onTimeWindowUpdate={handleTimeWindowUpdate}
+            />
+          )}
+        </WidgetWithAlert>
       </WrapperWidgetUI>
       <Menu
         anchorEl={anchorEl}

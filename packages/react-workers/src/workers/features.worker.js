@@ -9,6 +9,7 @@ import {
   groupValuesByDateColumn,
   AggregationTypes
 } from '@carto/react-core';
+import { InvalidColumnError } from '@carto/react-core/';
 import { applySorting } from '../utils/sorting';
 import { Methods } from '../workerMethods';
 
@@ -105,6 +106,8 @@ function getFormula({
   if (currentFeatures) {
     const targetOperation = aggregationFunctions[operation];
 
+    assertColumn(column);
+
     const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
 
     if (filteredFeatures.length === 0 && operation !== AggregationTypes.COUNT) {
@@ -122,7 +125,6 @@ function getHistogram({
   filtersLogicalOperator,
   operation,
   column,
-  bins,
   ticks,
   joinOperation
 }) {
@@ -131,12 +133,13 @@ function getHistogram({
   if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
 
+    assertColumn(column);
+
     result = histogram({
       data: filteredFeatures,
-      valuesColumns: [column].flat(),
+      valuesColumns: normalizeColumns(column),
       joinOperation,
       ticks,
-      bins,
       operation
     });
   }
@@ -157,9 +160,11 @@ function getCategories({
   if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
 
+    assertColumn(column, operationColumn);
+
     const groups = groupValuesByColumn({
       data: filteredFeatures,
-      valuesColumns: [operationColumn].flat(),
+      valuesColumns: normalizeColumns(operationColumn),
       joinOperation,
       keysColumn: column,
       operation
@@ -182,11 +187,14 @@ function getScatterPlot({
   let result = [];
   if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
+
+    assertColumn(xAxisColumn, yAxisColumn);
+
     result = scatterPlot({
       data: filteredFeatures,
-      xAxisColumns: [xAxisColumn].flat(),
+      xAxisColumns: normalizeColumns(xAxisColumn),
       xAxisJoinOperation,
-      yAxisColumns: [yAxisColumn].flat(),
+      yAxisColumns: normalizeColumns(yAxisColumn),
       yAxisJoinOperation
     });
   }
@@ -208,9 +216,11 @@ function getTimeSeries({
   if (currentFeatures) {
     const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
 
+    assertColumn(operationColumn, column);
+
     const groups = groupValuesByDateColumn({
       data: filteredFeatures,
-      valuesColumns: [operationColumn].flat(),
+      valuesColumns: normalizeColumns(operationColumn),
       keysColumn: column,
       groupType: stepSize,
       operation,
@@ -261,4 +271,24 @@ function applyPagination(features, { limit, page }) {
 
 function getFilteredFeatures(filters = {}, filtersLogicalOperator) {
   return _applyFilters(currentFeatures, filters, filtersLogicalOperator);
+}
+
+function assertColumn(...columnArgs) {
+  // This check can only be done if there're features
+  if (currentFeatures.length) {
+    // Due to the multiple column shape, we normalise it as an array with normalizeColumns
+    const columns = Array.from(new Set(columnArgs.map(normalizeColumns).flat()));
+
+    const featureKeys = Object.keys(currentFeatures[0]);
+
+    const invalidColumns = columns.filter((column) => !featureKeys.includes(column));
+
+    if (invalidColumns.length) {
+      throw new InvalidColumnError(`Missing column(s): ${invalidColumns.join(', ')}`);
+    }
+  }
+}
+
+function normalizeColumns(columns) {
+  return Array.isArray(columns) ? columns : typeof columns === 'string' ? [columns] : [];
 }

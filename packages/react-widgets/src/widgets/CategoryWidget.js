@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addFilter, removeFilter, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
-import { WrapperWidgetUI, CategoryWidgetUI, NoDataAlert } from '@carto/react-ui';
+import { addFilter, removeFilter } from '@carto/react-redux';
+import { WrapperWidgetUI, CategoryWidgetUI } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
-import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
+import WidgetWithAlert from './utils/WidgetWithAlert';
 
 const EMPTY_ARRAY = [];
 
@@ -51,16 +51,19 @@ function CategoryWidget(props) {
     onError,
     wrapperProps,
     noDataAlertProps,
-    droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
+    droppingFeaturesAlertProps
   } = props;
   const dispatch = useDispatch();
 
-  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
   const selectedCategories =
     useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
     EMPTY_ARRAY;
 
-  const { data = [], isLoading } = useWidgetFetch(getCategories, {
+  const {
+    data = [],
+    isLoading,
+    warning
+  } = useWidgetFetch(getCategories, {
     id,
     dataSource,
     params: {
@@ -99,20 +102,25 @@ function CategoryWidget(props) {
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      {(data.length && !isDroppingFeatures) || isLoading ? (
-        <CategoryWidgetUI
-          data={data}
-          formatter={formatter}
-          labels={labels}
-          selectedCategories={selectedCategories}
-          onSelectedCategoriesChange={handleSelectedCategoriesChange}
-          animation={animation}
-          filterable={filterable}
-          searchable={searchable}
-        />
-      ) : (
-       <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
-      )}
+      <WidgetWithAlert
+        dataSource={dataSource}
+        warning={warning}
+        droppingFeaturesAlertProps={droppingFeaturesAlertProps}
+        noDataAlertProps={noDataAlertProps}
+      >
+        {(!!data.length || isLoading) && (
+          <CategoryWidgetUI
+            data={data}
+            formatter={formatter}
+            labels={labels}
+            selectedCategories={selectedCategories}
+            onSelectedCategoriesChange={handleSelectedCategoriesChange}
+            animation={animation}
+            filterable={filterable}
+            searchable={searchable}
+          />
+        )}
+      </WidgetWithAlert>
     </WrapperWidgetUI>
   );
 }

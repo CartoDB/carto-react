@@ -1,18 +1,14 @@
 import React, { useCallback, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  addFilter,
-  removeFilter,
-  checkIfSourceIsDroppingFeature
-} from '@carto/react-redux';
-import { WrapperWidgetUI, NoDataAlert, BarWidgetUI } from '@carto/react-ui';
+import { addFilter, removeFilter } from '@carto/react-redux';
+import { WrapperWidgetUI, BarWidgetUI } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
-import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
+import WidgetWithAlert from './utils/WidgetWithAlert';
 
 const EMPTY_ARRAY = [];
 
@@ -62,15 +58,15 @@ function BarWidget({
   onError,
   wrapperProps,
   noDataAlertProps,
-  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
+  droppingFeaturesAlertProps
 }) {
   const dispatch = useDispatch();
 
-  const isDroppingFeatures = useSelector((state) =>
-    checkIfSourceIsDroppingFeature(state, dataSource)
-  );
-
-  const { data: _data = [], isLoading } = useWidgetFetch(getCategories, {
+  const {
+    data: _data = [],
+    isLoading,
+    warning
+  } = useWidgetFetch(getCategories, {
     id,
     dataSource,
     params: {
@@ -138,26 +134,29 @@ function BarWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      {(sortedData.length && !isDroppingFeatures) || isLoading ? (
-        <BarWidgetUI
-          xAxisData={sortedData.map((category) => category.name)}
-          yAxisData={sortedData.map((category) => category.value)}
-          xAxisFormatter={xAxisFormatter}
-          yAxisFormatter={yAxisFormatter}
-          labels={labels}
-          tooltip={tooltip}
-          tooltipFormatter={tooltipFormatter}
-          selectedBars={selectedBars}
-          onSelectedBarsChange={handleSelectedBarsChange}
-          height={height}
-          animation={animation}
-          filterable={filterable}
-        />
-      ) : (
-        <NoDataAlert
-          {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}
-        />
-      )}
+      <WidgetWithAlert
+        dataSource={dataSource}
+        warning={warning}
+        droppingFeaturesAlertProps={droppingFeaturesAlertProps}
+        noDataAlertProps={noDataAlertProps}
+      >
+        {(!!sortedData.length || isLoading) && (
+          <BarWidgetUI
+            xAxisData={sortedData.map((category) => category.name)}
+            yAxisData={sortedData.map((category) => category.value)}
+            xAxisFormatter={xAxisFormatter}
+            yAxisFormatter={yAxisFormatter}
+            labels={labels}
+            tooltip={tooltip}
+            tooltipFormatter={tooltipFormatter}
+            selectedBars={selectedBars}
+            onSelectedBarsChange={handleSelectedBarsChange}
+            height={height}
+            animation={animation}
+            filterable={filterable}
+          />
+        )}
+      </WidgetWithAlert>
     </WrapperWidgetUI>
   );
 }
