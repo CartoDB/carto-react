@@ -346,7 +346,7 @@ function defaultTooltipFormatter(params, xAxisFormatter, yAxisFormatter) {
   }
 
   const [left, right, value] = params.data.value;
-  const title = `${processFormatterRes(xAxisFormatter(left))} - ${processFormatterRes(
+  const title = `${processFormatterRes(xAxisFormatter(left))} — ${processFormatterRes(
     xAxisFormatter(right)
   )}`;
   const formattedValue = processFormatterRes(yAxisFormatter(value));
