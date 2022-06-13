@@ -1,4 +1,5 @@
 import { InvalidColumnError } from '@carto/react-core/';
+import { DEFAULT_INVALID_COLUMN_ERR } from '../../src/widgets/utils/constants';
 import { act, render, screen } from '@testing-library/react';
 import React from 'react';
 import useWidgetFetch from '../../src/hooks/useWidgetFetch';
@@ -82,9 +83,7 @@ describe('useWidgetFetch', () => {
 
     expect(onError).toBeCalledTimes(1);
 
-    modelFn.mockRejectedValue(
-      new InvalidColumnError('Uncaught InvalidColumnError: Invalid column')
-    );
+    modelFn.mockRejectedValue(new InvalidColumnError('Invalid column'));
 
     rerender(
       <TestComponent
@@ -103,7 +102,7 @@ describe('useWidgetFetch', () => {
     await act(() => sleep(250));
     expect(screen.queryByText('loading')).not.toBeInTheDocument();
     expect(onError).toBeCalledTimes(1);
-    expect(screen.queryByText(InvalidColumnError.message)).toBeInTheDocument();
+    expect(screen.queryByText(DEFAULT_INVALID_COLUMN_ERR)).toBeInTheDocument();
   });
 });
 
