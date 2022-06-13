@@ -6,6 +6,7 @@
 - Ensure source exists in HistogramWidget before getting stats [#426](https://github.com/CartoDB/carto-react/pull/426)
 - Use en dash for intervals instead of hyphen [#428](https://github.com/CartoDB/carto-react/pull/428) and [#429](https://github.com/CartoDB/carto-react/pull/429)
 - Remove widgets dropping features warning in global mode [#430](https://github.com/CartoDB/carto-react/pull/430)
+- Add warning to widgets when column is missing [#427](https://github.com/CartoDB/carto-react/pull/427)
 
 ## 1.3
 
