@@ -8,6 +8,10 @@ export function dealWithApiError({ response, data }) {
     throw new InvalidColumnError(`${data.error} ${data.column_name}`);
   }
 
+  if (data.error.includes('Missing columns')) {
+    throw new InvalidColumnError(data.error);
+  }
+
   switch (response.status) {
     case 401:
       throw new Error('Unauthorized access. Invalid credentials');
