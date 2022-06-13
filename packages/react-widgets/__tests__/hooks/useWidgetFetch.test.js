@@ -103,7 +103,7 @@ describe('useWidgetFetch', () => {
     await act(() => sleep(250));
     expect(screen.queryByText('loading')).not.toBeInTheDocument();
     expect(onError).toBeCalledTimes(1);
-    expect(screen.queryByText('Invalid column')).toBeInTheDocument();
+    expect(screen.queryByText(InvalidColumnError.message)).toBeInTheDocument();
   });
 });
 

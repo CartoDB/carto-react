@@ -13,7 +13,7 @@ export default function useWidgetFetch(
   // State
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [warning, setWarning] = useState();
+  const [warning, setWarning] = useState('');
 
   const isSourceReady = useSelector(
     (state) => global || selectAreFeaturesReadyForSource(state, dataSource)
@@ -23,7 +23,7 @@ export default function useWidgetFetch(
   useCustomCompareEffect(
     () => {
       setIsLoading(true);
-      setWarning(undefined);
+      setWarning('');
 
       if (source && isSourceReady && enabled) {
         modelFn({
@@ -38,7 +38,7 @@ export default function useWidgetFetch(
           })
           .catch((error) => {
             if (InvalidColumnError.is(error)) {
-              setWarning(InvalidColumnError.getMessage(error));
+              setWarning(InvalidColumnError.message);
             } else if (onError) {
               onError(error);
             }
