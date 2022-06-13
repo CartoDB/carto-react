@@ -1,19 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import {
-  addFilter,
-  removeFilter,
-  checkIfSourceIsDroppingFeature
-} from '@carto/react-redux';
-import { WrapperWidgetUI, HistogramWidgetUI, NoDataAlert } from '@carto/react-ui';
+import { addFilter, removeFilter } from '@carto/react-redux';
+import { WrapperWidgetUI, HistogramWidgetUI } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getHistogram } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import useWidgetFetch from '../hooks/useWidgetFetch';
-import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 import { _getStats } from '@carto/react-api';
 import useWidgetSource from '../hooks/useWidgetSource';
+import WidgetWithAlert from './utils/WidgetWithAlert';
 
 const EMPTY_ARRAY = [];
 
@@ -61,12 +57,9 @@ function HistogramWidget({
   onError,
   wrapperProps,
   noDataAlertProps,
-  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
+  droppingFeaturesAlertProps
 }) {
   const dispatch = useDispatch();
-  const isDroppingFeatures = useSelector((state) =>
-    checkIfSourceIsDroppingFeature(state, dataSource)
-  );
 
   const [[min, max], setMinMax] = useState([_min, _max]);
 
@@ -170,26 +163,29 @@ function HistogramWidget({
 
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
-      {(data.length && !isDroppingFeatures) || isLoading ? (
-        <HistogramWidgetUI
-          data={data}
-          min={min}
-          max={max}
-          ticks={ticks}
-          selectedBars={selectedBars}
-          onSelectedBarsChange={handleSelectedBarsChange}
-          tooltip={tooltip}
-          tooltipFormatter={tooltipFormatter}
-          xAxisFormatter={xAxisFormatter}
-          yAxisFormatter={formatter}
-          animation={animation}
-          filterable={filterable}
-        />
-      ) : (
-        <NoDataAlert
-          {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}
-        />
-      )}
+      <WidgetWithAlert
+        dataSource={dataSource}
+        global={global}
+        droppingFeaturesAlertProps={droppingFeaturesAlertProps}
+        noDataAlertProps={noDataAlertProps}
+      >
+        {(!!data.length || isLoading) && (
+          <HistogramWidgetUI
+            data={data}
+            min={min}
+            max={max}
+            ticks={ticks}
+            selectedBars={selectedBars}
+            onSelectedBarsChange={handleSelectedBarsChange}
+            tooltip={tooltip}
+            tooltipFormatter={tooltipFormatter}
+            xAxisFormatter={xAxisFormatter}
+            yAxisFormatter={formatter}
+            animation={animation}
+            filterable={filterable}
+          />
+        )}
+      </WidgetWithAlert>
     </WrapperWidgetUI>
   );
 }

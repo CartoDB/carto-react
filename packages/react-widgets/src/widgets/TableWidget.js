@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { WrapperWidgetUI, TableWidgetUI, NoDataAlert } from '@carto/react-ui';
+import { WrapperWidgetUI, TableWidgetUI } from '@carto/react-ui';
 import { getTable } from '../models';
-import { checkIfSourceIsDroppingFeature } from '@carto/react-redux';
-import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 import useWidgetFetch from '../hooks/useWidgetFetch';
+import WidgetWithAlert from './utils/WidgetWithAlert';
 
 const EMPTY_ARRAY = [];
 
@@ -39,14 +37,10 @@ function TableWidget({
   global,
   height,
   dense,
-  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps,
+  droppingFeaturesAlertProps,
   // Internal state
   pageSize
 }) {
-  const isDroppingFeatures = useSelector((state) =>
-    checkIfSourceIsDroppingFeature(state, dataSource)
-  );
-
   const [rowsPerPage, setRowsPerPage] = useState(initialPageSize);
   const [page, setPage] = useState(0);
 
@@ -89,29 +83,32 @@ function TableWidget({
 
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
-      {(rows.length && !isDroppingFeatures) || isLoading ? (
-        <TableWidgetUI
-          columns={columns}
-          rows={rows}
-          pagination
-          totalCount={totalCount}
-          page={page}
-          onSetPage={setPage}
-          onSetRowsPerPage={handleRowsPerPageChange}
-          rowsPerPage={rowsPerPage}
-          sorting
-          sortBy={sortBy}
-          sortDirection={sortDirection}
-          onSetSortBy={setSortBy}
-          onSetSortDirection={setSortDirection}
-          height={height}
-          dense={dense}
-        />
-      ) : (
-        <NoDataAlert
-          {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}
-        />
-      )}
+      <WidgetWithAlert
+        dataSource={dataSource}
+        global={global}
+        droppingFeaturesAlertProps={droppingFeaturesAlertProps}
+        noDataAlertProps={noDataAlertProps}
+      >
+        {(!!rows.length || isLoading) && (
+          <TableWidgetUI
+            columns={columns}
+            rows={rows}
+            pagination
+            totalCount={totalCount}
+            page={page}
+            onSetPage={setPage}
+            onSetRowsPerPage={handleRowsPerPageChange}
+            rowsPerPage={rowsPerPage}
+            sorting
+            sortBy={sortBy}
+            sortDirection={sortDirection}
+            onSetSortBy={setSortBy}
+            onSetSortDirection={setSortDirection}
+            height={height}
+            dense={dense}
+          />
+        )}
+      </WidgetWithAlert>
     </WrapperWidgetUI>
   );
 }

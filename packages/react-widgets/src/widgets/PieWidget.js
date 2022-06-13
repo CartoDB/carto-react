@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addFilter, removeFilter, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
-import { WrapperWidgetUI, PieWidgetUI, NoDataAlert } from '@carto/react-ui';
+import { addFilter, removeFilter } from '@carto/react-redux';
+import { WrapperWidgetUI, PieWidgetUI } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
-import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
+import WidgetWithAlert from './utils/WidgetWithAlert';
 
 const EMPTY_ARRAY = [];
 
@@ -53,10 +53,9 @@ function PieWidget({
   onError,
   wrapperProps,
   noDataAlertProps,
-  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
+  droppingFeaturesAlertProps
 }) {
   const dispatch = useDispatch();
-  const isDroppingFeatures = useSelector((state) => checkIfSourceIsDroppingFeature(state, dataSource))
 
   const selectedCategories =
     useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
@@ -101,22 +100,27 @@ function PieWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      {(data.length && !isDroppingFeatures) || isLoading ? (
-        <PieWidgetUI
-          data={data}
-          formatter={formatter}
-          height={height}
-          tooltipFormatter={tooltipFormatter}
-          colors={colors}
-          labels={labels}
-          animation={animation}
-          filterable={filterable}
-          selectedCategories={selectedCategories}
-          onSelectedCategoriesChange={handleSelectedCategoriesChange}
-        />
-      ) : (
-        <NoDataAlert {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}/>
-      )}
+      <WidgetWithAlert
+        dataSource={dataSource}
+        global={global}
+        droppingFeaturesAlertProps={droppingFeaturesAlertProps}
+        noDataAlertProps={noDataAlertProps}
+      >
+        {(!!data.length || isLoading) && (
+          <PieWidgetUI
+            data={data}
+            formatter={formatter}
+            height={height}
+            tooltipFormatter={tooltipFormatter}
+            colors={colors}
+            labels={labels}
+            animation={animation}
+            filterable={filterable}
+            selectedCategories={selectedCategories}
+            onSelectedCategoriesChange={handleSelectedCategoriesChange}
+          />
+        )}
+      </WidgetWithAlert>
     </WrapperWidgetUI>
   );
 }
