@@ -11,6 +11,7 @@ import { _getStats } from '@carto/react-api';
 import useWidgetSource from '../hooks/useWidgetSource';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 import { InvalidColumnError } from '@carto/react-core/';
+import { DEFAULT_INVALID_COLUMN_ERR } from './utils/constants';
 
 const EMPTY_ARRAY = [];
 
@@ -64,7 +65,7 @@ function HistogramWidget({
 
   const [[min, max], setMinMax] = useState([_min, _max]);
 
-  const [_warning, setWarning] = useState();
+  const [_warning, setWarning] = useState('');
 
   const source = useWidgetSource({ dataSource, id });
 
@@ -76,7 +77,7 @@ function HistogramWidget({
 
   useEffect(() => {
     if (!hasMinMax && source) {
-      setWarning(undefined);
+      setWarning('');
 
       _getStats({ column, source })
         .then((res) => {
@@ -84,8 +85,8 @@ function HistogramWidget({
           setMinMax([min, max]);
         })
         .catch((err) => {
-          if (err instanceof InvalidColumnError) {
-            setWarning(InvalidColumnError.getMessage(err));
+          if (InvalidColumnError.is(err)) {
+            setWarning(DEFAULT_INVALID_COLUMN_ERR);
           } else if (onError) {
             onError(err);
           }

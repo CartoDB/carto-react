@@ -1,16 +1,15 @@
 const NAME = 'InvalidColumnError';
-const MESSAGE_START = `Uncaught ${NAME}:`;
+const ERR_START_MESSAGE = `${NAME}: `;
 
 export class InvalidColumnError extends Error {
-  static message =
-    'The column selected for this widget is no longer available in the data source.';
-
   constructor(message) {
-    super(message);
+    super(`${ERR_START_MESSAGE}${message}`);
     this.name = NAME;
   }
 
   static is(error) {
-    return error.message?.startsWith(MESSAGE_START);
+    return (
+      error instanceof InvalidColumnError || error.message?.includes(ERR_START_MESSAGE)
+    );
   }
 }
