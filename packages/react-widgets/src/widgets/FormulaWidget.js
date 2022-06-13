@@ -5,10 +5,7 @@ import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
-import { useSelector } from 'react-redux';
-import { checkIfSourceIsDroppingFeature } from '@carto/react-redux/';
-import { NoDataAlert } from '@carto/react-ui/';
-import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
+import WidgetWithAlert from './utils/WidgetWithAlert';
 
 /**
  * Renders a <FormulaWidget /> component
@@ -38,11 +35,8 @@ function FormulaWidget({
   global,
   onError,
   wrapperProps,
-  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
+  droppingFeaturesAlertProps
 }) {
-  const isDroppingFeatures = useSelector((state) =>
-    checkIfSourceIsDroppingFeature(state, dataSource)
-  );
   const { data = { value: undefined }, isLoading } = useWidgetFetch(getFormula, {
     id,
     dataSource,
@@ -57,16 +51,18 @@ function FormulaWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      {isDroppingFeatures ? (
-        <NoDataAlert {...droppingFeaturesAlertProps} />
-      ) : (
+      <WidgetWithAlert
+        dataSource={dataSource}
+        global={global}
+        droppingFeaturesAlertProps={droppingFeaturesAlertProps}
+      >
         <FormulaWidgetUI
           data={Number.isFinite(data?.value) ? data.value : undefined}
           formatter={formatter}
           unitBefore={true}
           animation={animation}
         />
-      )}
+      </WidgetWithAlert>
     </WrapperWidgetUI>
   );
 }

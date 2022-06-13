@@ -9,6 +9,7 @@ export { default as TimeSeriesWidget } from './widgets/TimeSeriesWidget';
 export { default as BarWidget } from './widgets/BarWidget';
 export { default as FeatureSelectionWidget } from './widgets/FeatureSelectionWidget';
 export { default as TableWidget } from './widgets/TableWidget';
+export { default as WidgetWithAlert } from './widgets/utils/WidgetWithAlert';
 export {
   getFormula,
   getHistogram,

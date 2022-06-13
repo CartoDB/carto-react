@@ -1,12 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { checkIfSourceIsDroppingFeature } from '@carto/react-redux';
-import { WrapperWidgetUI, ScatterPlotWidgetUI, NoDataAlert } from '@carto/react-ui';
+import { WrapperWidgetUI, ScatterPlotWidgetUI } from '@carto/react-ui';
 import { getScatter } from '../models';
 import { columnAggregationOn } from './utils/propTypesFns';
-import { defaultDroppingFeaturesAlertProps } from './utils/defaultDroppingFeaturesAlertProps';
 import useWidgetFetch from '../hooks/useWidgetFetch';
+import WidgetWithAlert from './utils/WidgetWithAlert';
 
 /**
  * Renders a <ScatterPlotWidget /> component
@@ -43,12 +41,8 @@ function ScatterPlotWidget({
   onError,
   wrapperProps,
   noDataAlertProps,
-  droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps
+  droppingFeaturesAlertProps
 }) {
-  const isDroppingFeatures = useSelector((state) =>
-    checkIfSourceIsDroppingFeature(state, dataSource)
-  );
-
   const { data = [], isLoading } = useWidgetFetch(getScatter, {
     id,
     dataSource,
@@ -64,19 +58,22 @@ function ScatterPlotWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      {(data.length && !isDroppingFeatures) || isLoading ? (
-        <ScatterPlotWidgetUI
-          data={data}
-          tooltipFormatter={tooltipFormatter}
-          xAxisFormatter={xAxisFormatter}
-          yAxisFormatter={yAxisFormatter}
-          animation={animation}
-        />
-      ) : (
-        <NoDataAlert
-          {...(isDroppingFeatures ? droppingFeaturesAlertProps : noDataAlertProps)}
-        />
-      )}
+      <WidgetWithAlert
+        dataSource={dataSource}
+        global={global}
+        droppingFeaturesAlertProps={droppingFeaturesAlertProps}
+        noDataAlertProps={noDataAlertProps}
+      >
+        {(!!data.length || isLoading) && (
+          <ScatterPlotWidgetUI
+            data={data}
+            tooltipFormatter={tooltipFormatter}
+            xAxisFormatter={xAxisFormatter}
+            yAxisFormatter={yAxisFormatter}
+            animation={animation}
+          />
+        )}
+      </WidgetWithAlert>
     </WrapperWidgetUI>
   );
 }
