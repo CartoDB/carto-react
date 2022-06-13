@@ -1,7 +1,9 @@
-import { selectAreFeaturesReadyForSource } from '@carto/react-redux/';
+import { InvalidColumnError } from '@carto/react-core';
+import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
 import { dequal } from 'dequal';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { DEFAULT_INVALID_COLUMN_ERR } from '../widgets/utils/constants';
 import useCustomCompareEffect from './useCustomCompareEffect';
 import useWidgetSource from './useWidgetSource';
 
@@ -12,6 +14,7 @@ export default function useWidgetFetch(
   // State
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [warning, setWarning] = useState('');
 
   const isSourceReady = useSelector(
     (state) => global || selectAreFeaturesReadyForSource(state, dataSource)
@@ -21,6 +24,7 @@ export default function useWidgetFetch(
   useCustomCompareEffect(
     () => {
       setIsLoading(true);
+      setWarning('');
 
       if (source && isSourceReady && enabled) {
         modelFn({
@@ -34,7 +38,11 @@ export default function useWidgetFetch(
             }
           })
           .catch((error) => {
-            if (onError) onError(error);
+            if (InvalidColumnError.is(error)) {
+              setWarning(DEFAULT_INVALID_COLUMN_ERR);
+            } else if (onError) {
+              onError(error);
+            }
           })
           .finally(() => {
             setIsLoading(false);
@@ -45,5 +53,5 @@ export default function useWidgetFetch(
     dequal
   );
 
-  return { data, isLoading, isSourceReady, source };
+  return { data, isLoading, isSourceReady, source, warning };
 }

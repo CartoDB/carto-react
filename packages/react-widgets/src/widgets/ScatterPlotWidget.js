@@ -43,7 +43,11 @@ function ScatterPlotWidget({
   noDataAlertProps,
   droppingFeaturesAlertProps
 }) {
-  const { data = [], isLoading } = useWidgetFetch(getScatter, {
+  const {
+    data = [],
+    isLoading,
+    warning
+  } = useWidgetFetch(getScatter, {
     id,
     dataSource,
     params: {
@@ -60,6 +64,7 @@ function ScatterPlotWidget({
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <WidgetWithAlert
         dataSource={dataSource}
+        warning={warning}
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}

@@ -59,7 +59,11 @@ function CategoryWidget(props) {
     useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
     EMPTY_ARRAY;
 
-  const { data = [], isLoading } = useWidgetFetch(getCategories, {
+  const {
+    data = [],
+    isLoading,
+    warning
+  } = useWidgetFetch(getCategories, {
     id,
     dataSource,
     params: {
@@ -100,6 +104,7 @@ function CategoryWidget(props) {
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <WidgetWithAlert
         dataSource={dataSource}
+        warning={warning}
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}

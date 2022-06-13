@@ -33,7 +33,7 @@ const STEP_SIZE_RANGE_MAPPING = {
 
 /**
  * Renders a <TimeSeriesWidget /> component
- * @param  props
+ * @param  {object} props
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
@@ -119,7 +119,11 @@ function TimeSeriesWidget({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepSize]);
 
-  const { data = [], isLoading } = useWidgetFetch(getTimeSeries, {
+  const {
+    data = [],
+    isLoading,
+    warning
+  } = useWidgetFetch(getTimeSeries, {
     id,
     dataSource,
     params: {
@@ -231,6 +235,7 @@ function TimeSeriesWidget({
       >
         <WidgetWithAlert
           dataSource={dataSource}
+          warning={warning}
           global={global}
           droppingFeaturesAlertProps={droppingFeaturesAlertProps}
           noDataAlertProps={noDataAlertProps}

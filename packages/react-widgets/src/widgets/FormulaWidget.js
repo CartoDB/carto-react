@@ -37,7 +37,11 @@ function FormulaWidget({
   wrapperProps,
   droppingFeaturesAlertProps
 }) {
-  const { data = { value: undefined }, isLoading } = useWidgetFetch(getFormula, {
+  const {
+    data = { value: undefined },
+    isLoading,
+    warning
+  } = useWidgetFetch(getFormula, {
     id,
     dataSource,
     params: {
@@ -53,6 +57,7 @@ function FormulaWidget({
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <WidgetWithAlert
         dataSource={dataSource}
+        warning={warning}
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
       >

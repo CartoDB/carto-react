@@ -7,6 +7,8 @@ export {
 
 export { getMonday } from './utils/dateUtils';
 
+export { InvalidColumnError } from './utils/InvalidColumnError';
+
 export { debounce } from './utils/debounce';
 export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';

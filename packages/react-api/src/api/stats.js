@@ -1,6 +1,7 @@
 import { assert, checkCredentials, makeCall } from './common';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { getTileJson } from './tilejson';
+import { InvalidColumnError } from '@carto/react-core/';
 
 /**
  * Execute a stats service request.
@@ -27,7 +28,11 @@ export async function getStats(props) {
     const tileJson = await getTileJson({ source });
     const tileStatsAttributes = tileJson.tilestats.layers[0].attributes;
     const columnStats = tileStatsAttributes.find(({ attribute }) => attribute === column);
-    assert(columnStats, 'getStats: column not found in tileset attributes');
+
+    if (!columnStats) {
+      throw new InvalidColumnError(`${column} not found in tileset attributes`);
+    }
+
     return columnStats;
   } else {
     const url = buildUrl(source, column);

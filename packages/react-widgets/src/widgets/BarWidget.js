@@ -62,7 +62,11 @@ function BarWidget({
 }) {
   const dispatch = useDispatch();
 
-  const { data: _data = [], isLoading } = useWidgetFetch(getCategories, {
+  const {
+    data: _data = [],
+    isLoading,
+    warning
+  } = useWidgetFetch(getCategories, {
     id,
     dataSource,
     params: {
@@ -132,6 +136,7 @@ function BarWidget({
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <WidgetWithAlert
         dataSource={dataSource}
+        warning={warning}
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}

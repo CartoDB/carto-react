@@ -51,7 +51,8 @@ function TableWidget({
     data = { data: EMPTY_ARRAY, totalCount: 0 },
     isLoading,
     isSourceReady,
-    source
+    source,
+    warning
   } = useWidgetFetch(getTable, {
     id,
     dataSource,
@@ -85,6 +86,7 @@ function TableWidget({
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
       <WidgetWithAlert
         dataSource={dataSource}
+        warning={warning}
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}

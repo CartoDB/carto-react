@@ -10,6 +10,8 @@ import useWidgetFetch from '../hooks/useWidgetFetch';
 import { _getStats } from '@carto/react-api';
 import useWidgetSource from '../hooks/useWidgetSource';
 import WidgetWithAlert from './utils/WidgetWithAlert';
+import { InvalidColumnError } from '@carto/react-core/';
+import { DEFAULT_INVALID_COLUMN_ERR } from './utils/constants';
 
 const EMPTY_ARRAY = [];
 
@@ -63,6 +65,8 @@ function HistogramWidget({
 
   const [[min, max], setMinMax] = useState([_min, _max]);
 
+  const [_warning, setWarning] = useState('');
+
   const source = useWidgetSource({ dataSource, id });
 
   const hasMinMax =
@@ -73,12 +77,20 @@ function HistogramWidget({
 
   useEffect(() => {
     if (!hasMinMax && source) {
+      setWarning('');
+
       _getStats({ column, source })
         .then((res) => {
           const { min, max } = res;
           setMinMax([min, max]);
         })
-        .catch((err) => onError?.(err));
+        .catch((err) => {
+          if (InvalidColumnError.is(err)) {
+            setWarning(DEFAULT_INVALID_COLUMN_ERR);
+          } else if (onError) {
+            onError(err);
+          }
+        });
     }
   }, [column, source, onError, hasMinMax]);
 
@@ -96,7 +108,11 @@ function HistogramWidget({
     return [];
   }, [min, max, _ticks, bins, hasMinMax]);
 
-  let { data = EMPTY_ARRAY, isLoading } = useWidgetFetch(getHistogram, {
+  let {
+    data = EMPTY_ARRAY,
+    isLoading,
+    warning = _warning
+  } = useWidgetFetch(getHistogram, {
     id,
     dataSource,
     params: {
@@ -165,6 +181,7 @@ function HistogramWidget({
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
       <WidgetWithAlert
         dataSource={dataSource}
+        warning={warning}
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
