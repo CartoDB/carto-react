@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
-import { WrapperWidgetUI, BarWidgetUI } from '@carto/react-ui';
+import { BarWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
 import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
 import { getCategories } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
@@ -137,6 +137,7 @@ function BarWidget({
       <WidgetWithAlert
         dataSource={dataSource}
         warning={warning}
+        global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
       >

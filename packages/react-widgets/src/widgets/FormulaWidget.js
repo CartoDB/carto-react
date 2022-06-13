@@ -58,6 +58,7 @@ function FormulaWidget({
       <WidgetWithAlert
         dataSource={dataSource}
         warning={warning}
+        global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
       >
         <FormulaWidgetUI

@@ -65,6 +65,7 @@ function ScatterPlotWidget({
       <WidgetWithAlert
         dataSource={dataSource}
         warning={warning}
+        global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
       >

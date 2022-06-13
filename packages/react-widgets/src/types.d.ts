@@ -99,3 +99,11 @@ export type LegendWidget = {
   initialCollapsed?: boolean;
   customLegendTypes?: Record<string, Function>;
 }
+
+export type WidgetWithAlert = {
+  dataSource: string;
+  global?: boolean;
+  noDataAlertProps?: object;
+  droppingFeaturesAlertProps?: object;
+  children?: React.ReactNode;
+}

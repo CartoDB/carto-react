@@ -105,6 +105,7 @@ function CategoryWidget(props) {
       <WidgetWithAlert
         dataSource={dataSource}
         warning={warning}
+        global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
       >

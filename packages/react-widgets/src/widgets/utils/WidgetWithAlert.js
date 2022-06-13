@@ -9,13 +9,14 @@ export default function WidgetWithAlert({
   droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps,
   noDataAlertProps = {},
   warning,
+  global = false,
   children
 }) {
   const isDroppingFeatures = useSelector((state) =>
     checkIfSourceIsDroppingFeature(state, dataSource)
   );
 
-  return isDroppingFeatures || warning || !children ? (
+  return (!global && isDroppingFeatures) || warning || !children ? (
     <NoDataAlert
       {...(isDroppingFeatures
         ? droppingFeaturesAlertProps
