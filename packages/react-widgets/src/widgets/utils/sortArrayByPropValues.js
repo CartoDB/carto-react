@@ -1,3 +1,10 @@
+/**
+ * Sorts a list of objects based on a property values
+ * @param {object[]} array list of objects to sort
+ * @param {unknown[]} values values to sort by
+ * @param {string} prop property to sort by
+ * @returns sorted array
+ */
 export default function sortArrayByPropValues(array, values, prop) {
   if (values?.length && prop) {
     const uniqueValues = [...new Set(values)];
