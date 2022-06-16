@@ -3,6 +3,7 @@ import { updateLayer } from '@carto/react-redux/';
 import { LegendWidgetUI } from '@carto/react-ui';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import sortArrayByPropValues from './utils/sortArrayByPropValues';
 
 /**
  * Renders a <LegendWidget /> component
@@ -11,16 +12,22 @@ import PropTypes from 'prop-types';
  * @param  {Object.<string, function>} [props.customLayerOptions] - Allow to add custom controls to a legend item to tweak the associated layer
  * @param  {Object.<string, function>} [props.customLegendTypes] - Allow to customise by default legend types that can be rendered
  * @param  {boolean} [props.initialCollapsed] - Define initial collapsed value. false by default.
+ * @param  {string[]} [props.layerOrder] - Array of layer identifiers. Defines the order of layer legends. [] by default.
  */
 function LegendWidget({
   className,
   customLayerOptions,
   customLegendTypes,
-  initialCollapsed
+  initialCollapsed,
+  layerOrder
 }) {
   const dispatch = useDispatch();
   const layers = useSelector((state) =>
-    Object.values(state.carto.layers).filter((layer) => !!layer.legend)
+    sortArrayByPropValues(
+      Object.values(state.carto.layers).filter((layer) => !!layer.legend),
+      layerOrder,
+      'id'
+    )
   );
   const [collapsed, setCollapsed] = useState(initialCollapsed);
 
