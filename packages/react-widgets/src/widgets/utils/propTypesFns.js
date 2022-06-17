@@ -12,3 +12,27 @@ export const columnAggregationOn = (columnPropName) => (props, propName) => {
     }
   }
 };
+
+// FormulaWidget
+export const checkFormulaColumn = (props, propName) => {
+  const propValue = props[propName];
+
+  const isValidString = !!propValue && typeof propValue === 'string';
+  const isValidArray = Array.isArray(propValue) && propValue.length;
+
+  const validationError = new Error(`Prop ${propName} must be a string or an array`);
+
+  if (props.operation === AggregationTypes.COUNT) {
+    if (propValue && !(isValidString || isValidArray)) {
+      return validationError;
+    }
+  } else {
+    if (!propValue) {
+      return new Error(`Prop ${propName} must be defined`);
+    }
+
+    if (!isValidArray || !isValidString) {
+      return validationError;
+    }
+  }
+};
