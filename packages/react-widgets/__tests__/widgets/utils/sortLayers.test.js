@@ -60,12 +60,13 @@ describe('sortLayersById', () => {
     ];
     const ORDER = ['storesLayer1', 'storesLayer2', 'storesLayer0'];
     expect(() => sortLayers(ELEMENT_WITH_NO_PROP, ORDER)).toThrowError(
-      'Layers must have an id property'
+      'Layer must have an id'
     );
   });
 
   test('should sort in reverse order', () => {
     const ORDER = ['storesLayer1', 'storesLayer2', 'storesLayer0', 'storesLayer3'];
+
     const ORDERED_ELEMENTS = sortLayers(ELEMENTS, ORDER).map(({ id }) => id);
     expect(ORDER).toStrictEqual(ORDERED_ELEMENTS.reverse());
   });
