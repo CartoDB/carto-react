@@ -1,4 +1,4 @@
-import sortArrayByPropValues from '../../../src/widgets/utils/sortArrayByPropValues';
+import sortLayersById from '../../../src/widgets/utils/sortLayersById';
 
 describe('sortArrayByPropValues', () => {
   let ELEMENTS = [];
@@ -27,11 +27,6 @@ describe('sortArrayByPropValues', () => {
     ];
   });
 
-  test('should ignore not existing prop', () => {
-    const ORDER = ['storesLayer3', 'storesLayer2', 'storesLayer1', 'storesLayer0'];
-    sortArrayByPropValues(ELEMENTS, ORDER, 'not_existing_prop');
-    expect(ELEMENTS).toStrictEqual(ELEMENTS);
-  });
   test('should ignore not existing values', () => {
     const ORDER = [
       'not_existing_value',
@@ -40,24 +35,22 @@ describe('sortArrayByPropValues', () => {
       'storesLayer2',
       'storesLayer0'
     ];
-    const [, ...EXISTING_VALUES] = ORDER;
-    expect(EXISTING_VALUES).toStrictEqual(
-      sortArrayByPropValues(ELEMENTS, ORDER, 'id')
+    expect(ORDER.slice(1)).toStrictEqual(
+      sortLayersById(ELEMENTS, ORDER)
         .map(({ id }) => id)
-        .splice(0, EXISTING_VALUES.length)
         .reverse()
     );
   });
 
-  test('should add missing values at start', () => {
+  test('should add missing values at end', () => {
     const ORDER = ['storesLayer1', 'storesLayer2', 'storesLayer0'];
-    const ORDERED_ELEMENTS = sortArrayByPropValues(ELEMENTS, ORDER, 'id')
+    const ORDERED_ELEMENTS = sortLayersById(ELEMENTS, ORDER)
       .map(({ id }) => id)
-      .splice(0, 1);
+      .slice(ORDER.length);
     expect(ORDERED_ELEMENTS.every((id) => ORDER.indexOf(id) === -1)).toBeTruthy();
     expect(ORDERED_ELEMENTS.length).toBe(1);
   });
-  test('should add element without prop at start', () => {
+  test('should throw an error when elements have no id property', () => {
     const ELEMENT_WITH_NO_PROP = [
       ...ELEMENTS,
       {
@@ -66,20 +59,14 @@ describe('sortArrayByPropValues', () => {
       }
     ];
     const ORDER = ['storesLayer1', 'storesLayer2', 'storesLayer0'];
-    const ORDERED_ELEMENTS = sortArrayByPropValues(
-      ELEMENT_WITH_NO_PROP,
-      ORDER,
-      'id'
-    ).splice(0, 1);
-    expect(ORDERED_ELEMENTS.every((el) => !el.hasOwnProperty('id'))).toBeTruthy();
-    expect(ORDERED_ELEMENTS.length).toBe(1);
+    expect(() => sortLayersById(ELEMENT_WITH_NO_PROP, ORDER)).toThrowError(
+      'Layers must have an id property'
+    );
   });
 
   test('should sort in reverse order', () => {
     const ORDER = ['storesLayer1', 'storesLayer2', 'storesLayer0', 'storesLayer3'];
-    const ORDERED_ELEMENTS = sortArrayByPropValues(ELEMENTS, ORDER, 'id').map(
-      ({ id }) => id
-    );
+    const ORDERED_ELEMENTS = sortLayersById(ELEMENTS, ORDER).map(({ id }) => id);
     expect(ORDER).toStrictEqual(ORDERED_ELEMENTS.reverse());
   });
 });
