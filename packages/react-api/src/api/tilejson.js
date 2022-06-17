@@ -1,5 +1,6 @@
-import { assert, checkCredentials } from './common';
+import { checkCredentials } from './common';
 import { MAP_TYPES, API_VERSIONS, fetchLayerData, FORMATS } from '@deck.gl/carto';
+import { assert } from '@carto/react-core/';
 
 /**
  * Get the TileJson for static tilesets

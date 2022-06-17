@@ -1,5 +1,6 @@
-import { assert, checkCredentials, makeCall } from './common';
+import { checkCredentials, makeCall } from './common';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
+import { assert } from '@carto/react-core/';
 
 const URL_LENGTH = 2048;
 
