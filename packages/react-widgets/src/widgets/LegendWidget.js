@@ -3,7 +3,7 @@ import { updateLayer } from '@carto/react-redux/';
 import { LegendWidgetUI } from '@carto/react-ui';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import sortLayersById from './utils/sortLayersById';
+import sortLayers from './utils/sortLayers';
 
 /**
  * Renders a <LegendWidget /> component
@@ -23,7 +23,7 @@ function LegendWidget({
 }) {
   const dispatch = useDispatch();
   const layers = useSelector((state) =>
-    sortLayersById(
+    sortLayers(
       Object.values(state.carto.layers).filter((layer) => !!layer.legend),
       layerOrder
     )
@@ -79,11 +79,13 @@ function LegendWidget({
 LegendWidget.propTypes = {
   className: PropTypes.string,
   customLegendTypes: PropTypes.objectOf(PropTypes.func),
-  initialCollapsed: PropTypes.bool
+  initialCollapsed: PropTypes.bool,
+  layerOrder: PropTypes.arrayOf(PropTypes.string)
 };
 
 LegendWidget.defaultProps = {
-  initialCollapsed: false
+  initialCollapsed: false,
+  layerOrder: []
 };
 
 export default LegendWidget;
