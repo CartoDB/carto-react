@@ -12,5 +12,8 @@ export default function sortLayersById(layers = [], layerOrder = []) {
     layers.every((layer) => layer.id),
     'Layers must have an id property'
   );
-  return layers.sort((a, b) => uniqueValues.indexOf(b.id) - uniqueValues.indexOf(a.id));
+  return [...layers].sort((layerA, layerB) => {
+      assert(layerA.id && layerB.id, 'Layer must have an id')
+      return uniqueValues.indexOf(layerB.id) - uniqueValues.indexOf(layerA.id));
+  }
 }
