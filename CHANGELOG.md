@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## Not released
-- Add layerOrder property to LegendWidget. Allow to define a persistent order of legends based on the layer id. [#433](https://github.com/CartoDB/carto-react/pull/433)
+- Add layerOrder in LegendWidget [#433](https://github.com/CartoDB/carto-react/pull/433)
 - Allow FormulaWidget column to be undefined when using COUNT [#434](https://github.com/CartoDB/carto-react/pull/434)
 
 ## 1.3
