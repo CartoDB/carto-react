@@ -12,7 +12,7 @@ export { InvalidColumnError } from './utils/InvalidColumnError';
 export { debounce } from './utils/debounce';
 export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';
-export { assert } from './utils/assert';
+export { assert as _assert } from './utils/assert';
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
