@@ -1,7 +1,7 @@
-import { assert, checkCredentials, makeCall } from './common';
+import { checkCredentials, makeCall } from './common';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { getTileJson } from './tilejson';
-import { InvalidColumnError } from '@carto/react-core/';
+import { InvalidColumnError, _assert as assert } from '@carto/react-core/';
 
 /**
  * Execute a stats service request.

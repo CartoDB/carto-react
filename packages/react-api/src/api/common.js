@@ -22,12 +22,6 @@ export function dealWithApiError({ response, data }) {
   }
 }
 
-export function assert(condition, message) {
-  if (!condition) {
-    throw new Error(message);
-  }
-}
-
 export function checkCredentials(credentials) {
   if (!credentials || !credentials.apiBaseUrl || !credentials.accessToken) {
     throw new Error('Missing or bad credentials provided');

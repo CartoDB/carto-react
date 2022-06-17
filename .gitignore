@@ -2,6 +2,7 @@
 /coverage
 /reports
 /.nyc_output
+/.vscode
 
 /packages/*/node_modules
 /packages/*/coverage

@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Add layerOrder in LegendWidget [#433](https://github.com/CartoDB/carto-react/pull/433)
 - Allow FormulaWidget column to be undefined when using COUNT [#434](https://github.com/CartoDB/carto-react/pull/434)
 
 ## 1.3
