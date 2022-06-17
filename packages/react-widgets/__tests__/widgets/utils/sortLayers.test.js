@@ -1,31 +1,28 @@
 import sortLayers from '../../../src/widgets/utils/sortLayers';
 
 describe('sortLayersById', () => {
-  let ELEMENTS = [];
-  beforeAll(() => {
-    ELEMENTS = [
-      {
-        id: 'storesLayer0',
-        source: 'storesSource',
-        title: 'Store types 0'
-      },
-      {
-        id: 'storesLayer1',
-        source: 'storesSource',
-        title: 'Store types 1'
-      },
-      {
-        id: 'storesLayer2',
-        source: 'storesSource',
-        title: 'Store types 2'
-      },
-      {
-        id: 'storesLayer3',
-        source: 'storesSource',
-        title: 'Store types 3'
-      }
-    ];
-  });
+  const ELEMENTS = [
+    {
+      id: 'storesLayer0',
+      source: 'storesSource',
+      title: 'Store types 0'
+    },
+    {
+      id: 'storesLayer1',
+      source: 'storesSource',
+      title: 'Store types 1'
+    },
+    {
+      id: 'storesLayer2',
+      source: 'storesSource',
+      title: 'Store types 2'
+    },
+    {
+      id: 'storesLayer3',
+      source: 'storesSource',
+      title: 'Store types 3'
+    }
+  ];
 
   test('should ignore not existing ids', () => {
     const ORDER = [
@@ -67,7 +64,7 @@ describe('sortLayersById', () => {
   test('should sort in reverse order', () => {
     const ORDER = ['storesLayer1', 'storesLayer2', 'storesLayer0', 'storesLayer3'];
 
-    const ORDERED_ELEMENTS = sortLayers(ELEMENTS, ORDER).map(({ id }) => id);
-    expect(ORDER).toStrictEqual(ORDERED_ELEMENTS.reverse());
+    const orderedElements = sortLayers(ELEMENTS, ORDER).map(({ id }) => id);
+    expect(ORDER).toStrictEqual(orderedElements.reverse());
   });
 });
