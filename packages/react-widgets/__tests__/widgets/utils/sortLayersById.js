@@ -1,6 +1,6 @@
 import sortLayersById from '../../../src/widgets/utils/sortLayersById';
 
-describe('sortArrayByPropValues', () => {
+describe('sortLayersById', () => {
   let ELEMENTS = [];
   beforeAll(() => {
     ELEMENTS = [
@@ -27,7 +27,7 @@ describe('sortArrayByPropValues', () => {
     ];
   });
 
-  test('should ignore not existing values', () => {
+  test('should ignore not existing ids', () => {
     const ORDER = [
       'not_existing_value',
       'storesLayer3',
@@ -42,7 +42,7 @@ describe('sortArrayByPropValues', () => {
     );
   });
 
-  test('should add missing values at end', () => {
+  test('should add missing ids at end', () => {
     const ORDER = ['storesLayer1', 'storesLayer2', 'storesLayer0'];
     const ORDERED_ELEMENTS = sortLayersById(ELEMENTS, ORDER)
       .map(({ id }) => id)
