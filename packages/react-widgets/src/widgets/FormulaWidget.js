@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
 import { AggregationTypes } from '@carto/react-core';
-import { columnAggregationOn } from './utils/propTypesFns';
+import { checkFormulaColumn, columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 
@@ -76,8 +76,7 @@ FormulaWidget.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
-  column: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
-    .isRequired,
+  column: checkFormulaColumn,
   joinOperation: columnAggregationOn('column'),
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,

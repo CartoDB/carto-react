@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Allow FormulaWidget column to be undefined when using COUNT [#434](https://github.com/CartoDB/carto-react/pull/434)
+
 ## 1.3
 
 ### 1.3.0-beta.1 (2022-06-14)
