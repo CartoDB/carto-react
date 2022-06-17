@@ -1,4 +1,5 @@
 import { InvalidColumnError } from '@carto/react-core/';
+export { assert } from '@carto/react-core/';
 
 /**
  * Return more descriptive error from API
@@ -19,12 +20,6 @@ export function dealWithApiError({ response, data }) {
       throw new Error('Forbidden access to the requested data');
     default:
       throw new Error(`${JSON.stringify(data?.hint || data.error?.[0])}`);
-  }
-}
-
-export function assert(condition, message) {
-  if (!condition) {
-    throw new Error(message);
   }
 }
 
