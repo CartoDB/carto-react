@@ -2,7 +2,7 @@ import { assert } from '@carto/react-core';
 
 /**
  * Sorts a list of layers based on a list of id property values
- * @param {any[]} layers list of layers to sort
+ * @param {{ id: string }[]} layers - Array of layers to sort
  * @param {string[]} layerOrder values to sort by
  * @returns sorted array
  */
