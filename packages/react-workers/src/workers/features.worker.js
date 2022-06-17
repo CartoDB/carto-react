@@ -106,11 +106,17 @@ function getFormula({
   if (currentFeatures) {
     const targetOperation = aggregationFunctions[operation];
 
-    assertColumn(column);
+    const isCount = operation === AggregationTypes.COUNT;
+
+    // If the operation isn't count, we need to assert the column
+    // If the operation is count, the column can be undefined
+    if (!isCount || (isCount && column)) {
+      assertColumn(column);
+    }
 
     const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
 
-    if (filteredFeatures.length === 0 && operation !== AggregationTypes.COUNT) {
+    if (filteredFeatures.length === 0 && !isCount) {
       result = { value: null };
     } else {
       result = { value: targetOperation(filteredFeatures, column, joinOperation) };
