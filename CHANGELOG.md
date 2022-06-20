@@ -4,6 +4,7 @@
 
 - Add layerOrder in LegendWidget [#433](https://github.com/CartoDB/carto-react/pull/433)
 - Allow FormulaWidget column to be undefined when using COUNT [#434](https://github.com/CartoDB/carto-react/pull/434)
+- Bump deck.gl to 8.8.0-beta.3 [#435](https://github.com/CartoDB/carto-react/pull/435)
 
 ## 1.3
 
