@@ -271,11 +271,13 @@ function CategoryWidgetUI(props) {
         return searchValue
           ? list.filter((elem) => {
               return (
-                elem.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
-                (labels[elem.name]
-                  ? labels[elem.name].toLowerCase().indexOf(searchValue.toLowerCase()) !==
-                    -1
-                  : false)
+                elem.name !== null &&
+                (elem.name?.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
+                  (labels[elem.name]
+                    ? labels[elem.name]
+                        .toLowerCase()
+                        .indexOf(searchValue.toLowerCase()) !== -1
+                    : false))
               );
             })
           : list;
@@ -614,7 +616,8 @@ CategoryWidgetUI.defaultProps = {
 CategoryWidgetUI.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]).isRequired,
+      name: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
+        .isRequired,
       value: PropTypes.number
     })
   ),
