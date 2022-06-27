@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Layout improvements in BarWidgetUI [#438](https://github.com/CartoDB/carto-react/pull/438)
 - Fix FormulaWidget column check [#437](https://github.com/CartoDB/carto-react/pull/437)
 
 ## 1.3
