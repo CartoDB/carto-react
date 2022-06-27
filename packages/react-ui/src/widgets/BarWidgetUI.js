@@ -172,7 +172,7 @@ function BarWidgetUI(props) {
         type: 'bar',
         name: series[componentIdx] || '',
         animation,
-        barCategoryGap: '10px',
+        barMaxWidth: 100,
         data: row.map((value, dataIdx) => {
           const isSelected = selectedBars.some(
             ([sDataIdx, sComponentIdx = 0]) =>
@@ -203,10 +203,21 @@ function BarWidgetUI(props) {
   const options = useMemo(
     () => ({
       grid: {
-        left: xAxisData.length >= 4 ? calculateMargin(xAxisFormatter(xAxisData[0])) : 0,
+        left:
+          xAxisData.length >= 4
+            ? calculateMargin(
+                processFormatterRes(xAxisFormatter(xAxisData[0])),
+                xAxisData.length
+              )
+            : 0,
         top: theme.spacing(2),
         right:
-          xAxisData.length >= 4 ? calculateMargin(xAxisFormatter(xAxisData[xAxisData.length - 1])) : 0,
+          xAxisData.length >= 4
+            ? calculateMargin(
+                processFormatterRes(xAxisFormatter(xAxisData[xAxisData.length - 1])),
+                xAxisData.length
+              )
+            : 0,
         bottom: theme.spacing(0),
         containLabel: true
       },
@@ -221,7 +232,16 @@ function BarWidgetUI(props) {
       yAxis: yAxisOptions,
       series: seriesOptions
     }),
-    [xAxisData, theme, colors, tooltipOptions, xAxisOptions, yAxisOptions, seriesOptions, xAxisFormatter]
+    [
+      xAxisData,
+      theme,
+      colors,
+      tooltipOptions,
+      xAxisOptions,
+      yAxisOptions,
+      seriesOptions,
+      xAxisFormatter
+    ]
   );
 
   const clearBars = () => {
@@ -353,11 +373,11 @@ BarWidgetUI.propTypes = {
 export default BarWidgetUI;
 
 // Aux
-function calculateMargin(label = '') {
-  // For less than 8 characters, the margin isn't necessary
-  if (label.length <= 8) return 0;
-  // Calculated manually. For each 6 characters, the margin should be 6.5px
-  return (label.length * 6.5) / 6;
+function calculateMargin(label = '', amountCategories = 0) {
+  // For less than 8 characters and less than 15 categories, the margin isn't necessary
+  if (amountCategories <= 15 && label.length <= 8) return 0;
+  // Calculated manually. For each 6 characters, the margin should be 8.5px
+  return (label.length * 8.5) / 6;
 }
 
 function defaultTooltipFormatter(params, xAxisFormatter, yAxisFormatter) {
