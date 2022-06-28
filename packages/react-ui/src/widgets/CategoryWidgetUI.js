@@ -272,7 +272,8 @@ function CategoryWidgetUI(props) {
           ? list.filter((elem) => {
               return (
                 elem.name !== null &&
-                (elem.name?.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
+                elem.name !== undefined &&
+                (elem.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1 ||
                   (labels[elem.name]
                     ? labels[elem.name]
                         .toLowerCase()
