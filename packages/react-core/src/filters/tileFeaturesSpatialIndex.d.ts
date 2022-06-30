@@ -5,5 +5,6 @@ import { TileFeaturesResponse } from "../types";
 export default function tileFeaturesSpatialIndex(arg: {
   tiles: any;
   geometryToIntersect: Feature<Polygon | MultiPolygon>;
+  geoColumName: string;
   spatialIndex: SpatialIndex;
 }): TileFeaturesResponse;

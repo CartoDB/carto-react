@@ -59,6 +59,7 @@ function getTileFeatures({
   geometry,
   uniqueIdProperty,
   tileFormat,
+  geoColumName,
   spatialIndex
 }) {
   currentFeatures = tileFeatures({
@@ -67,6 +68,7 @@ function getTileFeatures({
     geometry,
     uniqueIdProperty,
     tileFormat,
+    geoColumName,
     spatialIndex
   });
   postMessage({ result: true });

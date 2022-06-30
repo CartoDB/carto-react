@@ -26,12 +26,13 @@ export type ScatterPlotFeature = [number, number][];
 export type Viewport = [number, number, number, number];
 
 export type TileFeatures = {
-  tiles: any; // TODO: add proper deck.gl type
+  tiles?: any; // TODO: add proper deck.gl type
   viewport: Viewport;
   geometry?: Geometry;
   uniqueIdProperty?: string;
   tileFormat: TILE_FORMATS;
-  spatialIndex?: SpatialIndex
+  geoColumName?: string;
+  spatialIndex?: SpatialIndex;
 };
 
 export type TileFeaturesResponse = Record<string, unknown>[] | [];
