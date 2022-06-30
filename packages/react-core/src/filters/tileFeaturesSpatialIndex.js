@@ -1,10 +1,14 @@
 import { indexes } from '@mapbox/tile-cover';
+import { tileToQuadbin } from '@deck.gl/carto';
 // h3-js has a known problem that does not allow us to use it in a web-worker. To solve
 // it we're overwriting the node_module package after install it (check postinstall script in the package.json and the patches/h3-js+3.7.2.patch file)
 // To know more about the h3-js issue check https://github.com/uber/h3-js/issues/117
 import { h3GetResolution, polyfill } from 'h3-js';
 import bboxClip from '@turf/bbox-clip';
 import { SpatialIndex } from '../operations/constants/SpatialIndexTypes';
+
+const aaa = tileToQuadbin;
+debugger;
 
 export default function tileFeaturesSpatialIndex({
   tiles,
@@ -55,7 +59,8 @@ function getResolution(tiles, spatialIndex) {
     return;
   }
 
-  if (spatialIndex === SpatialIndex.QUADINT || spatialIndex === SpatialIndex.QUADKEY) {
+  // if (spatialIndex === SpatialIndex.QUADINT || spatialIndex === SpatialIndex.QUADKEY) {
+  if (spatialIndex === SpatialIndex.QUADBIN) {
     return data[0].id.length;
   }
 
@@ -68,7 +73,8 @@ const bboxWest = [-180, -90, 0, 90];
 const bboxEast = [0, -90, 180, 90];
 
 function getCellsCoverGeometry(geometry, spatialIndex, resolution) {
-  if (spatialIndex === SpatialIndex.QUADINT || spatialIndex === SpatialIndex.QUADKEY) {
+  // if (spatialIndex === SpatialIndex.QUADINT || spatialIndex === SpatialIndex.QUADKEY) {
+  if (spatialIndex === SpatialIndex.QUADBIN) {
     return indexes(geometry, {
       min_zoom: resolution,
       max_zoom: resolution
