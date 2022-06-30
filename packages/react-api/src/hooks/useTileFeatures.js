@@ -28,6 +28,7 @@ export default function useTileFeatures({
 
   const [tileFormat, setTileFormat] = useState('');
   const [spatialIndex, setSpatialIndex] = useState();
+  const [geoColumName, setGeoColumName] = useState();
 
   const sourceId = source?.id;
 
@@ -44,6 +45,7 @@ export default function useTileFeatures({
         geometry: spatialFilter,
         uniqueIdProperty,
         tileFormat,
+        geoColumName,
         spatialIndex
       })
         .then(() => {
@@ -52,7 +54,14 @@ export default function useTileFeatures({
         .catch(throwError)
         .finally(clearDebounce);
     },
-    [tileFormat, setSourceFeaturesReady, sourceId, spatialIndex, clearDebounce]
+    [
+      tileFormat,
+      setSourceFeaturesReady,
+      sourceId,
+      geoColumName,
+      spatialIndex,
+      clearDebounce
+    ]
   );
 
   const loadTiles = useCallback(
@@ -133,8 +142,14 @@ export default function useTileFeatures({
   );
 
   const onDataLoad = useCallback(({ tiles: [tile], scheme }) => {
-    const tilesFormat = new URL(tile).searchParams.get('formatTiles');
+    const url = new URL(tile);
+    const tilesFormat = url.searchParams.get('formatTiles');
     setTileFormat(tilesFormat || TILE_FORMATS.MVT);
+    const geoColum = url.searchParams.get('geo_column');
+
+    if (geoColum) {
+      setGeoColumName(getColumnNameFromGeoColumn(geoColum));
+    }
     setSpatialIndex(Object.values(SpatialIndex).includes(scheme) ? scheme : undefined);
   }, []);
 
@@ -152,4 +167,9 @@ const customFetch = async (url, { layer, loaders, loadOptions, signal }) => {
     response.headers.get('Features-Dropped-From-Tile') === 'true';
   const result = await parse(response, loaders, loadOptions);
   return result ? { ...result, isDroppingFeatures } : null;
+};
+
+const getColumnNameFromGeoColumn = (geoColumn) => {
+  const parts = geoColumn.split(':');
+  return parts.length === 1 ? parts[0] : parts.length === 2 ? parts[1] : null;
 };

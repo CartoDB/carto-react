@@ -13,6 +13,7 @@ export function tileFeatures({
   geometry,
   uniqueIdProperty,
   tileFormat,
+  geoColumName,
   spatialIndex
 }) {
   const geometryToIntersect = getGeometryToIntersect(viewport, geometry);
@@ -22,7 +23,12 @@ export function tileFeatures({
   }
 
   if (spatialIndex) {
-    return tileFeaturesSpatialIndex({ tiles, geometryToIntersect, spatialIndex });
+    return tileFeaturesSpatialIndex({
+      tiles,
+      geometryToIntersect,
+      geoColumName,
+      spatialIndex
+    });
   }
   return tileFeaturesGeometries({
     tiles,

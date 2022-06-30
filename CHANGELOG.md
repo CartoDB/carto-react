@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## Not released
-
+- Return the spatial index ID as a property to be available for widgets [#440](https://github.com/CartoDB/carto-react/pull/440)
 - Fix CategoryWidget search if there are null values [#439](https://github.com/CartoDB/carto-react/pull/439)
 - Layout improvements in BarWidgetUI [#438](https://github.com/CartoDB/carto-react/pull/438)
 - Fix FormulaWidget column check [#437](https://github.com/CartoDB/carto-react/pull/437)

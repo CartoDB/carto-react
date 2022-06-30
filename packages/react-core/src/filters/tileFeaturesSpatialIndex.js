@@ -9,10 +9,12 @@ import { SpatialIndex } from '../operations/constants/SpatialIndexTypes';
 export default function tileFeaturesSpatialIndex({
   tiles,
   geometryToIntersect,
+  geoColumName,
   spatialIndex
 }) {
   const map = new Map();
   const resolution = getResolution(tiles, spatialIndex);
+  const spatialIndexIDName = geoColumName ? geoColumName : spatialIndex;
 
   if (!resolution) {
     return [];
@@ -39,7 +41,7 @@ export default function tileFeaturesSpatialIndex({
 
     tile.data.forEach((d) => {
       if (cellsDictionary[d.id]) {
-        map.set(d.id, d.properties);
+        map.set(d.id, { ...d.properties, [spatialIndexIDName]: d.id });
       }
     });
   }
