@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Not released
+- Add support for quadbin and remove quadkey and quadint [#442](https://github.com/CartoDB/carto-react/pull/442)
 
 ## 1.3
 
