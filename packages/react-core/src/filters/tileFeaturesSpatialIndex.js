@@ -1,3 +1,4 @@
+import { _quadbinZoom, _tileToQuadbin } from '@deck.gl/carto';
 import { tiles } from '@mapbox/tile-cover';
 // h3-js has a known problem that does not allow us to use it in a web-worker. To solve
 // it we're overwriting the node_module package after install it (check postinstall script in the package.json and the patches/h3-js+3.7.2.patch file)
@@ -93,56 +94,4 @@ function getCellsCoverGeometry(geometry, spatialIndex, resolution) {
       )
     );
   }
-}
-
-///// ALL THE CODE BELOW WILL BE IMPORTED FROM DECK GL /////////////
-const B = [
-  0x5555555555555555n,
-  0x3333333333333333n,
-  0x0f0f0f0f0f0f0f0fn,
-  0x00ff00ff00ff00ffn,
-  0x0000ffff0000ffffn,
-  0x00000000ffffffffn
-];
-const S = [0n, 1n, 2n, 4n, 8n, 16n];
-
-function _tileToQuadbin(tile) {
-  if (tile.z < 0 || tile.z > 26) {
-    throw new Error('Wrong zoom');
-  }
-  // eslint-disable-next-line no-undef
-  const z = BigInt(tile.z);
-  // eslint-disable-next-line no-undef
-  let x = BigInt(tile.x) << (32n - z);
-  // eslint-disable-next-line no-undef
-  let y = BigInt(tile.y) << (32n - z);
-
-  for (let i = 0; i < 5; i++) {
-    const s = S[5 - i];
-    const b = B[4 - i];
-    x = (x | (x << s)) & b;
-    y = (y | (y << s)) & b;
-  }
-
-  const quadbin =
-    0x4000000000000000n |
-    (1n << 59n) | // | (mode << 59) | (mode_dep << 57)
-    (z << 52n) |
-    ((x | (y << 1n)) >> 12n) |
-    (0xfffffffffffffn >> (z * 2n));
-  return bigIntToIndex(quadbin);
-}
-
-function bigIntToIndex(quadbin) {
-  return quadbin.toString(16);
-}
-
-function _quadbinZoom(index) {
-  const quadbin = indexToBigInt(index);
-  return (quadbin >> 52n) & 0x1fn;
-}
-
-function indexToBigInt(index) {
-  // eslint-disable-next-line no-undef
-  return BigInt(`0x${index}`);
 }
