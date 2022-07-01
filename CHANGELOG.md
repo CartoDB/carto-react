@@ -4,8 +4,8 @@
 
 ## 1.3
 
-### 1.3.0-beta.3 (2022-07-01)
-- Add support for quadbin and remove quadkey and quadint [#442](https://github.com/CartoDB/carto-react/pull/442)
+### 1.3.0-beta.4 (2022-07-01)
+- Add support for quadbin and remove quadkey and quadint. Bump deck.gl to 8.8.0 [#442](https://github.com/CartoDB/carto-react/pull/442)
 
 ### 1.3.0-beta.3 (2022-06-30)
 - Return the spatial index ID as a property to be available for widgets [#440](https://github.com/CartoDB/carto-react/pull/440)
