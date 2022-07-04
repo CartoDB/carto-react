@@ -204,18 +204,20 @@ function BarWidgetUI(props) {
     () => ({
       grid: {
         left:
-          xAxisData.length >= 4
+          xAxisDataWithLabels.length >= 4
             ? calculateMargin(
-                processFormatterRes(xAxisFormatter(xAxisData[0])),
-                xAxisData.length
+                processFormatterRes(xAxisFormatter(xAxisDataWithLabels[0])),
+                xAxisDataWithLabels.length
               )
             : 0,
         top: theme.spacing(2),
         right:
-          xAxisData.length >= 4
+          xAxisDataWithLabels.length >= 4
             ? calculateMargin(
-                processFormatterRes(xAxisFormatter(xAxisData[xAxisData.length - 1])),
-                xAxisData.length
+                processFormatterRes(
+                  xAxisFormatter(xAxisDataWithLabels[xAxisDataWithLabels.length - 1])
+                ),
+                xAxisDataWithLabels.length
               )
             : 0,
         bottom: theme.spacing(0),
@@ -233,7 +235,7 @@ function BarWidgetUI(props) {
       series: seriesOptions
     }),
     [
-      xAxisData,
+      xAxisDataWithLabels,
       theme,
       colors,
       tooltipOptions,
