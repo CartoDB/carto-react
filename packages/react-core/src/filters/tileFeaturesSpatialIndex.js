@@ -1,4 +1,5 @@
-import { indexes } from '@mapbox/tile-cover';
+import { _quadbinZoom, _tileToQuadbin } from '@deck.gl/carto';
+import { tiles } from '@mapbox/tile-cover';
 // h3-js has a known problem that does not allow us to use it in a web-worker. To solve
 // it we're overwriting the node_module package after install it (check postinstall script in the package.json and the patches/h3-js+3.7.2.patch file)
 // To know more about the h3-js issue check https://github.com/uber/h3-js/issues/117
@@ -9,10 +10,12 @@ import { SpatialIndex } from '../operations/constants/SpatialIndexTypes';
 export default function tileFeaturesSpatialIndex({
   tiles,
   geometryToIntersect,
+  geoColumName,
   spatialIndex
 }) {
   const map = new Map();
   const resolution = getResolution(tiles, spatialIndex);
+  const spatialIndexIDName = geoColumName ? geoColumName : spatialIndex;
 
   if (!resolution) {
     return [];
@@ -39,7 +42,7 @@ export default function tileFeaturesSpatialIndex({
 
     tile.data.forEach((d) => {
       if (cellsDictionary[d.id]) {
-        map.set(d.id, d.properties);
+        map.set(d.id, { ...d.properties, [spatialIndexIDName]: d.id });
       }
     });
   }
@@ -53,8 +56,8 @@ function getResolution(tiles, spatialIndex) {
     return;
   }
 
-  if (spatialIndex === SpatialIndex.QUADINT || spatialIndex === SpatialIndex.QUADKEY) {
-    return data[0].id.length;
+  if (spatialIndex === SpatialIndex.QUADBIN) {
+    return Number(_quadbinZoom(data[0].id));
   }
 
   if (spatialIndex === SpatialIndex.H3) {
@@ -66,11 +69,11 @@ const bboxWest = [-180, -90, 0, 90];
 const bboxEast = [0, -90, 180, 90];
 
 function getCellsCoverGeometry(geometry, spatialIndex, resolution) {
-  if (spatialIndex === SpatialIndex.QUADINT || spatialIndex === SpatialIndex.QUADKEY) {
-    return indexes(geometry, {
+  if (spatialIndex === SpatialIndex.QUADBIN) {
+    return tiles(geometry, {
       min_zoom: resolution,
       max_zoom: resolution
-    });
+    }).map(([x, y, z]) => _tileToQuadbin({ x, y, z }));
   }
 
   if (spatialIndex === SpatialIndex.H3) {
