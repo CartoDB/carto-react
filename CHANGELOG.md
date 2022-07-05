@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Use labels to calculate BarWidgetUI margin [#444](https://github.com/CartoDB/carto-react/pull/444)
+
 ## 1.3
 
 ### 1.3.0-beta.4 (2022-07-01)
