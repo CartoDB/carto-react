@@ -86,8 +86,9 @@ function BarWidgetUI(props) {
 
   // xAxis
   const xAxisDataWithLabels = useMemo(
-    () => xAxisData.map((name) => labels[name] || name),
-    [xAxisData, labels]
+    () =>
+      xAxisData.map((name) => processFormatterRes(xAxisFormatter(labels[name] || name))),
+    [xAxisData, labels, xAxisFormatter]
   );
 
   const xAxisOptions = useMemo(
@@ -101,12 +102,11 @@ function BarWidgetUI(props) {
       },
       axisLabel: {
         ...theme.typography.charts,
-        padding: [theme.spacing(0.5), 0, 0, 0],
-        formatter: (v) => processFormatterRes(xAxisFormatter(v))
+        padding: [theme.spacing(0.5), 0, 0, 0]
       },
       data: xAxisDataWithLabels
     }),
-    [theme, xAxisDataWithLabels, xAxisFormatter]
+    [theme, xAxisDataWithLabels]
   );
 
   // yAxis
@@ -205,18 +205,13 @@ function BarWidgetUI(props) {
       grid: {
         left:
           xAxisDataWithLabels.length >= 4
-            ? calculateMargin(
-                processFormatterRes(xAxisFormatter(xAxisDataWithLabels[0])),
-                xAxisDataWithLabels.length
-              )
+            ? calculateMargin(xAxisDataWithLabels[0], xAxisDataWithLabels.length)
             : 0,
         top: theme.spacing(2),
         right:
           xAxisDataWithLabels.length >= 4
             ? calculateMargin(
-                processFormatterRes(
-                  xAxisFormatter(xAxisDataWithLabels[xAxisDataWithLabels.length - 1])
-                ),
+                xAxisDataWithLabels[xAxisDataWithLabels.length - 1],
                 xAxisDataWithLabels.length
               )
             : 0,
@@ -241,8 +236,7 @@ function BarWidgetUI(props) {
       tooltipOptions,
       xAxisOptions,
       yAxisOptions,
-      seriesOptions,
-      xAxisFormatter
+      seriesOptions
     ]
   );
 
