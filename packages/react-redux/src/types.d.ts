@@ -26,6 +26,7 @@ type InitialCarto2State = {
 type OauthCarto3 = {
   domain: string,
   clientId: string,
+  organizationId: string,
   scopes: Array<string>
   audience: string,
   authorizeEndPoint: string
