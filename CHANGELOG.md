@@ -3,6 +3,8 @@
 ## Not released
 
 - Use labels to calculate BarWidgetUI margin [#444](https://github.com/CartoDB/carto-react/pull/444)
+- Allow specifying organizationId in OAuth to support SSO in carto3 [#445](https://github.com/CartoDB/carto-react/pull/445)
+
 
 ## 1.3
 
