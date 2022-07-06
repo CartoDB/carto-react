@@ -78,10 +78,10 @@ function BarWidgetUI(props) {
         return position;
       },
       formatter(params) {
-        return tooltipFormatter(params, xAxisFormatter, yAxisFormatter);
+        return tooltipFormatter(params, yAxisFormatter);
       }
     }),
-    [theme, tooltip, tooltipFormatter, xAxisFormatter, yAxisFormatter]
+    [theme, tooltip, tooltipFormatter, yAxisFormatter]
   );
 
   // xAxis
@@ -376,13 +376,13 @@ function calculateMargin(label = '', amountCategories = 0) {
   return (label.length * 8.5) / 6;
 }
 
-function defaultTooltipFormatter(params, xAxisFormatter, yAxisFormatter) {
+function defaultTooltipFormatter(params, yAxisFormatter) {
   if (!params || !params?.length) {
     return null;
   }
 
   let message = '';
-  message += `${processFormatterRes(xAxisFormatter(params[0].axisValueLabel))}`;
+  message += params[0].axisValueLabel;
   message += params
     .map(({ seriesName, value, data, marker }) => {
       const formattedSeriesName = seriesName ? seriesName + ': ' : '';
