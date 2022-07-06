@@ -82,18 +82,18 @@ export const createCartoSlice = (initialState) => {
       },
       updateLayer: (state, action) => {
         const layer = state.layers[action.payload.id];
-        if (layer)
+        if (layer) {
+          const newLayerAttrs = action.payload.layerAttributes;
+          const newLayer = { ...layer, ...newLayerAttrs };
+
           // TODO: Study if we should use a deepmerge fn
           state.layers[action.payload.id] = {
-            ...layer,
-            ...action.payload.layerAttributes,
-            ...(layer.legend && {
-              legend: {
-                ...layer.legend,
-                ...action.payload.layerAttributes.legend
-              }
+            ...newLayer,
+            ...(newLayer.legend && {
+              legend: { ...newLayer.legend, ...newLayerAttrs.legend }
             })
           };
+        }
       },
       removeLayer: (state, action) => {
         delete state.layers[action.payload];
