@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Remove xAxisFormatter use in tooltipFormatter in BarWidgetUI [#447](https://github.com/CartoDB/carto-react/pull/447)
+
 ## 1.3
 
 ### 1.3.0-beta.5 (2022-07-05)
