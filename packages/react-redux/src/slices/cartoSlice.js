@@ -88,7 +88,7 @@ export const createCartoSlice = (initialState) => {
           // TODO: Study if we should use a deepmerge fn
           state.layers[action.payload.id] = {
             ...newLayer,
-            ...(newLayer.legend && {
+            ...(layer.legend && newLayer.legend && {
               legend: { ...layer.legend, ...newLayer.legend }
             })
           };
