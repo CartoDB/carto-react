@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fix updateLayer reducer to allow remove the legend [#448](https://github.com/CartoDB/carto-react/pull/448)
 - Remove xAxisFormatter use in tooltipFormatter in BarWidgetUI [#447](https://github.com/CartoDB/carto-react/pull/447)
 
 ## 1.3
