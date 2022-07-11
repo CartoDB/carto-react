@@ -4,6 +4,8 @@
 
 ## 1.3
 
+### 1.3.0 (2022-07-11)
+
 ### 1.3.0-beta.6 (2022-07-06)
 
 - Fix updateLayer reducer to allow remove the legend [#448](https://github.com/CartoDB/carto-react/pull/448)
