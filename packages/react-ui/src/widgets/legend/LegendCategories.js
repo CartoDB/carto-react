@@ -4,7 +4,7 @@ import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
 
 function LegendCategories({ legend }) {
-  const { labels = [], colors = [], isStrokeColor = false } = legend;
+  const { labels = [], colors = [], isStrokeColor = false, customMarkers } = legend;
 
   const palette = getPalette(colors, labels.length);
 
@@ -14,6 +14,9 @@ function LegendCategories({ legend }) {
       isMax={false}
       label={label}
       color={palette[idx]}
+      icon={
+        customMarkers && Array.isArray(customMarkers) ? customMarkers[idx] : customMarkers
+      }
       isStrokeColor={isStrokeColor}
     />
   ));
@@ -42,6 +45,10 @@ LegendCategories.propTypes = {
   legend: PropTypes.shape({
     labels: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
     colors: PropTypes.oneOfType([PropTypes.arrayOf(ColorType), PropTypes.string]),
+    customMarkers: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.string
+    ]),
     isStrokeColor: PropTypes.bool
   }).isRequired
 };
@@ -56,14 +63,11 @@ const useStyles = makeStyles((theme) => ({
       '& $circle': {}
     }
   },
-  circle: {
+  marker: {
     whiteSpace: 'nowrap',
     display: 'block',
-    width: '12px',
-    height: '12px',
-    borderRadius: '50%',
     position: 'relative',
-    border: '2px solid transparent',
+
     '&::after': {
       position: 'absolute',
       display: ({ isMax }) => (isMax ? 'block' : 'none'),
@@ -75,6 +79,16 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: '50%',
       boxSizing: 'content-box'
     }
+  },
+  markerCircle: {
+    width: '12px',
+    height: '12px',
+    border: '2px solid transparent',
+    borderRadius: '50%'
+  },
+  markerIcon: {
+    width: '16px',
+    height: '16px'
   },
   flexParent: {
     display: 'flex',
@@ -94,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Row({ label, isMax, isStrokeColor, color = '#000' }) {
+function Row({ label, isMax, isStrokeColor, color = '#000', icon }) {
   const classes = useStyles({ isMax });
 
   const [showTooltip, setShowTooltip] = useState(false);
@@ -121,8 +135,25 @@ function Row({ label, isMax, isStrokeColor, color = '#000' }) {
           <Box
             mr={1.5}
             component='span'
-            className={classes.circle}
-            style={isStrokeColor ? { borderColor: color } : { backgroundColor: color }}
+            className={[
+              classes.marker,
+              icon ? classes.markerIcon : classes.markerCircle
+            ].join(' ')}
+            style={
+              icon
+                ? {
+                    backgroundColor: color,
+                    maskRepeat: 'no-repeat',
+                    maskSize: 'cover',
+                    maskImage: `url(${icon})`,
+                    WebkitMaskRepeat: 'no-repeat',
+                    WebkitMaskSize: 'cover',
+                    WebkitMaskImage: `url(${icon})`
+                  }
+                : isStrokeColor
+                ? { borderColor: color }
+                : { backgroundColor: color }
+            }
           />
         </Tooltip>
         <Typography ref={labelRef} variant='overline' className={classes.longTruncate}>

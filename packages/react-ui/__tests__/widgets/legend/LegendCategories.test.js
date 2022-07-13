@@ -20,21 +20,22 @@ describe('LegendCategories', () => {
   });
   test('renders colors (CARTOColors) correctly', () => {
     render(<LegendCategories legend={DEFAULT_LEGEND} />);
-    const elements = document.querySelectorAll('[class*="circle"]');
+    const elements = document.querySelectorAll('[class*="markerCircle"]');
     getPalette(COLOR, 2).forEach((color, idx) =>
       expect(elements[idx]).toHaveStyle(`background-color: ${color}`)
     );
   });
   test('renders colors (hex) correctly', () => {
     render(<LegendCategories legend={{ ...DEFAULT_LEGEND, colors: ['#000', '#fff'] }} />);
-    const [firstCategory, secondCategory] =
-      document.querySelectorAll('[class*="circle"]');
+    const [firstCategory, secondCategory] = document.querySelectorAll(
+      '[class*="markerCircle"]'
+    );
     expect(firstCategory).toHaveStyle('background-color: #000;');
     expect(secondCategory).toHaveStyle('background-color: #fff;');
   });
   test('renders stroked colors correctly', () => {
     render(<LegendCategories legend={{ ...DEFAULT_LEGEND, isStrokeColor: true }} />);
-    const elements = document.querySelectorAll('[class*="circle"]');
+    const elements = document.querySelectorAll('[class*="markerCircle"]');
     getPalette(COLOR, 2).forEach((color, idx) =>
       expect(elements[idx]).toHaveStyle(`border-color: ${color}`)
     );
