@@ -40,4 +40,16 @@ describe('LegendCategories', () => {
       expect(elements[idx]).toHaveStyle(`border-color: ${color}`)
     );
   });
+  test('renders icons correctly', () => {
+    render(
+      <LegendCategories
+        legend={{ ...DEFAULT_LEGEND, customMarkers: 'https://xyz.com/x.png' }}
+      />
+    );
+    const elements = document.querySelectorAll('[class*="markerIcon"]');
+    getPalette(COLOR, 2).forEach((color, idx) => {
+      expect(elements[idx]).toHaveStyle(`mask-image: url(https://xyz.com/x.png)`);
+      expect(elements[idx]).toHaveStyle(`background-color: ${color}`);
+    });
+  });
 });
