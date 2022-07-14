@@ -2,6 +2,9 @@
 
 ## Not released
 
+- LegendCategories: support for custom markers [#451](https://github.com/CartoDB/carto-react/pull/451)
+
+## 1.4
 ## 1.3
 
 ### 1.3.0 (2022-07-11)
