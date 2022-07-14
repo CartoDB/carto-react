@@ -42,7 +42,7 @@ To make a **prerelease**:
 3. Push that branch upstream, with something like `git push --set-upstream origin v1.0.0-rc.3`
 4. Open a PR, with for eg.: `https://github.com/CartoDB/carto-react/pull/new/v1.0.0-rc.3`
 5. Ask your peers for revision
-6. Ensure current versions in package.json files are ok (eg. not 1 package with rc.2 and another one with rc.3, also in internal dependencies & peerdependencies among packages)
+6. Ensure current versions in package.json files are ok (eg. not 1 package with rc.2 and another one with rc.3, also in internal dependencies & peerdependencies among packages). The effective bump will be done with lerna in a step later (so we're talking just about dependencies, not the main 'version' field in packages).
 7. Once it's ok execute locally `yarn publish:prerelease`
 8. Choose `Custom prerelease` and ensure the packages version proposed is correct (eg. change suffix to 'alpha' or 'beta', instead of 'rc' if required)
 9. Once the npm package has been published, `Merge the PR` to master from github
