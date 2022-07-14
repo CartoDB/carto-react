@@ -66,8 +66,13 @@ const useStyles = makeStyles((theme) => ({
   marker: {
     whiteSpace: 'nowrap',
     display: 'block',
+    width: '12px',
+    height: '12px',
+    borderRadius: '50%',
     position: 'relative',
-
+    border: '2px solid transparent'
+  },
+  circle: {
     '&::after': {
       position: 'absolute',
       display: ({ isMax }) => (isMax ? 'block' : 'none'),
@@ -80,15 +85,9 @@ const useStyles = makeStyles((theme) => ({
       boxSizing: 'content-box'
     }
   },
-  markerCircle: {
-    width: '12px',
-    height: '12px',
-    border: '2px solid transparent',
-    borderRadius: '50%'
-  },
-  markerIcon: {
-    width: '16px',
-    height: '16px'
+  icon: {
+    maskRepeat: 'no-repeat',
+    maskSize: 'cover'
   },
   flexParent: {
     display: 'flex',
@@ -135,19 +134,12 @@ function Row({ label, isMax, isStrokeColor, color = '#000', icon }) {
           <Box
             mr={1.5}
             component='span'
-            className={[
-              classes.marker,
-              icon ? classes.markerIcon : classes.markerCircle
-            ].join(' ')}
+            className={[classes.marker, icon ? classes.icon : classes.circle].join(' ')}
             style={
               icon
                 ? {
                     backgroundColor: color,
-                    maskRepeat: 'no-repeat',
-                    maskSize: 'cover',
                     maskImage: `url(${icon})`,
-                    WebkitMaskRepeat: 'no-repeat',
-                    WebkitMaskSize: 'cover',
                     WebkitMaskImage: `url(${icon})`
                   }
                 : isStrokeColor
