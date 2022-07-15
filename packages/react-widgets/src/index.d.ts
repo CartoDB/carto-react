@@ -6,6 +6,7 @@ export { default as PieWidget } from './widgets/PieWidget';
 export { default as LegendWidget } from './widgets/LegendWidget';
 export { default as ScatterPlotWidget } from './widgets/ScatterPlotWidget';
 export { default as TableWidget } from './widgets/TableWidget';
+export { default as SliderWidget } from './widgets/SliderWidget';
 export { default as WidgetWithAlert } from './widgets/utils/WidgetWithAlert';
 export {
   getFormula,

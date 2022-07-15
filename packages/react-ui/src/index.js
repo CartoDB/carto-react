@@ -13,6 +13,7 @@ import LegendRamp from './widgets/legend/LegendRamp';
 import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
+import SliderWidgetUI from './widgets/SliderWidgetUI';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
@@ -44,6 +45,7 @@ export {
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
   TableWidgetUI,
   LegendWidgetUI,
+  SliderWidgetUI,
   LEGEND_TYPES,
   NoDataAlert,
   featureSelectionIcons,

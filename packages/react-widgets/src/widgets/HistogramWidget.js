@@ -7,11 +7,8 @@ import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core
 import { getHistogram } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import useWidgetFetch from '../hooks/useWidgetFetch';
-import { _getStats } from '@carto/react-api';
-import useWidgetSource from '../hooks/useWidgetSource';
 import WidgetWithAlert from './utils/WidgetWithAlert';
-import { InvalidColumnError } from '@carto/react-core/';
-import { DEFAULT_INVALID_COLUMN_ERR } from './utils/constants';
+import useStats from '../hooks/useStats';
 
 const EMPTY_ARRAY = [];
 
@@ -65,34 +62,26 @@ function HistogramWidget({
 
   const [[min, max], setMinMax] = useState([_min, _max]);
 
-  const [_warning, setWarning] = useState('');
-
-  const source = useWidgetSource({ dataSource, id });
-
   const hasMinMax =
     Number.isFinite(min) &&
     min !== Number.MIN_SAFE_INTEGER &&
     Number.isFinite(max) &&
     max !== Number.MAX_SAFE_INTEGER;
 
-  useEffect(() => {
-    if (!hasMinMax && source) {
-      setWarning('');
+  const { stats, warning: _warning } = useStats({
+    id,
+    column,
+    dataSource,
+    customStats: hasMinMax,
+    onError
+  });
 
-      _getStats({ column, source })
-        .then((res) => {
-          const { min, max } = res;
-          setMinMax([min, max]);
-        })
-        .catch((err) => {
-          if (InvalidColumnError.is(err)) {
-            setWarning(DEFAULT_INVALID_COLUMN_ERR);
-          } else if (onError) {
-            onError(err);
-          }
-        });
+  useEffect(() => {
+    if (stats) {
+      const { min, max } = stats;
+      setMinMax([min, max]);
     }
-  }, [column, source, onError, hasMinMax]);
+  }, [stats]);
 
   const ticks = useMemo(() => {
     if (_ticks?.length) return _ticks;

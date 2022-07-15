@@ -40,6 +40,9 @@ onmessage = ({ data: { method, ...params } }) => {
     case Methods.FEATURES_RAW:
       getRawFeatures(params);
       break;
+    case Methods.FEATURES_MIN_MAX:
+      getMinMax(params);
+      break;
     case Methods.LOAD_TILES:
       loadTiles(params);
       break;
@@ -236,6 +239,23 @@ function getTimeSeries({
     });
 
     result = groups || [];
+  }
+
+  postMessage({ result });
+}
+
+function getMinMax({ filters, filtersLogicalOperator, column }) {
+  let result = null;
+
+  if (currentFeatures) {
+    const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
+
+    assertColumn(column);
+
+    result = {
+      min: aggregationFunctions.min(filteredFeatures, column),
+      max: aggregationFunctions.max(filteredFeatures, column)
+    };
   }
 
   postMessage({ result });

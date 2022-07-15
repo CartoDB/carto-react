@@ -4,7 +4,7 @@ import { _assert as assert } from '@carto/react-core/';
 
 const URL_LENGTH = 2048;
 
-const AVAILABLE_MODELS = ['category', 'histogram', 'formula', 'timeseries'];
+const AVAILABLE_MODELS = ['category', 'histogram', 'formula', 'timeseries', 'range'];
 
 /**
  * Execute a SQL model request.
