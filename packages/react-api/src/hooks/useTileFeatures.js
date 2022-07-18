@@ -76,8 +76,7 @@ export default function useTileFeatures({
         return acc;
       }, []);
 
-      // const isDroppingFeatures = tiles?.some((tile) => tile.content?.isDroppingFeatures);
-      const isDroppingFeatures = false;
+      const isDroppingFeatures = tiles?.some((tile) => tile.content?.isDroppingFeatures);
       dispatch(setIsDroppingFeatures({ id: sourceId, isDroppingFeatures }));
 
       executeTask(sourceId, Methods.LOAD_TILES, { tiles: cleanedTiles })
