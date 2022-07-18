@@ -99,6 +99,21 @@ function RangeWidget({
     }
   }, [stats]);
 
+  // The first time that you add the widget we apply the filter because this widget is a filter itself
+  useEffect(() => {
+    if (hasMinMax) {
+      dispatch(
+        addFilter({
+          id: dataSource,
+          column,
+          type: FilterTypes.BETWEEN,
+          values: [[min, max]],
+          owner: id
+        })
+      );
+    }
+  }, [column, dataSource, dispatch, hasMinMax, id, max, min]);
+
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <WidgetWithAlert

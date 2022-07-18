@@ -22,7 +22,7 @@ type BasemapName = CartoBasemapsNames | GMapsBasemapsNames;
 
 type FilterBasic = {
   type: _FilterTypes;
-  values: string[] | number[];
+  values: string[] | number[] | number[][];
   owner?: string;
   params?: Record<string, unknown>
 };
