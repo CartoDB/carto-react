@@ -2,6 +2,12 @@
 
 ## Not released
 
+## 1.4
+
+### 1.4.0-alpha.0 (2022-07-14)
+
+- LegendCategories: support for custom markers [#451](https://github.com/CartoDB/carto-react/pull/451)
+
 ## 1.3
 
 ### 1.3.0 (2022-07-11)
