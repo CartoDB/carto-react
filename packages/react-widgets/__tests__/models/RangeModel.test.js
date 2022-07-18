@@ -21,7 +21,7 @@ jest.mock('@carto/react-workers', () => ({
   }
 }));
 
-describe('getSlider', () => {
+describe('getRange', () => {
   describe('local mode', () => {
     test('should work correctly', async () => {
       const props = {

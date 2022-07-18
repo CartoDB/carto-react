@@ -47,5 +47,5 @@ export {
   LegendCategories,
   LegendIcon,
   LegendProportion,
-  LegendRamp,
+  LegendRamp
 };
