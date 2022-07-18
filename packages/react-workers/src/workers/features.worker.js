@@ -40,8 +40,8 @@ onmessage = ({ data: { method, ...params } }) => {
     case Methods.FEATURES_RAW:
       getRawFeatures(params);
       break;
-    case Methods.FEATURES_MIN_MAX:
-      getMinMax(params);
+    case Methods.FEATURES_RANGE:
+      getRange(params);
       break;
     case Methods.LOAD_TILES:
       loadTiles(params);
@@ -244,7 +244,7 @@ function getTimeSeries({
   postMessage({ result });
 }
 
-function getMinMax({ filters, filtersLogicalOperator, column }) {
+function getRange({ filters, filtersLogicalOperator, column }) {
   let result = null;
 
   if (currentFeatures) {

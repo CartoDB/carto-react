@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function SliderWidgetUI({ values, min, max, limits, onSelectedRangeChange }) {
+function RangeWidgetUI({ values, min, max, limits, onSelectedRangeChange }) {
   const classes = useStyles();
   const [sliderValues, setSliderValues] = useState([min, max]);
   const [inputsValues, setInputsValues] = useState([min, max]);
@@ -178,7 +178,7 @@ function SliderWidgetUI({ values, min, max, limits, onSelectedRangeChange }) {
   );
 }
 
-SliderWidgetUI.propTypes = {
+RangeWidgetUI.propTypes = {
   values: PropTypes.arrayOf(PropTypes.number),
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
@@ -186,4 +186,4 @@ SliderWidgetUI.propTypes = {
   onSelectedRangeChange: PropTypes.func
 };
 
-export default SliderWidgetUI;
+export default RangeWidgetUI;

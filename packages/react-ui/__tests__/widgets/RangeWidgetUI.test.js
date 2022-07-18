@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { getMaterialUIContext } from './testUtils';
-import SliderWidgetUI from '../../src/widgets/SliderWidgetUI';
+import RangeWidgetUI from '../../src/widgets/RangeWidgetUI';
 
 describe('SliderWidgetUI', () => {
   const Widget = (props) =>
-    getMaterialUIContext(<SliderWidgetUI min={0} max={100} {...props} />);
+    getMaterialUIContext(<RangeWidgetUI min={0} max={100} {...props} />);
 
   test('renders with default props', () => {
     render(<Widget />);

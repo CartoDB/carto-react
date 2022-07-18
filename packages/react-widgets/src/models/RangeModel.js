@@ -2,7 +2,7 @@ import { _executeModel } from '@carto/react-api';
 import { Methods, executeTask } from '@carto/react-workers';
 import { normalizeObjectKeys, wrapModelCall } from './utils';
 
-export function getSlider(props) {
+export function getRange(props) {
   return wrapModelCall(props, fromLocal, fromRemote);
 }
 
@@ -10,7 +10,7 @@ export function getSlider(props) {
 function fromLocal(props) {
   const { source, column } = props;
 
-  return executeTask(source.id, Methods.FEATURES_MIN_MAX, {
+  return executeTask(source.id, Methods.FEATURES_RANGE, {
     filters: source.filters,
     filtersLogicalOperator: source.filtersLogicalOperator,
     column

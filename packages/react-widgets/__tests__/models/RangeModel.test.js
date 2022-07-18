@@ -1,4 +1,4 @@
-import { getSlider } from '../../src/models/SliderModel';
+import { getRange } from '../../src/models/RangeModel';
 import { Methods, executeTask } from '@carto/react-workers';
 
 const RESULT = { min: 0, max: 100 };
@@ -36,19 +36,15 @@ describe('getSlider', () => {
         column: 'column_1'
       };
 
-      const data = await getSlider(props);
+      const data = await getRange(props);
 
       expect(data).toBe(RESULT);
 
-      expect(executeTask).toHaveBeenCalledWith(
-        props.source.id,
-        Methods.FEATURES_MIN_MAX,
-        {
-          filters: props.source.filters,
-          filtersLogicalOperator: props.source.filtersLogicalOperator,
-          column: props.column
-        }
-      );
+      expect(executeTask).toHaveBeenCalledWith(props.source.id, Methods.FEATURES_RANGE, {
+        filters: props.source.filters,
+        filtersLogicalOperator: props.source.filtersLogicalOperator,
+        column: props.column
+      });
     });
   });
 
@@ -69,7 +65,7 @@ describe('getSlider', () => {
         global: true
       };
 
-      const data = await getSlider(props);
+      const data = await getRange(props);
 
       expect(data).toEqual(RESULT);
 

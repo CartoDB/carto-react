@@ -4,15 +4,15 @@ import { PropTypes } from 'prop-types';
 import { _FilterTypes as FilterTypes } from '@carto/react-core';
 import { WrapperWidgetUI } from '@carto/react-ui';
 import { addFilter } from '@carto/react-redux/';
-import { getSlider } from '../models/SliderModel';
+import { getRange } from '../models/RangeModel';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
-import { SliderWidgetUI } from '@carto/react-ui';
+import { RangeWidgetUI } from '@carto/react-ui';
 import useStats from '../hooks/useStats';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 
 /**
- * Renders a <SliderWidget /> component
+ * Renders a <RangeWidget /> component
  * @param  {object} props
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
@@ -25,7 +25,7 @@ import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
  */
-function SliderWidget({
+function RangeWidget({
   id,
   title,
   dataSource,
@@ -60,7 +60,7 @@ function SliderWidget({
     data = { min: undefined, max: undefined },
     isLoading,
     warning = _warning
-  } = useWidgetFetch(getSlider, {
+  } = useWidgetFetch(getRange, {
     id,
     dataSource,
     params: {
@@ -108,7 +108,7 @@ function SliderWidget({
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
       >
         {min !== undefined && max !== undefined && (
-          <SliderWidgetUI
+          <RangeWidgetUI
             min={min}
             max={max}
             {...(selectedValues &&
@@ -123,7 +123,7 @@ function SliderWidget({
   );
 }
 
-SliderWidget.propTypes = {
+RangeWidget.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
@@ -136,9 +136,9 @@ SliderWidget.propTypes = {
   droppingFeaturesAlertProps: PropTypes.object
 };
 
-SliderWidget.defaultProps = {
+RangeWidget.defaultProps = {
   global: false,
   wrapperProps: {}
 };
 
-export default SliderWidget;
+export default RangeWidget;
