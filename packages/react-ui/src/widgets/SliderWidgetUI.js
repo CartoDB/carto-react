@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, makeStyles, Slider, TextField } from '@material-ui/core';
+import { debounce } from '@carto/react-core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,10 +70,15 @@ function SliderWidgetUI({ values, min, max, limits, onSelectedRangeChange }) {
     return result;
   }, [limits, sliderValues]);
 
+  const debouncedOnSelectedRangeChange = useMemo(
+    () => (onSelectedRangeChange ? debounce(onSelectedRangeChange, 250) : null),
+    [onSelectedRangeChange]
+  );
+
   const handleSliderChange = (_, newValues) => {
-    setSliderValues(newValues);
-    setInputsValues(newValues);
-    onSelectedRangeChange && onSelectedRangeChange([...newValues]);
+    setInputsValues([...newValues]);
+    setSliderValues([...newValues]);
+    debouncedOnSelectedRangeChange && debouncedOnSelectedRangeChange([...newValues]);
   };
 
   const handleInputChange = (event, index) => {
@@ -84,8 +90,8 @@ function SliderWidgetUI({ values, min, max, limits, onSelectedRangeChange }) {
     if (!values) {
       return;
     }
-    setSliderValues(values);
-    setInputsValues(values);
+    setInputsValues([...values]);
+    setSliderValues([...values]);
   }, [values]);
 
   const handleInputBlur = (index) => {
@@ -106,13 +112,14 @@ function SliderWidgetUI({ values, min, max, limits, onSelectedRangeChange }) {
       (a, b) => a - b
     );
     setInputsValues(newValues);
-    setSliderValues(newValues);
+    setSliderValues([...newValues]);
     onSelectedRangeChange && onSelectedRangeChange(newValues);
   };
 
   return (
     <Box className={classes.root}>
       <Slider
+        getAriaLabel={(index) => (index === 0 ? 'min value' : 'max value')}
         className={classes.sliderWithThumb}
         value={sliderValues}
         min={min}
@@ -121,6 +128,7 @@ function SliderWidgetUI({ values, min, max, limits, onSelectedRangeChange }) {
       />
       {limits && limits.length === 2 && (
         <Slider
+          getAriaLabel={(index) => (index === 0 ? 'min limit' : 'max limit')}
           className={`${classes.sliderNotThumb} ${classes.sliderLimits}`}
           value={limits}
           min={min}
@@ -129,6 +137,9 @@ function SliderWidgetUI({ values, min, max, limits, onSelectedRangeChange }) {
       )}
       {limitsValuesIntersection && (
         <Slider
+          getAriaLabel={(index) =>
+            index === 0 ? 'min intersection' : 'max intersection'
+          }
           className={`${classes.sliderNotThumb} ${classes.sliderIntersection}`}
           value={limitsValuesIntersection}
           min={min}
@@ -145,7 +156,8 @@ function SliderWidgetUI({ values, min, max, limits, onSelectedRangeChange }) {
           inputProps={{
             min: min,
             max: max,
-            type: 'number'
+            type: 'number',
+            'aria-label': 'min value'
           }}
         />
         <TextField
@@ -157,7 +169,8 @@ function SliderWidgetUI({ values, min, max, limits, onSelectedRangeChange }) {
           inputProps={{
             min: min,
             max: max,
-            type: 'number'
+            type: 'number',
+            'aria-label': 'max value'
           }}
         />
       </Box>

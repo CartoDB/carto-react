@@ -9,6 +9,7 @@ import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 import { SliderWidgetUI } from '@carto/react-ui';
 import useStats from '../hooks/useStats';
+import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 
 /**
  * Renders a <SliderWidget /> component
@@ -46,6 +47,13 @@ function SliderWidget({
     dataSource,
     customStats: hasMinMax,
     onError
+  });
+
+  const selectedValues = useWidgetFilterValues({
+    dataSource,
+    id,
+    column,
+    type: FilterTypes.BETWEEN
   });
 
   const {
@@ -103,6 +111,8 @@ function SliderWidget({
           <SliderWidgetUI
             min={min}
             max={max}
+            {...(selectedValues &&
+              selectedValues.length && { values: selectedValues[0] })}
             {...(Number.isFinite(data.min) &&
               Number.isFinite(data.max) && { limits: [data.min, data.max] })}
             onSelectedRangeChange={handleSelectedRangeChange}
