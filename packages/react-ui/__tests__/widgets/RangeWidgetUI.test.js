@@ -52,7 +52,7 @@ describe('SliderWidgetUI', () => {
   });
 
   test('renders specified limits and values within the limits', () => {
-    render(<Widget limits={[20, 80]} values={[40, 60]} />);
+    render(<Widget limits={[20, 80]} data={[40, 60]} />);
 
     const minLimit = screen.getByRole('slider', { name: 'min limit' });
     const maxLimit = screen.getByRole('slider', { name: 'max limit' });
@@ -82,7 +82,7 @@ describe('SliderWidgetUI', () => {
   });
 
   test('renders specified limits and values out of the limits', () => {
-    render(<Widget limits={[40, 60]} values={[20, 80]} />);
+    render(<Widget limits={[40, 60]} data={[20, 80]} />);
 
     const minLimit = screen.getByRole('slider', { name: 'min limit' });
     const maxLimit = screen.getByRole('slider', { name: 'max limit' });
@@ -112,7 +112,7 @@ describe('SliderWidgetUI', () => {
   });
 
   test('renders specified limits and values with a single value out of the limits', () => {
-    render(<Widget limits={[20, 80]} values={[10, 50]} />);
+    render(<Widget limits={[20, 80]} data={[10, 50]} />);
 
     const minLimit = screen.getByRole('slider', { name: 'min limit' });
     const maxLimit = screen.getByRole('slider', { name: 'max limit' });
