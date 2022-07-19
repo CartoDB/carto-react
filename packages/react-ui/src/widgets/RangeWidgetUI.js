@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function RangeWidgetUI({ values, min, max, limits, onSelectedRangeChange }) {
+function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
   const classes = useStyles();
   const [sliderValues, setSliderValues] = useState([min, max]);
   const [inputsValues, setInputsValues] = useState([min, max]);
@@ -87,12 +87,12 @@ function RangeWidgetUI({ values, min, max, limits, onSelectedRangeChange }) {
   };
 
   useEffect(() => {
-    if (!values) {
+    if (!data) {
       return;
     }
-    setInputsValues([...values]);
-    setSliderValues([...values]);
-  }, [values]);
+    setInputsValues([...data]);
+    setSliderValues([...data]);
+  }, [data]);
 
   const handleInputBlur = (index) => {
     let value = inputsValues[index];

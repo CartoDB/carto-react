@@ -25,5 +25,5 @@ const data = [...Array(10)].map((_, idx) => {
 
 // TODO
 export const Default = Template.bind({});
-const DefaultProps = { values: data, min: 0, max: 1000, limits: [500, 950] };
+const DefaultProps = { data, min: 0, max: 1000, limits: [500, 950] };
 Default.args = DefaultProps;

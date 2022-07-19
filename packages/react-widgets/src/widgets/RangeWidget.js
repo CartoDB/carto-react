@@ -126,8 +126,7 @@ function RangeWidget({
           <RangeWidgetUI
             min={min}
             max={max}
-            {...(selectedValues &&
-              selectedValues.length && { values: selectedValues[0] })}
+            {...(selectedValues && selectedValues.length && { data: selectedValues[0] })}
             {...(Number.isFinite(data.min) &&
               Number.isFinite(data.max) && { limits: [data.min, data.max] })}
             onSelectedRangeChange={handleSelectedRangeChange}
