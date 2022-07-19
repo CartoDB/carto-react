@@ -19,11 +19,7 @@ const Template = (args) => {
   return <RangeWidgetUI {...args} />;
 };
 
-const data = [...Array(10)].map((_, idx) => {
-  return (idx + 10) * 50;
-});
-
 // TODO
 export const Default = Template.bind({});
-const DefaultProps = { data, min: 0, max: 1000, limits: [500, 950] };
+const DefaultProps = { data: [400, 500], min: 0, max: 1000, limits: [300, 950] };
 Default.args = DefaultProps;

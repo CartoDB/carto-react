@@ -179,7 +179,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
 }
 
 RangeWidgetUI.propTypes = {
-  values: PropTypes.arrayOf(PropTypes.number),
+  data: PropTypes.arrayOf(PropTypes.number),
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   limits: PropTypes.arrayOf(PropTypes.number),
