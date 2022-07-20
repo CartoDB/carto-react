@@ -46,6 +46,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+/**
+ * Renders a <RangeWidget /> component
+ * @param  {object} props
+ * @param  {string} props.data - Array of two numbers with the selected values
+ * @param  {string} props.min - The absolute min value
+ * @param  {string} props.max - The absolute max value
+ * @param  {string} props.limits - Array of two numbers that represent a relative min and max values. It is useful to represent the min and max value taking into account other filters.
+ * @param  {number} [props.onSelectedRangeChange] - This fuction will be cal when selected values change
+
+ */
+
 function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
   const classes = useStyles();
   const [sliderValues, setSliderValues] = useState([min, max]);
