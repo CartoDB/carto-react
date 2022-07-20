@@ -99,9 +99,19 @@ function RangeWidget({
     }
   }, [stats]);
 
-  // The first time that you add the widget we apply the filter because this widget is a filter itself
   useEffect(() => {
-    if (hasMinMax) {
+    if (Number.isFinite(_min) && Number.isFinite(_max)) {
+      setMinMax([_min, _max]);
+    }
+  }, [_max, _min]);
+
+  // The first time that you add the widget we apply the filter because this widget is a filter itself
+  // We also apply the filter if you receive new min and max properties and selectedValues is out of the min-max range
+  useEffect(() => {
+    if (!hasMinMax) {
+      return;
+    }
+    if (!selectedValues || selectedValues[0][0] < min || selectedValues[0][1] > max) {
       dispatch(
         addFilter({
           id: dataSource,
@@ -112,7 +122,7 @@ function RangeWidget({
         })
       );
     }
-  }, [column, dataSource, dispatch, hasMinMax, id, max, min]);
+  }, [column, dataSource, dispatch, hasMinMax, id, max, min, selectedValues]);
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
