@@ -6,6 +6,7 @@ export enum Methods {
   FEATURES_SCATTERPLOT = 'featuresScatterPlot',
   FEATURES_TIME_SERIES = 'featuresTimeSeries',
   FEATURES_RAW = 'featuresRawFeatures',
+  FEATURES_RANGE = 'featuresRange',
   LOAD_GEOJSON_FEATURES = 'loadGeoJSONFeatures',
   GEOJSON_FEATURES = 'featuresGeoJSON',
   LOAD_TILES = 'loadTiles'

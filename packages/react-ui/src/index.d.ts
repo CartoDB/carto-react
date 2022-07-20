@@ -16,6 +16,7 @@ import {
   useTimeSeriesContext,
   TimeSeriesProvider
 } from './widgets/TimeSeriesWidgetUI/hooks/TimeSeriesContext';
+import RangeWidgetUI from './widgets/RangeWidgetUI';
 import useTimeSeriesInteractivity from './widgets/TimeSeriesWidgetUI/hooks/useTimeSeriesInteractivity';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
@@ -40,6 +41,7 @@ export {
   FeatureSelectionWidgetUI,
   TableWidgetUI,
   LegendWidgetUI,
+  RangeWidgetUI,
   LEGEND_TYPES,
   NoDataAlert,
   LegendCategories,

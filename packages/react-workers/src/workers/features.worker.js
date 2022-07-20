@@ -40,6 +40,9 @@ onmessage = ({ data: { method, ...params } }) => {
     case Methods.FEATURES_RAW:
       getRawFeatures(params);
       break;
+    case Methods.FEATURES_RANGE:
+      getRange(params);
+      break;
     case Methods.LOAD_TILES:
       loadTiles(params);
       break;
@@ -236,6 +239,23 @@ function getTimeSeries({
     });
 
     result = groups || [];
+  }
+
+  postMessage({ result });
+}
+
+function getRange({ filters, filtersLogicalOperator, column }) {
+  let result = null;
+
+  if (currentFeatures) {
+    const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
+
+    assertColumn(column);
+
+    result = {
+      min: aggregationFunctions.min(filteredFeatures, column),
+      max: aggregationFunctions.max(filteredFeatures, column)
+    };
   }
 
   postMessage({ result });
