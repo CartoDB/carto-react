@@ -6,6 +6,10 @@
 
 ## 1.4
 
+### 1.4.0-alpha.1 (2022-07-20)
+
+- Range widget (absolute values) [#454](https://github.com/CartoDB/carto-react/pull/454)
+
 ### 1.4.0-alpha.0 (2022-07-14)
 
 - LegendCategories: support for custom markers [#451](https://github.com/CartoDB/carto-react/pull/451)
