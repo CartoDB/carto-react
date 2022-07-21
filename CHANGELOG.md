@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix range widget styles [#457](https://github.com/CartoDB/carto-react/pull/457)
+
 ## 1.4
 
 ### 1.4.0-alpha.1 (2022-07-20)

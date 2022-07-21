@@ -7,32 +7,30 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative'
   },
-  sliderWithThumb: {
-    '& .MuiSlider-rail': {
-      color: theme.palette.text.hint
-    },
-    '& .MuiSlider-track': {
-      display: 'none'
-    }
+  sliderWithThumbRail: {
+    color: theme.palette.text.hint
+  },
+  sliderWithThumbTrack: {
+    display: 'none'
   },
   sliderNotThumb: {
     pointerEvents: 'none',
     position: 'absolute',
     left: 0,
-    right: 0,
-    '& .MuiSlider-thumb': {
-      display: 'none'
-    },
-    '& .MuiSlider-rail': {
-      display: 'none'
-    }
+    right: 0
+  },
+  sliderNotThumbThumb: {
+    display: 'none'
+  },
+  sliderNotThumbRail: {
+    display: 'none'
   },
   sliderLimits: {
-    zIndex: 1,
-    '& .MuiSlider-track': {
-      color: theme.palette.primary.main,
-      opacity: 0.38
-    }
+    zIndex: 1
+  },
+  sliderLimitsTrack: {
+    color: theme.palette.primary.main,
+    opacity: 0.38
   },
   sliderIntersection: {
     zIndex: 2
@@ -49,11 +47,11 @@ const useStyles = makeStyles((theme) => ({
 /**
  * Renders a <RangeWidget /> component
  * @param  {object} props
- * @param  {string} props.data - Array of two numbers with the selected values
- * @param  {string} props.min - The absolute min value
- * @param  {string} props.max - The absolute max value
- * @param  {string} props.limits - Array of two numbers that represent a relative min and max values. It is useful to represent the min and max value taking into account other filters.
- * @param  {number} [props.onSelectedRangeChange] - This fuction will be cal when selected values change
+ * @param  {number[]} props.data - Array of two numbers with the selected values
+ * @param  {number} props.min - The absolute min value
+ * @param  {number} props.max - The absolute max value
+ * @param  {number[]} props.limits - Array of two numbers that represent a relative min and max values. It is useful to represent the min and max value taking into account other filters.
+ * @param  {Function} [props.onSelectedRangeChange] - This fuction will be cal when selected values change
 
  */
 
@@ -131,7 +129,10 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
     <Box className={classes.root}>
       <Slider
         getAriaLabel={(index) => (index === 0 ? 'min value' : 'max value')}
-        className={classes.sliderWithThumb}
+        classes={{
+          rail: classes.sliderWithThumbRail,
+          track: classes.sliderWithThumbTrack
+        }}
         value={sliderValues}
         min={min}
         max={max}
@@ -141,6 +142,11 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
         <Slider
           getAriaLabel={(index) => (index === 0 ? 'min limit' : 'max limit')}
           className={`${classes.sliderNotThumb} ${classes.sliderLimits}`}
+          classes={{
+            rail: classes.sliderNotThumbRail,
+            thumb: classes.sliderNotThumbThumb,
+            track: classes.sliderLimitsTrack
+          }}
           value={limits}
           min={min}
           max={max}
@@ -152,6 +158,10 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
             index === 0 ? 'min intersection' : 'max intersection'
           }
           className={`${classes.sliderNotThumb} ${classes.sliderIntersection}`}
+          classes={{
+            rail: classes.sliderNotThumbRail,
+            thumb: classes.sliderNotThumbThumb
+          }}
           value={limitsValuesIntersection}
           min={min}
           max={max}
