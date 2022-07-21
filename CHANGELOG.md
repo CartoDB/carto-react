@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Range widget (absolute values) [#454](https://github.com/CartoDB/carto-react/pull/454)
+- Fix range widget styles [#457](https://github.com/CartoDB/carto-react/pull/457)
 
 ## 1.4
 
