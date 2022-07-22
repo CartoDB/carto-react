@@ -10,9 +10,6 @@ const useStyles = makeStyles((theme) => ({
   sliderWithThumbRail: {
     color: theme.palette.text.hint
   },
-  sliderWithThumbTrack: {
-    display: 'none'
-  },
   sliderNotThumb: {
     pointerEvents: 'none',
     position: 'absolute',
@@ -25,6 +22,14 @@ const useStyles = makeStyles((theme) => ({
   sliderNotThumbRail: {
     display: 'none'
   },
+  sliderNotThumbMarks: {
+    backgroundColor: theme.palette.primary.main,
+    opacity: 0.38,
+    height: theme.spacing(1),
+    width: theme.spacing(0.25),
+    top: '50%',
+    transform: 'translateY(-50%)'
+  },
   sliderLimits: {
     zIndex: 1
   },
@@ -32,14 +37,24 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
     opacity: 0.38
   },
-  sliderIntersection: {
-    zIndex: 2
-  },
   input: {
     maxWidth: theme.spacing(9),
     margin: 0,
     '& fieldset': {
       borderWidth: 1
+    },
+    '& input': {
+      '&[type=number]': {
+        appearance: 'textfield'
+      },
+      '&::-webkit-outer-spin-button': {
+        appearance: 'none',
+        margin: 0
+      },
+      '&::-webkit-inner-spin-button': {
+        appearance: 'none',
+        margin: 0
+      }
     }
   }
 }));
@@ -60,24 +75,24 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
   const [sliderValues, setSliderValues] = useState([min, max]);
   const [inputsValues, setInputsValues] = useState([min, max]);
 
-  const limitsValuesIntersection = useMemo(() => {
+  const limitsMarks = useMemo(() => {
     if (!limits || limits.length !== 2) {
-      return null;
+      return undefined;
     }
 
-    if (!sliderValues || sliderValues.length !== 2) {
-      return null;
+    if (limits[0] === limits[1]) {
+      return [{ value: limits[0] }];
     }
     const result = [
-      Math.max(limits[0], sliderValues[0]),
-      Math.min(limits[1], sliderValues[1])
+      { value: Math.max(limits[0], min) },
+      { value: Math.min(limits[1], max) }
     ];
 
-    if (result[0] > result[1]) {
-      return null;
+    if (result[0].value > result[1].value) {
+      return undefined;
     }
     return result;
-  }, [limits, sliderValues]);
+  }, [limits, max, min]);
 
   const debouncedOnSelectedRangeChange = useMemo(
     () => (onSelectedRangeChange ? debounce(onSelectedRangeChange, 250) : null),
@@ -130,8 +145,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
       <Slider
         getAriaLabel={(index) => (index === 0 ? 'min value' : 'max value')}
         classes={{
-          rail: classes.sliderWithThumbRail,
-          track: classes.sliderWithThumbTrack
+          rail: classes.sliderWithThumbRail
         }}
         value={sliderValues}
         min={min}
@@ -145,29 +159,17 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
           classes={{
             rail: classes.sliderNotThumbRail,
             thumb: classes.sliderNotThumbThumb,
-            track: classes.sliderLimitsTrack
+            track: classes.sliderLimitsTrack,
+            mark: classes.sliderNotThumbMarks,
+            markActive: classes.sliderNotThumbMarks
           }}
           value={limits}
           min={min}
           max={max}
+          marks={limitsMarks}
         />
       )}
-      {limitsValuesIntersection && (
-        <Slider
-          getAriaLabel={(index) =>
-            index === 0 ? 'min intersection' : 'max intersection'
-          }
-          className={`${classes.sliderNotThumb} ${classes.sliderIntersection}`}
-          classes={{
-            rail: classes.sliderNotThumbRail,
-            thumb: classes.sliderNotThumbThumb
-          }}
-          value={limitsValuesIntersection}
-          min={min}
-          max={max}
-        />
-      )}
-      <Box display={'flex'} justifyContent={'space-between'}>
+      <Box display={'flex'} justifyContent={'space-between'} mb={1}>
         <TextField
           className={classes.input}
           value={inputsValues[0]}
