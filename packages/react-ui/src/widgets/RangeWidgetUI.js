@@ -10,28 +10,26 @@ const useStyles = makeStyles((theme) => ({
   sliderWithThumbRail: {
     color: theme.palette.text.hint
   },
-  sliderNotThumb: {
+  sliderLimit: {
     pointerEvents: 'none',
     position: 'absolute',
+    zIndex: 1,
     left: 0,
     right: 0
   },
-  sliderNotThumbThumb: {
+  sliderLimitThumb: {
     display: 'none'
   },
-  sliderNotThumbRail: {
+  sliderLimitRail: {
     display: 'none'
   },
-  sliderNotThumbMarks: {
+  sliderLimitMarks: {
     backgroundColor: theme.palette.primary.main,
     opacity: 0.38,
     height: theme.spacing(1),
     width: theme.spacing(0.25),
     top: '50%',
     transform: 'translateY(-50%)'
-  },
-  sliderLimits: {
-    zIndex: 1
   },
   sliderLimitsTrack: {
     color: theme.palette.primary.main,
@@ -155,13 +153,13 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
       {limits && limits.length === 2 && (
         <Slider
           getAriaLabel={(index) => (index === 0 ? 'min limit' : 'max limit')}
-          className={`${classes.sliderNotThumb} ${classes.sliderLimits}`}
+          className={classes.sliderLimit}
           classes={{
-            rail: classes.sliderNotThumbRail,
-            thumb: classes.sliderNotThumbThumb,
+            rail: classes.sliderLimitRail,
+            thumb: classes.sliderLimitThumb,
             track: classes.sliderLimitsTrack,
-            mark: classes.sliderNotThumbMarks,
-            markActive: classes.sliderNotThumbMarks
+            mark: classes.sliderLimitMarks,
+            markActive: classes.sliderLimitMarks
           }}
           value={limits}
           min={min}
