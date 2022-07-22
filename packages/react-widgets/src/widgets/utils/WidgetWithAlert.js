@@ -7,6 +7,7 @@ import { defaultDroppingFeaturesAlertProps } from './defaultDroppingFeaturesAler
 export default function WidgetWithAlert({
   dataSource,
   droppingFeaturesAlertProps = defaultDroppingFeaturesAlertProps,
+  showDroppingFeaturesAlert = true,
   noDataAlertProps = {},
   warning,
   global = false,
@@ -16,7 +17,9 @@ export default function WidgetWithAlert({
     checkIfSourceIsDroppingFeature(state, dataSource)
   );
 
-  return (!global && isDroppingFeatures) || warning || !children ? (
+  return (!global && isDroppingFeatures && showDroppingFeaturesAlert) ||
+    warning ||
+    !children ? (
     <NoDataAlert
       {...(isDroppingFeatures
         ? droppingFeaturesAlertProps

@@ -8,7 +8,7 @@ describe('SliderWidgetUI', () => {
     getMaterialUIContext(<RangeWidgetUI min={0} max={100} {...props} />);
 
   test('renders with default props', () => {
-    render(<Widget />);
+    const { container } = render(<Widget />);
     const minValue = screen.getByRole('slider', { name: 'min value' });
     const maxValue = screen.getByRole('slider', { name: 'max value' });
     const inputMin = screen.getByRole('spinbutton', { name: 'min value' });
@@ -24,15 +24,15 @@ describe('SliderWidgetUI', () => {
 
     expect(inputMin).toHaveValue(0);
     expect(inputMax).toHaveValue(100);
+
+    expect(container.getElementsByClassName('MuiSlider-mark').length).toBe(0);
   });
 
   test('renders specified limits', () => {
-    render(<Widget limits={[20, 50]} />);
+    const { container } = render(<Widget limits={[20, 50]} />);
 
     const minLimit = screen.getByRole('slider', { name: 'min limit' });
     const maxLimit = screen.getByRole('slider', { name: 'max limit' });
-    const minIntersection = screen.getByRole('slider', { name: 'min intersection' });
-    const maxIntersection = screen.getByRole('slider', { name: 'max intersection' });
 
     expect(minLimit).toHaveAttribute('aria-valuemin', '0');
     expect(minLimit).toHaveAttribute('aria-valuemax', '100');
@@ -42,22 +42,31 @@ describe('SliderWidgetUI', () => {
     expect(maxLimit).toHaveAttribute('aria-valuemax', '100');
     expect(maxLimit).toHaveAttribute('aria-valuenow', '50');
 
-    expect(minIntersection).toHaveAttribute('aria-valuemin', '0');
-    expect(minIntersection).toHaveAttribute('aria-valuemax', '100');
-    expect(minIntersection).toHaveAttribute('aria-valuenow', '20');
-
-    expect(maxIntersection).toHaveAttribute('aria-valuemin', '0');
-    expect(maxIntersection).toHaveAttribute('aria-valuemax', '100');
-    expect(maxIntersection).toHaveAttribute('aria-valuenow', '50');
+    expect(container.getElementsByClassName('MuiSlider-mark').length).toBe(2);
   });
 
-  test('renders specified limits and values within the limits', () => {
-    render(<Widget limits={[20, 80]} data={[40, 60]} />);
+  test('renders specified limits with same min and max values', () => {
+    const { container } = render(<Widget limits={[50, 50]} />);
 
     const minLimit = screen.getByRole('slider', { name: 'min limit' });
     const maxLimit = screen.getByRole('slider', { name: 'max limit' });
-    const minIntersection = screen.getByRole('slider', { name: 'min intersection' });
-    const maxIntersection = screen.getByRole('slider', { name: 'max intersection' });
+
+    expect(minLimit).toHaveAttribute('aria-valuemin', '0');
+    expect(minLimit).toHaveAttribute('aria-valuemax', '100');
+    expect(minLimit).toHaveAttribute('aria-valuenow', '50');
+
+    expect(maxLimit).toHaveAttribute('aria-valuemin', '0');
+    expect(maxLimit).toHaveAttribute('aria-valuemax', '100');
+    expect(maxLimit).toHaveAttribute('aria-valuenow', '50');
+
+    expect(container.getElementsByClassName('MuiSlider-mark').length).toBe(1);
+  });
+
+  test('renders specified limits and values', () => {
+    const { container } = render(<Widget limits={[20, 80]} data={[40, 60]} />);
+
+    const minLimit = screen.getByRole('slider', { name: 'min limit' });
+    const maxLimit = screen.getByRole('slider', { name: 'max limit' });
     const inputMin = screen.getByRole('spinbutton', { name: 'min value' });
     const inputMax = screen.getByRole('spinbutton', { name: 'max value' });
 
@@ -68,77 +77,28 @@ describe('SliderWidgetUI', () => {
     expect(maxLimit).toHaveAttribute('aria-valuemin', '0');
     expect(maxLimit).toHaveAttribute('aria-valuemax', '100');
     expect(maxLimit).toHaveAttribute('aria-valuenow', '80');
-
-    expect(minIntersection).toHaveAttribute('aria-valuemin', '0');
-    expect(minIntersection).toHaveAttribute('aria-valuemax', '100');
-    expect(minIntersection).toHaveAttribute('aria-valuenow', '40');
-
-    expect(maxIntersection).toHaveAttribute('aria-valuemin', '0');
-    expect(maxIntersection).toHaveAttribute('aria-valuemax', '100');
-    expect(maxIntersection).toHaveAttribute('aria-valuenow', '60');
 
     expect(inputMin).toHaveValue(40);
     expect(inputMax).toHaveValue(60);
+
+    expect(container.getElementsByClassName('MuiSlider-mark').length).toBe(2);
   });
 
-  test('renders specified limits and values out of the limits', () => {
-    render(<Widget limits={[40, 60]} data={[20, 80]} />);
+  test('renders specified limits out of min-max range', () => {
+    const { container } = render(<Widget limits={[101, 200]} />);
 
     const minLimit = screen.getByRole('slider', { name: 'min limit' });
     const maxLimit = screen.getByRole('slider', { name: 'max limit' });
-    const minIntersection = screen.getByRole('slider', { name: 'min intersection' });
-    const maxIntersection = screen.getByRole('slider', { name: 'max intersection' });
-    const inputMin = screen.getByRole('spinbutton', { name: 'min value' });
-    const inputMax = screen.getByRole('spinbutton', { name: 'max value' });
 
     expect(minLimit).toHaveAttribute('aria-valuemin', '0');
     expect(minLimit).toHaveAttribute('aria-valuemax', '100');
-    expect(minLimit).toHaveAttribute('aria-valuenow', '40');
+    expect(minLimit).toHaveAttribute('aria-valuenow', '100');
 
     expect(maxLimit).toHaveAttribute('aria-valuemin', '0');
     expect(maxLimit).toHaveAttribute('aria-valuemax', '100');
-    expect(maxLimit).toHaveAttribute('aria-valuenow', '60');
+    expect(maxLimit).toHaveAttribute('aria-valuenow', '100');
 
-    expect(minIntersection).toHaveAttribute('aria-valuemin', '0');
-    expect(minIntersection).toHaveAttribute('aria-valuemax', '100');
-    expect(minIntersection).toHaveAttribute('aria-valuenow', '40');
-
-    expect(maxIntersection).toHaveAttribute('aria-valuemin', '0');
-    expect(maxIntersection).toHaveAttribute('aria-valuemax', '100');
-    expect(maxIntersection).toHaveAttribute('aria-valuenow', '60');
-
-    expect(inputMin).toHaveValue(20);
-    expect(inputMax).toHaveValue(80);
-  });
-
-  test('renders specified limits and values with a single value out of the limits', () => {
-    render(<Widget limits={[20, 80]} data={[10, 50]} />);
-
-    const minLimit = screen.getByRole('slider', { name: 'min limit' });
-    const maxLimit = screen.getByRole('slider', { name: 'max limit' });
-    const minIntersection = screen.getByRole('slider', { name: 'min intersection' });
-    const maxIntersection = screen.getByRole('slider', { name: 'max intersection' });
-    const inputMin = screen.getByRole('spinbutton', { name: 'min value' });
-    const inputMax = screen.getByRole('spinbutton', { name: 'max value' });
-
-    expect(minLimit).toHaveAttribute('aria-valuemin', '0');
-    expect(minLimit).toHaveAttribute('aria-valuemax', '100');
-    expect(minLimit).toHaveAttribute('aria-valuenow', '20');
-
-    expect(maxLimit).toHaveAttribute('aria-valuemin', '0');
-    expect(maxLimit).toHaveAttribute('aria-valuemax', '100');
-    expect(maxLimit).toHaveAttribute('aria-valuenow', '80');
-
-    expect(minIntersection).toHaveAttribute('aria-valuemin', '0');
-    expect(minIntersection).toHaveAttribute('aria-valuemax', '100');
-    expect(minIntersection).toHaveAttribute('aria-valuenow', '20');
-
-    expect(maxIntersection).toHaveAttribute('aria-valuemin', '0');
-    expect(maxIntersection).toHaveAttribute('aria-valuemax', '100');
-    expect(maxIntersection).toHaveAttribute('aria-valuenow', '50');
-
-    expect(inputMin).toHaveValue(10);
-    expect(inputMax).toHaveValue(50);
+    expect(container.getElementsByClassName('MuiSlider-mark').length).toBe(0);
   });
 
   test('On selected method is called when we change slider values', () => {
