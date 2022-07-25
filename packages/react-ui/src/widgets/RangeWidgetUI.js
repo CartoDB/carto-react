@@ -7,41 +7,52 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative'
   },
-  sliderWithThumb: {
-    '& .MuiSlider-rail': {
-      color: theme.palette.text.hint
-    },
-    '& .MuiSlider-track': {
-      display: 'none'
-    }
+  sliderWithThumbRail: {
+    color: theme.palette.text.hint
   },
-  sliderNotThumb: {
+  sliderLimit: {
     pointerEvents: 'none',
     position: 'absolute',
-    left: 0,
-    right: 0,
-    '& .MuiSlider-thumb': {
-      display: 'none'
-    },
-    '& .MuiSlider-rail': {
-      display: 'none'
-    }
-  },
-  sliderLimits: {
     zIndex: 1,
-    '& .MuiSlider-track': {
-      color: theme.palette.primary.main,
-      opacity: 0.38
-    }
+    left: 0,
+    right: 0
   },
-  sliderIntersection: {
-    zIndex: 2
+  sliderLimitThumb: {
+    display: 'none'
+  },
+  sliderLimitRail: {
+    display: 'none'
+  },
+  sliderLimitMarks: {
+    backgroundColor: theme.palette.primary.main,
+    opacity: 0.38,
+    height: theme.spacing(1),
+    width: theme.spacing(0.25),
+    top: '50%',
+    transform: 'translateY(-50%)'
+  },
+  sliderLimitsTrack: {
+    color: theme.palette.primary.main,
+    opacity: 0.38
   },
   input: {
     maxWidth: theme.spacing(9),
     margin: 0,
     '& fieldset': {
       borderWidth: 1
+    },
+    '& input': {
+      '&[type=number]': {
+        appearance: 'textfield'
+      },
+      '&::-webkit-outer-spin-button': {
+        appearance: 'none',
+        margin: 0
+      },
+      '&::-webkit-inner-spin-button': {
+        appearance: 'none',
+        margin: 0
+      }
     }
   }
 }));
@@ -49,11 +60,11 @@ const useStyles = makeStyles((theme) => ({
 /**
  * Renders a <RangeWidget /> component
  * @param  {object} props
- * @param  {string} props.data - Array of two numbers with the selected values
- * @param  {string} props.min - The absolute min value
- * @param  {string} props.max - The absolute max value
- * @param  {string} props.limits - Array of two numbers that represent a relative min and max values. It is useful to represent the min and max value taking into account other filters.
- * @param  {number} [props.onSelectedRangeChange] - This fuction will be cal when selected values change
+ * @param  {number[]} props.data - Array of two numbers with the selected values
+ * @param  {number} props.min - The absolute min value
+ * @param  {number} props.max - The absolute max value
+ * @param  {number[]} props.limits - Array of two numbers that represent a relative min and max values. It is useful to represent the min and max value taking into account other filters.
+ * @param  {Function} [props.onSelectedRangeChange] - This fuction will be cal when selected values change
 
  */
 
@@ -62,24 +73,24 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
   const [sliderValues, setSliderValues] = useState([min, max]);
   const [inputsValues, setInputsValues] = useState([min, max]);
 
-  const limitsValuesIntersection = useMemo(() => {
+  const limitsMarks = useMemo(() => {
     if (!limits || limits.length !== 2) {
-      return null;
+      return undefined;
     }
 
-    if (!sliderValues || sliderValues.length !== 2) {
-      return null;
+    if (limits[0] === limits[1]) {
+      return [{ value: limits[0] }];
     }
     const result = [
-      Math.max(limits[0], sliderValues[0]),
-      Math.min(limits[1], sliderValues[1])
+      { value: Math.max(limits[0], min) },
+      { value: Math.min(limits[1], max) }
     ];
 
-    if (result[0] > result[1]) {
-      return null;
+    if (result[0].value > result[1].value) {
+      return undefined;
     }
     return result;
-  }, [limits, sliderValues]);
+  }, [limits, max, min]);
 
   const debouncedOnSelectedRangeChange = useMemo(
     () => (onSelectedRangeChange ? debounce(onSelectedRangeChange, 250) : null),
@@ -131,7 +142,9 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
     <Box className={classes.root}>
       <Slider
         getAriaLabel={(index) => (index === 0 ? 'min value' : 'max value')}
-        className={classes.sliderWithThumb}
+        classes={{
+          rail: classes.sliderWithThumbRail
+        }}
         value={sliderValues}
         min={min}
         max={max}
@@ -140,24 +153,21 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
       {limits && limits.length === 2 && (
         <Slider
           getAriaLabel={(index) => (index === 0 ? 'min limit' : 'max limit')}
-          className={`${classes.sliderNotThumb} ${classes.sliderLimits}`}
+          className={classes.sliderLimit}
+          classes={{
+            rail: classes.sliderLimitRail,
+            thumb: classes.sliderLimitThumb,
+            track: classes.sliderLimitsTrack,
+            mark: classes.sliderLimitMarks,
+            markActive: classes.sliderLimitMarks
+          }}
           value={limits}
           min={min}
           max={max}
+          marks={limitsMarks}
         />
       )}
-      {limitsValuesIntersection && (
-        <Slider
-          getAriaLabel={(index) =>
-            index === 0 ? 'min intersection' : 'max intersection'
-          }
-          className={`${classes.sliderNotThumb} ${classes.sliderIntersection}`}
-          value={limitsValuesIntersection}
-          min={min}
-          max={max}
-        />
-      )}
-      <Box display={'flex'} justifyContent={'space-between'}>
+      <Box display={'flex'} justifyContent={'space-between'} mb={1}>
         <TextField
           className={classes.input}
           value={inputsValues[0]}

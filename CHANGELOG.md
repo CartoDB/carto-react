@@ -4,6 +4,14 @@
 - Support for SQL queryParameters
 ## 1.4
 
+### 1.4.0-alpha.3 (2022-07-22)
+
+- RangeWidget: new design changes [#459](https://github.com/CartoDB/carto-react/pull/459)
+
+### 1.4.0-alpha.2 (2022-07-21)
+
+- Fix range widget styles [#457](https://github.com/CartoDB/carto-react/pull/457)
+
 ### 1.4.0-alpha.1 (2022-07-20)
 
 - Range widget (absolute values) [#454](https://github.com/CartoDB/carto-react/pull/454)
