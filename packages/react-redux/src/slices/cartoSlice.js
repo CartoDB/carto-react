@@ -193,6 +193,7 @@ export const createCartoSlice = (initialState) => {
  * @param {Object} credentials - (optional) Custom credentials to be used in the source
  * @param {string} connection - connection name for carto 3 source
  * @param {FiltersLogicalOperators} filtersLogicalOperator - logical operator that defines how filters for different columns are joined together
+ * @param {import('@carto/react-api/types').QueryParameter[]} queryParameters - SQL query parameters
  */
 export const addSource = ({
   id,
@@ -200,10 +201,11 @@ export const addSource = ({
   type,
   credentials,
   connection,
-  filtersLogicalOperator = FiltersLogicalOperators.AND
+  filtersLogicalOperator = FiltersLogicalOperators.AND,
+  queryParameters = []
 }) => ({
   type: 'carto/addSource',
-  payload: { id, data, type, credentials, connection, filtersLogicalOperator }
+  payload: { id, data, type, credentials, connection, filtersLogicalOperator, queryParameters }
 });
 
 /**

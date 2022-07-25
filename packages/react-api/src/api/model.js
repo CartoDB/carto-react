@@ -14,6 +14,7 @@ const AVAILABLE_MODELS = ['category', 'histogram', 'formula', 'timeseries', 'ran
  * @param { object } props.source - source that owns the column
  * @param { object } props.params - widget's props
  * @param { object= } props.opts - Additional options for the HTTP request
+ * @param { import('../types').QueryParameter[] } props.queryParameters - sql query parameters
  */
 export function executeModel(props) {
   assert(props.source, 'executeModel: missing source');
@@ -27,7 +28,7 @@ export function executeModel(props) {
     )}`
   );
 
-  const { source, model, params, opts } = props;
+  const { source, model, params, queryParameters, opts } = props;
 
   checkCredentials(source.credentials);
 
@@ -45,6 +46,7 @@ export function executeModel(props) {
     type,
     source: data,
     params: JSON.stringify(params),
+    queryParameters: JSON.stringify(queryParameters),
     filters: JSON.stringify(filters),
     filtersLogicalOperator
   };
