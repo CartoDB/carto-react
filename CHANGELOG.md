@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## Not released
-
+- Support for SQL queryParameters
 ## 1.4
 
 ### 1.4.0-alpha.1 (2022-07-20)
