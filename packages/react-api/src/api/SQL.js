@@ -18,7 +18,7 @@ const DEFAULT_USER_COMPONENT_IN_URL = '{user}';
  * @param { string } props.query - SQL query to be executed
  * @param { string } props.connection - connection name required for CARTO cloud native
  * @param { Object } props.opts - Additional options for the HTTP request
- * @param { import('../types').QueryParameter[] } props.queryParameters - SQL query parameters
+ * @param { import('@deck.gl/carto').QueryParameters } props.queryParameters - SQL query parameters
  */
 export const executeSQL = async ({ credentials, query, connection, opts, queryParameters }) => {
   let response;

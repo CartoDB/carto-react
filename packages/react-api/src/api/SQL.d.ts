@@ -1,4 +1,4 @@
-import { Credentials, ExecuteSQLResponse, QueryParameter } from '../types';
+import { Credentials, ExecuteSQLResponse, QueryParameters } from '../types';
 import { FeatureCollection } from 'geojson';
 
 export function executeSQL<Response = FeatureCollection | {}[]>({
@@ -12,5 +12,5 @@ export function executeSQL<Response = FeatureCollection | {}[]>({
   query: string;
   connection?: string;
   opts?: unknown;
-  queryParameters?: QueryParameter[];
+  queryParameters?: QueryParameters;
 }): ExecuteSQLResponse<Response>;

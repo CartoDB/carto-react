@@ -14,7 +14,7 @@ const AVAILABLE_MODELS = ['category', 'histogram', 'formula', 'timeseries', 'ran
  * @param { object } props.source - source that owns the column
  * @param { object } props.params - widget's props
  * @param { object= } props.opts - Additional options for the HTTP request
- * @param { import('../types').QueryParameter[] } props.queryParameters - sql query parameters
+ * @param { import('@deck.gl/carto').QueryParameters } props.queryParameters - sql query parameters
  */
 export function executeModel(props) {
   assert(props.source, 'executeModel: missing source');
