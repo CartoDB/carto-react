@@ -37,7 +37,7 @@ export async function makeCall({ url, credentials, opts, queryParameters }) {
         Authorization: `Bearer ${credentials.accessToken}`
       },
       signal: opts?.abortController?.signal,
-      queryParameters: queryParameters ? JSON.stringify(queryParameters) : undefined,
+      queryParameters,
       ...opts?.otherOptions,
     });
     data = await response.json();

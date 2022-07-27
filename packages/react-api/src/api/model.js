@@ -14,7 +14,6 @@ const AVAILABLE_MODELS = ['category', 'histogram', 'formula', 'timeseries', 'ran
  * @param { object } props.source - source that owns the column
  * @param { object } props.params - widget's props
  * @param { object= } props.opts - Additional options for the HTTP request
- * @param { import('@deck.gl/carto').QueryParameters } props.queryParameters - sql query parameters
  */
 export function executeModel(props) {
   assert(props.source, 'executeModel: missing source');
@@ -28,7 +27,7 @@ export function executeModel(props) {
     )}`
   );
 
-  const { source, model, params, queryParameters, opts } = props;
+  const { source, model, params, opts } = props;
 
   checkCredentials(source.credentials);
 
@@ -40,13 +39,13 @@ export function executeModel(props) {
 
   let url = `${source.credentials.apiBaseUrl}/v3/sql/${source.connection}/model/${model}`;
 
-  const { filters, filtersLogicalOperator, data, type } = source;
-
+  const { filters, filtersLogicalOperator, data, type } = source;  
+  const queryParameters = source.queryParameters ? JSON.stringify(source.queryParameters) : ''
   const queryParams = {
     type,
     source: data,
     params: JSON.stringify(params),
-    queryParameters: JSON.stringify(queryParameters),
+    queryParameters,
     filters: JSON.stringify(filters),
     filtersLogicalOperator
   };
@@ -56,7 +55,6 @@ export function executeModel(props) {
   if (isGet) {
     url += '?' + new URLSearchParams(queryParams).toString();
   }
-
   return makeCall({
     url,
     credentials: source.credentials,
@@ -64,6 +62,7 @@ export function executeModel(props) {
       ...opts,
       method: isGet ? 'GET' : 'POST',
       ...(!isGet && { body: JSON.stringify(queryParams) })
-    }
+    },
+    queryParameters: queryParameters
   });
 }
