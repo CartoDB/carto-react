@@ -28,7 +28,7 @@ export function checkCredentials(credentials) {
   }
 }
 
-export async function makeCall({ url, credentials, opts, queryParameters }) {
+export async function makeCall({ url, credentials, opts }) {
   let response;
   let data;
   try {
@@ -37,7 +37,6 @@ export async function makeCall({ url, credentials, opts, queryParameters }) {
         Authorization: `Bearer ${credentials.accessToken}`
       },
       signal: opts?.abortController?.signal,
-      queryParameters,
       ...opts?.otherOptions,
     });
     data = await response.json();

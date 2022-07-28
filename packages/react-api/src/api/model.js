@@ -51,7 +51,6 @@ export function executeModel(props) {
   };
 
   const isGet = url.length + JSON.stringify(queryParams).length <= URL_LENGTH;
-
   if (isGet) {
     url += '?' + new URLSearchParams(queryParams).toString();
   }
@@ -62,7 +61,6 @@ export function executeModel(props) {
       ...opts,
       method: isGet ? 'GET' : 'POST',
       ...(!isGet && { body: JSON.stringify(queryParams) })
-    },
-    queryParameters: queryParameters
+    }
   });
 }

@@ -21,7 +21,7 @@ describe('model', () => {
       expect(mockedMakeCall).toHaveBeenCalledWith({
         credentials: TABLE_SOURCE.credentials,
         opts: { method: 'GET' },
-        url: 'https://gcp-us-east1.api.carto.com/v3/sql/carto-ps-bq-developers/model/formula?type=table&source=cartobq.public_account.seattle_collisions&params=%7B%22column%22%3A%22__test__%22%2C%22operation%22%3A%22avg%22%7D&filters=%7B%7D&queryParameters=undefined&filtersLogicalOperator=AND'
+        url: 'https://gcp-us-east1.api.carto.com/v3/sql/carto-ps-bq-developers/model/formula?type=table&source=cartobq.public_account.seattle_collisions&params=%7B%22column%22%3A%22__test__%22%2C%22operation%22%3A%22avg%22%7D&queryParameters=&filters=%7B%7D&filtersLogicalOperator=AND'
       });
     });
 
@@ -31,13 +31,14 @@ describe('model', () => {
       expect(mockedMakeCall).toHaveBeenCalledWith({
         credentials: TABLE_SOURCE.credentials,
         opts: { method: 'GET' },
-        url: 'https://gcp-us-east1.api.carto.com/v3/sql/carto-ps-bq-developers/model/formula?type=query&source=SELECT+*+FROM+%60cartobq.public_account.seattle_collisions%60&params=%7B%22column%22%3A%22__test__%22%2C%22operation%22%3A%22avg%22%7D&filters=%7B%7D&queryParameters=undefined&filtersLogicalOperator=AND'
+        url: 'https://gcp-us-east1.api.carto.com/v3/sql/carto-ps-bq-developers/model/formula?type=query&source=SELECT+*+FROM+%60cartobq.public_account.seattle_collisions%60&params=%7B%22column%22%3A%22__test__%22%2C%22operation%22%3A%22avg%22%7D&queryParameters=&filters=%7B%7D&filtersLogicalOperator=AND'
       });
     });
 
     test('works correctly when the source is very large', () => {
       const longQuerySource = {
         ...QUERY_SOURCE,
+        queryParameters: '',
         data: 'a'.repeat(2048)
       };
 
@@ -51,6 +52,7 @@ describe('model', () => {
             type: 'query',
             source: longQuerySource.data,
             params: JSON.stringify(DEFAULT_PARAMS),
+            queryParameters: '',
             filters: JSON.stringify(longQuerySource.filters),
             filtersLogicalOperator: longQuerySource.filtersLogicalOperator
           })
