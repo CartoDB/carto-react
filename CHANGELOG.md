@@ -1,7 +1,8 @@
 # CHANGELOG
 
 ## Not released
-- Support for SQL queryParameters
+- Support for SQL queryParameters [#461](https://github.com/CartoDB/carto-react/pull/461)
+
 ## 1.4
 
 ### 1.4.0-alpha.3 (2022-07-22)
