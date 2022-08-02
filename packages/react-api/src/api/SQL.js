@@ -18,8 +18,9 @@ const DEFAULT_USER_COMPONENT_IN_URL = '{user}';
  * @param { string } props.query - SQL query to be executed
  * @param { string } props.connection - connection name required for CARTO cloud native
  * @param { Object } props.opts - Additional options for the HTTP request
+ * @param { import('@deck.gl/carto').QueryParameters } props.queryParameters - SQL query parameters
  */
-export const executeSQL = async ({ credentials, query, connection, opts }) => {
+export const executeSQL = async ({ credentials, query, connection, opts, queryParameters }) => {
   let response;
 
   if (!credentials) {
@@ -27,7 +28,7 @@ export const executeSQL = async ({ credentials, query, connection, opts }) => {
   }
 
   try {
-    const request = createRequest({ credentials, connection, query, opts });
+    const request = createRequest({ credentials, connection, query, opts, queryParameters });
     response = await fetch(request);
   } catch (error) {
     if (error.name === 'AbortError') throw error;
@@ -54,7 +55,7 @@ export const executeSQL = async ({ credentials, query, connection, opts }) => {
  * Create an 'SQL query' request
  * (using GET or POST request, depending on url size)
  */
-function createRequest({ credentials, connection, query, opts = {} }) {
+function createRequest({ credentials, connection, query, opts = {}, queryParameters = [] }) {
   const { abortController, ...otherOptions } = opts;
 
   const { apiVersion = API_VERSIONS.V2 } = credentials;
@@ -62,7 +63,8 @@ function createRequest({ credentials, connection, query, opts = {} }) {
   const rawParams = {
     client: CLIENT,
     q: query?.trim(),
-    ...otherOptions
+    ...otherOptions,
+    queryParameters: queryParameters ? JSON.stringify(queryParameters) : undefined
   };
 
   if (apiVersion === API_VERSIONS.V3) {

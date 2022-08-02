@@ -1,5 +1,6 @@
 import { DataFilterExtension, MaskExtension } from '@deck.gl/extensions';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
+import { QueryParameters } from '@deck.gl/carto';
 import { FeatureCollection } from 'geojson';
 
 interface CredentialsCarto2 {
@@ -24,6 +25,7 @@ export type SourceProps = {
   type: MAP_TYPES.QUERY | MAP_TYPES.TABLE | MAP_TYPES.TILESET;
   connection?: string;
   credentials: Credentials;
+  queryParameters: QueryParameters;
 };
 
 export type LayerConfig = {

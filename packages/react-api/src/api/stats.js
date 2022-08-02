@@ -37,7 +37,7 @@ export async function getStats(props) {
   } else {
     const url = buildUrl(source, column);
 
-    return makeCall({ url, credentials: source.credentials, opts });
+    return makeCall({ url, credentials: source.credentials, opts, queryParameters: source.queryParameters });
   }
 }
 

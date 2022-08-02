@@ -37,7 +37,7 @@ export async function makeCall({ url, credentials, opts }) {
         Authorization: `Bearer ${credentials.accessToken}`
       },
       signal: opts?.abortController?.signal,
-      ...opts?.otherOptions
+      ...opts?.otherOptions,
     });
     data = await response.json();
   } catch (error) {
