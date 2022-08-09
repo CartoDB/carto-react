@@ -1,8 +1,14 @@
 import React from 'react';
-import { createTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
+import {
+  createTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+  StyledEngineProvider,
+  adaptV4Theme
+} from '@mui/material';
 import { cartoThemeOptions } from '../../src/theme/carto-theme';
 
-let theme = createTheme(cartoThemeOptions);
+let theme = createTheme(adaptV4Theme(cartoThemeOptions));
 theme = responsiveFontSizes(theme, {
   breakpoints: cartoThemeOptions.breakpoints.keys,
   disableAlign: false,
@@ -26,9 +32,11 @@ theme = responsiveFontSizes(theme, {
 
 export const decorators = [
   (Story) => (
-    <ThemeProvider theme={theme}>
-      <Story />
-    </ThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <Story />
+      </ThemeProvider>
+    </StyledEngineProvider>
   )
 ];
 

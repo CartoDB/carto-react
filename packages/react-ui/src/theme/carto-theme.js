@@ -1,8 +1,9 @@
 import {
   createTheme as createMuiTheme,
-  responsiveFontSizes
-} from '@material-ui/core/styles';
-import createSpacing from '@material-ui/core/styles/createSpacing';
+  responsiveFontSizes,
+  adaptV4Theme
+  // createSpacing,
+} from '@mui/material/styles';
 
 const colors = {
   common: {
@@ -64,7 +65,7 @@ const colors = {
 
 const variables = {
   palette: {
-    type: 'light',
+    mode: 'light',
     common: { ...colors.common },
     primary: {
       light: '#358be7',
@@ -277,7 +278,7 @@ const variables = {
   spacing: 8
 };
 
-const spacing = createSpacing(variables.spacing);
+const spacing = variables.spacing; // createSpacing(variables.spacing);
 const round = (value) => Math.round(value * 1e5) / 1e5;
 const pxToRem = (size) => `${round(size / variables.typography.htmlFontSize)}rem`;
 
@@ -318,7 +319,7 @@ export const cartoThemeOptions = {
     }
   },
   palette: {
-    type: 'light',
+    mode: 'light',
     common: { ...variables.palette.common },
     primary: { ...variables.palette.primary },
     secondary: { ...variables.palette.secondary },
@@ -1402,7 +1403,7 @@ export function createTheme(options = {}) {
     }
   };
 
-  let theme = createMuiTheme(themeOptions);
+  let theme = createMuiTheme(adaptV4Theme(themeOptions));
 
   theme = responsiveFontSizes(theme, {
     breakpoints: themeOptions.breakpoints.keys,

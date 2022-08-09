@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid, InputAdornment, TextField, Typography } from '@material-ui/core';
-import { Visibility } from '@material-ui/icons';
+import { Grid, InputAdornment, TextField, Typography } from '@mui/material';
+import { Visibility } from '@mui/icons-material';
 
 const options = {
   title: 'Common/Text Field',
@@ -258,7 +258,7 @@ const MultilineTemplate = ({ ...rest }) => {
           <TextField label='Default' multiline {...rest} />
         </Grid>
         <Grid item xs={4}>
-          <TextField label='With max rows' rowsMax={4} multiline {...rest} />
+          <TextField label='With max rows' maxRows={4} multiline {...rest} />
         </Grid>
 
         <Grid item xs={4}>

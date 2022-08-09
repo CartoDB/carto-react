@@ -1,9 +1,9 @@
 import React from 'react';
-import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
-import DirectionsWalkIcon from '@material-ui/icons/DirectionsWalk';
-import DriveEtaIcon from '@material-ui/icons/DriveEta';
-import AirplanemodeActiveIcon from '@material-ui/icons/AirplanemodeActive';
-import TrainIcon from '@material-ui/icons/Train';
+import { ToggleButtonGroup, ToggleButton } from '@mui/material';
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
+import DriveEtaIcon from '@mui/icons-material/DriveEta';
+import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
+import TrainIcon from '@mui/icons-material/Train';
 
 const options = {
   title: 'Common/Toggle Button',

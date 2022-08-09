@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox, FormControlLabel, Grid } from '@material-ui/core';
+import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 
 const options = {
   title: 'Common/Checkbox',

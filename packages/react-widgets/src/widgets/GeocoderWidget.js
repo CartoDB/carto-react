@@ -4,8 +4,8 @@ import { PropTypes } from 'prop-types';
 
 import { addLayer, setViewState } from '@carto/react-redux';
 
-import { CircularProgress, InputBase, Paper, SvgIcon } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { CircularProgress, InputBase, Paper, SvgIcon } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import useGeocoderWidgetController from '../hooks/useGeocoderWidgetController';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     ...theme.typography.body2,
-    width: `calc(100% - ${theme.spacing(5)}px)`,
+    width: `calc(100% - ${theme.spacing(5)})`,
     marginLeft: theme.spacing(1)
   }
 }));

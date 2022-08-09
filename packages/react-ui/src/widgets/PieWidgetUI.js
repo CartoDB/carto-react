@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../custom-components/echarts-for-react';
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 import { disableSerie, setColor } from './utils/chartUtils';
 import { processFormatterRes } from './utils/formatterUtils';
 
@@ -133,7 +133,7 @@ function PieWidgetUI({
 
           const disabled =
             selectedCategories?.length && !selectedCategories.includes(clonedItem.name);
-          
+
           if (labels?.[clonedItem.name]) {
             clonedItem.name = labels[clonedItem.name];
           }

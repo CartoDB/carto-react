@@ -8,7 +8,7 @@ import {
   selectFeatureSelectionMode
 } from '@carto/react-redux';
 import { EDIT_MODES } from '@carto/react-core';
-import { hexToRgb, useTheme } from '@material-ui/core';
+import { hexToRgb, useTheme } from '@mui/material';
 import EditableCartoGeoJsonLayer from './EditableCartoGeoJsonLayer';
 import useEventManager from './useEventManager';
 import MaskLayer from './MaskLayer';

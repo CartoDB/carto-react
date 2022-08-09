@@ -7,9 +7,9 @@ import {
   SvgIcon,
   Typography,
   capitalize,
-  makeStyles,
   Link
-} from '@material-ui/core';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import TimeSeriesChart from './components/TimeSeriesChart';
 import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesContext';

@@ -2,7 +2,7 @@ import React from 'react';
 import { getMaterialUIContext } from './testUtils';
 import LegendWidgetUI from '../../src/widgets/legend/LegendWidgetUI';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { act } from '@testing-library/react-hooks';
 
 const CUSTOM_CHILDREN = <Typography>Legend custom</Typography>;

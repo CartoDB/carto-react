@@ -8,8 +8,8 @@ import {
   MenuItem,
   Typography,
   Select
-} from '@material-ui/core';
-import { Visibility } from '@material-ui/icons';
+} from '@mui/material';
+import { Visibility } from '@mui/icons-material';
 
 const options = {
   title: 'Common/Select',

@@ -14,10 +14,10 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   Typography,
-  makeStyles,
   Switch,
   Paper
-} from '@material-ui/core';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import {
   Drafts,
   Delete,
@@ -26,7 +26,7 @@ import {
   Home,
   Inbox,
   Star
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 const options = {
   title: 'Common/List',
