@@ -83,6 +83,8 @@
     "@mui/lab": "^5.0.0-alpha.93",
     "@mui/material": "^5.9.3",
     "@mui/styles": "^5.9.3",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
     "echarts": "^5.2.0",
     "echarts-for-react": "^3.0.1",
     "react": "^17.0.1",

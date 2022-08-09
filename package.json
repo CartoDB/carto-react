@@ -21,6 +21,8 @@
     "@mui/lab": "^5.0.0-alpha.93",
     "@mui/material": "^5.9.3",
     "@mui/styles": "^5.9.3",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
     "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
