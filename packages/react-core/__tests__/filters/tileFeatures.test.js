@@ -1,6 +1,5 @@
 import { TILE_FORMATS } from '@deck.gl/carto';
 import { geojsonToBinary } from '@loaders.gl/gis';
-import { PagesSharp } from '@material-ui/icons';
 import { tileFeatures } from '../../src';
 import * as transformToTileCoords from '../../src/utils/transformToTileCoords';
 
