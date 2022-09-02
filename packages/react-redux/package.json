@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-redux",
-  "version": "1.4.0-alpha.4",
+  "version": "1.4.0-alpha.5",
   "description": "CARTO for React - Redux",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -63,8 +63,8 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^1.4.0-alpha.4",
-    "@carto/react-workers": "^1.4.0-alpha.4",
+    "@carto/react-core": "^1.4.0-alpha.5",
+    "@carto/react-workers": "^1.4.0-alpha.5",
     "@deck.gl/carto": "^8.8.0",
     "@deck.gl/core": "^8.8.0",
     "@reduxjs/toolkit": "^1.5.0"
