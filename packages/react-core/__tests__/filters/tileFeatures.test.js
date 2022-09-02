@@ -350,7 +350,58 @@ describe('viewport features with binary mode', () => {
   });
 
   describe('uniqueIdProperty is undefined', () => {
-    describe('dataset has cartodb_id field', () => {
+    describe('tiles provide unique id field', () => {
+      test('linestrings', () => {
+        const linestrings = [...Array(3)].map((_, i) => ({
+          type: 'Feature',
+          geometry: {
+            type: 'LineString',
+            // prettier-ignore
+            coordinates: [[0, 0], [0, 1], [1, 2]]
+          },
+          properties: {
+            other_prop: i
+          }
+        }));
+
+        // Two tiles, linestrings[0] is present in both
+        const binaryData1 = geojsonToBinary([linestrings[0], linestrings[1]]);
+        // @ts-ignore
+        binaryData1.lines.fields = [{ id: 100 }, { id: 101 }];
+
+        const binaryData2 = geojsonToBinary([linestrings[0], linestrings[2]]);
+        // @ts-ignore
+        binaryData2.lines.fields = [{ id: 100 }, { id: 102 }];
+
+        const mockedTiles = [
+          {
+            isVisible: true,
+            data: binaryData1,
+            bbox: { west, east, north, south }
+          },
+          {
+            isVisible: true,
+            data: binaryData2,
+            bbox: { west, east, north, south }
+          }
+        ];
+
+        const properties = tileFeatures({
+          tiles: mockedTiles,
+          viewport,
+          uniqueIdProperty: undefined
+        });
+
+        // prettier-ignore
+        expect(properties).toEqual([
+          { 'other_prop': 0 },
+          { 'other_prop': 1 },
+          { 'other_prop': 2 }
+        ]);
+      });
+    });
+
+    describe('features have cartodb_id field', () => {
       test('points', () => {
         const points = [...Array(3)].map((_, i) => ({
           type: 'Feature',
@@ -386,7 +437,7 @@ describe('viewport features with binary mode', () => {
       });
     });
 
-    describe('dataset has geoid field', () => {
+    describe('features have geoid field', () => {
       test('points', () => {
         const points = [...Array(3)].map((_, i) => ({
           type: 'Feature',
@@ -422,7 +473,7 @@ describe('viewport features with binary mode', () => {
       });
     });
 
-    describe('dataset has no cartodb_id or geoid fields', () => {
+    describe('no explicit id field', () => {
       test('points', () => {
         const points = [...Array(3)].map((_, i) => ({
           type: 'Feature',

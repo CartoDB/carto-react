@@ -48,8 +48,9 @@ function getFeatureId(data, startIndex) {
 
 function getPropertiesFromTile(data, startIndex) {
   const featureId = getFeatureId(data, startIndex);
-  const { properties, numericProps } = data;
+  const { properties, numericProps, fields } = data;
   const result = {
+    uniqueId: fields?.[featureId]?.id,
     properties: properties[featureId],
     numericProps: {}
   };
@@ -69,6 +70,10 @@ function parseProperties(tileProps) {
 function getUniquePropertyValue(tileProps, uniqueIdProperty, map) {
   if (uniqueIdProperty) {
     return getValueFromTileProps(tileProps, uniqueIdProperty);
+  }
+
+  if (tileProps.uniqueId) {
+    return tileProps.uniqueId;
   }
 
   const artificialId = map.size + 1; // a counter, assumed as a valid new id

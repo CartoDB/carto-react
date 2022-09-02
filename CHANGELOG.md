@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Use unique feature id from tileset if provided [#463](https://github.com/CartoDB/carto-react/pull/463)
+
 ## 1.4
 
 ### 1.4.0-alpha.4 (2022-08-02)
