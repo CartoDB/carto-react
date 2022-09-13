@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { DEFAULT_INVALID_COLUMN_ERR } from '../widgets/utils/constants';
 import useCustomCompareEffect from './useCustomCompareEffect';
 import useWidgetSource from './useWidgetSource';
+import useLinksToSource from './useLinksToSource';
 
 export default function useWidgetFetch(
   modelFn,
@@ -21,6 +22,9 @@ export default function useWidgetFetch(
   );
   const source = useWidgetSource({ dataSource, id });
 
+  // get linked sources that can filter the current one
+  const datasourceLinks = useLinksToSource(dataSource);
+
   useCustomCompareEffect(
     () => {
       setIsLoading(true);
@@ -30,7 +34,8 @@ export default function useWidgetFetch(
         modelFn({
           source,
           ...params,
-          global
+          global,
+          datasourceLinks
         })
           .then((data) => {
             if (data !== null && data !== undefined) {
@@ -49,7 +54,7 @@ export default function useWidgetFetch(
           });
       }
     },
-    [params, source, onError, isSourceReady, global, enabled],
+    [params, source, onError, isSourceReady, global, enabled, datasourceLinks],
     dequal
   );
 
