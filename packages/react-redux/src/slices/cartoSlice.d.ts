@@ -54,6 +54,11 @@ type WidgetLoadingState = {
   isLoading: boolean;
 };
 
+type SourceColumn = {
+  sourceId: string;
+  column: string;
+};
+
 declare enum CartoActions {
   ADD_SOURCE = 'carto/addSource',
   REMOVE_SOURCE = 'carto/removeSource',
@@ -69,7 +74,9 @@ declare enum CartoActions {
   SET_FEATURES_READY = 'carto/setFeaturesReady',
   SET_CREDENTIALS = 'carto/setCredentials',
   SET_FEATURE_SELECTION_MODE = 'carto/setFeatureSelectionMode',
-  SET_FEATURE_SELECTION_ENABLED = 'carto/setFeatureSelectionEnabled'
+  SET_FEATURE_SELECTION_ENABLED = 'carto/setFeatureSelectionEnabled',
+  ADD_SOURCE_LINK = 'carto/addSourceLink',
+  REMOVE_SOURCE_LINK = 'carto/removeSourceLink'
 }
 
 export function createCartoSlice(
@@ -160,3 +167,19 @@ export function setFeatureSelectionEnabled(enabled: boolean): {
 export function selectSpatialFilter(state: any, sourceId?: string): object | null;
 
 export function selectFeatureSelectionMode(state: any): string | null;
+
+export function addSourceLink(
+  origin: SourceColumn,
+  linked: SourceColumn
+): {
+  type: CartoActions.ADD_SOURCE_LINK;
+  payload: { origin: SourceColumn; linked: SourceColumn };
+};
+
+export function removeSourceLink(
+  originSourceId: string,
+  linkedSourceId: string
+): {
+  type: CartoActions.REMOVE_SOURCE_LINK;
+  payload: { originSourceId: string; linkedSourceId: string };
+};

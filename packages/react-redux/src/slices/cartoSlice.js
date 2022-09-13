@@ -49,6 +49,7 @@ export const createCartoSlice = (initialState) => {
       dataSources: {
         // Auto import dataSources
       },
+      dataSourceLinks: [],
       spatialFilter: null,
       featureSelectionMode: FEATURE_SELECTION_MODES.POLYGON,
       featureSelectionEnabled: false,
@@ -179,6 +180,23 @@ export const createCartoSlice = (initialState) => {
       },
       setFeatureSelectionEnabled: (state, action) => {
         state.featureSelectionEnabled = action.payload;
+      },
+      addSourceLink: (state, action) => {
+        const { origin, linked } = action.payload;
+        state.dataSourceLinks.push({
+          originSourceId: origin.sourceId,
+          originColumn: origin.column,
+          linkedSourceId: linked.sourceId,
+          linkedColumn: linked.column
+        });
+      },
+      removeSourceLink: (state, action) => {
+        const { originSourceId, linkedSourceId } = action.payload;
+        state.dataSourceLinks = state.dataSourceLinks.filter(
+          (link) =>
+            link.originSourceId !== originSourceId ||
+            link.linkedSourceId !== linkedSourceId
+        );
       }
     }
   });
@@ -420,4 +438,22 @@ export const setFeatureSelectionMode = (mode) => ({
 export const setFeatureSelectionEnabled = (enabled) => ({
   type: 'carto/setFeatureSelectionEnabled',
   payload: enabled
+});
+
+/** Action to link a source with another one
+ * @param {object} origin
+ * @param {object} linked
+ */
+export const addSourceLink = (origin, linked) => ({
+  type: 'carto/addSourceLink',
+  payload: { origin, linked }
+});
+
+/** Action to remove the link between two sources
+ * @param {string} originSourceId
+ * @param {string} linkedSourceId
+ */
+export const removeSourceLink = (originSourceId, linkedSourceId) => ({
+  type: 'carto/removeSourceLink',
+  payload: { originSourceId, linkedSourceId }
 });
