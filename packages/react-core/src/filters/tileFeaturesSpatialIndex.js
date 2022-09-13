@@ -1,9 +1,4 @@
-import {
-  bigIntToHex,
-  getResolution as quadbinGetResolution,
-  hexToBigInt,
-  geometryToCells
-} from 'quadbin';
+import { getResolution as quadbinGetResolution, geometryToCells } from 'quadbin';
 
 // h3-js has a known problem that does not allow us to use it in a web-worker. To solve
 // it we're overwriting the node_module package after install it (check postinstall script in the package.json and the patches/h3-js+3.7.2.patch file)
@@ -62,7 +57,7 @@ function getResolution(tiles, spatialIndex) {
   }
 
   if (spatialIndex === SpatialIndex.QUADBIN) {
-    return Number(quadbinGetResolution(hexToBigInt(data[0].id)));
+    return Number(quadbinGetResolution(data[0].id));
   }
 
   if (spatialIndex === SpatialIndex.H3) {
@@ -75,7 +70,7 @@ const bboxEast = [0, -90, 180, 90];
 
 function getCellsCoverGeometry(geometry, spatialIndex, resolution) {
   if (spatialIndex === SpatialIndex.QUADBIN) {
-    return geometryToCells(geometry, resolution).map(bigIntToHex);
+    return geometryToCells(geometry, resolution);
   }
 
   if (spatialIndex === SpatialIndex.H3) {
