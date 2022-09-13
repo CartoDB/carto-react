@@ -14497,10 +14497,10 @@ qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
-quadbin@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/quadbin/-/quadbin-0.1.3.tgz#9f7afabeb68cae3ad515b7244218a268a033848d"
-  integrity sha512-OxnZ1jeq4FNYuJvO3c317+C799eFY+ONhpLdT6macWoDyF4nwid6t57OuRR+ULBFUg0/34N7ylgwJzyNYDniIg==
+quadbin@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/quadbin/-/quadbin-0.1.4.tgz#4f3dae4316105ae85cfc0473c450558f9c21f7b5"
+  integrity sha512-CU4wivjITfW/eewXOWjFtpZbtkRN49rCW+VvOTbd4lrj2MzLA0GGY2iWaawgBkoQQLVb7UCKRtm1ojN1Bej2Ug==
   dependencies:
     "@mapbox/tile-cover" "^3.0.2"
 
