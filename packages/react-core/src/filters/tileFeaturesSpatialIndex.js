@@ -1,4 +1,10 @@
-import { _quadbinZoom, _tileToQuadbin } from '@deck.gl/carto';
+import {
+  bigIntToHex,
+  getResolution as quadbinGetResolution,
+  hexToBigInt,
+  tileToCell
+} from 'quadbin';
+
 import { tiles } from '@mapbox/tile-cover';
 // h3-js has a known problem that does not allow us to use it in a web-worker. To solve
 // it we're overwriting the node_module package after install it (check postinstall script in the package.json and the patches/h3-js+3.7.2.patch file)
@@ -57,7 +63,7 @@ function getResolution(tiles, spatialIndex) {
   }
 
   if (spatialIndex === SpatialIndex.QUADBIN) {
-    return Number(_quadbinZoom(data[0].id));
+    return Number(quadbinGetResolution(hexToBigInt(data[0].id)));
   }
 
   if (spatialIndex === SpatialIndex.H3) {
@@ -73,7 +79,7 @@ function getCellsCoverGeometry(geometry, spatialIndex, resolution) {
     return tiles(geometry, {
       min_zoom: resolution,
       max_zoom: resolution
-    }).map(([x, y, z]) => _tileToQuadbin({ x, y, z }));
+    }).map(([x, y, z]) => bigIntToHex(tileToCell({ x, y, z })));
   }
 
   if (spatialIndex === SpatialIndex.H3) {
