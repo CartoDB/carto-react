@@ -2,10 +2,9 @@ import {
   bigIntToHex,
   getResolution as quadbinGetResolution,
   hexToBigInt,
-  tileToCell
+  geometryToCells
 } from 'quadbin';
 
-import { tiles } from '@mapbox/tile-cover';
 // h3-js has a known problem that does not allow us to use it in a web-worker. To solve
 // it we're overwriting the node_module package after install it (check postinstall script in the package.json and the patches/h3-js+3.7.2.patch file)
 // To know more about the h3-js issue check https://github.com/uber/h3-js/issues/117
@@ -76,10 +75,7 @@ const bboxEast = [0, -90, 180, 90];
 
 function getCellsCoverGeometry(geometry, spatialIndex, resolution) {
   if (spatialIndex === SpatialIndex.QUADBIN) {
-    return tiles(geometry, {
-      min_zoom: resolution,
-      max_zoom: resolution
-    }).map(([x, y, z]) => bigIntToHex(tileToCell({ x, y, z })));
+    return geometryToCells(geometry, resolution).map(bigIntToHex);
   }
 
   if (spatialIndex === SpatialIndex.H3) {
