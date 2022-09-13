@@ -4,6 +4,10 @@
 
 ## 1.4
 
+### 1.4.0-alpha.6 (2022-09-02)
+
+- Switch to using quadbin library [#467](https://github.com/CartoDB/carto-react/pull/467)
+
 ### 1.4.0-alpha.5 (2022-09-02)
 
 - Use unique feature id from tileset if provided [#463](https://github.com/CartoDB/carto-react/pull/463)
