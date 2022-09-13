@@ -6,10 +6,10 @@ import { InitialCartoState, CartoState, ViewState } from '../types';
 import { AnyAction, Reducer } from 'redux';
 
 type Source = SourceProps & {
-  id: string
-  filters?: any
-  filtersLogicalOperator?: FiltersLogicalOperators
-  isDroppingFeatures?: boolean
+  id: string;
+  filters?: any;
+  filtersLogicalOperator?: FiltersLogicalOperators;
+  isDroppingFeatures?: boolean;
 };
 
 type Layer = {
@@ -24,7 +24,7 @@ type FilterBasic = {
   type: _FilterTypes;
   values: string[] | number[] | number[][];
   owner?: string;
-  params?: Record<string, unknown>
+  params?: Record<string, unknown>;
 };
 
 type FilterCommonProps = {
@@ -69,7 +69,7 @@ declare enum CartoActions {
   SET_FEATURES_READY = 'carto/setFeaturesReady',
   SET_CREDENTIALS = 'carto/setCredentials',
   SET_FEATURE_SELECTION_MODE = 'carto/setFeatureSelectionMode',
-  SET_FEATURE_SELECTION_ENABLED = 'carto/setFeatureSelectionEnabled',
+  SET_FEATURE_SELECTION_ENABLED = 'carto/setFeatureSelectionEnabled'
 }
 
 export function createCartoSlice(

@@ -88,9 +88,10 @@ export const createCartoSlice = (initialState) => {
           // TODO: Study if we should use a deepmerge fn
           state.layers[action.payload.id] = {
             ...newLayer,
-            ...(layer.legend && newLayer.legend && {
-              legend: { ...layer.legend, ...newLayer.legend }
-            })
+            ...(layer.legend &&
+              newLayer.legend && {
+                legend: { ...layer.legend, ...newLayer.legend }
+              })
           };
         }
       },
@@ -205,7 +206,15 @@ export const addSource = ({
   queryParameters = []
 }) => ({
   type: 'carto/addSource',
-  payload: { id, data, type, credentials, connection, filtersLogicalOperator, queryParameters }
+  payload: {
+    id,
+    data,
+    type,
+    credentials,
+    connection,
+    filtersLogicalOperator,
+    queryParameters
+  }
 });
 
 /**
@@ -213,7 +222,10 @@ export const addSource = ({
  * @param {string} id - unique id for the source
  * @param {boolean} isDroppingFeatures - flag that indicate if tiles are generated using a dropping feature strategy
  */
-export const setIsDroppingFeatures = ({id, isDroppingFeatures}) => ({ type: 'carto/setIsDroppingFeatures', payload: { id, isDroppingFeatures }})
+export const setIsDroppingFeatures = ({ id, isDroppingFeatures }) => ({
+  type: 'carto/setIsDroppingFeatures',
+  payload: { id, isDroppingFeatures }
+});
 
 /**
  * Action to remove a source from the store
@@ -312,7 +324,8 @@ const _setViewPort = (payload) => ({ type: 'carto/setViewPort', payload });
  * Redux selector to get a source by ID
  */
 export const selectSourceById = (state, id) => state.carto.dataSources[id];
-export const checkIfSourceIsDroppingFeature = (state, id) => state.carto.dataSources[id]?.isDroppingFeatures;
+export const checkIfSourceIsDroppingFeature = (state, id) =>
+  state.carto.dataSources[id]?.isDroppingFeatures;
 
 /**
  * Redux selector to select the spatial filter of a given sourceId or the root one
