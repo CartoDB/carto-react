@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Not released
+- Add title in LegendWidget [#466](https://github.com/CartoDB/carto-react/pull/466)
 
 ## 1.4
 

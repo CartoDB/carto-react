@@ -53,7 +53,8 @@ function LegendWidgetUI({
   onChangeCollapsed,
   onChangeVisibility,
   onChangeOpacity,
-  onChangeLegendRowCollapsed
+  onChangeLegendRowCollapsed,
+  title
 }) {
   const classes = useStyles();
   const isSingle = layers.length === 1;
@@ -64,6 +65,7 @@ function LegendWidgetUI({
         isSingle={isSingle}
         collapsed={collapsed}
         onChangeCollapsed={onChangeCollapsed}
+        title={title}
       >
         <LegendRows
           layers={layers}
@@ -82,7 +84,8 @@ LegendWidgetUI.defaultProps = {
   layers: [],
   customLegendTypes: {},
   customLayerOptions: {},
-  collapsed: false
+  collapsed: false,
+  title: 'Layers'
 };
 
 LegendWidgetUI.propTypes = {
@@ -94,7 +97,8 @@ LegendWidgetUI.propTypes = {
   onChangeCollapsed: PropTypes.func,
   onChangeLegendRowCollapsed: PropTypes.func,
   onChangeVisibility: PropTypes.func,
-  onChangeOpacity: PropTypes.func
+  onChangeOpacity: PropTypes.func,
+  title: PropTypes.string
 };
 
 export default LegendWidgetUI;
@@ -124,7 +128,7 @@ const useStylesLegendContainer = makeStyles((theme) => ({
   }
 }));
 
-function LegendContainer({ isSingle, children, collapsed, onChangeCollapsed }) {
+function LegendContainer({ isSingle, children, collapsed, onChangeCollapsed, title }) {
   const wrapper = createRef();
   const classes = useStylesLegendContainer({
     collapsed
@@ -155,7 +159,7 @@ function LegendContainer({ isSingle, children, collapsed, onChangeCollapsed }) {
           endIcon={<LayersIcon />}
           onClick={handleExpandClick}
         >
-          <Typography variant='subtitle1'>Layers</Typography>
+          <Typography variant='subtitle1'>{title}</Typography>
         </Button>
       </Grid>
     </>

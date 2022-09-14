@@ -8,6 +8,7 @@ import sortLayers from './utils/sortLayers';
 /**
  * Renders a <LegendWidget /> component
  * @param  {object} props
+ * @param  {string} [props.title] - Title of the widget
  * @param  {string} [props.className] - CSS class name
  * @param  {Object.<string, function>} [props.customLayerOptions] - Allow to add custom controls to a legend item to tweak the associated layer
  * @param  {Object.<string, function>} [props.customLegendTypes] - Allow to customise by default legend types that can be rendered
@@ -19,7 +20,8 @@ function LegendWidget({
   customLayerOptions,
   customLegendTypes,
   initialCollapsed,
-  layerOrder = []
+  layerOrder = [],
+  title
 }) {
   const dispatch = useDispatch();
   const layers = useSelector((state) =>
@@ -63,6 +65,7 @@ function LegendWidget({
 
   return (
     <LegendWidgetUI
+      title={title}
       className={className}
       customLegendTypes={customLegendTypes}
       customLayerOptions={customLayerOptions}
@@ -77,6 +80,7 @@ function LegendWidget({
 }
 
 LegendWidget.propTypes = {
+  title: PropTypes.string,
   className: PropTypes.string,
   customLegendTypes: PropTypes.objectOf(PropTypes.func),
   initialCollapsed: PropTypes.bool,
