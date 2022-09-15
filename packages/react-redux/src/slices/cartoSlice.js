@@ -67,8 +67,13 @@ export const createCartoSlice = (initialState) => {
         state.dataSources[action.payload.id] = source;
       },
       removeSource: (state, action) => {
-        delete state.dataSources[action.payload];
-        removeWorker(action.payload);
+        const sourceId = action.payload;
+        delete state.dataSources[sourceId];
+        state.dataSourceLinks = state.dataSourceLinks.filter(
+          ({ originSourceId, linkedSourceId }) =>
+            originSourceId !== sourceId && linkedSourceId !== sourceId
+        );
+        removeWorker(sourceId);
       },
       addLayer: (state, action) => {
         state.layers[action.payload.id] = action.payload;
