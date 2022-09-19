@@ -52,6 +52,9 @@ onmessage = ({ data: { method, ...params } }) => {
     case Methods.GEOJSON_FEATURES:
       getGeojsonFeatures(params);
       break;
+    case Methods.FILTERED_FEATURES_VALUES:
+      getFilteredFeaturesValues(params);
+      break;
     default:
       throw new Error('Invalid worker method');
   }
@@ -256,6 +259,18 @@ function getRange({ filters, filtersLogicalOperator, column }) {
       min: aggregationFunctions.min(filteredFeatures, column),
       max: aggregationFunctions.max(filteredFeatures, column)
     };
+  }
+
+  postMessage({ result });
+}
+
+function getFilteredFeaturesValues(params) {
+  let result = null;
+
+  if (currentFeatures) {
+    result = getFilteredFeatures(params.filters, params.filtersLogicalOperator).map(
+      (features) => features[params.column]
+    );
   }
 
   postMessage({ result });

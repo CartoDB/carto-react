@@ -9,5 +9,6 @@ export enum Methods {
   FEATURES_RANGE = 'featuresRange',
   LOAD_GEOJSON_FEATURES = 'loadGeoJSONFeatures',
   GEOJSON_FEATURES = 'featuresGeoJSON',
-  LOAD_TILES = 'loadTiles'
+  LOAD_TILES = 'loadTiles',
+  FILTERED_FEATURES_VALUES = 'filteredFeaturesValues'
 }

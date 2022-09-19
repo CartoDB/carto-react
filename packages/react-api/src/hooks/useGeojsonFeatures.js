@@ -1,8 +1,9 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
 import { debounce } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { throwError } from './utils';
 import useFeaturesCommons from './useFeaturesCommons';
+import useForeignFilter from './useForeignFilter';
 
 export default function useGeojsonFeatures({
   source,
@@ -21,6 +22,8 @@ export default function useGeojsonFeatures({
   ] = useFeaturesCommons({ source });
 
   const sourceId = source?.id;
+
+  useForeignFilter(source);
 
   const computeFeatures = useCallback(
     ({ viewport, spatialFilter, uniqueIdProperty }) => {

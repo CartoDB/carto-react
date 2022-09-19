@@ -49,7 +49,6 @@ export const createCartoSlice = (initialState) => {
       dataSources: {
         // Auto import dataSources
       },
-      dataSourceLinks: [],
       spatialFilter: null,
       featureSelectionMode: FEATURE_SELECTION_MODES.POLYGON,
       featureSelectionEnabled: false,
@@ -69,10 +68,12 @@ export const createCartoSlice = (initialState) => {
       removeSource: (state, action) => {
         const sourceId = action.payload;
         delete state.dataSources[sourceId];
-        state.dataSourceLinks = state.dataSourceLinks.filter(
-          ({ originSourceId, linkedSourceId }) =>
-            originSourceId !== sourceId && linkedSourceId !== sourceId
-        );
+        // remove link in other sources
+        Object.values(state.dataSources).forEach((otherSource) => {
+          if (otherSource.foreignFilteringSource?.foreignSourceId === sourceId) {
+            delete otherSource.foreignFilteringSource;
+          }
+        });
         removeWorker(sourceId);
       },
       addLayer: (state, action) => {
@@ -188,20 +189,22 @@ export const createCartoSlice = (initialState) => {
       },
       addSourceLink: (state, action) => {
         const { origin, linked } = action.payload;
-        state.dataSourceLinks.push({
-          originSourceId: origin.sourceId,
-          originColumn: origin.column,
-          linkedSourceId: linked.sourceId,
-          linkedColumn: linked.column
-        });
+        const source = state.dataSources[linked.sourceId];
+        if (source) {
+          source.foreignFilteringSource = {
+            foreignSourceId: origin.sourceId,
+            foreignColumn: origin.column,
+            column: linked.column
+          };
+        }
       },
       removeSourceLink: (state, action) => {
         const { originSourceId, linkedSourceId } = action.payload;
-        state.dataSourceLinks = state.dataSourceLinks.filter(
-          (link) =>
-            link.originSourceId !== originSourceId ||
-            link.linkedSourceId !== linkedSourceId
-        );
+        const source = state.dataSources[linkedSourceId];
+        if (source?.foreignFilteringSource?.foreignSourceId === originSourceId) {
+          delete source.filters?.[source.foreignFilteringSource.column];
+          delete source.foreignFilteringSource;
+        }
       }
     }
   });
@@ -226,7 +229,8 @@ export const addSource = ({
   credentials,
   connection,
   filtersLogicalOperator = FiltersLogicalOperators.AND,
-  queryParameters = []
+  queryParameters = [],
+  foreignFilteringSource
 }) => ({
   type: 'carto/addSource',
   payload: {
@@ -236,7 +240,8 @@ export const addSource = ({
     credentials,
     connection,
     filtersLogicalOperator,
-    queryParameters
+    queryParameters,
+    foreignFilteringSource
   }
 });
 

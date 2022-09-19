@@ -10,6 +10,7 @@ type Source = SourceProps & {
   filters?: any;
   filtersLogicalOperator?: FiltersLogicalOperators;
   isDroppingFeatures?: boolean;
+  foreignFilteringSource?: object;
 };
 
 type Layer = {

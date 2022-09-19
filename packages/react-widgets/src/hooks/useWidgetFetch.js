@@ -1,12 +1,11 @@
 import { InvalidColumnError } from '@carto/react-core';
-import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
+import { selectAreFeaturesReadyForSource, selectSourceById } from '@carto/react-redux';
 import { dequal } from 'dequal';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { DEFAULT_INVALID_COLUMN_ERR } from '../widgets/utils/constants';
 import useCustomCompareEffect from './useCustomCompareEffect';
 import useWidgetSource from './useWidgetSource';
-import useLinksToSource from './useLinksToSource';
 
 export default function useWidgetFetch(
   modelFn,
@@ -21,9 +20,9 @@ export default function useWidgetFetch(
     (state) => global || selectAreFeaturesReadyForSource(state, dataSource)
   );
   const source = useWidgetSource({ dataSource, id });
-
-  // get linked sources that can filter the current one
-  const datasourceLinks = useLinksToSource(dataSource);
+  const foreignSource = useSelector((state) =>
+    selectSourceById(state, source?.foreignFilteringSource?.foreignSourceId)
+  );
 
   useCustomCompareEffect(
     () => {
@@ -35,7 +34,7 @@ export default function useWidgetFetch(
           source,
           ...params,
           global,
-          datasourceLinks
+          foreignSource
         })
           .then((data) => {
             if (data !== null && data !== undefined) {
@@ -54,7 +53,7 @@ export default function useWidgetFetch(
           });
       }
     },
-    [params, source, onError, isSourceReady, global, enabled, datasourceLinks],
+    [params, source, onError, isSourceReady, global, enabled, foreignSource],
     dequal
   );
 

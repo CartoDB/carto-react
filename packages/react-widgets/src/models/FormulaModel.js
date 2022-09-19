@@ -1,7 +1,7 @@
 import { _executeModel } from '@carto/react-api';
 import { Methods, executeTask } from '@carto/react-workers';
 import { normalizeObjectKeys, wrapModelCall } from './utils';
-import { addRemoteLinkedSourceFilter } from '../hooks/linksUtils';
+import { setRemoteForeignSourceFilter } from '../hooks/sourceLinkUtils';
 
 export function getFormula(props) {
   return wrapModelCall(props, fromLocal, fromRemote);
@@ -22,12 +22,12 @@ function fromLocal(props) {
 
 // From remote
 function fromRemote(props) {
-  const { source, abortController, datasourceLinks, ...params } = props;
+  const { source, abortController, foreignSource, ...params } = props;
   const { column, operation } = params;
 
   let remoteSource = source;
-  if (datasourceLinks?.length) {
-    remoteSource = addRemoteLinkedSourceFilter(source, datasourceLinks);
+  if (source.foreignFilteringSource && foreignSource) {
+    remoteSource = setRemoteForeignSourceFilter(source, foreignSource);
   }
 
   return _executeModel({
