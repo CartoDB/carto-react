@@ -2,11 +2,17 @@
 
 ## Not released
 
+- Switch to using quadbin library, requiring deck.gl ^8.9.0-alpha.3 [#467](https://github.com/CartoDB/carto-react/pull/467)
+
+# CHANGELOG
+
+## Not released
+
 ## 1.4
 
-### 1.4.0-alpha.6 (2022-09-02)
+### 1.4.0 (2002-09-19)
 
-- Switch to using quadbin library [#467](https://github.com/CartoDB/carto-react/pull/467)
+- Add title in LegendWidget [#466](https://github.com/CartoDB/carto-react/pull/466)
 
 ### 1.4.0-alpha.5 (2022-09-02)
 

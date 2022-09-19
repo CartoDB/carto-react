@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-api",
-  "version": "1.4.0-alpha.5",
+  "version": "1.4.0",
   "description": "CARTO for React - Api",
   "author": "CARTO Dev Team",
   "keywords": [
