@@ -7,7 +7,7 @@ describe('FeatureSelectionLayer', () => {
   // mockReduxHooks();
   describe('Google Maps compatibility', () => {
     mockReduxHooks();
-    test.only('billboard property must be false', () => {
+    test('billboard property must be false', () => {
       const eventManager = new EventManager(document.createElement('div'), {});
       // @ts-ignore
       const { result: layers } = renderHook(() =>
