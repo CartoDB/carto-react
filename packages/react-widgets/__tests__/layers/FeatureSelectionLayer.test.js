@@ -4,9 +4,8 @@ import FeatureSelectionLayer from '../../src/layers/FeatureSelectionLayer';
 import { mockReduxHooks } from '../mockReduxHooks';
 
 describe('FeatureSelectionLayer', () => {
-  // mockReduxHooks();
+  mockReduxHooks();
   describe('Google Maps compatibility', () => {
-    mockReduxHooks();
     test('billboard property must be false', () => {
       const eventManager = new EventManager(document.createElement('div'), {});
       // @ts-ignore
