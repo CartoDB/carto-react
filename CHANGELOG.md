@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix the Feature selection tool by setting the `EditableGeoJsonLayer` billboard property to false to be compatible with Google raster base maps
+
 ## 1.4
 
 ### 1.4.0 (2002-09-19)

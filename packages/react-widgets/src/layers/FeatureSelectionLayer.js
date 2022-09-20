@@ -67,6 +67,8 @@ export default function FeatureSelectionLayer(
     new EditableCartoGeoJsonLayer({
       eventManager: customEventManager,
       id: 'FeatureSelectionLayer',
+      // billboard need to be false to be compatible with Google Satellite
+      billboard: false,
       pickable: !!selectedMode,
       data: {
         type: 'FeatureCollection',
@@ -112,7 +114,8 @@ export default function FeatureSelectionLayer(
       getEditHandlePointColor: [0xff, 0xff, 0xff],
       getEditHandlePointOutlineColor: primaryAsRgba,
       editHandlePointStrokeWidth: 5,
-      getEditHandlePointRadius: 2
+      getEditHandlePointRadius: 2,
+      getLineWidth: 4
     })
   ];
 }
