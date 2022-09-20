@@ -1,13 +1,22 @@
+import { useSelector } from 'react-redux';
+import { selectSourceById } from '@carto/react-redux';
+
 function isEmptyObject(value) {
   return Object.keys(value).length === 0 && value.constructor === Object;
 }
 
-export function setRemoteForeignSourceFilter(source, foreignSource) {
-  const { column, foreignColumn } = source.foreignFilteringSource;
+// For global widgets, sets proper filter expression for back-end filtering from foreign source
+export default function useRemoteForeignFilterSource(source, global) {
+  const foreignSource = useSelector(
+    (state) =>
+      global && selectSourceById(state, source?.foreignFilteringSource?.foreignSourceId)
+  );
 
-  if (!foreignSource.filters || isEmptyObject(foreignSource)) {
+  if (!foreignSource?.filters || isEmptyObject(foreignSource?.filters)) {
     return source;
   }
+
+  const { column, foreignColumn } = source?.foreignFilteringSource;
 
   const foreignFilter = {
     [column]: {
