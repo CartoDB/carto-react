@@ -12,8 +12,18 @@ export default function useRemoteForeignFilterSource(source, global) {
       global && selectSourceById(state, source?.foreignFilteringSource?.foreignSourceId)
   );
 
-  if (!foreignSource?.filters || isEmptyObject(foreignSource?.filters)) {
+  if (!global) {
     return source;
+  }
+
+  if (!foreignSource?.filters || isEmptyObject(foreignSource?.filters)) {
+    return (
+      source && {
+        ...source,
+        // @TODO: remove only the local foreign filter
+        filters: {}
+      }
+    );
   }
 
   const { column, foreignColumn } = source?.foreignFilteringSource;
