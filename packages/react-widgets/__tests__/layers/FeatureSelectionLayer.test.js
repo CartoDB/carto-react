@@ -5,7 +5,7 @@ import { mockReduxHooks } from '../mockReduxHooks';
 
 describe('FeatureSelectionLayer', () => {
   mockReduxHooks();
-  describe('Google Maps compatibility', () => {
+  describe('Google Maps Raster compatibility', () => {
     test('billboard property must be false', () => {
       const eventManager = new EventManager(document.createElement('div'), {});
       // @ts-ignore
