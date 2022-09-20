@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Set the `EditableGeoJsonLayer` billboard property to false to be compatible with Google raster base maps
+
 ## 1.4
 
 ### 1.4.0 (2002-09-19)
