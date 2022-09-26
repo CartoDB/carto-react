@@ -20,6 +20,10 @@ export const getApplicableFilters = (filters = {}, owner) => {
 // Filters to SQL
 
 const filterFunctions = {
+  [FilterTypes.FOREIGN_IN](column, filterValues) {
+    const formattedValues = filterValues.map((v) => (isFinite(v) ? v : `'${v}'`));
+    return `${column} in(${formattedValues})`;
+  },
   [FilterTypes.IN](column, filterValues) {
     const formattedValues = filterValues.map((v) => (isFinite(v) ? v : `'${v}'`));
     return `${column} in(${formattedValues})`;

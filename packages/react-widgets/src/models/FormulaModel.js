@@ -7,7 +7,7 @@ export function getFormula(props) {
 }
 
 // From local
-function fromLocal(props) {
+async function fromLocal(props) {
   const { source, operation, column, joinOperation } = props;
 
   return executeTask(source.id, Methods.FEATURES_FORMULA, {

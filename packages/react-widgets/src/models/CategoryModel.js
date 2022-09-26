@@ -7,7 +7,7 @@ export function getCategories(props) {
 }
 
 // From local
-function fromLocal(props) {
+async function fromLocal(props) {
   const { source, column, operationColumn, operation, joinOperation } = props;
 
   return executeTask(source.id, Methods.FEATURES_CATEGORY, {

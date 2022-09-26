@@ -5,13 +5,13 @@ export const FilterTypes = Object.freeze({
   BETWEEN: 'between', // [a, b] both are included
   CLOSED_OPEN: 'closed_open', // [a, b) a is included, b is not
   TIME: 'time',
-  STRING_SEARCH: 'stringSearch'
+  STRING_SEARCH: 'stringSearch',
+  FOREIGN_IN: 'foreign_in'
 });
 
 export const filterFunctions = {
-  [FilterTypes.IN](filterValues, featureValue) {
-    return filterValues.includes(featureValue);
-  },
+  [FilterTypes.IN]: includes,
+  [FilterTypes.FOREIGN_IN]: includes,
   [FilterTypes.BETWEEN]: between,
   [FilterTypes.TIME](filterValues, featureValue) {
     const featureValueAsTimestamp = new Date(featureValue).getTime();
@@ -24,6 +24,10 @@ export const filterFunctions = {
   [FilterTypes.CLOSED_OPEN]: closedOpen,
   [FilterTypes.STRING_SEARCH]: stringSearch
 };
+
+function includes(filterValues, featureValue) {
+  return filterValues.includes(featureValue);
+}
 
 // FilterTypes.BETWEEN
 function between(filterValues, featureValue) {
