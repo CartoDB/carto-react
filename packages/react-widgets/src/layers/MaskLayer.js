@@ -7,7 +7,7 @@ import { selectSpatialFilter } from '@carto/react-redux/';
 export default function MaskLayer() {
   const spatialFilterGeometry = useSelector((state) => selectSpatialFilter(state));
   const maskData = !!spatialFilterGeometry
-    ? [{ polygon: spatialFilterGeometry?.geometry.coordinates }]
+    ? [{ polygon: spatialFilterGeometry?.geometry?.coordinates }]
     : [];
 
   return new SolidPolygonLayer({

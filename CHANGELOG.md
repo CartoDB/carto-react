@@ -6,6 +6,10 @@
 
 ## 1.4
 
+### 1.4.1 (2002-09-20)
+
+- Fix the Feature selection tool by setting the `EditableGeoJsonLayer` billboard property to false to be compatible with Google raster base maps
+
 ### 1.4.0 (2002-09-19)
 
 - Add title in LegendWidget [#466](https://github.com/CartoDB/carto-react/pull/466)
