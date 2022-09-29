@@ -4,6 +4,7 @@ import { debounce } from '@carto/react-core';
 import { removeWorker } from '@carto/react-workers';
 import { setDefaultCredentials } from '@deck.gl/carto';
 import { FEATURE_SELECTION_MODES, FiltersLogicalOperators } from '@carto/react-core';
+import { _FilterTypes as FilterTypes } from '@carto/react-core';
 
 /**
  *
@@ -71,6 +72,9 @@ export const createCartoSlice = (initialState) => {
         // remove link in other sources
         Object.values(state.dataSources).forEach((otherSource) => {
           if (otherSource.foreignFilteringSource?.foreignSourceId === sourceId) {
+            delete otherSource.filters?.[otherSource.foreignFilteringSource.column]?.[
+              FilterTypes.FOREIGN_IN
+            ];
             delete otherSource.foreignFilteringSource;
           }
         });
@@ -202,7 +206,9 @@ export const createCartoSlice = (initialState) => {
         const { originSourceId, linkedSourceId } = action.payload;
         const source = state.dataSources[linkedSourceId];
         if (source?.foreignFilteringSource?.foreignSourceId === originSourceId) {
-          delete source.filters?.[source.foreignFilteringSource.column];
+          delete source.filters?.[source.foreignFilteringSource.column]?.[
+            FilterTypes.FOREIGN_IN
+          ];
           delete source.foreignFilteringSource;
         }
       }
@@ -211,6 +217,7 @@ export const createCartoSlice = (initialState) => {
 
   return slice.reducer;
 };
+
 /**
  * Action to add a source to the store
  *
