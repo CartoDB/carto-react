@@ -5,12 +5,12 @@ import {
   addFilter
 } from '@carto/react-redux';
 import { dequal } from 'dequal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DEFAULT_INVALID_COLUMN_ERR } from '../widgets/utils/constants';
 import useCustomCompareEffect from './useCustomCompareEffect';
 import useWidgetSource from './useWidgetSource';
-import { getForeignFilter } from '@carto/react-api';
+import { getForeignFilter, assignBackEndFilters } from '@carto/react-api';
 
 export default function useWidgetFetch(
   modelFn,
@@ -25,8 +25,6 @@ export default function useWidgetFetch(
   const isSourceReady = useSelector(
     (state) => global || selectAreFeaturesReadyForSource(state, dataSource)
   );
-  // const _source = useWidgetSource({ dataSource, id });
-  // const source = useRemoteForeignFilterSource(_source, global);
 
   const source = useWidgetSource({ dataSource, id });
   const foreignSource = useSelector(
@@ -61,11 +59,15 @@ export default function useWidgetFetch(
       setWarning('');
 
       if (source && isSourceReady && enabled) {
+        let _source = source;
+        if (foreignSource && global) {
+          _source = assignBackEndFilters(source, foreignSource);
+        }
+
         modelFn({
-          source,
+          source: _source,
           ...params,
-          global,
-          foreignSource
+          global
         })
           .then((data) => {
             if (data !== null && data !== undefined) {
