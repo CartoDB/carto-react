@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-api",
-  "version": "1.4.1",
+  "version": "1.5.0-alpha.0",
   "description": "CARTO for React - Api",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -64,12 +64,12 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^1.4.0-alpha.5",
-    "@carto/react-redux": "^1.4.0-alpha.5",
-    "@carto/react-workers": "^1.4.0-alpha.5",
-    "@deck.gl/carto": "^8.8.0",
-    "@deck.gl/core": "^8.8.0",
-    "@deck.gl/extensions": "^8.8.0",
+    "@carto/react-core": "^1.4.0",
+    "@carto/react-redux": "^1.4.0",
+    "@carto/react-workers": "^1.4.0",
+    "@deck.gl/carto": "^8.9.0-alpha.3",
+    "@deck.gl/core": "^8.9.0-alpha.3",
+    "@deck.gl/extensions": "^8.9.0-alpha.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",

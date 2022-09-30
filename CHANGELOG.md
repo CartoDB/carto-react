@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Switch to using quadbin library, requiring deck.gl ^8.9.0-alpha.3 [#467](https://github.com/CartoDB/carto-react/pull/467)
+
 ## 1.4
 
 ### 1.4.1 (2002-09-20)
