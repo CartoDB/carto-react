@@ -29,52 +29,44 @@ export async function getForeignFilter(column, foreignColumn, foreignSource) {
   };
 }
 
-function getBackEndForeignFilter(foreignColumn, foreignSource) {
-  return {
-    in_foreign_key_filter: {
-      values: [
-        {
-          foreignSource: foreignSource.data,
-          foreignSourceType: foreignSource.type,
-          foreignColumn,
-          foreignFilter: {
-            filters: foreignSource.filters
-          }
-        }
-      ]
-    }
-  };
+function deepClone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+function isNilOrEmpty(obj) {
+  return (
+    !obj ||
+    (Object.keys(obj).length === 0 && Object.getPrototypeOf(obj) === Object.prototype)
+  );
 }
 
 // For global widgets, sets proper filter expression for back-end filtering from foreign source
 export function assignBackEndFilters(source, foreignSource) {
   const { column, foreignColumn } = source.foreignFilteringSource;
 
-  // This replaces the FilterTypes.FOREIGN_IN filter by the special filter type 'in_foreign_key_filter'
-  // suitable for the API, while keeping all other filters that may exist on this source.
-  // TODO: Maybe use a deep clone + direct set to simplify, instead of this complex double reduce
-  const backEndFilters = Object.entries(source.filters).reduce(
-    (acc, [filteredColumn, columnFilters]) => {
-      const _columnFilters =
-        filteredColumn !== column
-          ? columnFilters
-          : Object.entries(columnFilters).reduce((result, [filterType, filterParams]) => {
-              if (filterType !== FilterTypes.FOREIGN_IN) {
-                return { ...result, [filterType]: filterParams };
-              }
-              return {
-                ...result,
-                ...getBackEndForeignFilter(foreignColumn, foreignSource)
-              };
-            }, {});
+  const backEndFilters = deepClone(source.filters);
+  if (backEndFilters?.[column]?.[FilterTypes.FOREIGN_IN]) {
+    delete backEndFilters[column][FilterTypes.FOREIGN_IN];
 
-      return {
-        ...acc,
-        [filteredColumn]: _columnFilters
+    if (!isNilOrEmpty(foreignSource.filters)) {
+      backEndFilters[column]['in_foreign_key_filter'] = {
+        values: [
+          {
+            foreignSource: foreignSource.data,
+            foreignSourceType: foreignSource.type,
+            foreignColumn,
+            foreignFilter: {
+              filters: foreignSource.filters
+            }
+          }
+        ]
       };
-    },
-    {}
-  );
+    } else if (isNilOrEmpty(backEndFilters[column])) {
+      // if there is no more filters on the column, we have to completely remove the entry in the filter object
+      // otherwise it's considered invalid by the API
+      delete backEndFilters[column];
+    }
+  }
 
   return {
     ...source,
