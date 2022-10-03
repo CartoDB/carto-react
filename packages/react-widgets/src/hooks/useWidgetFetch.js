@@ -1,16 +1,16 @@
 import { InvalidColumnError } from '@carto/react-core';
-import {
-  selectAreFeaturesReadyForSource,
-  selectSourceById,
-  addFilter
-} from '@carto/react-redux';
+import { selectAreFeaturesReadyForSource, addFilter } from '@carto/react-redux';
 import { dequal } from 'dequal';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DEFAULT_INVALID_COLUMN_ERR } from '../widgets/utils/constants';
 import useCustomCompareEffect from './useCustomCompareEffect';
 import useWidgetSource from './useWidgetSource';
-import { getForeignFilter, assignBackEndFilters } from '@carto/react-api';
+import {
+  getForeignFilter,
+  selectForeignFilterParams,
+  assignBackEndFilters
+} from '@carto/react-api';
 
 export default function useWidgetFetch(
   modelFn,
@@ -22,20 +22,22 @@ export default function useWidgetFetch(
   const [warning, setWarning] = useState('');
   const dispatch = useDispatch();
 
-  const isSourceReady = useSelector(
-    (state) => global || selectAreFeaturesReadyForSource(state, dataSource)
+  const source = useWidgetSource({ dataSource, id });
+  const { hasForeignFilter, foreignSource, isForeignSourceReady } = useSelector((state) =>
+    selectForeignFilterParams(state, source)
   );
 
-  const source = useWidgetSource({ dataSource, id });
-  const foreignSource = useSelector(
-    (state) =>
-      source?.foreignFilteringSource?.foreignSourceId &&
-      selectSourceById(state, source?.foreignFilteringSource?.foreignSourceId)
-  );
+  const isSourceReady = useSelector((state) => {
+    const selfReady = global || selectAreFeaturesReadyForSource(state, dataSource);
+    if (hasForeignFilter) {
+      return selfReady && isForeignSourceReady;
+    }
+    return selfReady;
+  });
 
   useCustomCompareEffect(
     () => {
-      if (!source?.id || !foreignSource) {
+      if (!source?.id || !foreignSource || !isForeignSourceReady) {
         return;
       }
       getForeignFilter(source, foreignSource).then((filter) => {
@@ -49,7 +51,7 @@ export default function useWidgetFetch(
         }
       });
     },
-    [source?.id, foreignSource],
+    [source?.id, foreignSource, isForeignSourceReady],
     dequal
   );
 

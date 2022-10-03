@@ -8,4 +8,8 @@ export { default as useCartoLayerProps } from './hooks/useCartoLayerProps';
 
 export { Credentials, UseCartoLayerFilterProps } from './types';
 
-export { getForeignFilter, assignBackEndFilters } from './hooks/foreignFilterUtils';
+export {
+  getForeignFilter,
+  assignBackEndFilters,
+  selectForeignFilterParams
+} from './hooks/foreignFilterUtils';

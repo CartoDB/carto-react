@@ -8,4 +8,8 @@ export { default as useCartoLayerProps } from './hooks/useCartoLayerProps';
 
 export { getDataFilterExtensionProps } from './hooks/dataFilterExtensionUtil';
 
-export { getForeignFilter, assignBackEndFilters } from './hooks/foreignFilterUtils';
+export {
+  getForeignFilter,
+  assignBackEndFilters,
+  selectForeignFilterParams
+} from './hooks/foreignFilterUtils';

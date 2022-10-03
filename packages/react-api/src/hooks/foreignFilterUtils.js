@@ -1,5 +1,6 @@
 import { _FilterTypes as FilterTypes } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
+import { selectSourceById, selectAreFeaturesReadyForSource } from '@carto/react-redux';
 
 async function getForeignFilterValues(foreignSource, foreignColumn) {
   const foreignFilterValues = await executeTask(
@@ -83,5 +84,26 @@ export function assignBackEndFilters(source, foreignSource) {
   return {
     ...source,
     filters: backEndFilters
+  };
+}
+
+export function selectForeignFilterParams(state, source) {
+  const foreignFilteringSource = source?.foreignFilteringSource;
+  let foreignSource;
+
+  if (foreignFilteringSource) {
+    foreignSource = selectSourceById(state, foreignFilteringSource.foreignSourceId);
+  }
+
+  if (!foreignSource) {
+    return { hasForeignFilter: false };
+  }
+
+  return {
+    hasForeignFilter: true,
+    foreignSource,
+    foreignColumn: foreignFilteringSource.foreignColumn,
+    column: foreignFilteringSource.column,
+    isForeignSourceReady: selectAreFeaturesReadyForSource(state, foreignSource.id)
   };
 }
