@@ -15,12 +15,7 @@ async function getForeignFilterValues(foreignSource, foreignColumn) {
   return foreignFilterValues;
 }
 
-export async function getForeignFilter(source, foreignSource) {
-  if (!source?.foreignFilteringSource || !foreignSource) {
-    return null;
-  }
-
-  const { column, foreignColumn } = source.foreignFilteringSource;
+export async function getForeignFilter(column, foreignColumn, foreignSource) {
   const foreignFilterValues = await getForeignFilterValues(foreignSource, foreignColumn);
 
   if (!foreignFilterValues) {
@@ -34,7 +29,7 @@ export async function getForeignFilter(source, foreignSource) {
   };
 }
 
-export function getBackEndForeignFilter(foreignColumn, foreignSource) {
+function getBackEndForeignFilter(foreignColumn, foreignSource) {
   return {
     in_foreign_key_filter: {
       values: [
@@ -96,14 +91,13 @@ export function selectForeignFilterParams(state, source) {
   }
 
   if (!foreignSource) {
-    return { hasForeignFilter: false };
+    return {};
   }
 
   return {
-    hasForeignFilter: true,
     foreignSource,
     foreignColumn: foreignFilteringSource.foreignColumn,
-    column: foreignFilteringSource.column,
+    foreignFilterSelfColumn: foreignFilteringSource.column,
     isForeignSourceReady: selectAreFeaturesReadyForSource(state, foreignSource.id)
   };
 }

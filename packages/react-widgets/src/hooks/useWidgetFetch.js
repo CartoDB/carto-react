@@ -1,7 +1,7 @@
 import { InvalidColumnError } from '@carto/react-core';
 import { selectAreFeaturesReadyForSource, addFilter } from '@carto/react-redux';
 import { dequal } from 'dequal';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DEFAULT_INVALID_COLUMN_ERR } from '../widgets/utils/constants';
 import useCustomCompareEffect from './useCustomCompareEffect';
@@ -23,9 +23,9 @@ export default function useWidgetFetch(
   const dispatch = useDispatch();
 
   const source = useWidgetSource({ dataSource, id });
-  const { hasForeignFilter, foreignSource, isForeignSourceReady } = useSelector((state) =>
-    selectForeignFilterParams(state, source)
-  );
+  const { foreignSource, isForeignSourceReady, foreignFilterSelfColumn, foreignColumn } =
+    useSelector((state) => selectForeignFilterParams(state, source));
+  const hasForeignFilter = !!foreignSource;
 
   const isSourceReady = useSelector((state) => {
     const selfReady = global || selectAreFeaturesReadyForSource(state, dataSource);
@@ -35,25 +35,30 @@ export default function useWidgetFetch(
     return selfReady;
   });
 
-  useCustomCompareEffect(
-    () => {
-      if (!source?.id || !foreignSource || !isForeignSourceReady) {
-        return;
-      }
-      getForeignFilter(source, foreignSource).then((filter) => {
+  useEffect(() => {
+    if (!isForeignSourceReady) {
+      return;
+    }
+    getForeignFilter(foreignFilterSelfColumn, foreignColumn, foreignSource).then(
+      (filter) => {
         if (filter) {
           dispatch(
             addFilter({
-              id: source?.id,
+              id: dataSource,
               ...filter
             })
           );
         }
-      });
-    },
-    [source?.id, foreignSource, isForeignSourceReady],
-    dequal
-  );
+      }
+    );
+  }, [
+    dispatch,
+    dataSource,
+    foreignFilterSelfColumn,
+    foreignColumn,
+    foreignSource,
+    isForeignSourceReady
+  ]);
 
   useCustomCompareEffect(
     () => {
