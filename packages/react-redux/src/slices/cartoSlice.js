@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WebMercatorViewport } from '@deck.gl/core';
-import { debounce } from '@carto/react-core';
 import { removeWorker } from '@carto/react-workers';
 import { setDefaultCredentials } from '@deck.gl/carto';
-import { FEATURE_SELECTION_MODES, FiltersLogicalOperators } from '@carto/react-core';
-import { _FilterTypes as FilterTypes } from '@carto/react-core';
+import {
+  debounce,
+  FEATURE_SELECTION_MODES,
+  FiltersLogicalOperators,
+  _FilterTypes as FilterTypes
+} from '@carto/react-core';
 
 /**
  *
@@ -164,7 +167,18 @@ export const createCartoSlice = (initialState) => {
         const source = state.dataSources[id];
 
         if (source && source.filters && source.filters[column]) {
+          let keptForeignFilter;
+          Object.entries(source.filters[column]).forEach(([filterType, filterParams]) => {
+            if (filterType === FilterTypes.FOREIGN_IN) {
+              keptForeignFilter = {
+                [FilterTypes.FOREIGN_IN]: { ...filterParams }
+              };
+            }
+          });
           delete source.filters[column];
+          if (keptForeignFilter) {
+            source.filters[column] = keptForeignFilter;
+          }
         }
       },
       clearFilters: (state, action) => {
@@ -172,7 +186,22 @@ export const createCartoSlice = (initialState) => {
         const source = state.dataSources[id];
 
         if (source && source.filters) {
+          let keptForeignFilter;
+          Object.entries(source.filters).forEach(([column, filters]) => {
+            Object.entries(filters).forEach(([filterType, filterParams]) => {
+              if (filterType === FilterTypes.FOREIGN_IN) {
+                keptForeignFilter = {
+                  [column]: {
+                    [FilterTypes.FOREIGN_IN]: { ...filterParams }
+                  }
+                };
+              }
+            });
+          });
           delete source.filters;
+          if (keptForeignFilter) {
+            source.filters = keptForeignFilter;
+          }
         }
       },
       setGeocoderResult: (state, action) => {
