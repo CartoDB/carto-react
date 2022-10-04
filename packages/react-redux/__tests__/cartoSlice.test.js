@@ -313,6 +313,19 @@ describe('carto slice', () => {
       );
     });
 
+    test('should prevent adding a double link between two sources', () => {
+      store.dispatch(cartoSlice.addSource(stores));
+      store.dispatch(cartoSlice.addSource(customersWithLink));
+      expect(() =>
+        store.dispatch(
+          cartoSlice.addSourceLink(
+            { sourceId: customers.id, column: 'store_id' },
+            { sourceId: stores.id, column: 'store_id' }
+          )
+        )
+      ).toThrow();
+    });
+
     test('should remove a link between two sources', () => {
       store.dispatch(cartoSlice.addSource(stores));
       store.dispatch(cartoSlice.addSource(customersWithLink));

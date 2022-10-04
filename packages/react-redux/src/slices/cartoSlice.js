@@ -223,7 +223,11 @@ export const createCartoSlice = (initialState) => {
       addSourceLink: (state, action) => {
         const { origin, linked } = action.payload;
         const source = state.dataSources[linked.sourceId];
-        if (source) {
+        const foreignSource = state.dataSources[origin.sourceId];
+        if (source && foreignSource) {
+          if (foreignSource.foreignFilteringSource?.foreignSourceId === source.id) {
+            throw new Error('Cannot link sources in both directions.');
+          }
           source.foreignFilteringSource = {
             foreignSourceId: origin.sourceId,
             foreignColumn: origin.column,
