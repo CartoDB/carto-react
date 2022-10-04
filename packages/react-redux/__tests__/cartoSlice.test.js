@@ -25,8 +25,12 @@ jest.mock('@deck.gl/carto', () => ({
 }));
 
 describe('carto slice', () => {
-  const store = mockAppStoreConfiguration();
-  store.reducerManager.add('carto', cartoSlice.createCartoSlice(INITIAL_STATE));
+  let store;
+
+  beforeEach(() => {
+    store = mockAppStoreConfiguration();
+    store.reducerManager.add('carto', cartoSlice.createCartoSlice(INITIAL_STATE));
+  });
 
   describe('source actions', () => {
     const sourceInfo = {
@@ -52,6 +56,7 @@ describe('carto slice', () => {
     });
 
     test('should remove a source', () => {
+      store.dispatch(cartoSlice.addSource(sourceInfo));
       store.dispatch(cartoSlice.removeSource(sourceInfo.id));
       const { carto } = store.getState();
       expect(carto.dataSources).not.toHaveProperty(sourceInfo.id);
@@ -83,6 +88,7 @@ describe('carto slice', () => {
     });
 
     test('should update a layer with extra layerAttributes info', () => {
+      store.dispatch(cartoSlice.addLayer(layerInfo));
       store.dispatch(cartoSlice.updateLayer(extraInfo));
       const { carto } = store.getState();
       const expected = {
@@ -93,6 +99,7 @@ describe('carto slice', () => {
     });
 
     test('should remove a layer', () => {
+      store.dispatch(cartoSlice.addLayer(layerInfo));
       store.dispatch(cartoSlice.removeLayer(layerInfo.id));
       const { carto } = store.getState();
       expect(carto.layers).not.toHaveProperty(layerInfo.id);
@@ -218,6 +225,8 @@ describe('carto slice', () => {
     });
 
     test('should remove a filter', () => {
+      store.dispatch(cartoSlice.addSource({ id: filter.id }));
+      store.dispatch(cartoSlice.addFilter(filter));
       store.dispatch(cartoSlice.removeFilter({ id: filter.id, column: filter.column }));
       const { carto } = store.getState();
       expect(carto.dataSources[filter.id].filters).not.toHaveProperty(filter.column);
@@ -234,11 +243,6 @@ describe('carto slice', () => {
   });
 
   describe('viewport features actions', () => {
-    const featuresInfo = {
-      sourceId: 'whatever-source-id',
-      features: [{ a: 1 }]
-    };
-
     test('worker calculations should be finished', () => {
       const sourceInfo = {
         sourceId: 'whatever-source-id',
@@ -266,6 +270,67 @@ describe('carto slice', () => {
 
       const { carto: state } = store.getState();
       expect(setDefaultCredentials).toHaveBeenCalledWith(state.credentials);
+    });
+  });
+
+  describe('source links', () => {
+    const stores = {
+      id: 'stores',
+      data: 'SELECT * FROM stores',
+      type: 'sql',
+      credentials: {},
+      queryParameters: {}
+    };
+    const customers = {
+      id: 'customers',
+      data: 'SELECT * FROM customers',
+      type: 'sql',
+      credentials: {},
+      queryParameters: {}
+    };
+    const filteringSourceParams = {
+      foreignSourceId: stores.id,
+      foreignColumn: 'store_id',
+      column: 'store_id'
+    };
+    const customersWithLink = {
+      ...customers,
+      foreignFilteringSource: filteringSourceParams
+    };
+
+    test('should add a link between two sources', () => {
+      store.dispatch(cartoSlice.addSource(stores));
+      store.dispatch(cartoSlice.addSource(customers));
+      store.dispatch(
+        cartoSlice.addSourceLink(
+          { sourceId: stores.id, column: 'store_id' },
+          { sourceId: customers.id, column: 'store_id' }
+        )
+      );
+      const { carto } = store.getState();
+      expect(carto.dataSources[customers.id].foreignFilteringSource).toMatchObject(
+        filteringSourceParams
+      );
+    });
+
+    test('should remove a link between two sources', () => {
+      store.dispatch(cartoSlice.addSource(stores));
+      store.dispatch(cartoSlice.addSource(customersWithLink));
+      store.dispatch(cartoSlice.removeSourceLink(stores.id, customers.id));
+      const { carto } = store.getState();
+      expect(carto.dataSources[customers.id]).not.toHaveProperty(
+        'foreignFilteringSource'
+      );
+    });
+
+    test('should remove the link in filtered source when removing filtering source', () => {
+      store.dispatch(cartoSlice.addSource(stores));
+      store.dispatch(cartoSlice.addSource(customersWithLink));
+      store.dispatch(cartoSlice.removeSource(stores.id));
+      const { carto } = store.getState();
+      expect(carto.dataSources[customers.id]).not.toHaveProperty(
+        'foreignFilteringSource'
+      );
     });
   });
 });
