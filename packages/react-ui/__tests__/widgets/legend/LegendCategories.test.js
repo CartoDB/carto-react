@@ -39,7 +39,7 @@ describe('LegendCategories', () => {
       expect(elements[idx]).toHaveStyle(`border-color: ${color}`)
     );
   });
-  test('renders icons correctly', () => {
+  test('renders masked icons correctly', () => {
     render(
       <LegendCategories
         legend={{ ...DEFAULT_LEGEND, customMarkers: 'https://xyz.com/x.png' }}
@@ -49,6 +49,22 @@ describe('LegendCategories', () => {
     getPalette(COLOR, 2).forEach((color, idx) => {
       expect(elements[idx]).toHaveStyle(`mask-image: url(https://xyz.com/x.png)`);
       expect(elements[idx]).toHaveStyle(`background-color: ${color}`);
+    });
+  });
+  test('renders non-masked icons correctly', () => {
+    render(
+      <LegendCategories
+        legend={{
+          ...DEFAULT_LEGEND,
+          customMarkers: 'https://xyz.com/x.png',
+          maskedMarkers: false
+        }}
+      />
+    );
+    const elements = document.querySelectorAll('[class*="marker"]');
+    getPalette(COLOR, 2).forEach((color, idx) => {
+      expect(elements[idx]).toHaveStyle(`background-image: url(https://xyz.com/x.png)`);
+      expect(elements[idx]).toHaveStyle(`background-color: rgba(0,0,0,0)`);
     });
   });
 });
