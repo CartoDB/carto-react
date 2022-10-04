@@ -2,6 +2,8 @@
 
 ## Not released
 
+- LegendCategories: maskedMarkers flag that allows disabling mask icons [#473]((https://github.com/CartoDB/carto-react/pull/473))
+
 ## 1.5
 ### 1.5.0-alpha.0 (2022-10-29)
 
