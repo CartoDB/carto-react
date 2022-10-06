@@ -1,4 +1,5 @@
 import React from 'react';
+import { withDesign } from 'storybook-addon-designs';
 import { Box, Grid, Typography } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
@@ -11,6 +12,13 @@ const options = {
         type: 'select',
         options: ['primary', 'secondary', 'error', 'warning', 'info', 'success']
       }
+    }
+  },
+  decorators: [withDesign],
+  parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=8775%3A71615'
     }
   }
 };

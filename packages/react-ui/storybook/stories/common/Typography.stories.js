@@ -1,4 +1,5 @@
 import React from 'react';
+import { withDesign } from 'storybook-addon-designs';
 import Typography from '@material-ui/core/Typography';
 
 const options = {
@@ -24,6 +25,13 @@ const options = {
           'overline'
         ]
       }
+    }
+  },
+  decorators: [withDesign],
+  parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=4662%3A14'
     }
   }
 };
