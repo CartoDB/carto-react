@@ -4,7 +4,13 @@ import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
 
 function LegendCategories({ legend }) {
-  const { labels = [], colors = [], isStrokeColor = false, customMarkers } = legend;
+  const {
+    labels = [],
+    colors = [],
+    isStrokeColor = false,
+    customMarkers,
+    maskedMarkers = true
+  } = legend;
 
   const palette = getPalette(colors, labels.length);
 
@@ -17,6 +23,7 @@ function LegendCategories({ legend }) {
       icon={
         customMarkers && Array.isArray(customMarkers) ? customMarkers[idx] : customMarkers
       }
+      maskedIcon={maskedMarkers}
       isStrokeColor={isStrokeColor}
     />
   ));
@@ -49,6 +56,7 @@ LegendCategories.propTypes = {
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.string
     ]),
+    maskedMarkers: PropTypes.bool,
     isStrokeColor: PropTypes.bool
   }).isRequired
 };
@@ -69,8 +77,7 @@ const useStyles = makeStyles((theme) => ({
     width: '12px',
     height: '12px',
     borderRadius: '50%',
-    position: 'relative',
-    border: '2px solid transparent'
+    position: 'relative'
   },
   circle: {
     '&::after': {
@@ -87,7 +94,9 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     maskRepeat: 'no-repeat',
-    maskSize: 'cover'
+    maskSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover'
   },
   flexParent: {
     display: 'flex',
@@ -107,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Row({ label, isMax, isStrokeColor, color = '#000', icon }) {
+function Row({ label, isMax, isStrokeColor, color = '#000', icon, maskedIcon }) {
   const classes = useStyles({ isMax });
 
   const [showTooltip, setShowTooltip] = useState(false);
@@ -137,11 +146,16 @@ function Row({ label, isMax, isStrokeColor, color = '#000', icon }) {
             className={[classes.marker, icon ? classes.icon : classes.circle].join(' ')}
             style={
               icon
-                ? {
-                    backgroundColor: color,
-                    maskImage: `url(${icon})`,
-                    WebkitMaskImage: `url(${icon})`
-                  }
+                ? maskedIcon
+                  ? {
+                      backgroundColor: color,
+                      maskImage: `url(${icon})`,
+                      WebkitMaskImage: `url(${icon})`
+                    }
+                  : {
+                      backgroundColor: `rgba(0,0,0,0)`,
+                      backgroundImage: `url(${icon})`
+                    }
                 : isStrokeColor
                 ? { borderColor: color }
                 : { backgroundColor: color }

@@ -5,7 +5,12 @@
 - Clear button in widgets reset only its own filters [#483](https://github.com/CartoDB/carto-react/pull/483)
 
 ## 1.5
-### 1.5.0-alpha.0 (2022-10-29)
+
+### 1.5.0-alpha.1 (2022-10-05)
+
+- LegendCategories: maskedMarkers flag that allows disabling mask icons [#473]((https://github.com/CartoDB/carto-react/pull/473))
+
+### 1.5.0-alpha.0 (2022-09-29)
 
 - Switch to using quadbin library, requiring deck.gl ^8.9.0-alpha.3 [#467](https://github.com/CartoDB/carto-react/pull/467)
 
