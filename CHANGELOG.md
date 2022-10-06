@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Clear button in widgets reset only its own filters [#483](https://github.com/CartoDB/carto-react/pull/483)
+
 ## 1.5
 ### 1.5.0-alpha.0 (2022-10-29)
 

@@ -152,13 +152,13 @@ export const createCartoSlice = (initialState) => {
         const { id, column, type } = action.payload;
         const source = state.dataSources[id];
 
-        if (
-          source &&
-          source.filters &&
-          source.filters[column] &&
-          source.filters[column][type]
-        ) {
-          delete source.filters[column][type];
+        if (source && source.filters && source.filters[column]) {
+          if (type && source.filters[column][type]) {
+            delete source.filters[column][type];
+            return;
+          }
+
+          delete source.filters[column];
         }
       },
       clearFilters: (state, action) => {
