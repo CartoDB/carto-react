@@ -124,7 +124,8 @@ function BarWidget({
         dispatch(
           removeFilter({
             id: dataSource,
-            column
+            column,
+            type: FilterTypes.IN
           })
         );
       }

@@ -189,7 +189,8 @@ function TimeSeriesWidget({
     dispatch(
       removeFilter({
         id: dataSource,
-        column
+        column,
+        type: FilterTypes.TIME
       })
     );
 

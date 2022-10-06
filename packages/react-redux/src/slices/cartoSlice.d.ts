@@ -30,6 +30,7 @@ type FilterBasic = {
 type FilterCommonProps = {
   id: string;
   column: string;
+  type: _FilterTypes;
 };
 
 type SpatialFilter = {
