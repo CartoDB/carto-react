@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Add **clear** button to RangeWidget [#485](https://github.com/CartoDB/carto-react/pull/485)
+
 ## 1.5
 
 ### 1.5.0-alpha.1 (2022-10-05)
