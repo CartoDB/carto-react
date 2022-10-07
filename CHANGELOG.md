@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Clear button in widgets reset only its own filters [#483](https://github.com/CartoDB/carto-react/pull/483)
+- Allow widgets to clear only its own filters [#483](https://github.com/CartoDB/carto-react/pull/483)
 
 ## 1.5
 
