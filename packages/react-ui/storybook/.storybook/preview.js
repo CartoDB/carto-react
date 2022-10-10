@@ -42,7 +42,22 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['Introduction', 'CARTO Theme', ['Palette', 'Typography'], 'Common']
+      order: [
+        'Introduction',
+        'CARTO Theme',
+        ['Palette', 'Typography'],
+        'Common',
+        'Custom Components',
+        [
+          'InputFile',
+          'CategoryWidgetUI',
+          'FormulaWidgetUI',
+          'HistogramWidgetUI',
+          'BarWidgetUI',
+          'PieWidgetUI',
+          'WrapperWidgetUI'
+        ]
+      ]
     }
   }
 };
