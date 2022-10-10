@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix how TimeSeriesWidget deals with timezones [#486](https://github.com/CartoDB/carto-react/pull/486)
+
 ## 1.5
 
 ### 1.5.0-alpha.1 (2022-10-05)
