@@ -18,6 +18,10 @@ import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 
+function getUTCTime (date) { 
+  return date.getTime() - (date.getTimezoneOffset() * 60000); 
+};
+
 // Due to the widget groups the data by a certain stepSize, when filtering
 // the filter applied must be a range that represent the grouping range.
 // For example, if you group the data by day, the range must
@@ -145,7 +149,7 @@ function TimeSeriesWidget({
             id: dataSource,
             column,
             type: FilterTypes.TIME,
-            values: [timeWindow.map((date) => date.getTime?.() || date)],
+            values: [timeWindow.map((date) => date instanceof Date ? getUTCTime(date) : date)],
             owner: id
           })
         );
