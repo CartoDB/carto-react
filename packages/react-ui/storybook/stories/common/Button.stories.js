@@ -1,4 +1,5 @@
 import React from 'react';
+import { withDesign } from 'storybook-addon-designs';
 import { Button, IconButton, Grid, SvgIcon } from '@material-ui/core';
 
 const options = {
@@ -32,6 +33,13 @@ const options = {
       control: {
         type: 'text'
       }
+    }
+  },
+  decorators: [withDesign],
+  parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=41%3A11694'
     }
   }
 };
