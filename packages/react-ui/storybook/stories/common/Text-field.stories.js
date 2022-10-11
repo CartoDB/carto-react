@@ -258,7 +258,7 @@ const MultilineTemplate = ({ ...rest }) => {
           <TextField label='Default' multiline {...rest} />
         </Grid>
         <Grid item xs={4}>
-          <TextField label='With max rows' rowsMax={4} multiline {...rest} />
+          <TextField label='With max rows' maxRows={4} multiline {...rest} />
         </Grid>
 
         <Grid item xs={4}>
