@@ -159,7 +159,7 @@ function HistogramWidget({
           removeFilter({
             id: dataSource,
             column,
-            type: FilterTypes.CLOSED_OPEN
+            owner: id
           })
         );
       }

@@ -190,12 +190,12 @@ function TimeSeriesWidget({
       removeFilter({
         id: dataSource,
         column,
-        type: FilterTypes.TIME
+        owner: id
       })
     );
 
     if (onStop) onStop();
-  }, [column, dataSource, dispatch, onStop]);
+  }, [column, dataSource, id, dispatch, onStop]);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
