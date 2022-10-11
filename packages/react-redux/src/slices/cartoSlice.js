@@ -149,16 +149,19 @@ export const createCartoSlice = (initialState) => {
         }
       },
       removeFilter: (state, action) => {
-        const { id, column, type } = action.payload;
+        const { id, column, owner } = action.payload;
         const source = state.dataSources[id];
 
         if (source && source.filters && source.filters[column]) {
-          if (type && source.filters[column][type]) {
-            delete source.filters[column][type];
-            return;
-          }
+          const typeToDelete = Object.entries(source.filters[column])
+            .filter(([_, filter]) => filter.owner === owner)
+            .map(([filterType]) => filterType);
 
-          delete source.filters[column];
+          typeToDelete.forEach((type) => delete source.filters[column][type]);
+
+          if (!owner || Object.keys(source.filters[column]).length === 0) {
+            delete source.filters[column];
+          }
         }
       },
       clearFilters: (state, action) => {
@@ -311,11 +314,11 @@ export const addFilter = ({ id, column, type, values, owner, params }) => ({
  * Action to remove a column filter from a source
  * @param {string} id - sourceId of the filter to remove
  * @param {string} column - column of the filter to remove
- * @param {FilterTypes} type - FilterTypes.IN, FilterTypes.BETWEEN, FilterTypes.CLOSED_OPEN and FilterTypes.TIME
+ * @param {string} owner  - (optional) id of the widget triggering the filter
  */
-export const removeFilter = ({ id, column, type }) => ({
+export const removeFilter = ({ id, column, owner }) => ({
   type: 'carto/removeFilter',
-  payload: { id, column, type }
+  payload: { id, column, owner }
 });
 
 /**
