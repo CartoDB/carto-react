@@ -44,11 +44,11 @@ const options = {
   parameters: {
     design: {
       type: 'figma',
-      url: '//www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1185%3A33114'
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1185%3A33114'
     }
   }
 };
-https: export default options;
+export default options;
 
 const Template = ({ ...args }) => {
   return (

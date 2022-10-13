@@ -1,5 +1,4 @@
 import React from 'react';
-import { withDesign } from 'storybook-addon-designs';
 import { Button, IconButton, Grid, SvgIcon } from '@material-ui/core';
 
 const options = {
@@ -35,7 +34,6 @@ const options = {
       }
     }
   },
-  decorators: [withDesign],
   parameters: {
     design: {
       type: 'figma',

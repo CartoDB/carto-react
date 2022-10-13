@@ -34,8 +34,7 @@
     "storybook:start": "start-storybook -c ./storybook/.storybook -p 6006",
     "storybook:build": "build-storybook -c ./storybook/.storybook",
     "storybook:publish": "yarn storybook:build && yarn firebase deploy --project cartodb-fb-storybook-react",
-    "precommit": "lint-staged",
-    "chromatic": "npx chromatic --project-token=092c85e4fe8e"
+    "precommit": "lint-staged"
   },
   "devDependencies": {
     "@babel/core": "^7.13.8",
