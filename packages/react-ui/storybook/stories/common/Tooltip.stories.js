@@ -40,9 +40,15 @@ const options = {
         type: 'boolean'
       }
     }
+  },
+  parameters: {
+    design: {
+      type: 'figma',
+      url: '//www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1185%3A33114'
+    }
   }
 };
-export default options;
+https: export default options;
 
 const Template = ({ ...args }) => {
   return (
