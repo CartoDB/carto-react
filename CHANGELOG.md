@@ -2,13 +2,15 @@
 
 ## Not released
 
+- Update Storybook to v6.5.12 [#487](https://github.com/CartoDB/carto-react/pull/487)
+
 - Add **clear** button to RangeWidget [#485](https://github.com/CartoDB/carto-react/pull/485)
 
 ## 1.5
 
 ### 1.5.0-alpha.1 (2022-10-05)
 
-- LegendCategories: maskedMarkers flag that allows disabling mask icons [#473]((https://github.com/CartoDB/carto-react/pull/473))
+- LegendCategories: maskedMarkers flag that allows disabling mask icons [#473](https://github.com/CartoDB/carto-react/pull/473)
 
 ### 1.5.0-alpha.0 (2022-09-29)
 
