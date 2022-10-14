@@ -6,7 +6,7 @@
 
 ### 1.5.0-alpha.4 (2022-10-14)
 
-- Update nebula to latest stable 1.0.4 [#491](https://github.com/CartoDB/carto-react/pull/491)
+- Update nebula to latest stable 1.0.4 and deck.gl ^8.9.0-alpha.4 [#491](https://github.com/CartoDB/carto-react/pull/491)
 
 ### 1.5.0-alpha.2 (2022-10-14)
 
