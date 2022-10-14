@@ -4,6 +4,10 @@
 
 ## 1.5
 
+### 1.5.0-alpha.3 (2022-10-14)
+
+- Update nebula to latest stable 1.0.4 [#491](https://github.com/CartoDB/carto-react/pull/491)
+
 ### 1.5.0-alpha.2 (2022-10-14)
 
 - Update Storybook to v6.5.12 [#487](https://github.com/CartoDB/carto-react/pull/487)
