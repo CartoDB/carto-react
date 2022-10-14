@@ -7,7 +7,7 @@ import {
   ArgsTable,
   Stories,
   PRIMARY_STORY
-} from '@storybook/addon-docs/blocks';
+} from '@storybook/addon-docs';
 import * as cartoSlice from '../../../../react-redux/src/slices/cartoSlice';
 import { AggregationTypes } from '../../../../react-core/src';
 import PieWidget from '../../../../react-widgets/src/widgets/PieWidget';
