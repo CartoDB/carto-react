@@ -31,7 +31,11 @@ const options = {
     }
   }
 };
-export default options;
+
+// Temporary removed
+// PR -> https://github.com/CartoDB/carto-react/pull/481
+// Shortcut -> https://app.shortcut.com/cartoteam/story/263063/add-widgets-stories-to-storybook
+// export default options;
 
 const Template = ({ ...args }) => {
   return (
@@ -268,7 +272,7 @@ const LegendNoChildrenTemplate = () => {
   return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
 };
 
-export const Playground = Template.bind({});
+/* export const Playground = Template.bind({});
 
 export const SingleLayer = LegendTemplate.bind({});
 export const MultiLayer = LegendMultiTemplate.bind({});
@@ -281,4 +285,4 @@ export const Icon = LegendIconTemplate.bind({});
 export const Ramp = LegendRampTemplate.bind({});
 export const Proportion = LegendProportionTemplate.bind({});
 export const Custom = LegendCustomTemplate.bind({});
-export const NoChildren = LegendNoChildrenTemplate.bind({});
+export const NoChildren = LegendNoChildrenTemplate.bind({}); */

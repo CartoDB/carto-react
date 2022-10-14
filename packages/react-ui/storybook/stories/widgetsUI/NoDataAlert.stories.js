@@ -25,11 +25,14 @@ const options = {
   }
 };
 
-export default options;
+// Temporary removed
+// PR -> https://github.com/CartoDB/carto-react/pull/481
+// Shortcut -> https://app.shortcut.com/cartoteam/story/263063/add-widgets-stories-to-storybook
+// export default options;
 
 const Template = (args) => <NoDataAlert {...args} />;
 
-export const Empty = Template.bind({});
+/* export const Empty = Template.bind({});
 Empty.args = {};
 Empty.parameters = buildReactPropsAsString({}, 'NoDataAlert');
 
@@ -39,4 +42,4 @@ const CustomTextsProps = {
   body: "Hey, I've modified the NoDataAlert component"
 };
 CustomTexts.args = CustomTextsProps;
-CustomTexts.parameters = buildReactPropsAsString(CustomTextsProps, 'NoDataAlert');
+CustomTexts.parameters = buildReactPropsAsString(CustomTextsProps, 'NoDataAlert'); */

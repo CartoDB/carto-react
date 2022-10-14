@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-ui",
-  "version": "1.5.0-alpha.1",
+  "version": "1.5.0-alpha.2",
   "description": "CARTO for React - UI",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -43,10 +43,11 @@
     "@babel/preset-env": "^7.13.9",
     "@babel/preset-react": "^7.12.13",
     "@reduxjs/toolkit": "^1.5.0",
-    "@storybook/addon-actions": "^6.4.14",
-    "@storybook/addon-essentials": "^6.4.14",
-    "@storybook/addon-links": "^6.4.14",
-    "@storybook/react": "^6.4.14",
+    "@storybook/addon-actions": "^6.5.12",
+    "@storybook/addon-essentials": "^6.5.12",
+    "@storybook/addon-links": "^6.5.12",
+    "@storybook/react": "^6.5.12",
+    "storybook-addon-designs": "^6.3.1",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/react-hooks": "^5.1.0",

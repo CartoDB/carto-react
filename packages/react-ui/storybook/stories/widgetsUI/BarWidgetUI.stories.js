@@ -7,7 +7,10 @@ const options = {
   component: BarWidgetUI
 };
 
-export default options;
+// Temporary removed
+// PR -> https://github.com/CartoDB/carto-react/pull/481
+// Shortcut -> https://app.shortcut.com/cartoteam/story/263063/add-widgets-stories-to-storybook
+// export default options;
 
 const Template = (args) => {
   if (args.series && !Array.isArray(args.series)) {
@@ -21,7 +24,7 @@ const yAxisData = [100, 300, 500, 250, 50, 200];
 
 const xAxisData = yAxisData.map((_, idx) => `Store ${idx + 1}`);
 
-export const Empty = Template.bind({});
+/* export const Empty = Template.bind({});
 const EmptyProps = {
   yAxisData,
   xAxisData,
@@ -131,4 +134,4 @@ const MultipleBarsCustomColorsProps = {
   colors: ['#f00', '#00f']
 };
 MultipleBarsCustomColors.args = MultipleBarsCustomColorsProps;
-MultipleBarsCustomColors.parameters = buildReactPropsAsString(MultipleBarsCustomColorsProps, 'BarWidgetUI');
+MultipleBarsCustomColors.parameters = buildReactPropsAsString(MultipleBarsCustomColorsProps, 'BarWidgetUI'); */

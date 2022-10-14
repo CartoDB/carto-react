@@ -23,13 +23,16 @@ const options = {
   }
 };
 
-export default options;
+// Temporary removed
+// PR -> https://github.com/CartoDB/carto-react/pull/481
+// Shortcut -> https://app.shortcut.com/cartoteam/story/263063/add-widgets-stories-to-storybook
+// export default options;
 
 const Template = (args) => {
   return <LegendCategories {...args} />;
 };
 
-export const Default = Template.bind({});
+/* export const Default = Template.bind({});
 const DefaultProps = { ...DEFAULT_LEGEND };
 Default.args = DefaultProps;
 
@@ -44,3 +47,4 @@ const WithStrokedColorsProps = {
   legend: { ...DEFAULT_LEGEND.legend, isStrokeColor: true }
 };
 WithStrokedColors.args = WithStrokedColorsProps;
+ */

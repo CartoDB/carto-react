@@ -34,13 +34,16 @@ const options = {
   }
 };
 
-export default options;
+// Temporary removed
+// PR -> https://github.com/CartoDB/carto-react/pull/481
+// Shortcut -> https://app.shortcut.com/cartoteam/story/263063/add-widgets-stories-to-storybook
+// export default options;
 
 const Template = (args) => {
   return <LegendRamp {...args} />;
 };
 
-export const Discontinuous = Template.bind({});
+/* export const Discontinuous = Template.bind({});
 Discontinuous.args = { ...DEFAULT_LEGEND };
 
 export const DiscontinuousWithFormattedLabels = Template.bind({});
@@ -53,4 +56,4 @@ export const ContinuousWithFormattedLabels = Template.bind({});
 ContinuousWithFormattedLabels.args = {
   ...DEFAULT_LEGEND_WITH_FORMATTED_LABELS,
   isContinuous: true
-};
+}; */

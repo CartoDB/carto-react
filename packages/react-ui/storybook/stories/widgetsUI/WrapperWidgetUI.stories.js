@@ -3,7 +3,8 @@ import { Typography } from '@material-ui/core';
 import ColorizeIcon from '@material-ui/icons/Colorize';
 import MenuIcon from '@material-ui/icons/Menu';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
-import WrapperWidgetUI from '.../../../src/widgets/WrapperWidgetUI';
+import { WrapperWidgetUI } from '@carto/react-ui';
+// import WrapperWidgetUI from '.../../../src/widgets/WrapperWidgetUI';
 import { buildReactPropsAsString } from '../../utils';
 
 const options = {
@@ -28,7 +29,11 @@ const options = {
     }
   }
 };
-export default options;
+
+// Temporary removed
+// PR -> https://github.com/CartoDB/carto-react/pull/481
+// Shortcut -> https://app.shortcut.com/cartoteam/story/263063/add-widgets-stories-to-storybook
+// export default options;
 
 const Template = (args) => (
   <WrapperWidgetUI {...args}>
@@ -36,7 +41,7 @@ const Template = (args) => (
   </WrapperWidgetUI>
 );
 
-export const Default = Template.bind({});
+/* export const Default = Template.bind({});
 const DefaultProps = { title: 'Default wrapper' };
 Default.args = DefaultProps;
 
@@ -262,4 +267,4 @@ WithActionsTooltip.parameters = {
 />`
     }
   }
-};
+}; */

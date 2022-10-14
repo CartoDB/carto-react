@@ -13,7 +13,10 @@ const options = {
   }
 };
 
-export default options;
+// Temporary removed
+// PR -> https://github.com/CartoDB/carto-react/pull/481
+// Shortcut -> https://app.shortcut.com/cartoteam/story/263063/add-widgets-stories-to-storybook
+// export default options;
 
 const Template = (args) => {
   return <HistogramWidgetUI {...args} />;
@@ -26,7 +29,7 @@ const defaultProps = {
   max: 700
 };
 
-export const Empty = Template.bind({});
+/* export const Empty = Template.bind({});
 const EmptyProps = {
   ...defaultProps
 };
@@ -54,10 +57,9 @@ const FilteredProps = {
 };
 Filtered.args = FilteredProps;
 
-
 export const NonEqualSizeBins = Template.bind({});
 const NonEqualSizeBinsProps = {
   ...defaultProps,
-  ticks: [100, 200, 250, 450, 500, 600],
+  ticks: [100, 200, 250, 450, 500, 600]
 };
-NonEqualSizeBins.args = NonEqualSizeBinsProps;
+NonEqualSizeBins.args = NonEqualSizeBinsProps; */

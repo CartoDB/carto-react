@@ -189,12 +189,13 @@ function TimeSeriesWidget({
     dispatch(
       removeFilter({
         id: dataSource,
-        column
+        column,
+        owner: id
       })
     );
 
     if (onStop) onStop();
-  }, [column, dataSource, dispatch, onStop]);
+  }, [column, dataSource, id, dispatch, onStop]);
 
   const [anchorEl, setAnchorEl] = useState(null);
 

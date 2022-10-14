@@ -1,4 +1,5 @@
 import React from 'react';
+import { withDesign } from 'storybook-addon-designs';
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
 import { cartoThemeOptions } from '../../src/theme/carto-theme';
 
@@ -34,7 +35,7 @@ export const decorators = [
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
-  viewMode: 'docs',
+  // viewMode: 'docs',
   docs: {
     source: {
       type: 'code'
@@ -59,5 +60,6 @@ export const parameters = {
         ]
       ]
     }
-  }
+  },
+  decorators: [withDesign]
 };

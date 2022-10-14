@@ -13,7 +13,10 @@ const options = {
   }
 };
 
-export default options;
+// Temporary removed
+// PR -> https://github.com/CartoDB/carto-react/pull/481
+// Shortcut -> https://app.shortcut.com/cartoteam/story/263063/add-widgets-stories-to-storybook
+// export default options;
 
 const dataDefault = [
   { name: 'Women', value: 101 },
@@ -22,7 +25,7 @@ const dataDefault = [
 
 const Template = (args) => <PieWidgetUI {...args} />;
 
-export const Default = Template.bind({});
+/* export const Default = Template.bind({});
 const DefaultProps = { data: dataDefault };
 Default.args = DefaultProps;
 
@@ -69,4 +72,4 @@ const SelectedCategoriesProps = {
   selectedCategories: ['Cats', 'Canaries'],
   onSelectedCategoriesChange: (categories) => console.log(categories)
 };
-SelectedCategories.args = SelectedCategoriesProps;
+SelectedCategories.args = SelectedCategoriesProps; */
