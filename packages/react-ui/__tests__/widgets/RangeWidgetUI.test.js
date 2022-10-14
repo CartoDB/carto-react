@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { getMaterialUIContext } from './testUtils';
 import RangeWidgetUI from '../../src/widgets/RangeWidgetUI';
 
@@ -101,7 +101,7 @@ describe('SliderWidgetUI', () => {
     expect(container.getElementsByClassName('MuiSlider-mark').length).toBe(0);
   });
 
-  test('On selected method is called when we change slider values', () => {
+  test('On selected method is called when we change slider values', async () => {
     const mockOnSelectedRangeChange = jest.fn();
     render(<Widget onSelectedRangeChange={mockOnSelectedRangeChange} />);
     const inputMin = screen.getByRole('spinbutton', { name: 'min value' });
@@ -112,12 +112,14 @@ describe('SliderWidgetUI', () => {
     fireEvent.change(inputMin, { target: { value: 20 } });
     fireEvent.blur(inputMin);
 
-    expect(mockOnSelectedRangeChange).toHaveBeenCalledWith([20, 100]);
+    await waitFor(() =>
+      expect(mockOnSelectedRangeChange).toHaveBeenCalledWith([20, 100])
+    );
 
     fireEvent.change(inputMax, { target: { value: 80 } });
     fireEvent.blur(inputMax);
 
-    expect(mockOnSelectedRangeChange).toHaveBeenCalledWith([20, 80]);
+    await waitFor(() => expect(mockOnSelectedRangeChange).toHaveBeenCalledWith([20, 80]));
 
     expect(minValue).toHaveAttribute('aria-valuenow', '20');
     expect(maxValue).toHaveAttribute('aria-valuenow', '80');

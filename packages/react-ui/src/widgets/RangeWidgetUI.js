@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, makeStyles, Slider, TextField } from '@material-ui/core';
+import { Box, Link, makeStyles, Slider, TextField } from '@material-ui/core';
 import { debounce } from '@carto/react-core';
 
 const useStyles = makeStyles((theme) => ({
@@ -54,6 +54,15 @@ const useStyles = makeStyles((theme) => ({
         margin: 0
       }
     }
+  },
+  clearWrapper: {
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    height: theme.spacing(1.5)
+  },
+  clearButton: {
+    ...theme.typography.caption,
+    cursor: 'pointer'
   }
 }));
 
@@ -97,7 +106,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
     [onSelectedRangeChange]
   );
 
-  const handleSliderChange = (_, newValues) => {
+  const changeSliderValues = (newValues) => {
     setInputsValues([...newValues]);
     setSliderValues([...newValues]);
     debouncedOnSelectedRangeChange && debouncedOnSelectedRangeChange([...newValues]);
@@ -107,6 +116,8 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
     const value = event.target.value === '' ? '' : Number(event.target.value);
     setInputsValues(Object.assign([], inputsValues, { [index]: value }));
   };
+
+  const hasBeenModified = min !== inputsValues[0] || max !== inputsValues[1];
 
   useEffect(() => {
     if (!data) {
@@ -133,40 +144,51 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
     const newValues = Object.assign([], inputsValues, { [index]: value }).sort(
       (a, b) => a - b
     );
-    setInputsValues(newValues);
-    setSliderValues([...newValues]);
-    onSelectedRangeChange && onSelectedRangeChange(newValues);
+    changeSliderValues(newValues);
+  };
+
+  const resetSlider = () => {
+    changeSliderValues([min, max]);
   };
 
   return (
     <Box className={classes.root}>
-      <Slider
-        getAriaLabel={(index) => (index === 0 ? 'min value' : 'max value')}
-        classes={{
-          rail: classes.sliderWithThumbRail
-        }}
-        value={sliderValues}
-        min={min}
-        max={max}
-        onChange={handleSliderChange}
-      />
-      {limits && limits.length === 2 && (
+      <Box className={classes.clearWrapper}>
+        {hasBeenModified && (
+          <Link onClick={resetSlider} className={classes.clearButton}>
+            Clear
+          </Link>
+        )}
+      </Box>
+      <Box>
         <Slider
-          getAriaLabel={(index) => (index === 0 ? 'min limit' : 'max limit')}
-          className={classes.sliderLimit}
+          getAriaLabel={(index) => (index === 0 ? 'min value' : 'max value')}
           classes={{
-            rail: classes.sliderLimitRail,
-            thumb: classes.sliderLimitThumb,
-            track: classes.sliderLimitsTrack,
-            mark: classes.sliderLimitMarks,
-            markActive: classes.sliderLimitMarks
+            rail: classes.sliderWithThumbRail
           }}
-          value={limits}
+          value={sliderValues}
           min={min}
           max={max}
-          marks={limitsMarks}
+          onChange={(_, values) => changeSliderValues(values)}
         />
-      )}
+        {limits && limits.length === 2 && (
+          <Slider
+            getAriaLabel={(index) => (index === 0 ? 'min limit' : 'max limit')}
+            className={classes.sliderLimit}
+            classes={{
+              rail: classes.sliderLimitRail,
+              thumb: classes.sliderLimitThumb,
+              track: classes.sliderLimitsTrack,
+              mark: classes.sliderLimitMarks,
+              markActive: classes.sliderLimitMarks
+            }}
+            value={limits}
+            min={min}
+            max={max}
+            marks={limitsMarks}
+          />
+        )}
+      </Box>
       <Box display={'flex'} justifyContent={'space-between'} mb={1}>
         <TextField
           className={classes.input}

@@ -3,6 +3,7 @@
 ## Not released
 
 - Update Storybook to v6.5.12 [#487](https://github.com/CartoDB/carto-react/pull/487)
+- Add **clear** button to RangeWidget [#485](https://github.com/CartoDB/carto-react/pull/485)
 
 ## 1.5
 
