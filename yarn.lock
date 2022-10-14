@@ -2945,10 +2945,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@nebula.gl/edit-modes@1.0.3", "@nebula.gl/edit-modes@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@nebula.gl/edit-modes/-/edit-modes-1.0.3.tgz#c9cc940d41d23576e2e1bef0ae915e94a3d63a35"
-  integrity sha512-EsfgK3NE6eVoY/6w4/VtXKE8iHpKoUvVO/7hjNwve8wrWH7x3eUXRbqnZIOd+kInuS62dTDmawoZkioHAFOvtg==
+"@nebula.gl/edit-modes@1.0.4", "@nebula.gl/edit-modes@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@nebula.gl/edit-modes/-/edit-modes-1.0.4.tgz#df37751768239fb37dfcb697b0b90e11371a47a3"
+  integrity sha512-x0t73q2wmiVLK15+0DnkpsO7e7L69dZ/3xISEZlo/2pEJc0op2UCJ7BynRyuZq6Bb8ZvwJCVjyspaUGYQqabNg==
   dependencies:
     "@turf/along" ">=6.3.0"
     "@turf/area" ">=4.0.0"
@@ -2980,13 +2980,13 @@
     lodash.throttle "^4.1.1"
     viewport-mercator-project ">=6.0.0"
 
-"@nebula.gl/layers@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@nebula.gl/layers/-/layers-1.0.3.tgz#677cb3cad64286b03caf63d57b6dedfd1e1ddcb4"
-  integrity sha512-/OJjiHkDd0qLS/2XZC8ctYccya8SLwsyCb+Xv99lY4HGqd6UM503yH4mZKRVnBfJIpgKDsZFnkUSjNxP1EHQHQ==
+"@nebula.gl/layers@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@nebula.gl/layers/-/layers-1.0.4.tgz#5acea95db132cbcb02bbb4a8afa805a0d9adc606"
+  integrity sha512-jwBGvQK7iIdq05DWl5q7vOIhpU+rVFhR+y30G1P5toz/SD9z3Qadfm2SYDgIcX36Ez45mJMKVllY7hLEG1tSRA==
   dependencies:
     "@danmarshall/deckgl-typings" "4.9.12"
-    "@nebula.gl/edit-modes" "1.0.3"
+    "@nebula.gl/edit-modes" "1.0.4"
     "@turf/bbox" ">=4.0.0"
     "@turf/bbox-polygon" ">=4.0.0"
     "@turf/bearing" ">=4.0.0"
