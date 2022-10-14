@@ -158,7 +158,8 @@ function HistogramWidget({
         dispatch(
           removeFilter({
             id: dataSource,
-            column
+            column,
+            owner: id
           })
         );
       }
