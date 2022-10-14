@@ -1,5 +1,5 @@
 import { spacing } from '../themeUtils';
-import { baseColors, themePalette } from './palette';
+import { themePalette } from './palette';
 import { themeTypography } from './typography';
 
 const round = (value) => Math.round(value * 1e5) / 1e5;
@@ -399,7 +399,7 @@ export const themeComponentsOverrides = {
       backgroundColor: themePalette.other.divider
     },
     light: {
-      backgroundColor: baseColors.shades.light[12]
+      backgroundColor: themePalette.grey[50]
     }
   },
 
