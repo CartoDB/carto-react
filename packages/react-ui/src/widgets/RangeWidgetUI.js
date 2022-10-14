@@ -106,7 +106,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
     [onSelectedRangeChange]
   );
 
-  const handleSliderChange = (_, newValues) => {
+  const changeSliderValues = (newValues) => {
     setInputsValues([...newValues]);
     setSliderValues([...newValues]);
     debouncedOnSelectedRangeChange && debouncedOnSelectedRangeChange([...newValues]);
@@ -144,15 +144,11 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
     const newValues = Object.assign([], inputsValues, { [index]: value }).sort(
       (a, b) => a - b
     );
-    setInputsValues(newValues);
-    setSliderValues([...newValues]);
-    onSelectedRangeChange && onSelectedRangeChange(newValues);
+    changeSliderValues(newValues);
   };
 
   const resetSlider = () => {
-    const newValues = [min, max];
-    setInputsValues(newValues);
-    setSliderValues([...newValues]);
+    changeSliderValues([min, max]);
   };
 
   return (
@@ -173,7 +169,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
           value={sliderValues}
           min={min}
           max={max}
-          onChange={handleSliderChange}
+          onChange={(_, values) => changeSliderValues(values)}
         />
         {limits && limits.length === 2 && (
           <Slider
