@@ -57,7 +57,8 @@ const baseColors = {
     500: '#872107'
   },
   qualitative: {
-    // legacy ?
+    // CARTO colors
+    // TODO: Related discussion https://app.shortcut.com/cartoteam/story/264834/
     bold: {
       0: '#7F3C8D',
       1: '#11A579',
@@ -82,7 +83,6 @@ const baseColors = {
       25: alpha(COLOR_BLACK, 0.25),
       12: alpha(COLOR_BLACK, 0.12),
       8: alpha(COLOR_BLACK, 0.08),
-      5: alpha(COLOR_BLACK, 0.05), // not defined in the palette but in use in designs (line 144)
       4: alpha(COLOR_BLACK, 0.04)
     },
     light: {
@@ -93,20 +93,19 @@ const baseColors = {
       25: alpha(COLOR_WHITE, 0.25),
       12: alpha(COLOR_WHITE, 0.12),
       8: alpha(COLOR_WHITE, 0.08),
-      5: alpha(COLOR_WHITE, 0.05), // legacy ?
       4: alpha(COLOR_WHITE, 0.04)
     }
   }
 };
 
-export const themePalette = {
+export const commonPalette = {
   common: { ...baseColors.common },
   primary: {
     light: baseColors.blue[300],
     main: baseColors.blue[400],
     dark: baseColors.blue[500],
     contrastText: baseColors.common.white,
-    relatedLight: 'rgba(3, 111, 226, 0.08)', // Legacy ?
+    relatedLight: alpha(baseColors.blue[400], 0.08), // TODO: review with design the need of a solid color
     background: alpha(baseColors.blue[400], 0.08)
   },
   secondary: {
@@ -114,7 +113,7 @@ export const themePalette = {
     main: baseColors.green[400],
     dark: baseColors.green[500],
     contrastText: baseColors.common.black,
-    relatedLight: 'rgba(71, 219, 153, 0.08)', // Legacy ?
+    relatedLight: alpha(baseColors.green[400], 0.08), // TODO: review with design the need of a solid color
     background: alpha(baseColors.green[400], 0.08)
   },
   text: {
@@ -133,22 +132,7 @@ export const themePalette = {
     disabledBackground: baseColors.shades.dark[12],
     disabled: baseColors.shades.dark[25],
     selected: baseColors.shades.dark[12],
-    focus: baseColors.shades.dark[12],
-    activatedOpacity: 0.12, // Legacy ?
-    hoverOpacity: 0.08, // Legacy ?
-    disabledOpacity: 0.38, // Legacy ?
-    selectedOpacity: 0.08, // Legacy ?
-    focusOpacity: 0.12 // Legacy ?
-  },
-  other: {
-    // what is this for?
-    divider: baseColors.shades.dark[12],
-    outliner: baseColors.shades.dark[25],
-    filterInput: baseColors.shades.dark[5],
-    backdrop: baseColors.shades.dark[60],
-    tooltip: baseColors.shades.dark[90],
-    snackbar: baseColors.shades.dark[100],
-    rating: baseColors.green[400] // fix name in figma
+    focus: baseColors.shades.dark[12]
   },
   info: {
     light: baseColors.indigo[300],
@@ -180,17 +164,30 @@ export const themePalette = {
     dark: baseColors.red[500],
     contrastText: baseColors.common.white,
     relatedDark: darken(baseColors.red[400], 0.6),
-    relatedLight: lighten(baseColors.red[400], 0)
+    relatedLight: lighten(baseColors.red[400], 0.9)
   },
   grey: {
     ...baseColors.neutral
   },
+  divider: baseColors.shades.dark[12],
+
+  // Custom common colors
   qualitative: {
-    ...baseColors.qualitative // Legacy ?
+    ...baseColors.qualitative
   },
+  default: {
+    light: baseColors.neutral[100],
+    main: baseColors.neutral[200],
+    dark: baseColors.neutral[50],
+    contrastText: baseColors.common.black,
+    background: baseColors.shades.dark[8]
+  }
+};
+
+export const componentsPalette = {
+  tooltip: baseColors.shades.dark[90],
   charts: {
-    // Legacy ?
-    axisLine: baseColors.shades.dark[5],
+    axisLine: baseColors.shades.dark[4],
     maxLabel: baseColors.shades.dark[60],
     disabled: baseColors.shades.dark[25],
     axisPointer: baseColors.shades.dark[40]

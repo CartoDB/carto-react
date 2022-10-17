@@ -66,7 +66,7 @@ function BarWidgetUI(props) {
         lineHeight: 16,
         color: theme.palette.common.white
       },
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: theme.palette.tooltip,
       position: function (point, _params, _dom, _rect, size) {
         const position = { top: 0 };
 

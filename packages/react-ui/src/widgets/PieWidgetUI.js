@@ -40,7 +40,7 @@ function PieWidgetUI({
       show: showTooltip,
       showDelay: 1000,
       transitionDuration: 0,
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: theme.palette.tooltip,
       textStyle: { color: theme.palette.common.white },
       confine: true,
       formatter:
@@ -50,7 +50,7 @@ function PieWidgetUI({
       showTooltip,
       formatter,
       theme.palette.common.white,
-      theme.palette.other.tooltip,
+      theme.palette.tooltip,
       tooltipFormatter
     ]
   );
@@ -133,7 +133,7 @@ function PieWidgetUI({
 
           const disabled =
             selectedCategories?.length && !selectedCategories.includes(clonedItem.name);
-          
+
           if (labels?.[clonedItem.name]) {
             clonedItem.name = labels[clonedItem.name];
           }

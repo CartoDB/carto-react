@@ -76,7 +76,7 @@ function HistogramWidgetUI({
         lineHeight: 16,
         color: theme.palette.common.white
       },
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: theme.palette.tooltip,
       confine: true,
       position: 'top',
       formatter(params) {
@@ -346,7 +346,9 @@ function defaultTooltipFormatter(params, xAxisFormatter, yAxisFormatter) {
   }
 
   const [left, right, value] = params.data.value;
-  const title = `${processFormatterRes(xAxisFormatter(left))} <span style="vertical-align: 1px;">—</span> ${processFormatterRes(
+  const title = `${processFormatterRes(
+    xAxisFormatter(left)
+  )} <span style="vertical-align: 1px;">—</span> ${processFormatterRes(
     xAxisFormatter(right)
   )}`;
   const formattedValue = processFormatterRes(yAxisFormatter(value));
