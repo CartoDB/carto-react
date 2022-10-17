@@ -88,9 +88,10 @@ export const createCartoSlice = (initialState) => {
           // TODO: Study if we should use a deepmerge fn
           state.layers[action.payload.id] = {
             ...newLayer,
-            ...(layer.legend && newLayer.legend && {
-              legend: { ...layer.legend, ...newLayer.legend }
-            })
+            ...(layer.legend &&
+              newLayer.legend && {
+                legend: { ...layer.legend, ...newLayer.legend }
+              })
           };
         }
       },
@@ -148,11 +149,19 @@ export const createCartoSlice = (initialState) => {
         }
       },
       removeFilter: (state, action) => {
-        const { id, column } = action.payload;
+        const { id, column, owner } = action.payload;
         const source = state.dataSources[id];
 
         if (source && source.filters && source.filters[column]) {
-          delete source.filters[column];
+          const typeToDelete = Object.entries(source.filters[column])
+            .filter(([_, filter]) => filter.owner === owner)
+            .map(([filterType]) => filterType);
+
+          typeToDelete.forEach((type) => delete source.filters[column][type]);
+
+          if (!owner || Object.keys(source.filters[column]).length === 0) {
+            delete source.filters[column];
+          }
         }
       },
       clearFilters: (state, action) => {
@@ -205,7 +214,15 @@ export const addSource = ({
   queryParameters = []
 }) => ({
   type: 'carto/addSource',
-  payload: { id, data, type, credentials, connection, filtersLogicalOperator, queryParameters }
+  payload: {
+    id,
+    data,
+    type,
+    credentials,
+    connection,
+    filtersLogicalOperator,
+    queryParameters
+  }
 });
 
 /**
@@ -213,7 +230,10 @@ export const addSource = ({
  * @param {string} id - unique id for the source
  * @param {boolean} isDroppingFeatures - flag that indicate if tiles are generated using a dropping feature strategy
  */
-export const setIsDroppingFeatures = ({id, isDroppingFeatures}) => ({ type: 'carto/setIsDroppingFeatures', payload: { id, isDroppingFeatures }})
+export const setIsDroppingFeatures = ({ id, isDroppingFeatures }) => ({
+  type: 'carto/setIsDroppingFeatures',
+  payload: { id, isDroppingFeatures }
+});
 
 /**
  * Action to remove a source from the store
@@ -292,12 +312,13 @@ export const addFilter = ({ id, column, type, values, owner, params }) => ({
 
 /**
  * Action to remove a column filter from a source
- * @param {id} - sourceId of the filter to remove
- * @param {column} - column of the filter to remove
+ * @param {string} id - sourceId of the filter to remove
+ * @param {string} column - column of the filter to remove
+ * @param {string} owner  - (optional) id of the widget triggering the filter
  */
-export const removeFilter = ({ id, column }) => ({
+export const removeFilter = ({ id, column, owner }) => ({
   type: 'carto/removeFilter',
-  payload: { id, column }
+  payload: { id, column, owner }
 });
 
 /**
@@ -312,7 +333,8 @@ const _setViewPort = (payload) => ({ type: 'carto/setViewPort', payload });
  * Redux selector to get a source by ID
  */
 export const selectSourceById = (state, id) => state.carto.dataSources[id];
-export const checkIfSourceIsDroppingFeature = (state, id) => state.carto.dataSources[id]?.isDroppingFeatures;
+export const checkIfSourceIsDroppingFeature = (state, id) =>
+  state.carto.dataSources[id]?.isDroppingFeatures;
 
 /**
  * Redux selector to select the spatial filter of a given sourceId or the root one

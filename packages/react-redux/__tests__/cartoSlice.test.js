@@ -2,6 +2,7 @@ import * as cartoSlice from '../src/slices/cartoSlice';
 import { setDefaultCredentials } from '@deck.gl/carto';
 import { mockAppStoreConfiguration } from './mockReducerManager';
 import { VOYAGER } from '@carto/react-basemaps';
+import { _FilterTypes } from '@carto/react-core';
 
 const INITIAL_STATE = {
   viewState: {
@@ -196,7 +197,7 @@ describe('carto slice', () => {
     const filter = {
       id: 'source-test-id-2',
       column: 'test-column',
-      type: 'sql',
+      type: _FilterTypes.BETWEEN,
       values: [1, 2],
       owner: 'widgetId'
     };
@@ -221,6 +222,48 @@ describe('carto slice', () => {
       store.dispatch(cartoSlice.removeFilter({ id: filter.id, column: filter.column }));
       const { carto } = store.getState();
       expect(carto.dataSources[filter.id].filters).not.toHaveProperty(filter.column);
+    });
+
+    describe('when remove a specific filter', () => {
+      test('should remove a specific filter', () => {
+        store.dispatch(cartoSlice.addSource({ id: filter.id }));
+        store.dispatch(cartoSlice.addFilter(filter));
+        store.dispatch(
+          cartoSlice.addFilter({
+            ...filter,
+            type: _FilterTypes.CLOSED_OPEN,
+            owner: 'widgetId2'
+          })
+        );
+        store.dispatch(
+          cartoSlice.removeFilter({
+            id: filter.id,
+            column: filter.column,
+            owner: 'widgetId2'
+          })
+        );
+        const { carto } = store.getState();
+        expect(carto.dataSources[filter.id].filters).toHaveProperty(filter.column);
+        expect(carto.dataSources[filter.id].filters[filter.column]).toHaveProperty(
+          filter.type
+        );
+      });
+
+      describe('and filters are empty', () => {
+        test('should clear filters', () => {
+          store.dispatch(cartoSlice.addSource({ id: filter.id }));
+          store.dispatch(cartoSlice.addFilter(filter));
+          store.dispatch(
+            cartoSlice.removeFilter({
+              id: filter.id,
+              column: filter.column,
+              owner: filter.owner
+            })
+          );
+          const { carto } = store.getState();
+          expect(carto.dataSources[filter.id].filters).not.toHaveProperty(filter.column);
+        });
+      });
     });
 
     test('should clear a filter', () => {

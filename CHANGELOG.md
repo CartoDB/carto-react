@@ -7,6 +7,16 @@
 
 ## 1.5
 
+### 1.5.0-alpha.4 (2022-10-14)
+
+- Update nebula to latest stable 1.0.4 and deck.gl ^8.9.0-alpha.4 [#491](https://github.com/CartoDB/carto-react/pull/491)
+
+### 1.5.0-alpha.2 (2022-10-14)
+
+- Update Storybook to v6.5.12 [#487](https://github.com/CartoDB/carto-react/pull/487)
+- Add **clear** button to RangeWidget [#485](https://github.com/CartoDB/carto-react/pull/485)
+- Allow widgets to clear only its own filters [#483](https://github.com/CartoDB/carto-react/pull/483)
+
 ### 1.5.0-alpha.1 (2022-10-05)
 
 - LegendCategories: maskedMarkers flag that allows disabling mask icons [#473](https://github.com/CartoDB/carto-react/pull/473)

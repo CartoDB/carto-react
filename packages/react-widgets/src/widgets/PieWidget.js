@@ -94,7 +94,8 @@ function PieWidget({
         dispatch(
           removeFilter({
             id: dataSource,
-            column
+            column,
+            owner: id
           })
         );
       }
