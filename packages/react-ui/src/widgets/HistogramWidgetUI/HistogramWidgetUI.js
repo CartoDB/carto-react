@@ -76,7 +76,7 @@ function HistogramWidgetUI({
         lineHeight: 16,
         color: theme.palette.common.white
       },
-      backgroundColor: theme.palette.tooltip,
+      backgroundColor: theme.palette.other.tooltip,
       confine: true,
       position: 'top',
       formatter(params) {

@@ -24,7 +24,7 @@ function __generateDefaultConfig(
         lineHeight: 16,
         color: theme.palette.common.white
       },
-      backgroundColor: theme.palette.tooltip,
+      backgroundColor: theme.palette.other.tooltip,
       ...(tooltipFormatter ? { formatter: tooltipFormatter } : {})
     },
     color: [theme.palette.secondary.main],

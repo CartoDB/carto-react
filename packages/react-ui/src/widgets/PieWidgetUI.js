@@ -40,7 +40,7 @@ function PieWidgetUI({
       show: showTooltip,
       showDelay: 1000,
       transitionDuration: 0,
-      backgroundColor: theme.palette.tooltip,
+      backgroundColor: theme.palette.other.tooltip,
       textStyle: { color: theme.palette.common.white },
       confine: true,
       formatter:
@@ -50,7 +50,7 @@ function PieWidgetUI({
       showTooltip,
       formatter,
       theme.palette.common.white,
-      theme.palette.tooltip,
+      theme.palette.other.tooltip,
       tooltipFormatter
     ]
   );

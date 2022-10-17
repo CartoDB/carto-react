@@ -46,7 +46,7 @@ export default function TimeSeriesChart({
         color: theme.palette.common.white
       },
       borderWidth: 0,
-      backgroundColor: theme.palette.tooltip,
+      backgroundColor: theme.palette.other.tooltip,
       position: (point, params, dom, rect, size) => {
         const position = { top: 0 };
 

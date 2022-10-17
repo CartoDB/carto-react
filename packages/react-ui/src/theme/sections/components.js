@@ -613,11 +613,11 @@ export const themeComponentsOverrides = {
   MuiTooltip: {
     tooltip: {
       ...themeTypography.caption,
-      backgroundColor: componentsPalette.tooltip
+      backgroundColor: componentsPalette.other.tooltip
     },
 
     arrow: {
-      color: componentsPalette.tooltip
+      color: componentsPalette.other.tooltip
     }
   },
 

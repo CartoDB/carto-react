@@ -169,7 +169,6 @@ export const commonPalette = {
   grey: {
     ...baseColors.neutral
   },
-  divider: baseColors.shades.dark[12],
 
   // Custom common colors
   qualitative: {
@@ -185,7 +184,10 @@ export const commonPalette = {
 };
 
 export const componentsPalette = {
-  tooltip: baseColors.shades.dark[90],
+  other: {
+    divider: baseColors.shades.dark[12],
+    tooltip: baseColors.shades.dark[90]
+  },
   charts: {
     axisLine: baseColors.shades.dark[4],
     maxLabel: baseColors.shades.dark[60],

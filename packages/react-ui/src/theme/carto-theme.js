@@ -55,7 +55,7 @@ export const cartoThemeOptions = {
     info: { ...commonPalette.info },
     success: { ...commonPalette.success },
     text: { ...commonPalette.text },
-    divider: commonPalette.divider,
+    divider: componentsPalette.other.divider,
     background: { ...commonPalette.background },
     grey: { ...commonPalette.grey },
     action: { ...commonPalette.action },
@@ -64,7 +64,7 @@ export const cartoThemeOptions = {
     qualitative: { ...commonPalette.qualitative },
     default: { ...commonPalette.default },
     charts: { ...componentsPalette.charts },
-    tooltip: componentsPalette.tooltip
+    other: { ...componentsPalette.other }
   },
   shadows: [...themeShadows],
   typography: {

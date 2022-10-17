@@ -25,10 +25,11 @@ Some keys have been removed from [color palette](https://github.com/CartoDB/cart
 - disabledOpacity
 - selectedOpacity
 - focusOpacity
-- other, all removed but tooltip
+- other, all removed but tooltip and divider
 
 Some others have been moved because they aren't native MUI keys and are so specific to some components, these are:
 
 - charts
+- other
 
-This set ok keys are now in: `componentsPalette`.
+These sets of keys are now in: `componentsPalette`.
