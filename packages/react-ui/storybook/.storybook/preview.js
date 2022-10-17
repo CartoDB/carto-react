@@ -1,4 +1,5 @@
 import React from 'react';
+import { withDesign } from 'storybook-addon-designs';
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
 import { cartoThemeOptions } from '../../src/theme/carto-theme';
 
@@ -59,5 +60,6 @@ export const parameters = {
         ]
       ]
     }
-  }
+  },
+  decorators: [withDesign]
 };

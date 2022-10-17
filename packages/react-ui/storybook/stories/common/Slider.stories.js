@@ -128,6 +128,12 @@ const options = {
         type: ['func', 'string']
       }
     }
+  },
+  parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1149%3A24517'
+    }
   }
 };
 export default options;
