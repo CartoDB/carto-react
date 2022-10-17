@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Integration between Figma and Storybook through `addon-designs` [#488](https://github.com/CartoDB/carto-react/pull/488)
 - Update Storybook to v6.5.12 [#487](https://github.com/CartoDB/carto-react/pull/487)
 
 ## 1.5
