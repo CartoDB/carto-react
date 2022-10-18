@@ -16,6 +16,6 @@ Removed unused custom `createTheme` function in `carto-theme.js`.
 
 # Typography
 
-Custom variant `charts` has been replaced by `caption`.
+`responsiveFontSizes` simplified due we want to resize only a few variants through the theme.
 
-`responsiveFontSizes` removed due we want to resize only a few variants through the theme.
+Added several custom variants to the typography set. Note that MUI v5 is needed to register them properly.
