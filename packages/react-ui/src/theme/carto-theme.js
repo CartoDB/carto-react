@@ -1,8 +1,3 @@
-import {
-  createTheme as createMuiTheme,
-  responsiveFontSizes
-} from '@material-ui/core/styles';
-
 import { themeComponentsOverrides, themeComponentsProps } from './sections/components';
 import { CssBaseline } from './sections/cssBaseline';
 import { themePalette } from './sections/palette';
@@ -111,42 +106,3 @@ export const cartoThemeOptions = {
   // Props
   props: { ...themeComponentsProps }
 };
-
-export function createTheme(options = {}) {
-  const themeOptions = {
-    ...cartoThemeOptions,
-    ...options,
-    components: {
-      MuiToggleButton: {
-        root: {
-          border: 'none'
-        }
-      }
-    }
-  };
-
-  let theme = createMuiTheme(themeOptions);
-
-  theme = responsiveFontSizes(theme, {
-    breakpoints: themeOptions.breakpoints.keys,
-    disableAlign: false,
-    factor: 2,
-    variants: [
-      'h1',
-      'h2',
-      'h3',
-      'h4',
-      'h5',
-      'h6',
-      'subtitle1',
-      'subtitle2',
-      'body1',
-      'body2',
-      'button',
-      'caption',
-      'overline'
-    ]
-  });
-
-  return theme;
-}
