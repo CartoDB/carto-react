@@ -35,7 +35,7 @@ export const decorators = [
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
-  viewMode: 'docs',
+  viewMode: 'story',
   docs: {
     source: {
       type: 'code'
