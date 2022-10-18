@@ -22,15 +22,12 @@ const options = {
   }
 };
 
-// Temporary removed
-// PR -> https://github.com/CartoDB/carto-react/pull/481
-// Shortcut -> https://app.shortcut.com/cartoteam/story/263063/add-widgets-stories-to-storybook
-// export default options;
+export default options;
 
 const Template = (args) => {
   return <LegendProportion {...args} />;
 };
 
-/* export const Default = Template.bind({});
+export const Default = Template.bind({});
 const DefaultProps = { ...DEFAULT_LEGEND };
-Default.args = DefaultProps; */
+Default.args = DefaultProps;

@@ -144,10 +144,7 @@ const options = {
   }
 };
 
-// Temporary removed
-// PR -> https://github.com/CartoDB/carto-react/pull/481
-// Shortcut -> https://app.shortcut.com/cartoteam/story/263063/add-widgets-stories-to-storybook
-// export default options;
+export default options;
 
 const Template = (args) => {
   if (args.timeWindow && !Array.isArray(args.timeWindow)) {
@@ -163,6 +160,5 @@ const requiredProps = {
   timeWindow: []
 };
 
-/* export const Default = Template.bind({});
+export const Default = Template.bind({});
 Default.args = requiredProps;
- */

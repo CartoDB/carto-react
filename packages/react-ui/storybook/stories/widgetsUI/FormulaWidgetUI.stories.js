@@ -20,16 +20,13 @@ const options = {
   }
 };
 
-// Temporary removed
-// PR -> https://github.com/CartoDB/carto-react/pull/481
-// Shortcut -> https://app.shortcut.com/cartoteam/story/263063/add-widgets-stories-to-storybook
-// export default options;
+export default options;
 
 const Template = (args) => <FormulaWidgetUI {...args} />;
 
 const data = 10000;
 
-/* export const Empty = Template.bind({});
+export const Empty = Template.bind({});
 Empty.args = {};
 
 export const Text = Template.bind({});
@@ -53,4 +50,4 @@ const FormatterValueUnitBeforeProps = {
   data,
   unitBefore: true
 };
-FormatterValueUnitBefore.args = FormatterValueUnitBeforeProps; */
+FormatterValueUnitBefore.args = FormatterValueUnitBeforeProps;

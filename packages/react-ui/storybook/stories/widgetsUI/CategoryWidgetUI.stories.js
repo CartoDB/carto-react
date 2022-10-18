@@ -28,10 +28,7 @@ const options = {
   }
 };
 
-// Temporary removed
-// PR -> https://github.com/CartoDB/carto-react/pull/481
-// Shortcut -> https://app.shortcut.com/cartoteam/story/263063/add-widgets-stories-to-storybook
-// export default options;
+export default options;
 
 const Template = (args) => {
   return <CategoryWidgetUI {...args} />;
@@ -46,7 +43,7 @@ const filteredData = data.slice(0, 4).map((cat, idx) => {
   return { ...cat, value: idx % 2 === 0 ? null : cat.value };
 });
 
-/* export const Default = Template.bind({});
+export const Default = Template.bind({});
 const DefaultProps = { data };
 Default.args = DefaultProps;
 
@@ -74,4 +71,4 @@ const WithSelectedCategoriesProps = {
   selectedCategories: ['Category 2', 'Category 4'],
   onSelectedCategoriesChange: (categories) => console.log(categories)
 };
-WithSelectedCategories.args = WithSelectedCategoriesProps; */
+WithSelectedCategories.args = WithSelectedCategoriesProps;

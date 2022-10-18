@@ -13,10 +13,7 @@ const options = {
   }
 };
 
-// Temporary removed
-// PR -> https://github.com/CartoDB/carto-react/pull/481
-// Shortcut -> https://app.shortcut.com/cartoteam/story/263063/add-widgets-stories-to-storybook
-// export default options;
+export default options;
 
 const dataDefault = [
   [1000.0, 800.04],
@@ -25,7 +22,7 @@ const dataDefault = [
 
 const Template = (args) => <ScatterPlotWidgetUI {...args} />;
 
-/* export const Default = Template.bind({});
+export const Default = Template.bind({});
 const DefaultProps = { data: dataDefault, name: 'name' };
 Default.args = DefaultProps;
 
@@ -52,4 +49,4 @@ const tooltipFormatterProps = {
   tooltipFormatter: (v) => `Price $ ${v.value[1]} Sales: ${v.value[0]}`
 };
 
-tooltipFormatter.args = tooltipFormatterProps; */
+tooltipFormatter.args = tooltipFormatterProps;
