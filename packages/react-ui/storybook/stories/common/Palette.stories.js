@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ColorBox = ({ colorVariant = '', colorName }) => {
+const ColorBox = ({ colorVariant, colorName }) => {
   const theme = useTheme();
   const color = theme.palette[colorVariant];
   const classes = useStyles();
