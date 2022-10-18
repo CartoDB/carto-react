@@ -33,14 +33,9 @@ export default options;
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
     gap: theme.spacing(1)
-  },
-  box: {
-    flex: 1,
-    minWidth: '25%'
   },
   text: {
     marginBottom: theme.spacing(0.5)
@@ -60,7 +55,7 @@ const ColorBox = ({ colorVariant = '', colorName }) => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.box}>
+    <Box>
       <Box className={classes.text}>
         <Typography variant='subtitle1'>{colorName}</Typography>
         <Typography variant='caption'>{color[colorName]}</Typography>
