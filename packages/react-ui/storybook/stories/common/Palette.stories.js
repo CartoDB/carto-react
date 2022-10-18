@@ -12,6 +12,12 @@ const options = {
         options: ['primary', 'secondary', 'error', 'warning', 'info', 'success']
       }
     }
+  },
+  parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=8786%3A6248'
+    }
   }
 };
 export default options;

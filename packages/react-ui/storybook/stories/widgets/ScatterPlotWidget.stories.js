@@ -7,7 +7,7 @@ import {
   ArgsTable,
   Stories,
   PRIMARY_STORY
-} from '@storybook/addon-docs/blocks';
+} from '@storybook/addon-docs';
 import * as cartoSlice from '@carto/react-redux/src/slices/cartoSlice';
 import ScatterPlotWidget from '../../../../react-widgets/src/widgets/ScatterPlotWidget';
 import { mockAppStoreConfiguration } from './utils';

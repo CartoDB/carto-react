@@ -92,7 +92,8 @@ function CategoryWidget(props) {
         dispatch(
           removeFilter({
             id: dataSource,
-            column
+            column,
+            owner: id
           })
         );
       }
