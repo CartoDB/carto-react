@@ -5,24 +5,9 @@ import { cartoThemeOptions } from '../../src/theme/carto-theme';
 
 let theme = createTheme(cartoThemeOptions);
 theme = responsiveFontSizes(theme, {
-  breakpoints: cartoThemeOptions.breakpoints.keys,
+  breakpoints: ['sm'],
   disableAlign: false,
-  factor: 2,
-  variants: [
-    'h1',
-    'h2',
-    'h3',
-    'h4',
-    'h5',
-    'h6',
-    'subtitle1',
-    'subtitle2',
-    'body1',
-    'body2',
-    'button',
-    'caption',
-    'overline'
-  ]
+  factor: 2
 });
 
 export const decorators = [
