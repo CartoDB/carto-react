@@ -30,7 +30,8 @@ const options = {
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=8776%3A64695'
-    }
+    },
+    viewMode: 'docs'
   }
 };
 export default options;
@@ -39,9 +40,6 @@ const Template = (args) => <Typography {...args}>{args.text}</Typography>;
 const disabledControlsArgTypes = {
   variant: { table: { disable: true } }
 };
-
-export const Default = Template.bind({});
-Default.args = { text: 'Default' };
 
 export const H1 = Template.bind({});
 H1.args = { variant: 'h1', text: 'H1 Headline' };

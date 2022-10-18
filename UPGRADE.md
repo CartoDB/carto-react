@@ -13,3 +13,9 @@
 Also added some files for shared constants (`themeConstants.js`) and useful functions (`themeUtils.js`).
 
 Removed unused custom `createTheme` function in `carto-theme.js`.
+
+# Typography
+
+Custom variant `charts` has been replaced by `caption`.
+
+`responsiveFontSizes` removed due we want to resize only a few variants through the theme.

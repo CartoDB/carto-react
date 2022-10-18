@@ -1,6 +1,8 @@
+import { getPixelToRem } from '../themeUtils';
+
 export const themeTypography = {
   htmlFontSize: 16,
-  fontFamily: 'Montserrat, sans-serif',
+  fontFamily: 'Inter, sans-serif',
   fontSize: 16,
   lineHeight: 1.5,
   fontWeightLight: 300,
@@ -9,117 +11,105 @@ export const themeTypography = {
   fontWeightBold: 600,
   fontSmoothing: 'antialiased',
   h1: {
-    fontFamily: 'Montserrat, sans-serif',
+    fontFamily: 'Inter, sans-serif',
     fontWeight: 600,
-    fontSize: '6rem',
+    fontSize: getPixelToRem(96),
     lineHeight: 1.084,
-    letterSpacing: '-0.016em',
-    fontSmoothing: 'antialiased'
+    letterSpacing: '-1.5px'
   },
   h2: {
-    fontFamily: 'Montserrat, sans-serif',
+    fontFamily: 'Inter, sans-serif',
     fontWeight: 600,
-    fontSize: '4rem',
+    fontSize: getPixelToRem(72),
     lineHeight: 1.125,
-    letterSpacing: '-0.008em',
-    fontSmoothing: 'antialiased'
+    letterSpacing: '-0.5px'
   },
   h3: {
-    fontFamily: 'Montserrat, sans-serif',
+    fontFamily: 'Inter, sans-serif',
     fontWeight: 600,
-    fontSize: '3rem',
+    fontSize: getPixelToRem(48),
     lineHeight: 1.167,
-    letterSpacing: '0em',
-    fontSmoothing: 'antialiased'
+    letterSpacing: 0
   },
   h4: {
-    fontFamily: 'Montserrat, sans-serif',
+    fontFamily: 'Inter, sans-serif',
     fontWeight: 600,
-    fontSize: '2.125rem',
+    fontSize: getPixelToRem(32),
     lineHeight: 1.177,
-    letterSpacing: '0.007em',
-    fontSmoothing: 'antialiased'
+    letterSpacing: '0.15px'
   },
   h5: {
-    fontFamily: 'Montserrat, sans-serif',
+    fontFamily: 'Inter, sans-serif',
     fontWeight: 600,
-    fontSize: '1.5rem',
+    fontSize: getPixelToRem(24),
     lineHeight: 1.334,
-    letterSpacing: '0em',
-    fontSmoothing: 'antialiased'
+    letterSpacing: '0.15px'
   },
   h6: {
-    fontFamily: 'Montserrat, sans-serif',
-    fontWeight: 600,
-    fontSize: '1.25rem',
+    fontFamily: 'Inter, sans-serif',
+    fontWeight: 500,
+    fontSize: getPixelToRem(18),
     lineHeight: 1.2,
-    letterSpacing: '0.007em',
-    fontSmoothing: 'antialiased'
+    letterSpacing: '0.15px'
   },
   subtitle1: {
-    fontFamily: 'Montserrat, sans-serif',
-    fontWeight: 600,
-    fontSize: '1rem',
+    fontFamily: 'Inter, sans-serif',
+    fontWeight: 500,
+    fontSize: getPixelToRem(16),
     lineHeight: 1.5,
-    letterSpacing: '0.009em',
-    fontSmoothing: 'antialiased'
+    letterSpacing: '0.15px'
   },
   subtitle2: {
-    fontFamily: '"Open Sans", sans-serif',
+    fontFamily: 'Inter, sans-serif',
     fontWeight: 600,
-    fontSize: '0.875rem',
+    fontSize: getPixelToRem(13),
     lineHeight: 1.715,
-    letterSpacing: '0.007em',
-    fontSmoothing: 'antialiased'
+    letterSpacing: '0.1px'
   },
   body1: {
-    fontFamily: '"Open Sans", sans-serif',
+    fontFamily: 'Inter, sans-serif',
     fontWeight: 400,
-    fontSize: '1rem',
+    fontSize: getPixelToRem(16),
     lineHeight: 1.5,
-    letterSpacing: '0.028em',
-    fontSmoothing: 'antialiased'
+    letterSpacing: '0.4px'
   },
   body2: {
-    fontFamily: '"Open Sans", sans-serif',
+    fontFamily: 'Inter, sans-serif',
     fontWeight: 400,
-    fontSize: '0.875rem',
+    fontSize: getPixelToRem(13),
     lineHeight: 1.429,
-    letterSpacing: '0.018em',
-    fontSmoothing: 'antialiased'
+    letterSpacing: '0.25px'
   },
   button: {
-    fontFamily: 'Montserrat, sans-serif',
-    fontWeight: 600,
-    fontSize: '0.875rem',
+    fontFamily: 'Inter, sans-serif',
+    fontWeight: 500,
+    fontSize: getPixelToRem(13),
     lineHeight: 1.715,
-    letterSpacing: '0.018em',
-    textTransform: 'inherit',
-    fontSmoothing: 'antialiased'
+    letterSpacing: '0.25px',
+    textTransform: 'inherit'
   },
   caption: {
-    fontFamily: '"Open Sans", sans-serif',
-    fontWeight: 600,
-    fontSize: '0.75rem',
+    fontFamily: 'Inter, sans-serif',
+    fontWeight: 400,
+    fontSize: getPixelToRem(11),
     lineHeight: 1.334,
-    letterSpacing: '0.017em',
-    fontSmoothing: 'antialiased'
+    letterSpacing: '0.2px'
   },
   overline: {
-    fontFamily: '"Open Sans", sans-serif',
-    fontWeight: 400,
-    fontSize: '0.625rem',
+    fontFamily: '"Overpass Mono", monospace',
+    fontWeight: 600,
+    fontSize: getPixelToRem(10),
     lineHeight: 1.6,
-    letterSpacing: '0.150em',
-    textTransform: 'uppercase',
-    fontSmoothing: 'antialiased'
+    letterSpacing: '2px',
+    textTransform: 'uppercase'
   },
+  // Custom fonts
   charts: {
-    fontFamily: '"Open Sans", sans-serif',
+    // TODO: design is going to create a new variant (more reusable) to replace this
+    fontFamily: 'Inter, sans-serif',
     fontWeight: 400,
-    fontSize: 10,
+    fontSize: getPixelToRem(10),
     lineHeight: 1.6,
-    letterSpacing: '0.150em',
-    fontSmoothing: 'antialiased'
+    letterSpacing: '0.150em'
   }
 };
