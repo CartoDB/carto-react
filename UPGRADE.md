@@ -12,6 +12,8 @@
 
 Also added some files for shared constants (`themeConstants.js`) and useful functions (`themeUtils.js`).
 
+Removed unused custom `createTheme` function in `carto-theme.js`.
+
 ## Colors
 
 Keys renamed:
