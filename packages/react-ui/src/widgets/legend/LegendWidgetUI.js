@@ -1,14 +1,6 @@
 import React, { createRef, Fragment } from 'react';
-import {
-  Box,
-  Button,
-  Collapse,
-  Divider,
-  Grid,
-  makeStyles,
-  SvgIcon,
-  Typography
-} from '@material-ui/core';
+import { Box, Button, Collapse, Divider, Grid, SvgIcon, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import LegendWrapper from './LegendWrapper';
 import LegendCategories from './LegendCategories';
 import LegendIcon from './LegendIcon';

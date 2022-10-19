@@ -1,5 +1,7 @@
 import React from 'react';
-import { Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Grid, Paper, Typography } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 const options = {
   title: 'Common/Paper',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, IconButton, Grid, SvgIcon } from '@material-ui/core';
+import { Button, IconButton, Grid, SvgIcon } from '@mui/material';
 
 const options = {
   title: 'Common/Button',
@@ -64,7 +64,7 @@ const PlaygroundTemplate = ({ label, icon, ...rest }) => (
       </Button>
     </Grid>
     <Grid item xs={3}>
-      <IconButton {...rest} aria-label={label}>
+      <IconButton {...rest} aria-label={label} size='large'>
         <Icon />
       </IconButton>
     </Grid>

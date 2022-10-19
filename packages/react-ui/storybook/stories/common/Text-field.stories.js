@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid, InputAdornment, TextField, Typography } from '@material-ui/core';
-import { Visibility } from '@material-ui/icons';
+import { Grid, InputAdornment, TextField, Typography } from '@mui/material';
+import { Visibility } from '@mui/icons-material';
 
 const options = {
   title: 'Common/Text Field',

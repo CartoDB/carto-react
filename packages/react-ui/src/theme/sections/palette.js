@@ -1,4 +1,4 @@
-import { alpha, darken, lighten } from '@material-ui/core';
+import { alpha, darken, lighten } from '@mui/material';
 
 const COLOR_BLACK = '#2C3032';
 const COLOR_WHITE = '#FFFFFF';
