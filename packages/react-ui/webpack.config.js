@@ -7,8 +7,10 @@ const webpackBaseConfig = require('../../webpack.base');
 const webpackConfig = {
   ...webpackBaseConfig,
   externals: [
-    /^@mui\/.+$/,
     '@carto/react-core',
+    /^@mui\/.+$/,
+    /^@emotion\/.+$/,
+    'styled-components',
     'echarts',
     'echarts-for-react',
     'react',

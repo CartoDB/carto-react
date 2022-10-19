@@ -10,6 +10,7 @@ const webpackConfig = {
     /^@carto\/react-.+$/,
     /^@deck.gl\/.+$/,
     /^@mui\/.+$/,
+    /^@emotion\/.+$/,
     /^@nebula.gl\/.+$/,
     'react',
     'react-dom',
