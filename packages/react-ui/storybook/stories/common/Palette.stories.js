@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
 const options = {
@@ -9,7 +9,15 @@ const options = {
     colorVariant: {
       control: {
         type: 'select',
-        options: ['primary', 'secondary', 'error', 'warning', 'info', 'success']
+        options: [
+          'primary',
+          'secondary',
+          'info',
+          'success',
+          'warning',
+          'error',
+          'default'
+        ]
       }
     }
   },
@@ -17,358 +25,155 @@ const options = {
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=8786%3A6248'
-    }
+    },
+    viewMode: 'docs'
   }
 };
 export default options;
 
-const boxStyle = {
-  height: 80,
-  width: 186,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  textAlign: 'center'
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: theme.spacing(1)
+  },
+  text: {
+    marginBottom: theme.spacing(0.5)
+  },
+  color: {
+    height: 60,
+    width: '100%',
+    marginBottom: theme.spacing(3),
+    border: `1px solid ${theme.palette.grey[100]}`,
+    borderRadius: theme.spacing(0.5)
+  }
+}));
+
+const ColorBox = ({ colorVariant, colorName }) => {
+  const theme = useTheme();
+  const color = theme.palette[colorVariant];
+  const classes = useStyles();
+
+  return (
+    <Box>
+      <Box className={classes.text}>
+        <Typography variant='subtitle1'>{colorName}</Typography>
+        <Typography variant='caption'>{color[colorName]}</Typography>
+      </Box>
+      <Box className={classes.color} style={{ backgroundColor: color[colorName] }} />
+    </Box>
+  );
 };
 
-const ColorTemplate = ({ colorVariant, shade, ...args }) => {
+const ColorTemplate = ({ colorVariant }) => {
   const theme = useTheme();
   const colorDef = theme.palette[colorVariant];
+  const classes = useStyles();
+
   return (
-    <Grid container>
-      <Box style={{ backgroundColor: colorDef.light, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: colorDef.contrastText }}>
-          Light
-          <br />
-          {colorDef.light}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.main, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: colorDef.contrastText }}>
-          Main
-          <br />
-          {colorDef.main}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.dark, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: colorDef.contrastText }}>
-          Dark
-          <br />
-          {colorDef.dark}
-        </Typography>
-      </Box>
+    <Grid container className={classes.container}>
+      <ColorBox colorVariant={colorVariant} colorName={'main'} />
+      <ColorBox colorVariant={colorVariant} colorName={'dark'} />
+      <ColorBox colorVariant={colorVariant} colorName={'light'} />
+      {colorDef.contrastText && (
+        <ColorBox colorVariant={colorVariant} colorName={'contrastText'} />
+      )}
+      {colorDef.background && (
+        <ColorBox colorVariant={colorVariant} colorName={'background'} />
+      )}
       {colorDef.relatedDark && (
-        <Box style={{ backgroundColor: colorDef.relatedDark, ...boxStyle }} {...args}>
-          <Typography variant='caption' style={{ color: theme.palette.common.white }}>
-            Related Dark
-            <br />
-            {colorDef.relatedDark}
-          </Typography>
-        </Box>
+        <ColorBox colorVariant={colorVariant} colorName={'relatedDark'} />
       )}
       {colorDef.relatedLight && (
-        <Box style={{ backgroundColor: colorDef.relatedLight, ...boxStyle }} {...args}>
-          <Typography variant='caption' style={{ color: colorDef.dark }}>
-            Related Light
-            <br />
-            {colorDef.relatedLight}
-          </Typography>
-        </Box>
+        <ColorBox colorVariant={colorVariant} colorName={'relatedLight'} />
       )}
     </Grid>
   );
 };
 
-const CommonTemplate = (args) => {
-  const theme = useTheme();
-  const colorDef = theme.palette.common;
+const TextTemplate = () => {
+  const classes = useStyles();
 
   return (
-    <Grid container>
-      <Box style={{ backgroundColor: colorDef.black, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: colorDef.white }}>
-          Black
-          <br />
-          {colorDef.black}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.white, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: colorDef.black }}>
-          White
-          <br />
-          {colorDef.white}
-        </Typography>
-      </Box>
+    <Grid container className={classes.container}>
+      <ColorBox colorVariant={'text'} colorName={'primary'} />
+      <ColorBox colorVariant={'text'} colorName={'secondary'} />
+      <ColorBox colorVariant={'text'} colorName={'disabled'} />
+      <ColorBox colorVariant={'text'} colorName={'hint'} />
     </Grid>
   );
 };
 
-const TextTemplate = (args) => {
-  const theme = useTheme();
-  const colorDef = theme.palette.text;
-  const textColor = theme.palette.common.white;
+const CommonTemplate = () => {
+  const classes = useStyles();
+
   return (
-    <Grid container>
-      <Box style={{ backgroundColor: colorDef.primary, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Primary
-          <br />
-          {colorDef.primary}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.secondary, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Secondary
-          <br />
-          {colorDef.secondary}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.hint, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Hint
-          <br />
-          {colorDef.hint}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.disabled, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Disabled
-          <br />
-          {colorDef.disabled}
-        </Typography>
-      </Box>
+    <Grid container className={classes.container}>
+      <ColorBox colorVariant={'common'} colorName={'black'} />
+      <ColorBox colorVariant={'common'} colorName={'white'} />
     </Grid>
   );
 };
 
-const BackgroundTemplate = (args) => {
-  const theme = useTheme();
-  const colorDef = theme.palette.background;
-  const textColor = theme.palette.common.black;
+const BackgroundTemplate = () => {
+  const classes = useStyles();
+
   return (
-    <Grid container>
-      <Box style={{ backgroundColor: colorDef.default, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Default
-          <br />
-          {colorDef.default}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.paper, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Paper
-          <br />
-          {colorDef.paper}
-        </Typography>
-      </Box>
+    <Grid container className={classes.container}>
+      <ColorBox colorVariant={'background'} colorName={'paper'} />
+      <ColorBox colorVariant={'background'} colorName={'default'} />
     </Grid>
   );
 };
 
-const OtherTemplate = (args) => {
-  const theme = useTheme();
-  const colorDef = theme.palette.other;
-  const textColor = theme.palette.common.white;
+const ActionTemplate = () => {
+  const classes = useStyles();
+
   return (
-    <Grid container>
-      <Box style={{ backgroundColor: colorDef.tooltip, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Tooltip
-          <br />
-          {colorDef.tooltip}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.snackbar, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Snackbar
-          <br />
-          {colorDef.snackbar}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.backdrop, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Backdrop
-          <br />
-          {colorDef.backdrop}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.divider, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: theme.palette.common.black }}>
-          Divider
-          <br />
-          {colorDef.divider}
-        </Typography>
-      </Box>
+    <Grid container className={classes.container}>
+      <ColorBox colorVariant={'action'} colorName={'active'} />
+      <ColorBox colorVariant={'action'} colorName={'hover'} />
+      <ColorBox colorVariant={'action'} colorName={'disabledBackground'} />
+      <ColorBox colorVariant={'action'} colorName={'disabled'} />
+      <ColorBox colorVariant={'action'} colorName={'selected'} />
+      <ColorBox colorVariant={'action'} colorName={'focus'} />
     </Grid>
   );
 };
 
-const ActionTemplate = (args) => {
-  const theme = useTheme();
-  const colorDef = theme.palette.action;
-  const textColor = theme.palette.common.black;
+const GreyTemplate = () => {
+  const classes = useStyles();
+
   return (
-    <Grid container>
-      <Box style={{ backgroundColor: colorDef.active, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Active
-          <br />
-          {colorDef.active}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.hover, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Hover
-          <br />
-          {colorDef.hover}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.selected, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Selected
-          <br />
-          {colorDef.selected}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.disabled, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Disabled
-          <br />
-          {colorDef.disabled}
-        </Typography>
-      </Box>
-      <Box
-        style={{ backgroundColor: colorDef.disabledBackground, ...boxStyle }}
-        {...args}
-      >
-        <Typography variant='caption' style={{ color: textColor }}>
-          DisabledBackground
-          <br />
-          {colorDef.disabledBackground}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef.focus, ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColor }}>
-          Focus
-          <br />
-          {colorDef.focus}
-        </Typography>
-      </Box>
+    <Grid container className={classes.container}>
+      <ColorBox colorVariant={'grey'} colorName={'900'} />
+      <ColorBox colorVariant={'grey'} colorName={'800'} />
+      <ColorBox colorVariant={'grey'} colorName={'700'} />
+      <ColorBox colorVariant={'grey'} colorName={'600'} />
+      <ColorBox colorVariant={'grey'} colorName={'500'} />
+      <ColorBox colorVariant={'grey'} colorName={'400'} />
+      <ColorBox colorVariant={'grey'} colorName={'300'} />
+      <ColorBox colorVariant={'grey'} colorName={'200'} />
+      <ColorBox colorVariant={'grey'} colorName={'100'} />
+      <ColorBox colorVariant={'grey'} colorName={'50'} />
+      <ColorBox colorVariant={'grey'} colorName={'A100'} />
+      <ColorBox colorVariant={'grey'} colorName={'A200'} />
+      <ColorBox colorVariant={'grey'} colorName={'A400'} />
+      <ColorBox colorVariant={'grey'} colorName={'A700'} />
     </Grid>
   );
 };
 
-const GreyTemplate = (args) => {
-  const theme = useTheme();
-  const colorDef = theme.palette.grey;
-  const textColorDark = theme.palette.common.white;
-  const textColorLight = theme.palette.common.black;
+const OtherTemplate = () => {
+  const classes = useStyles();
+
   return (
-    <Grid container>
-      <Box style={{ backgroundColor: colorDef[900], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorDark }}>
-          N900
-          <br />
-          {colorDef[900]}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef[800], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorDark }}>
-          N800
-          <br />
-          {colorDef[800]}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef[700], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorDark }}>
-          N700
-          <br />
-          {colorDef[700]}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef[600], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorDark }}>
-          N600
-          <br />
-          {colorDef[600]}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef[500], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorDark }}>
-          N500
-          <br />
-          {colorDef[500]}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef[400], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorLight }}>
-          N400
-          <br />
-          {colorDef[400]}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef[300], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorLight }}>
-          N300
-          <br />
-          {colorDef[300]}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef[200], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorLight }}>
-          N200
-          <br />
-          {colorDef[200]}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef[100], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorLight }}>
-          N100
-          <br />
-          {colorDef[100]}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef[50], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorLight }}>
-          N050
-          <br />
-          {colorDef[50]}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef['A100'], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorLight }}>
-          A100
-          <br />
-          {colorDef['A100']}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef['A200'], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorLight }}>
-          A200
-          <br />
-          {colorDef['A200']}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef['A400'], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorDark }}>
-          A400
-          <br />
-          {colorDef['A400']}
-        </Typography>
-      </Box>
-      <Box style={{ backgroundColor: colorDef['A700'], ...boxStyle }} {...args}>
-        <Typography variant='caption' style={{ color: textColorDark }}>
-          A700
-          <br />
-          {colorDef['A700']}
-        </Typography>
-      </Box>
+    <Grid container className={classes.container}>
+      <ColorBox colorVariant={'other'} colorName={'tooltip'} />
+      <ColorBox colorVariant={'other'} colorName={'divider'} />
     </Grid>
   );
 };
-
-export const Default = ColorTemplate.bind({});
-Default.args = { colorVariant: 'primary' };
 
 export const Primary = ColorTemplate.bind({});
 Primary.args = { colorVariant: 'primary' };
@@ -376,11 +181,11 @@ Primary.args = { colorVariant: 'primary' };
 export const Secondary = ColorTemplate.bind({});
 Secondary.args = { colorVariant: 'secondary' };
 
-export const Error = ColorTemplate.bind({});
-Error.args = { colorVariant: 'error' };
+export const Text = TextTemplate.bind({});
 
-export const Warning = ColorTemplate.bind({});
-Warning.args = { colorVariant: 'warning' };
+export const Background = BackgroundTemplate.bind({});
+
+export const Action = ActionTemplate.bind({});
 
 export const Info = ColorTemplate.bind({});
 Info.args = { colorVariant: 'info' };
@@ -388,14 +193,17 @@ Info.args = { colorVariant: 'info' };
 export const Success = ColorTemplate.bind({});
 Success.args = { colorVariant: 'success' };
 
+export const Warning = ColorTemplate.bind({});
+Warning.args = { colorVariant: 'warning' };
+
+export const Error = ColorTemplate.bind({});
+Error.args = { colorVariant: 'error' };
+
 export const Common = CommonTemplate.bind({});
 
-export const Text = TextTemplate.bind({});
+export const Grey = GreyTemplate.bind({});
 
-export const Background = BackgroundTemplate.bind({});
+export const Default = ColorTemplate.bind({});
+Default.args = { colorVariant: 'default' };
 
 export const Other = OtherTemplate.bind({});
-
-export const Action = ActionTemplate.bind({});
-
-export const Grey = GreyTemplate.bind({});

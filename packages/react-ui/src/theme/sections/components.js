@@ -1,5 +1,5 @@
 import { spacing } from '../themeUtils';
-import { baseColors, themePalette } from './palette';
+import { commonPalette, componentsPalette } from './palette';
 import { themeTypography } from './typography';
 
 const round = (value) => Math.round(value * 1e5) / 1e5;
@@ -15,7 +15,7 @@ export const themeComponentsOverrides = {
       boxShadow: 'none'
     },
     outlined: {
-      border: `2px solid ${themePalette.text.primary}`,
+      border: `2px solid ${commonPalette.text.primary}`,
       padding: '4px 14px',
       '&:hover': {
         borderWidth: '2px'
@@ -25,13 +25,13 @@ export const themeComponentsOverrides = {
       }
     },
     outlinedPrimary: {
-      border: `2px solid ${themePalette.primary.main}`,
+      border: `2px solid ${commonPalette.primary.main}`,
       '&:hover': {
         borderWidth: '2px'
       }
     },
     outlinedSecondary: {
-      border: `2px solid ${themePalette.secondary.main}`,
+      border: `2px solid ${commonPalette.secondary.main}`,
       '&:hover': {
         borderWidth: '2px'
       },
@@ -57,7 +57,7 @@ export const themeComponentsOverrides = {
     },
     containedSecondary: {
       '&:hover': {
-        backgroundColor: themePalette.secondary.light
+        backgroundColor: commonPalette.secondary.light
       }
     },
     outlinedSizeLarge: {
@@ -108,7 +108,7 @@ export const themeComponentsOverrides = {
     root: {
       padding: spacing(0.75),
       borderRadius: spacing(0.5),
-      color: themePalette.text.primary
+      color: commonPalette.text.primary
     },
     sizeSmall: {
       padding: spacing(0.25)
@@ -118,17 +118,17 @@ export const themeComponentsOverrides = {
   MuiInputBase: {
     root: {
       '&$disabled .MuiInputAdornment-root': {
-        color: themePalette.action.disabled
+        color: commonPalette.action.disabled
       },
       '&$disabled .MuiTypography-root': {
-        color: themePalette.action.disabled
+        color: commonPalette.action.disabled
       }
     }
   },
   MuiOutlinedInput: {
     root: {
       '&$disabled': {
-        backgroundColor: themePalette.action.hover
+        backgroundColor: commonPalette.action.hover
       }
     },
 
@@ -158,7 +158,7 @@ export const themeComponentsOverrides = {
     },
 
     notchedOutline: {
-      border: `2px solid ${themePalette.text.disabled}`
+      border: `2px solid ${commonPalette.text.disabled}`
     },
 
     multiline: {
@@ -210,10 +210,10 @@ export const themeComponentsOverrides = {
       ...themeTypography.body1,
       alignItems: 'baseline',
       marginBottom: spacing(1.5),
-      color: themePalette.text.secondary,
+      color: commonPalette.text.secondary,
 
       '&:disabled': {
-        color: themePalette.action.disabled
+        color: commonPalette.action.disabled
       },
 
       '& .MuiSvgIcon-root': {
@@ -315,7 +315,7 @@ export const themeComponentsOverrides = {
       '& + .MuiFormControlLabel-label': {
         ...themeTypography.body2,
         marginLeft: spacing(0.25),
-        color: themePalette.text.primary
+        color: commonPalette.text.primary
       },
 
       '& .MuiSvgIcon-root': {
@@ -334,7 +334,7 @@ export const themeComponentsOverrides = {
       '& + .MuiFormControlLabel-label': {
         ...themeTypography.body2,
         marginLeft: spacing(0.25),
-        color: themePalette.text.primary
+        color: commonPalette.text.primary
       },
 
       '& .MuiSvgIcon-root': {
@@ -348,7 +348,7 @@ export const themeComponentsOverrides = {
     indicator: {
       height: 4,
       '&.colorPrimary': {
-        backgroundColor: themePalette.text.primary
+        backgroundColor: commonPalette.text.primary
       }
     },
 
@@ -383,23 +383,23 @@ export const themeComponentsOverrides = {
       }
     },
     textColorPrimary: {
-      color: themePalette.primary.main,
+      color: commonPalette.primary.main,
       opacity: 1,
       '&$selected': {
-        color: themePalette.text.primary
+        color: commonPalette.text.primary
       },
       '&$disabled': {
-        color: themePalette.action.disabled
+        color: commonPalette.action.disabled
       }
     }
   },
 
   MuiDivider: {
     root: {
-      backgroundColor: themePalette.other.divider
+      backgroundColor: commonPalette.divider
     },
     light: {
-      backgroundColor: baseColors.shades.light[12]
+      backgroundColor: commonPalette.grey[50]
     }
   },
 
@@ -414,7 +414,7 @@ export const themeComponentsOverrides = {
       '& + .MuiFormControlLabel-label': {
         ...themeTypography.body2,
         marginLeft: spacing(0.25),
-        color: themePalette.text.primary
+        color: commonPalette.text.primary
       }
     },
 
@@ -422,7 +422,7 @@ export const themeComponentsOverrides = {
       padding: spacing(1.5),
       borderRadius: '50%',
       transform: 'translate(1px, 1px)',
-      color: themePalette.text.secondary,
+      color: commonPalette.text.secondary,
 
       '&$checked': {
         '& input': {
@@ -430,7 +430,7 @@ export const themeComponentsOverrides = {
         },
 
         transform: 'translate(13px, 1px)',
-        color: themePalette.common.white,
+        color: commonPalette.common.white,
 
         '& + $track': {
           opacity: 1
@@ -451,66 +451,66 @@ export const themeComponentsOverrides = {
 
     track: {
       height: 'auto',
-      border: `2px solid ${themePalette.text.secondary}`,
+      border: `2px solid ${commonPalette.text.secondary}`,
       borderRadius: spacing(2),
       opacity: 1,
-      backgroundColor: themePalette.common.white
+      backgroundColor: commonPalette.common.white
     },
 
     colorPrimary: {
       '&$checked': {
-        color: themePalette.common.white,
+        color: commonPalette.common.white,
 
         '& + $track': {
-          backgroundColor: themePalette.primary.main,
+          backgroundColor: commonPalette.primary.main,
           borderColor: 'transparent'
         },
 
         '&$disabled': {
-          color: themePalette.grey[100],
+          color: commonPalette.grey[100],
 
           '& + $track': {
-            backgroundColor: themePalette.text.disabled
+            backgroundColor: commonPalette.text.disabled
           }
         }
       },
 
       '&$disabled': {
-        color: themePalette.text.disabled,
+        color: commonPalette.text.disabled,
 
         '& + $track': {
           opacity: 1,
-          backgroundColor: themePalette.common.white,
-          borderColor: themePalette.text.disabled
+          backgroundColor: commonPalette.common.white,
+          borderColor: commonPalette.text.disabled
         }
       }
     },
 
     colorSecondary: {
       '&$checked': {
-        color: themePalette.common.white,
+        color: commonPalette.common.white,
 
         '& + $track': {
-          backgroundColor: themePalette.secondary.main,
+          backgroundColor: commonPalette.secondary.main,
           borderColor: 'transparent'
         },
 
         '&$disabled': {
-          color: themePalette.grey[100],
+          color: commonPalette.grey[100],
 
           '& + $track': {
-            backgroundColor: themePalette.text.disabled
+            backgroundColor: commonPalette.text.disabled
           }
         }
       },
 
       '&$disabled': {
-        color: themePalette.text.disabled,
+        color: commonPalette.text.disabled,
 
         '& + $track': {
           opacity: 1,
-          backgroundColor: themePalette.common.white,
-          borderColor: themePalette.text.disabled
+          backgroundColor: commonPalette.common.white,
+          borderColor: commonPalette.text.disabled
         }
       }
     },
@@ -613,11 +613,11 @@ export const themeComponentsOverrides = {
   MuiTooltip: {
     tooltip: {
       ...themeTypography.caption,
-      backgroundColor: themePalette.other.tooltip
+      backgroundColor: componentsPalette.other.tooltip
     },
 
     arrow: {
-      color: themePalette.other.tooltip
+      color: componentsPalette.other.tooltip
     }
   },
 
@@ -676,7 +676,7 @@ export const themeComponentsOverrides = {
     },
     input: {
       height: spacing(4),
-      border: `2px solid ${themePalette.other.divider}`,
+      border: `2px solid ${commonPalette.divider}`,
       borderRadius: spacing(0.5),
       fontWeight: themeTypography.fontWeightMedium,
       '& .MuiSelect-icon': {
@@ -690,7 +690,7 @@ export const themeComponentsOverrides = {
     caption: {
       ...themeTypography.caption,
       '&:first-of-type': {
-        color: themePalette.text.secondary
+        color: commonPalette.text.secondary
       }
     },
     toolbar: {
@@ -707,10 +707,10 @@ export const themeComponentsOverrides = {
   MuiTableCell: {
     head: {
       ...themeTypography.caption,
-      color: themePalette.text.secondary
+      color: commonPalette.text.secondary
     },
     stickyHeader: {
-      backgroundColor: themePalette.common.white
+      backgroundColor: commonPalette.common.white
     }
   },
 
@@ -721,12 +721,12 @@ export const themeComponentsOverrides = {
       height: spacing(4.5),
       border: 'none',
       borderRadius: spacing(0.5),
-      color: themePalette.grey[500],
+      color: commonPalette.grey[500],
       '&$selected': {
-        color: themePalette.primary.main,
-        backgroundColor: themePalette.primary.relatedLight,
+        color: commonPalette.primary.main,
+        backgroundColor: commonPalette.primary.relatedLight,
         '&:hover': {
-          backgroundColor: themePalette.primary.relatedLight
+          backgroundColor: commonPalette.primary.relatedLight
         }
       }
     },
@@ -746,30 +746,30 @@ export const themeComponentsOverrides = {
 
   MuiChip: {
     root: {
-      backgroundColor: themePalette.grey[100],
+      backgroundColor: commonPalette.grey[100],
       '&:hover': {
-        backgroundColor: themePalette.grey[200]
+        backgroundColor: commonPalette.grey[200]
       },
       '& .MuiAvatar-root': {
         backgroundColor: '#7f3c8d',
-        color: themePalette.common.white
+        color: commonPalette.common.white
       }
     },
     colorPrimary: {
       '&$disabled': {
-        backgroundColor: themePalette.grey[100],
-        color: themePalette.text.primary
+        backgroundColor: commonPalette.grey[100],
+        color: commonPalette.text.primary
       },
       '&:hover': {
-        backgroundColor: themePalette.primary.dark
+        backgroundColor: commonPalette.primary.dark
       }
     },
     colorSecondary: {
       '&$disabled': {
-        backgroundColor: themePalette.grey[100]
+        backgroundColor: commonPalette.grey[100]
       },
       '&:hover': {
-        backgroundColor: themePalette.secondary.light
+        backgroundColor: commonPalette.secondary.light
       }
     },
     label: {
@@ -787,7 +787,7 @@ export const themeComponentsOverrides = {
       },
       '&:hover': {
         backgroundColor: 'transparent',
-        borderColor: themePalette.grey[200],
+        borderColor: commonPalette.grey[200],
         '&$clickable': {
           backgroundColor: 'transparent'
         }
@@ -796,8 +796,8 @@ export const themeComponentsOverrides = {
     outlinedPrimary: {
       '&:hover': {
         backgroundColor: 'transparent',
-        borderColor: themePalette.primary.dark,
-        color: themePalette.primary.dark,
+        borderColor: commonPalette.primary.dark,
+        color: commonPalette.primary.dark,
         '&$clickable': {
           backgroundColor: 'transparent'
         }
@@ -806,8 +806,8 @@ export const themeComponentsOverrides = {
     outlinedSecondary: {
       '&:hover': {
         backgroundColor: 'transparent',
-        borderColor: themePalette.secondary.dark,
-        color: themePalette.secondary.dark,
+        borderColor: commonPalette.secondary.dark,
+        color: commonPalette.secondary.dark,
         '&$clickable': {
           backgroundColor: 'transparent'
         }
