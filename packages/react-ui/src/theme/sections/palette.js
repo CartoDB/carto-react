@@ -178,6 +178,7 @@ export const commonPalette = {
     light: baseColors.neutral[100],
     main: baseColors.neutral[200],
     dark: baseColors.neutral[50],
+    // are we missing here relatedLight ??
     contrastText: baseColors.common.black,
     background: baseColors.shades.dark[8]
   }
