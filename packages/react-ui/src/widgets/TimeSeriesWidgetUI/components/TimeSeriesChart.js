@@ -88,7 +88,7 @@ export default function TimeSeriesChart({
         axisLabel: {
           margin: 0,
           verticalAlign: 'bottom',
-          padding: [0, 0, theme.typography.charts.fontSize, 0],
+          padding: [0, 0, theme.typography.overlineDelicate.fontSize, 0],
           show: true,
           showMaxLabel: true,
           showMinLabel: false,
@@ -103,7 +103,7 @@ export default function TimeSeriesChart({
             return col;
           },
           ...(formatter ? { formatter: (v) => formatter(v) } : {}),
-          ...theme.typography.charts
+          ...theme.typography.overlineDelicate
         },
         axisLine: {
           show: false

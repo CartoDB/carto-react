@@ -101,7 +101,7 @@ function BarWidgetUI(props) {
         show: false
       },
       axisLabel: {
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         padding: [theme.spacing(0.5), 0, 0, 0]
       },
       data: xAxisDataWithLabels
@@ -132,14 +132,14 @@ function BarWidgetUI(props) {
       axisLabel: {
         margin: 0,
         verticalAlign: 'bottom',
-        padding: [0, 0, theme.typography.charts.fontSize, 0],
+        padding: [0, 0, theme.typography.overlineDelicate.fontSize, 0],
         show: true,
         showMaxLabel: true,
         showMinLabel: false,
         inside: true,
         color: (value) =>
           value >= maxValue ? theme.palette.charts.maxLabel : 'transparent',
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         formatter: (v) => processFormatterRes(yAxisFormatter(v))
       },
       axisLine: {
@@ -160,7 +160,7 @@ function BarWidgetUI(props) {
       maxValue,
       theme.palette.charts.axisLine,
       theme.palette.charts.maxLabel,
-      theme.typography.charts,
+      theme.typography.overlineDelicate,
       yAxisFormatter
     ]
   );
