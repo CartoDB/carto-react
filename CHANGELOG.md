@@ -2,6 +2,7 @@
 
 ## Not released
 
+- New color palette for MUI carto-theme [#496](https://github.com/CartoDB/carto-react/pull/496/)
 - Split carto-theme into sections [#495](https://github.com/CartoDB/carto-react/pull/495)
 - Integration between Figma and Storybook through `addon-designs` [#488](https://github.com/CartoDB/carto-react/pull/488)
 - Update Storybook to v6.5.12 [#487](https://github.com/CartoDB/carto-react/pull/487)

@@ -1,6 +1,6 @@
 import { themeComponentsOverrides, themeComponentsProps } from './sections/components';
 import { CssBaseline } from './sections/cssBaseline';
-import { themePalette } from './sections/palette';
+import { commonPalette, componentsPalette } from './sections/palette';
 import { themeShadows } from './sections/shadows';
 import { themeTypography } from './sections/typography';
 import { SPACING } from './themeConstants';
@@ -42,23 +42,24 @@ export const cartoThemeOptions = {
     type: 'light',
     contrastThreshold: 3,
     tonalOffset: 0.2,
-    common: { ...themePalette.common },
-    primary: { ...themePalette.primary },
-    secondary: { ...themePalette.secondary },
-    error: { ...themePalette.error },
-    warning: { ...themePalette.warning },
-    info: { ...themePalette.info },
-    success: { ...themePalette.success },
-    text: { ...themePalette.text },
-    other: { ...themePalette.other },
-    divider: themePalette.other.divider,
-    background: { ...themePalette.background },
-    charts: { ...themePalette.charts },
-    grey: { ...themePalette.grey },
-    action: { ...themePalette.action },
+    common: { ...commonPalette.common },
+    primary: { ...commonPalette.primary },
+    secondary: { ...commonPalette.secondary },
+    error: { ...commonPalette.error },
+    warning: { ...commonPalette.warning },
+    info: { ...commonPalette.info },
+    success: { ...commonPalette.success },
+    text: { ...commonPalette.text },
+    divider: componentsPalette.other.divider,
+    background: { ...commonPalette.background },
+    grey: { ...commonPalette.grey },
+    action: { ...commonPalette.action },
     // props: Object => Research,
     /* Custom Colors palette */
-    qualitative: { ...themePalette.qualitative }
+    qualitative: { ...commonPalette.qualitative },
+    default: { ...commonPalette.default },
+    charts: { ...componentsPalette.charts },
+    other: { ...componentsPalette.other }
   },
   shadows: [...themeShadows],
   typography: {
