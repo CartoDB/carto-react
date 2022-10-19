@@ -21,6 +21,8 @@
     "@mui/material": "^5.10.10",
     "@mui/styles": "^5.10.10",
     "@mui/styled-engine-sc": "^5.10.6",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
     "styled-components": "^5.2.3",
     "@nebula.gl/edit-modes": "^1.0.4",
     "@nebula.gl/layers": "^1.0.4",
