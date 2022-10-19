@@ -141,25 +141,15 @@ const ActionTemplate = () => {
   );
 };
 
-const GreyTemplate = () => {
+const CartoBrandTemplate = () => {
   const classes = useStyles();
 
   return (
     <Grid container className={classes.container}>
-      <ColorBox colorVariant={'grey'} colorName={'900'} />
-      <ColorBox colorVariant={'grey'} colorName={'800'} />
-      <ColorBox colorVariant={'grey'} colorName={'700'} />
-      <ColorBox colorVariant={'grey'} colorName={'600'} />
-      <ColorBox colorVariant={'grey'} colorName={'500'} />
-      <ColorBox colorVariant={'grey'} colorName={'400'} />
-      <ColorBox colorVariant={'grey'} colorName={'300'} />
-      <ColorBox colorVariant={'grey'} colorName={'200'} />
-      <ColorBox colorVariant={'grey'} colorName={'100'} />
-      <ColorBox colorVariant={'grey'} colorName={'50'} />
-      <ColorBox colorVariant={'grey'} colorName={'A100'} />
-      <ColorBox colorVariant={'grey'} colorName={'A200'} />
-      <ColorBox colorVariant={'grey'} colorName={'A400'} />
-      <ColorBox colorVariant={'grey'} colorName={'A700'} />
+      <ColorBox colorVariant={'cartoBrand'} colorName={'naviBlue'} />
+      <ColorBox colorVariant={'cartoBrand'} colorName={'locationRed'} />
+      <ColorBox colorVariant={'cartoBrand'} colorName={'predictionBlue'} />
+      <ColorBox colorVariant={'cartoBrand'} colorName={'softBlue'} />
     </Grid>
   );
 };
@@ -201,9 +191,9 @@ Error.args = { colorVariant: 'error' };
 
 export const Common = CommonTemplate.bind({});
 
-export const Grey = GreyTemplate.bind({});
-
 export const Default = ColorTemplate.bind({});
 Default.args = { colorVariant: 'default' };
+
+export const CartoBrand = CartoBrandTemplate.bind({});
 
 export const Other = OtherTemplate.bind({});

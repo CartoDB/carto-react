@@ -58,6 +58,7 @@ export const cartoThemeOptions = {
     /* Custom Colors palette */
     qualitative: { ...commonPalette.qualitative },
     default: { ...commonPalette.default },
+    cartoBrand: { ...commonPalette.cartoBrand },
     charts: { ...componentsPalette.charts },
     other: { ...componentsPalette.other }
   },

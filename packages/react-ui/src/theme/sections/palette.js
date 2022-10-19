@@ -171,15 +171,21 @@ export const commonPalette = {
   },
 
   // Custom common colors
-  qualitative: {
-    ...baseColors.qualitative
-  },
   default: {
     light: baseColors.neutral[100],
     main: baseColors.neutral[200],
     dark: baseColors.neutral[50],
     contrastText: baseColors.common.black,
     background: baseColors.shades.dark[8]
+  },
+  cartoBrand: {
+    naviBlue: '#162945',
+    locationRed: '#EB1510',
+    predictionBlue: '#1785FB',
+    softBlue: '#F2F6F9'
+  },
+  qualitative: {
+    ...baseColors.qualitative
   }
 };
 

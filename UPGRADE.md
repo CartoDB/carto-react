@@ -35,3 +35,5 @@ Some others have been moved because they aren't native MUI keys and are so speci
 - other
 
 These sets of keys are now in: `componentsPalette`.
+
+`grey palette` is not used to design (and therefore not for style) components directly. We have a set of neutral colors to use in the custom `default` variant.
