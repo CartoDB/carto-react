@@ -30,7 +30,7 @@ function __generateDefaultConfig(
     color: [theme.palette.secondary.main],
     xAxis: {
       axisLabel: {
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         padding: [theme.spacing(0.5), 0, 0, 0],
         formatter: (v) => {
           const formatted = xAxisFormatter(v);
@@ -42,7 +42,7 @@ function __generateDefaultConfig(
     },
     yAxis: {
       axisLabel: {
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         formatter: (v) => {
           const formatted = yAxisFormatter(v);
           return typeof formatted === 'object'

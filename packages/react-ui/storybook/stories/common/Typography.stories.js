@@ -28,20 +28,16 @@ const options = {
           'body2Italic',
           'body2Strong',
           'body2StrongItalic',
-          'buttonLarge',
-          'buttonSmall',
           'captionItalic',
           'captionStrong',
           'captionStrongItalic',
           'overlineDelicate',
-          'codeLarge',
-          'codeLargeStrong',
-          'codeMediun',
-          'codeMediunStrong',
-          'codeSmall',
-          'codeSmallStrong',
-          'codeSmallChip',
-          'charts'
+          'code1',
+          'code1Strong',
+          'code2',
+          'code2Strong',
+          'code3',
+          'code3Strong'
         ]
       }
     }
@@ -116,12 +112,6 @@ Body2Strong.args = { variant: 'body2Strong', text: 'Body 2 Strong' };
 export const Body2StrongItalic = Template.bind({});
 Body2StrongItalic.args = { variant: 'body2StrongItalic', text: 'Body 2 Strong Italic' };
 
-export const ButtonLarge = Template.bind({});
-ButtonLarge.args = { variant: 'buttonLarge', text: 'Button Large' };
-
-export const ButtonSmall = Template.bind({});
-ButtonSmall.args = { variant: 'buttonSmall', text: 'Button Small' };
-
 export const CaptionItalic = Template.bind({});
 CaptionItalic.args = { variant: 'captionItalic', text: 'Caption Italic' };
 
@@ -134,47 +124,44 @@ CaptionStrongItalic.args = {
   text: 'Caption Strong Italic'
 };
 
-export const CodeLarge = Template.bind({});
-CodeLarge.args = {
-  variant: 'codeLarge',
-  text: 'Code Large'
+export const OverlineDelicate = Template.bind({});
+OverlineDelicate.args = {
+  variant: 'overlineDelicate',
+  text: 'Overline Delicate'
 };
 
-export const CodeLargeStrong = Template.bind({});
-CodeLargeStrong.args = {
-  variant: 'codeLargeStrong',
-  text: 'Code Large Strong'
+export const Code1 = Template.bind({});
+Code1.args = {
+  variant: 'code1',
+  text: 'Code 1'
 };
 
-export const CodeMedium = Template.bind({});
-CodeMedium.args = {
-  variant: 'codeMedium',
-  text: 'Code Medium'
+export const Code1Strong = Template.bind({});
+Code1Strong.args = {
+  variant: 'code1Strong',
+  text: 'Code 1 Strong'
 };
 
-export const CodeMediumStrong = Template.bind({});
-CodeMediumStrong.args = {
-  variant: 'codeMediumStrong',
-  text: 'Code Medium Strong'
+export const Code2 = Template.bind({});
+Code2.args = {
+  variant: 'code2',
+  text: 'Code 2'
 };
 
-export const CodeSmall = Template.bind({});
-CodeSmall.args = {
-  variant: 'codeSmall',
-  text: 'Code Small'
+export const Code2Strong = Template.bind({});
+Code2Strong.args = {
+  variant: 'code2Strong',
+  text: 'Code 2 Strong'
 };
 
-export const CodeSmallStrong = Template.bind({});
-CodeSmallStrong.args = {
-  variant: 'codeSmallStrong',
-  text: 'Code Small Strong'
+export const Code3 = Template.bind({});
+Code3.args = {
+  variant: 'code3',
+  text: 'Code 3'
 };
 
-export const CodeSmallChip = Template.bind({});
-CodeSmallChip.args = {
-  variant: 'codeSmallChip',
-  text: 'Code Small Chip'
+export const Code3Strong = Template.bind({});
+Code3Strong.args = {
+  variant: 'code3Strong',
+  text: 'Code 3 Strong'
 };
-
-export const Charts = Template.bind({});
-Charts.args = { variant: 'charts', text: 'Charts' };

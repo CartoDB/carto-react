@@ -107,7 +107,7 @@ function HistogramWidgetUI({
       axisLabel: {
         showMinLabel: true,
         showMaxLabel: true,
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         hideOverlap: true,
         padding: [theme.spacing(0.5), theme.spacing(0.5), 0, theme.spacing(0.5)],
         formatter: (value) => {
@@ -143,7 +143,7 @@ function HistogramWidgetUI({
       axisLabel: {
         margin: 0,
         verticalAlign: 'bottom',
-        padding: [0, 0, theme.typography.charts.fontSize, 0],
+        padding: [0, 0, theme.typography.overlineDelicate.fontSize, 0],
         show: true,
         showMaxLabel: true,
         showMinLabel: false,
@@ -158,14 +158,14 @@ function HistogramWidgetUI({
 
           return col;
         },
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         formatter: (v) => processFormatterRes(yAxisFormatter(v))
       }
     }),
     [
       theme.palette.charts.axisLine,
       theme.palette.charts.maxLabel,
-      theme.typography.charts,
+      theme.typography.overlineDelicate,
       data,
       yAxisFormatter
     ]
@@ -346,7 +346,9 @@ function defaultTooltipFormatter(params, xAxisFormatter, yAxisFormatter) {
   }
 
   const [left, right, value] = params.data.value;
-  const title = `${processFormatterRes(xAxisFormatter(left))} <span style="vertical-align: 1px;">—</span> ${processFormatterRes(
+  const title = `${processFormatterRes(
+    xAxisFormatter(left)
+  )} <span style="vertical-align: 1px;">—</span> ${processFormatterRes(
     xAxisFormatter(right)
   )}`;
   const formattedValue = processFormatterRes(yAxisFormatter(value));

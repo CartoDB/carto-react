@@ -106,6 +106,7 @@ const baseTypography = {
 };
 
 const customTypography = {
+  // TODO: Create a wrapper for the Typography component to reduce the number of variants https://app.shortcut.com/cartoteam/story/265549/
   body1Italic: {
     ...baseTypography.body1,
     fontStyle: 'italic'
@@ -132,20 +133,6 @@ const customTypography = {
     fontWeight: 600,
     fontStyle: 'italic'
   },
-  buttonLarge: {
-    fontFamily: 'Inter, sans-serif',
-    fontWeight: 500,
-    fontSize: getPixelToRem(16),
-    lineHeight: 1.5,
-    letterSpacing: '0.25px'
-  },
-  buttonSmall: {
-    fontFamily: 'Inter, sans-serif',
-    fontWeight: 500,
-    fontSize: getPixelToRem(11),
-    lineHeight: 1.454,
-    letterSpacing: '0.4px'
-  },
   captionItalic: {
     ...baseTypography.caption,
     fontStyle: 'italic'
@@ -164,62 +151,47 @@ const customTypography = {
     fontWeight: 400,
     letterSpacing: '1.2px'
   },
-  codeLarge: {
+  code1: {
     fontFamily: '"Overpass Mono", monospace',
     fontWeight: 400,
     fontSize: getPixelToRem(16),
     lineHeight: 1.5,
     letterSpacing: 0
   },
-  codeLargeStrong: {
+  code1Strong: {
     fontFamily: '"Overpass Mono", monospace',
     fontWeight: 600,
     fontSize: getPixelToRem(16),
     lineHeight: 1.5,
     letterSpacing: 0
   },
-  codeMedium: {
+  code2: {
     fontFamily: '"Overpass Mono", monospace',
     fontWeight: 400,
     fontSize: getPixelToRem(14),
     lineHeight: 1.428,
     letterSpacing: 0
   },
-  codeMediumStrong: {
+  code2Strong: {
     fontFamily: '"Overpass Mono", monospace',
     fontWeight: 600,
     fontSize: getPixelToRem(14),
     lineHeight: 1.428,
     letterSpacing: 0
   },
-  codeSmall: {
+  code3: {
     fontFamily: '"Overpass Mono", monospace',
     fontWeight: 400,
     fontSize: getPixelToRem(12),
     lineHeight: 1.333,
     letterSpacing: 0
   },
-  codeSmallStrong: {
+  code3Strong: {
     fontFamily: '"Overpass Mono", monospace',
     fontWeight: 600,
     fontSize: getPixelToRem(12),
     lineHeight: 1.333,
     letterSpacing: 0
-  },
-  codeSmallChip: {
-    fontFamily: '"Overpass Mono", monospace',
-    fontWeight: 600,
-    fontSize: getPixelToRem(12),
-    lineHeight: 1.25,
-    letterSpacing: 0
-  },
-  charts: {
-    // TODO: design team is going to create a new variant (more reusable) to replace this one
-    fontFamily: 'Inter, sans-serif',
-    fontWeight: 400,
-    fontSize: getPixelToRem(10),
-    lineHeight: 1.2,
-    letterSpacing: '2px'
   }
 };
 
