@@ -6,8 +6,8 @@ const webpackBaseConfig = require('../../webpack.base');
 
 const webpackConfig = {
   ...webpackBaseConfig,
-  externals: [ 
-    /^@material-ui\/.+$/,
+  externals: [
+    /^@mui\/.+$/,
     '@carto/react-core',
     'echarts',
     'echarts-for-react',
