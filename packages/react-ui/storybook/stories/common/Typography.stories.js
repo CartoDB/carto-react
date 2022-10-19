@@ -94,73 +94,74 @@ export const Overline = Template.bind({});
 Overline.args = { variant: 'overline', text: 'Overline' };
 
 // Custom variants
-export const Body1Italic = Template.bind({});
+// TODO: Do not export them until we do this task https://app.shortcut.com/cartoteam/story/265549/
+const Body1Italic = Template.bind({});
 Body1Italic.args = { variant: 'body1Italic', text: 'Body 1 Italic' };
 
-export const Body1Strong = Template.bind({});
+const Body1Strong = Template.bind({});
 Body1Strong.args = { variant: 'boy1Strong', text: 'Body 1 Strong' };
 
-export const Body1StrongItalic = Template.bind({});
+const Body1StrongItalic = Template.bind({});
 Body1StrongItalic.args = { variant: 'body1StrongItalic', text: 'Body 1 Strong Italic' };
 
-export const Body2Italic = Template.bind({});
+const Body2Italic = Template.bind({});
 Body2Italic.args = { variant: 'body2Italic', text: 'Body 2 Italic' };
 
-export const Body2Strong = Template.bind({});
+const Body2Strong = Template.bind({});
 Body2Strong.args = { variant: 'body2Strong', text: 'Body 2 Strong' };
 
-export const Body2StrongItalic = Template.bind({});
+const Body2StrongItalic = Template.bind({});
 Body2StrongItalic.args = { variant: 'body2StrongItalic', text: 'Body 2 Strong Italic' };
 
-export const CaptionItalic = Template.bind({});
+const CaptionItalic = Template.bind({});
 CaptionItalic.args = { variant: 'captionItalic', text: 'Caption Italic' };
 
-export const CaptionStrong = Template.bind({});
+const CaptionStrong = Template.bind({});
 CaptionStrong.args = { variant: 'captionStrong', text: 'Caption Strong' };
 
-export const CaptionStrongItalic = Template.bind({});
+const CaptionStrongItalic = Template.bind({});
 CaptionStrongItalic.args = {
   variant: 'captionStrongItalic',
   text: 'Caption Strong Italic'
 };
 
-export const OverlineDelicate = Template.bind({});
+const OverlineDelicate = Template.bind({});
 OverlineDelicate.args = {
   variant: 'overlineDelicate',
   text: 'Overline Delicate'
 };
 
-export const Code1 = Template.bind({});
+const Code1 = Template.bind({});
 Code1.args = {
   variant: 'code1',
   text: 'Code 1'
 };
 
-export const Code1Strong = Template.bind({});
+const Code1Strong = Template.bind({});
 Code1Strong.args = {
   variant: 'code1Strong',
   text: 'Code 1 Strong'
 };
 
-export const Code2 = Template.bind({});
+const Code2 = Template.bind({});
 Code2.args = {
   variant: 'code2',
   text: 'Code 2'
 };
 
-export const Code2Strong = Template.bind({});
+const Code2Strong = Template.bind({});
 Code2Strong.args = {
   variant: 'code2Strong',
   text: 'Code 2 Strong'
 };
 
-export const Code3 = Template.bind({});
+const Code3 = Template.bind({});
 Code3.args = {
   variant: 'code3',
   text: 'Code 3'
 };
 
-export const Code3Strong = Template.bind({});
+const Code3Strong = Template.bind({});
 Code3Strong.args = {
   variant: 'code3Strong',
   text: 'Code 3 Strong'
