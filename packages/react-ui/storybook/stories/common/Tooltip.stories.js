@@ -4,7 +4,7 @@ import { Button, Grid, Tooltip, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 
 const options = {
-  title: 'Molecules/Tooltip',
+  title: 'Common/Tooltip',
   component: Tooltip,
   argTypes: {
     title: {

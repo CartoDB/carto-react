@@ -5,7 +5,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { columns, rows } from '../../../src/widgets/TableWidgetUI/mockData';
 
 const options = {
-  title: 'Organisms/TableWidgetUI',
+  title: 'Custom Components/TableWidgetUI',
   component: TableWidgetUI,
   argTypes: {},
   parameters: {

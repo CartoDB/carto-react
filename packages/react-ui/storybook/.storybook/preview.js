@@ -38,10 +38,10 @@ export const parameters = {
     storySort: {
       order: [
         'Introduction',
-        'Atoms',
+        'CARTO Theme',
         ['Palette', 'Typography'],
-        'Molecules',
-        'Organisms',
+        'Common',
+        'Custom Components',
         [
           'InputFile',
           'CategoryWidgetUI',

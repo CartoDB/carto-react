@@ -2,7 +2,7 @@ import React from 'react';
 import ScatterPlotWidgetUI from '../../../src/widgets/ScatterPlotWidgetUI';
 
 const options = {
-  title: 'Organisms/ScatterPlotWidgetUI',
+  title: 'Custom Components/ScatterPlotWidgetUI',
   component: ScatterPlotWidgetUI,
   parameters: {
     docs: {

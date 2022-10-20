@@ -2,7 +2,7 @@ import React from 'react';
 import HistogramWidgetUI from '../../../src/widgets/HistogramWidgetUI/HistogramWidgetUI';
 
 const options = {
-  title: 'Organisms/HistogramWidgetUI',
+  title: 'Custom Components/HistogramWidgetUI',
   component: HistogramWidgetUI,
   parameters: {
     docs: {

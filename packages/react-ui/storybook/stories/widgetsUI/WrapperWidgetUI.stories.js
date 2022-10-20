@@ -7,7 +7,7 @@ import WrapperWidgetUI from '.../../../src/widgets/WrapperWidgetUI';
 import { buildReactPropsAsString } from '../../utils';
 
 const options = {
-  title: 'Organisms/WrapperWidgetUI',
+  title: 'Custom Components/WrapperWidgetUI',
   component: WrapperWidgetUI,
   argTypes: {
     actions: {

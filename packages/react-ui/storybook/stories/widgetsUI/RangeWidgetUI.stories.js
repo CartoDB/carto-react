@@ -2,7 +2,7 @@ import React from 'react';
 import RangeWidgetUI from '../../../src/widgets/RangeWidgetUI';
 
 const options = {
-  title: 'Organisms/RangeWidgetUI',
+  title: 'Custom Components/RangeWidgetUI',
   component: RangeWidgetUI,
   parameters: {
     docs: {

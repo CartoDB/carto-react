@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LegendWidgetUI from '../../../src/widgets/legend/LegendWidgetUI';
 
 const options = {
-  title: 'Organisms/LegendWidgetUI',
+  title: 'Custom Components/LegendWidgetUI',
   component: LegendWidgetUI,
   argTypes: {
     className: {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Grid, Slider, TextField, Tooltip } from '@mui/material';
 
 const options = {
-  title: 'Molecules/Slider',
+  title: 'Common/Slider',
   component: Slider,
   argTypes: {
     color: {

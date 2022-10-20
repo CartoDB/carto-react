@@ -9,7 +9,7 @@ const DEFAULT_LEGEND = {
 };
 
 const options = {
-  title: 'Organisms/Legends/LegendCategories',
+  title: 'Custom Components/Legends/LegendCategories',
   component: LegendCategories,
   argTypes: {
     legend: {}

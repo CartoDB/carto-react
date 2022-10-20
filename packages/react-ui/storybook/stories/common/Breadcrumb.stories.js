@@ -3,7 +3,7 @@ import { Breadcrumbs, Link, Typography } from '@mui/material';
 import { NavigateNext, CloudCircle, Home, Style } from '@mui/icons-material';
 
 const options = {
-  title: 'Molecules/Breadcrumbs',
+  title: 'Common/Breadcrumbs',
   component: Breadcrumbs,
   argTypes: {
     maxItems: {

@@ -29,7 +29,7 @@ import {
 } from '@mui/icons-material';
 
 const options = {
-  title: 'Molecules/List',
+  title: 'Common/List',
   component: List
 };
 export default options;

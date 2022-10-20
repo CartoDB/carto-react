@@ -12,7 +12,7 @@ import {
 import { Visibility } from '@mui/icons-material';
 
 const options = {
-  title: 'Molecules/Select',
+  title: 'Common/Select',
   component: Select,
   argTypes: {
     variant: {

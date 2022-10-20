@@ -3,7 +3,7 @@ import { Grid, InputAdornment, TextField, Typography } from '@mui/material';
 import { Visibility } from '@mui/icons-material';
 
 const options = {
-  title: 'Molecules/Text Field',
+  title: 'Common/Text Field',
   component: TextField,
   argTypes: {
     variant: {

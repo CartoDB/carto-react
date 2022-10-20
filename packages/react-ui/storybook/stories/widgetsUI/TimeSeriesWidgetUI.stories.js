@@ -66,7 +66,7 @@ const data = [
 ];
 
 const options = {
-  title: 'Organisms/TimeSeriesWidgetUI',
+  title: 'Custom Components/TimeSeriesWidgetUI',
   component: TimeSeriesWidgetUI,
   argTypes: {
     data: {

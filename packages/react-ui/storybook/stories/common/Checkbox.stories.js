@@ -2,7 +2,7 @@ import React from 'react';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 
 const options = {
-  title: 'Molecules/Checkbox',
+  title: 'Common/Checkbox',
   component: Checkbox,
   argTypes: {
     color: {

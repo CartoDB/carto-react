@@ -3,7 +3,7 @@ import { Tab, Tabs } from '@mui/material';
 import { Layers, LocalOffer, Map, Place, Store } from '@mui/icons-material';
 
 const options = {
-  title: 'Molecules/Tabs',
+  title: 'Common/Tabs',
   component: Tabs,
   argTypes: {
     variant: {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, IconButton, Grid, SvgIcon } from '@mui/material';
 
 const options = {
-  title: 'Molecules/Button',
+  title: 'Common/Button',
   component: Button,
   argTypes: {
     variant: {

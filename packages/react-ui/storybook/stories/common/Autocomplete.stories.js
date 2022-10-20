@@ -3,7 +3,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { Grid, TextField } from '@mui/material';
 
 const options = {
-  title: 'Molecules/Autocomplete',
+  title: 'Common/Autocomplete',
   component: Autocomplete,
   argTypes: {
     variant: {

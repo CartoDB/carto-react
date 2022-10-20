@@ -2,7 +2,7 @@ import React from 'react';
 import { FormControlLabel, Grid, Switch } from '@mui/material';
 
 const options = {
-  title: 'Molecules/Switch',
+  title: 'Common/Switch',
   component: Switch,
   argTypes: {
     color: {

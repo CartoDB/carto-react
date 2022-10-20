@@ -20,7 +20,7 @@ const DEFAULT_LEGEND_WITH_FORMATTED_LABELS = {
 };
 
 const options = {
-  title: 'Organisms/Legends/LegendRamp',
+  title: 'Custom Components/Legends/LegendRamp',
   component: LegendRamp,
   argTypes: {
     legend: {}

@@ -6,7 +6,7 @@ import PolygonIcon from '../../../src/assets/PolygonIcon';
 import RectangleIcon from '../../../src/assets/RectangleIcon';
 
 const options = {
-  title: 'Organisms/FeatureSelectionWidgetUI',
+  title: 'Custom Components/FeatureSelectionWidgetUI',
   component: FeatureSelectionWidgetUI,
   argTypes: {
     enabled: {
