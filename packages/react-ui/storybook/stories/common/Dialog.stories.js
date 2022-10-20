@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 
 const options = {
-  title: 'Common/Dialog',
+  title: 'Molecules/Dialog',
   component: Dialog,
   argTypes: {
     disableEscapeKeyDown: {

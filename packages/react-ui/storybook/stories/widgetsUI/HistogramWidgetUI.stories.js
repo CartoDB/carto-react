@@ -2,7 +2,7 @@ import React from 'react';
 import HistogramWidgetUI from '../../../src/widgets/HistogramWidgetUI/HistogramWidgetUI';
 
 const options = {
-  title: 'Custom Components/HistogramWidgetUI',
+  title: 'Organisms/HistogramWidgetUI',
   component: HistogramWidgetUI,
   parameters: {
     docs: {
@@ -54,10 +54,9 @@ const FilteredProps = {
 };
 Filtered.args = FilteredProps;
 
-
 export const NonEqualSizeBins = Template.bind({});
 const NonEqualSizeBinsProps = {
   ...defaultProps,
-  ticks: [100, 200, 250, 450, 500, 600],
+  ticks: [100, 200, 250, 450, 500, 600]
 };
 NonEqualSizeBins.args = NonEqualSizeBinsProps;

@@ -3,7 +3,7 @@ import BarWidgetUI from '../../../src/widgets/BarWidgetUI';
 import { buildReactPropsAsString } from '../../utils';
 
 const options = {
-  title: 'Custom Components/BarWidgetUI',
+  title: 'Organisms/BarWidgetUI',
   component: BarWidgetUI
 };
 
@@ -131,4 +131,7 @@ const MultipleBarsCustomColorsProps = {
   colors: ['#f00', '#00f']
 };
 MultipleBarsCustomColors.args = MultipleBarsCustomColorsProps;
-MultipleBarsCustomColors.parameters = buildReactPropsAsString(MultipleBarsCustomColorsProps, 'BarWidgetUI');
+MultipleBarsCustomColors.parameters = buildReactPropsAsString(
+  MultipleBarsCustomColorsProps,
+  'BarWidgetUI'
+);

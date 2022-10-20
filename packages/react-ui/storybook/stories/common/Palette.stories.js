@@ -4,7 +4,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import { useTheme } from '@mui/material/styles';
 
 const options = {
-  title: 'CARTO Theme/Palette',
+  title: 'Atoms/Palette',
   component: Box,
   argTypes: {
     colorVariant: {

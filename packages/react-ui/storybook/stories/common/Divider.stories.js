@@ -10,7 +10,7 @@ import {
 } from '@mui/icons-material';
 
 const options = {
-  title: 'Common/Divider',
+  title: 'Molecules/Divider',
   component: Divider
 };
 export default options;

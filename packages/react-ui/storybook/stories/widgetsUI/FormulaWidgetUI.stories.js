@@ -2,7 +2,7 @@ import React from 'react';
 import FormulaWidgetUI from '../../../src/widgets/FormulaWidgetUI';
 
 const options = {
-  title: 'Custom Components/FormulaWidgetUI',
+  title: 'Organisms/FormulaWidgetUI',
   component: FormulaWidgetUI,
   argTypes: {
     formatter: {

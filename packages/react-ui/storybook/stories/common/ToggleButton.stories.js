@@ -6,7 +6,7 @@ import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 import TrainIcon from '@mui/icons-material/Train';
 
 const options = {
-  title: 'Common/Toggle Button',
+  title: 'Molecules/Toggle Button',
   component: ToggleButtonGroup,
   argTypes: {
     size: {

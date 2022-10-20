@@ -11,7 +11,7 @@ const DEFAULT_LEGEND = {
 };
 
 const options = {
-  title: 'Custom Components/Legends/LegendIcon',
+  title: 'Organisms/Legends/LegendIcon',
   component: LegendIcon,
   argTypes: {
     legend: {}

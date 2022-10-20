@@ -12,7 +12,7 @@ import { Alert } from '@mui/material';
 import UploadIcon from '../../../src/assets/UploadIcon';
 
 const options = {
-  title: 'Custom Components/InputFile',
+  title: 'Organisms/InputFile',
   component: InputFile,
   argTypes: {
     placeholder: {

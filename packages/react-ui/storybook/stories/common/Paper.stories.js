@@ -4,7 +4,7 @@ import { Grid, Paper, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 
 const options = {
-  title: 'Common/Paper',
+  title: 'Molecules/Paper',
   component: Paper,
   argTypes: {
     elevation: {

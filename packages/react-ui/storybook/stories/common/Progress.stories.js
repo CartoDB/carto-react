@@ -3,7 +3,7 @@ import { Box, Button, CircularProgress, Grid, LinearProgress } from '@mui/materi
 import CheckIcon from '@mui/icons-material/Check';
 
 const options = {
-  title: 'Common/Progress',
+  title: 'Molecules/Progress',
   component: CircularProgress,
   argTypes: {
     color: {
