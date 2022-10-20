@@ -4,9 +4,21 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { ThemeProvider } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
+import { createTheme, responsiveFontSizes } from '@mui/material';
 
-const theme = createTheme(); // for now we don't need real theme for tests
+import { cartoThemeOptions } from '../../../src/theme/carto-theme';
+
+const theme = getTheme(); // for now we don't need real theme for tests
+
+function getTheme() {
+  let theme = createTheme(cartoThemeOptions);
+  theme = responsiveFontSizes(theme, {
+    breakpoints: ['sm'],
+    disableAlign: false,
+    factor: 2
+  });
+  return theme;
+}
 
 const AllTheProviders = ({ children }) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;

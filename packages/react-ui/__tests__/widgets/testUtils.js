@@ -23,23 +23,13 @@ export function currencyFormatter(value) {
   };
 }
 
-export function getMaterialUIContext(children) {
-  return (
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={getTheme()}>{children}</ThemeProvider>
-    </StyledEngineProvider>
-  );
-}
-
-function getTheme() {
-  let theme = createTheme(adaptV4Theme(cartoThemeOptions));
-  theme = responsiveFontSizes(theme, {
-    breakpoints: ['sm'],
-    disableAlign: false,
-    factor: 2
-  });
-  return theme;
-}
+// export function getMaterialUIContext(children) {
+//   return (
+//     <StyledEngineProvider injectFirst>
+//       <ThemeProvider theme={getTheme()}>{children}</ThemeProvider>
+//     </StyledEngineProvider>
+//   );
+// }
 
 export const mockEcharts = {
   init() {

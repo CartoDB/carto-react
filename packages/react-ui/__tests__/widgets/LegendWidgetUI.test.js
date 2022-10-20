@@ -1,5 +1,4 @@
 import React from 'react';
-import { getMaterialUIContext } from './testUtils';
 import LegendWidgetUI from '../../src/widgets/legend/LegendWidgetUI';
 import { fireEvent, render, screen } from '../widgets/utils/testUtils';
 import { Typography } from '@mui/material';
@@ -117,7 +116,7 @@ describe('LegendWidgetUI', () => {
       }
     }
   ];
-  const Widget = (props) => getMaterialUIContext(<LegendWidgetUI {...props} />);
+  const Widget = (props) => <LegendWidgetUI {...props} />;
 
   test('single legend', () => {
     render(<Widget layers={[DATA[0]]}></Widget>);
