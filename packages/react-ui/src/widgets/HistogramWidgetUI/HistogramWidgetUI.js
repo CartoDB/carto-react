@@ -99,7 +99,7 @@ function HistogramWidgetUI({
       splitLine: {
         show: true,
         lineStyle: {
-          color: theme.palette.charts.axisLine
+          color: alpha(theme.palette.common.black, 0.04)
         }
       },
       axisTick: {
@@ -119,7 +119,7 @@ function HistogramWidgetUI({
             ? formatMax(formattedValue)
             : formattedValue;
         },
-        color: theme.palette.charts.maxLabel
+        color: alpha(theme.palette.common.black, 0.6)
       }
     }),
     [min, max, formattedData.length, theme, xAxisFormatter]
@@ -135,7 +135,7 @@ function HistogramWidgetUI({
       splitLine: {
         show: true,
         lineStyle: {
-          color: theme.palette.charts.axisLine
+          color: alpha(theme.palette.common.black, 0.04)
         }
       },
       axisTick: {
@@ -154,7 +154,7 @@ function HistogramWidgetUI({
             Math.max(...data.map((d) => d ?? Number.MIN_SAFE_INTEGER)) || 1;
           let col = 'transparent';
           if (value >= maxValue) {
-            col = theme.palette.charts.maxLabel;
+            col = alpha(theme.palette.common.black, 0.6);
           }
 
           return col;
@@ -164,8 +164,8 @@ function HistogramWidgetUI({
       }
     }),
     [
-      theme.palette.charts.axisLine,
-      theme.palette.charts.maxLabel,
+      alpha(theme.palette.common.black, 0.04),
+      alpha(theme.palette.common.black, 0.6),
       theme.typography.overlineDelicate,
       data,
       yAxisFormatter
@@ -177,7 +177,7 @@ function HistogramWidgetUI({
     const dataWithColor = formattedData.map((item, idx) => {
       const isDisabled = selectedBars.length && selectedBars.indexOf(idx) === -1;
       const color = isDisabled
-        ? theme.palette.charts.disabled
+        ? alpha(theme.palette.common.black, 0.25)
         : theme.palette.secondary.main;
 
       return { value: item, itemStyle: { color } };
@@ -227,7 +227,7 @@ function HistogramWidgetUI({
   }, [
     formattedData,
     markAreaOptions,
-    theme.palette.charts.disabled,
+    alpha(theme.palette.common.black, 0.25),
     theme.palette.secondary.main,
     selectedBars,
     animation

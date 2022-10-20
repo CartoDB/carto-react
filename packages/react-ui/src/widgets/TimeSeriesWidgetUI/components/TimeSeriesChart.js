@@ -66,7 +66,7 @@ export default function TimeSeriesChart({
     () => ({
       axisPointer: {
         lineStyle: {
-          color: theme.palette.charts.axisPointer
+          color: alpha(theme.palette.common.black, 0.4)
         }
       },
       xAxis: {
@@ -97,7 +97,7 @@ export default function TimeSeriesChart({
             // FIXME: Workaround to show only maxlabel
             let col = 'transparent';
             if (value >= maxValue) {
-              col = theme.palette.charts.maxLabel;
+              col = alpha(theme.palette.common.black, 0.6);
             }
 
             return col;
@@ -115,7 +115,7 @@ export default function TimeSeriesChart({
           show: true,
           onZero: false,
           lineStyle: {
-            color: theme.palette.charts.axisLine
+            color: alpha(theme.palette.common.black, 0.04)
           }
         },
         max: maxValue

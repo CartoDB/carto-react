@@ -101,20 +101,20 @@ const baseColors = {
 export const commonPalette = {
   common: { ...baseColors.common },
   primary: {
-    light: baseColors.blue[300],
     main: baseColors.blue[400],
     dark: baseColors.blue[500],
+    light: baseColors.blue[300],
     contrastText: baseColors.common.white,
-    relatedLight: alpha(baseColors.blue[400], 0.08), // TODO: review with design the need of a solid color
-    background: alpha(baseColors.blue[400], 0.08)
+    background: alpha(baseColors.blue[400], 0.08),
+    relatedLight: alpha(baseColors.blue[400], 0.08) // TODO: review with design the need of a solid color
   },
   secondary: {
-    light: baseColors.green[300],
     main: baseColors.green[400],
     dark: baseColors.green[500],
+    light: baseColors.green[300],
     contrastText: baseColors.common.black,
-    relatedLight: alpha(baseColors.green[400], 0.08), // TODO: review with design the need of a solid color
-    background: alpha(baseColors.green[400], 0.08)
+    background: alpha(baseColors.green[400], 0.08),
+    relatedLight: alpha(baseColors.green[400], 0.08) // TODO: review with design the need of a solid color
   },
   text: {
     primary: baseColors.common.black,
@@ -135,32 +135,32 @@ export const commonPalette = {
     focus: baseColors.shades.dark[12]
   },
   info: {
-    light: baseColors.indigo[300],
     main: baseColors.indigo[400],
     dark: baseColors.indigo[500],
+    light: baseColors.indigo[300],
     contrastText: baseColors.common.white,
     relatedDark: darken(baseColors.indigo[400], 0.6),
     relatedLight: lighten(baseColors.indigo[400], 0.9)
   },
   success: {
-    light: baseColors.green[300],
     main: baseColors.green[400],
     dark: baseColors.green[500],
+    light: baseColors.green[300],
     contrastText: baseColors.common.white,
     relatedDark: darken(baseColors.green[400], 0.6),
     relatedLight: lighten(baseColors.green[400], 0.9)
   },
   warning: {
-    light: baseColors.orange[300],
     main: baseColors.orange[400],
     dark: baseColors.orange[500],
+    light: baseColors.orange[300],
     contrastText: baseColors.common.black,
     relatedDark: darken(baseColors.orange[400], 0.6),
     relatedLight: lighten(baseColors.orange[400], 0.9)
   },
   error: {
-    light: baseColors.red[300],
     main: baseColors.red[400],
+    light: baseColors.red[300],
     dark: baseColors.red[500],
     contrastText: baseColors.common.white,
     relatedDark: darken(baseColors.red[400], 0.6),
@@ -172,12 +172,12 @@ export const commonPalette = {
 
   // Custom common colors
   default: {
-    light: baseColors.neutral[100],
     main: baseColors.neutral[200],
     dark: baseColors.neutral[50],
-    // are we missing here relatedLight ??
+    light: baseColors.neutral[100],
     contrastText: baseColors.common.black,
-    background: baseColors.shades.dark[8]
+    outlinerBorder: baseColors.shades.dark[25],
+    filledBackground: baseColors.shades.dark[4]
   },
   cartoBrand: {
     naviBlue: '#162945',
@@ -194,11 +194,5 @@ export const commonPalette = {
 export const componentsPalette = {
   other: {
     divider: baseColors.shades.dark[12]
-  },
-  charts: {
-    axisLine: baseColors.shades.dark[4],
-    maxLabel: baseColors.shades.dark[60],
-    disabled: baseColors.shades.dark[25],
-    axisPointer: baseColors.shades.dark[40]
   }
 };

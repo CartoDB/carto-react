@@ -1,3 +1,5 @@
+import { alpha } from '@mui/material';
+
 export function areChartPropsEqual(optionPrev, optionNext) {
   const tooltipFormatterPrev = optionPrev?.tooltip?.formatter;
   const tooltipFormatterNext = optionNext.tooltip?.formatter;
@@ -18,7 +20,7 @@ export function areChartPropsEqual(optionPrev, optionNext) {
 
 export function disableSerie(serie, theme) {
   serie.disabled = true;
-  serie.itemStyle = { color: theme.palette.charts.disabled };
+  serie.itemStyle = { color: alpha(theme.palette.common.black, 0.25) };
 }
 
 export function clearFilter(serie) {

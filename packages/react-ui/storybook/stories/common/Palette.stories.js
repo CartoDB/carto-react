@@ -35,14 +35,14 @@ export default options;
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
+    gridTemplateColumns: 'repeat(4, 1fr)',
     gap: theme.spacing(1)
   },
   text: {
     marginBottom: theme.spacing(0.5)
   },
   color: {
-    height: 60,
+    height: 48,
     width: '100%',
     marginBottom: theme.spacing(3),
     border: `1px solid ${theme.palette.grey[100]}`,
@@ -87,6 +87,12 @@ const ColorTemplate = ({ colorVariant }) => {
       )}
       {colorDef.relatedLight && (
         <ColorBox colorVariant={colorVariant} colorName={'relatedLight'} />
+      )}
+      {colorDef.outlinerBorder && (
+        <ColorBox colorVariant={colorVariant} colorName={'outlinerBorder'} />
+      )}
+      {colorDef.filledBackground && (
+        <ColorBox colorVariant={colorVariant} colorName={'filledBackground'} />
       )}
     </Grid>
   );

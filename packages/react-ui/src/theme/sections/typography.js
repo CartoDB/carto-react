@@ -111,6 +111,10 @@ const customTypography = {
     ...baseTypography.body1,
     fontStyle: 'italic'
   },
+  body1Medium: {
+    ...baseTypography.body1,
+    fontWeight: 500
+  },
   body1Strong: {
     ...baseTypography.body1,
     fontWeight: 600
@@ -136,6 +140,11 @@ const customTypography = {
   captionItalic: {
     ...baseTypography.caption,
     fontStyle: 'italic'
+  },
+  captionMedium: {
+    ...baseTypography.caption,
+    fontWeight: 500,
+    letterSpacing: '0.4px'
   },
   captionStrong: {
     ...baseTypography.caption,
