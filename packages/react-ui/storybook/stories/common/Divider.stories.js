@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Grid, List, ListItem, ListItemText } from '@material-ui/core';
+import { Divider, Grid, List, ListItem, ListItemText } from '@mui/material';
 import {
   FormatAlignLeft,
   FormatAlignCenter,
@@ -7,7 +7,7 @@ import {
   FormatBold,
   FormatItalic,
   FormatUnderlined
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 const options = {
   title: 'Common/Divider',

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
+import { Grid, Tooltip, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
 import { getMinMax } from './LegendProportion';

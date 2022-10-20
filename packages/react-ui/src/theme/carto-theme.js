@@ -39,7 +39,7 @@ export const cartoThemeOptions = {
     }
   },
   palette: {
-    type: 'light',
+    mode: 'light',
     contrastThreshold: 3,
     tonalOffset: 0.2,
     common: { ...commonPalette.common },

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
+import { Box, Grid, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { useTheme } from '@mui/material/styles';
 
 const options = {
   title: 'CARTO Theme/Palette',

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Breadcrumbs, Link, Typography } from '@material-ui/core';
-import { NavigateNext, CloudCircle, Home, Style } from '@material-ui/icons';
+import { Breadcrumbs, Link, Typography } from '@mui/material';
+import { NavigateNext, CloudCircle, Home, Style } from '@mui/icons-material';
 
 const options = {
   title: 'Common/Breadcrumbs',

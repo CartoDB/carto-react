@@ -9,7 +9,8 @@ const webpackConfig = {
   externals: [
     /^@carto\/react-.+$/,
     /^@deck.gl\/.+$/,
-    /^@material-ui\/.+$/,
+    /^@mui\/.+$/,
+    /^@emotion\/.+$/,
     /^@nebula.gl\/.+$/,
     'react',
     'react-dom',

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Link, makeStyles, Slider, TextField } from '@material-ui/core';
+import { Box, Link, Slider, TextField } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { debounce } from '@carto/react-core';
 
 const useStyles = makeStyles((theme) => ({

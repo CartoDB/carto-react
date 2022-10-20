@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, queryByAttribute, fireEvent } from '@testing-library/react';
 import FeatureSelectionWidgetUI from '../../src/widgets/FeatureSelectionWidgetUI';
-import { capitalize } from '@material-ui/core';
+import { capitalize } from '@mui/material';
 import CursorIcon from '../../src/assets/CursorIcon';
 import PolygonIcon from '../../src/assets/PolygonIcon';
 import RectangleIcon from '../../src/assets/RectangleIcon';

@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { createTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
+import {
+  createTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+  StyledEngineProvider,
+  adaptV4Theme
+} from '@mui/material';
 import * as echarts from 'echarts';
 
 import { cartoThemeOptions } from '../../src/theme/carto-theme';
@@ -18,30 +24,19 @@ export function currencyFormatter(value) {
 }
 
 export function getMaterialUIContext(children) {
-  return <ThemeProvider theme={getTheme()}>{children}</ThemeProvider>;
+  return (
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={getTheme()}>{children}</ThemeProvider>
+    </StyledEngineProvider>
+  );
 }
 
 function getTheme() {
-  let theme = createTheme(cartoThemeOptions);
+  let theme = createTheme(adaptV4Theme(cartoThemeOptions));
   theme = responsiveFontSizes(theme, {
-    breakpoints: cartoThemeOptions.breakpoints.keys,
+    breakpoints: ['sm'],
     disableAlign: false,
-    factor: 2,
-    variants: [
-      'h1',
-      'h2',
-      'h3',
-      'h4',
-      'h5',
-      'h6',
-      'subtitle1',
-      'subtitle2',
-      'body1',
-      'body2',
-      'button',
-      'caption',
-      'overline'
-    ]
+    factor: 2
   });
   return theme;
 }

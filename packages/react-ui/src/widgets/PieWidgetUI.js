@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../custom-components/echarts-for-react';
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 import { disableSerie, setColor } from './utils/chartUtils';
 import { processFormatterRes } from './utils/formatterUtils';
 
@@ -69,7 +69,7 @@ function PieWidgetUI({
       // TODO: as prop?
       formatter: (name) => name.toUpperCase(),
       textStyle: {
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         color: theme.palette.text.primary,
         lineHeight: 1,
         verticalAlign: 'bottom',
@@ -86,7 +86,7 @@ function PieWidgetUI({
       pageIconColor: theme.palette.text.secondary,
       pageIconInactiveColor: theme.palette.text.disabled,
       pageTextStyle: {
-        fontFamily: theme.typography.charts.fontFamily,
+        fontFamily: theme.typography.overlineDelicate.fontFamily,
         fontSize: theme.spacing(1.5),
         lineHeight: theme.spacing(1.75),
         fontWeight: 'normal',
@@ -103,7 +103,7 @@ function PieWidgetUI({
       position: 'center',
       rich: {
         b: {
-          fontFamily: theme.typography.charts.fontFamily,
+          fontFamily: theme.typography.overlineDelicate.fontFamily,
           fontSize: theme.spacing(1.75),
           lineHeight: theme.spacing(1.75),
           fontWeight: 'normal',
@@ -133,7 +133,7 @@ function PieWidgetUI({
 
           const disabled =
             selectedCategories?.length && !selectedCategories.includes(clonedItem.name);
-          
+
           if (labels?.[clonedItem.name]) {
             clonedItem.name = labels[clonedItem.name];
           }

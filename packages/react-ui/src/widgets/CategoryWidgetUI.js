@@ -10,10 +10,10 @@ import {
   SvgIcon,
   TextField,
   Typography,
-  makeStyles,
   Tooltip
-} from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { Skeleton } from '@mui/material';
 
 import { animateValues } from './utils/animations';
 

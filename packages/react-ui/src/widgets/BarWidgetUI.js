@@ -1,7 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../custom-components/echarts-for-react';
-import { Grid, Link, Typography, useTheme, makeStyles, darken } from '@material-ui/core';
+import { Grid, Link, Typography, useTheme, darken } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import detectTouchScreen from './utils/detectTouchScreen';
 import { processFormatterRes } from './utils/formatterUtils';
 
@@ -101,7 +102,7 @@ function BarWidgetUI(props) {
         show: false
       },
       axisLabel: {
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         padding: [theme.spacing(0.5), 0, 0, 0]
       },
       data: xAxisDataWithLabels
@@ -132,14 +133,14 @@ function BarWidgetUI(props) {
       axisLabel: {
         margin: 0,
         verticalAlign: 'bottom',
-        padding: [0, 0, theme.typography.charts.fontSize, 0],
+        padding: [0, 0, theme.typography.overlineDelicate.fontSize, 0],
         show: true,
         showMaxLabel: true,
         showMinLabel: false,
         inside: true,
         color: (value) =>
           value >= maxValue ? theme.palette.charts.maxLabel : 'transparent',
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         formatter: (v) => processFormatterRes(yAxisFormatter(v))
       },
       axisLine: {
@@ -160,7 +161,7 @@ function BarWidgetUI(props) {
       maxValue,
       theme.palette.charts.axisLine,
       theme.palette.charts.maxLabel,
-      theme.typography.charts,
+      theme.typography.overlineDelicate,
       yAxisFormatter
     ]
   );

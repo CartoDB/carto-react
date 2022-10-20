@@ -5,10 +5,10 @@ import {
   FormControl,
   InputLabel,
   Typography
-} from '@material-ui/core';
+} from '@mui/material';
 import React, { useState } from 'react';
 import InputFile from '../../../src/custom-components/InputFile';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import UploadIcon from '../../../src/assets/UploadIcon';
 
 const options = {

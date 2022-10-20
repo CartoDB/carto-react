@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import ReactEcharts from '../../custom-components/echarts-for-react';
-import { darken, Grid, Link, makeStyles, Typography, useTheme } from '@material-ui/core';
+import { darken, Grid, Link, Typography, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { processFormatterRes } from '../utils/formatterUtils';
 import detectTouchscreen from '../utils/detectTouchScreen';
 import useHistogramInteractivity from './useHistogramInteractivity';
@@ -107,7 +108,7 @@ function HistogramWidgetUI({
       axisLabel: {
         showMinLabel: true,
         showMaxLabel: true,
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         hideOverlap: true,
         padding: [theme.spacing(0.5), theme.spacing(0.5), 0, theme.spacing(0.5)],
         formatter: (value) => {
@@ -143,7 +144,7 @@ function HistogramWidgetUI({
       axisLabel: {
         margin: 0,
         verticalAlign: 'bottom',
-        padding: [0, 0, theme.typography.charts.fontSize, 0],
+        padding: [0, 0, theme.typography.overlineDelicate.fontSize, 0],
         show: true,
         showMaxLabel: true,
         showMinLabel: false,
@@ -158,14 +159,14 @@ function HistogramWidgetUI({
 
           return col;
         },
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         formatter: (v) => processFormatterRes(yAxisFormatter(v))
       }
     }),
     [
       theme.palette.charts.axisLine,
       theme.palette.charts.maxLabel,
-      theme.typography.charts,
+      theme.typography.overlineDelicate,
       data,
       yAxisFormatter
     ]
@@ -346,7 +347,9 @@ function defaultTooltipFormatter(params, xAxisFormatter, yAxisFormatter) {
   }
 
   const [left, right, value] = params.data.value;
-  const title = `${processFormatterRes(xAxisFormatter(left))} <span style="vertical-align: 1px;">—</span> ${processFormatterRes(
+  const title = `${processFormatterRes(
+    xAxisFormatter(left)
+  )} <span style="vertical-align: 1px;">—</span> ${processFormatterRes(
     xAxisFormatter(right)
   )}`;
   const formattedValue = processFormatterRes(yAxisFormatter(value));

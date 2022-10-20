@@ -1,4 +1,4 @@
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useRef, useState, useEffect } from 'react';
 import { areChartPropsEqual } from './utils/chartUtils';
@@ -30,7 +30,7 @@ function __generateDefaultConfig(
     color: [theme.palette.secondary.main],
     xAxis: {
       axisLabel: {
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         padding: [theme.spacing(0.5), 0, 0, 0],
         formatter: (v) => {
           const formatted = xAxisFormatter(v);
@@ -42,7 +42,7 @@ function __generateDefaultConfig(
     },
     yAxis: {
       axisLabel: {
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         formatter: (v) => {
           const formatted = yAxisFormatter(v);
           return typeof formatted === 'object'

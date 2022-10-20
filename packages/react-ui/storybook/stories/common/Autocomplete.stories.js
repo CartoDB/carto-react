@@ -1,6 +1,6 @@
 import React from 'react';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Grid, TextField } from '@material-ui/core';
+import Autocomplete from '@mui/material/Autocomplete';
+import { Grid, TextField } from '@mui/material';
 
 const options = {
   title: 'Common/Autocomplete',
