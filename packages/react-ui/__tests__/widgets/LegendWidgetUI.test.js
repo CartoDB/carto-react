@@ -198,13 +198,13 @@ describe('LegendWidgetUI', () => {
     expect(screen.getByText('Test')).toBeInTheDocument();
   });
 
-  test('legend with opacity control', () => {
+  test('legend with opacity control', async() => {
     const legendConfig = DATA[7];
     const onChangeOpacity = jest.fn();
     const container = render(
       <Widget layers={[legendConfig]} onChangeOpacity={onChangeOpacity}></Widget>
     );
-    const layerOptionsBtn = screen.getByTitle('Layer options');
+    const layerOptionsBtn = await screen.findByLabelText('Layer options');
     expect(layerOptionsBtn).toBeInTheDocument();
     layerOptionsBtn.click();
     expect(screen.getByText('Opacity')).toBeInTheDocument();
@@ -252,22 +252,23 @@ describe('LegendWidgetUI', () => {
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
   });
 
-  test('with custom layer options', () => {
+  test('with custom layer options', async() => {
     const layer = DATA[8];
     render(
       <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
     );
-    const layerOptionsBtn = screen.getByTitle('Layer options');
+    const layerOptionsBtn = await screen.findByLabelText('Layer options');
     expect(layerOptionsBtn).toBeInTheDocument();
     layerOptionsBtn.click();
     expect(screen.getByText('PaletteSelector')).toBeInTheDocument();
   });
-  test('with custom layer options - unknown option', () => {
+
+  test('with custom layer options - unknown option', async() => {
     const layer = { ...DATA[8], options: ['unknown'] };
     render(
       <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
     );
-    const layerOptionsBtn = screen.getByTitle('Layer options');
+    const layerOptionsBtn = await screen.findByLabelText('Layer options');
     expect(layerOptionsBtn).toBeInTheDocument();
     layerOptionsBtn.click();
     expect(screen.getByText('Unknown layer option')).toBeInTheDocument();
