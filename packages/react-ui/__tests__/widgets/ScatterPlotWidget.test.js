@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render } from '../widgets/utils/testUtils';
 import ScatterPlotWidgetUI from '../../src/widgets/ScatterPlotWidgetUI';
 import { getMaterialUIContext, mockEcharts } from './testUtils';
 

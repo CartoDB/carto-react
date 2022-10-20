@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '../../widgets/utils/testUtils';
 import LegendRamp from '../../../src/widgets/legend/LegendRamp';
 import { getPalette } from '../../../src/utils/palette';
 
@@ -62,7 +62,9 @@ describe('LegendRamp', () => {
       );
     });
     test('renders formatted labels correctly', () => {
-      render(<LegendRamp legend={DEFAULT_LEGEND_WITH_FORMATTED_LABELS} isContinuous={true} />);
+      render(
+        <LegendRamp legend={DEFAULT_LEGEND_WITH_FORMATTED_LABELS} isContinuous={true} />
+      );
       expect(screen.queryByText('0 km')).toBeInTheDocument();
       expect(screen.queryByText('200 km')).toBeInTheDocument();
 

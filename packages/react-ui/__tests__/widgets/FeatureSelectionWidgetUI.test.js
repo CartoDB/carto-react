@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, queryByAttribute, fireEvent } from '@testing-library/react';
+import { render, queryByAttribute, fireEvent } from '../widgets/utils/testUtils';
 import FeatureSelectionWidgetUI from '../../src/widgets/FeatureSelectionWidgetUI';
 import { capitalize } from '@mui/material';
 import CursorIcon from '../../src/assets/CursorIcon';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '../widgets/utils/testUtils';
 import TableWidgetUI from '../../src/widgets/TableWidgetUI/TableWidgetUI';
 import { getMaterialUIContext } from './testUtils';
 import { columns, rows } from '../../src/widgets/TableWidgetUI/mockData';

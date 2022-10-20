@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, act, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, act, fireEvent, waitFor } from '../widgets/utils/testUtils';
 import TimeSeriesWidgetUI from '../../src/widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import { getMaterialUIContext, mockEcharts } from './testUtils';
 import { GroupDateTypes } from '@carto/react-core';

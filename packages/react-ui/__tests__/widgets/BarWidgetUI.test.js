@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '../widgets/utils/testUtils';
 import BarWidgetUI from '../../src/widgets/BarWidgetUI';
 import { getMaterialUIContext, mockEcharts } from './testUtils';
 

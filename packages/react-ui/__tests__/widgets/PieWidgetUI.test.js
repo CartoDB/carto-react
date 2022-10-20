@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render } from '../widgets/utils/testUtils';
 import PieWidgetUI from '../../src/widgets/PieWidgetUI';
 import { getMaterialUIContext, mockEcharts } from './testUtils';
 

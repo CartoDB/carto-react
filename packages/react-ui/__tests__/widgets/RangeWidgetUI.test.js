@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor } from '../widgets/utils/testUtils';
 import { getMaterialUIContext } from './testUtils';
 import RangeWidgetUI from '../../src/widgets/RangeWidgetUI';
 
