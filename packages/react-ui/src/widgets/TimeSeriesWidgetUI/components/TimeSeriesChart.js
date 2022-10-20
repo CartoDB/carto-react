@@ -1,4 +1,4 @@
-import { useTheme } from '@mui/material';
+import { alpha, useTheme } from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import ReactEcharts from '../../../custom-components/echarts-for-react';
 import useTimeSeriesInteractivity from '../hooks/useTimeSeriesInteractivity';
@@ -46,7 +46,7 @@ export default function TimeSeriesChart({
         color: theme.palette.common.white
       },
       borderWidth: 0,
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: alpha(theme.palette.common.black, 0.9),
       position: (point, params, dom, rect, size) => {
         const position = { top: 0 };
 

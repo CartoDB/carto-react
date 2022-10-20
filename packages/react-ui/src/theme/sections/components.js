@@ -1,5 +1,6 @@
+import { alpha } from '@mui/material';
 import { spacing } from '../themeUtils';
-import { commonPalette, componentsPalette } from './palette';
+import { commonPalette } from './palette';
 import { themeTypography } from './typography';
 
 const round = (value) => Math.round(value * 1e5) / 1e5;
@@ -613,11 +614,11 @@ export const themeComponentsOverrides = {
   MuiTooltip: {
     tooltip: {
       ...themeTypography.caption,
-      backgroundColor: componentsPalette.other.tooltip
+      backgroundColor: alpha(commonPalette.common.black, 0.9)
     },
 
     arrow: {
-      color: componentsPalette.other.tooltip
+      color: alpha(commonPalette.common.black, 0.9)
     }
   },
 

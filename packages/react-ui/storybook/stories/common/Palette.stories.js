@@ -160,7 +160,6 @@ const OtherTemplate = () => {
 
   return (
     <Grid container className={classes.container}>
-      <ColorBox colorVariant={'other'} colorName={'tooltip'} />
       <ColorBox colorVariant={'other'} colorName={'divider'} />
     </Grid>
   );

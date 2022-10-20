@@ -193,8 +193,7 @@ export const commonPalette = {
 // Outside of the common palette due they are used only in some specific components
 export const componentsPalette = {
   other: {
-    divider: baseColors.shades.dark[12],
-    tooltip: baseColors.shades.dark[90]
+    divider: baseColors.shades.dark[12]
   },
   charts: {
     axisLine: baseColors.shades.dark[4],

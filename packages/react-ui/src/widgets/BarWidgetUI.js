@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../custom-components/echarts-for-react';
-import { Grid, Link, Typography, useTheme, darken } from '@mui/material';
+import { Grid, Link, Typography, useTheme, darken, alpha } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import detectTouchScreen from './utils/detectTouchScreen';
 import { processFormatterRes } from './utils/formatterUtils';
@@ -67,7 +67,7 @@ function BarWidgetUI(props) {
         lineHeight: 16,
         color: theme.palette.common.white
       },
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: alpha(theme.palette.common.black, 0.9),
       position: function (point, _params, _dom, _rect, size) {
         const position = { top: 0 };
 

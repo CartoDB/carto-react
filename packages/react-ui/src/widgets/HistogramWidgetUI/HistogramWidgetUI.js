@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import ReactEcharts from '../../custom-components/echarts-for-react';
-import { darken, Grid, Link, Typography, useTheme } from '@mui/material';
+import { alpha, darken, Grid, Link, Typography, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { processFormatterRes } from '../utils/formatterUtils';
 import detectTouchscreen from '../utils/detectTouchScreen';
@@ -77,7 +77,7 @@ function HistogramWidgetUI({
         lineHeight: 16,
         color: theme.palette.common.white
       },
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: alpha(theme.palette.common.black, 0.9),
       confine: true,
       position: 'top',
       formatter(params) {
