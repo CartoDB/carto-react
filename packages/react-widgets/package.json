@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-widgets",
-  "version": "2.0.0-mui-v5-alpha.0",
+  "version": "0.0.0-experimental-muiv5-0",
   "description": "CARTO for React - Widgets",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -72,9 +72,9 @@
     "@carto/react-workers": "^2.0.0-mui-v5-alpha.0",
     "@deck.gl/core": "^8.9.0-alpha.4",
     "@deck.gl/layers": "^8.9.0-alpha.4",
-    "@mui/material": "^5.10.10",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@mui/material": "^5.10.10",
     "@nebula.gl/edit-modes": "^1.0.4",
     "@nebula.gl/layers": "^1.0.4",
     "dequal": "^2.0.2",

@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-basemaps",
-  "version": "2.0.0-mui-v5-alpha.0",
+  "version": "0.0.0-experimental-muiv5-0",
   "description": "CARTO for React - Basemaps",
   "keywords": [
     "carto",
