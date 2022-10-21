@@ -4,5 +4,5 @@
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "1.5.0-alpha.4"
+  "version": "2.0.0-mui-v5-alpha.0"
 }

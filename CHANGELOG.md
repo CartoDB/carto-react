@@ -7,6 +7,7 @@
 - Split carto-theme into sections [#495](https://github.com/CartoDB/carto-react/pull/495)
 - Integration between Figma and Storybook through `addon-designs` [#488](https://github.com/CartoDB/carto-react/pull/488)
 - Update Storybook to v6.5.12 [#487](https://github.com/CartoDB/carto-react/pull/487)
+- Upgrade from Material UI v4 to MUI v5 [#501](https://github.com/CartoDB/carto-react/pull/501)
 
 ## 1.5
 

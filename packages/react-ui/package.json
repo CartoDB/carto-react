@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-ui",
-  "version": "1.5.0-alpha.4",
+  "version": "2.0.0-mui-v5-alpha.0",
   "description": "CARTO for React - UI",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -76,7 +76,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^1.5.0-alpha.4",
+    "@carto/react-core": "^2.0.0-mui-v5-alpha.0",
     "@mui/icons-material": "^5.10.9",
     "@mui/lab": "^5.0.0-alpha.104",
     "@mui/material": "^5.10.10",
