@@ -175,12 +175,11 @@ export const commonPalette = {
     main: baseColors.neutral[200],
     dark: baseColors.neutral[50],
     light: baseColors.neutral[100],
-    contrastText: baseColors.common.black,
-    outlinerBorder: baseColors.shades.dark[25],
-    filledBackground: baseColors.shades.dark[4]
+    outlinedBorder: baseColors.shades.dark[25],
+    background: baseColors.shades.dark[4]
   },
-  cartoBrand: {
-    naviBlue: '#162945',
+  brand: {
+    navyBlue: '#162945',
     locationRed: '#EB1510',
     predictionBlue: '#1785FB',
     softBlue: '#F2F6F9'

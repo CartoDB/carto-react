@@ -15,10 +15,9 @@ type CustomPaletteColor = Modify<
     relatedDark: string;
     relatedLight: string;
     background: string;
-    outlinerBorder: string;
-    filledBackground: string;
+    outlinedBorder: string;
     hint: string;
-    naviBlue: string;
+    navyBlue: string;
     locationRed: string;
     predictionBlue: string;
     softBlue: string;
@@ -35,7 +34,7 @@ type CustomPalette = Modify<
     success: CustomPaletteColor;
     text: CustomPaletteColor;
     default: CustomPaletteColor;
-    cartoBrand: CustomPaletteColor;
+    brand: CustomPaletteColor;
   }
 >;
 

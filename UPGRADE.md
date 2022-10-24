@@ -20,7 +20,7 @@ Removed unused custom `createTheme` function in `carto-theme.js`.
 
 Added several custom variants to the typography set. Note that MUI v5 is needed to register them properly.
 
-`Open Sans` and `Montserrat` families are been replaced by `Inter` and `Overpass Mono`, you have an exaple of this in the [`preview-head.html`](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/storybook/.storybook/preview-head.html) file.
+`Open Sans` and `Montserrat` families have been replaced by `Inter` and `Overpass Mono`, you have an example of this in the [`preview-head.html`](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/storybook/.storybook/preview-head.html) file.
 
 ## Colors
 

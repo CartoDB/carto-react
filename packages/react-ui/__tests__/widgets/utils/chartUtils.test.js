@@ -23,7 +23,9 @@ describe('chart utils', () => {
   });
 
   describe('applyChartFilter', () => {
-    const mockedTheme = { palette: { charts: { disabled: { color: '#fff' } } } };
+    const mockedTheme = {
+      palette: { common: { black: { color: '#000' } } }
+    };
 
     test('should enable a clicked item', () => {
       const serie = { data: [{ disabled: true }] };

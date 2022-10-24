@@ -88,11 +88,8 @@ const ColorTemplate = ({ colorVariant }) => {
       {colorDef.relatedLight && (
         <ColorBox colorVariant={colorVariant} colorName={'relatedLight'} />
       )}
-      {colorDef.outlinerBorder && (
-        <ColorBox colorVariant={colorVariant} colorName={'outlinerBorder'} />
-      )}
-      {colorDef.filledBackground && (
-        <ColorBox colorVariant={colorVariant} colorName={'filledBackground'} />
+      {colorDef.outlinedBorder && (
+        <ColorBox colorVariant={colorVariant} colorName={'outlinedBorder'} />
       )}
     </Grid>
   );
@@ -148,15 +145,15 @@ const ActionTemplate = () => {
   );
 };
 
-const CartoBrandTemplate = () => {
+const BrandTemplate = () => {
   const classes = useStyles();
 
   return (
     <Grid container className={classes.container}>
-      <ColorBox colorVariant={'cartoBrand'} colorName={'naviBlue'} />
-      <ColorBox colorVariant={'cartoBrand'} colorName={'locationRed'} />
-      <ColorBox colorVariant={'cartoBrand'} colorName={'predictionBlue'} />
-      <ColorBox colorVariant={'cartoBrand'} colorName={'softBlue'} />
+      <ColorBox colorVariant={'brand'} colorName={'naviBlue'} />
+      <ColorBox colorVariant={'brand'} colorName={'locationRed'} />
+      <ColorBox colorVariant={'brand'} colorName={'predictionBlue'} />
+      <ColorBox colorVariant={'brand'} colorName={'softBlue'} />
     </Grid>
   );
 };
@@ -200,6 +197,6 @@ export const Common = CommonTemplate.bind({});
 export const Default = ColorTemplate.bind({});
 Default.args = { colorVariant: 'default' };
 
-export const CartoBrand = CartoBrandTemplate.bind({});
+export const Brand = BrandTemplate.bind({});
 
 export const Other = OtherTemplate.bind({});
