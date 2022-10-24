@@ -36,6 +36,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+/**
+ * Renders a <ComparativeFormulaWidgetUI /> widget
+ * @param {Object} props
+ * @param {number[]} props.data
+ * @param {{ prefix?: string; suffix?: string; note?: string }[]} [props.labels]
+ * @param {{ prefix?: string; suffix?: string; note?: string; value?: string }[]} [props.colors]
+ * @param {boolean} [props.animated]
+ * @param {Object} [props.animationOptions]
+ * @param {(v: number) => React.ReactNode} [props.formatter]
+ */
 function ComparativeFormulaWidgetUI({
   data = EMPTY_ARRAY,
   labels = EMPTY_ARRAY,
@@ -131,7 +141,7 @@ const formulaColorsPropTypes = PropTypes.shape({
 });
 
 ComparativeFormulaWidgetUI.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.number),
+  data: PropTypes.arrayOf(PropTypes.number).isRequired,
   labels: PropTypes.arrayOf(formulaLabelsPropTypes),
   colors: PropTypes.arrayOf(formulaColorsPropTypes),
   animated: PropTypes.bool,
