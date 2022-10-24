@@ -188,3 +188,39 @@ export type LegendRamp = {
     colors?: string | string[] | number[][];
   };
 };
+
+export type AnimationOptions = Partial<{
+  duration: number;
+  enterance: boolean;
+  direct: boolean;
+  disabled: boolean;
+  decimals: number;
+}>;
+
+type AnimatedNumber = {
+  enabled: boolean;
+  value: number;
+  options?: AnimationOptions;
+  formatter: (n: number) => React.ReactNode;
+};
+
+export type FormulaLabels = {
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
+  note?: React.ReactNode;
+};
+
+export type FormulaColors = {
+  [key in keyof FormulaLabels]?: string;
+} & {
+  value?: string;
+};
+
+export type ComparativeFormulaWidgetUI = {
+  data: number[];
+  labels?: FormulaLabels[];
+  colors?: FormulaColors[];
+  animated?: boolean;
+  animationOptions?: AnimationOptions;
+  formatter?: (n: number) => React.ReactNode;
+};
