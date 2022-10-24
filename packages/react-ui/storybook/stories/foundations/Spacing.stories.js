@@ -8,6 +8,7 @@ const options = {
   argTypes: {
     size: {
       defaultValue: 15,
+      description: 'Use `theme.spacing(number)` function',
       control: {
         type: 'select',
         options: [0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 12, 15]

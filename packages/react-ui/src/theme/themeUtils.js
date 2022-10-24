@@ -1,7 +1,8 @@
 import { createSpacing } from '@mui/system';
 import { SPACING } from './themeConstants';
 
-export const spacing = createSpacing(SPACING);
+// Create spacing for theming
+export const getSpacing = createSpacing(SPACING);
 
 // Convert pixels to rem
 export function getPixelToRem(px) {
