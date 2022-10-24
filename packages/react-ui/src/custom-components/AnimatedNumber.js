@@ -7,6 +7,14 @@ function countDecimals(n) {
   return String(n).split('.')[1]?.length || 0;
 }
 
+/**
+ * Renders a <AnimatedNumber /> widget
+ * @param {Object} props
+ * @param {boolean} props.enabled
+ * @param {number} props.value
+ * @param {{ duration?: number; enterance?: boolean; direct?: boolean; disabled?: boolean; decimals?: number; }} [props.options]
+ * @param {(n: number) => React.ReactNode} [props.formatter]
+ */
 function AnimatedNumber({ enabled, value, options, formatter }) {
   const defaultOptions = {
     direct: true,
