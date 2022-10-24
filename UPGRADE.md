@@ -41,3 +41,9 @@ Some others have been moved because they aren't native MUI keys and are so speci
 - other
 
 These sets of keys are now in: `componentsPalette`.
+
+## Spacing
+
+Design is restringed to a few specific sizes for spacing, which are:
+
+`0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 12, 15`.
