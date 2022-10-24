@@ -272,6 +272,7 @@ function HistogramWidgetUI({
             <Link
               className={classes.clearButton}
               onClick={() => onSelectedBarsChange([])}
+              underline='hover'
             >
               Clear
             </Link>
