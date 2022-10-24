@@ -325,7 +325,12 @@ function TimeSeriesWidgetUIContent({
           </Box>
         )}
         {showClearButton && (
-          <Link variant='caption' style={{ cursor: 'pointer' }} onClick={handleStop}>
+          <Link
+            variant='caption'
+            style={{ cursor: 'pointer' }}
+            onClick={handleStop}
+            underline='hover'
+          >
             Clear
           </Link>
         )}
