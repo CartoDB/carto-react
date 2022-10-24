@@ -5,15 +5,15 @@ import {
   Collapse,
   Grid,
   Icon,
-  makeStyles,
   Switch,
   Tooltip,
   Typography
-} from '@material-ui/core';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import Note from './Note';
 import LayerIcon from '../../assets/LayerIcon';
-import { ToggleButton } from '@material-ui/lab';
+import { ToggleButton } from '@mui/material';
 import OpacityControl from '../OpacityControl';
 
 const useStyles = makeStyles((theme) => ({

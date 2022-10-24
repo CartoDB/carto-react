@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '../widgets/utils/testUtils';
 import BarWidgetUI from '../../src/widgets/BarWidgetUI';
-import { getMaterialUIContext, mockEcharts } from './testUtils';
+import { mockEcharts } from './testUtils';
 
 describe('BarWidgetUI', () => {
   beforeAll(() => {
@@ -16,15 +16,14 @@ describe('BarWidgetUI', () => {
 
   const X_AXIS_DATA = ['column_1', 'column_2', 'column_3'];
 
-  const Widget = (props) =>
-    getMaterialUIContext(
-      <BarWidgetUI
-        yAxisData={Y_AXIS_DATA}
-        xAxisData={X_AXIS_DATA}
-        onSelectedBarsChange={() => {}}
-        {...props}
-      />
-    );
+  const Widget = (props) => (
+    <BarWidgetUI
+      yAxisData={Y_AXIS_DATA}
+      xAxisData={X_AXIS_DATA}
+      onSelectedBarsChange={() => {}}
+      {...props}
+    />
+  );
 
   const Y_AXIS_DATA_MULTIPLE = [
     [1, 2, 3],
@@ -39,17 +38,16 @@ describe('BarWidgetUI', () => {
     6: 'Column 2'
   };
 
-  const WidgetMultiple = (props) =>
-    getMaterialUIContext(
-      <BarWidgetUI
-        yAxisData={Y_AXIS_DATA_MULTIPLE}
-        xAxisData={X_AXIS_DATA}
-        series={SERIES}
-        labels={LABELS}
-        onSelectedBarsChange={() => {}}
-        {...props}
-      />
-    );
+  const WidgetMultiple = (props) => (
+    <BarWidgetUI
+      yAxisData={Y_AXIS_DATA_MULTIPLE}
+      xAxisData={X_AXIS_DATA}
+      series={SERIES}
+      labels={LABELS}
+      onSelectedBarsChange={() => {}}
+      {...props}
+    />
+  );
 
   test('all selected', () => {
     render(<Widget />);

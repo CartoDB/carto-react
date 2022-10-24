@@ -12,7 +12,7 @@ import {
   AggregationTypes,
   _FilterTypes as FilterTypes
 } from '@carto/react-core';
-import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/core';
+import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Button, CircularProgress, Grid, LinearProgress } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
+import { Box, Button, CircularProgress, Grid, LinearProgress } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
 
 const options = {
   title: 'Common/Progress',

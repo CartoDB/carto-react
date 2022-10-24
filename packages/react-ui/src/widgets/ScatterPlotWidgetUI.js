@@ -1,4 +1,4 @@
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useRef, useState, useEffect } from 'react';
 import { areChartPropsEqual } from './utils/chartUtils';

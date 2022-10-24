@@ -1,4 +1,4 @@
-import createSpacing from '@material-ui/core/styles/createSpacing';
+import { createSpacing } from '@mui/system';
 import { SPACING } from './themeConstants';
 
 export const spacing = createSpacing(SPACING);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, ButtonGroup } from '@material-ui/core';
+import { Button, Grid, ButtonGroup } from '@mui/material';
 
 const options = {
   title: 'Common/Button Group',

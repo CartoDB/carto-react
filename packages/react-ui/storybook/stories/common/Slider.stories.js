@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Slider, TextField, Tooltip } from '@material-ui/core';
+import { Grid, Slider, TextField, Tooltip } from '@mui/material';
 
 const options = {
   title: 'Common/Slider',

@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-ui",
-  "version": "1.5.0-alpha.4",
+  "version": "0.0.0-experimental-muiv5-1",
   "description": "CARTO for React - UI",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -47,7 +47,6 @@
     "@storybook/addon-essentials": "^6.5.12",
     "@storybook/addon-links": "^6.5.12",
     "@storybook/react": "^6.5.12",
-    "storybook-addon-designs": "^6.3.1",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/react-hooks": "^5.1.0",
@@ -69,6 +68,7 @@
     "firebase-tools": "^8.17.0",
     "jest": "^26.6.3",
     "react-redux": "^7.2.2",
+    "storybook-addon-designs": "^6.3.1",
     "webpack": "^5.24.2",
     "webpack-cli": "^4.5.0"
   },
@@ -76,13 +76,18 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^1.5.0-alpha.4",
-    "@material-ui/core": "^4.11.3",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@carto/react-core": "0.0.0-experimental-muiv5-0",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/lab": "^5.0.0-alpha.104",
+    "@mui/material": "^5.10.10",
+    "@mui/styled-engine-sc": "^5.10.6",
+    "@mui/styles": "^5.10.10",
     "echarts": "^5.2.0",
     "echarts-for-react": "^3.0.1",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "styled-components": "^5.2.3"
   }
 }

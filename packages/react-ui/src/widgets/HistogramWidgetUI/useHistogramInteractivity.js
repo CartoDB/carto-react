@@ -1,4 +1,4 @@
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 const events = {};

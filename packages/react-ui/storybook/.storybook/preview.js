@@ -1,6 +1,11 @@
 import React from 'react';
 import { withDesign } from 'storybook-addon-designs';
-import { createTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
+import {
+  createTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+  StyledEngineProvider
+} from '@mui/material';
 import { cartoThemeOptions } from '../../src/theme/carto-theme';
 
 let theme = createTheme(cartoThemeOptions);
@@ -12,9 +17,11 @@ theme = responsiveFontSizes(theme, {
 
 export const decorators = [
   (Story) => (
-    <ThemeProvider theme={theme}>
-      <Story />
-    </ThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <Story />
+      </ThemeProvider>
+    </StyledEngineProvider>
   )
 ];
 

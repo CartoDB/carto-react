@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
+import { Box, Grid, Tooltip, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
 
