@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Implement ComparativeFormulaWidgetUI [#504](https://github.com/CartoDB/carto-react/pull/504)
+
 ## 1.5
 
 ### 1.5.0-alpha.4 (2022-10-14)
