@@ -20,7 +20,7 @@ export const themeComponentsOverrides = {
       '&:hover': {
         borderWidth: '2px'
       },
-      '&$disabled': {
+      '&.Mui-disabled': {
         borderWidth: '2px'
       }
     },
@@ -35,7 +35,7 @@ export const themeComponentsOverrides = {
       '&:hover': {
         borderWidth: '2px'
       },
-      '&$disabled': {
+      '&.Mui-disabled': {
         borderWidth: '2px'
       }
     },
@@ -71,20 +71,20 @@ export const themeComponentsOverrides = {
     startIcon: {
       marginRight: 6,
       marginLeft: -4,
-      '&$iconSizeSmall': {
+      '&.MuiButton-iconSizeSmall': {
         marginLeft: -4
       },
-      '&$iconSizeLarge': {
+      '&.MuiButton-iconSizeLarge': {
         marginRight: 8
       }
     },
     endIcon: {
       marginRight: -4,
       marginLeft: 6,
-      '&$iconSizeSmall': {
+      '&.MuiButton-iconSizeSmall': {
         marginRight: -4
       },
-      '&$iconSizeLarge': {
+      '&.MuiButton-iconSizeLarge': {
         marginLeft: 8
       }
     },
@@ -117,17 +117,17 @@ export const themeComponentsOverrides = {
 
   MuiInputBase: {
     root: {
-      '&$disabled .MuiInputAdornment-root': {
+      '&.Mui-disabled .MuiInputAdornment-root': {
         color: commonPalette.action.disabled
       },
-      '&$disabled .MuiTypography-root': {
+      '&.Mui-disabled .MuiTypography-root': {
         color: commonPalette.action.disabled
       }
     }
   },
   MuiOutlinedInput: {
     root: {
-      '&$disabled': {
+      '&.Mui-disabled': {
         backgroundColor: commonPalette.action.hover
       }
     },
@@ -147,12 +147,12 @@ export const themeComponentsOverrides = {
     },
 
     adornedStart: {
-      '&$marginDense': {
+      '&.MuiFormControl-marginDense': {
         paddingLeft: spacing(1.5)
       }
     },
     adornedEnd: {
-      '&$marginDense': {
+      '&.MuiFormControl-marginDense': {
         paddingRight: spacing(1.5)
       }
     },
@@ -173,16 +173,16 @@ export const themeComponentsOverrides = {
     formControl: {
       transform: 'translate(16px, 20px) scale(1)',
 
-      '&$shrink': {
+      '&.MuiInputLabel-shrink': {
         ...themeTypography.caption,
         transform: 'translate(16px, 8px) scale(1)'
       },
 
-      '&$marginDense': {
+      '&.MuiFormControl-marginDense': {
         ...themeTypography.caption,
         transform: 'translate(0, -20px) scale(1)',
 
-        '&$shrink': {
+        '&.MuiInputLabel-shrink': {
           ...themeTypography.caption,
           transform: 'translate(0, -20px) scale(1)'
         }
@@ -190,16 +190,16 @@ export const themeComponentsOverrides = {
     },
 
     outlined: {
-      '&$shrink': {
+      '&.MuiInputLabel-shrink': {
         ...themeTypography.caption,
         transform: 'translate(16px, 8px) scale(1)'
       },
 
-      '&$marginDense': {
+      '&.MuiFormControl-marginDense': {
         ...themeTypography.caption,
         transform: 'translate(0, -20px) scale(1)',
 
-        '&$shrink': {
+        '&.MuiInputLabel-shrink': {
           transform: 'translate(0, -20px) scale(1)'
         }
       }
@@ -246,13 +246,13 @@ export const themeComponentsOverrides = {
   MuiFormHelperText: {
     root: {
       ...themeTypography.caption,
-      '&$contained': {
+      '&.MuiFormHelperText-contained': {
         marginTop: spacing(1)
       }
     },
 
     marginDense: {
-      '&$contained': {
+      '&.MuiFormHelperText-contained': {
         marginLeft: spacing(0)
       }
     }
@@ -297,7 +297,7 @@ export const themeComponentsOverrides = {
           padding: spacing(0, 1.25, 0.5)
         }
       },
-      '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense':
+      '&.MuiInputBase-marginDense.MuiOutlinedInput-root .MuiInputBase-input.MuiOutlinedInput-inputMarginDense':
         {
           paddingTop: spacing(0.25),
           paddingBottom: spacing(0.25)
@@ -353,7 +353,7 @@ export const themeComponentsOverrides = {
     },
 
     vertical: {
-      '& $indicator': {
+      '& .MuiTabs-indicator': {
         width: 4
       },
 
@@ -385,10 +385,10 @@ export const themeComponentsOverrides = {
     textColorPrimary: {
       color: commonPalette.primary.main,
       opacity: 1,
-      '&$selected': {
+      '&.Mui-selected': {
         color: commonPalette.text.primary
       },
-      '&$disabled': {
+      '&.Mui-disabled': {
         color: commonPalette.action.disabled
       }
     }
@@ -424,7 +424,7 @@ export const themeComponentsOverrides = {
       transform: 'translate(1px, 1px)',
       color: commonPalette.text.secondary,
 
-      '&$checked': {
+      '&.Mui-checked': {
         '& input': {
           left: spacing(-1.5)
         },
@@ -432,7 +432,7 @@ export const themeComponentsOverrides = {
         transform: 'translate(13px, 1px)',
         color: commonPalette.common.white,
 
-        '& + $track': {
+        '& + .MuiSwitch-track': {
           opacity: 1
         }
       }
@@ -458,27 +458,27 @@ export const themeComponentsOverrides = {
     },
 
     colorPrimary: {
-      '&$checked': {
+      '&.Mui-checked': {
         color: commonPalette.common.white,
 
-        '& + $track': {
+        '& + .MuiSwitch-track': {
           backgroundColor: commonPalette.primary.main,
           borderColor: 'transparent'
         },
 
-        '&$disabled': {
+        '&.Mui-disabled': {
           color: commonPalette.grey[100],
 
-          '& + $track': {
+          '& + .MuiSwitch-track': {
             backgroundColor: commonPalette.text.disabled
           }
         }
       },
 
-      '&$disabled': {
+      '&.Mui-disabled': {
         color: commonPalette.text.disabled,
 
-        '& + $track': {
+        '& + .MuiSwitch-track': {
           opacity: 1,
           backgroundColor: commonPalette.common.white,
           borderColor: commonPalette.text.disabled
@@ -487,27 +487,27 @@ export const themeComponentsOverrides = {
     },
 
     colorSecondary: {
-      '&$checked': {
+      '&.Mui-checked': {
         color: commonPalette.common.white,
 
-        '& + $track': {
+        '& + .MuiSwitch-track': {
           backgroundColor: commonPalette.secondary.main,
           borderColor: 'transparent'
         },
 
-        '&$disabled': {
+        '&.Mui-disabled': {
           color: commonPalette.grey[100],
 
-          '& + $track': {
+          '& + .MuiSwitch-track': {
             backgroundColor: commonPalette.text.disabled
           }
         }
       },
 
-      '&$disabled': {
+      '&.Mui-disabled': {
         color: commonPalette.text.disabled,
 
-        '& + $track': {
+        '& + .MuiSwitch-track': {
           opacity: 1,
           backgroundColor: commonPalette.common.white,
           borderColor: commonPalette.text.disabled
@@ -520,15 +520,15 @@ export const themeComponentsOverrides = {
       width: spacing(6),
       padding: spacing(1),
 
-      '& $switchBase': {
+      '& .MuiSwitch-switchBase': {
         padding: spacing(1.5),
         transform: 'translate(0, 1px)',
 
-        '&$checked': {
+        '&.Mui-checked': {
           transform: 'translate(15px, 1px)'
         }
       },
-      '& $thumb': {
+      '& .MuiSwitch-thumb': {
         width: spacing(1.25),
         height: spacing(1.25)
       }
@@ -722,7 +722,7 @@ export const themeComponentsOverrides = {
       border: 'none',
       borderRadius: spacing(0.5),
       color: commonPalette.grey[500],
-      '&$selected': {
+      '&.Mui-selected': {
         color: commonPalette.primary.main,
         backgroundColor: commonPalette.primary.relatedLight,
         '&:hover': {
@@ -756,7 +756,7 @@ export const themeComponentsOverrides = {
       }
     },
     colorPrimary: {
-      '&$disabled': {
+      '&.Mui-disabled': {
         backgroundColor: commonPalette.grey[100],
         color: commonPalette.text.primary
       },
@@ -765,7 +765,7 @@ export const themeComponentsOverrides = {
       }
     },
     colorSecondary: {
-      '&$disabled': {
+      '&.Mui-disabled': {
         backgroundColor: commonPalette.grey[100]
       },
       '&:hover': {
@@ -782,13 +782,13 @@ export const themeComponentsOverrides = {
     },
     outlined: {
       transition: `border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1)`,
-      '&$disabled': {
+      '&.Mui-disabled': {
         backgroundColor: 'transparent'
       },
       '&:hover': {
         backgroundColor: 'transparent',
         borderColor: commonPalette.grey[200],
-        '&$clickable': {
+        '&.MuiChip-clickable': {
           backgroundColor: 'transparent'
         }
       }
@@ -798,7 +798,7 @@ export const themeComponentsOverrides = {
         backgroundColor: 'transparent',
         borderColor: commonPalette.primary.dark,
         color: commonPalette.primary.dark,
-        '&$clickable': {
+        '&.MuiChip-clickable': {
           backgroundColor: 'transparent'
         }
       }
@@ -808,7 +808,7 @@ export const themeComponentsOverrides = {
         backgroundColor: 'transparent',
         borderColor: commonPalette.secondary.dark,
         color: commonPalette.secondary.dark,
-        '&$clickable': {
+        '&.MuiChip-clickable': {
           backgroundColor: 'transparent'
         }
       }

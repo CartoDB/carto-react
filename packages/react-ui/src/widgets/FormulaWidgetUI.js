@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     marginLeft: theme.spacing(0.5),
 
-    '&$before': {
+    '&.before': {
       marginLeft: 0,
       marginRight: theme.spacing(0.5)
     }

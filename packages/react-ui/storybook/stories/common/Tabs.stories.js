@@ -24,6 +24,12 @@ const options = {
         type: 'select',
         options: ['default', 'primary', 'secondary']
       }
+    },
+    orientation: {
+      control: {
+        type: 'select',
+        options: ['horizontal', 'vertical']
+      }
     }
   }
 };

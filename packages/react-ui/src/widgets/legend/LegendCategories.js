@@ -67,10 +67,7 @@ export default LegendCategories;
 // Aux
 const useStyles = makeStyles((theme) => ({
   legendCategories: {
-    alignItems: 'center',
-    '&:hover': {
-      '& $circle': {}
-    }
+    alignItems: 'center'
   },
   marker: {
     whiteSpace: 'nowrap',

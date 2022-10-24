@@ -19,11 +19,25 @@ const options = {
       }
     },
     required: {
+      defaultValue: false,
       control: {
         type: 'boolean'
       }
     },
     disabled: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
+    error: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
+    multiline: {
+      defaultValue: false,
       control: {
         type: 'boolean'
       }
@@ -31,6 +45,12 @@ const options = {
     label: {
       control: {
         type: 'text'
+      }
+    },
+    margin: {
+      control: {
+        type: 'select',
+        options: ['dense', 'none', 'normal']
       }
     }
   },

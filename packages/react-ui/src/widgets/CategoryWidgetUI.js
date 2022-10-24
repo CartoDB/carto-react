@@ -38,15 +38,15 @@ const useStyles = makeStyles((theme) => ({
   },
 
   element: {
-    '&$unselected': {
+    '&.unselected': {
       color: theme.palette.text.disabled,
 
-      '& $progressbar div': {
+      '& .progressbar div': {
         backgroundColor: theme.palette.text.disabled
       }
     },
 
-    '&$rest $progressbar div': {
+    '&.rest .progressbar div': {
       backgroundColor: theme.palette.text.disabled
     }
   },
