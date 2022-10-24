@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, queryByAttribute, fireEvent } from '@testing-library/react';
+import { render, queryByAttribute, fireEvent } from '../widgets/utils/testUtils';
 import FeatureSelectionWidgetUI from '../../src/widgets/FeatureSelectionWidgetUI';
 import { capitalize } from '@mui/material';
 import CursorIcon from '../../src/assets/CursorIcon';
@@ -79,9 +79,9 @@ describe('FeatureSelectionWidgetUI', () => {
     expect(onEnabledChange).toHaveBeenCalledWith(false);
   });
 
-  test('selectionModes and editModes are rendered correctly in modes menu', () => {
+  test('selectionModes and editModes are rendered correctly in modes menu', async () => {
     const rendered = render(<CommonFeatureSelectionWidgetUI />);
-    const menuBtn = rendered.getByTitle('Select a mode');
+    const menuBtn = await rendered.findByLabelText('Select a mode');
     // Open menu
     fireEvent.click(menuBtn);
     // Once the menu is opened, check everything is okey rendered
@@ -90,13 +90,13 @@ describe('FeatureSelectionWidgetUI', () => {
     );
   });
 
-  test('select mode event is correctly raised', () => {
+  test('select mode event is correctly raised', async () => {
     const onSelectMode = jest.fn();
     const rendered = render(
       <CommonFeatureSelectionWidgetUI onSelectMode={onSelectMode} />
     );
 
-    const menuBtn = rendered.getByTitle('Select a mode');
+    const menuBtn = await rendered.findByLabelText('Select a mode');
     // Open menu
     fireEvent.click(menuBtn);
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '../widgets/utils/testUtils';
 import HistogramWidgetUI from '../../src/widgets/HistogramWidgetUI/HistogramWidgetUI';
-import { getMaterialUIContext, mockEcharts } from './testUtils';
+import { mockEcharts } from './testUtils';
 
 describe('HistogramWidgetUI', () => {
   beforeAll(() => {
@@ -22,8 +22,7 @@ describe('HistogramWidgetUI', () => {
     onSelectedBarsChange
   };
 
-  const Widget = (props) =>
-    getMaterialUIContext(<HistogramWidgetUI {...defaultProps} {...props} />);
+  const Widget = (props) => <HistogramWidgetUI {...defaultProps} {...props} />;
 
   test('all selected', () => {
     render(<Widget />);
