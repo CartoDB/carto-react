@@ -156,7 +156,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
     <Box className={classes.root}>
       <Box className={classes.clearWrapper}>
         {hasBeenModified && (
-          <Link onClick={resetSlider} className={classes.clearButton}>
+          <Link onClick={resetSlider} className={classes.clearButton} underline='hover'>
             Clear
           </Link>
         )}

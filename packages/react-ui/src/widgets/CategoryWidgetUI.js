@@ -505,21 +505,37 @@ function CategoryWidgetUI(props) {
                 {selectedCategories.length ? selectedCategories.length : 'All'} selected
               </Typography>
               {showAll ? (
-                <Link className={classes.linkAsButton} onClick={handleApplyClicked}>
+                <Link
+                  className={classes.linkAsButton}
+                  onClick={handleApplyClicked}
+                  underline='hover'
+                >
                   Apply
                 </Link>
               ) : blockedCategories.length > 0 ? (
-                <Link className={classes.linkAsButton} onClick={handleUnblockClicked}>
+                <Link
+                  className={classes.linkAsButton}
+                  onClick={handleUnblockClicked}
+                  underline='hover'
+                >
                   Unlock
                 </Link>
               ) : (
                 selectedCategories.length > 0 && (
                   <Grid container direction='row' justifyContent='flex-end' item xs>
-                    <Link className={classes.linkAsButton} onClick={handleBlockClicked}>
+                    <Link
+                      className={classes.linkAsButton}
+                      onClick={handleBlockClicked}
+                      underline='hover'
+                    >
                       Lock
                     </Link>
                     <Divider orientation='vertical' flexItem />
-                    <Link className={classes.linkAsButton} onClick={handleClearClicked}>
+                    <Link
+                      className={classes.linkAsButton}
+                      onClick={handleClearClicked}
+                      underline='hover'
+                    >
                       Clear
                     </Link>
                   </Grid>

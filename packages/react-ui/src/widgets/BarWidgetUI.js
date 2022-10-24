@@ -308,7 +308,11 @@ function BarWidgetUI(props) {
             {selectedBars?.length || 'All'} selected
           </Typography>
           {selectedBars && selectedBars.length > 0 && (
-            <Link className={classes.selectAllButton} onClick={() => clearBars()}>
+            <Link
+              className={classes.selectAllButton}
+              onClick={() => clearBars()}
+              underline='hover'
+            >
               Clear
             </Link>
           )}
