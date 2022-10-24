@@ -4,12 +4,11 @@ import {
   createTheme,
   responsiveFontSizes,
   ThemeProvider,
-  StyledEngineProvider,
-  adaptV4Theme
+  StyledEngineProvider
 } from '@mui/material';
 import { cartoThemeOptions } from '../../src/theme/carto-theme';
 
-let theme = createTheme(adaptV4Theme(cartoThemeOptions));
+let theme = createTheme(cartoThemeOptions);
 theme = responsiveFontSizes(theme, {
   breakpoints: ['sm'],
   disableAlign: false,
