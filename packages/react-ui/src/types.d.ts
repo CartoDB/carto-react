@@ -197,7 +197,7 @@ export type AnimationOptions = Partial<{
   decimals: number;
 }>;
 
-type AnimatedNumber = {
+export type AnimatedNumber = {
   enabled: boolean;
   value: number;
   options?: AnimationOptions;
