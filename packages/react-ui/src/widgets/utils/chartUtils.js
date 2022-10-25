@@ -20,8 +20,17 @@ export function areChartPropsEqual(optionPrev, optionNext) {
 
 export function disableSerie(serie, theme) {
   serie.disabled = true;
-  serie.itemStyle = { color: alpha(theme.palette.common.black, 0.25) };
+  serie.itemStyle = { color: theme.palette.black[25] };
 }
+
+/* 
+
+other foundations (borders, shadows, spacing)
+colors and typography final design changes
+typography component 
+MUI breaking changes in styles
+
+*/
 
 export function clearFilter(serie) {
   serie.data.forEach((item) => {

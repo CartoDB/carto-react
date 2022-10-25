@@ -24,7 +24,7 @@ describe('chart utils', () => {
 
   describe('applyChartFilter', () => {
     const mockedTheme = {
-      palette: { common: { black: { color: '#000' } } }
+      palette: { black: { 25: { color: '#000' } } }
     };
 
     test('should enable a clicked item', () => {
