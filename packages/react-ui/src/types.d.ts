@@ -224,3 +224,29 @@ export type ComparativeFormulaWidgetUI = {
   animationOptions?: AnimationOptions;
   formatter?: (n: number) => React.ReactNode;
 };
+
+export enum ORDER_TYPES {
+  RANKING = 'ranking',
+  FIXED = 'fixed',
+}
+
+type CategoryData = {
+  name: string;
+  value: number;
+};
+
+export type MultipleCategoryWidgetUI = {
+  names: string[];
+  data: CategoryData[][];
+  labels?: string[];
+  colors?: string[];
+  maxItems?: number;
+  order?: ORDER_TYPES;
+  animation?: boolean;
+  animationOptions?: AnimationOptions;
+  searchable?: boolean;
+  filterable?: boolean;
+  selectedCategories?: string[];
+  onSelectedCategoriesChange?: (categories: string[]) => any;
+  formatter?: (v: any) => string;
+};

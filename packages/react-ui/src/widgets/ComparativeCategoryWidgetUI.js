@@ -77,7 +77,6 @@ function transposeData(data, colors, labels, selectedCategories, order) {
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
-    borderTop: `1px solid ${theme.palette.divider}`,
     padding: theme.spacing(2, 0),
     ...theme.typography.body2
   },
@@ -159,7 +158,7 @@ function SearchIcon() {
   );
 }
 
-/** Renders a <MultipleCategoryWidgetUI /> widget
+/** Renders a <ComparativeCategoryWidgetUI /> widget
  * @param {Object} props
  * @param {string[]} props.names
  * @param {{ name: string; value: number }[][]} props.data
@@ -176,7 +175,7 @@ function SearchIcon() {
  * @param {(categories: string[]) => any} [props.onSelectedCategoriesChange]
  * @param {(v: any) => any} [props.formatter]
  */
-function MultipleCategoryWidgetUI({
+function ComparativeCategoryWidgetUI({
   names = EMPTY_ARRAY,
   data = EMPTY_ARRAY,
   labels = EMPTY_ARRAY,
@@ -451,8 +450,8 @@ function MultipleCategoryWidgetUI({
   );
 }
 
-MultipleCategoryWidgetUI.displayName = 'MultipleCategoryWidgetUI';
-MultipleCategoryWidgetUI.defaultProps = {
+ComparativeCategoryWidgetUI.displayName = 'ComparativeCategoryWidgetUI';
+ComparativeCategoryWidgetUI.defaultProps = {
   names: EMPTY_ARRAY,
   data: EMPTY_ARRAY,
   labels: EMPTY_ARRAY,
@@ -467,7 +466,7 @@ MultipleCategoryWidgetUI.defaultProps = {
   onSelectedCategoriesChange: IDENTITY_FN,
   formatter: IDENTITY_FN
 };
-MultipleCategoryWidgetUI.propTypes = {
+ComparativeCategoryWidgetUI.propTypes = {
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
   data: PropTypes.arrayOf(
     PropTypes.arrayOf(
@@ -490,7 +489,7 @@ MultipleCategoryWidgetUI.propTypes = {
   formatter: PropTypes.func
 };
 
-export default MultipleCategoryWidgetUI;
+export default ComparativeCategoryWidgetUI;
 
 const transposedCategoryItemPropTypes = PropTypes.shape({
   key: PropTypes.string.isRequired,

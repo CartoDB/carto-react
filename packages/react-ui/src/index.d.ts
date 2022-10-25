@@ -23,6 +23,7 @@ import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import ComparativeFormulaWidgetUI from './widgets/ComparativeFormulaWidgetUI';
+import ComparativeCategoryWidgetUI, { ORDER_TYPES } from './widgets/ComparativeCategoryWidgetUI';
 
 export {
   cartoThemeOptions,
@@ -44,6 +45,8 @@ export {
   LegendWidgetUI,
   RangeWidgetUI,
   ComparativeFormulaWidgetUI,
+  ComparativeCategoryWidgetUI,
+  ORDER_TYPES as CATEGORY_ORDER_TYPES,
   LEGEND_TYPES,
   NoDataAlert,
   LegendCategories,

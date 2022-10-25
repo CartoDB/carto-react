@@ -15,6 +15,9 @@ import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI'
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import RangeWidgetUI from './widgets/RangeWidgetUI';
 import ComparativeFormulaWidgetUI from './widgets/ComparativeFormulaWidgetUI';
+import ComparativeCategoryWidgetUI, {
+  ORDER_TYPES
+} from './widgets/ComparativeCategoryWidgetUI';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
@@ -44,6 +47,8 @@ export {
   TimeSeriesWidgetUI,
   FeatureSelectionWidgetUI,
   ComparativeFormulaWidgetUI,
+  ComparativeCategoryWidgetUI,
+  ORDER_TYPES as CATEGORY_ORDER_TYPES,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
   TableWidgetUI,
   LegendWidgetUI,
