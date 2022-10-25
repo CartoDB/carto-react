@@ -20,6 +20,16 @@ Removed unused custom `createTheme` function in `carto-theme.js`.
 
 Added several custom variants to the typography set. Note that MUI v5 is needed to register them properly.
 
+We have a `Typography` component that uses `Mui Typography` and extends it with some useful props:
+
+- weight
+- italic
+
+This we can be more flexible regarding text styles without adding too many variants to the Mui component.
+
+In short, instead of Mui Typography, the component you should use to add text is this one:
+`react-ui/src/atoms/Typography`
+
 ## Colors
 
 Keys renamed:

@@ -1,28 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography as MuiTypography } from '@mui/material';
-import { Text } from './styles';
 
-const Typography = (props) => {
-  const children = this.props.children;
-
+const Typography = ({ italic = false, weight, children, ...otherProps }) => {
   return (
-    <MuiTypography>
-      <Text weight={props.weight} italic={props.italic}>
+    <MuiTypography {...otherProps}>
+      <span style={{ fontWeight: weight, fontStyle: italic && 'italic' }}>
         {children}
-      </Text>
+      </span>
     </MuiTypography>
   );
 };
 
-Typography.defaultProps = {
-  italic: false
-};
-
 Typography.propTypes = {
   weight: PropTypes.oneOf([400 | 500 | 600]),
-  italic: PropTypes.bool,
-  children: PropTypes.element.isRequired
+  italic: PropTypes.bool
 };
 
 export default Typography;

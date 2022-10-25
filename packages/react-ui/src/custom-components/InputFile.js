@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, Typography } from '@mui/material';
-
+import { Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
+import Typography from '../atoms/Typography';
 
 const useStyles = makeStyles((theme) => ({
   inputFile: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Typography from '@mui/material/Typography';
+import Typography from '../../../src/atoms/Typography';
 
 const options = {
   title: 'CARTO Theme/Typography',
@@ -39,6 +39,19 @@ const options = {
           'code3',
           'code3Strong'
         ]
+      }
+    },
+    weight: {
+      control: {
+        type: 'select',
+        // options: [400, 500, 600]
+        options: { regular: 400, medium: 500, semiBold: 600 }
+      }
+    },
+    italic: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
       }
     }
   },
@@ -95,8 +108,8 @@ Overline.args = { variant: 'overline', text: 'Overline' };
 
 // Custom variants
 // TODO: Do not export them until we do this task https://app.shortcut.com/cartoteam/story/265549/
-const Body1Italic = Template.bind({});
-Body1Italic.args = { variant: 'body1Italic', text: 'Body 1 Italic' };
+export const Body1Italic = Template.bind({});
+Body1Italic.args = { variant: 'body1', italic: true, text: 'Body 1 Italic' };
 
 const Body1Strong = Template.bind({});
 Body1Strong.args = { variant: 'boy1Strong', text: 'Body 1 Strong' };
