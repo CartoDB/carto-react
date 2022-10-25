@@ -1,4 +1,3 @@
-import { alpha } from '@mui/material';
 import { spacing } from '../themeUtils';
 import { commonPalette } from './palette';
 import { themeTypography } from './typography';
@@ -614,11 +613,11 @@ export const themeComponentsOverrides = {
   MuiTooltip: {
     tooltip: {
       ...themeTypography.caption,
-      backgroundColor: alpha(commonPalette.common.black, 0.9)
+      backgroundColor: commonPalette.black[90]
     },
 
     arrow: {
-      color: alpha(commonPalette.common.black, 0.9)
+      color: commonPalette.black[90]
     }
   },
 

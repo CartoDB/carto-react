@@ -18,7 +18,12 @@ Removed unused custom `createTheme` function in `carto-theme.js`.
 
 `responsiveFontSizes` simplified due we want to resize only a few variants through the theme.
 
-Added several custom variants to the typography set. Note that MUI v5 is needed to register them properly.
+Added a few custom variants to the typography set:
+
+- overlineDelicate
+- code1
+- code2
+- code3
 
 `Open Sans` and `Montserrat` families have been replaced by `Inter` and `Overpass Mono`, you have an example of this in the [`preview-head.html`](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/storybook/.storybook/preview-head.html) file.
 
@@ -31,11 +36,15 @@ Some keys have been removed from [color palette](https://github.com/CartoDB/cart
 - disabledOpacity
 - selectedOpacity
 - focusOpacity
-- other, all removed but divider
+- other, all removed but divider, which is moved to first level
 
 Some others have been moved or replaced because they aren't native MUI keys and are so specific to some components, these are:
 
-- charts (replaced by `alpha(theme.palette.common.black, %)`)
-- other (moved to `componentsPalette`)
+- charts (replaced by `theme.palette.black[%]`)
 
 `grey palette` is not used to design (and therefore not for style) components directly. We have a set of neutral colors to use in the custom `default` variant.
+
+We also have a set of `shade` colors (with transparency):
+
+- black
+- white

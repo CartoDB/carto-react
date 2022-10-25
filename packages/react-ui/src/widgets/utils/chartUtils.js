@@ -1,5 +1,3 @@
-import { alpha } from '@mui/material';
-
 export function areChartPropsEqual(optionPrev, optionNext) {
   const tooltipFormatterPrev = optionPrev?.tooltip?.formatter;
   const tooltipFormatterNext = optionNext.tooltip?.formatter;
@@ -22,15 +20,6 @@ export function disableSerie(serie, theme) {
   serie.disabled = true;
   serie.itemStyle = { color: theme.palette.black[25] };
 }
-
-/* 
-
-other foundations (borders, shadows, spacing)
-colors and typography final design changes
-typography component 
-MUI breaking changes in styles
-
-*/
 
 export function clearFilter(serie) {
   serie.data.forEach((item) => {

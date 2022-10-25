@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../custom-components/echarts-for-react';
-import { alpha, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import { disableSerie, setColor } from './utils/chartUtils';
 import { processFormatterRes } from './utils/formatterUtils';
 
@@ -40,7 +40,7 @@ function PieWidgetUI({
       show: showTooltip,
       showDelay: 1000,
       transitionDuration: 0,
-      backgroundColor: alpha(theme.palette.common.black, 0.9),
+      backgroundColor: theme.palette.black[90],
       textStyle: { color: theme.palette.common.white },
       confine: true,
       formatter:
@@ -50,7 +50,7 @@ function PieWidgetUI({
       showTooltip,
       formatter,
       theme.palette.common.white,
-      alpha(theme.palette.common.black, 0.9),
+      theme.palette.black[90],
       tooltipFormatter
     ]
   );

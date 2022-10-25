@@ -1,4 +1,4 @@
-import { alpha, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import ReactEcharts from '../../../custom-components/echarts-for-react';
 import useTimeSeriesInteractivity from '../hooks/useTimeSeriesInteractivity';
@@ -46,7 +46,7 @@ export default function TimeSeriesChart({
         color: theme.palette.common.white
       },
       borderWidth: 0,
-      backgroundColor: alpha(theme.palette.common.black, 0.9),
+      backgroundColor: theme.palette.black[90],
       position: (point, params, dom, rect, size) => {
         const position = { top: 0 };
 
@@ -66,7 +66,7 @@ export default function TimeSeriesChart({
     () => ({
       axisPointer: {
         lineStyle: {
-          color: alpha(theme.palette.common.black, 0.4)
+          color: theme.palette.black[40]
         }
       },
       xAxis: {
@@ -97,7 +97,7 @@ export default function TimeSeriesChart({
             // FIXME: Workaround to show only maxlabel
             let col = 'transparent';
             if (value >= maxValue) {
-              col = alpha(theme.palette.common.black, 0.6);
+              col = theme.palette.black[60];
             }
 
             return col;
@@ -115,7 +115,7 @@ export default function TimeSeriesChart({
           show: true,
           onZero: false,
           lineStyle: {
-            color: alpha(theme.palette.common.black, 0.04)
+            color: theme.palette.black[4]
           }
         },
         max: maxValue

@@ -1,6 +1,6 @@
 import { themeComponentsOverrides, themeComponentsProps } from './sections/components';
 import { CssBaseline } from './sections/cssBaseline';
-import { commonPalette, componentsPalette } from './sections/palette';
+import { commonPalette } from './sections/palette';
 import { themeShadows } from './sections/shadows';
 import { themeTypography } from './sections/typography';
 import { SPACING } from './themeConstants';
@@ -60,8 +60,7 @@ export const cartoThemeOptions = {
     default: { ...commonPalette.default },
     white: { ...commonPalette.white },
     black: { ...commonPalette.black },
-    brand: { ...commonPalette.brand },
-    other: { ...componentsPalette.other }
+    brand: { ...commonPalette.brand }
   },
   shadows: [...themeShadows],
   typography: {

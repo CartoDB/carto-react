@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../custom-components/echarts-for-react';
-import { Grid, Link, Typography, useTheme, darken, alpha } from '@mui/material';
+import { Grid, Link, Typography, useTheme, darken } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import detectTouchScreen from './utils/detectTouchScreen';
 import { processFormatterRes } from './utils/formatterUtils';
@@ -67,7 +67,7 @@ function BarWidgetUI(props) {
         lineHeight: 16,
         color: theme.palette.common.white
       },
-      backgroundColor: alpha(theme.palette.common.black, 0.9),
+      backgroundColor: theme.palette.black[90],
       position: function (point, _params, _dom, _rect, size) {
         const position = { top: 0 };
 
@@ -138,8 +138,7 @@ function BarWidgetUI(props) {
         showMaxLabel: true,
         showMinLabel: false,
         inside: true,
-        color: (value) =>
-          value >= maxValue ? alpha(theme.palette.common.black, 0.6) : 'transparent',
+        color: (value) => (value >= maxValue ? theme.palette.black[60] : 'transparent'),
         ...theme.typography.overlineDelicate,
         formatter: (v) => processFormatterRes(yAxisFormatter(v))
       },
@@ -153,14 +152,14 @@ function BarWidgetUI(props) {
         show: true,
         onZero: false,
         lineStyle: {
-          color: alpha(theme.palette.common.black, 0.04)
+          color: theme.palette.black[4]
         }
       }
     }),
     [
       maxValue,
-      alpha(theme.palette.common.black, 0.04),
-      alpha(theme.palette.common.black, 0.6),
+      theme.palette.black[4],
+      theme.palette.black[60],
       theme.typography.overlineDelicate,
       yAxisFormatter
     ]
@@ -183,7 +182,7 @@ function BarWidgetUI(props) {
           return {
             value,
             ...(isDisabled && {
-              itemStyle: { color: alpha(theme.palette.common.black, 0.25) },
+              itemStyle: { color: theme.palette.black[25] },
               disabled: true
             })
           };
@@ -221,7 +220,7 @@ function BarWidgetUI(props) {
       },
       axisPointer: {
         lineStyle: {
-          color: alpha(theme.palette.common.black, 0.4)
+          color: theme.palette.black[40]
         }
       },
       color: colors,

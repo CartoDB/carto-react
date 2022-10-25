@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import ReactEcharts from '../../custom-components/echarts-for-react';
-import { alpha, darken, Grid, Link, Typography, useTheme } from '@mui/material';
+import { darken, Grid, Link, Typography, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { processFormatterRes } from '../utils/formatterUtils';
 import detectTouchscreen from '../utils/detectTouchScreen';
@@ -77,7 +77,7 @@ function HistogramWidgetUI({
         lineHeight: 16,
         color: theme.palette.common.white
       },
-      backgroundColor: alpha(theme.palette.common.black, 0.9),
+      backgroundColor: theme.palette.black[90],
       confine: true,
       position: 'top',
       formatter(params) {
@@ -99,7 +99,7 @@ function HistogramWidgetUI({
       splitLine: {
         show: true,
         lineStyle: {
-          color: alpha(theme.palette.common.black, 0.04)
+          color: theme.palette.black[4]
         }
       },
       axisTick: {
@@ -119,7 +119,7 @@ function HistogramWidgetUI({
             ? formatMax(formattedValue)
             : formattedValue;
         },
-        color: alpha(theme.palette.common.black, 0.6)
+        color: theme.palette.black[60]
       }
     }),
     [min, max, formattedData.length, theme, xAxisFormatter]
@@ -135,7 +135,7 @@ function HistogramWidgetUI({
       splitLine: {
         show: true,
         lineStyle: {
-          color: alpha(theme.palette.common.black, 0.04)
+          color: theme.palette.black[4]
         }
       },
       axisTick: {
@@ -154,7 +154,7 @@ function HistogramWidgetUI({
             Math.max(...data.map((d) => d ?? Number.MIN_SAFE_INTEGER)) || 1;
           let col = 'transparent';
           if (value >= maxValue) {
-            col = alpha(theme.palette.common.black, 0.6);
+            col = theme.palette.black[60];
           }
 
           return col;
@@ -164,8 +164,8 @@ function HistogramWidgetUI({
       }
     }),
     [
-      alpha(theme.palette.common.black, 0.04),
-      alpha(theme.palette.common.black, 0.6),
+      theme.palette.black[4],
+      theme.palette.black[60],
       theme.typography.overlineDelicate,
       data,
       yAxisFormatter
@@ -176,9 +176,7 @@ function HistogramWidgetUI({
   const seriesOptions = useMemo(() => {
     const dataWithColor = formattedData.map((item, idx) => {
       const isDisabled = selectedBars.length && selectedBars.indexOf(idx) === -1;
-      const color = isDisabled
-        ? alpha(theme.palette.common.black, 0.25)
-        : theme.palette.secondary.main;
+      const color = isDisabled ? theme.palette.black[25] : theme.palette.secondary.main;
 
       return { value: item, itemStyle: { color } };
     });
@@ -227,7 +225,7 @@ function HistogramWidgetUI({
   }, [
     formattedData,
     markAreaOptions,
-    alpha(theme.palette.common.black, 0.25),
+    theme.palette.black[25],
     theme.palette.secondary.main,
     selectedBars,
     animation

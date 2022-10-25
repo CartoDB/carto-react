@@ -22,6 +22,7 @@ const options = {
           'button',
           'caption',
           'overline',
+          'overlineDelicate',
           'code1',
           'code2',
           'code3'

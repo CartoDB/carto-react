@@ -193,10 +193,3 @@ export const commonPalette = {
     ...baseColors.qualitative
   }
 };
-
-// Outside of the common palette due they are used only in some specific components
-export const componentsPalette = {
-  other: {
-    divider: baseColors.shades.dark[12]
-  }
-};

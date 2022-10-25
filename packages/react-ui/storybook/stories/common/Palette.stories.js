@@ -146,6 +146,29 @@ const ActionTemplate = () => {
   );
 };
 
+const GreyTemplate = () => {
+  const classes = useStyles();
+
+  return (
+    <Grid container className={classes.container}>
+      <ColorBox colorVariant={'grey'} colorName={'900'} />
+      <ColorBox colorVariant={'grey'} colorName={'800'} />
+      <ColorBox colorVariant={'grey'} colorName={'700'} />
+      <ColorBox colorVariant={'grey'} colorName={'600'} />
+      <ColorBox colorVariant={'grey'} colorName={'500'} />
+      <ColorBox colorVariant={'grey'} colorName={'400'} />
+      <ColorBox colorVariant={'grey'} colorName={'300'} />
+      <ColorBox colorVariant={'grey'} colorName={'200'} />
+      <ColorBox colorVariant={'grey'} colorName={'100'} />
+      <ColorBox colorVariant={'grey'} colorName={'50'} />
+      <ColorBox colorVariant={'grey'} colorName={'A100'} />
+      <ColorBox colorVariant={'grey'} colorName={'A200'} />
+      <ColorBox colorVariant={'grey'} colorName={'A400'} />
+      <ColorBox colorVariant={'grey'} colorName={'A700'} />
+    </Grid>
+  );
+};
+
 const ShadesTemplate = () => {
   const classes = useStyles();
 
@@ -181,7 +204,7 @@ const BrandTemplate = () => {
 
   return (
     <Grid container className={classes.container}>
-      <ColorBox colorVariant={'brand'} colorName={'naviBlue'} />
+      <ColorBox colorVariant={'brand'} colorName={'navyBlue'} />
       <ColorBox colorVariant={'brand'} colorName={'locationRed'} />
       <ColorBox colorVariant={'brand'} colorName={'predictionBlue'} />
       <ColorBox colorVariant={'brand'} colorName={'softBlue'} />
@@ -221,6 +244,8 @@ Info.args = { colorVariant: 'info' };
 
 export const Success = ColorTemplate.bind({});
 Success.args = { colorVariant: 'success' };
+
+export const Grey = GreyTemplate.bind({});
 
 export const Text = TextTemplate.bind({});
 
