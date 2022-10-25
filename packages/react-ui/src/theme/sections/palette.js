@@ -76,7 +76,6 @@ const baseColors = {
   },
   shades: {
     dark: {
-      100: COLOR_BLACK,
       90: alpha(COLOR_BLACK, 0.9),
       60: alpha(COLOR_BLACK, 0.6),
       40: alpha(COLOR_BLACK, 0.4),
@@ -86,7 +85,6 @@ const baseColors = {
       4: alpha(COLOR_BLACK, 0.04)
     },
     light: {
-      100: COLOR_WHITE,
       90: alpha(COLOR_WHITE, 0.9),
       60: alpha(COLOR_WHITE, 0.6),
       40: alpha(COLOR_WHITE, 0.4),
@@ -169,6 +167,7 @@ export const commonPalette = {
   grey: {
     ...baseColors.neutral
   },
+  divider: baseColors.shades.dark[12],
 
   // Custom common colors
   default: {
@@ -183,6 +182,12 @@ export const commonPalette = {
     locationRed: '#EB1510',
     predictionBlue: '#1785FB',
     softBlue: '#F2F6F9'
+  },
+  white: {
+    ...baseColors.shades.light
+  },
+  black: {
+    ...baseColors.shades.dark
   },
   qualitative: {
     ...baseColors.qualitative

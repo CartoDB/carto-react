@@ -81,6 +81,9 @@ export const Overline = Template.bind({});
 Overline.args = { variant: 'overline', text: 'Overline' };
 
 // Custom variants
+export const OverlineDelicate = Template.bind({});
+OverlineDelicate.args = { variant: 'overlineDelicate', text: 'Overline Delicate' };
+
 export const Code1 = Template.bind({});
 Code1.args = {
   variant: 'code1',

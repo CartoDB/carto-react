@@ -50,7 +50,7 @@ export const cartoThemeOptions = {
     info: { ...commonPalette.info },
     success: { ...commonPalette.success },
     text: { ...commonPalette.text },
-    divider: componentsPalette.other.divider,
+    divider: commonPalette.divider,
     background: { ...commonPalette.background },
     grey: { ...commonPalette.grey },
     action: { ...commonPalette.action },
@@ -58,6 +58,8 @@ export const cartoThemeOptions = {
     /* Custom Colors palette */
     qualitative: { ...commonPalette.qualitative },
     default: { ...commonPalette.default },
+    white: { ...commonPalette.white },
+    black: { ...commonPalette.black },
     brand: { ...commonPalette.brand },
     other: { ...componentsPalette.other }
   },

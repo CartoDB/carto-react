@@ -34,6 +34,8 @@ type CustomPalette = Modify<
     success: CustomPaletteColor;
     text: CustomPaletteColor;
     default: CustomPaletteColor;
+    white: CustomPaletteColor;
+    black: CustomPaletteColor;
     brand: CustomPaletteColor;
   }
 >;
@@ -44,3 +46,30 @@ export type CartoTheme = Modify<
     palette: CustomPalette;
   }
 >;
+
+declare module '@mui/material/styles' {
+  interface TypographyVariants {
+    overlineDelicate: React.CSSProperties;
+    code1: React.CSSProperties;
+    code2: React.CSSProperties;
+    code3: React.CSSProperties;
+  }
+
+  // allow configuration using `createTheme`
+  interface TypographyVariantsOptions {
+    overlineDelicate?: React.CSSProperties;
+    code1?: React.CSSProperties;
+    code2?: React.CSSProperties;
+    code3?: React.CSSProperties;
+  }
+}
+
+// Update the Typography's variant prop options
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    overlineDelicate: true;
+    code1: true;
+    code2: true;
+    code3: true;
+  }
+}
