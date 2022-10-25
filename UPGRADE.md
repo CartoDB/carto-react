@@ -48,3 +48,5 @@ We also have a set of `shade` colors (with transparency):
 
 - black
 - white
+
+Important: `primary.relatedLight` and `secondary.relatedLight` has to be replaced by `primary.background` and `secondary.background`.

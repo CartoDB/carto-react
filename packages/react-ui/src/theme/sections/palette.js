@@ -104,7 +104,7 @@ export const commonPalette = {
     light: baseColors.blue[300],
     contrastText: baseColors.common.white,
     background: alpha(baseColors.blue[400], 0.08),
-    relatedLight: alpha(baseColors.blue[400], 0.08) // TODO: review with design the need of a solid color
+    relatedLight: lighten(baseColors.blue[400], 0.9)
   },
   secondary: {
     main: baseColors.green[400],
@@ -112,7 +112,7 @@ export const commonPalette = {
     light: baseColors.green[300],
     contrastText: baseColors.common.black,
     background: alpha(baseColors.green[400], 0.08),
-    relatedLight: alpha(baseColors.green[400], 0.08) // TODO: review with design the need of a solid color
+    relatedLight: lighten(baseColors.green[400], 0.9)
   },
   text: {
     primary: baseColors.common.black,

@@ -96,7 +96,7 @@ const baseTypography = {
     letterSpacing: '0.2px'
   },
   overline: {
-    fontFamily: '"Overpass Mono", monospace',
+    fontFamily: 'Inter, sans-serif',
     fontWeight: 600,
     fontSize: getPixelToRem(10),
     lineHeight: 1.2,

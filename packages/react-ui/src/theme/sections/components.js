@@ -724,9 +724,9 @@ export const themeComponentsOverrides = {
       color: commonPalette.grey[500],
       '&$selected': {
         color: commonPalette.primary.main,
-        backgroundColor: commonPalette.primary.relatedLight,
+        backgroundColor: commonPalette.primary.background,
         '&:hover': {
-          backgroundColor: commonPalette.primary.relatedLight
+          backgroundColor: commonPalette.primary.background
         }
       }
     },
