@@ -3,6 +3,7 @@
 ## Not released
 
 - Implement ComparativeFormulaWidgetUI [#504](https://github.com/CartoDB/carto-react/pull/504)
+- Implement ComparativeCategoryWidgetUI [#505](https://github.com/CartoDB/carto-react/pull/505)
 
 ## 1.5
 
