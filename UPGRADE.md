@@ -56,8 +56,6 @@ Design is restringed to a few specific values for border radius, which are:
 
 Use: `borderRadius: theme.spacing(x)`
 
-Note that `theme.shape.borderRadius` has changed from 4px to 8px.
-
 ## Shadows / Elevations
 
 Design is restringed to a few specific valuez for shadows, which are:

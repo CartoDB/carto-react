@@ -48,8 +48,8 @@ const ShadowBox = ({ size }) => {
   return (
     <Grid item xs={4} sm={3} md={2}>
       <Box className={classes.text}>
-        <Typography variant='subtitle1'>{`shadows[${size}]`}</Typography>
-        <Typography variant='caption'>{`Elevation ${size}`}</Typography>
+        <Typography variant='subtitle1'>{`Elevation ${size}`}</Typography>
+        <Typography variant='caption'>{`shadows[${size}]`}</Typography>
       </Box>
       <Box
         className={classes.container}
@@ -78,4 +78,4 @@ const Template = () => {
 
 export const Playground = ShadowBox.bind({});
 
-export const Spacings = Template.bind({});
+export const Shadows = Template.bind({});

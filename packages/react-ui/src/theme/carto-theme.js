@@ -67,7 +67,7 @@ export const cartoThemeOptions = {
   },
   spacing: SPACING, // For custom spacing: https://material-ui.com/customization/spacing/#custom-spacing
   shape: {
-    borderRadius: 8
+    borderRadius: 4
   },
   transitions: {
     easing: {
