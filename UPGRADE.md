@@ -58,6 +58,6 @@ Use: `borderRadius: theme.spacing(x)`
 
 ## Shadows / Elevations
 
-Design is restringed to a few specific valuez for shadows, which are:
+Design is restringed to a few specific values for shadows, which are:
 
 `0, 1, 2, 4, 6, 8, 16, 24`.
