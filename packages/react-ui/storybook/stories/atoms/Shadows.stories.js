@@ -63,7 +63,7 @@ const ShadowBox = ({ size }) => {
 
 const Template = () => {
   return (
-    <Grid container direction='row'>
+    <Grid container>
       <ShadowBox size={0} />
       <ShadowBox size={1} />
       <ShadowBox size={2} />

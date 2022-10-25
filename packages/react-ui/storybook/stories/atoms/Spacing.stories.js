@@ -61,7 +61,7 @@ const SpacingBox = ({ size }) => {
 
 const Template = () => {
   return (
-    <Grid container direction='row'>
+    <Grid container>
       <SpacingBox size={0.5} />
       <SpacingBox size={1} />
       <SpacingBox size={1.5} />

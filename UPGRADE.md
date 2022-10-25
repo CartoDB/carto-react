@@ -44,16 +44,22 @@ These sets of keys are now in: `componentsPalette`.
 
 ## Spacing
 
-Design is restringed to a few specific sizes for spacing, which are:
+Design is restringed to a few specific values for spacing, which are:
 
 `0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 12, 15`.
 
 ## Shapes
 
-Design is restringed to a few specific sizes for border radius, which are:
+Design is restringed to a few specific values for border radius, which are:
 
 `0.5, 1, 1.5, 2`.
 
 Use: `borderRadius: theme.spacing(x)`
 
 Note that `theme.shape.borderRadius` has changed from 4px to 8px.
+
+## Shadows / Elevations
+
+Design is restringed to a few specific valuez for shadows, which are:
+
+`0, 1, 2, 4, 6, 8, 16, 24`.

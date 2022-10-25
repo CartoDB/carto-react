@@ -62,7 +62,7 @@ const BorderBox = ({ size }) => {
 
 const Template = () => {
   return (
-    <Grid container direction='row'>
+    <Grid container>
       <BorderBox size={0.5} />
       <BorderBox size={1} />
       <BorderBox size={1.5} />
