@@ -167,7 +167,7 @@ function SearchIcon() {
  * @param {number} [props.maxItems]
  * @param {ORDER_TYPES} [props.order]
  * @param {boolean} [props.animation]
- * @param {Object} [props.animationOptions]
+ * @param {{ duration?: number; animateOnMount?: boolean; }} [props.animationOptions]
  * @param {boolean} [props.searchable]
  * @param {boolean} [props.searchable]
  * @param {boolean} [props.filterable]
@@ -265,7 +265,7 @@ function ComparativeCategoryWidgetUI({
   const showSearchToggle = searchable && !searchActive && maxItems < processedData.length;
 
   if (processedData.length === 0) {
-    return <MultipleCategoryUISkeleton />;
+    return <ComparativeCategoryUISkeleton />;
   }
 
   const list = searchActive
@@ -502,7 +502,7 @@ const transposedCategoryItemPropTypes = PropTypes.shape({
   ).isRequired
 }).isRequired;
 
-function MultipleCategoryUISkeleton() {
+function ComparativeCategoryUISkeleton() {
   const classes = useStyles();
   return (
     <div className={classes.wrapper}>
@@ -537,7 +537,7 @@ function MultipleCategoryUISkeleton() {
   );
 }
 
-function MultipleCategoryTooltip({ item, names, formatter = IDENTITY_FN }) {
+function ComparativeCategoryTooltip({ item, names, formatter = IDENTITY_FN }) {
   const theme = useTheme();
   const classes = useStyles();
 
@@ -575,12 +575,12 @@ function MultipleCategoryTooltip({ item, names, formatter = IDENTITY_FN }) {
   );
 }
 
-MultipleCategoryTooltip.displayName = 'MultipleCategoryTooltip';
-MultipleCategoryTooltip.defaultProps = {
+ComparativeCategoryTooltip.displayName = 'ComparativeCategoryTooltip';
+ComparativeCategoryTooltip.defaultProps = {
   names: EMPTY_ARRAY,
   formatter: IDENTITY_FN
 };
-MultipleCategoryTooltip.propTypes = {
+ComparativeCategoryTooltip.propTypes = {
   item: transposedCategoryItemPropTypes,
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
   formatter: PropTypes.func
@@ -625,7 +625,7 @@ function CategoryItem({
   }
 
   const tooltipContent = (
-    <MultipleCategoryTooltip item={item} names={names} formatter={formatter} />
+    <ComparativeCategoryTooltip item={item} names={names} formatter={formatter} />
   );
 
   return (

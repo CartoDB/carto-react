@@ -232,7 +232,7 @@ type CategoryData = {
   value: number;
 };
 
-export type MultipleCategoryWidgetUI = {
+export type ComparativeCategoryWidgetUI = {
   names: string[];
   data: CategoryData[][];
   labels?: string[];
