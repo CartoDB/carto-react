@@ -5,7 +5,6 @@ import {
   IconButton,
   MenuItem,
   SvgIcon,
-  Typography,
   capitalize,
   Link
 } from '@mui/material';
@@ -16,6 +15,7 @@ import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesCont
 import { CHART_TYPES } from './utils/constants';
 import { PropTypes } from 'prop-types';
 import { GroupDateTypes, getMonday } from '@carto/react-core';
+import Typography from '../../atoms/Typography';
 
 const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.YEARS]: yearCurrentDateRange,

@@ -12,11 +12,12 @@ import {
   AggregationTypes,
   _FilterTypes as FilterTypes
 } from '@carto/react-core';
-import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@mui/material';
+import { capitalize, Menu, MenuItem, SvgIcon } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
+import Typography from '@carto/react-ui/src/atoms/Typography/Typography';
 
 // Due to the widget groups the data by a certain stepSize, when filtering
 // the filter applied must be a range that represent the grouping range.

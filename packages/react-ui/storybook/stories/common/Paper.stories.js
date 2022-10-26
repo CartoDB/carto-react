@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid, Paper, Typography } from '@mui/material';
-
+import { Grid, Paper } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
+import Typography from '../../../src/atoms/Typography';
 
 const options = {
   title: 'Common/Paper',

@@ -44,14 +44,19 @@ const options = {
     weight: {
       control: {
         type: 'select',
-        // options: [400, 500, 600]
-        options: { regular: 400, medium: 500, semiBold: 600 }
+        options: ['regular', 'medium', 'semiBold']
       }
     },
     italic: {
       defaultValue: false,
       control: {
         type: 'boolean'
+      }
+    },
+    color: {
+      control: {
+        type: 'select',
+        options: ['primary.dark', 'brand.navyBlue', 'default.main']
       }
     }
   },
