@@ -9,8 +9,8 @@ import { animateValue } from '../widgets/utils/animations';
 export default function useAnimatedNumber(value, options = {}) {
   const { disabled, duration, animateOnMount, initialValue = 0 } = options;
 
-  // starting with a -1 to supress a typescript warning
-  const requestAnimationFrameRef = useRef(-1); 
+  /** @type {any} */
+  const requestAnimationFrameRef = useRef(); 
 
   // if we want to run the animation on mount, we set the starting value of the animated number as 0 (or the number in `initialValue`) and animate to the target value from there
   const [animatedValue, setAnimatedValue] = useState(() => animateOnMount ? initialValue : value);
