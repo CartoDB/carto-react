@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix LegendCategories displaying outlined points [#508](https://github.com/CartoDB/carto-react/pull/508)
+
 ## 1.5
 
 ### 1.5.0-alpha.4 (2022-10-14)
