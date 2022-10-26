@@ -192,6 +192,7 @@ export type LegendRamp = {
 export type AnimationOptions = {
   duration?: number;
   animateOnMount?: boolean;
+  initialValue?: number
 };
 
 export type AnimatedNumber = {
