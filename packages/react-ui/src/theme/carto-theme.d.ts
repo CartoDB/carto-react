@@ -9,6 +9,7 @@ import { Palette, PaletteColor } from '@mui/material';
 export const cartoThemeOptions: ThemeOptions;
 
 type Modify<T, R> = Omit<T, keyof R> & R;
+
 type CustomPaletteColor = Modify<
   PaletteColor,
   {
@@ -16,13 +17,36 @@ type CustomPaletteColor = Modify<
     relatedLight: string;
     background: string;
     outlinedBorder: string;
-    hint: string;
+  }
+>;
+type CustomBrandPaletteColor = Modify<
+  PaletteColor,
+  {
     navyBlue: string;
     locationRed: string;
     predictionBlue: string;
     softBlue: string;
   }
 >;
+type CustomTextPaletteColor = Modify<
+  PaletteColor,
+  {
+    hint: string;
+  }
+>;
+type CustomShadesPaletteColor = Modify<
+  PaletteColor,
+  {
+    90: string;
+    60: string;
+    40: string;
+    25: string;
+    12: string;
+    8: string;
+    4: string;
+  }
+>;
+
 type CustomPalette = Modify<
   Palette,
   {
@@ -32,11 +56,11 @@ type CustomPalette = Modify<
     warning: CustomPaletteColor;
     info: CustomPaletteColor;
     success: CustomPaletteColor;
-    text: CustomPaletteColor;
     default: CustomPaletteColor;
-    white: CustomPaletteColor;
-    black: CustomPaletteColor;
-    brand: CustomPaletteColor;
+    text: CustomTextPaletteColor;
+    white: CustomShadesPaletteColor;
+    black: CustomShadesPaletteColor;
+    brand: CustomBrandPaletteColor;
   }
 >;
 
