@@ -188,3 +188,15 @@ export type LegendRamp = {
     colors?: string | string[] | number[][];
   };
 };
+
+export type AnimationOptions = {
+  duration?: number;
+  animateOnMount?: boolean;
+};
+
+export type AnimatedNumber = {
+  enabled: boolean;
+  value: number;
+  options?: AnimationOptions;
+  formatter: (n: number) => React.ReactNode;
+};
