@@ -22,6 +22,7 @@ import PolygonIcon from './assets/PolygonIcon';
 import RectangleIcon from './assets/RectangleIcon';
 import LassoIcon from './assets/LassoIcon';
 import CircleIcon from './assets/CircleIcon';
+import ComparativePieWidgetUI from './widgets/ComparativePieWidgetUI';
 
 const featureSelectionIcons = {
   CursorIcon,
@@ -46,6 +47,7 @@ export {
   TableWidgetUI,
   LegendWidgetUI,
   RangeWidgetUI,
+  ComparativePieWidgetUI,
   LEGEND_TYPES,
   NoDataAlert,
   featureSelectionIcons,

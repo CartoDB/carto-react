@@ -22,6 +22,7 @@ import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
+import ComparativePieWidgetUI from './widgets/ComparativePieWidgetUI';
 
 export {
   cartoThemeOptions,
@@ -42,6 +43,7 @@ export {
   TableWidgetUI,
   LegendWidgetUI,
   RangeWidgetUI,
+  ComparativePieWidgetUI,
   LEGEND_TYPES,
   NoDataAlert,
   LegendCategories,
