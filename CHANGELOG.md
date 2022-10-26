@@ -2,9 +2,14 @@
 
 ## Not released
 
+- AnimatedNumber component with hook wrapping `animateValue` [#509](https://github.com/CartoDB/carto-react/pull/509)
 - Implement ComparativeFormulaWidgetUI [#504](https://github.com/CartoDB/carto-react/pull/504)
 
 ## 1.5
+
+### 1.5.0-alpha.5 (2022-10-26)
+
+- Fix LegendCategories displaying outlined points [#508](https://github.com/CartoDB/carto-react/pull/508)
 
 ### 1.5.0-alpha.4 (2022-10-14)
 
