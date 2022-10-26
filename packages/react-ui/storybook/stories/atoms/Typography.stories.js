@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '../../../src/atoms/Typography';
 
 const options = {
-  title: 'CARTO Theme/Typography',
+  title: 'Atoms/Typography',
   component: Typography,
   argTypes: {
     variant: {
@@ -110,10 +110,7 @@ Overline.args = { variant: 'overline', text: 'Overline' };
 
 // Custom variants
 export const OverlineDelicate = Template.bind({});
-OverlineDelicate.args = {
-  variant: 'overlineDelicate',
-  text: 'Overline Delicate'
-};
+OverlineDelicate.args = { variant: 'overlineDelicate', text: 'Overline Delicate' };
 
 export const Code1 = Template.bind({});
 Code1.args = {

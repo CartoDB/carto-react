@@ -224,7 +224,7 @@ function WrapperWidgetUI(props) {
               </IconButton>
               <Menu
                 id='options-menu'
-                elevation={3}
+                elevation={8}
                 anchorOrigin={{
                   vertical: 'top',
                   horizontal: 'right'

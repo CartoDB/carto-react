@@ -78,7 +78,7 @@ function HistogramWidgetUI({
         lineHeight: 16,
         color: theme.palette.common.white
       },
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: theme.palette.black[90],
       confine: true,
       position: 'top',
       formatter(params) {
@@ -100,7 +100,7 @@ function HistogramWidgetUI({
       splitLine: {
         show: true,
         lineStyle: {
-          color: theme.palette.charts.axisLine
+          color: theme.palette.black[4]
         }
       },
       axisTick: {
@@ -120,7 +120,7 @@ function HistogramWidgetUI({
             ? formatMax(formattedValue)
             : formattedValue;
         },
-        color: theme.palette.charts.maxLabel
+        color: theme.palette.black[60]
       }
     }),
     [min, max, formattedData.length, theme, xAxisFormatter]
@@ -136,7 +136,7 @@ function HistogramWidgetUI({
       splitLine: {
         show: true,
         lineStyle: {
-          color: theme.palette.charts.axisLine
+          color: theme.palette.black[4]
         }
       },
       axisTick: {
@@ -155,7 +155,7 @@ function HistogramWidgetUI({
             Math.max(...data.map((d) => d ?? Number.MIN_SAFE_INTEGER)) || 1;
           let col = 'transparent';
           if (value >= maxValue) {
-            col = theme.palette.charts.maxLabel;
+            col = theme.palette.black[60];
           }
 
           return col;
@@ -165,8 +165,8 @@ function HistogramWidgetUI({
       }
     }),
     [
-      theme.palette.charts.axisLine,
-      theme.palette.charts.maxLabel,
+      theme.palette.black[4],
+      theme.palette.black[60],
       theme.typography.overlineDelicate,
       data,
       yAxisFormatter
@@ -177,9 +177,7 @@ function HistogramWidgetUI({
   const seriesOptions = useMemo(() => {
     const dataWithColor = formattedData.map((item, idx) => {
       const isDisabled = selectedBars.length && selectedBars.indexOf(idx) === -1;
-      const color = isDisabled
-        ? theme.palette.charts.disabled
-        : theme.palette.secondary.main;
+      const color = isDisabled ? theme.palette.black[25] : theme.palette.secondary.main;
 
       return { value: item, itemStyle: { color } };
     });
@@ -228,7 +226,7 @@ function HistogramWidgetUI({
   }, [
     formattedData,
     markAreaOptions,
-    theme.palette.charts.disabled,
+    theme.palette.black[25],
     theme.palette.secondary.main,
     selectedBars,
     animation

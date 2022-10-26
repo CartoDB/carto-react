@@ -18,7 +18,14 @@ Removed unused custom `createTheme` function in `carto-theme.js`.
 
 `responsiveFontSizes` simplified due we want to resize only a few variants through the theme.
 
-Added several custom variants to the typography set. Note that MUI v5 is needed to register them properly.
+Added a few custom variants to the typography set:
+
+- overlineDelicate
+- code1
+- code2
+- code3
+
+`Open Sans` and `Montserrat` families have been replaced by `Inter` and `Overpass Mono`, you have an example of this in the [`preview-head.html`](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/storybook/.storybook/preview-head.html) file.
 
 We have a `Typography` component that uses `Mui Typography` and extends it with some useful props:
 
@@ -34,10 +41,6 @@ So `import { Typography } from '@carto/react-ui';`.
 
 ## Colors
 
-Keys renamed:
-
-- filterInput by filledInput (typo fixed)
-
 Some keys have been removed from [color palette](https://github.com/CartoDB/carto-react/tree/master/packages/react-ui/src/theme) due they are unused:
 
 - activatedOpacity
@@ -45,11 +48,37 @@ Some keys have been removed from [color palette](https://github.com/CartoDB/cart
 - disabledOpacity
 - selectedOpacity
 - focusOpacity
-- other, all removed but tooltip and divider
+- other, all removed but divider, which is moved to first level
 
-Some others have been moved because they aren't native MUI keys and are so specific to some components, these are:
+Some others have been moved or replaced because they aren't native MUI keys and are so specific to some components, these are:
 
-- charts
-- other
+- charts (replaced by `theme.palette.black[%]`)
 
-These sets of keys are now in: `componentsPalette`.
+`grey palette` is not used to design (and therefore not for style) components directly. We have a set of neutral colors to use in the custom `default` variant.
+
+We also have a set of `shade` colors (with transparency):
+
+- black
+- white
+
+Important: `primary.relatedLight` and `secondary.relatedLight` has to be replaced by `primary.background` and `secondary.background`.
+
+## Spacing
+
+Design is restringed to a few specific values for spacing, which are:
+
+`0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 12, 15`.
+
+## Shapes
+
+Design is restringed to a few specific values for border radius, which are:
+
+`0.5, 1, 1.5, 2`.
+
+Use: `borderRadius: theme.spacing(x)`
+
+## Shadows / Elevations
+
+Design is restringed to a few specific values for shadows, which are:
+
+`0, 1, 2, 4, 6, 8, 16, 24`.
