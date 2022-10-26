@@ -1,27 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useAnimateNumber from 'use-animate-number';
-
-function countDecimals(n) {
-  if (Math.floor(n) === n) return 0;
-  return String(n).split('.')[1]?.length || 0;
-}
+import useAnimatedNumber from '../hooks/useAnimatedNumber';
 
 /**
  * Renders a <AnimatedNumber /> widget
  * @param {Object} props
  * @param {boolean} props.enabled
  * @param {number} props.value
- * @param {{ duration?: number; enterance?: boolean; direct?: boolean; disabled?: boolean; decimals?: number; }} [props.options]
+ * @param {{ duration?: number; animateOnMount?: boolean; }} [props.options]
  * @param {(n: number) => React.ReactNode} [props.formatter]
  */
 function AnimatedNumber({ enabled, value, options, formatter }) {
   const defaultOptions = {
-    direct: true,
-    decimals: countDecimals(value),
+    animateOnMount: true,
     disabled: enabled === false || value === null || value === undefined
   };
-  const [animated] = useAnimateNumber(value, { ...defaultOptions, ...options });
+  const animated = useAnimatedNumber(value, { ...defaultOptions, ...options });
   return <span>{formatter ? formatter(animated) : animated}</span>;
 }
 
@@ -35,10 +29,7 @@ AnimatedNumber.defaultProps = {
 
 export const animationOptionsPropTypes = PropTypes.shape({
   duration: PropTypes.number,
-  enterance: PropTypes.bool,
-  direct: PropTypes.bool,
-  disabled: PropTypes.bool,
-  decimals: PropTypes.number
+  animateOnMount: PropTypes.bool
 });
 
 AnimatedNumber.propTypes = {

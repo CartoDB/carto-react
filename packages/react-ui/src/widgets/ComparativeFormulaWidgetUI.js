@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
  * @param {{ prefix?: string; suffix?: string; note?: string }[]} [props.labels]
  * @param {{ prefix?: string; suffix?: string; note?: string; value?: string }[]} [props.colors]
  * @param {boolean} [props.animated]
- * @param {Object} [props.animationOptions]
+ * @param {{ duration?: number; animateOnMount?: boolean; }} [props.animationOptions]
  * @param {(v: number) => React.ReactNode} [props.formatter]
  */
 function ComparativeFormulaWidgetUI({
