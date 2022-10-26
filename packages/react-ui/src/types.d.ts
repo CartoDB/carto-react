@@ -189,13 +189,10 @@ export type LegendRamp = {
   };
 };
 
-export type AnimationOptions = Partial<{
-  duration: number;
-  enterance: boolean;
-  direct: boolean;
-  disabled: boolean;
-  decimals: number;
-}>;
+export type AnimationOptions = {
+  duration?: number;
+  animateOnMount?: boolean;
+};
 
 export type AnimatedNumber = {
   enabled: boolean;
