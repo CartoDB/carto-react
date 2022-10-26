@@ -32,7 +32,7 @@ We have a `Typography` component that uses `Mui Typography` and extends it with 
 - weight
 - italic
 
-This we can be more flexible regarding text styles without adding too many variants to the Mui component.
+This way we can be more flexible regarding text styles without adding too many variants to the Mui component.
 
 In short, instead of Mui Typography, the component you should use to add text is this one:
 `react-ui/src/atoms/Typography`

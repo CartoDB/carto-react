@@ -69,6 +69,9 @@ export default options;
 
 const Template = (args) => <Typography {...args}>{args.text}</Typography>;
 
+export const Playground = Template.bind({});
+Playground.args = { variant: 'h1', text: 'H1 Headline' };
+
 export const H1 = Template.bind({});
 H1.args = { variant: 'h1', text: 'H1 Headline' };
 
