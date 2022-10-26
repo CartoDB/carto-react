@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Tooltip, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTheme } from '@mui/material/styles';
 
@@ -35,14 +35,18 @@ export default options;
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
+    gridTemplateColumns: 'repeat(4, 1fr)',
     gap: theme.spacing(1)
   },
   text: {
     marginBottom: theme.spacing(0.5)
   },
+  textValue: {
+    display: 'block',
+    maxWidth: '144px'
+  },
   color: {
-    height: 60,
+    height: 48,
     width: '100%',
     marginBottom: theme.spacing(3),
     border: `1px solid ${theme.palette.grey[100]}`,
@@ -53,15 +57,20 @@ const useStyles = makeStyles((theme) => ({
 const ColorBox = ({ colorVariant, colorName }) => {
   const theme = useTheme();
   const color = theme.palette[colorVariant];
+  const colorValue = colorName ? color[colorName] : color;
   const classes = useStyles();
 
   return (
     <Box>
       <Box className={classes.text}>
         <Typography variant='subtitle1'>{colorName}</Typography>
-        <Typography variant='caption'>{color[colorName]}</Typography>
+        <Tooltip title={colorValue} enterDelay={600}>
+          <Typography variant='caption' noWrap className={classes.textValue}>
+            {colorValue}
+          </Typography>
+        </Tooltip>
       </Box>
-      <Box className={classes.color} style={{ backgroundColor: color[colorName] }} />
+      <Box className={classes.color} style={{ background: colorValue }} />
     </Box>
   );
 };
@@ -87,6 +96,9 @@ const ColorTemplate = ({ colorVariant }) => {
       )}
       {colorDef.relatedLight && (
         <ColorBox colorVariant={colorVariant} colorName={'relatedLight'} />
+      )}
+      {colorDef.outlinedBorder && (
+        <ColorBox colorVariant={colorVariant} colorName={'outlinedBorder'} />
       )}
     </Grid>
   );
@@ -165,16 +177,63 @@ const GreyTemplate = () => {
   );
 };
 
-const OtherTemplate = () => {
+const ShadesTemplate = () => {
+  const classes = useStyles();
+
+  return (
+    <>
+      <Typography variant='h6'>{'Black'}</Typography>
+      <Grid container className={classes.container}>
+        <ColorBox colorVariant={'black'} colorName={90} />
+        <ColorBox colorVariant={'black'} colorName={60} />
+        <ColorBox colorVariant={'black'} colorName={40} />
+        <ColorBox colorVariant={'black'} colorName={25} />
+        <ColorBox colorVariant={'black'} colorName={12} />
+        <ColorBox colorVariant={'black'} colorName={8} />
+        <ColorBox colorVariant={'black'} colorName={4} />
+      </Grid>
+
+      <Typography variant='h6'>{'White'}</Typography>
+      <Grid container className={classes.container}>
+        <ColorBox colorVariant={'white'} colorName={90} />
+        <ColorBox colorVariant={'white'} colorName={60} />
+        <ColorBox colorVariant={'white'} colorName={40} />
+        <ColorBox colorVariant={'white'} colorName={25} />
+        <ColorBox colorVariant={'white'} colorName={12} />
+        <ColorBox colorVariant={'white'} colorName={8} />
+        <ColorBox colorVariant={'white'} colorName={4} />
+      </Grid>
+    </>
+  );
+};
+
+const BrandTemplate = () => {
   const classes = useStyles();
 
   return (
     <Grid container className={classes.container}>
-      <ColorBox colorVariant={'other'} colorName={'tooltip'} />
-      <ColorBox colorVariant={'other'} colorName={'divider'} />
+      <ColorBox colorVariant={'brand'} colorName={'navyBlue'} />
+      <ColorBox colorVariant={'brand'} colorName={'locationRed'} />
+      <ColorBox colorVariant={'brand'} colorName={'predictionBlue'} />
+      <ColorBox colorVariant={'brand'} colorName={'softBlue'} />
     </Grid>
   );
 };
+
+const DividerTemplate = () => {
+  const classes = useStyles();
+
+  return (
+    <Grid container className={classes.container}>
+      <ColorBox colorVariant={'divider'} />
+    </Grid>
+  );
+};
+
+export const Playground = ColorTemplate.bind({});
+Playground.args = { colorVariant: 'primary' };
+
+export const Common = CommonTemplate.bind({});
 
 export const Primary = ColorTemplate.bind({});
 Primary.args = { colorVariant: 'primary' };
@@ -182,11 +241,11 @@ Primary.args = { colorVariant: 'primary' };
 export const Secondary = ColorTemplate.bind({});
 Secondary.args = { colorVariant: 'secondary' };
 
-export const Text = TextTemplate.bind({});
+export const Error = ColorTemplate.bind({});
+Error.args = { colorVariant: 'error' };
 
-export const Background = BackgroundTemplate.bind({});
-
-export const Action = ActionTemplate.bind({});
+export const Warning = ColorTemplate.bind({});
+Warning.args = { colorVariant: 'warning' };
 
 export const Info = ColorTemplate.bind({});
 Info.args = { colorVariant: 'info' };
@@ -194,17 +253,19 @@ Info.args = { colorVariant: 'info' };
 export const Success = ColorTemplate.bind({});
 Success.args = { colorVariant: 'success' };
 
-export const Warning = ColorTemplate.bind({});
-Warning.args = { colorVariant: 'warning' };
-
-export const Error = ColorTemplate.bind({});
-Error.args = { colorVariant: 'error' };
-
-export const Common = CommonTemplate.bind({});
-
 export const Grey = GreyTemplate.bind({});
+
+export const Text = TextTemplate.bind({});
+
+export const Background = BackgroundTemplate.bind({});
+
+export const Action = ActionTemplate.bind({});
+
+export const Divider = DividerTemplate.bind({});
 
 export const Default = ColorTemplate.bind({});
 Default.args = { colorVariant: 'default' };
 
-export const Other = OtherTemplate.bind({});
+export const Brand = BrandTemplate.bind({});
+
+export const Shades = ShadesTemplate.bind({});

@@ -1,5 +1,5 @@
 import { getSpacing } from '../themeUtils';
-import { commonPalette, componentsPalette } from './palette';
+import { commonPalette } from './palette';
 import { themeTypography } from './typography';
 
 const round = (value) => Math.round(value * 1e5) / 1e5;
@@ -613,11 +613,11 @@ export const themeComponentsOverrides = {
   MuiTooltip: {
     tooltip: {
       ...themeTypography.caption,
-      backgroundColor: componentsPalette.other.tooltip
+      backgroundColor: commonPalette.black[90]
     },
 
     arrow: {
-      color: componentsPalette.other.tooltip
+      color: commonPalette.black[90]
     }
   },
 
@@ -724,9 +724,9 @@ export const themeComponentsOverrides = {
       color: commonPalette.grey[500],
       '&$selected': {
         color: commonPalette.primary.main,
-        backgroundColor: commonPalette.primary.relatedLight,
+        backgroundColor: commonPalette.primary.background,
         '&:hover': {
-          backgroundColor: commonPalette.primary.relatedLight
+          backgroundColor: commonPalette.primary.background
         }
       }
     },

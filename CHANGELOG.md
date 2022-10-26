@@ -3,6 +3,7 @@
 ## Not released
 
 - New spacings, borders and shadows toolkit for MUI carto-theme [#507](https://github.com/CartoDB/carto-react/pull/507/)
+- Colors and Typography: design update [#502](https://github.com/CartoDB/carto-react/pull/502/)
 - Upgrade from Material UI v4 to MUI v5 [#501](https://github.com/CartoDB/carto-react/pull/501)
 - New typography toolkit for MUI carto-theme [#498](https://github.com/CartoDB/carto-react/pull/498/)
 - New color palette for MUI carto-theme [#496](https://github.com/CartoDB/carto-react/pull/496/)

@@ -96,7 +96,7 @@ const baseTypography = {
     letterSpacing: '0.2px'
   },
   overline: {
-    fontFamily: '"Overpass Mono", monospace',
+    fontFamily: 'Inter, sans-serif',
     fontWeight: 600,
     fontSize: getPixelToRem(10),
     lineHeight: 1.2,
@@ -110,6 +110,10 @@ const customTypography = {
   body1Italic: {
     ...baseTypography.body1,
     fontStyle: 'italic'
+  },
+  body1Medium: {
+    ...baseTypography.body1,
+    fontWeight: 500
   },
   body1Strong: {
     ...baseTypography.body1,
@@ -136,6 +140,11 @@ const customTypography = {
   captionItalic: {
     ...baseTypography.caption,
     fontStyle: 'italic'
+  },
+  captionMedium: {
+    ...baseTypography.caption,
+    fontWeight: 500,
+    letterSpacing: '0.4px'
   },
   captionStrong: {
     ...baseTypography.caption,

@@ -1,6 +1,6 @@
 import { themeComponentsOverrides, themeComponentsProps } from './sections/components';
 import { CssBaseline } from './sections/cssBaseline';
-import { commonPalette, componentsPalette } from './sections/palette';
+import { commonPalette } from './sections/palette';
 import { themeShadows } from './sections/shadows';
 import { themeTypography } from './sections/typography';
 import { SPACING } from './themeConstants';
@@ -50,7 +50,7 @@ export const cartoThemeOptions = {
     info: { ...commonPalette.info },
     success: { ...commonPalette.success },
     text: { ...commonPalette.text },
-    divider: componentsPalette.other.divider,
+    divider: commonPalette.divider,
     background: { ...commonPalette.background },
     grey: { ...commonPalette.grey },
     action: { ...commonPalette.action },
@@ -58,8 +58,9 @@ export const cartoThemeOptions = {
     /* Custom Colors palette */
     qualitative: { ...commonPalette.qualitative },
     default: { ...commonPalette.default },
-    charts: { ...componentsPalette.charts },
-    other: { ...componentsPalette.other }
+    white: { ...commonPalette.white },
+    black: { ...commonPalette.black },
+    brand: { ...commonPalette.brand }
   },
   shadows: [...themeShadows],
   typography: {
