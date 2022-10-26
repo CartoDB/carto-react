@@ -50,3 +50,23 @@ We also have a set of `shade` colors (with transparency):
 - white
 
 Important: `primary.relatedLight` and `secondary.relatedLight` has to be replaced by `primary.background` and `secondary.background`.
+
+## Spacing
+
+Design is restringed to a few specific values for spacing, which are:
+
+`0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 12, 15`.
+
+## Shapes
+
+Design is restringed to a few specific values for border radius, which are:
+
+`0.5, 1, 1.5, 2`.
+
+Use: `borderRadius: theme.spacing(x)`
+
+## Shadows / Elevations
+
+Design is restringed to a few specific values for shadows, which are:
+
+`0, 1, 2, 4, 6, 8, 16, 24`.

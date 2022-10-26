@@ -92,8 +92,6 @@ const PaperTemplate = ({ ...args }) => {
           <PaperElementTemplate {...args} elevation={4} />
           <PaperElementTemplate {...args} elevation={6} />
           <PaperElementTemplate {...args} elevation={8} />
-          <PaperElementTemplate {...args} elevation={9} />
-          <PaperElementTemplate {...args} elevation={12} />
           <PaperElementTemplate {...args} elevation={16} />
           <PaperElementTemplate {...args} elevation={24} />
         </Grid>
