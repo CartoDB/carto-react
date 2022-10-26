@@ -4,21 +4,21 @@ import { animateValue } from '../widgets/utils/animations';
 /**
  * React hook to handle animating value changes over time, abstracting the necesary state, refs and effects
  * @param {number} value 
- * @param {{ disabled?: boolean; duration?: number; animateOnMount?: boolean }} [options] 
+ * @param {{ disabled?: boolean; duration?: number; animateOnMount?: boolean; initialValue?: number; }} [options] 
  */
 export default function useAnimatedNumber(value, options = {}) {
-  const { disabled, duration, animateOnMount } = options;
+  const { disabled, duration, animateOnMount, initialValue = 0 } = options;
 
-  // starting with a -1 to supress a typescript warning
-  const requestAnimationFrameRef = useRef(-1); 
+  /** @type {any} */
+  const requestAnimationFrameRef = useRef(); 
 
-  // if we want to run the animation on mount, we set the start value as 0 and animate to the start value
-  const [animatedValue, setAnimatedValue] = useState(() => animateOnMount ? 0 : value);
+  // if we want to run the animation on mount, we set the starting value of the animated number as 0 (or the number in `initialValue`) and animate to the target value from there
+  const [animatedValue, setAnimatedValue] = useState(() => animateOnMount ? initialValue : value);
 
   useEffect(() => {
     if (!disabled) {
       animateValue({
-        start: animatedValue || 0,
+        start: animatedValue,
         end: value,
         duration: duration || 500, // 500ms
         drawFrame: (val) => setAnimatedValue(val),
