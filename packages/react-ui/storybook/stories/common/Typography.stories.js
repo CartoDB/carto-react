@@ -42,7 +42,7 @@ const options = {
       }
     },
     color: {
-      description: 'Any color from the theme, default and custom ones',
+      description: 'Any theme color, default and custom ones',
       control: {
         type: 'select',
         options: ['primary.dark', 'brand.navyBlue', 'default.main']

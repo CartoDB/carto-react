@@ -30,6 +30,8 @@ This we can be more flexible regarding text styles without adding too many varia
 In short, instead of Mui Typography, the component you should use to add text is this one:
 `react-ui/src/atoms/Typography`
 
+So `import { Typography } from '@carto/react-ui';`.
+
 ## Colors
 
 Keys renamed:
