@@ -1,4 +1,5 @@
-import { alpha, darken, lighten } from '@mui/material';
+import { alpha } from '@mui/material';
+import { getMixedColor } from '../themeUtils';
 
 const COLOR_BLACK = '#2C3032';
 const COLOR_WHITE = '#FFFFFF';
@@ -104,7 +105,7 @@ export const commonPalette = {
     light: baseColors.blue[300],
     contrastText: baseColors.common.white,
     background: alpha(baseColors.blue[400], 0.08),
-    relatedLight: lighten(baseColors.blue[400], 0.9)
+    relatedLight: getMixedColor(baseColors.blue[400], baseColors.common.white, 0.9)
   },
   secondary: {
     main: baseColors.green[400],
@@ -112,7 +113,7 @@ export const commonPalette = {
     light: baseColors.green[300],
     contrastText: baseColors.common.black,
     background: alpha(baseColors.green[400], 0.08),
-    relatedLight: lighten(baseColors.green[400], 0.9)
+    relatedLight: getMixedColor(baseColors.green[400], baseColors.common.white, 0.9)
   },
   text: {
     primary: baseColors.common.black,
@@ -137,32 +138,32 @@ export const commonPalette = {
     dark: baseColors.indigo[500],
     light: baseColors.indigo[300],
     contrastText: baseColors.common.white,
-    relatedDark: darken(baseColors.indigo[400], 0.6),
-    relatedLight: lighten(baseColors.indigo[400], 0.9)
+    relatedDark: getMixedColor(baseColors.indigo[400], baseColors.neutral.A700, 0.6),
+    relatedLight: getMixedColor(baseColors.indigo[400], baseColors.common.white, 0.9)
   },
   success: {
-    main: baseColors.green[400],
-    dark: baseColors.green[500],
-    light: baseColors.green[300],
+    main: baseColors.lightGreen[400],
+    dark: baseColors.lightGreen[500],
+    light: baseColors.lightGreen[300],
     contrastText: baseColors.common.white,
-    relatedDark: darken(baseColors.green[400], 0.6),
-    relatedLight: lighten(baseColors.green[400], 0.9)
+    relatedDark: getMixedColor(baseColors.lightGreen[400], baseColors.neutral.A700, 0.6),
+    relatedLight: getMixedColor(baseColors.lightGreen[400], baseColors.common.white, 0.9)
   },
   warning: {
     main: baseColors.orange[400],
     dark: baseColors.orange[500],
     light: baseColors.orange[300],
     contrastText: baseColors.common.black,
-    relatedDark: darken(baseColors.orange[400], 0.6),
-    relatedLight: lighten(baseColors.orange[400], 0.9)
+    relatedDark: getMixedColor(baseColors.orange[400], baseColors.neutral.A700, 0.6),
+    relatedLight: getMixedColor(baseColors.orange[400], baseColors.common.white, 0.9)
   },
   error: {
     main: baseColors.red[400],
     light: baseColors.red[300],
     dark: baseColors.red[500],
     contrastText: baseColors.common.white,
-    relatedDark: darken(baseColors.red[400], 0.6),
-    relatedLight: lighten(baseColors.red[400], 0.9)
+    relatedDark: getMixedColor(baseColors.red[400], baseColors.neutral.A700, 0.6),
+    relatedLight: getMixedColor(baseColors.red[400], baseColors.common.white, 0.9)
   },
   grey: {
     ...baseColors.neutral
@@ -171,9 +172,9 @@ export const commonPalette = {
 
   // Custom common colors
   default: {
-    main: baseColors.neutral[200],
-    dark: baseColors.neutral[50],
-    light: baseColors.neutral[100],
+    main: baseColors.neutral[100],
+    dark: baseColors.neutral[200],
+    light: baseColors.neutral[50],
     outlinedBorder: baseColors.shades.dark[25],
     background: baseColors.shades.dark[4]
   },

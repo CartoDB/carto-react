@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Tooltip, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTheme } from '@mui/material/styles';
 
@@ -41,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
   text: {
     marginBottom: theme.spacing(0.5)
   },
+  textValue: {
+    display: 'block',
+    maxWidth: '144px'
+  },
   color: {
     height: 48,
     width: '100%',
@@ -60,9 +64,13 @@ const ColorBox = ({ colorVariant, colorName }) => {
     <Box>
       <Box className={classes.text}>
         <Typography variant='subtitle1'>{colorName}</Typography>
-        <Typography variant='caption'>{colorValue}</Typography>
+        <Tooltip title={colorValue} enterDelay={600}>
+          <Typography variant='caption' noWrap className={classes.textValue}>
+            {colorValue}
+          </Typography>
+        </Tooltip>
       </Box>
-      <Box className={classes.color} style={{ backgroundColor: colorValue }} />
+      <Box className={classes.color} style={{ background: colorValue }} />
     </Box>
   );
 };
