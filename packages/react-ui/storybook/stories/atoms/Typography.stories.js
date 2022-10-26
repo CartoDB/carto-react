@@ -32,7 +32,7 @@ const options = {
     weight: {
       control: {
         type: 'select',
-        options: ['regular', 'medium', 'semiBold']
+        options: ['regular', 'medium', 'strong']
       }
     },
     italic: {

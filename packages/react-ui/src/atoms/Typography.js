@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { Typography as MuiTypography } from '@mui/material';
 
+// We have a FontWeight enum exported in /react-ui/src/types.d.ts for IDE help
 const FontWeight = {
   regular: 400,
   medium: 500,
@@ -24,7 +25,7 @@ const Typography = forwardRef(({ italic, weight, children, ...otherProps }, ref)
 });
 
 Typography.propTypes = {
-  weight: PropTypes.oneOf([FontWeight]),
+  weight: PropTypes.oneOf(Object.keys(FontWeight)),
   italic: PropTypes.bool
 };
 
