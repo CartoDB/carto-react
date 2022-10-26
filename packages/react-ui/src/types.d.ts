@@ -49,7 +49,7 @@ export type HistogramWidgetUI = {
 export type BarWidgetUI = {
   xAxisData: (string | number)[];
   yAxisData: (string | number)[] | (string | number)[][];
-  series?: string[]
+  series?: string[];
   colors?: string | string[];
   stacked?: boolean;
   labels?: object;
@@ -187,4 +187,16 @@ export type LegendRamp = {
     labels?: (number | string)[];
     colors?: string | string[] | number[][];
   };
+};
+
+// Typography
+export enum FontWeight {
+  REGULAR = 'regular',
+  MEDIUM = 'medium',
+  STRONG = 'strong'
+}
+
+export type Typography = {
+  weight?: FontWeight;
+  italic?: boolean;
 };

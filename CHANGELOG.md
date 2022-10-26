@@ -2,6 +2,7 @@
 
 ## Not released
 
+- New Typography component to extend Mui Typography [#506](https://github.com/CartoDB/carto-react/pull/506)
 - New typography toolkit for MUI carto-theme [#498](https://github.com/CartoDB/carto-react/pull/498/)
 - New color palette for MUI carto-theme [#496](https://github.com/CartoDB/carto-react/pull/496/)
 - Split carto-theme into sections [#495](https://github.com/CartoDB/carto-react/pull/495)

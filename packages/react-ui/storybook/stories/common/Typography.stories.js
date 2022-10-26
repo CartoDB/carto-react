@@ -54,9 +54,18 @@ const options = {
       }
     },
     color: {
+      description: 'Any color from the theme, default and custom ones',
       control: {
         type: 'select',
         options: ['primary.dark', 'brand.navyBlue', 'default.main']
+      }
+    },
+    noWrap: {
+      defaultValue: false,
+      description:
+        'If `true`, the text will not wrap and will truncate with an ellipsis. Note that this can only happen with block or inline-block elements (it needs to have a width in order to overflow).',
+      control: {
+        type: 'boolean'
       }
     }
   },
