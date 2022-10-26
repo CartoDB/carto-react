@@ -5,7 +5,8 @@ import { addFilter, removeFilter } from '@carto/react-redux';
 import {
   TimeSeriesWidgetUI,
   WrapperWidgetUI,
-  TIME_SERIES_CHART_TYPES
+  TIME_SERIES_CHART_TYPES,
+  Typography
 } from '@carto/react-ui';
 import {
   GroupDateTypes,
@@ -17,7 +18,6 @@ import { PropTypes } from 'prop-types';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
-import Typography from '@carto/react-ui/src/atoms/Typography/Typography';
 
 // Due to the widget groups the data by a certain stepSize, when filtering
 // the filter applied must be a range that represent the grouping range.
