@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 
 const options = {
-  title: 'CARTO Theme/Typography',
+  title: 'Atoms/Typography',
   component: Typography,
   argTypes: {
     variant: {
