@@ -15,6 +15,44 @@ theme = responsiveFontSizes(theme, {
   factor: 2
 });
 
+const customViewports = {
+  xs: {
+    name: 'xs',
+    styles: {
+      width: '320px',
+      height: '599px'
+    }
+  },
+  sm: {
+    name: 'sm',
+    styles: {
+      width: '600px',
+      height: '959px'
+    }
+  },
+  md: {
+    name: 'md',
+    styles: {
+      width: '960px',
+      height: '1279px'
+    }
+  },
+  lg: {
+    name: 'lg',
+    styles: {
+      width: '1280',
+      height: '1599px'
+    }
+  },
+  xl: {
+    name: 'xl',
+    styles: {
+      width: '1600',
+      height: '100%'
+    }
+  }
+};
+
 export const decorators = [
   (Story) => (
     <StyledEngineProvider injectFirst>
@@ -37,8 +75,10 @@ export const parameters = {
     storySort: {
       order: [
         'Introduction',
+        'Foundations',
+        ['Palette', 'Typography', 'Spacing', 'Borders', 'Elevations', 'Breakpoints'],
         'Atoms',
-        ['Palette', 'Typography'],
+        'Molecules',
         'Common',
         'Custom Components',
         [
@@ -53,5 +93,8 @@ export const parameters = {
       ]
     }
   },
-  decorators: [withDesign]
+  decorators: [withDesign],
+  viewport: {
+    viewports: customViewports
+  }
 };
