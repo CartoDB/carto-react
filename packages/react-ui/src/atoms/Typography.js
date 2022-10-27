@@ -8,24 +8,27 @@ const FontWeight = {
   strong: 600
 };
 
-const Typography = forwardRef(({ italic, weight, children, ...otherProps }, ref) => {
-  // forwardRef needed to be able to hold a reference, in this way it can be a child for some Mui components, like Tooltip
-  // https://mui.com/material-ui/guides/composition/#caveat-with-refs
+const Typography = forwardRef(
+  ({ italic, weight, style, children, ...otherProps }, ref) => {
+    // forwardRef needed to be able to hold a reference, in this way it can be a child for some Mui components, like Tooltip
+    // https://mui.com/material-ui/guides/composition/#caveat-with-refs
+    const fontConfiguration = {
+      fontWeight: FontWeight[weight],
+      fontStyle: italic && 'italic'
+    };
 
-  return (
-    <MuiTypography
-      {...otherProps}
-      ref={ref}
-      style={{ fontWeight: FontWeight[weight], fontStyle: italic && 'italic' }}
-    >
-      {children}
-    </MuiTypography>
-  );
-});
+    return (
+      <MuiTypography ref={ref} style={({ ...fontConfiguration }, style)} {...otherProps}>
+        {children}
+      </MuiTypography>
+    );
+  }
+);
 
 Typography.propTypes = {
   weight: PropTypes.oneOf(Object.keys(FontWeight)),
-  italic: PropTypes.bool
+  italic: PropTypes.bool,
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
 export default Typography;
