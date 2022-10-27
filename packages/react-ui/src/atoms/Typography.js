@@ -18,7 +18,14 @@ const Typography = forwardRef(
     };
 
     return (
-      <MuiTypography ref={ref} style={({ ...fontConfiguration }, style)} {...otherProps}>
+      <MuiTypography
+        {...otherProps}
+        ref={ref}
+        style={{
+          ...fontConfiguration,
+          ...style
+        }}
+      >
         {children}
       </MuiTypography>
     );
