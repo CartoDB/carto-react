@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, Grid, Tooltip, Typography } from '@mui/material';
-
+import { Button, Grid, Tooltip } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
+import Typography from '../../../src/atoms/Typography';
 
 const options = {
   title: 'Common/Tooltip',

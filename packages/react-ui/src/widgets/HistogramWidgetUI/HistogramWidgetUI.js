@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import ReactEcharts from '../../custom-components/echarts-for-react';
-import { darken, Grid, Link, Typography, useTheme } from '@mui/material';
+import { darken, Grid, Link, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { processFormatterRes } from '../utils/formatterUtils';
 import detectTouchscreen from '../utils/detectTouchScreen';
 import useHistogramInteractivity from './useHistogramInteractivity';
+import Typography from '../../atoms/Typography';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 

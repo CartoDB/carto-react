@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../custom-components/echarts-for-react';
-import { Grid, Link, Typography, useTheme, darken } from '@mui/material';
+import { Grid, Link, useTheme, darken } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import detectTouchScreen from './utils/detectTouchScreen';
 import { processFormatterRes } from './utils/formatterUtils';
+import Typography from '../atoms/Typography';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
 

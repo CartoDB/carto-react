@@ -1,10 +1,11 @@
 import React from 'react';
-import { Grid, Tooltip, Typography } from '@mui/material';
+import { Grid, Tooltip } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
 import { getMinMax } from './LegendProportion';
 import LegendProportion from './LegendProportion';
+import Typography from '../../atoms/Typography';
 
 const useStyles = makeStyles(() => ({
   errorContainer: {

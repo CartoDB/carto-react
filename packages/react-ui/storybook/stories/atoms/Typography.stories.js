@@ -1,5 +1,5 @@
 import React from 'react';
-import Typography from '@mui/material/Typography';
+import Typography from '../../../src/atoms/Typography';
 
 const options = {
   title: 'Atoms/Typography',
@@ -28,6 +28,33 @@ const options = {
           'code3'
         ]
       }
+    },
+    weight: {
+      control: {
+        type: 'select',
+        options: ['regular', 'medium', 'strong']
+      }
+    },
+    italic: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
+    color: {
+      description: 'Any theme color, default and custom ones',
+      control: {
+        type: 'select',
+        options: ['primary.dark', 'brand.navyBlue', 'default.main']
+      }
+    },
+    noWrap: {
+      defaultValue: false,
+      description:
+        'If `true`, the text will not wrap and will truncate with an ellipsis. Note that this can only happen with block or inline-block elements (it needs to have a width in order to overflow).',
+      control: {
+        type: 'boolean'
+      }
     }
   },
   parameters: {
@@ -41,6 +68,9 @@ const options = {
 export default options;
 
 const Template = (args) => <Typography {...args}>{args.text}</Typography>;
+
+export const Playground = Template.bind({});
+Playground.args = { variant: 'h1', text: 'H1 Headline' };
 
 export const H1 = Template.bind({});
 H1.args = { variant: 'h1', text: 'H1 Headline' };

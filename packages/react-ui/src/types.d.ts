@@ -1,4 +1,6 @@
 import { GroupDateTypes } from '@carto/react-core';
+import { TypographyProps as MuiTypographyProps } from '@mui/material';
+import { CSSProperties } from 'react';
 
 export type WrapperWidgetUI = {
   title: string;
@@ -49,7 +51,7 @@ export type HistogramWidgetUI = {
 export type BarWidgetUI = {
   xAxisData: (string | number)[];
   yAxisData: (string | number)[] | (string | number)[][];
-  series?: string[]
+  series?: string[];
   colors?: string | string[];
   stacked?: boolean;
   labels?: object;
@@ -188,3 +190,10 @@ export type LegendRamp = {
     colors?: string | string[] | number[][];
   };
 };
+
+// Typography
+export interface TypographyProps extends MuiTypographyProps {
+  weight?: 'regular' | 'medium' | 'strong';
+  italic?: boolean;
+  style?: CSSProperties;
+}
