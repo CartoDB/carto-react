@@ -64,9 +64,9 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "0.0.0-experimental-muiv5-0",
-    "@carto/react-redux": "0.0.0-experimental-muiv5-0",
-    "@carto/react-workers": "0.0.0-experimental-muiv5-0",
+    "@carto/react-core": "0.0.0-experimental-muiv5-1.5.0-alpha.4-0",
+    "@carto/react-redux": "0.0.0-experimental-muiv5-1.5.0-alpha.4-0",
+    "@carto/react-workers": "0.0.0-experimental-muiv5-1.5.0-alpha.4-0",
     "@deck.gl/carto": "^8.9.0-alpha.4",
     "@deck.gl/core": "^8.9.0-alpha.4",
     "@deck.gl/extensions": "^8.9.0-alpha.4",
