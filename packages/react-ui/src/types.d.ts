@@ -1,4 +1,5 @@
 import { GroupDateTypes } from '@carto/react-core';
+import { TypographyProps as MuiTypographyProps } from '@mui/material';
 
 export type WrapperWidgetUI = {
   title: string;
@@ -190,13 +191,7 @@ export type LegendRamp = {
 };
 
 // Typography
-export enum FontWeight {
-  REGULAR = 'regular',
-  MEDIUM = 'medium',
-  STRONG = 'strong'
-}
-
-export type Typography = {
-  weight?: FontWeight;
+export interface TypographyProps extends MuiTypographyProps {
+  weight?: 'regular' | 'medium' | 'strong';
   italic?: boolean;
-};
+}
