@@ -1,7 +1,7 @@
 import React from 'react';
+import Typography from '../../src/atoms/Typography';
 import LegendWidgetUI from '../../src/widgets/legend/LegendWidgetUI';
 import { fireEvent, render, screen } from '../widgets/utils/testUtils';
-import { Typography } from '@mui/material';
 
 const CUSTOM_CHILDREN = <Typography>Legend custom</Typography>;
 
@@ -198,7 +198,7 @@ describe('LegendWidgetUI', () => {
     expect(screen.getByText('Test')).toBeInTheDocument();
   });
 
-  test('legend with opacity control', async() => {
+  test('legend with opacity control', async () => {
     const legendConfig = DATA[7];
     const onChangeOpacity = jest.fn();
     const container = render(
@@ -252,7 +252,7 @@ describe('LegendWidgetUI', () => {
     expect(screen.getByText('Legend custom')).toBeInTheDocument();
   });
 
-  test('with custom layer options', async() => {
+  test('with custom layer options', async () => {
     const layer = DATA[8];
     render(
       <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
@@ -263,7 +263,7 @@ describe('LegendWidgetUI', () => {
     expect(screen.getByText('PaletteSelector')).toBeInTheDocument();
   });
 
-  test('with custom layer options - unknown option', async() => {
+  test('with custom layer options - unknown option', async () => {
     const layer = { ...DATA[8], options: ['unknown'] };
     render(
       <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>

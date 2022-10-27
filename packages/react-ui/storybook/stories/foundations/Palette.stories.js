@@ -1,7 +1,8 @@
-import React from 'react';
-import { Box, Grid, Tooltip, Typography } from '@mui/material';
+import React, { useRef } from 'react';
+import { Box, Grid, Tooltip } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTheme } from '@mui/material/styles';
+import Typography from '../../../src/atoms/Typography';
 
 const options = {
   title: 'Foundations/Palette',
@@ -59,13 +60,19 @@ const ColorBox = ({ colorVariant, colorName }) => {
   const color = theme.palette[colorVariant];
   const colorValue = colorName ? color[colorName] : color;
   const classes = useStyles();
+  const textRef = useRef();
 
   return (
     <Box>
       <Box className={classes.text}>
         <Typography variant='subtitle1'>{colorName}</Typography>
         <Tooltip title={colorValue} enterDelay={600}>
-          <Typography variant='caption' noWrap className={classes.textValue}>
+          <Typography
+            variant='caption'
+            noWrap
+            className={classes.textValue}
+            ref={textRef}
+          >
             {colorValue}
           </Typography>
         </Tooltip>

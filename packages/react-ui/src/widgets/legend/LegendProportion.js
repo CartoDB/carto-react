@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
+import Typography from '../../atoms/Typography';
 
 const useStyles = makeStyles((theme) => ({
   circles: {

@@ -1,8 +1,9 @@
 import React from 'react';
 import TableWidgetUI from '../../../src/widgets/TableWidgetUI/TableWidgetUI';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { columns, rows } from '../../../src/widgets/TableWidgetUI/mockData';
+import Typography from '../../../src/atoms/Typography';
 
 const options = {
   title: 'Custom Components/TableWidgetUI',
