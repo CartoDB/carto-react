@@ -30,6 +30,10 @@
 
 ## 1.4
 
+### 1.4.2 (2022-10-27)
+
+- Support for **deck.gl 8.8.15** *(breaking change)*
+
 ### 1.4.1 (2022-09-20)
 
 - Fix the Feature selection tool by setting the `EditableGeoJsonLayer` billboard property to false to be compatible with Google raster base maps
