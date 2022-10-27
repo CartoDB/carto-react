@@ -2,7 +2,7 @@
 
 ## Not released
 
-
+- AnimatedNumber component with hook wrapping `animateValue` [#509](https://github.com/CartoDB/carto-react/pull/509)
 
 ## 1.5
 
