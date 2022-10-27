@@ -10,15 +10,15 @@ export const cartoThemeOptions = {
   breakpoints: {
     keys: ['xs', 'sm', 'md', 'lg', 'xl'],
     values: {
-      xs: 0,
-      sm: 600,
-      md: 960,
-      lg: 1280,
-      xl: 1920
+      xs: 320, // 320 - 599
+      sm: 600, // 600 - 959
+      md: 960, // 960 - 1279
+      lg: 1280, // 1280 - 1599
+      xl: 1600 // 1600+
     },
     unit: 'px',
-    tep: 5
-    // For more information about use this helper functions: https://material-ui.com/customization/spacing/#custom-spacing
+    step: 5
+    // For more information about use this helper functions: hhttps://mui.com/material-ui/customization/breakpoints/#css-media-queries
     // up: f d(),
     // down: f down(),
     // between: f p(),

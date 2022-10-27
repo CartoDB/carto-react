@@ -79,10 +79,11 @@ export const parameters = {
         ['Palette', 'Typography', 'Spacing', 'Borders', 'Elevations', 'Breakpoints'],
         'Atoms',
         'Molecules',
+        'Organisms',
+        ['InputFile'],
         'Common',
         'Custom Components',
         [
-          'InputFile',
           'CategoryWidgetUI',
           'FormulaWidgetUI',
           'HistogramWidgetUI',

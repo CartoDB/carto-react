@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 
 const options = {
-  title: 'Atoms/Spacings',
+  title: 'Foundations/Spacing',
   argTypes: {
     size: {
       defaultValue: 15,

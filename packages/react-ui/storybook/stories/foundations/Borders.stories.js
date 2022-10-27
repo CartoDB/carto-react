@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 
 const options = {
-  title: 'Atoms/Border Radius',
+  title: 'Foundations/Borders',
   argTypes: {
     size: {
       defaultValue: 1,

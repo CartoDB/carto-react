@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 
 const options = {
-  title: 'Atoms/Typography',
+  title: 'Foundations/Typography',
   component: Typography,
   argTypes: {
     variant: {
