@@ -1,0 +1,31 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title='Foundations/Breakpoints/Guide' />
+
+# Breakpoints
+
+These are the keys available:
+
+```js
+xs: 320;
+sm: 600;
+md: 960;
+lg: 1280;
+xl: 1600;
+```
+
+Examples of use and its result:
+
+```css
+breakpoints.between('xs', 'sm') -> (min-width:320px) and (max-width:599.95px)
+breakpoints.between('sm', 'md') -> (min-width:600px) and (max-width:959.95px)
+breakpoints.between('md', 'lg') -> (min-width:960px) and (max-width:1279.95px)
+breakpoints.between('lg', 'xl') -> (min-width:1280px) and (max-width:1599.95px)
+
+breakpoints.only('xs') -> (min-width:320px) and (max-width:599.95px)
+
+breakpoints.up('xs') -> (min-width:320px)
+breakpoints.down('xs') -> (max-width:319.95px)
+
+breakpoints.not('xs') -> (min-width:600px)
+```
