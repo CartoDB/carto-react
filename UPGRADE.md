@@ -1,5 +1,12 @@
 # Upgrade to the new design system
 
+## Breaking changes in Mui v5
+
+Please, follow the Mui guides related to breaking changes in components and styles:
+
+- [Styles](https://mui.com/material-ui/migration/v5-style-changes/)
+- [Components](https://mui.com/material-ui/migration/v5-component-changes/)
+
 ## MUI theme
 
 [carto-theme.js](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/theme/carto-theme.js) file splitted in sections:

@@ -1,7 +1,11 @@
 import React from 'react';
 import { withDesign } from 'storybook-addon-designs';
-import { createTheme, responsiveFontSizes, StyledEngineProvider } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
+import {
+  createTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+  StyledEngineProvider
+} from '@mui/material';
 import { cartoThemeOptions } from '../../src/theme/carto-theme';
 import { BREAKPOINTS } from '../../src/theme/themeConstants';
 

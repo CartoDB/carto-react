@@ -3,8 +3,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
+import { ThemeProvider } from '@mui/material';
 import { createTheme, responsiveFontSizes } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
 
 import { cartoThemeOptions } from '../../../src/theme/carto-theme';
 
