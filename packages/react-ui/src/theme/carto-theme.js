@@ -66,6 +66,7 @@ export const cartoThemeOptions = {
   typography: {
     ...themeTypography
   },
+  spacingValue: SPACING, // For situations where we can't use theme.spacing(), mainly math calculations.
   spacing: SPACING, // For custom spacing: https://material-ui.com/customization/spacing/#custom-spacing
   shape: {
     borderRadius: 4

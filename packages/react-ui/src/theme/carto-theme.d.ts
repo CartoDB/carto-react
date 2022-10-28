@@ -74,6 +74,7 @@ export type CartoTheme = Modify<
   Theme,
   {
     palette: CustomPalette;
+    spacingValue: number;
   }
 >;
 
