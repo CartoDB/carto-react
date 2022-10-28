@@ -1,4 +1,7 @@
-import { themeComponentsOverrides, themeComponentsProps } from './sections/components';
+import { dataDisplayOverrides } from './sections/components/dataDisplay';
+import { buttonsOverrides } from './sections/components/buttons';
+import { formsOverrides } from './sections/components/forms';
+import { navigationOverrides } from './sections/components/navigation';
 import { CssBaseline } from './sections/cssBaseline';
 import { commonPalette } from './sections/palette';
 import { themeShadows } from './sections/shadows';
@@ -102,10 +105,14 @@ export const cartoThemeOptions = {
   overrides: {
     MuiCssBaseline: {
       ...CssBaseline
-    },
-    ...themeComponentsOverrides
+    }
   },
 
-  // Props
-  props: { ...themeComponentsProps }
+  // Styles and props overrides for components
+  components: {
+    ...buttonsOverrides,
+    ...formsOverrides,
+    ...navigationOverrides,
+    ...dataDisplayOverrides
+  }
 };
