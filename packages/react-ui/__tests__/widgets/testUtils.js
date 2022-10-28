@@ -3,10 +3,10 @@ import React from 'react';
 import {
   createTheme,
   responsiveFontSizes,
-  ThemeProvider,
   StyledEngineProvider,
   adaptV4Theme
 } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import * as echarts from 'echarts';
 
 import { cartoThemeOptions } from '../../src/theme/carto-theme';
