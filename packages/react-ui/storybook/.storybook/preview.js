@@ -7,6 +7,7 @@ import {
   StyledEngineProvider
 } from '@mui/material';
 import { cartoThemeOptions } from '../../src/theme/carto-theme';
+import { BREAKPOINTS } from '../../src/theme/themeConstants';
 
 let theme = createTheme(cartoThemeOptions);
 theme = responsiveFontSizes(theme, {
@@ -19,35 +20,35 @@ const customViewports = {
   xs: {
     name: 'xs',
     styles: {
-      width: '320px',
-      height: '599px'
+      width: `${BREAKPOINTS.XS}px`,
+      height: `${BREAKPOINTS.SM - 1}px`
     }
   },
   sm: {
     name: 'sm',
     styles: {
-      width: '600px',
-      height: '959px'
+      width: `${BREAKPOINTS.SM}px`,
+      height: `${BREAKPOINTS.MD - 1}px`
     }
   },
   md: {
     name: 'md',
     styles: {
-      width: '960px',
-      height: '1279px'
+      width: `${BREAKPOINTS.MD}px`,
+      height: `${BREAKPOINTS.LG - 1}px`
     }
   },
   lg: {
     name: 'lg',
     styles: {
-      width: '1280',
-      height: '1599px'
+      width: `${BREAKPOINTS.LG}px`,
+      height: `${BREAKPOINTS.XL - 1}px`
     }
   },
   xl: {
     name: 'xl',
     styles: {
-      width: '1600',
+      width: `${BREAKPOINTS.XL}px`,
       height: '100%'
     }
   }

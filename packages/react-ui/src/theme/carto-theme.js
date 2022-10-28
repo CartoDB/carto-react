@@ -3,22 +3,22 @@ import { CssBaseline } from './sections/cssBaseline';
 import { commonPalette } from './sections/palette';
 import { themeShadows } from './sections/shadows';
 import { themeTypography } from './sections/typography';
-import { SPACING } from './themeConstants';
+import { BREAKPOINTS, SPACING } from './themeConstants';
 
 export const cartoThemeOptions = {
   themeName: 'CARTO',
   breakpoints: {
     keys: ['xs', 'sm', 'md', 'lg', 'xl'],
     values: {
-      xs: 320, // 320 - 599
-      sm: 600, // 600 - 959
-      md: 960, // 960 - 1279
-      lg: 1280, // 1280 - 1599
-      xl: 1600 // 1600+
+      xs: BREAKPOINTS.XS, // 320 - 599
+      sm: BREAKPOINTS.SM, // 600 - 959
+      md: BREAKPOINTS.MD, // 960 - 1279
+      lg: BREAKPOINTS.LG, // 1280 - 1599
+      xl: BREAKPOINTS.XL // 1600+
     },
     unit: 'px',
     step: 5
-    // For more information about use this helper functions: hhttps://mui.com/material-ui/customization/breakpoints/#css-media-queries
+    // For more information about use this helper functions: https://mui.com/material-ui/customization/breakpoints/#css-media-queries
     // up: f d(),
     // down: f down(),
     // between: f p(),

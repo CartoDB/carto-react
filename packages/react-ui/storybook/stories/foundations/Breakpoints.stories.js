@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { BREAKPOINTS } from '../../../src/theme/themeConstants';
 
 const options = {
   title: 'Foundations/Breakpoints',
@@ -9,14 +10,7 @@ const options = {
       defaultValue: '100%',
       control: {
         type: 'select',
-        options: [320, 600, 960, 1280, 1600],
-        labels: {
-          320: 'xs',
-          600: 'sm',
-          960: 'md',
-          1280: 'lg',
-          1600: 'xl'
-        }
+        options: { ...BREAKPOINTS }
       }
     }
   },
