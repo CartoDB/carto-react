@@ -1,8 +1,8 @@
 import React from 'react';
-import Typography from '@mui/material/Typography';
+import Typography from '../../../src/atoms/Typography';
 
 const options = {
-  title: 'CARTO Theme/Typography',
+  title: 'Atoms/Typography',
   component: Typography,
   argTypes: {
     variant: {
@@ -22,23 +22,38 @@ const options = {
           'button',
           'caption',
           'overline',
-          'body1Italic',
-          'body1Strong',
-          'body1StrongItalic',
-          'body2Italic',
-          'body2Strong',
-          'body2StrongItalic',
-          'captionItalic',
-          'captionStrong',
-          'captionStrongItalic',
           'overlineDelicate',
           'code1',
-          'code1Strong',
           'code2',
-          'code2Strong',
-          'code3',
-          'code3Strong'
+          'code3'
         ]
+      }
+    },
+    weight: {
+      control: {
+        type: 'select',
+        options: ['regular', 'medium', 'strong']
+      }
+    },
+    italic: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
+    color: {
+      description: 'Any theme color, default and custom ones',
+      control: {
+        type: 'select',
+        options: ['primary.dark', 'brand.navyBlue', 'default.main']
+      }
+    },
+    noWrap: {
+      defaultValue: false,
+      description:
+        'If `true`, the text will not wrap and will truncate with an ellipsis. Note that this can only happen with block or inline-block elements (it needs to have a width in order to overflow).',
+      control: {
+        type: 'boolean'
       }
     }
   },
@@ -53,6 +68,9 @@ const options = {
 export default options;
 
 const Template = (args) => <Typography {...args}>{args.text}</Typography>;
+
+export const Playground = Template.bind({});
+Playground.args = { variant: 'h1', text: 'H1 Headline' };
 
 export const H1 = Template.bind({});
 H1.args = { variant: 'h1', text: 'H1 Headline' };
@@ -94,75 +112,23 @@ export const Overline = Template.bind({});
 Overline.args = { variant: 'overline', text: 'Overline' };
 
 // Custom variants
-// TODO: Do not export them until we do this task https://app.shortcut.com/cartoteam/story/265549/
-const Body1Italic = Template.bind({});
-Body1Italic.args = { variant: 'body1Italic', text: 'Body 1 Italic' };
+export const OverlineDelicate = Template.bind({});
+OverlineDelicate.args = { variant: 'overlineDelicate', text: 'Overline Delicate' };
 
-const Body1Strong = Template.bind({});
-Body1Strong.args = { variant: 'boy1Strong', text: 'Body 1 Strong' };
-
-const Body1StrongItalic = Template.bind({});
-Body1StrongItalic.args = { variant: 'body1StrongItalic', text: 'Body 1 Strong Italic' };
-
-const Body2Italic = Template.bind({});
-Body2Italic.args = { variant: 'body2Italic', text: 'Body 2 Italic' };
-
-const Body2Strong = Template.bind({});
-Body2Strong.args = { variant: 'body2Strong', text: 'Body 2 Strong' };
-
-const Body2StrongItalic = Template.bind({});
-Body2StrongItalic.args = { variant: 'body2StrongItalic', text: 'Body 2 Strong Italic' };
-
-const CaptionItalic = Template.bind({});
-CaptionItalic.args = { variant: 'captionItalic', text: 'Caption Italic' };
-
-const CaptionStrong = Template.bind({});
-CaptionStrong.args = { variant: 'captionStrong', text: 'Caption Strong' };
-
-const CaptionStrongItalic = Template.bind({});
-CaptionStrongItalic.args = {
-  variant: 'captionStrongItalic',
-  text: 'Caption Strong Italic'
-};
-
-const OverlineDelicate = Template.bind({});
-OverlineDelicate.args = {
-  variant: 'overlineDelicate',
-  text: 'Overline Delicate'
-};
-
-const Code1 = Template.bind({});
+export const Code1 = Template.bind({});
 Code1.args = {
   variant: 'code1',
   text: 'Code 1'
 };
 
-const Code1Strong = Template.bind({});
-Code1Strong.args = {
-  variant: 'code1Strong',
-  text: 'Code 1 Strong'
-};
-
-const Code2 = Template.bind({});
+export const Code2 = Template.bind({});
 Code2.args = {
   variant: 'code2',
   text: 'Code 2'
 };
 
-const Code2Strong = Template.bind({});
-Code2Strong.args = {
-  variant: 'code2Strong',
-  text: 'Code 2 Strong'
-};
-
-const Code3 = Template.bind({});
+export const Code3 = Template.bind({});
 Code3.args = {
   variant: 'code3',
   text: 'Code 3'
-};
-
-const Code3Strong = Template.bind({});
-Code3Strong.args = {
-  variant: 'code3Strong',
-  text: 'Code 3 Strong'
 };

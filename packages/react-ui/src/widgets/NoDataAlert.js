@@ -1,6 +1,7 @@
 import React from 'react';
 import { Alert, AlertTitle } from '@mui/material';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
+import Typography from '../atoms/Typography';
 
 function AlertBody({ color = undefined, children }) {
   return children ? (

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Grid, Tooltip, Typography } from '@mui/material';
+import { Box, Grid, Tooltip } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
+import Typography from '../../atoms/Typography';
 
 function LegendCategories({ legend }) {
   const {

@@ -9,13 +9,13 @@ import {
   Divider,
   SvgIcon,
   TextField,
-  Typography,
   Tooltip
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Skeleton } from '@mui/material';
 
 import { animateValues } from './utils/animations';
+import Typography from '../atoms/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {

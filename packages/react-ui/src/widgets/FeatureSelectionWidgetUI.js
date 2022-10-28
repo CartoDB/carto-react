@@ -9,12 +9,12 @@ import {
   Menu,
   MenuItem,
   Tooltip,
-  Typography,
   useTheme
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { ArrowDropDown } from '@mui/icons-material';
 import PropTypes from 'prop-types';
+import Typography from '../atoms/Typography';
 
 function FeatureSelectionWidgetUI({
   className,

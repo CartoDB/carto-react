@@ -131,4 +131,7 @@ const MultipleBarsCustomColorsProps = {
   colors: ['#f00', '#00f']
 };
 MultipleBarsCustomColors.args = MultipleBarsCustomColorsProps;
-MultipleBarsCustomColors.parameters = buildReactPropsAsString(MultipleBarsCustomColorsProps, 'BarWidgetUI');
+MultipleBarsCustomColors.parameters = buildReactPropsAsString(
+  MultipleBarsCustomColorsProps,
+  'BarWidgetUI'
+);

@@ -22,6 +22,7 @@ import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
+import Typography from './atoms/Typography';
 
 export {
   cartoThemeOptions,
@@ -47,5 +48,6 @@ export {
   LegendCategories,
   LegendIcon,
   LegendProportion,
-  LegendRamp
+  LegendRamp,
+  Typography
 };

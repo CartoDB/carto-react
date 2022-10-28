@@ -11,10 +11,10 @@ import {
   LinearProgress,
   Menu,
   MenuItem,
-  Tooltip,
-  Typography
+  Tooltip
 } from '@mui/material';
 import { ExpandLess, ExpandMore, MoreVert } from '@mui/icons-material';
+import Typography from '../atoms/Typography';
 
 /*
 Options props must have this format:
@@ -224,7 +224,7 @@ function WrapperWidgetUI(props) {
               </IconButton>
               <Menu
                 id='options-menu'
-                elevation={3}
+                elevation={8}
                 anchorOrigin={{
                   vertical: 'top',
                   horizontal: 'right'

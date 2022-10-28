@@ -1,4 +1,4 @@
-import { spacing } from '../themeUtils';
+import { getSpacing } from '../themeUtils';
 import { commonPalette } from './palette';
 import { themeTypography } from './typography';
 
@@ -22,18 +22,18 @@ export const CssBaseline = {
     // iOS Search clear button
     'input[type="search"]::-webkit-search-cancel-button': {
       '-webkit-appearance': 'none',
-      height: spacing(2),
-      width: spacing(2),
+      height: getSpacing(2),
+      width: getSpacing(2),
       display: 'block',
       backgroundImage: `url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAn0lEQVR42u3UMQrDMBBEUZ9WfQqDmm22EaTyjRMHAlM5K+Y7lb0wnUZPIKHlnutOa+25Z4D++MRBX98MD1V/trSppLKHqj9TTBWKcoUqffbUcbBBEhTjBOV4ja4l4OIAZThEOV6jHO8ARXD+gPPvKMABinGOrnu6gTNUawrcQKNCAQ7QeTxORzle3+sDfjJpPCqhJh7GixZq4rHcc9l5A9qZ+WeBhgEuAAAAAElFTkSuQmCC)`,
       backgroundRepeat: 'no-repeat',
-      backgroundSize: spacing(2)
+      backgroundSize: getSpacing(2)
     },
 
     // Mapbox controls
     '.mapboxgl-ctrl.mapboxgl-ctrl-attrib': {
-      padding: spacing(0, 1),
-      borderRadius: spacing(0.5, 0, 0, 0),
+      padding: getSpacing(0, 1),
+      borderRadius: getSpacing(0.5, 0, 0, 0),
 
       '& .mapboxgl-ctrl-attrib-inner': {
         ...themeTypography.overline,
@@ -47,12 +47,12 @@ export const CssBaseline = {
 
       '&.mapboxgl-compact': {
         backgroundColor: 'transparent',
-        right: spacing(0.5),
-        bottom: spacing(2.5),
+        right: getSpacing(0.5),
+        bottom: getSpacing(2.5),
 
         // Mobile
         '@media (max-width: 600px)': {
-          bottom: spacing(0.5)
+          bottom: getSpacing(0.5)
         },
 
         '& .mapboxgl-ctrl-attrib-button': {
@@ -69,9 +69,9 @@ export const CssBaseline = {
 
         '& .mapboxgl-ctrl-attrib-inner': {
           backgroundColor: 'rgba(255,255,255,.8)',
-          padding: spacing(0.5, 1),
-          borderRadius: spacing(1.5),
-          marginRight: spacing(2.5),
+          padding: getSpacing(0.5, 1),
+          borderRadius: getSpacing(1.5),
+          marginRight: getSpacing(2.5),
           color: commonPalette.text.secondary
         },
 

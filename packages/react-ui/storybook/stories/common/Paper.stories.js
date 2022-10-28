@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid, Paper, Typography } from '@mui/material';
-
+import { Grid, Paper } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
+import Typography from '../../../src/atoms/Typography';
 
 const options = {
   title: 'Common/Paper',
@@ -92,8 +92,6 @@ const PaperTemplate = ({ ...args }) => {
           <PaperElementTemplate {...args} elevation={4} />
           <PaperElementTemplate {...args} elevation={6} />
           <PaperElementTemplate {...args} elevation={8} />
-          <PaperElementTemplate {...args} elevation={9} />
-          <PaperElementTemplate {...args} elevation={12} />
           <PaperElementTemplate {...args} elevation={16} />
           <PaperElementTemplate {...args} elevation={24} />
         </Grid>
