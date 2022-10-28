@@ -6,7 +6,7 @@ import UploadIcon from '../../../src/assets/UploadIcon';
 import Typography from '../../../src/atoms/Typography';
 
 const options = {
-  title: 'Custom Components/InputFile',
+  title: 'Organisms/InputFile',
   component: InputFile,
   argTypes: {
     placeholder: {

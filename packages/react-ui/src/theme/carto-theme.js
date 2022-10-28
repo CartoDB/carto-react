@@ -3,22 +3,22 @@ import { CssBaseline } from './sections/cssBaseline';
 import { commonPalette } from './sections/palette';
 import { themeShadows } from './sections/shadows';
 import { themeTypography } from './sections/typography';
-import { SPACING } from './themeConstants';
+import { BREAKPOINTS, SPACING } from './themeConstants';
 
 export const cartoThemeOptions = {
   themeName: 'CARTO',
   breakpoints: {
     keys: ['xs', 'sm', 'md', 'lg', 'xl'],
     values: {
-      xs: 0,
-      sm: 600,
-      md: 960,
-      lg: 1280,
-      xl: 1920
+      xs: BREAKPOINTS.XS, // 320 - 599
+      sm: BREAKPOINTS.SM, // 600 - 959
+      md: BREAKPOINTS.MD, // 960 - 1279
+      lg: BREAKPOINTS.LG, // 1280 - 1599
+      xl: BREAKPOINTS.XL // 1600+
     },
     unit: 'px',
-    tep: 5
-    // For more information about use this helper functions: https://material-ui.com/customization/spacing/#custom-spacing
+    step: 5
+    // For more information about use this helper functions: https://mui.com/material-ui/customization/breakpoints/#css-media-queries
     // up: f d(),
     // down: f down(),
     // between: f p(),
@@ -66,6 +66,7 @@ export const cartoThemeOptions = {
   typography: {
     ...themeTypography
   },
+  spacingValue: SPACING, // For situations where we can't use theme.spacing(), mainly math calculations.
   spacing: SPACING, // For custom spacing: https://material-ui.com/customization/spacing/#custom-spacing
   shape: {
     borderRadius: 4
