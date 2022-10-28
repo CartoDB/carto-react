@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import Typography from '../../../src/atoms/Typography';
 
 const options = {
-  title: 'Atoms/Palette',
+  title: 'Foundations/Palette',
   component: Box,
   argTypes: {
     colorVariant: {
@@ -26,7 +26,7 @@ const options = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=8786%3A6248'
+      url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=8775%3A71615'
     },
     viewMode: 'docs'
   }

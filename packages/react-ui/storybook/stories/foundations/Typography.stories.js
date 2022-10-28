@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '../../../src/atoms/Typography';
 
 const options = {
-  title: 'Atoms/Typography',
+  title: 'Foundations/Typography',
   component: Typography,
   argTypes: {
     variant: {
@@ -60,7 +60,7 @@ const options = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=8776%3A64695'
+      url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=4662%3A14'
     },
     viewMode: 'docs'
   }

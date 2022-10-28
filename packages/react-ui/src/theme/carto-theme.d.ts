@@ -1,4 +1,4 @@
-import { Theme, ThemeOptions } from '@mui/material';
+import { Theme, ThemeOptions, TypeText } from '@mui/material';
 import { Palette, PaletteColor } from '@mui/material';
 
 /*
@@ -10,53 +10,59 @@ export const cartoThemeOptions: ThemeOptions;
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 
-type CustomPaletteColor = Modify<
+type CustomMainPaletteColor = Modify<
+  PaletteColor,
+  {
+    relatedLight: string;
+    background: string;
+  }
+>;
+type CustomFeedbackPaletteColor = Modify<
   PaletteColor,
   {
     relatedDark: string;
     relatedLight: string;
+  }
+>;
+type CustomDefaultPaletteColor = Modify<
+  PaletteColor,
+  {
     background: string;
     outlinedBorder: string;
   }
 >;
-type CustomBrandPaletteColor = Modify<
-  PaletteColor,
-  {
-    navyBlue: string;
-    locationRed: string;
-    predictionBlue: string;
-    softBlue: string;
-  }
->;
+type CustomBrandPaletteColor = {
+  navyBlue: string;
+  locationRed: string;
+  predictionBlue: string;
+  softBlue: string;
+};
 type CustomTextPaletteColor = Modify<
-  PaletteColor,
+  TypeText,
   {
     hint: string;
   }
 >;
-type CustomShadesPaletteColor = Modify<
-  PaletteColor,
-  {
-    90: string;
-    60: string;
-    40: string;
-    25: string;
-    12: string;
-    8: string;
-    4: string;
-  }
->;
+type CustomShadesPaletteColor = {
+  90: string;
+  60: string;
+  40: string;
+  25: string;
+  12: string;
+  8: string;
+  4: string;
+};
 
 type CustomPalette = Modify<
   Palette,
   {
-    primary: CustomPaletteColor;
-    secondary: CustomPaletteColor;
-    error: CustomPaletteColor;
-    warning: CustomPaletteColor;
-    info: CustomPaletteColor;
-    success: CustomPaletteColor;
-    default: CustomPaletteColor;
+    primary: CustomMainPaletteColor;
+    secondary: CustomMainPaletteColor;
+    error: CustomFeedbackPaletteColor;
+    warning: CustomFeedbackPaletteColor;
+    info: CustomFeedbackPaletteColor;
+    success: CustomFeedbackPaletteColor;
+    default: CustomDefaultPaletteColor;
     text: CustomTextPaletteColor;
     white: CustomShadesPaletteColor;
     black: CustomShadesPaletteColor;
@@ -68,6 +74,7 @@ export type CartoTheme = Modify<
   Theme,
   {
     palette: CustomPalette;
+    spacingValue: number;
   }
 >;
 

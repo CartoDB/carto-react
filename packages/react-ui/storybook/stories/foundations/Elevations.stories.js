@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 
 const options = {
-  title: 'Atoms/Shadows',
+  title: 'Foundations/Elevations',
   argTypes: {
     size: {
       defaultValue: 2,
@@ -78,4 +78,4 @@ const Template = () => {
 
 export const Playground = ShadowBox.bind({});
 
-export const Shadows = Template.bind({});
+export const Elevations = Template.bind({});

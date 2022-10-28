@@ -4,21 +4,21 @@ import { useTheme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 
 const options = {
-  title: 'Atoms/Border Radius',
+  title: 'Foundations/Spacing',
   argTypes: {
     size: {
-      defaultValue: 1,
+      defaultValue: 15,
       description: 'Use `theme.spacing(number)` function',
       control: {
         type: 'select',
-        options: [0.5, 1, 1.5, 2]
+        options: [0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 12, 15]
       }
     }
   },
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=9787%3A4001'
+      url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=8776%3A64661'
     },
     viewMode: 'docs'
   }
@@ -30,30 +30,29 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(0.5)
   },
   container: {
-    width: theme.spacing(12),
-    height: theme.spacing(12),
     marginBottom: theme.spacing(2),
     padding: 0,
     backgroundColor: theme.palette.primary.background,
-    border: `1px solid ${theme.palette.primary.main}`
+    borderRadius: theme.spacing(0.5)
   }
 }));
 
-const BorderBox = ({ size }) => {
+const SpacingBox = ({ size }) => {
   const theme = useTheme();
   const sizeVariant = theme.spacing(size);
   const classes = useStyles();
 
   return (
-    <Grid item xs={6} sm={3}>
+    <Grid item xs={4} sm={3} md={2}>
       <Box className={classes.text}>
-        <Typography variant='subtitle1'>{`Border Radius ${size}`}</Typography>
+        <Typography variant='subtitle1'>{`Spacing ${size}`}</Typography>
         <Typography variant='caption'>{sizeVariant}</Typography>
       </Box>
       <Box
         className={classes.container}
         style={{
-          borderRadius: sizeVariant
+          width: sizeVariant,
+          height: sizeVariant
         }}
       />
     </Grid>
@@ -63,14 +62,24 @@ const BorderBox = ({ size }) => {
 const Template = () => {
   return (
     <Grid container>
-      <BorderBox size={0.5} />
-      <BorderBox size={1} />
-      <BorderBox size={1.5} />
-      <BorderBox size={2} />
+      <SpacingBox size={0.5} />
+      <SpacingBox size={1} />
+      <SpacingBox size={1.5} />
+      <SpacingBox size={2} />
+      <SpacingBox size={2.5} />
+      <SpacingBox size={3} />
+      <SpacingBox size={4} />
+      <SpacingBox size={5} />
+      <SpacingBox size={6} />
+      <SpacingBox size={7} />
+      <SpacingBox size={8} />
+      <SpacingBox size={9} />
+      <SpacingBox size={12} />
+      <SpacingBox size={15} />
     </Grid>
   );
 };
 
-export const Playground = BorderBox.bind({});
+export const Playground = SpacingBox.bind({});
 
-export const BorderRadius = Template.bind({});
+export const Spacings = Template.bind({});
