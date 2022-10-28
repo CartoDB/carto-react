@@ -4,8 +4,13 @@
 
 - Implement ComparativeFormulaWidgetUI [#504](https://github.com/CartoDB/carto-react/pull/504)
 - Implement ComparativeCategoryWidgetUI [#505](https://github.com/CartoDB/carto-react/pull/505)
+- AnimatedNumber component with hook wrapping `animateValue` [#509](https://github.com/CartoDB/carto-react/pull/509)
 
 ## 1.5
+
+### 1.5.0-alpha.5 (2022-10-26)
+
+- Fix LegendCategories displaying outlined points [#508](https://github.com/CartoDB/carto-react/pull/508)
 
 ### 1.5.0-alpha.4 (2022-10-14)
 
@@ -26,6 +31,10 @@
 - Switch to using quadbin library, requiring deck.gl ^8.9.0-alpha.3 [#467](https://github.com/CartoDB/carto-react/pull/467)
 
 ## 1.4
+
+### 1.4.2 (2022-10-27)
+
+- Support for **deck.gl 8.8.15** *(breaking change)*
 
 ### 1.4.1 (2022-09-20)
 
