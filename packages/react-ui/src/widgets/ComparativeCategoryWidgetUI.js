@@ -158,7 +158,9 @@ function SearchIcon() {
   );
 }
 
-/** Renders a <ComparativeCategoryWidgetUI /> widget
+/** Renders a `<ComparativeCategoryWidgetUI />` widget
+ * 
+ * <!--
  * @param {Object} props
  * @param {string[]} props.names
  * @param {{ name: string; value: number }[][]} props.data
@@ -174,6 +176,7 @@ function SearchIcon() {
  * @param {string[]} [props.selectedCategories]
  * @param {(categories: string[]) => any} [props.onSelectedCategoriesChange]
  * @param {(v: any) => any} [props.formatter]
+ * -->
  */
 function ComparativeCategoryWidgetUI({
   names = EMPTY_ARRAY,
