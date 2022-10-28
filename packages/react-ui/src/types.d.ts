@@ -201,3 +201,24 @@ export type AnimatedNumber = {
   options?: AnimationOptions;
   formatter: (n: number) => React.ReactNode;
 };
+
+export type FormulaLabels = {
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
+  note?: React.ReactNode;
+};
+
+export type FormulaColors = {
+  [key in keyof FormulaLabels]?: string;
+} & {
+  value?: string;
+};
+
+export type ComparativeFormulaWidgetUI = {
+  data: number[];
+  labels?: FormulaLabels[];
+  colors?: FormulaColors[];
+  animated?: boolean;
+  animationOptions?: AnimationOptions;
+  formatter?: (n: number) => React.ReactNode;
+};

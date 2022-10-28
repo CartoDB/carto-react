@@ -3,6 +3,7 @@
 ## Not released
 
 - AnimatedNumber component with hook wrapping `animateValue` [#509](https://github.com/CartoDB/carto-react/pull/509)
+- Implement ComparativeFormulaWidgetUI [#504](https://github.com/CartoDB/carto-react/pull/504)
 
 ## 1.5
 
