@@ -58,7 +58,7 @@ const options = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1145%3A19069'
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33807'
     }
   }
 };
@@ -319,7 +319,7 @@ Multiline.args = { value: 'Hello world\nwith multiple lines' };
 Multiline.parameters = {
   design: {
     type: 'figma',
-    url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1149%3A22604'
+    url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33542'
   }
 };
 
@@ -328,6 +328,6 @@ MultilineSmall.args = { value: 'Hello world\nwith multiple lines', size: 'small'
 MultilineSmall.parameters = {
   design: {
     type: 'figma',
-    url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1149%3A22604'
+    url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33542'
   }
 };
