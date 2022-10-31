@@ -192,7 +192,7 @@ function ComparativePieWidgetUI({
       hoverOffset: 5,
       bottom: theme.spacing(2.5),
       avoidLabelOverlap: true,
-      label: { show: !isMultiple, ...labelOptions },
+      label: { show: false, ...labelOptions },
       emphasis: {
         label: {
           show: true,
