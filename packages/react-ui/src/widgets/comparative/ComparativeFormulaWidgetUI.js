@@ -10,7 +10,6 @@ const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
 
 const useStyles = makeStyles((theme) => ({
-  formulaChart: {},
   formulaGroup: {
     '& + $formulaGroup': {
       marginTop: theme.spacing(2)
@@ -67,7 +66,7 @@ function ComparativeFormulaWidgetUI({
   }
 
   return (
-    <div className={classes.formulaChart}>
+    <div>
       {data
         .filter((n) => n !== undefined)
         .map((d, i) => (
