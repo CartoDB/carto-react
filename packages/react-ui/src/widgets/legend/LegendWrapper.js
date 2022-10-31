@@ -122,12 +122,9 @@ const useHeaderStyles = makeStyles((theme) => ({
     flex: '1 1 auto',
     justifyContent: 'flex-start',
     cursor: ({ collapsible }) => (collapsible ? 'pointer' : 'default'),
-    '& .MuiButton-label': {
-      ...theme.typography.body1,
 
-      '& .MuiButton-startIcon': {
-        marginRight: theme.spacing(1)
-      }
+    '& .MuiButton-startIcon': {
+      marginRight: theme.spacing(1)
     },
     '&:hover': {
       background: 'none'

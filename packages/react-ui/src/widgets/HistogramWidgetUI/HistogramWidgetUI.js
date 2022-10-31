@@ -17,10 +17,6 @@ const useStyles = makeStyles((theme) => ({
 
     '& .MuiTypography-caption': {
       color: theme.palette.text.secondary
-    },
-
-    '& .MuiButton-label': {
-      ...theme.typography.caption
     }
   },
   clearButton: {

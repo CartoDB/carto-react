@@ -25,7 +25,7 @@ We have a new custom spacing constant in carto-theme, `spacingValue`, which you 
 
 Note that if you're using `calc()` in your styles, you can keep using `theme.spacing()` as usual.
 
-# Typography
+## Typography
 
 `responsiveFontSizes` simplified due we want to resize only a few variants through the theme.
 
