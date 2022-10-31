@@ -1,12 +1,9 @@
 import { Theme, ThemeOptions, TypeText } from '@mui/material';
 import { Palette, PaletteColor } from '@mui/material';
 
-/*
-  TODO: Review if this set of changes in the type of Palette and PaletteColor, to properly use theme
-  from TypeScript clients, is still required and if it needs to be fully extended to reflect the new
-  color structure (custom keys & props)
-*/
+
 export const cartoThemeOptions: ThemeOptions;
+export const theme: CartoTheme;
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 
@@ -70,6 +67,7 @@ type CustomPalette = Modify<
   }
 >;
 
+// If we get every client to use 'default' theme types, module augmentation probably would allow us omiting this export
 export type CartoTheme = Modify<
   Theme,
   {
@@ -77,6 +75,16 @@ export type CartoTheme = Modify<
     spacingValue: number;
   }
 >;
+
+/*
+  Module augmentation, to allow a better experience when using carto-react from
+  TypeScript clients (eg: *makeStyles* using 'DefaultTheme' | *useTheme* using 'Theme')
+*/
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends CartoTheme {}
+}
 
 declare module '@mui/material/styles' {
   // Check https://mui.com/material-ui/customization/theming/#custom-variables
