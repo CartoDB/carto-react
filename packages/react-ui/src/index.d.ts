@@ -1,4 +1,4 @@
-import { cartoThemeOptions, CartoTheme } from './theme/carto-theme';
+import { theme, cartoThemeOptions, CartoTheme } from './theme/carto-theme';
 import WrapperWidgetUI from './widgets/WrapperWidgetUI';
 import CategoryWidgetUI from './widgets/CategoryWidgetUI';
 import FormulaWidgetUI from './widgets/FormulaWidgetUI';
@@ -25,6 +25,7 @@ import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import Typography from './atoms/Typography';
 
 export {
+  theme,
   cartoThemeOptions,
   CartoTheme,
   WrapperWidgetUI,
