@@ -23,6 +23,8 @@ Removed unused custom `createTheme` function in `carto-theme.js`.
 
 We have a new custom spacing constant in carto-theme, `spacingValue`, which you should use instead of the common `theme.spacing()` function in cases where you need to do value calculations, because since Mui v5, theme.spacing is no longer a number, but a string in this format: `number + px`.
 
+Note that if you're using `calc()` in your styles, you can use `theme.spacing()` as always.
+
 # Typography
 
 `responsiveFontSizes` simplified due we want to resize only a few variants through the theme.

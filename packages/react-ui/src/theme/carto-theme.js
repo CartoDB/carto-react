@@ -102,14 +102,14 @@ export const cartoThemeOptions = {
     snackbar: 1400,
     tooltip: 1500
   },
-  overrides: {
-    MuiCssBaseline: {
-      ...CssBaseline
-    }
-  },
 
   // Styles and props overrides for components
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        ...CssBaseline
+      }
+    },
     ...buttonsOverrides,
     ...formsOverrides,
     ...navigationOverrides,
