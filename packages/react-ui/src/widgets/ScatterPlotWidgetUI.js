@@ -1,4 +1,4 @@
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useRef, useState, useEffect } from 'react';
 import { areChartPropsEqual } from './utils/chartUtils';
@@ -24,7 +24,7 @@ function __generateDefaultConfig(
         lineHeight: 16,
         color: theme.palette.common.white
       },
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: theme.palette.black[90],
       ...(tooltipFormatter ? { formatter: tooltipFormatter } : {})
     },
     color: [theme.palette.secondary.main],

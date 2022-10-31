@@ -1,20 +1,12 @@
 import React, { createRef, useState } from 'react';
-import {
-  Box,
-  Button,
-  Collapse,
-  Grid,
-  Icon,
-  makeStyles,
-  Switch,
-  Tooltip,
-  Typography
-} from '@material-ui/core';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import { Box, Button, Collapse, Grid, Icon, Switch, Tooltip } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import Note from './Note';
 import LayerIcon from '../../assets/LayerIcon';
-import { ToggleButton } from '@material-ui/lab';
+import { ToggleButton } from '@mui/material';
 import OpacityControl from '../OpacityControl';
+import Typography from '../../atoms/Typography';
 
 const useStyles = makeStyles((theme) => ({
   legendWrapper: {

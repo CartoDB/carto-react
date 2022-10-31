@@ -1,7 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render } from '../widgets/utils/testUtils';
 import PieWidgetUI from '../../src/widgets/PieWidgetUI';
-import { getMaterialUIContext, mockEcharts } from './testUtils';
+import { mockEcharts } from './testUtils';
 
 describe('PieWidgetUI', () => {
   beforeAll(() => {
@@ -23,10 +23,9 @@ describe('PieWidgetUI', () => {
     }
   ];
 
-  const Widget = (props) =>
-    getMaterialUIContext(
-      <PieWidgetUI data={DATA} onSelectedCategoriesChange={() => {}} {...props} />
-    );
+  const Widget = (props) => (
+    <PieWidgetUI data={DATA} onSelectedCategoriesChange={() => {}} {...props} />
+  );
 
   test('renders correctly', () => {
     render(<Widget />);

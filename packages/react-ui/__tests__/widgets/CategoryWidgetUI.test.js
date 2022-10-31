@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '../widgets/utils/testUtils';
 import userEvent from '@testing-library/user-event';
 import CategoryWidgetUI from '../../src/widgets/CategoryWidgetUI';
 import { currencyFormatter } from './testUtils';
@@ -170,25 +170,33 @@ describe('CategoryWidgetUI', () => {
   });
 
   describe('when data name is not string', () => {
-    const NotStringData = [{
-      name: true,
-      value: 100
-    }, {
-      name: false,
-      value: 101
-    }]
+    const NotStringData = [
+      {
+        name: true,
+        value: 100
+      },
+      {
+        name: false,
+        value: 101
+      }
+    ];
     test('should render properly', () => {
       render(<CategoryWidgetUI data={NotStringData} />);
-  
+
       expect(screen.getByText(/true/)).toBeInTheDocument();
       expect(screen.getByText(/101/)).toBeInTheDocument();
     });
 
     test('should maintain typing when filters', () => {
-      const onSelectedCategoriesChangeFn = jest.fn()
-      render(<CategoryWidgetUI data={NotStringData} onSelectedCategoriesChange={onSelectedCategoriesChangeFn} />);
-      userEvent.click(screen.getByText(/true/))
-      expect(onSelectedCategoriesChangeFn).toHaveBeenCalledWith([true])
-    })
-  })
+      const onSelectedCategoriesChangeFn = jest.fn();
+      render(
+        <CategoryWidgetUI
+          data={NotStringData}
+          onSelectedCategoriesChange={onSelectedCategoriesChangeFn}
+        />
+      );
+      userEvent.click(screen.getByText(/true/));
+      expect(onSelectedCategoriesChangeFn).toHaveBeenCalledWith([true]);
+    });
+  });
 });

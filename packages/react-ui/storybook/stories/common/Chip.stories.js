@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Chip, Grid } from '@material-ui/core';
+import { Avatar, Chip, Grid } from '@mui/material';
 
 const options = {
   title: 'Common/Chip',

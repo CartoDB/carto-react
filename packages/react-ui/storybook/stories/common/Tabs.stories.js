@@ -1,6 +1,6 @@
 import React from 'react';
-import { Tab, Tabs } from '@material-ui/core';
-import { Layers, LocalOffer, Map, Place, Store } from '@material-ui/icons';
+import { Tab, Tabs } from '@mui/material';
+import { Layers, LocalOffer, Map, Place, Store } from '@mui/icons-material';
 
 const options = {
   title: 'Common/Tabs',

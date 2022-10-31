@@ -1,9 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../custom-components/echarts-for-react';
-import { Grid, Link, Typography, useTheme, makeStyles, darken } from '@material-ui/core';
+import { Grid, Link, useTheme, darken } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import detectTouchScreen from './utils/detectTouchScreen';
 import { processFormatterRes } from './utils/formatterUtils';
+import Typography from '../atoms/Typography';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
 
@@ -66,7 +68,7 @@ function BarWidgetUI(props) {
         lineHeight: 16,
         color: theme.palette.common.white
       },
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: theme.palette.black[90],
       position: function (point, _params, _dom, _rect, size) {
         const position = { top: 0 };
 
@@ -137,8 +139,7 @@ function BarWidgetUI(props) {
         showMaxLabel: true,
         showMinLabel: false,
         inside: true,
-        color: (value) =>
-          value >= maxValue ? theme.palette.charts.maxLabel : 'transparent',
+        color: (value) => (value >= maxValue ? theme.palette.black[60] : 'transparent'),
         ...theme.typography.overlineDelicate,
         formatter: (v) => processFormatterRes(yAxisFormatter(v))
       },
@@ -152,14 +153,14 @@ function BarWidgetUI(props) {
         show: true,
         onZero: false,
         lineStyle: {
-          color: theme.palette.charts.axisLine
+          color: theme.palette.black[4]
         }
       }
     }),
     [
       maxValue,
-      theme.palette.charts.axisLine,
-      theme.palette.charts.maxLabel,
+      theme.palette.black[4],
+      theme.palette.black[60],
       theme.typography.overlineDelicate,
       yAxisFormatter
     ]
@@ -182,7 +183,7 @@ function BarWidgetUI(props) {
           return {
             value,
             ...(isDisabled && {
-              itemStyle: { color: theme.palette.charts.disabled },
+              itemStyle: { color: theme.palette.black[25] },
               disabled: true
             })
           };
@@ -220,7 +221,7 @@ function BarWidgetUI(props) {
       },
       axisPointer: {
         lineStyle: {
-          color: theme.palette.charts.axisPointer
+          color: theme.palette.black[40]
         }
       },
       color: colors,
@@ -307,7 +308,11 @@ function BarWidgetUI(props) {
             {selectedBars?.length || 'All'} selected
           </Typography>
           {selectedBars && selectedBars.length > 0 && (
-            <Link className={classes.selectAllButton} onClick={() => clearBars()}>
+            <Link
+              className={classes.selectAllButton}
+              onClick={() => clearBars()}
+              underline='hover'
+            >
               Clear
             </Link>
           )}

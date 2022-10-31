@@ -5,14 +5,15 @@ import { addFilter, removeFilter } from '@carto/react-redux';
 import {
   TimeSeriesWidgetUI,
   WrapperWidgetUI,
-  TIME_SERIES_CHART_TYPES
+  TIME_SERIES_CHART_TYPES,
+  Typography
 } from '@carto/react-ui';
 import {
   GroupDateTypes,
   AggregationTypes,
   _FilterTypes as FilterTypes
 } from '@carto/react-core';
-import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/core';
+import { capitalize, Menu, MenuItem, SvgIcon } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';

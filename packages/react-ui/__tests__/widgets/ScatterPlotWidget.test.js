@@ -1,7 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render } from '../widgets/utils/testUtils';
 import ScatterPlotWidgetUI from '../../src/widgets/ScatterPlotWidgetUI';
-import { getMaterialUIContext, mockEcharts } from './testUtils';
+import { mockEcharts } from './testUtils';
 
 describe('ScatterPlotWidgetUI', () => {
   beforeAll(() => {
@@ -16,10 +16,9 @@ describe('ScatterPlotWidgetUI', () => {
     [2, 4],
     [3, 6]
   ];
-  const Widget = (props) =>
-    getMaterialUIContext(
-      <ScatterPlotWidgetUI data={DATA} onSelectedBarsChange={() => {}} {...props} />
-    );
+  const Widget = (props) => (
+    <ScatterPlotWidgetUI data={DATA} onSelectedBarsChange={() => {}} {...props} />
+  );
 
   test('renders correctly', () => {
     render(<Widget />);

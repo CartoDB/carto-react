@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 import React, { useState } from 'react';
 import FeatureSelectionWidgetUI from '../../../src/widgets/FeatureSelectionWidgetUI';
 import CursorIcon from '../../../src/assets/CursorIcon';

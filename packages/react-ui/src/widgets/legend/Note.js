@@ -1,5 +1,7 @@
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import { Box } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
+import Typography from '../../atoms/Typography';
 
 const useNoteStyles = makeStyles(() => ({
   note: {

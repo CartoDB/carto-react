@@ -1,6 +1,6 @@
 import React, { useState, createRef } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import {
   Box,
   Button,
@@ -11,10 +11,10 @@ import {
   LinearProgress,
   Menu,
   MenuItem,
-  Tooltip,
-  Typography
-} from '@material-ui/core';
-import { ExpandLess, ExpandMore, MoreVert } from '@material-ui/icons';
+  Tooltip
+} from '@mui/material';
+import { ExpandLess, ExpandMore, MoreVert } from '@mui/icons-material';
+import Typography from '../atoms/Typography';
 
 /*
 Options props must have this format:
@@ -157,6 +157,7 @@ function WrapperWidgetUI(props) {
         aria-label={action.label}
         onClick={action.action}
         className={classes.iconAction}
+        size='large'
       >
         {action.icon}
       </IconButton>
@@ -217,12 +218,13 @@ function WrapperWidgetUI(props) {
                 aria-haspopup='true'
                 onClick={handleClick}
                 className={classes.iconAction}
+                size='large'
               >
                 {optionsIcon}
               </IconButton>
               <Menu
                 id='options-menu'
-                elevation={3}
+                elevation={8}
                 anchorOrigin={{
                   vertical: 'top',
                   horizontal: 'right'

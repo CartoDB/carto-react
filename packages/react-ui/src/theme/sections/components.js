@@ -1,5 +1,5 @@
-import { spacing } from '../themeUtils';
-import { commonPalette, componentsPalette } from './palette';
+import { getSpacing } from '../themeUtils';
+import { commonPalette } from './palette';
 import { themeTypography } from './typography';
 
 const round = (value) => Math.round(value * 1e5) / 1e5;
@@ -106,12 +106,12 @@ export const themeComponentsOverrides = {
   },
   MuiIconButton: {
     root: {
-      padding: spacing(0.75),
-      borderRadius: spacing(0.5),
+      padding: getSpacing(0.75),
+      borderRadius: getSpacing(0.5),
       color: commonPalette.text.primary
     },
     sizeSmall: {
-      padding: spacing(0.25)
+      padding: getSpacing(0.25)
     }
   },
 
@@ -135,25 +135,25 @@ export const themeComponentsOverrides = {
     input: {
       ...themeTypography.body1,
       height: `${themeTypography.body1.lineHeight}em`,
-      padding: spacing(3, 2, 1)
+      padding: getSpacing(3, 2, 1)
     },
 
     inputMarginDense: {
       ...themeTypography.body2,
       height: `${themeTypography.body2.lineHeight}em`,
-      padding: spacing(1, 1.5),
-      paddingTop: spacing(1),
-      paddingBottom: spacing(1)
+      padding: getSpacing(1, 1.5),
+      paddingTop: getSpacing(1),
+      paddingBottom: getSpacing(1)
     },
 
     adornedStart: {
       '&$marginDense': {
-        paddingLeft: spacing(1.5)
+        paddingLeft: getSpacing(1.5)
       }
     },
     adornedEnd: {
       '&$marginDense': {
-        paddingRight: spacing(1.5)
+        paddingRight: getSpacing(1.5)
       }
     },
 
@@ -162,7 +162,7 @@ export const themeComponentsOverrides = {
     },
 
     multiline: {
-      padding: spacing(2.75, 2, 1.25)
+      padding: getSpacing(2.75, 2, 1.25)
     }
   },
   MuiInputLabel: {
@@ -209,7 +209,7 @@ export const themeComponentsOverrides = {
     root: {
       ...themeTypography.body1,
       alignItems: 'baseline',
-      marginBottom: spacing(1.5),
+      marginBottom: getSpacing(1.5),
       color: commonPalette.text.secondary,
 
       '&:disabled': {
@@ -222,15 +222,15 @@ export const themeComponentsOverrides = {
     },
 
     positionStart: {
-      marginLeft: spacing(0.25)
+      marginLeft: getSpacing(0.25)
     },
 
     positionEnd: {
-      marginRight: spacing(0.25)
+      marginRight: getSpacing(0.25)
     },
 
     marginDense: {
-      marginBottom: spacing(0),
+      marginBottom: getSpacing(0),
       alignItems: 'center',
       ...themeTypography.body2,
 
@@ -247,13 +247,13 @@ export const themeComponentsOverrides = {
     root: {
       ...themeTypography.caption,
       '&$contained': {
-        marginTop: spacing(1)
+        marginTop: getSpacing(1)
       }
     },
 
     marginDense: {
       '&$contained': {
-        marginLeft: spacing(0)
+        marginLeft: getSpacing(0)
       }
     }
   },
@@ -291,16 +291,16 @@ export const themeComponentsOverrides = {
   MuiAutocomplete: {
     inputRoot: {
       '&[class*="MuiOutlinedInput-root"]': {
-        padding: spacing(3, 1.25, 0.5),
+        padding: getSpacing(3, 1.25, 0.5),
 
         '& .MuiAutocomplete-input': {
-          padding: spacing(0, 1.25, 0.5)
+          padding: getSpacing(0, 1.25, 0.5)
         }
       },
       '&.MuiInputBase-marginDense.MuiOutlinedInput-root $input.MuiOutlinedInput-inputMarginDense':
         {
-          paddingTop: spacing(0.25),
-          paddingBottom: spacing(0.25)
+          paddingTop: getSpacing(0.25),
+          paddingBottom: getSpacing(0.25)
         }
     }
   },
@@ -309,17 +309,17 @@ export const themeComponentsOverrides = {
   MuiCheckbox: {
     root: {
       ...themeTypography.body2,
-      padding: spacing(0.75),
+      padding: getSpacing(0.75),
       borderRadius: '50%',
 
       '& + .MuiFormControlLabel-label': {
         ...themeTypography.body2,
-        marginLeft: spacing(0.25),
+        marginLeft: getSpacing(0.25),
         color: commonPalette.text.primary
       },
 
       '& .MuiSvgIcon-root': {
-        fontSize: spacing(3)
+        fontSize: getSpacing(3)
       }
     }
   },
@@ -328,17 +328,17 @@ export const themeComponentsOverrides = {
   MuiRadio: {
     root: {
       ...themeTypography.body2,
-      padding: spacing(0.75),
+      padding: getSpacing(0.75),
       borderRadius: '50%',
 
       '& + .MuiFormControlLabel-label': {
         ...themeTypography.body2,
-        marginLeft: spacing(0.25),
+        marginLeft: getSpacing(0.25),
         color: commonPalette.text.primary
       },
 
       '& .MuiSvgIcon-root': {
-        fontSize: spacing(3)
+        fontSize: getSpacing(3)
       }
     }
   },
@@ -358,7 +358,7 @@ export const themeComponentsOverrides = {
       },
 
       '& .MuiTab-root': {
-        padding: spacing(0, 2),
+        padding: getSpacing(0, 2),
 
         '& .MuiTab-wrapper': {
           alignItems: 'flex-start'
@@ -370,15 +370,15 @@ export const themeComponentsOverrides = {
   // Tab
   MuiTab: {
     root: {
-      padding: spacing(0, 1),
-      marginRight: spacing(3),
+      padding: getSpacing(0, 1),
+      marginRight: getSpacing(3),
       minWidth: '56px!important',
       '&[class*="MuiTab-labelIcon"] .MuiTab-wrapper': {
         flexFlow: 'row',
         alignItems: 'center'
       },
       '&[class*="MuiTab-labelIcon"] .MuiTab-wrapper > .MuiSvgIcon-root': {
-        marginRight: spacing(1),
+        marginRight: getSpacing(1),
         marginBottom: 0
       }
     },
@@ -406,27 +406,27 @@ export const themeComponentsOverrides = {
   // Switch
   MuiSwitch: {
     root: {
-      height: spacing(4.5),
-      width: spacing(6),
-      padding: spacing(1),
+      height: getSpacing(4.5),
+      width: getSpacing(6),
+      padding: getSpacing(1),
       overflow: 'visible',
 
       '& + .MuiFormControlLabel-label': {
         ...themeTypography.body2,
-        marginLeft: spacing(0.25),
+        marginLeft: getSpacing(0.25),
         color: commonPalette.text.primary
       }
     },
 
     switchBase: {
-      padding: spacing(1.5),
+      padding: getSpacing(1.5),
       borderRadius: '50%',
       transform: 'translate(1px, 1px)',
       color: commonPalette.text.secondary,
 
       '&$checked': {
         '& input': {
-          left: spacing(-1.5)
+          left: getSpacing(-1.5)
         },
 
         transform: 'translate(13px, 1px)',
@@ -439,20 +439,20 @@ export const themeComponentsOverrides = {
     },
 
     thumb: {
-      width: spacing(1.25),
-      height: spacing(1.25),
+      width: getSpacing(1.25),
+      height: getSpacing(1.25),
       boxShadow: 'none'
     },
 
     input: {
-      width: spacing(6),
+      width: getSpacing(6),
       left: 0
     },
 
     track: {
       height: 'auto',
       border: `2px solid ${commonPalette.text.secondary}`,
-      borderRadius: spacing(2),
+      borderRadius: getSpacing(2),
       opacity: 1,
       backgroundColor: commonPalette.common.white
     },
@@ -516,12 +516,12 @@ export const themeComponentsOverrides = {
     },
 
     sizeSmall: {
-      height: spacing(4.5),
-      width: spacing(6),
-      padding: spacing(1),
+      height: getSpacing(4.5),
+      width: getSpacing(6),
+      padding: getSpacing(1),
 
       '& $switchBase': {
-        padding: spacing(1.5),
+        padding: getSpacing(1.5),
         transform: 'translate(0, 1px)',
 
         '&$checked': {
@@ -529,8 +529,8 @@ export const themeComponentsOverrides = {
         }
       },
       '& $thumb': {
-        width: spacing(1.25),
-        height: spacing(1.25)
+        width: getSpacing(1.25),
+        height: getSpacing(1.25)
       }
     }
   },
@@ -546,13 +546,13 @@ export const themeComponentsOverrides = {
       },
       '& .MuiSvgIcon-root': {
         fontSize: `${themeTypography.body2.lineHeight}em`,
-        marginRight: spacing(1)
+        marginRight: getSpacing(1)
       }
     },
 
     separator: {
-      marginLeft: spacing(0.5),
-      marginRight: spacing(0.5)
+      marginLeft: getSpacing(0.5),
+      marginRight: getSpacing(0.5)
     }
   },
 
@@ -562,22 +562,22 @@ export const themeComponentsOverrides = {
       // Indent sublevels, ugly but needed to avoid issues with hover
       '& .MuiList-root': {
         '& .MuiListItem-root': {
-          paddingLeft: spacing(4)
+          paddingLeft: getSpacing(4)
         },
 
         '& .MuiList-root': {
           '& .MuiListItem-root': {
-            paddingLeft: spacing(6)
+            paddingLeft: getSpacing(6)
           },
 
           '& .MuiList-root': {
             '& .MuiListItem-root': {
-              paddingLeft: spacing(8)
+              paddingLeft: getSpacing(8)
             },
 
             '& .MuiList-root': {
               '& .MuiListItem-root': {
-                paddingLeft: spacing(10)
+                paddingLeft: getSpacing(10)
               }
             }
           }
@@ -588,11 +588,11 @@ export const themeComponentsOverrides = {
 
   MuiListItemIcon: {
     root: {
-      minWidth: spacing(5.75),
-      marginLeft: spacing(0.75),
+      minWidth: getSpacing(5.75),
+      marginLeft: getSpacing(0.75),
 
       '& .MuiSvgIcon-root': {
-        fontSize: spacing(3)
+        fontSize: getSpacing(3)
       }
     }
   },
@@ -600,11 +600,11 @@ export const themeComponentsOverrides = {
   MuiListItemAvatar: {
     root: {
       '& .MuiAvatar-root': {
-        height: spacing(4.5),
-        width: spacing(4.5)
+        height: getSpacing(4.5),
+        width: getSpacing(4.5)
       },
       '& .MuiSvgIcon-root': {
-        fontSize: spacing(2.5)
+        fontSize: getSpacing(2.5)
       }
     }
   },
@@ -613,25 +613,25 @@ export const themeComponentsOverrides = {
   MuiTooltip: {
     tooltip: {
       ...themeTypography.caption,
-      backgroundColor: componentsPalette.other.tooltip
+      backgroundColor: commonPalette.black[90]
     },
 
     arrow: {
-      color: componentsPalette.other.tooltip
+      color: commonPalette.black[90]
     }
   },
 
   // Dialog
   MuiDialogTitle: {
     root: {
-      padding: spacing(3, 3, 2)
+      padding: getSpacing(3, 3, 2)
     }
   },
 
   MuiDialogContent: {
     root: {
       '& .MuiFormGroup-root': {
-        padding: spacing(1, 0)
+        padding: getSpacing(1, 0)
       }
     }
   },
@@ -645,46 +645,46 @@ export const themeComponentsOverrides = {
   MuiToggleButtonGroup: {
     groupedHorizontal: {
       '&:not(:last-child)': {
-        marginRight: spacing(0.25),
-        borderTopRightRadius: spacing(0.5),
-        borderBottomRightRadius: spacing(0.5)
+        marginRight: getSpacing(0.25),
+        borderTopRightRadius: getSpacing(0.5),
+        borderBottomRightRadius: getSpacing(0.5)
       },
       '&:not(:first-child)': {
         marginLeft: 0,
         borderLeft: 'none',
-        borderTopLeftRadius: spacing(0.5),
-        borderBottomLeftRadius: spacing(0.5)
+        borderTopLeftRadius: getSpacing(0.5),
+        borderBottomLeftRadius: getSpacing(0.5)
       }
     },
     groupedVertical: {
       '&:not(:last-child)': {
-        marginBottom: spacing(0.25),
-        borderBottomLeftRadius: spacing(0.5),
-        borderBottomRightRadius: spacing(0.5)
+        marginBottom: getSpacing(0.25),
+        borderBottomLeftRadius: getSpacing(0.5),
+        borderBottomRightRadius: getSpacing(0.5)
       },
       '&:not(:first-child)': {
-        borderTopLeftRadius: spacing(0.5),
-        borderTopRightRadius: spacing(0.5)
+        borderTopLeftRadius: getSpacing(0.5),
+        borderTopRightRadius: getSpacing(0.5)
       }
     }
   },
 
   MuiTablePagination: {
     select: {
-      paddingRight: spacing(7.5),
-      paddingLeft: spacing(1.5)
+      paddingRight: getSpacing(7.5),
+      paddingLeft: getSpacing(1.5)
     },
     input: {
-      height: spacing(4),
+      height: getSpacing(4),
       border: `2px solid ${commonPalette.divider}`,
-      borderRadius: spacing(0.5),
+      borderRadius: getSpacing(0.5),
       fontWeight: themeTypography.fontWeightMedium,
       '& .MuiSelect-icon': {
         top: '50%',
         transform: 'translateY(-50%)',
-        width: spacing(2.25),
-        height: spacing(2.25),
-        right: spacing(0.75)
+        width: getSpacing(2.25),
+        height: getSpacing(2.25),
+        right: getSpacing(0.75)
       }
     },
     caption: {
@@ -695,11 +695,11 @@ export const themeComponentsOverrides = {
     },
     toolbar: {
       minHeight: 0,
-      marginTop: spacing(1)
+      marginTop: getSpacing(1)
     },
     actions: {
       '& button:last-child': {
-        marginLeft: spacing(2)
+        marginLeft: getSpacing(2)
       }
     }
   },
@@ -717,30 +717,30 @@ export const themeComponentsOverrides = {
   // MuiToggleButton
   MuiToggleButton: {
     root: {
-      width: spacing(4.5),
-      height: spacing(4.5),
+      width: getSpacing(4.5),
+      height: getSpacing(4.5),
       border: 'none',
-      borderRadius: spacing(0.5),
+      borderRadius: getSpacing(0.5),
       color: commonPalette.grey[500],
       '&$selected': {
         color: commonPalette.primary.main,
-        backgroundColor: commonPalette.primary.relatedLight,
+        backgroundColor: commonPalette.primary.background,
         '&:hover': {
-          backgroundColor: commonPalette.primary.relatedLight
+          backgroundColor: commonPalette.primary.background
         }
       }
     },
     sizeSmall: {
-      width: spacing(3),
-      height: spacing(3),
+      width: getSpacing(3),
+      height: getSpacing(3),
       '& .MuiSvgIcon-root': {
-        maxWidth: spacing(2.5),
-        maxHeight: spacing(2.5)
+        maxWidth: getSpacing(2.5),
+        maxHeight: getSpacing(2.5)
       }
     },
     sizeLarge: {
-      width: spacing(7),
-      height: spacing(7)
+      width: getSpacing(7),
+      height: getSpacing(7)
     }
   },
 

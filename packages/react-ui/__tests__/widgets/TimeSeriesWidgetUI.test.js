@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, screen, act, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, act, fireEvent, waitFor } from '../widgets/utils/testUtils';
 import TimeSeriesWidgetUI from '../../src/widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
-import { getMaterialUIContext, mockEcharts } from './testUtils';
+import { mockEcharts } from './testUtils';
 import { GroupDateTypes } from '@carto/react-core';
 
 describe('TimeSeriesWidgetUI', () => {
@@ -46,10 +46,9 @@ describe('TimeSeriesWidgetUI', () => {
     stepSize: GroupDateTypes.WEEKS
   };
 
-  const Widget = (props) =>
-    getMaterialUIContext(
-      <TimeSeriesWidgetUI data={DATA} {...props} {...mandatoryProps} />
-    );
+  const Widget = (props) => (
+    <TimeSeriesWidgetUI data={DATA} {...props} {...mandatoryProps} />
+  );
 
   test('renders correctly', () => {
     render(<Widget />);

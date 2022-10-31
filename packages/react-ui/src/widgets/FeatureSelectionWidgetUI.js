@@ -6,15 +6,15 @@ import {
   Chip,
   Divider,
   IconButton,
-  makeStyles,
   Menu,
   MenuItem,
   Tooltip,
-  Typography,
   useTheme
-} from '@material-ui/core';
-import { ArrowDropDown } from '@material-ui/icons';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { ArrowDropDown } from '@mui/icons-material';
 import PropTypes from 'prop-types';
+import Typography from '../atoms/Typography';
 
 function FeatureSelectionWidgetUI({
   className,
@@ -125,9 +125,7 @@ function Helper({ hasMode, enabled, isEdit, children }) {
   return (
     <Tooltip
       title={
-        isEdit
-          ? 'Click on the mask to edit it'
-          : 'Click on the map to create a mask'
+        isEdit ? 'Click on the mask to edit it' : 'Click on the map to create a mask'
       }
       open={open}
     >
@@ -184,9 +182,7 @@ function SelectedModeViewer({
     if (modes?.length && selectedMode) {
       const foundMode = modes.find(({ id: modeId }) => modeId === selectedMode);
       if (!foundMode) {
-        throw new Error(
-          'Selected mode not supported'
-        );
+        throw new Error('Selected mode not supported');
       }
       return foundMode;
     } else {
@@ -200,7 +196,7 @@ function SelectedModeViewer({
 
   return (
     <Tooltip title={tooltipTitle} placement={tooltipPlacement} arrow>
-      <IconButton onClick={onEnabledChangeWrapper} className={classes.btn}>
+      <IconButton onClick={onEnabledChangeWrapper} className={classes.btn} size='large'>
         {icon}
       </IconButton>
     </Tooltip>
@@ -284,6 +280,7 @@ function ModesSelector({
           aria-expanded={open ? 'true' : undefined}
           className={classes.btn}
           onClick={handleClick}
+          size='large'
         >
           <ArrowDropDown />
         </IconButton>

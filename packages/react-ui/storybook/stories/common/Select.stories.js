@@ -6,10 +6,10 @@ import {
   InputAdornment,
   InputLabel,
   MenuItem,
-  Typography,
   Select
-} from '@material-ui/core';
-import { Visibility } from '@material-ui/icons';
+} from '@mui/material';
+import { Visibility } from '@mui/icons-material';
+import Typography from '../../../src/atoms/Typography';
 
 const options = {
   title: 'Common/Select',

@@ -2,6 +2,11 @@
 
 ## Not released
 
+- Breakpoints for the new design system [#513](https://github.com/CartoDB/carto-react/pull/513/)
+- New Typography component to extend Mui Typography [#506](https://github.com/CartoDB/carto-react/pull/506)
+- New spacings, borders and shadows toolkit for MUI carto-theme [#507](https://github.com/CartoDB/carto-react/pull/507/)
+- Colors and Typography: design update [#502](https://github.com/CartoDB/carto-react/pull/502/)
+- Upgrade from Material UI v4 to MUI v5 [#501](https://github.com/CartoDB/carto-react/pull/501)
 - New typography toolkit for MUI carto-theme [#498](https://github.com/CartoDB/carto-react/pull/498/)
 - New color palette for MUI carto-theme [#496](https://github.com/CartoDB/carto-react/pull/496/)
 - Split carto-theme into sections [#495](https://github.com/CartoDB/carto-react/pull/495)

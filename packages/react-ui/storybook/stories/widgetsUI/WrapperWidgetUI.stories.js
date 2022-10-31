@@ -1,10 +1,8 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import ColorizeIcon from '@material-ui/icons/Colorize';
-import MenuIcon from '@material-ui/icons/Menu';
-import AddLocationIcon from '@material-ui/icons/AddLocation';
+import ColorizeIcon from '@mui/icons-material/Colorize';
+import MenuIcon from '@mui/icons-material/Menu';
+import AddLocationIcon from '@mui/icons-material/AddLocation';
 import WrapperWidgetUI from '.../../../src/widgets/WrapperWidgetUI';
-import { buildReactPropsAsString } from '../../utils';
 
 const options = {
   title: 'Custom Components/WrapperWidgetUI',

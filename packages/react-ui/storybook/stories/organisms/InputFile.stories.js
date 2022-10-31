@@ -1,18 +1,12 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  Typography
-} from '@material-ui/core';
+import { Box, Button, CircularProgress, FormControl, InputLabel } from '@mui/material';
 import React, { useState } from 'react';
 import InputFile from '../../../src/custom-components/InputFile';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 import UploadIcon from '../../../src/assets/UploadIcon';
+import Typography from '../../../src/atoms/Typography';
 
 const options = {
-  title: 'Custom Components/InputFile',
+  title: 'Organisms/InputFile',
   component: InputFile,
   argTypes: {
     placeholder: {

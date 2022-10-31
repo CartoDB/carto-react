@@ -1,20 +1,13 @@
 import React, { createRef, Fragment } from 'react';
-import {
-  Box,
-  Button,
-  Collapse,
-  Divider,
-  Grid,
-  makeStyles,
-  SvgIcon,
-  Typography
-} from '@material-ui/core';
+import { Box, Button, Collapse, Divider, Grid, SvgIcon } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import LegendWrapper from './LegendWrapper';
 import LegendCategories from './LegendCategories';
 import LegendIcon from './LegendIcon';
 import LegendRamp from './LegendRamp';
 import LegendProportion from './LegendProportion';
 import PropTypes from 'prop-types';
+import Typography from '../../atoms/Typography';
 
 const LayersIcon = () => (
   <SvgIcon width='24' height='24' viewBox='0 0 24 24'>

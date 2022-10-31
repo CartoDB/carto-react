@@ -7,10 +7,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  makeStyles,
   TableSortLabel,
   TablePagination
-} from '@material-ui/core';
+} from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
   tableHeadCellLabel: {
