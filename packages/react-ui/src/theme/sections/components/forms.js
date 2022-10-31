@@ -238,8 +238,7 @@ export const formsOverrides = {
   // Checkbox
   MuiCheckbox: {
     defaultProps: {
-      size: 'small',
-      color: 'primary'
+      size: 'small'
     },
     styleOverrides: {
       root: {
