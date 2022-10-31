@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     flexWrap: 'nowrap',
 
-    '&:hover $progressbar div': {
+    '&:hover .progressbar div': {
       backgroundColor: theme.palette.secondary.dark
     }
   },

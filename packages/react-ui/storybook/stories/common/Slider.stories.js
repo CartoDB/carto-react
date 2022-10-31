@@ -200,7 +200,7 @@ const SliderWithInputTemplate = ({ ...args }) => {
 };
 
 const CustomLabelTemplate = ({ ...args }) => {
-  const ValueLabelComponent = (props) => {
+  const CustomValueLabel = (props) => {
     const { children, open, value } = props;
 
     return (
@@ -213,7 +213,9 @@ const CustomLabelTemplate = ({ ...args }) => {
   return (
     <Slider
       valueLabelDisplay='auto'
-      ValueLabelComponent={ValueLabelComponent}
+      components={{
+        ValueLabel: CustomValueLabel
+      }}
       {...args}
     />
   );

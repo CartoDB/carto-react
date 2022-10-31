@@ -193,7 +193,6 @@ export const formsOverrides = {
     defaultProps: {
       variant: 'outlined',
       MenuProps: {
-        getContentAnchorEl: null,
         anchorOrigin: {
           vertical: 'bottom',
           horizontal: 'left'
@@ -262,8 +261,7 @@ export const formsOverrides = {
   // Radio Button
   MuiRadio: {
     defaultProps: {
-      size: 'small',
-      color: 'primary'
+      size: 'small'
     },
     styleOverrides: {
       root: {
