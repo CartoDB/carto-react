@@ -21,25 +21,18 @@ import PropTypes from 'prop-types';
 import AnimatedNumber, {
   animationOptionsPropTypes
 } from '../custom-components/AnimatedNumber';
-
-/**
- * Enum for ComparativeCategoryWidgetUI order types. 'RANKING' orders the data by value and 'FIXED' keep the order present in the original data
- * @enum {string}
- */
-export const ORDER_TYPES = {
-  RANKING: 'RANKING',
-  FIXED: 'FIXED'
-};
+import CategoryWidgetUI from '../widgets/CategoryWidgetUI';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
+const ORDER_TYPES = CategoryWidgetUI.ORDER_TYPES;
 
 /** transpose incoming data to group items by column, apply colors and labels
  * @param {{ name: string; value: number }[][]} data
  * @param {string[]} colors
  * @param {string[]} labels
  * @param {string[]} selectedCategories
- * @param {ORDER_TYPES} order
+ * @param {CategoryWidgetUI.ORDER_TYPES} order
  *
  * @returns {{ label: string; key: string; data: { color: string; value: number }[] }[]}
  */
@@ -168,7 +161,7 @@ function SearchIcon() {
  * @param {string[]} [props.labels]
  * @param {string[]} [props.colors]
  * @param {number} [props.maxItems]
- * @param {ORDER_TYPES} [props.order]
+ * @param {CategoryWidgetUI.ORDER_TYPES} [props.order]
  * @param {boolean} [props.animation]
  * @param {{ duration?: number; animateOnMount?: boolean; }} [props.animationOptions]
  * @param {boolean} [props.searchable]
