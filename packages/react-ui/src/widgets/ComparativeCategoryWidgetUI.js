@@ -52,7 +52,7 @@ function transposeData(data, colors, labels, selectedCategories, order) {
     const label = labels[itemIndex] || item.name;
     const indexData = data.map((group, groupIndex) => ({
       color: isDisabled ? lighten(colors[groupIndex], 0.8) : colors[groupIndex],
-      value: group[itemIndex].value
+      value: group[itemIndex] ? group[itemIndex].value : 0
     }));
 
     return {
