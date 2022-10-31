@@ -22,8 +22,8 @@ import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
-import ComparativeFormulaWidgetUI from './widgets/ComparativeFormulaWidgetUI';
-import ComparativeCategoryWidgetUI, { ORDER_TYPES } from './widgets/ComparativeCategoryWidgetUI';
+import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI';
+import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
 
 export {
   cartoThemeOptions,
@@ -46,7 +46,6 @@ export {
   FeatureSelectionWidgetUI,
   ComparativeFormulaWidgetUI,
   ComparativeCategoryWidgetUI,
-  ORDER_TYPES as CATEGORY_ORDER_TYPES,
   LEGEND_TYPES,
   NoDataAlert,
   LegendCategories,

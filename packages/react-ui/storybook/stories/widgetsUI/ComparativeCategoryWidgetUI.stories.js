@@ -1,5 +1,5 @@
 import React from 'react';
-import ComparativeCategoryWidgetUI from '../../../src/widgets/ComparativeCategoryWidgetUI';
+import ComparativeCategoryWidgetUI from '../../../src/widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
 
 const options = {
   title: 'Custom Components/ComparativeCategoryWidgetUI',

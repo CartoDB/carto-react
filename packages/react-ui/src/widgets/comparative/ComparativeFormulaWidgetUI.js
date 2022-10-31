@@ -4,7 +4,7 @@ import { Box, makeStyles, Typography } from '@material-ui/core';
 import { useTheme } from '@material-ui/core';
 import AnimatedNumber, {
   animationOptionsPropTypes
-} from '../custom-components/AnimatedNumber';
+} from '../../custom-components/AnimatedNumber';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];

@@ -20,8 +20,8 @@ import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import AnimatedNumber, {
   animationOptionsPropTypes
-} from '../custom-components/AnimatedNumber';
-import CategoryWidgetUI from '../widgets/CategoryWidgetUI';
+} from '../../../custom-components/AnimatedNumber';
+import CategoryWidgetUI from '../../CategoryWidgetUI';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
