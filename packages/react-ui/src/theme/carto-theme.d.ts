@@ -79,6 +79,18 @@ export type CartoTheme = Modify<
 >;
 
 declare module '@mui/material/styles' {
+  // Check https://mui.com/material-ui/customization/theming/#custom-variables
+  interface Theme {
+    palette: CustomPalette;
+    spacingValue: number;
+  }
+
+  // allow configuration using `createTheme`
+  interface ThemeOptions {
+    palette?: CustomPalette;
+    spacingValue?: number;
+  }
+
   interface TypographyVariants {
     overlineDelicate: React.CSSProperties;
     code1: React.CSSProperties;
@@ -86,7 +98,6 @@ declare module '@mui/material/styles' {
     code3: React.CSSProperties;
   }
 
-  // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
     overlineDelicate?: React.CSSProperties;
     code1?: React.CSSProperties;

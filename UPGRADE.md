@@ -1,5 +1,12 @@
 # Upgrade to the new design system
 
+## Breaking changes in Mui v5
+
+Please, follow the Mui guides related to breaking changes in components and styles:
+
+- [Styles](https://mui.com/material-ui/migration/v5-style-changes/)
+- [Components](https://mui.com/material-ui/migration/v5-component-changes/)
+
 ## MUI theme
 
 [carto-theme.js](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/theme/carto-theme.js) file splitted in sections:
@@ -15,6 +22,8 @@ Also added some files for shared constants (`themeConstants.js`) and useful func
 Removed unused custom `createTheme` function in `carto-theme.js`.
 
 We have a new custom spacing constant in carto-theme, `spacingValue`, which you should use instead of the common `theme.spacing()` function in cases where you need to do value calculations, because since Mui v5, theme.spacing is no longer a number, but a string in this format: `number + px`.
+
+Note that if you're using `calc()` in your styles, you can keep using `theme.spacing()` as usual.
 
 # Typography
 
