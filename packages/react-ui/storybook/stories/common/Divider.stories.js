@@ -11,7 +11,13 @@ import {
 
 const options = {
   title: 'Common/Divider',
-  component: Divider
+  component: Divider,
+  parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A28897'
+    }
+  }
 };
 export default options;
 
