@@ -1,144 +1,27 @@
 import {
   Box,
   Button,
-  Checkbox,
-  darken,
   Divider,
   InputAdornment,
-  lighten,
   Link,
-  makeStyles,
   SvgIcon,
   TextField,
-  Tooltip,
   Typography,
-  useTheme,
-  withStyles
+  useTheme
 } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import AnimatedNumber, {
-  animationOptionsPropTypes
-} from '../../../custom-components/AnimatedNumber';
+import { animationOptionsPropTypes } from '../../../custom-components/AnimatedNumber';
 import CategoryWidgetUI from '../../CategoryWidgetUI';
+import { transposeCategoryData } from './transposeCategoryData';
+import { useCategoryStyles } from './useCategoryStyles';
+import CategoryItem from './CategoryItem';
+import CategorySkeleton from './CategorySkeleton';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
 const ORDER_TYPES = CategoryWidgetUI.ORDER_TYPES;
-
-/** transpose incoming data to group items by column, apply colors and labels
- * @param {{ name: string; value: number }[][]} data
- * @param {string[]} colors
- * @param {string[]} labels
- * @param {string[]} selectedCategories
- * @param {CategoryWidgetUI.ORDER_TYPES} order
- *
- * @returns {{ label: string; key: string; data: { color: string; value: number }[] }[]}
- */
-function transposeData(data, colors, labels, selectedCategories, order) {
-  const reference = data[0] || [];
-  const transposed = reference.map((item, itemIndex) => {
-    const isDisabled =
-      selectedCategories.length > 0 && selectedCategories.indexOf(item.name) === -1;
-
-    const label = labels[itemIndex] || item.name;
-    const indexData = data.map((group, groupIndex) => ({
-      color: isDisabled ? lighten(colors[groupIndex], 0.8) : colors[groupIndex],
-      value: group[itemIndex] ? group[itemIndex].value : 0
-    }));
-
-    return {
-      label,
-      key: item.name,
-      data: indexData
-    };
-  });
-
-  // only sort the list if order type is 'RANKING'
-  // if order type is 'FIXED' keep the sort order from data
-  if (order === ORDER_TYPES.RANKING) {
-    transposed.sort((a, b) => {
-      const aMax = Math.max(...a.data.map((d) => d.value));
-      const bMax = Math.max(...b.data.map((d) => d.value));
-      return bMax - aMax;
-    });
-  }
-
-  return transposed;
-}
-
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    padding: theme.spacing(2, 0),
-    ...theme.typography.body2
-  },
-  categoriesList: {
-    overflow: 'auto',
-    maxHeight: theme.spacing(40),
-    paddingRight: theme.spacing(1),
-    margin: theme.spacing(0.5, 0)
-  },
-  label: {},
-  positive: {},
-  negative: {},
-  progressbar: {
-    height: theme.spacing(0.5),
-    width: '100%',
-    margin: theme.spacing(0.5, 0, 1, 0),
-    borderRadius: theme.spacing(0.5),
-    backgroundColor: theme.palette.action.disabledBackground,
-
-    '& div': {
-      width: 0,
-      height: '100%',
-      borderRadius: theme.spacing(0.5),
-      transition: `background-color ${theme.transitions.easing.sharp} ${theme.transitions.duration.shortest}ms,
-                   width ${theme.transitions.easing.sharp} ${theme.transitions.duration.complex}ms`
-    }
-  },
-  toolbar: {
-    marginBottom: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-
-    '& .MuiTypography-caption': {
-      color: theme.palette.text.secondary
-    },
-
-    '& .MuiButton-label': {
-      ...theme.typography.caption
-    },
-
-    '& a': {
-      cursor: 'pointer'
-    }
-  },
-  searchInput: {
-    marginTop: theme.spacing(-0.5)
-  },
-  categoryGroup: {
-    '& $progressbar div': {
-      backgroundColor: 'var(--color)'
-    }
-  },
-  categoryGroupHover: {
-    cursor: 'pointer',
-    '&:hover $progressbar div': {
-      backgroundColor: 'var(--hover-color)'
-    },
-    '& $progressbar div': {
-      backgroundColor: 'var(--color)'
-    }
-  },
-  bullet: {
-    flexShrink: 0,
-    width: theme.spacing(1),
-    height: theme.spacing(1),
-    borderRadius: theme.spacing(1)
-  }
-}));
-
-const OTHERS_KEY = 'others';
+export const OTHERS_KEY = 'others';
 
 function SearchIcon() {
   return (
@@ -187,7 +70,7 @@ function ComparativeCategoryWidgetUI({
   onSelectedCategoriesChange = IDENTITY_FN,
   formatter = IDENTITY_FN
 }) {
-  const classes = useStyles();
+  const classes = useCategoryStyles();
   const theme = useTheme();
   const [searchActive, setSearchActive] = useState(false);
   const [blockingActive, setBlockingActive] = useState(false);
@@ -201,7 +84,7 @@ function ComparativeCategoryWidgetUI({
       theme.palette.primary.main,
       theme.palette.info.main
     ];
-    return transposeData(data, _colors, labels, selectedCategories, order);
+    return transposeCategoryData(data, _colors, labels, selectedCategories, order);
   }, [data, colors, labels, theme, selectedCategories, order]);
 
   const maxValue = useMemo(() => {
@@ -262,7 +145,7 @@ function ComparativeCategoryWidgetUI({
   const showSearchToggle = searchable && !searchActive && maxItems < processedData.length;
 
   if (processedData.length === 0) {
-    return <ComparativeCategoryUISkeleton />;
+    return <CategorySkeleton />;
   }
 
   const list = searchActive
@@ -487,207 +370,3 @@ ComparativeCategoryWidgetUI.propTypes = {
 };
 
 export default ComparativeCategoryWidgetUI;
-
-const transposedCategoryItemPropTypes = PropTypes.shape({
-  key: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      color: PropTypes.string.isRequired,
-      value: PropTypes.number.isRequired
-    })
-  ).isRequired
-}).isRequired;
-
-function ComparativeCategoryUISkeleton() {
-  const classes = useStyles();
-  return (
-    <div className={classes.wrapper}>
-      <Box
-        display='flex'
-        alignItems='center'
-        justifyContent='space-between'
-        className={classes.toolbar}
-      >
-        <Typography variant='caption'>
-          <Skeleton variant='text' width={100} />
-        </Typography>
-      </Box>
-      <Box display='flex' flexDirection='column' className={classes.categoriesList}>
-        {[...Array(4)].map((_, i) => (
-          <Box key={i} py={0.5}>
-            <Box display='flex' justifyContent='space-between' flexWrap='nowrap'>
-              <Typography variant='body2' noWrap>
-                <Skeleton variant='text' width={100} />
-              </Typography>
-              <Typography variant='body2'>
-                <Skeleton variant='text' width={70} />
-              </Typography>
-            </Box>
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className={classes.progressbar}></div>
-            ))}
-          </Box>
-        ))}
-      </Box>
-    </div>
-  );
-}
-
-function ComparativeCategoryTooltip({ item, names, formatter = IDENTITY_FN }) {
-  const theme = useTheme();
-  const classes = useStyles();
-
-  return (
-    <div>
-      <Typography color='inherit' variant='caption' noWrap>
-        {item.label}
-      </Typography>
-      <Box pt={1}>
-        {item.data.map((d, i) => (
-          <Box
-            key={names[i]}
-            display='flex'
-            alignItems='center'
-            gridGap={theme.spacing(0.75)}
-          >
-            <div
-              className={classes.bullet}
-              style={{
-                backgroundColor:
-                  item.key === OTHERS_KEY ? theme.palette.background.default : d.color
-              }}
-            ></div>
-            <Typography color='inherit' variant='caption'>
-              {names[i]}
-            </Typography>
-            <Box flexGrow={1}></Box>
-            <Typography color='inherit' variant='caption'>
-              {formatter(d.value)}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
-    </div>
-  );
-}
-
-ComparativeCategoryTooltip.displayName = 'ComparativeCategoryTooltip';
-ComparativeCategoryTooltip.defaultProps = {
-  names: EMPTY_ARRAY,
-  formatter: IDENTITY_FN
-};
-ComparativeCategoryTooltip.propTypes = {
-  item: transposedCategoryItemPropTypes,
-  names: PropTypes.arrayOf(PropTypes.string).isRequired,
-  formatter: PropTypes.func
-};
-
-const StyledTooltip = withStyles((theme) => ({
-  tooltip: {
-    color: theme.palette.common.white,
-    maxWidth: 260
-  }
-}))(Tooltip);
-
-function CategoryItem({
-  item,
-  animation,
-  animationOptions,
-  maxValue,
-  showCheckbox,
-  checkboxChecked,
-  className,
-  formatter,
-  onClick = IDENTITY_FN,
-  names
-}) {
-  const classes = useStyles();
-  const theme = useTheme();
-  const compareValue = useMemo(() => {
-    const reference = item.data[0].value;
-    const max = Math.max(...item.data.map((d) => d.value));
-    return reference - max;
-  }, [item]);
-
-  const valueColor =
-    Math.sign(compareValue) === -1
-      ? theme.palette.error.main
-      : theme.palette.success.main;
-
-  const numberColor = item.key === OTHERS_KEY ? theme.palette.text.disabled : valueColor;
-
-  function getProgressbarLength(value) {
-    return `${Math.min(100, ((value || 0) / maxValue) * 100)}%`;
-  }
-
-  const tooltipContent = (
-    <ComparativeCategoryTooltip item={item} names={names} formatter={formatter} />
-  );
-
-  return (
-    <StyledTooltip placement='top-start' title={tooltipContent}>
-      <Box
-        display='flex'
-        alignItems='center'
-        flexWrap='nowrap'
-        gridGap={theme.spacing(1)}
-        onClick={() => onClick(item.key)}
-        className={className}
-      >
-        {showCheckbox ? <Checkbox checked={checkboxChecked} /> : null}
-        <Box py={0.5} flexGrow='1'>
-          <Box display='flex' justifyContent='space-between' flexWrap='nowrap'>
-            <Tooltip title={item.label}>
-              <Typography className={classes.label} variant='body2' noWrap>
-                {item.label}
-              </Typography>
-            </Tooltip>
-            <Typography style={{ color: numberColor }} variant='body2'>
-              <AnimatedNumber
-                value={compareValue || 0}
-                enabled={animation}
-                options={animationOptions}
-                formatter={formatter}
-              />
-            </Typography>
-          </Box>
-          {item.data.map((d, i) => (
-            <div key={`${item.key}_${i}`} className={classes.progressbar}>
-              <div
-                style={
-                  /* @ts-ignore */ {
-                    '--hover-color': darken(d.color, 0.2),
-                    '--color': d.color,
-                    width: getProgressbarLength(d.value)
-                  }
-                }
-              ></div>
-            </div>
-          ))}
-        </Box>
-      </Box>
-    </StyledTooltip>
-  );
-}
-
-CategoryItem.displayName = 'CategoryItem';
-CategoryItem.defaultProps = {
-  animation: true,
-  animationOptions: {},
-  className: '',
-  formatter: IDENTITY_FN,
-  onClick: IDENTITY_FN
-};
-CategoryItem.propTypes = {
-  item: transposedCategoryItemPropTypes,
-  animation: PropTypes.bool,
-  animationOptions: animationOptionsPropTypes,
-  maxValue: PropTypes.number.isRequired,
-  showCheckbox: PropTypes.bool.isRequired,
-  checkboxChecked: PropTypes.bool.isRequired,
-  className: PropTypes.string,
-  formatter: PropTypes.func,
-  onClick: PropTypes.func,
-  names: PropTypes.arrayOf(PropTypes.string).isRequired
-};
