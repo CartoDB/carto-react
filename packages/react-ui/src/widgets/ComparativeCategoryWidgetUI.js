@@ -138,6 +138,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   bullet: {
+    flexShrink: 0,
     width: theme.spacing(1),
     height: theme.spacing(1),
     borderRadius: theme.spacing(1)
