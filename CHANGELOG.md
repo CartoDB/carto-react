@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Missing implementation for support `queryParameters` in `stats` request [#517](https://github.com/CartoDB/carto-react/pull/517)
 - AnimatedNumber component with hook wrapping `animateValue` [#509](https://github.com/CartoDB/carto-react/pull/509)
 - Implement ComparativeFormulaWidgetUI [#504](https://github.com/CartoDB/carto-react/pull/504)
 
