@@ -54,11 +54,11 @@ export const navigationOverrides = {
         padding: getSpacing(0, 1),
         marginRight: getSpacing(3),
         minWidth: '56px!important',
-        '&[class*="MuiTab-labelIcon"] .MuiTab-wrapper': {
+        '&[class*="MuiTab-labelIcon"]': {
           flexFlow: 'row',
           alignItems: 'center'
         },
-        '&[class*="MuiTab-labelIcon"] .MuiTab-wrapper > .MuiSvgIcon-root': {
+        '&[class*="MuiTab-labelIcon"] .MuiSvgIcon-root': {
           marginRight: getSpacing(1),
           marginBottom: 0
         }
