@@ -157,12 +157,12 @@ export default function useTileFeatures({
 }
 
 // WORKAROUND: To read headers and know if the tile is dropping features.
-// Remove when the new loader is ready => https://github.com/visgl/loaders.gl/pull/2128
 const customFetch = async (url, { layer, loaders, loadOptions, signal }) => {
   loadOptions = loadOptions || layer.getLoadOptions();
   loaders = loaders || layer.props.loaders;
 
-  const response = await fetch(url, { signal });
+  const headers = loadOptions.fetch.headers;
+  const response = await fetch(url, { signal, headers });
   const isDroppingFeatures =
     response.headers.get('Features-Dropped-From-Tile') === 'true';
   const result = await parse(response, loaders, loadOptions);
