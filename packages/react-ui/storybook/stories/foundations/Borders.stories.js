@@ -20,7 +20,9 @@ const options = {
       type: 'figma',
       url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=9787%3A4001'
     },
-    viewMode: 'docs'
+    status: {
+      type: 'validated'
+    }
   }
 };
 export default options;

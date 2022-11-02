@@ -54,6 +54,34 @@ const customViewports = {
   }
 };
 
+const componentsStatus = {
+  deprecated: {
+    background: '#C1300B', // Error/Main
+    color: '#ffffff',
+    description: 'Do not use'
+  },
+  inDevelopment: {
+    background: '#F29E02', // Warning/Main
+    color: '#ffffff',
+    description: 'Work in progress'
+  },
+  readyToReview: {
+    background: '#024388', // Info/Main
+    color: '#ffffff',
+    description: 'Ready to review and validation'
+  },
+  validated: {
+    background: '#709F1D', // Success/Main
+    color: '#ffffff',
+    description: 'Validated and ready to use'
+  },
+  needUpdate: {
+    background: '#E1E3E4', // Default/Main
+    color: '#2C3032',
+    description: 'Need an update'
+  }
+};
+
 export const decorators = [
   (Story) => (
     <StyledEngineProvider injectFirst>
@@ -98,5 +126,8 @@ export const parameters = {
   decorators: [withDesign],
   viewport: {
     viewports: customViewports
+  },
+  status: {
+    statuses: componentsStatus
   }
 };
