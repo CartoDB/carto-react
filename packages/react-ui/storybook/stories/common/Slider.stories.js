@@ -185,7 +185,7 @@ const SliderWithInputTemplate = ({ ...args }) => {
           value={value}
           onChange={handleInputChange}
           onBlur={handleBlur}
-          margin='dense'
+          size='small'
           inputProps={{
             step: 10,
             min: 0,
