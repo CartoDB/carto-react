@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Bump deck.gl to 8.8.15 [#520](https://github.com/CartoDB/carto-react/pull/520)
 - Fix missing implementation in stats to support `queryParameters` in RangeWidget and HistogramWidget [#517](https://github.com/CartoDB/carto-react/pull/517)
 - AnimatedNumber component with hook wrapping `animateValue` [#509](https://github.com/CartoDB/carto-react/pull/509)
 - Implement ComparativeFormulaWidgetUI [#504](https://github.com/CartoDB/carto-react/pull/504)
