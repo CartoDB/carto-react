@@ -1,3 +1,5 @@
+import { createTheme, responsiveFontSizes } from '@mui/material';
+
 import { dataDisplayOverrides } from './sections/components/dataDisplay';
 import { buttonsOverrides } from './sections/components/buttons';
 import { formsOverrides } from './sections/components/forms';
@@ -116,3 +118,6 @@ export const cartoThemeOptions = {
     ...dataDisplayOverrides
   }
 };
+
+// @ts-ignore
+export const theme = responsiveFontSizes(createTheme(cartoThemeOptions));
