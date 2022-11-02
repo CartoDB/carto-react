@@ -194,7 +194,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
         <TextField
           className={classes.input}
           value={inputsValues[0]}
-          margin='dense'
+          size='small'
           onChange={(event) => handleInputChange(event, 0)}
           onBlur={() => handleInputBlur(0)}
           inputProps={{
@@ -207,7 +207,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
         <TextField
           className={classes.input}
           value={inputsValues[1]}
-          margin='dense'
+          size='small'
           onChange={(event) => handleInputChange(event, 1)}
           onBlur={() => handleInputBlur(1)}
           inputProps={{

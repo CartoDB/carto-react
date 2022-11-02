@@ -63,12 +63,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     cursor: (props) => (props.expandable ? 'pointer' : 'default'),
-    '& .MuiButton-label': {
-      ...theme.typography.body1,
 
-      '& .MuiButton-startIcon': {
-        marginRight: theme.spacing(1)
-      }
+    '& .MuiButton-startIcon': {
+      marginRight: theme.spacing(1)
     },
     '&:hover': {
       background: 'none'

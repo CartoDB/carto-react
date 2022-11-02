@@ -193,7 +193,6 @@ export const formsOverrides = {
     defaultProps: {
       variant: 'outlined',
       MenuProps: {
-        getContentAnchorEl: null,
         anchorOrigin: {
           vertical: 'bottom',
           horizontal: 'left'
@@ -238,8 +237,7 @@ export const formsOverrides = {
   // Checkbox
   MuiCheckbox: {
     defaultProps: {
-      size: 'small',
-      color: 'primary'
+      size: 'small'
     },
     styleOverrides: {
       root: {
@@ -263,8 +261,7 @@ export const formsOverrides = {
   // Radio Button
   MuiRadio: {
     defaultProps: {
-      size: 'small',
-      color: 'primary'
+      size: 'small'
     },
     styleOverrides: {
       root: {
@@ -287,9 +284,6 @@ export const formsOverrides = {
 
   // Switch
   MuiSwitch: {
-    defaultProps: {
-      color: 'primary'
-    },
     styleOverrides: {
       root: {
         height: getSpacing(4.5),
