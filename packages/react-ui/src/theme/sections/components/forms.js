@@ -284,9 +284,6 @@ export const formsOverrides = {
 
   // Switch
   MuiSwitch: {
-    defaultProps: {
-      color: 'primary'
-    },
     styleOverrides: {
       root: {
         height: getSpacing(4.5),
