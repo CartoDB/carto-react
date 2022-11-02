@@ -2,7 +2,9 @@
 
 ## Not released
 
+- Breaking changes in Mui v5: components [#518](https://github.com/CartoDB/carto-react/pull/518)
 - Breaking changes in Mui v5: styles and theme [#514](https://github.com/CartoDB/carto-react/pull/514/)
+- Add final Figma links into Storybook [#515](https://github.com/CartoDB/carto-react/pull/515)
 - Breakpoints for the new design system [#513](https://github.com/CartoDB/carto-react/pull/513/)
 - New Typography component to extend Mui Typography [#506](https://github.com/CartoDB/carto-react/pull/506)
 - New spacings, borders and shadows toolkit for MUI carto-theme [#507](https://github.com/CartoDB/carto-react/pull/507/)

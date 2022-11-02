@@ -58,7 +58,7 @@ export default function OpacityControl({ opacity, onChangeOpacity }) {
             <TextField
               className={classes.input}
               value={Math.round(opacity * 100)}
-              margin='dense'
+              size='small'
               onChange={handleTextFieldChange}
               InputProps={{
                 step: 1,

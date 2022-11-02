@@ -132,7 +132,7 @@ const options = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1149%3A24517'
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A32732'
     }
   }
 };
@@ -185,7 +185,7 @@ const SliderWithInputTemplate = ({ ...args }) => {
           value={value}
           onChange={handleInputChange}
           onBlur={handleBlur}
-          margin='dense'
+          size='small'
           inputProps={{
             step: 10,
             min: 0,
@@ -200,7 +200,7 @@ const SliderWithInputTemplate = ({ ...args }) => {
 };
 
 const CustomLabelTemplate = ({ ...args }) => {
-  const ValueLabelComponent = (props) => {
+  const CustomValueLabel = (props) => {
     const { children, open, value } = props;
 
     return (
@@ -213,7 +213,9 @@ const CustomLabelTemplate = ({ ...args }) => {
   return (
     <Slider
       valueLabelDisplay='auto'
-      ValueLabelComponent={ValueLabelComponent}
+      components={{
+        ValueLabel: CustomValueLabel
+      }}
       {...args}
     />
   );

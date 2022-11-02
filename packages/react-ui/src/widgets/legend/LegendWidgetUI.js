@@ -109,10 +109,7 @@ const useStylesLegendContainer = makeStyles((theme) => ({
     padding: theme.spacing(0.75, 1.25, 0.75, 3),
     borderTop: ({ collapsed }) =>
       collapsed ? 'none' : `1px solid ${theme.palette.divider}`,
-    cursor: 'pointer',
-    '& .MuiButton-label': {
-      ...theme.typography.body1
-    }
+    cursor: 'pointer'
   },
   wrapperInner: {
     maxHeight: 'max(350px, 80vh)',

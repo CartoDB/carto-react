@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     flexWrap: 'nowrap',
 
-    '&:hover $progressbar div': {
+    '&:hover .progressbar div': {
       backgroundColor: theme.palette.secondary.dark
     }
   },
@@ -91,10 +91,6 @@ const useStyles = makeStyles((theme) => ({
 
     '& .MuiTypography-caption': {
       color: theme.palette.text.secondary
-    },
-
-    '& .MuiButton-label': {
-      ...theme.typography.caption
     }
   },
 
