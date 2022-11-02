@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Add `Authorization header` fetching tiles [#519](https://github.com/CartoDB/carto-react/pull/519)
+- Fix TileLayer unauthorized error due to [breaking changes](https://github.com/visgl/deck.gl/pull/7287) in deck.gl >=8.9.0-alpha.3 and >=8.8.15 [#519](https://github.com/CartoDB/carto-react/pull/519)
 - AnimatedNumber component with hook wrapping `animateValue` [#509](https://github.com/CartoDB/carto-react/pull/509)
 - Implement ComparativeFormulaWidgetUI [#504](https://github.com/CartoDB/carto-react/pull/504)
 
