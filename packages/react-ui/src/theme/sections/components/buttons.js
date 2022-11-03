@@ -1,5 +1,6 @@
-import { getPixelToRem, getSpacing } from '../../themeUtils';
+import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
+import { themeTypography } from '../typography';
 
 export const buttonsOverrides = {
   // Button
@@ -9,99 +10,94 @@ export const buttonsOverrides = {
     },
 
     styleOverrides: {
+      root: {
+        padding: getSpacing(0, 2)
+      },
       contained: {
         boxShadow: 'none'
       },
-      outlined: {
-        border: `2px solid ${commonPalette.text.primary}`,
-        padding: '4px 14px',
-        '&:hover': {
-          borderWidth: '2px'
-        },
-        '&.Mui-disabled': {
-          borderWidth: '2px'
-        }
-      },
-      outlinedPrimary: {
-        border: `2px solid ${commonPalette.primary.main}`,
-        '&:hover': {
-          borderWidth: '2px'
-        }
-      },
-      outlinedSecondary: {
-        border: `2px solid ${commonPalette.secondary.main}`,
-        '&:hover': {
-          borderWidth: '2px'
-        },
-        '&.Mui-disabled': {
-          borderWidth: '2px'
-        }
-      },
-      containedSizeSmall: {
-        padding: '2px 12px',
-        fontSize: getPixelToRem(12)
-      },
-      outlinedSizeSmall: {
-        padding: '2px 12px',
-        fontSize: getPixelToRem(12)
-      },
-      textSizeSmall: {
-        padding: '2px 12px',
-        fontSize: getPixelToRem(12)
-      },
-      containedSizeLarge: {
-        padding: '16px 24px',
-        fontSize: getPixelToRem(16)
-      },
-      containedSecondary: {
-        '&:hover': {
-          backgroundColor: commonPalette.secondary.light
-        }
-      },
-      outlinedSizeLarge: {
-        padding: '16px 24px',
-        fontSize: getPixelToRem(16)
-      },
-      textSizeLarge: {
-        padding: '16px 24px',
-        fontSize: getPixelToRem(16)
-      },
       startIcon: {
         marginRight: 6,
-        marginLeft: -4,
-        '&.MuiButton-iconSizeSmall': {
-          marginLeft: -4
+
+        '& .MuiSvgIcon-root': {
+          fontSize: 18
         },
-        '&.MuiButton-iconSizeLarge': {
-          marginRight: 8
+        '&.MuiButton-iconSizeSmall': {
+          marginRight: 4
         }
       },
       endIcon: {
-        marginRight: -4,
         marginLeft: 6,
-        '&.MuiButton-iconSizeSmall': {
-          marginRight: -4
+
+        '& .MuiSvgIcon-root': {
+          fontSize: 18
         },
-        '&.MuiButton-iconSizeLarge': {
-          marginLeft: 8
+        '&.MuiButton-iconSizeSmall': {
+          marginLeft: 4
         }
       },
-      iconSizeSmall: {
-        '& > *:first-child': {
-          fontSize: 20
+      sizeSmall: {
+        height: getSpacing(3),
+        ...themeTypography.caption,
+        fontWeight: 500,
+        letterSpacing: '0.4px'
+      },
+      sizeMedium: {
+        height: getSpacing(4)
+      },
+      sizeLarge: {
+        height: getSpacing(6),
+        ...themeTypography.body1,
+        fontWeight: 500,
+        letterSpacing: '0.25px'
+      }
+    },
+    // Custom color
+    variants: [
+      {
+        props: { variant: 'contained', color: 'default' },
+        style: {
+          color: commonPalette.text.primary,
+          backgroundColor: commonPalette.default.main,
+
+          '&.Mui-disabled': {
+            color: commonPalette.text.disabled,
+            backgroundColor: commonPalette.action.disabledBackground
+          },
+          '&:hover, &:focus': {
+            backgroundColor: commonPalette.default.dark
+          }
         }
       },
-      iconSizeMedium: {
-        '& > *:first-child': {
-          fontSize: 24
+      {
+        props: { variant: 'outlined', color: 'default' },
+        style: {
+          color: commonPalette.text.primary,
+          borderColor: commonPalette.text.primary,
+
+          '&.Mui-disabled': {
+            color: commonPalette.text.disabled,
+            borderColor: commonPalette.default.outlinedBorder
+          },
+          '&:hover, &:focus': {
+            backgroundColor: commonPalette.action.hover
+          }
         }
       },
-      iconSizeLarge: {
-        '& > *:first-child': {
-          fontSize: 24
+      {
+        props: { variant: 'text', color: 'default' },
+        style: {
+          color: commonPalette.text.primary,
+
+          '&.Mui-disabled': {
+            color: commonPalette.text.disabled
+          },
+          '&:hover, &:focus': {
+            backgroundColor: commonPalette.action.hover
+          }
         }
       }
-    }
+    ]
   },
 
   // Button Base
@@ -114,11 +110,13 @@ export const buttonsOverrides = {
   // Icon Button
   MuiIconButton: {
     styleOverrides: {
-      root: {
+      root: ({ ownerState }) => ({
+        ...(ownerState.color === 'default' && {
+          color: commonPalette.text.primary
+        }),
         padding: getSpacing(0.75),
-        borderRadius: getSpacing(0.5),
-        color: commonPalette.text.primary
-      },
+        borderRadius: getSpacing(0.5)
+      }),
       sizeSmall: {
         padding: getSpacing(0.25)
       }
@@ -134,9 +132,11 @@ export const buttonsOverrides = {
         border: 'none',
         borderRadius: getSpacing(0.5),
         color: commonPalette.grey[500],
+
         '&.Mui-selected': {
           color: commonPalette.primary.main,
           backgroundColor: commonPalette.primary.background,
+
           '&:hover': {
             backgroundColor: commonPalette.primary.background
           }
@@ -145,6 +145,7 @@ export const buttonsOverrides = {
       sizeSmall: {
         width: getSpacing(3),
         height: getSpacing(3),
+
         '& .MuiSvgIcon-root': {
           maxWidth: getSpacing(2.5),
           maxHeight: getSpacing(2.5)
