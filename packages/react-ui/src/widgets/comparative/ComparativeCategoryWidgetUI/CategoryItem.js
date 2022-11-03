@@ -116,13 +116,14 @@ function CategoryItem({
         display='flex'
         alignItems='center'
         flexWrap='nowrap'
+        overflow='hidden'
         gridGap={theme.spacing(1)}
         onClick={() => onClick(item.key)}
         className={className}
       >
         {showCheckbox ? <Checkbox checked={checkboxChecked} /> : null}
-        <Box py={0.5} flexGrow='1'>
-          <Box display='flex' justifyContent='space-between' flexWrap='nowrap'>
+        <Box py={0.5} flexGrow='1' maxWidth='100%' minWidth={0}>
+          <Box display='flex' justifyContent='space-between' flexWrap='nowrap' gridGap={theme.spacing(0.5)}>
             <Tooltip title={item.label}>
               <Typography variant='body2' noWrap>
                 {item.label}

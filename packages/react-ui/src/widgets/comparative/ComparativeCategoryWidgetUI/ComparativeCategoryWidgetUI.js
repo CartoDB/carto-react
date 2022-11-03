@@ -268,7 +268,7 @@ function ComparativeCategoryWidgetUI({
           />
         </Box>
       ) : null}
-      <Box display='flex' flexDirection='column' className={classes.categoriesList}>
+      <Box className={classes.categoriesList}>
         {list.length === 0 ? (
           <>
             <Typography variant='body2'>No results</Typography>

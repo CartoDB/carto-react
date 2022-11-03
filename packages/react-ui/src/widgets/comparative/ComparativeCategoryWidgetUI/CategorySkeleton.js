@@ -1,3 +1,4 @@
+import React from 'react'
 import { Box, Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { useCategoryStyles } from "./useCategoryStyles";
@@ -16,7 +17,7 @@ export default function CategorySkeleton() {
           <Skeleton variant='text' width={100} />
         </Typography>
       </Box>
-      <Box display='flex' flexDirection='column' className={classes.categoriesList}>
+      <Box className={classes.categoriesList}>
         {[...Array(4)].map((_, i) => (
           <Box key={i} py={0.5}>
             <Box display='flex' justifyContent='space-between' flexWrap='nowrap'>
