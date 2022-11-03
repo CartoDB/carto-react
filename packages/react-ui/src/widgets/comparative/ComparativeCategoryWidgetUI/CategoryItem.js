@@ -91,7 +91,7 @@ function CategoryItem({
   const theme = useTheme();
   const compareValue = useMemo(() => {
     const reference = item.data[0].value;
-    const max = Math.max(...item.data.map((d) => d.value));
+    const max = Math.max(...item.data.slice(1).map((d) => d.value));
     return reference - max;
   }, [item]);
 
