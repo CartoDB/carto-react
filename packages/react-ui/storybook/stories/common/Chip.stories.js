@@ -60,11 +60,11 @@ const options = {
       }
     },
     variant: {
-      defaultValue: 'default',
+      defaultValue: 'filled',
       description: 'The variant to use.',
       control: {
         type: 'select',
-        options: ['default', 'outlined']
+        options: ['filled', 'outlined']
       }
     }
   },

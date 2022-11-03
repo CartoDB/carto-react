@@ -78,7 +78,7 @@ const componentsStatus = {
   needUpdate: {
     background: '#E1E3E4', // Default/Main
     color: '#2C3032',
-    description: 'Need an update'
+    description: 'Need an update, but can be used in this state'
   }
 };
 
@@ -102,6 +102,7 @@ export const parameters = {
   },
   options: {
     storySort: {
+      method: 'alphabetical',
       order: [
         'Introduction',
         'Foundations',
@@ -111,15 +112,7 @@ export const parameters = {
         'Organisms',
         ['InputFile'],
         'Common',
-        'Custom Components',
-        [
-          'CategoryWidgetUI',
-          'FormulaWidgetUI',
-          'HistogramWidgetUI',
-          'BarWidgetUI',
-          'PieWidgetUI',
-          'WrapperWidgetUI'
-        ]
+        'Custom Components'
       ]
     }
   },

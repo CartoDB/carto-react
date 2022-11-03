@@ -1,20 +1,23 @@
 import React from 'react';
-import { Button, IconButton, Grid, SvgIcon } from '@mui/material';
+import { Button, Grid } from '@mui/material';
+import { Add, Close } from '@mui/icons-material';
 
 const options = {
-  title: 'Common/Button',
+  title: 'Atoms/Button',
   component: Button,
   argTypes: {
     variant: {
+      defaultValue: 'contained',
       control: {
         type: 'select',
         options: ['text', 'contained', 'outlined']
       }
     },
     color: {
+      defaultValue: 'primary',
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary']
+        options: ['default', 'primary', 'secondary', 'error']
       }
     },
     size: {
@@ -24,6 +27,7 @@ const options = {
       }
     },
     disabled: {
+      defaultValue: false,
       control: {
         type: 'boolean'
       }
@@ -46,161 +50,94 @@ const options = {
 };
 export default options;
 
-const Icon = (props) => (
-  <SvgIcon {...props}>
-    <path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z' />
-  </SvgIcon>
-);
-const PlaygroundTemplate = ({ label, icon, ...rest }) => (
-  <Grid container spacing={2}>
-    <Grid item xs={3}>
-      <Button {...rest}>{label}</Button>
-    </Grid>
-    <Grid item xs={3}>
-      <Button {...rest} startIcon={<Icon />}>
+const Buttons = ({ label, size, disabled, variant, ...rest }) => (
+  <Grid item container spacing={2}>
+    <Grid item xs={4}>
+      <Button {...rest} size={size} variant={variant} disabled={disabled}>
         {label}
       </Button>
     </Grid>
-    <Grid item xs={3}>
-      <Button {...rest} endIcon={<Icon />}>
+    <Grid item xs={4}>
+      <Button
+        {...rest}
+        size={size}
+        variant={variant}
+        disabled={disabled}
+        startIcon={<Add />}
+      >
         {label}
       </Button>
     </Grid>
-    <Grid item xs={3}>
-      <IconButton {...rest} aria-label={label} size='large'>
-        <Icon />
-      </IconButton>
+    <Grid item xs={4}>
+      <Button
+        {...rest}
+        size={size}
+        variant={variant}
+        disabled={disabled}
+        endIcon={<Close />}
+      >
+        {label}
+      </Button>
     </Grid>
   </Grid>
 );
-const ButtonTemplate = ({ label, icon, ...rest }) => {
+
+const PlaygroundTemplate = ({ label, size, ...rest }) => (
+  <Grid container spacing={2}>
+    <Buttons {...rest} label={label} size={size} />
+  </Grid>
+);
+
+const VariantTemplate = ({ label, icon, ...rest }) => {
   const smallLabel = label ? label : 'Small button';
-  const mediumLabel = label ? label : 'Normal button';
+  const mediumLabel = label ? label : 'Medium button';
   const largeLabel = label ? label : 'Large button';
   const disabledLabel = label ? label : 'Disabled button';
 
   return (
     <Grid container spacing={2}>
-      <Grid item container spacing={2}>
-        <Grid item xs={3}>
-          <Button {...rest} size='small'>
-            {smallLabel}
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button {...rest} startIcon={<Icon />} size='small'>
-            {smallLabel}
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button {...rest} endIcon={<Icon />} size='small'>
-            {smallLabel}
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <IconButton {...rest} aria-label={smallLabel} size='small'>
-            <Icon fontSize='small' />
-          </IconButton>
-        </Grid>
-      </Grid>
-      <Grid item container spacing={2}>
-        <Grid item xs={3}>
-          <Button {...rest} size='medium'>
-            {mediumLabel}
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button {...rest} startIcon={<Icon />} size='medium'>
-            {mediumLabel}
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button {...rest} endIcon={<Icon />} size='medium'>
-            {mediumLabel}
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <IconButton {...rest} aria-label={mediumLabel} size='medium'>
-            <Icon />
-          </IconButton>
-        </Grid>
-      </Grid>
-      <Grid item container spacing={2}>
-        <Grid item xs={3}>
-          <Button {...rest} size='large'>
-            {largeLabel}
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button {...rest} startIcon={<Icon />} size='large'>
-            {largeLabel}
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button {...rest} endIcon={<Icon />} size='large'>
-            {largeLabel}
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <IconButton {...rest} aria-label={largeLabel} size='medium'>
-            <Icon />
-          </IconButton>
-        </Grid>
-      </Grid>
-      <Grid item container spacing={2}>
-        <Grid item xs={3}>
-          <Button {...rest} size='large' disabled>
-            {disabledLabel}
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button {...rest} startIcon={<Icon />} size='large' disabled>
-            {disabledLabel}
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button {...rest} endIcon={<Icon />} size='large' disabled>
-            {disabledLabel}
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <IconButton {...rest} aria-label={disabledLabel} size='medium' disabled>
-            <Icon />
-          </IconButton>
-        </Grid>
-      </Grid>
+      <Buttons {...rest} label={smallLabel} size='small' />
+      <Buttons {...rest} label={mediumLabel} size='medium' />
+      <Buttons {...rest} label={largeLabel} size='large' />
+      <Buttons {...rest} label={disabledLabel} disabled />
     </Grid>
   );
 };
-const disabledControlsArgTypes = {
-  variant: { table: { disable: true } },
-  size: { table: { disable: true } },
-  disabled: { table: { disable: true } }
+
+const ColorTemplate = ({ label, icon, ...rest }) => {
+  const containedLabel = label ? label : 'Contained button';
+  const outlinedLabel = label ? label : 'Outlined button';
+  const textLabel = label ? label : 'Text button';
+
+  return (
+    <Grid container spacing={2}>
+      <Buttons {...rest} label={containedLabel} variant='contained' />
+      <Buttons {...rest} label={outlinedLabel} variant='outlined' />
+      <Buttons {...rest} label={textLabel} variant='text' />
+    </Grid>
+  );
 };
 
-export const Default = PlaygroundTemplate.bind({});
-Default.args = { label: 'Button' };
+export const Playground = PlaygroundTemplate.bind({});
+Playground.args = { label: 'Button' };
 
-export const Contained = ButtonTemplate.bind({});
+export const Contained = VariantTemplate.bind({});
 Contained.args = { variant: 'contained' };
-Contained.argTypes = disabledControlsArgTypes;
 
-export const Outlined = ButtonTemplate.bind({});
+export const Outlined = VariantTemplate.bind({});
 Outlined.args = { variant: 'outlined' };
-Outlined.argTypes = disabledControlsArgTypes;
 
-export const Base = ButtonTemplate.bind({});
-Base.args = { variant: 'text' };
-Base.argTypes = disabledControlsArgTypes;
+export const Text = VariantTemplate.bind({});
+Text.args = { variant: 'text' };
 
-export const ContainedPrimary = ButtonTemplate.bind({});
-ContainedPrimary.args = { variant: 'contained', color: 'primary' };
-ContainedPrimary.argTypes = disabledControlsArgTypes;
+export const PrimaryColor = ColorTemplate.bind({});
+PrimaryColor.args = { color: 'primary' };
 
-export const OutlinedPrimary = ButtonTemplate.bind({});
-OutlinedPrimary.args = { variant: 'outlined', color: 'primary' };
-OutlinedPrimary.argTypes = disabledControlsArgTypes;
+export const SecondaryColor = ColorTemplate.bind({});
+SecondaryColor.args = { color: 'secondary' };
 
-export const BasePrimary = ButtonTemplate.bind({});
-BasePrimary.args = { variant: 'text', color: 'primary' };
-BasePrimary.argTypes = disabledControlsArgTypes;
+export const ErrorColor = ColorTemplate.bind({});
+ErrorColor.args = { color: 'error' };
+
+export const DefaultColor = ColorTemplate.bind({});
+DefaultColor.args = { color: 'default' };
