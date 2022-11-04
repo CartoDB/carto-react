@@ -111,14 +111,41 @@ export const buttonsOverrides = {
   MuiIconButton: {
     styleOverrides: {
       root: ({ ownerState }) => ({
+        borderRadius: getSpacing(0.5),
+
+        '& .MuiSvgIcon-root': {
+          fontSize: 18
+        },
+
         ...(ownerState.color === 'default' && {
-          color: commonPalette.text.primary
+          color: commonPalette.text.primary,
+
+          '&:hover, &:focus-visible': {
+            backgroundColor: commonPalette.action.hover
+          }
         }),
-        padding: getSpacing(0.75),
-        borderRadius: getSpacing(0.5)
+        ...(ownerState.color === 'primary' && {
+          '&:hover, &:focus-visible': {
+            backgroundColor: commonPalette.primary.background
+          }
+        }),
+        ...(ownerState.color === 'secondary' && {
+          '&:hover, &:focus-visible': {
+            backgroundColor: commonPalette.secondary.background
+          }
+        })
       }),
       sizeSmall: {
-        padding: getSpacing(0.25)
+        width: getSpacing(3),
+        height: getSpacing(3)
+      },
+      sizeMedium: {
+        width: getSpacing(4),
+        height: getSpacing(4)
+      },
+      sizeLarge: {
+        width: getSpacing(6),
+        height: getSpacing(6)
       }
     }
   },

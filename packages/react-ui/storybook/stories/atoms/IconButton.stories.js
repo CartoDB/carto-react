@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconButton, Grid } from '@mui/material';
 import { Delete } from '@mui/icons-material';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Atoms/IconButton',
@@ -37,23 +38,26 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1761%3A30090'
     },
     status: {
-      type: 'inDevelopment'
+      type: 'readyToReview'
     }
   }
 };
 export default options;
 
-const IconButtons = ({ color, label, size, disabled, ...rest }) => (
+const IconButtons = ({ color, label, size, disabled, title, ...rest }) => (
   <Grid item xs={3}>
-    <IconButton
-      {...rest}
-      aria-label={label}
-      color={color}
-      size={size}
-      disabled={disabled}
-    >
-      <Delete fontSize='inherit' />
-    </IconButton>
+    <Grid container direction='column' alignItems='center' spacing={2}>
+      {title && <Typography variant='body2'>{title}</Typography>}
+      <IconButton
+        {...rest}
+        aria-label={label}
+        color={color}
+        size={size}
+        disabled={disabled}
+      >
+        <Delete fontSize='inherit' />
+      </IconButton>
+    </Grid>
   </Grid>
 );
 
@@ -71,10 +75,10 @@ const ButtonTemplate = ({ label, ...rest }) => {
 
   return (
     <Grid container spacing={2}>
-      <IconButtons {...rest} label={smallLabel} size='small' />
-      <IconButtons {...rest} label={mediumLabel} size='medium' />
-      <IconButtons {...rest} label={largeLabel} size='large' />
-      <IconButtons {...rest} label={disabledLabel} disabled />
+      <IconButtons {...rest} label={smallLabel} size='small' title='Small' />
+      <IconButtons {...rest} label={mediumLabel} size='medium' title='Medium' />
+      <IconButtons {...rest} label={largeLabel} size='large' title='Large' />
+      <IconButtons {...rest} label={disabledLabel} disabled title='Disabled' />
     </Grid>
   );
 };
