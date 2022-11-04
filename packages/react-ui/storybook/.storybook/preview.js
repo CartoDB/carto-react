@@ -4,17 +4,11 @@ import {
   createTheme,
   responsiveFontSizes,
   ThemeProvider,
-  StyledEngineProvider
+  StyledEngineProvider,
+  CssBaseline
 } from '@mui/material';
-import { cartoThemeOptions } from '../../src/theme/carto-theme';
+import { cartoThemeOptions, theme } from '../../src/theme/carto-theme';
 import { BREAKPOINTS } from '../../src/theme/themeConstants';
-
-let theme = createTheme(cartoThemeOptions);
-theme = responsiveFontSizes(theme, {
-  breakpoints: ['sm'],
-  disableAlign: false,
-  factor: 2
-});
 
 const customViewports = {
   xs: {
@@ -86,6 +80,7 @@ export const decorators = [
   (Story) => (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Story />
       </ThemeProvider>
     </StyledEngineProvider>
