@@ -1,5 +1,5 @@
 import React from 'react';
-import Typography from '../../../src/atoms/Typography';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Foundations/Typography',

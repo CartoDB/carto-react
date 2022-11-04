@@ -14,7 +14,7 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 import { ArrowDropDown } from '@mui/icons-material';
 import PropTypes from 'prop-types';
-import Typography from '../atoms/Typography';
+import Typography from '../components/atoms/Typography';
 
 function FeatureSelectionWidgetUI({
   className,

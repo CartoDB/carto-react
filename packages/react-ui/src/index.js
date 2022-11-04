@@ -22,7 +22,7 @@ import PolygonIcon from './assets/PolygonIcon';
 import RectangleIcon from './assets/RectangleIcon';
 import LassoIcon from './assets/LassoIcon';
 import CircleIcon from './assets/CircleIcon';
-import Typography from './atoms/Typography';
+import Typography from './components/atoms/Typography';
 
 const featureSelectionIcons = {
   CursorIcon,

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Grid, Paper } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import Typography from '../../../src/atoms/Typography';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
-  title: 'Common/Paper',
+  title: 'Atoms/Paper',
   component: Paper,
   argTypes: {
     elevation: {

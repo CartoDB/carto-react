@@ -1,10 +1,10 @@
 import React from 'react';
 import { Breadcrumbs, Link } from '@mui/material';
 import { NavigateNext, CloudCircle, Home, Style } from '@mui/icons-material';
-import Typography from '../../../src/atoms/Typography';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
-  title: 'Common/Breadcrumbs',
+  title: 'Molecules/Breadcrumbs',
   component: Breadcrumbs,
   argTypes: {
     maxItems: {

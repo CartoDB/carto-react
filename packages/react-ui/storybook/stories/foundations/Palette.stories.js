@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Box, Grid, Tooltip } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTheme } from '@mui/material/styles';
-import Typography from '../../../src/atoms/Typography';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Foundations/Palette',

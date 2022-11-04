@@ -7,7 +7,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import { processFormatterRes } from '../utils/formatterUtils';
 import detectTouchscreen from '../utils/detectTouchScreen';
 import useHistogramInteractivity from './useHistogramInteractivity';
-import Typography from '../../atoms/Typography';
+import Typography from '../../components/atoms/Typography';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 

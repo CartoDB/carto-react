@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar, Chip, Grid } from '@mui/material';
 
 const options = {
-  title: 'Common/Chip',
+  title: 'Molecules/Chip',
   component: Chip,
   argTypes: {
     avatar: {

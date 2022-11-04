@@ -15,7 +15,7 @@ import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesCont
 import { CHART_TYPES } from './utils/constants';
 import { PropTypes } from 'prop-types';
 import { GroupDateTypes, getMonday } from '@carto/react-core';
-import Typography from '../../atoms/Typography';
+import Typography from '../../components/atoms/Typography';
 
 const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.YEARS]: yearCurrentDateRange,

@@ -2,7 +2,7 @@ import React from 'react';
 import PieWidgetUI from '../../../src/widgets/PieWidgetUI';
 
 const options = {
-  title: 'Custom Components/PieWidgetUI',
+  title: 'Organisms/Widgets/PieWidgetUI',
   component: PieWidgetUI,
   parameters: {
     docs: {

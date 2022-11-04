@@ -7,7 +7,7 @@ import LegendIcon from './LegendIcon';
 import LegendRamp from './LegendRamp';
 import LegendProportion from './LegendProportion';
 import PropTypes from 'prop-types';
-import Typography from '../../atoms/Typography';
+import Typography from '../../components/atoms/Typography';
 
 const LayersIcon = () => (
   <SvgIcon width='24' height='24' viewBox='0 0 24 24'>

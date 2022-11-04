@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 
 const options = {
-  title: 'Common/Radio',
+  title: 'Atoms/Radio',
   component: Radio,
   argTypes: {
     color: {

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Grid, InputAdornment, TextField } from '@mui/material';
 import { Visibility } from '@mui/icons-material';
-import Typography from '../../../src/atoms/Typography';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
-  title: 'Common/Text Field',
+  title: 'Atoms/Text Field',
   component: TextField,
   argTypes: {
     variant: {

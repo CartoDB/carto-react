@@ -5,7 +5,7 @@ import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
 import { getMinMax } from './LegendProportion';
 import LegendProportion from './LegendProportion';
-import Typography from '../../atoms/Typography';
+import Typography from '../../components/atoms/Typography';
 
 const useStyles = makeStyles(() => ({
   errorContainer: {

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { BREAKPOINTS } from '../../../src/theme/themeConstants';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Foundations/Breakpoints',

@@ -5,7 +5,7 @@ import { Grid, Link, useTheme, darken } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import detectTouchScreen from './utils/detectTouchScreen';
 import { processFormatterRes } from './utils/formatterUtils';
-import Typography from '../atoms/Typography';
+import Typography from '../components/atoms/Typography';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
 

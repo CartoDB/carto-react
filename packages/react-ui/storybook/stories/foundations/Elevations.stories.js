@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Foundations/Elevations',

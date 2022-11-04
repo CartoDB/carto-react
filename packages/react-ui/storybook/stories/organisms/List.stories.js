@@ -29,7 +29,7 @@ import {
 } from '@mui/icons-material';
 
 const options = {
-  title: 'Common/List',
+  title: 'Organisms/List',
   component: List,
   parameters: {
     design: {

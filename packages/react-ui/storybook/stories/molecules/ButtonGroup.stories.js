@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Grid, ButtonGroup } from '@mui/material';
 
 const options = {
-  title: 'Common/Button Group',
+  title: 'Molecules/Button Group',
   component: ButtonGroup,
   argTypes: {
     variant: {
