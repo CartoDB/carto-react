@@ -23,6 +23,7 @@ import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import Typography from './components/atoms/Typography';
+import Button from './components/atoms/Button';
 
 export {
   theme,
@@ -50,5 +51,6 @@ export {
   LegendIcon,
   LegendProportion,
   LegendRamp,
-  Typography
+  Typography,
+  Button
 };
