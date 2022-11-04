@@ -124,7 +124,6 @@ declare module '@mui/material/Typography' {
 }
 
 // Update the Buttons's color prop options
-
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     default: true;

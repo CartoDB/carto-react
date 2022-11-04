@@ -118,7 +118,7 @@ export const buttonsOverrides = {
         },
 
         ...(ownerState.color === 'default' && {
-          color: commonPalette.text.primary,
+          color: commonPalette.text.secondary,
 
           '&:hover, &:focus-visible': {
             backgroundColor: commonPalette.action.hover
