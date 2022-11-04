@@ -1,8 +1,20 @@
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
+import { themeShadows } from '../shadows';
+
+const sizeSmall = getSpacing(3);
+const sizeMedium = getSpacing(4);
+const sizeLarge = getSpacing(6);
 
 export const buttonsOverrides = {
+  // Button Base
+  MuiButtonBase: {
+    defaultProps: {
+      disableRipple: true
+    }
+  },
+
   // Button
   MuiButton: {
     defaultProps: {
@@ -10,12 +22,48 @@ export const buttonsOverrides = {
     },
 
     styleOverrides: {
-      root: {
-        padding: getSpacing(0, 2)
-      },
+      root: ({ ownerState }) => ({
+        '&:hover, &:focus-visible': {
+          ...(ownerState.color === 'primary' &&
+            ownerState.variant !== 'contained' && {
+              backgroundColor: commonPalette.primary.background
+            }),
+          ...(ownerState.color === 'secondary' &&
+            ownerState.variant !== 'contained' && {
+              backgroundColor: commonPalette.secondary.background
+            }),
+          ...(ownerState.color === 'error' &&
+            ownerState.variant !== 'contained' &&
+            {
+              // background: commonPalette.error.relatedLight // TODO discuss with design the linear-gradient issue
+            })
+        }
+      }),
+
       contained: {
-        boxShadow: 'none'
+        boxShadow: 'none',
+
+        '&.Mui-disabled': {
+          color: commonPalette.text.disabled,
+          backgroundColor: commonPalette.action.disabledBackground
+        }
       },
+      outlined: {
+        '&.Mui-disabled': {
+          color: commonPalette.text.disabled,
+          borderColor: commonPalette.default.outlinedBorder
+        }
+      },
+      outlinedPrimary: {
+        borderColor: commonPalette.primary.main
+      },
+      outlinedSecondary: {
+        borderColor: commonPalette.secondary.main
+      },
+      outlinedError: {
+        borderColor: commonPalette.error.main
+      },
+
       startIcon: {
         marginRight: 6,
 
@@ -23,7 +71,8 @@ export const buttonsOverrides = {
           fontSize: 18
         },
         '&.MuiButton-iconSizeSmall': {
-          marginRight: 4
+          marginRight: 4,
+          marginLeft: -4
         }
       },
       endIcon: {
@@ -33,38 +82,48 @@ export const buttonsOverrides = {
           fontSize: 18
         },
         '&.MuiButton-iconSizeSmall': {
-          marginLeft: 4
+          marginLeft: 4,
+          marginRight: -4
         }
       },
+
       sizeSmall: {
-        height: getSpacing(3),
+        height: sizeSmall,
+        padding: getSpacing(0, 1.5),
         ...themeTypography.caption,
+        lineHeight: sizeSmall,
         fontWeight: 500,
         letterSpacing: '0.4px'
       },
       sizeMedium: {
-        height: getSpacing(4)
+        height: sizeMedium,
+        padding: getSpacing(0, 2),
+        lineHeight: sizeMedium
       },
       sizeLarge: {
-        height: getSpacing(6),
+        height: sizeLarge,
+        padding: getSpacing(0, 2.5),
         ...themeTypography.body1,
+        lineHeight: sizeLarge,
         fontWeight: 500,
         letterSpacing: '0.25px'
       }
     },
-    // Custom color
+
     variants: [
+      // Custom color and its variants
       {
         props: { variant: 'contained', color: 'default' },
         style: {
           color: commonPalette.text.primary,
           backgroundColor: commonPalette.default.main,
+          border: `1px solid ${commonPalette.text.primary}`,
 
           '&.Mui-disabled': {
             color: commonPalette.text.disabled,
             backgroundColor: commonPalette.action.disabledBackground
           },
-          '&:hover, &:focus': {
+          '&:hover, &:focus-visible': {
             backgroundColor: commonPalette.default.dark
           }
         }
@@ -79,8 +138,9 @@ export const buttonsOverrides = {
             color: commonPalette.text.disabled,
             borderColor: commonPalette.default.outlinedBorder
           },
-          '&:hover, &:focus': {
-            backgroundColor: commonPalette.action.hover
+          '&:hover, &:focus-visible': {
+            backgroundColor: commonPalette.action.hover,
+            borderColor: commonPalette.text.primary
           }
         }
       },
@@ -92,7 +152,7 @@ export const buttonsOverrides = {
           '&.Mui-disabled': {
             color: commonPalette.text.disabled
           },
-          '&:hover, &:focus': {
+          '&:hover, &:focus-visible': {
             backgroundColor: commonPalette.action.hover
           }
         }
@@ -100,10 +160,24 @@ export const buttonsOverrides = {
     ]
   },
 
-  // Button Base
-  MuiButtonBase: {
-    defaultProps: {
-      disableRipple: true
+  // Mui Button Group
+  MuiButtonGroup: {
+    styleOverrides: {
+      root: ({ ownerState }) => ({
+        boxShadow: themeShadows[0],
+
+        ...(ownerState.variant === 'text' && {
+          boxShadow: themeShadows[1],
+          '& .MuiButtonGroup-grouped:not(:last-of-type)': {
+            borderColor: commonPalette.default.dark
+          }
+        }),
+        ...(ownerState.variant === 'outlined' && {
+          '& .MuiButtonBase-root.Mui-disabled': {
+            borderColor: 'inherit'
+          }
+        })
+      })
     }
   },
 
@@ -135,17 +209,18 @@ export const buttonsOverrides = {
           }
         })
       }),
+
       sizeSmall: {
-        width: getSpacing(3),
-        height: getSpacing(3)
+        width: sizeSmall,
+        height: sizeSmall
       },
       sizeMedium: {
-        width: getSpacing(4),
-        height: getSpacing(4)
+        width: sizeMedium,
+        height: sizeMedium
       },
       sizeLarge: {
-        width: getSpacing(6),
-        height: getSpacing(6)
+        width: sizeLarge,
+        height: sizeLarge
       }
     }
   },

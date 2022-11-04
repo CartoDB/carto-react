@@ -1,6 +1,9 @@
 import React from 'react';
-import { Button, Grid } from '@mui/material';
+import { Grid, Tooltip } from '@mui/material';
 import { Add, Close } from '@mui/icons-material';
+import LoadingButton from '@mui/lab/LoadingButton';
+import Typography from '../../../src/components/atoms/Typography';
+import Button from '../../../src/components/atoms/Button';
 
 const options = {
   title: 'Atoms/Button',
@@ -44,7 +47,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A26509'
     },
     status: {
-      type: 'inDevelopment'
+      type: 'readyToReview'
     }
   }
 };
@@ -118,6 +121,72 @@ const ColorTemplate = ({ label, icon, ...rest }) => {
   );
 };
 
+const BehaviorTemplate = ({ label, icon, ...rest }) => {
+  const overflowLabel = 'TextButton with overflow';
+
+  return (
+    <Grid container direction='column' spacing={6}>
+      <Grid item container direction='column' xs={4}>
+        <Typography variant='body1' style={{ marginBottom: 16 }}>
+          {'Overflow + optional tooltip'}
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <Button {...rest} style={{ maxWidth: '150px' }}>
+              {overflowLabel}
+            </Button>
+          </Grid>
+          <Grid item xs={4}>
+            <Tooltip title={overflowLabel} placement='top'>
+              <Button {...rest} startIcon={<Add />} style={{ maxWidth: '150px' }}>
+                {overflowLabel}
+              </Button>
+            </Tooltip>
+          </Grid>
+          <Grid item xs={4}>
+            <Button {...rest} endIcon={<Close />} style={{ maxWidth: '150px' }}>
+              {overflowLabel}
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid item container direction='column' xs={4}>
+        <Typography variant='body1' style={{ marginBottom: 16 }}>
+          {'Loading'}
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <LoadingButton loading variant='outlined'>
+              {'Disabled'}
+            </LoadingButton>
+          </Grid>
+          <Grid item xs={4}>
+            <LoadingButton
+              loading
+              loadingPosition='start'
+              variant='contained'
+              startIcon={<Add />}
+            >
+              {'Import data'}
+            </LoadingButton>
+          </Grid>
+          <Grid item xs={4}>
+            <LoadingButton
+              loading
+              loadingPosition='end'
+              variant='contained'
+              endIcon={<Close />}
+            >
+              {'Send email'}
+            </LoadingButton>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
+
 export const Playground = PlaygroundTemplate.bind({});
 Playground.args = { label: 'Button' };
 
@@ -141,3 +210,5 @@ ErrorColor.args = { color: 'error' };
 
 export const DefaultColor = ColorTemplate.bind({});
 DefaultColor.args = { color: 'default' };
+
+export const Behavior = BehaviorTemplate.bind({});

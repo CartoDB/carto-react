@@ -46,7 +46,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A27945'
     },
     status: {
-      type: 'needUpdate'
+      type: 'readyToReview'
     }
   }
 };
@@ -100,35 +100,27 @@ const ButtonTemplate = ({ label, icon, ...rest }) => {
     </Grid>
   );
 };
-const disabledControlsArgTypes = {
-  variant: { table: { disable: true } },
-  size: { table: { disable: true } },
-  disabled: { table: { disable: true } }
-};
 
 export const Default = PlaygroundTemplate.bind({});
 Default.args = { label: 'Button' };
 
 export const Contained = ButtonTemplate.bind({});
 Contained.args = { variant: 'contained' };
-Contained.argTypes = disabledControlsArgTypes;
 
 export const Outlined = ButtonTemplate.bind({});
 Outlined.args = { variant: 'outlined' };
-Outlined.argTypes = disabledControlsArgTypes;
 
 export const Base = ButtonTemplate.bind({});
 Base.args = { variant: 'text' };
-Base.argTypes = disabledControlsArgTypes;
 
 export const ContainedPrimary = ButtonTemplate.bind({});
 ContainedPrimary.args = { variant: 'contained', color: 'primary' };
-ContainedPrimary.argTypes = disabledControlsArgTypes;
 
 export const OutlinedPrimary = ButtonTemplate.bind({});
 OutlinedPrimary.args = { variant: 'outlined', color: 'primary' };
-OutlinedPrimary.argTypes = disabledControlsArgTypes;
 
 export const BasePrimary = ButtonTemplate.bind({});
 BasePrimary.args = { variant: 'text', color: 'primary' };
-BasePrimary.argTypes = disabledControlsArgTypes;
+
+export const Vertical = ButtonTemplate.bind({});
+Vertical.args = { variant: 'text', color: 'primary', orientation: 'vertical' };
