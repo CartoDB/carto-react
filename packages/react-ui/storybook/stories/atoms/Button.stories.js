@@ -122,7 +122,7 @@ const ColorTemplate = ({ label, icon, ...rest }) => {
 };
 
 const BehaviorTemplate = ({ label, icon, ...rest }) => {
-  const overflowLabel = 'TextButton with overflow';
+  const overflowLabel = 'Text Button with overflow';
 
   return (
     <Grid container direction='column' spacing={6}>
@@ -132,19 +132,17 @@ const BehaviorTemplate = ({ label, icon, ...rest }) => {
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            <Button {...rest} style={{ maxWidth: '150px' }}>
-              {overflowLabel}
-            </Button>
+            <Button {...rest}>{overflowLabel}</Button>
           </Grid>
           <Grid item xs={4}>
             <Tooltip title={overflowLabel} placement='top'>
-              <Button {...rest} startIcon={<Add />} style={{ maxWidth: '150px' }}>
+              <Button {...rest} startIcon={<Add />}>
                 {overflowLabel}
               </Button>
             </Tooltip>
           </Grid>
           <Grid item xs={4}>
-            <Button {...rest} endIcon={<Close />} style={{ maxWidth: '150px' }}>
+            <Button {...rest} endIcon={<Close />}>
               {overflowLabel}
             </Button>
           </Grid>

@@ -1,3 +1,4 @@
+// salto de borde y colores ok
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
@@ -23,6 +24,8 @@ export const buttonsOverrides = {
 
     styleOverrides: {
       root: ({ ownerState }) => ({
+        maxWidth: '192px',
+
         '&:hover, &:focus-visible': {
           ...(ownerState.color === 'primary' &&
             ownerState.variant !== 'contained' && {
@@ -43,6 +46,9 @@ export const buttonsOverrides = {
         },
         '& + &': {
           marginLeft: getSpacing(1)
+        },
+        '& .MuiSvgIcon-root': {
+          fontSize: 18
         }
       }),
 
@@ -168,23 +174,67 @@ export const buttonsOverrides = {
 
   // Mui Button Group
   MuiButtonGroup: {
+    defaultProps: {
+      disableRipple: true
+    },
+
     styleOverrides: {
       root: ({ ownerState }) => ({
         boxShadow: themeShadows[0],
 
+        '& .MuiButton-root + .MuiButton-root': {
+          marginLeft: 0
+        },
+
         ...(ownerState.variant === 'text' && {
           boxShadow: themeShadows[1],
+          borderColor: commonPalette.default.dark,
+
           '& .MuiButtonGroup-grouped:not(:last-of-type)': {
             borderColor: commonPalette.default.dark
           }
         }),
         ...(ownerState.variant === 'outlined' && {
-          '& .MuiButtonBase-root.Mui-disabled': {
-            borderColor: 'inherit'
-          }
+          ...(ownerState.color === 'default' && {
+            '& .MuiButtonBase-root.Mui-disabled': {
+              borderColor: commonPalette.text.primary
+            }
+          }),
+          ...(ownerState.color === 'primary' && {
+            '& .MuiButtonBase-root.Mui-disabled': {
+              borderColor: commonPalette.primary.main
+            }
+          }),
+          ...(ownerState.color === 'secondary' && {
+            '& .MuiButtonBase-root.Mui-disabled': {
+              borderColor: commonPalette.secondary.main
+            }
+          }),
+          '& .MuiButtonGroup-grouped:not(:last-of-type):hover, & .Mui-disabled:not(:last-of-type)':
+            {
+              borderRightColor: 'transparent'
+            }
         })
       })
-    }
+    },
+    variants: [
+      // Custom color and its variants
+      {
+        props: { variant: 'contained', color: 'default' },
+        style: {
+          '& .MuiButton-root': {
+            borderColor: commonPalette.default.main
+          },
+          '& .MuiButtonGroup-grouped:not(:last-of-type)': {
+            borderColor: commonPalette.default.main,
+            borderRightColor: commonPalette.default.dark
+          },
+          '& .MuiButtonGroup-grouped:hover, & .MuiButtonGroup-grouped:focus-visible': {
+            borderColor: commonPalette.default.dark
+          }
+        }
+      }
+    ]
   },
 
   // Icon Button

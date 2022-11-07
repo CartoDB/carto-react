@@ -23,6 +23,7 @@ import RectangleIcon from './assets/RectangleIcon';
 import LassoIcon from './assets/LassoIcon';
 import CircleIcon from './assets/CircleIcon';
 import Typography from './components/atoms/Typography';
+import Button from './components/atoms/Button';
 
 const featureSelectionIcons = {
   CursorIcon,
@@ -55,5 +56,6 @@ export {
   LegendIcon,
   LegendProportion,
   LegendRamp,
-  Typography
+  Typography,
+  Button
 };

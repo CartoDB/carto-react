@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Grid, ButtonGroup } from '@mui/material';
+import { Close } from '@mui/icons-material';
 
 const options = {
   title: 'Molecules/Button Group',
@@ -30,6 +31,7 @@ const options = {
       }
     },
     disabled: {
+      defaultValue: false,
       control: {
         type: 'boolean'
       }
@@ -61,6 +63,7 @@ const PlaygroundTemplate = ({ label, icon, ...rest }) => (
     </ButtonGroup>
   </Grid>
 );
+
 const ButtonTemplate = ({ label, icon, ...rest }) => {
   const smallLabel = label ? label : 'Small button';
   const mediumLabel = label ? label : 'Normal button';
@@ -69,40 +72,110 @@ const ButtonTemplate = ({ label, icon, ...rest }) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item container>
+      <Grid item>
         <ButtonGroup {...rest} size='small'>
           <Button>{smallLabel}</Button>
           <Button>{smallLabel}</Button>
           <Button>{smallLabel}</Button>
         </ButtonGroup>
       </Grid>
-      <Grid item container>
+      <Grid item>
         <ButtonGroup {...rest} size='medium'>
           <Button>{mediumLabel}</Button>
           <Button>{mediumLabel}</Button>
           <Button>{mediumLabel}</Button>
         </ButtonGroup>
       </Grid>
-      <Grid item container>
+      <Grid item>
         <ButtonGroup {...rest} size='large'>
           <Button>{largeLabel}</Button>
           <Button>{largeLabel}</Button>
           <Button>{largeLabel}</Button>
         </ButtonGroup>
       </Grid>
-      <Grid item container>
-        <ButtonGroup {...rest} size='large'>
-          <Button>{largeLabel}</Button>
+      <Grid item>
+        <ButtonGroup {...rest}>
+          <Button>{disabledLabel}</Button>
           <Button disabled>{disabledLabel}</Button>
-          <Button>{largeLabel}</Button>
+          <Button>{disabledLabel}</Button>
         </ButtonGroup>
       </Grid>
     </Grid>
   );
 };
 
-export const Default = PlaygroundTemplate.bind({});
-Default.args = { label: 'Button' };
+const ColorTemplate = ({ label, icon, ...rest }) => {
+  const containedLabel = label ? label : 'Contained button';
+  const outlinedLabel = label ? label : 'Outlined button';
+  const textLabel = label ? label : 'Text button';
+
+  return (
+    <Grid container spacing={2}>
+      <Grid item>
+        <ButtonGroup {...rest} variant='contained'>
+          <Button>{containedLabel}</Button>
+          <Button>{containedLabel}</Button>
+          <Button>{containedLabel}</Button>
+        </ButtonGroup>
+      </Grid>
+      <Grid item>
+        <ButtonGroup {...rest} variant='outlined'>
+          <Button>{outlinedLabel}</Button>
+          <Button>{outlinedLabel}</Button>
+          <Button>{outlinedLabel}</Button>
+        </ButtonGroup>
+      </Grid>
+      <Grid item>
+        <ButtonGroup {...rest} variant='text'>
+          <Button>{textLabel}</Button>
+          <Button>{textLabel}</Button>
+          <Button>{textLabel}</Button>
+        </ButtonGroup>
+      </Grid>
+    </Grid>
+  );
+};
+
+const SplitTemplate = ({ ...rest }) => {
+  return (
+    <Grid container spacing={2}>
+      <Grid item>
+        <ButtonGroup {...rest} variant='contained' size='small'>
+          <Button>{'Button'}</Button>
+          <Button>
+            <Close />
+          </Button>
+        </ButtonGroup>
+      </Grid>
+      <Grid item>
+        <ButtonGroup {...rest} variant='contained' size='medium'>
+          <Button>{'Button'}</Button>
+          <Button>
+            <Close />
+          </Button>
+        </ButtonGroup>
+      </Grid>
+      <Grid item>
+        <ButtonGroup {...rest} variant='contained' size='large'>
+          <Button>{'Button'}</Button>
+          <Button>
+            <Close />
+          </Button>
+        </ButtonGroup>
+      </Grid>
+      <Grid item>
+        <ButtonGroup {...rest} variant='contained'>
+          <Button disabled>{'Disabled'}</Button>
+          <Button>
+            <Close />
+          </Button>
+        </ButtonGroup>
+      </Grid>
+    </Grid>
+  );
+};
+export const Playground = PlaygroundTemplate.bind({});
+Playground.args = { label: 'Button' };
 
 export const Contained = ButtonTemplate.bind({});
 Contained.args = { variant: 'contained' };
@@ -113,14 +186,17 @@ Outlined.args = { variant: 'outlined' };
 export const Base = ButtonTemplate.bind({});
 Base.args = { variant: 'text' };
 
-export const ContainedPrimary = ButtonTemplate.bind({});
-ContainedPrimary.args = { variant: 'contained', color: 'primary' };
+export const Primary = ColorTemplate.bind({});
+Primary.args = { color: 'primary' };
 
-export const OutlinedPrimary = ButtonTemplate.bind({});
-OutlinedPrimary.args = { variant: 'outlined', color: 'primary' };
+export const Secondary = ColorTemplate.bind({});
+Secondary.args = { color: 'secondary' };
 
-export const BasePrimary = ButtonTemplate.bind({});
-BasePrimary.args = { variant: 'text', color: 'primary' };
+export const Default = ColorTemplate.bind({});
+Default.args = { color: 'default' };
 
 export const Vertical = ButtonTemplate.bind({});
-Vertical.args = { variant: 'text', color: 'primary', orientation: 'vertical' };
+Vertical.args = { variant: 'outlined', color: 'primary', orientation: 'vertical' };
+
+export const Split = SplitTemplate.bind({});
+Split.args = { variant: 'outlined', color: 'primary' };
