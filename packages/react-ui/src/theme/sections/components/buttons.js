@@ -349,5 +349,35 @@ export const buttonsOverrides = {
         }
       }
     }
+  },
+
+  // FAB button
+  MuiFab: {
+    styleOverrides: {
+      root: {
+        '& .MuiSvgIcon-root': {
+          width: 24,
+          height: 24
+        }
+      },
+      sizeSmall: {
+        width: 32,
+        height: 32,
+        minHeight: 32,
+
+        '& .MuiSvgIcon-root': {
+          width: 18,
+          height: 18
+        },
+        '&.MuiFab-extended': {
+          width: 'auto'
+        }
+      },
+      secondary: {
+        '&:hover': {
+          backgroundColor: commonPalette.secondary.light
+        }
+      }
+    }
   }
 };
