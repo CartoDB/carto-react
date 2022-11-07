@@ -153,6 +153,20 @@ const BehaviorTemplate = ({ label, icon, ...rest }) => {
 
       <Grid item container direction='column' xs={4}>
         <Typography variant='body1' style={{ marginBottom: 16 }}>
+          {'Pairing buttons'}
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item>
+            <Button {...rest}>{'Button'}</Button>
+            <Button {...rest} startIcon={<Add />}>
+              {'Button'}
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid item container direction='column' xs={4}>
+        <Typography variant='body1' style={{ marginBottom: 16 }}>
           {'Loading'}
         </Typography>
         <Grid container spacing={2}>

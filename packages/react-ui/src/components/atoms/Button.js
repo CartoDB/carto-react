@@ -9,7 +9,7 @@ const Button = forwardRef(({ style, children, ...otherProps }, ref) => {
 
   return (
     <MuiButton {...otherProps} ref={ref} style={style}>
-      <Typography variant='inherit' color='inherit' noWrap>
+      <Typography variant='inherit' color='inherit' noWrap component='span'>
         {children}
       </Typography>
     </MuiButton>
