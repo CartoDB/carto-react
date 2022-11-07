@@ -37,9 +37,8 @@ export const buttonsOverrides = {
               backgroundColor: commonPalette.secondary.light
             }),
           ...(ownerState.color === 'error' &&
-            ownerState.variant !== 'contained' &&
-            {
-              // background: commonPalette.error.relatedLight // TODO discuss with design the linear-gradient issue
+            ownerState.variant !== 'contained' && {
+              background: commonPalette.error.relatedLight
             })
         },
         '& + &': {
