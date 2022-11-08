@@ -1,4 +1,3 @@
-// salto de borde y colores ok
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
@@ -13,16 +12,13 @@ export const buttonsOverrides = {
   // Button Base
   MuiButtonBase: {
     defaultProps: {
-      disableRipple: true
+      disableRipple: true,
+      disableElevation: true
     }
   },
 
   // Button
   MuiButton: {
-    defaultProps: {
-      disableElevation: true
-    },
-
     styleOverrides: {
       root: ({ ownerState }) => ({
         maxWidth: '192px',
@@ -40,11 +36,12 @@ export const buttonsOverrides = {
               background: commonPalette.error.relatedLight
             })
           }),
-          ...(ownerState.color === 'secondary' &&
-            ownerState.variant === 'contained' && {
+          ...(ownerState.variant === 'contained' &&
+            ownerState.color === 'secondary' && {
               backgroundColor: commonPalette.secondary.light
             })
         },
+        // Pairing buttons separation
         '& + &': {
           marginLeft: getSpacing(1)
         },
@@ -177,13 +174,12 @@ export const buttonsOverrides = {
   // Mui Button Group
   MuiButtonGroup: {
     defaultProps: {
-      disableRipple: true
+      disableRipple: true,
+      disableElevation: true
     },
 
     styleOverrides: {
       root: ({ ownerState }) => ({
-        boxShadow: themeShadows[0],
-
         '& .MuiButton-root + .MuiButton-root': {
           marginLeft: 0
         },
@@ -222,20 +218,21 @@ export const buttonsOverrides = {
         ...(ownerState.variant === 'contained' && {
           ...(ownerState.color === 'default' && {
             '& .MuiButtonGroup-grouped:not(:last-of-type)': {
-              borderRightColor: commonPalette.default.dark
+              borderRightColor: commonPalette.default.dark,
+
+              '&.Mui-disabled': {
+                ...(ownerState.color === 'default' && {
+                  borderColor: commonPalette.default.dark
+                }),
+                ...(ownerState.color === 'primary' && {
+                  borderColor: commonPalette.primary.dark
+                }),
+                ...(ownerState.color === 'secondary' && {
+                  borderColor: commonPalette.secondary.dark
+                })
+              }
             }
-          }),
-          '& .MuiButtonGroup-grouped:not(:last-of-type).Mui-disabled': {
-            ...(ownerState.color === 'default' && {
-              borderColor: commonPalette.default.dark
-            }),
-            ...(ownerState.color === 'primary' && {
-              borderColor: commonPalette.primary.dark
-            }),
-            ...(ownerState.color === 'secondary' && {
-              borderColor: commonPalette.secondary.dark
-            })
-          }
+          })
         })
       })
     }
@@ -247,27 +244,23 @@ export const buttonsOverrides = {
       root: ({ ownerState }) => ({
         borderRadius: getSpacing(0.5),
 
+        ...(ownerState.color === 'default' && {
+          color: commonPalette.text.secondary
+        }),
         '& .MuiSvgIcon-root': {
           fontSize: iconSize
         },
-
-        ...(ownerState.color === 'default' && {
-          color: commonPalette.text.secondary,
-
-          '&:hover, &:focus-visible': {
+        '&:hover, &:focus-visible': {
+          ...(ownerState.color === 'default' && {
             backgroundColor: commonPalette.action.hover
-          }
-        }),
-        ...(ownerState.color === 'primary' && {
-          '&:hover, &:focus-visible': {
+          }),
+          ...(ownerState.color === 'primary' && {
             backgroundColor: commonPalette.primary.background
-          }
-        }),
-        ...(ownerState.color === 'secondary' && {
-          '&:hover, &:focus-visible': {
+          }),
+          ...(ownerState.color === 'secondary' && {
             backgroundColor: commonPalette.secondary.background
-          }
-        })
+          })
+        }
       }),
 
       sizeSmall: {
