@@ -3,7 +3,7 @@ import { Fab, Grid } from '@mui/material';
 import { Add, Close, Edit } from '@mui/icons-material';
 
 const options = {
-  title: 'Atoms/FAB Button',
+  title: 'Molecules/FAB Button',
   component: Fab,
   argTypes: {
     variant: {
