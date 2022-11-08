@@ -28,27 +28,28 @@ export const buttonsOverrides = {
         maxWidth: '192px',
 
         '&:hover, &:focus-visible': {
-          ...(ownerState.color === 'primary' &&
-            ownerState.variant !== 'contained' && {
+          ...(ownerState.variant !== 'contained' && {
+            ...(ownerState.color === 'primary' && {
               backgroundColor: commonPalette.primary.background
             }),
-          ...(ownerState.color === 'secondary' &&
-            ownerState.variant !== 'contained' && {
+            ...(ownerState.color === 'secondary' && {
               backgroundColor: commonPalette.secondary.background
             }),
+
+            ...(ownerState.color === 'error' && {
+              background: commonPalette.error.relatedLight
+            })
+          }),
           ...(ownerState.color === 'secondary' &&
             ownerState.variant === 'contained' && {
               backgroundColor: commonPalette.secondary.light
-            }),
-          ...(ownerState.color === 'error' &&
-            ownerState.variant !== 'contained' && {
-              background: commonPalette.error.relatedLight
             })
         },
         '& + &': {
           marginLeft: getSpacing(1)
         },
         '& .MuiSvgIcon-root': {
+          display: 'flex',
           fontSize: iconSize
         }
       }),
@@ -78,25 +79,25 @@ export const buttonsOverrides = {
       },
 
       startIcon: {
-        marginRight: 6,
+        marginRight: getSpacing(0.75),
 
         '& .MuiSvgIcon-root': {
           fontSize: iconSize
         },
         '&.MuiButton-iconSizeSmall': {
-          marginRight: 4,
-          marginLeft: -4
+          marginRight: getSpacing(0.5),
+          marginLeft: getSpacing(-0.5)
         }
       },
       endIcon: {
-        marginLeft: 6,
+        marginLeft: getSpacing(0.75),
 
         '& .MuiSvgIcon-root': {
           fontSize: iconSize
         },
         '&.MuiButton-iconSizeSmall': {
-          marginLeft: 4,
-          marginRight: -4
+          marginLeft: getSpacing(0.5),
+          marginRight: getSpacing(-0.5)
         }
       },
 
@@ -130,7 +131,7 @@ export const buttonsOverrides = {
         style: {
           color: commonPalette.text.primary,
           backgroundColor: commonPalette.default.main,
-          border: `1px solid ${commonPalette.text.primary}`,
+          borderColor: commonPalette.text.primary,
 
           '&.Mui-disabled': {
             color: commonPalette.text.disabled,
@@ -211,31 +212,33 @@ export const buttonsOverrides = {
               borderColor: commonPalette.secondary.main
             }
           }),
-          '& .MuiButtonGroup-grouped:not(:last-of-type):hover, & .Mui-disabled:not(:last-of-type)':
-            {
-              borderRightColor: 'transparent'
+          ...(ownerState.orientation !== 'vertical' && {
+            '& .MuiButtonGroup-grouped:not(:last-of-type):hover, & .Mui-disabled:not(:last-of-type)':
+              {
+                borderRightColor: 'transparent'
+              }
+          })
+        }),
+        ...(ownerState.variant === 'contained' && {
+          ...(ownerState.color === 'default' && {
+            '& .MuiButtonGroup-grouped:not(:last-of-type)': {
+              borderRightColor: commonPalette.default.dark
             }
+          }),
+          '& .MuiButtonGroup-grouped:not(:last-of-type).Mui-disabled': {
+            ...(ownerState.color === 'default' && {
+              borderColor: commonPalette.default.dark
+            }),
+            ...(ownerState.color === 'primary' && {
+              borderColor: commonPalette.primary.dark
+            }),
+            ...(ownerState.color === 'secondary' && {
+              borderColor: commonPalette.secondary.dark
+            })
+          }
         })
       })
-    },
-    variants: [
-      // Custom color and its variants
-      {
-        props: { variant: 'contained', color: 'default' },
-        style: {
-          '& .MuiButton-root': {
-            borderColor: commonPalette.default.main
-          },
-          '& .MuiButtonGroup-grouped:not(:last-of-type)': {
-            borderColor: commonPalette.default.main,
-            borderRightColor: commonPalette.default.dark
-          },
-          '& .MuiButtonGroup-grouped:hover, & .MuiButtonGroup-grouped:focus-visible': {
-            borderColor: commonPalette.default.dark
-          }
-        }
-      }
-    ]
+    }
   },
 
   // Icon Button
