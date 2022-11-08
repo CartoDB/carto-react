@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { ToggleButtonGroup, ToggleButton, Grid } from '@mui/material';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
@@ -28,6 +28,11 @@ const options = {
       control: {
         type: 'boolean'
       }
+    },
+    label: {
+      control: {
+        type: 'text'
+      }
     }
   },
   parameters: {
@@ -42,7 +47,7 @@ const options = {
 };
 export default options;
 
-const Template = (args) => {
+const ToggleRow = ({ label, ...rest }) => {
   const [selected, setSelected] = React.useState(() => ['walk']);
 
   const handleAlignment = (event, newAlignment) => {
@@ -51,64 +56,49 @@ const Template = (args) => {
 
   return (
     <ToggleButtonGroup
-      {...args}
+      {...rest}
       value={selected}
       onChange={handleAlignment}
       aria-label='text alignment'
     >
       <ToggleButton value='walk' aria-label='walk'>
-        <DirectionsWalkIcon />
+        {label ? label : <DirectionsWalkIcon />}
       </ToggleButton>
       <ToggleButton value='car' aria-label='drive'>
-        <DriveEtaIcon />
+        {label ? label : <DriveEtaIcon />}
       </ToggleButton>
       <ToggleButton value='train' aria-label='train'>
-        <TrainIcon />
+        {label ? label : <TrainIcon />}
       </ToggleButton>
       <ToggleButton value='airplane' aria-label='airplane' disabled>
-        <AirplanemodeActiveIcon />
+        {label ? label : <AirplanemodeActiveIcon />}
       </ToggleButton>
     </ToggleButtonGroup>
   );
 };
 
-const DefaultPropsTemplate = () => {
-  const [selected, setSelected] = React.useState(() => ['walk']);
-
-  const handleAlignment = (event, newAlignment) => {
-    setSelected(newAlignment);
-  };
-
+const SizesTemplate = (args) => {
   return (
-    <ToggleButtonGroup
-      orientation='horizontal'
-      exclusive={false}
-      value={selected}
-      onChange={handleAlignment}
-      aria-label='text alignment'
-    >
-      <ToggleButton value='walk' aria-label='walk'>
-        <DirectionsWalkIcon />
-      </ToggleButton>
-      <ToggleButton value='car' aria-label='drive'>
-        <DriveEtaIcon />
-      </ToggleButton>
-      <ToggleButton value='train' aria-label='train'>
-        <TrainIcon />
-      </ToggleButton>
-      <ToggleButton value='airplane' aria-label='airplane' disabled>
-        <AirplanemodeActiveIcon />
-      </ToggleButton>
-    </ToggleButtonGroup>
+    <Grid item container direction='column' spacing={4}>
+      <Grid item>
+        <ToggleRow size='large' />
+      </Grid>
+      <Grid item>
+        <ToggleRow size='medium' />
+      </Grid>
+      <Grid item>
+        <ToggleRow size='small' />
+      </Grid>
+    </Grid>
   );
 };
 
-export const Playground = Template.bind({});
+export const Playground = ToggleRow.bind({});
 
-export const DefaultProps = DefaultPropsTemplate.bind({});
+export const Sizes = SizesTemplate.bind({});
 
-export const OrientationVertical = Template.bind({});
-OrientationVertical.args = { orientation: 'vertical' };
+export const Vertical = ToggleRow.bind({});
+Vertical.args = { orientation: 'vertical' };
 
-export const MultipleSelection = Template.bind({});
+export const MultipleSelection = ToggleRow.bind({});
 MultipleSelection.args = { exclusive: false };
