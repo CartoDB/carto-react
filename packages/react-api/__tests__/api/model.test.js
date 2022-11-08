@@ -1,5 +1,10 @@
 import { executeModel } from '../../src/api/model';
-import { QUERY_PARAMS_SOURCE, QUERY_SOURCE, TABLE_SOURCE, TILESET_SOURCE } from '../dataMocks';
+import {
+  QUERY_PARAMS_SOURCE,
+  QUERY_SOURCE,
+  TABLE_SOURCE,
+  TILESET_SOURCE
+} from '../dataMocks';
 
 const mockedMakeCall = jest.fn();
 
@@ -50,9 +55,8 @@ describe('model', () => {
           body: JSON.stringify({
             type: 'query',
             source: longQuerySource.data,
-            params: JSON.stringify(DEFAULT_PARAMS),
-            queryParameters: '',
-            filters: JSON.stringify(longQuerySource.filters),
+            params: DEFAULT_PARAMS,
+            filters: longQuerySource.filters,
             filtersLogicalOperator: longQuerySource.filtersLogicalOperator
           })
         },
@@ -60,9 +64,12 @@ describe('model', () => {
       });
     });
 
-
     test('works correctly when the source has queryParameters', () => {
-      executeModel({ model: 'formula', source: QUERY_PARAMS_SOURCE, params: DEFAULT_PARAMS });
+      executeModel({
+        model: 'formula',
+        source: QUERY_PARAMS_SOURCE,
+        params: DEFAULT_PARAMS
+      });
 
       expect(mockedMakeCall).toHaveBeenCalledWith({
         credentials: TABLE_SOURCE.credentials,

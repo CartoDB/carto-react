@@ -39,9 +39,11 @@ export function executeModel(props) {
 
   let url = `${source.credentials.apiBaseUrl}/v3/sql/${source.connection}/model/${model}`;
 
-  const { filters, filtersLogicalOperator, data, type } = source;  
-  const queryParameters = source.queryParameters ? JSON.stringify(source.queryParameters) : ''
-  const queryParams = {
+  const { filters, filtersLogicalOperator, data, type } = source;
+  const queryParameters = source.queryParameters
+    ? JSON.stringify(source.queryParameters)
+    : '';
+  let queryParams = {
     type,
     source: data,
     params: JSON.stringify(params),
@@ -50,9 +52,13 @@ export function executeModel(props) {
     filtersLogicalOperator
   };
 
-  const isGet = url.length + JSON.stringify(queryParams).length <= URL_LENGTH;
+  const isGet = false && url.length + JSON.stringify(queryParams).length <= URL_LENGTH;
   if (isGet) {
     url += '?' + new URLSearchParams(queryParams).toString();
+  } else {
+    queryParams.params = params;
+    queryParams.filters = filters;
+    queryParams.queryParameters = source.queryParameters;
   }
   return makeCall({
     url,
