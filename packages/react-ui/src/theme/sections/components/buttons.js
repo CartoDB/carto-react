@@ -7,6 +7,7 @@ import { themeShadows } from '../shadows';
 const sizeSmall = getSpacing(3);
 const sizeMedium = getSpacing(4);
 const sizeLarge = getSpacing(6);
+const iconSize = getSpacing(2.25);
 
 export const buttonsOverrides = {
   // Button Base
@@ -48,7 +49,7 @@ export const buttonsOverrides = {
           marginLeft: getSpacing(1)
         },
         '& .MuiSvgIcon-root': {
-          fontSize: 18
+          fontSize: iconSize
         }
       }),
 
@@ -80,7 +81,7 @@ export const buttonsOverrides = {
         marginRight: 6,
 
         '& .MuiSvgIcon-root': {
-          fontSize: 18
+          fontSize: iconSize
         },
         '&.MuiButton-iconSizeSmall': {
           marginRight: 4,
@@ -91,7 +92,7 @@ export const buttonsOverrides = {
         marginLeft: 6,
 
         '& .MuiSvgIcon-root': {
-          fontSize: 18
+          fontSize: iconSize
         },
         '&.MuiButton-iconSizeSmall': {
           marginLeft: 4,
@@ -244,7 +245,7 @@ export const buttonsOverrides = {
         borderRadius: getSpacing(0.5),
 
         '& .MuiSvgIcon-root': {
-          fontSize: 18
+          fontSize: iconSize
         },
 
         ...(ownerState.color === 'default' && {
@@ -356,23 +357,52 @@ export const buttonsOverrides = {
     styleOverrides: {
       root: {
         '& .MuiSvgIcon-root': {
-          width: 24,
-          height: 24
-        }
-      },
-      sizeSmall: {
-        width: 32,
-        height: 32,
-        minHeight: 32,
-
-        '& .MuiSvgIcon-root': {
-          width: 18,
-          height: 18
+          width: getSpacing(3),
+          height: getSpacing(3)
         },
         '&.MuiFab-extended': {
-          width: 'auto'
+          ...themeTypography.body1,
+          fontWeight: 500,
+          width: 'auto',
+          height: getSpacing(7),
+          paddingRight: getSpacing(3),
+          borderRadius: getSpacing(8),
+
+          '& .MuiSvgIcon-root': {
+            marginRight: getSpacing(1.5)
+          }
         }
       },
+
+      sizeSmall: {
+        width: getSpacing(4),
+        height: getSpacing(4),
+        minHeight: getSpacing(4),
+
+        '& .MuiSvgIcon-root': {
+          width: iconSize,
+          height: iconSize
+        },
+        '&.MuiFab-extended': {
+          ...themeTypography.body2,
+          fontWeight: 600,
+          width: 'auto',
+          height: getSpacing(4),
+          paddingRight: getSpacing(2),
+
+          '& .MuiSvgIcon-root': {
+            marginRight: getSpacing(1)
+          }
+        }
+      },
+      sizeMedium: {
+        '&.MuiFab-extended': {
+          ...themeTypography.body2,
+          fontWeight: 600,
+          height: getSpacing(6)
+        }
+      },
+
       secondary: {
         '&:hover': {
           backgroundColor: commonPalette.secondary.light

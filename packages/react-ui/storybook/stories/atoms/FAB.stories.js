@@ -41,7 +41,7 @@ const options = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A26509'
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A28899'
     },
     status: {
       type: 'readyToReview'
@@ -54,7 +54,7 @@ const FABButtons = ({ label, size, disabled, variant, ...rest }) => {
   const customLabel = label ? label : 'Label';
 
   return (
-    <Grid item container alignItems='center' spacing={2}>
+    <>
       <Grid item>
         <Fab {...rest} size={size} variant={variant} disabled={disabled} aria-label='add'>
           <Add />
@@ -77,14 +77,54 @@ const FABButtons = ({ label, size, disabled, variant, ...rest }) => {
           {customLabel}
         </Fab>
       </Grid>
-    </Grid>
+      <Grid item>
+        <Fab {...rest} size={size} variant={variant} disabled aria-label='add'>
+          <Add />
+        </Fab>
+      </Grid>
+      <Grid item>
+        <Fab {...rest} size={size} disabled aria-label='edit'>
+          <Edit />
+        </Fab>
+      </Grid>
+      <Grid item>
+        <Fab {...rest} size={size} variant='extended' disabled aria-label={customLabel}>
+          <Close />
+          {customLabel}
+        </Fab>
+      </Grid>
+    </>
   );
 };
 
-export const Playground = FABButtons.bind({});
+const Template = ({ label, size, color, ...rest }) => (
+  <Grid container alignItems='center' spacing={2}>
+    <FABButtons {...rest} color={color} label={label} size={size} />
+  </Grid>
+);
 
-export const PrimaryColor = FABButtons.bind({});
+const SizeTemplate = ({ label, color, ...rest }) => (
+  <Grid container spacing={3}>
+    <Grid container item alignItems='center' spacing={2}>
+      <FABButtons {...rest} color={color} label='Large' size='large' />
+    </Grid>
+
+    <Grid container item alignItems='center' spacing={2}>
+      <FABButtons {...rest} color={color} label='Medium' size='medium' />
+    </Grid>
+
+    <Grid container item alignItems='center' spacing={2}>
+      <FABButtons {...rest} color={color} label='Small' size='small' />
+    </Grid>
+  </Grid>
+);
+
+export const Playground = Template.bind({});
+
+export const PrimaryColor = Template.bind({});
 PrimaryColor.args = { color: 'primary' };
 
-export const SecondaryColor = FABButtons.bind({});
+export const SecondaryColor = Template.bind({});
 SecondaryColor.args = { color: 'secondary' };
+
+export const Sizes = SizeTemplate.bind({});
