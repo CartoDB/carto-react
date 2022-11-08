@@ -1,5 +1,5 @@
 import React from 'react';
-import Typography from '../../src/atoms/Typography';
+import Typography from '../../src/components/atoms/Typography';
 import LegendWidgetUI from '../../src/widgets/legend/LegendWidgetUI';
 import { fireEvent, render, screen } from '../widgets/utils/testUtils';
 
