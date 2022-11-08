@@ -52,7 +52,7 @@ export function executeModel(props) {
     filtersLogicalOperator
   };
 
-  const isGet = false && url.length + JSON.stringify(queryParams).length <= URL_LENGTH;
+  const isGet = url.length + JSON.stringify(queryParams).length <= URL_LENGTH;
   if (isGet) {
     url += '?' + new URLSearchParams(queryParams).toString();
   } else {
