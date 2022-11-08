@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix `executeModel` through **POST** request [#525](https://github.com/CartoDB/carto-react/pull/525)
+
 ## 1.5
 
 ### 1.5.0-alpha.6 (2022-11-02)
