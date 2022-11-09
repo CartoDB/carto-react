@@ -31,13 +31,21 @@ export function checkCredentials(credentials) {
 export async function makeCall({ url, credentials, opts }) {
   let response;
   let data;
+  const isPost = opts?.method === 'POST';
   try {
     response = await fetch(url.toString(), {
       headers: {
-        Authorization: `Bearer ${credentials.accessToken}`
+        Authorization: `Bearer ${credentials.accessToken}`,
+        ...(isPost ? { 'Content-Type': 'application/json' } : {})
       },
+      ...(isPost
+        ? {
+            method: opts?.method,
+            body: opts?.body
+          }
+        : {}),
       signal: opts?.abortController?.signal,
-      ...opts?.otherOptions,
+      ...opts?.otherOptions
     });
     data = await response.json();
   } catch (error) {

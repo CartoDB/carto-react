@@ -37,7 +37,12 @@ export async function getStats(props) {
   } else {
     const url = buildUrl(source, column);
 
-    return makeCall({ url, credentials: source.credentials, opts, queryParameters: source.queryParameters });
+    return makeCall({
+      url,
+      credentials: source.credentials,
+      opts,
+      queryParameters: source.queryParameters
+    });
   }
 }
 
@@ -53,6 +58,10 @@ function buildUrl(source, column) {
 
   if (isQuery) {
     url.searchParams.set('q', source.data);
+
+    if (source.queryParameters) {
+      url.searchParams.set('queryParameters', JSON.stringify(source.queryParameters));
+    }
   }
 
   return url;
