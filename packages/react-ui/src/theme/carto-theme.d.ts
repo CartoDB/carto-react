@@ -1,7 +1,6 @@
 import { Theme, ThemeOptions, TypeText } from '@mui/material';
 import { Palette, PaletteColor } from '@mui/material';
 
-
 export const cartoThemeOptions: ThemeOptions;
 export const theme: CartoTheme;
 
@@ -121,5 +120,12 @@ declare module '@mui/material/Typography' {
     code1: true;
     code2: true;
     code3: true;
+  }
+}
+
+// Update the Buttons's color prop options
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    default: true;
   }
 }

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Box, Grid, Tooltip } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTheme } from '@mui/material/styles';
-import Typography from '../../../src/atoms/Typography';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Foundations/Palette',
@@ -28,7 +28,9 @@ const options = {
       type: 'figma',
       url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=8775%3A71615'
     },
-    viewMode: 'docs'
+    status: {
+      type: 'validated'
+    }
   }
 };
 export default options;

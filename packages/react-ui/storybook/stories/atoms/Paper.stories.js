@@ -1,10 +1,10 @@
 import React from 'react';
 import { Grid, Paper } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import Typography from '../../../src/atoms/Typography';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
-  title: 'Common/Paper',
+  title: 'Atoms/Paper',
   component: Paper,
   argTypes: {
     elevation: {
@@ -19,6 +19,9 @@ const options = {
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1447%3A38722'
+    },
+    status: {
+      type: 'needUpdate'
     }
   }
 };

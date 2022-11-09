@@ -106,54 +106,10 @@ const baseTypography = {
 };
 
 const customTypography = {
-  // TODO: Create a wrapper for the Typography component to reduce the number of variants https://app.shortcut.com/cartoteam/story/265549/
-  body1Italic: {
-    ...baseTypography.body1,
-    fontStyle: 'italic'
-  },
-  body1Medium: {
-    ...baseTypography.body1,
-    fontWeight: 500
-  },
-  body1Strong: {
-    ...baseTypography.body1,
-    fontWeight: 600
-  },
-  body1StrongItalic: {
-    ...baseTypography.body1,
-    fontWeight: 600,
-    fontStyle: 'italic'
-  },
-  body2Italic: {
-    ...baseTypography.body2,
-    fontStyle: 'italic'
-  },
-  body2Strong: {
-    ...baseTypography.body2,
-    fontWeight: 600
-  },
-  body2StrongItalic: {
-    ...baseTypography.body2,
-    fontWeight: 600,
-    fontStyle: 'italic'
-  },
-  captionItalic: {
-    ...baseTypography.caption,
-    fontStyle: 'italic'
-  },
   captionMedium: {
     ...baseTypography.caption,
     fontWeight: 500,
     letterSpacing: '0.4px'
-  },
-  captionStrong: {
-    ...baseTypography.caption,
-    fontWeight: 500
-  },
-  captionStrongItalic: {
-    ...baseTypography.caption,
-    fontWeight: 500,
-    fontStyle: 'italic'
   },
   overlineDelicate: {
     ...baseTypography.overline,
@@ -167,13 +123,6 @@ const customTypography = {
     lineHeight: 1.5,
     letterSpacing: 0
   },
-  code1Strong: {
-    fontFamily: '"Overpass Mono", monospace',
-    fontWeight: 600,
-    fontSize: getPixelToRem(16),
-    lineHeight: 1.5,
-    letterSpacing: 0
-  },
   code2: {
     fontFamily: '"Overpass Mono", monospace',
     fontWeight: 400,
@@ -181,23 +130,9 @@ const customTypography = {
     lineHeight: 1.428,
     letterSpacing: 0
   },
-  code2Strong: {
-    fontFamily: '"Overpass Mono", monospace',
-    fontWeight: 600,
-    fontSize: getPixelToRem(14),
-    lineHeight: 1.428,
-    letterSpacing: 0
-  },
   code3: {
     fontFamily: '"Overpass Mono", monospace',
     fontWeight: 400,
-    fontSize: getPixelToRem(12),
-    lineHeight: 1.333,
-    letterSpacing: 0
-  },
-  code3Strong: {
-    fontFamily: '"Overpass Mono", monospace',
-    fontWeight: 600,
     fontSize: getPixelToRem(12),
     lineHeight: 1.333,
     letterSpacing: 0

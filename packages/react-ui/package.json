@@ -47,6 +47,7 @@
     "@storybook/addon-essentials": "^6.5.12",
     "@storybook/addon-links": "^6.5.12",
     "@storybook/addon-viewport": "^6.5.12",
+    "@etchteam/storybook-addon-status": "^4.2.2",
     "@storybook/react": "^6.5.12",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",

@@ -1,13 +1,13 @@
 # Upgrade to the new design system
 
-## Breaking changes in Mui v5
+# Breaking changes in Mui v5
 
 Please, follow the Mui guides related to breaking changes in components and styles:
 
 - [Styles](https://mui.com/material-ui/migration/v5-style-changes/)
 - [Components](https://mui.com/material-ui/migration/v5-component-changes/)
 
-## MUI theme
+# MUI theme
 
 [carto-theme.js](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/theme/carto-theme.js) file splitted in sections:
 
@@ -36,7 +36,7 @@ Added a few custom variants to the typography set:
 - code2
 - code3
 
-`Open Sans` and `Montserrat` families have been replaced by `Inter` and `Overpass Mono`, you have an example of this in the [`preview-head.html`](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/storybook/.storybook/preview-head.html) file.
+For external use: `Open Sans` and `Montserrat` families have been replaced by `Inter` and `Overpass Mono`, you have an example of this in the [`preview-head.html`](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/storybook/.storybook/preview-head.html) file.
 
 We have a `Typography` component that uses `Mui Typography` and extends it with some useful props:
 
@@ -48,7 +48,7 @@ This way we can be more flexible regarding text styles without adding too many v
 In short, instead of Mui Typography, the component you should use to add text is this one:
 `react-ui/src/atoms/Typography`
 
-So `import { Typography } from '@carto/react-ui';`.
+For external use: `import { Typography } from '@carto/react-ui';`.
 
 ## Colors
 
@@ -93,3 +93,14 @@ Use: `borderRadius: theme.spacing(x)`
 Design is restringed to a few specific values for shadows, which are:
 
 `0, 1, 2, 4, 6, 8, 16, 24`.
+
+# Components
+
+## Button
+
+We have a `Button` component that uses `Mui Button` and wraps its children in `Typography` to meet with the designed behavior (text overflow case).
+
+So, instead of Mui Button, the component you should use to create buttons is this one:
+`react-ui/src/atoms/Button`
+
+For external use: `import { Button } from '@carto/react-ui';`.

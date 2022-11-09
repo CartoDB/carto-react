@@ -1,5 +1,4 @@
 import { alpha } from '@mui/material';
-import { getMixedColor } from '../themeUtils';
 
 const COLOR_BLACK = '#2C3032';
 const COLOR_WHITE = '#FFFFFF';
@@ -105,7 +104,7 @@ export const commonPalette = {
     light: baseColors.blue[300],
     contrastText: baseColors.common.white,
     background: alpha(baseColors.blue[400], 0.08),
-    relatedLight: getMixedColor(baseColors.blue[400], baseColors.common.white, 0.9)
+    relatedLight: '#EAF2FC'
   },
   secondary: {
     main: baseColors.green[400],
@@ -113,7 +112,7 @@ export const commonPalette = {
     light: baseColors.green[300],
     contrastText: baseColors.common.black,
     background: alpha(baseColors.green[400], 0.08),
-    relatedLight: getMixedColor(baseColors.green[400], baseColors.common.white, 0.9)
+    relatedLight: '#EFFCF5'
   },
   text: {
     primary: baseColors.common.black,
@@ -138,32 +137,32 @@ export const commonPalette = {
     dark: baseColors.indigo[500],
     light: baseColors.indigo[300],
     contrastText: baseColors.common.white,
-    relatedDark: getMixedColor(baseColors.indigo[400], baseColors.neutral.A700, 0.6),
-    relatedLight: getMixedColor(baseColors.indigo[400], baseColors.common.white, 0.9)
+    relatedDark: '#0d2b4a',
+    relatedLight: '#E9EEF4'
   },
   success: {
     main: baseColors.lightGreen[400],
     dark: baseColors.lightGreen[500],
     light: baseColors.lightGreen[300],
     contrastText: baseColors.common.white,
-    relatedDark: getMixedColor(baseColors.lightGreen[400], baseColors.neutral.A700, 0.6),
-    relatedLight: getMixedColor(baseColors.lightGreen[400], baseColors.common.white, 0.9)
+    relatedDark: '#3D541A',
+    relatedLight: '#F2F5EB'
   },
   warning: {
     main: baseColors.orange[400],
     dark: baseColors.orange[500],
     light: baseColors.orange[300],
     contrastText: baseColors.common.black,
-    relatedDark: getMixedColor(baseColors.orange[400], baseColors.neutral.A700, 0.6),
-    relatedLight: getMixedColor(baseColors.orange[400], baseColors.common.white, 0.9)
+    relatedDark: '#78540F',
+    relatedLight: '#FEF6EA'
   },
   error: {
     main: baseColors.red[400],
     light: baseColors.red[300],
     dark: baseColors.red[500],
     contrastText: baseColors.common.white,
-    relatedDark: getMixedColor(baseColors.red[400], baseColors.neutral.A700, 0.6),
-    relatedLight: getMixedColor(baseColors.red[400], baseColors.common.white, 0.9)
+    relatedDark: '#622215',
+    relatedLight: '#F9EDEA'
   },
   grey: {
     ...baseColors.neutral

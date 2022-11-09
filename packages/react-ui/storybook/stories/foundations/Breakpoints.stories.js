@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { BREAKPOINTS } from '../../../src/theme/themeConstants';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Foundations/Breakpoints',
@@ -19,7 +20,9 @@ const options = {
       type: 'figma',
       url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=10472%3A3871'
     },
-    viewMode: 'docs'
+    status: {
+      type: 'validated'
+    }
   }
 };
 export default options;

@@ -14,7 +14,7 @@ import {
   Tooltip
 } from '@mui/material';
 import { ExpandLess, ExpandMore, MoreVert } from '@mui/icons-material';
-import Typography from '../atoms/Typography';
+import Typography from '../components/atoms/Typography';
 
 /*
 Options props must have this format:

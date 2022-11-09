@@ -3,7 +3,7 @@ import BarWidgetUI from '../../../src/widgets/BarWidgetUI';
 import { buildReactPropsAsString } from '../../utils';
 
 const options = {
-  title: 'Custom Components/BarWidgetUI',
+  title: 'Organisms/Widgets/BarWidgetUI',
   component: BarWidgetUI
 };
 

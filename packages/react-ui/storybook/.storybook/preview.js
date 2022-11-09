@@ -4,17 +4,11 @@ import {
   createTheme,
   responsiveFontSizes,
   ThemeProvider,
-  StyledEngineProvider
+  StyledEngineProvider,
+  CssBaseline
 } from '@mui/material';
-import { cartoThemeOptions } from '../../src/theme/carto-theme';
+import { cartoThemeOptions, theme } from '../../src/theme/carto-theme';
 import { BREAKPOINTS } from '../../src/theme/themeConstants';
-
-let theme = createTheme(cartoThemeOptions);
-theme = responsiveFontSizes(theme, {
-  breakpoints: ['sm'],
-  disableAlign: false,
-  factor: 2
-});
 
 const customViewports = {
   xs: {
@@ -54,10 +48,39 @@ const customViewports = {
   }
 };
 
+const componentsStatus = {
+  deprecated: {
+    background: '#C1300B', // Error/Main
+    color: '#ffffff',
+    description: 'Do not use'
+  },
+  inDevelopment: {
+    background: '#F29E02', // Warning/Main
+    color: '#ffffff',
+    description: 'Work in progress'
+  },
+  readyToReview: {
+    background: '#024388', // Info/Main
+    color: '#ffffff',
+    description: 'Ready to review and validation'
+  },
+  validated: {
+    background: '#709F1D', // Success/Main
+    color: '#ffffff',
+    description: 'Validated and ready to use'
+  },
+  needUpdate: {
+    background: '#E1E3E4', // Default/Main
+    color: '#2C3032',
+    description: 'Need an update, but can be used in this state'
+  }
+};
+
 export const decorators = [
   (Story) => (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Story />
       </ThemeProvider>
     </StyledEngineProvider>
@@ -74,29 +97,22 @@ export const parameters = {
   },
   options: {
     storySort: {
+      method: 'alphabetical',
       order: [
         'Introduction',
         'Foundations',
         ['Palette', 'Typography', 'Spacing', 'Borders', 'Elevations', 'Breakpoints'],
         'Atoms',
         'Molecules',
-        'Organisms',
-        ['InputFile'],
-        'Common',
-        'Custom Components',
-        [
-          'CategoryWidgetUI',
-          'FormulaWidgetUI',
-          'HistogramWidgetUI',
-          'BarWidgetUI',
-          'PieWidgetUI',
-          'WrapperWidgetUI'
-        ]
+        'Organisms'
       ]
     }
   },
   decorators: [withDesign],
   viewport: {
     viewports: customViewports
+  },
+  status: {
+    statuses: componentsStatus
   }
 };

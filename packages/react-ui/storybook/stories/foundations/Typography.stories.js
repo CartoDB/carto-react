@@ -1,5 +1,5 @@
 import React from 'react';
-import Typography from '../../../src/atoms/Typography';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Foundations/Typography',
@@ -62,7 +62,9 @@ const options = {
       type: 'figma',
       url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=4662%3A14'
     },
-    viewMode: 'docs'
+    status: {
+      type: 'validated'
+    }
   }
 };
 export default options;

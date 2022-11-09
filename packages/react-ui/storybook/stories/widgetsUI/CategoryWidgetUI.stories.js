@@ -2,7 +2,7 @@ import React from 'react';
 import CategoryWidgetUI from '../../../src/widgets/CategoryWidgetUI';
 
 const options = {
-  title: 'Custom Components/CategoryWidgetUI',
+  title: 'Organisms/Widgets/CategoryWidgetUI',
   component: CategoryWidgetUI,
   argTypes: {
     selectedCategories: {

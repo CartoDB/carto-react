@@ -6,7 +6,7 @@ import Note from './Note';
 import LayerIcon from '../../assets/LayerIcon';
 import { ToggleButton } from '@mui/material';
 import OpacityControl from '../OpacityControl';
-import Typography from '../../atoms/Typography';
+import Typography from '../../components/atoms/Typography';
 
 const useStyles = makeStyles((theme) => ({
   legendWrapper: {

@@ -4,6 +4,7 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     'storybook-addon-designs',
-    '@storybook/addon-viewport'
+    '@storybook/addon-viewport',
+    '@etchteam/storybook-addon-status'
   ]
 };

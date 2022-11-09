@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Foundations/Spacing',
@@ -20,7 +21,9 @@ const options = {
       type: 'figma',
       url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=8776%3A64661'
     },
-    viewMode: 'docs'
+    status: {
+      type: 'validated'
+    }
   }
 };
 export default options;

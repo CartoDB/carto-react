@@ -3,7 +3,7 @@ import { Box, Button, CircularProgress, Grid, LinearProgress } from '@mui/materi
 import CheckIcon from '@mui/icons-material/Check';
 
 const options = {
-  title: 'Common/Progress',
+  title: 'Atoms/Progress',
   component: CircularProgress,
   argTypes: {
     color: {
@@ -42,6 +42,9 @@ const options = {
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A29703'
+    },
+    status: {
+      type: 'needUpdate'
     }
   }
 };

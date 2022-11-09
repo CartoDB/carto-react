@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Grid } from '@mui/material';
 import PropTypes from 'prop-types';
-import Typography from '../../atoms/Typography';
+import Typography from '../../components/atoms/Typography';
 
 const ICON_SIZE = 16;
 

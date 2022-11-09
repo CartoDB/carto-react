@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import Typography from '../../atoms/Typography';
+import Typography from '../../components/atoms/Typography';
 
 export default function LayerOptionWrapper({ className = '', label, children }) {
   return (

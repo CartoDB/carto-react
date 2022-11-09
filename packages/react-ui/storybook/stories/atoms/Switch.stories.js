@@ -2,7 +2,7 @@ import React from 'react';
 import { FormControlLabel, Grid, Switch } from '@mui/material';
 
 const options = {
-  title: 'Common/Switch',
+  title: 'Atoms/Switch',
   component: Switch,
   argTypes: {
     color: {
@@ -26,6 +26,9 @@ const options = {
     design: {
       type: 'figma',
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33096'
+    },
+    status: {
+      type: 'needUpdate'
     }
   }
 };

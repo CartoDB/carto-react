@@ -3,10 +3,10 @@ import TableWidgetUI from '../../../src/widgets/TableWidgetUI/TableWidgetUI';
 import { Box } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { columns, rows } from '../../../src/widgets/TableWidgetUI/mockData';
-import Typography from '../../../src/atoms/Typography';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
-  title: 'Custom Components/TableWidgetUI',
+  title: 'Organisms/Widgets/TableWidgetUI',
   component: TableWidgetUI,
   argTypes: {},
   parameters: {
