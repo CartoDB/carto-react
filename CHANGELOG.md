@@ -4,6 +4,19 @@
 
 ## 1.4
 
+### 1.4.4 (2022-11-09)
+
+- Fix `executeModel` through **POST** request [#525](https://github.com/CartoDB/carto-react/pull/525)
+
+
+### 1.4.3 (2022-11-03)
+
+- Fix TileLayer unauthorized error due to [breaking changes](https://github.com/visgl/deck.gl/pull/7287) in deck.gl >=8.8.15 [#519](https://github.com/CartoDB/carto-react/pull/519)
+
+### 1.4.2 (2022-10-27)
+
+- Support for **deck.gl 8.8.15** *(breaking change)*. It requires ‘quadbin’ >= 0.1.5
+
 ### 1.4.1 (2002-09-20)
 
 - Fix the Feature selection tool by setting the `EditableGeoJsonLayer` billboard property to false to be compatible with Google raster base maps
