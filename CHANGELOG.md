@@ -4,9 +4,9 @@
 
 ## 1.4
 
-### 1.4.4 (2022-11-09)
+### 1.4.5 (2022-11-09)
 
-- Fix `executeModel` through **POST** request [#525](https://github.com/CartoDB/carto-react/pull/525)
+- Fix `executeModel` through **POST** request [#525](https://github.com/CartoDB/carto-react/pull/525) and [#499](https://github.com/CartoDB/carto-react/pull/499)
 
 
 ### 1.4.3 (2022-11-03)
