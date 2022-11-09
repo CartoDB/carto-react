@@ -2,6 +2,9 @@
 
 ## Not released
 
+- Implement ComparativeFormulaWidgetUI [#504](https://github.com/CartoDB/carto-react/pull/504)
+- Implement ComparativeCategoryWidgetUI [#505](https://github.com/CartoDB/carto-react/pull/505)
+- AnimatedNumber component with hook wrapping `animateValue` [#509](https://github.com/CartoDB/carto-react/pull/509)
 - Fix `executeModel` through **POST** request [#525](https://github.com/CartoDB/carto-react/pull/525)
 
 ## 1.5
