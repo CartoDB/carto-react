@@ -2,12 +2,12 @@
 
 ## Not released
 
-- Implement ComparativeFormulaWidgetUI [#504](https://github.com/CartoDB/carto-react/pull/504)
-- Implement ComparativeCategoryWidgetUI [#505](https://github.com/CartoDB/carto-react/pull/505)
-- AnimatedNumber component with hook wrapping `animateValue` [#509](https://github.com/CartoDB/carto-react/pull/509)
-- Fix `executeModel` through **POST** request [#525](https://github.com/CartoDB/carto-react/pull/525)
-
 ## 1.5
+
+### 1.5.0-alpha.7 (2022-11-09)
+
+- Implement ComparativeCategoryWidgetUI [#505](https://github.com/CartoDB/carto-react/pull/505)
+- Fix `executeModel` through **POST** request [#525](https://github.com/CartoDB/carto-react/pull/525)
 
 ### 1.5.0-alpha.6 (2022-11-02)
 
@@ -47,7 +47,7 @@
 
 ### 1.4.2 (2022-10-27)
 
-- Support for **deck.gl 8.8.15** *(breaking change)*. It requires ‘quadbin’ >= 0.1.5
+- Support for **deck.gl 8.8.15** _(breaking change)_. It requires ‘quadbin’ >= 0.1.5
 
 ### 1.4.1 (2022-09-20)
 
