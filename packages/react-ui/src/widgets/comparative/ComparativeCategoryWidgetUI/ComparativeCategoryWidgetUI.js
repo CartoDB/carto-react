@@ -79,7 +79,7 @@ function ComparativeCategoryWidgetUI({
 
   // process incoming data to group items by column, apply colors and labels
   const processedData = useMemo(() => {
-    const _colors = colors || [
+    const _colors = colors?.length ? colors : [
       theme.palette.secondary.main,
       theme.palette.primary.main,
       theme.palette.info.main
