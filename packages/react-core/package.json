@@ -71,6 +71,6 @@
     "@turf/boolean-within": "^6.3.0",
     "@turf/intersect": "^6.3.0",
     "h3-js": "^3.7.2",
-    "quadbin": "^0.1.4"
+    "quadbin": "^0.1.5"
   }
 }
