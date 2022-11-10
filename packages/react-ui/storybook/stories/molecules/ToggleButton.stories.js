@@ -1,9 +1,12 @@
 import React from 'react';
-import { ToggleButtonGroup, ToggleButton, Grid } from '@mui/material';
-import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
-import DriveEtaIcon from '@mui/icons-material/DriveEta';
-import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
-import TrainIcon from '@mui/icons-material/Train';
+import { ToggleButtonGroup, ToggleButton, Grid, Divider } from '@mui/material';
+import {
+  CheckCircleOutline,
+  FormatAlignCenter,
+  FormatAlignJustify,
+  FormatAlignLeft,
+  FormatAlignRight
+} from '@mui/icons-material';
 
 const options = {
   title: 'Molecules/Toggle Button',
@@ -13,7 +16,7 @@ const options = {
       defaultValue: 'medium',
       control: {
         type: 'select',
-        options: ['small', 'medium', 'large']
+        options: ['small', 'medium']
       }
     },
     orientation: {
@@ -47,7 +50,25 @@ const options = {
 };
 export default options;
 
-const ToggleRow = ({ label, ...rest }) => {
+const Toggle = ({ label, ...rest }) => {
+  const [selected, setSelected] = React.useState(false);
+
+  return (
+    <ToggleButton
+      {...rest}
+      value='check'
+      aria-label='check'
+      selected={selected}
+      onChange={() => {
+        setSelected(!selected);
+      }}
+    >
+      {label ? label : <CheckCircleOutline />}
+    </ToggleButton>
+  );
+};
+
+const ToggleRow = ({ label, divider, ...rest }) => {
   const [selected, setSelected] = React.useState(() => ['walk']);
 
   const handleAlignment = (event, newAlignment) => {
@@ -62,16 +83,17 @@ const ToggleRow = ({ label, ...rest }) => {
       aria-label='text alignment'
     >
       <ToggleButton value='walk' aria-label='walk'>
-        {label ? label : <DirectionsWalkIcon />}
+        {label ? label : <FormatAlignLeft />}
       </ToggleButton>
       <ToggleButton value='car' aria-label='drive'>
-        {label ? label : <DriveEtaIcon />}
+        {label ? label : <FormatAlignCenter />}
       </ToggleButton>
       <ToggleButton value='train' aria-label='train'>
-        {label ? label : <TrainIcon />}
+        {label ? label : <FormatAlignRight />}
       </ToggleButton>
+      {divider && <Divider flexItem orientation='vertical' />}
       <ToggleButton value='airplane' aria-label='airplane' disabled>
-        {label ? label : <AirplanemodeActiveIcon />}
+        {label ? label : <FormatAlignJustify />}
       </ToggleButton>
     </ToggleButtonGroup>
   );
@@ -79,15 +101,64 @@ const ToggleRow = ({ label, ...rest }) => {
 
 const SizesTemplate = (args) => {
   return (
+    <Grid item container alignItems='center' spacing={4}>
+      <Grid item>
+        <Toggle {...args} size='large' />
+      </Grid>
+      <Grid item>
+        <Toggle {...args} size='medium' />
+      </Grid>
+      <Grid item>
+        <Toggle {...args} size='small' />
+      </Grid>
+    </Grid>
+  );
+};
+
+const TextTemplate = (args) => {
+  return (
+    <Grid item container alignItems='center' spacing={4}>
+      <Grid item>
+        <Toggle {...args} size='medium' label='CARTO' />
+      </Grid>
+      <Grid item>
+        <Toggle {...args} size='small' label='CARTO' />
+      </Grid>
+    </Grid>
+  );
+};
+
+const GroupTemplate = (args) => {
+  return (
     <Grid item container direction='column' spacing={4}>
       <Grid item>
-        <ToggleRow size='large' />
+        <ToggleRow {...args} size='medium' />
       </Grid>
       <Grid item>
-        <ToggleRow size='medium' />
+        <ToggleRow {...args} size='small' />
+      </Grid>
+    </Grid>
+  );
+};
+
+const VerticalGroupTemplate = (args) => {
+  return (
+    <Grid item container spacing={4}>
+      <Grid item>
+        <ToggleRow {...args} size='medium' />
       </Grid>
       <Grid item>
-        <ToggleRow size='small' />
+        <ToggleRow {...args} size='small' />
+      </Grid>
+    </Grid>
+  );
+};
+
+const DividedTemplate = (args) => {
+  return (
+    <Grid item container direction='column' spacing={4}>
+      <Grid item>
+        <ToggleRow divider />
       </Grid>
     </Grid>
   );
@@ -97,8 +168,17 @@ export const Playground = ToggleRow.bind({});
 
 export const Sizes = SizesTemplate.bind({});
 
-export const Vertical = ToggleRow.bind({});
-Vertical.args = { orientation: 'vertical' };
+export const Text = TextTemplate.bind({});
 
-export const MultipleSelection = ToggleRow.bind({});
+export const HorizontalGroup = GroupTemplate.bind({});
+
+export const HorizontalTextGroup = GroupTemplate.bind({});
+HorizontalTextGroup.args = { label: 'Text' };
+
+export const VerticalGroup = VerticalGroupTemplate.bind({});
+VerticalGroup.args = { orientation: 'vertical' };
+
+export const DividedGroup = DividedTemplate.bind({});
+
+export const MultipleSelection = GroupTemplate.bind({});
 MultipleSelection.args = { exclusive: false };

@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Priority 1 components review [#529](https://github.com/CartoDB/carto-react/pull/529)
 - New design system in priority 1 components [#523](https://github.com/CartoDB/carto-react/pull/523)
 - Breaking changes in Mui v5: components [#518](https://github.com/CartoDB/carto-react/pull/518)
 - Breaking changes in Mui v5: styles and theme [#514](https://github.com/CartoDB/carto-react/pull/514/)
