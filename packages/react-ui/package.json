@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-ui",
-  "version": "0.0.0-experimental-muiv5-1.5.0-alpha.4-6",
+  "version": "0.0.0-experimental-muiv5-1.5.0-alpha.4-7",
   "description": "CARTO for React - UI",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -42,6 +42,7 @@
     "@babel/plugin-transform-runtime": "^7.13.9",
     "@babel/preset-env": "^7.13.9",
     "@babel/preset-react": "^7.12.13",
+    "@etchteam/storybook-addon-status": "^4.2.2",
     "@reduxjs/toolkit": "^1.5.0",
     "@storybook/addon-actions": "^6.5.12",
     "@storybook/addon-essentials": "^6.5.12",
@@ -78,7 +79,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "0.0.0-experimental-muiv5-1.5.0-alpha.4-6",
+    "@carto/react-core": "0.0.0-experimental-muiv5-1.5.0-alpha.4-7",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/icons-material": "^5.10.9",
