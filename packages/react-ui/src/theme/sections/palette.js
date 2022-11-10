@@ -137,7 +137,7 @@ export const commonPalette = {
     dark: baseColors.indigo[500],
     light: baseColors.indigo[300],
     contrastText: baseColors.common.white,
-    relatedDark: '#0d2b4a',
+    relatedDark: '#0D2B4A',
     relatedLight: '#E9EEF4'
   },
   success: {

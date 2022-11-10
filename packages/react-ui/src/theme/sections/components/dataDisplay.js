@@ -89,7 +89,20 @@ export const dataDisplayOverrides = {
     styleOverrides: {
       tooltip: {
         ...themeTypography.caption,
-        backgroundColor: commonPalette.black[90]
+        backgroundColor: commonPalette.black[90],
+
+        '.MuiTooltip-popper[data-popper-placement*="top"] &': {
+          marginBottom: getSpacing(0.5)
+        },
+        '.MuiTooltip-popper[data-popper-placement*="right"] &': {
+          marginLeft: getSpacing(0.5)
+        },
+        '.MuiTooltip-popper[data-popper-placement*="bottom"] &': {
+          marginTop: getSpacing(0.5)
+        },
+        '.MuiTooltip-popper[data-popper-placement*="left"] &': {
+          marginRight: getSpacing(0.5)
+        }
       },
 
       arrow: {

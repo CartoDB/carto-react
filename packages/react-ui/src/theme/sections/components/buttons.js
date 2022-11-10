@@ -24,6 +24,8 @@ export const buttonsOverrides = {
         maxWidth: '192px',
 
         '&:hover, &:focus-visible': {
+          boxShadow: themeShadows[0],
+
           ...(ownerState.variant !== 'contained' && {
             ...(ownerState.color === 'primary' && {
               backgroundColor: commonPalette.primary.background
@@ -73,6 +75,16 @@ export const buttonsOverrides = {
       },
       outlinedError: {
         borderColor: commonPalette.error.main
+      },
+      containedPrimary: {
+        '&:hover, &:focus-visible': {
+          backgroundColor: commonPalette.primary.dark
+        }
+      },
+      containedError: {
+        '&:hover, &:focus-visible': {
+          backgroundColor: commonPalette.error.dark
+        }
       },
 
       startIcon: {
@@ -380,8 +392,7 @@ export const buttonsOverrides = {
           height: iconSize
         },
         '&.MuiFab-extended': {
-          ...themeTypography.body2,
-          fontWeight: 600,
+          ...themeTypography.caption,
           width: 'auto',
           height: getSpacing(4),
           paddingRight: getSpacing(2),
@@ -393,8 +404,7 @@ export const buttonsOverrides = {
       },
       sizeMedium: {
         '&.MuiFab-extended': {
-          ...themeTypography.body2,
-          fontWeight: 600,
+          ...themeTypography.button,
           height: getSpacing(6)
         }
       },
