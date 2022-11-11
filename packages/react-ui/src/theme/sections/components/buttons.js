@@ -354,12 +354,10 @@ export const buttonsOverrides = {
         borderRadius: getSpacing(1),
         boxShadow: themeShadows[1],
 
-        '& .MuiToggleButtonGroup-grouped:not(:first-of-type), &.Mui-Selected': {
-          borderRadius: radius
-        },
-        '& .MuiToggleButtonGroup-grouped:not(:last-of-type)': {
-          borderRadius: radius
-        },
+        '& .MuiToggleButtonGroup-grouped:not(:first-of-type), &.Mui-Selected, & .MuiToggleButtonGroup-grouped:not(:last-of-type)':
+          {
+            borderRadius: radius
+          },
         '.MuiDivider-root': {
           height: sizeLarge,
           margin: getSpacing(0, 1),
@@ -377,7 +375,10 @@ export const buttonsOverrides = {
         '&.MuiToggleButton-sizeSmall': {
           height: sizeSmall,
           margin: getSpacing(0.5),
-          marginLeft: 0
+
+          '&:not(:first-of-type)': {
+            marginLeft: 0
+          }
         }
       },
       // Styles applied to the children if orientation="vertical"
@@ -392,7 +393,10 @@ export const buttonsOverrides = {
         '&.MuiToggleButton-sizeSmall': {
           width: sizeSmall,
           margin: getSpacing(0.5),
-          marginTop: 0
+
+          '&:not(:first-of-type)': {
+            marginTop: 0
+          }
         }
       }
     }
