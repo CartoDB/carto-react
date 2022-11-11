@@ -9,7 +9,7 @@ export const CssBaseline = {
     width: '5px'
   },
   '*::-webkit-scrollbar-track': {
-    '-webkit-box-shadow': 'none',
+    boxShadow: 'none',
     background: 'transparent'
   },
   '*::-webkit-scrollbar-thumb': {
@@ -20,7 +20,8 @@ export const CssBaseline = {
 
   // iOS Search clear button
   'input[type="search"]::-webkit-search-cancel-button': {
-    '-webkit-appearance': 'none',
+    WebkitAppearance: 'none',
+    appearance: 'none',
     height: getSpacing(2),
     width: getSpacing(2),
     display: 'block',
