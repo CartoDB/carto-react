@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Replace kebab-case properties in styles [#530](https://github.com/CartoDB/carto-react/pull/530)
 - New design system in priority 1 components [#523](https://github.com/CartoDB/carto-react/pull/523)
 - Breaking changes in Mui v5: components [#518](https://github.com/CartoDB/carto-react/pull/518)
 - Breaking changes in Mui v5: styles and theme [#514](https://github.com/CartoDB/carto-react/pull/514/)
