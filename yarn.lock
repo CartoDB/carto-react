@@ -14862,7 +14862,7 @@ qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
-quadbin@^0.1.2, quadbin@^0.1.4:
+quadbin@^0.1.2, quadbin@^0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/quadbin/-/quadbin-0.1.5.tgz#aa6dba53d0558236f8070450c90d6ed9b87507c8"
   integrity sha512-/MQnN7V73myA+31gTxldTGN8ixqrUCXtUoDvRKSI9QZJOaq0cS9SNQkdToMxjC3ZSM2hN7mleOAn+9QVNlPZOg==
