@@ -7,6 +7,7 @@ export const dataDisplayOverrides = {
   MuiDivider: {
     styleOverrides: {
       root: {
+        backgroundColor: 'transparent',
         borderColor: commonPalette.divider
       },
       light: {

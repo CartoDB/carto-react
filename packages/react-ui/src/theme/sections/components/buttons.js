@@ -302,6 +302,7 @@ export const buttonsOverrides = {
       root: {
         minWidth: sizeMedium,
         height: sizeMedium,
+        padding: getSpacing(0, 1),
         color: commonPalette.text.secondary,
         border: 'none',
         borderRadius: radius,
@@ -310,18 +311,31 @@ export const buttonsOverrides = {
         '& + &': {
           marginLeft: getSpacing(0.5)
         },
+        '.MuiSvgIcon-root': {
+          margin: getSpacing(0, -0.75)
+        },
         '&.Mui-selected': {
           color: commonPalette.primary.main,
           backgroundColor: commonPalette.primary.background,
 
           '&:hover': {
+            color: commonPalette.text.secondary,
             backgroundColor: commonPalette.action.hover
           }
+        },
+        '&.Mui-disabled': {
+          border: 'none'
         }
+      },
+      sizeLarge: {
+        minWidth: sizeLarge,
+        height: sizeLarge,
+        ...themeTypography.body1
       },
       sizeSmall: {
         minWidth: sizeSmall,
-        height: sizeSmall
+        height: sizeSmall,
+        ...themeTypography.caption
       }
     }
   },
@@ -335,8 +349,8 @@ export const buttonsOverrides = {
 
     styleOverrides: {
       root: {
-        minWidth: sizeLarge,
-        minHeight: sizeLarge,
+        alignItems: 'center',
+        justifyContent: 'center',
         borderRadius: getSpacing(1),
         boxShadow: themeShadows[1],
 
@@ -344,23 +358,41 @@ export const buttonsOverrides = {
           borderRadius: radius
         },
         '& .MuiToggleButtonGroup-grouped:not(:last-of-type)': {
-          marginRight: getSpacing(0.5),
           borderRadius: radius
         },
-        '.MuiDivider-root': { margin: getSpacing(1, 0) }
-      },
-      groupedHorizontal: {
-        height: sizeLarge,
-
-        '& .MuiToggleButton-root': {
-          height: sizeMedium
+        '.MuiDivider-root': {
+          height: sizeLarge,
+          margin: getSpacing(0, 1),
+          marginLeft: getSpacing(0.5)
         }
       },
-      groupedVertical: {
-        width: sizeLarge,
+      // Styles applied to the children if orientation="horizontal"
+      groupedHorizontal: {
+        height: sizeMedium,
+        margin: getSpacing(1),
 
-        '& .MuiToggleButton-root': {
-          width: sizeMedium
+        '&:not(:last-of-type)': {
+          marginRight: getSpacing(0.5)
+        },
+        '&.MuiToggleButton-sizeSmall': {
+          height: sizeSmall,
+          margin: getSpacing(0.5),
+          marginLeft: 0
+        }
+      },
+      // Styles applied to the children if orientation="vertical"
+      groupedVertical: {
+        width: sizeMedium,
+        margin: getSpacing(1),
+
+        '&.MuiToggleButton-root': {
+          marginLeft: getSpacing(1),
+          marginBottom: getSpacing(0.5)
+        },
+        '&.MuiToggleButton-sizeSmall': {
+          width: sizeSmall,
+          margin: getSpacing(0.5),
+          marginTop: 0
         }
       }
     }

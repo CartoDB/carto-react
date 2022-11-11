@@ -32,6 +32,12 @@ const options = {
         type: 'boolean'
       }
     },
+    disabled: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
     label: {
       control: {
         type: 'text'
@@ -44,7 +50,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A36258'
     },
     status: {
-      type: 'inDevelopment'
+      type: 'readyToReview'
     }
   }
 };
@@ -69,7 +75,7 @@ const Toggle = ({ label, ...rest }) => {
 };
 
 const ToggleRow = ({ label, divider, ...rest }) => {
-  const [selected, setSelected] = React.useState(() => ['walk']);
+  const [selected, setSelected] = React.useState(() => ['AlignLeft']);
 
   const handleAlignment = (event, newAlignment) => {
     setSelected(newAlignment);
@@ -82,17 +88,17 @@ const ToggleRow = ({ label, divider, ...rest }) => {
       onChange={handleAlignment}
       aria-label='text alignment'
     >
-      <ToggleButton value='walk' aria-label='walk'>
+      <ToggleButton value='AlignLeft' aria-label='AlignLeft'>
         {label ? label : <FormatAlignLeft />}
       </ToggleButton>
-      <ToggleButton value='car' aria-label='drive'>
+      <ToggleButton value='AlignCenter' aria-label='AlignCenter'>
         {label ? label : <FormatAlignCenter />}
       </ToggleButton>
-      <ToggleButton value='train' aria-label='train'>
+      {divider && <Divider flexItem orientation='vertical' />}
+      <ToggleButton value='AlignRight' aria-label='AlignRight'>
         {label ? label : <FormatAlignRight />}
       </ToggleButton>
-      {divider && <Divider flexItem orientation='vertical' />}
-      <ToggleButton value='airplane' aria-label='airplane' disabled>
+      <ToggleButton value='AlignJustify' aria-label='AlignJustify' disabled>
         {label ? label : <FormatAlignJustify />}
       </ToggleButton>
     </ToggleButtonGroup>
@@ -180,5 +186,5 @@ VerticalGroup.args = { orientation: 'vertical' };
 
 export const DividedGroup = DividedTemplate.bind({});
 
-export const MultipleSelection = GroupTemplate.bind({});
-MultipleSelection.args = { exclusive: false };
+export const MultipleSelectionGroup = GroupTemplate.bind({});
+MultipleSelectionGroup.args = { exclusive: false };
