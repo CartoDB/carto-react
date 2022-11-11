@@ -4,8 +4,9 @@
 
 ## 1.4
 
-### 1.4.5 (2022-11-09)
+### 1.4.6 (2022-11-11)
 
+- Fix issue when switching to using quadbin library [#467](https://github.com/CartoDB/carto-react/pull/467)
 - Fix `executeModel` through **POST** request [#525](https://github.com/CartoDB/carto-react/pull/525) and [#499](https://github.com/CartoDB/carto-react/pull/499)
 
 
