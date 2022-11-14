@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Grid,
-  Radio,
-  RadioGroup
-} from '@mui/material';
+import { FormControlLabel, Grid, Radio } from '@mui/material';
 
 const options = {
   title: 'Atoms/Radio',
@@ -44,7 +37,7 @@ export default options;
 const RadioTemplate = ({ label, size, checked, disabled, ...args }) => {
   return (
     <FormControlLabel
-      value='female'
+      value={label}
       control={<Radio size={size} checked={checked} disabled={disabled} />}
       label={label}
     />
