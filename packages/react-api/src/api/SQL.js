@@ -20,7 +20,13 @@ const DEFAULT_USER_COMPONENT_IN_URL = '{user}';
  * @param { Object } props.opts - Additional options for the HTTP request
  * @param { import('@deck.gl/carto').QueryParameters } props.queryParameters - SQL query parameters
  */
-export const executeSQL = async ({ credentials, query, connection, opts, queryParameters }) => {
+export const executeSQL = async ({
+  credentials,
+  query,
+  connection,
+  opts,
+  queryParameters
+}) => {
   let response;
 
   if (!credentials) {
@@ -28,7 +34,13 @@ export const executeSQL = async ({ credentials, query, connection, opts, queryPa
   }
 
   try {
-    const request = createRequest({ credentials, connection, query, opts, queryParameters });
+    const request = createRequest({
+      credentials,
+      connection,
+      query,
+      opts,
+      queryParameters
+    });
     response = await fetch(request);
   } catch (error) {
     if (error.name === 'AbortError') throw error;
@@ -55,7 +67,13 @@ export const executeSQL = async ({ credentials, query, connection, opts, queryPa
  * Create an 'SQL query' request
  * (using GET or POST request, depending on url size)
  */
-function createRequest({ credentials, connection, query, opts = {}, queryParameters = [] }) {
+function createRequest({
+  credentials,
+  connection,
+  query,
+  opts = {},
+  queryParameters = []
+}) {
   const { abortController, ...otherOptions } = opts;
 
   const { apiVersion = API_VERSIONS.V2 } = credentials;
@@ -63,8 +81,7 @@ function createRequest({ credentials, connection, query, opts = {}, queryParamet
   const rawParams = {
     client: CLIENT,
     q: query?.trim(),
-    ...otherOptions,
-    queryParameters: queryParameters ? JSON.stringify(queryParameters) : undefined
+    ...otherOptions
   };
 
   if (apiVersion === API_VERSIONS.V3) {
@@ -79,7 +96,11 @@ function createRequest({ credentials, connection, query, opts = {}, queryParamet
   }
 
   // Get request
-  const urlParamsForGet = Object.entries(rawParams).map(([key, value]) =>
+  const getParams = {
+    ...rawParams,
+    queryParameters: queryParameters ? JSON.stringify(queryParameters) : undefined
+  };
+  const urlParamsForGet = Object.entries(getParams).map(([key, value]) =>
     encodeParameter(key, value)
   );
   const getUrl = generateApiUrl({
@@ -87,7 +108,9 @@ function createRequest({ credentials, connection, query, opts = {}, queryParamet
     connection,
     parameters: urlParamsForGet
   });
-  if (getUrl.length < REQUEST_GET_MAX_URL_LENGTH) {
+
+  const isGet = getUrl.length < 0;
+  if (isGet) {
     return getRequest(getUrl, requestOpts);
   }
 
@@ -96,12 +119,17 @@ function createRequest({ credentials, connection, query, opts = {}, queryParamet
     apiVersion === API_VERSIONS.V3
       ? [`access_token=${credentials.accessToken}`, `client=${CLIENT}`]
       : null;
+
+  const payload = {
+    ...rawParams,
+    queryParameters
+  };
   const postUrl = generateApiUrl({
     credentials,
     connection,
     parameters: urlParamsForPost
   });
-  return postRequest(postUrl, rawParams, requestOpts);
+  return postRequest(postUrl, payload, requestOpts);
 }
 
 /**
