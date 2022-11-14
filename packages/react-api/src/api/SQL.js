@@ -109,7 +109,7 @@ function createRequest({
     parameters: urlParamsForGet
   });
 
-  const isGet = getUrl.length < 0;
+  const isGet = getUrl.length < REQUEST_GET_MAX_URL_LENGTH;
   if (isGet) {
     return getRequest(getUrl, requestOpts);
   }
