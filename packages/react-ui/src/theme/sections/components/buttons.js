@@ -7,6 +7,7 @@ const sizeSmall = getSpacing(3);
 const sizeMedium = getSpacing(4);
 const sizeLarge = getSpacing(6);
 const iconSize = getSpacing(2.25);
+const radius = getSpacing(0.5);
 
 export const buttonsOverrides = {
   // Button Base
@@ -14,6 +15,15 @@ export const buttonsOverrides = {
     defaultProps: {
       disableRipple: true,
       disableElevation: true
+    },
+
+    styleOverrides: {
+      root: {
+        '& .MuiSvgIcon-root': {
+          display: 'flex',
+          fontSize: iconSize
+        }
+      }
     }
   },
 
@@ -24,6 +34,8 @@ export const buttonsOverrides = {
         maxWidth: '192px',
 
         '&:hover, &:focus-visible': {
+          boxShadow: themeShadows[0],
+
           ...(ownerState.variant !== 'contained' && {
             ...(ownerState.color === 'primary' && {
               backgroundColor: commonPalette.primary.background
@@ -44,10 +56,6 @@ export const buttonsOverrides = {
         // Pairing buttons separation
         '& + &': {
           marginLeft: getSpacing(1)
-        },
-        '& .MuiSvgIcon-root': {
-          display: 'flex',
-          fontSize: iconSize
         }
       }),
 
@@ -73,6 +81,16 @@ export const buttonsOverrides = {
       },
       outlinedError: {
         borderColor: commonPalette.error.main
+      },
+      containedPrimary: {
+        '&:hover, &:focus-visible': {
+          backgroundColor: commonPalette.primary.dark
+        }
+      },
+      containedError: {
+        '&:hover, &:focus-visible': {
+          backgroundColor: commonPalette.error.dark
+        }
       },
 
       startIcon: {
@@ -282,33 +300,42 @@ export const buttonsOverrides = {
   MuiToggleButton: {
     styleOverrides: {
       root: {
-        width: getSpacing(4.5),
-        height: getSpacing(4.5),
+        minWidth: sizeMedium,
+        height: sizeMedium,
+        padding: getSpacing(0, 1),
+        color: commonPalette.text.secondary,
         border: 'none',
-        borderRadius: getSpacing(0.5),
-        color: commonPalette.grey[500],
+        borderRadius: radius,
 
+        // Pairing buttons separation
+        '& + &': {
+          marginLeft: getSpacing(0.5)
+        },
+        '.MuiSvgIcon-root': {
+          margin: getSpacing(0, -0.75)
+        },
         '&.Mui-selected': {
           color: commonPalette.primary.main,
           backgroundColor: commonPalette.primary.background,
 
           '&:hover': {
-            backgroundColor: commonPalette.primary.background
+            color: commonPalette.text.secondary,
+            backgroundColor: commonPalette.action.hover
           }
-        }
-      },
-      sizeSmall: {
-        width: getSpacing(3),
-        height: getSpacing(3),
-
-        '& .MuiSvgIcon-root': {
-          maxWidth: getSpacing(2.5),
-          maxHeight: getSpacing(2.5)
+        },
+        '&.Mui-disabled': {
+          border: 'none'
         }
       },
       sizeLarge: {
-        width: getSpacing(7),
-        height: getSpacing(7)
+        minWidth: sizeLarge,
+        height: sizeLarge,
+        ...themeTypography.body1
+      },
+      sizeSmall: {
+        minWidth: sizeSmall,
+        height: sizeSmall,
+        ...themeTypography.caption
       }
     }
   },
@@ -321,28 +348,55 @@ export const buttonsOverrides = {
     },
 
     styleOverrides: {
-      groupedHorizontal: {
-        '&:not(:last-child)': {
-          marginRight: getSpacing(0.25),
-          borderTopRightRadius: getSpacing(0.5),
-          borderBottomRightRadius: getSpacing(0.5)
-        },
-        '&:not(:first-child)': {
-          marginLeft: 0,
-          borderLeft: 'none',
-          borderTopLeftRadius: getSpacing(0.5),
-          borderBottomLeftRadius: getSpacing(0.5)
+      root: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: getSpacing(1),
+        boxShadow: themeShadows[1],
+
+        '& .MuiToggleButtonGroup-grouped:not(:first-of-type), &.Mui-Selected, & .MuiToggleButtonGroup-grouped:not(:last-of-type)':
+          {
+            borderRadius: radius
+          },
+        '.MuiDivider-root': {
+          height: sizeLarge,
+          margin: getSpacing(0, 1),
+          marginLeft: getSpacing(0.5)
         }
       },
-      groupedVertical: {
-        '&:not(:last-child)': {
-          marginBottom: getSpacing(0.25),
-          borderBottomLeftRadius: getSpacing(0.5),
-          borderBottomRightRadius: getSpacing(0.5)
+      // Styles applied to the children if orientation="horizontal"
+      groupedHorizontal: {
+        height: sizeMedium,
+        margin: getSpacing(1),
+
+        '&:not(:last-of-type)': {
+          marginRight: getSpacing(0.5)
         },
-        '&:not(:first-child)': {
-          borderTopLeftRadius: getSpacing(0.5),
-          borderTopRightRadius: getSpacing(0.5)
+        '&.MuiToggleButton-sizeSmall': {
+          height: sizeSmall,
+          margin: getSpacing(0.5),
+
+          '&:not(:first-of-type)': {
+            marginLeft: 0
+          }
+        }
+      },
+      // Styles applied to the children if orientation="vertical"
+      groupedVertical: {
+        width: sizeMedium,
+        margin: getSpacing(1),
+
+        '&.MuiToggleButton-root': {
+          marginLeft: getSpacing(1),
+          marginBottom: getSpacing(0.5)
+        },
+        '&.MuiToggleButton-sizeSmall': {
+          width: sizeSmall,
+          margin: getSpacing(0.5),
+
+          '&:not(:first-of-type)': {
+            marginTop: 0
+          }
         }
       }
     }
@@ -352,6 +406,10 @@ export const buttonsOverrides = {
   MuiFab: {
     styleOverrides: {
       root: {
+        '&:focus': {
+          boxShadow: themeShadows[6]
+        },
+
         '& .MuiSvgIcon-root': {
           width: getSpacing(3),
           height: getSpacing(3)
@@ -380,8 +438,7 @@ export const buttonsOverrides = {
           height: iconSize
         },
         '&.MuiFab-extended': {
-          ...themeTypography.body2,
-          fontWeight: 600,
+          ...themeTypography.caption,
           width: 'auto',
           height: getSpacing(4),
           paddingRight: getSpacing(2),
@@ -393,8 +450,7 @@ export const buttonsOverrides = {
       },
       sizeMedium: {
         '&.MuiFab-extended': {
-          ...themeTypography.body2,
-          fontWeight: 600,
+          ...themeTypography.button,
           height: getSpacing(6)
         }
       },

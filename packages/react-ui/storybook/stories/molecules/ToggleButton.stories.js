@@ -1,9 +1,12 @@
 import React from 'react';
-import { ToggleButtonGroup, ToggleButton } from '@mui/material';
-import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
-import DriveEtaIcon from '@mui/icons-material/DriveEta';
-import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
-import TrainIcon from '@mui/icons-material/Train';
+import { ToggleButtonGroup, ToggleButton, Grid, Divider } from '@mui/material';
+import {
+  CheckCircleOutline,
+  FormatAlignCenter,
+  FormatAlignJustify,
+  FormatAlignLeft,
+  FormatAlignRight
+} from '@mui/icons-material';
 
 const options = {
   title: 'Molecules/Toggle Button',
@@ -13,7 +16,7 @@ const options = {
       defaultValue: 'medium',
       control: {
         type: 'select',
-        options: ['small', 'medium', 'large']
+        options: ['small', 'medium']
       }
     },
     orientation: {
@@ -28,6 +31,17 @@ const options = {
       control: {
         type: 'boolean'
       }
+    },
+    disabled: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
+    label: {
+      control: {
+        type: 'text'
+      }
     }
   },
   parameters: {
@@ -36,14 +50,32 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A36258'
     },
     status: {
-      type: 'inDevelopment'
+      type: 'readyToReview'
     }
   }
 };
 export default options;
 
-const Template = (args) => {
-  const [selected, setSelected] = React.useState(() => ['walk']);
+const Toggle = ({ label, ...rest }) => {
+  const [selected, setSelected] = React.useState(false);
+
+  return (
+    <ToggleButton
+      {...rest}
+      value='check'
+      aria-label='check'
+      selected={selected}
+      onChange={() => {
+        setSelected(!selected);
+      }}
+    >
+      {label ? label : <CheckCircleOutline />}
+    </ToggleButton>
+  );
+};
+
+const ToggleRow = ({ label, divider, ...rest }) => {
+  const [selected, setSelected] = React.useState(() => ['AlignLeft']);
 
   const handleAlignment = (event, newAlignment) => {
     setSelected(newAlignment);
@@ -51,64 +83,108 @@ const Template = (args) => {
 
   return (
     <ToggleButtonGroup
-      {...args}
+      {...rest}
       value={selected}
       onChange={handleAlignment}
       aria-label='text alignment'
     >
-      <ToggleButton value='walk' aria-label='walk'>
-        <DirectionsWalkIcon />
+      <ToggleButton value='AlignLeft' aria-label='AlignLeft'>
+        {label ? label : <FormatAlignLeft />}
       </ToggleButton>
-      <ToggleButton value='car' aria-label='drive'>
-        <DriveEtaIcon />
+      <ToggleButton value='AlignCenter' aria-label='AlignCenter'>
+        {label ? label : <FormatAlignCenter />}
       </ToggleButton>
-      <ToggleButton value='train' aria-label='train'>
-        <TrainIcon />
+      {divider && <Divider flexItem orientation='vertical' />}
+      <ToggleButton value='AlignRight' aria-label='AlignRight'>
+        {label ? label : <FormatAlignRight />}
       </ToggleButton>
-      <ToggleButton value='airplane' aria-label='airplane' disabled>
-        <AirplanemodeActiveIcon />
+      <ToggleButton value='AlignJustify' aria-label='AlignJustify' disabled>
+        {label ? label : <FormatAlignJustify />}
       </ToggleButton>
     </ToggleButtonGroup>
   );
 };
 
-const DefaultPropsTemplate = () => {
-  const [selected, setSelected] = React.useState(() => ['walk']);
-
-  const handleAlignment = (event, newAlignment) => {
-    setSelected(newAlignment);
-  };
-
+const SizesTemplate = (args) => {
   return (
-    <ToggleButtonGroup
-      orientation='horizontal'
-      exclusive={false}
-      value={selected}
-      onChange={handleAlignment}
-      aria-label='text alignment'
-    >
-      <ToggleButton value='walk' aria-label='walk'>
-        <DirectionsWalkIcon />
-      </ToggleButton>
-      <ToggleButton value='car' aria-label='drive'>
-        <DriveEtaIcon />
-      </ToggleButton>
-      <ToggleButton value='train' aria-label='train'>
-        <TrainIcon />
-      </ToggleButton>
-      <ToggleButton value='airplane' aria-label='airplane' disabled>
-        <AirplanemodeActiveIcon />
-      </ToggleButton>
-    </ToggleButtonGroup>
+    <Grid item container alignItems='center' spacing={4}>
+      <Grid item>
+        <Toggle {...args} size='large' />
+      </Grid>
+      <Grid item>
+        <Toggle {...args} size='medium' />
+      </Grid>
+      <Grid item>
+        <Toggle {...args} size='small' />
+      </Grid>
+    </Grid>
   );
 };
 
-export const Playground = Template.bind({});
+const TextTemplate = (args) => {
+  return (
+    <Grid item container alignItems='center' spacing={4}>
+      <Grid item>
+        <Toggle {...args} size='medium' label='CARTO' />
+      </Grid>
+      <Grid item>
+        <Toggle {...args} size='small' label='CARTO' />
+      </Grid>
+    </Grid>
+  );
+};
 
-export const DefaultProps = DefaultPropsTemplate.bind({});
+const GroupTemplate = (args) => {
+  return (
+    <Grid item container direction='column' spacing={4}>
+      <Grid item>
+        <ToggleRow {...args} size='medium' />
+      </Grid>
+      <Grid item>
+        <ToggleRow {...args} size='small' />
+      </Grid>
+    </Grid>
+  );
+};
 
-export const OrientationVertical = Template.bind({});
-OrientationVertical.args = { orientation: 'vertical' };
+const VerticalGroupTemplate = (args) => {
+  return (
+    <Grid item container spacing={4}>
+      <Grid item>
+        <ToggleRow {...args} size='medium' />
+      </Grid>
+      <Grid item>
+        <ToggleRow {...args} size='small' />
+      </Grid>
+    </Grid>
+  );
+};
 
-export const MultipleSelection = Template.bind({});
-MultipleSelection.args = { exclusive: false };
+const DividedTemplate = (args) => {
+  return (
+    <Grid item container direction='column' spacing={4}>
+      <Grid item>
+        <ToggleRow divider />
+      </Grid>
+    </Grid>
+  );
+};
+
+export const Playground = ToggleRow.bind({});
+
+export const Sizes = SizesTemplate.bind({});
+
+export const Text = TextTemplate.bind({});
+
+export const HorizontalGroup = GroupTemplate.bind({});
+
+export const HorizontalTextGroup = GroupTemplate.bind({});
+HorizontalTextGroup.args = { label: 'Text' };
+
+export const VerticalGroup = VerticalGroupTemplate.bind({});
+VerticalGroup.args = { orientation: 'vertical' };
+
+export const DividedGroup = DividedTemplate.bind({});
+
+export const MultipleSelectionGroup = GroupTemplate.bind({});
+MultipleSelectionGroup.args = { exclusive: false };
