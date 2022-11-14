@@ -12,10 +12,10 @@ const options = {
   title: 'Atoms/Radio',
   component: Radio,
   argTypes: {
-    color: {
+    size: {
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary']
+        options: ['small', 'medium']
       }
     },
     disabled: {
@@ -35,66 +35,49 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A29704'
     },
     status: {
-      type: 'needUpdate'
+      type: 'readyToReview'
     }
   }
 };
 export default options;
 
-const Template = ({ label, color, checked = false, ...args }) => {
+const RadioTemplate = ({ label, size, checked, disabled, ...args }) => {
   return (
-    <FormControl component='fieldset'>
-      <FormLabel component='legend'>Gender</FormLabel>
-      <RadioGroup aria-label='gender' name='gender1'>
-        <FormControlLabel
-          value='female'
-          control={<Radio color={color} />}
-          label='Female'
-        />
-        <FormControlLabel value='male' control={<Radio color={color} />} label='Male' />
-        <FormControlLabel value='other' control={<Radio color={color} />} label='Other' />
-        <FormControlLabel
-          value='disabled'
-          disabled
-          control={<Radio color={color} />}
-          label='(Disabled option)'
-        />
-      </RadioGroup>
-    </FormControl>
+    <FormControlLabel
+      value='female'
+      control={<Radio size={size} checked={checked} disabled={disabled} />}
+      label={label}
+    />
   );
 };
 
-const RadioTemplate = ({ color, ...args }) => {
+const StatesTemplate = ({ size, ...args }) => {
   return (
     <Grid container spacing={2}>
       <Grid item container spacing={2}>
         <Grid item xs={4}>
           <FormControlLabel
-            control={<Radio color={color} checked />}
+            control={<Radio size={size} checked />}
             label='Active'
             {...args}
           />
         </Grid>
         <Grid item xs={4}>
-          <FormControlLabel
-            control={<Radio color={color} />}
-            label='Inactive'
-            {...args}
-          />
+          <FormControlLabel control={<Radio size={size} />} label='Inactive' {...args} />
         </Grid>
       </Grid>
 
       <Grid item container spacing={2}>
         <Grid item xs={4}>
           <FormControlLabel
-            control={<Radio color={color} checked disabled />}
+            control={<Radio size={size} checked disabled />}
             label='Disabled Active'
             {...args}
           />
         </Grid>
         <Grid item xs={4}>
           <FormControlLabel
-            control={<Radio color={color} disabled />}
+            control={<Radio size={size} disabled />}
             label='Disabled Inactive'
             {...args}
           />
@@ -104,11 +87,55 @@ const RadioTemplate = ({ color, ...args }) => {
   );
 };
 
-export const Playground = Template.bind({});
+const SizeTemplate = ({ ...args }) => {
+  return (
+    <Grid container spacing={2}>
+      <Grid item container spacing={2}>
+        <Grid item xs={4}>
+          <FormControlLabel
+            control={<Radio size='small' checked />}
+            label='Small Active'
+            {...args}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <FormControlLabel
+            control={<Radio size='small' />}
+            label='Small Inactive'
+            {...args}
+          />
+        </Grid>
+      </Grid>
+
+      <Grid item container spacing={2}>
+        <Grid item xs={4}>
+          <FormControlLabel control={<Radio checked />} label='Medium Active' {...args} />
+        </Grid>
+        <Grid item xs={4}>
+          <FormControlLabel control={<Radio />} label='Medium Inactive' {...args} />
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
+
+const disabledSizesArgTypes = {
+  size: { table: { disable: true } },
+  checked: { table: { disable: true } }
+};
+
+const disabledStatesArgTypes = {
+  checked: { table: { disable: true } },
+  disabled: { table: { disable: true } }
+};
+
+export const Playground = RadioTemplate.bind({});
 Playground.args = { label: 'Text' };
 
-export const Primary = RadioTemplate.bind({});
-Primary.args = {};
+export const States = StatesTemplate.bind({});
+States.argTypes = disabledStatesArgTypes;
+States.args = { size: 'medium' };
 
-export const Secondary = RadioTemplate.bind({});
-Secondary.args = { color: 'secondary' };
+export const Sizes = SizeTemplate.bind({});
+Sizes.argTypes = disabledSizesArgTypes;
+Sizes.args = { disabled: false };
