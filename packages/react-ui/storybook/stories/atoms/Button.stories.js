@@ -128,11 +128,13 @@ const BehaviorTemplate = ({ label, icon, ...rest }) => {
     <Grid container direction='column' spacing={6}>
       <Grid item container direction='column' xs={4}>
         <Typography variant='body1' style={{ marginBottom: 16 }}>
-          {'Overflow + optional tooltip'}
+          {'Overflow + tooltip'}
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            <Button {...rest}>{overflowLabel}</Button>
+            <Tooltip title={overflowLabel} placement='top'>
+              <Button {...rest}>{overflowLabel}</Button>
+            </Tooltip>
           </Grid>
           <Grid item xs={4}>
             <Tooltip title={overflowLabel} placement='top'>
@@ -142,9 +144,11 @@ const BehaviorTemplate = ({ label, icon, ...rest }) => {
             </Tooltip>
           </Grid>
           <Grid item xs={4}>
-            <Button {...rest} endIcon={<Close />}>
-              {overflowLabel}
-            </Button>
+            <Tooltip title={overflowLabel} placement='top'>
+              <Button {...rest} endIcon={<Close />}>
+                {overflowLabel}
+              </Button>
+            </Tooltip>
           </Grid>
         </Grid>
       </Grid>

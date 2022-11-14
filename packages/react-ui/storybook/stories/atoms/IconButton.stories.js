@@ -1,6 +1,6 @@
 import React from 'react';
-import { IconButton, Grid } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import { IconButton, Grid, Tooltip } from '@mui/material';
+import { CheckCircleOutlined } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
@@ -44,22 +44,28 @@ const options = {
 };
 export default options;
 
-const IconButtons = ({ color, label, size, disabled, title, ...rest }) => (
-  <Grid item xs={3}>
-    <Grid container direction='column' alignItems='center' spacing={2}>
-      {title && <Typography variant='body2'>{title}</Typography>}
-      <IconButton
-        {...rest}
-        aria-label={label}
-        color={color}
-        size={size}
-        disabled={disabled}
-      >
-        <Delete fontSize='inherit' />
-      </IconButton>
+const IconButtons = ({ color, label, size, disabled, title, ...rest }) => {
+  const tooltipHelp = '(Unless noted, must be wrapped in a Tooltip)';
+
+  return (
+    <Grid item xs={3}>
+      <Grid container direction='column' alignItems='center' spacing={2}>
+        {title && <Typography variant='body2'>{title}</Typography>}
+        <Tooltip title={`${label} ${tooltipHelp}`} placement='top'>
+          <IconButton
+            {...rest}
+            aria-label={label}
+            color={color}
+            size={size}
+            disabled={disabled}
+          >
+            <CheckCircleOutlined />
+          </IconButton>
+        </Tooltip>
+      </Grid>
     </Grid>
-  </Grid>
-);
+  );
+};
 
 const PlaygroundTemplate = ({ label, size, color, ...rest }) => (
   <Grid container spacing={2}>
@@ -68,10 +74,10 @@ const PlaygroundTemplate = ({ label, size, color, ...rest }) => (
 );
 
 const ButtonTemplate = ({ label, ...rest }) => {
-  const smallLabel = label ? label : 'Small icon button';
-  const mediumLabel = label ? label : 'Medium icon button';
-  const largeLabel = label ? label : 'Large icon button';
-  const disabledLabel = label ? label : 'Disabled icon button';
+  const smallLabel = label ? label : 'Small';
+  const mediumLabel = label ? label : 'Medium';
+  const largeLabel = label ? label : 'Large';
+  const disabledLabel = label ? label : 'Disabled';
 
   return (
     <Grid container spacing={2}>
