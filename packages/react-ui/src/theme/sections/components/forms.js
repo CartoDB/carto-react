@@ -236,25 +236,26 @@ export const formsOverrides = {
 
   // Checkbox
   MuiCheckbox: {
-    defaultProps: {
-      size: 'small'
-    },
     styleOverrides: {
-      root: {
-        ...themeTypography.body2,
-        padding: getSpacing(0.75),
-        borderRadius: '50%',
+      root: ({ ownerState }) => ({
+        padding: getSpacing(0.5),
 
+        '&:hover, &:focus-visible': {
+          backgroundColor: commonPalette.primary.background
+        },
         '& + .MuiFormControlLabel-label': {
           ...themeTypography.body2,
-          marginLeft: getSpacing(0.25),
-          color: commonPalette.text.primary
+          marginLeft: getSpacing(0.25)
         },
 
         '& .MuiSvgIcon-root': {
-          fontSize: getSpacing(3)
+          fontSize: getSpacing(3),
+
+          ...(ownerState.size === 'small' && {
+            fontSize: getSpacing(2.5)
+          })
         }
-      }
+      })
     }
   },
 
