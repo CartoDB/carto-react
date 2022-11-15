@@ -1,9 +1,11 @@
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
+import { themeShadows } from '../shadows';
 import { themeTypography } from '../typography';
 
-const switchHeight = getSpacing(2);
-const switchWidth = getSpacing(3);
+const switchSizeS = 2;
+const switchSizeM = 3;
+const switchSizeL = 4;
 
 const checkboxRadioOverrides = {
   root: ({ ownerState }) => ({
@@ -222,10 +224,14 @@ export const formsOverrides = {
 
   // Switch
   MuiSwitch: {
+    defaultProps: {
+      disableRipple: true
+    },
+
     styleOverrides: {
       root: {
-        width: switchWidth,
-        height: switchHeight,
+        width: getSpacing(switchSizeM),
+        height: getSpacing(switchSizeS),
         padding: 0,
         overflow: 'visible',
 
@@ -237,31 +243,49 @@ export const formsOverrides = {
       },
 
       switchBase: {
+        width: getSpacing(switchSizeL),
+        height: getSpacing(switchSizeL),
         padding: getSpacing(0.5),
         borderRadius: '50%',
         color: commonPalette.text.secondary,
+        transform: 'translate(-8px, -8px)',
 
+        '&:hover': {
+          backgroundColor: commonPalette.action.hover
+        },
         '&.Mui-checked': {
-          transform: 'translate(8px, 0)',
+          transform: 'translate(0, -8px)',
           color: commonPalette.common.white,
 
           '& input': {
             left: getSpacing(-1.5)
           },
           '& + .MuiSwitch-track': {
-            opacity: 1
+            opacity: 1,
+            border: 0
           }
         }
       },
 
       thumb: {
         width: getSpacing(1),
-        height: getSpacing(1)
+        height: getSpacing(1),
+        boxShadow: themeShadows[0],
+
+        '.Mui-checked &': {
+          boxShadow: themeShadows[1]
+        },
+        '.Mui-disabled &': {
+          backgroundColor: commonPalette.text.disabled
+        },
+        '.Mui-disabled.Mui-checked &': {
+          backgroundColor: commonPalette.common.white
+        }
       },
 
       input: {
-        width: switchWidth,
-        height: switchHeight,
+        width: getSpacing(switchSizeM),
+        height: getSpacing(switchSizeS),
         left: 0
       },
 
@@ -270,63 +294,29 @@ export const formsOverrides = {
         border: `1px solid ${commonPalette.text.secondary}`,
         borderRadius: getSpacing(2),
         opacity: 1,
-        backgroundColor: commonPalette.common.white
+        backgroundColor: commonPalette.common.white,
+        transitionDuration: '500ms',
+
+        '.MuiButtonBase-root.MuiSwitch-switchBase.Mui-disabled + &': {
+          opacity: 1,
+          borderColor: commonPalette.text.disabled
+        },
+        '.MuiButtonBase-root.Mui-checked.Mui-disabled + &': {
+          backgroundColor: commonPalette.text.disabled
+        }
       },
 
       colorPrimary: {
         '&.Mui-checked': {
-          color: commonPalette.common.white,
-
-          '& + .MuiSwitch-track': {
-            backgroundColor: commonPalette.primary.main,
-            borderColor: 'transparent'
-          },
-
-          '&.Mui-disabled': {
-            color: commonPalette.grey[100],
-
-            '& + .MuiSwitch-track': {
-              backgroundColor: commonPalette.text.disabled
-            }
-          }
-        },
-
-        '&.Mui-disabled': {
-          color: commonPalette.text.disabled,
-
-          '& + .MuiSwitch-track': {
-            opacity: 1,
-            backgroundColor: commonPalette.common.white,
-            borderColor: commonPalette.text.disabled
+          '&:hover': {
+            backgroundColor: commonPalette.primary.background
           }
         }
       },
-
       colorSecondary: {
         '&.Mui-checked': {
-          color: commonPalette.common.white,
-
-          '& + .MuiSwitch-track': {
-            backgroundColor: commonPalette.secondary.main,
-            borderColor: 'transparent'
-          },
-
-          '&.Mui-disabled': {
-            color: commonPalette.grey[100],
-
-            '& + .MuiSwitch-track': {
-              backgroundColor: commonPalette.text.disabled
-            }
-          }
-        },
-
-        '&.Mui-disabled': {
-          color: commonPalette.text.disabled,
-
-          '& + .MuiSwitch-track': {
-            opacity: 1,
-            backgroundColor: commonPalette.common.white,
-            borderColor: commonPalette.text.disabled
+          '&:hover': {
+            backgroundColor: commonPalette.secondary.background
           }
         }
       }
