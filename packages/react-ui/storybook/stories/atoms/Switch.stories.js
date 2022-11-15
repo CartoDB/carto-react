@@ -8,10 +8,11 @@ const options = {
     color: {
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary']
+        options: ['primary', 'secondary']
       }
     },
     disabled: {
+      defaultValue: false,
       control: {
         type: 'boolean'
       }
@@ -28,7 +29,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33096'
     },
     status: {
-      type: 'needUpdate'
+      type: 'inDevelopment'
     }
   }
 };

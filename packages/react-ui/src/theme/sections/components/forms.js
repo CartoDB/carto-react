@@ -2,6 +2,9 @@ import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
 
+const switchHeight = getSpacing(2);
+const switchWidth = getSpacing(3);
+
 const checkboxRadioOverrides = {
   root: ({ ownerState }) => ({
     padding: getSpacing(0.5),
@@ -221,22 +224,21 @@ export const formsOverrides = {
   MuiSwitch: {
     styleOverrides: {
       root: {
-        height: getSpacing(4.5),
-        width: getSpacing(6),
-        padding: getSpacing(1),
+        width: switchWidth,
+        height: switchHeight,
+        padding: 0,
         overflow: 'visible',
 
         '& + .MuiFormControlLabel-label': {
           ...themeTypography.body2,
-          marginLeft: getSpacing(0.25),
+          marginLeft: getSpacing(1),
           color: commonPalette.text.primary
         }
       },
 
       switchBase: {
-        padding: getSpacing(1.5),
+        padding: getSpacing(0.5),
         borderRadius: '50%',
-        transform: 'translate(1px, 1px)',
         color: commonPalette.text.secondary,
 
         '&.Mui-checked': {
@@ -244,7 +246,7 @@ export const formsOverrides = {
             left: getSpacing(-1.5)
           },
 
-          transform: 'translate(13px, 1px)',
+          transform: 'translate(8px, 0)',
           color: commonPalette.common.white,
 
           '& + .MuiSwitch-track': {
@@ -254,19 +256,19 @@ export const formsOverrides = {
       },
 
       thumb: {
-        width: getSpacing(1.25),
-        height: getSpacing(1.25),
-        boxShadow: 'none'
+        width: getSpacing(1),
+        height: getSpacing(1)
       },
 
       input: {
-        width: getSpacing(6),
+        width: switchWidth,
+        height: switchHeight,
         left: 0
       },
 
       track: {
         height: 'auto',
-        border: `2px solid ${commonPalette.text.secondary}`,
+        border: `1px solid ${commonPalette.text.secondary}`,
         borderRadius: getSpacing(2),
         opacity: 1,
         backgroundColor: commonPalette.common.white
@@ -327,25 +329,6 @@ export const formsOverrides = {
             backgroundColor: commonPalette.common.white,
             borderColor: commonPalette.text.disabled
           }
-        }
-      },
-
-      sizeSmall: {
-        height: getSpacing(4.5),
-        width: getSpacing(6),
-        padding: getSpacing(1),
-
-        '& .MuiSwitch-switchBase': {
-          padding: getSpacing(1.5),
-          transform: 'translate(0, 1px)',
-
-          '&.Mui-checked': {
-            transform: 'translate(15px, 1px)'
-          }
-        },
-        '& .MuiSwitch-thumb': {
-          width: getSpacing(1.25),
-          height: getSpacing(1.25)
         }
       }
     }
