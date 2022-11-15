@@ -2,109 +2,48 @@ import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
 
-export const formsOverrides = {
-  // Input
-  MuiInputBase: {
-    styleOverrides: {
-      root: {
-        '&.Mui-disabled .MuiInputAdornment-root': {
-          color: commonPalette.action.disabled
-        },
-        '&.Mui-disabled .MuiTypography-root': {
-          color: commonPalette.action.disabled
-        }
-      }
-    }
-  },
+const checkboxRadioOverrides = {
+  root: ({ ownerState }) => ({
+    padding: getSpacing(0.5),
 
-  // Outlined Input
-  MuiOutlinedInput: {
-    defaultProps: {
-      notched: false
+    ...(ownerState.size === 'small' && {
+      padding: getSpacing(0.25)
+    }),
+
+    '&:hover, &:focus-visible': {
+      backgroundColor: commonPalette.primary.background
     },
+    '& + .MuiFormControlLabel-label': {
+      ...themeTypography.body2,
+      marginLeft: getSpacing(0.25),
+
+      ...(ownerState.size === 'small' && {
+        marginLeft: getSpacing(0.5)
+      })
+    },
+
+    '& .MuiSvgIcon-root': {
+      fontSize: getSpacing(3),
+
+      ...(ownerState.size === 'small' && {
+        fontSize: getSpacing(2.5)
+      })
+    }
+  })
+};
+
+export const formsOverrides = {
+  // Checkbox
+  MuiCheckbox: {
     styleOverrides: {
-      root: {
-        '&.Mui-disabled': {
-          backgroundColor: commonPalette.action.hover
-        }
-      },
-
-      input: {
-        ...themeTypography.body1,
-        height: `${themeTypography.body1.lineHeight}em`,
-        padding: getSpacing(3, 2, 1)
-      },
-
-      inputMarginDense: {
-        ...themeTypography.body2,
-        height: `${themeTypography.body2.lineHeight}em`,
-        padding: getSpacing(1, 1.5),
-        paddingTop: getSpacing(1),
-        paddingBottom: getSpacing(1)
-      },
-
-      adornedStart: {
-        '&.MuiFormControl-marginDense': {
-          paddingLeft: getSpacing(1.5)
-        }
-      },
-      adornedEnd: {
-        '&.MuiFormControl-marginDense': {
-          paddingRight: getSpacing(1.5)
-        }
-      },
-
-      notchedOutline: {
-        border: `2px solid ${commonPalette.text.disabled}`
-      },
-
-      multiline: {
-        padding: getSpacing(2.75, 2, 1.25)
-      }
+      ...checkboxRadioOverrides
     }
   },
 
-  // Label
-  MuiInputLabel: {
+  // Radio Button
+  MuiRadio: {
     styleOverrides: {
-      root: {
-        ...themeTypography.body1
-      },
-
-      formControl: {
-        transform: 'translate(16px, 20px) scale(1)',
-
-        '&.MuiInputLabel-shrink': {
-          ...themeTypography.caption,
-          transform: 'translate(16px, 8px) scale(1)'
-        },
-
-        '&.MuiFormControl-marginDense': {
-          ...themeTypography.caption,
-          transform: 'translate(0, -20px) scale(1)',
-
-          '&.MuiInputLabel-shrink': {
-            ...themeTypography.caption,
-            transform: 'translate(0, -20px) scale(1)'
-          }
-        }
-      },
-
-      outlined: {
-        '&.MuiInputLabel-shrink': {
-          ...themeTypography.caption,
-          transform: 'translate(16px, 8px) scale(1)'
-        },
-
-        '&.MuiFormControl-marginDense': {
-          ...themeTypography.caption,
-          transform: 'translate(0, -20px) scale(1)',
-
-          '&.MuiInputLabel-shrink': {
-            transform: 'translate(0, -20px) scale(1)'
-          }
-        }
-      }
+      ...checkboxRadioOverrides
     }
   },
 
@@ -188,6 +127,50 @@ export const formsOverrides = {
     }
   },
 
+  // Label
+  MuiInputLabel: {
+    styleOverrides: {
+      root: {
+        ...themeTypography.body1
+      },
+
+      formControl: {
+        transform: 'translate(16px, 20px) scale(1)',
+
+        '&.MuiInputLabel-shrink': {
+          ...themeTypography.caption,
+          transform: 'translate(16px, 8px) scale(1)'
+        },
+
+        '&.MuiFormControl-marginDense': {
+          ...themeTypography.caption,
+          transform: 'translate(0, -20px) scale(1)',
+
+          '&.MuiInputLabel-shrink': {
+            ...themeTypography.caption,
+            transform: 'translate(0, -20px) scale(1)'
+          }
+        }
+      },
+
+      outlined: {
+        '&.MuiInputLabel-shrink': {
+          ...themeTypography.caption,
+          transform: 'translate(16px, 8px) scale(1)'
+        },
+
+        '&.MuiFormControl-marginDense': {
+          ...themeTypography.caption,
+          transform: 'translate(0, -20px) scale(1)',
+
+          '&.MuiInputLabel-shrink': {
+            transform: 'translate(0, -20px) scale(1)'
+          }
+        }
+      }
+    }
+  },
+
   // Select
   MuiSelect: {
     defaultProps: {
@@ -230,54 +213,6 @@ export const formsOverrides = {
             paddingTop: getSpacing(0.25),
             paddingBottom: getSpacing(0.25)
           }
-      }
-    }
-  },
-
-  // Checkbox
-  MuiCheckbox: {
-    defaultProps: {
-      size: 'small'
-    },
-    styleOverrides: {
-      root: {
-        ...themeTypography.body2,
-        padding: getSpacing(0.75),
-        borderRadius: '50%',
-
-        '& + .MuiFormControlLabel-label': {
-          ...themeTypography.body2,
-          marginLeft: getSpacing(0.25),
-          color: commonPalette.text.primary
-        },
-
-        '& .MuiSvgIcon-root': {
-          fontSize: getSpacing(3)
-        }
-      }
-    }
-  },
-
-  // Radio Button
-  MuiRadio: {
-    defaultProps: {
-      size: 'small'
-    },
-    styleOverrides: {
-      root: {
-        ...themeTypography.body2,
-        padding: getSpacing(0.75),
-        borderRadius: '50%',
-
-        '& + .MuiFormControlLabel-label': {
-          ...themeTypography.body2,
-          marginLeft: getSpacing(0.25),
-          color: commonPalette.text.primary
-        },
-
-        '& .MuiSvgIcon-root': {
-          fontSize: getSpacing(3)
-        }
       }
     }
   },
