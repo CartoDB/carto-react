@@ -10,7 +10,7 @@ const checkboxRadioOverrides = {
     padding: getSpacing(0.5),
 
     ...(ownerState.size === 'small' && {
-      padding: getSpacing(0.25)
+      padding: '3px'
     }),
 
     '&:hover, &:focus-visible': {
@@ -29,7 +29,7 @@ const checkboxRadioOverrides = {
       fontSize: getSpacing(3),
 
       ...(ownerState.size === 'small' && {
-        fontSize: getSpacing(2.5)
+        fontSize: getSpacing(2.25)
       })
     }
   })
@@ -242,13 +242,12 @@ export const formsOverrides = {
         color: commonPalette.text.secondary,
 
         '&.Mui-checked': {
-          '& input': {
-            left: getSpacing(-1.5)
-          },
-
           transform: 'translate(8px, 0)',
           color: commonPalette.common.white,
 
+          '& input': {
+            left: getSpacing(-1.5)
+          },
           '& + .MuiSwitch-track': {
             opacity: 1
           }
