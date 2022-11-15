@@ -307,6 +307,9 @@ export const buttonsOverrides = {
         border: 'none',
         borderRadius: radius,
 
+        '&:hover': {
+          backgroundColor: commonPalette.action.hover
+        },
         // Pairing buttons separation
         '& + &': {
           marginLeft: getSpacing(0.5)
@@ -319,7 +322,6 @@ export const buttonsOverrides = {
           backgroundColor: commonPalette.primary.background,
 
           '&:hover': {
-            color: commonPalette.text.secondary,
             backgroundColor: commonPalette.action.hover
           }
         },
