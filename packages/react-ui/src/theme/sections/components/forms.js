@@ -295,7 +295,7 @@ export const formsOverrides = {
         borderRadius: getSpacing(2),
         opacity: 1,
         backgroundColor: commonPalette.common.white,
-        transitionDuration: '500ms',
+        transitionDuration: '300ms',
 
         '.MuiButtonBase-root.MuiSwitch-switchBase.Mui-disabled + &': {
           opacity: 1,
