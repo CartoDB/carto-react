@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Switch component adapted to the new design system [#534](https://github.com/CartoDB/carto-react/pull/534/)
 - Radio and Checkbox components adapted to the new design system [#532](https://github.com/CartoDB/carto-react/pull/532/)
 - Improvements in Components priority 1 after design review [#529](https://github.com/CartoDB/carto-react/pull/529)
 - Replace kebab-case properties in styles [#530](https://github.com/CartoDB/carto-react/pull/530)

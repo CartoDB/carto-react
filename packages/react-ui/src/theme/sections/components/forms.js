@@ -12,7 +12,7 @@ const checkboxRadioOverrides = {
     padding: getSpacing(0.5),
 
     ...(ownerState.size === 'small' && {
-      padding: '3px'
+      padding: '3px' // Forced to a non-standard value to meet with design
     }),
 
     '&:hover, &:focus-visible': {
