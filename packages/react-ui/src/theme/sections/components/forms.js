@@ -307,17 +307,13 @@ export const formsOverrides = {
       },
 
       colorPrimary: {
-        '&.Mui-checked': {
-          '&:hover': {
-            backgroundColor: commonPalette.primary.background
-          }
+        '&.Mui-checked:hover': {
+          backgroundColor: commonPalette.primary.background
         }
       },
       colorSecondary: {
-        '&.Mui-checked': {
-          '&:hover': {
-            backgroundColor: commonPalette.secondary.background
-          }
+        '&.Mui-checked:hover': {
+          backgroundColor: commonPalette.secondary.background
         }
       }
     }
