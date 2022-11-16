@@ -207,7 +207,7 @@ const CustomLabelTemplate = ({ ...args }) => {
     const { children, open, value } = props;
 
     return (
-      <Tooltip open={open} enterTouchDelay={0} placement='top' arrow title={value}>
+      <Tooltip open={open} enterTouchDelay={0} title={value}>
         {children}
       </Tooltip>
     );

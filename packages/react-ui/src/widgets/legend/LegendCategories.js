@@ -132,13 +132,13 @@ function Row({ label, isMax, isStrokeColor, color = '#000', icon, maskedIcon }) 
   }, [setShowTooltip, labelPhantomRef, labelRef]);
 
   return (
-    <Tooltip title={showTooltip ? label : ''} placement='left' arrow>
+    <Tooltip title={showTooltip ? label : ''} placement='left'>
       <Grid
         container
         item
         className={[classes.legendCategories, classes.flexParent].join(' ')}
       >
-        <Tooltip title={isMax ? 'Most representative' : ''} placement='top' arrow>
+        <Tooltip title={isMax ? 'Most representative' : ''}>
           <Box
             mr={1.5}
             component='span'

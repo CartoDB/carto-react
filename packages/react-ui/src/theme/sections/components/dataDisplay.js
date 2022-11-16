@@ -87,6 +87,11 @@ export const dataDisplayOverrides = {
 
   // Tooltip
   MuiTooltip: {
+    defaultProps: {
+      arrow: true,
+      placement: 'top'
+    },
+
     styleOverrides: {
       tooltip: {
         ...themeTypography.caption,

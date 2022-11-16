@@ -49,7 +49,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A36257'
     },
     status: {
-      type: 'needUpdate'
+      type: 'inDevelopment'
     }
   }
 };
@@ -68,12 +68,12 @@ const TooltipTemplate = () => {
     <Grid container spacing={2}>
       <Grid item container spacing={2}>
         <Grid item xs={4}>
-          <Tooltip title='Tooltip on top' placement='top'>
+          <Tooltip title='Tooltip on top'>
             <Button>Sample</Button>
           </Tooltip>
         </Grid>
         <Grid item xs={4}>
-          <Tooltip title='bottom with arrow' arrow placement='bottom'>
+          <Tooltip title='bottom' placement='bottom'>
             <Button>Sample</Button>
           </Tooltip>
         </Grid>
@@ -137,7 +137,7 @@ const TooltipDataTemplate = () => {
     <Grid container spacing={2}>
       <Grid item container spacing={2}>
         <Grid item xs={4}>
-          <Tooltip placement='top' title={<DataComponent />}>
+          <Tooltip title={<DataComponent />}>
             <Button>Sample</Button>
           </Tooltip>
         </Grid>

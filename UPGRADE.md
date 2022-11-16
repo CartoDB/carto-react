@@ -104,3 +104,7 @@ So, instead of Mui Button, the component you should use to create buttons is thi
 `react-ui/src/atoms/Button`
 
 For external use: `import { Button } from '@carto/react-ui';`.
+
+## Tooltip
+
+Now, by default is placed `top` and has an `arrow` indicator, so you don't need to specify these properties anymore.
