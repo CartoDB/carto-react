@@ -307,6 +307,9 @@ export const buttonsOverrides = {
         border: 'none',
         borderRadius: radius,
 
+        '&:hover': {
+          backgroundColor: commonPalette.action.hover
+        },
         // Pairing buttons separation
         '& + &': {
           marginLeft: getSpacing(0.5)
@@ -319,7 +322,6 @@ export const buttonsOverrides = {
           backgroundColor: commonPalette.primary.background,
 
           '&:hover': {
-            color: commonPalette.text.secondary,
             backgroundColor: commonPalette.action.hover
           }
         },
@@ -335,7 +337,8 @@ export const buttonsOverrides = {
       sizeSmall: {
         minWidth: sizeSmall,
         height: sizeSmall,
-        ...themeTypography.caption
+        ...themeTypography.caption,
+        fontWeight: 500
       }
     }
   },
@@ -353,6 +356,7 @@ export const buttonsOverrides = {
         justifyContent: 'center',
         borderRadius: getSpacing(1),
         boxShadow: themeShadows[1],
+        backgroundColor: commonPalette.background.paper,
 
         '& .MuiToggleButtonGroup-grouped:not(:first-of-type), &.Mui-Selected, & .MuiToggleButtonGroup-grouped:not(:last-of-type)':
           {
@@ -370,7 +374,12 @@ export const buttonsOverrides = {
         margin: getSpacing(1),
 
         '&:not(:last-of-type)': {
-          marginRight: getSpacing(0.5)
+          marginRight: getSpacing(0.5),
+          marginLeft: 0,
+          borderLeft: 'none'
+        },
+        '&:first-of-type': {
+          marginLeft: getSpacing(1)
         },
         '&.MuiToggleButton-sizeSmall': {
           height: sizeSmall,
