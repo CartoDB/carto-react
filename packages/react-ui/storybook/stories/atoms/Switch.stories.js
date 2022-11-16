@@ -34,7 +34,7 @@ const options = {
 };
 export default options;
 
-const Template = ({ label, color, checked, ...args }) => {
+const Template = ({ label, color, ...args }) => {
   return <FormControlLabel control={<Switch color={color} />} label={label} {...args} />;
 };
 
@@ -47,7 +47,7 @@ const SwitchTemplate = ({ color, ...args }) => {
         </Grid>
         <Grid item xs={4}>
           <FormControlLabel
-            control={<Switch color={color} checked />}
+            control={<Switch color={color} defaultChecked />}
             label='On'
             {...args}
           />
@@ -64,7 +64,7 @@ const SwitchTemplate = ({ color, ...args }) => {
         </Grid>
         <Grid item xs={4}>
           <FormControlLabel
-            control={<Switch color={color} checked disabled />}
+            control={<Switch color={color} defaultChecked disabled />}
             label='Disabled On'
             {...args}
           />
