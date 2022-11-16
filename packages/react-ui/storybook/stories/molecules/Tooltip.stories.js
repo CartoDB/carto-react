@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, Grid, Tooltip } from '@mui/material';
+import { Box, Button, Grid, IconButton, Tooltip } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
+import { InfoOutlined } from '@mui/icons-material';
 
 const options = {
   title: 'Molecules/Tooltip',
@@ -16,20 +17,7 @@ const options = {
     placement: {
       control: {
         type: 'select',
-        options: [
-          'top-start',
-          'top',
-          'top-end',
-          'left-start',
-          'left',
-          'left-end',
-          'right-start',
-          'right',
-          'right-end',
-          'bottom-start',
-          'bottom',
-          'bottom-end'
-        ]
+        options: ['top', 'left', 'right', 'bottom']
       }
     },
     arrow: {
@@ -55,38 +43,51 @@ const options = {
 };
 export default options;
 
-const Template = ({ ...args }) => {
+const useStylesContainer = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: theme.spacing(4)
+  }
+}));
+
+const TooltipBox = ({ ...args }) => {
+  const classes = useStylesContainer();
+
   return (
-    <Tooltip {...args}>
-      <Button>Sample</Button>
-    </Tooltip>
+    <Box className={classes.container}>
+      <Tooltip {...args}>
+        <IconButton>
+          <InfoOutlined />
+        </IconButton>
+      </Tooltip>
+    </Box>
   );
 };
 
-const TooltipTemplate = () => {
+const TooltipTextTemplate = () => {
+  const classes = useStylesContainer();
+
   return (
-    <Grid container spacing={2}>
-      <Grid item container spacing={2}>
-        <Grid item xs={4}>
-          <Tooltip title='Tooltip on top'>
-            <Button>Sample</Button>
-          </Tooltip>
-        </Grid>
-        <Grid item xs={4}>
-          <Tooltip title='bottom' placement='bottom'>
-            <Button>Sample</Button>
-          </Tooltip>
-        </Grid>
-        <Grid item xs={4}>
-          <Tooltip
-            title='Very very very very very very very very very very very very very very long text'
-            placement='bottom'
-          >
-            <Button>Sample</Button>
-          </Tooltip>
+    <Box className={classes.container}>
+      <Grid container spacing={2}>
+        <Grid item container spacing={2}>
+          <Grid item xs={4}>
+            <Tooltip title='Tooltip'>
+              <Button>Sample</Button>
+            </Tooltip>
+          </Grid>
+          <Grid item xs={4}>
+            <Tooltip
+              title='This is an example to show that 
+tooltip text can be longer.'
+            >
+              <Button>Sample</Button>
+            </Tooltip>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 };
 
@@ -136,7 +137,7 @@ const TooltipDataTemplate = () => {
   return (
     <Grid container spacing={2}>
       <Grid item container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item>
           <Tooltip title={<DataComponent />}>
             <Button>Sample</Button>
           </Tooltip>
@@ -146,8 +147,32 @@ const TooltipDataTemplate = () => {
   );
 };
 
-export const Playground = Template.bind({});
-Playground.args = {};
+const TooltipPositionTemplate = () => {
+  return (
+    <Grid container direction='column' spacing={2}>
+      <Grid item>
+        <TooltipBox arrow={false} />
+      </Grid>
+      <Grid item>
+        <TooltipBox />
+      </Grid>
+      <Grid item>
+        <TooltipBox placement='bottom' />
+      </Grid>
+      <Grid item>
+        <TooltipBox placement='right' />
+      </Grid>
+      <Grid item>
+        <TooltipBox placement='left' />
+      </Grid>
+    </Grid>
+  );
+};
 
-export const Text = TooltipTemplate.bind({});
+export const Playground = TooltipBox;
+
+export const Text = TooltipTextTemplate.bind({});
+
 export const Data = TooltipDataTemplate.bind({});
+
+export const Position = TooltipPositionTemplate.bind({});

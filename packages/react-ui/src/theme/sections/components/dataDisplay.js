@@ -2,6 +2,10 @@ import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
 
+const tooltipArrowSize = 0.75;
+const tooltipSeparation = 0.5;
+const tooltipMargin = tooltipArrowSize + tooltipSeparation;
+
 export const dataDisplayOverrides = {
   // Divider
   MuiDivider: {
@@ -95,23 +99,43 @@ export const dataDisplayOverrides = {
     styleOverrides: {
       tooltip: {
         ...themeTypography.caption,
+        fontWeight: 500,
+        maxWidth: '240px',
         backgroundColor: commonPalette.black[90],
 
         '.MuiTooltip-popper[data-popper-placement*="top"] &': {
-          marginBottom: getSpacing(0.5)
+          marginBottom: getSpacing(tooltipMargin),
+
+          '.MuiTooltip-arrow': {
+            marginBottom: getSpacing(-tooltipArrowSize)
+          }
         },
         '.MuiTooltip-popper[data-popper-placement*="right"] &': {
-          marginLeft: getSpacing(0.5)
+          marginLeft: getSpacing(tooltipMargin),
+
+          '.MuiTooltip-arrow': {
+            marginLeft: getSpacing(-tooltipArrowSize)
+          }
         },
         '.MuiTooltip-popper[data-popper-placement*="bottom"] &': {
-          marginTop: getSpacing(0.5)
+          marginTop: getSpacing(tooltipMargin),
+
+          '.MuiTooltip-arrow': {
+            marginTop: getSpacing(-tooltipArrowSize)
+          }
         },
         '.MuiTooltip-popper[data-popper-placement*="left"] &': {
-          marginRight: getSpacing(0.5)
+          marginRight: getSpacing(tooltipMargin),
+
+          '.MuiTooltip-arrow': {
+            marginRight: getSpacing(-tooltipArrowSize)
+          }
         }
       },
 
       arrow: {
+        width: '10px', // Forced to a non-standard value to meet with design
+        height: getSpacing(tooltipArrowSize),
         color: commonPalette.black[90]
       }
     }
