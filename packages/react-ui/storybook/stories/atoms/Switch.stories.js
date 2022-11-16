@@ -8,7 +8,7 @@ const options = {
     color: {
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary']
+        options: ['primary', 'secondary']
       }
     },
     disabled: {
@@ -28,13 +28,13 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33096'
     },
     status: {
-      type: 'needUpdate'
+      type: 'validated'
     }
   }
 };
 export default options;
 
-const Template = ({ label, color, checked, ...args }) => {
+const Template = ({ label, color, ...args }) => {
   return <FormControlLabel control={<Switch color={color} />} label={label} {...args} />;
 };
 
@@ -47,7 +47,7 @@ const SwitchTemplate = ({ color, ...args }) => {
         </Grid>
         <Grid item xs={4}>
           <FormControlLabel
-            control={<Switch color={color} checked />}
+            control={<Switch color={color} defaultChecked />}
             label='On'
             {...args}
           />
@@ -64,7 +64,7 @@ const SwitchTemplate = ({ color, ...args }) => {
         </Grid>
         <Grid item xs={4}>
           <FormControlLabel
-            control={<Switch color={color} checked disabled />}
+            control={<Switch color={color} defaultChecked disabled />}
             label='Disabled On'
             {...args}
           />
