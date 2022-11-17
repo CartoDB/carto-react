@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tab, Tabs } from '@mui/material';
+import { Grid, Tab, Tabs } from '@mui/material';
 import { Layers, LocalOffer, Map, Place, Store } from '@mui/icons-material';
 
 const options = {
@@ -38,7 +38,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33239'
     },
     status: {
-      type: 'needUpdate'
+      type: 'readyToReview'
     }
   }
 };
@@ -62,7 +62,7 @@ const Template = ({ ...args }) => {
   );
 };
 
-const TemplateOnlyIcons = ({ ...args }) => {
+const TemplateIcons = ({ ...args }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -80,7 +80,7 @@ const TemplateOnlyIcons = ({ ...args }) => {
   );
 };
 
-const TemplateIconsLabels = ({ ...args }) => {
+const TemplateIconsAndText = ({ ...args }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -98,6 +98,74 @@ const TemplateIconsLabels = ({ ...args }) => {
   );
 };
 
+const TemplateText = ({ ...args }) => {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <Tabs value={value} onChange={handleChange} aria-label='tabs example' {...args}>
+      <Tab label='Maps' />
+      <Tab label='Layers' />
+      <Tab label='Tag' />
+      <Tab label='POIs' />
+      <Tab label='Stores' disabled />
+    </Tabs>
+  );
+};
+
+const TemplateWrapped = ({ ...args }) => {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <Tabs value={value} onChange={handleChange} aria-label='tabs example' {...args}>
+      <Tab label='Wrapped Label' />
+      <Tab label='Wrapped Label' />
+      <Tab label='Wrapped Label' />
+      <Tab label='Wrapped Label' />
+      <Tab label='Wrapped Label' disabled />
+    </Tabs>
+  );
+};
+
+const TemplateVertical = ({ ...args }) => {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <Grid container justifyContent='space-between'>
+      <Grid item>
+        <TemplateIcons orientation='vertical' value={value} onChange={handleChange} />
+      </Grid>
+      <Grid item>
+        <TemplateIconsAndText
+          orientation='vertical'
+          value={value}
+          onChange={handleChange}
+        />
+      </Grid>
+      <Grid item>
+        <TemplateText orientation='vertical' value={value} onChange={handleChange} />
+      </Grid>
+      <Grid item>
+        <TemplateWrapped orientation='vertical' value={value} onChange={handleChange} />
+      </Grid>
+    </Grid>
+  );
+};
+
 export const Playground = Template.bind({});
-export const OnlyIcons = TemplateOnlyIcons.bind({});
-export const IconsLabels = TemplateIconsLabels.bind({});
+export const Icons = TemplateIcons.bind({});
+export const IconsAndText = TemplateIconsAndText.bind({});
+export const Text = TemplateText.bind({});
+export const WrappedText = TemplateWrapped.bind({});
+export const Vertical = TemplateVertical.bind({});
