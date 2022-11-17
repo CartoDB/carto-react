@@ -39,7 +39,7 @@ const options = {
 };
 export default options;
 
-const useStylesContainer = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
@@ -55,7 +55,7 @@ const useStylesContainer = makeStyles((theme) => ({
 }));
 
 const TooltipBox = ({ title, ...args }) => {
-  const classes = useStylesContainer();
+  const classes = useStyles();
 
   return (
     <Box className={classes.container}>
@@ -73,7 +73,7 @@ const TooltipBox = ({ title, ...args }) => {
 };
 
 const TooltipPlaygroundTemplate = (args) => {
-  const classes = useStylesContainer();
+  const classes = useStyles();
 
   return (
     <Box className={classes.standalone}>
@@ -87,7 +87,7 @@ const TooltipPlaygroundTemplate = (args) => {
 };
 
 const TooltipTextTemplate = () => {
-  const classes = useStylesContainer();
+  const classes = useStyles();
 
   return (
     <Box className={classes.container}>
@@ -116,25 +116,19 @@ tooltip text can be longer.'
 
 const dataTooltip1 = [
   {
-    value: 123000,
-    outlinedBullet: false,
-    color: commonPalette.qualitative.bold[1]
+    value: 123000
   }
 ];
 const dataTooltip2 = [
   {
-    value: 123000,
-    outlinedBullet: false,
-    color: commonPalette.qualitative.bold[1]
+    value: 123000
   },
   {
     value: 123000,
-    outlinedBullet: false,
     color: commonPalette.qualitative.bold[6]
   },
   {
     value: 123000,
-    outlinedBullet: false,
     color: commonPalette.qualitative.bold[9]
   }
 ];
@@ -142,16 +136,14 @@ const dataTooltip3 = [
   {
     category: 'Category 1',
     value: 123000,
-    outlinedBullet: true,
-    color: commonPalette.qualitative.bold[1]
+    outlinedBullet: true
   }
 ];
 const dataTooltip4 = [
   {
     category: 'Category 1',
     value: 123000,
-    outlinedBullet: true,
-    color: commonPalette.qualitative.bold[1]
+    outlinedBullet: true
   },
   {
     category: 'Category 2',
@@ -235,7 +227,7 @@ const TooltipPositionTemplate = (args) => {
 };
 
 const TooltipBehaviorTemplate = (args) => {
-  const classes = useStylesContainer();
+  const classes = useStyles();
 
   return (
     <Grid container direction='column' spacing={2}>
