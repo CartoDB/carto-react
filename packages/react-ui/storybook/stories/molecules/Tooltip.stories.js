@@ -4,6 +4,7 @@ import { InfoOutlined } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import TooltipData from '../../../src/components/organisms/TooltipData';
+import { commonPalette } from '../../../src/theme/sections/palette';
 
 const options = {
   title: 'Molecules/Tooltip',
@@ -117,24 +118,24 @@ const dataTooltip1 = [
   {
     value: 123000,
     outlinedBullet: false,
-    color: 'primary'
+    color: commonPalette.qualitative.bold[1]
   }
 ];
 const dataTooltip2 = [
   {
     value: 123000,
     outlinedBullet: false,
-    color: 'primary'
+    color: commonPalette.qualitative.bold[1]
   },
   {
     value: 123000,
     outlinedBullet: false,
-    color: 'secondary'
+    color: commonPalette.qualitative.bold[6]
   },
   {
     value: 123000,
     outlinedBullet: false,
-    color: 'secondary'
+    color: commonPalette.qualitative.bold[9]
   }
 ];
 const dataTooltip3 = [
@@ -142,7 +143,7 @@ const dataTooltip3 = [
     category: 'Category 1',
     value: 123000,
     outlinedBullet: true,
-    color: 'primary'
+    color: commonPalette.qualitative.bold[1]
   }
 ];
 const dataTooltip4 = [
@@ -150,19 +151,19 @@ const dataTooltip4 = [
     category: 'Category 1',
     value: 123000,
     outlinedBullet: true,
-    color: 'primary'
+    color: commonPalette.qualitative.bold[1]
   },
   {
     category: 'Category 2',
     value: 123000,
     outlinedBullet: true,
-    color: 'secondary'
+    color: commonPalette.qualitative.bold[6]
   },
   {
     category: 'Category 3',
     value: 123000,
     outlinedBullet: true,
-    color: 'secondary'
+    color: commonPalette.qualitative.bold[9]
   }
 ];
 
