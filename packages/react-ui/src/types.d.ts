@@ -205,3 +205,16 @@ export interface TypographyProps extends MuiTypographyProps {
 export interface ButtonProps extends MuiButtonProps {
   style?: CSSProperties;
 }
+
+// Tooltip data
+export type TooltipDataProps = {
+  items: [
+    {
+      category?: string;
+      value: number;
+      outlinedBullet?: boolean;
+      color?: 'primary' | 'secondary';
+    }
+  ];
+  title?: string;
+};

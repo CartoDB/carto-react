@@ -24,6 +24,7 @@ import NoDataAlert from './widgets/NoDataAlert';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import Typography from './components/atoms/Typography';
 import Button from './components/atoms/Button';
+import TooltipData from './components/organisms/TooltipData';
 
 export {
   theme,
@@ -52,5 +53,6 @@ export {
   LegendProportion,
   LegendRamp,
   Typography,
-  Button
+  Button,
+  TooltipData
 };

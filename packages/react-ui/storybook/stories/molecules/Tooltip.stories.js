@@ -1,8 +1,9 @@
 import React from 'react';
 import { Box, Grid, IconButton, Tooltip } from '@mui/material';
+import { InfoOutlined } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
-import { InfoOutlined } from '@mui/icons-material';
+import TooltipData from '../../../src/components/organisms/TooltipData';
 
 const options = {
   title: 'Molecules/Tooltip',
@@ -90,83 +91,111 @@ const TooltipTextTemplate = () => {
   return (
     <Box className={classes.container}>
       <Grid container spacing={2}>
-        <Grid item container spacing={2}>
-          <Grid item xs={4}>
-            <Tooltip title='Tooltip'>
-              <IconButton>
-                <InfoOutlined />
-              </IconButton>
-            </Tooltip>
-          </Grid>
-          <Grid item xs={4}>
-            <Tooltip
-              title='This is an example to show that 
+        <Grid item xs={4}>
+          <Tooltip title='Tooltip'>
+            <IconButton>
+              <InfoOutlined />
+            </IconButton>
+          </Tooltip>
+        </Grid>
+        <Grid item xs={4}>
+          <Tooltip
+            title='This is an example to show that 
 tooltip text can be longer.'
-            >
-              <IconButton>
-                <InfoOutlined />
-              </IconButton>
-            </Tooltip>
-          </Grid>
+          >
+            <IconButton>
+              <InfoOutlined />
+            </IconButton>
+          </Tooltip>
         </Grid>
       </Grid>
     </Box>
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  data: {
-    padding: theme.spacing(0.5)
-  },
-  list: {
-    listStyle: 'none',
-    paddingLeft: 0,
-    margin: theme.spacing(0.5, 0, 0, 0),
-    fontWeight: theme.typography.fontWeightRegular
-  },
-  item: {
-    display: 'inline-block',
-    width: theme.spacing(1),
-    height: theme.spacing(1),
-    borderRadius: '50%',
-    marginRight: theme.spacing(0.5),
-    backgroundColor: theme.palette.primary.main,
-    '&:not(:last-child())': {
-      marginBottom: theme.spacing(0.5)
-    }
+const dataTooltip1 = [
+  {
+    value: 123000,
+    outlinedBullet: false,
+    color: 'primary'
   }
-}));
-
-const DataComponent = () => {
-  const classes = useStyles();
-  return (
-    <Grid container direction='column' className={classes.data}>
-      <Typography color='inherit' variant='caption'>
-        Category
-      </Typography>
-      <ul className={classes.list}>
-        <li>
-          <span className={classes.item}></span>123,000
-        </li>
-        <li>
-          <span className={classes.item}></span>123,000
-        </li>
-      </ul>
-    </Grid>
-  );
-};
+];
+const dataTooltip2 = [
+  {
+    value: 123000,
+    outlinedBullet: false,
+    color: 'primary'
+  },
+  {
+    value: 123000,
+    outlinedBullet: false,
+    color: 'secondary'
+  },
+  {
+    value: 123000,
+    outlinedBullet: false,
+    color: 'secondary'
+  }
+];
+const dataTooltip3 = [
+  {
+    category: 'Category 1',
+    value: 123000,
+    outlinedBullet: true,
+    color: 'primary'
+  }
+];
+const dataTooltip4 = [
+  {
+    category: 'Category 1',
+    value: 123000,
+    outlinedBullet: true,
+    color: 'primary'
+  },
+  {
+    category: 'Category 2',
+    value: 123000,
+    outlinedBullet: true,
+    color: 'secondary'
+  },
+  {
+    category: 'Category 3',
+    value: 123000,
+    outlinedBullet: true,
+    color: 'secondary'
+  }
+];
 
 const TooltipDataTemplate = () => {
   return (
-    <Grid container spacing={2}>
-      <Grid item container spacing={2}>
-        <Grid item>
-          <Tooltip title={<DataComponent />}>
-            <IconButton>
-              <InfoOutlined />
-            </IconButton>
-          </Tooltip>
-        </Grid>
+    <Grid container justifyContent='space-between' spacing={2}>
+      <Grid item>
+        <Tooltip title={<TooltipData title='Title' items={dataTooltip1} />}>
+          <IconButton>
+            <InfoOutlined />
+          </IconButton>
+        </Tooltip>
+      </Grid>
+      <Grid item>
+        <Tooltip title={<TooltipData title='Title' items={dataTooltip2} />}>
+          <IconButton>
+            <InfoOutlined />
+          </IconButton>
+        </Tooltip>
+      </Grid>
+      <Grid item>
+        <Tooltip title={<TooltipData title='Title' items={dataTooltip3} />}>
+          <IconButton>
+            <InfoOutlined />
+          </IconButton>
+        </Tooltip>
+      </Grid>
+      <Grid item>
+        <Tooltip title={<TooltipData title='Title' items={dataTooltip4} />}>
+          <IconButton>
+            <InfoOutlined />
+          </IconButton>
+        </Tooltip>
       </Grid>
     </Grid>
   );
@@ -204,6 +233,37 @@ const TooltipPositionTemplate = (args) => {
   );
 };
 
+const TooltipBehaviorTemplate = (args) => {
+  const classes = useStylesContainer();
+
+  return (
+    <Grid container direction='column' spacing={2}>
+      <Grid item>
+        <TooltipBox {...args} title='Default' />
+      </Grid>
+
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Follow cursor'}
+          </Typography>
+
+          <Tooltip
+            {...args}
+            followCursor
+            arrow={false}
+            title='When followCursor is true, Tooltip should have arrow={false} property too'
+          >
+            <IconButton>
+              <InfoOutlined />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      </Grid>
+    </Grid>
+  );
+};
+
 export const Playground = TooltipPlaygroundTemplate;
 Playground.args = { title: 'Text' };
 
@@ -214,3 +274,5 @@ export const Data = TooltipDataTemplate.bind({});
 export const Arrow = TooltipArrowTemplate.bind({});
 
 export const Position = TooltipPositionTemplate.bind({});
+
+export const Behavior = TooltipBehaviorTemplate.bind({});
