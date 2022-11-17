@@ -2,7 +2,7 @@ import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
 
-const tooltipArrowSize = 0.75;
+const tooltipArrowSize = 1;
 const tooltipSeparation = 0.5;
 const tooltipMargin = tooltipArrowSize + tooltipSeparation;
 
@@ -93,7 +93,9 @@ export const dataDisplayOverrides = {
   MuiTooltip: {
     defaultProps: {
       arrow: true,
-      placement: 'top'
+      placement: 'top',
+      enterDelay: 1000,
+      leaveDelay: 200
     },
 
     styleOverrides: {
@@ -104,37 +106,36 @@ export const dataDisplayOverrides = {
         backgroundColor: commonPalette.black[90],
 
         '.MuiTooltip-popper[data-popper-placement*="top"] &': {
-          marginBottom: getSpacing(tooltipMargin),
+          marginBottom: getSpacing(tooltipSeparation),
 
-          '.MuiTooltip-arrow': {
-            marginBottom: getSpacing(-tooltipArrowSize)
+          '&.MuiTooltip-tooltipArrow': {
+            marginBottom: getSpacing(tooltipMargin)
           }
         },
         '.MuiTooltip-popper[data-popper-placement*="right"] &': {
-          marginLeft: getSpacing(tooltipMargin),
+          marginLeft: getSpacing(tooltipSeparation),
 
-          '.MuiTooltip-arrow': {
-            marginLeft: getSpacing(-tooltipArrowSize)
+          '&.MuiTooltip-tooltipArrow': {
+            marginLeft: getSpacing(tooltipMargin)
           }
         },
         '.MuiTooltip-popper[data-popper-placement*="bottom"] &': {
-          marginTop: getSpacing(tooltipMargin),
+          marginTop: getSpacing(tooltipSeparation),
 
-          '.MuiTooltip-arrow': {
-            marginTop: getSpacing(-tooltipArrowSize)
+          '&.MuiTooltip-tooltipArrow': {
+            marginTop: getSpacing(tooltipMargin)
           }
         },
         '.MuiTooltip-popper[data-popper-placement*="left"] &': {
-          marginRight: getSpacing(tooltipMargin),
+          marginRight: getSpacing(tooltipSeparation),
 
-          '.MuiTooltip-arrow': {
-            marginRight: getSpacing(-tooltipArrowSize)
+          '&.MuiTooltip-tooltipArrow': {
+            marginRight: getSpacing(tooltipMargin)
           }
         }
       },
 
       arrow: {
-        width: '10px', // Forced to a non-standard value to meet with design
         height: getSpacing(tooltipArrowSize),
         color: commonPalette.black[90]
       }

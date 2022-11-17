@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Grid, IconButton, Tooltip } from '@mui/material';
+import { Box, Grid, IconButton, Tooltip } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import { InfoOutlined } from '@mui/icons-material';
@@ -9,7 +9,6 @@ const options = {
   component: Tooltip,
   argTypes: {
     title: {
-      defaultValue: 'Hello World!',
       control: {
         type: 'text'
       }
@@ -24,11 +23,6 @@ const options = {
       control: {
         type: 'boolean'
       }
-    },
-    interactive: {
-      control: {
-        type: 'boolean'
-      }
     }
   },
   parameters: {
@@ -37,7 +31,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A36257'
     },
     status: {
-      type: 'inDevelopment'
+      type: 'readyToReview'
     }
   }
 };
@@ -46,16 +40,41 @@ export default options;
 const useStylesContainer = makeStyles((theme) => ({
   container: {
     display: 'flex',
-    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: theme.spacing(4)
+  },
+  standalone: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  label: {
+    minWidth: '200px'
   }
 }));
 
-const TooltipBox = ({ ...args }) => {
+const TooltipBox = ({ title, ...args }) => {
   const classes = useStylesContainer();
 
   return (
     <Box className={classes.container}>
+      <Typography variant='body2' className={classes.label}>
+        {title}
+      </Typography>
+
+      <Tooltip {...args} title={title}>
+        <IconButton>
+          <InfoOutlined />
+        </IconButton>
+      </Tooltip>
+    </Box>
+  );
+};
+
+const TooltipPlaygroundTemplate = (args) => {
+  const classes = useStylesContainer();
+
+  return (
+    <Box className={classes.standalone}>
       <Tooltip {...args}>
         <IconButton>
           <InfoOutlined />
@@ -74,7 +93,9 @@ const TooltipTextTemplate = () => {
         <Grid item container spacing={2}>
           <Grid item xs={4}>
             <Tooltip title='Tooltip'>
-              <Button>Sample</Button>
+              <IconButton>
+                <InfoOutlined />
+              </IconButton>
             </Tooltip>
           </Grid>
           <Grid item xs={4}>
@@ -82,7 +103,9 @@ const TooltipTextTemplate = () => {
               title='This is an example to show that 
 tooltip text can be longer.'
             >
-              <Button>Sample</Button>
+              <IconButton>
+                <InfoOutlined />
+              </IconButton>
             </Tooltip>
           </Grid>
         </Grid>
@@ -139,7 +162,9 @@ const TooltipDataTemplate = () => {
       <Grid item container spacing={2}>
         <Grid item>
           <Tooltip title={<DataComponent />}>
-            <Button>Sample</Button>
+            <IconButton>
+              <InfoOutlined />
+            </IconButton>
           </Tooltip>
         </Grid>
       </Grid>
@@ -147,32 +172,45 @@ const TooltipDataTemplate = () => {
   );
 };
 
-const TooltipPositionTemplate = () => {
+const TooltipArrowTemplate = (args) => {
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
-        <TooltipBox arrow={false} />
+        <TooltipBox {...args} title='No arrow' arrow={false} />
       </Grid>
       <Grid item>
-        <TooltipBox />
-      </Grid>
-      <Grid item>
-        <TooltipBox placement='bottom' />
-      </Grid>
-      <Grid item>
-        <TooltipBox placement='right' />
-      </Grid>
-      <Grid item>
-        <TooltipBox placement='left' />
+        <TooltipBox {...args} title='Tooltip with arrow' />
       </Grid>
     </Grid>
   );
 };
 
-export const Playground = TooltipBox;
+const TooltipPositionTemplate = (args) => {
+  return (
+    <Grid container direction='column' spacing={2}>
+      <Grid item>
+        <TooltipBox {...args} title='Tooltip top' />
+      </Grid>
+      <Grid item>
+        <TooltipBox {...args} title='Tooltip right' placement='right' />
+      </Grid>
+      <Grid item>
+        <TooltipBox {...args} title='Tooltip left' placement='left' />
+      </Grid>
+      <Grid item>
+        <TooltipBox {...args} title='Tooltip bottom' placement='bottom' />
+      </Grid>
+    </Grid>
+  );
+};
+
+export const Playground = TooltipPlaygroundTemplate;
+Playground.args = { title: 'Text' };
 
 export const Text = TooltipTextTemplate.bind({});
 
 export const Data = TooltipDataTemplate.bind({});
+
+export const Arrow = TooltipArrowTemplate.bind({});
 
 export const Position = TooltipPositionTemplate.bind({});
