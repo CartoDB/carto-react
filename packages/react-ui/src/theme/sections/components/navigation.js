@@ -15,8 +15,7 @@ export const navigationOverrides = {
   // Tabs
   MuiTabs: {
     defaultProps: {
-      indicatorColor: 'primary',
-      textColor: 'primary',
+      iconPosition: 'start',
       TabIndicatorProps: {
         classes: {
           colorPrimary: 'colorPrimary'
@@ -24,53 +23,31 @@ export const navigationOverrides = {
       }
     },
     styleOverrides: {
-      indicator: {
-        height: 4,
-        '&.colorPrimary': {
-          backgroundColor: commonPalette.text.primary
-        }
+      root: {
+        borderBottom: `1px solid ${commonPalette.black[12]}`
       },
 
       vertical: {
-        '& .MuiTabs-indicator': {
-          width: 4
-        },
-
-        '& .MuiTab-root': {
-          padding: getSpacing(0, 2),
-
-          '& .MuiTab-wrapper': {
-            alignItems: 'flex-start'
-          }
-        }
+        borderBottom: 0
       }
     }
   },
 
   // Tab
   MuiTab: {
+    defaultProps: {
+      iconPosition: 'start'
+    },
+
     styleOverrides: {
       root: {
-        padding: getSpacing(0, 1),
-        marginRight: getSpacing(3),
-        minWidth: '56px!important',
-        '&[class*="MuiTab-labelIcon"]': {
-          flexFlow: 'row',
-          alignItems: 'center'
-        },
-        '&[class*="MuiTab-labelIcon"] .MuiSvgIcon-root': {
-          marginRight: getSpacing(1),
-          marginBottom: 0
-        }
-      },
-      textColorPrimary: {
-        color: commonPalette.primary.main,
-        opacity: 1,
-        '&.Mui-selected': {
-          color: commonPalette.text.primary
-        },
+        minHeight: getSpacing(6),
+        minWidth: getSpacing(6),
+        padding: getSpacing(0, 1.875), // Forced to a non-standard value to meet with design
+        color: commonPalette.text.primary,
+
         '&.Mui-disabled': {
-          color: commonPalette.action.disabled
+          color: commonPalette.text.disabled
         }
       }
     }
