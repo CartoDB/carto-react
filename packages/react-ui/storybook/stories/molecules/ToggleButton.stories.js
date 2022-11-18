@@ -113,7 +113,7 @@ const ToggleRow = ({ label, divider, fullWidth, ...rest }) => {
   );
 };
 
-const SizesTemplate = (args) => {
+const IconTemplate = (args) => {
   return (
     <Grid container alignItems='center' spacing={4}>
       <Grid item>
@@ -174,6 +174,9 @@ const DividedTemplate = (args) => {
       <Grid item>
         <ToggleRow divider />
       </Grid>
+      <Grid item>
+        <ToggleRow divider size='small' />
+      </Grid>
     </Grid>
   );
 };
@@ -224,19 +227,19 @@ const BehaviorTemplate = (args) => {
 
 export const Playground = ToggleRow.bind({});
 
-export const Sizes = SizesTemplate.bind({});
+export const Icon = IconTemplate.bind({});
 
 export const Text = TextTemplate.bind({});
-
-export const HorizontalGroup = GroupTemplate.bind({});
-
-export const HorizontalTextGroup = GroupTemplate.bind({});
-HorizontalTextGroup.args = { label: 'Text' };
 
 export const VerticalGroup = VerticalGroupTemplate.bind({});
 VerticalGroup.args = { orientation: 'vertical' };
 
+export const HorizontalGroup = GroupTemplate.bind({});
+
 export const DividedGroup = DividedTemplate.bind({});
+
+export const HorizontalTextGroup = GroupTemplate.bind({});
+HorizontalTextGroup.args = { label: 'Text' };
 
 export const MultipleSelectionGroup = GroupTemplate.bind({});
 MultipleSelectionGroup.args = { exclusive: false };
