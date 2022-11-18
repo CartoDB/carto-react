@@ -51,7 +51,7 @@ const IconButtons = ({ color, label, size, disabled, title, ...rest }) => {
     <Grid item xs={3}>
       <Grid container direction='column' alignItems='center' spacing={2}>
         {title && <Typography variant='body2'>{title}</Typography>}
-        <Tooltip title={`${label} ${tooltipHelp}`} placement='top'>
+        <Tooltip title={`${label} ${tooltipHelp}`}>
           <IconButton
             {...rest}
             aria-label={label}

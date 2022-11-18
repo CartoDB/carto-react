@@ -167,7 +167,7 @@ function Header({
         <Typography variant='subtitle1'>{title}</Typography>
       </Button>
       {!!layerOptionsEnabled && (
-        <Tooltip title='Layer options' placement='top' arrow>
+        <Tooltip title='Layer options'>
           <ToggleButton
             selected={isLayerOptionsExpanded}
             onClick={onToggleLayerOptions}
@@ -178,7 +178,7 @@ function Header({
         </Tooltip>
       )}
       {switchable && (
-        <Tooltip title={(visible ? 'Hide' : 'Show') + ' layer'} placement='top' arrow>
+        <Tooltip title={(visible ? 'Hide' : 'Show') + ' layer'}>
           <Switch checked={visible} onChange={onChangeVisibility} />
         </Tooltip>
       )}

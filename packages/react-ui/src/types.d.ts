@@ -205,3 +205,17 @@ export interface TypographyProps extends MuiTypographyProps {
 export interface ButtonProps extends MuiButtonProps {
   style?: CSSProperties;
 }
+
+// Tooltip data
+// Export types and component if we need it outsite C4R
+type TooltipDataProps = {
+  items: [
+    {
+      category?: string;
+      value: string | number;
+      outlinedBullet?: boolean;
+      color?: 'primary' | 'secondary';
+    }
+  ];
+  title?: string;
+};
