@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix `executeSQL` through **POST** request [#531](https://github.com/CartoDB/carto-react/pull/531)
+
 ## 1.5
 
 ### 1.5.0-alpha.7 (2022-11-09)
