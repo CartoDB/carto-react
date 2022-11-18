@@ -147,7 +147,6 @@ function GeometryViewer({
       <Tooltip
         title={isDisabled ? 'Apply mask' : 'Clear mask'}
         placement={tooltipPlacement}
-        arrow
       >
         <Chip
           label='Mask'
@@ -195,7 +194,7 @@ function SelectedModeViewer({
   const onEnabledChangeWrapper = () => onEnabledChange(!enabled);
 
   return (
-    <Tooltip title={tooltipTitle} placement={tooltipPlacement} arrow>
+    <Tooltip title={tooltipTitle} placement={tooltipPlacement}>
       <IconButton onClick={onEnabledChangeWrapper} className={classes.btn} size='large'>
         {icon}
       </IconButton>
@@ -272,7 +271,7 @@ function ModesSelector({
 
   return (
     <Box>
-      <Tooltip title='Select a mode' placement={tooltipPlacement} arrow>
+      <Tooltip title='Select a mode' placement={tooltipPlacement}>
         <IconButton
           id='fade-button'
           aria-controls='fade-menu'

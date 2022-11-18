@@ -138,7 +138,7 @@ function StepsDiscontinuous({ labels = [], palette = [], max, min }) {
             : `${label} - ${rightLabels[idx + 1]}`;
 
         return (
-          <Tooltip key={idx} title={title} placement='top' arrow>
+          <Tooltip key={idx} title={title}>
             <Grid
               item
               xs

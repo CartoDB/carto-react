@@ -184,7 +184,7 @@ function WrapperWidgetUI(props) {
           }
           onClick={handleExpandClick}
         >
-          <Tooltip title={props.title} placement='top' arrow>
+          <Tooltip title={props.title}>
             <Typography className={classes.buttonText} align='left' variant='subtitle1'>
               {props.title}
             </Typography>
