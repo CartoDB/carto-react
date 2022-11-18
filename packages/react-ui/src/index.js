@@ -24,7 +24,6 @@ import LassoIcon from './assets/LassoIcon';
 import CircleIcon from './assets/CircleIcon';
 import Typography from './components/atoms/Typography';
 import Button from './components/atoms/Button';
-// import TooltipData from './components/organisms/TooltipData';
 
 const featureSelectionIcons = {
   CursorIcon,
@@ -59,5 +58,4 @@ export {
   LegendRamp,
   Typography,
   Button
-  // TooltipData
 };

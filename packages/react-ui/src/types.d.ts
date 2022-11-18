@@ -207,6 +207,7 @@ export interface ButtonProps extends MuiButtonProps {
 }
 
 // Tooltip data
+// Export types and component if we need it outsite C4R
 type TooltipDataProps = {
   items: [
     {
