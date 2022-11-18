@@ -82,7 +82,7 @@ TooltipData.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       category: PropTypes.string,
-      value: PropTypes.number.isRequired,
+      value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
       outlinedBullet: PropTypes.bool,
       color: PropTypes.string
     })

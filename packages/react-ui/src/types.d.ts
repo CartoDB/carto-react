@@ -211,7 +211,7 @@ type TooltipDataProps = {
   items: [
     {
       category?: string;
-      value: number;
+      value: string | number;
       outlinedBullet?: boolean;
       color?: 'primary' | 'secondary';
     }
