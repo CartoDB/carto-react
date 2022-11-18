@@ -207,7 +207,7 @@ export interface ButtonProps extends MuiButtonProps {
 }
 
 // Tooltip data
-export type TooltipDataProps = {
+type TooltipDataProps = {
   items: [
     {
       category?: string;

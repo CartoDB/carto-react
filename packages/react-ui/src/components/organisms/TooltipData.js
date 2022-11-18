@@ -51,8 +51,7 @@ const TooltipData = ({ items, title }) => {
             <span
               className={classes.bullet}
               style={{
-                backgroundColor: `${item.outlinedBullet ? 'transparent' : item.color}
-            `,
+                backgroundColor: `${item.outlinedBullet ? 'transparent' : item.color}`,
                 borderColor: item.color
               }}
             ></span>
