@@ -123,15 +123,13 @@ const TemplateWrapped = ({ ...args }) => {
   };
 
   return (
-    <Box style={{ width: '100%', maxWidth: '534px' }}>
-      <Tabs {...args} value={value} onChange={handleChange} aria-label='tabs example'>
-        <Tab label='Wrapped Label' wrapped />
-        <Tab label='Wrapped Label' wrapped />
-        <Tab label='Wrapped Label' wrapped />
-        <Tab label='Wrapped Label' wrapped />
-        <Tab label='Wrapped Label' wrapped disabled />
-      </Tabs>
-    </Box>
+    <Tabs {...args} value={value} onChange={handleChange} aria-label='tabs example'>
+      <Tab label='Wrapped Label' wrapped />
+      <Tab label='Wrapped Label' wrapped />
+      <Tab label='Wrapped Label' wrapped />
+      <Tab label='Wrapped Label' wrapped />
+      <Tab label='Wrapped Label' wrapped disabled />
+    </Tabs>
   );
 };
 

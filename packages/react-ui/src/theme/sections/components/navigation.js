@@ -23,9 +23,13 @@ export const navigationOverrides = {
       }
     },
     styleOverrides: {
-      root: {
-        borderBottom: `1px solid ${commonPalette.black[12]}`
-      },
+      root: ({ ownerState }) => ({
+        borderBottom: `1px solid ${commonPalette.black[12]}`,
+
+        ...(ownerState.variant !== 'fullWidth' && {
+          display: 'inline-flex'
+        })
+      }),
 
       vertical: {
         borderBottom: 0
@@ -41,14 +45,40 @@ export const navigationOverrides = {
 
     styleOverrides: {
       root: {
+        zIndex: 1,
         minHeight: getSpacing(6),
         minWidth: getSpacing(6),
         padding: getSpacing(0, 1.875), // Forced to a non-standard value to meet with design
+        paddingTop: '2px',
+        borderBottom: '2px solid transparent',
+        ...themeTypography.subtitle2,
         color: commonPalette.text.primary,
+        transition: 'border 300ms cubic-bezier(0.4, 0, 0.2, 1)',
 
-        '&.Mui-disabled': {
-          color: commonPalette.text.disabled
+        '&:hover': {
+          borderBottomColor: commonPalette.text.primary,
+
+          '.Mui-selected&': {
+            // color: commonPalette.text.primary, TODO pending design decision
+          }
+        },
+        '.MuiTabs-vertical &': {
+          paddingTop: 0,
+          borderBottom: 0,
+          paddingLeft: '2px',
+          borderRight: '2px solid transparent',
+
+          '&:hover': {
+            borderRightColor: commonPalette.text.primary,
+
+            '.Mui-selected&': {
+              // color: commonPalette.text.primary, TODO pending design decision
+            }
+          }
         }
+      },
+      wrapped: {
+        maxWidth: '100px' // Forced to a non-standard value to meet with design
       }
     }
   },
