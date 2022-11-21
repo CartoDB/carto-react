@@ -47,7 +47,7 @@ export const navigationOverrides = {
       root: {
         minHeight: getSpacing(6),
         minWidth: getSpacing(6),
-        padding: getSpacing(0, 1.875), // Forced to a non-standard value to meet with design
+        padding: getSpacing(0, 2),
         paddingTop: '2px',
         borderBottom: '2px solid transparent',
         ...themeTypography.subtitle2,
