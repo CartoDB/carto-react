@@ -45,7 +45,6 @@ export const navigationOverrides = {
 
     styleOverrides: {
       root: {
-        zIndex: 1,
         minHeight: getSpacing(6),
         minWidth: getSpacing(6),
         padding: getSpacing(0, 1.875), // Forced to a non-standard value to meet with design
@@ -56,11 +55,10 @@ export const navigationOverrides = {
         transition: 'border 300ms cubic-bezier(0.4, 0, 0.2, 1)',
 
         '&:hover': {
-          borderBottomColor: commonPalette.text.primary,
-
-          '.Mui-selected&': {
-            // color: commonPalette.text.primary, TODO pending design decision
-          }
+          borderBottomColor: commonPalette.text.primary
+        },
+        '.Mui-selected&': {
+          pointerEvents: 'none'
         },
         '.MuiTabs-vertical &': {
           paddingTop: 0,
@@ -69,11 +67,7 @@ export const navigationOverrides = {
           borderRight: '2px solid transparent',
 
           '&:hover': {
-            borderRightColor: commonPalette.text.primary,
-
-            '.Mui-selected&': {
-              // color: commonPalette.text.primary, TODO pending design decision
-            }
+            borderRightColor: commonPalette.text.primary
           }
         }
       },

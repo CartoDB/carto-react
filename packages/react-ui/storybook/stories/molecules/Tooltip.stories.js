@@ -2,9 +2,10 @@ import React from 'react';
 import { Box, Grid, IconButton, Tooltip } from '@mui/material';
 import { InfoOutlined } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
-import Typography from '../../../src/components/atoms/Typography';
-import TooltipData from '../../../src/components/organisms/TooltipData';
 import { commonPalette } from '../../../src/theme/sections/palette';
+import TooltipData from '../../../src/components/organisms/TooltipData';
+import Typography from '../../../src/components/atoms/Typography';
+import Button from '../../../src/components/atoms/Button';
 
 const options = {
   title: 'Molecules/Tooltip',
@@ -247,9 +248,7 @@ const TooltipBehaviorTemplate = (args) => {
             arrow={false}
             title='When followCursor is true, Tooltip should have arrow={false} property too'
           >
-            <IconButton>
-              <InfoOutlined />
-            </IconButton>
+            <Button variant='outlined'>{'Long Button'}</Button>
           </Tooltip>
         </Box>
       </Grid>
