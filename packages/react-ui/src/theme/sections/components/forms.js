@@ -54,125 +54,43 @@ export const formsOverrides = {
 
   // Input Adornment
   MuiInputAdornment: {
-    defaultProps: {
-      disableTypography: true
-    },
-
     styleOverrides: {
-      root: {
-        ...themeTypography.body1,
-        alignItems: 'baseline',
-        marginBottom: getSpacing(1.5),
-        color: commonPalette.text.secondary,
-
-        '&:disabled': {
-          color: commonPalette.action.disabled
-        },
-
-        '& .MuiSvgIcon-root': {
-          fontSize: `${themeTypography.body1.lineHeight}em`
-        }
-      },
-
-      positionStart: {
-        marginLeft: getSpacing(0.25)
-      },
-
-      positionEnd: {
-        marginRight: getSpacing(0.25)
-      },
-
-      marginDense: {
-        marginBottom: getSpacing(0),
-        alignItems: 'center',
-        ...themeTypography.body2,
-
-        '& .MuiTypography-root': {
-          ...themeTypography.body2
-        },
-
-        '& .MuiSvgIcon-root': {
-          fontSize: `${themeTypography.body2.lineHeight}em`
-        }
-      }
+      root: {}
     }
   },
 
   // Text Field
   MuiTextField: {
     defaultProps: {
-      variant: 'outlined'
+      InputLabelProps: {
+        shrink: true
+      }
+    },
+    styleOverrides: {
+      root: {
+        minWidth: '192px'
+      }
     }
   },
 
   // Form Helper Text
   MuiFormHelperText: {
     styleOverrides: {
-      root: {
-        ...themeTypography.caption,
-        '&.MuiFormHelperText-contained': {
-          marginTop: getSpacing(1)
-        }
-      },
-
-      marginDense: {
-        '&.MuiFormHelperText-contained': {
-          marginLeft: getSpacing(0)
-        }
-      }
+      root: {}
     }
   },
 
   // Form Control
   MuiFormControl: {
     styleOverrides: {
-      root: {
-        width: '100%'
-      }
+      root: {}
     }
   },
 
   // Label
   MuiInputLabel: {
     styleOverrides: {
-      root: {
-        ...themeTypography.body1
-      },
-
-      formControl: {
-        transform: 'translate(16px, 20px) scale(1)',
-
-        '&.MuiInputLabel-shrink': {
-          ...themeTypography.caption,
-          transform: 'translate(16px, 8px) scale(1)'
-        },
-
-        '&.MuiFormControl-marginDense': {
-          ...themeTypography.caption,
-          transform: 'translate(0, -20px) scale(1)',
-
-          '&.MuiInputLabel-shrink': {
-            ...themeTypography.caption,
-            transform: 'translate(0, -20px) scale(1)'
-          }
-        }
-      },
-
-      outlined: {
-        '&.MuiInputLabel-shrink': {
-          ...themeTypography.caption,
-          transform: 'translate(16px, 8px) scale(1)'
-        },
-
-        '&.MuiFormControl-marginDense': {
-          ...themeTypography.caption,
-          transform: 'translate(0, -20px) scale(1)',
-
-          '&.MuiInputLabel-shrink': {
-            transform: 'translate(0, -20px) scale(1)'
-          }
-        }
-      }
+      root: {}
     }
   },
 
