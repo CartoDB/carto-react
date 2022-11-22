@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Tabs component adapted to the new design system [#537](https://github.com/CartoDB/carto-react/pull/537/)
 - Tooltip component adapted to the new design system [#536](https://github.com/CartoDB/carto-react/pull/536/)
 - Switch component adapted to the new design system [#534](https://github.com/CartoDB/carto-react/pull/534/)
 - Design review of Toggle component [#533](https://github.com/CartoDB/carto-react/pull/533)

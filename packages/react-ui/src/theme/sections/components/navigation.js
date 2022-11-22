@@ -57,7 +57,7 @@ export const navigationOverrides = {
         '&:hover': {
           borderBottomColor: commonPalette.text.primary
         },
-        '.Mui-selected&': {
+        '&.Mui-selected': {
           pointerEvents: 'none'
         },
         '.MuiTabs-vertical &': {

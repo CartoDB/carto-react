@@ -29,6 +29,12 @@ const options = {
       control: {
         type: 'boolean'
       }
+    },
+    disabled: {
+      defaultValue: true,
+      control: {
+        type: 'boolean'
+      }
     }
   },
   parameters: {
@@ -43,7 +49,7 @@ const options = {
 };
 export default options;
 
-const Template = ({ ...args }) => {
+const Template = ({ label, wrapped, disabled, ...args }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -52,16 +58,16 @@ const Template = ({ ...args }) => {
 
   return (
     <Tabs {...args} value={value} onChange={handleChange} aria-label='tabs example'>
-      <Tab label='Maps' />
-      <Tab label='Layers' />
-      <Tab label='Tag' />
-      <Tab label='POIs' />
-      <Tab label='Stores' disabled />
+      <Tab label={label} wrapped={wrapped} />
+      <Tab label={label} wrapped={wrapped} />
+      <Tab label={label} wrapped={wrapped} />
+      <Tab label={label} wrapped={wrapped} />
+      <Tab label={label} wrapped={wrapped} disabled={disabled} />
     </Tabs>
   );
 };
 
-const TemplateIcons = ({ ...args }) => {
+const TemplateIcons = ({ label, wrapped, disabled, ...args }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -70,16 +76,16 @@ const TemplateIcons = ({ ...args }) => {
 
   return (
     <Tabs {...args} value={value} onChange={handleChange} aria-label='tabs example'>
-      <Tab icon={<Map />} />
-      <Tab icon={<Layers />} />
-      <Tab icon={<LocalOffer />} />
-      <Tab icon={<Place />} />
-      <Tab icon={<Store />} disabled />
+      <Tab icon={<Map />} label={label} wrapped={wrapped} />
+      <Tab icon={<Layers />} label={label} wrapped={wrapped} />
+      <Tab icon={<LocalOffer />} label={label} wrapped={wrapped} />
+      <Tab icon={<Place />} label={label} wrapped={wrapped} />
+      <Tab icon={<Store />} label={label} wrapped={wrapped} disabled={disabled} />
     </Tabs>
   );
 };
 
-const TemplateIconsAndText = ({ ...args }) => {
+const TemplateIconsAndText = ({ label, wrapped, disabled, ...args }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -88,16 +94,16 @@ const TemplateIconsAndText = ({ ...args }) => {
 
   return (
     <Tabs {...args} value={value} onChange={handleChange} aria-label='tabs example'>
-      <Tab label='Maps' icon={<Map />} />
-      <Tab label='Layers' icon={<Layers />} />
-      <Tab label='Tag' icon={<LocalOffer />} />
-      <Tab label='POIs' icon={<Place />} />
-      <Tab label='Stores' icon={<Store />} disabled />
+      <Tab icon={<Map />} label={label} wrapped={wrapped} />
+      <Tab icon={<Layers />} label={label} wrapped={wrapped} />
+      <Tab icon={<LocalOffer />} label={label} wrapped={wrapped} />
+      <Tab icon={<Place />} label={label} wrapped={wrapped} />
+      <Tab icon={<Store />} label={label} wrapped={wrapped} disabled={disabled} />
     </Tabs>
   );
 };
 
-const TemplateText = ({ ...args }) => {
+const TemplateText = ({ label, wrapped, disabled, ...args }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -106,16 +112,16 @@ const TemplateText = ({ ...args }) => {
 
   return (
     <Tabs {...args} value={value} onChange={handleChange} aria-label='tabs example'>
-      <Tab label='Maps' />
-      <Tab label='Layers' />
-      <Tab label='Tag' />
-      <Tab label='POIs' />
-      <Tab label='Stores' disabled />
+      <Tab label={label} wrapped={wrapped} />
+      <Tab label={label} wrapped={wrapped} />
+      <Tab label={label} wrapped={wrapped} />
+      <Tab label={label} wrapped={wrapped} />
+      <Tab label={label} wrapped={wrapped} disabled={disabled} />
     </Tabs>
   );
 };
 
-const TemplateWrapped = ({ ...args }) => {
+const TemplateWrapped = ({ label, wrapped, disabled, ...args }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -124,14 +130,14 @@ const TemplateWrapped = ({ ...args }) => {
 
   return (
     <Tabs {...args} value={value} onChange={handleChange} aria-label='tabs example'>
-      <Tab label='Wrapped Label used for a very long text' wrapped />
-      <Tab label='Wrapped Label used for a very long text' wrapped />
-      <Tab label='Wrapped Label used for a very long text' wrapped disabled />
+      <Tab label={label} wrapped={wrapped} />
+      <Tab label={label} wrapped={wrapped} />
+      <Tab label={label} wrapped={wrapped} disabled={disabled} />
     </Tabs>
   );
 };
 
-const TemplateVertical = ({ ...args }) => {
+const TemplateVertical = ({ label, wrapped, disabled, ...args }) => {
   const [value, setValue] = React.useState(0);
   const [value2, setValue2] = React.useState(0);
   const [value3, setValue3] = React.useState(0);
@@ -153,36 +159,66 @@ const TemplateVertical = ({ ...args }) => {
   return (
     <Grid container justifyContent='space-between'>
       <Grid item>
-        <TemplateIcons
+        <Tabs
           {...args}
           orientation='vertical'
           value={value}
           onChange={handleChange}
-        />
+          aria-label='tabs example'
+        >
+          <Tab icon={<Map />} />
+          <Tab icon={<Layers />} />
+          <Tab icon={<LocalOffer />} />
+          <Tab icon={<Place />} />
+          <Tab icon={<Store />} disabled={disabled} />
+        </Tabs>
       </Grid>
       <Grid item>
-        <TemplateIconsAndText
+        <Tabs
           {...args}
           orientation='vertical'
           value={value2}
           onChange={handleChange2}
-        />
+          aria-label='tabs example'
+        >
+          <Tab icon={<Map />} label={label} wrapped={wrapped} />
+          <Tab icon={<Layers />} label={label} wrapped={wrapped} />
+          <Tab icon={<LocalOffer />} label={label} wrapped={wrapped} />
+          <Tab icon={<Place />} label={label} wrapped={wrapped} />
+          <Tab icon={<Store />} label={label} wrapped={wrapped} disabled={disabled} />
+        </Tabs>
       </Grid>
       <Grid item>
-        <TemplateText
+        <Tabs
           {...args}
           orientation='vertical'
           value={value3}
           onChange={handleChange3}
-        />
+          aria-label='tabs example'
+        >
+          <Tab label={label} wrapped={wrapped} />
+          <Tab label={label} wrapped={wrapped} />
+          <Tab label={label} wrapped={wrapped} />
+          <Tab label={label} wrapped={wrapped} />
+          <Tab label={label} wrapped={wrapped} disabled={disabled} />
+        </Tabs>
       </Grid>
       <Grid item>
-        <TemplateWrapped
+        <Tabs
           {...args}
           orientation='vertical'
           value={value4}
           onChange={handleChange4}
-        />
+          aria-label='tabs example'
+        >
+          <Tab label='Wrapped Label used for a very long text' wrapped />
+          <Tab label='Wrapped Label used for a very long text' wrapped />
+          <Tab
+            label='Wrapped Label used for a very long text'
+            wrapped
+            disabled={disabled}
+          />
+        </Tabs>
       </Grid>
     </Grid>
   );
@@ -243,16 +279,35 @@ const BehaviorTemplate = (args) => {
   );
 };
 
+const commonArgs = { label: 'Label', disabled: true };
+const disabledControlsVerticalArgTypes = {
+  orientation: { table: { disable: true } },
+  variant: { table: { disable: true } }
+};
+const disabledControlsBehaviorArgTypes = {
+  label: { table: { disable: true } },
+  wrapped: { table: { disable: true } },
+  variant: { table: { disable: true } },
+  disabled: { table: { disable: true } }
+};
+
 export const Playground = Template.bind({});
+Playground.args = { ...commonArgs };
 
 export const Icons = TemplateIcons.bind({});
 
 export const IconsAndText = TemplateIconsAndText.bind({});
+IconsAndText.args = { ...commonArgs };
 
 export const Text = TemplateText.bind({});
+Text.args = { ...commonArgs };
 
 export const WrappedText = TemplateWrapped.bind({});
+WrappedText.args = { label: 'Wrapped Label used for a very long text', wrapped: true };
 
 export const Vertical = TemplateVertical.bind({});
+Vertical.args = { ...commonArgs, orientation: 'vertical' };
+Vertical.argTypes = disabledControlsVerticalArgTypes;
 
 export const Behavior = BehaviorTemplate.bind({});
+Behavior.argTypes = disabledControlsBehaviorArgTypes;
