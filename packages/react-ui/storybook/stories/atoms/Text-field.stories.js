@@ -12,7 +12,7 @@ const options = {
     variant: {
       control: {
         type: 'select',
-        options: ['standard', 'filled', 'outlined']
+        options: ['outlined', 'filled', 'standard']
       }
     },
     size: {
@@ -40,6 +40,11 @@ const options = {
       }
     },
     label: {
+      control: {
+        type: 'text'
+      }
+    },
+    placeholder: {
       control: {
         type: 'text'
       }
@@ -85,397 +90,526 @@ const endAdornmentIcon = (
   </InputAdornment>
 );
 
-const TextFieldBox = ({
-  title,
+const PlaygroundTemplate = (args) => <TextField {...args}></TextField>;
+
+const VariantsTemplate = ({ label, placeholder, ...rest }) => {
+  const classes = useStyles();
+
+  return (
+    <Grid container direction='column' spacing={6}>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Filled'}
+          </Typography>
+          <TextField {...rest} label={label} variant='filled' placeholder={placeholder} />
+        </Box>
+      </Grid>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Outlined'}
+          </Typography>
+          <TextField
+            {...rest}
+            label={label}
+            variant='outlined'
+            placeholder={placeholder}
+          />
+        </Box>
+      </Grid>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Standard'}
+          </Typography>
+          <TextField
+            {...rest}
+            label={label}
+            variant='standard'
+            placeholder={placeholder}
+          />
+        </Box>
+      </Grid>
+    </Grid>
+  );
+};
+
+const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest }) => {
+  const classes = useStyles();
+
+  return (
+    <Grid container direction='column' spacing={6}>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Label + helper text'}
+          </Typography>
+          <TextField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            helperText={helperText}
+          />
+        </Box>
+      </Grid>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Without label + helper text'}
+          </Typography>
+          <TextField {...rest} placeholder={placeholder} />
+        </Box>
+      </Grid>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Only label'}
+          </Typography>
+          <TextField {...rest} label={label} placeholder={placeholder} />
+        </Box>
+      </Grid>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Only helper text'}
+          </Typography>
+          <TextField {...rest} placeholder={placeholder} helperText={helperText} />
+        </Box>
+      </Grid>
+    </Grid>
+  );
+};
+
+const PrefixAndSuffixTemplate = ({
   label,
-  helperText,
+  placeholder,
   startAdornment,
   endAdornment,
   ...rest
 }) => {
   const classes = useStyles();
-  const startAdornmentDefault = startAdornment ? startAdornment : startAdornmentText;
 
-  return (
-    <Box className={classes.container}>
-      <Typography variant='body2' className={classes.label}>
-        {title}
-      </Typography>
-      <TextField
-        {...rest}
-        label={label}
-        placeholder='Placeholder text'
-        helperText={helperText}
-        InputProps={{ startAdornment: startAdornmentDefault, endAdornment: endAdornment }}
-      />
-    </Box>
-  );
-};
-
-const PlaygroundTemplate = (args) => <TextField {...args}></TextField>;
-
-const VariantsTemplate = ({ ...rest }) => {
-  return (
-    <Grid container spacing={6}>
-      <Grid item>
-        <TextField
-          {...rest}
-          label='Filled'
-          variant='filled'
-          placeholder='Placeholder text'
-          InputProps={{ startAdornment: startAdornmentText }}
-        />
-      </Grid>
-      <Grid item>
-        <TextField
-          {...rest}
-          label='Outlined'
-          variant='outlined'
-          placeholder='Placeholder text'
-          InputProps={{ startAdornment: startAdornmentText }}
-        />
-      </Grid>
-      <Grid item>
-        <TextField
-          {...rest}
-          label='Standard'
-          variant='standard'
-          placeholder='Placeholder text'
-          InputProps={{ startAdornment: startAdornmentText }}
-        />
-      </Grid>
-    </Grid>
-  );
-};
-
-const LabelAndHelperTextTemplate = ({ ...rest }) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <TextFieldBox
-          title='Label + helper text'
-          label='Label'
-          helperText='Helper text'
-        />
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Prefix and suffix (text)'}
+          </Typography>
+          <TextField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            InputProps={{
+              startAdornment: startAdornmentText,
+              endAdornment: endAdornmentText
+            }}
+          />
+        </Box>
       </Grid>
       <Grid item>
-        <TextFieldBox title='Without label + helper text' />
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Prefix and suffix (icon)'}
+          </Typography>
+          <TextField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            InputProps={{
+              startAdornment: startAdornmentIcon,
+              endAdornment: endAdornmentIcon
+            }}
+          />
+        </Box>
       </Grid>
       <Grid item>
-        <TextFieldBox title='Only label' label='Label' />
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Prefix and suffix (mix)'}
+          </Typography>
+          <TextField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            InputProps={{
+              startAdornment: startAdornmentText,
+              endAdornment: endAdornmentIcon
+            }}
+          />
+        </Box>
       </Grid>
       <Grid item>
-        <TextFieldBox title='Only helper text' helperText='Helper text' />
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Only prefix'}
+          </Typography>
+          <TextField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            InputProps={{
+              startAdornment: startAdornmentText
+            }}
+          />
+        </Box>
+      </Grid>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Only suffix'}
+          </Typography>
+          <TextField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            InputProps={{
+              endAdornment: endAdornmentText
+            }}
+          />
+        </Box>
+      </Grid>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'None'}
+          </Typography>
+          <TextField {...rest} label={label} placeholder={placeholder} />
+        </Box>
       </Grid>
     </Grid>
   );
 };
 
-const PrefixAndSuffixTemplate = ({ ...rest }) => {
-  return (
-    <Grid container direction='column' spacing={6}>
-      <Grid item>
-        <TextFieldBox
-          title='Prefix and suffix (text)'
-          label='Label'
-          startAdornment={startAdornmentText}
-          endAdornment={endAdornmentText}
-        />
-      </Grid>
-      <Grid item>
-        <TextFieldBox
-          title='Prefix and suffix (icon)'
-          label='Label'
-          startAdornment={startAdornmentIcon}
-          endAdornment={endAdornmentIcon}
-        />
-      </Grid>
-      <Grid item>
-        <TextFieldBox
-          title='Prefix and suffix (mix)'
-          label='Label'
-          startAdornment={startAdornmentText}
-          endAdornment={endAdornmentIcon}
-        />
-      </Grid>
-      <Grid item>
-        <TextFieldBox
-          title='Only prefix'
-          label='Label'
-          startAdornment={startAdornmentText}
-        />
-      </Grid>
-      <Grid item>
-        <TextFieldBox title='Only suffix' label='Label' endAdornment={endAdornmentText} />
-      </Grid>
-      <Grid item>
-        <TextFieldBox title='None' label='Label' />
-      </Grid>
-    </Grid>
-  );
-};
-
-const InputAdornmentsMix = ({ ...rest }) => {
+const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
   return (
     <Grid container spacing={6}>
+      <Grid item container spacing={2}>
+        <Grid item xs={2}>
+          <Typography>Placeholder</Typography>
+        </Grid>
+        <Grid item>
+          <TextField {...rest} variant='filled' label={label} placeholder={placeholder} />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='outlined'
+            label={label}
+            placeholder={placeholder}
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='standard'
+            label={label}
+            placeholder={placeholder}
+          />
+        </Grid>
+      </Grid>
+
       <Grid item container spacing={2}>
         <Grid item xs={2}>
           <Typography>Empty</Typography>
         </Grid>
-        <Grid item xs={10} container spacing={2}>
-          <Grid item>
-            <TextField label='Label' {...rest} />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Prefix'
-              {...rest}
-              InputProps={{ startAdornment: startAdornmentText }}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Suffix'
-              {...rest}
-              InputProps={{ endAdornment: endAdornmentText }}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Prefix and suffix'
-              {...rest}
-              InputProps={{
-                startAdornment: startAdornmentText,
-                endAdornment: endAdornmentText
-              }}
-            />
-          </Grid>
+        <Grid item>
+          <TextField {...rest} variant='filled' label={label} />
+        </Grid>
+        <Grid item>
+          <TextField {...rest} variant='outlined' label={label} />
+        </Grid>
+        <Grid item>
+          <TextField {...rest} variant='standard' label={label} />
         </Grid>
       </Grid>
 
       <Grid item container spacing={2}>
         <Grid item xs={2}>
-          <Typography>Active</Typography>
+          <Typography>Filled</Typography>
         </Grid>
-        <Grid item xs={10} container spacing={2}>
-          <Grid item>
-            <TextField label='Label' {...rest} focused />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Prefix'
-              {...rest}
-              focused
-              InputProps={{ startAdornment: startAdornmentText }}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Suffix'
-              {...rest}
-              focused
-              InputProps={{ endAdornment: endAdornmentText }}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Prefix and suffix'
-              {...rest}
-              focused
-              InputProps={{
-                startAdornment: startAdornmentText,
-                endAdornment: endAdornmentText
-              }}
-            />
-          </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='filled'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='outlined'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='standard'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+          />
         </Grid>
       </Grid>
+
+      <Grid item container spacing={2}>
+        <Grid item xs={2}>
+          <Typography>Focused</Typography>
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='filled'
+            label={label}
+            placeholder={placeholder}
+            focused
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='outlined'
+            label={label}
+            placeholder={placeholder}
+            focused
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='standard'
+            label={label}
+            placeholder={placeholder}
+            focused
+          />
+        </Grid>
+      </Grid>
+
+      <Grid item container spacing={2}>
+        <Grid item xs={2}>
+          <Typography>Focused filled</Typography>
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='filled'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            focused
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='outlined'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            focused
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='standard'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            focused
+          />
+        </Grid>
+      </Grid>
+
       <Grid item container spacing={2}>
         <Grid item xs={2}>
           <Typography>Disabled</Typography>
         </Grid>
-        <Grid item xs={10} container spacing={2}>
-          <Grid item>
-            <TextField {...rest} label='Label' disabled />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Prefix'
-              {...rest}
-              disabled
-              InputProps={{ startAdornment: startAdornmentText }}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Suffix'
-              {...rest}
-              disabled
-              InputProps={{ endAdornment: endAdornmentText }}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Prefix and suffix'
-              {...rest}
-              disabled
-              InputProps={{
-                startAdornment: startAdornmentText,
-                endAdornment: endAdornmentText
-              }}
-            />
-          </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='filled'
+            label={label}
+            placeholder={placeholder}
+            disabled
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='outlined'
+            label={label}
+            placeholder={placeholder}
+            disabled
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='standard'
+            label={label}
+            placeholder={placeholder}
+            disabled
+          />
         </Grid>
       </Grid>
 
       <Grid item container spacing={2}>
         <Grid item xs={2}>
-          <Typography>Has value</Typography>
+          <Typography>Disabled filled</Typography>
         </Grid>
-        <Grid item xs={10} container spacing={2}>
-          <Grid item>
-            <TextField label='Label' defaultValue='Hello world' {...rest} />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Prefix'
-              {...rest}
-              defaultValue='Hello world'
-              InputProps={{ startAdornment: startAdornmentText }}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Suffix'
-              {...rest}
-              defaultValue='Hello world'
-              InputProps={{ endAdornment: endAdornmentText }}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Prefix and suffix'
-              {...rest}
-              defaultValue='Hello world'
-              InputProps={{
-                startAdornment: startAdornmentText,
-                endAdornment: endAdornmentText
-              }}
-            />
-          </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='filled'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            disabled
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='outlined'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            disabled
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='standard'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            disabled
+          />
         </Grid>
       </Grid>
 
       <Grid item container spacing={2}>
         <Grid item xs={2}>
-          <Typography>Empty Error</Typography>
+          <Typography>Error</Typography>
         </Grid>
-        <Grid item xs={10} container spacing={2}>
-          <Grid item>
-            <TextField label='Label' error {...rest} />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Prefix'
-              {...rest}
-              error
-              InputProps={{ startAdornment: startAdornmentText }}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Suffix'
-              {...rest}
-              error
-              InputProps={{ endAdornment: endAdornmentText }}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Prefix and suffix'
-              {...rest}
-              error
-              InputProps={{
-                startAdornment: startAdornmentText,
-                endAdornment: endAdornmentText
-              }}
-            />
-          </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='filled'
+            label={label}
+            placeholder={placeholder}
+            helperText={helperText}
+            error
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='outlined'
+            label={label}
+            placeholder={placeholder}
+            helperText={helperText}
+            error
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='standard'
+            label={label}
+            placeholder={placeholder}
+            helperText={helperText}
+            error
+          />
         </Grid>
       </Grid>
 
       <Grid item container spacing={2}>
         <Grid item xs={2}>
-          <Typography>Value Error</Typography>
+          <Typography>Error filled</Typography>
         </Grid>
-        <Grid item xs={10} container spacing={2}>
-          <Grid item>
-            <TextField
-              label='Label'
-              error
-              defaultValue='Hello world'
-              InputProps={{ readOnly: true }}
-              {...rest}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Prefix'
-              error
-              {...rest}
-              defaultValue='Hello world'
-              InputProps={{ startAdornment: startAdornmentText, readOnly: true }}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Suffix'
-              error
-              {...rest}
-              defaultValue='Hello world'
-              InputProps={{ endAdornment: endAdornmentText, readOnly: true }}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label='Prefix and suffix'
-              error
-              {...rest}
-              defaultValue='Hello world'
-              InputProps={{
-                startAdornment: startAdornmentText,
-                endAdornment: endAdornmentText,
-                readOnly: true
-              }}
-            />
-          </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='filled'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            helperText={helperText}
+            error
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='outlined'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            helperText={helperText}
+            error
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            variant='standard'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            helperText={helperText}
+            error
+          />
         </Grid>
       </Grid>
     </Grid>
   );
 };
 
-const commonArgs = { helperText: 'Helper text' };
-const disabledControlsArgTypes = {
+const commonArgs = {
+  label: 'Label text',
+  placeholder: 'Placeholder text',
+  helperText: 'Helper text.'
+};
+const sizeArgs = {
+  helperText: 'This is a error message.',
+  defaultValue: 'Hello world'
+};
+
+const disabledControlsVariantsArgTypes = {
+  variant: { table: { disable: true } }
+};
+const disabledControlsSizeArgTypes = {
   variant: { table: { disable: true } },
-  disabled: { table: { disable: true } },
-  required: { table: { disable: true } }
+  error: { table: { disable: true } },
+  defaultValue: { table: { disable: true } }
 };
 
 export const Playground = PlaygroundTemplate.bind({});
-Playground.args = { ...commonArgs, label: 'Label' };
+Playground.args = { ...commonArgs };
 
 export const Variants = VariantsTemplate.bind({});
 Variants.args = { ...commonArgs };
+Variants.argTypes = disabledControlsVariantsArgTypes;
 
 export const LabelAndHelperText = LabelAndHelperTextTemplate.bind({});
+LabelAndHelperText.args = { ...commonArgs };
 
 export const PrefixAndSuffix = PrefixAndSuffixTemplate.bind({});
+PrefixAndSuffix.args = { ...commonArgs };
 
-export const Medium = InputAdornmentsMix.bind({});
-Medium.args = { ...commonArgs };
-Medium.argTypes = disabledControlsArgTypes;
+export const Medium = SizeTemplate.bind({});
+Medium.args = { ...commonArgs, ...sizeArgs };
+Medium.argTypes = disabledControlsSizeArgTypes;
 
-export const Small = InputAdornmentsMix.bind({});
-Small.args = { ...commonArgs, size: 'small' };
-Small.argTypes = disabledControlsArgTypes;
+export const Small = SizeTemplate.bind({});
+Small.args = { ...commonArgs, ...sizeArgs, size: 'small' };
+Small.argTypes = disabledControlsSizeArgTypes;
