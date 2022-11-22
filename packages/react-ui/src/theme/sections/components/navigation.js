@@ -72,7 +72,7 @@ export const navigationOverrides = {
         }
       },
       wrapped: {
-        maxWidth: '100px' // Forced to a non-standard value to meet with design
+        maxWidth: '240px'
       }
     }
   },

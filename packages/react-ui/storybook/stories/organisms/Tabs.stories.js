@@ -124,11 +124,9 @@ const TemplateWrapped = ({ ...args }) => {
 
   return (
     <Tabs {...args} value={value} onChange={handleChange} aria-label='tabs example'>
-      <Tab label='Wrapped Label' wrapped />
-      <Tab label='Wrapped Label' wrapped />
-      <Tab label='Wrapped Label' wrapped />
-      <Tab label='Wrapped Label' wrapped />
-      <Tab label='Wrapped Label' wrapped disabled />
+      <Tab label='Wrapped Label used for a very long text' wrapped />
+      <Tab label='Wrapped Label used for a very long text' wrapped />
+      <Tab label='Wrapped Label used for a very long text' wrapped disabled />
     </Tabs>
   );
 };
