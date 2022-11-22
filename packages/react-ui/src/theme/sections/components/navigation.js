@@ -15,8 +15,7 @@ export const navigationOverrides = {
   // Tabs
   MuiTabs: {
     defaultProps: {
-      indicatorColor: 'primary',
-      textColor: 'primary',
+      iconPosition: 'start',
       TabIndicatorProps: {
         classes: {
           colorPrimary: 'colorPrimary'
@@ -24,54 +23,56 @@ export const navigationOverrides = {
       }
     },
     styleOverrides: {
-      indicator: {
-        height: 4,
-        '&.colorPrimary': {
-          backgroundColor: commonPalette.text.primary
-        }
-      },
+      root: ({ ownerState }) => ({
+        borderBottom: `1px solid ${commonPalette.black[12]}`,
+
+        ...(ownerState.variant !== 'fullWidth' && {
+          display: 'inline-flex'
+        })
+      }),
 
       vertical: {
-        '& .MuiTabs-indicator': {
-          width: 4
-        },
-
-        '& .MuiTab-root': {
-          padding: getSpacing(0, 2),
-
-          '& .MuiTab-wrapper': {
-            alignItems: 'flex-start'
-          }
-        }
+        borderBottom: 0
       }
     }
   },
 
   // Tab
   MuiTab: {
+    defaultProps: {
+      iconPosition: 'start'
+    },
+
     styleOverrides: {
       root: {
-        padding: getSpacing(0, 1),
-        marginRight: getSpacing(3),
-        minWidth: '56px!important',
-        '&[class*="MuiTab-labelIcon"]': {
-          flexFlow: 'row',
-          alignItems: 'center'
+        minHeight: getSpacing(6),
+        minWidth: getSpacing(6),
+        padding: getSpacing(0, 2),
+        paddingTop: '2px',
+        borderBottom: '2px solid transparent',
+        ...themeTypography.subtitle2,
+        color: commonPalette.text.primary,
+        transition: 'border 300ms cubic-bezier(0.4, 0, 0.2, 1)',
+
+        '&:hover': {
+          borderBottomColor: commonPalette.text.primary
         },
-        '&[class*="MuiTab-labelIcon"] .MuiSvgIcon-root': {
-          marginRight: getSpacing(1),
-          marginBottom: 0
+        '&.Mui-selected': {
+          pointerEvents: 'none'
+        },
+        '.MuiTabs-vertical &': {
+          paddingTop: 0,
+          borderBottom: 0,
+          paddingLeft: '2px',
+          borderRight: '2px solid transparent',
+
+          '&:hover': {
+            borderRightColor: commonPalette.text.primary
+          }
         }
       },
-      textColorPrimary: {
-        color: commonPalette.primary.main,
-        opacity: 1,
-        '&.Mui-selected': {
-          color: commonPalette.text.primary
-        },
-        '&.Mui-disabled': {
-          color: commonPalette.action.disabled
-        }
+      wrapped: {
+        maxWidth: '240px'
       }
     }
   },
