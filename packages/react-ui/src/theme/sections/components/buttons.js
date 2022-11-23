@@ -387,6 +387,9 @@ export const buttonsOverrides = {
 
           '&:not(:first-of-type)': {
             marginLeft: 0
+          },
+          '& + .MuiDivider-root': {
+            height: sizeMedium
           }
         }
       },
