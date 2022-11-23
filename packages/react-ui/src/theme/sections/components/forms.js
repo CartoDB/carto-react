@@ -260,15 +260,6 @@ export const formsOverrides = {
     }
   },
 
-  // Form Control
-  MuiFormControl: {
-    styleOverrides: {
-      root: {
-        width: '100%' // ??
-      }
-    }
-  },
-
   // Label
   MuiInputLabel: {
     styleOverrides: {

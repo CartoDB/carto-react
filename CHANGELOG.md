@@ -2,6 +2,7 @@
 
 ## Not released
 
+- TextField and TextArea component adapted to the new design system [#538](https://github.com/CartoDB/carto-react/pull/538/)
 - Tabs component adapted to the new design system [#537](https://github.com/CartoDB/carto-react/pull/537/)
 - Tooltip component adapted to the new design system [#536](https://github.com/CartoDB/carto-react/pull/536/)
 - Switch component adapted to the new design system [#534](https://github.com/CartoDB/carto-react/pull/534/)
