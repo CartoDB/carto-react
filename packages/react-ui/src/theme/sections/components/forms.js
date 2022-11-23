@@ -80,28 +80,139 @@ export const formsOverrides = {
         ...themeTypography.body1,
 
         '& input': {
-          padding: 0
+          padding: 0,
+
+          '&::placeholder': {
+            opacity: 1,
+            color: commonPalette.text.hint
+          }
         },
-        '& .MuiOutlinedInput-notchedOutline': {
-          top: 0
+
+        '&.MuiInputBase-formControl::after': {
+          top: 0,
+          transform: 'none',
+          opacity: 0,
+          transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+        },
+        '&.MuiInputBase-formControl.Mui-focused::after': {
+          transform: 'none',
+          opacity: 1
         },
 
         // Variants
         '&.MuiFilledInput-root': {
           borderRadius: getSpacing(0.5),
+          backgroundColor: commonPalette.default.background,
 
-          '&:before, &:after': {
-            content: 'none'
+          '&:hover': {
+            backgroundColor: commonPalette.default.background
+          },
+          '&::before': {
+            top: 0,
+            borderRadius: getSpacing(0.5),
+            border: '1px solid transparent',
+            transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+          },
+          '&:hover:not(.Mui-disabled)::before': {
+            borderColor: commonPalette.text.primary
+          },
+          '&::after': {
+            borderRadius: getSpacing(0.5),
+            border: '1px solid transparent'
+          },
+          '&.Mui-focused': {
+            backgroundColor: commonPalette.background.paper,
+
+            '&::after': {
+              border: `2px solid ${commonPalette.primary.main}`
+            }
+          },
+          '&.Mui-disabled': {
+            backgroundColor: commonPalette.default.background,
+
+            '&::before': {
+              borderBottomStyle: 'solid'
+            }
+          },
+          '&.Mui-error::after': {
+            opacity: 1,
+            border: `2px solid ${commonPalette.error.light}`
           }
         },
+
+        '&.MuiOutlinedInput-root': {
+          padding: getSpacing(0, 2),
+
+          '&.MuiInputBase-sizeSmall': {
+            padding: getSpacing(0, 1.5)
+          },
+          '& .MuiOutlinedInput-notchedOutline': {
+            top: 0,
+            borderColor: commonPalette.default.outlinedBorder,
+            transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+          },
+          '&.Mui-error .MuiOutlinedInput-notchedOutline': {
+            border: `2px solid ${commonPalette.error.light}`
+          }
+        },
+
         '&.MuiInput-underline': {
           marginTop: 0,
-          padding: 0
+          padding: 0,
+
+          '&::before': {
+            borderColor: commonPalette.default.outlinedBorder
+          },
+          '&:hover:not(.Mui-disabled)::before': {
+            borderBottom: `1px solid ${commonPalette.text.primary}`
+          },
+          '&:not(.Mui-disabled)::after': {
+            borderBottom: '1px solid transparent'
+          },
+          '&.Mui-focused::after': {
+            borderBottom: `2px solid ${commonPalette.primary.main}`
+          },
+          '&.Mui-error::after': {
+            opacity: 1,
+            borderBottom: `2px solid ${commonPalette.error.light}`
+          },
+          '&.Mui-disabled::before': {
+            borderBottomStyle: 'solid'
+          }
+        },
+
+        // TextArea (multiline)
+        '&.MuiInputBase-multiline': {
+          height: 'auto',
+          minHeight: getSpacing(12),
+          alignItems: 'flex-start',
+          padding: getSpacing(1.5, 2),
+
+          '& textarea': {
+            ...themeTypography.body1,
+
+            '&::placeholder, &.Mui-disabled::placeholder': {
+              opacity: 1,
+              color: commonPalette.text.hint
+            }
+          },
+
+          '&.MuiInputBase-sizeSmall': {
+            minHeight: getSpacing(9),
+            padding: getSpacing(1, 1.5),
+
+            '& textarea': {
+              ...themeTypography.body2
+            }
+          }
         }
       },
 
       // size
       sizeSmall: {
+        height: getSpacing(4),
+        padding: getSpacing(0, 1.5),
+
         '& input': {
           ...themeTypography.body2
         }
@@ -114,15 +225,26 @@ export const formsOverrides = {
     styleOverrides: {
       root: {
         '& .MuiTypography-root': {
-          ...themeTypography.body1
+          ...themeTypography.body1,
+          color: commonPalette.text.secondary
         },
         '&.MuiInputAdornment-sizeSmall': {
           '& .MuiTypography-root': {
             ...themeTypography.body2
           }
         },
+        '&.MuiInputAdornment-positionStart.MuiInputAdornment-root:not(.MuiInputAdornment-hiddenLabel)':
+          {
+            marginTop: 0
+          },
         '& .MuiSvgIcon-root': {
-          fontSize: ICON_SIZE
+          fontSize: ICON_SIZE,
+          color: commonPalette.text.secondary
+        },
+        '.Mui-disabled &': {
+          '& .MuiTypography-root, & .MuiSvgIcon-root': {
+            color: commonPalette.text.disabled
+          }
         }
       }
     }
@@ -141,7 +263,9 @@ export const formsOverrides = {
   // Form Control
   MuiFormControl: {
     styleOverrides: {
-      root: {}
+      root: {
+        width: '100%' // ??
+      }
     }
   },
 
@@ -153,7 +277,11 @@ export const formsOverrides = {
         transform: 'none',
         marginBottom: getSpacing(1),
         ...themeTypography.caption,
-        fontWeight: 500
+        fontWeight: 500,
+        color: commonPalette.text.primary
+      },
+      sizeSmall: {
+        marginBottom: getSpacing(0.5)
       }
     }
   },
@@ -162,6 +290,7 @@ export const formsOverrides = {
   MuiSelect: {
     defaultProps: {
       variant: 'outlined',
+
       MenuProps: {
         anchorOrigin: {
           vertical: 'bottom',
