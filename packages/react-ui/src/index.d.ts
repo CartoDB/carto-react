@@ -23,6 +23,8 @@ import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import ComparativePieWidgetUI from './widgets/ComparativePieWidgetUI';
+import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI';
+import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
 
 export {
   cartoThemeOptions,
@@ -39,11 +41,13 @@ export {
   useTimeSeriesInteractivity,
   TimeSeriesProvider,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
-  FeatureSelectionWidgetUI,
   TableWidgetUI,
   LegendWidgetUI,
   RangeWidgetUI,
   ComparativePieWidgetUI,
+  FeatureSelectionWidgetUI,
+  ComparativeFormulaWidgetUI,
+  ComparativeCategoryWidgetUI,
   LEGEND_TYPES,
   NoDataAlert,
   LegendCategories,
