@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@material-ui/core';
 import { lighten } from '@material-ui/core'
-import EchartsWrapper from '../custom-components/echarts-for-react';
+import EchartsWrapper from '../../custom-components/echarts-for-react';
 
 /**
  * process incoming data to assign labels, colors and selected / unselected styles

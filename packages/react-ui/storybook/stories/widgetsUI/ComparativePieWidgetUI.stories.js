@@ -1,5 +1,6 @@
 import React from 'react';
-import ComparativePieWidgetUI from '../../../src/widgets/ComparativePieWidgetUI';
+import ComparativePieWidgetUI from '../../../src/widgets/comparative/ComparativePieWidgetUI';
+import { buildReactPropsAsString } from '../../utils';
 
 const options = {
   title: 'Custom Components/ComparativePieWidgetUI',
@@ -10,8 +11,7 @@ export default options;
 
 const Template = (args) => <ComparativePieWidgetUI {...args} />;
 
-export const Default = Template.bind({});
-Default.args = {
+const sampleProps = {
   names: ['name 1', 'name 2'],
   data: [
     [
@@ -33,3 +33,7 @@ Default.args = {
   ],
   selectedCategories: ['data 1']
 };
+
+export const Default = Template.bind({});
+Default.args = sampleProps;
+Default.parameters = buildReactPropsAsString(sampleProps, 'ComparativePieWidgetUI');
