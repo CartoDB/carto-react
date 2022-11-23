@@ -1,3 +1,4 @@
+import { ICON_SIZE, ICON_SIZE_M } from '../../themeConstants';
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeShadows } from '../shadows';
@@ -28,10 +29,10 @@ const checkboxRadioOverrides = {
     },
 
     '& .MuiSvgIcon-root': {
-      fontSize: getSpacing(3),
+      fontSize: ICON_SIZE_M,
 
       ...(ownerState.size === 'small' && {
-        fontSize: getSpacing(2.25)
+        fontSize: ICON_SIZE
       })
     }
   })
@@ -52,13 +53,6 @@ export const formsOverrides = {
     }
   },
 
-  // Input Adornment
-  MuiInputAdornment: {
-    styleOverrides: {
-      root: {}
-    }
-  },
-
   // Text Field
   MuiTextField: {
     defaultProps: {
@@ -68,7 +62,68 @@ export const formsOverrides = {
     },
     styleOverrides: {
       root: {
-        minWidth: '192px'
+        minWidth: '192px',
+
+        '& legend': {
+          display: 'none'
+        }
+      }
+    }
+  },
+
+  // Input Base
+  MuiInputBase: {
+    styleOverrides: {
+      root: {
+        height: getSpacing(6),
+        padding: getSpacing(0, 2),
+        ...themeTypography.body1,
+
+        '& input': {
+          padding: 0
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+          top: 0
+        },
+
+        // Variants
+        '&.MuiFilledInput-root': {
+          borderRadius: getSpacing(0.5),
+
+          '&:before, &:after': {
+            content: 'none'
+          }
+        },
+        '&.MuiInput-underline': {
+          marginTop: 0,
+          padding: 0
+        }
+      },
+
+      // size
+      sizeSmall: {
+        '& input': {
+          ...themeTypography.body2
+        }
+      }
+    }
+  },
+
+  // Input Adornment
+  MuiInputAdornment: {
+    styleOverrides: {
+      root: {
+        '& .MuiTypography-root': {
+          ...themeTypography.body1
+        },
+        '&.MuiInputAdornment-sizeSmall': {
+          '& .MuiTypography-root': {
+            ...themeTypography.body2
+          }
+        },
+        '& .MuiSvgIcon-root': {
+          fontSize: ICON_SIZE
+        }
       }
     }
   },
@@ -76,7 +131,10 @@ export const formsOverrides = {
   // Form Helper Text
   MuiFormHelperText: {
     styleOverrides: {
-      root: {}
+      root: {
+        margin: 0,
+        marginTop: getSpacing(1)
+      }
     }
   },
 
@@ -90,7 +148,13 @@ export const formsOverrides = {
   // Label
   MuiInputLabel: {
     styleOverrides: {
-      root: {}
+      root: {
+        position: 'static',
+        transform: 'none',
+        marginBottom: getSpacing(1),
+        ...themeTypography.caption,
+        fontWeight: 500
+      }
     }
   },
 

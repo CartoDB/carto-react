@@ -2,11 +2,11 @@ import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
 import { themeShadows } from '../shadows';
+import { ICON_SIZE, ICON_SIZE_M } from '../../themeConstants';
 
 const sizeSmall = getSpacing(3);
 const sizeMedium = getSpacing(4);
 const sizeLarge = getSpacing(6);
-const iconSize = getSpacing(2.25);
 const radius = getSpacing(0.5);
 
 export const buttonsOverrides = {
@@ -21,7 +21,7 @@ export const buttonsOverrides = {
       root: {
         '& .MuiSvgIcon-root': {
           display: 'flex',
-          fontSize: iconSize
+          fontSize: ICON_SIZE
         }
       }
     }
@@ -97,7 +97,7 @@ export const buttonsOverrides = {
         marginRight: getSpacing(0.75),
 
         '& .MuiSvgIcon-root': {
-          fontSize: iconSize
+          fontSize: ICON_SIZE
         },
         '&.MuiButton-iconSizeSmall': {
           marginRight: getSpacing(0.5),
@@ -108,7 +108,7 @@ export const buttonsOverrides = {
         marginLeft: getSpacing(0.75),
 
         '& .MuiSvgIcon-root': {
-          fontSize: iconSize
+          fontSize: ICON_SIZE
         },
         '&.MuiButton-iconSizeSmall': {
           marginLeft: getSpacing(0.5),
@@ -266,7 +266,7 @@ export const buttonsOverrides = {
           color: commonPalette.text.secondary
         }),
         '& .MuiSvgIcon-root': {
-          fontSize: iconSize
+          fontSize: ICON_SIZE
         },
         '&:hover, &:focus-visible': {
           ...(ownerState.color === 'default' && {
@@ -420,8 +420,8 @@ export const buttonsOverrides = {
         },
 
         '& .MuiSvgIcon-root': {
-          width: getSpacing(3),
-          height: getSpacing(3)
+          width: ICON_SIZE_M,
+          height: ICON_SIZE_M
         },
         '&.MuiFab-extended': {
           ...themeTypography.body1,
@@ -443,8 +443,8 @@ export const buttonsOverrides = {
         minHeight: getSpacing(4),
 
         '& .MuiSvgIcon-root': {
-          width: iconSize,
-          height: iconSize
+          width: ICON_SIZE,
+          height: ICON_SIZE
         },
         '&.MuiFab-extended': {
           ...themeTypography.caption,
