@@ -285,16 +285,6 @@ export const formsOverrides = {
 
   // Select
   MuiSelect: {
-    defaultProps: {
-      variant: 'outlined',
-
-      MenuProps: {
-        anchorOrigin: {
-          vertical: 'bottom',
-          horizontal: 'left'
-        }
-      }
-    },
     styleOverrides: {
       root: {
         '&:hover': {
