@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, Grid, InputAdornment, TextField } from '@mui/material';
-import { InfoOutlined, MapOutlined } from '@mui/icons-material';
+import { Box, Grid, TextField } from '@mui/material';
 import Typography from '../../../src/components/atoms/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 

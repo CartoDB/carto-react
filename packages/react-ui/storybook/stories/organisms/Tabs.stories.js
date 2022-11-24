@@ -49,7 +49,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33239'
     },
     status: {
-      type: 'validated'
+      type: 'readyToReview'
     }
   }
 };
@@ -251,18 +251,13 @@ const BehaviorTemplate = (args) => {
       <Grid item container direction='column' alignItems='flex-start'>
         <Typography variant='body1'>{'Hug Text'}</Typography>
         <Typography variant='body2'>{'Default behavior'}</Typography>
-
-        <Tabs
-          {...args}
-          value={value}
-          onChange={handleChange}
-          aria-label='tabs example'
-          {...args}
-        >
-          <Tab label='Extra Long Label' icon={<MapOutlined />} />
-          <Tab label='Label' icon={<LayersOutlined />} />
-          <Tab label='Long Label' icon={<LocalOfferOutlined />} />
-        </Tabs>
+        <Box style={{ width: '100%' }}>
+          <Tabs {...args} value={value} onChange={handleChange} aria-label='tabs example'>
+            <Tab label='Extra Long Label' icon={<MapOutlined />} />
+            <Tab label='Label' icon={<LayersOutlined />} />
+            <Tab label='Long Label' icon={<LocalOfferOutlined />} />
+          </Tabs>
+        </Box>
       </Grid>
 
       <Grid item container direction='column' alignItems='flex-start'>
@@ -278,7 +273,6 @@ const BehaviorTemplate = (args) => {
             onChange={handleChange2}
             aria-label='tabs example'
             variant='fullWidth'
-            {...args}
           >
             <Tab label='Extra Long Label' icon={<MapOutlined />} />
             <Tab label='Label' icon={<LayersOutlined />} />

@@ -66,6 +66,9 @@ export const formsOverrides = {
 
         '& legend': {
           display: 'none'
+        },
+        '& + &': {
+          marginLeft: getSpacing(2)
         }
       }
     }
@@ -81,6 +84,9 @@ export const formsOverrides = {
 
         '& input': {
           padding: 0,
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
 
           '&::placeholder': {
             opacity: 1,

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Grid, InputAdornment, TextField } from '@mui/material';
-import { InfoOutlined, MapOutlined } from '@mui/icons-material';
+import { Box, Grid, InputAdornment, TextField, Tooltip } from '@mui/material';
+import { EuroOutlined, InfoOutlined } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 const startAdornmentText = <InputAdornment position='start'>Kg</InputAdornment>;
 const startAdornmentIcon = (
   <InputAdornment position='start'>
-    <MapOutlined />
+    <EuroOutlined />
   </InputAdornment>
 );
 const endAdornmentText = <InputAdornment position='end'>Kg</InputAdornment>;
@@ -573,6 +573,101 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
   );
 };
 
+const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
+  const classes = useStyles();
+
+  return (
+    <Grid container direction='column' spacing={6}>
+      <Grid item>
+        <Typography variant='subtitle1' className={classes.label}>
+          {'Overflow'}
+        </Typography>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Default'}
+          </Typography>
+          <TextField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            defaultValue='felipegutierrezsoriano@cartodb.com'
+          />
+        </Box>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Tooltip'}
+          </Typography>
+
+          <Tooltip
+            title='felipegutierrezsoriano@cartodb.com'
+            placement='bottom'
+            followCursor
+            arrow={false}
+          >
+            <TextField
+              {...rest}
+              label={label}
+              placeholder={placeholder}
+              defaultValue='felipegutierrezsoriano@cartodb.com'
+            />
+          </Tooltip>
+        </Box>
+      </Grid>
+
+      <Grid item>
+        <Typography variant='subtitle1' className={classes.label}>
+          {'Grouping'}
+        </Typography>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Pairing'}
+          </Typography>
+
+          <TextField {...rest} label={label} placeholder={placeholder} />
+          <TextField {...rest} label={label} placeholder={placeholder} />
+        </Box>
+      </Grid>
+
+      <Grid item>
+        <Typography variant='subtitle1' className={classes.label}>
+          {'Types'}
+        </Typography>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Examples'}
+          </Typography>
+
+          <TextField
+            {...rest}
+            label='Name'
+            placeholder={placeholder}
+            defaultValue='Felipe'
+            helperText={helperText}
+          />
+          <TextField
+            {...rest}
+            label='Amount'
+            placeholder={placeholder}
+            defaultValue='3560'
+            type='number'
+            InputProps={{
+              startAdornment: startAdornmentIcon
+            }}
+            helperText={helperText}
+          />
+          <TextField
+            {...rest}
+            label='Password'
+            placeholder={placeholder}
+            defaultValue='1234'
+            type='password'
+            helperText={helperText}
+          />
+        </Box>
+      </Grid>
+    </Grid>
+  );
+};
 const commonArgs = {
   label: 'Label text',
   placeholder: 'Placeholder text',
@@ -612,3 +707,6 @@ Medium.argTypes = disabledControlsSizeArgTypes;
 export const Small = SizeTemplate.bind({});
 Small.args = { ...commonArgs, ...sizeArgs, size: 'small' };
 Small.argTypes = disabledControlsSizeArgTypes;
+
+export const Behavior = BehaviorTemplate.bind({});
+Behavior.args = { ...commonArgs };

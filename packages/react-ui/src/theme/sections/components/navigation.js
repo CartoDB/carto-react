@@ -25,11 +25,7 @@ export const navigationOverrides = {
     },
     styleOverrides: {
       root: ({ ownerState }) => ({
-        borderBottom: `1px solid ${commonPalette.black[12]}`,
-
-        ...(ownerState.variant !== 'fullWidth' && {
-          display: 'inline-flex'
-        })
+        borderBottom: `1px solid ${commonPalette.black[12]}`
       }),
 
       vertical: {
