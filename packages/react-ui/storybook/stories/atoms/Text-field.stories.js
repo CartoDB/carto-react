@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, Grid, InputAdornment, TextField, Tooltip } from '@mui/material';
+import { Box, Grid, InputAdornment, TextField } from '@mui/material';
 import { EuroOutlined, InfoOutlined } from '@mui/icons-material';
-import Typography from '../../../src/components/atoms/Typography';
 import makeStyles from '@mui/styles/makeStyles';
+import Typography from '../../../src/components/atoms/Typography';
+import PasswordField from '../../../src/components/atoms/PasswordField';
 
 const options = {
   title: 'Atoms/Text Field',
@@ -573,6 +574,50 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
   );
 };
 
+const PasswordFieldTemplate = ({
+  label,
+  placeholder,
+  defaultValue,
+  helperText,
+  ...rest
+}) => {
+  const classes = useStyles();
+
+  return (
+    <Grid container direction='column' spacing={6}>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Default'}
+          </Typography>
+          <TextField
+            {...rest}
+            label='Password'
+            placeholder={placeholder}
+            defaultValue='1234'
+            helperText={helperText}
+            type='password'
+          />
+        </Box>
+      </Grid>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Custom component'}
+          </Typography>
+          <PasswordField
+            {...rest}
+            label='Password'
+            placeholder={placeholder}
+            defaultValue='1234'
+            helperText={helperText}
+          />
+        </Box>
+      </Grid>
+    </Grid>
+  );
+};
+
 const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
   const classes = useStyles();
 
@@ -592,25 +637,6 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             placeholder={placeholder}
             defaultValue='felipegutierrezsoriano@cartodb.com'
           />
-        </Box>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Tooltip'}
-          </Typography>
-
-          <Tooltip
-            title='felipegutierrezsoriano@cartodb.com'
-            placement='bottom'
-            followCursor
-            arrow={false}
-          >
-            <TextField
-              {...rest}
-              label={label}
-              placeholder={placeholder}
-              defaultValue='felipegutierrezsoriano@cartodb.com'
-            />
-          </Tooltip>
         </Box>
       </Grid>
 
@@ -655,12 +681,11 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             }}
             helperText={helperText}
           />
-          <TextField
+          <PasswordField
             {...rest}
             label='Password'
             placeholder={placeholder}
             defaultValue='1234'
-            type='password'
             helperText={helperText}
           />
         </Box>
@@ -668,6 +693,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
     </Grid>
   );
 };
+
 const commonArgs = {
   label: 'Label text',
   placeholder: 'Placeholder text',
@@ -707,6 +733,9 @@ Medium.argTypes = disabledControlsSizeArgTypes;
 export const Small = SizeTemplate.bind({});
 Small.args = { ...commonArgs, ...sizeArgs, size: 'small' };
 Small.argTypes = disabledControlsSizeArgTypes;
+
+export const Password = PasswordFieldTemplate.bind({});
+Password.args = { ...commonArgs };
 
 export const Behavior = BehaviorTemplate.bind({});
 Behavior.args = { ...commonArgs };
