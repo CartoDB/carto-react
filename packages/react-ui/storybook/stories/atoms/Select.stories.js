@@ -1,12 +1,12 @@
 import React from 'react';
-import { Box, Grid, InputAdornment, MenuItem, Select, TextField } from '@mui/material';
-import { EuroOutlined, InfoOutlined } from '@mui/icons-material';
+import { Box, Chip, Grid, InputAdornment, MenuItem, TextField } from '@mui/material';
+import { EuroOutlined } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Atoms/Select',
-  component: Select,
+  component: TextField,
   argTypes: {
     variant: {
       control: {
@@ -82,10 +82,9 @@ const startAdornmentIcon = (
     <EuroOutlined />
   </InputAdornment>
 );
-const endAdornmentText = <InputAdornment position='end'>Kg</InputAdornment>;
-const endAdornmentIcon = (
+const endAdornmentChip = (
   <InputAdornment position='end'>
-    <InfoOutlined />
+    <Chip label='Time' size='small' />
   </InputAdornment>
 );
 
@@ -237,70 +236,7 @@ const PrefixAndSuffixTemplate = ({
       <Grid item>
         <Box className={classes.container}>
           <Typography variant='body2' className={classes.label}>
-            {'Prefix and suffix (text)'}
-          </Typography>
-          <TextField
-            {...rest}
-            select
-            label={label}
-            placeholder={placeholder}
-            InputProps={{
-              startAdornment: startAdornmentText,
-              endAdornment: endAdornmentText
-            }}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
-        </Box>
-      </Grid>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Prefix and suffix (icon)'}
-          </Typography>
-          <TextField
-            {...rest}
-            select
-            label={label}
-            placeholder={placeholder}
-            InputProps={{
-              startAdornment: startAdornmentIcon,
-              endAdornment: endAdornmentIcon
-            }}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
-        </Box>
-      </Grid>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Prefix and suffix (mix)'}
-          </Typography>
-          <TextField
-            {...rest}
-            select
-            label={label}
-            placeholder={placeholder}
-            InputProps={{
-              startAdornment: startAdornmentText,
-              endAdornment: endAdornmentIcon
-            }}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
-        </Box>
-      </Grid>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Only prefix'}
+            {'Prefix'}
           </Typography>
           <TextField
             {...rest}
@@ -320,7 +256,7 @@ const PrefixAndSuffixTemplate = ({
       <Grid item>
         <Box className={classes.container}>
           <Typography variant='body2' className={classes.label}>
-            {'Only suffix'}
+            {'Suffix'}
           </Typography>
           <TextField
             {...rest}
@@ -328,7 +264,28 @@ const PrefixAndSuffixTemplate = ({
             label={label}
             placeholder={placeholder}
             InputProps={{
-              endAdornment: endAdornmentText
+              endAdornment: endAdornmentChip
+            }}
+          >
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </TextField>
+        </Box>
+      </Grid>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Prefix and suffix (chip)'}
+          </Typography>
+          <TextField
+            {...rest}
+            select
+            label={label}
+            placeholder={placeholder}
+            InputProps={{
+              startAdornment: startAdornmentIcon,
+              endAdornment: endAdornmentChip
             }}
           >
             <MenuItem value={10}>Ten</MenuItem>
