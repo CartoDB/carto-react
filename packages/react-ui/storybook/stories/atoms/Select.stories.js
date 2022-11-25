@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Chip, Grid, InputAdornment, MenuItem, TextField } from '@mui/material';
-import { EuroOutlined } from '@mui/icons-material';
+import { MapOutlined } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 const startAdornmentText = <InputAdornment position='start'>Kg</InputAdornment>;
 const startAdornmentIcon = (
   <InputAdornment position='start'>
-    <EuroOutlined />
+    <MapOutlined />
   </InputAdornment>
 );
 const endAdornmentChip = (
@@ -187,7 +187,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Without label + helper text'}
           </Typography>
-          <TextField {...rest} placeholder={placeholder}>
+          <TextField {...rest} select placeholder={placeholder}>
             <MenuItem value={10}>Ten</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>
@@ -199,7 +199,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Only label'}
           </Typography>
-          <TextField {...rest} label={label} placeholder={placeholder}>
+          <TextField {...rest} select label={label} placeholder={placeholder}>
             <MenuItem value={10}>Ten</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>
@@ -211,7 +211,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Only helper text'}
           </Typography>
-          <TextField {...rest} placeholder={placeholder} helperText={helperText}>
+          <TextField {...rest} select placeholder={placeholder} helperText={helperText}>
             <MenuItem value={10}>Ten</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>
@@ -299,7 +299,7 @@ const PrefixAndSuffixTemplate = ({
           <Typography variant='body2' className={classes.label}>
             {'None'}
           </Typography>
-          <TextField {...rest} label={label} placeholder={placeholder}>
+          <TextField {...rest} select label={label} placeholder={placeholder}>
             <MenuItem value={10}>Ten</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>
@@ -318,7 +318,13 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Placeholder</Typography>
         </Grid>
         <Grid item>
-          <TextField {...rest} variant='filled' label={label} placeholder={placeholder}>
+          <TextField
+            {...rest}
+            select
+            variant='filled'
+            label={label}
+            placeholder={placeholder}
+          >
             <MenuItem value={10}>Ten</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>
@@ -357,21 +363,21 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Empty</Typography>
         </Grid>
         <Grid item>
-          <TextField {...rest} variant='filled' label={label}>
+          <TextField {...rest} select variant='filled' label={label}>
             <MenuItem value={10}>Ten</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>
           </TextField>
         </Grid>
         <Grid item>
-          <TextField {...rest} variant='outlined' label={label}>
+          <TextField {...rest} select variant='outlined' label={label}>
             <MenuItem value={10}>Ten</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>
           </TextField>
         </Grid>
         <Grid item>
-          <TextField {...rest} variant='standard' label={label}>
+          <TextField {...rest} select variant='standard' label={label}>
             <MenuItem value={10}>Ten</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>

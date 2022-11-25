@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Grid, InputAdornment, TextField } from '@mui/material';
-import { EuroOutlined, InfoOutlined } from '@mui/icons-material';
+import { EuroOutlined, InfoOutlined, MapOutlined } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import PasswordField from '../../../src/components/atoms/PasswordField';
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
 const startAdornmentText = <InputAdornment position='start'>Kg</InputAdornment>;
 const startAdornmentIcon = (
   <InputAdornment position='start'>
-    <EuroOutlined />
+    <MapOutlined />
   </InputAdornment>
 );
 const endAdornmentText = <InputAdornment position='end'>Kg</InputAdornment>;
@@ -677,7 +677,11 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             defaultValue='3560'
             type='number'
             InputProps={{
-              startAdornment: startAdornmentIcon
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <EuroOutlined />
+                </InputAdornment>
+              )
             }}
             helperText={helperText}
           />

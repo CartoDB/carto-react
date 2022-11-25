@@ -97,8 +97,7 @@ export const formsOverrides = {
         '&.MuiInputBase-formControl::after': {
           top: 0,
           transform: 'none',
-          opacity: 0,
-          transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+          opacity: 0
         },
         '&.MuiInputBase-formControl.Mui-focused::after': {
           transform: 'none',
@@ -157,6 +156,9 @@ export const formsOverrides = {
             borderColor: commonPalette.default.outlinedBorder,
             transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
           },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            transition: 'none'
+          },
           '&.Mui-error .MuiOutlinedInput-notchedOutline': {
             border: `2px solid ${commonPalette.error.light}`
           }
@@ -192,9 +194,10 @@ export const formsOverrides = {
           height: 'auto',
           minHeight: getSpacing(12),
           alignItems: 'flex-start',
-          padding: getSpacing(1.5, 2),
+          padding: getSpacing(0, 0.25),
 
           '& textarea': {
+            padding: getSpacing(1.5, 1.75),
             ...themeTypography.body1,
 
             '&::placeholder, &.Mui-disabled::placeholder': {
@@ -205,9 +208,10 @@ export const formsOverrides = {
 
           '&.MuiInputBase-sizeSmall': {
             minHeight: getSpacing(9),
-            padding: getSpacing(1, 1.5),
+            padding: getSpacing(0, 0.25),
 
             '& textarea': {
+              padding: getSpacing(1, 1.25),
               ...themeTypography.body2
             }
           }
@@ -279,6 +283,9 @@ export const formsOverrides = {
       },
       sizeSmall: {
         marginBottom: getSpacing(0.5)
+      },
+      standard: {
+        marginBottom: 0
       }
     }
   },
@@ -287,15 +294,7 @@ export const formsOverrides = {
   MuiSelect: {
     styleOverrides: {
       root: {
-        '&:hover': {
-          backgroundColor: 'transparent'
-        }
-      },
-
-      select: {
-        '&:focus': {
-          backgroundColor: 'transparent'
-        }
+        maxWidth: '192px'
       }
     }
   },
