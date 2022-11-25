@@ -110,3 +110,12 @@ For external use: `import { Button } from '@carto/react-ui';`.
 Now, by default is placed `top` and has an `arrow` indicator, so you don't need to specify these properties anymore.
 
 We have a new component for building data structures within Tooltips, `TooltipData`.
+
+## Password Input Field
+
+We have a custom component to build the show / hide content logic on top of TextField Mui component.
+
+Instead of `<TextField type='password' /> ` you can use:
+`react-ui/src/atoms/PasswordField`
+
+For external use: `import { PasswordField } from '@carto/react-ui';`.

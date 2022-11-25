@@ -1,3 +1,4 @@
+import { ICON_SIZE, ICON_SIZE_M } from '../../themeConstants';
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeShadows } from '../shadows';
@@ -28,10 +29,10 @@ const checkboxRadioOverrides = {
     },
 
     '& .MuiSvgIcon-root': {
-      fontSize: getSpacing(3),
+      fontSize: ICON_SIZE_M,
 
       ...(ownerState.size === 'small' && {
-        fontSize: getSpacing(2.25)
+        fontSize: ICON_SIZE
       })
     }
   })
@@ -52,56 +53,206 @@ export const formsOverrides = {
     }
   },
 
-  // Input Adornment
-  MuiInputAdornment: {
+  // Text Field
+  MuiTextField: {
     defaultProps: {
-      disableTypography: true
+      InputLabelProps: {
+        shrink: true
+      }
     },
-
     styleOverrides: {
       root: {
-        ...themeTypography.body1,
-        alignItems: 'baseline',
-        marginBottom: getSpacing(1.5),
-        color: commonPalette.text.secondary,
+        minWidth: '192px',
 
-        '&:disabled': {
-          color: commonPalette.action.disabled
+        '& legend': {
+          display: 'none'
         },
-
-        '& .MuiSvgIcon-root': {
-          fontSize: `${themeTypography.body1.lineHeight}em`
-        }
-      },
-
-      positionStart: {
-        marginLeft: getSpacing(0.25)
-      },
-
-      positionEnd: {
-        marginRight: getSpacing(0.25)
-      },
-
-      marginDense: {
-        marginBottom: getSpacing(0),
-        alignItems: 'center',
-        ...themeTypography.body2,
-
-        '& .MuiTypography-root': {
-          ...themeTypography.body2
-        },
-
-        '& .MuiSvgIcon-root': {
-          fontSize: `${themeTypography.body2.lineHeight}em`
+        '& + &': {
+          marginLeft: getSpacing(2)
         }
       }
     }
   },
 
-  // Text Field
-  MuiTextField: {
-    defaultProps: {
-      variant: 'outlined'
+  // Input Base
+  MuiInputBase: {
+    styleOverrides: {
+      root: {
+        height: getSpacing(6),
+        padding: getSpacing(0, 2),
+        ...themeTypography.body1,
+
+        '& input': {
+          padding: 0,
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+
+          '&::placeholder': {
+            opacity: 1,
+            color: commonPalette.text.hint
+          }
+        },
+
+        '&.MuiInputBase-formControl::after': {
+          top: 0,
+          transform: 'none',
+          opacity: 0,
+          transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+        },
+        '&.MuiInputBase-formControl.Mui-focused::after': {
+          transform: 'none',
+          opacity: 1
+        },
+
+        // Variants
+        '&.MuiFilledInput-root': {
+          borderRadius: getSpacing(0.5),
+          backgroundColor: commonPalette.default.background,
+
+          '&:hover': {
+            backgroundColor: commonPalette.default.background
+          },
+          '&::before': {
+            top: 0,
+            borderRadius: getSpacing(0.5),
+            border: '1px solid transparent',
+            transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+          },
+          '&:hover:not(.Mui-disabled)::before': {
+            borderColor: commonPalette.text.primary
+          },
+          '&::after': {
+            borderRadius: getSpacing(0.5),
+            border: '1px solid transparent'
+          },
+          '&.Mui-focused': {
+            backgroundColor: commonPalette.background.paper,
+
+            '&::after': {
+              border: `2px solid ${commonPalette.primary.main}`
+            }
+          },
+          '&.Mui-disabled': {
+            backgroundColor: commonPalette.default.background,
+
+            '&::before': {
+              borderBottomStyle: 'solid'
+            }
+          },
+          '&.Mui-error::after': {
+            opacity: 1,
+            border: `2px solid ${commonPalette.error.light}`
+          }
+        },
+
+        '&.MuiOutlinedInput-root': {
+          padding: getSpacing(0, 2),
+
+          '&.MuiInputBase-sizeSmall': {
+            padding: getSpacing(0, 1.5)
+          },
+          '& .MuiOutlinedInput-notchedOutline': {
+            top: 0,
+            borderColor: commonPalette.default.outlinedBorder,
+            transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+          },
+          '&.Mui-error .MuiOutlinedInput-notchedOutline': {
+            border: `2px solid ${commonPalette.error.light}`
+          }
+        },
+
+        '&.MuiInput-underline': {
+          marginTop: 0,
+          padding: 0,
+
+          '&::before': {
+            borderColor: commonPalette.default.outlinedBorder
+          },
+          '&:hover:not(.Mui-disabled)::before': {
+            borderBottom: `1px solid ${commonPalette.text.primary}`
+          },
+          '&:not(.Mui-disabled)::after': {
+            borderBottom: '1px solid transparent'
+          },
+          '&.Mui-focused::after': {
+            borderBottom: `2px solid ${commonPalette.primary.main}`
+          },
+          '&.Mui-error::after': {
+            opacity: 1,
+            borderBottom: `2px solid ${commonPalette.error.light}`
+          },
+          '&.Mui-disabled::before': {
+            borderBottomStyle: 'solid'
+          }
+        },
+
+        // TextArea (multiline)
+        '&.MuiInputBase-multiline': {
+          height: 'auto',
+          minHeight: getSpacing(12),
+          alignItems: 'flex-start',
+          padding: getSpacing(1.5, 2),
+
+          '& textarea': {
+            ...themeTypography.body1,
+
+            '&::placeholder, &.Mui-disabled::placeholder': {
+              opacity: 1,
+              color: commonPalette.text.hint
+            }
+          },
+
+          '&.MuiInputBase-sizeSmall': {
+            minHeight: getSpacing(9),
+            padding: getSpacing(1, 1.5),
+
+            '& textarea': {
+              ...themeTypography.body2
+            }
+          }
+        }
+      },
+
+      // size
+      sizeSmall: {
+        height: getSpacing(4),
+        padding: getSpacing(0, 1.5),
+
+        '& input': {
+          ...themeTypography.body2
+        }
+      }
+    }
+  },
+
+  // Input Adornment
+  MuiInputAdornment: {
+    styleOverrides: {
+      root: {
+        '& .MuiTypography-root': {
+          ...themeTypography.body1,
+          color: commonPalette.text.secondary
+        },
+        '&.MuiInputAdornment-sizeSmall': {
+          '& .MuiTypography-root': {
+            ...themeTypography.body2
+          }
+        },
+        '&.MuiInputAdornment-positionStart.MuiInputAdornment-root:not(.MuiInputAdornment-hiddenLabel)':
+          {
+            marginTop: 0
+          },
+        '& .MuiSvgIcon-root': {
+          fontSize: ICON_SIZE,
+          color: commonPalette.text.secondary
+        },
+        '.Mui-disabled &': {
+          '& .MuiTypography-root, & .MuiSvgIcon-root': {
+            color: commonPalette.text.disabled
+          }
+        }
+      }
     }
   },
 
@@ -109,25 +260,8 @@ export const formsOverrides = {
   MuiFormHelperText: {
     styleOverrides: {
       root: {
-        ...themeTypography.caption,
-        '&.MuiFormHelperText-contained': {
-          marginTop: getSpacing(1)
-        }
-      },
-
-      marginDense: {
-        '&.MuiFormHelperText-contained': {
-          marginLeft: getSpacing(0)
-        }
-      }
-    }
-  },
-
-  // Form Control
-  MuiFormControl: {
-    styleOverrides: {
-      root: {
-        width: '100%'
+        margin: 0,
+        marginTop: getSpacing(1)
       }
     }
   },
@@ -136,42 +270,15 @@ export const formsOverrides = {
   MuiInputLabel: {
     styleOverrides: {
       root: {
-        ...themeTypography.body1
+        position: 'static',
+        transform: 'none',
+        marginBottom: getSpacing(1),
+        ...themeTypography.caption,
+        fontWeight: 500,
+        color: commonPalette.text.primary
       },
-
-      formControl: {
-        transform: 'translate(16px, 20px) scale(1)',
-
-        '&.MuiInputLabel-shrink': {
-          ...themeTypography.caption,
-          transform: 'translate(16px, 8px) scale(1)'
-        },
-
-        '&.MuiFormControl-marginDense': {
-          ...themeTypography.caption,
-          transform: 'translate(0, -20px) scale(1)',
-
-          '&.MuiInputLabel-shrink': {
-            ...themeTypography.caption,
-            transform: 'translate(0, -20px) scale(1)'
-          }
-        }
-      },
-
-      outlined: {
-        '&.MuiInputLabel-shrink': {
-          ...themeTypography.caption,
-          transform: 'translate(16px, 8px) scale(1)'
-        },
-
-        '&.MuiFormControl-marginDense': {
-          ...themeTypography.caption,
-          transform: 'translate(0, -20px) scale(1)',
-
-          '&.MuiInputLabel-shrink': {
-            transform: 'translate(0, -20px) scale(1)'
-          }
-        }
+      sizeSmall: {
+        marginBottom: getSpacing(0.5)
       }
     }
   },
@@ -180,6 +287,7 @@ export const formsOverrides = {
   MuiSelect: {
     defaultProps: {
       variant: 'outlined',
+
       MenuProps: {
         anchorOrigin: {
           vertical: 'bottom',

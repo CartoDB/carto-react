@@ -1,3 +1,4 @@
+import { ICON_SIZE } from '../../themeConstants';
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
@@ -24,11 +25,7 @@ export const navigationOverrides = {
     },
     styleOverrides: {
       root: ({ ownerState }) => ({
-        borderBottom: `1px solid ${commonPalette.black[12]}`,
-
-        ...(ownerState.variant !== 'fullWidth' && {
-          display: 'inline-flex'
-        })
+        borderBottom: `1px solid ${commonPalette.black[12]}`
       }),
 
       vertical: {
@@ -88,7 +85,7 @@ export const navigationOverrides = {
           alignItems: 'center'
         },
         '& .MuiSvgIcon-root': {
-          fontSize: `${themeTypography.body2.lineHeight}em`,
+          fontSize: ICON_SIZE,
           marginRight: getSpacing(1)
         }
       },

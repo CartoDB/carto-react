@@ -1,6 +1,12 @@
 import React from 'react';
 import { Box, Grid, Tab, Tabs } from '@mui/material';
-import { Layers, LocalOffer, Map, Place, Store } from '@mui/icons-material';
+import {
+  LayersOutlined,
+  LocalOfferOutlined,
+  MapOutlined,
+  PlaceOutlined,
+  StoreOutlined
+} from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
@@ -76,11 +82,11 @@ const TemplateIcons = ({ label, wrapped, disabled, ...args }) => {
 
   return (
     <Tabs {...args} value={value} onChange={handleChange} aria-label='tabs example'>
-      <Tab icon={<Map />} label={label} wrapped={wrapped} />
-      <Tab icon={<Layers />} label={label} wrapped={wrapped} />
-      <Tab icon={<LocalOffer />} label={label} wrapped={wrapped} />
-      <Tab icon={<Place />} label={label} wrapped={wrapped} />
-      <Tab icon={<Store />} label={label} wrapped={wrapped} disabled={disabled} />
+      <Tab icon={<MapOutlined />} label={label} wrapped={wrapped} />
+      <Tab icon={<LayersOutlined />} label={label} wrapped={wrapped} />
+      <Tab icon={<LocalOfferOutlined />} label={label} wrapped={wrapped} />
+      <Tab icon={<PlaceOutlined />} label={label} wrapped={wrapped} />
+      <Tab icon={<StoreOutlined />} label={label} wrapped={wrapped} disabled={disabled} />
     </Tabs>
   );
 };
@@ -94,11 +100,11 @@ const TemplateIconsAndText = ({ label, wrapped, disabled, ...args }) => {
 
   return (
     <Tabs {...args} value={value} onChange={handleChange} aria-label='tabs example'>
-      <Tab icon={<Map />} label={label} wrapped={wrapped} />
-      <Tab icon={<Layers />} label={label} wrapped={wrapped} />
-      <Tab icon={<LocalOffer />} label={label} wrapped={wrapped} />
-      <Tab icon={<Place />} label={label} wrapped={wrapped} />
-      <Tab icon={<Store />} label={label} wrapped={wrapped} disabled={disabled} />
+      <Tab icon={<MapOutlined />} label={label} wrapped={wrapped} />
+      <Tab icon={<LayersOutlined />} label={label} wrapped={wrapped} />
+      <Tab icon={<LocalOfferOutlined />} label={label} wrapped={wrapped} />
+      <Tab icon={<PlaceOutlined />} label={label} wrapped={wrapped} />
+      <Tab icon={<StoreOutlined />} label={label} wrapped={wrapped} disabled={disabled} />
     </Tabs>
   );
 };
@@ -166,11 +172,11 @@ const TemplateVertical = ({ label, wrapped, disabled, ...args }) => {
           onChange={handleChange}
           aria-label='tabs example'
         >
-          <Tab icon={<Map />} />
-          <Tab icon={<Layers />} />
-          <Tab icon={<LocalOffer />} />
-          <Tab icon={<Place />} />
-          <Tab icon={<Store />} disabled={disabled} />
+          <Tab icon={<MapOutlined />} />
+          <Tab icon={<LayersOutlined />} />
+          <Tab icon={<LocalOfferOutlined />} />
+          <Tab icon={<PlaceOutlined />} />
+          <Tab icon={<StoreOutlined />} disabled={disabled} />
         </Tabs>
       </Grid>
       <Grid item>
@@ -181,11 +187,16 @@ const TemplateVertical = ({ label, wrapped, disabled, ...args }) => {
           onChange={handleChange2}
           aria-label='tabs example'
         >
-          <Tab icon={<Map />} label={label} wrapped={wrapped} />
-          <Tab icon={<Layers />} label={label} wrapped={wrapped} />
-          <Tab icon={<LocalOffer />} label={label} wrapped={wrapped} />
-          <Tab icon={<Place />} label={label} wrapped={wrapped} />
-          <Tab icon={<Store />} label={label} wrapped={wrapped} disabled={disabled} />
+          <Tab icon={<MapOutlined />} label={label} wrapped={wrapped} />
+          <Tab icon={<LayersOutlined />} label={label} wrapped={wrapped} />
+          <Tab icon={<LocalOfferOutlined />} label={label} wrapped={wrapped} />
+          <Tab icon={<PlaceOutlined />} label={label} wrapped={wrapped} />
+          <Tab
+            icon={<StoreOutlined />}
+            label={label}
+            wrapped={wrapped}
+            disabled={disabled}
+          />
         </Tabs>
       </Grid>
       <Grid item>
@@ -240,18 +251,13 @@ const BehaviorTemplate = (args) => {
       <Grid item container direction='column' alignItems='flex-start'>
         <Typography variant='body1'>{'Hug Text'}</Typography>
         <Typography variant='body2'>{'Default behavior'}</Typography>
-
-        <Tabs
-          {...args}
-          value={value}
-          onChange={handleChange}
-          aria-label='tabs example'
-          {...args}
-        >
-          <Tab label='Extra Long Label' icon={<Map />} />
-          <Tab label='Label' icon={<Layers />} />
-          <Tab label='Long Label' icon={<LocalOffer />} />
-        </Tabs>
+        <Box style={{ width: '100%' }}>
+          <Tabs {...args} value={value} onChange={handleChange} aria-label='tabs example'>
+            <Tab label='Extra Long Label' icon={<MapOutlined />} />
+            <Tab label='Label' icon={<LayersOutlined />} />
+            <Tab label='Long Label' icon={<LocalOfferOutlined />} />
+          </Tabs>
+        </Box>
       </Grid>
 
       <Grid item container direction='column' alignItems='flex-start'>
@@ -267,11 +273,10 @@ const BehaviorTemplate = (args) => {
             onChange={handleChange2}
             aria-label='tabs example'
             variant='fullWidth'
-            {...args}
           >
-            <Tab label='Extra Long Label' icon={<Map />} />
-            <Tab label='Label' icon={<Layers />} />
-            <Tab label='Long Label' icon={<LocalOffer />} />
+            <Tab label='Extra Long Label' icon={<MapOutlined />} />
+            <Tab label='Label' icon={<LayersOutlined />} />
+            <Tab label='Long Label' icon={<LocalOfferOutlined />} />
           </Tabs>
         </Box>
       </Grid>

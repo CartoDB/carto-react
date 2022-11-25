@@ -1,18 +1,16 @@
 import React from 'react';
-import { Box, Grid, InputAdornment, TextField } from '@mui/material';
-import { EuroOutlined, InfoOutlined } from '@mui/icons-material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Box, Grid, TextField } from '@mui/material';
 import Typography from '../../../src/components/atoms/Typography';
-import PasswordField from '../../../src/components/atoms/PasswordField';
+import makeStyles from '@mui/styles/makeStyles';
 
 const options = {
-  title: 'Atoms/Text Field',
+  title: 'Atoms/Text Area',
   component: TextField,
   argTypes: {
     variant: {
       control: {
         type: 'select',
-        options: ['outlined', 'filled', 'standard']
+        options: ['outlined', 'filled']
       }
     },
     size: {
@@ -53,7 +51,7 @@ const options = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33807'
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33542'
     },
     status: {
       type: 'readyToReview'
@@ -77,20 +75,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const startAdornmentText = <InputAdornment position='start'>Kg</InputAdornment>;
-const startAdornmentIcon = (
-  <InputAdornment position='start'>
-    <EuroOutlined />
-  </InputAdornment>
-);
-const endAdornmentText = <InputAdornment position='end'>Kg</InputAdornment>;
-const endAdornmentIcon = (
-  <InputAdornment position='end'>
-    <InfoOutlined />
-  </InputAdornment>
-);
-
-const PlaygroundTemplate = (args) => <TextField {...args}></TextField>;
+const PlaygroundTemplate = (args) => <TextField {...args} multiline></TextField>;
 
 const VariantsTemplate = ({ label, placeholder, ...rest }) => {
   const classes = useStyles();
@@ -102,7 +87,13 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
           <Typography variant='body2' className={classes.label}>
             {'Filled'}
           </Typography>
-          <TextField {...rest} label={label} variant='filled' placeholder={placeholder} />
+          <TextField
+            {...rest}
+            multiline
+            label={label}
+            variant='filled'
+            placeholder={placeholder}
+          />
         </Box>
       </Grid>
       <Grid item>
@@ -112,21 +103,9 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
           </Typography>
           <TextField
             {...rest}
+            multiline
             label={label}
             variant='outlined'
-            placeholder={placeholder}
-          />
-        </Box>
-      </Grid>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Standard'}
-          </Typography>
-          <TextField
-            {...rest}
-            label={label}
-            variant='standard'
             placeholder={placeholder}
           />
         </Box>
@@ -147,6 +126,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           </Typography>
           <TextField
             {...rest}
+            multiline
             label={label}
             placeholder={placeholder}
             helperText={helperText}
@@ -158,7 +138,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Without label + helper text'}
           </Typography>
-          <TextField {...rest} placeholder={placeholder} />
+          <TextField {...rest} multiline placeholder={placeholder} />
         </Box>
       </Grid>
       <Grid item>
@@ -166,7 +146,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Only label'}
           </Typography>
-          <TextField {...rest} label={label} placeholder={placeholder} />
+          <TextField {...rest} multiline label={label} placeholder={placeholder} />
         </Box>
       </Grid>
       <Grid item>
@@ -174,108 +154,12 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Only helper text'}
           </Typography>
-          <TextField {...rest} placeholder={placeholder} helperText={helperText} />
-        </Box>
-      </Grid>
-    </Grid>
-  );
-};
-
-const PrefixAndSuffixTemplate = ({
-  label,
-  placeholder,
-  startAdornment,
-  endAdornment,
-  ...rest
-}) => {
-  const classes = useStyles();
-
-  return (
-    <Grid container direction='column' spacing={6}>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Prefix and suffix (text)'}
-          </Typography>
           <TextField
             {...rest}
-            label={label}
+            multiline
             placeholder={placeholder}
-            InputProps={{
-              startAdornment: startAdornmentText,
-              endAdornment: endAdornmentText
-            }}
+            helperText={helperText}
           />
-        </Box>
-      </Grid>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Prefix and suffix (icon)'}
-          </Typography>
-          <TextField
-            {...rest}
-            label={label}
-            placeholder={placeholder}
-            InputProps={{
-              startAdornment: startAdornmentIcon,
-              endAdornment: endAdornmentIcon
-            }}
-          />
-        </Box>
-      </Grid>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Prefix and suffix (mix)'}
-          </Typography>
-          <TextField
-            {...rest}
-            label={label}
-            placeholder={placeholder}
-            InputProps={{
-              startAdornment: startAdornmentText,
-              endAdornment: endAdornmentIcon
-            }}
-          />
-        </Box>
-      </Grid>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Only prefix'}
-          </Typography>
-          <TextField
-            {...rest}
-            label={label}
-            placeholder={placeholder}
-            InputProps={{
-              startAdornment: startAdornmentText
-            }}
-          />
-        </Box>
-      </Grid>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Only suffix'}
-          </Typography>
-          <TextField
-            {...rest}
-            label={label}
-            placeholder={placeholder}
-            InputProps={{
-              endAdornment: endAdornmentText
-            }}
-          />
-        </Box>
-      </Grid>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'None'}
-          </Typography>
-          <TextField {...rest} label={label} placeholder={placeholder} />
         </Box>
       </Grid>
     </Grid>
@@ -290,12 +174,10 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Placeholder</Typography>
         </Grid>
         <Grid item>
-          <TextField {...rest} variant='filled' label={label} placeholder={placeholder} />
-        </Grid>
-        <Grid item>
           <TextField
             {...rest}
-            variant='outlined'
+            multiline
+            variant='filled'
             label={label}
             placeholder={placeholder}
           />
@@ -303,7 +185,8 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
-            variant='standard'
+            multiline
+            variant='outlined'
             label={label}
             placeholder={placeholder}
           />
@@ -315,13 +198,10 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Empty</Typography>
         </Grid>
         <Grid item>
-          <TextField {...rest} variant='filled' label={label} />
+          <TextField {...rest} multiline variant='filled' label={label} />
         </Grid>
         <Grid item>
-          <TextField {...rest} variant='outlined' label={label} />
-        </Grid>
-        <Grid item>
-          <TextField {...rest} variant='standard' label={label} />
+          <TextField {...rest} multiline variant='outlined' label={label} />
         </Grid>
       </Grid>
 
@@ -332,6 +212,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='filled'
             label={label}
             placeholder={placeholder}
@@ -341,16 +222,8 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            variant='standard'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
@@ -365,6 +238,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='filled'
             label={label}
             placeholder={placeholder}
@@ -374,16 +248,8 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            focused
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            variant='standard'
             label={label}
             placeholder={placeholder}
             focused
@@ -398,6 +264,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='filled'
             label={label}
             placeholder={placeholder}
@@ -408,17 +275,8 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            focused
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            variant='standard'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
@@ -434,6 +292,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='filled'
             label={label}
             placeholder={placeholder}
@@ -443,16 +302,8 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            disabled
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            variant='standard'
             label={label}
             placeholder={placeholder}
             disabled
@@ -467,6 +318,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='filled'
             label={label}
             placeholder={placeholder}
@@ -477,17 +329,8 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            disabled
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            variant='standard'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
@@ -503,6 +346,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='filled'
             label={label}
             placeholder={placeholder}
@@ -513,17 +357,8 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            helperText={helperText}
-            error
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            variant='standard'
             label={label}
             placeholder={placeholder}
             helperText={helperText}
@@ -539,6 +374,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='filled'
             label={label}
             placeholder={placeholder}
@@ -550,6 +386,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
+            multiline
             variant='outlined'
             label={label}
             placeholder={placeholder}
@@ -558,61 +395,6 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             error
           />
         </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            variant='standard'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            helperText={helperText}
-            error
-          />
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-};
-
-const PasswordFieldTemplate = ({
-  label,
-  placeholder,
-  defaultValue,
-  helperText,
-  ...rest
-}) => {
-  const classes = useStyles();
-
-  return (
-    <Grid container direction='column' spacing={6}>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Default'}
-          </Typography>
-          <TextField
-            {...rest}
-            label='Password'
-            placeholder={placeholder}
-            defaultValue='1234'
-            helperText={helperText}
-            type='password'
-          />
-        </Box>
-      </Grid>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Custom component'}
-          </Typography>
-          <PasswordField
-            {...rest}
-            label='Password'
-            placeholder={placeholder}
-            defaultValue='1234'
-            helperText={helperText}
-          />
-        </Box>
       </Grid>
     </Grid>
   );
@@ -622,70 +404,37 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
   const classes = useStyles();
 
   return (
-    <Grid container direction='column' spacing={6}>
+    <Grid container direction='column' spacing={2}>
       <Grid item>
-        <Typography variant='subtitle1' className={classes.label}>
-          {'Overflow'}
-        </Typography>
         <Box className={classes.container}>
           <Typography variant='body2' className={classes.label}>
-            {'Default'}
+            {'Autosize'}
           </Typography>
+
           <TextField
             {...rest}
+            multiline
             label={label}
             placeholder={placeholder}
-            defaultValue='felipegutierrezsoriano@cartodb.com'
+            defaultValue={defaultValue}
+            helperText={helperText}
           />
         </Box>
       </Grid>
 
       <Grid item>
-        <Typography variant='subtitle1' className={classes.label}>
-          {'Grouping'}
-        </Typography>
         <Box className={classes.container}>
           <Typography variant='body2' className={classes.label}>
-            {'Pairing'}
-          </Typography>
-
-          <TextField {...rest} label={label} placeholder={placeholder} />
-          <TextField {...rest} label={label} placeholder={placeholder} />
-        </Box>
-      </Grid>
-
-      <Grid item>
-        <Typography variant='subtitle1' className={classes.label}>
-          {'Types'}
-        </Typography>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Examples'}
+            {'Maximum height (rows="4")'}
           </Typography>
 
           <TextField
             {...rest}
-            label='Name'
+            multiline
+            rows='4'
+            label={label}
             placeholder={placeholder}
-            defaultValue='Felipe'
-            helperText={helperText}
-          />
-          <TextField
-            {...rest}
-            label='Amount'
-            placeholder={placeholder}
-            defaultValue='3560'
-            type='number'
-            InputProps={{
-              startAdornment: startAdornmentIcon
-            }}
-            helperText={helperText}
-          />
-          <PasswordField
-            {...rest}
-            label='Password'
-            placeholder={placeholder}
-            defaultValue='1234'
+            defaultValue={defaultValue}
             helperText={helperText}
           />
         </Box>
@@ -723,9 +472,6 @@ Variants.argTypes = disabledControlsVariantsArgTypes;
 export const LabelAndHelperText = LabelAndHelperTextTemplate.bind({});
 LabelAndHelperText.args = { ...commonArgs };
 
-export const PrefixAndSuffix = PrefixAndSuffixTemplate.bind({});
-PrefixAndSuffix.args = { ...commonArgs };
-
 export const Medium = SizeTemplate.bind({});
 Medium.args = { ...commonArgs, ...sizeArgs };
 Medium.argTypes = disabledControlsSizeArgTypes;
@@ -733,9 +479,6 @@ Medium.argTypes = disabledControlsSizeArgTypes;
 export const Small = SizeTemplate.bind({});
 Small.args = { ...commonArgs, ...sizeArgs, size: 'small' };
 Small.argTypes = disabledControlsSizeArgTypes;
-
-export const Password = PasswordFieldTemplate.bind({});
-Password.args = { ...commonArgs };
 
 export const Behavior = BehaviorTemplate.bind({});
 Behavior.args = { ...commonArgs };

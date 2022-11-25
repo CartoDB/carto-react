@@ -1,3 +1,4 @@
+import { ICON_SIZE, ICON_SIZE_M } from '../../themeConstants';
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
@@ -70,7 +71,7 @@ export const dataDisplayOverrides = {
         marginLeft: getSpacing(0.75),
 
         '& .MuiSvgIcon-root': {
-          fontSize: getSpacing(3)
+          fontSize: ICON_SIZE_M
         }
       }
     }
@@ -83,7 +84,7 @@ export const dataDisplayOverrides = {
           width: getSpacing(4.5)
         },
         '& .MuiSvgIcon-root': {
-          fontSize: getSpacing(2.5)
+          fontSize: ICON_SIZE
         }
       }
     }
