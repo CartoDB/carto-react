@@ -1,34 +1,27 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@material-ui/core';
-import { lighten } from '@material-ui/core'
+import { lighten } from '@material-ui/core';
 import EchartsWrapper from '../../custom-components/echarts-for-react';
 
 /**
  * process incoming data to assign labels, colors and selected / unselected styles
- * @param {{ name: string; value: number; }[]} data 
- * @param {string[]} [colors] 
- * @param {string[]} [labels] 
- * @param {Object} [theme] 
- * @param {string[]} [selectedCategories] 
+ * @param {{ name: string; value: number; }[]} data
+ * @param {string[]} [colors]
+ * @param {string[]} [labels]
+ * @param {Object} [theme]
+ * @param {string[]} [selectedCategories]
  */
-function processData(
-  data,
-  colors = [],
-  labels = [],
-  theme,
-  selectedCategories = [],
-) {
+function processData(data, colors = [], labels = [], theme, selectedCategories = []) {
   return data.map((item, index) => {
     const isDisabled =
-      selectedCategories.length > 0 &&
-      selectedCategories.indexOf(item.name) === -1;
+      selectedCategories.length > 0 && selectedCategories.indexOf(item.name) === -1;
     const palette = colors?.length ? colors : theme.palette.qualitative.bold;
     return {
       ...item,
       key: item.name,
       color: isDisabled ? lighten(palette[index], 0.8) : palette[index],
-      name: labels[index] || item.name,
+      name: labels[index] || item.name
     };
   });
 }
@@ -54,9 +47,9 @@ function defaultTooltipFormatter(params) {
 
   return `
     <p style="${titleStyle}">${data.name}</p>
-    <p style="${valueStyle}">${
-      singleParams.marker
-    } ${label} (${params.formatter(singleParams.percent)} %)</p>
+    <p style="${valueStyle}">${singleParams.marker} ${label} (${params.formatter(
+    singleParams.percent
+  )} %)</p>
   `.trim();
 }
 
@@ -64,7 +57,9 @@ const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
 
 /**
- * Renders a <ComparativePieWidgetUI /> widget
+ * Renders a `<ComparativePieWidgetUI />` widget
+ *
+ * <!--
  * @param {Object} props
  * @param {string[]} props.names
  * @param {{ name: string; value: number; }[][]} [props.data]
@@ -76,6 +71,7 @@ const EMPTY_ARRAY = [];
  * @param {(v: any) => string} [props.tooltipFormatter]
  * @param {string[]} [props.selectedCategories]
  * @param {(categories: string[]) => any} [props.onCategorySelected]
+ * -->
  */
 function ComparativePieWidgetUI({
   names = EMPTY_ARRAY,
@@ -87,7 +83,7 @@ function ComparativePieWidgetUI({
   formatter = IDENTITY_FN,
   tooltipFormatter = defaultTooltipFormatter,
   selectedCategories = [],
-  onCategorySelected = IDENTITY_FN,
+  onCategorySelected = IDENTITY_FN
 }) {
   /** @type {any} */
   const theme = useTheme();
@@ -97,7 +93,7 @@ function ComparativePieWidgetUI({
 
   const processedData = useMemo(() => {
     return data.map((d, i) =>
-      processData(d, colors[i], labels[i], theme, selectedCategories),
+      processData(d, colors[i], labels[i], theme, selectedCategories)
     );
   }, [data, colors, labels, theme, selectedCategories]);
 
@@ -116,8 +112,8 @@ function ComparativePieWidgetUI({
           tooltipFormatter({
             ...params,
             formatter,
-            isMultiple,
-          })),
+            isMultiple
+          }))
     };
 
     const legendData = isMultiple
@@ -139,14 +135,14 @@ function ComparativePieWidgetUI({
         color: theme.palette.text.primary,
         lineHeight: 1,
         verticalAlign: 'bottom',
-        padding: [0, 0, 0, theme.spacing(0.5)],
+        padding: [0, 0, 0, theme.spacing(0.5)]
       },
       inactiveColor: theme.palette.text.disabled,
       pageIcons: {
         horizontal: [
           'path://M15.41 7.41 14 6 8 12 14 18 15.41 16.59 10.83 12z',
-          'path://M9 16.59 13.3265857 12 9 7.41 10.3319838 6 16 12 10.3319838 18z',
-        ],
+          'path://M9 16.59 13.3265857 12 9 7.41 10.3319838 6 16 12 10.3319838 18z'
+        ]
       },
       pageIconSize: theme.spacing(1.5),
       pageIconColor: theme.palette.text.secondary,
@@ -156,8 +152,8 @@ function ComparativePieWidgetUI({
         fontSize: theme.spacing(1.5),
         lineHeight: theme.spacing(1.75),
         fontWeight: 'normal',
-        color: theme.palette.text.primary,
-      },
+        color: theme.palette.text.primary
+      }
     };
     const labelOptions = {
       formatter: ({ name, percent }) => `{per|${formatter(percent)}%}\n{b|${name}}`,
@@ -168,16 +164,16 @@ function ComparativePieWidgetUI({
           fontSize: theme.spacing(1.75),
           lineHeight: theme.spacing(1.75),
           fontWeight: 'normal',
-          color: theme.palette.text.primary,
+          color: theme.palette.text.primary
         },
         per: {
           ...theme.typography.charts,
           fontSize: theme.spacing(3),
           lineHeight: theme.spacing(4.5),
           fontWeight: 600,
-          color: theme.palette.text.primary,
-        },
-      },
+          color: theme.palette.text.primary
+        }
+      }
     };
     const series = processedData.map((data, i) => ({
       type: 'pie',
@@ -197,25 +193,18 @@ function ComparativePieWidgetUI({
         label: {
           show: true,
           formatter: labelOptions.formatter,
-          rich: labelOptions.rich,
-        },
-      },
+          rich: labelOptions.rich
+        }
+      }
     }));
     const grid = {
       left: theme.spacing(0),
       top: theme.spacing(0),
       right: theme.spacing(0),
-      bottom: theme.spacing(0),
+      bottom: theme.spacing(0)
     };
     return { grid, tooltip, legend, series };
-  }, [
-    theme,
-    names,
-    animation,
-    processedData,
-    formatter,
-    tooltipFormatter,
-  ]);
+  }, [theme, names, animation, processedData, formatter, tooltipFormatter]);
 
   const onEvents = {
     mouseover: (selected, chart) => {
@@ -224,7 +213,7 @@ function ComparativePieWidgetUI({
           chart.dispatchAction({
             type: 'downplay',
             seriesIndex: 0,
-            dataIndex: 0,
+            dataIndex: 0
           });
         }
       }
@@ -234,7 +223,7 @@ function ComparativePieWidgetUI({
         chart.dispatchAction({
           type: 'highlight',
           seriesIndex: 0,
-          dataIndex: 0,
+          dataIndex: 0
         });
       }
     },
@@ -256,7 +245,7 @@ function ComparativePieWidgetUI({
       }
 
       onCategorySelected(newCategories);
-    },
+    }
   };
 
   useEffect(() => {
@@ -264,7 +253,7 @@ function ComparativePieWidgetUI({
       chartRef.current.dispatchAction({
         type: processedData.length === 1 ? 'highlight' : 'downplay',
         seriesIndex: 0,
-        dataIndex: 0,
+        dataIndex: 0
       });
     }
   }, [processedData]);
@@ -299,14 +288,18 @@ ComparativePieWidgetUI.defaultProps = {
   formatter: IDENTITY_FN,
   tooltipFormatter: defaultTooltipFormatter,
   selectedCategories: [],
-  onCategorySelected: IDENTITY_FN,
+  onCategorySelected: IDENTITY_FN
 };
 ComparativePieWidgetUI.propTypes = {
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
-  data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    value: PropTypes.number
-  }))),
+  data: PropTypes.arrayOf(
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        value: PropTypes.number
+      })
+    )
+  ),
   labels: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
   colors: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
   height: PropTypes.string,
@@ -314,7 +307,7 @@ ComparativePieWidgetUI.propTypes = {
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   selectedCategories: PropTypes.arrayOf(PropTypes.string),
-  onCategorySelected: PropTypes.func,
+  onCategorySelected: PropTypes.func
 };
 
 export default ComparativePieWidgetUI;
