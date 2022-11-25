@@ -248,3 +248,21 @@ export type ComparativeCategoryWidgetUI = {
   onSelectedCategoriesChange?: (categories: string[]) => any;
   formatter?: (v: any) => string;
 };
+
+export type PieData = {
+  name: string;
+  value: number;
+};
+
+export type ComparativePieWidgetUIProps = {
+  names: string[];
+  data: PieData[][];
+  labels?: string[][];
+  colors?: string[][];
+  height?: string;
+  animation?: boolean;
+  formatter?: (v: number) => string;
+  tooltipFormatter?: (v: any) => string;
+  selectedCategories?: string[];
+  onCategorySelected?: (categories: string[]) => any;
+};

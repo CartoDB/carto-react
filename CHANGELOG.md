@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Implement ComparativePieWidgetUI [#510](https://github.com/CartoDB/carto-react/pull/510)
 - Fix `executeSQL` through **POST** request [#531](https://github.com/CartoDB/carto-react/pull/531)
 
 ## 1.5

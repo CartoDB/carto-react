@@ -49,6 +49,7 @@ function getTheme() {
 export const mockEcharts = {
   init() {
     jest.spyOn(echarts, 'getInstanceByDom').mockImplementation(() => ({
+      dispatchAction: jest.fn(),
       hideLoading: jest.fn(),
       getOption: jest.fn(() => ({
         series: [
