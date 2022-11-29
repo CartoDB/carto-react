@@ -635,7 +635,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             {...rest}
             label={label}
             placeholder={placeholder}
-            defaultValue='felipegutierrezsoriano@cartodb.com'
+            defaultValue='Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts'
           />
         </Box>
       </Grid>
@@ -651,6 +651,35 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
 
           <TextField {...rest} label={label} placeholder={placeholder} />
           <TextField {...rest} label={label} placeholder={placeholder} />
+        </Box>
+      </Grid>
+
+      <Grid item>
+        <Typography variant='subtitle1' className={classes.label}>
+          {'Width'}
+        </Typography>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Default (fullWidth)'}
+          </Typography>
+          <TextField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            defaultValue='felipegutierrezsoriano@cartodb.com'
+          />
+        </Box>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'No fullWidth'}
+          </Typography>
+          <TextField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            defaultValue='felipegutierrezsoriano@cartodb.com'
+            fullWidth={false}
+          />
         </Box>
       </Grid>
 

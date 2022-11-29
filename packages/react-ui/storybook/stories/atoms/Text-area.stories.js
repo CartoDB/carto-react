@@ -406,6 +406,9 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
+        <Typography variant='subtitle1' className={classes.label}>
+          {'Height'}
+        </Typography>
         <Box className={classes.container}>
           <Typography variant='body2' className={classes.label}>
             {'Autosize'}
@@ -436,6 +439,39 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             placeholder={placeholder}
             defaultValue={defaultValue}
             helperText={helperText}
+          />
+        </Box>
+      </Grid>
+
+      <Grid item>
+        <Typography variant='subtitle1' className={classes.label}>
+          {'Width'}
+        </Typography>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Default (fullWidth)'}
+          </Typography>
+          <TextField
+            {...rest}
+            multiline
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            helperText={helperText}
+          />
+        </Box>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'No fullWidth'}
+          </Typography>
+          <TextField
+            {...rest}
+            multiline
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            helperText={helperText}
+            fullWidth={false}
           />
         </Box>
       </Grid>

@@ -1,12 +1,12 @@
-import React from 'react';
-import { Box, Chip, Grid, InputAdornment, MenuItem, TextField } from '@mui/material';
-import { MapOutlined } from '@mui/icons-material';
+import React, { useState } from 'react';
+import { Box, Grid, MenuItem, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
+import SelectField from '../../../src/components/atoms/SelectField';
 
 const options = {
   title: 'Atoms/Select',
-  component: TextField,
+  component: SelectField,
   argTypes: {
     variant: {
       control: {
@@ -76,25 +76,37 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const startAdornmentText = <InputAdornment position='start'>Kg</InputAdornment>;
-const startAdornmentIcon = (
-  <InputAdornment position='start'>
-    <MapOutlined />
-  </InputAdornment>
-);
-const endAdornmentChip = (
-  <InputAdornment position='end'>
-    <Chip label='Time' size='small' />
-  </InputAdornment>
-);
+const menuItems = [
+  {
+    label: 'Ten',
+    id: '10'
+  },
+  {
+    label: 'Twenty',
+    id: '20'
+  },
+  {
+    label: 'Thirty',
+    id: '30'
+  }
+];
 
-const PlaygroundTemplate = (args) => (
-  <TextField {...args} select>
-    <MenuItem value={10}>Ten</MenuItem>
-    <MenuItem value={20}>Twenty</MenuItem>
-    <MenuItem value={30}>Thirty</MenuItem>
-  </TextField>
-);
+const menuItemsLong = [
+  {
+    label: 'table_openstreetmap_pointsofinterest',
+    id: '10'
+  },
+  {
+    label: 'Twenty',
+    id: '20'
+  },
+  {
+    label: 'Thirty',
+    id: '30'
+  }
+];
+
+const PlaygroundTemplate = (args) => <SelectField {...args} items={menuItems} />;
 
 const VariantsTemplate = ({ label, size, required, placeholder, ...rest }) => {
   const classes = useStyles();
@@ -106,17 +118,13 @@ const VariantsTemplate = ({ label, size, required, placeholder, ...rest }) => {
           <Typography variant='body2' className={classes.label}>
             {'Filled'}
           </Typography>
-          <TextField
+          <SelectField
             {...rest}
-            select
             label={label}
             variant='filled'
             placeholder={placeholder}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Box>
       </Grid>
       <Grid item>
@@ -124,17 +132,13 @@ const VariantsTemplate = ({ label, size, required, placeholder, ...rest }) => {
           <Typography variant='body2' className={classes.label}>
             {'Outlined'}
           </Typography>
-          <TextField
+          <SelectField
             {...rest}
-            select
             label={label}
             variant='outlined'
             placeholder={placeholder}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Box>
       </Grid>
       <Grid item>
@@ -142,17 +146,13 @@ const VariantsTemplate = ({ label, size, required, placeholder, ...rest }) => {
           <Typography variant='body2' className={classes.label}>
             {'Standard'}
           </Typography>
-          <TextField
+          <SelectField
             {...rest}
-            select
             label={label}
             variant='standard'
             placeholder={placeholder}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Box>
       </Grid>
     </Grid>
@@ -169,17 +169,13 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Label + helper text'}
           </Typography>
-          <TextField
+          <SelectField
             {...rest}
-            select
             label={label}
             placeholder={placeholder}
             helperText={helperText}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Box>
       </Grid>
       <Grid item>
@@ -187,11 +183,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Without label + helper text'}
           </Typography>
-          <TextField {...rest} select placeholder={placeholder}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+          <SelectField {...rest} placeholder={placeholder} items={menuItems} />
         </Box>
       </Grid>
       <Grid item>
@@ -199,11 +191,12 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Only label'}
           </Typography>
-          <TextField {...rest} select label={label} placeholder={placeholder}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+          <SelectField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            items={menuItems}
+          />
         </Box>
       </Grid>
       <Grid item>
@@ -211,99 +204,12 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Only helper text'}
           </Typography>
-          <TextField {...rest} select placeholder={placeholder} helperText={helperText}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
-        </Box>
-      </Grid>
-    </Grid>
-  );
-};
-
-const PrefixAndSuffixTemplate = ({
-  label,
-  placeholder,
-  startAdornment,
-  endAdornment,
-  ...rest
-}) => {
-  const classes = useStyles();
-
-  return (
-    <Grid container direction='column' spacing={6}>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Prefix'}
-          </Typography>
-          <TextField
+          <SelectField
             {...rest}
-            select
-            label={label}
             placeholder={placeholder}
-            InputProps={{
-              startAdornment: startAdornmentText
-            }}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
-        </Box>
-      </Grid>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Suffix'}
-          </Typography>
-          <TextField
-            {...rest}
-            select
-            label={label}
-            placeholder={placeholder}
-            InputProps={{
-              endAdornment: endAdornmentChip
-            }}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
-        </Box>
-      </Grid>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Prefix and suffix (chip)'}
-          </Typography>
-          <TextField
-            {...rest}
-            select
-            label={label}
-            placeholder={placeholder}
-            InputProps={{
-              startAdornment: startAdornmentIcon,
-              endAdornment: endAdornmentChip
-            }}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
-        </Box>
-      </Grid>
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'None'}
-          </Typography>
-          <TextField {...rest} select label={label} placeholder={placeholder}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            helperText={helperText}
+            items={menuItems}
+          />
         </Box>
       </Grid>
     </Grid>
@@ -311,6 +217,11 @@ const PrefixAndSuffixTemplate = ({
 };
 
 const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
+  const [fixedValue, setFixedValue] = useState('Ten');
+  const handleChange = (event) => {
+    setFixedValue(event.target.value);
+  };
+
   return (
     <Grid container spacing={6}>
       <Grid item container spacing={2}>
@@ -318,43 +229,31 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Placeholder</Typography>
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='filled'
             label={label}
             placeholder={placeholder}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='outlined'
             label={label}
             placeholder={placeholder}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='standard'
             label={label}
             placeholder={placeholder}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
       </Grid>
 
@@ -363,25 +262,13 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Empty</Typography>
         </Grid>
         <Grid item>
-          <TextField {...rest} select variant='filled' label={label}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+          <SelectField {...rest} variant='filled' label={label} items={menuItems} />
         </Grid>
         <Grid item>
-          <TextField {...rest} select variant='outlined' label={label}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+          <SelectField {...rest} variant='outlined' label={label} items={menuItems} />
         </Grid>
         <Grid item>
-          <TextField {...rest} select variant='standard' label={label}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+          <SelectField {...rest} variant='standard' label={label} items={menuItems} />
         </Grid>
       </Grid>
 
@@ -392,44 +279,49 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item>
           <TextField
             {...rest}
-            select
             variant='filled'
             label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
+            select
+            placeholder={'test'}
+            //items={menuItems}
+            value={fixedValue}
+            onChange={handleChange}
+            SelectProps={{
+              renderValue: (value) => value
+            }}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {menuItems.map((option) => (
+              <MenuItem key={option.label} value={option.label}>
+                {option.label}
+              </MenuItem>
+            ))}
           </TextField>
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='outlined'
             label={label}
             placeholder={placeholder}
-            defaultValue={defaultValue}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+            value={fixedValue}
+            onChange={handleChange}
+            SelectProps={{
+              renderValue: (value) => value
+            }}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='standard'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+            value={fixedValue}
+            onChange={handleChange}
+          />
         </Grid>
       </Grid>
 
@@ -438,46 +330,34 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Focused</Typography>
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='filled'
             label={label}
             placeholder={placeholder}
             focused
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='outlined'
             label={label}
             placeholder={placeholder}
             focused
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='standard'
             label={label}
             placeholder={placeholder}
             focused
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
       </Grid>
 
@@ -486,49 +366,37 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Focused filled</Typography>
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='filled'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
             focused
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='outlined'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
             focused
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='standard'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
             focused
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
       </Grid>
 
@@ -537,46 +405,34 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Disabled</Typography>
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='filled'
             label={label}
             placeholder={placeholder}
             disabled
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='outlined'
             label={label}
             placeholder={placeholder}
             disabled
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='standard'
             label={label}
             placeholder={placeholder}
             disabled
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
       </Grid>
 
@@ -585,49 +441,37 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Disabled filled</Typography>
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='filled'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
             disabled
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='outlined'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
             disabled
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='standard'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
             disabled
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
       </Grid>
 
@@ -636,49 +480,37 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Error</Typography>
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='filled'
             label={label}
             placeholder={placeholder}
             helperText={helperText}
             error
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='outlined'
             label={label}
             placeholder={placeholder}
             helperText={helperText}
             error
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='standard'
             label={label}
             placeholder={placeholder}
             helperText={helperText}
             error
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
       </Grid>
 
@@ -687,53 +519,64 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Error filled</Typography>
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='filled'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
             helperText={helperText}
             error
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='outlined'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
             helperText={helperText}
             error
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
         <Grid item>
-          <TextField
+          <SelectField
             {...rest}
-            select
             variant='standard'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
             helperText={helperText}
             error
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+            items={menuItems}
+          />
         </Grid>
+      </Grid>
+    </Grid>
+  );
+};
+
+const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
+  const classes = useStyles();
+
+  return (
+    <Grid container direction='column' spacing={6}>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Default'}
+          </Typography>
+          <SelectField
+            {...rest}
+            multiple
+            label={label}
+            placeholder={placeholder}
+            items={menuItems}
+          />
+        </Box>
       </Grid>
     </Grid>
   );
@@ -752,11 +595,12 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
           <Typography variant='body2' className={classes.label}>
             {'Default'}
           </Typography>
-          <TextField {...rest} select label={label} placeholder={placeholder}>
-            <MenuItem value={10}>table_openstreetmap_pointsofinterest</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+          <SelectField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            items={menuItemsLong}
+          />
         </Box>
       </Grid>
 
@@ -769,16 +613,47 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             {'Pairing'}
           </Typography>
 
-          <TextField {...rest} select label={label} placeholder={placeholder}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
-          <TextField {...rest} select label={label} placeholder={placeholder}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </TextField>
+          <SelectField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            items={menuItems}
+          />
+          <SelectField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            items={menuItems}
+          />
+        </Box>
+      </Grid>
+
+      <Grid item>
+        <Typography variant='subtitle1' className={classes.label}>
+          {'Width'}
+        </Typography>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Default (fullWidth)'}
+          </Typography>
+          <SelectField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            items={menuItems}
+          />
+        </Box>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'No fullWidth'}
+          </Typography>
+          <SelectField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            fullWidth={false}
+            items={menuItems}
+          />
         </Box>
       </Grid>
     </Grid>
@@ -791,8 +666,8 @@ const commonArgs = {
   helperText: 'Helper text.'
 };
 const sizeArgs = {
-  helperText: 'This is a error message.',
-  defaultValue: 'Hello world'
+  helperText: 'This is a error message.'
+  //value: '10'
 };
 
 const disabledControlsVariantsArgTypes = {
@@ -814,9 +689,6 @@ Variants.argTypes = disabledControlsVariantsArgTypes;
 export const LabelAndHelperText = LabelAndHelperTextTemplate.bind({});
 LabelAndHelperText.args = { ...commonArgs };
 
-export const PrefixAndSuffix = PrefixAndSuffixTemplate.bind({});
-PrefixAndSuffix.args = { ...commonArgs };
-
 export const Medium = SizeTemplate.bind({});
 Medium.args = { ...commonArgs, ...sizeArgs };
 Medium.argTypes = disabledControlsSizeArgTypes;
@@ -824,6 +696,9 @@ Medium.argTypes = disabledControlsSizeArgTypes;
 export const Small = SizeTemplate.bind({});
 Small.args = { ...commonArgs, ...sizeArgs, size: 'small' };
 Small.argTypes = disabledControlsSizeArgTypes;
+
+export const MultipleSelection = MultipleTemplate.bind({});
+MultipleSelection.args = { ...commonArgs };
 
 export const Behavior = BehaviorTemplate.bind({});
 Behavior.args = { ...commonArgs };

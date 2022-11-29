@@ -3,6 +3,7 @@ import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeShadows } from '../shadows';
 import { themeTypography } from '../typography';
+import ArrowDropIcon from '../../../assets/ArrowDropIcon';
 
 const switchSizeS = 2;
 const switchSizeM = 3;
@@ -56,21 +57,55 @@ export const formsOverrides = {
   // Text Field
   MuiTextField: {
     defaultProps: {
+      fullWidth: true,
+
       InputLabelProps: {
         shrink: true
+      },
+      SelectProps: {
+        IconComponent: ArrowDropIcon,
+
+        MenuProps: {
+          getContentAnchorEl: null
+        }
       }
     },
     styleOverrides: {
-      root: {
-        minWidth: '192px',
-
+      root: ({ ownerState }) => ({
         '& legend': {
           display: 'none'
         },
         '& + &': {
           marginLeft: getSpacing(2)
-        }
-      }
+        },
+
+        // Select bool
+        ...(ownerState.select === true && {
+          '& .MuiInputBase-root': {
+            padding: 0,
+
+            '& .MuiInputAdornment-positionEnd': {
+              marginRight: getSpacing(3)
+            },
+            '& .MuiSelect-select': {
+              display: 'flex',
+              alignItems: 'center',
+              height: '100%',
+              padding: 0,
+
+              '&:focus': {
+                background: 'transparent'
+              }
+            },
+            '& .MuiSelect-icon': {
+              right: getSpacing(2)
+            },
+            '& .MuiSelect-iconStandard': {
+              right: 0
+            }
+          }
+        })
+      })
     }
   },
 
@@ -150,6 +185,9 @@ export const formsOverrides = {
 
           '&.MuiInputBase-sizeSmall': {
             padding: getSpacing(0, 1.5)
+          },
+          '&.Mui-focused': {
+            backgroundColor: commonPalette.background.paper
           },
           '& .MuiOutlinedInput-notchedOutline': {
             top: 0,
@@ -292,9 +330,18 @@ export const formsOverrides = {
 
   // Select
   MuiSelect: {
+    defaultProps: {
+      IconComponent: ArrowDropIcon
+    },
+
     styleOverrides: {
       root: {
-        maxWidth: '192px'
+        '& .MuiSelect-icon': {
+          right: getSpacing(2)
+        },
+        '& .MuiSelect-iconStandard': {
+          right: 0
+        }
       }
     }
   },
