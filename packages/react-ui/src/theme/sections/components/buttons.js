@@ -306,6 +306,7 @@ export const buttonsOverrides = {
         color: commonPalette.text.secondary,
         border: 'none',
         borderRadius: radius,
+        transition: 'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
         '&:hover': {
           backgroundColor: commonPalette.action.hover
