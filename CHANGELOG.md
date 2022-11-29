@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Improve rendering performance of FeatureSelectionLayer (mask layer) [#541](https://github.com/CartoDB/carto-react/pull/541)
+
 ## 1.5
 
 ## 1.5.0-alpha.8 (2022-11-25)
