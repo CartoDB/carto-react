@@ -74,6 +74,7 @@ export default function FeatureSelectionLayer(
           type: 'FeatureCollection',
           features: spatialFilterGeometry ? [spatialFilterGeometry] : []
         },
+        // has mask polygon changed?
         dataComparator: (data, oldData) => data.features[0] === oldData.features[0],
         mode,
         // @ts-ignore
