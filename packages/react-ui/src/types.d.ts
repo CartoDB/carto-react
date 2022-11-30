@@ -215,11 +215,6 @@ type TooltipDataProps = {
   title?: string;
 };
 
-// PasswordField
-export interface PasswordFieldProps {
-  style?: CSSProperties;
-}
-
 // SelectField
 export interface SelectFieldProps {
   items: [
