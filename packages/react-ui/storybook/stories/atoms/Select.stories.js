@@ -94,7 +94,7 @@ const menuItems = [
 const menuItemsLong = [
   {
     label: 'table_openstreetmap_pointsofinterest',
-    id: '10'
+    id: '10Long'
   },
   {
     label: 'Twenty',
@@ -217,9 +217,17 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
 };
 
 const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
-  const [fixedValue, setFixedValue] = useState('Ten');
+  const [fixedValue, setFixedValue] = useState('Twenty');
+  const [fixedValue2, setFixedValue2] = useState('Ten');
+  const [fixedValue3, setFixedValue3] = useState('Thirty');
   const handleChange = (event) => {
     setFixedValue(event.target.value);
+  };
+  const handleChange2 = (event) => {
+    setFixedValue2(event.target.value);
+  };
+  const handleChange3 = (event) => {
+    setFixedValue3(event.target.value);
   };
 
   return (
@@ -227,8 +235,9 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
       <Grid item container spacing={2}>
         <Grid item xs={2}>
           <Typography>Placeholder</Typography>
+          <Typography variant='body2'>Custom component</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs={3}>
           <SelectField
             {...rest}
             variant='filled'
@@ -237,7 +246,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             items={menuItems}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={3}>
           <SelectField
             {...rest}
             variant='outlined'
@@ -246,7 +255,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             items={menuItems}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={3}>
           <SelectField
             {...rest}
             variant='standard'
@@ -261,35 +270,8 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item xs={2}>
           <Typography>Empty</Typography>
         </Grid>
-        <Grid item>
-          <SelectField {...rest} variant='filled' label={label} items={menuItems} />
-        </Grid>
-        <Grid item>
-          <SelectField {...rest} variant='outlined' label={label} items={menuItems} />
-        </Grid>
-        <Grid item>
-          <SelectField {...rest} variant='standard' label={label} items={menuItems} />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Filled</Typography>
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            variant='filled'
-            label={label}
-            select
-            placeholder={'test'}
-            //items={menuItems}
-            value={fixedValue}
-            onChange={handleChange}
-            SelectProps={{
-              renderValue: (value) => value
-            }}
-          >
+        <Grid item xs={3}>
+          <TextField select {...rest} variant='filled' label={label}>
             {menuItems.map((option) => (
               <MenuItem key={option.label} value={option.label}>
                 {option.label}
@@ -297,31 +279,77 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             ))}
           </TextField>
         </Grid>
-        <Grid item>
-          <SelectField
+        <Grid item xs={3}>
+          <TextField select {...rest} variant='outlined' label={label}>
+            {menuItems.map((option) => (
+              <MenuItem key={option.label} value={option.label}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
+        <Grid item xs={3}>
+          <TextField select {...rest} variant='standard' label={label}>
+            {menuItems.map((option) => (
+              <MenuItem key={option.label} value={option.label}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
+      </Grid>
+
+      <Grid item container spacing={2}>
+        <Grid item xs={2}>
+          <Typography>Filled</Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <TextField
+            {...rest}
+            variant='filled'
+            label={label}
+            select
+            value={fixedValue}
+            onChange={handleChange}
+          >
+            {menuItems.map((option) => (
+              <MenuItem key={option.label} value={option.label}>
+                <Typography variant='inherit'>{option.label}</Typography>
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
+        <Grid item xs={3}>
+          <TextField
             {...rest}
             variant='outlined'
             label={label}
-            placeholder={placeholder}
-            items={menuItems}
-            value={fixedValue}
-            onChange={handleChange}
-            SelectProps={{
-              renderValue: (value) => value
-            }}
-          />
+            select
+            value={fixedValue2}
+            onChange={handleChange2}
+          >
+            {menuItems.map((option) => (
+              <MenuItem key={option.label} value={option.label}>
+                <Typography variant='inherit'>{option.label}</Typography>
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
-        <Grid item>
-          <SelectField
+        <Grid item xs={3}>
+          <TextField
             {...rest}
             variant='standard'
             label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            items={menuItems}
-            value={fixedValue}
-            onChange={handleChange}
-          />
+            select
+            value={fixedValue3}
+            onChange={handleChange3}
+          >
+            {menuItems.map((option) => (
+              <MenuItem key={option.label} value={option.label}>
+                <Typography variant='inherit'>{option.label}</Typography>
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
       </Grid>
 
@@ -329,7 +357,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item xs={2}>
           <Typography>Focused</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs={3}>
           <SelectField
             {...rest}
             variant='filled'
@@ -339,7 +367,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             items={menuItems}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={3}>
           <SelectField
             {...rest}
             variant='outlined'
@@ -349,51 +377,12 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             items={menuItems}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={3}>
           <SelectField
             {...rest}
             variant='standard'
             label={label}
             placeholder={placeholder}
-            focused
-            items={menuItems}
-          />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Focused filled</Typography>
-        </Grid>
-        <Grid item>
-          <SelectField
-            {...rest}
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            focused
-            items={menuItems}
-          />
-        </Grid>
-        <Grid item>
-          <SelectField
-            {...rest}
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            focused
-            items={menuItems}
-          />
-        </Grid>
-        <Grid item>
-          <SelectField
-            {...rest}
-            variant='standard'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
             focused
             items={menuItems}
           />
@@ -404,7 +393,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item xs={2}>
           <Typography>Disabled</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs={3}>
           <SelectField
             {...rest}
             variant='filled'
@@ -414,7 +403,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             items={menuItems}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={3}>
           <SelectField
             {...rest}
             variant='outlined'
@@ -424,51 +413,12 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             items={menuItems}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={3}>
           <SelectField
             {...rest}
             variant='standard'
             label={label}
             placeholder={placeholder}
-            disabled
-            items={menuItems}
-          />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Disabled filled</Typography>
-        </Grid>
-        <Grid item>
-          <SelectField
-            {...rest}
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            disabled
-            items={menuItems}
-          />
-        </Grid>
-        <Grid item>
-          <SelectField
-            {...rest}
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            disabled
-            items={menuItems}
-          />
-        </Grid>
-        <Grid item>
-          <SelectField
-            {...rest}
-            variant='standard'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
             disabled
             items={menuItems}
           />
@@ -479,7 +429,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item xs={2}>
           <Typography>Error</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs={3}>
           <SelectField
             {...rest}
             variant='filled'
@@ -490,7 +440,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             items={menuItems}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={3}>
           <SelectField
             {...rest}
             variant='outlined'
@@ -501,54 +451,12 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             items={menuItems}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={3}>
           <SelectField
             {...rest}
             variant='standard'
             label={label}
             placeholder={placeholder}
-            helperText={helperText}
-            error
-            items={menuItems}
-          />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Error filled</Typography>
-        </Grid>
-        <Grid item>
-          <SelectField
-            {...rest}
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            helperText={helperText}
-            error
-            items={menuItems}
-          />
-        </Grid>
-        <Grid item>
-          <SelectField
-            {...rest}
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            helperText={helperText}
-            error
-            items={menuItems}
-          />
-        </Grid>
-        <Grid item>
-          <SelectField
-            {...rest}
-            variant='standard'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
             helperText={helperText}
             error
             items={menuItems}
@@ -567,7 +475,7 @@ const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...res
       <Grid item>
         <Box className={classes.container}>
           <Typography variant='body2' className={classes.label}>
-            {'Default'}
+            {'Default (custom component)'}
           </Typography>
           <SelectField
             {...rest}
@@ -667,7 +575,6 @@ const commonArgs = {
 };
 const sizeArgs = {
   helperText: 'This is a error message.'
-  //value: '10'
 };
 
 const disabledControlsVariantsArgTypes = {

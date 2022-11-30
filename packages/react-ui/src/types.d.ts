@@ -222,8 +222,13 @@ export interface PasswordFieldProps {
 
 // SelectField
 export interface SelectFieldProps {
-  items: string[];
-  placeholder?: string;
+  items: [
+    {
+      label: string;
+      id: string | number;
+    }
+  ];
   multiple?: boolean;
+  placeholder: string;
   size?: 'small' | 'medium' | 'large';
 }

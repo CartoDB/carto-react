@@ -9,7 +9,8 @@ const SelectField = forwardRef(
     // https://mui.com/material-ui/guides/composition/#caveat-with-refs
 
     const [content, setContent] = useState([]);
-    const handleChange = (event: SelectChangeEvent<typeof content>) => {
+
+    const handleChange = (event) => {
       const {
         target: { value }
       } = event;
@@ -18,6 +19,7 @@ const SelectField = forwardRef(
         typeof value === 'string' ? value.split(',') : value
       );
     };
+
     const isSmall = size === 'small';
 
     return (
@@ -50,17 +52,19 @@ const SelectField = forwardRef(
                 component='span'
               >
                 {items.find((item) => item.id === value).label}
+                {multiple && ', '}
               </Typography>
             ));
           }
         }}
       >
+        <MenuItem key='empty' disabled value={''}></MenuItem>
         {items.map((item, index) => (
           <MenuItem key={index} value={item.id}>
-            {multiple && <Checkbox checked={content.indexOf(item) > -1} />}
-            <Typography variant='body2' component='span'>
-              {item.label}
-            </Typography>
+            {multiple && (
+              <Checkbox checked={content.indexOf(item.id) > -1} size='small' />
+            )}
+            {item.label}
           </MenuItem>
         ))}
       </TextField>
@@ -72,11 +76,15 @@ SelectField.defaultProps = {
   multiple: false,
   size: 'medium'
 };
-
 SelectField.propTypes = {
-  items: PropTypes.array.isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
+    })
+  ).isRequired,
+  placeholder: PropTypes.string.isRequired,
   multiple: PropTypes.bool,
-  placeholder: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium', 'large'])
 };
 
