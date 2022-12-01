@@ -214,3 +214,16 @@ type TooltipDataProps = {
   ];
   title?: string;
 };
+
+// SelectField
+export interface SelectFieldProps {
+  items: [
+    {
+      label: string;
+      id: string | number;
+    }
+  ];
+  multiple?: boolean;
+  placeholder: string;
+  size?: 'small' | 'medium' | 'large';
+}

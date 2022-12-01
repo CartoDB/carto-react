@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Grid, InputAdornment, TextField } from '@mui/material';
-import { EuroOutlined, InfoOutlined } from '@mui/icons-material';
+import { EuroOutlined, InfoOutlined, MapOutlined } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import PasswordField from '../../../src/components/atoms/PasswordField';
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
 const startAdornmentText = <InputAdornment position='start'>Kg</InputAdornment>;
 const startAdornmentIcon = (
   <InputAdornment position='start'>
-    <EuroOutlined />
+    <MapOutlined />
   </InputAdornment>
 );
 const endAdornmentText = <InputAdornment position='end'>Kg</InputAdornment>;
@@ -627,7 +627,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
         <Typography variant='subtitle1' className={classes.label}>
           {'Overflow'}
         </Typography>
-        <Box className={classes.container}>
+        <Box className={classes.container} style={{ maxWidth: '440px' }}>
           <Typography variant='body2' className={classes.label}>
             {'Default'}
           </Typography>
@@ -656,6 +656,35 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
 
       <Grid item>
         <Typography variant='subtitle1' className={classes.label}>
+          {'Width'}
+        </Typography>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Default (fullWidth)'}
+          </Typography>
+          <TextField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            defaultValue='felipegutierrezsoriano@cartodb.com'
+          />
+        </Box>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'No fullWidth'}
+          </Typography>
+          <TextField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            defaultValue='felipegutierrezsoriano@cartodb.com'
+            fullWidth={false}
+          />
+        </Box>
+      </Grid>
+
+      <Grid item>
+        <Typography variant='subtitle1' className={classes.label}>
           {'Types'}
         </Typography>
         <Box className={classes.container}>
@@ -677,7 +706,11 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             defaultValue='3560'
             type='number'
             InputProps={{
-              startAdornment: startAdornmentIcon
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <EuroOutlined />
+                </InputAdornment>
+              )
             }}
             helperText={helperText}
           />
