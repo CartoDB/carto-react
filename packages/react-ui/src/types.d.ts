@@ -213,7 +213,6 @@ type TooltipDataProps = {
 };
 
 // SelectField
-
 export interface SelectFieldProps extends TextFieldProps {
   items: [
     {
@@ -228,6 +227,7 @@ export interface SelectFieldProps extends TextFieldProps {
 
 export interface UploadFieldProps extends TextFieldProps {
   placeholder?: string;
+  dragPlaceholder?: string;
   buttonText?: string;
   accept?: string;
   multiple?: boolean;

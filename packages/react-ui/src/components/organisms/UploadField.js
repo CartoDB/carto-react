@@ -1,19 +1,33 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, InputAdornment, TextField } from '@mui/material';
+import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
+import { Cancel } from '@mui/icons-material';
 
 const useStyles = makeStyles((theme) => ({
-  dragOver: {
-    background: 'red'
+  focused: {
+    '& .MuiOutlinedInput-root, & .MuiFilledInput-root': {
+      backgroundColor: theme.palette.background.paper
+    },
+    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline, & .MuiInputBase-root.MuiFilledInput-root::after':
+      {
+        opacity: 1,
+        border: `2px solid ${theme.palette.primary.main}`
+      },
+    '& .MuiFormLabel-root': {
+      color: theme.palette.primary.main
+    }
   }
 }));
 
 function UploadField(props) {
   const classes = useStyles();
   const uploadInputRef = useRef(null);
+  const textFieldRef = useRef(null);
+
   const [filesText, setFilesText] = useState('');
-  const [over, setOver] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+  const [file, setFile] = useState(false);
 
   useEffect(() => {
     if (props.files.length === 0) {
@@ -31,20 +45,22 @@ function UploadField(props) {
 
   const handleDragOver = (event) => {
     event.preventDefault();
-    setOver(true);
+    setDragOver(true);
   };
 
   const handleDragLeave = (event) => {
     event.preventDefault();
-    setOver(false);
+    setDragOver(false);
   };
 
   const handleDrop = (event) => {
     event.preventDefault();
+    setDragOver(false);
 
     const items = event.dataTransfer.items;
     const newFiles = getAllFiles(items);
     props.onChange(newFiles);
+    setFile(newFiles);
   };
 
   const getAllFiles = (items) => {
@@ -55,6 +71,7 @@ function UploadField(props) {
         newFiles.push(file);
       }
     }
+    setFile(newFiles);
 
     return newFiles;
   };
@@ -62,29 +79,60 @@ function UploadField(props) {
   const handleFiles = (event) => {
     const newFiles = Array.from(event.target.files);
     props.onChange(newFiles);
+    setFile(newFiles);
   };
 
+  const resetState = (event) => {
+    event.stopPropagation();
+
+    setFilesText(null);
+    setFile(undefined);
+  };
+
+  const dragPlaceholderText = dragOver
+    ? props.dragPlaceholder
+    : filesText || props.placeholder;
+
   return (
-    <Box>
+    <>
       <TextField
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
+        {...props}
+        ref={textFieldRef}
         variant={props.variant}
-        placeholder={filesText || props.placeholder}
+        placeholder={dragPlaceholderText}
         label={props.label}
         helperText={props.helperText}
+        className={dragOver && classes.focused}
         InputProps={{
+          onDragOver: handleDragOver,
+          onDragLeave: handleDragLeave,
+          onDrop: handleDrop,
+          onClick: handleBrowse,
           readOnly: true,
           endAdornment: (
             <InputAdornment position='end'>
-              <Button size='small' variant='text' color='primary' onClick={handleBrowse}>
-                {props.buttonText}
-              </Button>
+              {!file ? (
+                <Button
+                  size='small'
+                  variant='text'
+                  color='primary'
+                  disabled={!!dragOver}
+                  className={classes.button}
+                >
+                  {props.buttonText}
+                </Button>
+              ) : (
+                <IconButton
+                  onClick={resetState}
+                  aria-label='delete'
+                  disabled={!!dragOver}
+                >
+                  <Cancel />
+                </IconButton>
+              )}
             </InputAdornment>
           )
         }}
-        className={`${over ? classes.dragOdver : ''}`}
       />
       <input
         ref={uploadInputRef}
@@ -94,12 +142,13 @@ function UploadField(props) {
         multiple={props.multiple}
         onChange={handleFiles}
       />
-    </Box>
+    </>
   );
 }
 
 UploadField.defaultProps = {
   placeholder: 'Drag and drop your file or click to browse',
+  dragPlaceholder: 'Drop your file here...',
   buttonText: 'Browse',
   accept: 'application/JSON',
   multiple: false,
@@ -110,6 +159,7 @@ UploadField.defaultProps = {
 
 UploadField.propTypes = {
   placeholder: PropTypes.string,
+  dragPlaceholder: PropTypes.string,
   buttonText: PropTypes.string,
   accept: PropTypes.string,
   multiple: PropTypes.bool,
