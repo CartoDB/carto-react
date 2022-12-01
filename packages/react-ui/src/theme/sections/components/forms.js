@@ -396,6 +396,7 @@ export const formsOverrides = {
           }
         },
 
+        // Size Small
         '&.MuiInputBase-sizeSmall': {
           ...themeTypography.body2,
 

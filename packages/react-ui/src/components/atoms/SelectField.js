@@ -51,7 +51,7 @@ const SelectField = forwardRef(
                 variant={isSmall ? 'body2' : 'body1'}
                 component='span'
               >
-                {items.find((item) => item.id === value).label}
+                {items.find((item) => item.value === value).label}
                 {multiple && ', '}
               </Typography>
             ));
@@ -60,9 +60,9 @@ const SelectField = forwardRef(
       >
         <MenuItem key='empty' disabled value={''}></MenuItem>
         {items.map((item, index) => (
-          <MenuItem key={index} value={item.id}>
+          <MenuItem key={index} value={item.value}>
             {multiple && (
-              <Checkbox checked={content.indexOf(item.id) > -1} size='small' />
+              <Checkbox checked={content.indexOf(item.value) > -1} size='small' />
             )}
             {item.label}
           </MenuItem>

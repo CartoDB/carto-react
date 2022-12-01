@@ -52,7 +52,7 @@ const options = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33807'
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A29965'
     },
     status: {
       type: 'readyToReview'
@@ -79,30 +79,30 @@ const useStyles = makeStyles((theme) => ({
 const menuItems = [
   {
     label: 'Ten',
-    id: '10'
+    value: '10'
   },
   {
     label: 'Twenty',
-    id: '20'
+    value: '20'
   },
   {
     label: 'Thirty',
-    id: '30'
+    value: '30'
   }
 ];
 
 const menuItemsLong = [
   {
     label: 'table_openstreetmap_pointsofinterest',
-    id: '10Long'
+    value: '10Long'
   },
   {
     label: 'Twenty',
-    id: '20'
+    value: '20'
   },
   {
     label: 'Thirty',
-    id: '30'
+    value: '30'
   }
 ];
 
