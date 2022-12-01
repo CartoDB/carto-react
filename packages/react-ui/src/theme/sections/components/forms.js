@@ -3,6 +3,7 @@ import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeShadows } from '../shadows';
 import { themeTypography } from '../typography';
+import ArrowDropIcon from '../../../assets/ArrowDropIcon';
 
 const switchSizeS = 2;
 const switchSizeM = 3;
@@ -56,21 +57,84 @@ export const formsOverrides = {
   // Text Field
   MuiTextField: {
     defaultProps: {
+      fullWidth: true,
+
       InputLabelProps: {
         shrink: true
+      },
+      SelectProps: {
+        IconComponent: ArrowDropIcon
       }
     },
     styleOverrides: {
-      root: {
-        minWidth: '192px',
-
+      root: ({ ownerState }) => ({
         '& legend': {
           display: 'none'
         },
         '& + &': {
           marginLeft: getSpacing(2)
-        }
-      }
+        },
+
+        // Select bool
+        ...(ownerState.select === true && {
+          '& .MuiInputBase-root': {
+            padding: 0,
+
+            '&.MuiOutlinedInput-root': {
+              padding: 0
+            },
+            '& .MuiInputAdornment-positionEnd': {
+              marginRight: getSpacing(3)
+            },
+            '& .MuiSelect-select': {
+              display: 'flex',
+              alignItems: 'center',
+              height: '100%',
+              padding: 0,
+
+              '&.MuiInputBase-input': {
+                paddingLeft: getSpacing(2),
+                paddingRight: getSpacing(5),
+
+                '&.MuiSelect-standard': {
+                  paddingLeft: 0
+                }
+              },
+              '&:focus': {
+                background: 'transparent'
+              },
+              '& .MuiTypography-root': {
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }
+            },
+            '& .MuiSelect-icon': {
+              right: getSpacing(2)
+            },
+            '& .MuiSelect-iconStandard': {
+              right: 0
+            }
+          },
+
+          '& .MuiInputBase-sizeSmall': {
+            '& .MuiSelect-select': {
+              ...themeTypography.body2,
+
+              '&.MuiInputBase-input': {
+                paddingLeft: getSpacing(1.5),
+                paddingRight: getSpacing(4)
+              }
+            },
+            '&.MuiOutlinedInput-root.MuiInputBase-sizeSmall': {
+              padding: 0
+            },
+            '& .MuiSelect-icon': {
+              right: getSpacing(1.5)
+            }
+          }
+        })
+      })
     }
   },
 
@@ -97,8 +161,7 @@ export const formsOverrides = {
         '&.MuiInputBase-formControl::after': {
           top: 0,
           transform: 'none',
-          opacity: 0,
-          transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+          opacity: 0
         },
         '&.MuiInputBase-formControl.Mui-focused::after': {
           transform: 'none',
@@ -152,10 +215,16 @@ export const formsOverrides = {
           '&.MuiInputBase-sizeSmall': {
             padding: getSpacing(0, 1.5)
           },
+          '&.Mui-focused': {
+            backgroundColor: commonPalette.background.paper
+          },
           '& .MuiOutlinedInput-notchedOutline': {
             top: 0,
             borderColor: commonPalette.default.outlinedBorder,
             transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+          },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            transition: 'none'
           },
           '&.Mui-error .MuiOutlinedInput-notchedOutline': {
             border: `2px solid ${commonPalette.error.light}`
@@ -192,9 +261,10 @@ export const formsOverrides = {
           height: 'auto',
           minHeight: getSpacing(12),
           alignItems: 'flex-start',
-          padding: getSpacing(1.5, 2),
+          padding: getSpacing(0, 0.25),
 
           '& textarea': {
+            padding: getSpacing(1.5, 1.75),
             ...themeTypography.body1,
 
             '&::placeholder, &.Mui-disabled::placeholder': {
@@ -205,9 +275,10 @@ export const formsOverrides = {
 
           '&.MuiInputBase-sizeSmall': {
             minHeight: getSpacing(9),
-            padding: getSpacing(1, 1.5),
+            padding: getSpacing(0, 0.25),
 
             '& textarea': {
+              padding: getSpacing(1, 1.25),
               ...themeTypography.body2
             }
           }
@@ -256,6 +327,13 @@ export const formsOverrides = {
     }
   },
 
+  // Form Control
+  MuiFormControl: {
+    defaultProps: {
+      fullWidth: true
+    }
+  },
+
   // Form Helper Text
   MuiFormHelperText: {
     styleOverrides: {
@@ -279,6 +357,9 @@ export const formsOverrides = {
       },
       sizeSmall: {
         marginBottom: getSpacing(0.5)
+      },
+      standard: {
+        marginBottom: 0
       }
     }
   },
@@ -286,25 +367,77 @@ export const formsOverrides = {
   // Select
   MuiSelect: {
     defaultProps: {
-      variant: 'outlined',
-
-      MenuProps: {
-        anchorOrigin: {
-          vertical: 'bottom',
-          horizontal: 'left'
-        }
-      }
+      IconComponent: ArrowDropIcon,
+      fullWidth: true
     },
+
     styleOverrides: {
       root: {
-        '&:hover': {
-          backgroundColor: 'transparent'
+        padding: 0,
+
+        '& .MuiSelect-icon': {
+          right: getSpacing(2)
+        },
+        '& .MuiSelect-iconStandard': {
+          right: 0
+        },
+        '& legend': {
+          display: 'none'
+        },
+
+        // Variants
+        '&.MuiOutlinedInput-root': {
+          padding: 0
+        },
+        '&.MuiFilledInput-root, &.MuiInput-underline': {
+          '&.Mui-focused::after': {
+            height: '100%',
+            transition: 'none'
+          }
+        },
+
+        // Size Small
+        '&.MuiInputBase-sizeSmall': {
+          ...themeTypography.body2,
+
+          '& .MuiSelect-select': {
+            '&.MuiInputBase-input': {
+              paddingLeft: getSpacing(1.5),
+              paddingRight: getSpacing(4)
+            },
+            '&.MuiSelect-standard': {
+              paddingLeft: 0
+            }
+          },
+          '&.MuiOutlinedInput-root.MuiInputBase-sizeSmall': {
+            padding: 0
+          },
+          '& .MuiSelect-icon': {
+            right: getSpacing(1.5)
+          }
         }
       },
-
       select: {
+        display: 'flex',
+        alignItems: 'center',
+        height: '100%',
+        padding: 0,
+
+        '&.MuiInputBase-input': {
+          paddingLeft: getSpacing(2),
+          paddingRight: getSpacing(5),
+
+          '&.MuiSelect-standard': {
+            paddingLeft: 0
+          }
+        },
         '&:focus': {
-          backgroundColor: 'transparent'
+          background: 'transparent'
+        },
+        '& .MuiTypography-root': {
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis'
         }
       }
     }

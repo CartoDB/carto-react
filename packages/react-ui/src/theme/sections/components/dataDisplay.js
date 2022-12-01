@@ -311,5 +311,17 @@ export const dataDisplayOverrides = {
     defaultProps: {
       color: 'textPrimary'
     }
+  },
+
+  // Svg Icons
+  MuiSvgIcon: {
+    styleOverrides: {
+      root: {
+        fontSize: ICON_SIZE
+      },
+      sizeLarge: {
+        fontSize: ICON_SIZE_M
+      }
+    }
   }
 };

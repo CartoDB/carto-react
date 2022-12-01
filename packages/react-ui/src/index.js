@@ -25,6 +25,7 @@ import CircleIcon from './assets/CircleIcon';
 import Typography from './components/atoms/Typography';
 import Button from './components/atoms/Button';
 import PasswordField from './components/atoms/PasswordField';
+import SelectField from './components/atoms/SelectField';
 
 const featureSelectionIcons = {
   CursorIcon,
@@ -59,5 +60,6 @@ export {
   LegendRamp,
   Typography,
   Button,
-  PasswordField
+  PasswordField,
+  SelectField
 };

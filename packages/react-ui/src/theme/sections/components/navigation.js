@@ -8,7 +8,39 @@ export const navigationOverrides = {
   MuiMenuItem: {
     styleOverrides: {
       root: {
-        ...themeTypography.body2
+        ...themeTypography.body2,
+        height: getSpacing(4),
+        transition: 'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+
+        '&:focus-visible': {
+          // Solves a known Mui issue: https://github.com/mui/material-ui/issues/23747
+          backgroundColor: 'transparent',
+
+          '&:hover': {
+            backgroundColor: commonPalette.action.hover
+          }
+        },
+        '&.Mui-selected': {
+          color: commonPalette.primary.main,
+
+          '&:focus-visible': {
+            // Solves a known Mui issue: https://github.com/mui/material-ui/issues/23747
+            backgroundColor: commonPalette.primary.background
+          },
+          '&:hover': {
+            backgroundColor: commonPalette.action.hover
+          },
+          '& .MuiTypography-root, & .MuiSvgIcon-root': {
+            color: commonPalette.primary.main
+          }
+        },
+        '&.Mui-disabled:empty': {
+          height: 0,
+          padding: 0
+        },
+        '& .MuiCheckbox-root, & > .MuiSvgIcon-root': {
+          marginRight: getSpacing(1)
+        }
       }
     }
   },

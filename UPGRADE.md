@@ -119,3 +119,12 @@ Instead of `<TextField type='password' /> ` you can use:
 `react-ui/src/atoms/PasswordField`
 
 For external use: `import { PasswordField } from '@carto/react-ui';`.
+
+## Select Field
+
+We have a custom component to build the `placeholder` and `multiple selection` logic on top of TextField Mui component.
+
+Instead of `<TextField select /> ` or `<Select />` you can use:
+`react-ui/src/atoms/SelectField`
+
+For external use: `import { SelectField } from '@carto/react-ui';`.
