@@ -627,7 +627,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
         <Typography variant='subtitle1' className={classes.label}>
           {'Overflow'}
         </Typography>
-        <Box className={classes.container}>
+        <Box className={classes.container} style={{ maxWidth: '440px' }}>
           <Typography variant='body2' className={classes.label}>
             {'Default'}
           </Typography>
@@ -635,7 +635,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             {...rest}
             label={label}
             placeholder={placeholder}
-            defaultValue='Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts'
+            defaultValue='felipegutierrezsoriano@cartodb.com'
           />
         </Box>
       </Grid>

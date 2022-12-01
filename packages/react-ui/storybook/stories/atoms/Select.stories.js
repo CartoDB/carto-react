@@ -499,7 +499,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
         <Typography variant='subtitle1' className={classes.label}>
           {'Overflow'}
         </Typography>
-        <Box className={classes.container}>
+        <Box className={classes.container} style={{ maxWidth: '440px' }}>
           <Typography variant='body2' className={classes.label}>
             {'Default'}
           </Typography>
