@@ -1,8 +1,5 @@
 import { GroupDateTypes } from '@carto/react-core';
-import {
-  ButtonProps as MuiButtonProps,
-  TypographyProps as MuiTypographyProps
-} from '@mui/material';
+import { TextFieldProps, TypographyProps as MuiTypographyProps } from '@mui/material';
 import { CSSProperties } from 'react';
 
 export type WrapperWidgetUI = {
@@ -214,3 +211,16 @@ type TooltipDataProps = {
   ];
   title?: string;
 };
+
+export interface UploadFieldProps extends TextFieldProps {
+  placeholder?: string;
+  buttonText?: string;
+  accept?: string;
+  multiple?: boolean;
+  files?: [];
+  variant?: 'outlined' | 'filled';
+  label?: string;
+  name: string;
+  helperText?: string;
+  onChange?: (file?: File | null) => void;
+}
