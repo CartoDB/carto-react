@@ -26,6 +26,7 @@ import Typography from './components/atoms/Typography';
 import Button from './components/atoms/Button';
 import PasswordField from './components/atoms/PasswordField';
 import SelectField from './components/atoms/SelectField';
+import UploadField from './components/molecules/UploadField';
 
 export {
   theme,
@@ -56,5 +57,6 @@ export {
   Typography,
   Button,
   PasswordField,
-  SelectField
+  SelectField,
+  UploadField
 };

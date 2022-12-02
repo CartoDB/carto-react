@@ -1,11 +1,12 @@
-import React from 'react';
-import { Box, Grid, TextField } from '@mui/material';
-import Typography from '../../../src/components/atoms/Typography';
+import React, { useState } from 'react';
+import { Box, Grid } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
+import Typography from '../../../src/components/atoms/Typography';
+import UploadField from '../../../src/components/molecules/UploadField';
 
 const options = {
-  title: 'Atoms/Text Area',
-  component: TextField,
+  title: 'Molecules/UploadField',
+  component: UploadField,
   argTypes: {
     variant: {
       control: {
@@ -46,15 +47,44 @@ const options = {
       control: {
         type: 'text'
       }
+    },
+    dragPlaceholder: {
+      control: {
+        type: 'text'
+      }
+    },
+    buttonText: {
+      control: {
+        type: 'text'
+      }
+    },
+    files: {
+      defaultValue: [],
+      description: 'Files handled by the input.'
+    },
+    accept: {
+      defaultValue: ['application/JSON'],
+      description:
+        'Array of strings that defines the file types the file input should accept.',
+      control: {
+        type: 'string'
+      }
+    },
+    multiple: {
+      defaultValue: false,
+      description: 'Specifies that multiple files can be chosen at once.',
+      control: {
+        type: 'boolean'
+      }
     }
   },
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33542'
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A36997'
     },
     status: {
-      type: 'validated'
+      type: 'readyToReview'
     }
   }
 };
@@ -75,10 +105,25 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const PlaygroundTemplate = (args) => <TextField {...args} multiline></TextField>;
+const Template = ({ ...args }) => {
+  const [files, setFiles] = useState([]);
+  const handleUploadFieldChange = (files) => {
+    setFiles(files);
+  };
 
-const VariantsTemplate = ({ label, placeholder, ...rest }) => {
+  return <UploadField {...args} files={files} onChange={handleUploadFieldChange} />;
+};
+
+const VariantsTemplate = ({ label, required, placeholder, dragPlaceholder, ...rest }) => {
   const classes = useStyles();
+  const [files, setFiles] = useState([]);
+  const [files2, setFiles2] = useState([]);
+  const handleUploadFieldChange = (files) => {
+    setFiles(files);
+  };
+  const handleUploadFieldChange2 = (files) => {
+    setFiles2(files);
+  };
 
   return (
     <Grid container direction='column' spacing={6}>
@@ -87,12 +132,14 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
           <Typography variant='body2' className={classes.label}>
             {'Filled'}
           </Typography>
-          <TextField
+          <UploadField
             {...rest}
-            multiline
-            label={label}
             variant='filled'
+            files={files}
+            label={label}
             placeholder={placeholder}
+            dragPlaceholder={dragPlaceholder}
+            onChange={handleUploadFieldChange}
           />
         </Box>
       </Grid>
@@ -101,12 +148,14 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
           <Typography variant='body2' className={classes.label}>
             {'Outlined'}
           </Typography>
-          <TextField
+          <UploadField
             {...rest}
-            multiline
-            label={label}
             variant='outlined'
+            files={files2}
+            label={label}
             placeholder={placeholder}
+            dragPlaceholder={dragPlaceholder}
+            onChange={handleUploadFieldChange2}
           />
         </Box>
       </Grid>
@@ -116,6 +165,22 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
 
 const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest }) => {
   const classes = useStyles();
+  const [files, setFiles] = useState([]);
+  const [files2, setFiles2] = useState([]);
+  const [files3, setFiles3] = useState([]);
+  const [files4, setFiles4] = useState([]);
+  const handleUploadFieldChange = (files) => {
+    setFiles(files);
+  };
+  const handleUploadFieldChange2 = (files) => {
+    setFiles2(files);
+  };
+  const handleUploadFieldChange3 = (files) => {
+    setFiles3(files);
+  };
+  const handleUploadFieldChange4 = (files) => {
+    setFiles4(files);
+  };
 
   return (
     <Grid container direction='column' spacing={6}>
@@ -124,12 +189,13 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Label + helper text'}
           </Typography>
-          <TextField
+          <UploadField
             {...rest}
-            multiline
             label={label}
             placeholder={placeholder}
             helperText={helperText}
+            files={files}
+            onChange={handleUploadFieldChange}
           />
         </Box>
       </Grid>
@@ -138,7 +204,12 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Without label + helper text'}
           </Typography>
-          <TextField {...rest} multiline placeholder={placeholder} />
+          <UploadField
+            {...rest}
+            placeholder={placeholder}
+            files={files2}
+            onChange={handleUploadFieldChange2}
+          />
         </Box>
       </Grid>
       <Grid item>
@@ -146,7 +217,13 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Only label'}
           </Typography>
-          <TextField {...rest} multiline label={label} placeholder={placeholder} />
+          <UploadField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            files={files3}
+            onChange={handleUploadFieldChange3}
+          />
         </Box>
       </Grid>
       <Grid item>
@@ -154,11 +231,12 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
           <Typography variant='body2' className={classes.label}>
             {'Only helper text'}
           </Typography>
-          <TextField
+          <UploadField
             {...rest}
-            multiline
             placeholder={placeholder}
             helperText={helperText}
+            files={files4}
+            onChange={handleUploadFieldChange4}
           />
         </Box>
       </Grid>
@@ -167,66 +245,55 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
 };
 
 const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
+  const [files, setFiles] = useState([]);
+  const [files2, setFiles2] = useState([]);
+  const [files3, setFiles3] = useState([]);
+  const [files4, setFiles4] = useState([]);
+  const [files5, setFiles5] = useState([]);
+  const [files6, setFiles6] = useState([]);
+  const handleUploadFieldChange = (files) => {
+    setFiles(files);
+  };
+  const handleUploadFieldChange2 = (files) => {
+    setFiles2(files);
+  };
+  const handleUploadFieldChange3 = (files) => {
+    setFiles3(files);
+  };
+  const handleUploadFieldChange4 = (files) => {
+    setFiles4(files);
+  };
+  const handleUploadFieldChange5 = (files) => {
+    setFiles5(files);
+  };
+  const handleUploadFieldChange6 = (files) => {
+    setFiles6(files);
+  };
+
   return (
     <Grid container spacing={6}>
       <Grid item container spacing={2}>
         <Grid item xs={2}>
-          <Typography>Placeholder</Typography>
+          <Typography>Default</Typography>
         </Grid>
-        <Grid item>
-          <TextField
+        <Grid item xs={4}>
+          <UploadField
             {...rest}
-            multiline
             variant='filled'
             label={label}
             placeholder={placeholder}
+            files={files}
+            onChange={handleUploadFieldChange}
           />
         </Grid>
-        <Grid item>
-          <TextField
+        <Grid item xs={4}>
+          <UploadField
             {...rest}
-            multiline
             variant='outlined'
             label={label}
             placeholder={placeholder}
-          />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Empty</Typography>
-        </Grid>
-        <Grid item>
-          <TextField {...rest} multiline variant='filled' label={label} />
-        </Grid>
-        <Grid item>
-          <TextField {...rest} multiline variant='outlined' label={label} />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Filled</Typography>
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            multiline
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            multiline
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
+            files={files2}
+            onChange={handleUploadFieldChange2}
           />
         </Grid>
       </Grid>
@@ -235,52 +302,26 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item xs={2}>
           <Typography>Focused</Typography>
         </Grid>
-        <Grid item>
-          <TextField
+        <Grid item xs={4}>
+          <UploadField
             {...rest}
-            multiline
             variant='filled'
             label={label}
             placeholder={placeholder}
             focused
+            files={files3}
+            onChange={handleUploadFieldChange3}
           />
         </Grid>
-        <Grid item>
-          <TextField
+        <Grid item xs={4}>
+          <UploadField
             {...rest}
-            multiline
             variant='outlined'
             label={label}
             placeholder={placeholder}
             focused
-          />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Focused filled</Typography>
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            multiline
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            focused
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            multiline
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            focused
+            files={files4}
+            onChange={handleUploadFieldChange4}
           />
         </Grid>
       </Grid>
@@ -289,51 +330,21 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item xs={2}>
           <Typography>Disabled</Typography>
         </Grid>
-        <Grid item>
-          <TextField
+        <Grid item xs={4}>
+          <UploadField
             {...rest}
-            multiline
             variant='filled'
             label={label}
             placeholder={placeholder}
             disabled
           />
         </Grid>
-        <Grid item>
-          <TextField
+        <Grid item xs={4}>
+          <UploadField
             {...rest}
-            multiline
             variant='outlined'
             label={label}
             placeholder={placeholder}
-            disabled
-          />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Disabled filled</Typography>
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            multiline
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            disabled
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            multiline
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
             disabled
           />
         </Grid>
@@ -343,56 +354,28 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
         <Grid item xs={2}>
           <Typography>Error</Typography>
         </Grid>
-        <Grid item>
-          <TextField
+        <Grid item xs={4}>
+          <UploadField
             {...rest}
-            multiline
             variant='filled'
             label={label}
             placeholder={placeholder}
             helperText={helperText}
             error
+            files={files5}
+            onChange={handleUploadFieldChange5}
           />
         </Grid>
-        <Grid item>
-          <TextField
+        <Grid item xs={4}>
+          <UploadField
             {...rest}
-            multiline
             variant='outlined'
             label={label}
             placeholder={placeholder}
             helperText={helperText}
             error
-          />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Error filled</Typography>
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            multiline
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            helperText={helperText}
-            error
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            {...rest}
-            multiline
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            helperText={helperText}
-            error
+            files={files6}
+            onChange={handleUploadFieldChange6}
           />
         </Grid>
       </Grid>
@@ -400,78 +383,57 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
   );
 };
 
-const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
+const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
   const classes = useStyles();
+  const [files, setFiles] = useState([]);
+  const handleUploadFieldChange = (files) => {
+    setFiles(files);
+  };
 
   return (
-    <Grid container direction='column' spacing={2}>
+    <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Typography variant='subtitle1' className={classes.label}>
-          {'Height'}
-        </Typography>
         <Box className={classes.container}>
           <Typography variant='body2' className={classes.label}>
-            {'Autosize'}
+            {'Default'}
           </Typography>
-
-          <TextField
+          <UploadField
             {...rest}
-            multiline
+            multiple
             label={label}
             placeholder={placeholder}
-            defaultValue={defaultValue}
-            helperText={helperText}
+            files={files}
+            onChange={handleUploadFieldChange}
           />
         </Box>
       </Grid>
+    </Grid>
+  );
+};
 
-      <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Maximum height (rows="4")'}
-          </Typography>
+const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
+  const classes = useStyles();
+  const [files, setFiles] = useState([]);
+  const handleUploadFieldChange = (files) => {
+    setFiles(files);
+  };
 
-          <TextField
-            {...rest}
-            multiline
-            rows='4'
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            helperText={helperText}
-          />
-        </Box>
-      </Grid>
-
+  return (
+    <Grid container direction='column' spacing={6}>
       <Grid item>
         <Typography variant='subtitle1' className={classes.label}>
-          {'Width'}
+          {'Overflow'}
         </Typography>
-        <Box className={classes.container}>
+        <Box className={classes.container} style={{ maxWidth: '440px' }}>
           <Typography variant='body2' className={classes.label}>
-            {'Default (fullWidth)'}
+            {'Default'}
           </Typography>
-          <TextField
+          <UploadField
             {...rest}
-            multiline
             label={label}
             placeholder={placeholder}
-            defaultValue={defaultValue}
-            helperText={helperText}
-          />
-        </Box>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'No fullWidth'}
-          </Typography>
-          <TextField
-            {...rest}
-            multiline
-            label={label}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            helperText={helperText}
-            fullWidth={false}
+            files={files}
+            onChange={handleUploadFieldChange}
           />
         </Box>
       </Grid>
@@ -481,12 +443,14 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
 
 const commonArgs = {
   label: 'Label text',
-  placeholder: 'Placeholder text',
-  helperText: 'Helper text.'
+  placeholder: 'Drag and drop your file or click to browse',
+  dragPlaceholder: 'Drop your file here...',
+  helperText: 'Upload a CSV or GeoJSON file, or a zip package with your Shapefile',
+  buttonText: 'Browse',
+  accept: ['application/JSON', 'image/*']
 };
 const sizeArgs = {
-  helperText: 'This is a error message.',
-  defaultValue: 'Hello world'
+  helperText: 'This is a error message.'
 };
 
 const disabledControlsVariantsArgTypes = {
@@ -498,7 +462,7 @@ const disabledControlsSizeArgTypes = {
   defaultValue: { table: { disable: true } }
 };
 
-export const Playground = PlaygroundTemplate.bind({});
+export const Playground = Template.bind({});
 Playground.args = { ...commonArgs };
 
 export const Variants = VariantsTemplate.bind({});
@@ -515,6 +479,9 @@ Medium.argTypes = disabledControlsSizeArgTypes;
 export const Small = SizeTemplate.bind({});
 Small.args = { ...commonArgs, ...sizeArgs, size: 'small' };
 Small.argTypes = disabledControlsSizeArgTypes;
+
+export const MultipleSelection = MultipleTemplate.bind({});
+MultipleSelection.args = { ...commonArgs };
 
 export const Behavior = BehaviorTemplate.bind({});
 Behavior.args = { ...commonArgs };

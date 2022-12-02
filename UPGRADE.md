@@ -128,3 +128,14 @@ Instead of `<TextField select /> ` or `<Select />` you can use:
 `react-ui/src/atoms/SelectField`
 
 For external use: `import { SelectField } from '@carto/react-ui';`.
+
+## InputFile / UploadField
+
+This component is used to display and input `type='file'`.
+
+We are replacing `InputFile` component by the new `UploadField`.
+
+Instead of `<Inputfile /> ` you can use:
+`react-ui/src/molecules/UploadField`
+
+For external use: `import { UploadField } from '@carto/react-ui';`.

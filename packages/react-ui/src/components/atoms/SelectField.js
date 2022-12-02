@@ -55,6 +55,16 @@ const SelectField = forwardRef(
                 {multiple && ', '}
               </Typography>
             ));
+          },
+          MenuProps: {
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'left'
+            },
+            transformOrigin: {
+              vertical: -4,
+              horizontal: 'left'
+            }
           }
         }}
       >
@@ -85,7 +95,7 @@ SelectField.propTypes = {
   ).isRequired,
   placeholder: PropTypes.string.isRequired,
   multiple: PropTypes.bool,
-  size: PropTypes.oneOf(['small', 'medium', 'large'])
+  size: PropTypes.oneOf(['small', 'medium'])
 };
 
 export default SelectField;
