@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Divider component adapted to the new design system [#546](https://github.com/CartoDB/carto-react/pull/546/)
 - Select component adapted to the new design system [#544](https://github.com/CartoDB/carto-react/pull/544/)
 - TextField and TextArea component adapted to the new design system [#538](https://github.com/CartoDB/carto-react/pull/538/)
 - Tabs component adapted to the new design system [#537](https://github.com/CartoDB/carto-react/pull/537/)

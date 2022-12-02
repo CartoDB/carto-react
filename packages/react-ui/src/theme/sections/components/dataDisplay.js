@@ -16,7 +16,7 @@ export const dataDisplayOverrides = {
         borderColor: commonPalette.divider
       },
       light: {
-        borderColor: commonPalette.grey[50]
+        borderColor: commonPalette.white[12]
       }
     }
   },
