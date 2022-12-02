@@ -13,8 +13,7 @@ export const buttonsOverrides = {
   // Button Base
   MuiButtonBase: {
     defaultProps: {
-      disableRipple: true,
-      disableElevation: true
+      disableRipple: true
     },
 
     styleOverrides: {
@@ -29,6 +28,10 @@ export const buttonsOverrides = {
 
   // Button
   MuiButton: {
+    defaultProps: {
+      disableElevation: true
+    },
+
     styleOverrides: {
       root: ({ ownerState }) => ({
         maxWidth: '192px',
