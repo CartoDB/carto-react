@@ -229,13 +229,9 @@ export interface UploadFieldProps extends TextFieldProps {
   placeholder?: string;
   dragPlaceholder?: string;
   buttonText?: string;
-  accept?: string;
+  accept?: string[];
   multiple?: boolean;
   error?: boolean;
   files?: [];
-  variant?: 'outlined' | 'filled';
-  label?: string;
-  name: string;
-  helperText?: string;
   onChange: (file?: File | null) => void;
 }

@@ -118,11 +118,8 @@ function UploadField(props) {
       <TextField
         {...props}
         ref={textFieldRef}
-        variant={props.variant}
         placeholder={dragPlaceholderText}
         value={filesText}
-        label={props.label}
-        helperText={props.helperText}
         error={props.error}
         className={`${classes.uploadField} ${dragOver && classes.focused}`}
         InputProps={{
@@ -173,11 +170,10 @@ UploadField.defaultProps = {
   placeholder: 'Drag and drop your file or click to browse',
   dragPlaceholder: 'Drop your file here...',
   buttonText: 'Browse',
-  accept: 'application/JSON',
+  accept: ['application/JSON'],
   multiple: false,
   error: false,
   files: [],
-  variant: 'outlined',
   onChange: (files) => files
 };
 
@@ -185,13 +181,10 @@ UploadField.propTypes = {
   placeholder: PropTypes.string,
   dragPlaceholder: PropTypes.string,
   buttonText: PropTypes.string,
-  accept: PropTypes.string,
+  accept: PropTypes.array,
   multiple: PropTypes.bool,
   error: PropTypes.bool,
   files: PropTypes.array,
-  variant: PropTypes.oneOf(['outlined', 'filled']),
-  label: PropTypes.string,
-  helperText: PropTypes.string,
   onChange: PropTypes.func.isRequired
 };
 
