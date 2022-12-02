@@ -108,7 +108,7 @@ const menuItemsLong = [
 
 const PlaygroundTemplate = (args) => <SelectField {...args} items={menuItems} />;
 
-const VariantsTemplate = ({ label, size, required, placeholder, ...rest }) => {
+const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
   const classes = useStyles();
 
   return (

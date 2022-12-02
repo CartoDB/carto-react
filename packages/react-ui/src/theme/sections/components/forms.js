@@ -80,7 +80,7 @@ export const formsOverrides = {
           '& .MuiInputBase-root': {
             padding: 0,
 
-            '&.MuiOutlinedInput-root': {
+            '&.MuiOutlinedInput-root, &.MuiFilledInput-root': {
               padding: 0
             },
             '& .MuiInputAdornment-positionEnd': {
@@ -110,7 +110,8 @@ export const formsOverrides = {
               }
             },
             '& .MuiSelect-icon': {
-              right: getSpacing(2)
+              right: getSpacing(2),
+              color: commonPalette.text.secondary
             },
             '& .MuiSelect-iconStandard': {
               right: 0
@@ -118,6 +119,9 @@ export const formsOverrides = {
           },
 
           '& .MuiInputBase-sizeSmall': {
+            '&.MuiInputBase-root.MuiFilledInput-root': {
+              padding: 0
+            },
             '& .MuiSelect-select': {
               ...themeTypography.body2,
 
@@ -170,6 +174,7 @@ export const formsOverrides = {
 
         // Variants
         '&.MuiFilledInput-root': {
+          padding: getSpacing(0, 2),
           borderRadius: getSpacing(0.5),
           backgroundColor: commonPalette.default.background,
 
@@ -188,6 +193,9 @@ export const formsOverrides = {
           '&::after': {
             borderRadius: getSpacing(0.5),
             border: '1px solid transparent'
+          },
+          '&.MuiInputBase-sizeSmall': {
+            padding: getSpacing(0, 1.5)
           },
           '&.Mui-focused': {
             backgroundColor: commonPalette.background.paper,
@@ -217,6 +225,9 @@ export const formsOverrides = {
           },
           '&.Mui-focused': {
             backgroundColor: commonPalette.background.paper
+          },
+          '&.Mui-disabled': {
+            backgroundColor: commonPalette.default.background
           },
           '& .MuiOutlinedInput-notchedOutline': {
             top: 0,
@@ -376,7 +387,8 @@ export const formsOverrides = {
         padding: 0,
 
         '& .MuiSelect-icon': {
-          right: getSpacing(2)
+          right: getSpacing(2),
+          color: commonPalette.text.secondary
         },
         '& .MuiSelect-iconStandard': {
           right: 0

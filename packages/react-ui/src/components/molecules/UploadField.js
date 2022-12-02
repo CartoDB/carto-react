@@ -5,6 +5,33 @@ import makeStyles from '@mui/styles/makeStyles';
 import { Cancel } from '@mui/icons-material';
 
 const useStyles = makeStyles((theme) => ({
+  uploadField: {
+    '& .MuiInputBase-root': {
+      cursor: 'pointer',
+
+      '& input': {
+        cursor: 'pointer'
+      },
+      '&.Mui-disabled': {
+        pointerEvents: 'none',
+
+        '& .MuiButtonBase-root': {
+          color: theme.palette.text.disabled
+        }
+      },
+      '&.MuiInputBase-sizeSmall': {
+        paddingRight: theme.spacing(0.5)
+      }
+    },
+    '& .MuiFormLabel-root': {
+      cursor: 'pointer',
+
+      '&.Mui-disabled': {
+        pointerEvents: 'none'
+      }
+    }
+  },
+
   focused: {
     '& .MuiOutlinedInput-root, & .MuiFilledInput-root': {
       backgroundColor: theme.palette.background.paper
@@ -27,7 +54,6 @@ function UploadField(props) {
 
   const [filesText, setFilesText] = useState('');
   const [dragOver, setDragOver] = useState(false);
-  const [file, setFile] = useState(false);
 
   useEffect(() => {
     if (props.files.length === 0) {
@@ -60,7 +86,6 @@ function UploadField(props) {
     const items = event.dataTransfer.items;
     const newFiles = getAllFiles(items);
     props.onChange(newFiles);
-    setFile(newFiles);
   };
 
   const getAllFiles = (items) => {
@@ -71,7 +96,6 @@ function UploadField(props) {
         newFiles.push(file);
       }
     }
-    setFile(newFiles);
 
     return newFiles;
   };
@@ -79,19 +103,15 @@ function UploadField(props) {
   const handleFiles = (event) => {
     const newFiles = Array.from(event.target.files);
     props.onChange(newFiles);
-    setFile(newFiles);
   };
 
-  const resetState = (event) => {
+  const handleReset = (event) => {
     event.stopPropagation();
 
-    setFilesText(null);
-    setFile(undefined);
+    setFilesText('');
   };
 
-  const dragPlaceholderText = dragOver
-    ? props.dragPlaceholder
-    : filesText || props.placeholder;
+  const dragPlaceholderText = dragOver ? props.dragPlaceholder : props.placeholder;
 
   return (
     <>
@@ -100,9 +120,11 @@ function UploadField(props) {
         ref={textFieldRef}
         variant={props.variant}
         placeholder={dragPlaceholderText}
+        value={filesText}
         label={props.label}
         helperText={props.helperText}
-        className={dragOver && classes.focused}
+        error={props.error}
+        className={`${classes.uploadField} ${dragOver && classes.focused}`}
         InputProps={{
           onDragOver: handleDragOver,
           onDragLeave: handleDragLeave,
@@ -111,11 +133,11 @@ function UploadField(props) {
           readOnly: true,
           endAdornment: (
             <InputAdornment position='end'>
-              {!file ? (
+              {!filesText ? (
                 <Button
                   size='small'
                   variant='text'
-                  color='primary'
+                  color={props.error ? 'default' : 'primary'}
                   disabled={!!dragOver}
                   className={classes.button}
                 >
@@ -123,9 +145,10 @@ function UploadField(props) {
                 </Button>
               ) : (
                 <IconButton
-                  onClick={resetState}
+                  onClick={handleReset}
                   aria-label='delete'
                   disabled={!!dragOver}
+                  size='small'
                 >
                   <Cancel />
                 </IconButton>
@@ -152,6 +175,7 @@ UploadField.defaultProps = {
   buttonText: 'Browse',
   accept: 'application/JSON',
   multiple: false,
+  error: false,
   files: [],
   variant: 'outlined',
   onChange: (files) => files
@@ -163,6 +187,7 @@ UploadField.propTypes = {
   buttonText: PropTypes.string,
   accept: PropTypes.string,
   multiple: PropTypes.bool,
+  error: PropTypes.bool,
   files: PropTypes.array,
   variant: PropTypes.oneOf(['outlined', 'filled']),
   label: PropTypes.string,

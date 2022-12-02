@@ -222,7 +222,7 @@ export interface SelectFieldProps extends TextFieldProps {
   ];
   multiple?: boolean;
   placeholder: string;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium';
 }
 
 export interface UploadFieldProps extends TextFieldProps {
@@ -231,10 +231,11 @@ export interface UploadFieldProps extends TextFieldProps {
   buttonText?: string;
   accept?: string;
   multiple?: boolean;
+  error?: boolean;
   files?: [];
   variant?: 'outlined' | 'filled';
   label?: string;
   name: string;
   helperText?: string;
-  onChange?: (file?: File | null) => void;
+  onChange: (file?: File | null) => void;
 }
