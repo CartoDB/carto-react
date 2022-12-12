@@ -224,78 +224,16 @@ export const dataDisplayOverrides = {
   MuiChip: {
     styleOverrides: {
       root: {
-        backgroundColor: commonPalette.grey[100],
-        '&:hover': {
-          backgroundColor: commonPalette.grey[200]
-        },
-        '& .MuiAvatar-root': {
-          backgroundColor: '#7f3c8d',
-          color: commonPalette.common.white
-        }
+        maxWidth: '192px'
       },
-      colorPrimary: {
-        '&.Mui-disabled': {
-          backgroundColor: commonPalette.grey[100],
-          color: commonPalette.text.primary
-        },
-        '&:hover': {
-          backgroundColor: commonPalette.primary.dark
-        }
-      },
-      colorSecondary: {
-        '&.Mui-disabled': {
-          backgroundColor: commonPalette.grey[100]
-        },
-        '&:hover': {
-          backgroundColor: commonPalette.secondary.light
-        }
-      },
-      label: {
-        fontFamily: '"Open Sans", sans-serif',
-        letterSpacing: 0.25
-      },
-      labelSmall: {
-        fontSize: themeTypography.caption.fontSize,
-        fontWeight: themeTypography.fontWeightLight
-      },
-      outlined: {
-        transition: `border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1)`,
-        '&.Mui-disabled': {
-          backgroundColor: 'transparent'
-        },
-        '&:hover': {
-          backgroundColor: 'transparent',
-          borderColor: commonPalette.grey[200],
-          '&.MuiChip-clickable': {
-            backgroundColor: 'transparent'
-          }
-        }
-      },
-      outlinedPrimary: {
-        '&:hover': {
-          backgroundColor: 'transparent',
-          borderColor: commonPalette.primary.dark,
-          color: commonPalette.primary.dark,
-          '&.MuiChip-clickable': {
-            backgroundColor: 'transparent'
-          }
-        }
-      },
-      outlinedSecondary: {
-        '&:hover': {
-          backgroundColor: 'transparent',
-          borderColor: commonPalette.secondary.dark,
-          color: commonPalette.secondary.dark,
-          '&.MuiChip-clickable': {
-            backgroundColor: 'transparent'
-          }
-        }
-      },
-      clickable: {
-        '&:focus': {
-          webkitTapHighlightColor: 'none'
-        }
-      }
+      colorPrimary: {},
+      colorSecondary: {},
+      label: {},
+      labelSmall: {},
+      outlined: {},
+      outlinedPrimary: {},
+      outlinedSecondary: {},
+      clickable: {}
     }
   },
 
