@@ -437,7 +437,6 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
 const commonArgs = {
   label: 'Label text',
   helperText: 'Upload a CSV or GeoJSON file, or a zip package with your Shapefile',
-  buttonText: 'Browse',
   accept: ['application/JSON', 'image/*']
 };
 const sizeArgs = {

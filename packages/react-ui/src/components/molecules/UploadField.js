@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function UploadField(props) {
+function UploadField({ buttonText, accept, files, ...props }) {
   const classes = useStyles();
   const uploadInputRef = useRef(null);
   const textFieldRef = useRef(null);
@@ -59,14 +59,14 @@ function UploadField(props) {
   const isSmall = props.size === 'small';
 
   useEffect(() => {
-    if (props.files.length === 0) {
+    if (files.length === 0) {
       setFilesText('');
-    } else if (props.files.length === 1) {
-      setFilesText(props.files[0].name);
+    } else if (files.length === 1) {
+      setFilesText(files[0].name);
     } else {
-      setFilesText(`${props.files.length} files selected`);
+      setFilesText(`${files.length} files selected`);
     }
-  }, [props.files]);
+  }, [files]);
 
   const handleBrowse = () => {
     uploadInputRef.current?.click();
@@ -153,7 +153,7 @@ function UploadField(props) {
                   disabled={!!dragOver}
                   className={classes.button}
                 >
-                  {props.buttonText}
+                  {buttonText}
                 </Button>
               ) : (
                 <IconButton
@@ -173,7 +173,7 @@ function UploadField(props) {
         ref={uploadInputRef}
         style={{ display: 'none' }}
         type='file'
-        accept={props.accept}
+        accept={accept}
         multiple={props.multiple}
         onChange={handleFiles}
       />
@@ -184,22 +184,15 @@ function UploadField(props) {
 UploadField.defaultProps = {
   buttonText: 'Browse',
   accept: ['application/JSON'],
-  multiple: false,
-  error: false,
   files: [],
-  onChange: (files) => files,
-  size: 'medium'
+  onChange: (files) => files
 };
 
 UploadField.propTypes = {
-  placeholder: PropTypes.string,
   buttonText: PropTypes.string,
   accept: PropTypes.array,
-  multiple: PropTypes.bool,
-  error: PropTypes.bool,
   files: PropTypes.array,
-  onChange: PropTypes.func.isRequired,
-  size: PropTypes.oneOf(['small', 'medium'])
+  onChange: PropTypes.func.isRequired
 };
 
 export default UploadField;
