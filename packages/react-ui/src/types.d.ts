@@ -225,13 +225,14 @@ export interface SelectFieldProps extends TextFieldProps {
   size?: 'small' | 'medium';
 }
 
+// UploadField
 export interface UploadFieldProps extends TextFieldProps {
   placeholder?: string;
-  dragPlaceholder?: string;
   buttonText?: string;
   accept?: string[];
   multiple?: boolean;
   error?: boolean;
   files?: [];
   onChange: (file?: File | null) => void;
+  size?: 'small' | 'medium';
 }

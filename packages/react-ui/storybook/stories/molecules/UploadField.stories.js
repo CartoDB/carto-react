@@ -48,11 +48,6 @@ const options = {
         type: 'text'
       }
     },
-    dragPlaceholder: {
-      control: {
-        type: 'text'
-      }
-    },
     buttonText: {
       control: {
         type: 'text'
@@ -114,7 +109,7 @@ const Template = ({ ...args }) => {
   return <UploadField {...args} files={files} onChange={handleUploadFieldChange} />;
 };
 
-const VariantsTemplate = ({ label, required, placeholder, dragPlaceholder, ...rest }) => {
+const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
   const classes = useStyles();
   const [files, setFiles] = useState([]);
   const [files2, setFiles2] = useState([]);
@@ -138,7 +133,6 @@ const VariantsTemplate = ({ label, required, placeholder, dragPlaceholder, ...re
             files={files}
             label={label}
             placeholder={placeholder}
-            dragPlaceholder={dragPlaceholder}
             onChange={handleUploadFieldChange}
           />
         </Box>
@@ -154,7 +148,6 @@ const VariantsTemplate = ({ label, required, placeholder, dragPlaceholder, ...re
             files={files2}
             label={label}
             placeholder={placeholder}
-            dragPlaceholder={dragPlaceholder}
             onChange={handleUploadFieldChange2}
           />
         </Box>
@@ -443,8 +436,6 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
 
 const commonArgs = {
   label: 'Label text',
-  placeholder: 'Drag and drop your file or click to browse',
-  dragPlaceholder: 'Drop your file here...',
   helperText: 'Upload a CSV or GeoJSON file, or a zip package with your Shapefile',
   buttonText: 'Browse',
   accept: ['application/JSON', 'image/*']
