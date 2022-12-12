@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
@@ -114,26 +114,26 @@ function UploadField({ buttonText, accept, files, ...props }) {
     setFilesText('');
   };
 
-  const setPlaceholder = () => {
+  const getPlaceholder = useMemo(() => {
     const multipleSuffix = props.multiple ? '(s)' : '';
-    const placeholder = `Drag and drop your file${multipleSuffix} or click to browse`;
+    const defaultPlaceholder = `Drag and drop your file${multipleSuffix} or click to browse`;
     const dragPlaceholder = `Drop your file${multipleSuffix} here...`;
 
     let placeholderText;
     if (dragOver) {
       placeholderText = dragPlaceholder;
     } else {
-      placeholderText = props.placeholder || placeholder;
+      placeholderText = props.placeholder || defaultPlaceholder;
     }
     return placeholderText;
-  };
+  }, [dragOver, props.multiple, props.placeholder]);
 
   return (
     <>
       <TextField
         {...props}
         ref={textFieldRef}
-        placeholder={setPlaceholder()}
+        placeholder={getPlaceholder}
         value={filesText}
         error={props.error}
         className={`${classes.uploadField} ${dragOver && classes.focused}`}
