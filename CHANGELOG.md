@@ -4,6 +4,10 @@
 
 ## 1.4
 
+### 1.4.8 (2022-12-13)
+
+- Allow to use custom version explictly in GoogleMap (not 'beta' by default now) [#550](https://github.com/CartoDB/carto-react/pull/550)
+
 ### 1.4.7 (2022-11-18)
 
 - Fix `executeSQL` through **POST** request [#531](https://github.com/CartoDB/carto-react/pull/531)
