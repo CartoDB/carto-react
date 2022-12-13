@@ -10,11 +10,12 @@ import { debounce } from '@carto/react-core';
  * @param { Object } props.basemap.options - *MapOptions* as defined by https://developers.google.com/maps/documentation/javascript/reference/map#MapOptions
  * @param { Object } props.viewState - Viewstate, as defined by deck.gl. Just center and zoom level are supported
  * @param { Layer[] } props.layers - deck.gl layers array
- * @param { function } props.getTooltip - (Optional). Tooltip handler
+ * @param { function } props.getTooltip - (Optional) Tooltip handler
  * @param { function } props.onResize - (Optional) onResize handler
  * @param { function } props.onViewStateChange - (Optional) onViewStateChange handler
  * @param { string } props.apiKey - Google Maps API Key
  * @param { string } props.mapId - Google Maps custom mapId
+ * @param { string } props.customVersion - (Optional) Google Maps custom version, that will be specified at url level. Eg: if customVersion === 'beta' it will use internally like https://maps.google.com/maps/api/js?v=beta
  * @returns { JSX.Element } - Data returned from the SQL query execution
  */
 export function GoogleMap(props) {
@@ -26,7 +27,8 @@ export function GoogleMap(props) {
     onResize,
     onViewStateChange,
     apiKey,
-    mapId
+    mapId,
+    customVersion = null
   } = props;
   // based on https://publiuslogic.com/blog/google-maps+react-hooks/
   const containerRef = useRef();
@@ -137,7 +139,10 @@ export function GoogleMap(props) {
       script.id = 'gmaps';
       script.async = true;
       script.type = `text/javascript`;
-      script.src = `https://maps.google.com/maps/api/js?v=beta&key=` + apiKey;
+
+      let url = `https://maps.google.com/maps/api/js?key=${apiKey}`;
+      if (customVersion) url = url + `&v=${customVersion}`;
+      script.src = url;
       const headScript = document.getElementsByTagName(`script`)[0];
       headScript.parentNode.insertBefore(script, headScript);
       script.addEventListener(`load`, onLoad);
