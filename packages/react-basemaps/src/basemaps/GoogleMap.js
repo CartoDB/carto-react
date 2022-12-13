@@ -137,7 +137,7 @@ export function GoogleMap(props) {
       script.id = 'gmaps';
       script.async = true;
       script.type = `text/javascript`;
-      script.src = `https://maps.google.com/maps/api/js?v=beta&key=` + apiKey;
+      script.src = `https://maps.google.com/maps/api/js?key=` + apiKey;
       const headScript = document.getElementsByTagName(`script`)[0];
       headScript.parentNode.insertBefore(script, headScript);
       script.addEventListener(`load`, onLoad);
