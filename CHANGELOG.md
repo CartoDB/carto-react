@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Allow to use custom version explictly in GoogleMap (not 'beta' by default now) [#550](https://github.com/CartoDB/carto-react/pull/550)
+
 ## 1.5
 
 ## 1.5.0-alpha.9 (2022-11-29)

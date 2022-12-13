@@ -141,7 +141,7 @@ export function GoogleMap(props) {
       script.type = `text/javascript`;
 
       let url = `https://maps.google.com/maps/api/js?key=${apiKey}`;
-      if (customVersion) url = url + `&v=${customVersion}`;
+      if (customVersion) url = `${url}&v=${customVersion}`;
       script.src = url;
       const headScript = document.getElementsByTagName(`script`)[0];
       headScript.parentNode.insertBefore(script, headScript);
