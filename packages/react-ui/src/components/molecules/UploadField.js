@@ -189,10 +189,14 @@ UploadField.defaultProps = {
 };
 
 UploadField.propTypes = {
+  placeholder: PropTypes.string,
   buttonText: PropTypes.string,
   accept: PropTypes.array,
+  multiple: PropTypes.bool,
+  error: PropTypes.bool,
   files: PropTypes.array,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  size: PropTypes.oneOf(['small', 'medium'])
 };
 
 export default UploadField;
