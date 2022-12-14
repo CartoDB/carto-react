@@ -127,12 +127,5 @@ export const navigationOverrides = {
         marginRight: getSpacing(0.5)
       }
     }
-  },
-
-  // Links
-  MuiLink: {
-    defaultProps: {
-      underline: 'hover'
-    }
   }
 };
