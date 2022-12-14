@@ -1,8 +1,8 @@
 import React from 'react';
 import { Avatar, Chip, Grid, Box, Tooltip } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import Typography from '../../../src/components/atoms/Typography';
 import { FileUploadOutlined } from '@mui/icons-material';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Molecules/Chip',
@@ -599,7 +599,14 @@ const SizeArgs = {
   onDelete: () => {},
   avatar: <Avatar>M</Avatar>
 };
+const disabledControlsCommonArgTypes = {
+  avatar: { table: { disable: true } },
+  deleteIcon: { table: { disable: true } },
+  icon: { table: { disable: true } },
+  onDelete: { table: { disable: true } }
+};
 const disabledControlsSizeArgTypes = {
+  ...disabledControlsCommonArgTypes,
   variant: { table: { disable: true } }
 };
 
@@ -607,15 +614,19 @@ export const Playground = Template.bind({});
 Playground.args = { ...commonArgs };
 
 export const Variants = VariantsTemplate.bind({});
+Variants.argTypes = disabledControlsCommonArgTypes;
 
 export const Colors = ColorsTemplate.bind({});
 Colors.args = { ...commonArgs };
+Colors.argTypes = disabledControlsCommonArgTypes;
 
 export const Prefix = PrefixTemplate.bind({});
 Prefix.args = { ...commonArgs };
+Prefix.argTypes = disabledControlsCommonArgTypes;
 
 export const Removable = RemovableTemplate.bind({});
 Removable.args = { onDelete: () => {} };
+Removable.argTypes = disabledControlsCommonArgTypes;
 
 export const Medium = SizeTemplate.bind({});
 Medium.args = { ...commonArgs, ...SizeArgs };
@@ -627,3 +638,4 @@ Small.argTypes = disabledControlsSizeArgTypes;
 
 export const Behavior = BehaviorTemplate.bind({});
 Behavior.args = { ...commonArgs };
+Behavior.argTypes = disabledControlsCommonArgTypes;

@@ -385,16 +385,7 @@ export const dataDisplayOverrides = {
         color: commonPalette.secondary.contrastText,
         backgroundColor: commonPalette.secondary.main,
         border: `1px solid ${commonPalette.action.hover}`
-      },
-      size: [
-        {
-          props: { size: 'small' },
-          style: {
-            width: ICON_SIZE,
-            height: ICON_SIZE
-          }
-        }
-      ]
+      }
     }
   },
 

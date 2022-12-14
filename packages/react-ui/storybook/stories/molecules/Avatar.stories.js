@@ -1,8 +1,8 @@
 import React from 'react';
 import { Avatar, Grid, Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import Typography from '../../../src/components/atoms/Typography';
 import { Star } from '@mui/icons-material';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Molecules/Avatar',
