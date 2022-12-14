@@ -250,7 +250,7 @@ export const dataDisplayOverrides = {
           color: commonPalette.text.disabled,
           backgroundColor: commonPalette.action.disabledBackground,
 
-          '& .MuiChip-deleteIcon': {
+          '& .MuiChip-deleteIcon, & .MuiChip-icon': {
             color: commonPalette.action.disabled
           }
         }
@@ -276,7 +276,7 @@ export const dataDisplayOverrides = {
 
         '&.Mui-disabled': {
           borderColor: commonPalette.default.outlinedBorder,
-          backgroundColor: commonPalette.background.paper
+          backgroundColor: 'transparent'
         }
       },
       outlinedPrimary: {
@@ -315,8 +315,17 @@ export const dataDisplayOverrides = {
         width: ICON_SIZE,
         height: ICON_SIZE,
         margin: 0,
-        marginLeft: '2px',
-        marginRight: '3px'
+        marginLeft: '2px', // Forced to a non-standard value to meet with design
+        marginRight: '3px', // Forced to a non-standard value to meet with design
+        transition: 'color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+
+        '&.MuiChip-deleteIconColorDefault': {
+          color: commonPalette.text.secondary,
+
+          '&:hover': {
+            color: commonPalette.text.primary
+          }
+        }
       },
       deleteIconSmall: {
         width: getSpacing(2),
@@ -324,7 +333,48 @@ export const dataDisplayOverrides = {
         marginRight: 0
       },
 
-      clickable: {}
+      clickable: {
+        '&:active': {
+          boxShadow: 'none'
+        },
+        '&:hover': {
+          '& .MuiChip-deleteIconColorDefault': {
+            color: commonPalette.text.primary
+          }
+        },
+
+        '&.MuiChip-outlined': {
+          transitionProperty: 'background, color, border-color',
+          transitionDuration: '300ms',
+          transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+
+          '&:hover': {
+            backgroundColor: 'transparent',
+
+            '&.MuiChip-colorPrimary': {
+              color: commonPalette.primary.dark,
+              borderColor: commonPalette.primary.dark
+            },
+            '&.MuiChip-colorSecondary': {
+              color: commonPalette.secondary.dark,
+              borderColor: commonPalette.secondary.dark
+            },
+            '&.MuiChip-colorDefault': {
+              borderColor: commonPalette.default.dark
+            }
+          }
+        },
+        '&.MuiChip-filled': {
+          '&:hover': {
+            '&.MuiChip-colorSecondary': {
+              backgroundColor: commonPalette.secondary.light
+            },
+            '&.MuiChip-colorDefault': {
+              backgroundColor: commonPalette.default.dark
+            }
+          }
+        }
+      }
     }
   },
 
