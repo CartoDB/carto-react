@@ -3,6 +3,7 @@
 ## Not released
 
 - Chip component adapted to the new design system [#551](https://github.com/CartoDB/carto-react/pull/551/)
+- Design changes in UploadField component [#548](https://github.com/CartoDB/carto-react/pull/548/)
 - Divider component adapted to the new design system [#546](https://github.com/CartoDB/carto-react/pull/546/)
 - UploadField component created for the new design system [#545](https://github.com/CartoDB/carto-react/pull/545/)
 - Select component adapted to the new design system [#544](https://github.com/CartoDB/carto-react/pull/544/)
