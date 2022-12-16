@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Default props of core components to meet the common use case [#552](https://github.com/CartoDB/carto-react/pull/552/)
 - Divider component adapted to the new design system [#546](https://github.com/CartoDB/carto-react/pull/546/)
 - UploadField component created for the new design system [#545](https://github.com/CartoDB/carto-react/pull/545/)
 - Select component adapted to the new design system [#544](https://github.com/CartoDB/carto-react/pull/544/)
