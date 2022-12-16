@@ -591,7 +591,7 @@ export const formsOverrides = {
     styleOverrides: {
       thumb: {
         '&:hover, &.Mui-focusVisible': {
-          boxShadow: `0 0 0 8px ${commonPalette.primary.background}`
+          boxShadow: `0 0 0 ${getSpacing(1)} ${commonPalette.primary.background}`
         }
       }
     }
