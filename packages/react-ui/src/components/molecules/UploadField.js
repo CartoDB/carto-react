@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
   uploadField: {
     '& .MuiInputBase-root': {
       cursor: 'pointer',
+      paddingRight: theme.spacing(1),
 
       '& input': {
         cursor: 'pointer'
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function UploadField(props) {
+function UploadField({ buttonText, accept, files, ...props }) {
   const classes = useStyles();
   const uploadInputRef = useRef(null);
   const textFieldRef = useRef(null);
@@ -55,15 +56,17 @@ function UploadField(props) {
   const [filesText, setFilesText] = useState('');
   const [dragOver, setDragOver] = useState(false);
 
+  const isSmall = props.size === 'small';
+
   useEffect(() => {
-    if (props.files.length === 0) {
+    if (files.length === 0) {
       setFilesText('');
-    } else if (props.files.length === 1) {
-      setFilesText(props.files[0].name);
+    } else if (files.length === 1) {
+      setFilesText(files[0].name);
     } else {
-      setFilesText(`${props.files.length} files selected`);
+      setFilesText(`${files.length} files selected`);
     }
-  }, [props.files]);
+  }, [files]);
 
   const handleBrowse = () => {
     uploadInputRef.current?.click();
@@ -111,14 +114,26 @@ function UploadField(props) {
     setFilesText('');
   };
 
-  const dragPlaceholderText = dragOver ? props.dragPlaceholder : props.placeholder;
+  const getPlaceholder = useMemo(() => {
+    const multipleSuffix = props.multiple ? '(s)' : '';
+    const defaultPlaceholder = `Drag and drop your file${multipleSuffix} or click to browse`;
+    const dragPlaceholder = `Drop your file${multipleSuffix} here...`;
+
+    let placeholderText;
+    if (dragOver) {
+      placeholderText = dragPlaceholder;
+    } else {
+      placeholderText = props.placeholder || defaultPlaceholder;
+    }
+    return placeholderText;
+  }, [dragOver, props.multiple, props.placeholder]);
 
   return (
     <>
       <TextField
         {...props}
         ref={textFieldRef}
-        placeholder={dragPlaceholderText}
+        placeholder={getPlaceholder}
         value={filesText}
         error={props.error}
         className={`${classes.uploadField} ${dragOver && classes.focused}`}
@@ -132,20 +147,20 @@ function UploadField(props) {
             <InputAdornment position='end'>
               {!filesText ? (
                 <Button
-                  size='small'
+                  size={isSmall ? 'small' : 'medium'}
                   variant='text'
                   color={props.error ? 'default' : 'primary'}
                   disabled={!!dragOver}
                   className={classes.button}
                 >
-                  {props.buttonText}
+                  {buttonText}
                 </Button>
               ) : (
                 <IconButton
                   onClick={handleReset}
                   aria-label='delete'
                   disabled={!!dragOver}
-                  size='small'
+                  size={isSmall ? 'small' : 'medium'}
                 >
                   <Cancel />
                 </IconButton>
@@ -158,7 +173,7 @@ function UploadField(props) {
         ref={uploadInputRef}
         style={{ display: 'none' }}
         type='file'
-        accept={props.accept}
+        accept={accept}
         multiple={props.multiple}
         onChange={handleFiles}
       />
@@ -167,25 +182,21 @@ function UploadField(props) {
 }
 
 UploadField.defaultProps = {
-  placeholder: 'Drag and drop your file or click to browse',
-  dragPlaceholder: 'Drop your file here...',
   buttonText: 'Browse',
   accept: ['application/JSON'],
-  multiple: false,
-  error: false,
   files: [],
   onChange: (files) => files
 };
 
 UploadField.propTypes = {
   placeholder: PropTypes.string,
-  dragPlaceholder: PropTypes.string,
   buttonText: PropTypes.string,
   accept: PropTypes.array,
   multiple: PropTypes.bool,
   error: PropTypes.bool,
   files: PropTypes.array,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  size: PropTypes.oneOf(['small', 'medium'])
 };
 
 export default UploadField;

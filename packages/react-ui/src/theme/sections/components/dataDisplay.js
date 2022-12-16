@@ -222,79 +222,169 @@ export const dataDisplayOverrides = {
 
   // Chip
   MuiChip: {
+    defaultProps: {
+      color: 'primary'
+    },
+
     styleOverrides: {
       root: {
-        backgroundColor: commonPalette.grey[100],
-        '&:hover': {
-          backgroundColor: commonPalette.grey[200]
-        },
+        maxWidth: '192px',
+        padding: getSpacing(0, 0.5),
+
         '& .MuiAvatar-root': {
-          backgroundColor: '#7f3c8d',
-          color: commonPalette.common.white
-        }
-      },
-      colorPrimary: {
-        '&.Mui-disabled': {
-          backgroundColor: commonPalette.grey[100],
-          color: commonPalette.text.primary
+          width: ICON_SIZE_M,
+          height: ICON_SIZE_M,
+          margin: 0,
+          color: commonPalette.secondary.contrastText,
+          backgroundColor: commonPalette.background.paper
         },
-        '&:hover': {
-          backgroundColor: commonPalette.primary.dark
-        }
-      },
-      colorSecondary: {
-        '&.Mui-disabled': {
-          backgroundColor: commonPalette.grey[100]
+        '& .MuiChip-icon': {
+          margin: 0,
+          marginLeft: getSpacing(0.5)
         },
-        '&:hover': {
-          backgroundColor: commonPalette.secondary.light
+        '& img': {
+          width: ICON_SIZE_M,
+          height: ICON_SIZE_M
+        },
+        '&.Mui-disabled': {
+          color: commonPalette.text.disabled,
+          backgroundColor: commonPalette.action.disabledBackground,
+
+          '& .MuiChip-deleteIcon, & .MuiChip-icon': {
+            color: commonPalette.action.disabled
+          }
         }
       },
-      label: {
-        fontFamily: '"Open Sans", sans-serif',
-        letterSpacing: 0.25
+
+      // Variants
+      filled: {
+        border: 0,
+        backgroundColor: commonPalette.default.main,
+
+        '& .MuiChip-iconColorPrimary': {
+          color: commonPalette.primary.contrastText
+        }
       },
-      labelSmall: {
-        fontSize: themeTypography.caption.fontSize,
-        fontWeight: themeTypography.fontWeightLight
+      filledPrimary: {
+        backgroundColor: commonPalette.primary.main
+      },
+      filledSecondary: {
+        backgroundColor: commonPalette.secondary.main
       },
       outlined: {
-        transition: `border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1)`,
+        borderColor: commonPalette.default.outlinedBorder,
+
         '&.Mui-disabled': {
+          borderColor: commonPalette.default.outlinedBorder,
           backgroundColor: 'transparent'
-        },
-        '&:hover': {
-          backgroundColor: 'transparent',
-          borderColor: commonPalette.grey[200],
-          '&.MuiChip-clickable': {
-            backgroundColor: 'transparent'
-          }
         }
       },
       outlinedPrimary: {
-        '&:hover': {
-          backgroundColor: 'transparent',
-          borderColor: commonPalette.primary.dark,
-          color: commonPalette.primary.dark,
-          '&.MuiChip-clickable': {
-            backgroundColor: 'transparent'
-          }
-        }
+        borderColor: commonPalette.primary.main
       },
       outlinedSecondary: {
-        '&:hover': {
-          backgroundColor: 'transparent',
-          borderColor: commonPalette.secondary.dark,
-          color: commonPalette.secondary.dark,
-          '&.MuiChip-clickable': {
-            backgroundColor: 'transparent'
+        borderColor: commonPalette.secondary.main
+      },
+
+      // Sizes
+      sizeSmall: {
+        '& img': {
+          width: ICON_SIZE,
+          height: ICON_SIZE
+        },
+        '& .MuiAvatar-root': {
+          width: ICON_SIZE,
+          height: ICON_SIZE
+        },
+        '& .MuiChip-icon': {
+          marginLeft: getSpacing(0.25)
+        }
+      },
+
+      // Inner elements
+      label: {
+        ...themeTypography.button,
+        padding: getSpacing(0, 0.75)
+      },
+      labelSmall: {
+        ...themeTypography.caption,
+        fontWeight: 500,
+        padding: getSpacing(0, 0.5)
+      },
+      deleteIcon: {
+        width: ICON_SIZE,
+        height: ICON_SIZE,
+        margin: 0,
+        marginLeft: '2px', // Forced to a non-standard value to meet with design
+        marginRight: '3px', // Forced to a non-standard value to meet with design
+        transition: 'color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+
+        '&.MuiChip-deleteIconColorDefault': {
+          color: commonPalette.text.secondary,
+
+          '&:hover': {
+            color: commonPalette.text.primary
           }
         }
       },
+      deleteIconSmall: {
+        width: getSpacing(2),
+        height: getSpacing(2),
+        marginRight: 0
+      },
+
       clickable: {
-        '&:focus': {
-          webkitTapHighlightColor: 'none'
+        '&:active': {
+          boxShadow: 'none'
+        },
+        '&:hover': {
+          '& .MuiChip-deleteIconColorDefault': {
+            color: commonPalette.text.primary
+          }
+        },
+
+        '&.MuiChip-outlined': {
+          transitionProperty: 'background, color, border-color',
+          transitionDuration: '300ms',
+          transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+
+          '&:hover': {
+            backgroundColor: 'transparent',
+
+            '&.MuiChip-colorPrimary': {
+              color: commonPalette.primary.dark,
+              borderColor: commonPalette.primary.dark
+            },
+            '&.MuiChip-colorSecondary': {
+              color: commonPalette.secondary.dark,
+              borderColor: commonPalette.secondary.dark
+            },
+            '&.MuiChip-colorDefault': {
+              borderColor: commonPalette.default.dark
+            }
+          }
+        },
+        '&.MuiChip-filled': {
+          '&:hover': {
+            '&.MuiChip-colorSecondary': {
+              backgroundColor: commonPalette.secondary.light
+            },
+            '&.MuiChip-colorDefault': {
+              backgroundColor: commonPalette.default.dark
+            }
+          }
         }
+      }
+    }
+  },
+
+  // Avatar
+  MuiAvatar: {
+    styleOverrides: {
+      root: {
+        color: commonPalette.secondary.contrastText,
+        backgroundColor: commonPalette.secondary.main,
+        border: `1px solid ${commonPalette.action.hover}`
       }
     }
   },
