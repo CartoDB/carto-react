@@ -1,5 +1,8 @@
 import React from 'react';
-import { Avatar, Chip, Grid } from '@mui/material';
+import { Avatar, Chip, Grid, Box, Tooltip } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { FileUploadOutlined } from '@mui/icons-material';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Molecules/Chip',
@@ -17,12 +20,9 @@ const options = {
       }
     },
     color: {
-      defaultValue: 'default',
-      description:
-        'The color of the component. It supports those theme colors that make sense for this component.',
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary']
+        options: ['primary', 'secondary', 'default']
       }
     },
     deleteIcon: {
@@ -31,7 +31,6 @@ const options = {
     },
     disabled: {
       defaultValue: false,
-      description: 'If `true`, the chip should be displayed in a disabled state.',
       control: {
         type: 'boolean'
       }
@@ -41,7 +40,6 @@ const options = {
     },
     label: {
       defaultValue: 'Chip content',
-      description: 'The content of the label.',
       control: {
         type: 'text'
       }
@@ -52,16 +50,12 @@ const options = {
       defaultValue: null
     },
     size: {
-      defaultValue: 'medium',
-      description: 'The size of the chip.',
       control: {
         type: 'select',
         options: ['small', 'medium']
       }
     },
     variant: {
-      defaultValue: 'filled',
-      description: 'The variant to use.',
       control: {
         type: 'select',
         options: ['filled', 'outlined']
@@ -74,59 +68,574 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A28895'
     },
     status: {
-      type: 'needUpdate'
+      type: 'readyToReview'
     }
   }
 };
 export default options;
 
-// const Template = ({ ...args }) => {
-//   return <Chip { ...args } />
-// };
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: theme.spacing(4)
+  },
+  standalone: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  label: {
+    minWidth: '200px'
+  },
+  header: {
+    minWidth: '200px',
+    marginTop: theme.spacing(4)
+  }
+}));
+
 const Template = ({ ...args }) => {
+  return <Chip {...args} />;
+};
+
+const VariantsTemplate = ({ ...args }) => {
+  const classes = useStyles();
+
   return (
-    <Grid container direction='row' alignItems='center'>
-      <Grid item xs={3}>
-        <Chip {...args} color='primary' />
-      </Grid>
-      <Grid item xs={3}>
-        <Chip {...args} color='secondary' />
-      </Grid>
-      <Grid item xs={3}>
-        <Chip {...args} color='default' />
+    <Grid container direction='column' spacing={3}>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Filled'}
+          </Typography>
+          <Chip {...args} />
+        </Box>
       </Grid>
 
-      <Grid item xs={3}>
-        <Chip {...args} variant='outlined' />
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Outlined'}
+          </Typography>
+          <Chip {...args} variant='outlined' />
+        </Box>
       </Grid>
     </Grid>
   );
 };
 
-export const Default = Template.bind({});
-Default.args = {};
+const PrefixTemplate = ({ ...args }) => {
+  const classes = useStyles();
 
-export const Removable = Template.bind({});
-Removable.args = { onDelete: () => {} };
+  return (
+    <Grid container direction='column' spacing={3}>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Primary'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} avatar={<Avatar>M</Avatar>} />
+            </Grid>
+            <Grid item>
+              <Chip {...args} variant='outlined' avatar={<Avatar>M</Avatar>} />
+            </Grid>
+            <Grid item>
+              <Chip {...args} avatar={<Avatar label='Avatar' src='/avatar.jpeg' />} />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                variant='outlined'
+                avatar={<Avatar label='Avatar' src='/avatar.jpeg' />}
+              />
+            </Grid>
+            <Grid item>
+              <Chip {...args} icon={<FileUploadOutlined />} />
+            </Grid>
+            <Grid item>
+              <Chip {...args} variant='outlined' icon={<FileUploadOutlined />} />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
 
-export const Thumbnail = Template.bind({});
-Thumbnail.args = { avatar: <Avatar>M</Avatar> };
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Secondary'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='secondary' avatar={<Avatar>M</Avatar>} />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='secondary'
+                variant='outlined'
+                avatar={<Avatar>M</Avatar>}
+              />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='secondary'
+                avatar={<Avatar label='Avatar' src='/avatar.jpeg' />}
+              />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='secondary'
+                variant='outlined'
+                avatar={<Avatar label='Avatar' src='/avatar.jpeg' />}
+              />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='secondary' icon={<FileUploadOutlined />} />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='secondary'
+                variant='outlined'
+                icon={<FileUploadOutlined />}
+              />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
 
-export const ThumbnailRemovable = Template.bind({});
-ThumbnailRemovable.args = { avatar: <Avatar>M</Avatar>, onDelete: () => {} };
-
-export const SizeSmall = Template.bind({});
-SizeSmall.args = { size: 'small' };
-
-export const SizeSmallRemovable = Template.bind({});
-SizeSmallRemovable.args = { size: 'small', onDelete: () => {} };
-
-export const SizeSmallThumbnail = Template.bind({});
-SizeSmallThumbnail.args = { size: 'small', avatar: <Avatar>M</Avatar> };
-
-export const SizeSmallThumbnailRemovable = Template.bind({});
-SizeSmallThumbnailRemovable.args = {
-  size: 'small',
-  avatar: <Avatar>M</Avatar>,
-  onDelete: () => {}
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Default'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='default' avatar={<Avatar>M</Avatar>} />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='default'
+                variant='outlined'
+                avatar={<Avatar>M</Avatar>}
+              />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='default'
+                avatar={<Avatar label='Avatar' src='/avatar.jpeg' />}
+              />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='default'
+                variant='outlined'
+                avatar={<Avatar label='Avatar' src='/avatar.jpeg' />}
+              />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='default' icon={<FileUploadOutlined />} />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='default'
+                variant='outlined'
+                icon={<FileUploadOutlined />}
+              />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+    </Grid>
+  );
 };
+
+const RemovableTemplate = ({ ...args }) => {
+  const classes = useStyles();
+
+  return (
+    <Grid container direction='column' spacing={3}>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Primary'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} />
+            </Grid>
+            <Grid item>
+              <Chip {...args} variant='outlined' />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Secondary'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='secondary' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='secondary' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Default'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='default' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='default' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+    </Grid>
+  );
+};
+
+const ColorsTemplate = ({ ...args }) => {
+  const classes = useStyles();
+
+  return (
+    <Grid container direction='column' spacing={3}>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Primary'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} />
+            </Grid>
+            <Grid item>
+              <Chip {...args} variant='outlined' />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Secondary'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='secondary' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='secondary' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Default'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='default' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='default' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+    </Grid>
+  );
+};
+
+const SizeTemplate = ({ ...args }) => {
+  const classes = useStyles();
+
+  return (
+    <Grid container direction='column' spacing={3}>
+      <Grid item>
+        <Typography variant='subtitle1' className={classes.header}>
+          {'Primary'}
+        </Typography>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Default'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} />
+            </Grid>
+            <Grid item>
+              <Chip {...args} variant='outlined' />
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Clickable (hover)'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} clickable />
+            </Grid>
+            <Grid item>
+              <Chip {...args} variant='outlined' clickable />
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Disabled'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} disabled />
+            </Grid>
+            <Grid item>
+              <Chip {...args} variant='outlined' disabled />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+
+      <Grid item>
+        <Typography variant='subtitle1' className={classes.header}>
+          {'Secondary'}
+        </Typography>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Default'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='secondary' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='secondary' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Clickable (hover)'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='secondary' clickable />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='secondary' variant='outlined' clickable />
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Disabled'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='secondary' disabled />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='secondary' variant='outlined' disabled />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+
+      <Grid item>
+        <Typography variant='subtitle1' className={classes.header}>
+          {'Default'}
+        </Typography>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Default'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='default' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='default' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Clickable (hover)'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='default' clickable />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='default' variant='outlined' clickable />
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Disabled'}
+          </Typography>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='default' disabled />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='default' variant='outlined' disabled />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+    </Grid>
+  );
+};
+
+const BehaviorTemplate = ({ ...args }) => {
+  const classes = useStyles();
+  const longLabel = 'felipegomezcases@cartodb.com';
+
+  return (
+    <Grid container direction='column' spacing={3}>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Overflow'}
+          </Typography>
+          <Grid container spacing={1}>
+            <Grid item>
+              <Chip
+                {...args}
+                label={longLabel}
+                avatar={<Avatar>M</Avatar>}
+                onDelete={() => {}}
+              />
+            </Grid>
+            <Grid item>
+              <Chip {...args} label={longLabel} avatar={<Avatar>M</Avatar>} />
+            </Grid>
+            <Grid item>
+              <Chip {...args} label={longLabel} />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Hover with Tooltip'}
+          </Typography>
+          <Grid container spacing={1}>
+            <Grid item>
+              <Tooltip title={longLabel}>
+                <Chip
+                  {...args}
+                  label={longLabel}
+                  avatar={<Avatar>M</Avatar>}
+                  onDelete={() => {}}
+                  clickable
+                />
+              </Tooltip>
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+
+      <Grid item>
+        <Box className={classes.container} style={{ maxWidth: '600px' }}>
+          <Typography variant='body2' className={classes.label}>
+            {'Pairing (Grid 8px)'}
+          </Typography>
+          <Grid container spacing={1}>
+            <Grid item>
+              <Chip {...args} />
+            </Grid>
+            <Grid item>
+              <Chip {...args} />
+            </Grid>
+            <Grid item>
+              <Chip {...args} />
+            </Grid>
+            <Grid item>
+              <Chip {...args} />
+            </Grid>
+            <Grid item>
+              <Chip {...args} />
+            </Grid>
+            <Grid item>
+              <Chip {...args} />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+    </Grid>
+  );
+};
+
+const commonArgs = {
+  label: 'Chip content'
+};
+const SizeArgs = {
+  onDelete: () => {},
+  avatar: <Avatar>M</Avatar>
+};
+const disabledControlsCommonArgTypes = {
+  avatar: { table: { disable: true } },
+  deleteIcon: { table: { disable: true } },
+  icon: { table: { disable: true } },
+  onDelete: { table: { disable: true } }
+};
+const disabledControlsSizeArgTypes = {
+  ...disabledControlsCommonArgTypes,
+  variant: { table: { disable: true } }
+};
+
+export const Playground = Template.bind({});
+Playground.args = { ...commonArgs };
+
+export const Variants = VariantsTemplate.bind({});
+Variants.argTypes = disabledControlsCommonArgTypes;
+
+export const Colors = ColorsTemplate.bind({});
+Colors.args = { ...commonArgs };
+Colors.argTypes = disabledControlsCommonArgTypes;
+
+export const Prefix = PrefixTemplate.bind({});
+Prefix.args = { ...commonArgs };
+Prefix.argTypes = disabledControlsCommonArgTypes;
+
+export const Removable = RemovableTemplate.bind({});
+Removable.args = { onDelete: () => {} };
+Removable.argTypes = disabledControlsCommonArgTypes;
+
+export const Medium = SizeTemplate.bind({});
+Medium.args = { ...commonArgs, ...SizeArgs };
+Medium.argTypes = disabledControlsSizeArgTypes;
+
+export const Small = SizeTemplate.bind({});
+Small.args = { ...commonArgs, ...SizeArgs, size: 'small' };
+Small.argTypes = disabledControlsSizeArgTypes;
+
+export const Behavior = BehaviorTemplate.bind({});
+Behavior.args = { ...commonArgs };
+Behavior.argTypes = disabledControlsCommonArgTypes;

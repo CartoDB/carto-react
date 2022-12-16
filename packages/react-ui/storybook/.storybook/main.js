@@ -6,5 +6,6 @@ module.exports = {
     'storybook-addon-designs',
     '@storybook/addon-viewport',
     '@etchteam/storybook-addon-status'
-  ]
+  ],
+  staticDirs: ['../assets']
 };
