@@ -8,6 +8,7 @@ import { CssBaseline } from './sections/cssBaseline';
 import { commonPalette } from './sections/palette';
 import { themeShadows } from './sections/shadows';
 import { themeTypography } from './sections/typography';
+import { feedbackOverrides } from './sections/components/feedback';
 import { BREAKPOINTS, SPACING } from './themeConstants';
 
 export const cartoThemeOptions = {
@@ -115,7 +116,8 @@ export const cartoThemeOptions = {
     ...buttonsOverrides,
     ...formsOverrides,
     ...navigationOverrides,
-    ...dataDisplayOverrides
+    ...dataDisplayOverrides,
+    ...feedbackOverrides
   }
 };
 
