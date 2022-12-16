@@ -584,7 +584,16 @@ export const formsOverrides = {
   MuiSlider: {
     defaultProps: {
       color: 'primary',
-      marks: false
+      marks: false,
+      size: 'small'
+    },
+
+    styleOverrides: {
+      thumb: {
+        '&:hover, &.Mui-focusVisible': {
+          boxShadow: `0 0 0 ${getSpacing(1)} ${commonPalette.primary.background}`
+        }
+      }
     }
   }
 };
