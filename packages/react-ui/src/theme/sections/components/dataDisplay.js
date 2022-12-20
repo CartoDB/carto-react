@@ -386,7 +386,7 @@ export const dataDisplayOverrides = {
         backgroundColor: commonPalette.secondary.main
       },
       img: {
-        // border: `1px solid ${commonPalette.default.outlinedBorder}` TODO fix the backoground color overlap
+        // border: `1px solid ${commonPalette.default.outlinedBorder}` TODO fix the background color overlap
       },
       circular: {
         '& img': {
