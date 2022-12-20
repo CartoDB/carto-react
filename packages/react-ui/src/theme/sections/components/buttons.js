@@ -18,9 +18,11 @@ export const buttonsOverrides = {
 
     styleOverrides: {
       root: {
-        '& .MuiSvgIcon-root': {
+        '& .MuiSvgIcon-root, & svg': {
           display: 'flex',
-          fontSize: ICON_SIZE
+          fontSize: ICON_SIZE,
+          width: ICON_SIZE,
+          height: ICON_SIZE
         }
       }
     }
@@ -34,7 +36,7 @@ export const buttonsOverrides = {
 
     styleOverrides: {
       root: ({ ownerState }) => ({
-        maxWidth: '192px',
+        // maxWidth: '192px', TODO temporary disabled waiting for a design definition
 
         '&:hover, &:focus-visible': {
           boxShadow: themeShadows[0],
@@ -99,8 +101,10 @@ export const buttonsOverrides = {
       startIcon: {
         marginRight: getSpacing(0.75),
 
-        '& .MuiSvgIcon-root': {
-          fontSize: ICON_SIZE
+        '& .MuiSvgIcon-root, & svg': {
+          fontSize: ICON_SIZE,
+          width: ICON_SIZE,
+          height: ICON_SIZE
         },
         '&.MuiButton-iconSizeSmall': {
           marginRight: getSpacing(0.5),
@@ -110,8 +114,10 @@ export const buttonsOverrides = {
       endIcon: {
         marginLeft: getSpacing(0.75),
 
-        '& .MuiSvgIcon-root': {
-          fontSize: ICON_SIZE
+        '& .MuiSvgIcon-root, & svg': {
+          fontSize: ICON_SIZE,
+          width: ICON_SIZE,
+          height: ICON_SIZE
         },
         '&.MuiButton-iconSizeSmall': {
           marginLeft: getSpacing(0.5),
@@ -268,8 +274,10 @@ export const buttonsOverrides = {
         ...(ownerState.color === 'default' && {
           color: commonPalette.text.secondary
         }),
-        '& .MuiSvgIcon-root': {
-          fontSize: ICON_SIZE
+        '& .MuiSvgIcon-root, & svg': {
+          fontSize: ICON_SIZE,
+          width: ICON_SIZE,
+          height: ICON_SIZE
         },
         '&:hover, &:focus-visible': {
           ...(ownerState.color === 'default' && {
@@ -318,7 +326,7 @@ export const buttonsOverrides = {
         '& + &': {
           marginLeft: getSpacing(0.5)
         },
-        '.MuiSvgIcon-root': {
+        '.MuiSvgIcon-root, & svg': {
           margin: getSpacing(0, -0.75)
         },
         '&.Mui-selected': {
@@ -426,7 +434,8 @@ export const buttonsOverrides = {
           boxShadow: themeShadows[6]
         },
 
-        '& .MuiSvgIcon-root': {
+        '& .MuiSvgIcon-root, & svg': {
+          fontSize: ICON_SIZE_M,
           width: ICON_SIZE_M,
           height: ICON_SIZE_M
         },
@@ -449,7 +458,8 @@ export const buttonsOverrides = {
         height: getSpacing(4),
         minHeight: getSpacing(4),
 
-        '& .MuiSvgIcon-root': {
+        '& .MuiSvgIcon-root, & svg': {
+          fontSize: ICON_SIZE,
           width: ICON_SIZE,
           height: ICON_SIZE
         },

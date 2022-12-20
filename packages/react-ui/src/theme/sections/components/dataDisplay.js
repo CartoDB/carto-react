@@ -383,8 +383,20 @@ export const dataDisplayOverrides = {
     styleOverrides: {
       root: {
         color: commonPalette.secondary.contrastText,
-        backgroundColor: commonPalette.secondary.main,
-        border: `1px solid ${commonPalette.action.hover}`
+        backgroundColor: commonPalette.secondary.main
+      },
+      img: {
+        // border: `1px solid ${commonPalette.default.outlinedBorder}` TODO fix the backoground color overlap
+      },
+      circular: {
+        '& img': {
+          borderRadius: '50%'
+        }
+      },
+      rounded: {
+        '& img': {
+          borderRadius: getSpacing(0.5)
+        }
       }
     }
   },
