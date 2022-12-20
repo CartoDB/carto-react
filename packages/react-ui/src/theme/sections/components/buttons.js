@@ -428,6 +428,10 @@ export const buttonsOverrides = {
 
   // FAB button
   MuiFab: {
+    defaultProps: {
+      color: 'primary'
+    },
+
     styleOverrides: {
       root: {
         '&:focus': {
@@ -485,7 +489,26 @@ export const buttonsOverrides = {
         '&:hover': {
           backgroundColor: commonPalette.secondary.light
         }
-      }
+      },
+
+      variants: [
+        // Custom color and its variants
+        {
+          props: { color: 'default' },
+          style: {
+            color: commonPalette.text.primary,
+            backgroundColor: commonPalette.background.paper,
+
+            '&.Mui-disabled': {
+              color: commonPalette.text.disabled,
+              backgroundColor: commonPalette.action.disabledBackground
+            },
+            '&:hover, &:focus-visible': {
+              backgroundColor: commonPalette.default.light
+            }
+          }
+        }
+      ]
     }
   }
 };

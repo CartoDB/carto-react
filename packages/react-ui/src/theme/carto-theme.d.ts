@@ -129,3 +129,10 @@ declare module '@mui/material/Button' {
     default: true;
   }
 }
+
+// Update the FAB's color prop options
+declare module '@mui/material/Fab' {
+  interface FabPropsColorOverrides {
+    default: true;
+  }
+}

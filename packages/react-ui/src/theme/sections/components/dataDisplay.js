@@ -383,7 +383,8 @@ export const dataDisplayOverrides = {
     styleOverrides: {
       root: {
         color: commonPalette.secondary.contrastText,
-        backgroundColor: commonPalette.secondary.main
+        backgroundColor: commonPalette.secondary.main,
+        border: 'none'
       },
       img: {
         // border: `1px solid ${commonPalette.default.outlinedBorder}` TODO fix the background color overlap
