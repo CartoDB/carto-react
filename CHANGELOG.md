@@ -2,6 +2,7 @@
 
 ## Not released
 
+- New color variant in FAB button [#554](https://github.com/CartoDB/carto-react/pull/554)
 - Adjustments in theme to fix uses cases in cloud-native [#553](https://github.com/CartoDB/carto-react/pull/553/)
 - Default props of core components to meet the common use case [#552](https://github.com/CartoDB/carto-react/pull/552/)
 - Chip component adapted to the new design system [#551](https://github.com/CartoDB/carto-react/pull/551/)
