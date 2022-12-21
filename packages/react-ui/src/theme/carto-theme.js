@@ -9,6 +9,7 @@ import { commonPalette } from './sections/palette';
 import { themeShadows } from './sections/shadows';
 import { themeTypography } from './sections/typography';
 import { feedbackOverrides } from './sections/components/feedback';
+import { surfacesOverrides } from './sections/components/surfaces';
 import { BREAKPOINTS, SPACING } from './themeConstants';
 
 export const cartoThemeOptions = {
@@ -66,7 +67,8 @@ export const cartoThemeOptions = {
     default: { ...commonPalette.default },
     white: { ...commonPalette.white },
     black: { ...commonPalette.black },
-    brand: { ...commonPalette.brand }
+    brand: { ...commonPalette.brand },
+    custom: { ...commonPalette.custom }
   },
   shadows: [...themeShadows],
   typography: {
@@ -117,7 +119,8 @@ export const cartoThemeOptions = {
     ...formsOverrides,
     ...navigationOverrides,
     ...dataDisplayOverrides,
-    ...feedbackOverrides
+    ...feedbackOverrides,
+    ...surfacesOverrides
   }
 };
 

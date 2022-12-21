@@ -22,6 +22,7 @@ export const buttonsOverrides = {
           display: 'flex',
           fontSize: ICON_SIZE,
           width: ICON_SIZE,
+          minWidth: ICON_SIZE,
           height: ICON_SIZE
         }
       }
@@ -104,6 +105,7 @@ export const buttonsOverrides = {
         '& .MuiSvgIcon-root, & svg': {
           fontSize: ICON_SIZE,
           width: ICON_SIZE,
+          minWidth: ICON_SIZE,
           height: ICON_SIZE
         },
         '&.MuiButton-iconSizeSmall': {
@@ -117,6 +119,7 @@ export const buttonsOverrides = {
         '& .MuiSvgIcon-root, & svg': {
           fontSize: ICON_SIZE,
           width: ICON_SIZE,
+          minWidth: ICON_SIZE,
           height: ICON_SIZE
         },
         '&.MuiButton-iconSizeSmall': {
@@ -277,6 +280,7 @@ export const buttonsOverrides = {
         '& .MuiSvgIcon-root, & svg': {
           fontSize: ICON_SIZE,
           width: ICON_SIZE,
+          minWidth: ICON_SIZE,
           height: ICON_SIZE
         },
         '&:hover, &:focus-visible': {
@@ -441,6 +445,7 @@ export const buttonsOverrides = {
         '& .MuiSvgIcon-root, & svg': {
           fontSize: ICON_SIZE_M,
           width: ICON_SIZE_M,
+          minWidth: ICON_SIZE_M,
           height: ICON_SIZE_M
         },
         '&.MuiFab-extended': {
@@ -474,6 +479,7 @@ export const buttonsOverrides = {
         '& .MuiSvgIcon-root, & svg': {
           fontSize: ICON_SIZE,
           width: ICON_SIZE,
+          minWidth: ICON_SIZE,
           height: ICON_SIZE
         },
         '&.MuiFab-extended': {

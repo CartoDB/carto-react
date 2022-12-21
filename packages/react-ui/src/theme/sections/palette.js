@@ -191,5 +191,8 @@ export const commonPalette = {
   },
   qualitative: {
     ...baseColors.qualitative
+  },
+  custom: {
+    appBar: '#162945' // brand.navyBlue
   }
 };
