@@ -48,7 +48,6 @@ export const navigationOverrides = {
   // Tabs
   MuiTabs: {
     defaultProps: {
-      iconPosition: 'start',
       TabIndicatorProps: {
         classes: {
           colorPrimary: 'colorPrimary'

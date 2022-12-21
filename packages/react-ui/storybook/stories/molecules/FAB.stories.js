@@ -14,10 +14,9 @@ const options = {
       }
     },
     color: {
-      defaultValue: 'primary',
       control: {
         type: 'select',
-        options: ['primary', 'secondary']
+        options: ['primary', 'secondary', 'default']
       }
     },
     size: {
@@ -126,5 +125,8 @@ PrimaryColor.args = { color: 'primary' };
 
 export const SecondaryColor = Template.bind({});
 SecondaryColor.args = { color: 'secondary' };
+
+export const DefaultColor = Template.bind({});
+DefaultColor.args = { color: 'default' };
 
 export const Sizes = SizeTemplate.bind({});

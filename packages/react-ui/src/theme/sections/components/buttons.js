@@ -428,8 +428,12 @@ export const buttonsOverrides = {
 
   // FAB button
   MuiFab: {
+    defaultProps: {
+      color: 'primary'
+    },
+
     styleOverrides: {
-      root: {
+      root: ({ ownerState }) => ({
         '&:focus': {
           boxShadow: themeShadows[6]
         },
@@ -450,8 +454,17 @@ export const buttonsOverrides = {
           '& .MuiSvgIcon-root': {
             marginRight: getSpacing(1.5)
           }
-        }
-      },
+        },
+
+        ...(ownerState.color === 'default' && {
+          color: commonPalette.text.primary,
+          backgroundColor: commonPalette.background.paper,
+
+          '&:hover, &:focus-visible': {
+            backgroundColor: commonPalette.default.light
+          }
+        })
+      }),
 
       sizeSmall: {
         width: getSpacing(4),
