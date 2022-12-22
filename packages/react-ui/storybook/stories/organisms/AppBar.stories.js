@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Chip, Grid, IconButton, Menu, MenuItem } from '@mui/material';
-import { CheckCircleOutline, HelpOutlined } from '@mui/icons-material';
+import { CheckCircleOutline } from '@mui/icons-material';
 import AppBar from '../../../src/components/organisms/AppBar';
 import Typography from '../../../src/components/atoms/Typography';
 
@@ -44,13 +44,9 @@ const Template = (args) => {
   return (
     <>
       <Typography variant='body2' style={{ marginBottom: '24px' }}>
-        {'Core structure provided by our CARTO AppBar component'}
+        {'Core structure provided by our CARTO AppBar component (v1)'}
       </Typography>
-      <AppBar
-        {...args}
-        position='static'
-        brandLogo={<img src='/carto-logo.svg' alt='' />}
-      />
+      <AppBar {...args} position='static' />
     </>
   );
 };
@@ -70,11 +66,7 @@ const CustomTemplate = (args) => {
       <Typography variant='body2' style={{ marginBottom: '24px' }}>
         {'Custom composition of components inside the CARTO AppBar'}
       </Typography>
-      <AppBar
-        {...args}
-        position='static'
-        brandLogo={<img src='/carto-logo.svg' alt='' />}
-      >
+      <AppBar {...args} position='static'>
         <Chip label={'Some text in a Chip'} color='default' size='small' />
 
         <Grid container justifyContent='flex-end' spacing={2}>
@@ -100,7 +92,8 @@ const CustomTemplate = (args) => {
 const commonArgs = {
   brandText: 'CARTO',
   secondaryText: 'Some text',
-  showBurgerMenu: true
+  showBurgerMenu: true,
+  brandLogo: <img src='/carto-logo.svg' alt='' />
 };
 export const Basic = Template.bind({});
 Basic.args = { ...commonArgs };

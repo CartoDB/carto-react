@@ -1,13 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  AppBar as MuiAppBar,
-  Divider,
-  Hidden,
-  IconButton,
-  Toolbar,
-  useTheme
-} from '@mui/material';
+import { AppBar as MuiAppBar, Divider, Hidden, IconButton, Toolbar } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { MenuOutlined } from '@mui/icons-material';
 import Typography from '../atoms/Typography';
@@ -62,7 +55,6 @@ const AppBar = ({
   ...otherProps
 }) => {
   const classes = useStyles();
-  const theme = useTheme();
 
   return (
     <MuiAppBar {...otherProps}>
@@ -72,7 +64,7 @@ const AppBar = ({
             <Hidden mdUp>
               <div className={classes.menu}>
                 <IconButton onClick={onClickMenu} className={classes.menuButton}>
-                  <MenuOutlined htmlColor={theme.palette.common.white} />
+                  <MenuOutlined />
                 </IconButton>
                 <Divider orientation='vertical' flexItem light />
               </div>

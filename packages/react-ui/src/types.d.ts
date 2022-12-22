@@ -237,7 +237,7 @@ export interface UploadFieldProps extends TextFieldProps {
   onChange: (file?: File | null) => void;
 }
 
-// UploadField
+// AppBar
 export interface AppBarProps extends MuiAppBarProps {
   brandLogo?: React.ReactElement;
   brandText?: string;
