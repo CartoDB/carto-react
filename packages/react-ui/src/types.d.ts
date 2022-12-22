@@ -1,5 +1,9 @@
 import { GroupDateTypes } from '@carto/react-core';
-import { TextFieldProps, TypographyProps as MuiTypographyProps } from '@mui/material';
+import {
+  AppBarProps as MuiAppBarProps,
+  TextFieldProps,
+  TypographyProps as MuiTypographyProps
+} from '@mui/material';
 import { CSSProperties } from 'react';
 
 export type WrapperWidgetUI = {
@@ -231,4 +235,13 @@ export interface UploadFieldProps extends TextFieldProps {
   accept?: string[];
   files?: [];
   onChange: (file?: File | null) => void;
+}
+
+// AppBar
+export interface AppBarProps extends MuiAppBarProps {
+  brandLogo?: React.ReactElement;
+  brandText?: string;
+  secondaryText?: string;
+  onClickMenu?: Function;
+  showBurgerMenu?: boolean;
 }

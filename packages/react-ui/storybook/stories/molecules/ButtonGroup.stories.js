@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, ButtonGroup } from '@mui/material';
-import { ArrowDropDown } from '@mui/icons-material';
 import Button from '../../../src/components/atoms/Button';
+import ArrowDropIcon from '../../../src/assets/ArrowDropIcon';
 
 const options = {
   title: 'Molecules/Button Group',
@@ -114,7 +114,7 @@ const SplitTemplate = ({ ...rest }) => {
         <ButtonGroup {...rest} variant='outlined' size='small'>
           <Button>{'Button'}</Button>
           <Button>
-            <ArrowDropDown />
+            <ArrowDropIcon />
           </Button>
         </ButtonGroup>
       </Grid>
@@ -122,7 +122,7 @@ const SplitTemplate = ({ ...rest }) => {
         <ButtonGroup {...rest} variant='contained' size='medium'>
           <Button>{'Button'}</Button>
           <Button>
-            <ArrowDropDown />
+            <ArrowDropIcon />
           </Button>
         </ButtonGroup>
       </Grid>
@@ -130,7 +130,7 @@ const SplitTemplate = ({ ...rest }) => {
         <ButtonGroup {...rest} variant='outlined' size='large'>
           <Button>{'Button'}</Button>
           <Button>
-            <ArrowDropDown />
+            <ArrowDropIcon />
           </Button>
         </ButtonGroup>
       </Grid>
@@ -138,7 +138,7 @@ const SplitTemplate = ({ ...rest }) => {
         <ButtonGroup {...rest} variant='outlined'>
           <Button disabled>{'Disabled'}</Button>
           <Button>
-            <ArrowDropDown />
+            <ArrowDropIcon />
           </Button>
         </ButtonGroup>
       </Grid>
@@ -146,7 +146,7 @@ const SplitTemplate = ({ ...rest }) => {
         <ButtonGroup {...rest} variant='outlined' orientation='vertical'>
           <Button>{'Button'}</Button>
           <Button>
-            <ArrowDropDown />
+            <ArrowDropIcon />
           </Button>
         </ButtonGroup>
       </Grid>

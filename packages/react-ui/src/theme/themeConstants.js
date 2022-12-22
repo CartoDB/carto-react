@@ -15,3 +15,7 @@ export const BREAKPOINTS = {
 // Icons
 export const ICON_SIZE = getSpacing(2.25);
 export const ICON_SIZE_M = getSpacing(3);
+
+// AppBar
+export const APPBAR_SIZE = getSpacing(6);
+export const APPBAR_SIZE_M = getSpacing(8);
