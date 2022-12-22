@@ -154,6 +154,17 @@ export const dataDisplayOverrides = {
     }
   },
 
+  // Popover
+  MuiPopover: {
+    styleOverrides: {
+      root: {
+        '& .MuiPaper-root': {
+          marginTop: getSpacing(0.5)
+        }
+      }
+    }
+  },
+
   // Dialog
   MuiDialog: {
     defaultProps: {
