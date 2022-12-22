@@ -108,7 +108,7 @@ const menuItemsLong = [
 
 const PlaygroundTemplate = (args) => <SelectField {...args} items={menuItems} />;
 
-const VariantsTemplate = ({ label, required, placeholder, size, ...rest }) => {
+const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -123,7 +123,6 @@ const VariantsTemplate = ({ label, required, placeholder, size, ...rest }) => {
             label={label}
             variant='filled'
             placeholder={placeholder}
-            size={size}
             items={menuItems}
           />
         </Box>
@@ -138,7 +137,6 @@ const VariantsTemplate = ({ label, required, placeholder, size, ...rest }) => {
             label={label}
             variant='outlined'
             placeholder={placeholder}
-            size={size}
             items={menuItems}
           />
         </Box>
@@ -153,7 +151,6 @@ const VariantsTemplate = ({ label, required, placeholder, size, ...rest }) => {
             label={label}
             variant='standard'
             placeholder={placeholder}
-            size={size}
             items={menuItems}
           />
         </Box>
