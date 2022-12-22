@@ -22,11 +22,13 @@ import PolygonIcon from './assets/PolygonIcon';
 import RectangleIcon from './assets/RectangleIcon';
 import LassoIcon from './assets/LassoIcon';
 import CircleIcon from './assets/CircleIcon';
+import ArrowDropIcon from './assets/ArrowDropIcon';
 import Typography from './components/atoms/Typography';
 import Button from './components/atoms/Button';
 import PasswordField from './components/atoms/PasswordField';
 import SelectField from './components/atoms/SelectField';
 import UploadField from './components/molecules/UploadField';
+import AppBar from './components/organisms/AppBar';
 
 const featureSelectionIcons = {
   CursorIcon,
@@ -63,5 +65,7 @@ export {
   Button,
   PasswordField,
   SelectField,
-  UploadField
+  UploadField,
+  AppBar,
+  ArrowDropIcon
 };

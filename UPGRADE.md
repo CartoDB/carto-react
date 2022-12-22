@@ -46,7 +46,7 @@ We have a `Typography` component that uses `Mui Typography` and extends it with 
 This way we can be more flexible regarding text styles without adding too many variants to the Mui component.
 
 In short, instead of Mui Typography, the component you should use to add text is this one:
-`react-ui/src/atoms/Typography`
+`react-ui/src/components/atoms/Typography`
 
 For external use: `import { Typography } from '@carto/react-ui';`.
 
@@ -101,7 +101,7 @@ Design is restringed to a few specific values for shadows, which are:
 We have a `Button` component that uses `Mui Button` and wraps its children in `Typography` to meet with the designed behavior (text overflow case).
 
 So, instead of Mui Button, the component you should use to create buttons is this one:
-`react-ui/src/atoms/Button`
+`react-ui/src/components/atoms/Button`
 
 For external use: `import { Button } from '@carto/react-ui';`.
 
@@ -116,7 +116,7 @@ We have a new component for building data structures within Tooltips, `TooltipDa
 We have a custom component to build the show / hide content logic on top of TextField Mui component.
 
 Instead of `<TextField type='password' /> ` you can use:
-`react-ui/src/atoms/PasswordField`
+`react-ui/src/components/atoms/PasswordField`
 
 For external use: `import { PasswordField } from '@carto/react-ui';`.
 
@@ -125,7 +125,7 @@ For external use: `import { PasswordField } from '@carto/react-ui';`.
 We have a custom component to build the `placeholder` and `multiple selection` logic on top of TextField Mui component.
 
 Instead of `<TextField select /> ` or `<Select />` you can use:
-`react-ui/src/atoms/SelectField`
+`react-ui/src/components/atoms/SelectField`
 
 For external use: `import { SelectField } from '@carto/react-ui';`.
 
@@ -136,6 +136,22 @@ This component is used to display and input `type='file'`.
 We are replacing `InputFile` component by the new `UploadField`.
 
 Instead of `<Inputfile /> ` you can use:
-`react-ui/src/molecules/UploadField`
+`react-ui/src/components/molecules/UploadField`
 
 For external use: `import { UploadField } from '@carto/react-ui';`.
+
+## AppBar
+
+We have a custom component to build the basic structure and styles on top of AppBar Mui component.
+
+This component normalize size and position of common elements like:
+
+- logo
+- Texts
+- Avatar
+- Burger menu icon
+
+You can use `<AppBar /> ` from:
+`react-ui/src/components/organisms/AppBar`
+
+For external use: `import { AppBar } from '@carto/react-ui';`.
