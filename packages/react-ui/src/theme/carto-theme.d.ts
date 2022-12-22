@@ -48,9 +48,6 @@ type CustomShadesPaletteColor = {
   8: string;
   4: string;
 };
-type CustomPaletteColor = {
-  appBar: string;
-};
 
 type CustomPalette = Modify<
   Palette,
@@ -66,7 +63,6 @@ type CustomPalette = Modify<
     white: CustomShadesPaletteColor;
     black: CustomShadesPaletteColor;
     brand: CustomBrandPaletteColor;
-    custom: CustomPaletteColor;
   }
 >;
 

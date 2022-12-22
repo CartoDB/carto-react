@@ -67,8 +67,7 @@ export const cartoThemeOptions = {
     default: { ...commonPalette.default },
     white: { ...commonPalette.white },
     black: { ...commonPalette.black },
-    brand: { ...commonPalette.brand },
-    custom: { ...commonPalette.custom }
+    brand: { ...commonPalette.brand }
   },
   shadows: [...themeShadows],
   typography: {

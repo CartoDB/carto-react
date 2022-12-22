@@ -12,7 +12,7 @@ export const surfacesOverrides = {
         alignItems: 'center',
         justifyContent: 'space-between',
         height: APPBAR_SIZE,
-        backgroundColor: commonPalette.custom.appBar,
+        backgroundColor: commonPalette.brand.navyBlue,
         color: commonPalette.common.white,
         boxShadow: themeShadows[0],
 
