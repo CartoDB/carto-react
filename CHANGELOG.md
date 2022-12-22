@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Inputs size to small by default [#556](https://github.com/CartoDB/carto-react/pull/556)
 - New AppBar component (v1) and default props changes[#555](https://github.com/CartoDB/carto-react/pull/555)
 - New color variant in FAB button [#554](https://github.com/CartoDB/carto-react/pull/554)
 - Adjustments in theme to fix uses cases in cloud-native [#553](https://github.com/CartoDB/carto-react/pull/553/)

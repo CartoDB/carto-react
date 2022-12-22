@@ -221,7 +221,7 @@ export interface SelectFieldProps extends TextFieldProps {
   items: [
     {
       label: string;
-      id: string | number;
+      value: string | number;
     }
   ];
   multiple?: boolean;

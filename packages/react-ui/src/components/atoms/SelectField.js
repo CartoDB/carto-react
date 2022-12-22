@@ -33,6 +33,7 @@ const SelectField = forwardRef(
         SelectProps={{
           multiple: multiple,
           displayEmpty: !!placeholder,
+          size: size,
           renderValue: (selected) => {
             if (selected.length === 0) {
               return (
@@ -84,13 +85,13 @@ const SelectField = forwardRef(
 
 SelectField.defaultProps = {
   multiple: false,
-  size: 'medium'
+  size: 'small'
 };
 SelectField.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
+      value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
     })
   ).isRequired,
   placeholder: PropTypes.string.isRequired,

@@ -509,7 +509,7 @@ export const LabelAndHelperText = LabelAndHelperTextTemplate.bind({});
 LabelAndHelperText.args = { ...commonArgs };
 
 export const Medium = SizeTemplate.bind({});
-Medium.args = { ...commonArgs, ...sizeArgs };
+Medium.args = { ...commonArgs, ...sizeArgs, size: 'medium' };
 Medium.argTypes = disabledControlsSizeArgTypes;
 
 export const Small = SizeTemplate.bind({});

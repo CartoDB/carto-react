@@ -88,7 +88,7 @@ const AutocompleteTemplate = ({ disabled, size, ...args }) => {
             getOptionLabel={(option) => option.title}
             disabled={disabled}
             renderInput={(params) => (
-              <TextField {...args} {...params} label='Basic autocomplete' />
+              <TextField {...args} {...params} size={size} label='Basic autocomplete' />
             )}
             size={size}
           />
@@ -101,7 +101,7 @@ const AutocompleteTemplate = ({ disabled, size, ...args }) => {
             getOptionLabel={(option) => option.title}
             disabled={disabled}
             renderInput={(params) => (
-              <TextField {...args} {...params} label='Grouped autocomplete' />
+              <TextField {...args} {...params} size={size} label='Grouped autocomplete' />
             )}
             size={size}
           />
@@ -116,7 +116,12 @@ const AutocompleteTemplate = ({ disabled, size, ...args }) => {
             getOptionLabel={(option) => option.title}
             disabled={disabled}
             renderInput={(params) => (
-              <TextField {...args} {...params} label='Multiple autocomplete' />
+              <TextField
+                {...args}
+                {...params}
+                size={size}
+                label='Multiple autocomplete'
+              />
             )}
             size={size}
           />
@@ -131,5 +136,5 @@ export const Playground = Template.bind({});
 export const Default = AutocompleteTemplate.bind({});
 Default.args = {};
 
-export const Small = AutocompleteTemplate.bind({});
-Small.args = { size: 'small' };
+export const Medium = AutocompleteTemplate.bind({});
+Medium.args = { size: 'medium' };
