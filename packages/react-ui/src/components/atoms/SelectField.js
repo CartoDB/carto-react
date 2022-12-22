@@ -33,6 +33,7 @@ const SelectField = forwardRef(
         SelectProps={{
           multiple: multiple,
           displayEmpty: !!placeholder,
+          size: size,
           renderValue: (selected) => {
             if (selected.length === 0) {
               return (

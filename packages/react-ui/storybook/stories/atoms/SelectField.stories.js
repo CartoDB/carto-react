@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Grid, MenuItem, TextField } from '@mui/material';
+import { Box, Grid, MenuItem, Select, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
@@ -108,7 +108,7 @@ const menuItemsLong = [
 
 const PlaygroundTemplate = (args) => <SelectField {...args} items={menuItems} />;
 
-const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
+const VariantsTemplate = ({ label, required, placeholder, size, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -123,6 +123,7 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             label={label}
             variant='filled'
             placeholder={placeholder}
+            size={size}
             items={menuItems}
           />
         </Box>
@@ -137,6 +138,7 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             label={label}
             variant='outlined'
             placeholder={placeholder}
+            size={size}
             items={menuItems}
           />
         </Box>
@@ -151,6 +153,7 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             label={label}
             variant='standard'
             placeholder={placeholder}
+            size={size}
             items={menuItems}
           />
         </Box>
@@ -216,7 +219,14 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
   );
 };
 
-const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
+const SizeTemplate = ({
+  label,
+  placeholder,
+  defaultValue,
+  helperText,
+  size,
+  ...rest
+}) => {
   const [fixedValue, setFixedValue] = useState('Twenty');
   const [fixedValue2, setFixedValue2] = useState('Ten');
   const [fixedValue3, setFixedValue3] = useState('Thirty');
@@ -244,6 +254,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             items={menuItems}
+            size={size}
           />
         </Grid>
         <Grid item xs={3}>
@@ -253,6 +264,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             items={menuItems}
+            size={size}
           />
         </Grid>
         <Grid item xs={3}>
@@ -262,6 +274,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             items={menuItems}
+            size={size}
           />
         </Grid>
       </Grid>
@@ -271,31 +284,31 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Empty</Typography>
         </Grid>
         <Grid item xs={3}>
-          <TextField select {...rest} variant='filled' label={label}>
+          <Select select {...rest} variant='filled' label={label} size={size}>
             {menuItems.map((option) => (
               <MenuItem key={option.label} value={option.label}>
                 {option.label}
               </MenuItem>
             ))}
-          </TextField>
+          </Select>
         </Grid>
         <Grid item xs={3}>
-          <TextField select {...rest} variant='outlined' label={label}>
+          <Select select {...rest} variant='outlined' label={label} size={size}>
             {menuItems.map((option) => (
               <MenuItem key={option.label} value={option.label}>
                 {option.label}
               </MenuItem>
             ))}
-          </TextField>
+          </Select>
         </Grid>
         <Grid item xs={3}>
-          <TextField select {...rest} variant='standard' label={label}>
+          <Select select {...rest} variant='standard' label={label} size={size}>
             {menuItems.map((option) => (
               <MenuItem key={option.label} value={option.label}>
                 {option.label}
               </MenuItem>
             ))}
-          </TextField>
+          </Select>
         </Grid>
       </Grid>
 
@@ -311,6 +324,9 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             select
             value={fixedValue}
             onChange={handleChange}
+            SelectProps={{
+              size: size
+            }}
           >
             {menuItems.map((option) => (
               <MenuItem key={option.label} value={option.label}>
@@ -327,6 +343,9 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             select
             value={fixedValue2}
             onChange={handleChange2}
+            SelectProps={{
+              size: size
+            }}
           >
             {menuItems.map((option) => (
               <MenuItem key={option.label} value={option.label}>
@@ -343,6 +362,9 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             select
             value={fixedValue3}
             onChange={handleChange3}
+            SelectProps={{
+              size: size
+            }}
           >
             {menuItems.map((option) => (
               <MenuItem key={option.label} value={option.label}>
@@ -364,6 +386,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             focused
+            size={size}
             items={menuItems}
           />
         </Grid>
@@ -374,6 +397,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             focused
+            size={size}
             items={menuItems}
           />
         </Grid>
@@ -384,6 +408,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             focused
+            size={size}
             items={menuItems}
           />
         </Grid>
@@ -400,6 +425,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             disabled
+            size={size}
             items={menuItems}
           />
         </Grid>
@@ -410,6 +436,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             disabled
+            size={size}
             items={menuItems}
           />
         </Grid>
@@ -420,6 +447,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             disabled
+            size={size}
             items={menuItems}
           />
         </Grid>
@@ -437,6 +465,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             placeholder={placeholder}
             helperText={helperText}
             error
+            size={size}
             items={menuItems}
           />
         </Grid>
@@ -448,6 +477,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             placeholder={placeholder}
             helperText={helperText}
             error
+            size={size}
             items={menuItems}
           />
         </Grid>
@@ -459,6 +489,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             placeholder={placeholder}
             helperText={helperText}
             error
+            size={size}
             items={menuItems}
           />
         </Grid>
@@ -597,7 +628,7 @@ export const LabelAndHelperText = LabelAndHelperTextTemplate.bind({});
 LabelAndHelperText.args = { ...commonArgs };
 
 export const Medium = SizeTemplate.bind({});
-Medium.args = { ...commonArgs, ...sizeArgs };
+Medium.args = { ...commonArgs, ...sizeArgs, size: 'medium' };
 Medium.argTypes = disabledControlsSizeArgTypes;
 
 export const Small = SizeTemplate.bind({});

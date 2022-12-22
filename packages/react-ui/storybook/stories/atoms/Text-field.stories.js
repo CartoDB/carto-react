@@ -760,7 +760,7 @@ export const PrefixAndSuffix = PrefixAndSuffixTemplate.bind({});
 PrefixAndSuffix.args = { ...commonArgs };
 
 export const Medium = SizeTemplate.bind({});
-Medium.args = { ...commonArgs, ...sizeArgs };
+Medium.args = { ...commonArgs, ...sizeArgs, size: 'medium' };
 Medium.argTypes = disabledControlsSizeArgTypes;
 
 export const Small = SizeTemplate.bind({});

@@ -58,6 +58,7 @@ export const formsOverrides = {
   MuiTextField: {
     defaultProps: {
       fullWidth: true,
+      size: 'small',
 
       InputLabelProps: {
         shrink: true
@@ -379,7 +380,8 @@ export const formsOverrides = {
   MuiSelect: {
     defaultProps: {
       IconComponent: ArrowDropIcon,
-      fullWidth: true
+      fullWidth: true,
+      size: 'small'
     },
 
     styleOverrides: {
@@ -398,7 +400,7 @@ export const formsOverrides = {
         },
 
         // Variants
-        '&.MuiOutlinedInput-root': {
+        '&.MuiOutlinedInput-root, &.MuiFilledInput-root': {
           padding: 0
         },
         '&.MuiFilledInput-root, &.MuiInput-underline': {
@@ -421,9 +423,10 @@ export const formsOverrides = {
               paddingLeft: 0
             }
           },
-          '&.MuiOutlinedInput-root.MuiInputBase-sizeSmall': {
-            padding: 0
-          },
+          '&.MuiOutlinedInput-root.MuiInputBase-sizeSmall, &.MuiFilledInput-root.MuiInputBase-sizeSmall':
+            {
+              padding: 0
+            },
           '& .MuiSelect-icon': {
             right: getSpacing(1.5)
           }
