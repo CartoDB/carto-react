@@ -64,7 +64,8 @@ export const formsOverrides = {
         shrink: true
       },
       SelectProps: {
-        IconComponent: ArrowDropIcon
+        IconComponent: ArrowDropIcon,
+        size: 'small'
       }
     },
     styleOverrides: {

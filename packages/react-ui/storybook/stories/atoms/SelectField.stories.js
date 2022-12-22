@@ -284,7 +284,7 @@ const SizeTemplate = ({
           <Typography>Empty</Typography>
         </Grid>
         <Grid item xs={3}>
-          <Select select {...rest} variant='filled' label={label} size={size}>
+          <Select {...rest} variant='filled' label={label} size={size}>
             {menuItems.map((option) => (
               <MenuItem key={option.label} value={option.label}>
                 {option.label}
@@ -293,7 +293,7 @@ const SizeTemplate = ({
           </Select>
         </Grid>
         <Grid item xs={3}>
-          <Select select {...rest} variant='outlined' label={label} size={size}>
+          <Select {...rest} variant='outlined' label={label} size={size}>
             {menuItems.map((option) => (
               <MenuItem key={option.label} value={option.label}>
                 {option.label}
@@ -302,7 +302,7 @@ const SizeTemplate = ({
           </Select>
         </Grid>
         <Grid item xs={3}>
-          <Select select {...rest} variant='standard' label={label} size={size}>
+          <Select {...rest} variant='standard' label={label} size={size}>
             {menuItems.map((option) => (
               <MenuItem key={option.label} value={option.label}>
                 {option.label}
