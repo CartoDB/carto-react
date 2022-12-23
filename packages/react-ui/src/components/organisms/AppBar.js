@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     marginRight: theme.spacing(1.5),
 
+    '& a': {
+      display: 'flex'
+    },
     '& svg, & img': {
       width: theme.spacing(4),
       height: theme.spacing(4)
@@ -35,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     flex: 1,
     marginLeft: theme.spacing(1)
+  },
+  text: {
+    display: 'flex',
+    alignItems: 'center'
   },
   textSeparator: {
     '&::after': {
@@ -73,14 +80,20 @@ const AppBar = ({
           {brandLogo && <div className={classes.logo}>{brandLogo}</div>}
           {brandText && (
             <Typography
+              component='span'
               variant='subtitle1'
-              className={secondaryText && classes.textSeparator}
+              className={[classes.text, secondaryText && classes.textSeparator].join(' ')}
             >
               {brandText}
             </Typography>
           )}
           {secondaryText && (
-            <Typography variant='body2' weight='strong'>
+            <Typography
+              component='span'
+              variant='body2'
+              weight='strong'
+              className={classes.text}
+            >
               {secondaryText}
             </Typography>
           )}
@@ -98,8 +111,8 @@ AppBar.defaultProps = {
 
 AppBar.propTypes = {
   brandLogo: PropTypes.element,
-  brandText: PropTypes.string,
-  secondaryText: PropTypes.string,
+  brandText: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  secondaryText: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   onClickMenu: PropTypes.func,
   showBurgerMenu: PropTypes.bool
 };

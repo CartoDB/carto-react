@@ -240,8 +240,8 @@ export interface UploadFieldProps extends TextFieldProps {
 // AppBar
 export interface AppBarProps extends MuiAppBarProps {
   brandLogo?: React.ReactElement;
-  brandText?: string;
-  secondaryText?: string;
+  brandText?: string | React.ReactElement;
+  secondaryText?: string | React.ReactElement;
   onClickMenu?: Function;
   showBurgerMenu?: boolean;
 }
