@@ -78,7 +78,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "0.0.0-experimental-muiv5-1.5.0-alpha.4-20",
+    "@carto/react-core": "0.0.0-experimental-muiv5-1.5.0-alpha.4-21",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/icons-material": "^5.10.9",
