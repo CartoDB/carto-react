@@ -9,7 +9,9 @@ import { APPBAR_SIZE } from '../../theme/themeConstants';
 const useStyles = makeStyles((theme) => ({
   row: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    maxWidth: 'calc(100% - 300px)',
+    overflow: 'hidden'
   },
   menu: {
     display: 'flex',
@@ -36,12 +38,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    flex: 1,
     marginLeft: theme.spacing(1)
   },
   text: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    whiteSpace: 'nowrap'
+  },
+  brandText: {
+    whiteSpace: 'nowrap'
   },
   textSeparator: {
     '&::after': {
@@ -82,7 +87,11 @@ const AppBar = ({
             <Typography
               component='span'
               variant='subtitle1'
-              className={[classes.text, secondaryText && classes.textSeparator].join(' ')}
+              className={[
+                classes.text,
+                classes.brandText,
+                secondaryText && classes.textSeparator
+              ].join(' ')}
             >
               {brandText}
             </Typography>
