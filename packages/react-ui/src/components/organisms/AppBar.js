@@ -38,12 +38,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    flex: 1,
     marginLeft: theme.spacing(1)
   },
   text: {
     display: 'flex',
-    alignItems: 'center',
-    whiteSpace: 'nowrap'
+    alignItems: 'center'
   },
   brandText: {
     whiteSpace: 'nowrap'
