@@ -317,6 +317,7 @@ function BarWidgetUI(props) {
         <ReactEcharts
           option={options}
           lazyUpdate={true}
+          notMerge={true}
           onEvents={onEvents}
           style={{ height }}
         />
