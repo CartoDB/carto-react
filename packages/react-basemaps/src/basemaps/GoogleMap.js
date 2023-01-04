@@ -15,7 +15,7 @@ import { debounce } from '@carto/react-core';
  * @param { function } props.onViewStateChange - (Optional) onViewStateChange handler
  * @param { string } props.apiKey - Google Maps API Key
  * @param { string } props.mapId - Google Maps custom mapId
- * @param { string } props.customVersion - (Optional) Google Maps custom version, that will be specified at url level. Eg: if customVersion === 'beta' it will use internally like https://maps.google.com/maps/api/js?v=beta
+ * @param { string } props.customVersion - (Optional) Google Maps custom version, that will be specified at url level. Eg: if customVersion === 'beta' it will use internally like this: https://maps.google.com/maps/api/js?v=beta
  * @returns { JSX.Element } - Data returned from the SQL query execution
  */
 export function GoogleMap(props) {
@@ -28,7 +28,7 @@ export function GoogleMap(props) {
     onViewStateChange,
     apiKey,
     mapId,
-    customVersion = null
+    customVersion = ''
   } = props;
   // based on https://publiuslogic.com/blog/google-maps+react-hooks/
   const containerRef = useRef();
