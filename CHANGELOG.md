@@ -4,6 +4,10 @@
 
 ## 1.4
 
+## 1.4.9 (2023-01-04)
+
+- Fix lack of refresh in BarWidgetUI when modyfing yAxisData dinamically [#558](https://github.com/CartoDB/carto-react/pull/558)
+
 ### 1.4.8 (2022-12-13)
 
 - Allow to use custom version explictly in GoogleMap (not 'beta' by default now) [#550](https://github.com/CartoDB/carto-react/pull/550)
@@ -17,14 +21,13 @@
 - Fix issue when switching to using quadbin library [#467](https://github.com/CartoDB/carto-react/pull/467)
 - Fix `executeModel` through **POST** request [#525](https://github.com/CartoDB/carto-react/pull/525)
 
-
 ### 1.4.3 (2022-11-03)
 
 - Fix TileLayer unauthorized error due to [breaking changes](https://github.com/visgl/deck.gl/pull/7287) in deck.gl >=8.8.15 [#519](https://github.com/CartoDB/carto-react/pull/519)
 
 ### 1.4.2 (2022-10-27)
 
-- Support for **deck.gl 8.8.15** *(breaking change)*. It requires ‘quadbin’ >= 0.1.5
+- Support for **deck.gl 8.8.15** _(breaking change)_. It requires ‘quadbin’ >= 0.1.5
 
 ### 1.4.1 (2002-09-20)
 
