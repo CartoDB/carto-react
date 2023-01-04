@@ -3,6 +3,7 @@
 ## Not released
 
 - Allow to use custom version explictly in GoogleMap (not 'beta' by default now) [#550](https://github.com/CartoDB/carto-react/pull/550)
+- Fix lack of refresh in BarWidgetUI when modyfing yAxisData dinamically [#558](https://github.com/CartoDB/carto-react/pull/558)
 
 ## 1.5
 
