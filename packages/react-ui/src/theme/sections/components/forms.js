@@ -347,6 +347,19 @@ export const formsOverrides = {
     }
   },
 
+  // Form Control Label (radio, checkbox and switch wrapper)
+  MuiFormControlLabel: {
+    styleOverrides: {
+      root: {
+        marginLeft: getSpacing(-0.5),
+
+        '& .MuiSwitch-root': {
+          marginLeft: getSpacing(0.5)
+        }
+      }
+    }
+  },
+
   // Form Helper Text
   MuiFormHelperText: {
     styleOverrides: {

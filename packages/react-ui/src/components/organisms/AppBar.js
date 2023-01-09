@@ -11,8 +11,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     maxWidth: 'calc(100% - 300px)',
-    minWidth: '200px',
-    overflow: 'hidden'
+    overflow: 'hidden',
+
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '188px'
+    }
   },
   menu: {
     display: 'flex',

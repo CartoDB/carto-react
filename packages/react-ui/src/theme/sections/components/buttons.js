@@ -59,6 +59,9 @@ export const buttonsOverrides = {
               backgroundColor: commonPalette.secondary.light
             })
         },
+        '& svg path': {
+          fill: 'currentColor'
+        },
         // Pairing buttons separation
         '& + &': {
           marginLeft: getSpacing(1)
