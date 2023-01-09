@@ -477,17 +477,14 @@ export const formsOverrides = {
     styleOverrides: {
       inputRoot: {
         '&[class*="MuiOutlinedInput-root"]': {
-          padding: getSpacing(3, 1.25, 0.5),
-
           '& .MuiAutocomplete-input': {
-            padding: getSpacing(0, 1.25, 0.5)
+            padding: 0
           }
         },
-        '&.MuiInputBase-marginDense.MuiOutlinedInput-root .MuiInputBase-input.MuiOutlinedInput-inputMarginDense':
-          {
-            paddingTop: getSpacing(0.25),
-            paddingBottom: getSpacing(0.25)
-          }
+        '& .MuiAutocomplete-endAdornment': {
+          top: 0,
+          right: getSpacing(0.25)
+        }
       }
     }
   },
