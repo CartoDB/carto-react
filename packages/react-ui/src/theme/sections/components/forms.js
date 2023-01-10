@@ -173,6 +173,7 @@ export const formsOverrides = {
           transform: 'none',
           opacity: 1
         },
+        '& legend': { display: 'none' },
 
         // Variants
         '&.MuiFilledInput-root': {
@@ -295,6 +296,11 @@ export const formsOverrides = {
               ...themeTypography.body2
             }
           }
+        },
+
+        // Select Multiple selection
+        '&.MuiInputBase-root .MuiSelect-multiple.MuiInputBase-input': {
+          paddingLeft: 0
         }
       },
 
