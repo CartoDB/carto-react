@@ -86,7 +86,11 @@ export const navigationOverrides = {
           borderBottomColor: commonPalette.text.primary
         },
         '&.Mui-selected': {
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+
+          '& svg path': {
+            fill: commonPalette.primary.main
+          }
         },
         '.MuiTabs-vertical &': {
           paddingTop: 0,

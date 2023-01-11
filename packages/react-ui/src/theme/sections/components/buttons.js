@@ -59,6 +59,9 @@ export const buttonsOverrides = {
               backgroundColor: commonPalette.secondary.light
             })
         },
+        '& svg path': {
+          fill: 'currentColor'
+        },
         // Pairing buttons separation
         '& + &': {
           marginLeft: getSpacing(1)
@@ -282,6 +285,9 @@ export const buttonsOverrides = {
           width: ICON_SIZE,
           minWidth: ICON_SIZE,
           height: ICON_SIZE
+        },
+        '& svg path': {
+          fill: 'currentColor'
         },
         '&:hover, &:focus-visible': {
           ...(ownerState.color === 'default' && {

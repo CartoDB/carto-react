@@ -1,6 +1,6 @@
 import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox, MenuItem, TextField } from '@mui/material';
+import { Box, Checkbox, MenuItem, TextField } from '@mui/material';
 import Typography from './Typography';
 
 const SelectField = forwardRef(
@@ -21,6 +21,7 @@ const SelectField = forwardRef(
     };
 
     const isSmall = size === 'small';
+    const paddingSize = isSmall ? 1.5 : 2;
 
     return (
       <TextField
@@ -37,25 +38,31 @@ const SelectField = forwardRef(
           renderValue: (selected) => {
             if (selected.length === 0) {
               return (
-                <Typography
-                  variant={isSmall ? 'body2' : 'body1'}
-                  color='text.hint'
-                  component='span'
-                >
-                  {placeholder}
-                </Typography>
+                <Box ml={multiple && paddingSize}>
+                  <Typography
+                    variant={isSmall ? 'body2' : 'body1'}
+                    color='text.hint'
+                    component='span'
+                  >
+                    {placeholder}
+                  </Typography>
+                </Box>
               );
             }
-            return selected.map((value, index) => (
-              <Typography
-                key={index}
-                variant={isSmall ? 'body2' : 'body1'}
-                component='span'
-              >
-                {items.find((item) => item.value === value).label}
-                {multiple && ', '}
-              </Typography>
-            ));
+            return (
+              <Box ml={multiple && paddingSize}>
+                {selected.map((value, index) => (
+                  <Typography
+                    key={index}
+                    variant={isSmall ? 'body2' : 'body1'}
+                    component='span'
+                  >
+                    {items.find((item) => item.value === value).label}
+                    {multiple && ', '}
+                  </Typography>
+                ))}
+              </Box>
+            );
           },
           MenuProps: {
             anchorOrigin: {
