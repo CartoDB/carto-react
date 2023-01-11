@@ -286,6 +286,9 @@ export const buttonsOverrides = {
           minWidth: ICON_SIZE,
           height: ICON_SIZE
         },
+        '& svg path': {
+          fill: 'currentColor'
+        },
         '&:hover, &:focus-visible': {
           ...(ownerState.color === 'default' && {
             backgroundColor: commonPalette.action.hover
