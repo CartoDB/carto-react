@@ -154,7 +154,6 @@ function WrapperWidgetUI(props) {
         aria-label={action.label}
         onClick={action.action}
         className={classes.iconAction}
-        size='large'
       >
         {action.icon}
       </IconButton>
@@ -208,14 +207,13 @@ function WrapperWidgetUI(props) {
             })}
 
           {options.length > 0 && (
-            <div>
+            <>
               <IconButton
                 aria-label='options'
                 aria-controls='options-menu'
                 aria-haspopup='true'
                 onClick={handleClick}
                 className={classes.iconAction}
-                size='large'
               >
                 {optionsIcon}
               </IconButton>
@@ -246,7 +244,7 @@ function WrapperWidgetUI(props) {
                   </MenuItem>
                 ))}
               </Menu>
-            </div>
+            </>
           )}
         </Grid>
       </Grid>

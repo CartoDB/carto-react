@@ -76,7 +76,8 @@ const useStyles = makeStyles((theme) => ({
     width: '12px',
     height: '12px',
     borderRadius: '50%',
-    position: 'relative'
+    position: 'relative',
+    border: '2px solid transparent'
   },
   circle: {
     '&::after': {

@@ -202,6 +202,7 @@ export const dataDisplayOverrides = {
       },
       input: {
         height: getSpacing(4),
+        width: 'auto',
         border: `2px solid ${commonPalette.divider}`,
         borderRadius: getSpacing(0.5),
         fontWeight: themeTypography.fontWeightMedium,
