@@ -35,7 +35,7 @@ Then, inside the proper template folder in carto-react-template, link packages w
 
 You will need npm credentials under @carto organization.
 
-To make a **prerelease**:
+### To make a **prerelease**:
 
 1. Create a new branch from master, named after the new version (eg, if current version is v1.0.0-rc.2, `git checkout -b release-1.0.0-rc.3`)
 2. Modify the changelog, creating a new entry with current contents from `Not released` for the new release; eg: `## 1.0.0-rc.3 (2021-03-22)`. Keep 'Not released' header for the future work, and commit it to the new branch
@@ -48,9 +48,14 @@ To make a **prerelease**:
 9. Once the npm package has been published, `Merge the PR` to master from github
 10. Update the storybook (if required)
 
-To make an official **release**:
-
+### To make an official **release**:
 1. Repeat the same steps as in a prerelease, but executing `yarn publish:release`
+
+### To apply a hotfix patch
+- If change also applies to current master, it's recommended to start by creating a PR applying the fix it (to avoid forgetting it).
+- Then create a branch for the patch release, but this time start with the desired (usually stable) branch. For example, to create a patch 1.4.8, while not affecting current master, do `git checkout -b release-v1.4.8 release-v1.4.7`. Then apply there, locally, all changes as needed. If you created a first PR for master, you can use cherry-pick to share changes among master & patch.
+- After having everything ready, go as usual, with changelog entry + `yarn publish:release`
+
 
 ## Firebase deployment of storybook
 
