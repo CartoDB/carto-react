@@ -17,11 +17,10 @@ function __generateDefaultConfig(
       containLabel: true
     },
     tooltip: {
-      padding: [theme.spacing(0.5), theme.spacing(1)],
+      padding: [theme.spacingValue * 0.5, theme.spacingValue],
       textStyle: {
         ...theme.typography.caption,
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: 11,
         color: theme.palette.common.white
       },
       backgroundColor: theme.palette.black[90],
@@ -31,7 +30,7 @@ function __generateDefaultConfig(
     xAxis: {
       axisLabel: {
         ...theme.typography.overlineDelicate,
-        padding: [theme.spacing(0.5), 0, 0, 0],
+        padding: [theme.spacingValue * 0.5, 0, 0, 0],
         formatter: (v) => {
           const formatted = xAxisFormatter(v);
           return typeof formatted === 'object'

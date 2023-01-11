@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 0
   },
   content: {
-    padding: theme.spacing(0, 3, 3, 3)
+    padding: theme.spacing(0, 2, 2, 3)
   },
   attr: {
     marginBottom: theme.spacing(1)
@@ -82,7 +82,7 @@ export default function LegendWrapper({
       {hasChildren && !!children && (
         <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
           <Box className={classes.content}>
-            <Grid container direction='column' pb={16} spacing={1}>
+            <Grid container direction='column' spacing={1}>
               {attr && (
                 <Typography className={classes.attr} variant='caption'>
                   By {attr}
