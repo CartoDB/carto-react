@@ -558,19 +558,40 @@ const MultipleTemplate = ({
             label={label}
             size={size}
             multiple
+            displayEmpty
             value={personName}
             onChange={handleChange}
             input={<OutlinedInput id='select-multiple-chip' label='Chip' />}
-            renderValue={(selected) => (
-              <Box
-                className={classes.chips}
-                style={{ height: isSmall ? '24px' : '32px' }}
-              >
-                {selected.map((value) => (
-                  <Chip size={size} color='default' key={value} label={value} />
-                ))}
-              </Box>
-            )}
+            renderValue={(selected) => {
+              if (selected.length === 0) {
+                return (
+                  <Typography variant={isSmall ? 'body2' : 'body1'} color='text.hint'>
+                    Placeholder
+                  </Typography>
+                );
+              }
+
+              return (
+                <Box
+                  className={classes.chips}
+                  style={{ height: isSmall ? '24px' : '32px' }}
+                >
+                  {selected.map((value) => (
+                    <Chip size={size} color='default' key={value} label={value} />
+                  ))}
+                </Box>
+              );
+            }}
+            // renderValue={(selected) => (
+            //   <Box
+            //     className={classes.chips}
+            //     style={{ height: isSmall ? '24px' : '32px' }}
+            //   >
+            //     {selected.map((value) => (
+            //       <Chip size={size} color='default' key={value} label={value} />
+            //     ))}
+            //   </Box>
+            //)}
           >
             {[...Array(10)].map((x, index) => (
               <MenuItem key={index} value={`Option item ${index + 1}`}>

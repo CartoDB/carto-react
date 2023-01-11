@@ -300,7 +300,8 @@ export const formsOverrides = {
 
         // Select Multiple selection
         '&.MuiInputBase-root .MuiSelect-multiple.MuiInputBase-input': {
-          paddingLeft: 0
+          paddingLeft: 0,
+          paddingRight: getSpacing(3)
         }
       },
 

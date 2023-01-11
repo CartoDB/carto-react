@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: (props) => (props.expandable ? 'pointer' : 'default'),
 
     '& .MuiButton-startIcon': {
+      marginTop: '3px',
       marginRight: theme.spacing(1)
     },
     '&:hover': {
