@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Widgets adapted to the new design system [#562](https://github.com/CartoDB/carto-react/pull/562)
 - Adjustments in theme to fix uses cases in cloud-native [#560](https://github.com/CartoDB/carto-react/pull/560)
 - Inputs size to small by default [#556](https://github.com/CartoDB/carto-react/pull/556)
 - New AppBar component (v1) and default props changes[#555](https://github.com/CartoDB/carto-react/pull/555)

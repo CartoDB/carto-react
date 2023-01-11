@@ -11,7 +11,7 @@ const IS_TOUCH_SCREEN = detectTouchScreen();
 
 const useStyles = makeStyles((theme) => ({
   optionsSelectedBar: {
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacingValue * 2,
 
     '& .MuiTypography-caption': {
       color: theme.palette.text.secondary
@@ -56,12 +56,11 @@ function BarWidgetUI(props) {
     () => ({
       show: tooltip,
       trigger: 'axis',
-      padding: [theme.spacing(0.5), theme.spacing(1)],
+      padding: [theme.spacingValue * 0.5, theme.spacingValue],
       borderWidth: 0,
       textStyle: {
         ...theme.typography.caption,
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: 11,
         color: theme.palette.common.white
       },
       backgroundColor: theme.palette.black[90],
@@ -100,7 +99,7 @@ function BarWidgetUI(props) {
       },
       axisLabel: {
         ...theme.typography.overlineDelicate,
-        padding: [theme.spacing(0.5), 0, 0, 0]
+        padding: [theme.spacingValue * 0.5, 0, 0, 0]
       },
       data: xAxisDataWithLabels
     }),
@@ -130,7 +129,7 @@ function BarWidgetUI(props) {
       axisLabel: {
         margin: 0,
         verticalAlign: 'bottom',
-        padding: [0, 0, theme.typography.overlineDelicate.fontSize, 0],
+        padding: [0, 0, theme.spacingValue * 1.25, 0],
         show: true,
         showMaxLabel: true,
         showMinLabel: false,
@@ -155,9 +154,9 @@ function BarWidgetUI(props) {
     }),
     [
       maxValue,
-      theme.palette.black[4],
-      theme.palette.black[60],
+      theme.palette.black,
       theme.typography.overlineDelicate,
+      theme.spacingValue,
       yAxisFormatter
     ]
   );

@@ -38,11 +38,10 @@ export default function TimeSeriesChart({
     () => ({
       show: tooltip,
       trigger: 'axis',
-      padding: [theme.spacing(0.5), theme.spacing(1)],
+      padding: [theme.spacingValue * 0.5, theme.spacingValue],
       textStyle: {
         ...theme.typography.caption,
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: 11,
         color: theme.palette.common.white
       },
       borderWidth: 0,
@@ -88,7 +87,7 @@ export default function TimeSeriesChart({
         axisLabel: {
           margin: 0,
           verticalAlign: 'bottom',
-          padding: [0, 0, theme.typography.overlineDelicate.fontSize, 0],
+          padding: [0, 0, theme.spacingValue * 1.25, 0],
           show: true,
           showMaxLabel: true,
           showMinLabel: false,
@@ -156,10 +155,10 @@ export default function TimeSeriesChart({
   const options = useMemo(
     () => ({
       grid: {
-        left: theme.spacing(2),
-        top: theme.spacing(4),
-        right: theme.spacing(2),
-        bottom: theme.spacing(3)
+        left: theme.spacingValue * 2,
+        top: theme.spacingValue * 4,
+        right: theme.spacingValue * 2,
+        bottom: theme.spacingValue * 3
       },
       color: [theme.palette.secondary.main],
       tooltip: tooltipOptions,
