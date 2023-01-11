@@ -6,9 +6,8 @@ import {
   Link,
   SvgIcon,
   TextField,
-  Typography,
   useTheme
-} from '@material-ui/core';
+} from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { animationOptionsPropTypes } from '../../../custom-components/AnimatedNumber';
@@ -17,6 +16,7 @@ import { transposeCategoryData } from './transposeCategoryData';
 import { useCategoryStyles } from './useCategoryStyles';
 import CategoryItem from './CategoryItem';
 import CategorySkeleton from './CategorySkeleton';
+import Typography from '../../../components/atoms/Typography';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];

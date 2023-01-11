@@ -1,12 +1,5 @@
-import {
-  Box,
-  Checkbox,
-  darken,
-  Tooltip,
-  Typography,
-  useTheme,
-  withStyles
-} from '@material-ui/core';
+import { Box, Checkbox, darken, Tooltip, Typography, useTheme } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import AnimatedNumber, {
