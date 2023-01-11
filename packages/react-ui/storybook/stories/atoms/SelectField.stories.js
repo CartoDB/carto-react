@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { Box, Grid, MenuItem, Select, TextField } from '@mui/material';
+import {
+  Box,
+  Chip,
+  Grid,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  TextField
+} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
@@ -73,6 +81,12 @@ const useStyles = makeStyles((theme) => ({
   },
   label: {
     minWidth: '200px'
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: theme.spacing(1),
+    overflow: 'auto'
   }
 }));
 
@@ -495,8 +509,27 @@ const SizeTemplate = ({
   );
 };
 
-const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
+const MultipleTemplate = ({
+  label,
+  placeholder,
+  defaultValue,
+  helperText,
+  size,
+  ...rest
+}) => {
   const classes = useStyles();
+  const [personName, setPersonName] = React.useState([]);
+  const isSmall = size === 'small';
+
+  const handleChange = (event) => {
+    const {
+      target: { value }
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value
+    );
+  };
 
   return (
     <Grid container direction='column' spacing={6}>
@@ -508,10 +541,43 @@ const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...res
           <SelectField
             {...rest}
             multiple
+            size={size}
             label={label}
             placeholder={placeholder}
             items={menuItems}
           />
+        </Box>
+      </Grid>
+      <Grid item xs={3}>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Select (with custom chips)'}
+          </Typography>
+          <Select
+            {...rest}
+            label={label}
+            size={size}
+            multiple
+            value={personName}
+            onChange={handleChange}
+            input={<OutlinedInput id='select-multiple-chip' label='Chip' />}
+            renderValue={(selected) => (
+              <Box
+                className={classes.chips}
+                style={{ height: isSmall ? '24px' : '32px' }}
+              >
+                {selected.map((value) => (
+                  <Chip size={size} color='default' key={value} label={value} />
+                ))}
+              </Box>
+            )}
+          >
+            {[...Array(10)].map((x, index) => (
+              <MenuItem key={index} value={`Option item ${index + 1}`}>
+                {`Option item ${index + 1}`}
+              </MenuItem>
+            ))}
+          </Select>
         </Box>
       </Grid>
     </Grid>

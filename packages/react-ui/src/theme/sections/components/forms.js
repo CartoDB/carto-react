@@ -173,6 +173,7 @@ export const formsOverrides = {
           transform: 'none',
           opacity: 1
         },
+        '& legend': { display: 'none' },
 
         // Variants
         '&.MuiFilledInput-root': {
@@ -295,6 +296,11 @@ export const formsOverrides = {
               ...themeTypography.body2
             }
           }
+        },
+
+        // Select Multiple selection
+        '&.MuiInputBase-root .MuiSelect-multiple.MuiInputBase-input': {
+          paddingLeft: 0
         }
       },
 
@@ -344,6 +350,19 @@ export const formsOverrides = {
   MuiFormControl: {
     defaultProps: {
       fullWidth: true
+    }
+  },
+
+  // Form Control Label (radio, checkbox and switch wrapper)
+  MuiFormControlLabel: {
+    styleOverrides: {
+      root: {
+        marginLeft: getSpacing(-0.5),
+
+        '& .MuiSwitch-root': {
+          marginLeft: getSpacing(0.5)
+        }
+      }
     }
   },
 
@@ -464,17 +483,14 @@ export const formsOverrides = {
     styleOverrides: {
       inputRoot: {
         '&[class*="MuiOutlinedInput-root"]': {
-          padding: getSpacing(3, 1.25, 0.5),
-
           '& .MuiAutocomplete-input': {
-            padding: getSpacing(0, 1.25, 0.5)
+            padding: 0
           }
         },
-        '&.MuiInputBase-marginDense.MuiOutlinedInput-root .MuiInputBase-input.MuiOutlinedInput-inputMarginDense':
-          {
-            paddingTop: getSpacing(0.25),
-            paddingBottom: getSpacing(0.25)
-          }
+        '& .MuiAutocomplete-endAdornment': {
+          top: 0,
+          right: getSpacing(0.25)
+        }
       }
     }
   },
