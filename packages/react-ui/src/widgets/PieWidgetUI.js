@@ -60,12 +60,12 @@ function PieWidgetUI({
     () => ({
       selectedMode: false,
       type: 'scroll',
-      left: theme.spacingValue * 1,
+      left: theme.spacingValue,
       bottom: theme.spacingValue * -0.5,
       itemGap: theme.spacingValue * 3,
       icon: 'circle',
-      itemWidth: theme.spacingValue * 1,
-      itemHeight: theme.spacingValue * 1,
+      itemWidth: theme.spacingValue,
+      itemHeight: theme.spacingValue,
       // TODO: as prop?
       formatter: (name) => name.toUpperCase(),
       textStyle: {

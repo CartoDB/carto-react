@@ -66,12 +66,11 @@ function HistogramWidgetUI({
     () => ({
       show: tooltip,
       trigger: 'item',
-      padding: [theme.spacing(0.5), theme.spacing(1)],
+      padding: [theme.spacingValue * 0.5, theme.spacingValue],
       borderWidth: 0,
       textStyle: {
         ...theme.typography.caption,
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: 11,
         color: theme.palette.common.white
       },
       backgroundColor: theme.palette.black[90],
@@ -107,7 +106,12 @@ function HistogramWidgetUI({
         showMaxLabel: true,
         ...theme.typography.overlineDelicate,
         hideOverlap: true,
-        padding: [theme.spacing(0.5), theme.spacing(0.5), 0, theme.spacing(0.5)],
+        padding: [
+          theme.spacingValue * 0.5,
+          theme.spacingValue * 0.5,
+          0,
+          theme.spacingValue * 0.5
+        ],
         formatter: (value) => {
           const formattedValue = processFormatterRes(xAxisFormatter(value));
           return value === min
@@ -141,7 +145,7 @@ function HistogramWidgetUI({
       axisLabel: {
         margin: 0,
         verticalAlign: 'bottom',
-        padding: [0, 0, theme.typography.overlineDelicate.fontSize, 0],
+        padding: [0, 0, theme.spacingValue * 1.25, 0],
         show: true,
         showMaxLabel: true,
         showMinLabel: false,
@@ -161,8 +165,8 @@ function HistogramWidgetUI({
       }
     }),
     [
-      theme.palette.black[4],
-      theme.palette.black[60],
+      theme.palette.black,
+      theme.spacingValue,
       theme.typography.overlineDelicate,
       data,
       yAxisFormatter
@@ -222,7 +226,7 @@ function HistogramWidgetUI({
   }, [
     formattedData,
     markAreaOptions,
-    theme.palette.black[25],
+    theme.palette.black,
     theme.palette.secondary.main,
     selectedBars,
     animation
@@ -231,10 +235,10 @@ function HistogramWidgetUI({
   const options = useMemo(
     () => ({
       grid: {
-        left: theme.spacing(0.1),
-        right: theme.spacing(0.1),
-        top: theme.spacing(2),
-        bottom: theme.spacing(0.5),
+        left: theme.spacingValue * 0.1,
+        right: theme.spacingValue * 0.1,
+        top: theme.spacingValue * 2,
+        bottom: theme.spacingValue * 0.5,
         containLabel: true
       },
       tooltip: tooltipOptions,
@@ -260,7 +264,7 @@ function HistogramWidgetUI({
           alignItems='center'
           className={classes.optionsSelectedBar}
         >
-          <Typography variant='caption'>
+          <Typography variant='caption' weight='strong'>
             {selectedBars.length ? yAxisFormatter(countSelectedElements) : 'All'} selected
           </Typography>
           {selectedBars.length > 0 && (

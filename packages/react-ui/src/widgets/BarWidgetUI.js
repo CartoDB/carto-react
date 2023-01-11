@@ -56,7 +56,7 @@ function BarWidgetUI(props) {
     () => ({
       show: tooltip,
       trigger: 'axis',
-      padding: [theme.spacingValue * 0.5, theme.spacingValue * 1],
+      padding: [theme.spacingValue * 0.5, theme.spacingValue],
       borderWidth: 0,
       textStyle: {
         ...theme.typography.caption,
@@ -152,7 +152,13 @@ function BarWidgetUI(props) {
         }
       }
     }),
-    [maxValue, theme.palette.black, theme.typography.overlineDelicate, yAxisFormatter]
+    [
+      maxValue,
+      theme.palette.black,
+      theme.typography.overlineDelicate,
+      theme.spacingValue,
+      yAxisFormatter
+    ]
   );
 
   // Serie
