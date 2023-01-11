@@ -25,9 +25,11 @@ function ComparativeCategoryTooltip({ item, names, formatter = IDENTITY_FN }) {
         {item.data.map((d, i) => (
           <Box
             key={names[i]}
-            display='flex'
-            alignItems='center'
-            gridGap={theme.spacing(0.75)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: theme.spacing(0.75)
+            }}
           >
             <div
               className={classes.bullet}
@@ -106,21 +108,25 @@ function CategoryItem({
   return (
     <StyledTooltip placement='top-start' title={tooltipContent}>
       <Box
-        display='flex'
-        alignItems='center'
-        flexWrap='nowrap'
-        overflow='hidden'
-        gridGap={theme.spacing(1)}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          flexWrap: 'nowrap',
+          overflow: 'hidden',
+          gap: theme.spacing(1)
+        }}
         onClick={() => onClick(item.key)}
         className={className}
       >
         {showCheckbox ? <Checkbox checked={checkboxChecked} /> : null}
         <Box py={0.5} flexGrow='1' maxWidth='100%' minWidth={0}>
           <Box
-            display='flex'
-            justifyContent='space-between'
-            flexWrap='nowrap'
-            gridGap={theme.spacing(0.5)}
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexWrap: 'nowrap',
+              gap: theme.spacing(0.5)
+            }}
           >
             <Tooltip title={item.label}>
               <Typography variant='body2' noWrap>

@@ -36,6 +36,10 @@ Added a few custom variants to the typography set:
 - code2
 - code3
 
+Some variants have been replaced because they were so specific to some components, these are:
+
+- charts (replaced by `theme.palette.overline + weight='strong'`)
+
 For external use: `Open Sans` and `Montserrat` families have been replaced by `Inter` and `Overpass Mono`, you have an example of this in the [`preview-head.html`](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/storybook/.storybook/preview-head.html) file.
 
 We have a `Typography` component that uses `Mui Typography` and extends it with some useful props:

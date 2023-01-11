@@ -228,9 +228,11 @@ function ComparativeCategoryWidgetUI({
     <div className={classes.wrapper}>
       {filterable ? (
         <Box
-          display='flex'
-          alignItems='center'
-          justifyContent='space-between'
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}
           className={classes.toolbar}
         >
           <Typography variant='caption'>
@@ -243,7 +245,13 @@ function ComparativeCategoryWidgetUI({
             ) : blockingActive ? (
               <Link onClick={disableBlocking}>Unlock</Link>
             ) : selectedCategories.length ? (
-              <Box display='flex' justifyContent='flex-end' gridGap={theme.spacing(1)}>
+              <Box
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  gap: theme.spacing(1)
+                }}
+              >
                 <Link onClick={enableBlocking}>Lock</Link>
                 <Divider orientation='vertical' flexItem />
                 <Link onClick={clearSelection}>Clear</Link>
@@ -310,13 +318,22 @@ function ComparativeCategoryWidgetUI({
           Cancel
         </Button>
       ) : null}
-      <Box py={2} display='flex' alignItems='center' gridGap={theme.spacing(1.5)}>
+      <Box
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: theme.spacing(1.5),
+          padding: theme.spacing(2, 0)
+        }}
+      >
         {names.map((name, i) => (
           <Box
             key={names[i]}
-            display='flex'
-            alignItems='center'
-            gridGap={theme.spacing(0.75)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: theme.spacing(0.75)
+            }}
           >
             <div
               className={classes.bullet}

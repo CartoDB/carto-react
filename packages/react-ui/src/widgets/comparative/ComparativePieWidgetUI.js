@@ -102,7 +102,7 @@ function ComparativePieWidgetUI({
     const tooltip = {
       trigger: 'item',
       show: true,
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: theme.palette.black[90],
       textStyle: { color: theme.palette.common.white },
       confine: true,
       borderWidth: 0,
@@ -124,18 +124,19 @@ function ComparativePieWidgetUI({
       data: legendData,
       selectedMode: false,
       type: 'scroll',
-      left: theme.spacing(1),
-      bottom: -theme.spacing(0.5),
-      itemGap: theme.spacing(3),
+      left: theme.spacingValue,
+      bottom: theme.spacingValue * -0.5,
+      itemGap: theme.spacingValue * 3,
       icon: 'circle',
-      itemWidth: theme.spacing(1),
-      itemHeight: theme.spacing(1),
+      itemWidth: theme.spacingValue,
+      itemHeight: theme.spacingValue,
       textStyle: {
-        ...theme.typography.charts,
-        color: theme.palette.text.primary,
+        ...theme.typography.overline,
+        fontWeight: 400,
         lineHeight: 1,
+        color: theme.palette.text.primary,
         verticalAlign: 'bottom',
-        padding: [0, 0, 0, theme.spacing(0.5)]
+        padding: [0, 0, 0, theme.spacingValue * 0.5]
       },
       inactiveColor: theme.palette.text.disabled,
       pageIcons: {
@@ -144,14 +145,14 @@ function ComparativePieWidgetUI({
           'path://M9 16.59 13.3265857 12 9 7.41 10.3319838 6 16 12 10.3319838 18z'
         ]
       },
-      pageIconSize: theme.spacing(1.5),
+      pageIconSize: theme.spacingValue * 1.5,
       pageIconColor: theme.palette.text.secondary,
       pageIconInactiveColor: theme.palette.text.disabled,
       pageTextStyle: {
-        fontFamily: theme.typography.charts.fontFamily,
-        fontSize: theme.spacing(1.5),
-        lineHeight: theme.spacing(1.75),
-        fontWeight: 'normal',
+        fontFamily: theme.typography.overline.fontFamily,
+        fontSize: theme.spacingValue * 1.5,
+        lineHeight: theme.spacingValue * 1.75,
+        fontWeight: 400,
         color: theme.palette.text.primary
       }
     };
@@ -160,17 +161,16 @@ function ComparativePieWidgetUI({
       position: 'center',
       rich: {
         b: {
-          fontFamily: theme.typography.charts.fontFamily,
-          fontSize: theme.spacing(1.75),
-          lineHeight: theme.spacing(1.75),
-          fontWeight: 'normal',
+          fontFamily: theme.typography.overline.fontFamily,
+          fontSize: theme.spacingValue * 1.75,
+          lineHeight: theme.spacingValue * 1.75,
+          fontWeight: 400,
           color: theme.palette.text.primary
         },
         per: {
-          ...theme.typography.charts,
-          fontSize: theme.spacing(3),
-          lineHeight: theme.spacing(4.5),
-          fontWeight: 600,
+          ...theme.typography.overline,
+          fontSize: theme.spacingValue * 3,
+          lineHeight: theme.spacingValue * 4.5,
           color: theme.palette.text.primary
         }
       }
@@ -186,7 +186,7 @@ function ComparativePieWidgetUI({
       radius: i === 0 ? ['75%', '90%'] : ['56%', '72%'],
       selectedOffset: 0,
       hoverOffset: 5,
-      bottom: theme.spacing(2.5),
+      bottom: theme.spacingValue * 2.5,
       avoidLabelOverlap: true,
       label: { show: false, ...labelOptions },
       emphasis: {
@@ -198,10 +198,10 @@ function ComparativePieWidgetUI({
       }
     }));
     const grid = {
-      left: theme.spacing(0),
-      top: theme.spacing(0),
-      right: theme.spacing(0),
-      bottom: theme.spacing(0)
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0
     };
     return { grid, tooltip, legend, series };
   }, [theme, names, animation, processedData, formatter, tooltipFormatter]);
