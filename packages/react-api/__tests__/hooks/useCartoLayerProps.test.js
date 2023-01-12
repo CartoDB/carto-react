@@ -13,6 +13,7 @@ describe('useCartoLayerProps', () => {
       'binary',
       'onViewportLoad',
       'fetch',
+      'loaders',
       'onDataLoad',
       'id',
       'visible',
