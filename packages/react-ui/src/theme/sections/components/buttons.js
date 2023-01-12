@@ -59,7 +59,7 @@ export const buttonsOverrides = {
               backgroundColor: commonPalette.secondary.light
             })
         },
-        '& svg path': {
+        '& svg:not(.doNotFillIcon) path': {
           fill: 'currentColor'
         },
         // Pairing buttons separation
@@ -286,7 +286,7 @@ export const buttonsOverrides = {
           minWidth: ICON_SIZE,
           height: ICON_SIZE
         },
-        '& svg path': {
+        '& svg:not(.doNotFillIcon) path': {
           fill: 'currentColor'
         },
         '&:hover, &:focus-visible': {

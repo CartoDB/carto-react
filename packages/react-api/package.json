@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-api",
-  "version": "0.0.0-experimental-muiv5-1.5.0-alpha.4-28",
+  "version": "0.0.0-experimental-muiv5-1.5.0-alpha.4-30",
   "description": "CARTO for React - Api",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -64,9 +64,9 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "0.0.0-experimental-muiv5-1.5.0-alpha.4-28",
-    "@carto/react-redux": "0.0.0-experimental-muiv5-1.5.0-alpha.4-28",
-    "@carto/react-workers": "0.0.0-experimental-muiv5-1.5.0-alpha.4-28",
+    "@carto/react-core": "0.0.0-experimental-muiv5-1.5.0-alpha.4-30",
+    "@carto/react-redux": "0.0.0-experimental-muiv5-1.5.0-alpha.4-30",
+    "@carto/react-workers": "0.0.0-experimental-muiv5-1.5.0-alpha.4-30",
     "@deck.gl/carto": "^8.9.0-alpha.4",
     "@deck.gl/core": "^8.9.0-alpha.4",
     "@deck.gl/extensions": "^8.9.0-alpha.4",
