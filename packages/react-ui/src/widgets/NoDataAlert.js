@@ -7,6 +7,7 @@ function AlertBody({ color = undefined, children }) {
   return children ? (
     <Box mt={0.5}>
       <Typography
+        component='div'
         variant='caption'
         color={color || 'inherit'}
         style={{ fontWeight: 'normal' }}
