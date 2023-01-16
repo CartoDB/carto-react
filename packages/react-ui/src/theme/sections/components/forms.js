@@ -536,12 +536,16 @@ export const formsOverrides = {
         '&:hover': {
           backgroundColor: commonPalette.action.hover
         },
+        '&.MuiSwitch-switchBase input': {
+          top: getSpacing(1),
+          left: getSpacing(1)
+        },
         '&.Mui-checked': {
           transform: 'translate(0, -8px)',
           color: commonPalette.common.white,
 
-          '& input': {
-            left: getSpacing(-1.5)
+          '&.MuiSwitch-switchBase input': {
+            left: 0
           },
           '& + .MuiSwitch-track': {
             opacity: 1,
