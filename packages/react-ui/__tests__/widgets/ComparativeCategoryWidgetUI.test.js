@@ -1,6 +1,6 @@
 import React from 'react';
 import ComparativeCategoryWidgetUI from '../../src/widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '../widgets/utils/testUtils';
 import userEvent from '@testing-library/user-event';
 
 const SAMPLE_DATA = [

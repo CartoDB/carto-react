@@ -1,7 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render } from '../widgets/utils/testUtils';
 import ComparativePieWidgetUI from '../../src/widgets/comparative/ComparativePieWidgetUI';
-import { getMaterialUIContext, mockEcharts } from './testUtils';
+import { mockEcharts } from './testUtils';
 
 const PIE_DATA_PROPS = {
   names: ['name 1', 'name 2'],
@@ -34,8 +34,7 @@ describe('ComparativePieWidgetUI', () => {
     mockEcharts.destroy();
   });
 
-  const Widget = (props) =>
-    getMaterialUIContext(<ComparativePieWidgetUI {...PIE_DATA_PROPS} {...props} />);
+  const Widget = (props) => <ComparativePieWidgetUI {...PIE_DATA_PROPS} {...props} />;
 
   test('renders correctly', () => {
     render(<Widget />);
