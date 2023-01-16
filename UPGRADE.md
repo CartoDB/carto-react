@@ -31,11 +31,11 @@ Needed changes:
 
 1. Change `${theme.spacing(xx)}px` by `${theme.spacing(xx)}`. It means, without the `px` ending, since in Mui v5 it is appended to the end of the string by default.
 
-Tip: An easy search to catch up them, would be `)}px`
+Tip: An easy search to catch up this, would be `)}px`
 
 2. Change `-theme.spacing(xx)` by `theme.spacing(-xx)`. It means, move the negative symbol inside the function.
 
-An easy search would be `-theme.spacing(`
+Tip: An easy search to catch up this, would be `-theme.spacing(`
 
 ## Typography
 
