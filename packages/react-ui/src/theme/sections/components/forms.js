@@ -335,8 +335,11 @@ export const formsOverrides = {
           {
             marginTop: 0
           },
-        '& .MuiSvgIcon-root': {
+        '& .MuiSvgIcon-root, & svg': {
           fontSize: ICON_SIZE,
+          width: ICON_SIZE,
+          minWidth: ICON_SIZE,
+          height: ICON_SIZE,
           color: commonPalette.text.secondary
         },
         '.Mui-disabled &': {
