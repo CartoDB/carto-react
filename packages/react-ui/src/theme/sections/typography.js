@@ -97,10 +97,10 @@ const baseTypography = {
   },
   overline: {
     fontFamily: 'Inter, sans-serif',
-    fontWeight: 600,
+    fontWeight: 500,
     fontSize: getPixelToRem(10),
     lineHeight: 1.2,
-    letterSpacing: '2px',
+    letterSpacing: '1.2px',
     textTransform: 'uppercase'
   }
 };

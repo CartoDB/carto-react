@@ -21,9 +21,21 @@ Also added some files for shared constants (`themeConstants.js`) and useful func
 
 Removed unused custom `createTheme` function in `carto-theme.js`.
 
+## theme.spacing
+
 We have a new custom spacing constant in carto-theme, `spacingValue`, which you should use instead of the common `theme.spacing()` function in cases where you need to do value calculations, because since Mui v5, theme.spacing is no longer a number, but a string in this format: `number + px`.
 
 Note that if you're using `calc()` in your styles, you can keep using `theme.spacing()` as usual.
+
+Needed changes:
+
+1. Change `${theme.spacing(xx)}px` by `${theme.spacing(xx)}`. It means, without the `px` ending, since in Mui v5 it is appended to the end of the string by default.
+
+Tip: An easy search to catch up this, would be `)}px`
+
+2. Change `-theme.spacing(xx)` by `theme.spacing(-xx)`. It means, move the negative symbol inside the function.
+
+Tip: An easy search to catch up this, would be `-theme.spacing(`
 
 ## Typography
 
