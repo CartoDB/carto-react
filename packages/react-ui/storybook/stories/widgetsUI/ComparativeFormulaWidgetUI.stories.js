@@ -3,7 +3,7 @@ import ComparativeFormulaWidgetUI from '../../../src/widgets/comparative/Compara
 import { buildReactPropsAsString } from '../../utils';
 
 const options = {
-  title: 'Custom Components/ComparativeFormulaWidgetUI',
+  title: 'Organisms/Widgets/ComparativeFormulaWidgetUI',
   component: ComparativeFormulaWidgetUI
 };
 

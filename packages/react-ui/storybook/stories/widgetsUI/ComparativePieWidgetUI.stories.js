@@ -3,7 +3,7 @@ import ComparativePieWidgetUI from '../../../src/widgets/comparative/Comparative
 import { buildReactPropsAsString } from '../../utils';
 
 const options = {
-  title: 'Custom Components/ComparativePieWidgetUI',
+  title: 'Organisms/Widgets/ComparativePieWidgetUI',
   component: ComparativePieWidgetUI
 };
 
