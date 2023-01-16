@@ -2,6 +2,8 @@
 
 ## Not released
 
+-Adjustments in theme to fix uses cases in cloud-native [#567](https://github.com/CartoDB/carto-react/pull/567)
+
 - Cherry pick from #531 PR [#564](https://github.com/CartoDB/carto-react/pull/564)
 - Widgets adapted to the new design system [#562](https://github.com/CartoDB/carto-react/pull/562)
 - Adjustments in theme to fix uses cases in cloud-native [#560](https://github.com/CartoDB/carto-react/pull/560)
