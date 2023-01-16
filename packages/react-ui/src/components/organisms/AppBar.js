@@ -24,7 +24,11 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1.5)
   },
   menuButton: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+
+    '&.MuiButtonBase-root svg path': {
+      fill: theme.palette.background.paper
+    }
   },
   logo: {
     display: 'flex',

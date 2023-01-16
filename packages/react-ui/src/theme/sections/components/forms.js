@@ -1,3 +1,4 @@
+import React from 'react';
 import { ICON_SIZE, ICON_SIZE_M } from '../../themeConstants';
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
@@ -300,7 +301,8 @@ export const formsOverrides = {
 
         // Select Multiple selection
         '&.MuiInputBase-root .MuiSelect-multiple.MuiInputBase-input': {
-          paddingLeft: 0
+          paddingLeft: 0,
+          paddingRight: getSpacing(3)
         }
       },
 
@@ -480,6 +482,10 @@ export const formsOverrides = {
 
   // Autocomplete
   MuiAutocomplete: {
+    defaultProps: {
+      popupIcon: <ArrowDropIcon />
+    },
+
     styleOverrides: {
       inputRoot: {
         '&[class*="MuiOutlinedInput-root"]': {
@@ -490,7 +496,11 @@ export const formsOverrides = {
         '& .MuiAutocomplete-endAdornment': {
           top: 0,
           right: getSpacing(0.25)
-        }
+        },
+        '& .MuiAutocomplete-popupIndicator:hover, & .MuiAutocomplete-popupIndicator:focus-visible':
+          {
+            backgroundColor: 'transparent'
+          }
       }
     }
   },

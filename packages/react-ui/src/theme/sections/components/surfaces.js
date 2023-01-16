@@ -16,19 +16,11 @@ export const surfacesOverrides = {
         color: commonPalette.common.white,
         boxShadow: themeShadows[0],
 
-        ['@media (min-width: ' + BREAKPOINTS.XL + 'px)']: {
-          height: APPBAR_SIZE_M
-        },
-
         '& .MuiToolbar-root': {
           justifyContent: 'space-between',
           width: '100%',
           padding: getSpacing(0, 1),
-          minHeight: APPBAR_SIZE,
-
-          ['@media (min-width: ' + BREAKPOINTS.XL + 'px)']: {
-            minHeight: APPBAR_SIZE_M
-          }
+          minHeight: APPBAR_SIZE
         },
         '& .MuiTypography-root': {
           color: commonPalette.common.white
