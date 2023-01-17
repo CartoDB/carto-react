@@ -132,11 +132,7 @@ export default function useTileFeatures({
   const fetch = useCallback(
     (...args) => {
       stopAnyCompute();
-
-      if (spatialIndex) {
-        return Layer.defaultProps.fetch.value(...args);
-      }
-      return customFetch(...args);
+      return Layer.defaultProps.fetch.value(...args);
     },
     [stopAnyCompute, spatialIndex]
   );
@@ -155,19 +151,6 @@ export default function useTileFeatures({
 
   return [onDataLoad, onViewportLoad, fetch];
 }
-
-// WORKAROUND: To read headers and know if the tile is dropping features.
-// Remove when the new loader is ready => https://github.com/visgl/loaders.gl/pull/2128
-const customFetch = async (url, { layer, loaders, loadOptions, signal }) => {
-  loadOptions = loadOptions || layer.getLoadOptions();
-  loaders = loaders || layer.props.loaders;
-
-  const response = await fetch(url, { signal });
-  const isDroppingFeatures =
-    response.headers.get('Features-Dropped-From-Tile') === 'true';
-  const result = await parse(response, loaders, loadOptions);
-  return result ? { ...result, isDroppingFeatures } : null;
-};
 
 const getColumnNameFromGeoColumn = (geoColumn) => {
   const parts = geoColumn.split(':');

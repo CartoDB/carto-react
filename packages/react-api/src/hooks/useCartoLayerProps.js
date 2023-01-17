@@ -5,6 +5,7 @@ import useGeojsonFeatures from './useGeojsonFeatures';
 import useTileFeatures from './useTileFeatures';
 import { getDataFilterExtensionProps } from './dataFilterExtensionUtil';
 import { getMaskExtensionProps } from './maskExtensionUtil';
+import FeaturesDroppedLoader from './FeaturesDroppedLoader';
 
 export default function useCartoLayerProps({
   source,
@@ -51,6 +52,7 @@ export default function useCartoLayerProps({
     ...(viewportFeatures && {
       onViewportLoad,
       fetch,
+      loaders: [FeaturesDroppedLoader],
       onDataLoad
     })
   };

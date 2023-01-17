@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid transparent'
   },
   circle: {
+    border: '2px solid transparent',
     '&::after': {
       position: 'absolute',
       display: ({ isMax }) => (isMax ? 'block' : 'none'),

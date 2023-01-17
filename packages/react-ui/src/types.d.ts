@@ -195,6 +195,84 @@ export type LegendRamp = {
   };
 };
 
+export type AnimationOptions = {
+  duration?: number;
+  animateOnMount?: boolean;
+  initialValue?: number;
+};
+
+export type AnimatedNumber = {
+  enabled: boolean;
+  value: number;
+  options?: AnimationOptions;
+  formatter: (n: number) => React.ReactNode;
+};
+
+export type FormulaLabels = {
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
+  note?: React.ReactNode;
+};
+
+export type FormulaColors = {
+  [key in keyof FormulaLabels]?: string;
+} & {
+  value?: string;
+};
+
+export type ComparativeFormulaWidgetUI = {
+  data: number[];
+  labels?: FormulaLabels[];
+  colors?: FormulaColors[];
+  animated?: boolean;
+  animationOptions?: AnimationOptions;
+  formatter?: (n: number) => React.ReactNode;
+};
+
+export enum ORDER_TYPES {
+  RANKING = 'ranking',
+  FIXED = 'fixed'
+}
+
+type CategoryData = {
+  name: string;
+  value: number;
+};
+
+export type ComparativeCategoryWidgetUI = {
+  names: string[];
+  data: CategoryData[][];
+  labels?: string[];
+  colors?: string[];
+  maxItems?: number;
+  order?: ORDER_TYPES;
+  animation?: boolean;
+  animationOptions?: AnimationOptions;
+  searchable?: boolean;
+  filterable?: boolean;
+  selectedCategories?: string[];
+  onSelectedCategoriesChange?: (categories: string[]) => any;
+  formatter?: (v: any) => string;
+};
+
+export type PieData = {
+  name: string;
+  value: number;
+};
+
+export type ComparativePieWidgetUIProps = {
+  names: string[];
+  data: PieData[][];
+  labels?: string[][];
+  colors?: string[][];
+  height?: string;
+  animation?: boolean;
+  formatter?: (v: number) => string;
+  tooltipFormatter?: (v: any) => string;
+  selectedCategories?: string[];
+  onCategorySelected?: (categories: string[]) => any;
+};
+
 // Typography
 export interface TypographyProps extends MuiTypographyProps {
   weight?: 'regular' | 'medium' | 'strong';

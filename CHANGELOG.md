@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Update design-system branch with master [#563](https://github.com/CartoDB/carto-react/pull/563)
 - Adjustments in theme to fix uses cases in cloud-native [#567](https://github.com/CartoDB/carto-react/pull/567)
 - Cherry pick from #531 PR [#564](https://github.com/CartoDB/carto-react/pull/564)
 - Widgets adapted to the new design system [#562](https://github.com/CartoDB/carto-react/pull/562)
@@ -41,6 +42,41 @@
 
 ## 1.5
 
+## 1.5.0-alpha.11 (2023-01-12)
+
+- Remove custom fetch function. Fixes issues with icon loading and FillStyleExtensions
+
+## 1.5.0-alpha.10 (2023-01-04)
+
+- Allow to use custom version explicitly in GoogleMap (not 'beta' by default now) [#550](https://github.com/CartoDB/carto-react/pull/550)
+- Fix lack of refresh in BarWidgetUI when modifying yAxisData dinamically [#558](https://github.com/CartoDB/carto-react/pull/558)
+
+## 1.5.0-alpha.9 (2022-11-29)
+
+- Improve rendering performance of FeatureSelectionLayer (mask layer) [#541](https://github.com/CartoDB/carto-react/pull/541)
+
+## 1.5.0-alpha.8 (2022-11-25)
+
+- Implement ComparativePieWidgetUI [#510](https://github.com/CartoDB/carto-react/pull/510)
+- Fix `executeSQL` through **POST** request [#531](https://github.com/CartoDB/carto-react/pull/531)
+
+### 1.5.0-alpha.7 (2022-11-09)
+
+- Implement ComparativeCategoryWidgetUI [#505](https://github.com/CartoDB/carto-react/pull/505)
+- Fix `executeModel` through **POST** request [#525](https://github.com/CartoDB/carto-react/pull/525)
+
+### 1.5.0-alpha.6 (2022-11-02)
+
+- Fix TileLayer unauthorized error due to [breaking changes](https://github.com/visgl/deck.gl/pull/7287) in deck.gl >=8.9.0-alpha.3 and >=8.8.15 [#519](https://github.com/CartoDB/carto-react/pull/519)
+- Bump deck.gl to 8.8.15 [#520](https://github.com/CartoDB/carto-react/pull/520)
+- Fix missing implementation in stats to support `queryParameters` in RangeWidget and HistogramWidget [#517](https://github.com/CartoDB/carto-react/pull/517)
+- AnimatedNumber component with hook wrapping `animateValue` [#509](https://github.com/CartoDB/carto-react/pull/509)
+- Implement ComparativeFormulaWidgetUI [#504](https://github.com/CartoDB/carto-react/pull/504)
+
+### 1.5.0-alpha.5 (2022-10-26)
+
+- Fix LegendCategories displaying outlined points [#508](https://github.com/CartoDB/carto-react/pull/508)
+
 ### 1.5.0-alpha.4 (2022-10-14)
 
 - Update nebula to latest stable 1.0.4 and deck.gl ^8.9.0-alpha.4 [#491](https://github.com/CartoDB/carto-react/pull/491)
@@ -60,6 +96,14 @@
 - Switch to using quadbin library, requiring deck.gl ^8.9.0-alpha.3 [#467](https://github.com/CartoDB/carto-react/pull/467)
 
 ## 1.4
+
+### 1.4.3 (2022-11-03)
+
+- Fix TileLayer unauthorized error due to [breaking changes](https://github.com/visgl/deck.gl/pull/7287) in deck.gl >=8.8.15 [#519](https://github.com/CartoDB/carto-react/pull/519)
+
+### 1.4.2 (2022-10-27)
+
+- Support for **deck.gl 8.8.15** _(breaking change)_. It requires ‘quadbin’ >= 0.1.5
 
 ### 1.4.1 (2022-09-20)
 

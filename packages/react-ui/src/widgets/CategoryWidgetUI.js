@@ -609,6 +609,10 @@ function CategoryWidgetUI(props) {
   );
 }
 
+/**
+ * Enum for CategoryWidgetUI order types. 'RANKING' orders the data by value and 'FIXED' keeps the order present in the original data
+ * @enum {string}
+ */
 CategoryWidgetUI.ORDER_TYPES = {
   RANKING: 'ranking',
   FIXED: 'fixed'
