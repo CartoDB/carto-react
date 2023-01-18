@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Bump deck.gl to latest 8.8.23 [#](https://github.com/CartoDB/carto-react/pull/)
 ## 1.5
 
 ## 1.5.0-alpha.11 (2023-01-12)
