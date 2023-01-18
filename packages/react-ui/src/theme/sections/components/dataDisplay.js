@@ -58,7 +58,6 @@ export const dataDisplayOverrides = {
     defaultProps: {
       primaryTypographyProps: {
         variant: 'body2',
-        style: { fontWeight: themeTypography.fontWeightBold },
         noWrap: true
       },
       secondaryTypographyProps: { variant: 'caption' }
@@ -67,11 +66,13 @@ export const dataDisplayOverrides = {
   MuiListItemIcon: {
     styleOverrides: {
       root: {
-        minWidth: getSpacing(5.75),
-        marginLeft: getSpacing(0.75),
+        marginRight: getSpacing(1),
 
         '& .MuiSvgIcon-root': {
           fontSize: ICON_SIZE_M
+        },
+        '.MuiMenuItem-root.MuiButtonBase-root &': {
+          minWidth: getSpacing(2.25)
         }
       }
     }
@@ -80,8 +81,8 @@ export const dataDisplayOverrides = {
     styleOverrides: {
       root: {
         '& .MuiAvatar-root': {
-          height: getSpacing(4.5),
-          width: getSpacing(4.5)
+          height: getSpacing(4),
+          width: getSpacing(4)
         },
         '& .MuiSvgIcon-root': {
           fontSize: ICON_SIZE
