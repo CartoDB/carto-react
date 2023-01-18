@@ -4,9 +4,10 @@
 
 ## 1.5
 
-## 1.5.0-alpha.11 (2023-01-12)
+## 1.5.0-alpha.11 (2023-01-18)
 
-- Remove custom fetch function. Fixes issues with icon loading and FillStyleExtensions
+- Remove custom fetch function. Fixes issues with icon loading and FillStyleExtensions [#561](https://github.com/CartoDB/carto-react/pull/561)
+- Bump deck.gl to latest 8.8.23 [#571](https://github.com/CartoDB/carto-react/pull/571)
 
 ## 1.5.0-alpha.10 (2023-01-04)
 
