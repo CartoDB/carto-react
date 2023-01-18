@@ -202,22 +202,16 @@ export type AnimatedNumber = {
   formatter: (n: number) => React.ReactNode;
 };
 
-export type FormulaLabels = {
+export type FormulaData = {
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
-  note?: React.ReactNode;
-};
-
-export type FormulaColors = {
-  [key in keyof FormulaLabels]?: string;
-} & {
-  value?: string;
+  label?: React.ReactNode;
+  value: number;
 };
 
 export type ComparativeFormulaWidgetUI = {
-  data: number[];
-  labels?: FormulaLabels[];
-  colors?: FormulaColors[];
+  data: FormulaData[];
+  colors?: string[];
   animated?: boolean;
   animationOptions?: AnimationOptions;
   formatter?: (n: number) => React.ReactNode;
