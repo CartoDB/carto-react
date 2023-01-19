@@ -23,7 +23,7 @@ module.exports = {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -40,9 +40,7 @@ module.exports = {
   //   "lcov",
   //   "clover"
   // ],
-  coverageReporters: [
-    "json"
-  ],
+  coverageReporters: ['json'],
 
   // An object that configures minimum threshold enforcement for coverage results
   // coverageThreshold: undefined,
@@ -69,9 +67,7 @@ module.exports = {
   // maxWorkers: "50%",
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  moduleDirectories: [
-    "node_modules"
-  ],
+  moduleDirectories: ['node_modules'],
 
   // An array of file extensions your modules use
   // moduleFileExtensions: [
@@ -154,10 +150,7 @@ module.exports = {
   //   "**/__tests__/**/*.[jt]s?(x)",
   //   "**/?(*.)+(spec|test).[tj]s?(x)"
   // ],
-  testMatch: [
-    "**/?(*.)+(spec|test).js"
-  ],
-
+  testMatch: ['**/?(*.)+(spec|test).js'],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   // testPathIgnorePatterns: [
@@ -187,8 +180,9 @@ module.exports = {
   //   "/node_modules/",
   //   "\\.pnp\\.[^\\/]+$"
   // ],
-    transformIgnorePatterns: ['node_modules/(?!(@mapbox/tiny-sdf|mapbox-gl)/)'],
-
+  transformIgnorePatterns: [
+    'node_modules/(?!(@mapbox/tiny-sdf|mapbox-gl|d3-array|internmap|d3-color|d3-scale|d3-interpolate|d3-format|d3-time|d3-time-format)/)'
+  ]
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
