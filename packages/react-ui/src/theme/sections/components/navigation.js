@@ -93,7 +93,7 @@ export const navigationOverrides = {
         '&.Mui-selected': {
           pointerEvents: 'none',
 
-          '& svg path': {
+          '& svg:not(.doNotFillIcon) path': {
             fill: commonPalette.primary.main
           }
         },
