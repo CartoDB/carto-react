@@ -2,6 +2,7 @@
 
 ## Not released
 
+- HistogramWidgets: fix handling of min/max properties [#571](https://github.com/CartoDB/carto-react/pull/571)
 ## 1.5
 
 ## 1.5.0-alpha.11 (2023-01-12)

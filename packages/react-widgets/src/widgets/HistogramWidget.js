@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
@@ -43,8 +43,8 @@ function HistogramWidget({
   column,
   operation,
   ticks: _ticks = [],
-  min: _min,
-  max: _max,
+  min: externalMin,
+  max: externalMax,
   xAxisFormatter,
   bins,
   formatter,
@@ -60,33 +60,34 @@ function HistogramWidget({
 }) {
   const dispatch = useDispatch();
 
-  const [[min, max], setMinMax] = useState([_min, _max]);
-
-  const hasMinMax =
-    Number.isFinite(min) &&
-    min !== Number.MIN_SAFE_INTEGER &&
-    Number.isFinite(max) &&
-    max !== Number.MAX_SAFE_INTEGER;
+  const hasExternalMinMax =
+    Number.isFinite(externalMin) &&
+    externalMin !== Number.MIN_SAFE_INTEGER &&
+    Number.isFinite(externalMax) &&
+    externalMax !== Number.MAX_SAFE_INTEGER;
 
   const { stats, warning: _warning } = useStats({
     id,
     column,
     dataSource,
-    customStats: hasMinMax,
+    customStats: hasExternalMinMax,
     onError
   });
 
-  useEffect(() => {
-    if (stats) {
-      const { min, max } = stats;
-      setMinMax([min, max]);
+  const [min, max] = useMemo(() => {
+    if (hasExternalMinMax) {
+      return [externalMin, externalMax];
     }
-  }, [stats]);
+    if (stats) {
+      return [stats.min, stats.max];
+    }
+    return [undefined, undefined];
+  }, [hasExternalMinMax, stats, externalMin, externalMax]);
 
   const ticks = useMemo(() => {
     if (_ticks?.length) return _ticks;
 
-    if (bins && hasMinMax) {
+    if (bins && hasExternalMinMax) {
       const result = [];
       for (let i = 1; i < bins; i += 1) {
         result.push(min + (max - min) * (i / bins));
@@ -95,7 +96,7 @@ function HistogramWidget({
     }
 
     return [];
-  }, [min, max, _ticks, bins, hasMinMax]);
+  }, [min, max, _ticks, bins, hasExternalMinMax]);
 
   let {
     data = EMPTY_ARRAY,
