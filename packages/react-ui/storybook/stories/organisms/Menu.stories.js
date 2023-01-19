@@ -36,15 +36,9 @@ const options = {
 };
 export default options;
 
-const Template = ({ label, wrapped, disabled, ...args }) => {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
+const Template = ({ label, ...args }) => {
   return (
-    <MenuList {...args} value={value} onChange={handleChange} aria-label='tabs example'>
+    <MenuList {...args}>
       <MenuItem>
         <ListItemIcon>
           <ContentCutOutlined />
