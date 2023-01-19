@@ -67,6 +67,8 @@ function ComparativeFormulaWidgetUI({
     [data, colors]
   );
 
+  const isReference = processedData.length > 1;
+
   return (
     <div>
       {processedData.map((d, i) => (
@@ -84,7 +86,7 @@ function ComparativeFormulaWidgetUI({
                 </Typography>
               </Box>
             ) : null}
-            <Box fontWeight={!i ? 'bold' : ''}>
+            <Box fontWeight={isReference && !i ? 'bold' : ''}>
               <AnimatedNumber
                 value={d.value || 0}
                 enabled={animated}
