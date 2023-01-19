@@ -83,7 +83,7 @@ const Template = ({ label, wrapped, disabled, ...args }) => {
   );
 };
 
-const commonArgs = { label: 'Label', dense: true };
+const commonArgs = { label: 'Label', dense: false };
 
 export const Playground = Template.bind({});
 Playground.args = { ...commonArgs };
