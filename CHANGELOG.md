@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Adjustments in theme to fix uses cases in cloud-native [#572](https://github.com/CartoDB/carto-react/pull/572)
 - Update design-system branch with master [#563](https://github.com/CartoDB/carto-react/pull/563)
 - Adjustments in theme to fix uses cases in cloud-native [#567](https://github.com/CartoDB/carto-react/pull/567)
 - Cherry pick from #531 PR [#564](https://github.com/CartoDB/carto-react/pull/564)

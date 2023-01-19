@@ -1,5 +1,5 @@
 import { getSpacing } from '../../themeUtils';
-import { APPBAR_SIZE, APPBAR_SIZE_M, BREAKPOINTS } from '../../themeConstants';
+import { APPBAR_SIZE } from '../../themeConstants';
 import { commonPalette } from '../palette';
 import { themeShadows } from '../shadows';
 

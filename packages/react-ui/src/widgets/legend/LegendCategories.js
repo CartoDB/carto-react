@@ -163,12 +163,16 @@ function Row({ label, isMax, isStrokeColor, color = '#000', icon, maskedIcon }) 
             }
           />
         </Tooltip>
-        <Typography ref={labelRef} variant='overline' className={classes.longTruncate}>
+        <Typography
+          ref={labelRef}
+          variant='overlineDelicate'
+          className={classes.longTruncate}
+        >
           {label}
         </Typography>
         <Typography
           ref={labelPhantomRef}
-          variant='overline'
+          variant='overlineDelicate'
           className={[classes.longTruncate, classes.titlePhantom].join(' ')}
         >
           {label}

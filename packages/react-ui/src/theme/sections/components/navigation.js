@@ -9,6 +9,7 @@ export const navigationOverrides = {
     styleOverrides: {
       root: {
         ...themeTypography.body2,
+        minHeight: getSpacing(4),
         height: getSpacing(4),
         transition: 'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
@@ -41,6 +42,10 @@ export const navigationOverrides = {
         '& .MuiCheckbox-root, & > .MuiSvgIcon-root': {
           marginRight: getSpacing(1)
         }
+      },
+      dense: {
+        minHeight: getSpacing(3),
+        height: getSpacing(3)
       }
     }
   },
@@ -88,7 +93,7 @@ export const navigationOverrides = {
         '&.Mui-selected': {
           pointerEvents: 'none',
 
-          '& svg path': {
+          '& svg:not(.doNotFillIcon) path': {
             fill: commonPalette.primary.main
           }
         },
