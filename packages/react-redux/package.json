@@ -63,8 +63,8 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "0.0.0-experimental-muiv5-1.5.0-alpha.11-01",
-    "@carto/react-workers": "0.0.0-experimental-muiv5-1.5.0-alpha.11-01",
+    "@carto/react-core": "0.0.0-experimental-muiv5-1.5.0-alpha.11-02",
+    "@carto/react-workers": "0.0.0-experimental-muiv5-1.5.0-alpha.11-02",
     "@deck.gl/carto": "^8.8.15",
     "@deck.gl/core": "^8.8.15",
     "@reduxjs/toolkit": "^1.5.0"
