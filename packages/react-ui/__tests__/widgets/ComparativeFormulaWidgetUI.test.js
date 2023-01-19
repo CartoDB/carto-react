@@ -16,17 +16,19 @@ const SAMPLE_DATA = [
 
 describe('ComparativeFormulaWidgetUI', () => {
   test('empty', () => {
-    const { container } = render(<ComparativeFormulaWidgetUI data={[]} />);
+    const { container } = render(
+      <ComparativeFormulaWidgetUI data={[]} animated={false} />
+    );
     expect(container).toBeInTheDocument();
   });
 
   test('simple', async () => {
-    render(<ComparativeFormulaWidgetUI data={SAMPLE_DATA} />);
+    render(<ComparativeFormulaWidgetUI data={SAMPLE_DATA} animated={false} />);
     expect(await screen.findByText(SAMPLE_DATA[0].value)).toBeInTheDocument();
   });
 
   test('multiple', async () => {
-    render(<ComparativeFormulaWidgetUI data={SAMPLE_DATA} />);
+    render(<ComparativeFormulaWidgetUI data={SAMPLE_DATA} animated={false} />);
     const data = await Promise.all(
       SAMPLE_DATA.map(async (d) => await screen.findByText(d.value))
     );
@@ -35,7 +37,7 @@ describe('ComparativeFormulaWidgetUI', () => {
 
   test('simple - data as object', async () => {
     const DATA = { value: 1234 };
-    render(<ComparativeFormulaWidgetUI data={SAMPLE_DATA} />);
+    render(<ComparativeFormulaWidgetUI data={SAMPLE_DATA} animated={false} />);
     expect(await screen.findByText(DATA.value)).toBeInTheDocument();
   });
 
@@ -43,6 +45,7 @@ describe('ComparativeFormulaWidgetUI', () => {
     render(
       <ComparativeFormulaWidgetUI
         data={SAMPLE_DATA}
+        animated={false}
         formatter={(value) => {
           return Intl.NumberFormat('en-US', {
             maximumFractionDigits: 2,
@@ -53,6 +56,6 @@ describe('ComparativeFormulaWidgetUI', () => {
         }}
       />
     );
-    expect(screen.getByText(/1\.234K/)).toBeInTheDocument();
+    expect(screen.getByText(/1\.23K/)).toBeInTheDocument();
   });
 });
