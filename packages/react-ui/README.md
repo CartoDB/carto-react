@@ -14,4 +14,4 @@
 
 Package with UI components, based on MaterialUI + a CARTO theme
 
-See the official doc & reference at [CARTO for React](https://docs.carto.com/react/)
+See the official doc & reference at [CARTO for React](https://docs.carto.com/development-tools/carto-for-react)
