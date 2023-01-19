@@ -2,6 +2,8 @@
 
 ## Not released
 
+-  Adapt comparative category widget design [#575](https://github.com/CartoDB/carto-react/pull/575)
+
 ## 1.5
 
 ## 1.5.0-alpha.11 (2023-01-18)
