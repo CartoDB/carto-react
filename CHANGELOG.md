@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Improved Comparative Formula UI props interface [#573](https://github.com/CartoDB/carto-react/pull/573)
+
 ## 1.5
 
 ## 1.5.0-alpha.11 (2023-01-12)
