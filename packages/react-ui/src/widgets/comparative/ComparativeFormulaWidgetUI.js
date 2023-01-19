@@ -86,7 +86,7 @@ function ComparativeFormulaWidgetUI({
               ) : null}
               <Box color={getColor(i).value}>
                 <AnimatedNumber
-                  value={d || 0}
+                  value={d}
                   enabled={animated}
                   options={animationOptions}
                   formatter={formatter}

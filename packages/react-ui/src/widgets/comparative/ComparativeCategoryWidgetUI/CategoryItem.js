@@ -156,7 +156,7 @@ function CategoryItem({
                 color={i === 0 ? 'textPrimary' : 'textSecondary'}
               >
                 <AnimatedNumber
-                  value={d.value || 0}
+                  value={d.value}
                   enabled={animation}
                   options={animationOptions}
                   formatter={formatter}
