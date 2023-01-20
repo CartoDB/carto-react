@@ -88,7 +88,7 @@ function ComparativeFormulaWidgetUI({
             ) : null}
             <Box fontWeight={isReference && !i ? 'bold' : ''}>
               <AnimatedNumber
-                value={d.value || 0}
+                value={d.value}
                 enabled={animated}
                 options={animationOptions}
                 formatter={formatter}

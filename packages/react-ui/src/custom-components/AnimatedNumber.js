@@ -15,7 +15,7 @@ function AnimatedNumber({ enabled, value, options, formatter }) {
     animateOnMount: true,
     disabled: enabled === false || value === null || value === undefined
   };
-  const animated = useAnimatedNumber(value, { ...defaultOptions, ...options });
+  const animated = useAnimatedNumber(value || 0, { ...defaultOptions, ...options });
   return <span>{formatter ? formatter(animated) : animated}</span>;
 }
 
