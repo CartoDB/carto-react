@@ -2,11 +2,13 @@
 
 ## Not released
 
+## 1.5
+
+## 1.5.0-alpha.12 (2023-01-20)
+
 - HistogramWidget: fix handling of min/max properties [#574](https://github.com/CartoDB/carto-react/pull/574)
 - Adapt comparative category widget design [#575](https://github.com/CartoDB/carto-react/pull/575)
 - Improved Comparative Formula UI props interface [#573](https://github.com/CartoDB/carto-react/pull/573)
-
-## 1.5
 
 ## 1.5.0-alpha.11 (2023-01-18)
 
