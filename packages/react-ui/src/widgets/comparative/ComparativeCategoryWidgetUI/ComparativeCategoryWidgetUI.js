@@ -53,6 +53,7 @@ function SearchIcon() {
  * @param {string[]} [props.selectedCategories]
  * @param {(categories: string[]) => any} [props.onSelectedCategoriesChange]
  * @param {(v: any) => any} [props.formatter]
+ * @param {(v: any) => any} [props.tooltipFormatter]
  * -->
  */
 function ComparativeCategoryWidgetUI({
@@ -68,7 +69,8 @@ function ComparativeCategoryWidgetUI({
   filterable = true,
   selectedCategories = EMPTY_ARRAY,
   onSelectedCategoriesChange = IDENTITY_FN,
-  formatter = IDENTITY_FN
+  formatter = IDENTITY_FN,
+  tooltipFormatter = IDENTITY_FN
 }) {
   const classes = useCategoryStyles();
   const theme = useTheme();
@@ -288,6 +290,7 @@ function ComparativeCategoryWidgetUI({
             checkboxChecked={tempSelection.indexOf(d.key) !== -1}
             className={filterable ? classes.categoryGroupHover : classes.categoryGroup}
             formatter={formatter}
+            tooltipFormatter={tooltipFormatter}
             onClick={clickHandler}
             names={names}
           />
@@ -308,7 +311,7 @@ function ComparativeCategoryWidgetUI({
           Cancel
         </Button>
       ) : null}
-      <Box py={2} display='flex' alignItems='center' gridGap={theme.spacing(1.5)}>
+      <Box py={2} display='flex' flexWrap='wrap' alignItems='center' gridGap={theme.spacing(1.5)}>
         {names.map((name, i) => (
           <Box
             key={names[i]}
@@ -344,7 +347,8 @@ ComparativeCategoryWidgetUI.defaultProps = {
   filterable: true,
   selectedCategories: [],
   onSelectedCategoriesChange: IDENTITY_FN,
-  formatter: IDENTITY_FN
+  formatter: IDENTITY_FN,
+  tooltipFormatter: IDENTITY_FN
 };
 ComparativeCategoryWidgetUI.propTypes = {
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -366,7 +370,8 @@ ComparativeCategoryWidgetUI.propTypes = {
   filterable: PropTypes.bool,
   selectedCategories: PropTypes.arrayOf(PropTypes.string),
   onSelectedCategoriesChange: PropTypes.func,
-  formatter: PropTypes.func
+  formatter: PropTypes.func,
+  tooltipFormatter: PropTypes.func
 };
 
 export default ComparativeCategoryWidgetUI;

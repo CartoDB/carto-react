@@ -1,6 +1,6 @@
 import React from 'react';
 import ComparativeFormulaWidgetUI from '../../../src/widgets/comparative/ComparativeFormulaWidgetUI';
-import { buildReactPropsAsString } from '../../utils'
+import { buildReactPropsAsString } from '../../utils';
 
 const options = {
   title: 'Custom Components/ComparativeFormulaWidgetUI',
@@ -11,12 +11,11 @@ export default options;
 
 const Template = (args) => <ComparativeFormulaWidgetUI {...args} />;
 const sampleProps = {
-  data: [1245, 3435.9],
-  labels: [
-    { prefix: '$', suffix: ' sales', note: 'label 1' },
-    { prefix: '$', suffix: ' sales', note: 'label 2' }
+  data: [
+    { prefix: '$', suffix: ' sales', label: 'label 1', value: 1245 },
+    { prefix: '$', suffix: ' sales', label: 'label 2', value: 3435.9 }
   ],
-  colors: [{ note: '#ff9900' }, { note: '#6732a8' }]
+  colors: ['#ff9900']
 };
 
 export const Default = Template.bind({});
