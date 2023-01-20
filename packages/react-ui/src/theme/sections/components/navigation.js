@@ -61,7 +61,8 @@ export const navigationOverrides = {
     },
     styleOverrides: {
       root: ({ ownerState }) => ({
-        borderBottom: `1px solid ${commonPalette.black[12]}`
+        boxSizing: 'content-box',
+        boxShadow: `0 1px 0 0 ${commonPalette.black[12]}`
       }),
 
       vertical: {
