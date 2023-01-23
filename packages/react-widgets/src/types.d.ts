@@ -108,3 +108,10 @@ export type WidgetWithAlert = {
   droppingFeaturesAlertProps?: object;
   children?: React.ReactNode;
 }
+
+export type FeatureSelectionWidget = {
+  className?: string;
+  selectionModes?: string[],
+  editModes?: string[],
+  tooltipPlacement?: string,
+}
