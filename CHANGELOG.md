@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix gmaps warning caused by callback now been mandatary from version >=3.51.6 [#581](https://github.com/CartoDB/carto-react/pull/581)
+
 ## 1.5
 
 ## 1.5.0-alpha.12 (2023-01-20)
