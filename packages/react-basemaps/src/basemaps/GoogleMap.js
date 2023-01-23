@@ -140,7 +140,7 @@ export function GoogleMap(props) {
       script.async = true;
       script.type = `text/javascript`;
 
-      let url = `https://maps.google.com/maps/api/js?key=${apiKey}`;
+      let url = `https://maps.google.com/maps/api/js?key=${apiKey}&callback=Function.prototype`;
       if (customVersion) url = `${url}&v=${customVersion}`;
       script.src = url;
       const headScript = document.getElementsByTagName(`script`)[0];
