@@ -2,7 +2,7 @@
 
 ## Not released
 
-- fix category tooltip formatter [#579](https://github.com/CartoDB/carto-react/pull/579)
+- Fix ComparativeCategoryWidgetUI tooltip formatter [#579](https://github.com/CartoDB/carto-react/pull/579)
 
 ## 1.5
 
