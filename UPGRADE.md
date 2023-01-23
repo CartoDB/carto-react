@@ -27,6 +27,8 @@ We have a new custom spacing constant in carto-theme, `spacingValue`, which you 
 
 Note that if you're using `calc()` in your styles, you can keep using `theme.spacing()` as usual.
 
+`theme.spacingValue * 2`
+
 Needed changes:
 
 1. Change `${theme.spacing(xx)}px` by `${theme.spacing(xx)}`. It means, without the `px` ending, since in Mui v5 it is appended to the end of the string by default.
@@ -36,6 +38,15 @@ Tip: An easy search to catch up this, would be `)}px`
 2. Change `-theme.spacing(xx)` by `theme.spacing(-xx)`. It means, move the negative symbol inside the function.
 
 Tip: An easy search to catch up this, would be `-theme.spacing(`
+
+## Icons
+
+We have this kind of rules in buttons to cover the common use cases:
+
+`svg path { fill: currentColor }`
+
+In case you don't need the icon to be filled, you can apply this class to the svg parent:
+`.doNotFillIcon`
 
 ## Typography
 
