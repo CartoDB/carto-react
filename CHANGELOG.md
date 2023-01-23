@@ -4,6 +4,10 @@
 
 ## 1.4
 
+## 1.4.10 (2023-01-23)
+
+- Fix gmaps warning caused by callback now been mandatary from version >=3.51.6 [#581](https://github.com/CartoDB/carto-react/pull/581)
+
 ## 1.4.9 (2023-01-04)
 
 - Fix lack of refresh in BarWidgetUI when modyfing yAxisData dinamically [#558](https://github.com/CartoDB/carto-react/pull/558)
