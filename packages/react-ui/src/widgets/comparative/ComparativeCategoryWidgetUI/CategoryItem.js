@@ -59,7 +59,7 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
           <Box flexGrow={1}></Box>
           <Box ml={1} px={1} bgcolor={numberColor} color='white' borderRadius={2}>
             <Typography color='inherit' variant='caption'>
-              {signText}{formatter(Math.abs(compareValue))}%
+              {signText}{formatter(Math.abs(compareValue))}
             </Typography>
           </Box>
         </Box>
@@ -85,7 +85,8 @@ const StyledTooltip = withStyles((theme) => ({
   tooltip: {
     color: theme.palette.common.white,
     maxWidth: 260,
-    marginBottom: 0
+    marginBottom: 0,
+    overflow: 'hidden'
   }
 }))(Tooltip);
 
