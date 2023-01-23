@@ -3,6 +3,8 @@
 ## Not released
 
 - Improve typing for FeatureSelectionWidget [#580](https://github.com/CartoDB/carto-react/pull/580)
+- Fix ComparativeCategoryWidgetUI tooltip formatter [#579](https://github.com/CartoDB/carto-react/pull/579)
+- Fix gmaps warning caused by callback now been mandatary from version >=3.51.6 [#581](https://github.com/CartoDB/carto-react/pull/581)
 
 ## 1.5
 
