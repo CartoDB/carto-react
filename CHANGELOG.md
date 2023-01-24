@@ -4,6 +4,10 @@
 
 ## 1.5
 
+## 1.5.0-alpha.14 (2023-01-24)
+
+- Fix isDroppingFeatures converting to Boolean [#583](https://github.com/CartoDB/carto-react/pull/583)
+
 ## 1.5.0-alpha.13 (2023-01-23)
 
 - Improve typing for FeatureSelectionWidget [#580](https://github.com/CartoDB/carto-react/pull/580)
