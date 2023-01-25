@@ -1,7 +1,7 @@
 export const feedbackOverrides = {
   // SnackBar
-  MuiSnackBar: {
-    DefaultProps: {
+  MuiSnackbar: {
+    defaultProps: {
       anchorOrigin: {
         vertical: 'bottom',
         horizontal: 'center'
