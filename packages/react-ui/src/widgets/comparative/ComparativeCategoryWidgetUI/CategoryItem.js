@@ -34,7 +34,13 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
         {item.label}
       </Typography>
       <Box pt={1} pb={0.5}>
-        <Box display='flex' alignItems='baseline' gridGap={theme.spacing(0.75)}>
+        <Box
+          style={{
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: theme.spacing(0.75)
+          }}
+        >
           <div
             className={classes.bullet}
             style={{
@@ -45,8 +51,20 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
           <Typography color='inherit' variant='caption'>
             {name}
           </Typography>
-          <Box flexGrow={1}></Box>
-          <Box ml={1} px={1} bgcolor={numberColor} color='white' borderRadius={2}>
+          <Box
+            style={{
+              flexGrow: 1
+            }}
+          ></Box>
+          <Box
+            style={{
+              marginLeft: theme.spacing(1),
+              padding: theme.spacing(0, 1),
+              backgroundColor: numberColor,
+              color: 'white',
+              borderRadius: theme.spacing(2)
+            }}
+          >
             <Typography color='inherit' variant='caption'>
               {signText}
               {formatter(Math.abs(compareValue))}
@@ -145,7 +163,6 @@ function CategoryItem({
                 alignItems: 'center',
                 gap: theme.spacing(0.5)
               }}
-              className={classes.progressbarWrapper}
             >
               <div className={classes.progressbar}>
                 <div
