@@ -64,7 +64,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "0.0.0-experimental-muiv5-1.5.0-alpha.11-03",
+    "@carto/react-core": "0.0.0-experimental-muiv5-1.5.0-alpha.11-04",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }
