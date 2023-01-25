@@ -45,8 +45,9 @@ We have this kind of rules in buttons to cover the common use cases:
 
 `svg path { fill: currentColor }`
 
-In case you don't need the icon to be filled, you can apply this class to the svg parent:
-`.doNotFillIcon`
+In case you don't need the icon to be filled, you can apply this class to the svg parent: `.doNotFillIcon`
+
+`<CloseIcon className="doNotFillIcon" />`
 
 ## Typography
 
