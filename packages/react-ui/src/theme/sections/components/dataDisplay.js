@@ -173,6 +173,10 @@ export const dataDisplayOverrides = {
     }
   },
   MuiDialogTitle: {
+    defaultProps: {
+      variant: 'subtitle1'
+    },
+
     styleOverrides: {
       root: {
         padding: getSpacing(3, 3, 2)
@@ -191,6 +195,12 @@ export const dataDisplayOverrides = {
   MuiDialogContentText: {
     defaultProps: {
       variant: 'body2'
+    },
+
+    styleOverrides: {
+      root: {
+        color: commonPalette.text.primary
+      }
     }
   },
 
