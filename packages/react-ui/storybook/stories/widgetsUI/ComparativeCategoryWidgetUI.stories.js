@@ -43,5 +43,6 @@ Default.args = {
   names: ['serie 1', 'serie 2', 'serie 3'],
   labels: ['label 1', 'label 2', 'label 3', 'label 4', 'label 5', 'label 6'],
   colors: ['#f27', '#fa0', '#32a852'],
-  maxItems: 3
+  maxItems: 3,
+  tooltipFormatter: (n) => `${Number(n).toFixed(2)}%`
 };

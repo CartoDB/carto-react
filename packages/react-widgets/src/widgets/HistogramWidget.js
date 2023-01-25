@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
@@ -19,10 +19,10 @@ const EMPTY_ARRAY = [];
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's column to get the data from.
- * @param  {number} props.min - Min value of the indicated column
- * @param  {number} props.max - Max value of the indicated column
+ * @param  {number=} props.min - Min value of the indicated column
+ * @param  {number=} props.max - Max value of the indicated column
  * @param  {string} [props.operation] - Operation to apply to the column. Must be one of those defined in `AggregationTypes` object.
- * @param  {number[]} [props.ticks] - Array of thresholds for the X axis.
+ * @param  {number[]=} [props.ticks] - Array of thresholds for the X axis.
  * @param  {number} [props.bins] - Number of bins to calculate the ticks.
  * @param  {Function} [props.xAxisformatter] - Function to format X axis values.
  * @param  {Function} [props.formatter] - Function to format Y axis values.
@@ -43,8 +43,8 @@ function HistogramWidget({
   column,
   operation,
   ticks: _ticks = [],
-  min: _min,
-  max: _max,
+  min: externalMin,
+  max: externalMax,
   xAxisFormatter,
   bins,
   formatter,
@@ -60,33 +60,34 @@ function HistogramWidget({
 }) {
   const dispatch = useDispatch();
 
-  const [[min, max], setMinMax] = useState([_min, _max]);
-
-  const hasMinMax =
-    Number.isFinite(min) &&
-    min !== Number.MIN_SAFE_INTEGER &&
-    Number.isFinite(max) &&
-    max !== Number.MAX_SAFE_INTEGER;
+  const hasExternalMinMax =
+    Number.isFinite(externalMin) &&
+    externalMin !== Number.MIN_SAFE_INTEGER &&
+    Number.isFinite(externalMax) &&
+    externalMax !== Number.MAX_SAFE_INTEGER;
 
   const { stats, warning: _warning } = useStats({
     id,
     column,
     dataSource,
-    customStats: hasMinMax,
+    customStats: hasExternalMinMax,
     onError
   });
 
-  useEffect(() => {
-    if (stats) {
-      const { min, max } = stats;
-      setMinMax([min, max]);
+  const [min, max] = useMemo(() => {
+    if (hasExternalMinMax) {
+      return [externalMin, externalMax];
     }
-  }, [stats]);
+    if (stats) {
+      return [stats.min, stats.max];
+    }
+    return [undefined, undefined];
+  }, [hasExternalMinMax, stats, externalMin, externalMax]);
 
   const ticks = useMemo(() => {
     if (_ticks?.length) return _ticks;
 
-    if (bins && hasMinMax) {
+    if (bins && hasExternalMinMax) {
       const result = [];
       for (let i = 1; i < bins; i += 1) {
         result.push(min + (max - min) * (i / bins));
@@ -95,7 +96,7 @@ function HistogramWidget({
     }
 
     return [];
-  }, [min, max, _ticks, bins, hasMinMax]);
+  }, [min, max, _ticks, bins, hasExternalMinMax]);
 
   let {
     data = EMPTY_ARRAY,

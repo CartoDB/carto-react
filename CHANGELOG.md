@@ -43,9 +43,26 @@
 
 ## 1.5
 
-## 1.5.0-alpha.11 (2023-01-12)
+## 1.5.0-alpha.14 (2023-01-24)
 
-- Remove custom fetch function. Fixes issues with icon loading and FillStyleExtensions
+- Fix isDroppingFeatures converting to Boolean [#583](https://github.com/CartoDB/carto-react/pull/583)
+
+## 1.5.0-alpha.13 (2023-01-23)
+
+- Improve typing for FeatureSelectionWidget [#580](https://github.com/CartoDB/carto-react/pull/580)
+- Fix ComparativeCategoryWidgetUI tooltip formatter [#579](https://github.com/CartoDB/carto-react/pull/579)
+- Fix gmaps warning caused by callback now been mandatary from version >=3.51.6 [#581](https://github.com/CartoDB/carto-react/pull/581)
+
+## 1.5.0-alpha.12 (2023-01-20)
+
+- HistogramWidget: fix handling of min/max properties [#574](https://github.com/CartoDB/carto-react/pull/574)
+- Adapt comparative category widget design [#575](https://github.com/CartoDB/carto-react/pull/575)
+- Improved Comparative Formula UI props interface [#573](https://github.com/CartoDB/carto-react/pull/573)
+
+## 1.5.0-alpha.11 (2023-01-18)
+
+- Remove custom fetch function. Fixes issues with icon loading and FillStyleExtensions [#561](https://github.com/CartoDB/carto-react/pull/561)
+- Bump deck.gl to latest 8.8.23 [#571](https://github.com/CartoDB/carto-react/pull/571)
 
 ## 1.5.0-alpha.10 (2023-01-04)
 

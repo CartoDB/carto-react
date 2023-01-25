@@ -49,11 +49,9 @@ describe('ComparativeCategoryWidgetUI', () => {
 
     expect(screen.getByText(/data 1/)).toBeInTheDocument();
 
-    const [ref, ...others] = SAMPLE_DATA.map((s) => s[0]);
-    const max = Math.max(...others.map((o) => o.value));
-    const value = ref.value - max;
-
-    expect(screen.getAllByText(new RegExp(value))[0]).toBeInTheDocument();
+    SAMPLE_DATA.map((s) => s[0]).forEach((item) => {
+      expect(screen.getAllByText(new RegExp(String(item.value)))[0]).toBeInTheDocument();
+    });
   });
 
   test('with one selected category', () => {

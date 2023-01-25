@@ -203,7 +203,7 @@ function BarWidgetUI(props) {
           xAxisDataWithLabels.length >= 4
             ? calculateMargin(xAxisDataWithLabels[0], xAxisDataWithLabels.length)
             : 0,
-        top: theme.spacing(2),
+        top: theme.spacingValue * 2,
         right:
           xAxisDataWithLabels.length >= 4
             ? calculateMargin(
@@ -211,7 +211,7 @@ function BarWidgetUI(props) {
                 xAxisDataWithLabels.length
               )
             : 0,
-        bottom: theme.spacing(0),
+        bottom: 0,
         containLabel: true
       },
       axisPointer: {
@@ -441,7 +441,7 @@ function useProcessedProps({
   return {
     ...props,
     labels,
-    height: height ?? theme.spacing(22),
+    height: height ?? theme.spacingValue * 22,
     selectedBars: formatSelectedBars(_selectedBars),
     yAxisData,
     colors,

@@ -14,7 +14,6 @@ export const useCategoryStyles = makeStyles((theme) => ({
   progressbar: {
     height: theme.spacing(0.5),
     width: '100%',
-    margin: theme.spacing(0.5, 0, 1, 0),
     borderRadius: theme.spacing(0.5),
     backgroundColor: theme.palette.action.disabledBackground,
 
