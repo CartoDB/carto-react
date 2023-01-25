@@ -132,9 +132,9 @@ function ComparativePieWidgetUI({
       itemHeight: theme.spacingValue,
       textStyle: {
         ...theme.typography.overline,
+        color: theme.palette.text.primary,
         fontWeight: 400,
         lineHeight: 1,
-        color: theme.palette.text.primary,
         verticalAlign: 'bottom',
         padding: [0, 0, 0, theme.spacingValue * 0.5]
       },
@@ -171,6 +171,7 @@ function ComparativePieWidgetUI({
           ...theme.typography.overline,
           fontSize: theme.spacingValue * 3,
           lineHeight: theme.spacingValue * 4.5,
+          fontWeight: 600,
           color: theme.palette.text.primary
         }
       }

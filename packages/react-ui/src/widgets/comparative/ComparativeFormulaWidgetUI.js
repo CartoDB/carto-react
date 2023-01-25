@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Box, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
@@ -40,9 +40,8 @@ const useStyles = makeStyles((theme) => ({
  * Renders a `<ComparativeFormulaWidgetUI />` widget
  * <!--
  * @param {Object} props
- * @param {number[]} props.data
- * @param {{ prefix?: string; suffix?: string; note?: string }[]} [props.labels]
- * @param {{ prefix?: string; suffix?: string; note?: string; value?: string }[]} [props.colors]
+ * @param {{ prefix?: React.ReactNode; suffix?: React.ReactNode; label?: React.ReactNode, value: number }[]} [props.data]
+ * @param {string[]} [props.colors]
  * @param {boolean} [props.animated]
  * @param {{ duration?: number; animateOnMount?: boolean; initialValue?: number; }} [props.animationOptions]
  * @param {(v: number) => React.ReactNode} [props.formatter]
@@ -50,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
  */
 function ComparativeFormulaWidgetUI({
   data = EMPTY_ARRAY,
-  labels = EMPTY_ARRAY,
   colors = EMPTY_ARRAY,
   animated = true,
   animationOptions,
@@ -59,93 +57,93 @@ function ComparativeFormulaWidgetUI({
   const theme = useTheme();
   const classes = useStyles();
 
-  function getColor(index) {
-    return colors[index] || {};
-  }
-  function getLabel(index) {
-    return labels[index] || {};
-  }
+  const processedData = useMemo(
+    () =>
+      data
+        .map((d, i) => ({
+          ...d,
+          color: getColor(colors, i)
+        }))
+        .filter((d) => d.value !== undefined),
+    [data, colors]
+  );
+
+  const isReference = processedData.length > 1;
 
   return (
     <div>
-      {data
-        .filter((n) => n !== undefined)
-        .map((d, i) => (
-          <div className={classes.formulaGroup} key={i}>
-            <div className={classes.firstLine}>
-              {getLabel(i).prefix ? (
-                <Box color={getColor(i).prefix || theme.palette.text.secondary}>
-                  <Typography
-                    color='inherit'
-                    component='span'
-                    variant='subtitle2'
-                    className={[classes.unit, classes.unitBefore].join(' ')}
-                  >
-                    {getLabel(i).prefix}
-                  </Typography>
-                </Box>
-              ) : null}
-              <Box color={getColor(i).value}>
-                <AnimatedNumber
-                  value={d || 0}
-                  enabled={animated}
-                  options={animationOptions}
-                  formatter={formatter}
-                />
+      {processedData.map((d, i) => (
+        <div className={classes.formulaGroup} key={i}>
+          <div className={classes.firstLine}>
+            {d.prefix ? (
+              <Box color={theme.palette.text.secondary}>
+                <Typography
+                  color='inherit'
+                  component='span'
+                  variant='subtitle2'
+                  className={[classes.unit, classes.unitBefore].join(' ')}
+                >
+                  {d.prefix}
+                </Typography>
               </Box>
-              {getLabel(i).suffix ? (
-                <Box color={getColor(i).suffix || theme.palette.text.secondary}>
-                  <Typography
-                    color='inherit'
-                    component='span'
-                    variant='subtitle2'
-                    className={classes.unit}
-                  >
-                    {getLabel(i).suffix}
-                  </Typography>
-                </Box>
-              ) : null}
-            </div>
-            {getLabel(i).note ? (
-              <Box color={getColor(i).note}>
-                <Typography className={classes.note} color='inherit' variant='caption'>
-                  {getLabel(i).note}
+            ) : null}
+            <Box fontWeight={isReference && !i ? 'bold' : ''}>
+              <AnimatedNumber
+                value={d.value}
+                enabled={animated}
+                options={animationOptions}
+                formatter={formatter}
+              />
+            </Box>
+            {d.suffix ? (
+              <Box color={theme.palette.text.secondary}>
+                <Typography
+                  color='inherit'
+                  component='span'
+                  variant='subtitle2'
+                  className={classes.unit}
+                >
+                  {d.suffix}
                 </Typography>
               </Box>
             ) : null}
           </div>
-        ))}
+          {d.label ? (
+            <Box color={d.color || theme.palette.text.secondary}>
+              <Typography className={classes.note} color='inherit' variant='caption'>
+                {d.label}
+              </Typography>
+            </Box>
+          ) : null}
+        </div>
+      ))}
     </div>
   );
+}
+
+function getColor(colors, index) {
+  return colors[index];
 }
 
 ComparativeFormulaWidgetUI.displayName = 'ComparativeFormulaWidgetUI';
 ComparativeFormulaWidgetUI.defaultProps = {
   data: EMPTY_ARRAY,
-  labels: EMPTY_ARRAY,
   colors: EMPTY_ARRAY,
   animated: true,
   animationOptions: {},
   formatter: IDENTITY_FN
 };
 
-const formulaLabelsPropTypes = PropTypes.shape({
-  prefix: PropTypes.string,
-  suffix: PropTypes.string,
-  note: PropTypes.string
-});
-
-const formulaColorsPropTypes = PropTypes.shape({
+const formulaDataPropTypes = PropTypes.shape({
   prefix: PropTypes.string,
   suffix: PropTypes.string,
   note: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.number
 });
 
 ComparativeFormulaWidgetUI.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.number).isRequired,
-  labels: PropTypes.arrayOf(formulaLabelsPropTypes),
-  colors: PropTypes.arrayOf(formulaColorsPropTypes),
+  data: PropTypes.arrayOf(formulaDataPropTypes).isRequired,
+  colors: PropTypes.arrayOf(PropTypes.string),
   animated: PropTypes.bool,
   animationOptions: animationOptionsPropTypes,
   formatter: PropTypes.func
