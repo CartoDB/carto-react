@@ -4,6 +4,10 @@
 
 ## 1.5
 
+## 1.5.0-alpha.15 (2023-01-30)
+
+- Fix support for MVT in FeaturesDroppedLoader [#587](https://github.com/CartoDB/carto-react/pull/587)
+
 ## 1.5.0-alpha.14 (2023-01-24)
 
 - Fix isDroppingFeatures converting to Boolean [#583](https://github.com/CartoDB/carto-react/pull/583)
