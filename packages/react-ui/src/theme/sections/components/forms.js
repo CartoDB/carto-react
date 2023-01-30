@@ -487,20 +487,31 @@ export const formsOverrides = {
     },
 
     styleOverrides: {
+      root: {
+        '& .MuiInputBase-root .MuiAutocomplete-endAdornment': {
+          top: getSpacing(1),
+          right: getSpacing(2)
+        },
+        '& .MuiInputBase-sizeSmall .MuiAutocomplete-endAdornment': {
+          top: 0,
+          right: getSpacing(0.75)
+        }
+      },
+
       inputRoot: {
         '&[class*="MuiOutlinedInput-root"]': {
           '& .MuiAutocomplete-input': {
             padding: 0
           }
         },
-        '& .MuiAutocomplete-endAdornment': {
-          top: 0,
-          right: getSpacing(0.25)
-        },
         '& .MuiAutocomplete-popupIndicator:hover, & .MuiAutocomplete-popupIndicator:focus-visible':
           {
             backgroundColor: 'transparent'
           }
+      },
+
+      option: {
+        ...themeTypography.body2
       }
     }
   },
