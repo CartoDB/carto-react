@@ -636,18 +636,24 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             {'Pairing'}
           </Typography>
 
-          <SelectField
-            {...rest}
-            label={label}
-            placeholder={placeholder}
-            items={menuItems}
-          />
-          <SelectField
-            {...rest}
-            label={label}
-            placeholder={placeholder}
-            items={menuItems}
-          />
+          <Grid container spacing={2}>
+            <Grid item>
+              <SelectField
+                {...rest}
+                label={label}
+                placeholder={placeholder}
+                items={menuItems}
+              />
+            </Grid>
+            <Grid item>
+              <SelectField
+                {...rest}
+                label={label}
+                placeholder={placeholder}
+                items={menuItems}
+              />
+            </Grid>
+          </Grid>
         </Box>
       </Grid>
 

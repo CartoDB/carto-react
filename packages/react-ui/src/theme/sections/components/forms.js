@@ -74,9 +74,6 @@ export const formsOverrides = {
         '& legend': {
           display: 'none'
         },
-        '& + &': {
-          marginLeft: getSpacing(2)
-        },
 
         // Select bool
         ...(ownerState.select === true && {
