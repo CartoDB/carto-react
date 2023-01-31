@@ -87,10 +87,7 @@ export const formsOverrides = {
               marginRight: getSpacing(3)
             },
             '& .MuiSelect-select': {
-              display: 'flex',
-              alignItems: 'center',
-              height: '100%',
-              padding: 0,
+              padding: getSpacing(1.5),
 
               '&.MuiInputBase-input': {
                 paddingLeft: getSpacing(2),
@@ -124,6 +121,7 @@ export const formsOverrides = {
             },
             '& .MuiSelect-select': {
               ...themeTypography.body2,
+              padding: getSpacing(0.75),
 
               '&.MuiInputBase-input': {
                 paddingLeft: getSpacing(1.5),
@@ -455,10 +453,7 @@ export const formsOverrides = {
         }
       },
       select: {
-        display: 'flex',
-        alignItems: 'center',
-        height: '100%',
-        padding: 0,
+        padding: getSpacing(1.5),
 
         '&.MuiInputBase-input': {
           paddingLeft: getSpacing(2),
@@ -475,6 +470,10 @@ export const formsOverrides = {
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis'
+        },
+
+        '&.MuiInputBase-inputSizeSmall': {
+          padding: getSpacing(0.75)
         }
       }
     }

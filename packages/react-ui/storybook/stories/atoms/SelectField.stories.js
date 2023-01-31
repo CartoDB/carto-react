@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
 
 const menuItems = [
   {
-    label: 'Ten',
+    label: 'Ten: super large text with overflow',
     value: '10'
   },
   {
@@ -582,16 +582,6 @@ const MultipleTemplate = ({
                 </Box>
               );
             }}
-            // renderValue={(selected) => (
-            //   <Box
-            //     className={classes.chips}
-            //     style={{ height: isSmall ? '24px' : '32px' }}
-            //   >
-            //     {selected.map((value) => (
-            //       <Chip size={size} color='default' key={value} label={value} />
-            //     ))}
-            //   </Box>
-            //)}
           >
             {[...Array(10)].map((x, index) => (
               <MenuItem key={index} value={`Option item ${index + 1}`}>
