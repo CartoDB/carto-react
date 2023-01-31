@@ -489,7 +489,7 @@ export const formsOverrides = {
       root: {
         '& .MuiInputBase-root .MuiAutocomplete-endAdornment': {
           top: getSpacing(1),
-          right: getSpacing(2)
+          right: getSpacing(1.5)
         },
         '& .MuiInputBase-sizeSmall .MuiAutocomplete-endAdornment': {
           top: 0,
