@@ -4,41 +4,43 @@
 
 ## 1.5
 
-## 1.5.0-alpha.15 (2023-01-30)
+### 1.5.0 (2023-01-31)
+
+### 1.5.0-alpha.15 (2023-01-30)
 
 - Fix support for MVT in FeaturesDroppedLoader [#587](https://github.com/CartoDB/carto-react/pull/587)
 
-## 1.5.0-alpha.14 (2023-01-24)
+### 1.5.0-alpha.14 (2023-01-24)
 
 - Fix isDroppingFeatures converting to Boolean [#583](https://github.com/CartoDB/carto-react/pull/583)
 
-## 1.5.0-alpha.13 (2023-01-23)
+### 1.5.0-alpha.13 (2023-01-23)
 
 - Improve typing for FeatureSelectionWidget [#580](https://github.com/CartoDB/carto-react/pull/580)
 - Fix ComparativeCategoryWidgetUI tooltip formatter [#579](https://github.com/CartoDB/carto-react/pull/579)
 - Fix gmaps warning caused by callback now been mandatary from version >=3.51.6 [#581](https://github.com/CartoDB/carto-react/pull/581)
 
-## 1.5.0-alpha.12 (2023-01-20)
+### 1.5.0-alpha.12 (2023-01-20)
 
 - HistogramWidget: fix handling of min/max properties [#574](https://github.com/CartoDB/carto-react/pull/574)
 - Adapt comparative category widget design [#575](https://github.com/CartoDB/carto-react/pull/575)
 - Improved Comparative Formula UI props interface [#573](https://github.com/CartoDB/carto-react/pull/573)
 
-## 1.5.0-alpha.11 (2023-01-18)
+### 1.5.0-alpha.11 (2023-01-18)
 
 - Remove custom fetch function. Fixes issues with icon loading and FillStyleExtensions [#561](https://github.com/CartoDB/carto-react/pull/561)
 - Bump deck.gl to latest 8.8.23 [#571](https://github.com/CartoDB/carto-react/pull/571)
 
-## 1.5.0-alpha.10 (2023-01-04)
+### 1.5.0-alpha.10 (2023-01-04)
 
 - Allow to use custom version explicitly in GoogleMap (not 'beta' by default now) [#550](https://github.com/CartoDB/carto-react/pull/550)
 - Fix lack of refresh in BarWidgetUI when modifying yAxisData dinamically [#558](https://github.com/CartoDB/carto-react/pull/558)
 
-## 1.5.0-alpha.9 (2022-11-29)
+### 1.5.0-alpha.9 (2022-11-29)
 
 - Improve rendering performance of FeatureSelectionLayer (mask layer) [#541](https://github.com/CartoDB/carto-react/pull/541)
 
-## 1.5.0-alpha.8 (2022-11-25)
+### 1.5.0-alpha.8 (2022-11-25)
 
 - Implement ComparativePieWidgetUI [#510](https://github.com/CartoDB/carto-react/pull/510)
 - Fix `executeSQL` through **POST** request [#531](https://github.com/CartoDB/carto-react/pull/531)
