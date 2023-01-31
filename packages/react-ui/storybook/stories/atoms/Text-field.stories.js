@@ -649,8 +649,15 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             {'Pairing'}
           </Typography>
 
-          <TextField {...rest} label={label} placeholder={placeholder} />
-          <TextField {...rest} label={label} placeholder={placeholder} />
+          <Grid container spacing={2}>
+            <Grid item>
+              <TextField {...rest} label={label} placeholder={placeholder} />
+            </Grid>
+
+            <Grid item>
+              <TextField {...rest} label={label} placeholder={placeholder} />
+            </Grid>
+          </Grid>
         </Box>
       </Grid>
 

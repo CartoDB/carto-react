@@ -74,9 +74,6 @@ export const formsOverrides = {
         '& legend': {
           display: 'none'
         },
-        '& + &': {
-          marginLeft: getSpacing(2)
-        },
 
         // Select bool
         ...(ownerState.select === true && {
@@ -90,10 +87,7 @@ export const formsOverrides = {
               marginRight: getSpacing(3)
             },
             '& .MuiSelect-select': {
-              display: 'flex',
-              alignItems: 'center',
-              height: '100%',
-              padding: 0,
+              padding: getSpacing(1.5),
 
               '&.MuiInputBase-input': {
                 paddingLeft: getSpacing(2),
@@ -127,6 +121,7 @@ export const formsOverrides = {
             },
             '& .MuiSelect-select': {
               ...themeTypography.body2,
+              padding: getSpacing(0.75),
 
               '&.MuiInputBase-input': {
                 paddingLeft: getSpacing(1.5),
@@ -458,10 +453,7 @@ export const formsOverrides = {
         }
       },
       select: {
-        display: 'flex',
-        alignItems: 'center',
-        height: '100%',
-        padding: 0,
+        padding: getSpacing(1.5),
 
         '&.MuiInputBase-input': {
           paddingLeft: getSpacing(2),
@@ -478,6 +470,10 @@ export const formsOverrides = {
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis'
+        },
+
+        '&.MuiInputBase-inputSizeSmall': {
+          padding: getSpacing(0.75)
         }
       }
     }
@@ -490,20 +486,31 @@ export const formsOverrides = {
     },
 
     styleOverrides: {
+      root: {
+        '& .MuiInputBase-root .MuiAutocomplete-endAdornment': {
+          top: getSpacing(1),
+          right: getSpacing(2)
+        },
+        '& .MuiInputBase-sizeSmall .MuiAutocomplete-endAdornment': {
+          top: 0,
+          right: getSpacing(0.75)
+        }
+      },
+
       inputRoot: {
         '&[class*="MuiOutlinedInput-root"]': {
           '& .MuiAutocomplete-input': {
             padding: 0
           }
         },
-        '& .MuiAutocomplete-endAdornment': {
-          top: 0,
-          right: getSpacing(0.25)
-        },
         '& .MuiAutocomplete-popupIndicator:hover, & .MuiAutocomplete-popupIndicator:focus-visible':
           {
             backgroundColor: 'transparent'
           }
+      },
+
+      option: {
+        ...themeTypography.body2
       }
     }
   },

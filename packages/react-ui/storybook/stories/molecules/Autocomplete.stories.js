@@ -35,7 +35,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A26505'
     },
     status: {
-      type: 'needUpdate'
+      type: 'inDevelopment'
     }
   }
 };
@@ -138,3 +138,6 @@ Default.args = {};
 
 export const Medium = AutocompleteTemplate.bind({});
 Medium.args = { size: 'medium' };
+
+export const Small = AutocompleteTemplate.bind({});
+Small.args = { size: 'small' };
