@@ -1,6 +1,5 @@
 import { getTileJson } from '../../src/api/tilejson';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
-import { CLIENT_ID } from '@carto/react-api/api/common';
 
 const mockedFetchLayerData = jest.fn();
 
@@ -36,7 +35,7 @@ describe('tilejson', () => {
       const tilejson = await getTileJson({ source });
 
       expect(mockedFetchLayerData).toBeCalledWith({
-        clientId: CLIENT_ID,
+        clientId: 'carto-for-react', // hardcoded as no neeed to export CLIENT_ID from '@carto/react-api/api/common';
         connection: '__test_connection__',
         credentials: {
           accessToken: '__test_api_key__',
