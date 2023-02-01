@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Provide unified CLIENT_ID for metrics [#591](https://github.com/CartoDB/carto-react/pull/591)
+
 ## 1.5
 
 ### 1.5.0 (2023-01-31)

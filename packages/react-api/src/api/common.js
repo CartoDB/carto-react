@@ -60,3 +60,5 @@ export async function makeCall({ url, credentials, opts }) {
 
   return data;
 }
+
+export const CLIENT_ID = 'carto-for-react';
