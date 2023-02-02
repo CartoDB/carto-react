@@ -2,9 +2,8 @@ import { encodeParameter, getRequest, postRequest } from '@carto/react-core';
 import { REQUEST_GET_MAX_URL_LENGTH } from '@carto/react-core';
 import { API_VERSIONS } from '@deck.gl/carto';
 
-import { dealWithApiError } from './common';
+import { dealWithApiError, CLIENT_ID } from './common';
 
-const CLIENT = 'carto-react';
 const DEFAULT_USER_COMPONENT_IN_URL = '{user}';
 
 /**
@@ -79,7 +78,7 @@ function createRequest({
   const { apiVersion = API_VERSIONS.V2 } = credentials;
 
   const rawParams = {
-    client: CLIENT,
+    client: CLIENT_ID,
     q: query?.trim(),
     ...otherOptions
   };
@@ -117,7 +116,7 @@ function createRequest({
   // Post request
   const urlParamsForPost =
     apiVersion === API_VERSIONS.V3
-      ? [`access_token=${credentials.accessToken}`, `client=${CLIENT}`]
+      ? [`access_token=${credentials.accessToken}`, `client=${CLIENT_ID}`]
       : null;
 
   const payload = {
