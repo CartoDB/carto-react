@@ -3,6 +3,7 @@
 ## Not released
 
 - Requests to CARTO APIs V3 will be authorized through the Authorization header instead of using a query param [#592](https://github.com/CartoDB/carto-react/pull/592)
+- Provide unified CLIENT_ID for metrics [#591](https://github.com/CartoDB/carto-react/pull/591)
 
 ## 1.5
 
