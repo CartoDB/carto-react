@@ -108,13 +108,14 @@ function createRequest({
   });
 
   const isGet = getUrl.length < REQUEST_GET_MAX_URL_LENGTH;
-  if (isGet && apiVersion !== API_VERSIONS.V3) {
-    return getRequest(getUrl, requestOpts);
-  }
-  if (isGet && apiVersion === API_VERSIONS.V3) {
-    return getRequest(getUrl, requestOpts, {
-      Authorization: `Bearer ${credentials.accessToken}`
-    });
+  if (isGet) {
+    if (apiVersion === API_VERSIONS.V3) {
+      return getRequest(getUrl, requestOpts, {
+        Authorization: `Bearer ${credentials.accessToken}`
+      });
+    } else {
+      return getRequest(getUrl, requestOpts);
+    }
   }
 
   // Post request
@@ -129,9 +130,12 @@ function createRequest({
     connection,
     parameters: urlParamsForPost
   });
-  return postRequest(postUrl, payload, requestOpts, {
-    Authorization: `Bearer ${credentials.accessToken}`
-  });
+  if (apiVersion === API_VERSIONS.V3) {
+    return postRequest(postUrl, payload, requestOpts, {
+      Authorization: `Bearer ${credentials.accessToken}`
+    });
+  }
+  return postRequest(postUrl, payload, requestOpts);
 }
 
 /**
