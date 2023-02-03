@@ -6,8 +6,12 @@ import { firstBy } from 'thenby';
  * @param {object} [sortOptions]
  * @param {string | string[] | object[]} [sortOptions.sortBy] - One or more columns to sort by
  * @param {string} [sortOptions.sortByDirection] - Direction by the columns will be sorted
+ * @param {string} [sortOptions.sortByColumnType] - Column type
  */
-export function applySorting(features, { sortBy, sortByDirection = 'asc' } = {}) {
+export function applySorting(
+  features,
+  { sortBy, sortByDirection = 'asc', sortByColumnType = 'string' } = {}
+) {
   // If sortBy is undefined, pass all features
   if (sortBy === undefined) {
     return features;
@@ -21,20 +25,21 @@ export function applySorting(features, { sortBy, sortByDirection = 'asc' } = {})
   if (!isValidSortBy) {
     throw new Error('Sorting options are bad formatted');
   }
-
+  const isNumberColumn = sortByColumnType === 'integer' || sortByColumnType === 'float';
   const sortFn = createSortFn({
     sortBy,
-    sortByDirection
+    sortByDirection,
+    columnDataType: isNumberColumn ? 'number' : sortByColumnType
   });
-
   return features.sort(sortFn);
 }
 
 // Aux
-function createSortFn({ sortBy, sortByDirection }) {
+function createSortFn({ sortBy, sortByDirection, columnDataType = 'string' }) {
   const [firstSortOption, ...othersSortOptions] = normalizeSortByOptions({
     sortBy,
-    sortByDirection
+    sortByDirection,
+    columnDataType
   });
 
   let sortFn = firstBy(...firstSortOption);
@@ -45,26 +50,29 @@ function createSortFn({ sortBy, sortByDirection }) {
   return sortFn;
 }
 
-function normalizeSortByOptions({ sortBy, sortByDirection }) {
+function normalizeSortByOptions({ sortBy, sortByDirection, columnDataType }) {
+  const numberFormat = columnDataType === 'number' && { cmp: (a, b) => a - b };
   if (!Array.isArray(sortBy)) {
     sortBy = [sortBy];
   }
-
   return sortBy.map((sortByEl) => {
     // sortByEl is 'column'
     if (typeof sortByEl === 'string') {
-      return [sortByEl, sortByDirection];
+      return [sortByEl, { direction: sortByDirection, ...numberFormat }];
     }
 
     if (Array.isArray(sortByEl)) {
       // sortBy is ['column']
       if (sortByEl[1] === undefined) {
-        return [sortByEl, sortByDirection];
+        return [sortByEl, { direction: sortByDirection, ...numberFormat }];
       }
 
       // sortBy is ['column', { ... }]
       if (typeof sortByEl[1] === 'object') {
-        return [sortByEl[0], { direction: sortByDirection, ...sortByEl[1] }];
+        const othersSortOptions = numberFormat
+          ? { ...numberFormat, ...sortByEl[1] }
+          : sortByEl[1];
+        return [sortByEl[0], { direction: sortByDirection, ...othersSortOptions }];
       }
     }
     return sortByEl;

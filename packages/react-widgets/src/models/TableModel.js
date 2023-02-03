@@ -6,7 +6,7 @@ export function getTable(props) {
 }
 
 function fromLocal(props) {
-  const { source, rowsPerPage, page, sortBy, sortDirection } = props;
+  const { source, rowsPerPage, page, sortBy, sortDirection, sortByColumnType } = props;
 
   return executeTask(source.id, Methods.FEATURES_RAW, {
     filters: source.filters,
@@ -14,6 +14,7 @@ function fromLocal(props) {
     limit: rowsPerPage,
     page,
     sortBy,
-    sortByDirection: sortDirection
+    sortByDirection: sortDirection,
+    sortByColumnType
   });
 }

@@ -45,6 +45,7 @@ function TableWidget({
   const [page, setPage] = useState(0);
 
   const [sortBy, setSortBy] = useState(undefined);
+  const [sortByColumnType, setSortByColumnType] = useState(undefined);
   const [sortDirection, setSortDirection] = useState('asc');
 
   const {
@@ -60,7 +61,8 @@ function TableWidget({
       rowsPerPage,
       page,
       sortBy,
-      sortDirection
+      sortDirection,
+      sortByColumnType
     },
     global,
     onError
@@ -80,6 +82,12 @@ function TableWidget({
   const handleRowsPerPageChange = (newRowsPerPage) => {
     setRowsPerPage(newRowsPerPage);
     if (onPageSizeChange) onPageSizeChange(newRowsPerPage);
+  };
+
+  const handleSortBy = (newSortBy) => {
+    setSortBy(newSortBy);
+    const column = columns.find((c) => c.field === newSortBy);
+    setSortByColumnType(column?.type);
   };
 
   return (
@@ -104,7 +112,7 @@ function TableWidget({
             sorting
             sortBy={sortBy}
             sortDirection={sortDirection}
-            onSetSortBy={setSortBy}
+            onSetSortBy={handleSortBy}
             onSetSortDirection={setSortDirection}
             height={height}
             dense={dense}
