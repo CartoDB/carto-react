@@ -83,9 +83,7 @@ function createRequest({
     ...otherOptions
   };
 
-  if (apiVersion === API_VERSIONS.V3) {
-    rawParams.access_token = credentials.accessToken;
-  } else if (apiVersion === API_VERSIONS.V1 || apiVersion === API_VERSIONS.V2) {
+  if (apiVersion === API_VERSIONS.V1 || apiVersion === API_VERSIONS.V2) {
     rawParams.api_key = credentials.apiKey;
   }
 
@@ -110,13 +108,19 @@ function createRequest({
 
   const isGet = getUrl.length < REQUEST_GET_MAX_URL_LENGTH;
   if (isGet) {
-    return getRequest(getUrl, requestOpts);
+    if (apiVersion === API_VERSIONS.V3) {
+      return getRequest(getUrl, requestOpts, {
+        Authorization: `Bearer ${credentials.accessToken}`
+      });
+    } else {
+      return getRequest(getUrl, requestOpts);
+    }
   }
 
   // Post request
   const urlParamsForPost =
     apiVersion === API_VERSIONS.V3
-      ? [`access_token=${credentials.accessToken}`, `client=${CLIENT_ID}`]
+      ? [`client=${CLIENT_ID}`]
       : null;
 
   const payload = {
@@ -128,6 +132,11 @@ function createRequest({
     connection,
     parameters: urlParamsForPost
   });
+  if (apiVersion === API_VERSIONS.V3) {
+    return postRequest(postUrl, payload, requestOpts, {
+      Authorization: `Bearer ${credentials.accessToken}`
+    });
+  }
   return postRequest(postUrl, payload, requestOpts);
 }
 
