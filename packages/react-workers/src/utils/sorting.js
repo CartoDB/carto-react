@@ -25,11 +25,10 @@ export function applySorting(
   if (!isValidSortBy) {
     throw new Error('Sorting options are bad formatted');
   }
-  const isNumberColumn = sortByColumnType === 'integer' || sortByColumnType === 'float';
   const sortFn = createSortFn({
     sortBy,
     sortByDirection,
-    columnDataType: isNumberColumn ? 'number' : sortByColumnType
+    columnDataType: sortByColumnType
   });
   return features.sort(sortFn);
 }
