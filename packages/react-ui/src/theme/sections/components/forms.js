@@ -494,6 +494,9 @@ export const formsOverrides = {
         '& .MuiInputBase-sizeSmall .MuiAutocomplete-endAdornment': {
           top: 0,
           right: getSpacing(0.75)
+        },
+        '& .MuiFormLabel-root': {
+          pointerEvents: 'auto'
         }
       },
 
