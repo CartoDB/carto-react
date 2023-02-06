@@ -268,7 +268,8 @@ function getRawFeatures({
   limit = 10,
   page = 0,
   sortBy,
-  sortByDirection = 'asc'
+  sortByDirection = 'asc',
+  sortByColumnType
 }) {
   let data = [];
   let numberPages = 0;
@@ -277,7 +278,8 @@ function getRawFeatures({
   if (currentFeatures) {
     data = applySorting(getFilteredFeatures(filters, filtersLogicalOperator), {
       sortBy,
-      sortByDirection
+      sortByDirection,
+      sortByColumnType
     });
 
     totalCount = data.length;
