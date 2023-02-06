@@ -2,11 +2,13 @@
 
 ## Not released
 
+## 1.5
+
+### 1.5.1 (2023-02-06)
+
 - Add optional sortByColumnType param to fix number sorting in TableWidget [#593](https://github.com/CartoDB/carto-react/pull/593)
 - Requests to CARTO APIs V3 will be authorized through the Authorization header instead of using a query param [#592](https://github.com/CartoDB/carto-react/pull/592)
 - Provide unified CLIENT_ID for metrics [#591](https://github.com/CartoDB/carto-react/pull/591)
-
-## 1.5
 
 ### 1.5.0 (2023-01-31)
 
