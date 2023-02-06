@@ -6,7 +6,7 @@ import { firstBy } from 'thenby';
  * @param {object} [sortOptions]
  * @param {string | string[] | object[]} [sortOptions.sortBy] - One or more columns to sort by
  * @param {string} [sortOptions.sortByDirection] - Direction by the columns will be sorted
- * @param {string} [sortOptions.sortByColumnType] - Column type
+ * @param {('number'|'string'|'date')} [sortOptions.sortByColumnType] - Column type
  */
 export function applySorting(
   features,
