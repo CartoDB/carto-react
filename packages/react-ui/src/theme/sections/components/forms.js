@@ -531,10 +531,12 @@ export const formsOverrides = {
         padding: 0,
         overflow: 'visible',
 
-        '& + .MuiFormControlLabel-label': {
-          ...themeTypography.body2,
+        '& + .MuiTypography-root': {
           marginLeft: getSpacing(1),
           color: commonPalette.text.primary
+        },
+        '& + .MuiFormControlLabel-label': {
+          ...themeTypography.body2
         }
       },
 
