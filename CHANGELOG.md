@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Update design-system branch with master (1.5.1) [#596](https://github.com/CartoDB/carto-react/pull/596)
 - Adjustments in theme to fix uses cases in cloud-native [#572](https://github.com/CartoDB/carto-react/pull/572)
 - Update design-system branch with master [#563](https://github.com/CartoDB/carto-react/pull/563)
 - Adjustments in theme to fix uses cases in cloud-native [#567](https://github.com/CartoDB/carto-react/pull/567)
@@ -43,11 +44,23 @@
 
 ## 1.5
 
-## 1.5.0-alpha.14 (2023-01-24)
+### 1.5.1 (2023-02-06)
+
+- Add optional sortByColumnType param to fix number sorting in TableWidget [#593](https://github.com/CartoDB/carto-react/pull/593)
+- Requests to CARTO APIs V3 will be authorized through the Authorization header instead of using a query param [#592](https://github.com/CartoDB/carto-react/pull/592)
+- Provide unified CLIENT_ID for metrics [#591](https://github.com/CartoDB/carto-react/pull/591)
+
+### 1.5.0 (2023-01-31)
+
+### 1.5.0-alpha.15 (2023-01-30)
+
+- Fix support for MVT in FeaturesDroppedLoader [#587](https://github.com/CartoDB/carto-react/pull/587)
+
+### 1.5.0-alpha.14 (2023-01-24)
 
 - Fix isDroppingFeatures converting to Boolean [#583](https://github.com/CartoDB/carto-react/pull/583)
 
-## 1.5.0-alpha.13 (2023-01-23)
+### 1.5.0-alpha.13 (2023-01-23)
 
 - Improve typing for FeatureSelectionWidget [#580](https://github.com/CartoDB/carto-react/pull/580)
 - Fix ComparativeCategoryWidgetUI tooltip formatter [#579](https://github.com/CartoDB/carto-react/pull/579)
