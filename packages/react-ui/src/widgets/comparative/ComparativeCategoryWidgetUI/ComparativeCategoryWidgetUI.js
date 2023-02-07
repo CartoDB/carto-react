@@ -325,6 +325,7 @@ function ComparativeCategoryWidgetUI({
         style={{
           display: 'flex',
           alignItems: 'center',
+          flexWrap: 'wrap',
           gap: theme.spacing(1.5),
           padding: theme.spacing(2, 0)
         }}

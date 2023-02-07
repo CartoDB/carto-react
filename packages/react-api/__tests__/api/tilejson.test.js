@@ -35,7 +35,7 @@ describe('tilejson', () => {
       const tilejson = await getTileJson({ source });
 
       expect(mockedFetchLayerData).toBeCalledWith({
-        clientId: 'carto-for-react',
+        clientId: 'carto-for-react', // hardcoded as no neeed to export CLIENT_ID from '@carto/react-api/api/common';
         connection: '__test_connection__',
         credentials: {
           accessToken: '__test_api_key__',

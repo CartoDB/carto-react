@@ -2,9 +2,8 @@ import { encodeParameter, getRequest, postRequest } from '@carto/react-core';
 import { REQUEST_GET_MAX_URL_LENGTH } from '@carto/react-core';
 import { API_VERSIONS } from '@deck.gl/carto';
 
-import { dealWithApiError } from './common';
+import { dealWithApiError, CLIENT_ID } from './common';
 
-const CLIENT = 'carto-react';
 const DEFAULT_USER_COMPONENT_IN_URL = '{user}';
 
 /**
@@ -79,14 +78,12 @@ function createRequest({
   const { apiVersion = API_VERSIONS.V2 } = credentials;
 
   const rawParams = {
-    client: CLIENT,
+    client: CLIENT_ID,
     q: query?.trim(),
     ...otherOptions
   };
 
-  if (apiVersion === API_VERSIONS.V3) {
-    rawParams.access_token = credentials.accessToken;
-  } else if (apiVersion === API_VERSIONS.V1 || apiVersion === API_VERSIONS.V2) {
+  if (apiVersion === API_VERSIONS.V1 || apiVersion === API_VERSIONS.V2) {
     rawParams.api_key = credentials.apiKey;
   }
 
@@ -111,14 +108,18 @@ function createRequest({
 
   const isGet = getUrl.length < REQUEST_GET_MAX_URL_LENGTH;
   if (isGet) {
-    return getRequest(getUrl, requestOpts);
+    if (apiVersion === API_VERSIONS.V3) {
+      return getRequest(getUrl, requestOpts, {
+        Authorization: `Bearer ${credentials.accessToken}`
+      });
+    } else {
+      return getRequest(getUrl, requestOpts);
+    }
   }
 
   // Post request
   const urlParamsForPost =
-    apiVersion === API_VERSIONS.V3
-      ? [`access_token=${credentials.accessToken}`, `client=${CLIENT}`]
-      : null;
+    apiVersion === API_VERSIONS.V3 ? [`client=${CLIENT_ID}`] : null;
 
   const payload = {
     ...rawParams,
@@ -129,6 +130,11 @@ function createRequest({
     connection,
     parameters: urlParamsForPost
   });
+  if (apiVersion === API_VERSIONS.V3) {
+    return postRequest(postUrl, payload, requestOpts, {
+      Authorization: `Bearer ${credentials.accessToken}`
+    });
+  }
   return postRequest(postUrl, payload, requestOpts);
 }
 

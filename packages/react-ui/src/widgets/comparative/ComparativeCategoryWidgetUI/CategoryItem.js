@@ -142,7 +142,7 @@ function CategoryItem({
       {showCheckbox ? <Checkbox checked={checkboxChecked} /> : null}
       <Box
         style={{
-          padding: theme.spacing(0, 0.5),
+          padding: theme.spacing(0.5, 0),
           flexGrow: '1',
           maxWidth: '100%',
           minWidth: 0
@@ -161,8 +161,9 @@ function CategoryItem({
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: theme.spacing(0.5)
+                gap: theme.spacing(2)
               }}
+              className={classes.progressbarWrapper}
             >
               <div className={classes.progressbar}>
                 <div
