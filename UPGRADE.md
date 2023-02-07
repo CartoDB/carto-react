@@ -183,3 +183,33 @@ You can use `<AppBar /> ` from:
 `react-ui/src/components/organisms/AppBar`
 
 For external use: `import { AppBar } from '@carto/react-ui';`.
+
+# Testing
+
+Mui5 has changed the DOM tags, so this is causing some E2E test to fail.
+
+## Aria attributes
+
+Mui5 has improve the `accesibility` of many of the components, adding by default some attributes to the DOM, like aria-label.
+
+This can cause some tests to fail if `aria-label` is not correctly created, because if this attribute is present, `Playwright` will check its content rather than the text of the node itself.
+
+## Tabs
+
+Some tests rely on tab clicking, but with the new design, the click is disabled on selected tab. So, if your test fails in an assert like this:
+
+`await page.getByRole('tab', { name: 'Map' }).click()`
+
+Before the click, yo have to check if the tab is selected.
+
+We have an `isAriaAttributeValue` function in `@utils/ariaAssertions` to check for some aria tags not supported by default by Playwright.
+
+This assert will pass:
+
+```
+  const MapPreviewTab = page.getByRole('tab', { name: 'Map' })
+
+  if (await isAriaAttributeValue(MapPreviewTab, 'selected', 'false')) {
+    await MapPreviewTab.click()
+  }
+```
