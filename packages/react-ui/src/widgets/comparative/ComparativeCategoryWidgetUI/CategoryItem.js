@@ -163,7 +163,6 @@ function CategoryItem({
                 alignItems: 'center',
                 gap: theme.spacing(2)
               }}
-              className={classes.progressbarWrapper}
             >
               <div className={classes.progressbar}>
                 <div
