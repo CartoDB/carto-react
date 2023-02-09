@@ -7,12 +7,15 @@ import {
   scatterPlot,
   groupValuesByColumn,
   groupValuesByDateColumn,
-  AggregationTypes
+  AggregationTypes,
+  ResultFormat,
+  InvalidColumnError
 } from '@carto/react-core';
-import { InvalidColumnError } from '@carto/react-core/';
+
 import { applySorting } from '../utils/sorting';
 
 let currentFeatures;
+let currentFeaturesProps;
 let currentGeoJSON;
 let currentTiles;
 
@@ -31,8 +34,10 @@ export function getTileFeatures({
     uniqueIdProperty,
     tileFormat,
     geoColumName,
-    spatialIndex
+    spatialIndex,
+    resultFormat: ResultFormat.GeoJsonFeature
   });
+  currentFeaturesProps = currentFeatures.map((feature) => feature.properties);
   return true;
 }
 
@@ -52,8 +57,10 @@ export function getGeojsonFeatures({ viewport, geometry, uniqueIdProperty }) {
       geojson: currentGeoJSON,
       viewport,
       geometry,
-      uniqueIdProperty
+      uniqueIdProperty,
+      resultFormat: ResultFormat.GeoJsonFeature
     });
+    currentFeaturesProps = currentFeatures.map((feature) => feature.properties);
   }
   return true;
 }
@@ -67,7 +74,7 @@ export function getFormula({
 }) {
   let result = null;
 
-  if (currentFeatures) {
+  if (currentFeaturesProps) {
     const targetOperation = aggregationFunctions[operation];
 
     const isCount = operation === AggregationTypes.COUNT;
@@ -78,12 +85,14 @@ export function getFormula({
       assertColumn(column);
     }
 
-    const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
+    const filteredFeatures = getFilteredFeaturesProps(filters, filtersLogicalOperator);
 
     if (filteredFeatures.length === 0 && !isCount) {
       result = { value: null };
     } else {
-      result = { value: targetOperation(filteredFeatures, column, joinOperation) };
+      result = {
+        value: targetOperation(filteredFeatures, column, joinOperation)
+      };
     }
   }
 
@@ -100,8 +109,8 @@ export function getHistogram({
 }) {
   let result = null;
 
-  if (currentFeatures) {
-    const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
+  if (currentFeaturesProps) {
+    const filteredFeatures = getFilteredFeaturesProps(filters, filtersLogicalOperator);
 
     assertColumn(column);
 
@@ -127,8 +136,8 @@ export function getCategories({
 }) {
   let result = null;
 
-  if (currentFeatures) {
-    const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
+  if (currentFeaturesProps) {
+    const filteredFeatures = getFilteredFeaturesProps(filters, filtersLogicalOperator);
 
     assertColumn(column, operationColumn);
 
@@ -155,8 +164,8 @@ export function getScatterPlot({
   yAxisJoinOperation
 }) {
   let result = [];
-  if (currentFeatures) {
-    const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
+  if (currentFeaturesProps) {
+    const filteredFeatures = getFilteredFeaturesProps(filters, filtersLogicalOperator);
 
     assertColumn(xAxisColumn, yAxisColumn);
 
@@ -183,8 +192,8 @@ export function getTimeSeries({
 }) {
   let result = [];
 
-  if (currentFeatures) {
-    const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
+  if (currentFeaturesProps) {
+    const filteredFeatures = getFilteredFeaturesProps(filters, filtersLogicalOperator);
 
     assertColumn(operationColumn, column);
 
@@ -206,8 +215,8 @@ export function getTimeSeries({
 export function getRange({ filters, filtersLogicalOperator, column }) {
   let result = null;
 
-  if (currentFeatures) {
-    const filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
+  if (currentFeaturesProps) {
+    const filteredFeatures = getFilteredFeaturesProps(filters, filtersLogicalOperator);
 
     assertColumn(column);
 
@@ -228,14 +237,19 @@ export function getRawFeatures({
   page = 0,
   sortBy,
   sortByDirection = 'asc',
-  sortByColumnType
+  sortByColumnType,
+  resultFormat
 }) {
   let data = [];
   let numberPages = 0;
   let totalCount = 0;
 
   if (currentFeatures) {
-    data = applySorting(getFilteredFeatures(filters, filtersLogicalOperator), {
+    data =
+      resultFormat === ResultFormat.GeoJsonFeature
+        ? getFilteredFeatures(filters, filtersLogicalOperator)
+        : getFilteredFeaturesProps(filters, filtersLogicalOperator);
+    data = applySorting(data, {
       sortBy,
       sortByDirection,
       sortByColumnType
@@ -256,17 +270,21 @@ function applyPagination(features, { limit, page }) {
   return features.slice(limit * Math.max(0, page), limit * Math.max(1, page + 1));
 }
 
+function getFilteredFeaturesProps(filters = {}, filtersLogicalOperator) {
+  return _applyFilters(currentFeaturesProps, filters, filtersLogicalOperator);
+}
+
 function getFilteredFeatures(filters = {}, filtersLogicalOperator) {
   return _applyFilters(currentFeatures, filters, filtersLogicalOperator);
 }
 
 function assertColumn(...columnArgs) {
   // This check can only be done if there're features
-  if (currentFeatures.length) {
+  if (currentFeaturesProps.length) {
     // Due to the multiple column shape, we normalise it as an array with normalizeColumns
     const columns = Array.from(new Set(columnArgs.map(normalizeColumns).flat()));
 
-    const featureKeys = Object.keys(currentFeatures[0]);
+    const featureKeys = Object.keys(currentFeaturesProps[0]);
 
     const invalidColumns = columns.filter((column) => !featureKeys.includes(column));
 

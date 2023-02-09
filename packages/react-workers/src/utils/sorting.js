@@ -30,7 +30,9 @@ export function applySorting(
     sortByDirection,
     columnDataType: sortByColumnType
   });
-  return features.sort(sortFn);
+  return features.sort(
+    isGeoJsonFeature(features[0]) ? (a, b) => sortFn(a.properties, b.properties) : sortFn
+  );
 }
 
 // Aux
@@ -76,4 +78,8 @@ function normalizeSortByOptions({ sortBy, sortByDirection, columnDataType }) {
     }
     return sortByEl;
   });
+}
+
+function isGeoJsonFeature(v) {
+  return v && v.type === 'Feature' && v.properties && typeof v.properties === 'object';
 }

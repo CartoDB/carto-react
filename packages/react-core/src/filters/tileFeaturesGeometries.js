@@ -3,6 +3,7 @@ import bboxPolygon from '@turf/bbox-polygon';
 import intersects from '@turf/boolean-intersects';
 import booleanWithin from '@turf/boolean-within';
 import intersect from '@turf/intersect';
+import { ResultFormat } from '../types';
 import transformToTileCoords from '../utils/transformToTileCoords';
 
 const GEOMETRY_TYPES = Object.freeze({
@@ -16,7 +17,8 @@ function addIntersectedFeaturesInTile({
   data,
   geometryIntersection,
   type,
-  uniqueIdProperty
+  uniqueIdProperty,
+  resultFormat
 }) {
   const indices = getIndices(data);
   const { positions } = data;
@@ -30,8 +32,14 @@ function addIntersectedFeaturesInTile({
 
     if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
       const ringCoordinates = getRingCoordinatesFor(startIndex, endIndex, positions);
-      if (intersects(getFeatureByType(ringCoordinates, type), geometryIntersection)) {
-        map.set(uniquePropertyValue, parseProperties(tileProps));
+      const geometry = getGeometryByType(ringCoordinates, type);
+      if (intersects(geometry, geometryIntersection)) {
+        const properties = parseProperties(tileProps);
+        let result = properties;
+        if (resultFormat === ResultFormat.GeoJsonFeature) {
+          result = { type: 'Feature', properties, geometry };
+        }
+        map.set(uniquePropertyValue, result);
       }
     }
   }
@@ -89,7 +97,7 @@ function getValueFromTileProps(tileProps, propertyName) {
   return numericProps[propertyName] || properties[propertyName];
 }
 
-function getFeatureByType(coordinates, type) {
+function getGeometryByType(coordinates, type) {
   switch (type) {
     case GEOMETRY_TYPES['Polygon']:
       return { type: 'Polygon', coordinates: [coordinates] };
@@ -120,36 +128,46 @@ function calculateFeatures({
   geometryIntersection,
   data,
   type,
-  uniqueIdProperty
+  uniqueIdProperty,
+  resultFormat
 }) {
   if (!data?.properties.length) {
     return;
   }
 
   if (tileIsFullyVisible) {
-    addAllFeaturesInTile({ map, data, uniqueIdProperty });
+    addAllFeaturesInTile({ map, data, uniqueIdProperty, type, resultFormat });
   } else {
     addIntersectedFeaturesInTile({
       map,
       data,
       geometryIntersection,
       type,
-      uniqueIdProperty
+      uniqueIdProperty,
+      resultFormat
     });
   }
 }
 
-function addAllFeaturesInTile({ map, data, uniqueIdProperty }) {
+function addAllFeaturesInTile({ map, data, uniqueIdProperty, type, resultFormat }) {
   const indices = getIndices(data);
+  const { positions } = data;
 
   for (let i = 0; i < indices.length - 1; i++) {
     const startIndex = indices[i];
-
+    const endIndex = indices[i + 1];
     const tileProps = getPropertiesFromTile(data, startIndex);
     const uniquePropertyValue = getUniquePropertyValue(tileProps, uniqueIdProperty, map);
 
     if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
-      map.set(uniquePropertyValue, parseProperties(tileProps));
+      const properties = parseProperties(tileProps);
+      let result = properties;
+      if (resultFormat) {
+        const ringCoordinates = getRingCoordinatesFor(startIndex, endIndex, positions);
+        const geometry = getGeometryByType(ringCoordinates, type);
+        result = { type: 'Feature', properties, geometry };
+      }
+      map.set(uniquePropertyValue, result);
     }
   }
 }
@@ -174,7 +192,8 @@ export default function tileFeaturesGeometries({
   tiles,
   tileFormat,
   geometryToIntersect,
-  uniqueIdProperty
+  uniqueIdProperty,
+  resultFormat
 }) {
   const map = new Map();
 
@@ -212,7 +231,8 @@ export default function tileFeaturesGeometries({
       geometryIntersection: transformedGeomtryToIntersect,
       data: tile.data.points,
       type: GEOMETRY_TYPES['Point'],
-      uniqueIdProperty
+      uniqueIdProperty,
+      resultFormat
     });
     calculateFeatures({
       map,
@@ -220,7 +240,8 @@ export default function tileFeaturesGeometries({
       geometryIntersection: transformedGeomtryToIntersect,
       data: tile.data.lines,
       type: GEOMETRY_TYPES['LineString'],
-      uniqueIdProperty
+      uniqueIdProperty,
+      resultFormat
     });
     calculateFeatures({
       map,
@@ -228,7 +249,8 @@ export default function tileFeaturesGeometries({
       geometryIntersection: transformedGeomtryToIntersect,
       data: tile.data.polygons,
       type: GEOMETRY_TYPES['Polygon'],
-      uniqueIdProperty
+      uniqueIdProperty,
+      resultFormat
     });
   }
   return Array.from(map.values());

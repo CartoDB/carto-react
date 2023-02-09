@@ -33,6 +33,11 @@ export type TileFeatures = {
   tileFormat: TILE_FORMATS;
   geoColumName?: string;
   spatialIndex?: SpatialIndex;
+  resultFormat?: ResultFormat
 };
 
+export enum ResultFormat {
+  OnlyProperties = 'OnlyProperties',
+  GeoJsonFeature = 'GeoJsonFeature'
+}
 export type TileFeaturesResponse = Record<string, unknown>[] | [];

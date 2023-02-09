@@ -1,3 +1,4 @@
+import { ResultFormat } from '@carto/react-core';
 import {
   getFormula,
   getHistogram,
@@ -57,6 +58,14 @@ describe('Worker Methods', () => {
         pages: 1,
         totalCount: 6,
         data: sampleGeoJson.features.map((f) => f.properties)
+      });
+    });
+    it('returns whole features with geometry resultFormat=GeoJsonFeature', () => {
+      expect(getRawFeatures({ resultFormat: ResultFormat.GeoJsonFeature })).toEqual({
+        currentPage: 0,
+        pages: 1,
+        totalCount: 6,
+        data: sampleGeoJson.features
       });
     });
     it('supports limit and returns paging info', () => {
