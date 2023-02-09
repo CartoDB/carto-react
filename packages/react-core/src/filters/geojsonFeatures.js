@@ -1,7 +1,14 @@
 import intersects from '@turf/boolean-intersects';
+import { ResultFormat } from '../types';
 import { getGeometryToIntersect } from './tileFeatures';
 
-export function geojsonFeatures({ geojson, viewport, geometry, uniqueIdProperty }) {
+export function geojsonFeatures({
+  geojson,
+  viewport,
+  geometry,
+  uniqueIdProperty,
+  resultFormat
+}) {
   let uniqueIdx = 0;
   // Map is used to cache multi geometries. Only a sucessfull intersect by multipolygon
   const map = new Map();
@@ -16,7 +23,10 @@ export function geojsonFeatures({ geojson, viewport, geometry, uniqueIdProperty 
       ? feature.properties[uniqueIdProperty]
       : ++uniqueIdx;
     if (!map.has(uniqueId) && intersects(geometryToIntersect, feature)) {
-      map.set(uniqueId, feature.properties);
+      map.set(
+        uniqueId,
+        resultFormat === ResultFormat.GeoJsonFeature ? feature : feature.properties
+      );
     }
   }
 
