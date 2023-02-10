@@ -47,15 +47,17 @@ You will need npm credentials under @carto organization.
 8. Choose `Custom prerelease` and ensure the packages version proposed is correct (eg. change suffix to 'alpha' or 'beta', instead of 'rc' if required)
 9. Once the npm package has been published, `Merge the PR` to master from github
 10. Update the storybook (if required)
+11. Coordinate with the design team on minor and major bump versions. C4R and Design system library must have the same paired version.
 
 ### To make an official **release**:
+
 1. Repeat the same steps as in a prerelease, but executing `yarn publish:release`
 
 ### To apply a hotfix patch
+
 - If change also applies to current master, it's recommended to start by creating a PR applying the fix it (to avoid forgetting it).
 - Then create a branch for the patch release, but this time start with the desired (usually stable) branch. For example, to create a patch 1.4.8, while not affecting current master, do `git checkout -b release-v1.4.8 release-v1.4.7`. Then apply there, locally, all changes as needed. If you created a first PR for master, you can use cherry-pick to share changes among master & patch.
 - After having everything ready, go as usual, with changelog entry + `yarn publish:release`
-
 
 ## Firebase deployment of storybook
 
