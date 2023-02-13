@@ -512,6 +512,13 @@ export const formsOverrides = {
           }
       },
 
+      listbox: {
+        '& .MuiAutocomplete-option': {
+          minHeight: getSpacing(4),
+          padding: getSpacing(0, 2)
+        }
+      },
+
       option: {
         ...themeTypography.body2
       }

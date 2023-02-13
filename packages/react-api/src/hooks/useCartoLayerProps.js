@@ -8,6 +8,8 @@ import { getMaskExtensionProps } from './maskExtensionUtil';
 import FeaturesDroppedLoader from './FeaturesDroppedLoader';
 import { CLIENT_ID } from '../api/common';
 
+const LOADERS = [FeaturesDroppedLoader];
+
 export default function useCartoLayerProps({
   source,
   layerConfig,
@@ -53,7 +55,7 @@ export default function useCartoLayerProps({
     ...(viewportFeatures && {
       onViewportLoad,
       fetch,
-      loaders: [FeaturesDroppedLoader],
+      loaders: LOADERS,
       onDataLoad
     })
   };
