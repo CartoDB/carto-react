@@ -2,45 +2,11 @@
 
 ## Not released
 
-- Update design-system branch with master (1.5.1) [#596](https://github.com/CartoDB/carto-react/pull/596)
-- Adjustments in theme to fix uses cases in cloud-native [#572](https://github.com/CartoDB/carto-react/pull/572)
-- Update design-system branch with master [#563](https://github.com/CartoDB/carto-react/pull/563)
-- Adjustments in theme to fix uses cases in cloud-native [#567](https://github.com/CartoDB/carto-react/pull/567)
-- Cherry pick from #531 PR [#564](https://github.com/CartoDB/carto-react/pull/564)
-- Widgets adapted to the new design system [#562](https://github.com/CartoDB/carto-react/pull/562)
-- Adjustments in theme to fix uses cases in cloud-native [#560](https://github.com/CartoDB/carto-react/pull/560)
-- Inputs size to small by default [#556](https://github.com/CartoDB/carto-react/pull/556)
-- New AppBar component (v1) and default props changes[#555](https://github.com/CartoDB/carto-react/pull/555)
-- New color variant in FAB button [#554](https://github.com/CartoDB/carto-react/pull/554)
-- Adjustments in theme to fix uses cases in cloud-native [#553](https://github.com/CartoDB/carto-react/pull/553/)
-- Default props of core components to meet the common use case [#552](https://github.com/CartoDB/carto-react/pull/552/)
-- Chip component adapted to the new design system [#551](https://github.com/CartoDB/carto-react/pull/551/)
-- Design changes in UploadField component [#548](https://github.com/CartoDB/carto-react/pull/548/)
-- Divider component adapted to the new design system [#546](https://github.com/CartoDB/carto-react/pull/546/)
-- UploadField component created for the new design system [#545](https://github.com/CartoDB/carto-react/pull/545/)
-- Select component adapted to the new design system [#544](https://github.com/CartoDB/carto-react/pull/544/)
-- TextField and TextArea component adapted to the new design system [#538](https://github.com/CartoDB/carto-react/pull/538/)
-- Tabs component adapted to the new design system [#537](https://github.com/CartoDB/carto-react/pull/537/)
-- Tooltip component adapted to the new design system [#536](https://github.com/CartoDB/carto-react/pull/536/)
-- Switch component adapted to the new design system [#534](https://github.com/CartoDB/carto-react/pull/534/)
-- Design review of Toggle component [#533](https://github.com/CartoDB/carto-react/pull/533)
-- Radio and Checkbox components adapted to the new design system [#532](https://github.com/CartoDB/carto-react/pull/532/)
-- Improvements in Components priority 1 after design review [#529](https://github.com/CartoDB/carto-react/pull/529)
-- Replace kebab-case properties in styles [#530](https://github.com/CartoDB/carto-react/pull/530)
-- New design system in priority 1 components [#523](https://github.com/CartoDB/carto-react/pull/523)
-- Breaking changes in Mui v5: components [#518](https://github.com/CartoDB/carto-react/pull/518)
-- Breaking changes in Mui v5: styles and theme [#514](https://github.com/CartoDB/carto-react/pull/514/)
-- Add final Figma links into Storybook [#515](https://github.com/CartoDB/carto-react/pull/515)
-- Breakpoints for the new design system [#513](https://github.com/CartoDB/carto-react/pull/513/)
-- New Typography component to extend Mui Typography [#506](https://github.com/CartoDB/carto-react/pull/506)
-- New spacings, borders and shadows toolkit for MUI carto-theme [#507](https://github.com/CartoDB/carto-react/pull/507/)
-- Colors and Typography: design update [#502](https://github.com/CartoDB/carto-react/pull/502/)
-- Upgrade from Material UI v4 to MUI v5 [#501](https://github.com/CartoDB/carto-react/pull/501)
-- New typography toolkit for MUI carto-theme [#498](https://github.com/CartoDB/carto-react/pull/498/)
-- New color palette for MUI carto-theme [#496](https://github.com/CartoDB/carto-react/pull/496/)
-- Split carto-theme into sections [#495](https://github.com/CartoDB/carto-react/pull/495)
-- Integration between Figma and Storybook through `addon-designs` [#488](https://github.com/CartoDB/carto-react/pull/488)
-- Update Storybook to v6.5.12 [#487](https://github.com/CartoDB/carto-react/pull/487)
+## 2.0
+
+### 2.0.0-alpha.0 (2023-02-13)
+
+- MUI5 & new Design System upgrade [#494](https://github.com/CartoDB/carto-react/pull/494)
 
 ## 1.5
 
