@@ -32,21 +32,21 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     flexWrap: 'nowrap',
 
-    '&:hover .progressbar div': {
+    '&:hover $progressbar div': {
       backgroundColor: theme.palette.secondary.dark
     }
   },
 
   element: {
-    '&.unselected': {
+    '&$unselected': {
       color: theme.palette.text.disabled,
 
-      '& .progressbar div': {
+      '& $progressbar div': {
         backgroundColor: theme.palette.text.disabled
       }
     },
 
-    '&.rest .progressbar div': {
+    '&$rest $progressbar div': {
       backgroundColor: theme.palette.text.disabled
     }
   },
