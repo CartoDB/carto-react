@@ -1,4 +1,4 @@
-import { cartoThemeOptions, CartoTheme } from './theme/carto-theme';
+import { theme, cartoThemeOptions, CartoTheme } from './theme/carto-theme';
 import WrapperWidgetUI from './widgets/WrapperWidgetUI';
 import CategoryWidgetUI from './widgets/CategoryWidgetUI';
 import FormulaWidgetUI from './widgets/FormulaWidgetUI';
@@ -25,8 +25,15 @@ import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import ComparativePieWidgetUI from './widgets/comparative/ComparativePieWidgetUI';
 import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI';
 import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
+import Typography from './components/atoms/Typography';
+import Button from './components/atoms/Button';
+import PasswordField from './components/atoms/PasswordField';
+import SelectField from './components/atoms/SelectField';
+import UploadField from './components/molecules/UploadField';
+import AppBar from './components/organisms/AppBar';
 
 export {
+  theme,
   cartoThemeOptions,
   CartoTheme,
   WrapperWidgetUI,
@@ -53,5 +60,11 @@ export {
   LegendCategories,
   LegendIcon,
   LegendProportion,
-  LegendRamp
+  LegendRamp,
+  Typography,
+  Button,
+  PasswordField,
+  SelectField,
+  UploadField,
+  AppBar
 };

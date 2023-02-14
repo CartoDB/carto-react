@@ -4,7 +4,7 @@ import {
   fireEvent,
   screen,
   waitForElementToBeRemoved
-} from '@testing-library/react';
+} from '../widgets/utils/testUtils';
 import WrapperWidgetUI from '../../src/widgets/WrapperWidgetUI';
 import FormulaWidgetUI from '../../src/widgets/FormulaWidgetUI';
 

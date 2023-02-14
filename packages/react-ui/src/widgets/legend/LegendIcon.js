@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Box, Grid } from '@mui/material';
 import PropTypes from 'prop-types';
+import Typography from '../../components/atoms/Typography';
 
 const ICON_SIZE = 16;
 
@@ -12,7 +13,7 @@ function LegendIcon({ legend }) {
       <Box mr={1.5} width={ICON_SIZE} height={ICON_SIZE}>
         <img src={icons[idx]} alt={label} width={ICON_SIZE} height={ICON_SIZE} />
       </Box>
-      <Typography variant='overline'>{label}</Typography>
+      <Typography variant='overlineDelicate'>{label}</Typography>
     </Grid>
   ));
 

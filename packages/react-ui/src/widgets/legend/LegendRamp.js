@@ -1,9 +1,11 @@
 import React from 'react';
-import { Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
+import { Grid, Tooltip } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
 import { getMinMax } from './LegendProportion';
 import LegendProportion from './LegendProportion';
+import Typography from '../../components/atoms/Typography';
 
 const useStyles = makeStyles(() => ({
   errorContainer: {
@@ -136,7 +138,7 @@ function StepsDiscontinuous({ labels = [], palette = [], max, min }) {
             : `${label} - ${rightLabels[idx + 1]}`;
 
         return (
-          <Tooltip key={idx} title={title} placement='top' arrow>
+          <Tooltip key={idx} title={title}>
             <Grid
               item
               xs

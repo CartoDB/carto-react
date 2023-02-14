@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Box, makeStyles, Typography } from '@material-ui/core';
-import { useTheme } from '@material-ui/core';
+import { Box, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import AnimatedNumber, {
   animationOptionsPropTypes
 } from '../../custom-components/AnimatedNumber';
+import Typography from '../../components/atoms/Typography';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];

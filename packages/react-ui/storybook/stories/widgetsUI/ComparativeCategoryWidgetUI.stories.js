@@ -2,7 +2,7 @@ import React from 'react';
 import ComparativeCategoryWidgetUI from '../../../src/widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
 
 const options = {
-  title: 'Custom Components/ComparativeCategoryWidgetUI',
+  title: 'Organisms/Widgets/ComparativeCategoryWidgetUI',
   component: ComparativeCategoryWidgetUI
 };
 

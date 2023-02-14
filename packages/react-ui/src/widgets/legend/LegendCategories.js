@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
+import { Box, Grid, Tooltip } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
+import Typography from '../../components/atoms/Typography';
 
 function LegendCategories({ legend }) {
   const {
@@ -66,10 +68,7 @@ export default LegendCategories;
 // Aux
 const useStyles = makeStyles((theme) => ({
   legendCategories: {
-    alignItems: 'center',
-    '&:hover': {
-      '& $circle': {}
-    }
+    alignItems: 'center'
   },
   marker: {
     whiteSpace: 'nowrap',
@@ -77,7 +76,8 @@ const useStyles = makeStyles((theme) => ({
     width: '12px',
     height: '12px',
     borderRadius: '50%',
-    position: 'relative'
+    position: 'relative',
+    border: '2px solid transparent'
   },
   circle: {
     border: '2px solid transparent',
@@ -134,13 +134,13 @@ function Row({ label, isMax, isStrokeColor, color = '#000', icon, maskedIcon }) 
   }, [setShowTooltip, labelPhantomRef, labelRef]);
 
   return (
-    <Tooltip title={showTooltip ? label : ''} placement='left' arrow>
+    <Tooltip title={showTooltip ? label : ''} placement='left'>
       <Grid
         container
         item
         className={[classes.legendCategories, classes.flexParent].join(' ')}
       >
-        <Tooltip title={isMax ? 'Most representative' : ''} placement='top' arrow>
+        <Tooltip title={isMax ? 'Most representative' : ''}>
           <Box
             mr={1.5}
             component='span'
@@ -163,12 +163,16 @@ function Row({ label, isMax, isStrokeColor, color = '#000', icon, maskedIcon }) 
             }
           />
         </Tooltip>
-        <Typography ref={labelRef} variant='overline' className={classes.longTruncate}>
+        <Typography
+          ref={labelRef}
+          variant='overlineDelicate'
+          className={classes.longTruncate}
+        >
           {label}
         </Typography>
         <Typography
           ref={labelPhantomRef}
-          variant='overline'
+          variant='overlineDelicate'
           className={[classes.longTruncate, classes.titlePhantom].join(' ')}
         >
           {label}

@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import ComparativeCategoryWidgetUI from '../../src/widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '../widgets/utils/testUtils';
 import userEvent from '@testing-library/user-event';
 
 const SAMPLE_DATA = [
@@ -30,7 +30,7 @@ const SAMPLE_DATA = [
   ]
 ];
 
-const SAMPLE_NAMES = ['serie 1', 'serie 2', 'serie 3']
+const SAMPLE_NAMES = ['serie 1', 'serie 2', 'serie 3'];
 
 describe('ComparativeCategoryWidgetUI', () => {
   test('item skeleton should display', () => {
@@ -40,7 +40,7 @@ describe('ComparativeCategoryWidgetUI', () => {
 
   test('simple', () => {
     render(
-      <ComparativeCategoryWidgetUI 
+      <ComparativeCategoryWidgetUI
         data={SAMPLE_DATA}
         names={SAMPLE_NAMES}
         animation={false}
@@ -49,14 +49,14 @@ describe('ComparativeCategoryWidgetUI', () => {
 
     expect(screen.getByText(/data 1/)).toBeInTheDocument();
 
-    SAMPLE_DATA.map(s => s[0]).forEach((item) => {
-      expect(screen.getAllByText(new RegExp(String(item.value)))[0]).toBeInTheDocument()
-    })
+    SAMPLE_DATA.map((s) => s[0]).forEach((item) => {
+      expect(screen.getAllByText(new RegExp(String(item.value)))[0]).toBeInTheDocument();
+    });
   });
 
   test('with one selected category', () => {
     render(
-      <ComparativeCategoryWidgetUI 
+      <ComparativeCategoryWidgetUI
         data={SAMPLE_DATA}
         names={SAMPLE_NAMES}
         animation={false}
@@ -70,37 +70,37 @@ describe('ComparativeCategoryWidgetUI', () => {
   describe('order', () => {
     test('fixed', () => {
       render(
-        <ComparativeCategoryWidgetUI 
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
           order={'fixed'}
         />
       );
-  
+
       const renderedCategories = screen.getAllByText(/data \d/);
       expect(renderedCategories[0].textContent).toBe('data 1');
-    })
+    });
     test('ranking', () => {
       render(
-        <ComparativeCategoryWidgetUI 
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
           order={'ranking'}
         />
       );
-  
+
       const renderedCategories = screen.getAllByText(/data \d/);
       expect(renderedCategories[0].textContent).toBe('data 4');
-    })
-  })
+    });
+  });
 
   describe('events', () => {
     test('category change', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <ComparativeCategoryWidgetUI 
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -110,12 +110,12 @@ describe('ComparativeCategoryWidgetUI', () => {
 
       fireEvent.click(screen.getByText(/data 1/));
       expect(mockOnSelectedCategoriesChange).toHaveBeenCalledTimes(1);
-    })
+    });
 
     test('clear', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <ComparativeCategoryWidgetUI 
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -126,12 +126,12 @@ describe('ComparativeCategoryWidgetUI', () => {
 
       fireEvent.click(screen.getByText(/Clear/));
       expect(mockOnSelectedCategoriesChange).toHaveBeenCalledTimes(1);
-    })
+    });
 
     test('lock', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <ComparativeCategoryWidgetUI 
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -143,12 +143,12 @@ describe('ComparativeCategoryWidgetUI', () => {
       fireEvent.click(screen.getByText(/data 1/));
       expect(screen.getByText(/Lock/)).toBeInTheDocument();
       expect(mockOnSelectedCategoriesChange).toHaveBeenCalledTimes(1);
-    })
+    });
 
     test('unlock', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <ComparativeCategoryWidgetUI 
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -159,7 +159,7 @@ describe('ComparativeCategoryWidgetUI', () => {
 
       fireEvent.click(screen.getByText(/data 1/));
       expect(mockOnSelectedCategoriesChange).toHaveBeenCalledTimes(1);
-      
+
       fireEvent.click(screen.getByText(/Lock/));
       expect(screen.queryByText(/Unlock/)).toBeInTheDocument();
       expect(screen.queryByText(/Lock/)).not.toBeInTheDocument();
@@ -172,7 +172,7 @@ describe('ComparativeCategoryWidgetUI', () => {
     test('search cycle', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <ComparativeCategoryWidgetUI 
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -184,13 +184,13 @@ describe('ComparativeCategoryWidgetUI', () => {
       fireEvent.click(screen.getByText(/data 1/));
       fireEvent.click(screen.getByText(/Apply/));
       expect(mockOnSelectedCategoriesChange).toHaveBeenCalledTimes(1);
-    })
+    });
 
     test('search category', () => {
       HTMLElement.prototype.scrollIntoView = jest.fn();
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <ComparativeCategoryWidgetUI 
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -203,12 +203,12 @@ describe('ComparativeCategoryWidgetUI', () => {
       fireEvent.click(screen.getByText(/data 1/));
       fireEvent.click(screen.getByText(/Apply/));
       expect(mockOnSelectedCategoriesChange).toHaveBeenCalledTimes(1);
-    })
+    });
 
     test('search cancel', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <ComparativeCategoryWidgetUI 
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -220,11 +220,11 @@ describe('ComparativeCategoryWidgetUI', () => {
       fireEvent.click(screen.getByText(/Search in 1 elements/));
       fireEvent.click(screen.getByText(/Cancel/));
       expect(screen.getByText(/Search in 1 elements/)).toBeInTheDocument();
-    })
+    });
 
     test('searchable props', () => {
       render(
-        <ComparativeCategoryWidgetUI 
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -234,6 +234,6 @@ describe('ComparativeCategoryWidgetUI', () => {
 
       expect(screen.queryByText('Search in 1 elements')).not.toBeInTheDocument();
       expect(screen.getByText('Others (1)')).toBeInTheDocument();
-    })
-  })
-})
+    });
+  });
+});

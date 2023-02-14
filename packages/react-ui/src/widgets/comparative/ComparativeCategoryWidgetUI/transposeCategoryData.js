@@ -1,4 +1,4 @@
-import { lighten } from '@material-ui/core';
+import { lighten } from '@mui/material/styles';
 import CategoryWidgetUI from '../../CategoryWidgetUI';
 import PropTypes from 'prop-types';
 

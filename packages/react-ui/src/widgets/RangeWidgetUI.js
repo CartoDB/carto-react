@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Link, makeStyles, Slider, TextField } from '@material-ui/core';
+import { Box, Link, Slider, TextField } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { debounce } from '@carto/react-core';
 
 const useStyles = makeStyles((theme) => ({
@@ -155,7 +156,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
     <Box className={classes.root}>
       <Box className={classes.clearWrapper}>
         {hasBeenModified && (
-          <Link onClick={resetSlider} className={classes.clearButton}>
+          <Link onClick={resetSlider} className={classes.clearButton} underline='hover'>
             Clear
           </Link>
         )}
@@ -193,7 +194,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
         <TextField
           className={classes.input}
           value={inputsValues[0]}
-          margin='dense'
+          size='small'
           onChange={(event) => handleInputChange(event, 0)}
           onBlur={() => handleInputBlur(0)}
           inputProps={{
@@ -206,7 +207,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
         <TextField
           className={classes.input}
           value={inputsValues[1]}
-          margin='dense'
+          size='small'
           onChange={(event) => handleInputChange(event, 1)}
           onBlur={() => handleInputBlur(1)}
           inputProps={{

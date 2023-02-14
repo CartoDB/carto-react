@@ -1,4 +1,4 @@
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import ReactEcharts from '../../../custom-components/echarts-for-react';
 import useTimeSeriesInteractivity from '../hooks/useTimeSeriesInteractivity';
@@ -38,15 +38,14 @@ export default function TimeSeriesChart({
     () => ({
       show: tooltip,
       trigger: 'axis',
-      padding: [theme.spacing(0.5), theme.spacing(1)],
+      padding: [theme.spacingValue * 0.5, theme.spacingValue],
       textStyle: {
         ...theme.typography.caption,
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: 11,
         color: theme.palette.common.white
       },
       borderWidth: 0,
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: theme.palette.black[90],
       position: (point, params, dom, rect, size) => {
         const position = { top: 0 };
 
@@ -66,7 +65,7 @@ export default function TimeSeriesChart({
     () => ({
       axisPointer: {
         lineStyle: {
-          color: theme.palette.charts.axisPointer
+          color: theme.palette.black[40]
         }
       },
       xAxis: {
@@ -88,7 +87,7 @@ export default function TimeSeriesChart({
         axisLabel: {
           margin: 0,
           verticalAlign: 'bottom',
-          padding: [0, 0, theme.typography.charts.fontSize, 0],
+          padding: [0, 0, theme.spacingValue * 1.25, 0],
           show: true,
           showMaxLabel: true,
           showMinLabel: false,
@@ -97,13 +96,13 @@ export default function TimeSeriesChart({
             // FIXME: Workaround to show only maxlabel
             let col = 'transparent';
             if (value >= maxValue) {
-              col = theme.palette.charts.maxLabel;
+              col = theme.palette.black[60];
             }
 
             return col;
           },
           ...(formatter ? { formatter: (v) => formatter(v) } : {}),
-          ...theme.typography.charts
+          ...theme.typography.overlineDelicate
         },
         axisLine: {
           show: false
@@ -115,7 +114,7 @@ export default function TimeSeriesChart({
           show: true,
           onZero: false,
           lineStyle: {
-            color: theme.palette.charts.axisLine
+            color: theme.palette.black[4]
           }
         },
         max: maxValue
@@ -156,10 +155,10 @@ export default function TimeSeriesChart({
   const options = useMemo(
     () => ({
       grid: {
-        left: theme.spacing(2),
-        top: theme.spacing(4),
-        right: theme.spacing(2),
-        bottom: theme.spacing(3)
+        left: theme.spacingValue * 2,
+        top: theme.spacingValue * 4,
+        right: theme.spacingValue * 2,
+        bottom: theme.spacingValue * 3
       },
       color: [theme.palette.secondary.main],
       tooltip: tooltipOptions,

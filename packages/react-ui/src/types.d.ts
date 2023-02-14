@@ -1,4 +1,10 @@
 import { GroupDateTypes } from '@carto/react-core';
+import {
+  AppBarProps as MuiAppBarProps,
+  TextFieldProps,
+  TypographyProps as MuiTypographyProps
+} from '@mui/material';
+import { CSSProperties } from 'react';
 
 export type WrapperWidgetUI = {
   title: string;
@@ -49,7 +55,7 @@ export type HistogramWidgetUI = {
 export type BarWidgetUI = {
   xAxisData: (string | number)[];
   yAxisData: (string | number)[] | (string | number)[][];
-  series?: string[]
+  series?: string[];
   colors?: string | string[];
   stacked?: boolean;
   labels?: object;
@@ -192,7 +198,7 @@ export type LegendRamp = {
 export type AnimationOptions = {
   duration?: number;
   animateOnMount?: boolean;
-  initialValue?: number
+  initialValue?: number;
 };
 
 export type AnimatedNumber = {
@@ -219,7 +225,7 @@ export type ComparativeFormulaWidgetUI = {
 
 export enum ORDER_TYPES {
   RANKING = 'ranking',
-  FIXED = 'fixed',
+  FIXED = 'fixed'
 }
 
 type CategoryData = {
@@ -261,3 +267,54 @@ export type ComparativePieWidgetUIProps = {
   selectedCategories?: string[];
   onCategorySelected?: (categories: string[]) => any;
 };
+
+// Typography
+export interface TypographyProps extends MuiTypographyProps {
+  weight?: 'regular' | 'medium' | 'strong';
+  italic?: boolean;
+  style?: CSSProperties;
+}
+
+// Tooltip data
+// Export types and component if we need it outsite C4R
+type TooltipDataProps = {
+  items: [
+    {
+      category?: string;
+      value: string | number;
+      outlinedBullet?: boolean;
+      color?: 'primary' | 'secondary';
+    }
+  ];
+  title?: string;
+};
+
+// SelectField
+export interface SelectFieldProps extends TextFieldProps {
+  items: [
+    {
+      label: string;
+      value: string | number;
+    }
+  ];
+  multiple?: boolean;
+  placeholder: string;
+  size?: 'small' | 'medium';
+}
+
+// UploadField
+export interface UploadFieldProps extends TextFieldProps {
+  buttonText?: string;
+  accept?: string[];
+  files?: [];
+  onChange: (file?: File | null) => void;
+}
+
+// AppBar
+export interface AppBarProps extends MuiAppBarProps {
+  brandLogo?: React.ReactElement;
+  brandText?: string | React.ReactElement;
+  secondaryText?: string | React.ReactElement;
+  onClickMenu?: Function;
+  showBurgerMenu?: boolean;
+}

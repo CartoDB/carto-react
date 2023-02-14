@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  Box,
-  Grid,
-  InputAdornment,
-  makeStyles,
-  Slider,
-  TextField
-} from '@material-ui/core';
+import { Box, Grid, InputAdornment, Slider, TextField } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import LayerOptionWrapper from './legend/LayerOptionWrapper';
 
 const useOpacityControlStyles = makeStyles(({ spacing }) => ({
@@ -64,7 +58,7 @@ export default function OpacityControl({ opacity, onChangeOpacity }) {
             <TextField
               className={classes.input}
               value={Math.round(opacity * 100)}
-              margin='dense'
+              size='small'
               onChange={handleTextFieldChange}
               InputProps={{
                 step: 1,

@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 import React, { useState } from 'react';
 import FeatureSelectionWidgetUI from '../../../src/widgets/FeatureSelectionWidgetUI';
 import CursorIcon from '../../../src/assets/CursorIcon';
@@ -6,7 +6,7 @@ import PolygonIcon from '../../../src/assets/PolygonIcon';
 import RectangleIcon from '../../../src/assets/RectangleIcon';
 
 const options = {
-  title: 'Custom Components/FeatureSelectionWidgetUI',
+  title: 'Organisms/Widgets/FeatureSelectionWidgetUI',
   component: FeatureSelectionWidgetUI,
   argTypes: {
     enabled: {

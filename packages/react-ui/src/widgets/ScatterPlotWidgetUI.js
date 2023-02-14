@@ -1,4 +1,4 @@
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useRef, useState, useEffect } from 'react';
 import { areChartPropsEqual } from './utils/chartUtils';
@@ -17,21 +17,20 @@ function __generateDefaultConfig(
       containLabel: true
     },
     tooltip: {
-      padding: [theme.spacing(0.5), theme.spacing(1)],
+      padding: [theme.spacingValue * 0.5, theme.spacingValue],
       textStyle: {
         ...theme.typography.caption,
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: 11,
         color: theme.palette.common.white
       },
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: theme.palette.black[90],
       ...(tooltipFormatter ? { formatter: tooltipFormatter } : {})
     },
     color: [theme.palette.secondary.main],
     xAxis: {
       axisLabel: {
-        ...theme.typography.charts,
-        padding: [theme.spacing(0.5), 0, 0, 0],
+        ...theme.typography.overlineDelicate,
+        padding: [theme.spacingValue * 0.5, 0, 0, 0],
         formatter: (v) => {
           const formatted = xAxisFormatter(v);
           return typeof formatted === 'object'
@@ -42,7 +41,7 @@ function __generateDefaultConfig(
     },
     yAxis: {
       axisLabel: {
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         formatter: (v) => {
           const formatted = yAxisFormatter(v);
           return typeof formatted === 'object'

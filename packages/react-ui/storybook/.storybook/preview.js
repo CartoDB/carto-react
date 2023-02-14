@@ -1,34 +1,89 @@
 import React from 'react';
-import { createTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
-import { cartoThemeOptions } from '../../src/theme/carto-theme';
+import { withDesign } from 'storybook-addon-designs';
+import {
+  createTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+  StyledEngineProvider,
+  CssBaseline
+} from '@mui/material';
+import { cartoThemeOptions, theme } from '../../src/theme/carto-theme';
+import { BREAKPOINTS } from '../../src/theme/themeConstants';
 
-let theme = createTheme(cartoThemeOptions);
-theme = responsiveFontSizes(theme, {
-  breakpoints: cartoThemeOptions.breakpoints.keys,
-  disableAlign: false,
-  factor: 2,
-  variants: [
-    'h1',
-    'h2',
-    'h3',
-    'h4',
-    'h5',
-    'h6',
-    'subtitle1',
-    'subtitle2',
-    'body1',
-    'body2',
-    'button',
-    'caption',
-    'overline'
-  ]
-});
+const customViewports = {
+  xs: {
+    name: 'xs',
+    styles: {
+      width: `${BREAKPOINTS.XS}px`,
+      height: `${BREAKPOINTS.SM - 1}px`
+    }
+  },
+  sm: {
+    name: 'sm',
+    styles: {
+      width: `${BREAKPOINTS.SM}px`,
+      height: `${BREAKPOINTS.MD - 1}px`
+    }
+  },
+  md: {
+    name: 'md',
+    styles: {
+      width: `${BREAKPOINTS.MD}px`,
+      height: `${BREAKPOINTS.LG - 1}px`
+    }
+  },
+  lg: {
+    name: 'lg',
+    styles: {
+      width: `${BREAKPOINTS.LG}px`,
+      height: `${BREAKPOINTS.XL - 1}px`
+    }
+  },
+  xl: {
+    name: 'xl',
+    styles: {
+      width: `${BREAKPOINTS.XL}px`,
+      height: '100%'
+    }
+  }
+};
+
+const componentsStatus = {
+  deprecated: {
+    background: '#C1300B', // Error/Main
+    color: '#ffffff',
+    description: 'Do not use'
+  },
+  inDevelopment: {
+    background: '#F29E02', // Warning/Main
+    color: '#ffffff',
+    description: 'Work in progress'
+  },
+  readyToReview: {
+    background: '#024388', // Info/Main
+    color: '#ffffff',
+    description: 'Ready to review and validation'
+  },
+  validated: {
+    background: '#709F1D', // Success/Main
+    color: '#ffffff',
+    description: 'Validated and ready to use'
+  },
+  needUpdate: {
+    background: '#E1E3E4', // Default/Main
+    color: '#2C3032',
+    description: 'Need an update, but can be used in this state'
+  }
+};
 
 export const decorators = [
   (Story) => (
-    <ThemeProvider theme={theme}>
-      <Story />
-    </ThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Story />
+      </ThemeProvider>
+    </StyledEngineProvider>
   )
 ];
 
@@ -42,22 +97,22 @@ export const parameters = {
   },
   options: {
     storySort: {
+      method: 'alphabetical',
       order: [
         'Introduction',
-        'CARTO Theme',
-        ['Palette', 'Typography'],
-        'Common',
-        'Custom Components',
-        [
-          'InputFile',
-          'CategoryWidgetUI',
-          'FormulaWidgetUI',
-          'HistogramWidgetUI',
-          'BarWidgetUI',
-          'PieWidgetUI',
-          'WrapperWidgetUI'
-        ]
+        'Foundations',
+        ['Palette', 'Typography', 'Spacing', 'Borders', 'Elevations', 'Breakpoints'],
+        'Atoms',
+        'Molecules',
+        'Organisms'
       ]
     }
+  },
+  decorators: [withDesign],
+  viewport: {
+    viewports: customViewports
+  },
+  status: {
+    statuses: componentsStatus
   }
 };

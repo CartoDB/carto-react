@@ -6,15 +6,15 @@ import {
   Chip,
   Divider,
   IconButton,
-  makeStyles,
   Menu,
   MenuItem,
   Tooltip,
-  Typography,
   useTheme
-} from '@material-ui/core';
-import { ArrowDropDown } from '@material-ui/icons';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { ArrowDropDown } from '@mui/icons-material';
 import PropTypes from 'prop-types';
+import Typography from '../components/atoms/Typography';
 
 function FeatureSelectionWidgetUI({
   className,
@@ -125,9 +125,7 @@ function Helper({ hasMode, enabled, isEdit, children }) {
   return (
     <Tooltip
       title={
-        isEdit
-          ? 'Click on the mask to edit it'
-          : 'Click on the map to create a mask'
+        isEdit ? 'Click on the mask to edit it' : 'Click on the map to create a mask'
       }
       open={open}
     >
@@ -149,7 +147,6 @@ function GeometryViewer({
       <Tooltip
         title={isDisabled ? 'Apply mask' : 'Clear mask'}
         placement={tooltipPlacement}
-        arrow
       >
         <Chip
           label='Mask'
@@ -184,9 +181,7 @@ function SelectedModeViewer({
     if (modes?.length && selectedMode) {
       const foundMode = modes.find(({ id: modeId }) => modeId === selectedMode);
       if (!foundMode) {
-        throw new Error(
-          'Selected mode not supported'
-        );
+        throw new Error('Selected mode not supported');
       }
       return foundMode;
     } else {
@@ -199,8 +194,8 @@ function SelectedModeViewer({
   const onEnabledChangeWrapper = () => onEnabledChange(!enabled);
 
   return (
-    <Tooltip title={tooltipTitle} placement={tooltipPlacement} arrow>
-      <IconButton onClick={onEnabledChangeWrapper} className={classes.btn}>
+    <Tooltip title={tooltipTitle} placement={tooltipPlacement}>
+      <IconButton onClick={onEnabledChangeWrapper} className={classes.btn} size='large'>
         {icon}
       </IconButton>
     </Tooltip>
@@ -276,7 +271,7 @@ function ModesSelector({
 
   return (
     <Box>
-      <Tooltip title='Select a mode' placement={tooltipPlacement} arrow>
+      <Tooltip title='Select a mode' placement={tooltipPlacement}>
         <IconButton
           id='fade-button'
           aria-controls='fade-menu'
@@ -284,6 +279,7 @@ function ModesSelector({
           aria-expanded={open ? 'true' : undefined}
           className={classes.btn}
           onClick={handleClick}
+          size='large'
         >
           <ArrowDropDown />
         </IconButton>

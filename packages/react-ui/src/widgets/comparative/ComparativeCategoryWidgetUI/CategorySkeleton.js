@@ -1,7 +1,8 @@
-import React from 'react'
-import { Box, Typography } from "@material-ui/core";
-import { Skeleton } from "@material-ui/lab";
-import { useCategoryStyles } from "./useCategoryStyles";
+import React from 'react';
+import { Box } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
+import { useCategoryStyles } from './useCategoryStyles';
+import Typography from '../../../components/atoms/Typography';
 
 export default function CategorySkeleton() {
   const classes = useCategoryStyles();

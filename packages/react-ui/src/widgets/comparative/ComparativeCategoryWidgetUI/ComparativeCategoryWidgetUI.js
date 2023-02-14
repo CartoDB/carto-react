@@ -6,9 +6,8 @@ import {
   Link,
   SvgIcon,
   TextField,
-  Typography,
   useTheme
-} from '@material-ui/core';
+} from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { animationOptionsPropTypes } from '../../../custom-components/AnimatedNumber';
@@ -17,6 +16,7 @@ import { transposeCategoryData } from './transposeCategoryData';
 import { useCategoryStyles } from './useCategoryStyles';
 import CategoryItem from './CategoryItem';
 import CategorySkeleton from './CategorySkeleton';
+import Typography from '../../../components/atoms/Typography';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
@@ -36,7 +36,7 @@ function SearchIcon() {
 }
 
 /** Renders a `<ComparativeCategoryWidgetUI />` widget
- * 
+ *
  * <!--
  * @param {Object} props
  * @param {string[]} props.names
@@ -81,11 +81,13 @@ function ComparativeCategoryWidgetUI({
 
   // process incoming data to group items by column, apply colors and labels
   const processedData = useMemo(() => {
-    const _colors = colors?.length ? colors : [
-      theme.palette.secondary.main,
-      theme.palette.primary.main,
-      theme.palette.info.main
-    ];
+    const _colors = colors?.length
+      ? colors
+      : [
+          theme.palette.secondary.main,
+          theme.palette.primary.main,
+          theme.palette.info.main
+        ];
     return transposeCategoryData(data, _colors, labels, selectedCategories, order);
   }, [data, colors, labels, theme, selectedCategories, order]);
 
@@ -228,9 +230,11 @@ function ComparativeCategoryWidgetUI({
     <div className={classes.wrapper}>
       {filterable ? (
         <Box
-          display='flex'
-          alignItems='center'
-          justifyContent='space-between'
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}
           className={classes.toolbar}
         >
           <Typography variant='caption'>
@@ -243,7 +247,13 @@ function ComparativeCategoryWidgetUI({
             ) : blockingActive ? (
               <Link onClick={disableBlocking}>Unlock</Link>
             ) : selectedCategories.length ? (
-              <Box display='flex' justifyContent='flex-end' gridGap={theme.spacing(1)}>
+              <Box
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  gap: theme.spacing(1)
+                }}
+              >
                 <Link onClick={enableBlocking}>Lock</Link>
                 <Divider orientation='vertical' flexItem />
                 <Link onClick={clearSelection}>Clear</Link>
@@ -311,13 +321,23 @@ function ComparativeCategoryWidgetUI({
           Cancel
         </Button>
       ) : null}
-      <Box py={2} display='flex' flexWrap='wrap' alignItems='center' gridGap={theme.spacing(1.5)}>
+      <Box
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: theme.spacing(1.5),
+          padding: theme.spacing(2, 0)
+        }}
+      >
         {names.map((name, i) => (
           <Box
             key={names[i]}
-            display='flex'
-            alignItems='center'
-            gridGap={theme.spacing(0.75)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: theme.spacing(0.75)
+            }}
           >
             <div
               className={classes.bullet}

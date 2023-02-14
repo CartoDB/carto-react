@@ -1,20 +1,12 @@
 import React, { createRef, useState } from 'react';
-import {
-  Box,
-  Button,
-  Collapse,
-  Grid,
-  Icon,
-  makeStyles,
-  Switch,
-  Tooltip,
-  Typography
-} from '@material-ui/core';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import { Box, Button, Collapse, Grid, Icon, Switch, Tooltip } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import Note from './Note';
 import LayerIcon from '../../assets/LayerIcon';
-import { ToggleButton } from '@material-ui/lab';
+import { ToggleButton } from '@mui/material';
 import OpacityControl from '../OpacityControl';
+import Typography from '../../components/atoms/Typography';
 
 const useStyles = makeStyles((theme) => ({
   legendWrapper: {
@@ -23,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 0
   },
   content: {
-    padding: theme.spacing(0, 3, 3, 3)
+    padding: theme.spacing(0, 2, 2, 3)
   },
   attr: {
     marginBottom: theme.spacing(1)
@@ -90,7 +82,7 @@ export default function LegendWrapper({
       {hasChildren && !!children && (
         <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
           <Box className={classes.content}>
-            <Grid container direction='column' pb={16} spacing={1}>
+            <Grid container direction='column' spacing={1}>
               {attr && (
                 <Typography className={classes.attr} variant='caption'>
                   By {attr}
@@ -130,12 +122,9 @@ const useHeaderStyles = makeStyles((theme) => ({
     flex: '1 1 auto',
     justifyContent: 'flex-start',
     cursor: ({ collapsible }) => (collapsible ? 'pointer' : 'default'),
-    '& .MuiButton-label': {
-      ...theme.typography.body1,
 
-      '& .MuiButton-startIcon': {
-        marginRight: theme.spacing(1)
-      }
+    '& .MuiButton-startIcon': {
+      marginRight: theme.spacing(1)
     },
     '&:hover': {
       background: 'none'
@@ -178,7 +167,7 @@ function Header({
         <Typography variant='subtitle1'>{title}</Typography>
       </Button>
       {!!layerOptionsEnabled && (
-        <Tooltip title='Layer options' placement='top' arrow>
+        <Tooltip title='Layer options'>
           <ToggleButton
             selected={isLayerOptionsExpanded}
             onClick={onToggleLayerOptions}
@@ -189,7 +178,7 @@ function Header({
         </Tooltip>
       )}
       {switchable && (
-        <Tooltip title={(visible ? 'Hide' : 'Show') + ' layer'} placement='top' arrow>
+        <Tooltip title={(visible ? 'Hide' : 'Show') + ' layer'}>
           <Switch checked={visible} onChange={onChangeVisibility} />
         </Tooltip>
       )}

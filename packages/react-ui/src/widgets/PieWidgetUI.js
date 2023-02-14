@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../custom-components/echarts-for-react';
-import { useTheme } from '@material-ui/core';
+import { useTheme } from '@mui/material';
 import { disableSerie, setColor } from './utils/chartUtils';
 import { processFormatterRes } from './utils/formatterUtils';
 
@@ -40,7 +40,7 @@ function PieWidgetUI({
       show: showTooltip,
       showDelay: 1000,
       transitionDuration: 0,
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: theme.palette.black[90],
       textStyle: { color: theme.palette.common.white },
       confine: true,
       formatter:
@@ -50,7 +50,7 @@ function PieWidgetUI({
       showTooltip,
       formatter,
       theme.palette.common.white,
-      theme.palette.other.tooltip,
+      theme.palette.black,
       tooltipFormatter
     ]
   );
@@ -60,20 +60,20 @@ function PieWidgetUI({
     () => ({
       selectedMode: false,
       type: 'scroll',
-      left: theme.spacing(1),
-      bottom: -theme.spacing(0.5),
-      itemGap: theme.spacing(3),
+      left: theme.spacingValue,
+      bottom: theme.spacingValue * -0.5,
+      itemGap: theme.spacingValue * 3,
       icon: 'circle',
-      itemWidth: theme.spacing(1),
-      itemHeight: theme.spacing(1),
+      itemWidth: theme.spacingValue,
+      itemHeight: theme.spacingValue,
       // TODO: as prop?
       formatter: (name) => name.toUpperCase(),
       textStyle: {
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         color: theme.palette.text.primary,
         lineHeight: 1,
         verticalAlign: 'bottom',
-        padding: [0, 0, 0, theme.spacing(0.5)]
+        padding: [0, 0, 0, theme.spacingValue * 0.5]
       },
       inactiveColor: theme.palette.text.disabled,
       pageIcons: {
@@ -82,14 +82,12 @@ function PieWidgetUI({
           'path://M9 16.59 13.3265857 12 9 7.41 10.3319838 6 16 12 10.3319838 18z'
         ]
       },
-      pageIconSize: theme.spacing(1.5),
+      pageIconSize: theme.spacingValue * 1.5,
       pageIconColor: theme.palette.text.secondary,
       pageIconInactiveColor: theme.palette.text.disabled,
       pageTextStyle: {
-        fontFamily: theme.typography.charts.fontFamily,
-        fontSize: theme.spacing(1.5),
-        lineHeight: theme.spacing(1.75),
-        fontWeight: 'normal',
+        fontFamily: theme.typography.overlineDelicate.fontFamily,
+        fontSize: 10,
         color: theme.palette.text.primary
       }
     }),
@@ -103,16 +101,16 @@ function PieWidgetUI({
       position: 'center',
       rich: {
         b: {
-          fontFamily: theme.typography.charts.fontFamily,
-          fontSize: theme.spacing(1.75),
-          lineHeight: theme.spacing(1.75),
+          fontFamily: theme.typography.overlineDelicate.fontFamily,
+          fontSize: theme.spacingValue * 1.75,
+          lineHeight: theme.spacingValue * 1.75,
           fontWeight: 'normal',
           color: theme.palette.text.primary
         },
         per: {
           ...theme.typography,
-          fontSize: theme.spacing(3),
-          lineHeight: theme.spacing(4.5),
+          fontSize: theme.spacingValue * 3,
+          lineHeight: theme.spacingValue * 4.5,
           fontWeight: 600,
           color: theme.palette.text.primary
         }
@@ -133,7 +131,7 @@ function PieWidgetUI({
 
           const disabled =
             selectedCategories?.length && !selectedCategories.includes(clonedItem.name);
-          
+
           if (labels?.[clonedItem.name]) {
             clonedItem.name = labels[clonedItem.name];
           }
@@ -150,7 +148,7 @@ function PieWidgetUI({
         radius: ['74%', '90%'],
         selectedOffset: 0,
         hoverOffset: 5,
-        bottom: theme.spacing(2.5),
+        bottom: theme.spacingValue * 2.5,
         label: { show: showLabel, ...labelOptions },
         emphasis: {
           label: { ...labelOptions, position: undefined }
@@ -172,16 +170,16 @@ function PieWidgetUI({
   const options = useMemo(
     () => ({
       grid: {
-        left: theme.spacing(0),
-        top: theme.spacing(0),
-        right: theme.spacing(0),
-        bottom: theme.spacing(0)
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0
       },
       tooltip: tooltipOptions,
       legend: legendOptions,
       series: seriesOptions
     }),
-    [theme, tooltipOptions, seriesOptions, legendOptions]
+    [tooltipOptions, seriesOptions, legendOptions]
   );
 
   const clickEvent = useCallback(

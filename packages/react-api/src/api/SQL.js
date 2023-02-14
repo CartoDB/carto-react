@@ -119,9 +119,7 @@ function createRequest({
 
   // Post request
   const urlParamsForPost =
-    apiVersion === API_VERSIONS.V3
-      ? [`client=${CLIENT_ID}`]
-      : null;
+    apiVersion === API_VERSIONS.V3 ? [`client=${CLIENT_ID}`] : null;
 
   const payload = {
     ...rawParams,

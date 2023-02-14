@@ -1,9 +1,9 @@
-import { NoDataAlert } from '@carto/react-ui';
 import React from 'react';
+import NoDataAlert from '../../../src/widgets/NoDataAlert';
 import { buildReactPropsAsString } from '../../utils';
 
 const options = {
-  title: 'Custom Components/NoDataAlert',
+  title: 'Organisms/Widgets/NoDataAlert',
   component: NoDataAlert,
   argTypes: {
     title: {
@@ -35,7 +35,7 @@ Empty.parameters = buildReactPropsAsString({}, 'NoDataAlert');
 
 export const CustomTexts = Template.bind({});
 const CustomTextsProps = {
-  titlee: 'Example',
+  title: 'Example',
   body: "Hey, I've modified the NoDataAlert component"
 };
 CustomTexts.args = CustomTextsProps;

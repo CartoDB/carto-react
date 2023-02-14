@@ -1,6 +1,6 @@
 import React, { useState, createRef } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import {
   Box,
   Button,
@@ -11,10 +11,10 @@ import {
   LinearProgress,
   Menu,
   MenuItem,
-  Tooltip,
-  Typography
-} from '@material-ui/core';
-import { ExpandLess, ExpandMore, MoreVert } from '@material-ui/icons';
+  Tooltip
+} from '@mui/material';
+import { ExpandLess, ExpandMore, MoreVert } from '@mui/icons-material';
+import Typography from '../components/atoms/Typography';
 
 /*
 Options props must have this format:
@@ -63,12 +63,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     cursor: (props) => (props.expandable ? 'pointer' : 'default'),
-    '& .MuiButton-label': {
-      ...theme.typography.body1,
 
-      '& .MuiButton-startIcon': {
-        marginRight: theme.spacing(1)
-      }
+    '& .MuiButton-startIcon': {
+      marginTop: '3px',
+      marginRight: theme.spacing(1)
     },
     '&:hover': {
       background: 'none'
@@ -186,7 +184,7 @@ function WrapperWidgetUI(props) {
           }
           onClick={handleExpandClick}
         >
-          <Tooltip title={props.title} placement='top' arrow>
+          <Tooltip title={props.title}>
             <Typography className={classes.buttonText} align='left' variant='subtitle1'>
               {props.title}
             </Typography>
@@ -210,7 +208,7 @@ function WrapperWidgetUI(props) {
             })}
 
           {options.length > 0 && (
-            <div>
+            <>
               <IconButton
                 aria-label='options'
                 aria-controls='options-menu'
@@ -222,7 +220,7 @@ function WrapperWidgetUI(props) {
               </IconButton>
               <Menu
                 id='options-menu'
-                elevation={3}
+                elevation={8}
                 anchorOrigin={{
                   vertical: 'top',
                   horizontal: 'right'
@@ -247,7 +245,7 @@ function WrapperWidgetUI(props) {
                   </MenuItem>
                 ))}
               </Menu>
-            </div>
+            </>
           )}
         </Grid>
       </Grid>

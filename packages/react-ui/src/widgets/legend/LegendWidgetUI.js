@@ -1,20 +1,13 @@
 import React, { createRef, Fragment } from 'react';
-import {
-  Box,
-  Button,
-  Collapse,
-  Divider,
-  Grid,
-  makeStyles,
-  SvgIcon,
-  Typography
-} from '@material-ui/core';
+import { Box, Button, Collapse, Divider, Grid, SvgIcon } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import LegendWrapper from './LegendWrapper';
 import LegendCategories from './LegendCategories';
 import LegendIcon from './LegendIcon';
 import LegendRamp from './LegendRamp';
 import LegendProportion from './LegendProportion';
 import PropTypes from 'prop-types';
+import Typography from '../../components/atoms/Typography';
 
 const LayersIcon = () => (
   <SvgIcon width='24' height='24' viewBox='0 0 24 24'>
@@ -116,10 +109,7 @@ const useStylesLegendContainer = makeStyles((theme) => ({
     padding: theme.spacing(0.75, 1.25, 0.75, 3),
     borderTop: ({ collapsed }) =>
       collapsed ? 'none' : `1px solid ${theme.palette.divider}`,
-    cursor: 'pointer',
-    '& .MuiButton-label': {
-      ...theme.typography.body1
-    }
+    cursor: 'pointer'
   },
   wrapperInner: {
     maxHeight: 'max(350px, 80vh)',

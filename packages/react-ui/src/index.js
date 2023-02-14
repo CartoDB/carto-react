@@ -1,4 +1,4 @@
-import { cartoThemeOptions } from './theme/carto-theme';
+import { theme, cartoThemeOptions } from './theme/carto-theme';
 import WrapperWidgetUI from './widgets/WrapperWidgetUI';
 import CategoryWidgetUI from './widgets/CategoryWidgetUI';
 import FormulaWidgetUI from './widgets/FormulaWidgetUI';
@@ -19,12 +19,19 @@ import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCatego
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
+import ComparativePieWidgetUI from './widgets/comparative/ComparativePieWidgetUI';
 import CursorIcon from './assets/CursorIcon';
 import PolygonIcon from './assets/PolygonIcon';
 import RectangleIcon from './assets/RectangleIcon';
 import LassoIcon from './assets/LassoIcon';
 import CircleIcon from './assets/CircleIcon';
-import ComparativePieWidgetUI from './widgets/comparative/ComparativePieWidgetUI';
+import ArrowDropIcon from './assets/ArrowDropIcon';
+import Typography from './components/atoms/Typography';
+import Button from './components/atoms/Button';
+import PasswordField from './components/atoms/PasswordField';
+import SelectField from './components/atoms/SelectField';
+import UploadField from './components/molecules/UploadField';
+import AppBar from './components/organisms/AppBar';
 
 const featureSelectionIcons = {
   CursorIcon,
@@ -35,6 +42,7 @@ const featureSelectionIcons = {
 };
 
 export {
+  theme,
   cartoThemeOptions,
   WrapperWidgetUI,
   CategoryWidgetUI,
@@ -58,5 +66,12 @@ export {
   LegendCategories,
   LegendIcon,
   LegendProportion,
-  LegendRamp
+  LegendRamp,
+  Typography,
+  Button,
+  PasswordField,
+  SelectField,
+  UploadField,
+  AppBar,
+  ArrowDropIcon
 };

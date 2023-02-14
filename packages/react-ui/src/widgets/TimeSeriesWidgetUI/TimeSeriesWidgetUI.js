@@ -5,17 +5,17 @@ import {
   IconButton,
   MenuItem,
   SvgIcon,
-  Typography,
   capitalize,
-  makeStyles,
   Link
-} from '@material-ui/core';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import TimeSeriesChart from './components/TimeSeriesChart';
 import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesContext';
 import { CHART_TYPES } from './utils/constants';
 import { PropTypes } from 'prop-types';
 import { GroupDateTypes, getMonday } from '@carto/react-core';
+import Typography from '../../components/atoms/Typography';
 
 const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.YEARS]: yearCurrentDateRange,
@@ -325,7 +325,12 @@ function TimeSeriesWidgetUIContent({
           </Box>
         )}
         {showClearButton && (
-          <Link variant='caption' style={{ cursor: 'pointer' }} onClick={handleStop}>
+          <Link
+            variant='caption'
+            style={{ cursor: 'pointer' }}
+            onClick={handleStop}
+            underline='hover'
+          >
             Clear
           </Link>
         )}

@@ -7,10 +7,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  makeStyles,
   TableSortLabel,
   TablePagination
-} from '@material-ui/core';
+} from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
   tableHeadCellLabel: {
@@ -55,7 +56,6 @@ function TableWidgetUI({
   height,
   dense
 }) {
-  const classes = useStyles();
   const paginationRef = useRef(null);
 
   const handleSort = (sortField) => {
@@ -96,7 +96,6 @@ function TableWidgetUI({
       {pagination && (
         <TablePagination
           ref={paginationRef}
-          className={classes.pagination}
           rowsPerPageOptions={rowsPerPageOptions}
           component='div'
           count={totalCount}

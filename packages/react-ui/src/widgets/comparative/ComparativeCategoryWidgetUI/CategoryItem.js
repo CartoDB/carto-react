@@ -1,12 +1,5 @@
-import {
-  Box,
-  Checkbox,
-  darken,
-  Tooltip,
-  Typography,
-  useTheme,
-  withStyles
-} from '@material-ui/core';
+import { Box, Checkbox, darken, Tooltip, Typography, useTheme } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
 import React from 'react';
 import PropTypes from 'prop-types';
 import AnimatedNumber, {
@@ -27,7 +20,7 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
   const name = names[index];
 
   const compareValue = ((data.value - reference.value) / (reference.value || 1)) * 100;
-  const signText = Math.sign(compareValue) === -1 ? '-' : '+'
+  const signText = Math.sign(compareValue) === -1 ? '-' : '+';
   const valueColor =
     Math.sign(compareValue) === -1
       ? theme.palette.error.main
@@ -42,9 +35,11 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
       </Typography>
       <Box pt={1} pb={0.5}>
         <Box
-          display='flex'
-          alignItems='baseline'
-          gridGap={theme.spacing(0.75)}
+          style={{
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: theme.spacing(0.75)
+          }}
         >
           <div
             className={classes.bullet}
@@ -56,10 +51,23 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
           <Typography color='inherit' variant='caption'>
             {name}
           </Typography>
-          <Box flexGrow={1}></Box>
-          <Box ml={1} px={1} bgcolor={numberColor} color='white' borderRadius={2}>
+          <Box
+            style={{
+              flexGrow: 1
+            }}
+          ></Box>
+          <Box
+            style={{
+              marginLeft: theme.spacing(1),
+              padding: theme.spacing(0, 1),
+              backgroundColor: numberColor,
+              color: 'white',
+              borderRadius: theme.spacing(2)
+            }}
+          >
             <Typography color='inherit' variant='caption'>
-              {signText}{formatter(Math.abs(compareValue))}
+              {signText}
+              {formatter(Math.abs(compareValue))}
             </Typography>
           </Box>
         </Box>
@@ -78,7 +86,7 @@ ComparativeCategoryTooltip.propTypes = {
   item: transposedCategoryItemPropTypes,
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
   formatter: PropTypes.func,
-  index: PropTypes.number,
+  index: PropTypes.number
 };
 
 const StyledTooltip = withStyles((theme) => ({
@@ -111,21 +119,35 @@ function CategoryItem({
   }
 
   const tooltipContent = (index) => (
-    <ComparativeCategoryTooltip item={item} names={names} formatter={tooltipFormatter} index={index} />
+    <ComparativeCategoryTooltip
+      item={item}
+      names={names}
+      formatter={tooltipFormatter}
+      index={index}
+    />
   );
 
   return (
     <Box
-      display='flex'
-      alignItems='center'
-      flexWrap='nowrap'
-      overflow='hidden'
-      gridGap={theme.spacing(1)}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        flexWrap: 'nowrap',
+        overflow: 'hidden',
+        gap: theme.spacing(1)
+      }}
       onClick={() => onClick(item.key)}
       className={className}
     >
       {showCheckbox ? <Checkbox checked={checkboxChecked} /> : null}
-      <Box py={0.5} flexGrow='1' maxWidth='100%' minWidth={0}>
+      <Box
+        style={{
+          padding: theme.spacing(0.5, 0),
+          flexGrow: '1',
+          maxWidth: '100%',
+          minWidth: 0
+        }}
+      >
         <Typography variant='body2' noWrap>
           {item.label}
         </Typography>
@@ -136,10 +158,11 @@ function CategoryItem({
             placement='top-start'
           >
             <Box
-              display='flex'
-              alignItems='center'
-              gridGap={16}
-              className={classes.progressbarWrapper}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: theme.spacing(2)
+              }}
             >
               <div className={classes.progressbar}>
                 <div

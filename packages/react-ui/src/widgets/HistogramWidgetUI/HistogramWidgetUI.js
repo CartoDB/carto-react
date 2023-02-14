@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import ReactEcharts from '../../custom-components/echarts-for-react';
-import { darken, Grid, Link, makeStyles, Typography, useTheme } from '@material-ui/core';
+import { darken, Grid, Link, useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { processFormatterRes } from '../utils/formatterUtils';
 import detectTouchscreen from '../utils/detectTouchScreen';
 import useHistogramInteractivity from './useHistogramInteractivity';
+import Typography from '../../components/atoms/Typography';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 
@@ -15,10 +17,6 @@ const useStyles = makeStyles((theme) => ({
 
     '& .MuiTypography-caption': {
       color: theme.palette.text.secondary
-    },
-
-    '& .MuiButton-label': {
-      ...theme.typography.caption
     }
   },
   clearButton: {
@@ -68,15 +66,14 @@ function HistogramWidgetUI({
     () => ({
       show: tooltip,
       trigger: 'item',
-      padding: [theme.spacing(0.5), theme.spacing(1)],
+      padding: [theme.spacingValue * 0.5, theme.spacingValue],
       borderWidth: 0,
       textStyle: {
         ...theme.typography.caption,
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: 11,
         color: theme.palette.common.white
       },
-      backgroundColor: theme.palette.other.tooltip,
+      backgroundColor: theme.palette.black[90],
       confine: true,
       position: 'top',
       formatter(params) {
@@ -98,7 +95,7 @@ function HistogramWidgetUI({
       splitLine: {
         show: true,
         lineStyle: {
-          color: theme.palette.charts.axisLine
+          color: theme.palette.black[4]
         }
       },
       axisTick: {
@@ -107,9 +104,14 @@ function HistogramWidgetUI({
       axisLabel: {
         showMinLabel: true,
         showMaxLabel: true,
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         hideOverlap: true,
-        padding: [theme.spacing(0.5), theme.spacing(0.5), 0, theme.spacing(0.5)],
+        padding: [
+          theme.spacingValue * 0.5,
+          theme.spacingValue * 0.5,
+          0,
+          theme.spacingValue * 0.5
+        ],
         formatter: (value) => {
           const formattedValue = processFormatterRes(xAxisFormatter(value));
           return value === min
@@ -118,7 +120,7 @@ function HistogramWidgetUI({
             ? formatMax(formattedValue)
             : formattedValue;
         },
-        color: theme.palette.charts.maxLabel
+        color: theme.palette.black[60]
       }
     }),
     [min, max, formattedData.length, theme, xAxisFormatter]
@@ -134,7 +136,7 @@ function HistogramWidgetUI({
       splitLine: {
         show: true,
         lineStyle: {
-          color: theme.palette.charts.axisLine
+          color: theme.palette.black[4]
         }
       },
       axisTick: {
@@ -143,7 +145,7 @@ function HistogramWidgetUI({
       axisLabel: {
         margin: 0,
         verticalAlign: 'bottom',
-        padding: [0, 0, theme.typography.charts.fontSize, 0],
+        padding: [0, 0, theme.spacingValue * 1.25, 0],
         show: true,
         showMaxLabel: true,
         showMinLabel: false,
@@ -153,19 +155,19 @@ function HistogramWidgetUI({
             Math.max(...data.map((d) => d ?? Number.MIN_SAFE_INTEGER)) || 1;
           let col = 'transparent';
           if (value >= maxValue) {
-            col = theme.palette.charts.maxLabel;
+            col = theme.palette.black[60];
           }
 
           return col;
         },
-        ...theme.typography.charts,
+        ...theme.typography.overlineDelicate,
         formatter: (v) => processFormatterRes(yAxisFormatter(v))
       }
     }),
     [
-      theme.palette.charts.axisLine,
-      theme.palette.charts.maxLabel,
-      theme.typography.charts,
+      theme.palette.black,
+      theme.spacingValue,
+      theme.typography.overlineDelicate,
       data,
       yAxisFormatter
     ]
@@ -175,9 +177,7 @@ function HistogramWidgetUI({
   const seriesOptions = useMemo(() => {
     const dataWithColor = formattedData.map((item, idx) => {
       const isDisabled = selectedBars.length && selectedBars.indexOf(idx) === -1;
-      const color = isDisabled
-        ? theme.palette.charts.disabled
-        : theme.palette.secondary.main;
+      const color = isDisabled ? theme.palette.black[25] : theme.palette.secondary.main;
 
       return { value: item, itemStyle: { color } };
     });
@@ -226,7 +226,7 @@ function HistogramWidgetUI({
   }, [
     formattedData,
     markAreaOptions,
-    theme.palette.charts.disabled,
+    theme.palette.black,
     theme.palette.secondary.main,
     selectedBars,
     animation
@@ -235,10 +235,10 @@ function HistogramWidgetUI({
   const options = useMemo(
     () => ({
       grid: {
-        left: theme.spacing(0.1),
-        right: theme.spacing(0.1),
-        top: theme.spacing(2),
-        bottom: theme.spacing(0.5),
+        left: theme.spacingValue * 0.1,
+        right: theme.spacingValue * 0.1,
+        top: theme.spacingValue * 2,
+        bottom: theme.spacingValue * 0.5,
         containLabel: true
       },
       tooltip: tooltipOptions,
@@ -264,13 +264,14 @@ function HistogramWidgetUI({
           alignItems='center'
           className={classes.optionsSelectedBar}
         >
-          <Typography variant='caption'>
+          <Typography variant='caption' weight='strong'>
             {selectedBars.length ? yAxisFormatter(countSelectedElements) : 'All'} selected
           </Typography>
           {selectedBars.length > 0 && (
             <Link
               className={classes.clearButton}
               onClick={() => onSelectedBarsChange([])}
+              underline='hover'
             >
               Clear
             </Link>
@@ -346,7 +347,9 @@ function defaultTooltipFormatter(params, xAxisFormatter, yAxisFormatter) {
   }
 
   const [left, right, value] = params.data.value;
-  const title = `${processFormatterRes(xAxisFormatter(left))} <span style="vertical-align: 1px;">—</span> ${processFormatterRes(
+  const title = `${processFormatterRes(
+    xAxisFormatter(left)
+  )} <span style="vertical-align: 1px;">—</span> ${processFormatterRes(
     xAxisFormatter(right)
   )}`;
   const formattedValue = processFormatterRes(yAxisFormatter(value));
