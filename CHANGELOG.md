@@ -4,6 +4,7 @@
 
 ## 2.0
 
+### 2.0.0-beta.0 (2023-02-14)
 ### 2.0.0-alpha.0 (2023-02-13)
 
 - MUI5 & new Design System upgrade [#494](https://github.com/CartoDB/carto-react/pull/494)
