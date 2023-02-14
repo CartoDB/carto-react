@@ -4,9 +4,11 @@
 
 ## 2.0
 
-### 2.0.0-beta.0 (2023-02-14)
+### 2.0.0-beta.1 (2023-02-14)
 
 - Fix unselected row styles in Category Widget [#601](https://github.com/CartoDB/carto-react/pull/601)
+
+### 2.0.0-beta.0 (2023-02-14)
 
 ### 2.0.0-alpha.0 (2023-02-13)
 
