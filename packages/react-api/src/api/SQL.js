@@ -74,11 +74,12 @@ function createRequest({
   queryParameters = []
 }) {
   const { abortController, ...otherOptions } = opts;
+  const client = opts.client || CLIENT_ID;
 
   const { apiVersion = API_VERSIONS.V2 } = credentials;
 
   const rawParams = {
-    client: CLIENT_ID,
+    client,
     q: query?.trim(),
     ...otherOptions
   };
@@ -118,8 +119,7 @@ function createRequest({
   }
 
   // Post request
-  const urlParamsForPost =
-    apiVersion === API_VERSIONS.V3 ? [`client=${CLIENT_ID}`] : null;
+  const urlParamsForPost = apiVersion === API_VERSIONS.V3 ? [`client=${client}`] : null;
 
   const payload = {
     ...rawParams,

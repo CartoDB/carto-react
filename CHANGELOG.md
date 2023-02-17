@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix overwrite default client in SQL post request [#603](https://github.com/CartoDB/carto-react/pull/603)
+
 ## 2.0
 
 ### 2.0.0-beta.1 (2023-02-14)
