@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { cartoThemeOptions, theme } from '../../src/theme/carto-theme';
 import { BREAKPOINTS } from '../../src/theme/themeConstants';
+import { wd } from 'paths.macro';
 
 const customViewports = {
   xs: {
@@ -114,5 +115,10 @@ export const parameters = {
   },
   status: {
     statuses: componentsStatus
+  },
+  storySource: {
+    repository: 'https://github.com/CartoDB/carto-react',
+    workingDir: wd,
+    branch: 'master'
   }
 };

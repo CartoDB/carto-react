@@ -5,6 +5,7 @@ module.exports = {
     '@storybook/addon-essentials',
     'storybook-addon-designs',
     '@storybook/addon-viewport',
+    'storybook-vscode-component/register',
     '@etchteam/storybook-addon-status'
   ],
   staticDirs: ['../assets']
