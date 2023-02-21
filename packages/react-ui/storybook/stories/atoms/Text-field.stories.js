@@ -4,6 +4,7 @@ import { EuroOutlined, InfoOutlined, MapOutlined } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import PasswordField from '../../../src/components/atoms/PasswordField';
+import { getComponentUrl } from '../../utils';
 
 const options = {
   title: 'Atoms/Text Field',
@@ -59,7 +60,7 @@ const options = {
       type: 'validated'
     },
     storySource: {
-      componentPath: '/src/theme/sections/components/forms.js'
+      componentPath: getComponentUrl('theme/sections/components/forms.js')
     }
   }
 };

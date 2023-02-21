@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormControlLabel, Grid, Switch } from '@mui/material';
+import { getComponentUrl } from '../../utils';
 
 const options = {
   title: 'Atoms/Switch',
@@ -31,7 +32,7 @@ const options = {
       type: 'validated'
     },
     storySource: {
-      componentPath: '/src/theme/sections/components/forms.js'
+      componentPath: getComponentUrl('theme/sections/components/forms.js')
     }
   }
 };

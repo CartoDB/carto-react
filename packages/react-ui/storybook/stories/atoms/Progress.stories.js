@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Button, CircularProgress, Grid, LinearProgress } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
+import { getComponentUrl } from '../../utils';
 
 const options = {
   title: 'Atoms/Progress',
@@ -47,7 +48,7 @@ const options = {
       type: 'needUpdate'
     },
     storySource: {
-      componentPath: '/src/theme/sections/components/forms.js'
+      componentPath: getComponentUrl('theme/sections/components/forms.js')
     }
   }
 };

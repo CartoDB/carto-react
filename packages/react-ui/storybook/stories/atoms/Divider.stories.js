@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Divider, Grid } from '@mui/material';
+import { getComponentUrl } from '../../utils';
 
 const options = {
   title: 'Atoms/Divider',
@@ -21,7 +22,7 @@ const options = {
       type: 'validated'
     },
     storySource: {
-      componentPath: '/src/theme/sections/components/dataDisplay.js'
+      componentPath: getComponentUrl('theme/sections/components/dataDisplay.js')
     }
   }
 };

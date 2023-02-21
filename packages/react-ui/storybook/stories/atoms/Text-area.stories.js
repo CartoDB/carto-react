@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Grid, TextField } from '@mui/material';
 import Typography from '../../../src/components/atoms/Typography';
 import makeStyles from '@mui/styles/makeStyles';
+import { getComponentUrl } from '../../utils';
 
 const options = {
   title: 'Atoms/Text Area',
@@ -57,7 +58,7 @@ const options = {
       type: 'validated'
     },
     storySource: {
-      componentPath: '/src/theme/sections/components/forms.js'
+      componentPath: getComponentUrl('theme/sections/components/forms.js')
     }
   }
 };

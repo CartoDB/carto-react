@@ -2,6 +2,7 @@ import React from 'react';
 import { IconButton, Grid, Tooltip } from '@mui/material';
 import { CheckCircleOutlined } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
+import { getComponentUrl } from '../../utils';
 
 const options = {
   title: 'Atoms/IconButton',
@@ -41,7 +42,7 @@ const options = {
       type: 'validated'
     },
     storySource: {
-      componentPath: '/src/theme/sections/components/buttons.js'
+      componentPath: getComponentUrl('theme/sections/components/buttons.js')
     }
   }
 };

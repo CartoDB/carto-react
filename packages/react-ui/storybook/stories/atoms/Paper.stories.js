@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Paper } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
+import { getComponentUrl } from '../../utils';
 
 const options = {
   title: 'Atoms/Paper',
@@ -24,7 +25,7 @@ const options = {
       type: 'needUpdate'
     },
     storySource: {
-      componentPath: '/src/theme/sections/components/dataDisplay.js'
+      componentPath: getComponentUrl('theme/sections/components/dataDisplay.js')
     }
   }
 };

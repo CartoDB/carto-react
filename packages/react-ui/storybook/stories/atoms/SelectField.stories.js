@@ -11,6 +11,7 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
+import { getComponentUrl } from '../../utils';
 
 const options = {
   title: 'Atoms/Select',
@@ -66,7 +67,7 @@ const options = {
       type: 'validated'
     },
     storySource: {
-      componentPath: '/src/components/atoms/SelectField.js'
+      componentPath: getComponentUrl('components/atoms/SelectField.js')
     }
   }
 };

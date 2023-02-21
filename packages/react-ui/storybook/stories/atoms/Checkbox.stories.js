@@ -1,5 +1,6 @@
 import React from 'react';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
+import { getComponentUrl } from '../../utils';
 
 const options = {
   title: 'Atoms/Checkbox',
@@ -41,7 +42,7 @@ const options = {
       type: 'validated'
     },
     storySource: {
-      componentPath: '/src/theme/sections/components/forms.js'
+      componentPath: getComponentUrl('theme/sections/components/forms.js')
     }
   }
 };

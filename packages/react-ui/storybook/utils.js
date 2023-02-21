@@ -56,3 +56,13 @@ export function buildReactPropsAsString(props, componentName) {
     }
   };
 }
+
+export function getComponentUrl(path) {
+  const isDevelopment = process.env.NODE_ENV === 'development';
+
+  if (isDevelopment) {
+    return `/src/${path}`;
+  }
+
+  return `/packages/react-ui/src/${path}`;
+}

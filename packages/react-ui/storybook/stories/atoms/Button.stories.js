@@ -4,6 +4,7 @@ import { Add, Close } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Typography from '../../../src/components/atoms/Typography';
 import Button from '../../../src/components/atoms/Button';
+import { getComponentUrl } from '../../utils';
 
 const options = {
   title: 'Atoms/Button',
@@ -50,7 +51,7 @@ const options = {
       type: 'validated'
     },
     storySource: {
-      componentPath: '/src/components/atoms/Button.js'
+      componentPath: getComponentUrl('components/atoms/Button.js')
     }
   }
 };

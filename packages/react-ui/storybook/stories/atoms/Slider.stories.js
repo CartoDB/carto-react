@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Slider, TextField, Tooltip } from '@mui/material';
+import { getComponentUrl } from '../../utils';
 
 const options = {
   title: 'Atoms/Slider',
@@ -138,7 +139,7 @@ const options = {
       type: 'needUpdate'
     },
     storySource: {
-      componentPath: '/src/theme/sections/components/forms.js'
+      componentPath: getComponentUrl('theme/sections/components/forms.js')
     }
   }
 };
