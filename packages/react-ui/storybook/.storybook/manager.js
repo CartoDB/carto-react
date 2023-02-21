@@ -7,7 +7,7 @@ const theme = create({
   base: 'light',
 
   // Brand
-  brandTitle: `CARTO DS v.${version}`,
+  brandTitle: `CARTO DS ${version}`,
   brandImage: undefined
 });
 
