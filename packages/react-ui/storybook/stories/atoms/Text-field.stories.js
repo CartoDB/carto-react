@@ -57,6 +57,9 @@ const options = {
     },
     status: {
       type: 'validated'
+    },
+    storySource: {
+      componentPath: '/src/theme/sections/components/forms.js'
     }
   }
 };

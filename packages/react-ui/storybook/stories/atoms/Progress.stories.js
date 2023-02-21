@@ -45,6 +45,9 @@ const options = {
     },
     status: {
       type: 'needUpdate'
+    },
+    storySource: {
+      componentPath: '/src/theme/sections/components/forms.js'
     }
   }
 };

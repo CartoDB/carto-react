@@ -48,6 +48,9 @@ const options = {
     },
     status: {
       type: 'validated'
+    },
+    storySource: {
+      componentPath: '/src/components/atoms/Button.js'
     }
   }
 };
