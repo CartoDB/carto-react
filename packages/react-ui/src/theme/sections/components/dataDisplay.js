@@ -270,7 +270,8 @@ export const dataDisplayOverrides = {
           height: ICON_SIZE_M,
           margin: 0,
           color: commonPalette.secondary.contrastText,
-          backgroundColor: commonPalette.background.paper
+          backgroundColor: commonPalette.background.paper,
+          border: `1px solid ${commonPalette.action.hover}`
         },
         '& .MuiChip-icon': {
           margin: 0,
@@ -283,10 +284,17 @@ export const dataDisplayOverrides = {
         '&.Mui-disabled': {
           color: commonPalette.text.disabled,
           backgroundColor: commonPalette.action.disabledBackground,
+          opacity: 1,
 
           '& .MuiChip-deleteIcon, & .MuiChip-icon': {
             color: commonPalette.action.disabled
+          },
+          '& .MuiAvatar-root': {
+            opacity: 0.6
           }
+        },
+        '& .MuiChip-deleteIcon': {
+          color: commonPalette.black[60]
         }
       },
 
@@ -300,7 +308,11 @@ export const dataDisplayOverrides = {
         }
       },
       filledPrimary: {
-        backgroundColor: commonPalette.primary.main
+        backgroundColor: commonPalette.primary.main,
+
+        '& .MuiChip-deleteIcon': {
+          color: commonPalette.white[60]
+        }
       },
       filledSecondary: {
         backgroundColor: commonPalette.secondary.main
