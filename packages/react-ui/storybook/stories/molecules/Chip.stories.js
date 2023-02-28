@@ -68,7 +68,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A28895'
     },
     status: {
-      type: 'readyToReview'
+      type: 'validated'
     }
   }
 };
@@ -378,7 +378,7 @@ const SizeTemplate = ({ ...args }) => {
         </Typography>
         <Box className={classes.container}>
           <Typography variant='body2' className={classes.label}>
-            {'Default'}
+            {'Default (hover icon)'}
           </Typography>
           <Grid container item spacing={6}>
             <Grid item>
@@ -391,7 +391,7 @@ const SizeTemplate = ({ ...args }) => {
         </Box>
         <Box className={classes.container}>
           <Typography variant='body2' className={classes.label}>
-            {'Clickable (hover)'}
+            {'Clickable (hover chip)'}
           </Typography>
           <Grid container item spacing={6}>
             <Grid item>
@@ -423,7 +423,7 @@ const SizeTemplate = ({ ...args }) => {
         </Typography>
         <Box className={classes.container}>
           <Typography variant='body2' className={classes.label}>
-            {'Default'}
+            {'Default (hover icon)'}
           </Typography>
           <Grid container item spacing={6}>
             <Grid item>
@@ -436,7 +436,7 @@ const SizeTemplate = ({ ...args }) => {
         </Box>
         <Box className={classes.container}>
           <Typography variant='body2' className={classes.label}>
-            {'Clickable (hover)'}
+            {'Clickable (hover chip)'}
           </Typography>
           <Grid container item spacing={6}>
             <Grid item>
@@ -468,7 +468,7 @@ const SizeTemplate = ({ ...args }) => {
         </Typography>
         <Box className={classes.container}>
           <Typography variant='body2' className={classes.label}>
-            {'Default'}
+            {'Default (hover icon)'}
           </Typography>
           <Grid container item spacing={6}>
             <Grid item>
@@ -481,7 +481,7 @@ const SizeTemplate = ({ ...args }) => {
         </Box>
         <Box className={classes.container}>
           <Typography variant='body2' className={classes.label}>
-            {'Clickable (hover)'}
+            {'Clickable (hover chip)'}
           </Typography>
           <Grid container item spacing={6}>
             <Grid item>
