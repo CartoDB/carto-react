@@ -323,6 +323,9 @@ export const dataDisplayOverrides = {
         '&.Mui-disabled': {
           borderColor: commonPalette.default.outlinedBorder,
           backgroundColor: 'transparent'
+        },
+        '& .MuiChip-deleteIcon:hover': {
+          color: commonPalette.text.primary
         }
       },
       outlinedPrimary: {
@@ -382,11 +385,6 @@ export const dataDisplayOverrides = {
       clickable: {
         '&:active': {
           boxShadow: 'none'
-        },
-        '&:hover': {
-          '& .MuiChip-deleteIconColorDefault': {
-            color: commonPalette.text.primary
-          }
         },
 
         '&.MuiChip-outlined': {
