@@ -260,5 +260,4 @@ Sizes.argTypes = disabledSizesArgTypes;
 Sizes.args = { disabled: false };
 
 export const Group = GroupTemplate.bind({});
-Sizes.argTypes = disabledStatesArgTypes;
-Sizes.args = { disabled: false };
+Group.args = { disabled: false };

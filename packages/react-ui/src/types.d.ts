@@ -319,7 +319,7 @@ export interface AppBarProps extends MuiAppBarProps {
   showBurgerMenu?: boolean;
 }
 
-// AppBar
+// Optional Label
 export type OptionalLabelProps = {
   label: string;
 };
