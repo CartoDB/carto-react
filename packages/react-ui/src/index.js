@@ -32,6 +32,7 @@ import PasswordField from './components/atoms/PasswordField';
 import SelectField from './components/atoms/SelectField';
 import UploadField from './components/molecules/UploadField';
 import AppBar from './components/organisms/AppBar';
+import OptionalLabel from './components/atoms/OptionalLabel';
 
 const featureSelectionIcons = {
   CursorIcon,
@@ -73,5 +74,6 @@ export {
   SelectField,
   UploadField,
   AppBar,
-  ArrowDropIcon
+  ArrowDropIcon,
+  OptionalLabel
 };
