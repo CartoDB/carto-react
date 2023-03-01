@@ -1,5 +1,13 @@
 import React from 'react';
-import { Checkbox, FormControlLabel, Grid } from '@mui/material';
+import {
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
+  Grid
+} from '@mui/material';
+import OptionalLabel from '../../../src/components/atoms/OptionalLabel';
 
 const options = {
   title: 'Atoms/Checkbox',
@@ -163,6 +171,71 @@ const SizeTemplate = ({ ...args }) => {
   );
 };
 
+const GroupTemplate = ({ ...args }) => {
+  return (
+    <Grid container spacing={2}>
+      <Grid item container spacing={2}>
+        <Grid item xs={4}>
+          <FormControl required component='fieldset'>
+            <FormLabel component='legend'>Group Label</FormLabel>
+            <FormGroup>
+              <FormControlLabel
+                {...args}
+                control={<Checkbox checked />}
+                label='Gilad Gray'
+              />
+              <FormControlLabel {...args} control={<Checkbox />} label='Jason Killian' />
+              <FormControlLabel
+                {...args}
+                control={<Checkbox checked indeterminate />}
+                label='Antoine Llorca'
+              />
+            </FormGroup>
+          </FormControl>
+        </Grid>
+        <Grid item xs={4}>
+          <FormControl component='fieldset'>
+            <FormLabel component='legend'>
+              <OptionalLabel label={'Group Label'} />
+            </FormLabel>
+            <FormGroup>
+              <FormControlLabel
+                {...args}
+                control={<Checkbox checked />}
+                label='Gilad Gray'
+              />
+              <FormControlLabel {...args} control={<Checkbox />} label='Jason Killian' />
+              <FormControlLabel
+                {...args}
+                control={<Checkbox checked indeterminate />}
+                label='Antoine Llorca'
+              />
+            </FormGroup>
+          </FormControl>
+        </Grid>
+        <Grid item xs={4}>
+          <FormControl component='fieldset'>
+            <FormLabel component='legend'>Group Label</FormLabel>
+            <FormGroup>
+              <FormControlLabel
+                {...args}
+                control={<Checkbox checked />}
+                label='Gilad Gray'
+              />
+              <FormControlLabel {...args} control={<Checkbox />} label='Jason Killian' />
+              <FormControlLabel
+                {...args}
+                control={<Checkbox checked indeterminate />}
+                label='Antoine Llorca'
+              />
+            </FormGroup>
+          </FormControl>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
+
 const disabledSizesArgTypes = {
   size: { table: { disable: true } },
   checked: { table: { disable: true } },
@@ -184,4 +257,8 @@ States.args = { size: 'medium' };
 
 export const Sizes = SizeTemplate.bind({});
 Sizes.argTypes = disabledSizesArgTypes;
+Sizes.args = { disabled: false };
+
+export const Group = GroupTemplate.bind({});
+Sizes.argTypes = disabledStatesArgTypes;
 Sizes.args = { disabled: false };

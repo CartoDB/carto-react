@@ -40,6 +40,32 @@ const checkboxRadioOverrides = {
   })
 };
 
+const LabelOverrides = {
+  root: {
+    position: 'static',
+    transform: 'none',
+    marginBottom: getSpacing(1),
+    ...themeTypography.caption,
+    fontWeight: 500,
+    color: commonPalette.text.primary
+  },
+  sizeSmall: {
+    marginBottom: getSpacing(0.5)
+  },
+  standard: {
+    marginBottom: 0
+  },
+  asterisk: {
+    color: 'transparent',
+
+    '&::after': {
+      content: '"(required)"',
+      marginLeft: getSpacing(-0.5),
+      color: commonPalette.text.secondary
+    }
+  }
+};
+
 export const formsOverrides = {
   // Checkbox
   MuiCheckbox: {
@@ -379,20 +405,12 @@ export const formsOverrides = {
   // Label
   MuiInputLabel: {
     styleOverrides: {
-      root: {
-        position: 'static',
-        transform: 'none',
-        marginBottom: getSpacing(1),
-        ...themeTypography.caption,
-        fontWeight: 500,
-        color: commonPalette.text.primary
-      },
-      sizeSmall: {
-        marginBottom: getSpacing(0.5)
-      },
-      standard: {
-        marginBottom: 0
-      }
+      ...LabelOverrides
+    }
+  },
+  MuiFormLabel: {
+    styleOverrides: {
+      ...LabelOverrides
     }
   },
 

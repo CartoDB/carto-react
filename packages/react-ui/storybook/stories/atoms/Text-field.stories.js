@@ -4,6 +4,7 @@ import { EuroOutlined, InfoOutlined, MapOutlined } from '@mui/icons-material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import PasswordField from '../../../src/components/atoms/PasswordField';
+import OptionalLabel from '../../../src/components/atoms/OptionalLabel';
 
 const options = {
   title: 'Atoms/Text Field',
@@ -102,7 +103,12 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
           <Typography variant='body2' className={classes.label}>
             {'Filled'}
           </Typography>
-          <TextField {...rest} label={label} variant='filled' placeholder={placeholder} />
+          <TextField
+            {...rest}
+            label={<OptionalLabel label={label} />}
+            variant='filled'
+            placeholder={placeholder}
+          />
         </Box>
       </Grid>
       <Grid item>
@@ -113,6 +119,7 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
           <TextField
             {...rest}
             label={label}
+            required
             variant='outlined'
             placeholder={placeholder}
           />
