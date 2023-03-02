@@ -1,7 +1,6 @@
 import React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Grid, TextField } from '@mui/material';
-import OptionalLabel from '../../../src/components/atoms/OptionalLabel';
 
 const options = {
   title: 'Molecules/Autocomplete',
@@ -89,12 +88,7 @@ const AutocompleteTemplate = ({ disabled, size, ...args }) => {
             getOptionLabel={(option) => option.title}
             disabled={disabled}
             renderInput={(params) => (
-              <TextField
-                {...args}
-                {...params}
-                size={size}
-                label={<OptionalLabel label={'Basic autocomplete'} />}
-              />
+              <TextField {...args} {...params} size={size} label={'Basic autocomplete'} />
             )}
             size={size}
           />

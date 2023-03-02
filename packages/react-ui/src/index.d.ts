@@ -31,7 +31,7 @@ import PasswordField from './components/atoms/PasswordField';
 import SelectField from './components/atoms/SelectField';
 import UploadField from './components/molecules/UploadField';
 import AppBar from './components/organisms/AppBar';
-import OptionalLabel from './components/atoms/OptionalLabel';
+import LabelWithMarker from './components/atoms/LabelWithMarker';
 
 export {
   theme,
@@ -68,5 +68,5 @@ export {
   SelectField,
   UploadField,
   AppBar,
-  OptionalLabel
+  LabelWithMarker
 };

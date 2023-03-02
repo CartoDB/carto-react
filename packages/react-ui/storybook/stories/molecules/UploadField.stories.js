@@ -3,7 +3,6 @@ import { Box, Grid } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import UploadField from '../../../src/components/molecules/UploadField';
-import OptionalLabel from '../../../src/components/atoms/OptionalLabel';
 
 const options = {
   title: 'Molecules/UploadField',
@@ -132,7 +131,7 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             {...rest}
             variant='filled'
             files={files}
-            label={<OptionalLabel label={label} />}
+            label={label}
             placeholder={placeholder}
             onChange={handleUploadFieldChange}
           />

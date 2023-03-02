@@ -13,7 +13,6 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
-import OptionalLabel from '../../../src/components/atoms/OptionalLabel';
 
 const options = {
   title: 'Atoms/Select',
@@ -137,7 +136,7 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
           </Typography>
           <SelectField
             {...rest}
-            label={<OptionalLabel label={label} />}
+            label={label}
             variant='filled'
             placeholder={placeholder}
             items={menuItems}
@@ -312,9 +311,7 @@ const SizeTemplate = ({
         </Grid>
         <Grid item xs={3}>
           <FormControl>
-            <InputLabel>
-              <OptionalLabel label={label} />
-            </InputLabel>
+            <InputLabel>{label}</InputLabel>
             <Select {...rest} variant='outlined' size={size}>
               {menuItems.map((option) => (
                 <MenuItem key={option.label} value={option.label}>
