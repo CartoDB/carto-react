@@ -14,6 +14,7 @@ const LabelWithMarker = ({ label, type }) => {
         component='span'
         variant='inherit'
         color='textSecondary'
+        weight='regular'
         style={{ marginLeft: theme.spacing(0.5) }}
       >
         {isRequired ? '(required)' : '(optional)'}
