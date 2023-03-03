@@ -59,16 +59,18 @@ const LabelOverrides = {
   // These styles avoid (by now) the need to review current forms and change those with a required mark.
   // TODO: remored asterisk completely and use instead LabelWithIndicator component to mark also required ones.
   asterisk: {
-    color: 'transparent',
-
-    '&.Mui-error': {
+    '&, &.Mui-error': {
       color: 'transparent'
     },
     '&::after': {
       content: '"(required)"',
       marginLeft: getSpacing(-0.5),
       color: commonPalette.text.secondary,
-      fontWeight: 400
+      fontWeight: 400,
+
+      '.Mui-disabled &': {
+        color: commonPalette.text.disabled
+      }
     }
   }
 };

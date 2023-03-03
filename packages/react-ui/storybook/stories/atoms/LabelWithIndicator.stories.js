@@ -141,14 +141,28 @@ const UseCasesTemplate = ({ label, ...rest }) => {
           </Typography>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <TextField
                   label={<LabelWithIndicator {...rest} label={label} />}
                   placeholder='Placeholder text'
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <TextField label={label} required placeholder='Placeholder text' />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  label={<LabelWithIndicator {...rest} label={label} />}
+                  placeholder='Placeholder text'
+                  error
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  label={<LabelWithIndicator {...rest} label={label} />}
+                  placeholder='Placeholder text'
+                  disabled
+                />
               </Grid>
             </Grid>
           </Grid>
@@ -161,19 +175,35 @@ const UseCasesTemplate = ({ label, ...rest }) => {
           </Typography>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <SelectField
                   label={<LabelWithIndicator {...rest} label={label} />}
                   placeholder='Placeholder text'
                   items={menuItems}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <SelectField
                   label={label}
                   required
                   placeholder='Placeholder text'
                   items={menuItems}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <SelectField
+                  label={<LabelWithIndicator {...rest} label={label} />}
+                  placeholder='Placeholder text'
+                  items={menuItems}
+                  error
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <SelectField
+                  label={<LabelWithIndicator {...rest} label={label} />}
+                  placeholder='Placeholder text'
+                  items={menuItems}
+                  disabled
                 />
               </Grid>
             </Grid>
@@ -187,7 +217,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
           </Typography>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <UploadField
                   files={files}
                   label={<LabelWithIndicator {...rest} label={label} />}
@@ -195,13 +225,31 @@ const UseCasesTemplate = ({ label, ...rest }) => {
                   onChange={handleUploadFieldChange}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <UploadField
                   files={files}
                   label={label}
                   required
                   placeholder='Placeholder text'
                   onChange={handleUploadFieldChange}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <UploadField
+                  files={files}
+                  label={<LabelWithIndicator {...rest} label={label} />}
+                  placeholder='Placeholder text'
+                  onChange={handleUploadFieldChange}
+                  error
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <UploadField
+                  files={files}
+                  label={<LabelWithIndicator {...rest} label={label} />}
+                  placeholder='Placeholder text'
+                  onChange={handleUploadFieldChange}
+                  disabled
                 />
               </Grid>
             </Grid>
@@ -215,19 +263,35 @@ const UseCasesTemplate = ({ label, ...rest }) => {
           </Typography>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <PasswordField
                   label={<LabelWithIndicator {...rest} label={label} />}
                   placeholder='Placeholder text'
                   defaultValue='1234'
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <PasswordField
                   label={label}
                   required
                   placeholder='Placeholder text'
                   defaultValue='1234'
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <PasswordField
+                  label={<LabelWithIndicator {...rest} label={label} />}
+                  placeholder='Placeholder text'
+                  defaultValue='1234'
+                  error
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <PasswordField
+                  label={<LabelWithIndicator {...rest} label={label} />}
+                  placeholder='Placeholder text'
+                  defaultValue='1234'
+                  disabled
                 />
               </Grid>
             </Grid>
@@ -241,7 +305,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
           </Typography>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <Autocomplete
                   options={top100Films}
                   renderInput={(params) => (
@@ -253,11 +317,37 @@ const UseCasesTemplate = ({ label, ...rest }) => {
                   size='small'
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <Autocomplete
                   options={top100Films}
                   renderInput={(params) => (
                     <TextField size='small' label={label} required />
+                  )}
+                  size='small'
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <Autocomplete
+                  options={top100Films}
+                  renderInput={(params) => (
+                    <TextField
+                      size='small'
+                      label={<LabelWithIndicator {...rest} label={label} />}
+                      error
+                    />
+                  )}
+                  size='small'
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <Autocomplete
+                  options={top100Films}
+                  renderInput={(params) => (
+                    <TextField
+                      size='small'
+                      label={<LabelWithIndicator {...rest} label={label} />}
+                      disabled
+                    />
                   )}
                   size='small'
                 />
@@ -273,7 +363,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
           </Typography>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <FormControl component='fieldset'>
                   <FormLabel component='legend'>
                     <LabelWithIndicator label={'Group Label'} />
@@ -288,9 +378,39 @@ const UseCasesTemplate = ({ label, ...rest }) => {
                   </FormGroup>
                 </FormControl>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <FormControl required component='fieldset'>
                   <FormLabel component='legend'>Group Label</FormLabel>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox checked />} label='Gilad Gray' />
+                    <FormControlLabel control={<Checkbox />} label='Jason Killian' />
+                    <FormControlLabel
+                      control={<Checkbox checked indeterminate />}
+                      label='Antoine Llorca'
+                    />
+                  </FormGroup>
+                </FormControl>
+              </Grid>
+              <Grid item xs={3}>
+                <FormControl error component='fieldset'>
+                  <FormLabel component='legend'>
+                    <LabelWithIndicator label={'Group Label'} />
+                  </FormLabel>
+                  <FormGroup>
+                    <FormControlLabel control={<Checkbox checked />} label='Gilad Gray' />
+                    <FormControlLabel control={<Checkbox />} label='Jason Killian' />
+                    <FormControlLabel
+                      control={<Checkbox checked indeterminate />}
+                      label='Antoine Llorca'
+                    />
+                  </FormGroup>
+                </FormControl>
+              </Grid>
+              <Grid item xs={3}>
+                <FormControl disabled component='fieldset'>
+                  <FormLabel component='legend'>
+                    <LabelWithIndicator label={'Group Label'} />
+                  </FormLabel>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox checked />} label='Gilad Gray' />
                     <FormControlLabel control={<Checkbox />} label='Jason Killian' />

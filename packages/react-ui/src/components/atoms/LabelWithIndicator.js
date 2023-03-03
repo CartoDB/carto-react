@@ -1,11 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTheme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import Typography from './Typography';
 
+const useStyles = makeStyles((theme) => ({
+  indicator: {
+    marginLeft: theme.spacing(0.5),
+
+    '.Mui-disabled &': {
+      color: theme.palette.text.disabled
+    }
+  }
+}));
+
 const LabelWithIndicator = ({ label, type }) => {
+  const classes = useStyles();
   const isRequired = type === 'required';
-  const theme = useTheme();
 
   return (
     <>
@@ -15,7 +25,7 @@ const LabelWithIndicator = ({ label, type }) => {
         variant='inherit'
         color='textSecondary'
         weight='regular'
-        style={{ marginLeft: theme.spacing(0.5) }}
+        className={classes.indicator}
       >
         {isRequired ? '(required)' : '(optional)'}
       </Typography>
