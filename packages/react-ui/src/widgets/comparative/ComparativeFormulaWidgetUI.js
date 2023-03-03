@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Box, useTheme } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 import AnimatedNumber, {
   animationOptionsPropTypes
 } from '../../custom-components/AnimatedNumber';
@@ -10,30 +10,32 @@ import Typography from '../../components/atoms/Typography';
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
 
-const useStyles = makeStyles((theme) => ({
-  formulaGroup: {
-    '& + $formulaGroup': {
-      marginTop: theme.spacing(2)
-    }
-  },
-  firstLine: {
-    margin: 0,
-    ...theme.typography.h5,
-    fontWeight: Number(theme.typography.fontWeightMedium),
-    color: theme.palette.text.primary,
-    display: 'flex'
-  },
-  unit: {
-    marginLeft: theme.spacing(0.5)
-  },
-  unitBefore: {
-    marginLeft: 0,
-    marginRight: theme.spacing(0.5)
-  },
-  note: {
-    display: 'inline-block',
-    marginTop: theme.spacing(0.5)
+const FormulaGroup = styled('div')(({ theme }) => ({
+  '&:nth-of-type(n+2)': {
+    marginTop: theme.spacing(2)
   }
+}));
+
+const FirstLine = styled('div')(({ theme }) => ({
+  margin: 0,
+  ...theme.typography.h5,
+  fontWeight: Number(theme.typography.fontWeightMedium),
+  color: theme.palette.text.primary,
+  display: 'flex'
+}));
+
+const Preffix = styled(Typography)(({ theme }) => ({
+  marginLeft: theme.spacing(0.5),
+  marginRight: theme.spacing(0.5)
+}));
+
+const Unit = styled(Typography)(({ theme }) => ({
+  marginLeft: theme.spacing(0.5)
+}));
+
+const Note = styled(Typography)(({ theme }) => ({
+  display: 'inline-block',
+  marginTop: theme.spacing(0.5)
 }));
 
 /**
@@ -55,7 +57,6 @@ function ComparativeFormulaWidgetUI({
   formatter = IDENTITY_FN
 }) {
   const theme = useTheme();
-  const classes = useStyles();
 
   const processedData = useMemo(
     () =>
@@ -73,18 +74,13 @@ function ComparativeFormulaWidgetUI({
   return (
     <div>
       {processedData.map((d, i) => (
-        <div className={classes.formulaGroup} key={i}>
-          <div className={classes.firstLine}>
+        <FormulaGroup key={i}>
+          <FirstLine>
             {d.prefix ? (
               <Box color={theme.palette.text.secondary}>
-                <Typography
-                  color='inherit'
-                  component='span'
-                  variant='subtitle2'
-                  className={[classes.unit, classes.unitBefore].join(' ')}
-                >
+                <Preffix color='inherit' component='span' variant='subtitle2'>
                   {d.prefix}
-                </Typography>
+                </Preffix>
               </Box>
             ) : null}
             <Box fontWeight={isReference && !i ? 'bold' : ''}>
@@ -97,25 +93,20 @@ function ComparativeFormulaWidgetUI({
             </Box>
             {d.suffix ? (
               <Box color={theme.palette.text.secondary}>
-                <Typography
-                  color='inherit'
-                  component='span'
-                  variant='subtitle2'
-                  className={classes.unit}
-                >
+                <Unit color='inherit' component='span' variant='subtitle2'>
                   {d.suffix}
-                </Typography>
+                </Unit>
               </Box>
             ) : null}
-          </div>
+          </FirstLine>
           {d.label ? (
             <Box color={d.color || theme.palette.text.secondary}>
-              <Typography className={classes.note} color='inherit' variant='caption'>
+              <Note color='inherit' variant='caption'>
                 {d.label}
-              </Typography>
+              </Note>
             </Box>
           ) : null}
-        </div>
+        </FormulaGroup>
       ))}
     </div>
   );
