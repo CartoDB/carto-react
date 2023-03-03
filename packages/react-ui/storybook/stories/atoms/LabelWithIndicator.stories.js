@@ -35,11 +35,10 @@ const options = {
     }
   },
   parameters: {
-    /* TODO: TBD by design
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33807'
-    }, */
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/C4R-Components-2.0?node-id=2502%3A34473&t=vG1iT2zmsc2p0Cst-0'
+    },
     status: {
       type: 'validated'
     }
