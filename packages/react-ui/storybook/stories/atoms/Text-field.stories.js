@@ -113,7 +113,6 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
           <TextField
             {...rest}
             label={label}
-            required
             variant='outlined'
             placeholder={placeholder}
           />

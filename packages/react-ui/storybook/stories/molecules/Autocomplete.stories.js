@@ -88,7 +88,7 @@ const AutocompleteTemplate = ({ disabled, size, ...args }) => {
             getOptionLabel={(option) => option.title}
             disabled={disabled}
             renderInput={(params) => (
-              <TextField {...args} {...params} size={size} label={'Basic autocomplete'} />
+              <TextField {...args} {...params} size={size} label='Basic autocomplete' />
             )}
             size={size}
           />
@@ -101,13 +101,7 @@ const AutocompleteTemplate = ({ disabled, size, ...args }) => {
             getOptionLabel={(option) => option.title}
             disabled={disabled}
             renderInput={(params) => (
-              <TextField
-                {...args}
-                {...params}
-                size={size}
-                label='Grouped autocomplete'
-                required
-              />
+              <TextField {...args} {...params} size={size} label='Grouped autocomplete' />
             )}
             size={size}
           />

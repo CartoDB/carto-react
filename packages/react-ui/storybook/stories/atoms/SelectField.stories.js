@@ -152,7 +152,6 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             {...rest}
             label={label}
             variant='outlined'
-            required
             placeholder={placeholder}
             items={menuItems}
           />
@@ -300,7 +299,7 @@ const SizeTemplate = ({
         <Grid item xs={3}>
           <FormControl required>
             <InputLabel>{label}</InputLabel>
-            <Select {...rest} variant='filled' required size={size}>
+            <Select {...rest} variant='filled' size={size}>
               {menuItems.map((option) => (
                 <MenuItem key={option.label} value={option.label}>
                   {option.label}
@@ -324,7 +323,7 @@ const SizeTemplate = ({
         <Grid item xs={3}>
           <FormControl>
             <InputLabel>{label}</InputLabel>
-            <Select {...rest} variant='standard' label={label} size={size}>
+            <Select {...rest} variant='standard' size={size}>
               {menuItems.map((option) => (
                 <MenuItem key={option.label} value={option.label}>
                   {option.label}

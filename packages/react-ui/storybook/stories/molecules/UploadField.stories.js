@@ -146,7 +146,6 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             {...rest}
             variant='outlined'
             files={files2}
-            required
             label={label}
             placeholder={placeholder}
             onChange={handleUploadFieldChange2}
