@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material';
 import Typography from './Typography';
 
-const LabelWithMarker = ({ label, type }) => {
+const LabelWithIndicator = ({ label, type }) => {
   const isRequired = type === 'required';
   const theme = useTheme();
 
@@ -23,12 +23,12 @@ const LabelWithMarker = ({ label, type }) => {
   );
 };
 
-LabelWithMarker.defaultProps = {
+LabelWithIndicator.defaultProps = {
   type: 'optional'
 };
-LabelWithMarker.propTypes = {
+LabelWithIndicator.propTypes = {
   label: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['optional' | 'required'])
 };
 
-export default LabelWithMarker;
+export default LabelWithIndicator;

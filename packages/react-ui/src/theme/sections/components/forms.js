@@ -57,14 +57,18 @@ const LabelOverrides = {
   },
   // Temporal workaroud to give a faster solution for a Workflows demand: https://app.shortcut.com/cartoteam/story/294539/distinction-among-parameters-optional-inputs-units-in-the-ui
   // These styles avoid (by now) the need to review current forms and change those with a required mark.
-  // TODO: remored asterisk completely and use instead LabelWithMarker component to mark also required ones.
+  // TODO: remored asterisk completely and use instead LabelWithIndicator component to mark also required ones.
   asterisk: {
     color: 'transparent',
 
+    '&.Mui-error': {
+      color: 'transparent'
+    },
     '&::after': {
       content: '"(required)"',
       marginLeft: getSpacing(-0.5),
-      color: commonPalette.text.secondary
+      color: commonPalette.text.secondary,
+      fontWeight: 400
     }
   }
 };

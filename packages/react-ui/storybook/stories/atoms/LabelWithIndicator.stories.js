@@ -15,12 +15,12 @@ import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import PasswordField from '../../../src/components/atoms/PasswordField';
 import SelectField from '../../../src/components/atoms/SelectField';
-import LabelWithMarker from '../../../src/components/atoms/LabelWithMarker';
+import LabelWithIndicator from '../../../src/components/atoms/LabelWithIndicator';
 import UploadField from '../../../src/components/molecules/UploadField';
 
 const options = {
-  title: 'Atoms/LabelWithMarker',
-  component: LabelWithMarker,
+  title: 'Atoms/LabelWithIndicator',
+  component: LabelWithIndicator,
   argTypes: {
     type: {
       control: {
@@ -92,7 +92,7 @@ const top100Films = [
 
 const PlaygroundTemplate = (args) => (
   <InputLabel>
-    <LabelWithMarker {...args} />
+    <LabelWithIndicator {...args} />
   </InputLabel>
 );
 
@@ -107,7 +107,7 @@ const TypesTemplate = ({ ...args }) => {
             {'Optional'}
           </Typography>
           <InputLabel>
-            <LabelWithMarker {...args} />
+            <LabelWithIndicator {...args} />
           </InputLabel>
         </Box>
       </Grid>
@@ -117,7 +117,7 @@ const TypesTemplate = ({ ...args }) => {
             {'Required'}
           </Typography>
           <InputLabel>
-            <LabelWithMarker {...args} type='required' />
+            <LabelWithIndicator {...args} type='required' />
           </InputLabel>
         </Box>
       </Grid>
@@ -143,7 +143,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
             <Grid item container spacing={2}>
               <Grid item xs={4}>
                 <TextField
-                  label={<LabelWithMarker {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} />}
                   placeholder='Placeholder text'
                 />
               </Grid>
@@ -163,7 +163,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
             <Grid item container spacing={2}>
               <Grid item xs={4}>
                 <SelectField
-                  label={<LabelWithMarker {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} />}
                   placeholder='Placeholder text'
                   items={menuItems}
                 />
@@ -190,7 +190,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               <Grid item xs={4}>
                 <UploadField
                   files={files}
-                  label={<LabelWithMarker {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} />}
                   placeholder='Placeholder text'
                   onChange={handleUploadFieldChange}
                 />
@@ -217,7 +217,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
             <Grid item container spacing={2}>
               <Grid item xs={4}>
                 <PasswordField
-                  label={<LabelWithMarker {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} />}
                   placeholder='Placeholder text'
                   defaultValue='1234'
                 />
@@ -247,7 +247,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
                   renderInput={(params) => (
                     <TextField
                       size='small'
-                      label={<LabelWithMarker {...rest} label={label} />}
+                      label={<LabelWithIndicator {...rest} label={label} />}
                     />
                   )}
                   size='small'
@@ -276,7 +276,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               <Grid item xs={4}>
                 <FormControl component='fieldset'>
                   <FormLabel component='legend'>
-                    <LabelWithMarker label={'Group Label'} />
+                    <LabelWithIndicator label={'Group Label'} />
                   </FormLabel>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox checked />} label='Gilad Gray' />
