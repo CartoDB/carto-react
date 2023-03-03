@@ -297,7 +297,7 @@ const SizeTemplate = ({
           <Typography>Empty</Typography>
         </Grid>
         <Grid item xs={3}>
-          <FormControl required>
+          <FormControl>
             <InputLabel>{label}</InputLabel>
             <Select {...rest} variant='filled' size={size}>
               {menuItems.map((option) => (
