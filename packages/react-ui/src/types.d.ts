@@ -318,3 +318,9 @@ export interface AppBarProps extends MuiAppBarProps {
   onClickMenu?: Function;
   showBurgerMenu?: boolean;
 }
+
+// LabelWithIndicator
+export type LabelWithIndicatorProps = {
+  label: string;
+  type?: 'optional' | 'required';
+};

@@ -6,6 +6,7 @@
 
 ### 2.0.0-beta.2 (2023-02-17)
 
+- New component: LabelWithIndicator [#608](https://github.com/CartoDB/carto-react/pull/608)
 - Design review of Chip component [#607](https://github.com/CartoDB/carto-react/pull/607)
 - Fix overwrite default client in SQL post request [#603](https://github.com/CartoDB/carto-react/pull/603)
 
