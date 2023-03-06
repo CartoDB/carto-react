@@ -2,41 +2,42 @@
 // https://app.shortcut.com/cartoteam/story/272209/replace-widgets-tooltip-with-tooltipdata
 import React from 'react';
 import PropTypes from 'prop-types';
-import makeStyles from '@mui/styles/makeStyles';
+
+import { styled } from '@mui/material';
+
 import Typography from '../atoms/Typography';
 
-const useStyles = makeStyles((theme) => ({
-  list: {
-    listStyle: 'none',
-    paddingLeft: 0,
-    margin: theme.spacing(0.5, 0, 0, 0)
-  },
-  item: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+const Content = styled('ul')(({ theme }) => ({
+  listStyle: 'none',
+  paddingLeft: 0,
+  margin: theme.spacing(0.5, 0, 0, 0)
+}));
 
-    '&:not(:last-child)': {
-      marginBottom: theme.spacing(0.5)
-    }
-  },
-  bullet: {
-    width: theme.spacing(1),
-    height: theme.spacing(1),
-    marginRight: theme.spacing(0.5),
-    border: `2px solid ${theme.palette.qualitative.bold[1]}`,
-    borderRadius: '50%',
-    backgroundColor: theme.palette.qualitative.bold[1]
-  },
-  category: {
-    minWidth: theme.spacing(10),
-    marginRight: theme.spacing(1.5)
+const Entry = styled('li')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+
+  '&:not(:last-child)': {
+    marginBottom: theme.spacing(0.5)
   }
 }));
 
-const TooltipData = ({ items, title }) => {
-  const classes = useStyles();
+const Bullet = styled('span')(({ theme }) => ({
+  width: theme.spacing(1),
+  height: theme.spacing(1),
+  marginRight: theme.spacing(0.5),
+  border: `2px solid ${theme.palette.qualitative.bold[1]}`,
+  borderRadius: '50%',
+  backgroundColor: theme.palette.qualitative.bold[1]
+}));
 
+const Category = styled(Typography)(({ theme }) => ({
+  minWidth: theme.spacing(10),
+  marginRight: theme.spacing(1.5)
+}));
+
+const TooltipData = ({ items, title }) => {
   return (
     <>
       {title && (
@@ -45,27 +46,26 @@ const TooltipData = ({ items, title }) => {
         </Typography>
       )}
 
-      <ul className={classes.list}>
+      <Content>
         {items.map((item, index) => (
-          <li key={index} className={classes.item}>
-            <span
-              className={classes.bullet}
+          <Entry key={index}>
+            <Bullet
               style={{
                 backgroundColor: `${item.outlinedBullet ? 'transparent' : item.color}`,
                 borderColor: item.color
               }}
-            ></span>
+            ></Bullet>
             {item.category && (
-              <Typography color='inherit' variant='caption' className={classes.category}>
+              <Category color='inherit' variant='caption'>
                 {item.category}
-              </Typography>
+              </Category>
             )}
             <Typography color='inherit' variant='caption' weight='medium'>
               {item.value}
             </Typography>
-          </li>
+          </Entry>
         ))}
-      </ul>
+      </Content>
     </>
   );
 };
