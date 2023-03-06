@@ -5,8 +5,8 @@ import makeStyles from '@mui/styles/makeStyles';
 import { styled } from '@mui/material';
 import { MenuOutlined } from '@mui/icons-material';
 
-import Typography from '../atoms/Typography';
-import { APPBAR_SIZE } from '../../theme/themeConstants';
+import Typography from '../../atoms/Typography';
+import { APPBAR_SIZE } from '../../../theme/themeConstants';
 
 const useStyles = makeStyles((theme) => ({
   row: {
