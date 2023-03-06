@@ -1,34 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material';
+
 import Typography from './Typography';
 
-const useStyles = makeStyles((theme) => ({
-  indicator: {
-    marginLeft: theme.spacing(0.5),
-
-    '.Mui-disabled &': {
-      color: theme.palette.text.disabled
-    }
+const LabelIndicator = styled(Typography)(({ theme }) => ({
+  marginLeft: theme.spacing(0.5),
+  '.Mui-disabled &': {
+    color: theme.palette.text.disabled
   }
 }));
 
 const LabelWithIndicator = ({ label, type }) => {
-  const classes = useStyles();
   const isRequired = type === 'required';
 
   return (
     <>
       {label}
-      <Typography
+      <LabelIndicator
         component='span'
         variant='inherit'
         color='textSecondary'
         weight='regular'
-        className={classes.indicator}
       >
         {isRequired ? '(required)' : '(optional)'}
-      </Typography>
+      </LabelIndicator>
     </>
   );
 };
