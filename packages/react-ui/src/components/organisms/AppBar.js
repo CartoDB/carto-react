@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { AppBar as MuiAppBar, Divider, Hidden, IconButton, Toolbar } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material';
 import { MenuOutlined } from '@mui/icons-material';
+
 import Typography from '../atoms/Typography';
 import { APPBAR_SIZE } from '../../theme/themeConstants';
 
@@ -65,6 +67,59 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const DivRow = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  maxWidth: 'calc(100% - 300px)',
+  overflow: 'hidden',
+
+  [theme.breakpoints.down('sm')]: {
+    minWidth: '188px'
+  }
+}));
+
+const DivMenu = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  height: APPBAR_SIZE,
+  marginRight: theme.spacing(1.5)
+}));
+
+const IconButtonMenuButton = styled(IconButton)(({ theme }) => ({
+  marginRight: theme.spacing(1),
+
+  '&.MuiButtonBase-root svg path': {
+    fill: theme.palette.background.paper
+  }
+}));
+
+const DivLogo = styled('div')(({ theme }) => ({
+  display: 'flex',
+  marginRight: theme.spacing(1.5),
+
+  '& a': {
+    display: 'flex'
+  },
+
+  '& svg, & img': {
+    width: theme.spacing(4),
+    height: theme.spacing(4)
+  }
+}));
+
+const DivContent = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  flex: 1,
+  marginLeft: theme.spacing(1)
+}));
+
+const TypographyText = styled(Typography)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center'
+}));
+
 const AppBar = ({
   children,
   brandLogo,
@@ -79,18 +134,18 @@ const AppBar = ({
   return (
     <MuiAppBar {...otherProps}>
       <Toolbar>
-        <div className={classes.row}>
+        <DivRow>
           {showBurgerMenu && (
             <Hidden mdUp>
-              <div className={classes.menu}>
-                <IconButton onClick={onClickMenu} className={classes.menuButton}>
+              <DivMenu>
+                <IconButtonMenuButton onClick={onClickMenu}>
                   <MenuOutlined />
-                </IconButton>
+                </IconButtonMenuButton>
                 <Divider orientation='vertical' flexItem light />
-              </div>
+              </DivMenu>
             </Hidden>
           )}
-          {brandLogo && <div className={classes.logo}>{brandLogo}</div>}
+          {brandLogo && <DivLogo>{brandLogo}</DivLogo>}
           {brandText && (
             <Typography
               component='span'
@@ -105,18 +160,13 @@ const AppBar = ({
             </Typography>
           )}
           {secondaryText && (
-            <Typography
-              component='span'
-              variant='body2'
-              weight='strong'
-              className={classes.text}
-            >
+            <TypographyText component='span' variant='body2' weight='strong'>
               {secondaryText}
-            </Typography>
+            </TypographyText>
           )}
-        </div>
+        </DivRow>
 
-        <div className={classes.content}>{children}</div>
+        <DivContent>{children}</DivContent>
       </Toolbar>
     </MuiAppBar>
   );
