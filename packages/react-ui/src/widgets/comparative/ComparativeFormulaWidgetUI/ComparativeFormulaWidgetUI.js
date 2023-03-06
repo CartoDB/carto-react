@@ -34,34 +34,39 @@ function ComparativeFormulaWidgetUI({
   animationOptions,
   formatter = IDENTITY_FN
 }) {
-  const processedData = processFormulaValues(data, colors);
-  const isReference = processedData.length > 1;
+  const formulaValues = prepareFormulaValues(data, colors);
 
   return (
     <div>
-      {processedData.map((dataRow, index) => (
+      {formulaValues.map((row, index) => (
         <FormulaGroup key={index}>
           <FormulaValue
-            row={dataRow}
-            isReference={isReference}
+            row={row}
             animated={animated}
             animationOptions={animationOptions}
             formatter={formatter}
           />
-          <FormulaLabel row={dataRow} />
+          <FormulaLabel row={row} />
         </FormulaGroup>
       ))}
     </div>
   );
 }
 
-function processFormulaValues(data, colors) {
-  return data
+function prepareFormulaValues(data, colors) {
+  const values = data
     .map((d, i) => ({
       ...d,
       color: colors[i]
     }))
     .filter((d) => d.value !== undefined);
+
+  const isReference = values && values.length > 1;
+  if (isReference) {
+    values[0].shouldBeHighlighted = true;
+  }
+
+  return values;
 }
 
 ComparativeFormulaWidgetUI.displayName = 'ComparativeFormulaWidgetUI';

@@ -14,7 +14,6 @@ const MainLine = styled('div')(({ theme }) => ({
 }));
 
 const Preffix = styled(Typography)(({ theme }) => ({
-  marginLeft: theme.spacing(0.5),
   marginRight: theme.spacing(0.5)
 }));
 
@@ -22,10 +21,10 @@ const Unit = styled(Typography)(({ theme }) => ({
   marginLeft: theme.spacing(0.5)
 }));
 
-function FormulaValue({ row, isReference, animated, animationOptions, formatter }) {
+function FormulaValue({ row, animated, animationOptions, formatter }) {
   const theme = useTheme();
 
-  const { prefix, value, suffix } = row;
+  const { prefix, value, suffix, shouldBeHighlighted } = row;
 
   return (
     <MainLine>
@@ -37,7 +36,7 @@ function FormulaValue({ row, isReference, animated, animationOptions, formatter 
         </Box>
       ) : null}
 
-      <Box fontWeight={isReference ? 'bold' : ''}>
+      <Box fontWeight={shouldBeHighlighted ? 'bold' : ''}>
         <AnimatedNumber
           value={value}
           enabled={animated}
