@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import {
   Box,
   Chip,
+  FormControl,
   Grid,
+  InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
@@ -295,31 +297,40 @@ const SizeTemplate = ({
           <Typography>Empty</Typography>
         </Grid>
         <Grid item xs={3}>
-          <Select {...rest} variant='filled' label={label} size={size}>
-            {menuItems.map((option) => (
-              <MenuItem key={option.label} value={option.label}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </Select>
+          <FormControl>
+            <InputLabel>{label}</InputLabel>
+            <Select {...rest} variant='filled' size={size}>
+              {menuItems.map((option) => (
+                <MenuItem key={option.label} value={option.label}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={3}>
-          <Select {...rest} variant='outlined' label={label} size={size}>
-            {menuItems.map((option) => (
-              <MenuItem key={option.label} value={option.label}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </Select>
+          <FormControl>
+            <InputLabel>{label}</InputLabel>
+            <Select {...rest} variant='outlined' size={size}>
+              {menuItems.map((option) => (
+                <MenuItem key={option.label} value={option.label}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={3}>
-          <Select {...rest} variant='standard' label={label} size={size}>
-            {menuItems.map((option) => (
-              <MenuItem key={option.label} value={option.label}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </Select>
+          <FormControl>
+            <InputLabel>{label}</InputLabel>
+            <Select {...rest} variant='standard' size={size}>
+              {menuItems.map((option) => (
+                <MenuItem key={option.label} value={option.label}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
       </Grid>
 
