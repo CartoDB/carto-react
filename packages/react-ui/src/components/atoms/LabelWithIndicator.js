@@ -37,7 +37,7 @@ LabelWithIndicator.defaultProps = {
   type: 'optional'
 };
 LabelWithIndicator.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
   type: PropTypes.oneOf(['optional' | 'required'])
 };
 
