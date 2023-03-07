@@ -69,13 +69,64 @@ function getLuminance(color) {
   return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
 }
 
-// Automatically calculate an optimal contrasting color based on another one
+// Calculate an optimal contrasting color based on another one
 export function getContrastColor(color) {
-  const options = {
-    black: commonPalette.common.black,
-    white: commonPalette.common.white,
-    limit: 0.179 // W3C recommendation https://github.com/w3c/wcag/issues/695
-  };
+  const black = commonPalette.common.black;
+  const white = commonPalette.common.white;
+  const limit = 0.179; // W3C recommendation https://github.com/w3c/wcag/issues/695
 
-  return getLuminance(color) > options.limit ? options.black : options.white;
+  return getLuminance(color) > limit ? black : white;
+}
+
+// Return a carto color qualitative bold and its contrast color
+export function getNextCartoColor(index) {
+  const palette = commonPalette.qualitative.bold;
+  const colorsValues = Object.values(palette);
+
+  const colors = {
+    backgroundColor: colorsValues[index],
+    color: getContrastColor(colorsValues[index])
+  };
+  colorsValues.push(palette[index]);
+
+  return colors;
+}
+
+// Return a carto color qualitative bold and its contrast color
+export function getCartoColorQualitativeBold(index, colors) {
+  colors = colors || commonPalette.qualitative.bold;
+
+  /*   const colorAndContrastColor = [
+    { backgroundColor: colors[0], color: getContrastColor(colors[0]) },
+    { backgroundColor: colors[1], color: getContrastColor(colors[1]) },
+    { backgroundColor: colors[2], color: getContrastColor(colors[2]) },
+    { backgroundColor: colors[3], color: getContrastColor(colors[3]) },
+    { backgroundColor: colors[4], color: getContrastColor(colors[4]) },
+    { backgroundColor: colors[5], color: getContrastColor(colors[5]) },
+    { backgroundColor: colors[6], color: getContrastColor(colors[6]) },
+    { backgroundColor: colors[7], color: getContrastColor(colors[7]) },
+    { backgroundColor: colors[8], color: getContrastColor(colors[8]) },
+    { backgroundColor: colors[9], color: getContrastColor(colors[9]) },
+    { backgroundColor: colors[10], color: getContrastColor(colors[10]) },
+    { backgroundColor: colors[11], color: getContrastColor(colors[11]) }
+  ]; */
+
+  const colorsValues = Object.values(colors);
+
+  const mapColors = colorsValues.map((c, i) => ({
+    backgroundColor: c[i],
+    color: getContrastColor(c[i])
+  }));
+
+  /*   if (
+    index === colorAndContrastColor.length ||
+    index > colorAndContrastColor.length - 1
+  ) {
+    index = 0;
+  }
+  if (index < colorAndContrastColor.length) {
+    index++;
+  } */
+
+  return mapColors;
 }

@@ -4,7 +4,6 @@ import { Add, Close } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Typography from '../../../src/components/atoms/Typography';
 import Button from '../../../src/components/atoms/Button';
-import { getContrastColor } from '../../../src/utils/palette';
 
 const options = {
   title: 'Atoms/Button',
@@ -54,20 +53,11 @@ const options = {
 };
 export default options;
 
-const testColor = '#A5AA99';
-const contrast = getContrastColor(testColor);
-
 const Buttons = ({ label, size, disabled, variant, ...rest }) => (
   <Grid item container spacing={2}>
     <Grid item xs={4}>
-      <Button
-        {...rest}
-        size={size}
-        variant={variant}
-        disabled={disabled}
-        style={{ background: testColor }}
-      >
-        <span style={{ color: contrast }}>{testColor}</span>
+      <Button {...rest} size={size} variant={variant} disabled={disabled}>
+        {label}
       </Button>
     </Grid>
     <Grid item xs={4}>
