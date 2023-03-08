@@ -1,14 +1,15 @@
 import React from 'react';
-import { Avatar, Grid, Box } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Star } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
+import Avatar from '../../../src/components/molecules/Avatar';
 
 const options = {
   title: 'Molecules/Avatar',
   component: Avatar,
   argTypes: {
-    sizes: {
+    size: {
       control: {
         type: 'select',
         options: ['large', 'medium', 'small', 'xsmall']
