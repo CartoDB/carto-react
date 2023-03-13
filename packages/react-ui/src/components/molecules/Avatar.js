@@ -41,11 +41,10 @@ const AvatarContainer = styled(MuiAvatar)(
     height: ${theme.spacing(Sizes[size])};
     ${theme.typography.subtitle1};
     ${handleSizeStyles(size)};
-    width: ${({ size }) => (size === 'xsmall' ? theme.spacing(5) : undefined)};
 
-    svg: {
-      width: ${({ size }) => (size === 'xsmall' ? theme.spacing(5) : undefined)};
-      height: ${({ size }) => (size === 'xsmall' ? theme.spacing(5) : undefined)};
+    svg {
+      width: ${size === 'xsmall' ? theme.spacing(2) : theme.spacing(2.25)};
+      height: ${size === 'xsmall' ? theme.spacing(2) : theme.spacing(2.25)};
     }
   `
 );
