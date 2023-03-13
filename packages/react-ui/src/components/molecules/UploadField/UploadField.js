@@ -55,8 +55,6 @@ function UploadField({ buttonText, accept, files, ...props }) {
   const uploadInputRef = useRef(null);
   const classes = useStyles();
 
-  // const textFieldRef = useRef(null); // ?
-
   const { filesText, getPlaceholder, dragOver, inputEvents, handleFiles, handleReset } =
     useFileUpload({
       uploadInputRef,
@@ -70,7 +68,6 @@ function UploadField({ buttonText, accept, files, ...props }) {
     <>
       <TextField
         {...props}
-        // ref={textFieldRef}
         placeholder={getPlaceholder}
         value={filesText}
         error={error}
