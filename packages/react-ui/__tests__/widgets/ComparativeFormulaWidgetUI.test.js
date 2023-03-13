@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '../widgets/utils/testUtils';
-import ComparativeFormulaWidgetUI from '../../src/widgets/comparative/ComparativeFormulaWidgetUI';
+import ComparativeFormulaWidgetUI from '../../src/widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 
 const SAMPLE_DATA = [
   {

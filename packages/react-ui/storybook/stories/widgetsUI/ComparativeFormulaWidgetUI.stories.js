@@ -1,5 +1,5 @@
 import React from 'react';
-import ComparativeFormulaWidgetUI from '../../../src/widgets/comparative/ComparativeFormulaWidgetUI';
+import ComparativeFormulaWidgetUI from '../../../src/widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 import { buildReactPropsAsString } from '../../utils';
 
 const options = {
