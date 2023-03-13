@@ -1,9 +1,9 @@
 import React from 'react';
-import { Avatar, Grid, Box } from '@mui/material';
+import { Avatar, Grid, Box, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Star } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
-import { getNextCartoColor } from '../../../src/utils/palette';
+import { getCartoColorPropsForItem } from '../../../src/utils/palette';
 
 const options = {
   title: 'Molecules/Avatar',
@@ -356,6 +356,7 @@ const ContentSizeTemplate = ({ ...args }) => {
 
 const ColorBackgroundTemplate = ({ ...args }) => {
   const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <Grid container direction='column' spacing={3}>
@@ -365,12 +366,12 @@ const ColorBackgroundTemplate = ({ ...args }) => {
             {'Carto qualitative bold'}
           </Typography>
           <Grid container item spacing={6}>
-            {[...Array(12)].map((x, index) => (
+            {[...Array(15)].map((x, index) => (
               <Grid item key={index}>
                 <Avatar
                   {...args}
                   style={{
-                    ...getNextCartoColor(index)
+                    ...getCartoColorPropsForItem(theme, index)
                   }}
                 >{`C${index + 1}`}</Avatar>
               </Grid>
