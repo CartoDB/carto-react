@@ -55,7 +55,7 @@ export function rgbToHex(r, g, b) {
 
 // Returns style props for an item ({ backgroundColor, color}) using qualitative bold palette.
 // It re-iterates over the palette if index is greater than palette's size (repeated colors)
-export function getCartoColorPropsForItem(theme, index) {
+export function getCartoColorStylePropsForItem(theme, index) {
   const palette = commonPalette.qualitative.bold;
   const colors = Object.values(palette);
 

@@ -1,6 +1,6 @@
 import { Theme } from '@mui/material';
 
-export function getCartoColorPropsForItem(
+export function getCartoColorStylePropsForItem(
   theme: Theme,
   index: number
 ): { backgroundColor: string; color: string };

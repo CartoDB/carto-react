@@ -32,7 +32,7 @@ import SelectField from './components/atoms/SelectField';
 import UploadField from './components/molecules/UploadField';
 import AppBar from './components/organisms/AppBar';
 import LabelWithIndicator from './components/atoms/LabelWithIndicator';
-import { getCartoColorPropsForItem } from './utils/palette';
+import { getCartoColorStylePropsForItem } from './utils/palette';
 
 export {
   theme,
@@ -70,5 +70,5 @@ export {
   UploadField,
   AppBar,
   LabelWithIndicator,
-  getCartoColorPropsForItem
+  getCartoColorStylePropsForItem
 };
