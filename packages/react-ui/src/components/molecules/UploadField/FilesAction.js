@@ -2,7 +2,8 @@ import React from 'react';
 import { Button, IconButton, InputAdornment } from '@mui/material';
 import { Cancel } from '@mui/icons-material';
 
-export default function FilesIndicator({
+// For Browser or Delete actions
+export default function FilesAction({
   buttonText,
   hasFiles,
   size,

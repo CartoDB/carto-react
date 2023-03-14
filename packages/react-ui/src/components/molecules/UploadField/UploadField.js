@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import FilesIndicator from './FilesIndicator';
+import FilesAction from './FilesAction';
 import useFileUpload from './useFileUpload';
 import StyledUploadField from './StyledUploadField';
 
@@ -30,7 +30,7 @@ function UploadField({ buttonText, accept, files, ...props }) {
           ...inputEvents,
           readOnly: true,
           endAdornment: (
-            <FilesIndicator
+            <FilesAction
               buttonText={buttonText}
               hasFiles={!!filesText}
               size={size}
