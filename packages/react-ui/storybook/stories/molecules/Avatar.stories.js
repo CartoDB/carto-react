@@ -2,8 +2,7 @@ import React from 'react';
 import { Avatar, Grid, Box, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Star } from '@mui/icons-material';
-import Typography from '../../../src/components/atoms/Typography';
-import { getCartoColorStylePropsForItem } from '@carto/react-ui';
+import { getCartoColorStylePropsForItem, Typography } from '@carto/react-ui';
 
 const options = {
   title: 'Molecules/Avatar',
