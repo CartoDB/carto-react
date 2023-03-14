@@ -23,7 +23,7 @@ import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import ComparativePieWidgetUI from './widgets/comparative/ComparativePieWidgetUI';
-import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI';
+import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
 import Typography from './components/atoms/Typography';
 import Button from './components/atoms/Button';
