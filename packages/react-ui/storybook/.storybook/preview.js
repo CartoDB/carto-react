@@ -52,27 +52,29 @@ const componentsStatus = {
   deprecated: {
     background: '#C1300B', // Error/Main
     color: '#ffffff',
-    description: 'Do not use'
+    description:
+      'Legacy component that might be currently in use, but shouldn`t be used in new projects'
   },
   inDevelopment: {
     background: '#F29E02', // Warning/Main
     color: '#ffffff',
-    description: 'Work in progress'
+    description: 'Work in progress or experimental. Not ready to use in production yet'
   },
   readyToReview: {
     background: '#024388', // Info/Main
     color: '#ffffff',
-    description: 'Ready to review and validation'
+    description: 'Ready to review and validation by design and other stakeholders'
   },
   validated: {
     background: '#709F1D', // Success/Main
     color: '#ffffff',
-    description: 'Validated and ready to use'
+    description: 'Fully validated and ready-to-use implementation'
   },
-  needUpdate: {
+  needsUpdate: {
     background: '#E1E3E4', // Default/Main
     color: '#2C3032',
-    description: 'Need an update, but can be used in this state'
+    description:
+      'Needs an update due to some design changes, but can be used in this state'
   }
 };
 
