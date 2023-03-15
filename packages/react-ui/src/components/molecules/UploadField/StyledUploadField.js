@@ -3,7 +3,7 @@ import { styled, TextField } from '@mui/material';
 const StyledUploadField = styled(TextField, {
   shouldForwardProp: (prop) => prop !== 'focused'
 })(({ focused, theme }) => ({
-  '& .MuiInputBase-root': {
+  '&.MuiTextField-root .MuiInputBase-root': {
     cursor: 'pointer',
     paddingRight: theme.spacing(1),
 
