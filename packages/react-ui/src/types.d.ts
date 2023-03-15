@@ -321,6 +321,6 @@ export interface AppBarProps extends MuiAppBarProps {
 
 // LabelWithIndicator
 export type LabelWithIndicatorProps = {
-  label: string;
+  label: string | React.ReactElement;
   type?: 'optional' | 'required';
 };
