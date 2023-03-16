@@ -15,7 +15,7 @@ import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
 
 const options = {
-  title: 'Atoms/Select',
+  title: 'Atoms/Select Field',
   component: SelectField,
   argTypes: {
     variant: {
