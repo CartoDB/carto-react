@@ -1,3 +1,4 @@
+import React from 'react';
 import { ICON_SIZE, ICON_SIZE_M } from '../../themeConstants';
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
