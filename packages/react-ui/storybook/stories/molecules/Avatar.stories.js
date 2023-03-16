@@ -1,8 +1,8 @@
 import React from 'react';
-import { Avatar, Grid, Box } from '@mui/material';
+import { Avatar, Grid, Box, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Star } from '@mui/icons-material';
-import Typography from '../../../src/components/atoms/Typography';
+import { getCartoColorStylePropsForItem, Typography } from '@carto/react-ui';
 
 const options = {
   title: 'Molecules/Avatar',
@@ -353,6 +353,34 @@ const ContentSizeTemplate = ({ ...args }) => {
   );
 };
 
+const ColorBackgroundTemplate = ({ ...args }) => {
+  const classes = useStyles();
+  const theme = useTheme();
+
+  return (
+    <Grid container direction='column' spacing={3}>
+      <Grid item>
+        <Box className={classes.container}>
+          <Typography variant='body2' className={classes.label}>
+            {'Carto qualitative bold'}
+          </Typography>
+          <Grid container item spacing={6}>
+            {[...Array(15)].map((x, index) => (
+              <Grid item key={index}>
+                <Avatar
+                  {...args}
+                  style={{
+                    ...getCartoColorStylePropsForItem(theme, index)
+                  }}
+                >{`C${index + 1}`}</Avatar>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Grid>
+    </Grid>
+  );
+};
 export const Playground = Template.bind({});
 
 export const Shape = ShapeTemplate.bind({});
@@ -362,3 +390,5 @@ export const Content = ContentTemplate.bind({});
 export const ShapeSizes = ShapeSizeTemplate.bind({});
 
 export const ContentSize = ContentSizeTemplate.bind({});
+
+export const ColorBackground = ColorBackgroundTemplate.bind({});

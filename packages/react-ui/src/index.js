@@ -33,6 +33,7 @@ import SelectField from './components/atoms/SelectField';
 import UploadField from './components/molecules/UploadField/UploadField';
 import AppBar from './components/organisms/AppBar/AppBar';
 import LabelWithIndicator from './components/atoms/LabelWithIndicator';
+import { getCartoColorStylePropsForItem } from './utils/palette';
 
 const featureSelectionIcons = {
   CursorIcon,
@@ -75,5 +76,6 @@ export {
   UploadField,
   AppBar,
   ArrowDropIcon,
-  LabelWithIndicator
+  LabelWithIndicator,
+  getCartoColorStylePropsForItem
 };
