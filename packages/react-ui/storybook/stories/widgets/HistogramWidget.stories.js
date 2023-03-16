@@ -12,7 +12,7 @@ import * as cartoSlice from '../../../../react-redux/src/slices/cartoSlice';
 import { AggregationTypes } from '../../../../react-core/src';
 import HistogramWidget from '../../../../react-widgets/src/widgets/HistogramWidget';
 import { mockAppStoreConfiguration } from './utils';
-import { buildReactPropsAsString } from '../../utils';
+import { buildReactPropsAsString } from '../../utils/utils';
 
 const store = mockAppStoreConfiguration();
 
