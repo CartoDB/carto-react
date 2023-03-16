@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, Chip, Grid, IconButton, Menu, MenuItem } from '@mui/material';
 import { CheckCircleOutline } from '@mui/icons-material';
-import AppBar from '../../../src/components/organisms/AppBar';
+import AppBar from '../../../src/components/organisms/AppBar/AppBar';
 import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
