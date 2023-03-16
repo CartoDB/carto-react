@@ -1,0 +1,41 @@
+.sbdocs .link-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 16px;
+  margin: 40px 0;
+}
+
+@media (min-width: 768px) {
+  .sbdocs .link-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+}
+
+.sbdocs .link-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 24px;
+  color: #2c3032;
+  border: 1px solid #2c30321f;
+  border-radius: 6px;
+}
+.sbdocs .link-item img {
+  width: 32px;
+  height: 32px;
+  margin-right: 16px;
+}
+.sbdocs .link-item strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.sbdocs .tag {
+  display: inline-block;
+  padding: 0 8px;
+  font-weight: 600;
+  color: #47db99;
+  border: 1px solid #47db99;
+  border-radius: 6px;
+}
