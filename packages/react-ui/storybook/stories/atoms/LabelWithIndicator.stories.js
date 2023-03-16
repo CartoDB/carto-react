@@ -16,7 +16,7 @@ import Typography from '../../../src/components/atoms/Typography';
 import PasswordField from '../../../src/components/atoms/PasswordField';
 import SelectField from '../../../src/components/atoms/SelectField';
 import LabelWithIndicator from '../../../src/components/atoms/LabelWithIndicator';
-import UploadField from '../../../src/components/molecules/UploadField';
+import UploadField from '../../../src/components/molecules/UploadField/UploadField';
 
 const options = {
   title: 'Atoms/LabelWithIndicator',

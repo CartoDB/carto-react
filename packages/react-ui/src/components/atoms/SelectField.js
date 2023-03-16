@@ -1,23 +1,20 @@
 import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Checkbox, MenuItem, TextField } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material';
+
 import Typography from './Typography';
 
-const useStyles = makeStyles((theme) => ({
-  content: {
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis'
-  }
-}));
+const BoxContent = styled(Box)({
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis'
+});
 
 const SelectField = forwardRef(
   ({ placeholder, items, multiple, size, ...otherProps }, ref) => {
     // forwardRef needed to be able to hold a reference, in this way it can be a child for some Mui components, like Tooltip
     // https://mui.com/material-ui/guides/composition/#caveat-with-refs
-    const classes = useStyles();
-
     const [content, setContent] = useState([]);
 
     const handleChange = (event) => {
@@ -48,7 +45,7 @@ const SelectField = forwardRef(
           renderValue: (selected) => {
             if (selected.length === 0) {
               return (
-                <Box ml={multiple && paddingSize} className={classes.content}>
+                <BoxContent ml={multiple && paddingSize}>
                   <Typography
                     variant={isSmall ? 'body2' : 'body1'}
                     color='text.hint'
@@ -56,11 +53,11 @@ const SelectField = forwardRef(
                   >
                     {placeholder}
                   </Typography>
-                </Box>
+                </BoxContent>
               );
             }
             return (
-              <Box ml={multiple && paddingSize} className={classes.content}>
+              <BoxContent ml={multiple && paddingSize}>
                 {selected.map((value, index) => (
                   <Typography
                     key={index}
@@ -71,7 +68,7 @@ const SelectField = forwardRef(
                     {multiple && ', '}
                   </Typography>
                 ))}
-              </Box>
+              </BoxContent>
             );
           },
           MenuProps: {
