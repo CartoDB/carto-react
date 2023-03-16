@@ -14,7 +14,7 @@ import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import RangeWidgetUI from './widgets/RangeWidgetUI';
-import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI';
+import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
@@ -33,6 +33,7 @@ import SelectField from './components/atoms/SelectField';
 import UploadField from './components/molecules/UploadField';
 import AppBar from './components/organisms/AppBar';
 import LabelWithIndicator from './components/atoms/LabelWithIndicator';
+import { getCartoColorStylePropsForItem } from './utils/palette';
 
 const featureSelectionIcons = {
   CursorIcon,
@@ -75,5 +76,6 @@ export {
   UploadField,
   AppBar,
   ArrowDropIcon,
-  LabelWithIndicator
+  LabelWithIndicator,
+  getCartoColorStylePropsForItem
 };

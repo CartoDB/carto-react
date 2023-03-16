@@ -23,7 +23,7 @@ import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import ComparativePieWidgetUI from './widgets/comparative/ComparativePieWidgetUI';
-import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI';
+import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
 import Typography from './components/atoms/Typography';
 import Button from './components/atoms/Button';
@@ -32,6 +32,7 @@ import SelectField from './components/atoms/SelectField';
 import UploadField from './components/molecules/UploadField';
 import AppBar from './components/organisms/AppBar';
 import LabelWithIndicator from './components/atoms/LabelWithIndicator';
+import { getCartoColorStylePropsForItem } from './utils/palette';
 
 export {
   theme,
@@ -68,5 +69,6 @@ export {
   SelectField,
   UploadField,
   AppBar,
-  LabelWithIndicator
+  LabelWithIndicator,
+  getCartoColorStylePropsForItem
 };
