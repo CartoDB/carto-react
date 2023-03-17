@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Avatar as MuiAvatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-const Sizes = {
+const sizes = {
   large: 5,
   medium: 4,
   small: 3,
@@ -13,8 +13,8 @@ const Sizes = {
 const AvatarContainer = styled(MuiAvatar, {
   shouldForwardProp: (prop) => prop !== 'size'
 })(({ size, theme }) => ({
-  width: theme.spacing(Sizes[size]),
-  height: theme.spacing(Sizes[size]),
+  width: theme.spacing(sizes[size]),
+  height: theme.spacing(sizes[size]),
   ...theme.typography.subtitle1,
 
   ...(size === 'large' && {
@@ -47,7 +47,7 @@ Avatar.defaultProps = {
   size: 'medium'
 };
 Avatar.propTypes = {
-  size: PropTypes.oneOf(Object.keys(Sizes))
+  size: PropTypes.oneOf(Object.keys(sizes))
 };
 
 export default Avatar;
