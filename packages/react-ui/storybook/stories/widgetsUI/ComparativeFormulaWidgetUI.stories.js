@@ -1,6 +1,6 @@
 import React from 'react';
 import ComparativeFormulaWidgetUI from '../../../src/widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
-import { buildReactPropsAsString } from '../../utils';
+import { buildReactPropsAsString } from '../../utils/utils';
 
 const options = {
   title: 'Organisms/Widgets/ComparativeFormulaWidgetUI',

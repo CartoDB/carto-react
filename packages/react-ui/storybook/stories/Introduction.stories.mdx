@@ -1,18 +1,84 @@
 import { Meta, Description } from '@storybook/addon-docs';
 import { version } from '../../package.json';
+import '../utils/docStyles.css';
+import Doc from '../assets/doc.svg';
+import Github from '../assets/github.svg';
+import Figma from '../assets/figma.svg';
+import Storybook from '../assets/storybook.svg';
 
 <Meta title='Introduction' />
 
 # CARTO for React - Widgets and UI Components
 
 This storybook includes the UI Components (@carto/react-ui) for CARTO for React.
-They are based on [Material-UI](https://material-ui.com/), and they include a CARTO theme + custom widgets.
+They are based on [Mui](https://mui.com/), and they include a CARTO theme + custom widgets.
 
 ## Library version
 
-<p>
-  <strong>{version}</strong>
-</p>
+<p className='tag'>{version}</p>
+
+## Resources
+
+<div className='link-list'>
+  <a
+    className='link-item'
+    href='https://github.com/CartoDB/carto-react/blob/master/DEVELOPERS.md'
+    target='_blank'
+  >
+    <img src={Doc} alt='C4R docs' />
+    <div>
+      <strong>developers README.md</strong>
+      Useful information for C4R developers
+    </div>
+  </a>
+  <a
+    className='link-item'
+    href='https://github.com/CartoDB/carto-react/blob/master/UPGRADE.md'
+    target='_blank'
+  >
+    <img src={Doc} alt='Upgrade docs' />
+    <div>
+      <strong>UPGRADE.md</strong>
+      Useful information to migrate from Mui v4 to v5
+    </div>
+  </a>
+  <a className='link-item' href='https://github.com/CartoDB/carto-react' target='_blank'>
+    <img src={Github} alt='C4R GitHub' />
+    <div>
+      <strong>Carto for React library</strong>
+      Core design system components for all CARTO products
+    </div>
+  </a>
+  <a
+    className='link-item'
+    href='https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/C4R-Components-2.0-beta.3'
+    target='_blank'
+  >
+    <img src={Figma} alt='Figma library' />
+    <div>
+      <strong>Figma design library</strong>
+      Design library for the core design system components.
+    </div>
+  </a>
+  <a
+    className='link-item'
+    href='https://cloud-native-storybook-carto-carto-frontend.vercel.app/'
+    target='_blank'
+  >
+    <img src={Storybook} alt='CN Storybook' />
+    <div>
+      <strong>Cloud Native StoryBook</strong>
+      Inventory and guides of use of common components in the cloud-native scope.
+    </div>
+  </a>
+  <a className='link-item' href='https://github.com/CartoDB/cloud-native' target='_blank'>
+    <img src={Github} alt='C4R GitHub' />
+    <div>
+      <strong>Cloud Native repository</strong>
+      Github repository
+    </div>
+  </a>
+</div>
 
 ## Storybook Development
 

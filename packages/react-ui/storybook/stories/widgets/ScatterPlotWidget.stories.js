@@ -11,7 +11,7 @@ import {
 import * as cartoSlice from '@carto/react-redux/src/slices/cartoSlice';
 import ScatterPlotWidget from '../../../../react-widgets/src/widgets/ScatterPlotWidget';
 import { mockAppStoreConfiguration } from './utils';
-import { buildReactPropsAsString } from '../../utils';
+import { buildReactPropsAsString } from '../../utils/utils';
 
 const store = mockAppStoreConfiguration();
 

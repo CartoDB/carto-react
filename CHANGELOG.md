@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Carto for React dependencies fix and Storybook cleanup [#615](https://github.com/CartoDB/carto-react/pull/615)
 - Add new getCartoColorStylePropsForItem function [#614](https://github.com/CartoDB/carto-react/pull/614)
 
 ## 2.0
