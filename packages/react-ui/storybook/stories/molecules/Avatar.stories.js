@@ -381,14 +381,25 @@ const ColorBackgroundTemplate = ({ ...args }) => {
     </Grid>
   );
 };
+
+const disabledVariantArgType = {
+  variant: { table: { disable: true } }
+};
+const disabledSizeArgType = {
+  size: { table: { disable: true } }
+};
+
 export const Playground = Template.bind({});
 
 export const Shape = ShapeTemplate.bind({});
+Shape.argTypes = disabledVariantArgType;
 
 export const Content = ContentTemplate.bind({});
 
 export const ShapeSizes = ShapeSizeTemplate.bind({});
+ShapeSizes.argTypes = { ...disabledVariantArgType, ...disabledSizeArgType };
 
 export const ContentSize = ContentSizeTemplate.bind({});
+ContentSize.argTypes = disabledSizeArgType;
 
 export const ColorBackground = ColorBackgroundTemplate.bind({});

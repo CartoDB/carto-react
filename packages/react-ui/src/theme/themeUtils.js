@@ -13,7 +13,7 @@ export function getPixelToRem(px) {
   return rem;
 }
 
-// Get the icon path from a given Mui icon
+// Get the icon path from a given icon
 export function getIconPath(icon) {
   const iconString = ReactDOMServer.renderToString(icon);
   const parser = new DOMParser();

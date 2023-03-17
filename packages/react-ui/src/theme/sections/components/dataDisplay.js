@@ -10,6 +10,8 @@ const tooltipArrowSize = 1;
 const tooltipSeparation = 0.5;
 const tooltipMargin = tooltipArrowSize + tooltipSeparation;
 const avatarFallbackImage = getIconPath(<PersonOutline />);
+const avatarCircularRadius = '50%';
+const avatarRodundedRadius = 0.5;
 
 export const dataDisplayOverrides = {
   // Divider
@@ -430,9 +432,12 @@ export const dataDisplayOverrides = {
   MuiAvatar: {
     styleOverrides: {
       root: {
+        overflow: 'initial',
         color: commonPalette.secondary.contrastText,
         backgroundColor: commonPalette.secondary.main,
 
+        //  Default fallback image override
+        // https://github.com/mui/material-ui/issues/33229
         '& .MuiAvatar-fallback': {
           path: {
             d: `path('${avatarFallbackImage}') !important`
@@ -440,16 +445,21 @@ export const dataDisplayOverrides = {
         }
       },
       img: {
-        // border: `1px solid ${commonPalette.default.outlinedBorder}` TODO fix the background color overlap
+        boxShadow: `0 0 0 1px ${commonPalette.default.outlinedBorder}`
       },
+
       circular: {
+        borderRadius: avatarCircularRadius,
+
         '& img': {
-          borderRadius: '50%'
+          borderRadius: avatarCircularRadius
         }
       },
       rounded: {
+        borderRadius: getSpacing(avatarRodundedRadius),
+
         '& img': {
-          borderRadius: getSpacing(0.5)
+          borderRadius: getSpacing(avatarRodundedRadius)
         }
       }
     }

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Avatar as MuiAvatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -35,16 +35,13 @@ const AvatarContainer = styled(MuiAvatar, {
   })
 }));
 
-const Avatar = forwardRef(({ size, children, ...otherProps }, ref) => {
-  // forwardRef needed to be able to hold a reference, in this way it can be a child for some Mui components, like Tooltip
-  // https://mui.com/material-ui/guides/composition/#caveat-with-refs
-
+const Avatar = ({ size, children, ...otherProps }) => {
   return (
-    <AvatarContainer {...otherProps} ref={ref} size={size}>
+    <AvatarContainer {...otherProps} size={size}>
       {children}
     </AvatarContainer>
   );
-});
+};
 
 Avatar.defaultProps = {
   size: 'medium'
