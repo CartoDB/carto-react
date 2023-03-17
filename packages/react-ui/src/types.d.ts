@@ -2,7 +2,8 @@ import { GroupDateTypes } from '@carto/react-core';
 import {
   AppBarProps as MuiAppBarProps,
   TextFieldProps,
-  TypographyProps as MuiTypographyProps
+  TypographyProps as MuiTypographyProps,
+  AvatarProps as MuiAvatarProps
 } from '@mui/material';
 import { CSSProperties } from 'react';
 
@@ -324,3 +325,8 @@ export type LabelWithIndicatorProps = {
   label: string | React.ReactElement;
   type?: 'optional' | 'required';
 };
+
+// LabelWithIndicator
+export interface AvatarProps extends MuiAvatarProps {
+  size?: 'large' | 'medium' | 'small' | 'xsmall';
+}
