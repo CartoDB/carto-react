@@ -2,6 +2,8 @@
 
 ## Not released
 
+- New Avatar component based on Mui Avatar [#617](https://github.com/CartoDB/carto-react/pull/617)
+
 ## 2.0
 
 ### 2.0.0-beta.4 (2023-03-17)
