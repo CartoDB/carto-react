@@ -1,11 +1,15 @@
+import React from 'react';
 import { ICON_SIZE, ICON_SIZE_M } from '../../themeConstants';
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
+import { PersonOutline } from '@mui/icons-material';
+import { getIconPath } from '../../themeUtils';
 
 const tooltipArrowSize = 1;
 const tooltipSeparation = 0.5;
 const tooltipMargin = tooltipArrowSize + tooltipSeparation;
+const avatarFallbackImage = getIconPath(<PersonOutline />);
 
 export const dataDisplayOverrides = {
   // Divider
@@ -427,7 +431,13 @@ export const dataDisplayOverrides = {
     styleOverrides: {
       root: {
         color: commonPalette.secondary.contrastText,
-        backgroundColor: commonPalette.secondary.main
+        backgroundColor: commonPalette.secondary.main,
+
+        '& .MuiAvatar-fallback': {
+          path: {
+            d: `path('${avatarFallbackImage}') !important`
+          }
+        }
       },
       img: {
         // border: `1px solid ${commonPalette.default.outlinedBorder}` TODO fix the background color overlap
