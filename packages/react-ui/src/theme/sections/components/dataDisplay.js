@@ -11,7 +11,7 @@ const tooltipSeparation = 0.5;
 const tooltipMargin = tooltipArrowSize + tooltipSeparation;
 const avatarFallbackImage = getIconPath(<PersonOutline />);
 const avatarCircularRadius = '50%';
-const avatarRodundedRadius = 0.5;
+const avatarRoundedRadius = 0.5;
 
 export const dataDisplayOverrides = {
   // Divider
@@ -456,10 +456,10 @@ export const dataDisplayOverrides = {
         }
       },
       rounded: {
-        borderRadius: getSpacing(avatarRodundedRadius),
+        borderRadius: getSpacing(avatarRoundedRadius),
 
         '& img': {
-          borderRadius: getSpacing(avatarRodundedRadius)
+          borderRadius: getSpacing(avatarRoundedRadius)
         }
       }
     }

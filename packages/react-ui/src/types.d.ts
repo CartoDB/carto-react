@@ -326,7 +326,7 @@ export type LabelWithIndicatorProps = {
   type?: 'optional' | 'required';
 };
 
-// LabelWithIndicator
+// Avatar
 export interface AvatarProps extends MuiAvatarProps {
   size?: 'large' | 'medium' | 'small' | 'xsmall';
 }
