@@ -4,6 +4,10 @@
 
 ## 2.0
 
+### 2.0.0-beta.5 (2023-03-22)
+
+- Styled import fix [#618](https://github.com/CartoDB/carto-react/pull/618)
+
 ### 2.0.0-beta.4 (2023-03-17)
 
 - Carto for React dependencies fix and Storybook cleanup [#615](https://github.com/CartoDB/carto-react/pull/615)
