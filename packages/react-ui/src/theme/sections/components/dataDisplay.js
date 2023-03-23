@@ -1,11 +1,17 @@
+import React from 'react';
 import { ICON_SIZE, ICON_SIZE_M } from '../../themeConstants';
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
+import { PersonOutline } from '@mui/icons-material';
+import { getIconPath } from '../../themeUtils';
 
 const tooltipArrowSize = 1;
 const tooltipSeparation = 0.5;
 const tooltipMargin = tooltipArrowSize + tooltipSeparation;
+const avatarFallbackImage = getIconPath(<PersonOutline />);
+const avatarCircularRadius = '50%';
+const avatarRoundedRadius = 0.5;
 
 export const dataDisplayOverrides = {
   // Divider
@@ -426,20 +432,34 @@ export const dataDisplayOverrides = {
   MuiAvatar: {
     styleOverrides: {
       root: {
+        overflow: 'initial',
         color: commonPalette.secondary.contrastText,
-        backgroundColor: commonPalette.secondary.main
+        backgroundColor: commonPalette.secondary.main,
+
+        //  Default fallback image override
+        // https://github.com/mui/material-ui/issues/33229
+        '& .MuiAvatar-fallback': {
+          path: {
+            d: `path('${avatarFallbackImage}') !important`
+          }
+        }
       },
       img: {
-        // border: `1px solid ${commonPalette.default.outlinedBorder}` TODO fix the background color overlap
+        boxShadow: `0 0 0 1px ${commonPalette.default.outlinedBorder}`
       },
+
       circular: {
+        borderRadius: avatarCircularRadius,
+
         '& img': {
-          borderRadius: '50%'
+          borderRadius: avatarCircularRadius
         }
       },
       rounded: {
+        borderRadius: getSpacing(avatarRoundedRadius),
+
         '& img': {
-          borderRadius: getSpacing(0.5)
+          borderRadius: getSpacing(avatarRoundedRadius)
         }
       }
     }

@@ -1,14 +1,14 @@
 import React from 'react';
-import { Avatar, Grid, Box, useTheme } from '@mui/material';
+import { Grid, Box, useTheme } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Star } from '@mui/icons-material';
-import { getCartoColorStylePropsForItem, Typography } from '@carto/react-ui';
+import { getCartoColorStylePropsForItem, Typography, Avatar } from '@carto/react-ui';
 
 const options = {
   title: 'Molecules/Avatar',
   component: Avatar,
   argTypes: {
-    sizes: {
+    size: {
       control: {
         type: 'select',
         options: ['large', 'medium', 'small', 'xsmall']
@@ -27,7 +27,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1925%3A30532&t=Y3JoU7theewbWKOW-0'
     },
     status: {
-      type: 'inDevelopment'
+      type: 'readyToReview'
     }
   }
 };
@@ -372,7 +372,7 @@ const ColorBackgroundTemplate = ({ ...args }) => {
                   style={{
                     ...getCartoColorStylePropsForItem(theme, index)
                   }}
-                >{`C${index + 1}`}</Avatar>
+                >{`${index + 1}`}</Avatar>
               </Grid>
             ))}
           </Grid>
@@ -381,14 +381,25 @@ const ColorBackgroundTemplate = ({ ...args }) => {
     </Grid>
   );
 };
+
+const disabledVariantArgType = {
+  variant: { table: { disable: true } }
+};
+const disabledSizeArgType = {
+  size: { table: { disable: true } }
+};
+
 export const Playground = Template.bind({});
 
 export const Shape = ShapeTemplate.bind({});
+Shape.argTypes = disabledVariantArgType;
 
 export const Content = ContentTemplate.bind({});
 
 export const ShapeSizes = ShapeSizeTemplate.bind({});
+ShapeSizes.argTypes = { ...disabledVariantArgType, ...disabledSizeArgType };
 
 export const ContentSize = ContentSizeTemplate.bind({});
+ContentSize.argTypes = disabledSizeArgType;
 
 export const ColorBackground = ColorBackgroundTemplate.bind({});
