@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AppBar as MuiAppBar, Toolbar, styled } from '@mui/material';
+import { AppBar as MuiAppBar, Toolbar } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 import BurguerMenu from './BurguerMenu';
 import BrandLogo from './BrandLogo';
