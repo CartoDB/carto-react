@@ -1,7 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Checkbox, MenuItem, TextField } from '@mui/material';
-import { styled } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 import Typography from './Typography';
 

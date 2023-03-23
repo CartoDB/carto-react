@@ -1,4 +1,5 @@
-import { styled, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 const StyledUploadField = styled(TextField, {
   shouldForwardProp: (prop) => prop !== 'focused'

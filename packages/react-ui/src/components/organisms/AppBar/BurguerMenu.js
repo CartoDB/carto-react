@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider, Hidden, IconButton } from '@mui/material';
-import { styled } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { MenuOutlined } from '@mui/icons-material';
 
 import { APPBAR_SIZE } from '../../../theme/themeConstants';
