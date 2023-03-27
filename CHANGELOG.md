@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Display Carto icon gallery in Storybook [#619](https://github.com/CartoDB/carto-react/pull/619)
 - New Avatar component based on Mui Avatar [#617](https://github.com/CartoDB/carto-react/pull/617)
 
 ## 2.0

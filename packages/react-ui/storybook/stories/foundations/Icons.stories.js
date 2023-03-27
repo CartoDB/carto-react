@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import Typography from '../../../src/components/atoms/Typography';
+import { Typography } from '@carto/react-ui';
 import { icons } from '../../../src/assets';
 
 const options = {
@@ -53,19 +53,16 @@ const useStyles = makeStyles((theme) => ({
 
 const Template = ({ ...args }) => {
   const classes = useStyles();
-  const IconGallery = () => {
-    const iconsList = Object.entries(icons);
-    return iconsList.map(([key, Icon]) => (
-      <Grid key={key} item xs={4} sm={3} className={classes.box}>
-        <Icon {...args} />
-        <Typography variant='body2'>{key}</Typography>
-      </Grid>
-    ));
-  };
+  const iconsList = Object.entries(icons);
 
   return (
     <Grid container spacing={6}>
-      {IconGallery()}
+      {iconsList.map(([key, Icon]) => (
+        <Grid key={key} item xs={4} sm={3} className={classes.box}>
+          <Icon {...args} />
+          <Typography variant='body2'>{key}</Typography>
+        </Grid>
+      ))}
     </Grid>
   );
 };
