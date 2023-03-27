@@ -1,24 +1,40 @@
 import React from 'react';
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import Typography from '../../../src/components/atoms/Typography';
-import * as Icons from '../../../src/assets';
+import { icons } from '../../../src/assets';
 
 const options = {
-  title: 'Foundations/Icons',
+  title: 'Foundations/Carto Icons',
   argTypes: {
-    size: {
+    fontSize: {
       control: {
         type: 'select',
-        options: [18, 24, 32, 40]
+        options: ['small', 'medium', 'large']
+      }
+    },
+    color: {
+      control: {
+        type: 'select',
+        options: [
+          'action',
+          'disabled',
+          'primary',
+          'secondary',
+          'error',
+          'info',
+          'success',
+          'warning',
+          'default'
+        ]
       }
     }
   },
   parameters: {
-    /*     design: {
+    design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/lVrTKiHj5zFUmCjjHF6Rc4/CARTO-Foundations?node-id=9787%3A4001'
-    }, */
+      url: 'https://www.figma.com/file/Yj97O00yGzMg1ULcA0WEfl/CARTO-Icons?node-id=8816-2893&t=b1zTHwFjHKGCo8BC-0'
+    },
     status: {
       type: 'inDevelopment'
     }
@@ -27,32 +43,29 @@ const options = {
 export default options;
 
 const useStyles = makeStyles((theme) => ({
-  text: {
-    marginBottom: theme.spacing(0.5)
-  },
-  container: {
-    width: theme.spacing(12),
-    height: theme.spacing(12),
-    marginBottom: theme.spacing(2),
-    padding: 0,
-    backgroundColor: theme.palette.primary.background,
-    border: `1px solid ${theme.palette.primary.main}`
+  box: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: theme.spacing(1)
   }
 }));
 
-const Template = () => {
+const Template = ({ ...args }) => {
   const classes = useStyles();
-  const AllIcons = ({ props }) => {
-    const icons = Object.values(Icons);
-    return icons.map((IconComponent) => <IconComponent {...props} key={IconComponent} />);
+  const IconGallery = () => {
+    const iconsList = Object.entries(icons);
+    return iconsList.map(([key, Icon]) => (
+      <Grid key={key} item xs={4} sm={3} className={classes.box}>
+        <Icon {...args} />
+        <Typography variant='body2'>{key}</Typography>
+      </Grid>
+    ));
   };
 
   return (
-    <Grid item xs={6} sm={3}>
-      <Box className={classes.text}>
-        <Typography variant='subtitle1'>{'Custom Icon gallery'}</Typography>
-      </Box>
-      {AllIcons}
+    <Grid container spacing={6}>
+      {IconGallery()}
     </Grid>
   );
 };

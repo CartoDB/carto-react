@@ -4,7 +4,7 @@ import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeShadows } from '../shadows';
 import { themeTypography } from '../typography';
-import ArrowDropIcon from '../../../assets/ArrowDropIcon';
+import ArrowDropIcon from '../../../assets/icons/ArrowDropIcon';
 
 const switchSizeS = 2;
 const switchSizeM = 3;

@@ -1,2 +1,19 @@
-export ArrowDropIcon from './ArrowDropIcon';
-export CursorIcon from './CursorIcon';
+import ArrowDropIcon from './icons/ArrowDropIcon';
+import CursorIcon from './icons/CursorIcon';
+import CircleIcon from './icons/CircleIcon';
+import LassoIcon from './icons/LassoIcon';
+import LayerIcon from './icons/LayerIcon';
+import PolygonIcon from './icons/PolygonIcon';
+import RectangleIcon from './icons/RectangleIcon';
+import UploadIcon from './icons/UploadIcon';
+
+export const icons = {
+  ArrowDrop: ArrowDropIcon,
+  Circle: CircleIcon,
+  Cursor: CursorIcon,
+  Lasso: LassoIcon,
+  Layer: LayerIcon,
+  Polygon: PolygonIcon,
+  Rectangle: RectangleIcon,
+  Upload: UploadIcon
+};

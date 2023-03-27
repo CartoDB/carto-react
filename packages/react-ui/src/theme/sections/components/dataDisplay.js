@@ -482,10 +482,14 @@ export const dataDisplayOverrides = {
   // Svg Icons
   MuiSvgIcon: {
     styleOverrides: {
+      // TODO: pending design to define final sizes for icons
       root: {
         fontSize: ICON_SIZE
       },
-      sizeLarge: {
+      fontSizeSmall: {
+        fontSize: getSpacing(1.5)
+      },
+      fontSizeLarge: {
         fontSize: ICON_SIZE_M
       }
     }
