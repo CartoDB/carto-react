@@ -5,7 +5,7 @@ import { Typography } from '@carto/react-ui';
 import { icons } from '../../../src/assets';
 
 const options = {
-  title: 'Foundations/Carto Icons',
+  title: 'Icons/Carto Icons',
   argTypes: {
     fontSize: {
       control: {

@@ -104,6 +104,7 @@ export const parameters = {
         'Introduction',
         'Foundations',
         ['Palette', 'Typography', 'Spacing', 'Borders', 'Elevations', 'Breakpoints'],
+        'Icons',
         'Atoms',
         'Molecules',
         'Organisms'
