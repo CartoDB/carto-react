@@ -1,7 +1,7 @@
 .sbdocs .link-list {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto;
   gap: 16px;
   margin: 40px 0;
 }
@@ -31,7 +31,7 @@
   margin-bottom: 4px;
 }
 
-.sbdocs .tag {
+.sbdocs .text-tag {
   display: inline-block;
   padding: 0 8px;
   font-weight: 600;
