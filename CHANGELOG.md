@@ -3,6 +3,7 @@
 ## Not released
 
 - New Avatar component based on Mui Avatar [#617](https://github.com/CartoDB/carto-react/pull/617)
+- Allow to inject headers externally to executeSQL helper [#620](https://github.com/CartoDB/carto-react/pull/620)
 
 ## 2.0
 
