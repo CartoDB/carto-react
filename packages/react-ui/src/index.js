@@ -35,7 +35,7 @@ import AppBar from './components/organisms/AppBar/AppBar';
 import LabelWithIndicator from './components/atoms/LabelWithIndicator';
 import { getCartoColorStylePropsForItem } from './utils/palette';
 import Avatar from './components/molecules/Avatar';
-import { ICON_SIZE_S, ICON_SIZE, ICON_SIZE_M } from './theme/themeconstants';
+import { ICON_SIZE_S, ICON_SIZE, ICON_SIZE_M } from './theme/themeConstants';
 
 const featureSelectionIcons = {
   CursorIcon,
