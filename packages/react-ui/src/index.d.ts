@@ -34,6 +34,7 @@ import AppBar from './components/organisms/AppBar/AppBar';
 import LabelWithIndicator from './components/atoms/LabelWithIndicator';
 import { getCartoColorStylePropsForItem } from './utils/palette';
 import Avatar from './components/molecules/Avatar';
+import { ICON_SIZE_S, ICON_SIZE, ICON_SIZE_M } from './theme/themeconstants';
 
 export {
   theme,
@@ -72,5 +73,8 @@ export {
   AppBar,
   LabelWithIndicator,
   getCartoColorStylePropsForItem,
-  Avatar
+  Avatar,
+  ICON_SIZE_S,
+  ICON_SIZE,
+  ICON_SIZE_M
 };
