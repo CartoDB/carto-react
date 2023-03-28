@@ -36,7 +36,7 @@ const options = {
       url: 'https://www.figma.com/file/Yj97O00yGzMg1ULcA0WEfl/CARTO-Icons?node-id=8816-2893&t=b1zTHwFjHKGCo8BC-0'
     },
     status: {
-      type: 'inDevelopment'
+      type: 'validated'
     }
   }
 };
