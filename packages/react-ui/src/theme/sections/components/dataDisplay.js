@@ -1,5 +1,5 @@
 import React from 'react';
-import { ICON_SIZE, ICON_SIZE_M } from '../../themeConstants';
+import { ICON_SIZE, ICON_SIZE_M, ICON_SIZE_S } from '../../themeConstants';
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
@@ -482,12 +482,11 @@ export const dataDisplayOverrides = {
   // Svg Icons
   MuiSvgIcon: {
     styleOverrides: {
-      // TODO: pending design to define final sizes for icons
       root: {
         fontSize: ICON_SIZE
       },
       fontSizeSmall: {
-        fontSize: getSpacing(1.5)
+        fontSize: ICON_SIZE_S
       },
       fontSizeLarge: {
         fontSize: ICON_SIZE_M

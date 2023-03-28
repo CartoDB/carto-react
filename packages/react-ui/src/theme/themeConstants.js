@@ -13,6 +13,7 @@ export const BREAKPOINTS = {
 };
 
 // Icons
+export const ICON_SIZE_S = getSpacing(1.5);
 export const ICON_SIZE = getSpacing(2.25);
 export const ICON_SIZE_M = getSpacing(3);
 
