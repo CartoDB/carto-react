@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Avatar as MuiAvatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { ICON_SIZE_S } from '../../theme/themeConstants';
+import { ICON_SIZE_SMALL } from '../../theme/themeConstants';
 
 const sizes = {
   large: 5,
@@ -30,8 +30,8 @@ const AvatarContainer = styled(MuiAvatar, {
     fontWeight: 500,
 
     svg: {
-      width: ICON_SIZE_S,
-      height: ICON_SIZE_S
+      width: ICON_SIZE_SMALL,
+      height: ICON_SIZE_SMALL
     }
   })
 }));

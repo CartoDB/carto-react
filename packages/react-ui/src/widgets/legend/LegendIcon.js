@@ -2,16 +2,20 @@ import React from 'react';
 import { Box, Grid } from '@mui/material';
 import PropTypes from 'prop-types';
 import Typography from '../../components/atoms/Typography';
-
-const ICON_SIZE = 16;
+import { ICON_SIZE_MEDIUM } from '../../theme/themeConstants';
 
 function LegendIcon({ legend }) {
   const { labels = [], icons = [] } = legend;
 
   const Icons = labels.map((label, idx) => (
     <Grid key={label} container item alignItems='center'>
-      <Box mr={1.5} width={ICON_SIZE} height={ICON_SIZE}>
-        <img src={icons[idx]} alt={label} width={ICON_SIZE} height={ICON_SIZE} />
+      <Box mr={1.5} width={ICON_SIZE_MEDIUM} height={ICON_SIZE_MEDIUM}>
+        <img
+          src={icons[idx]}
+          alt={label}
+          width={ICON_SIZE_MEDIUM}
+          height={ICON_SIZE_MEDIUM}
+        />
       </Box>
       <Typography variant='overlineDelicate'>{label}</Typography>
     </Grid>

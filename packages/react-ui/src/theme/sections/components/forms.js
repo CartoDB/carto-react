@@ -1,5 +1,5 @@
 import React from 'react';
-import { ICON_SIZE, ICON_SIZE_M } from '../../themeConstants';
+import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE } from '../../themeConstants';
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeShadows } from '../shadows';
@@ -31,10 +31,10 @@ const checkboxRadioOverrides = {
     },
 
     '& .MuiSvgIcon-root': {
-      fontSize: ICON_SIZE_M,
+      fontSize: ICON_SIZE_LARGE,
 
       ...(ownerState.size === 'small' && {
-        fontSize: ICON_SIZE
+        fontSize: ICON_SIZE_MEDIUM
       })
     }
   })
@@ -366,10 +366,10 @@ export const formsOverrides = {
             marginTop: 0
           },
         '& .MuiSvgIcon-root, & svg': {
-          fontSize: ICON_SIZE,
-          width: ICON_SIZE,
-          minWidth: ICON_SIZE,
-          height: ICON_SIZE,
+          fontSize: ICON_SIZE_MEDIUM,
+          width: ICON_SIZE_MEDIUM,
+          minWidth: ICON_SIZE_MEDIUM,
+          height: ICON_SIZE_MEDIUM,
           color: commonPalette.text.secondary
         },
         '.Mui-disabled &': {

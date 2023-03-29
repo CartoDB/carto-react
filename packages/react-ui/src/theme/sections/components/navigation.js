@@ -1,4 +1,4 @@
-import { ICON_SIZE } from '../../themeConstants';
+import { ICON_SIZE_MEDIUM } from '../../themeConstants';
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
@@ -126,7 +126,7 @@ export const navigationOverrides = {
           alignItems: 'center'
         },
         '& .MuiSvgIcon-root': {
-          fontSize: ICON_SIZE,
+          fontSize: ICON_SIZE_MEDIUM,
           marginRight: getSpacing(1)
         }
       },
