@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import { Typography } from '@carto/react-ui';
 import { icons } from '../../../src/assets';
+import { GridVerticalContent } from '../../utils/storyStyles';
 
 const options = {
   title: 'Icons/Carto Icons',
@@ -39,26 +39,16 @@ const options = {
 };
 export default options;
 
-const useStyles = makeStyles((theme) => ({
-  box: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: theme.spacing(1)
-  }
-}));
-
 const Template = ({ ...args }) => {
-  const classes = useStyles();
   const iconsList = Object.entries(icons);
 
   return (
     <Grid container spacing={6}>
       {iconsList.map(([key, Icon]) => (
-        <Grid key={key} item xs={4} sm={3} className={classes.box}>
+        <GridVerticalContent key={key} item xs={4} sm={3}>
           <Icon {...args} />
           <Typography variant='body2'>{key}</Typography>
-        </Grid>
+        </GridVerticalContent>
       ))}
     </Grid>
   );
