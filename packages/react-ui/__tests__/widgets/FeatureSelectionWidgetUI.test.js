@@ -2,9 +2,9 @@ import React from 'react';
 import { render, queryByAttribute, fireEvent } from '../widgets/utils/testUtils';
 import FeatureSelectionWidgetUI from '../../src/widgets/FeatureSelectionWidgetUI';
 import { capitalize } from '@mui/material';
-import CursorIcon from '../../src/assets/CursorIcon';
-import PolygonIcon from '../../src/assets/PolygonIcon';
-import RectangleIcon from '../../src/assets/RectangleIcon';
+import CursorIcon from '../../src/assets/icons/CursorIcon';
+import PolygonIcon from '../../src/assets/icons/PolygonIcon';
+import RectangleIcon from '../../src/assets/icons/RectangleIcon';
 
 const POLYGON_ICON_ID = 'polygon-icon';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, ButtonGroup } from '@mui/material';
 import Button from '../../../src/components/atoms/Button';
-import ArrowDropIcon from '../../../src/assets/ArrowDropIcon';
+import ArrowDropIcon from '../../../src/assets/icons/ArrowDropIcon';
 
 const options = {
   title: 'Molecules/Button Group',
