@@ -3,9 +3,13 @@
 ## Not released
 
 - Display Carto icon gallery in Storybook [#619](https://github.com/CartoDB/carto-react/pull/619)
-- New Avatar component based on Mui Avatar [#617](https://github.com/CartoDB/carto-react/pull/617)
 
 ## 2.0
+
+### 2.0.0-beta.6 (2023-03-29)
+
+- New Avatar component based on Mui Avatar [#617](https://github.com/CartoDB/carto-react/pull/617)
+- Allow to inject headers externally to executeSQL helper [#620](https://github.com/CartoDB/carto-react/pull/620)
 
 ### 2.0.0-beta.5 (2023-03-22)
 
