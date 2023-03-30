@@ -15,7 +15,7 @@ const BrandElements = styled('div')(({ theme }) => ({
   overflow: 'hidden',
 
   [theme.breakpoints.down('sm')]: {
-    minWidth: '188px'
+    minWidth: '190px'
   }
 }));
 
