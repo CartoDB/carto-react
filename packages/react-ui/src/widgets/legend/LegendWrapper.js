@@ -7,6 +7,7 @@ import LayerIcon from '../../assets/icons/LayerIcon';
 import { ToggleButton } from '@mui/material';
 import OpacityControl from '../OpacityControl';
 import Typography from '../../components/atoms/Typography';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   legendWrapper: {
@@ -158,7 +159,7 @@ function Header({
         startIcon={
           collapsible && (
             <Icon>
-              <ExpandIcon className={classes.expandIcon} />
+              <ExpandIcon className={clsx('doNotFillIcon', classes.expandIcon)} />
             </Icon>
           )
         }
