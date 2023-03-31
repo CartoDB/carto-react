@@ -195,7 +195,7 @@ function SelectedModeViewer({
 
   return (
     <Tooltip title={tooltipTitle} placement={tooltipPlacement}>
-      <IconButton onClick={onEnabledChangeWrapper} className={classes.btn} size='large'>
+      <IconButton onClick={onEnabledChangeWrapper} className={classes.btn}>
         {icon}
       </IconButton>
     </Tooltip>
@@ -279,7 +279,6 @@ function ModesSelector({
           aria-expanded={open ? 'true' : undefined}
           className={classes.btn}
           onClick={handleClick}
-          size='large'
         >
           <ArrowDropDown />
         </IconButton>
