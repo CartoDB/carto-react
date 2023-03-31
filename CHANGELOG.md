@@ -2,9 +2,12 @@
 
 ## Not released
 
-- Display Carto icon gallery in Storybook [#619](https://github.com/CartoDB/carto-react/pull/619)
-
 ## 2.0
+
+### 2.0.0-beta.7 (2023-03-31)
+
+- Minor theme and Widgets styles fixes [#622](https://github.com/CartoDB/carto-react/pull/622)
+- Display Carto icon gallery in Storybook [#619](https://github.com/CartoDB/carto-react/pull/619)
 
 ### 2.0.0-beta.6 (2023-03-29)
 
