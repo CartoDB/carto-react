@@ -2,9 +2,11 @@
 
 ## Not released
 
-- Add compatibility with react 18 at peer dependencies [#624](https://github.com/CartoDB/carto-react/pull/624)
-
 ## 2.0
+
+### 2.0.0-beta.8 (2023-04-04)
+
+- Add compatibility with react 18 at peer dependencies [#624](https://github.com/CartoDB/carto-react/pull/624)
 
 ### 2.0.0-beta.7 (2023-03-31)
 
