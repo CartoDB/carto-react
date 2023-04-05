@@ -1,6 +1,6 @@
 # Developers
 
-This is a monorepo, made with lerna and yarn workspaces. We recommend node version >=14.X
+This is a monorepo, made with lerna and yarn workspaces. We recommend node version >=18
 
 Clone and execute
 
