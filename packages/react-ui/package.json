@@ -84,7 +84,6 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.125",
     "@mui/material": "^5.11.16",
-    "@mui/styled-engine-sc": "^5.10.6",
     "@mui/styles": "^5.11.16",
     "echarts": "^5.2.0",
     "echarts-for-react": "^3.0.1",
