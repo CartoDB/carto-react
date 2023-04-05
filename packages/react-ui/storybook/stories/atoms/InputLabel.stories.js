@@ -55,7 +55,7 @@ const RequiredTemplate = ({ label, ...args }) => {
         {'Use <LabelWithIndicator /> component inside the Label'}
       </Typography>
 
-      <Typography variant='body2' mb={2}>
+      <Typography variant='body1' mb={2}>
         {'Required'}
       </Typography>
 
@@ -66,7 +66,7 @@ const RequiredTemplate = ({ label, ...args }) => {
         <OutlinedInput placeholder='Input text' />
       </FormControl>
 
-      <Typography variant='body2' mt={4} mb={2}>
+      <Typography variant='body1' mt={4} mb={2}>
         {'Optional'}
       </Typography>
 
