@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Add missing form stories [#627](https://github.com/CartoDB/carto-react/pull/627/files)
+
 ## 2.0
 
 ### 2.0.0-beta.8 (2023-04-04)
