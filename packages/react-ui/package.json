@@ -7,7 +7,7 @@
     "carto",
     "react",
     "ui",
-    "material-ui"
+    "mui"
   ],
   "repository": {
     "type": "git",
