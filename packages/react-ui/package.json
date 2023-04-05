@@ -1,13 +1,13 @@
 {
   "name": "@carto/react-ui",
-  "version": "2.0.0-beta.8",
+  "version": "2.0.0",
   "description": "CARTO for React - UI",
   "author": "CARTO Dev Team",
   "keywords": [
     "carto",
     "react",
     "ui",
-    "material-ui"
+    "mui"
   ],
   "repository": {
     "type": "git",
@@ -78,7 +78,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^2.0.0-beta.8",
+    "@carto/react-core": "^2.0.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.16",
