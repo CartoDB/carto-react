@@ -2,6 +2,8 @@ import { getSpacing } from '../../themeUtils';
 import { APPBAR_SIZE } from '../../themeConstants';
 import { commonPalette } from '../palette';
 import { themeShadows } from '../shadows';
+import { ExpandMoreOutlined } from '@mui/icons-material';
+import { themeTypography } from '../typography';
 
 export const surfacesOverrides = {
   // AppBar
@@ -31,6 +33,47 @@ export const surfacesOverrides = {
         '& .MuiAvatar-root': {
           width: getSpacing(4),
           height: getSpacing(4)
+        }
+      }
+    }
+  },
+
+  // MuiAccordion
+  MuiAccordion: {
+    defaultProps: {
+      disableGutters: true,
+      elevation: 0
+    },
+    styleOverrides: {
+      root: {
+        ...themeTypography.body2,
+        backgroundColor: 'transparent',
+        borderBottom: `1px solid ${commonPalette.divider}`,
+
+        '&:last-child': {
+          borderBottomColor: 'transparent'
+        },
+        '&::before': {
+          content: 'none'
+        }
+      },
+      expanded: {},
+      disabled: {}
+    }
+  },
+  // MuiAccordionSummary
+  MuiAccordionSummary: {
+    defaultProps: {
+      expandIcon: <ExpandMoreOutlined />
+    },
+    styleOverrides: {
+      root: {
+        ...themeTypography.button
+      },
+      expanded: {},
+      expandIconWrapper: {
+        '& svg': {
+          color: commonPalette.text.secondary
         }
       }
     }
