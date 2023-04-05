@@ -74,7 +74,7 @@
     "@deck.gl/layers": "^8.9.6",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@mui/material": "^5.10.10",
+    "@mui/material": "^5.11.16",
     "@nebula.gl/edit-modes": "^1.0.4",
     "@nebula.gl/layers": "^1.0.4",
     "dequal": "^2.0.2",
