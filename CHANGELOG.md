@@ -2,7 +2,8 @@
 
 ## Not released
 
-- Bump deck.gl to latest 8.9.6 [#626](https://github.com/CartoDB/carto-react/pull/626)
+- Bump to latest @deck.gl 8.9.6, @emotion and @mui packages [#626](https://github.com/CartoDB/carto-react/pull/626)
+- Add missing form stories [#627](https://github.com/CartoDB/carto-react/pull/627/files)
 
 ## 2.0
 
