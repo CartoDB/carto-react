@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { ExpandMoreOutlined } from '@mui/icons-material';
 
 const AccordionContainer = styled('div', {
   shouldForwardProp: (prop) => prop !== 'variant'
@@ -27,11 +26,7 @@ const AccordionGroup = ({ variant, items, ...otherProps }) => {
           defaultExpanded={item.defaultExpanded}
           onChange={item.onChange}
         >
-          <AccordionSummary
-            expandIcon={<ExpandMoreOutlined />}
-            aria-controls={`${index}-content`}
-            id={`${index}-header`}
-          >
+          <AccordionSummary aria-controls={`${index}-content`} id={`${index}-header`}>
             {item.summary}
           </AccordionSummary>
           <AccordionDetails>{item.content}</AccordionDetails>
@@ -49,7 +44,7 @@ AccordionGroup.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       summary: PropTypes.string.isRequired,
-      content: PropTypes.element.isRequired,
+      content: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
       disabled: PropTypes.boolean,
       defaultExpanded: PropTypes.boolean,
       onChange: PropTypes.func
