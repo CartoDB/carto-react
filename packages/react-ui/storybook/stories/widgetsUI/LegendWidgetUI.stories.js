@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import LegendWidgetUI from '../../../src/widgets/legend/LegendWidgetUI';
+import CartoIcon from '../../assets/carto-symbol.svg';
 
 const options = {
   title: 'Organisms/Widgets/LegendWidgetUI',
@@ -181,9 +182,9 @@ const LegendIconTemplate = () => {
         type: 'icon',
         labels: ['Icon 1', 'Icon 2', 'Icon 3'],
         icons: [
-          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2FShare%2Ficon%2Fnolan%2FMaps%2Fmarker1600.png&f=1&nofb=1',
-          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2FShare%2Ficon%2Fnolan%2FMaps%2Fmarker1600.png&f=1&nofb=1',
-          'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2FShare%2Ficon%2Fnolan%2FMaps%2Fmarker1600.png&f=1&nofb=1'
+          '/static/media/storybook/assets/carto-symbol.svg',
+          '/static/media/storybook/assets/carto-symbol.svg',
+          '/static/media/storybook/assets/carto-symbol.svg'
         ]
       }
     }

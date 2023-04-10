@@ -5,7 +5,7 @@ import { icons } from '../../../src/assets';
 import { GridVerticalContent } from '../../utils/storyStyles';
 
 const options = {
-  title: 'Icons/Carto Icons',
+  title: 'Icons/CARTO Icons',
   argTypes: {
     fontSize: {
       control: {
