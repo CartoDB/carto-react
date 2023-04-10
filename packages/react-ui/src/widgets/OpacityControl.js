@@ -7,10 +7,6 @@ const Content = styled(Box)(() => ({
   flex: 1
 }));
 
-const SliderWithSpace = styled(Slider)(({ theme }) => ({
-  marginTop: theme.spacing(1)
-}));
-
 const Input = styled(TextField)(({ theme }) => ({
   width: theme.spacing(8),
   '& input': {
@@ -45,11 +41,13 @@ export default function OpacityControl({ opacity, onChangeOpacity }) {
       <Content>
         <Grid container spacing={2} direction='row' alignItems='center'>
           <Grid item xs>
-            <SliderWithSpace
+            <Slider
               value={Math.round(opacity * 100)}
               min={0}
               max={100}
               step={1}
+              xs
+              mt={1}
               onChange={(_, value) => onChangeOpacity(value / 100)}
               aria-labelledby='input-slider'
             />
