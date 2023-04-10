@@ -1,6 +1,5 @@
 import React, { useState, createRef } from 'react';
 import PropTypes from 'prop-types';
-import makeStyles from '@mui/styles/makeStyles';
 import {
   Box,
   Button,
@@ -11,7 +10,8 @@ import {
   LinearProgress,
   Menu,
   MenuItem,
-  Tooltip
+  Tooltip,
+  styled
 } from '@mui/material';
 import { ExpandLess, ExpandMore, MoreVert } from '@mui/icons-material';
 import Typography from '../components/atoms/Typography';
@@ -30,80 +30,99 @@ Actions props must have this format:
 ];
 */
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'relative',
-    maxWidth: '100%',
-    padding: ({ margin }) => (margin !== undefined ? margin : theme.spacing(2, 2.5))
+const Root = styled(Box)(({ theme, margin = false }) => ({
+  position: 'relative',
+  maxWidth: '100%',
+  padding: margin !== undefined ? margin : theme.spacing(2, 2.5)
+}));
+
+const LoadingBar = styled(LinearProgress)(({ theme }) => ({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: theme.spacing(0.25)
+}));
+
+const Header = styled(Grid, {
+  shouldForwardProp: (prop) => prop !== 'expanded'
+})(({ theme, expanded = true }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'flex-start',
+  justifyContent: 'space-between',
+  width: '100%',
+  ...(expanded ? { minHeight: theme.spacing(3) } : { height: theme.spacing(3) }),
+  padding: 0
+}));
+
+const HeaderButton = styled(Button)(({ theme, expandable = true }) => ({
+  flex: 1,
+  padding: 0,
+  alignItems: 'flex-start',
+  justifyContent: 'flex-start',
+  cursor: expandable ? 'pointer' : 'default',
+  '& .MuiButton-startIcon': {
+    marginTop: '3px',
+    marginRight: theme.spacing(1)
   },
-  loading: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: theme.spacing(0.25)
-  },
-  header: ({ expanded }) => ({
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    width: '100%',
-    ...(expanded ? { minHeight: theme.spacing(3) } : { height: theme.spacing(3) }),
-    padding: 0
+  '&:hover': {
+    background: 'none'
+  }
+}));
+
+const HideButton = styled(ExpandLess)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: theme.spacing(3),
+  height: theme.spacing(3),
+  color: theme.palette.text.secondary
+}));
+
+const ShowButton = styled(ExpandMore)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: theme.spacing(3),
+  height: theme.spacing(3),
+  color: theme.palette.text.secondary
+}));
+
+const Text = styled(Typography)(({ expanded = true }) => ({
+  wordBreak: 'break-word',
+  overflow: 'hidden',
+  ...(expanded && {
+    display: '-webkit-box',
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: 'vertical'
   }),
-  optionsMenu: {
+  ...(!expanded && {
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis'
+  })
+}));
+
+const ActionsGrid = styled(Grid)(({ theme }) => ({
+  display: 'flex',
+  marginLeft: theme.spacing(1)
+}));
+
+const IconActionButton = styled(IconButton)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  margin: theme.spacing(-0.75, 0)
+}));
+
+const PaperMenu = styled(Menu)(({ theme }) => ({
+  '& .MuiDrawer-paper': {
     marginTop: theme.spacing(6),
     maxHeight: theme.spacing(21),
     minWidth: theme.spacing(16)
-  },
-  button: {
-    flex: 1,
-    padding: 0,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    cursor: (props) => (props.expandable ? 'pointer' : 'default'),
-
-    '& .MuiButton-startIcon': {
-      marginTop: '3px',
-      marginRight: theme.spacing(1)
-    },
-    '&:hover': {
-      background: 'none'
-    }
-  },
-  buttonText: ({ expanded }) => ({
-    wordBreak: 'break-word',
-    overflow: 'hidden',
-    ...(expanded && {
-      display: '-webkit-box',
-      WebkitLineClamp: 2,
-      WebkitBoxOrient: 'vertical'
-    }),
-    ...(!expanded && {
-      whiteSpace: 'nowrap',
-      textOverflow: 'ellipsis'
-    })
-  }),
-  actions: {
-    display: 'flex',
-    marginLeft: theme.spacing(1)
-  },
-  iconToggle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-    color: theme.palette.text.secondary
-  },
-  iconAction: {
-    color: theme.palette.text.secondary,
-    margin: theme.spacing(-0.75, 0)
-  },
-  content: {
-    paddingTop: theme.spacing(1.25)
   }
+}));
+
+const Content = styled(Box)(({ theme }) => ({
+  paddingTop: theme.spacing(1.25)
 }));
 
 function WrapperWidgetUI(props) {
@@ -117,7 +136,6 @@ function WrapperWidgetUI(props) {
   const setExpanded = externalExpanded ? props.onExpandedChange : setExpandedInt;
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const classes = useStyles({ ...props, expanded });
   const open = Boolean(anchorEl);
   const {
     disabled = false,
@@ -150,14 +168,9 @@ function WrapperWidgetUI(props) {
 
   const iconButtonTooltip = (action) => {
     return (
-      <IconButton
-        key={action.id}
-        aria-label={action.label}
-        onClick={action.action}
-        className={classes.iconAction}
-      >
+      <IconActionButton key={action.id} aria-label={action.label} onClick={action.action}>
         {action.icon}
-      </IconButton>
+      </IconActionButton>
     );
   };
 
@@ -166,32 +179,23 @@ function WrapperWidgetUI(props) {
   }
 
   return (
-    <Box component='section' aria-label={props.title} className={classes.root}>
-      {props.isLoading ? <LinearProgress className={classes.loading} /> : null}
-      <Grid container className={classes.header}>
-        <Button
-          className={classes.button}
+    <Root component='section' aria-label={props.title}>
+      {props.isLoading ? <LoadingBar /> : null}
+      <Header container>
+        <HeaderButton
           startIcon={
-            props.expandable && (
-              <Icon>
-                {expanded ? (
-                  <ExpandLess className={classes.iconToggle} />
-                ) : (
-                  <ExpandMore className={classes.iconToggle} />
-                )}
-              </Icon>
-            )
+            props.expandable && <Icon>{expanded ? <HideButton /> : <ShowButton />}</Icon>
           }
           onClick={handleExpandClick}
         >
           <Tooltip title={props.title}>
-            <Typography className={classes.buttonText} align='left' variant='subtitle1'>
+            <Text align='left' variant='subtitle1'>
               {props.title}
-            </Typography>
+            </Text>
           </Tooltip>
-        </Button>
+        </HeaderButton>
 
-        <Grid className={classes.actions} item>
+        <ActionsGrid item>
           {actions.length > 0 &&
             actions.map((action) => {
               return action.tooltip ? (
@@ -209,16 +213,15 @@ function WrapperWidgetUI(props) {
 
           {options.length > 0 && (
             <>
-              <IconButton
+              <IconActionButton
                 aria-label='options'
                 aria-controls='options-menu'
                 aria-haspopup='true'
                 onClick={handleClick}
-                className={classes.iconAction}
               >
                 {optionsIcon}
-              </IconButton>
-              <Menu
+              </IconActionButton>
+              <PaperMenu
                 id='options-menu'
                 elevation={8}
                 anchorOrigin={{
@@ -233,7 +236,6 @@ function WrapperWidgetUI(props) {
                 keepMounted
                 open={open}
                 onClose={handleClose}
-                PaperProps={{ className: classes.optionsMenu }}
               >
                 {options.map((option) => (
                   <MenuItem
@@ -244,16 +246,16 @@ function WrapperWidgetUI(props) {
                     {option.name}
                   </MenuItem>
                 ))}
-              </Menu>
+              </PaperMenu>
             </>
           )}
-        </Grid>
-      </Grid>
+        </ActionsGrid>
+      </Header>
       {/* TODO: check collapse error */}
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
-        <Box className={classes.content}>{props.children}</Box>
+        <Content>{props.children}</Content>
       </Collapse>
-    </Box>
+    </Root>
   );
 }
 
