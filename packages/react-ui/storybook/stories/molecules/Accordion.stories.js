@@ -25,18 +25,12 @@ const options = {
       control: {
         type: 'boolean'
       }
-    },
-    variant: {
-      control: {
-        type: 'select',
-        options: ['standard', 'outlined']
-      }
     }
   },
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1925%3A30532&t=Y3JoU7theewbWKOW-0'
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/C4R-Components?node-id=6361-152749&t=EVLxqsSCMSm0Lvtv-0'
     },
     status: {
       type: 'readyToReview'
@@ -79,37 +73,34 @@ const items = [
   }
 ];
 
-const Template = ({ ...args }) => {
+const Template = ({ defaultExpanded, ...args }) => {
   return (
-    <Accordion {...args}>
+    <Accordion {...args} defaultExpanded={defaultExpanded}>
       <AccordionSummary>Accordion summary</AccordionSummary>
       <AccordionDetails>
         <Typography variant='body2'>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mauris urna.
-          Mauris non feugiat arcu, a varius justo. Vivamus placerat ante purus, a luctus
-          magna convallis pretium. In a laoreet mi, sit amet rutrum neque.
         </Typography>
       </AccordionDetails>
     </Accordion>
   );
 };
 
-const SingleTemplate = ({ ...args }) => {
+const SingleTemplate = ({ defaultExpanded, ...args }) => {
   return (
-    <Accordion {...args}>
+    <Accordion {...args} defaultExpanded={defaultExpanded}>
       <AccordionSummary>Accordion summary</AccordionSummary>
       <AccordionDetails>
         <Typography variant='body2'>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mauris urna.
-          Mauris non feugiat arcu, a varius justo. Vivamus placerat ante purus, a luctus
-          magna convallis pretium. In a laoreet mi, sit amet rutrum neque.
+          Mauris non feugiat arcu, a varius justo.
         </Typography>
       </AccordionDetails>
     </Accordion>
   );
 };
 
-const GroupTemplate = ({ variant, ...args }) => {
+const GroupTemplate = ({ defaultExpanded, ...args }) => {
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
@@ -131,7 +122,7 @@ const GroupTemplate = ({ variant, ...args }) => {
   );
 };
 
-const StatesTemplate = ({ ...args }) => {
+const StatesTemplate = ({ defaultExpanded, ...args }) => {
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
@@ -141,10 +132,7 @@ const StatesTemplate = ({ ...args }) => {
             <AccordionSummary>Accordion summary</AccordionSummary>
             <AccordionDetails>
               <Typography variant='body2'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mauris
-                urna. Mauris non feugiat arcu, a varius justo. Vivamus placerat ante
-                purus, a luctus magna convallis pretium. In a laoreet mi, sit amet rutrum
-                neque.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -158,9 +146,7 @@ const StatesTemplate = ({ ...args }) => {
             <AccordionDetails>
               <Typography variant='body2'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mauris
-                urna. Mauris non feugiat arcu, a varius justo. Vivamus placerat ante
-                purus, a luctus magna convallis pretium. In a laoreet mi, sit amet rutrum
-                neque.
+                urna. Vivamus placerat ante purus, a luctus magna convallis pretium.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -173,10 +159,8 @@ const StatesTemplate = ({ ...args }) => {
             <AccordionSummary>Accordion summary</AccordionSummary>
             <AccordionDetails>
               <Typography variant='body2'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et mauris
-                urna. Mauris non feugiat arcu, a varius justo. Vivamus placerat ante
-                purus, a luctus magna convallis pretium. In a laoreet mi, sit amet rutrum
-                neque.
+                Mauris non feugiat arcu, a varius justo. Vivamus placerat ante purus, a
+                luctus magna convallis pretium. In a laoreet mi, sit amet rutrum neque.
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -186,7 +170,7 @@ const StatesTemplate = ({ ...args }) => {
   );
 };
 
-const BehaviorTemplate = ({ variant, ...args }) => {
+const BehaviorTemplate = ({ defaultExpanded, ...args }) => {
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
@@ -201,9 +185,7 @@ const BehaviorTemplate = ({ variant, ...args }) => {
               <AccordionDetails>
                 <Typography variant='body2'>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et
-                  mauris urna. Mauris non feugiat arcu, a varius justo. Vivamus placerat
-                  ante purus, a luctus magna convallis pretium. In a laoreet mi, sit amet
-                  rutrum neque.
+                  mauris urna. Mauris non feugiat arcu, a varius justo.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -223,18 +205,18 @@ const BehaviorTemplate = ({ variant, ...args }) => {
     </Grid>
   );
 };
-
-const disabledVariantArgType = {
-  variant: { table: { disable: true } }
+const disabledArgType = {
+  disabled: { table: { disable: true } }
 };
-
 export const Playground = Template.bind({});
 
 export const Single = SingleTemplate.bind({});
 
 export const Group = GroupTemplate.bind({});
-Group.argTypes = disabledVariantArgType;
+Group.argTypes = disabledArgType;
 
 export const States = StatesTemplate.bind({});
+States.argTypes = disabledArgType;
 
 export const Behavior = BehaviorTemplate.bind({});
+Behavior.argTypes = disabledArgType;
