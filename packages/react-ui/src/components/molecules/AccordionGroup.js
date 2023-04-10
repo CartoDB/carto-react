@@ -21,7 +21,12 @@ const AccordionGroup = ({ variant, items, ...otherProps }) => {
   return (
     <AccordionContainer {...otherProps} variant={variant}>
       {items.map((item, index) => (
-        <Accordion key={index}>
+        <Accordion
+          key={index}
+          disabled={item.disabled}
+          defaultExpanded={item.defaultExpanded}
+          onChange={item.onChange}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreOutlined />}
             aria-controls={`${index}-content`}
@@ -44,7 +49,10 @@ AccordionGroup.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       summary: PropTypes.string.isRequired,
-      content: PropTypes.element.isRequired
+      content: PropTypes.element.isRequired,
+      disabled: PropTypes.boolean,
+      defaultExpanded: PropTypes.boolean,
+      onChange: PropTypes.func
     })
   ).isRequired
 };

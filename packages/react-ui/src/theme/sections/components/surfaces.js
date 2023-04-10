@@ -50,15 +50,16 @@ export const surfacesOverrides = {
         backgroundColor: 'transparent',
         borderBottom: `1px solid ${commonPalette.divider}`,
 
-        '&:last-child': {
+        '&:last-of-type': {
           borderBottomColor: 'transparent'
         },
         '&::before': {
           content: 'none'
+        },
+        '&.Mui-disabled': {
+          backgroundColor: 'inherit'
         }
-      },
-      expanded: {},
-      disabled: {}
+      }
     }
   },
   // MuiAccordionSummary
@@ -68,12 +69,20 @@ export const surfacesOverrides = {
     },
     styleOverrides: {
       root: {
-        ...themeTypography.button
+        ...themeTypography.button,
+
+        '&.Mui-disabled': {
+          opacity: 1,
+          color: commonPalette.text.disabled
+        }
       },
-      expanded: {},
       expandIconWrapper: {
         '& svg': {
-          color: commonPalette.text.secondary
+          color: commonPalette.text.secondary,
+
+          '.Mui-disabled &': {
+            color: commonPalette.text.disabled
+          }
         }
       }
     }
