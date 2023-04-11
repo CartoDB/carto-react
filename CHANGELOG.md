@@ -3,6 +3,7 @@
 ## Not released
 
 - Storybook documentation and fixes [#629](https://github.com/CartoDB/carto-react/pull/629)
+- Note component cleaned styles from makeStyles [#630](https://github.com/CartoDB/carto-react/pull/630)
 
 ## 2.0
 
