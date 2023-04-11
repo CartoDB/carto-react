@@ -121,10 +121,6 @@ const PaperMenu = styled(Menu)(({ theme }) => ({
   }
 }));
 
-const Content = styled(Box)(({ theme }) => ({
-  paddingTop: theme.spacing(1.25)
-}));
-
 function WrapperWidgetUI(props) {
   const wrapper = createRef();
 
@@ -253,7 +249,9 @@ function WrapperWidgetUI(props) {
       </Header>
       {/* TODO: check collapse error */}
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
-        <Content>{props.children}</Content>
+        <Box xs pt={1}>
+          {props.children}
+        </Box>
       </Collapse>
     </Root>
   );
