@@ -2,12 +2,15 @@
 
 ## Not released
 
+- Storybook documentation and fixes [#629](https://github.com/CartoDB/carto-react/pull/629)
+- Note component cleaned styles from makeStyles [#630](https://github.com/CartoDB/carto-react/pull/630)
+
 ## 2.0
 
 ### 2.0.0 (2023-04-05)
 
 - Bump to latest @deck.gl 8.9.6, @emotion and @mui packages [#626](https://github.com/CartoDB/carto-react/pull/626)
-- Add missing form stories [#627](https://github.com/CartoDB/carto-react/pull/627/files)
+- Add missing form stories [#627](https://github.com/CartoDB/carto-react/pull/627)
 
 ### 2.0.0-beta.8 (2023-04-04)
 
