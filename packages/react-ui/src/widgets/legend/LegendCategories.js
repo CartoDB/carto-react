@@ -146,6 +146,7 @@ function Row({ label, isMax, isStrokeColor, color = '#000', icon, maskedIcon }) 
       <Grid container item alignContent={'center'}>
         <Tooltip title={isMax ? 'Most representative' : ''}>
           <Marker
+            className='marker'
             mr={1.5}
             component='span'
             isMax={isMax}
