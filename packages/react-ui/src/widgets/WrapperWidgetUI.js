@@ -30,11 +30,16 @@ Actions props must have this format:
 ];
 */
 
-const Root = styled(Box)(({ theme, margin = false }) => ({
-  position: 'relative',
-  maxWidth: '100%',
-  padding: margin !== undefined ? margin : theme.spacing(2, 2.5)
-}));
+const Root = styled(Box,{
+  shouldForwardProp: (prop) => prop !== 'margin'
+})(({ theme, margin }) => {
+  return {
+    margin: 0,
+    position: 'relative',
+    maxWidth: '100%',
+    padding: margin !== undefined ? margin : theme.spacing(2, 2.5)
+  }
+});
 
 const LoadingBar = styled(LinearProgress)(({ theme }) => ({
   position: 'absolute',
@@ -71,23 +76,19 @@ const HeaderButton = styled(Button)(({ theme, expandable = true }) => ({
   }
 }));
 
-const HideButton = styled(ExpandLess)(({ theme }) => ({
+const ParentIcon = ({theme}) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   width: theme.spacing(3),
   height: theme.spacing(3),
   color: theme.palette.text.secondary
-}));
+});
 
-const ShowButton = styled(ExpandMore)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: theme.spacing(3),
-  height: theme.spacing(3),
-  color: theme.palette.text.secondary
-}));
+const HideButton = styled(ExpandLess)(({ theme }) => ParentIcon({theme}));
+
+const ShowButton = styled(ExpandMore)(({ theme }) => ParentIcon({theme}));
+
 
 const Text = styled(Typography)(({ expanded = true }) => ({
   wordBreak: 'break-word',
@@ -114,8 +115,8 @@ const IconActionButton = styled(IconButton)(({ theme }) => ({
 }));
 
 const PaperMenu = styled(Menu)(({ theme }) => ({
-  '& .MuiDrawer-paper': {
-    marginTop: theme.spacing(6),
+  '.MuiPaper-root': {
+    marginTop: theme.spacing(5),
     maxHeight: theme.spacing(21),
     minWidth: theme.spacing(16)
   }
@@ -175,17 +176,18 @@ function WrapperWidgetUI(props) {
   }
 
   return (
-    <Root component='section' aria-label={props.title}>
+    <Root margin={props.margin} component='section' aria-label={props.title}>
       {props.isLoading ? <LoadingBar /> : null}
-      <Header container>
+      <Header container expanded={props.expanded.toString()}>
         <HeaderButton
+          expandable={props.expandable.toString()}
           startIcon={
             props.expandable && <Icon>{expanded ? <HideButton /> : <ShowButton />}</Icon>
           }
           onClick={handleExpandClick}
         >
           <Tooltip title={props.title}>
-            <Text align='left' variant='subtitle1'>
+            <Text expanded={props.expanded.toString()} align='left' variant='subtitle1'>
               {props.title}
             </Text>
           </Tooltip>
