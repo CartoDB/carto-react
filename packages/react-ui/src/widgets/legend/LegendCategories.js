@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Grid, Tooltip } from '@mui/material';
+import { Box, Grid, Tooltip, styled } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
@@ -65,61 +65,56 @@ LegendCategories.propTypes = {
 
 export default LegendCategories;
 
-// Aux
-const useStyles = makeStyles((theme) => ({
-  legendCategories: {
-    alignItems: 'center'
-  },
-  marker: {
-    whiteSpace: 'nowrap',
-    display: 'block',
-    width: '12px',
-    height: '12px',
-    borderRadius: '50%',
-    position: 'relative',
-    border: '2px solid transparent'
-  },
-  circle: {
-    border: '2px solid transparent',
-    '&::after': {
-      position: 'absolute',
-      display: ({ isMax }) => (isMax ? 'block' : 'none'),
-      content: '""',
-      width: '16px',
-      height: '16px',
-      border: `2px solid ${theme.palette.grey[900]}`,
-      transform: 'translate(-30%, -30%)',
-      borderRadius: '50%',
-      boxSizing: 'content-box'
-    }
-  },
-  icon: {
-    maskRepeat: 'no-repeat',
-    maskSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover'
-  },
-  flexParent: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  longTruncate: {
-    flex: 1,
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis'
-  },
-  titlePhantom: {
-    opacity: 0,
+const getCircleStyles = ({ isMax, theme }) => ({
+  border: '2px solid transparent',
+  '&::after': {
     position: 'absolute',
-    whiteSpace: 'nowrap',
-    pointerEvents: 'none'
+    display: ({ isMax }) => (isMax ? 'block' : 'none'),
+    content: '""',
+    width: '16px',
+    height: '16px',
+    border: `2px solid ${theme.palette.grey[900]}`,
+    transform: 'translate(-30%, -30%)',
+    borderRadius: '50%',
+    boxSizing: 'content-box'
   }
+});
+
+const getIconStyles = () => ({
+  maskRepeat: 'no-repeat',
+  maskSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover'
+});
+
+const Marker = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'isMax' && prop !== 'icon'
+})(({ isMax, icon, theme }) => ({
+  whiteSpace: 'nowrap',
+  display: 'block',
+  width: '12px',
+  height: '12px',
+  borderRadius: '50%',
+  position: 'relative',
+  border: '2px solid transparent',
+  ...(icon ? getCircleStyles({ isMax, theme }) : getIconStyles())
+}));
+
+const LongTruncate = styled(Typography)(() => ({
+  flex: 1,
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis'
+}));
+
+const TitlePhantom = styled(LongTruncate)(() => ({
+  opacity: 0,
+  position: 'absolute',
+  whiteSpace: 'nowrap',
+  pointerEvents: 'none'
 }));
 
 function Row({ label, isMax, isStrokeColor, color = '#000', icon, maskedIcon }) {
-  const classes = useStyles({ isMax });
-
   const [showTooltip, setShowTooltip] = useState(false);
   const labelRef = useRef(null);
   const labelPhantomRef = useRef(null);
@@ -135,16 +130,13 @@ function Row({ label, isMax, isStrokeColor, color = '#000', icon, maskedIcon }) 
 
   return (
     <Tooltip title={showTooltip ? label : ''} placement='left'>
-      <Grid
-        container
-        item
-        className={[classes.legendCategories, classes.flexParent].join(' ')}
-      >
+      <Grid container item alignContent={'center'}>
         <Tooltip title={isMax ? 'Most representative' : ''}>
-          <Box
+          <Marker
             mr={1.5}
             component='span'
-            className={[classes.marker, icon ? classes.icon : classes.circle].join(' ')}
+            isMax={isMax}
+            icon={icon}
             style={
               icon
                 ? maskedIcon
@@ -163,20 +155,12 @@ function Row({ label, isMax, isStrokeColor, color = '#000', icon, maskedIcon }) 
             }
           />
         </Tooltip>
-        <Typography
-          ref={labelRef}
-          variant='overlineDelicate'
-          className={classes.longTruncate}
-        >
+        <LongTruncate ref={labelRef} variant='overlineDelicate'>
           {label}
-        </Typography>
-        <Typography
-          ref={labelPhantomRef}
-          variant='overlineDelicate'
-          className={[classes.longTruncate, classes.titlePhantom].join(' ')}
-        >
+        </LongTruncate>
+        <TitlePhantom ref={labelPhantomRef} variant='overlineDelicate'>
           {label}
-        </Typography>
+        </TitlePhantom>
       </Grid>
     </Tooltip>
   );
