@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Grid, Tooltip, styled } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
 import Typography from '../../components/atoms/Typography';
@@ -65,11 +64,11 @@ LegendCategories.propTypes = {
 
 export default LegendCategories;
 
-const getCircleStyles = ({ isMax, theme }) => ({
+const getCircleStyles = ({ isMax, color, isStrokeColor, theme }) => ({
   border: '2px solid transparent',
   '&::after': {
     position: 'absolute',
-    display: ({ isMax }) => (isMax ? 'block' : 'none'),
+    display: isMax ? 'block' : 'none',
     content: '""',
     width: '16px',
     height: '16px',
@@ -77,19 +76,31 @@ const getCircleStyles = ({ isMax, theme }) => ({
     transform: 'translate(-30%, -30%)',
     borderRadius: '50%',
     boxSizing: 'content-box'
-  }
+  },
+  ...(isStrokeColor ? { borderColor: color } : { backgroundColor: color })
 });
 
-const getIconStyles = () => ({
+const getIconStyles = ({ icon, color, maskedIcon }) => ({
   maskRepeat: 'no-repeat',
   maskSize: 'cover',
   backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover'
+  backgroundSize: 'cover',
+  ...(maskedIcon
+    ? {
+        backgroundColor: color,
+        maskImage: `url(${icon})`,
+        WebkitMaskImage: `url(${icon})`
+      }
+    : {
+        backgroundColor: `rgba(0,0,0,0)`,
+        backgroundImage: `url(${icon})`
+      })
 });
 
 const Marker = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'isMax' && prop !== 'icon'
-})(({ isMax, icon, theme }) => ({
+  shouldForwardProp: (prop) =>
+    !['isMax', 'icon', 'maskedIcon', 'color', 'isStrokeColor'].includes(prop)
+})(({ isMax, icon, maskedIcon, color, isStrokeColor, theme }) => ({
   whiteSpace: 'nowrap',
   display: 'block',
   width: '12px',
@@ -97,7 +108,9 @@ const Marker = styled(Box, {
   borderRadius: '50%',
   position: 'relative',
   border: '2px solid transparent',
-  ...(icon ? getCircleStyles({ isMax, theme }) : getIconStyles())
+  ...(icon
+    ? getIconStyles({ icon, color, maskedIcon })
+    : getCircleStyles({ isMax, color, isStrokeColor, theme }))
 }));
 
 const LongTruncate = styled(Typography)(() => ({
@@ -137,22 +150,9 @@ function Row({ label, isMax, isStrokeColor, color = '#000', icon, maskedIcon }) 
             component='span'
             isMax={isMax}
             icon={icon}
-            style={
-              icon
-                ? maskedIcon
-                  ? {
-                      backgroundColor: color,
-                      maskImage: `url(${icon})`,
-                      WebkitMaskImage: `url(${icon})`
-                    }
-                  : {
-                      backgroundColor: `rgba(0,0,0,0)`,
-                      backgroundImage: `url(${icon})`
-                    }
-                : isStrokeColor
-                ? { borderColor: color }
-                : { backgroundColor: color }
-            }
+            maskedIcon={maskedIcon}
+            isStrokeColor={isStrokeColor}
+            color={color}
           />
         </Tooltip>
         <LongTruncate ref={labelRef} variant='overlineDelicate'>
