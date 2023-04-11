@@ -235,7 +235,7 @@ const TemplateVertical = ({ label, wrapped, disabled, ...args }) => {
   );
 };
 
-const BehaviorTemplate = (args) => {
+const BehaviorTemplate = ({ wrapped, ...args }) => {
   const [value, setValue] = React.useState(0);
   const [value2, setValue2] = React.useState(0);
 
@@ -253,9 +253,9 @@ const BehaviorTemplate = (args) => {
         <Typography variant='body2'>{'Default behavior'}</Typography>
         <Box style={{ width: '100%' }}>
           <Tabs {...args} value={value} onChange={handleChange} aria-label='tabs example'>
-            <Tab label='Extra Long Label' icon={<MapOutlined />} />
-            <Tab label='Label' icon={<LayersOutlined />} />
-            <Tab label='Long Label' icon={<LocalOfferOutlined />} />
+            <Tab label='Extra Long Label' icon={<MapOutlined />} wrapped={wrapped} />
+            <Tab label='Label' icon={<LayersOutlined />} wrapped={wrapped} />
+            <Tab label='Long Label' icon={<LocalOfferOutlined />} wrapped={wrapped} />
           </Tabs>
         </Box>
       </Grid>
@@ -274,9 +274,9 @@ const BehaviorTemplate = (args) => {
             aria-label='tabs example'
             variant='fullWidth'
           >
-            <Tab label='Extra Long Label' icon={<MapOutlined />} />
-            <Tab label='Label' icon={<LayersOutlined />} />
-            <Tab label='Long Label' icon={<LocalOfferOutlined />} />
+            <Tab label='Extra Long Label' icon={<MapOutlined />} wrapped={wrapped} />
+            <Tab label='Label' icon={<LayersOutlined />} wrapped={wrapped} />
+            <Tab label='Long Label' icon={<LocalOfferOutlined />} wrapped={wrapped} />
           </Tabs>
         </Box>
       </Grid>

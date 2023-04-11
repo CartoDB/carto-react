@@ -63,7 +63,7 @@ const options = {
 };
 export default options;
 
-const Toggle = ({ label, ...rest }) => {
+const Toggle = ({ label, exclusive, ...rest }) => {
   const [selected, setSelected] = React.useState(false);
 
   return (
@@ -81,7 +81,7 @@ const Toggle = ({ label, ...rest }) => {
   );
 };
 
-const ToggleRow = ({ label, divider, fullWidth, ...rest }) => {
+const ToggleRow = ({ label, divider, fullWidth, exclusive, ...rest }) => {
   const [selected, setSelected] = React.useState(() => ['AlignLeft']);
 
   const handleAlignment = (event, newAlignment) => {
@@ -94,6 +94,7 @@ const ToggleRow = ({ label, divider, fullWidth, ...rest }) => {
       value={selected}
       onChange={handleAlignment}
       fullWidth={fullWidth}
+      exclusive={exclusive}
       aria-label='text alignment'
     >
       <ToggleButton value='AlignLeft' aria-label='AlignLeft'>
@@ -113,7 +114,7 @@ const ToggleRow = ({ label, divider, fullWidth, ...rest }) => {
   );
 };
 
-const IconTemplate = (args) => {
+const IconTemplate = ({ exclusive, ...args }) => {
   return (
     <Grid container alignItems='center' spacing={4}>
       <Grid item>
@@ -129,7 +130,7 @@ const IconTemplate = (args) => {
   );
 };
 
-const TextTemplate = (args) => {
+const TextTemplate = ({ exclusive, ...args }) => {
   return (
     <Grid container alignItems='center' spacing={4}>
       <Grid item>
@@ -142,7 +143,7 @@ const TextTemplate = (args) => {
   );
 };
 
-const GroupTemplate = (args) => {
+const GroupTemplate = ({ exclusive, ...args }) => {
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>
@@ -155,7 +156,7 @@ const GroupTemplate = (args) => {
   );
 };
 
-const VerticalGroupTemplate = (args) => {
+const VerticalGroupTemplate = ({ exclusive, ...args }) => {
   return (
     <Grid container spacing={4}>
       <Grid item>
@@ -168,20 +169,20 @@ const VerticalGroupTemplate = (args) => {
   );
 };
 
-const DividedTemplate = (args) => {
+const DividedTemplate = ({ exclusive, ...args }) => {
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>
-        <ToggleRow divider />
+        <ToggleRow {...args} divider />
       </Grid>
       <Grid item>
-        <ToggleRow divider size='small' />
+        <ToggleRow {...args} divider size='small' />
       </Grid>
     </Grid>
   );
 };
 
-const BehaviorTemplate = (args) => {
+const BehaviorTemplate = ({ exclusive, ...args }) => {
   const [selected, setSelected] = React.useState(() => ['opt1']);
   const [selected2, setSelected2] = React.useState(() => ['opt1']);
 
@@ -198,7 +199,12 @@ const BehaviorTemplate = (args) => {
         <Typography variant='body1'>{'Hug Text'}</Typography>
         <Typography variant='body2'>{'Default behavior'}</Typography>
 
-        <ToggleButtonGroup {...args} value={selected} onChange={handleAlignment}>
+        <ToggleButtonGroup
+          {...args}
+          value={selected}
+          onChange={handleAlignment}
+          exclusive={exclusive}
+        >
           <ToggleButton value='opt1'>{'Opt 1'}</ToggleButton>
           <ToggleButton value='opt2'>{'Opt 2'}</ToggleButton>
           <ToggleButton value='opt3'>{'Option 3'}</ToggleButton>
@@ -214,6 +220,7 @@ const BehaviorTemplate = (args) => {
           value={selected2}
           onChange={handleAlignment2}
           fullWidth
+          exclusive={exclusive}
           style={{ width: '496px' }}
         >
           <ToggleButton value='opt1'>{'Opt 1'}</ToggleButton>
