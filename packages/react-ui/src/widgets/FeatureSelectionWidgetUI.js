@@ -8,10 +8,10 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  styled,
   Tooltip,
   useTheme
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { ArrowDropDown } from '@mui/icons-material';
 import PropTypes from 'prop-types';
 import Typography from '../components/atoms/Typography';
@@ -159,13 +159,11 @@ function GeometryViewer({
   );
 }
 
-const useSelectedModeViewerStyles = makeStyles((theme) => ({
-  btn: {
-    color: ({ enabled }) =>
-      enabled ? theme.palette.primary.main : theme.palette.text.secondary,
-    backgroundColor: ({ enabled }) =>
-      enabled ? alpha(theme.palette.primary.main, 0.05) : null
-  }
+const StyledSelectedModeViewerButton = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== 'enabled'
+})(({ theme: { palette }, enabled }) => ({
+  color: enabled ? palette.primary.main : palette.text.secondary,
+  backgroundColor: enabled ? alpha(palette.primary.main, 0.05) : null
 }));
 
 function SelectedModeViewer({
@@ -175,8 +173,6 @@ function SelectedModeViewer({
   onEnabledChange,
   tooltipPlacement
 }) {
-  const classes = useSelectedModeViewerStyles({ enabled });
-
   const { label, icon, isEdit } = useMemo(() => {
     if (modes?.length && selectedMode) {
       const foundMode = modes.find(({ id: modeId }) => modeId === selectedMode);
@@ -195,24 +191,22 @@ function SelectedModeViewer({
 
   return (
     <Tooltip title={tooltipTitle} placement={tooltipPlacement}>
-      <IconButton onClick={onEnabledChangeWrapper} className={classes.btn}>
+      <StyledSelectedModeViewerButton onClick={onEnabledChangeWrapper} enabled={enabled}>
         {icon}
-      </IconButton>
+      </StyledSelectedModeViewerButton>
     </Tooltip>
   );
 }
 
-const useModesSelectorStyles = makeStyles((theme) => ({
-  btn: {
-    color: theme.palette.text.secondary,
-    width: 24
-  },
-  divider: {
-    margin: theme.spacing(1, 0)
-  },
-  enabledMenuItem: {
-    backgroundColor: alpha(theme.palette.primary.main, 0.08)
-  }
+const StyledButtonArrow = styled(IconButton)(({ theme: { palette } }) => ({
+  color: palette.text.secondary,
+  width: 24
+}));
+
+const StyledMenuItem = styled(MenuItem, {
+  shouldForwardProp: (prop) => prop !== 'enabled'
+})(({ theme: { palette }, enabled }) => ({
+  ...(enabled && { backgroundColor: alpha(palette.primary.main, 0.08) })
 }));
 
 function ModesSelector({
@@ -224,8 +218,6 @@ function ModesSelector({
   tooltipPlacement
 }) {
   const theme = useTheme();
-  const classes = useModesSelectorStyles();
-
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
@@ -247,8 +239,8 @@ function ModesSelector({
   const hasEditModes = !!editModes.length;
 
   const MenuItemWrapper = forwardRef(({ mode, isEnabled }, ref) => (
-    <MenuItem
-      className={isEnabled ? classes.enabledMenuItem : null}
+    <StyledMenuItem
+      enabled={isEnabled}
       ref={ref}
       onClick={() => handleSelectMode(mode.id)}
     >
@@ -258,7 +250,7 @@ function ModesSelector({
           <Typography variant='body2'>{capitalize(mode.label)}</Typography>
         </Box>
       </Box>
-    </MenuItem>
+    </StyledMenuItem>
   ));
 
   const createMenuItemWrapper = (mode) => (
@@ -272,16 +264,15 @@ function ModesSelector({
   return (
     <Box>
       <Tooltip title='Select a mode' placement={tooltipPlacement}>
-        <IconButton
+        <StyledButtonArrow
           id='fade-button'
           aria-controls='fade-menu'
           aria-haspopup='true'
           aria-expanded={open ? 'true' : undefined}
-          className={classes.btn}
           onClick={handleClick}
         >
           <ArrowDropDown />
-        </IconButton>
+        </StyledButtonArrow>
       </Tooltip>
       <Menu
         style={{ zIndex: theme.zIndex.tooltip + 1 }}
@@ -297,35 +288,31 @@ function ModesSelector({
           <Typography variant='caption'>Choose a selection mode</Typography>
         </MenuItem>
         {hasSelectionModes && selectionModes.map(createMenuItemWrapper)}
-        {hasSelectionModes && hasEditModes && <Divider className={classes.divider} />}
+        {hasSelectionModes && hasEditModes && (
+          <Divider
+            sx={{
+              margin: ({ spacing }) => spacing(1, 0)
+            }}
+          />
+        )}
         {hasSelectionModes && editModes.map(createMenuItemWrapper)}
       </Menu>
     </Box>
   );
 }
 
-const useWrapperStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(0.5),
-    backgroundColor: theme.palette.common.white,
-    color: theme.palette.text.primary,
-    borderRadius: theme.shape.borderRadius,
-    boxShadow:
-      '0px 3px 5px -1px rgb(0 0 0 / 16%), 0px 5px 8px 0px rgb(0 0 0 / 8%), 0px 1px 14px 0px rgb(0 0 0 / 4%)'
-  }
+const StylesWrapper = styled('div')(({ theme: { spacing, palette, shape } }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: spacing(0.5),
+  backgroundColor: palette.common.white,
+  color: palette.text.primary,
+  borderRadius: shape.borderRadius,
+  boxShadow:
+    '0px 3px 5px -1px rgb(0 0 0 / 16%), 0px 5px 8px 0px rgb(0 0 0 / 8%), 0px 1px 14px 0px rgb(0 0 0 / 4%)'
 }));
 
 function Wrapper({ className, children }) {
-  const classes = useWrapperStyles();
-  return (
-    <Box
-      className={`${classes.root} ${className}`}
-      p={0.5}
-      display='flex'
-      alignItems='center'
-      justifyContent='space-between'
-    >
-      {children}
-    </Box>
-  );
+  return <StylesWrapper className={`${className}`}>{children}</StylesWrapper>;
 }
