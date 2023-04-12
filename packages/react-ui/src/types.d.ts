@@ -3,7 +3,9 @@ import {
   AppBarProps as MuiAppBarProps,
   TextFieldProps,
   TypographyProps as MuiTypographyProps,
-  AvatarProps as MuiAvatarProps
+  AvatarProps as MuiAvatarProps,
+  SxProps,
+  Theme
 } from '@mui/material';
 import { CSSProperties } from 'react';
 
@@ -164,6 +166,7 @@ export type FeatureSelectionWidgetUI = {
   onSelectGeometry?: Function;
   tooltipPlacement?: string;
   className?: string;
+  sx?: SxProps<Theme>;
 };
 
 // Legends

@@ -18,6 +18,7 @@ import Typography from '../components/atoms/Typography';
 
 function FeatureSelectionWidgetUI({
   className,
+  sx,
   selectionModes,
   editModes,
   selectedMode,
@@ -30,7 +31,7 @@ function FeatureSelectionWidgetUI({
   tooltipPlacement
 }) {
   return (
-    <Wrapper className={className}>
+    <Wrapper sx={sx} className={className}>
       <Helper
         hasMode={!!selectedMode}
         isEdit={editModes.some((mode) => mode.id === selectedMode)}
@@ -68,7 +69,7 @@ function FeatureSelectionWidgetUI({
 }
 
 FeatureSelectionWidgetUI.defaultProps = {
-  className: '',
+  sx: undefined,
   enabled: false,
   tooltipPlacement: 'bottom',
   editModes: []
@@ -81,7 +82,7 @@ const MODE_SHAPE = PropTypes.shape({
 });
 
 FeatureSelectionWidgetUI.propTypes = {
-  className: PropTypes.string,
+  sx: PropTypes.any,
   selectionModes: PropTypes.arrayOf(MODE_SHAPE.isRequired).isRequired,
   editModes: PropTypes.arrayOf(MODE_SHAPE.isRequired),
   selectedMode: PropTypes.string.isRequired,
@@ -313,6 +314,10 @@ const StylesWrapper = styled('div')(({ theme: { spacing, palette, shape } }) => 
     '0px 3px 5px -1px rgb(0 0 0 / 16%), 0px 5px 8px 0px rgb(0 0 0 / 8%), 0px 1px 14px 0px rgb(0 0 0 / 4%)'
 }));
 
-function Wrapper({ className, children }) {
-  return <StylesWrapper className={`${className}`}>{children}</StylesWrapper>;
+function Wrapper({ sx, className, children }) {
+  return (
+    <StylesWrapper className={className} sx={sx}>
+      {children}
+    </StylesWrapper>
+  );
 }
