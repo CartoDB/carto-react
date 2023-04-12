@@ -7,12 +7,11 @@ const AccordionContainer = styled('div', {
   shouldForwardProp: (prop) => prop !== 'variant'
 })(({ variant, theme }) => ({
   width: '100%',
-  border: '1px solid transparent',
   borderRadius: theme.spacing(0.5),
 
   ...(variant === 'outlined' && {
     backgroundColor: theme.palette.background.paper,
-    borderColor: theme.palette.divider
+    boxShadow: `inset 0 0 0 1px ${theme.palette.divider}`
   })
 }));
 

@@ -48,16 +48,16 @@ export const surfacesOverrides = {
       root: {
         ...themeTypography.body2,
         backgroundColor: 'transparent',
-        borderBottom: `1px solid ${commonPalette.divider}`,
+        boxShadow: `inset 0 -1px 0 0 ${commonPalette.divider}`,
 
         '&:last-of-type': {
-          borderBottomColor: 'transparent'
+          boxShadow: 'none'
         },
         '&::before': {
           content: 'none'
         },
         '&.Mui-disabled': {
-          backgroundColor: 'inherit'
+          backgroundColor: 'transparent'
         }
       }
     }
@@ -84,6 +84,14 @@ export const surfacesOverrides = {
             color: commonPalette.text.disabled
           }
         }
+      }
+    }
+  },
+  // MuiAccordionDetails
+  MuiAccordionDetails: {
+    styleOverrides: {
+      root: {
+        paddingBottom: getSpacing(3)
       }
     }
   }
