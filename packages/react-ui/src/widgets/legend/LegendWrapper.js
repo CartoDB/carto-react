@@ -1,29 +1,30 @@
-import React, { createRef, useState } from 'react';
-import { Box, Button, Collapse, Grid, Icon, Switch, Tooltip } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import Note from './Note';
+import {
+  Box,
+  Button,
+  Collapse,
+  Grid,
+  Icon,
+  Switch,
+  ToggleButton,
+  Tooltip,
+  styled
+} from '@mui/material';
+import React, { createRef, useState } from 'react';
 import LayerIcon from '../../assets/icons/LayerIcon';
-import { ToggleButton } from '@mui/material';
-import OpacityControl from '../OpacityControl';
 import Typography from '../../components/atoms/Typography';
-import clsx from 'clsx';
+import OpacityControl from '../OpacityControl';
+import Note from './Note';
 
-const useStyles = makeStyles((theme) => ({
-  legendWrapper: {
-    position: 'relative',
-    maxWidth: '100%',
-    padding: 0
-  },
-  content: {
-    padding: theme.spacing(0, 2, 2, 3)
-  },
-  attr: {
-    marginBottom: theme.spacing(1)
-  },
-  layerOptionsWrapper: {
-    backgroundColor: theme.palette.grey[50]
-  }
+const Wrapper = styled(Box)(() => ({
+  position: 'relative',
+  maxWidth: '100%',
+  padding: 0
+}));
+
+const LayerOptionsWrapper = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.grey[50],
+  marginTop: theme.spacing(2)
 }));
 
 export default function LegendWrapper({
@@ -45,7 +46,6 @@ export default function LegendWrapper({
   onChangeCollapsed
 }) {
   const wrapper = createRef();
-  const classes = useStyles();
   const expanded = !collapsed;
   const [isLayerOptionsExpanded, setIsLayerOptionsExpanded] = useState(false);
 
@@ -67,7 +67,7 @@ export default function LegendWrapper({
   };
 
   return (
-    <Box component='section' aria-label={title} className={classes.legendWrapper}>
+    <Wrapper component='section' aria-label={title}>
       <Header
         title={title}
         switchable={switchable}
@@ -82,16 +82,16 @@ export default function LegendWrapper({
       />
       {hasChildren && !!children && (
         <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
-          <Box className={classes.content}>
+          <Box sx={{ pt: 0, px: 2, pb: 3 }}>
             <Grid container direction='column' spacing={1}>
               {attr && (
-                <Typography className={classes.attr} variant='caption'>
+                <Typography xs mb={1} variant='caption'>
                   By {attr}
                 </Typography>
               )}
               {children}
               <Collapse in={isLayerOptionsExpanded} timeout='auto' unmountOnExit>
-                <Box className={classes.layerOptionsWrapper} mt={2}>
+                <LayerOptionsWrapper>
                   {showOpacityControl && (
                     <OpacityControl
                       opacity={opacity}
@@ -99,43 +99,47 @@ export default function LegendWrapper({
                     />
                   )}
                   {layerOptions}
-                </Box>
+                </LayerOptionsWrapper>
               </Collapse>
               <Note>{note}</Note>
             </Grid>
           </Box>
         </Collapse>
       )}
-    </Box>
+    </Wrapper>
   );
 }
 
-const useHeaderStyles = makeStyles((theme) => ({
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: '60px',
-    padding: theme.spacing(1.25, 1.25, 1.25, 2.5)
-  },
-  button: {
-    padding: 0,
-    flex: '1 1 auto',
-    justifyContent: 'flex-start',
-    cursor: ({ collapsible }) => (collapsible ? 'pointer' : 'default'),
+const GridHeader = styled(Grid)(({ theme }) => ({
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  height: '60px',
+  padding: theme.spacing(1.25, 1.25, 1.25, 2.5)
+}));
 
-    '& .MuiButton-startIcon': {
-      marginRight: theme.spacing(1)
-    },
-    '&:hover': {
-      background: 'none'
-    }
+const ButtonHeader = styled(Button, {
+  shouldForwardProp: (prop) => prop !== 'collapsible'
+})(({ theme, collapsible }) => ({
+  padding: 0,
+  flex: '1 1 auto',
+  justifyContent: 'flex-start',
+  cursor: collapsible ? 'pointer' : 'default',
+  '& .MuiButton-startIcon': {
+    marginRight: theme.spacing(1)
   },
-  expandIcon: {
-    display: 'block',
-    fill: theme.palette.text.secondary
+  '&:hover': {
+    background: 'none'
   }
 }));
+
+const ParentIcon = ({ theme }) => ({
+  display: 'block',
+  fill: theme.palette.text.secondary
+});
+
+const MoreIconHeader = styled(ExpandMore)(({ theme }) => ParentIcon({ theme }));
+const LessIconHeader = styled(ExpandLess)(({ theme }) => ParentIcon({ theme }));
 
 function Header({
   title,
@@ -149,24 +153,23 @@ function Header({
   onToggleLayerOptions,
   isLayerOptionsExpanded
 }) {
-  const classes = useHeaderStyles({ collapsible });
-  const ExpandIcon = expanded ? ExpandLess : ExpandMore;
+  const ExpandIcon = expanded ? LessIconHeader : MoreIconHeader;
 
   return (
-    <Grid container alignItems='center' className={classes.header}>
-      <Button
-        className={classes.button}
+    <GridHeader container>
+      <ButtonHeader
+        collapsible={collapsible.toString()}
         startIcon={
           collapsible && (
             <Icon>
-              <ExpandIcon className={clsx('doNotFillIcon', classes.expandIcon)} />
+              <ExpandIcon />
             </Icon>
           )
         }
         onClick={onExpandClick}
       >
         <Typography variant='subtitle1'>{title}</Typography>
-      </Button>
+      </ButtonHeader>
       {!!layerOptionsEnabled && (
         <Tooltip title='Layer options'>
           <ToggleButton
@@ -183,6 +186,6 @@ function Header({
           <Switch checked={visible} onChange={onChangeVisibility} />
         </Tooltip>
       )}
-    </Grid>
+    </GridHeader>
   );
 }
