@@ -43,7 +43,7 @@ function LegendRamp({ isContinuous = false, legend }) {
         <>
           <Grid container item>
             {isContinuous ? (
-              <StepsContinuous item xs palette={palette} />
+              <StepsContinuous className="step" item xs palette={palette} />
             ) : (
               <StepsDiscontinuous
                 labels={formattedLabels}
@@ -91,7 +91,7 @@ const StepsContinuous = styled(Grid, {
 })(({ palette }) => ({
   height: 8,
   borderRadius: 4,
-  backgroundImage: `linear-gradient(to right, ${palette.join()})`
+  background: `linear-gradient(to right, ${palette.join()})`
 }));
 
 const StepGrid = styled(Grid, {
@@ -99,10 +99,10 @@ const StepGrid = styled(Grid, {
 })(({ color }) => ({
   height: 8,
   backgroundColor: color,
-  '&:first-child': {
+  '&:first-of-type': {
     borderRadius: '4px 0 0 4px'
   },
-  '&:last-child': {
+  '&:last-of-type': {
     borderRadius: '0 4px 4px 0'
   }
 }));
@@ -122,7 +122,7 @@ function StepsDiscontinuous({ labels = [], palette = [], max, min }) {
 
         return (
           <Tooltip key={idx} title={title}>
-            <StepGrid item xs color={palette[idx]} />
+            <StepGrid className="step" item xs color={palette[idx]} />
           </Tooltip>
         );
       })}
