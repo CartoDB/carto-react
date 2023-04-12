@@ -94,7 +94,7 @@ const StepsContinuous = styled(Grid, {
   backgroundImage: `linear-gradient(to right, ${palette.join()})`
 }));
 
-const StepsDiscontinuousGrid = styled(Grid, {
+const StepGrid = styled(Grid, {
   shouldForwardProp: (prop) => prop !== 'color'
 })(({ color }) => ({
   height: 8,
@@ -122,7 +122,7 @@ function StepsDiscontinuous({ labels = [], palette = [], max, min }) {
 
         return (
           <Tooltip key={idx} title={title}>
-            <StepsDiscontinuousGrid item xs color={palette[idx]} />
+            <StepGrid item xs color={palette[idx]} />
           </Tooltip>
         );
       })}
