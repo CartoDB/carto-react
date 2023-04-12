@@ -1,5 +1,5 @@
 import React, { createRef, Fragment } from 'react';
-import { Box, Button, Collapse, Divider, Grid, SvgIcon } from '@mui/material';
+import { Box, Button, Collapse, Divider, Grid, styled, SvgIcon } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import LegendWrapper from './LegendWrapper';
 import LegendCategories from './LegendCategories';
@@ -28,13 +28,12 @@ const LayersIcon = () => (
   </SvgIcon>
 );
 
-const useStyles = makeStyles((theme) => ({
-  legend: {
-    minWidth: '240px',
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[1],
-    borderRadius: 4
-  }
+
+const LegendBox = styled(Box)(({theme}) => ({
+  minWidth: '240px',
+  backgroundColor: theme.palette.background.paper,
+  boxShadow: theme.shadows[1],
+  borderRadius: 4
 }));
 
 function LegendWidgetUI({
@@ -49,11 +48,10 @@ function LegendWidgetUI({
   onChangeLegendRowCollapsed,
   title
 }) {
-  const classes = useStyles();
   const isSingle = layers.length === 1;
 
   return (
-    <Box className={`${classes.legend} ${className}`}>
+    <LegendBox className={className}>
       <LegendContainer
         isSingle={isSingle}
         collapsed={collapsed}
@@ -69,7 +67,7 @@ function LegendWidgetUI({
           onChangeCollapsed={onChangeLegendRowCollapsed}
         />
       </LegendContainer>
-    </Box>
+    </LegendBox>
   );
 }
 
@@ -96,33 +94,35 @@ LegendWidgetUI.propTypes = {
 
 export default LegendWidgetUI;
 
-const useStylesLegendContainer = makeStyles((theme) => ({
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: '36px'
-  },
-  button: {
-    flex: '1 1 auto',
-    justifyContent: 'space-between',
-    padding: theme.spacing(0.75, 1.25, 0.75, 3),
-    borderTop: ({ collapsed }) =>
-      collapsed ? 'none' : `1px solid ${theme.palette.divider}`,
-    cursor: 'pointer'
-  },
-  wrapperInner: {
+
+const Header = styled(Grid)(() => ({
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  height: '36px'
+}));
+
+const HeaderButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== 'collapsed'
+})(({theme, collapsed}) => ({
+  flex: '1 1 auto',
+  justifyContent: 'space-between',
+  padding: theme.spacing(0.75, 1.25, 0.75, 3),
+  borderTop: collapsed ? 'none' : `1px solid ${theme.palette.divider}`,
+  cursor: 'pointer'
+}));
+
+const CollapseWrapper = styled(Collapse)(() => ({
+  '.MuiCollapse-wrapperInner': {
     maxHeight: 'max(350px, 80vh)',
     overflowY: 'auto',
     overflowX: 'hidden'
   }
 }));
 
+
 function LegendContainer({ isSingle, children, collapsed, onChangeCollapsed, title }) {
   const wrapper = createRef();
-  const classes = useStylesLegendContainer({
-    collapsed
-  });
 
   const handleExpandClick = () => {
     if (onChangeCollapsed) onChangeCollapsed(!collapsed);
@@ -132,26 +132,23 @@ function LegendContainer({ isSingle, children, collapsed, onChangeCollapsed, tit
     children
   ) : (
     <>
-      <Collapse
+      <CollapseWrapper
         ref={wrapper}
         in={!collapsed}
         timeout='auto'
         unmountOnExit
-        classes={{
-          wrapperInner: classes.wrapperInner
-        }}
       >
         {children}
-      </Collapse>
-      <Grid container className={classes.header}>
-        <Button
-          className={classes.button}
+      </CollapseWrapper>
+      <Header container>
+        <HeaderButton
+          collapsed={collapsed.toString()}
           endIcon={<LayersIcon />}
           onClick={handleExpandClick}
         >
           <Typography variant='subtitle1'>{title}</Typography>
-        </Button>
-      </Grid>
+        </HeaderButton>
+      </Header>
     </>
   );
 }
