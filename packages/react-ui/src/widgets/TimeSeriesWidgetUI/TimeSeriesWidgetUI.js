@@ -150,7 +150,6 @@ function TimeSeriesWidgetUIContent({
   showControls,
   animation
 }) {
-  const classes = useStyles();
   const [anchorSpeedEl, setAnchorSpeedEl] = useState(null);
   const [speed, setSpeed] = useState(1);
   const {
