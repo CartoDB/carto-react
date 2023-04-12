@@ -9,7 +9,9 @@ import {
   Divider,
   SvgIcon,
   TextField,
-  Tooltip
+  Tooltip,
+  styled,
+  Box
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Skeleton } from '@mui/material';
@@ -18,36 +20,12 @@ import { animateValues } from './utils/animations';
 import Typography from '../components/atoms/Typography';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    ...theme.typography.body2
-  },
-
-  categoriesWrapper: {
-    maxHeight: theme.spacing(40),
-    overflow: 'auto',
-    padding: theme.spacing(0, 1, 1, 0)
-  },
-
   selectable: {
     cursor: 'pointer',
     flexWrap: 'nowrap',
 
     '&:hover $progressbar div': {
       backgroundColor: theme.palette.secondary.dark
-    }
-  },
-
-  element: {
-    '&$unselected': {
-      color: theme.palette.text.disabled,
-
-      '& $progressbar div': {
-        backgroundColor: theme.palette.text.disabled
-      }
-    },
-
-    '&$rest $progressbar div': {
-      backgroundColor: theme.palette.text.disabled
     }
   },
 
@@ -85,15 +63,6 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'default'
   },
 
-  optionsSelectedBar: {
-    marginBottom: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-
-    '& .MuiTypography-caption': {
-      color: theme.palette.text.secondary
-    }
-  },
-
   linkAsButton: {
     ...theme.typography.caption,
     cursor: 'pointer',
@@ -105,6 +74,42 @@ const useStyles = makeStyles((theme) => ({
 
   searchInput: {
     marginTop: theme.spacing(-0.5)
+  }
+}));
+
+const StyledRoot = styled(Box)(({ theme: { typography } }) => ({
+  ...typography.body2
+}));
+
+const StyledCategoriesWrapper = styled(Grid)(({ theme: { spacing } }) => ({
+  maxHeight: spacing(40),
+  overflow: 'auto',
+  padding: spacing(0, 1, 1, 0)
+}));
+
+const StylesGridElement = styled(Grid)(({ theme: { palette } }) => ({
+  flexDirection: 'row',
+  '&$unselected': {
+    color: palette.text.disabled,
+
+    '& $progressbar div': {
+      backgroundColor: palette.text.disabled
+    }
+  },
+
+  '&$rest $progressbar div': {
+    backgroundColor: palette.text.disabled
+  }
+}));
+
+const StyledOptionsSelectedBar = styled(Grid)(({ theme: { spacing, palette } }) => ({
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: spacing(2),
+  paddingRight: spacing(1),
+  '& .MuiTypography-caption': {
+    color: palette.text.secondary
   }
 }));
 
@@ -390,13 +395,12 @@ function CategoryWidgetUI(props) {
     }, []);
 
     return (
-      <Grid
+      <StylesGridElement
         container
         direction='row'
         spacing={1}
         onClick={filterable ? onCategoryClick : () => {}}
         className={`
-          ${classes.element}
           ${filterable ? classes.selectable : ''}
           ${
             !showAll &&
@@ -448,26 +452,20 @@ function CategoryWidgetUI(props) {
             <div style={{ width: getProgressbarLength(data.value) }}></div>
           </Grid>
         </Grid>
-      </Grid>
+      </StylesGridElement>
     );
   };
 
   const CategoryItemSkeleton = () => (
     <>
-      <Grid
-        container
-        direction='row'
-        justifyContent='space-between'
-        alignItems='center'
-        className={classes.optionsSelectedBar}
-      >
+      <StyledOptionsSelectedBar container>
         <Typography variant='caption'>
           <Skeleton variant='text' width={100} />
         </Typography>
-      </Grid>
-      <Grid container item className={classes.categoriesWrapper}>
+      </StyledOptionsSelectedBar>
+      <StyledCategoriesWrapper container item>
         {[...Array(4)].map((_, i) => (
-          <Grid key={i} container direction='row' spacing={1} className={classes.element}>
+          <StylesGridElement key={i} container spacing={1}>
             <Grid container item xs zeroMinWidth>
               <Grid container item direction='row' justifyContent='space-between'>
                 <Typography variant='body2' noWrap>
@@ -479,24 +477,18 @@ function CategoryWidgetUI(props) {
               </Grid>
               <Skeleton variant='text' className={classes.skeletonProgressbar} />
             </Grid>
-          </Grid>
+          </StylesGridElement>
         ))}
-      </Grid>
+      </StyledCategoriesWrapper>
     </>
   );
 
   return (
-    <div className={classes.root}>
+    <StyledRoot>
       {data?.length > 0 ? (
         <>
           {filterable && sortedData.length > 0 && (
-            <Grid
-              container
-              direction='row'
-              justifyContent='space-between'
-              alignItems='center'
-              className={classes.optionsSelectedBar}
-            >
+            <StyledOptionsSelectedBar container>
               <Typography variant='caption'>
                 {selectedCategories.length ? selectedCategories.length : 'All'} selected
               </Typography>
@@ -537,16 +529,10 @@ function CategoryWidgetUI(props) {
                   </Grid>
                 )
               )}
-            </Grid>
+            </StyledOptionsSelectedBar>
           )}
           {data.length > maxItems && showAll && (
-            <Grid
-              container
-              direction='row'
-              justifyContent='space-between'
-              alignItems='center'
-              className={classes.optionsSelectedBar}
-            >
+            <StyledOptionsSelectedBar container>
               <TextField
                 size='small'
                 placeholder='Search'
@@ -561,9 +547,9 @@ function CategoryWidgetUI(props) {
                   )
                 }}
               />
-            </Grid>
+            </StyledOptionsSelectedBar>
           )}
-          <Grid container item className={classes.categoriesWrapper}>
+          <StyledCategoriesWrapper container item>
             {animValues.length ? (
               animValues.map((d, i) => (
                 <CategoryItem
@@ -584,7 +570,7 @@ function CategoryWidgetUI(props) {
                 </Typography>
               </>
             )}
-          </Grid>
+          </StyledCategoriesWrapper>
           {data.length > maxItems && searchable ? (
             showAll ? (
               <Button size='small' color='primary' onClick={handleCancelClicked}>
@@ -605,7 +591,7 @@ function CategoryWidgetUI(props) {
       ) : (
         <CategoryItemSkeleton />
       )}
-    </div>
+    </StyledRoot>
   );
 }
 
