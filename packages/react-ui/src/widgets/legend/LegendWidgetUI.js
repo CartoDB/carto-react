@@ -1,6 +1,5 @@
 import React, { createRef, Fragment } from 'react';
 import { Box, Button, Collapse, Divider, Grid, styled, SvgIcon } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import LegendWrapper from './LegendWrapper';
 import LegendCategories from './LegendCategories';
 import LegendIcon from './LegendIcon';
@@ -33,7 +32,7 @@ const LegendBox = styled(Box)(({theme}) => ({
   minWidth: '240px',
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.shadows[1],
-  borderRadius: 4
+  borderRadius: theme.spacing(0.5),
 }));
 
 function LegendWidgetUI({
@@ -95,11 +94,11 @@ LegendWidgetUI.propTypes = {
 export default LegendWidgetUI;
 
 
-const Header = styled(Grid)(() => ({
+const Header = styled(Grid)(({ theme }) => ({
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'space-between',
-  height: '36px'
+  height: theme.spacing(4.5)
 }));
 
 const HeaderButton = styled(Button, {
