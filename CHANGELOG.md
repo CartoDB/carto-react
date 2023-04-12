@@ -6,6 +6,8 @@
 - Note component cleaned styles from makeStyles [#630](https://github.com/CartoDB/carto-react/pull/630)
 - OpacityControl component migrated from makeStyles to styled-components + cleanup [#631](https://github.com/CartoDB/carto-react/pull/631)
 
+- LegendWidgetUI component migrated from makeStyles to styled-components + cleanup [#637](https://github.com/CartoDB/carto-react/pull/637)
+
 ## 2.0
 
 ### 2.0.0 (2023-04-05)
