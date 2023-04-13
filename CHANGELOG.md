@@ -5,6 +5,7 @@
 - Storybook documentation and fixes [#629](https://github.com/CartoDB/carto-react/pull/629)
 - Note component cleaned styles from makeStyles [#630](https://github.com/CartoDB/carto-react/pull/630)
 - OpacityControl component migrated from makeStyles to styled-components + cleanup [#631](https://github.com/CartoDB/carto-react/pull/631)
+- ComparativeCategoryWidgetUI component migrated from makeStyles to styled-components + cleanup [#648](https://github.com/CartoDB/carto-react/pull/648)
 
 ## 2.0
 
