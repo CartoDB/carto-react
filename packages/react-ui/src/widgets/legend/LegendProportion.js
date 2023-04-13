@@ -3,17 +3,18 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Typography from '../../components/atoms/Typography';
 
+const sizes = {
+  0: 12,
+  1: 9,
+  2: 6,
+  3: 3
+};
+
 const Circle = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'index'
 })(({ index = 0, theme }) => {
-  const sizes = {
-    0: 96,
-    1: 72,
-    2: 48,
-    3: 24
-  };
-  const width = `${sizes[index]}px`;
-  const height = `${sizes[index]}px`;
+  const width = theme.spacing(sizes[index]);
+  const height = theme.spacing(sizes[index]);
 
   return {
     border: `solid 1px ${theme.palette.grey[100]}`,
@@ -54,7 +55,7 @@ function LegendProportion({ legend }) {
         spacing={1}
       >
         {error ? (
-          <Grid item xs maxWidth={240}>
+          <Grid item maxWidth={240}>
             <Typography variant='overline'>
               You need to specify valid numbers for the labels property
             </Typography>
