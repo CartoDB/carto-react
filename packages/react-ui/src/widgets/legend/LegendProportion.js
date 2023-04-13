@@ -27,18 +27,24 @@ const Circle = styled(Box, {
   };
 });
 
+const ProportionalGrid = styled(Grid)(({ theme: { spacing } }) => ({
+  justifyContent: 'flex-end',
+  marginBottom: spacing(0.5),
+  position: 'relative'
+}));
+
 function LegendProportion({ legend }) {
   const { min, max, error } = calculateRange(legend);
   const [step1, step2] = !error ? calculateSteps(min, max) : [0, 0];
 
   return (
     <Grid container item direction='row' spacing={2} data-testid='proportion-legend'>
-      <Grid container item xs={6} justifyContent='flex-end' mb={4} position='relative'>
+      <ProportionalGrid container item xs={6}>
         <Circle index={0} component='span'></Circle>
         <Circle index={1} component='span'></Circle>
         <Circle index={2} component='span'></Circle>
         <Circle index={3} component='span'></Circle>
-      </Grid>
+      </ProportionalGrid>
       <Grid
         container
         item
