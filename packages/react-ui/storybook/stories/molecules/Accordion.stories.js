@@ -34,7 +34,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/C4R-Components?node-id=6361-152749&t=EVLxqsSCMSm0Lvtv-0'
     },
     status: {
-      type: 'readyToReview'
+      type: 'validated'
     }
   }
 };
