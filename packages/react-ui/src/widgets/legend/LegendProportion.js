@@ -41,10 +41,9 @@ function LegendProportion({ legend }) {
   return (
     <Grid container item direction='row' spacing={2} data-testid='proportion-legend'>
       <ProportionalGrid container item xs={6}>
-        <Circle index={0} component='span'></Circle>
-        <Circle index={1} component='span'></Circle>
-        <Circle index={2} component='span'></Circle>
-        <Circle index={3} component='span'></Circle>
+        {[...Array(4)].map((circle, index) => (
+          <Circle index={index} component='span'></Circle>
+        ))}
       </ProportionalGrid>
       <Grid
         container
