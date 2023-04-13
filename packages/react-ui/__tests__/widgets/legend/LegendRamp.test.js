@@ -35,10 +35,11 @@ describe('LegendRamp', () => {
       const elements = document.querySelectorAll('[class*="step"]');
       expect(elements.length).toBe(3);
       getPalette(COLOR, 3).forEach((color, idx) => {
-        const backgroundColor = window.getComputedStyle(elements[idx])['background-color'];
-        expect(backgroundColor).toBe(hexToRgb(color))
-      }
-      );
+        const backgroundColor = window.getComputedStyle(elements[idx])[
+          'background-color'
+        ];
+        expect(backgroundColor).toBe(hexToRgb(color));
+      });
     });
     test('renders formatted labels correctly', () => {
       render(<LegendRamp legend={DEFAULT_LEGEND_WITH_FORMATTED_LABELS} />);
@@ -47,9 +48,11 @@ describe('LegendRamp', () => {
 
       const elements = document.querySelectorAll('[class*="step"]');
       expect(elements.length).toBe(3);
-      getPalette(COLOR, 3).forEach((color, idx) =>{
-        const backgroundColor = window.getComputedStyle(elements[idx])['background-color'];
-        expect(backgroundColor).toBe(hexToRgb(color))
+      getPalette(COLOR, 3).forEach((color, idx) => {
+        const backgroundColor = window.getComputedStyle(elements[idx])[
+          'background-color'
+        ];
+        expect(backgroundColor).toBe(hexToRgb(color));
       });
     });
   });
@@ -61,8 +64,8 @@ describe('LegendRamp', () => {
 
       const ramp = document.querySelector('.step');
       const palette = getPalette(COLOR, 2);
-      const backgroundImage = window.getComputedStyle(ramp)['background'];
-      expect(backgroundImage).toHaveCSS('background', `linear-gradient(to right, ${palette.join()})`
+      expect(ramp).toHaveStyle(
+        `background: linear-gradient(to right, ${palette.join()})`
       );
     });
     test('renders formatted labels correctly', () => {
@@ -74,8 +77,9 @@ describe('LegendRamp', () => {
 
       const ramp = document.querySelector('.step');
       const palette = getPalette(COLOR, 2);
-      const backgroundImage = window.getComputedStyle(ramp)['background'];
-      expect(backgroundImage).toBe(`linear-gradient(to right, ${palette.join()})`);
+      expect(ramp).toHaveStyle(
+        `background: linear-gradient(to right, ${palette.join()})`
+      );
     });
   });
 });
