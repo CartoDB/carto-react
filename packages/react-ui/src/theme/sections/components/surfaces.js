@@ -1,3 +1,4 @@
+import React from 'react';
 import { getSpacing } from '../../themeUtils';
 import { APPBAR_SIZE } from '../../themeConstants';
 import { commonPalette } from '../palette';
