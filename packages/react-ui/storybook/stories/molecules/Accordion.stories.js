@@ -3,6 +3,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
   Divider,
   Grid
 } from '@mui/material';
@@ -42,8 +43,7 @@ export default options;
 const items = [
   {
     summary: 'Accordion summary 1',
-    content: <Typography variant='body2'>text</Typography>,
-    disabled: false
+    content: <Typography variant='body2'>text</Typography>
   },
   {
     summary: 'Accordion summary 2',
@@ -58,8 +58,7 @@ const items = [
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </Typography>
       </>
-    ),
-    disabled: false
+    )
   },
   {
     summary: 'Accordion summary 3',
@@ -179,7 +178,7 @@ const BehaviorTemplate = ({ defaultExpanded, ...args }) => {
         </TitleContent>
         <BoxContent>
           <TitleContent variant='body2'>{'Single'}</TitleContent>
-          <div>
+          <Box>
             <Accordion {...args}>
               <AccordionSummary>Accordion summary</AccordionSummary>
               <AccordionDetails>
@@ -190,16 +189,16 @@ const BehaviorTemplate = ({ defaultExpanded, ...args }) => {
               </AccordionDetails>
             </Accordion>
             <Divider />
-          </div>
+          </Box>
         </BoxContent>
       </Grid>
       <Grid item>
         <BoxContent>
           <TitleContent variant='body2'>{'Group Standard'}</TitleContent>
-          <div>
+          <Box>
             <AccordionGroup {...args} items={items} />
             <Divider />
-          </div>
+          </Box>
         </BoxContent>
       </Grid>
     </Grid>
