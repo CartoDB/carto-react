@@ -13,67 +13,44 @@ import {
   styled,
   Box
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { Skeleton } from '@mui/material';
 
 import { animateValues } from './utils/animations';
 import Typography from '../components/atoms/Typography';
 
-const useStyles = makeStyles((theme) => ({
-  selectable: {
-    cursor: 'pointer',
-    flexWrap: 'nowrap',
+const SkeletonProgressbar = styled(Skeleton)(({ theme }) => ({
+  height: theme.spacing(1),
+  width: '100%',
+  margin: theme.spacing(0.5, 0, 1, 0)
+}));
 
-    '&:hover $progressbar div': {
-      backgroundColor: theme.palette.secondary.dark
-    }
-  },
+const Progressbar = styled(Grid)(({ theme }) => ({
+  height: theme.spacing(0.5),
+  width: '100%',
+  margin: theme.spacing(0.5, 0, 1, 0),
+  borderRadius: theme.spacing(0.5),
+  backgroundColor: theme.palette.action.disabledBackground,
 
-  label: {
-    fontWeight: theme.typography.fontWeightBold,
-    marginRight: theme.spacing(2)
-  },
-
-  progressbar: {
-    height: theme.spacing(0.5),
-    width: '100%',
-    margin: theme.spacing(0.5, 0, 1, 0),
+  '& div': {
+    width: 0,
+    height: '100%',
     borderRadius: theme.spacing(0.5),
-    backgroundColor: theme.palette.action.disabledBackground,
+    backgroundColor: theme.palette.secondary.main,
+    transition: `background-color ${theme.transitions.easing.sharp} ${theme.transitions.duration.shortest}ms,
+                 width ${theme.transitions.easing.sharp} ${theme.transitions.duration.complex}ms`
+  }
+}));
 
-    '& div': {
-      width: 0,
-      height: '100%',
-      borderRadius: theme.spacing(0.5),
-      backgroundColor: theme.palette.secondary.main,
-      transition: `background-color ${theme.transitions.easing.sharp} ${theme.transitions.duration.shortest}ms,
-                   width ${theme.transitions.easing.sharp} ${theme.transitions.duration.complex}ms`
-    }
-  },
+const Label = styled(Typography)(({ theme }) => ({
+  fontWeight: theme.typography.fontWeightBold,
+  marginRight: theme.spacing(2)
+}));
 
-  skeletonProgressbar: {
-    height: theme.spacing(1),
-    width: '100%',
-    margin: theme.spacing(0.5, 0, 1, 0)
-  },
-
-  unselected: {},
-
-  rest: {
-    cursor: 'default'
-  },
-
-  linkAsButton: {
-    ...theme.typography.caption,
-    cursor: 'pointer',
-
-    '& + hr': {
-      margin: theme.spacing(0, 1)
-    }
-  },
-
-  searchInput: {
-    marginTop: theme.spacing(-0.5)
+const LinkAsButton = styled(Link)(({theme}) => ({
+  ...theme.typography.caption,
+  cursor: 'pointer',
+  '& + hr': {
+    margin: theme.spacing(0, 1)
   }
 }));
 
@@ -87,20 +64,33 @@ const StyledCategoriesWrapper = styled(Grid)(({ theme: { spacing } }) => ({
   padding: spacing(0, 1, 1, 0)
 }));
 
-const StylesGridElement = styled(Grid)(({ theme: { palette } }) => ({
+const StylesGridElement = styled(Grid, {
+  shouldForwardProp: (prop) => !['selectable', 'name', 'unselected'].includes(prop)
+})(({ theme, selectable, name, unselected }) => {
+  return {
   flexDirection: 'row',
-  '&$unselected': {
-    color: palette.text.disabled,
-
-    '& $progressbar div': {
-      backgroundColor: palette.text.disabled
+  ...(unselected && {
+    color: theme.palette.text.disabled,
+    '.progressbar div':{
+      backgroundColor: theme.palette.text.disabled
     }
-  },
+  }),
+  ...(name === REST_CATEGORY && {
+    cursor: 'default',
+    '.progressbar div':{
+      backgroundColor: theme.palette.text.disabled
+    }
+  }),
+  ...(selectable && {
+    cursor: 'pointer',
+    flexWrap: 'nowrap',
 
-  '&$rest $progressbar div': {
-    backgroundColor: palette.text.disabled
-  }
-}));
+    '&:hover .progressbar div': {
+      backgroundColor: theme.palette.secondary.dark
+    }
+  })
+}
+});
 
 const StyledOptionsSelectedBar = styled(Grid)(({ theme: { spacing, palette } }) => ({
   flexDirection: 'row',
@@ -155,7 +145,6 @@ function CategoryWidgetUI(props) {
   const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
-  const classes = useStyles({ filterable });
 
   // Get blockedCategories in the same order as original data
   const sortBlockedSameAsData = (blockedCategories) =>
@@ -394,23 +383,19 @@ function CategoryWidgetUI(props) {
       };
     }, []);
 
+
+    const unselected = !showAll &&
+    selectedCategories.length > 0 &&
+    selectedCategories.indexOf(data.name) === -1
     return (
       <StylesGridElement
         container
         direction='row'
         spacing={1}
         onClick={filterable ? onCategoryClick : () => {}}
-        className={`
-          ${filterable ? classes.selectable : ''}
-          ${
-            !showAll &&
-            selectedCategories.length > 0 &&
-            selectedCategories.indexOf(data.name) === -1
-              ? classes.unselected
-              : ''
-          }
-          ${data.name === REST_CATEGORY ? classes.rest : ''}
-        `}
+        selectable={filterable}
+        unselected={unselected}
+        name={data.name === REST_CATEGORY ? REST_CATEGORY : ''}
       >
         {filterable && showAll && (
           <Grid item>
@@ -429,14 +414,13 @@ function CategoryWidgetUI(props) {
               title={getCategoryLabel(data.name)}
               disableHoverListener={!isOverflowed}
             >
-              <Typography
+              <Label
                 variant='body2'
-                className={classes.label}
                 noWrap
                 ref={textElementRef}
               >
                 {getCategoryLabel(data.name)}
-              </Typography>
+              </Label>
             </Tooltip>
             {typeof value === 'object' && value !== null ? (
               <span>
@@ -448,9 +432,9 @@ function CategoryWidgetUI(props) {
               <span>{value}</span>
             )}
           </Grid>
-          <Grid item className={classes.progressbar}>
+          <Progressbar className='progressbar' item >
             <div style={{ width: getProgressbarLength(data.value) }}></div>
-          </Grid>
+          </Progressbar>
         </Grid>
       </StylesGridElement>
     );
@@ -475,7 +459,7 @@ function CategoryWidgetUI(props) {
                   <Skeleton variant='text' width={70} />
                 </Typography>
               </Grid>
-              <Skeleton variant='text' className={classes.skeletonProgressbar} />
+              <SkeletonProgressbar variant='text' />
             </Grid>
           </StylesGridElement>
         ))}
@@ -493,39 +477,35 @@ function CategoryWidgetUI(props) {
                 {selectedCategories.length ? selectedCategories.length : 'All'} selected
               </Typography>
               {showAll ? (
-                <Link
-                  className={classes.linkAsButton}
+                <LinkAsButton
                   onClick={handleApplyClicked}
                   underline='hover'
                 >
                   Apply
-                </Link>
+                </LinkAsButton>
               ) : blockedCategories.length > 0 ? (
-                <Link
-                  className={classes.linkAsButton}
+                <LinkAsButton
                   onClick={handleUnblockClicked}
                   underline='hover'
                 >
                   Unlock
-                </Link>
+                </LinkAsButton>
               ) : (
                 selectedCategories.length > 0 && (
                   <Grid container direction='row' justifyContent='flex-end' item xs>
-                    <Link
-                      className={classes.linkAsButton}
+                    <LinkAsButton
                       onClick={handleBlockClicked}
                       underline='hover'
                     >
                       Lock
-                    </Link>
+                    </LinkAsButton>
                     <Divider orientation='vertical' flexItem />
-                    <Link
-                      className={classes.linkAsButton}
+                    <LinkAsButton
                       onClick={handleClearClicked}
                       underline='hover'
                     >
                       Clear
-                    </Link>
+                    </LinkAsButton>
                   </Grid>
                 )
               )}
@@ -535,10 +515,10 @@ function CategoryWidgetUI(props) {
             <StyledOptionsSelectedBar container>
               <TextField
                 size='small'
+                mt={-0.5}
                 placeholder='Search'
                 onChange={handleSearchChange}
                 onFocus={handleSearchFocus}
-                className={classes.searchInput}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
