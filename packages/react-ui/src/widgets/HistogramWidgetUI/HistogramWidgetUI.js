@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import ReactEcharts from '../../custom-components/echarts-for-react';
-import { darken, Grid, Link, useTheme } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { darken, Grid, Link, styled, useTheme } from '@mui/material';
 import { processFormatterRes } from '../utils/formatterUtils';
 import detectTouchscreen from '../utils/detectTouchScreen';
 import useHistogramInteractivity from './useHistogramInteractivity';
@@ -11,19 +10,21 @@ import Typography from '../../components/atoms/Typography';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 
-const useStyles = makeStyles((theme) => ({
-  optionsSelectedBar: {
-    marginBottom: theme.spacing(2),
+const OptionsSelectedBar = styled(Grid)(({theme}) => ({
+  marginBottom: theme.spacing(2),
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
 
-    '& .MuiTypography-caption': {
-      color: theme.palette.text.secondary
-    }
-  },
-  clearButton: {
-    ...theme.typography.caption,
-    cursor: 'pointer'
+  '& .MuiTypography-caption': {
+    color: theme.palette.text.secondary
   }
-}));
+}))
+
+const ClearButton = styled(Link)(({theme}) => ({
+  ...theme.typography.caption,
+  cursor: 'pointer'
+}))
 
 function HistogramWidgetUI({
   data,
@@ -40,7 +41,7 @@ function HistogramWidgetUI({
   filterable: _filterable,
   height
 }) {
-  const classes = useStyles();
+
   const theme = useTheme();
 
   const filterable = _filterable && !!onSelectedBarsChange;
@@ -257,26 +258,19 @@ function HistogramWidgetUI({
   return (
     <div>
       {filterable && (
-        <Grid
-          container
-          direction='row'
-          justifyContent='space-between'
-          alignItems='center'
-          className={classes.optionsSelectedBar}
-        >
+        <OptionsSelectedBar container>
           <Typography variant='caption' weight='strong'>
             {selectedBars.length ? yAxisFormatter(countSelectedElements) : 'All'} selected
           </Typography>
           {selectedBars.length > 0 && (
-            <Link
-              className={classes.clearButton}
+            <ClearButton
               onClick={() => onSelectedBarsChange([])}
               underline='hover'
             >
               Clear
-            </Link>
+            </ClearButton>
           )}
-        </Grid>
+        </OptionsSelectedBar>
       )}
       <ReactEcharts
         option={options}
