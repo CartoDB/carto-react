@@ -75,20 +75,20 @@ const StylesGridElement = styled(Grid, {
       backgroundColor: theme.palette.text.disabled
     }
   }),
-  ...(name === REST_CATEGORY && {
-    cursor: 'default',
-    '.progressbar div':{
-      backgroundColor: theme.palette.text.disabled
-    }
-  }),
-  ...(selectable && {
+  ...(name !== REST_CATEGORY && selectable && {
     cursor: 'pointer',
     flexWrap: 'nowrap',
 
     '&:hover .progressbar div': {
       backgroundColor: theme.palette.secondary.dark
     }
-  })
+  }),
+  ...(name === REST_CATEGORY && {
+    cursor: 'default',
+    '.progressbar div':{
+      backgroundColor: theme.palette.text.disabled
+    }
+  }),
 }
 });
 
