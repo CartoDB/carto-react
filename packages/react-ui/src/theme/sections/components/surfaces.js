@@ -1,7 +1,10 @@
+import React from 'react';
 import { getSpacing } from '../../themeUtils';
 import { APPBAR_SIZE } from '../../themeConstants';
 import { commonPalette } from '../palette';
 import { themeShadows } from '../shadows';
+import { ExpandMoreOutlined } from '@mui/icons-material';
+import { themeTypography } from '../typography';
 
 export const surfacesOverrides = {
   // AppBar
@@ -32,6 +35,64 @@ export const surfacesOverrides = {
           width: getSpacing(4),
           height: getSpacing(4)
         }
+      }
+    }
+  },
+
+  // MuiAccordion
+  MuiAccordion: {
+    defaultProps: {
+      disableGutters: true,
+      elevation: 0
+    },
+    styleOverrides: {
+      root: {
+        ...themeTypography.body2,
+        backgroundColor: 'transparent',
+        boxShadow: `inset 0 -1px 0 0 ${commonPalette.divider}`,
+
+        '&:last-of-type': {
+          boxShadow: 'none'
+        },
+        '&::before': {
+          content: 'none'
+        },
+        '&.Mui-disabled': {
+          backgroundColor: 'transparent'
+        }
+      }
+    }
+  },
+  // MuiAccordionSummary
+  MuiAccordionSummary: {
+    defaultProps: {
+      expandIcon: <ExpandMoreOutlined />
+    },
+    styleOverrides: {
+      root: {
+        ...themeTypography.button,
+
+        '&.Mui-disabled': {
+          opacity: 1,
+          color: commonPalette.text.disabled
+        }
+      },
+      expandIconWrapper: {
+        '& svg': {
+          color: commonPalette.text.secondary,
+
+          '.Mui-disabled &': {
+            color: commonPalette.text.disabled
+          }
+        }
+      }
+    }
+  },
+  // MuiAccordionDetails
+  MuiAccordionDetails: {
+    styleOverrides: {
+      root: {
+        paddingBottom: getSpacing(3)
       }
     }
   }
