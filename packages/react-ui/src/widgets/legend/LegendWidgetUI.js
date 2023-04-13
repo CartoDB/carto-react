@@ -27,12 +27,11 @@ const LayersIcon = () => (
   </SvgIcon>
 );
 
-
-const LegendBox = styled(Box)(({theme}) => ({
+const LegendBox = styled(Box)(({ theme }) => ({
   minWidth: '240px',
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.shadows[1],
-  borderRadius: theme.spacing(0.5),
+  borderRadius: theme.spacing(0.5)
 }));
 
 function LegendWidgetUI({
@@ -93,7 +92,6 @@ LegendWidgetUI.propTypes = {
 
 export default LegendWidgetUI;
 
-
 const Header = styled(Grid)(({ theme }) => ({
   flexDirection: 'row',
   alignItems: 'center',
@@ -103,7 +101,7 @@ const Header = styled(Grid)(({ theme }) => ({
 
 const HeaderButton = styled(Button, {
   shouldForwardProp: (prop) => prop !== 'collapsed'
-})(({theme, collapsed}) => ({
+})(({ theme, collapsed }) => ({
   flex: '1 1 auto',
   justifyContent: 'space-between',
   padding: theme.spacing(0.75, 1.25, 0.75, 3),
@@ -119,7 +117,6 @@ const CollapseWrapper = styled(Collapse)(() => ({
   }
 }));
 
-
 function LegendContainer({ isSingle, children, collapsed, onChangeCollapsed, title }) {
   const wrapper = createRef();
 
@@ -131,17 +128,12 @@ function LegendContainer({ isSingle, children, collapsed, onChangeCollapsed, tit
     children
   ) : (
     <>
-      <CollapseWrapper
-        ref={wrapper}
-        in={!collapsed}
-        timeout='auto'
-        unmountOnExit
-      >
+      <CollapseWrapper ref={wrapper} in={!collapsed} timeout='auto' unmountOnExit>
         {children}
       </CollapseWrapper>
       <Header container>
         <HeaderButton
-          collapsed={collapsed.toString()}
+          collapsed={collapsed}
           endIcon={<LayersIcon />}
           onClick={handleExpandClick}
         >
