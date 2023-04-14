@@ -11,22 +11,19 @@ const StyledPaper = styled(Paper)(({ theme: { spacing } }) => ({
   height: spacing(4.5),
   width: spacing(30),
   paddingLeft: spacing(1.5),
-  borderRadius: 4,
+  borderRadius: spacing(0.5),
   display: 'flex',
   alignItems: 'center'
 }));
 
-const StyledIcon = styled(SvgIcon)(({ theme: { palette, typography } }) => ({
-  fill: palette.text.secondary,
-  fontSize: `${typography.body2.lineHeight}em`,
-  height: '1em'
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme: { typography, spacing } }) => ({
-  ...typography.body2,
+const InputSearch = styled(InputBase)(({ theme: { spacing } }) => ({
   width: `calc(100% - ${spacing(5)})`,
   marginLeft: spacing(1)
 }));
+
+const svgStyle = {
+  fill: ({ palette }) => palette.text.secondary
+};
 
 const SearchIcon = (args) => (
   <SvgIcon {...args}>
@@ -41,6 +38,7 @@ const SearchIcon = (args) => (
  * Renders a <GeocoderWidget /> component
  * @param  {object} props
  * @param  {Object} [props.className] - Material-UI withStyle class for styling
+ * @param  {Object} [props.sx] - MUI5 for styling with sx prop
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  */
 function GeocoderWidget(props = {}) {
@@ -73,18 +71,14 @@ function GeocoderWidget(props = {}) {
   }, [geocoderResult, dispatch]);
 
   return (
-    <StyledPaper className={`${props.className}`} elevation={2}>
+    <StyledPaper className={`${props.className}`} elevation={2} sx={props.sx}>
       {loading ? (
-        <StyledIcon>
-          <CircularProgress size={20} />
-        </StyledIcon>
+        <CircularProgress size={18} sx={svgStyle} />
       ) : (
-        <StyledIcon>
-          <SearchIcon />
-        </StyledIcon>
+        <SearchIcon sx={svgStyle} />
       )}
 
-      <StyledInputBase
+      <InputSearch
         type='search'
         tabIndex={-1}
         size='small'
@@ -102,6 +96,7 @@ function GeocoderWidget(props = {}) {
 
 GeocoderWidget.propTypes = {
   className: PropTypes.string,
+  sx: PropTypes.object,
   onError: PropTypes.func
 };
 
