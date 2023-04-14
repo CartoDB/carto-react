@@ -61,22 +61,9 @@ const options = {
 };
 export default options;
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: theme.spacing(4)
-  },
-  label: {
-    minWidth: '200px'
-  }
-}));
-
 const PlaygroundTemplate = (args) => <TextField {...args} multiline></TextField>;
 
 const VariantsTemplate = ({ label, placeholder, ...rest }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
@@ -112,8 +99,6 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
 };
 
 const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
@@ -398,8 +383,6 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
 };
 
 const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
