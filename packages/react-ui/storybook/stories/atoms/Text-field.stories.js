@@ -3,7 +3,7 @@ import { Grid, InputAdornment, TextField } from '@mui/material';
 import React from 'react';
 import PasswordField from '../../../src/components/atoms/PasswordField';
 import Typography from '../../../src/components/atoms/Typography';
-import { Container, Label } from './common.stories.styled';
+import { Container, Label } from '../common.stories.styled';
 
 const options = {
   title: 'Atoms/Text Field',

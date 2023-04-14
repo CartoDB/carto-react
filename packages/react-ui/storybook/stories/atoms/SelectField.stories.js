@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
-import { Container, Label, ChipWrapper } from './common.stories.styled';
+import { Container, Label, ChipWrapper } from '../common.stories.styled';
 
 const options = {
   title: 'Atoms/Select Field',

@@ -1,7 +1,7 @@
 import { Grid, TextField } from '@mui/material';
 import React from 'react';
 import Typography from '../../../src/components/atoms/Typography';
-import { Container, Label } from './common.stories.styled';
+import { Container, Label } from '../common.stories.styled';
 
 const options = {
   title: 'Atoms/Text Area',
