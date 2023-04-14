@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Improve upgrade guide documentation [#651](https://github.com/CartoDB/carto-react/pull/651)
+
 ## 2.0
 
 ### 2.0.1 (2023-04-14)
