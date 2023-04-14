@@ -1,8 +1,7 @@
+import { Grid, TextField } from '@mui/material';
 import React from 'react';
-import { Box, Grid, TextField } from '@mui/material';
 import Typography from '../../../src/components/atoms/Typography';
-import makeStyles from '@mui/styles/makeStyles';
-import { Label, Container } from './common.stories.styled';
+import { Container, Label } from './common.stories.styled';
 
 const options = {
   title: 'Atoms/Text Area',
@@ -99,6 +98,7 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
 };
 
 const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest }) => {
+
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
