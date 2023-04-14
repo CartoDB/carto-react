@@ -41,6 +41,8 @@ Tip: An easy search to catch up this, would be `-theme.spacing(`
 
 ## Icons
 
+### Colors
+
 We have this kind of rules in buttons to cover the common use cases:
 
 `svg path { fill: currentColor }`
@@ -48,6 +50,16 @@ We have this kind of rules in buttons to cover the common use cases:
 In case you don't need the icon to be filled, you can apply this class to the svg parent: `.doNotFillIcon`
 
 `<CloseIcon className="doNotFillIcon" />`
+
+### Sizes
+
+We have 3 defined sizes that can be added with the `fontSize` prop of `SvgIcon` component.
+
+- small
+- medium (default)
+- large
+
+Note: the most common use case is to have the icons at medium size (`18px`), there is only a few exceptions where they use other sizes.
 
 ## Typography styles
 
@@ -64,7 +76,7 @@ In case you don't need the icon to be filled, you can apply this class to the sv
 
 Replaced variants due they were so specific to some components, these are:
 
-- `charts`: replaced by `theme.palette.overline + weight='strong'`
+- `charts`: replaced by `theme.palette.overline` + `weight='strong'`
 
 ### Font families
 
@@ -188,7 +200,7 @@ For external use: `import { Avatar } from '@carto/react-ui';`.
 
 ## New components
 
-These components provide extra functionality to core components to meet the design specs, but they don't exist in Mui library.
+These components provide extra functionality to meet the design specs, but they don't exist in Mui library.
 
 ### PasswordField
 
