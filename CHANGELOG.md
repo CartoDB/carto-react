@@ -12,6 +12,7 @@
 - Storybook documentation and fixes [#629](https://github.com/CartoDB/carto-react/pull/629)
 - Note component cleaned styles from makeStyles [#630](https://github.com/CartoDB/carto-react/pull/630)
 - OpacityControl component migrated from makeStyles to styled-components + cleanup [#631](https://github.com/CartoDB/carto-react/pull/631)
+- Migrate multiples components from storybook away from makeStyles [#652](https://github.com/CartoDB/carto-react/pull/652)
 
 ### 2.0.0 (2023-04-05)
 
