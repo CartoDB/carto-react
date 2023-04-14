@@ -61,7 +61,9 @@ const Header = styled(Grid, {
   padding: 0
 }));
 
-const HeaderButton = styled(Button)(({ theme, expandable = true }) => ({
+const HeaderButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== 'expandable'
+})(({ theme, expandable = true }) => ({
   flex: 1,
   padding: 0,
   alignItems: 'flex-start',
@@ -90,7 +92,9 @@ const HideButton = styled(ExpandLess)(({ theme }) => ParentIcon({theme}));
 const ShowButton = styled(ExpandMore)(({ theme }) => ParentIcon({theme}));
 
 
-const Text = styled(Typography)(({ expanded = true }) => ({
+const Text = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== 'expanded'
+})(({ expanded = true }) => ({
   wordBreak: 'break-word',
   overflow: 'hidden',
   ...(expanded && {
@@ -178,16 +182,16 @@ function WrapperWidgetUI(props) {
   return (
     <Root margin={props.margin} component='section' aria-label={props.title}>
       {props.isLoading ? <LoadingBar /> : null}
-      <Header container expanded={props.expanded.toString()}>
+      <Header container expanded={props.expanded}>
         <HeaderButton
-          expandable={props.expandable.toString()}
+          expandable={props.expandable}
           startIcon={
             props.expandable && <Icon>{expanded ? <HideButton /> : <ShowButton />}</Icon>
           }
           onClick={handleExpandClick}
         >
           <Tooltip title={props.title}>
-            <Text expanded={props.expanded.toString()} align='left' variant='subtitle1'>
+            <Text expanded={props.expanded} align='left' variant='subtitle1'>
               {props.title}
             </Text>
           </Tooltip>
