@@ -1,8 +1,8 @@
+import { Grid } from '@mui/material';
 import React, { useState } from 'react';
-import { Box, Grid } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import UploadField from '../../../src/components/molecules/UploadField/UploadField';
+import { Container, Label } from '../common.stories.styled';
 
 const options = {
   title: 'Molecules/UploadField',
@@ -85,21 +85,6 @@ const options = {
 };
 export default options;
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: theme.spacing(4)
-  },
-  standalone: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  label: {
-    minWidth: '200px'
-  }
-}));
-
 const Template = ({ ...args }) => {
   const [files, setFiles] = useState([]);
   const handleUploadFieldChange = (files) => {
@@ -110,7 +95,6 @@ const Template = ({ ...args }) => {
 };
 
 const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
-  const classes = useStyles();
   const [files, setFiles] = useState([]);
   const [files2, setFiles2] = useState([]);
   const handleUploadFieldChange = (files) => {
@@ -123,10 +107,10 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
+        <Container>
+          <Label variant='body2'>
             {'Filled'}
-          </Typography>
+          </Label>
           <UploadField
             {...rest}
             variant='filled'
@@ -135,13 +119,13 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             placeholder={placeholder}
             onChange={handleUploadFieldChange}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
+        <Container>
+          <Label variant='body2'>
             {'Outlined'}
-          </Typography>
+          </Label>
           <UploadField
             {...rest}
             variant='outlined'
@@ -150,14 +134,13 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             placeholder={placeholder}
             onChange={handleUploadFieldChange2}
           />
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
 };
 
 const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest }) => {
-  const classes = useStyles();
   const [files, setFiles] = useState([]);
   const [files2, setFiles2] = useState([]);
   const [files3, setFiles3] = useState([]);
@@ -178,10 +161,10 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
+        <Container>
+          <Label variant='body2'>
             {'Label + helper text'}
-          </Typography>
+          </Label>
           <UploadField
             {...rest}
             label={label}
@@ -190,26 +173,26 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
             files={files}
             onChange={handleUploadFieldChange}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
+        <Container>
+          <Label variant='body2'>
             {'Without label + helper text'}
-          </Typography>
+          </Label>
           <UploadField
             {...rest}
             placeholder={placeholder}
             files={files2}
             onChange={handleUploadFieldChange2}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
+        <Container>
+          <Label variant='body2'>
             {'Only label'}
-          </Typography>
+          </Label>
           <UploadField
             {...rest}
             label={label}
@@ -217,13 +200,13 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
             files={files3}
             onChange={handleUploadFieldChange3}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
+        <Container>
+          <Label variant='body2'>
             {'Only helper text'}
-          </Typography>
+          </Label>
           <UploadField
             {...rest}
             placeholder={placeholder}
@@ -231,7 +214,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
             files={files4}
             onChange={handleUploadFieldChange4}
           />
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
@@ -377,7 +360,6 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
 };
 
 const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
-  const classes = useStyles();
   const [files, setFiles] = useState([]);
   const handleUploadFieldChange = (files) => {
     setFiles(files);
@@ -386,10 +368,10 @@ const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...res
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
+        <Container>
+          <Label variant='body2'>
             {'Default'}
-          </Typography>
+          </Label>
           <UploadField
             {...rest}
             multiple
@@ -398,14 +380,13 @@ const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             files={files}
             onChange={handleUploadFieldChange}
           />
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
 };
 
 const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
-  const classes = useStyles();
   const [files, setFiles] = useState([]);
   const handleUploadFieldChange = (files) => {
     setFiles(files);
@@ -414,13 +395,13 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Typography variant='subtitle1' className={classes.label}>
+        <Label variant='subtitle1'>
           {'Overflow'}
-        </Typography>
-        <Box className={classes.container} style={{ maxWidth: '440px' }}>
-          <Typography variant='body2' className={classes.label}>
+        </Label>
+        <Container style={{ maxWidth: '440px' }}>
+          <Label variant='body2'>
             {'Default'}
-          </Typography>
+          </Label>
           <UploadField
             {...rest}
             label={label}
@@ -428,7 +409,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             files={files}
             onChange={handleUploadFieldChange}
           />
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
