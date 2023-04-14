@@ -28,7 +28,7 @@ const LayersIcon = () => (
 );
 
 const LegendBox = styled(Box)(({ theme }) => ({
-  minWidth: '240px',
+  minWidth: theme.spacing(30),
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.shadows[1],
   borderRadius: theme.spacing(0.5)
