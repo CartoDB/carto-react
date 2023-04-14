@@ -32,7 +32,7 @@ describe('LegendRamp', () => {
       expect(screen.queryByText('< 0')).toBeInTheDocument();
       expect(screen.queryByText('≥ 200')).toBeInTheDocument();
 
-      const elements = document.querySelectorAll('[class*="step"]');
+      const elements = document.querySelectorAll('[data-testid=step-discontinuous]');
       expect(elements.length).toBe(3);
       getPalette(COLOR, 3).forEach((color, idx) => {
         const backgroundColor = window.getComputedStyle(elements[idx])[
@@ -46,7 +46,7 @@ describe('LegendRamp', () => {
       expect(screen.queryByText('< 0 km')).toBeInTheDocument();
       expect(screen.queryByText('≥ 200 km')).toBeInTheDocument();
 
-      const elements = document.querySelectorAll('[class*="step"]');
+      const elements = document.querySelectorAll('[data-testid=step-discontinuous]');
       expect(elements.length).toBe(3);
       getPalette(COLOR, 3).forEach((color, idx) => {
         const backgroundColor = window.getComputedStyle(elements[idx])[
@@ -62,7 +62,7 @@ describe('LegendRamp', () => {
       expect(screen.queryByText('0')).toBeInTheDocument();
       expect(screen.queryByText('200')).toBeInTheDocument();
 
-      const ramp = document.querySelector('.step');
+      const ramp = document.querySelector('[data-testid=step-continuous]');
       const palette = getPalette(COLOR, 2);
       expect(ramp).toHaveStyle(
         `background: linear-gradient(to right, ${palette.join()})`
@@ -75,7 +75,7 @@ describe('LegendRamp', () => {
       expect(screen.queryByText('0 km')).toBeInTheDocument();
       expect(screen.queryByText('200 km')).toBeInTheDocument();
 
-      const ramp = document.querySelector('.step');
+      const ramp = document.querySelector('[data-testid=step-continuous]');
       const palette = getPalette(COLOR, 2);
       expect(ramp).toHaveStyle(
         `background: linear-gradient(to right, ${palette.join()})`
