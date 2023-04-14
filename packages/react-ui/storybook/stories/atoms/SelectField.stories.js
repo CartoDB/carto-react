@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Box,
   Chip,
   FormControl,
   Grid,
@@ -9,11 +8,10 @@ import {
   OutlinedInput,
   Select,
   TextField,
-  styled
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
+import { Container, Label, ChipWrapper } from './common.stories.styled';
 
 const options = {
   title: 'Atoms/Select Field',
@@ -71,26 +69,6 @@ const options = {
   }
 };
 export default options;
-
-const Container = styled(Box)(({theme}) => ({
-  display: 'flex',
-  alignItems: 'center',
-  marginTop: theme.spacing(4)
-}));
-
-const Label = styled(Typography)(({theme}) => ({
-  minWidth: theme.spacing(25)
-}));
-
-const ChipWrapper = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'small'
-})(({theme, small}) => ({
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: theme.spacing(1),
-  overflow: 'auto',
-  height: theme.spacing(small ? 3 : 4)
-}));
 
 const menuItems = [
   {
