@@ -2,12 +2,17 @@
 
 ## Not released
 
+## 2.0
+
+### 2.0.1 (2023-04-14)
+
+- New DS core component: accordion [#632](https://github.com/CartoDB/carto-react/pull/632)
+- DS update: Disable ligatures in the monospaced font family [#649](https://github.com/CartoDB/carto-react/pull/649)
+- DS update: change action.disabledBackground color [#647](https://github.com/CartoDB/carto-react/pull/647)
 - Storybook documentation and fixes [#629](https://github.com/CartoDB/carto-react/pull/629)
 - Note component cleaned styles from makeStyles [#630](https://github.com/CartoDB/carto-react/pull/630)
 - OpacityControl component migrated from makeStyles to styled-components + cleanup [#631](https://github.com/CartoDB/carto-react/pull/631)
 - LegendRamp component migrated from makeStyles to styled-components + cleanup [#636](https://github.com/CartoDB/carto-react/pull/636)
-
-## 2.0
 
 ### 2.0.0 (2023-04-05)
 
