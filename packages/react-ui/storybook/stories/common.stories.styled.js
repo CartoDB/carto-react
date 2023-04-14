@@ -4,9 +4,12 @@ import {
 } from '@mui/material';
 import Typography from '../../src/components/atoms/Typography';
 
-export const Container = styled(Box)(({theme}) => ({
+export const Standalone = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
+}));
+
+export const Container = styled(Standalone)(({theme}) => ({
   marginTop: theme.spacing(4)
 }));
 
