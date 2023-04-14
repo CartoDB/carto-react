@@ -127,7 +127,7 @@ export const commonPalette = {
   action: {
     active: baseColors.shades.dark[40],
     hover: baseColors.shades.dark[8],
-    disabledBackground: baseColors.shades.dark[12],
+    disabledBackground: baseColors.neutral[100],
     disabled: baseColors.shades.dark[25],
     selected: baseColors.shades.dark[12],
     focus: baseColors.shades.dark[12]
