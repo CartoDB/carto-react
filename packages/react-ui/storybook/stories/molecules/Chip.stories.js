@@ -539,9 +539,9 @@ const BehaviorTemplate = ({ ...args }) => {
 
       <Grid item>
         <Container style={{ maxWidth: '600px' }}>
-          <Typography variant='body2' className={classes.label}>
+          <Label variant='body2'>
             {'Pairing (Grid 8px)'}
-          </Typography>
+          </Label>
           <Grid container spacing={1}>
             <Grid item>
               <Chip {...args} />

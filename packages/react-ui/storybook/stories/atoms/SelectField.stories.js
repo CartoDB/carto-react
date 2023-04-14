@@ -521,7 +521,7 @@ const MultipleTemplate = ({
         <Container>
           <Label variant='body2'>
             {'Default (custom component)'}
-          </TypLabelography>
+          </Label>
           <SelectField
             {...rest}
             multiple

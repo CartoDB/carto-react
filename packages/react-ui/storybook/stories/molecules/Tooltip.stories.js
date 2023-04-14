@@ -41,7 +41,7 @@ export default options;
 
 const TooltipBox = ({ title, ...args }) => {
   return (
-    <Container>
+    <Container justifyContent='center'>
       <Label variant='body2'>
         {title}
       </Label>
@@ -175,7 +175,7 @@ const TooltipDataTemplate = () => {
 
 const TooltipArrowTemplate = (args) => {
   return (
-    <Grid container direction='column' spacing={2}>
+    <Grid container justifyContent='flex-start' direction='column' spacing={2}>
       <Grid item>
         <TooltipBox {...args} title='No arrow' arrow={false} />
       </Grid>
@@ -188,7 +188,7 @@ const TooltipArrowTemplate = (args) => {
 
 const TooltipPositionTemplate = (args) => {
   return (
-    <Grid container direction='column' spacing={2}>
+    <Grid container justifyContent='flex-start' direction='column' spacing={2}>
       <Grid item>
         <TooltipBox {...args} title='Tooltip top' />
       </Grid>
@@ -207,7 +207,7 @@ const TooltipPositionTemplate = (args) => {
 
 const TooltipBehaviorTemplate = (args) => {
   return (
-    <Grid container direction='column' spacing={2}>
+    <Grid container justifyContent='flex-start' direction='column' spacing={2}>
       <Grid item>
         <TooltipBox {...args} title='Default' />
       </Grid>

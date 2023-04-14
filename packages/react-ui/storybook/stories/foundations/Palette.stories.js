@@ -40,7 +40,7 @@ const Container = styled(Grid)(({ theme }) => ({
   gap: theme.spacing(1)
 }));
 
-const Text = styled(Typography)(({ theme }) => ({
+const TextColor = styled(Typography)(({ theme }) => ({
   display: 'block',
   maxWidth: theme.spacing(18)
 }));
@@ -67,9 +67,9 @@ const ColorBox = ({ colorVariant, colorName }) => {
       <Box mt={0.5}>
         <Typography variant='subtitle1'>{colorName}</Typography>
         <Tooltip title={colorValue} enterDelay={600}>
-          <Text variant='caption' noWrap ref={textRef}>
+          <TextColor variant='caption' noWrap ref={textRef}>
             {colorValue}
-          </Text>
+          </TextColor>
         </Tooltip>
       </Box>
       <Bullet color={colorValue} />

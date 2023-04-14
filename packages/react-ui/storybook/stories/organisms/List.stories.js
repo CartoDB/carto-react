@@ -15,9 +15,9 @@ import {
   ListItemText,
   Typography,
   Switch,
-  Paper
+  Paper,
+  styled
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import {
   Drafts,
   Delete,
@@ -27,7 +27,6 @@ import {
   Inbox,
   Star
 } from '@mui/icons-material';
-import styled from '@emotion/styled';
 
 const options = {
   title: 'Organisms/List',
@@ -45,7 +44,9 @@ const options = {
 export default options;
 
 const RootWrapper = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.grey[100]
+  backgroundColor: theme.palette.grey[100],
+  margin: theme.spacing(-4),
+  padding: theme.spacing(4)
 }));
 
 const Template = ({ secondary, ...args }) => {
