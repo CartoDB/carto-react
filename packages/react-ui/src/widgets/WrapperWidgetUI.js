@@ -255,7 +255,7 @@ function WrapperWidgetUI(props) {
       </Header>
       {/* TODO: check collapse error */}
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
-        <Box xs pt={1}>
+        <Box pt={1}>
           {props.children}
         </Box>
       </Collapse>
