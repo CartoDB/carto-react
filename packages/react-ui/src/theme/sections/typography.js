@@ -121,21 +121,24 @@ const customTypography = {
     fontWeight: 400,
     fontSize: getPixelToRem(16),
     lineHeight: 1.5,
-    letterSpacing: 0
+    letterSpacing: 0,
+    fontVariantLigatures: 'no-common-ligatures'
   },
   code2: {
     fontFamily: '"Overpass Mono", monospace',
     fontWeight: 400,
     fontSize: getPixelToRem(14),
     lineHeight: 1.428,
-    letterSpacing: 0
+    letterSpacing: 0,
+    fontVariantLigatures: 'no-common-ligatures'
   },
   code3: {
     fontFamily: '"Overpass Mono", monospace',
     fontWeight: 400,
     fontSize: getPixelToRem(12),
     lineHeight: 1.333,
-    letterSpacing: 0
+    letterSpacing: 0,
+    fontVariantLigatures: 'no-common-ligatures'
   }
 };
 

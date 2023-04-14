@@ -1,8 +1,8 @@
 import React from 'react';
-import { Grid, Box, useTheme } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Grid, useTheme } from '@mui/material';
 import { Star } from '@mui/icons-material';
-import { getCartoColorStylePropsForItem, Typography, Avatar } from '@carto/react-ui';
+import { getCartoColorStylePropsForItem, Avatar } from '@carto/react-ui';
+import { BoxContent, TitleContent } from '../../utils/storyStyles';
 
 const options = {
   title: 'Molecules/Avatar',
@@ -33,119 +33,86 @@ const options = {
 };
 export default options;
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: theme.spacing(4)
-  },
-  standalone: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  label: {
-    minWidth: '200px'
-  }
-}));
-
 const Template = ({ ...args }) => {
   return <Avatar {...args} />;
 };
 
 const ShapeTemplate = ({ ...args }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Circular'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Circular'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args} />
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
 
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Square'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Square'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args} variant='square' />
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
 
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Rounded'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Rounded'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args} variant='rounded' />
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
     </Grid>
   );
 };
 
 const ContentTemplate = ({ ...args }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Default'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Default'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args} />
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
 
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Image'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Image'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args} src='/avatar.jpeg' />
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Initial'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Initial'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args}>M</Avatar>
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Icon'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Icon'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args}>
@@ -153,22 +120,18 @@ const ContentTemplate = ({ ...args }) => {
               </Avatar>
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
     </Grid>
   );
 };
 
 const ShapeSizeTemplate = ({ ...args }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Large'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Large'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args} size='large' />
@@ -180,14 +143,12 @@ const ShapeSizeTemplate = ({ ...args }) => {
               <Avatar {...args} variant='rounded' size='large' />
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
 
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Medium'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Medium'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args} />
@@ -199,14 +160,12 @@ const ShapeSizeTemplate = ({ ...args }) => {
               <Avatar {...args} variant='rounded' />
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
 
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Small'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Small'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args} size='small' />
@@ -218,14 +177,12 @@ const ShapeSizeTemplate = ({ ...args }) => {
               <Avatar {...args} variant='rounded' size='small' />
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
 
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Extra Small'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Extra Small'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args} size='xsmall' />
@@ -237,22 +194,18 @@ const ShapeSizeTemplate = ({ ...args }) => {
               <Avatar {...args} variant='rounded' size='xsmall' />
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
     </Grid>
   );
 };
 
 const ContentSizeTemplate = ({ ...args }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Large'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Large'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args} size='large' />
@@ -271,14 +224,12 @@ const ContentSizeTemplate = ({ ...args }) => {
               </Avatar>
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
 
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Medium'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Medium'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args} />
@@ -295,14 +246,12 @@ const ContentSizeTemplate = ({ ...args }) => {
               </Avatar>
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
 
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Small'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Small'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args} size='small' />
@@ -321,14 +270,12 @@ const ContentSizeTemplate = ({ ...args }) => {
               </Avatar>
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
 
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Extra Small'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Extra Small'}</TitleContent>
           <Grid container item spacing={6}>
             <Grid item>
               <Avatar {...args} size='xsmall' />
@@ -347,23 +294,20 @@ const ContentSizeTemplate = ({ ...args }) => {
               </Avatar>
             </Grid>
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
     </Grid>
   );
 };
 
 const ColorBackgroundTemplate = ({ ...args }) => {
-  const classes = useStyles();
   const theme = useTheme();
 
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Carto qualitative bold'}
-          </Typography>
+        <BoxContent>
+          <TitleContent variant='body2'>{'Carto qualitative bold'}</TitleContent>
           <Grid container item spacing={6}>
             {[...Array(15)].map((x, index) => (
               <Grid item key={index}>
@@ -376,7 +320,7 @@ const ColorBackgroundTemplate = ({ ...args }) => {
               </Grid>
             ))}
           </Grid>
-        </Box>
+        </BoxContent>
       </Grid>
     </Grid>
   );
