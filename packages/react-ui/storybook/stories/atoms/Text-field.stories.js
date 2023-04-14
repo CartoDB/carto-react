@@ -1,9 +1,8 @@
-import React from 'react';
-import { Box, Grid, InputAdornment, TextField } from '@mui/material';
 import { EuroOutlined, InfoOutlined, MapOutlined } from '@mui/icons-material';
-import makeStyles from '@mui/styles/makeStyles';
-import Typography from '../../../src/components/atoms/Typography';
+import { Grid, InputAdornment, TextField } from '@mui/material';
+import React from 'react';
 import PasswordField from '../../../src/components/atoms/PasswordField';
+import Typography from '../../../src/components/atoms/Typography';
 import { Container, Label } from './common.stories.styled';
 
 const options = {
