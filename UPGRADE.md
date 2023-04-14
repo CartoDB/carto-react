@@ -53,26 +53,32 @@ In case you don't need the icon to be filled, you can apply this class to the sv
 
 `responsiveFontSizes` simplified due we want to resize only a few variants through the theme.
 
-### New colors
-
-New custom variants added to the typography set:
+### New variants
 
 - overlineDelicate
 - code1
 - code2
 - code3
 
-### Replaced colors
+### Replaced variants
 
 Replaced variants due they were so specific to some components, these are:
 
-- charts (replaced by `theme.palette.overline + weight='strong'`)
+- `charts`: replaced by `theme.palette.overline + weight='strong'`
 
 ### Font families
 
 For external use: `Open Sans` and `Montserrat` families have been replaced by `Inter` and `Overpass Mono`, you have an example of this in the [`preview-head.html`](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/storybook/.storybook/preview-head.html) file.
 
 ## Colors
+
+### New colors
+
+- `default` variant: new set of neutral colors. Use it instead of `grey palette`.
+- `brand palette` with custom CARTO colors for branding.
+- We also have a set of `shade` colors (with transparency):
+  - `black`
+  - `white`
 
 ### Deleted colors
 
@@ -85,23 +91,13 @@ Some keys have been removed from [color palette](https://github.com/CartoDB/cart
 - focusOpacity
 - other, all removed but divider, which is moved to first level
 
-### Moved/replaced colors
+### Replaced colors
 
 Some others have been moved or replaced because they aren't native MUI keys and are so specific to some components, these are:
 
 - `charts`: replaced by `theme.palette.black[%]`
 - `primary.relatedLight`: replaced by `primary.background`
 - `secondary.relatedLight`: replaced by `secondary.background`.
-
-### New colors
-
-- `default` variant: new set of neutral colors. Use it instead of `grey palette`.
-- `brand palette` with custom CARTO colors for branding.
-- We also have a set of `shade` colors (with transparency):
-  - `black`
-  - `white`
-
-Important:
 
 ## Spacing
 
