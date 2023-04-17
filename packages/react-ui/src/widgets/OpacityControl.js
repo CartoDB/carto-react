@@ -1,39 +1,36 @@
 import React from 'react';
-import { Box, Grid, InputAdornment, Slider, TextField } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Box, Grid, InputAdornment, Slider, TextField, styled } from '@mui/material';
 import LayerOptionWrapper from './legend/LayerOptionWrapper';
 
-const useOpacityControlStyles = makeStyles(({ spacing }) => ({
-  content: {
-    height: 'auto',
-    flex: 1
-  },
-  slider: {
-    marginTop: spacing(1)
-  },
-  input: {
-    width: spacing(8),
-    '& input': {
-      '&[type=number]': {
-        appearance: 'textfield'
-      },
-      '&::-webkit-outer-spin-button': {
-        appearance: 'none',
-        margin: 0
-      },
-      '&::-webkit-inner-spin-button': {
-        appearance: 'none',
-        margin: 0
-      }
+const Content = styled(Box)(() => ({
+  height: 'auto',
+  flex: 1
+}));
+
+const Input = styled(TextField)(({ theme }) => ({
+  width: theme.spacing(8),
+  '& input': {
+    '&[type=number]': {
+      appearance: 'textfield'
+    },
+    '&::-webkit-outer-spin-button': {
+      appearance: 'none',
+      margin: 0
+    },
+    '&::-webkit-inner-spin-button': {
+      appearance: 'none',
+      margin: 0
     }
-  },
-  noMargin: {
+  }
+}));
+
+const InputUnit = styled(InputAdornment)(({ theme }) => ({
+  '& 	.MuiInputAdornment-positionEnd': {
     margin: 0
   }
 }));
 
 export default function OpacityControl({ opacity, onChangeOpacity }) {
-  const classes = useOpacityControlStyles();
   const handleTextFieldChange = (e) => {
     const newOpacity = parseInt(e.target.value || '0');
     onChangeOpacity(Math.max(0, Math.min(100, newOpacity)) / 100);
@@ -41,7 +38,7 @@ export default function OpacityControl({ opacity, onChangeOpacity }) {
 
   return (
     <LayerOptionWrapper label='Opacity'>
-      <Box className={classes.content}>
+      <Content>
         <Grid container spacing={2} direction='row' alignItems='center'>
           <Grid item xs>
             <Slider
@@ -49,14 +46,14 @@ export default function OpacityControl({ opacity, onChangeOpacity }) {
               min={0}
               max={100}
               step={1}
+              xs
+              mt={1}
               onChange={(_, value) => onChangeOpacity(value / 100)}
               aria-labelledby='input-slider'
-              className={classes.slider}
             />
           </Grid>
           <Grid item>
-            <TextField
-              className={classes.input}
+            <Input
               value={Math.round(opacity * 100)}
               size='small'
               onChange={handleTextFieldChange}
@@ -67,19 +64,12 @@ export default function OpacityControl({ opacity, onChangeOpacity }) {
                 type: 'number',
                 inputProps: { 'data-testid': 'opacity-slider' },
                 'aria-labelledby': 'opacity-slider',
-                endAdornment: (
-                  <InputAdornment
-                    classes={{ positionEnd: classes.noMargin }}
-                    position='end'
-                  >
-                    %
-                  </InputAdornment>
-                )
+                endAdornment: <InputUnit position='end'> %</InputUnit>
               }}
             />
           </Grid>
         </Grid>
-      </Box>
+      </Content>
     </LayerOptionWrapper>
   );
 }

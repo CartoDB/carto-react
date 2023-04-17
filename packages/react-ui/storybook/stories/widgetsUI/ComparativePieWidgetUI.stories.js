@@ -1,6 +1,6 @@
 import React from 'react';
 import ComparativePieWidgetUI from '../../../src/widgets/comparative/ComparativePieWidgetUI';
-import { buildReactPropsAsString } from '../../utils';
+import { buildReactPropsAsString } from '../../utils/utils';
 
 const options = {
   title: 'Organisms/Widgets/ComparativePieWidgetUI',

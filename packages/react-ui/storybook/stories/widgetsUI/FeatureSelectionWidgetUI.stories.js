@@ -1,9 +1,9 @@
 import { Box } from '@mui/material';
 import React, { useState } from 'react';
 import FeatureSelectionWidgetUI from '../../../src/widgets/FeatureSelectionWidgetUI';
-import CursorIcon from '../../../src/assets/CursorIcon';
-import PolygonIcon from '../../../src/assets/PolygonIcon';
-import RectangleIcon from '../../../src/assets/RectangleIcon';
+import CursorIcon from '../../../src/assets/icons/CursorIcon';
+import PolygonIcon from '../../../src/assets/icons/PolygonIcon';
+import RectangleIcon from '../../../src/assets/icons/RectangleIcon';
 
 const options = {
   title: 'Organisms/Widgets/FeatureSelectionWidgetUI',

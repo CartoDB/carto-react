@@ -1,7 +1,7 @@
 import React from 'react';
 import { SvgIcon } from '@mui/material';
 
-export default function RectangleIcon(props) {
+export default function UploadIcon(props) {
   return (
     <SvgIcon {...props}>
       <path

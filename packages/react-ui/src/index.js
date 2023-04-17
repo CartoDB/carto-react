@@ -14,25 +14,33 @@ import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import RangeWidgetUI from './widgets/RangeWidgetUI';
-import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI';
+import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
 import ComparativePieWidgetUI from './widgets/comparative/ComparativePieWidgetUI';
-import CursorIcon from './assets/CursorIcon';
-import PolygonIcon from './assets/PolygonIcon';
-import RectangleIcon from './assets/RectangleIcon';
-import LassoIcon from './assets/LassoIcon';
-import CircleIcon from './assets/CircleIcon';
-import ArrowDropIcon from './assets/ArrowDropIcon';
+import CursorIcon from './assets/icons/CursorIcon';
+import PolygonIcon from './assets/icons/PolygonIcon';
+import RectangleIcon from './assets/icons/RectangleIcon';
+import LassoIcon from './assets/icons/LassoIcon';
+import CircleIcon from './assets/icons/CircleIcon';
+import ArrowDropIcon from './assets/icons/ArrowDropIcon';
 import Typography from './components/atoms/Typography';
 import Button from './components/atoms/Button';
 import PasswordField from './components/atoms/PasswordField';
 import SelectField from './components/atoms/SelectField';
-import UploadField from './components/molecules/UploadField';
-import AppBar from './components/organisms/AppBar';
+import UploadField from './components/molecules/UploadField/UploadField';
+import AppBar from './components/organisms/AppBar/AppBar';
 import LabelWithIndicator from './components/atoms/LabelWithIndicator';
+import { getCartoColorStylePropsForItem } from './utils/palette';
+import Avatar from './components/molecules/Avatar';
+import {
+  ICON_SIZE_SMALL,
+  ICON_SIZE_MEDIUM,
+  ICON_SIZE_LARGE
+} from './theme/themeConstants';
+import AccordionGroup from './components/molecules/AccordionGroup';
 
 const featureSelectionIcons = {
   CursorIcon,
@@ -75,5 +83,11 @@ export {
   UploadField,
   AppBar,
   ArrowDropIcon,
-  LabelWithIndicator
+  LabelWithIndicator,
+  getCartoColorStylePropsForItem,
+  Avatar,
+  ICON_SIZE_SMALL,
+  ICON_SIZE_MEDIUM,
+  ICON_SIZE_LARGE,
+  AccordionGroup
 };

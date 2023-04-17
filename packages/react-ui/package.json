@@ -1,13 +1,13 @@
 {
   "name": "@carto/react-ui",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.1",
   "description": "CARTO for React - UI",
   "author": "CARTO Dev Team",
   "keywords": [
     "carto",
     "react",
     "ui",
-    "material-ui"
+    "mui"
   ],
   "repository": {
     "type": "git",
@@ -78,18 +78,17 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "2.0.0-beta.1",
-    "@emotion/react": "^11.10.0",
-    "@emotion/styled": "^11.10.0",
-    "@mui/icons-material": "^5.10.9",
-    "@mui/lab": "^5.0.0-alpha.104",
-    "@mui/material": "^5.10.10",
-    "@mui/styled-engine-sc": "^5.10.6",
-    "@mui/styles": "^5.10.10",
-    "echarts": "^5.2.0",
-    "echarts-for-react": "^3.0.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "@carto/react-core": "^2.0.1",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/lab": "^5.0.0-alpha.125",
+    "@mui/material": "^5.11.16",
+    "@mui/styles": "^5.11.16",
+    "echarts": "^5.4.2",
+    "echarts-for-react": "^3.0.2",
+    "react": "17.x || 18.x",
+    "react-dom": "17.x || 18.x",
     "styled-components": "^5.2.3"
   }
 }

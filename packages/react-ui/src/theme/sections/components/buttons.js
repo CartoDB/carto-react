@@ -2,7 +2,7 @@ import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
 import { themeShadows } from '../shadows';
-import { ICON_SIZE, ICON_SIZE_M } from '../../themeConstants';
+import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE } from '../../themeConstants';
 
 const sizeSmall = getSpacing(3);
 const sizeMedium = getSpacing(4);
@@ -20,10 +20,10 @@ export const buttonsOverrides = {
       root: {
         '& .MuiSvgIcon-root, & svg': {
           display: 'flex',
-          fontSize: ICON_SIZE,
-          width: ICON_SIZE,
-          minWidth: ICON_SIZE,
-          height: ICON_SIZE
+          fontSize: ICON_SIZE_MEDIUM,
+          width: ICON_SIZE_MEDIUM,
+          minWidth: ICON_SIZE_MEDIUM,
+          height: ICON_SIZE_MEDIUM
         }
       }
     }
@@ -106,10 +106,10 @@ export const buttonsOverrides = {
         marginRight: getSpacing(0.75),
 
         '& .MuiSvgIcon-root, & svg': {
-          fontSize: ICON_SIZE,
-          width: ICON_SIZE,
-          minWidth: ICON_SIZE,
-          height: ICON_SIZE
+          fontSize: ICON_SIZE_MEDIUM,
+          width: ICON_SIZE_MEDIUM,
+          minWidth: ICON_SIZE_MEDIUM,
+          height: ICON_SIZE_MEDIUM
         },
         '&.MuiButton-iconSizeSmall': {
           marginRight: getSpacing(0.5),
@@ -120,10 +120,10 @@ export const buttonsOverrides = {
         marginLeft: getSpacing(0.75),
 
         '& .MuiSvgIcon-root, & svg': {
-          fontSize: ICON_SIZE,
-          width: ICON_SIZE,
-          minWidth: ICON_SIZE,
-          height: ICON_SIZE
+          fontSize: ICON_SIZE_MEDIUM,
+          width: ICON_SIZE_MEDIUM,
+          minWidth: ICON_SIZE_MEDIUM,
+          height: ICON_SIZE_MEDIUM
         },
         '&.MuiButton-iconSizeSmall': {
           marginLeft: getSpacing(0.5),
@@ -281,10 +281,10 @@ export const buttonsOverrides = {
           color: commonPalette.text.secondary
         }),
         '& .MuiSvgIcon-root, & svg': {
-          fontSize: ICON_SIZE,
-          width: ICON_SIZE,
-          minWidth: ICON_SIZE,
-          height: ICON_SIZE
+          fontSize: ICON_SIZE_MEDIUM,
+          width: ICON_SIZE_MEDIUM,
+          minWidth: ICON_SIZE_MEDIUM,
+          height: ICON_SIZE_MEDIUM
         },
         '& svg:not(.doNotFillIcon) path': {
           fill: 'currentColor'
@@ -449,10 +449,10 @@ export const buttonsOverrides = {
         },
 
         '& .MuiSvgIcon-root, & svg': {
-          fontSize: ICON_SIZE_M,
-          width: ICON_SIZE_M,
-          minWidth: ICON_SIZE_M,
-          height: ICON_SIZE_M
+          fontSize: ICON_SIZE_LARGE,
+          width: ICON_SIZE_LARGE,
+          minWidth: ICON_SIZE_LARGE,
+          height: ICON_SIZE_LARGE
         },
         '&.MuiFab-extended': {
           ...themeTypography.body1,
@@ -483,10 +483,10 @@ export const buttonsOverrides = {
         minHeight: getSpacing(4),
 
         '& .MuiSvgIcon-root, & svg': {
-          fontSize: ICON_SIZE,
-          width: ICON_SIZE,
-          minWidth: ICON_SIZE,
-          height: ICON_SIZE
+          fontSize: ICON_SIZE_MEDIUM,
+          width: ICON_SIZE_MEDIUM,
+          minWidth: ICON_SIZE_MEDIUM,
+          height: ICON_SIZE_MEDIUM
         },
         '&.MuiFab-extended': {
           ...themeTypography.caption,

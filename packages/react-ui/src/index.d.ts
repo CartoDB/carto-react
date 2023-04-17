@@ -23,15 +23,23 @@ import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import ComparativePieWidgetUI from './widgets/comparative/ComparativePieWidgetUI';
-import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI';
+import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
 import Typography from './components/atoms/Typography';
 import Button from './components/atoms/Button';
 import PasswordField from './components/atoms/PasswordField';
 import SelectField from './components/atoms/SelectField';
-import UploadField from './components/molecules/UploadField';
-import AppBar from './components/organisms/AppBar';
+import UploadField from './components/molecules/UploadField/UploadField';
+import AppBar from './components/organisms/AppBar/AppBar';
 import LabelWithIndicator from './components/atoms/LabelWithIndicator';
+import { getCartoColorStylePropsForItem } from './utils/palette';
+import Avatar from './components/molecules/Avatar';
+import {
+  ICON_SIZE_SMALL,
+  ICON_SIZE_MEDIUM,
+  ICON_SIZE_LARGE
+} from './theme/themeConstants';
+import AccordionGroup from './components/molecules/AccordionGroup';
 
 export {
   theme,
@@ -68,5 +76,11 @@ export {
   SelectField,
   UploadField,
   AppBar,
-  LabelWithIndicator
+  LabelWithIndicator,
+  getCartoColorStylePropsForItem,
+  Avatar,
+  ICON_SIZE_SMALL,
+  ICON_SIZE_MEDIUM,
+  ICON_SIZE_LARGE,
+  AccordionGroup
 };

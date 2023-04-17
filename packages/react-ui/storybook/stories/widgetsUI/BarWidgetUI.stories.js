@@ -1,6 +1,6 @@
 import React from 'react';
 import BarWidgetUI from '../../../src/widgets/BarWidgetUI';
-import { buildReactPropsAsString } from '../../utils';
+import { buildReactPropsAsString } from '../../utils/utils';
 
 const options = {
   title: 'Organisms/Widgets/BarWidgetUI',

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Grid } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
-import UploadField from '../../../src/components/molecules/UploadField';
+import UploadField from '../../../src/components/molecules/UploadField/UploadField';
 
 const options = {
   title: 'Molecules/UploadField',

@@ -47,6 +47,8 @@ export const cartoThemeOptions = {
   },
   palette: {
     mode: 'light',
+    // Used by `getContrastText()` to maximize the contrast between the background and the text.
+    // https://mui.com/material-ui/customization/palette/#accessibility
     contrastThreshold: 3,
     tonalOffset: 0.2,
     common: { ...commonPalette.common },

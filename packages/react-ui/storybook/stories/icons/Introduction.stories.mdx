@@ -1,0 +1,77 @@
+import { Meta, Description } from '@storybook/addon-docs';
+import '../../utils/docStyles.css';
+import Figma from '../../assets/figma.svg';
+import Mui from '../../assets/mui.svg';
+
+<Meta title='Icons/Introduction' />
+
+# CARTO Icons
+
+Material icons are imported directly from `@mui/icons-material` library, `custom` ones need to be downloaded and stored in our repository.
+
+## Resources
+
+<div className='link-list'>
+  <a
+    className='link-item'
+    href='https://www.figma.com/file/Yj97O00yGzMg1ULcA0WEfl/CARTO-Icons?node-id=8816-2893&t=FAJCRqG37ndjFgHN-0'
+    target='_blank'
+  >
+    <img src={Figma} alt='Figma library' />
+    <div>
+      <strong>Carto icon library</strong>
+      Design library for icons
+    </div>
+  </a>
+  <a
+    className='link-item'
+    href='https://mui.com/material-ui/material-icons/'
+    target='_blank'
+  >
+    <img src={Mui} alt='Mui icons' />
+    <div>
+      <strong>Mui icons</strong>
+      Inventory and guides of use of Material UI icons.
+    </div>
+  </a>
+</div>
+
+## Adding new icon
+
+Before you start, make sure that:
+
+- Icons that you want to add are not already in our repository.
+
+Then:
+
+- Every icon must comply with our [icon rules](#rules-for-icons)
+- Ensure you download the icon directly from the Figma icon library
+- Place it at `src/assets/icons`
+- Add it as a js component as the example below.
+- Name the exported asset to the same name it has in the library
+- You have more info in the [Figma guide](https://www.figma.com/proto/12e7boz39jWiytTnjN674G/Ways-of-working-%2F-298130?page-id=1%3A2&node-id=26-5183&viewport=622%2C338%2C0.09&scaling=scale-down).
+
+## Rules for Icons
+
+- Download it at 24x24 px
+- fill = currentColor
+
+## Example
+
+```js
+import React from 'react';
+import { SvgIcon } from '@mui/material';
+
+export default function ArrowDropIcon(props) {
+  return (
+    <SvgIcon {...props}>
+      <path
+        fillRule='evenodd'
+        clipRule='evenodd'
+        d='M12.5 12.17L9.32998 9L7.91998 10.41L12.5 15L17.09 10.41L15.67 9L12.5 12.17Z'
+        fill='currentColor'
+      />
+    </SvgIcon>
+  );
+}
+```

@@ -1,4 +1,5 @@
 import * as cartoColors from 'cartocolor';
+import { commonPalette } from '../theme/sections/palette';
 
 export const DEFAULT_PALETTE = 'PurpOr';
 export const NULL_COLOR = [204, 204, 204];
@@ -50,4 +51,18 @@ export function getPalette(colors, domainSize) {
 
 export function rgbToHex(r, g, b) {
   return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+// Returns style props for an item ({ backgroundColor, color}) using qualitative bold palette.
+// It re-iterates over the palette if index is greater than palette's size (repeated colors)
+export function getCartoColorStylePropsForItem(theme, index) {
+  const palette = commonPalette.qualitative.bold;
+  const colors = Object.values(palette);
+
+  let chosenIndex = index % colors.length;
+
+  return {
+    backgroundColor: colors[chosenIndex],
+    color: theme.palette.getContrastText(colors[chosenIndex])
+  };
 }

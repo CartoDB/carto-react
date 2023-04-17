@@ -1,11 +1,17 @@
-import { ICON_SIZE, ICON_SIZE_M } from '../../themeConstants';
+import React from 'react';
+import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE, ICON_SIZE_SMALL } from '../../themeConstants';
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
+import { PersonOutline } from '@mui/icons-material';
+import { getIconPath } from '../../themeUtils';
 
 const tooltipArrowSize = 1;
 const tooltipSeparation = 0.5;
 const tooltipMargin = tooltipArrowSize + tooltipSeparation;
+const avatarFallbackImage = getIconPath(<PersonOutline />);
+const avatarCircularRadius = '50%';
+const avatarRoundedRadius = 0.5;
 
 export const dataDisplayOverrides = {
   // Divider
@@ -69,7 +75,7 @@ export const dataDisplayOverrides = {
         marginRight: getSpacing(1),
 
         '& .MuiSvgIcon-root': {
-          fontSize: ICON_SIZE_M
+          fontSize: ICON_SIZE_LARGE
         },
         '.MuiMenuItem-root.MuiButtonBase-root &': {
           minWidth: getSpacing(2.25)
@@ -85,7 +91,7 @@ export const dataDisplayOverrides = {
           width: getSpacing(4)
         },
         '& .MuiSvgIcon-root': {
-          fontSize: ICON_SIZE
+          fontSize: ICON_SIZE_MEDIUM
         }
       }
     }
@@ -266,8 +272,8 @@ export const dataDisplayOverrides = {
         padding: getSpacing(0, 0.5),
 
         '& .MuiAvatar-root': {
-          width: ICON_SIZE_M,
-          height: ICON_SIZE_M,
+          width: ICON_SIZE_LARGE,
+          height: ICON_SIZE_LARGE,
           margin: 0,
           color: commonPalette.secondary.contrastText,
           backgroundColor: commonPalette.background.paper,
@@ -278,8 +284,8 @@ export const dataDisplayOverrides = {
           marginLeft: getSpacing(0.5)
         },
         '& img': {
-          width: ICON_SIZE_M,
-          height: ICON_SIZE_M
+          width: ICON_SIZE_LARGE,
+          height: ICON_SIZE_LARGE
         },
         '&.Mui-disabled': {
           color: commonPalette.text.disabled,
@@ -338,12 +344,12 @@ export const dataDisplayOverrides = {
       // Sizes
       sizeSmall: {
         '& img': {
-          width: ICON_SIZE,
-          height: ICON_SIZE
+          width: ICON_SIZE_MEDIUM,
+          height: ICON_SIZE_MEDIUM
         },
         '& .MuiAvatar-root': {
-          width: ICON_SIZE,
-          height: ICON_SIZE
+          width: ICON_SIZE_MEDIUM,
+          height: ICON_SIZE_MEDIUM
         },
         '& .MuiChip-icon': {
           marginLeft: getSpacing(0.25)
@@ -361,8 +367,8 @@ export const dataDisplayOverrides = {
         padding: getSpacing(0, 0.5)
       },
       deleteIcon: {
-        width: ICON_SIZE,
-        height: ICON_SIZE,
+        width: ICON_SIZE_MEDIUM,
+        height: ICON_SIZE_MEDIUM,
         margin: 0,
         marginLeft: '2px', // Forced to a non-standard value to meet with design
         marginRight: '3px', // Forced to a non-standard value to meet with design
@@ -426,20 +432,34 @@ export const dataDisplayOverrides = {
   MuiAvatar: {
     styleOverrides: {
       root: {
+        overflow: 'initial',
         color: commonPalette.secondary.contrastText,
-        backgroundColor: commonPalette.secondary.main
+        backgroundColor: commonPalette.secondary.main,
+
+        //  Default fallback image override
+        // https://github.com/mui/material-ui/issues/33229
+        '& .MuiAvatar-fallback': {
+          path: {
+            d: `path('${avatarFallbackImage}') !important`
+          }
+        }
       },
       img: {
-        // border: `1px solid ${commonPalette.default.outlinedBorder}` TODO fix the background color overlap
+        boxShadow: `0 0 0 1px ${commonPalette.default.outlinedBorder}`
       },
+
       circular: {
+        borderRadius: avatarCircularRadius,
+
         '& img': {
-          borderRadius: '50%'
+          borderRadius: avatarCircularRadius
         }
       },
       rounded: {
+        borderRadius: getSpacing(avatarRoundedRadius),
+
         '& img': {
-          borderRadius: getSpacing(0.5)
+          borderRadius: getSpacing(avatarRoundedRadius)
         }
       }
     }
@@ -463,10 +483,13 @@ export const dataDisplayOverrides = {
   MuiSvgIcon: {
     styleOverrides: {
       root: {
-        fontSize: ICON_SIZE
+        fontSize: ICON_SIZE_MEDIUM
       },
-      sizeLarge: {
-        fontSize: ICON_SIZE_M
+      fontSizeSmall: {
+        fontSize: ICON_SIZE_SMALL
+      },
+      fontSizeLarge: {
+        fontSize: ICON_SIZE_LARGE
       }
     }
   }

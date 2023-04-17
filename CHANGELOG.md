@@ -2,14 +2,55 @@
 
 ## Not released
 
+- Improve upgrade guide documentation [#651](https://github.com/CartoDB/carto-react/pull/651)
 - Fix Histogram widget when showing just one row of data [#653](https://github.com/CartoDB/carto-react/pull/653)
 
 ## 2.0
 
-### 2.0.0-beta.2 (2023-02-17)
+### 2.0.1 (2023-04-14)
+
+- New DS core component: accordion [#632](https://github.com/CartoDB/carto-react/pull/632)
+- DS update: Disable ligatures in the monospaced font family [#649](https://github.com/CartoDB/carto-react/pull/649)
+- DS update: change action.disabledBackground color [#647](https://github.com/CartoDB/carto-react/pull/647)
+- Storybook documentation and fixes [#629](https://github.com/CartoDB/carto-react/pull/629)
+- Note component cleaned styles from makeStyles [#630](https://github.com/CartoDB/carto-react/pull/630)
+- OpacityControl component migrated from makeStyles to styled-components + cleanup [#631](https://github.com/CartoDB/carto-react/pull/631)
+
+### 2.0.0 (2023-04-05)
+
+- Bump to latest @deck.gl 8.9.6, @emotion and @mui packages [#626](https://github.com/CartoDB/carto-react/pull/626)
+- Add missing form stories [#627](https://github.com/CartoDB/carto-react/pull/627)
+
+### 2.0.0-beta.8 (2023-04-04)
+
+- Add compatibility with react 18 at peer dependencies [#624](https://github.com/CartoDB/carto-react/pull/624)
+
+### 2.0.0-beta.7 (2023-03-31)
+
+- Minor theme and Widgets styles fixes [#622](https://github.com/CartoDB/carto-react/pull/622)
+- Display Carto icon gallery in Storybook [#619](https://github.com/CartoDB/carto-react/pull/619)
+
+### 2.0.0-beta.6 (2023-03-29)
+
+- New Avatar component based on Mui Avatar [#617](https://github.com/CartoDB/carto-react/pull/617)
+- Allow to inject headers externally to executeSQL helper [#620](https://github.com/CartoDB/carto-react/pull/620)
+
+### 2.0.0-beta.5 (2023-03-22)
+
+- Styled import fix [#618](https://github.com/CartoDB/carto-react/pull/618)
+
+### 2.0.0-beta.4 (2023-03-17)
+
+- Carto for React dependencies fix and Storybook cleanup [#615](https://github.com/CartoDB/carto-react/pull/615)
+- Add new getCartoColorStylePropsForItem function [#614](https://github.com/CartoDB/carto-react/pull/614)
+
+### 2.0.0-beta.3 (2023-03-06)
 
 - New component: LabelWithIndicator [#608](https://github.com/CartoDB/carto-react/pull/608)
 - Design review of Chip component [#607](https://github.com/CartoDB/carto-react/pull/607)
+
+### 2.0.0-beta.2 (2023-02-17)
+
 - Fix overwrite default client in SQL post request [#603](https://github.com/CartoDB/carto-react/pull/603)
 
 ### 2.0.0-beta.1 (2023-02-14)
