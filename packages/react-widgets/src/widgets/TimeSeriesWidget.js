@@ -24,13 +24,23 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
 // For example, if you group the data by day, the range must
 // start with a day and ends 24 hours later.
 const STEP_SIZE_RANGE_MAPPING = {
-  [GroupDateTypes.YEARS]: 60 * 60 * 24 * 365 * 1000,
-  [GroupDateTypes.MONTHS]: 60 * 60 * 24 * 30 * 1000,
   [GroupDateTypes.WEEKS]: 60 * 60 * 24 * 7 * 1000,
   [GroupDateTypes.DAYS]: 60 * 60 * 24 * 1000,
   [GroupDateTypes.HOURS]: 60 * 60 * 1000,
   [GroupDateTypes.MINUTES]: 60 * 1000
 };
+
+function calculateNextStep(time, stepType) {
+  const currentDate = new Date(time);
+  switch (stepType) {
+    case GroupDateTypes.YEARS:
+      return currentDate.setFullYear(currentDate.getFullYear() + 1);
+    case GroupDateTypes.MONTHS:
+      return currentDate.setMonth(currentDate.getMonth() + 1);
+    default:
+      return time + STEP_SIZE_RANGE_MAPPING[stepType];
+  }
+}
 
 /**
  * Renders a <TimeSeriesWidget /> component
@@ -166,7 +176,7 @@ function TimeSeriesWidget({
             id: dataSource,
             column,
             type: FilterTypes.TIME,
-            values: [[moment, moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize]]],
+            values: [[moment, calculateNextStep(moment, selectedStepSize) - 1]],
             owner: id
           })
         );
