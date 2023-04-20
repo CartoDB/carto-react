@@ -256,10 +256,13 @@ export const dataDisplayOverrides = {
   MuiTableRow: {
     styleOverrides: {
       root: {
-        height: getSpacing(6),
+        transition: 'background-color 0.25s ease',
         '&:not(.MuiTableRow-head) th, td': {
           border: 'none',
-          padding: getSpacing(1, 2)
+          '&:not(.MuiTableCell-sizeSmall)': {
+            padding: getSpacing(1, 2),
+            height: getSpacing(6)
+          }
         },
         '&.MuiTableRow-hover:hover': {
           cursor: 'pointer'

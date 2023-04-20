@@ -15,8 +15,7 @@ import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
   tableRow: {
-    maxHeight: theme.spacing(6.5),
-    transition: 'background-color 0.25s ease'
+    maxHeight: theme.spacing(6.5)
   },
   tableCell: {
     overflow: 'hidden',
