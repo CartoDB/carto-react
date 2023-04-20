@@ -248,11 +248,31 @@ export const dataDisplayOverrides = {
       }
     }
   },
+  MuiTable: {
+    defaultProps: {
+      stickyHeader: true
+    }
+  },
+  MuiTableRow: {
+    styleOverrides: {
+      root: {
+        height: getSpacing(6),
+        '&:not(.MuiTableRow-head) th, td': {
+          border: 'none',
+          padding: getSpacing(1, 2)
+        },
+        '&.MuiTableRow-hover:hover': {
+          cursor: 'pointer'
+        }
+      }
+    }
+  },
   MuiTableCell: {
     styleOverrides: {
       head: {
         ...themeTypography.caption,
-        color: commonPalette.text.secondary
+        fontWeight: themeTypography.fontWeightMedium,
+        color: commonPalette.text.primary
       },
       stickyHeader: {
         backgroundColor: commonPalette.common.white
