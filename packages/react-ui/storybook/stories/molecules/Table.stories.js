@@ -44,7 +44,7 @@ const rows = [
 ];
 
 const options = {
-  title: 'Organisms/Table',
+  title: 'Molecules/Table',
   component: Table,
   argTypes: {
     maxWidth: {
