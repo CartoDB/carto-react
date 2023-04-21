@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Chip, FormControl, MenuItem, Select, Typography } from '@mui/material';
+import { Chip, FormControl, MenuItem, Select, Tooltip, Typography } from '@mui/material';
 
 function createData(
   name, // : string,
@@ -91,9 +91,11 @@ const PlaygroundTemplate = (args) => {
                 {index + 1}
               </TableCell>
               <TableCell>
-                <Typography variant='body2' noWrap sx={{ maxWidth: 120 }}>
-                  {row.name}
-                </Typography>
+                <Tooltip title={row.name}>
+                  <Typography variant='body2' noWrap sx={{ maxWidth: 120 }}>
+                    {row.name}
+                  </Typography>
+                </Tooltip>
               </TableCell>
               <TableCell>
                 <Chip size='small' color='default' label={row.type} />
@@ -116,9 +118,11 @@ const PlaygroundTemplate = (args) => {
                 </FormControl>
               </TableCell>
               <TableCell>
-                <Typography variant='body2' noWrap sx={{ maxWidth: 120 }}>
-                  {row.description}
-                </Typography>
+                <Tooltip title={row.description}>
+                  <Typography variant='body2' noWrap sx={{ maxWidth: 120 }}>
+                    {row.description}
+                  </Typography>
+                </Tooltip>
               </TableCell>
             </TableRow>
           ))}
@@ -151,9 +155,11 @@ const ScrollTemplate = ({ maxHeight, maxWidth }) => (
                 {index + 1}
               </TableCell>
               <TableCell>
-                <Typography variant='body2' noWrap sx={{ maxWidth: 120 }}>
-                  {row.name}
-                </Typography>
+                <Tooltip title={row.name}>
+                  <Typography variant='body2' noWrap sx={{ maxWidth: 120 }}>
+                    {row.name}
+                  </Typography>
+                </Tooltip>
               </TableCell>
               <TableCell>
                 <Chip size='small' color='default' label={row.type} />
@@ -176,9 +182,11 @@ const ScrollTemplate = ({ maxHeight, maxWidth }) => (
                 </FormControl>
               </TableCell>
               <TableCell>
-                <Typography variant='body2' noWrap sx={{ maxWidth: 120 }}>
-                  {row.description}
-                </Typography>
+                <Tooltip title={row.description}>
+                  <Typography variant='body2' noWrap sx={{ maxWidth: 120 }}>
+                    {row.description}
+                  </Typography>
+                </Tooltip>
               </TableCell>
             </TableRow>
           ))}
