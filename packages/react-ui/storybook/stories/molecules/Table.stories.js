@@ -162,12 +162,16 @@ const ScrollTemplate = ({ maxHeight, maxWidth }) => (
               <TableCell component='th' scope='row'>
                 {index + 1}
               </TableCell>
-              <TableCell>
-                <Tooltip title={row.name}>
-                  <Typography variant='body2' noWrap sx={{ maxWidth: '100%' }}>
-                    {row.name}
-                  </Typography>
-                </Tooltip>
+              <TableCell sx={{ maxWidth: 160 }}>
+                {index === 1 ? (
+                  <Tooltip title={row.name}>
+                    <Typography variant='inherit' noWrap>
+                      {row.name}
+                    </Typography>
+                  </Tooltip>
+                ) : (
+                  row.name
+                )}
               </TableCell>
               <TableCell>
                 <Chip size='small' color='default' label={row.type} />
@@ -189,12 +193,16 @@ const ScrollTemplate = ({ maxHeight, maxWidth }) => (
                   </Select>
                 </FormControl>
               </TableCell>
-              <TableCell>
-                <Tooltip title={row.description}>
-                  <Typography variant='body2' noWrap sx={{ maxWidth: '100%' }}>
-                    {row.description}
-                  </Typography>
-                </Tooltip>
+              <TableCell sx={{ maxWidth: 160 }}>
+                {index === 3 ? (
+                  <Tooltip title={row.description}>
+                    <Typography variant='inherit' noWrap>
+                      {row.description}
+                    </Typography>
+                  </Tooltip>
+                ) : (
+                  row.description
+                )}
               </TableCell>
             </TableRow>
           ))}
