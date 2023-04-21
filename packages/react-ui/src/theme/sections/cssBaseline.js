@@ -6,7 +6,8 @@ export const CssBaseline = {
   // Custom scrollbars
   '*::-webkit-scrollbar': {
     position: 'fixed',
-    width: '5px'
+    width: '5px',
+    height: '5px'
   },
   '*::-webkit-scrollbar-track': {
     boxShadow: 'none',
