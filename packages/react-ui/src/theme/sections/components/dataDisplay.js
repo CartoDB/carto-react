@@ -258,7 +258,7 @@ export const dataDisplayOverrides = {
       root: {
         transition: 'background-color 0.25s ease',
         '&:not(.MuiTableRow-head) th, td': {
-          border: 'none',
+          borderColor: commonPalette.divider,
           '&:not(.MuiTableCell-sizeSmall)': {
             padding: getSpacing(1, 2),
             height: getSpacing(6)
