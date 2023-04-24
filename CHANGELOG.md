@@ -2,6 +2,7 @@
 
 ## Not released
 
+- react-api: getStats request uses POST for big queries/queryParameters [#656](https://github.com/CartoDB/carto-react/pull/656)
 - New DS core component: Table [#657](https://github.com/CartoDB/carto-react/pull/657)
 - Improve upgrade guide documentation [#651](https://github.com/CartoDB/carto-react/pull/651)
 - Fix storybook publication with Node 18 [#654](https://github.com/CartoDB/carto-react/pull/654)
