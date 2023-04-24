@@ -171,7 +171,7 @@ const ScrollTemplate = ({ maxHeight, maxWidth }) => (
                 {index + 1}
               </TableCell>
               <TableCell sx={{ maxWidth: 160 }}>
-                {index === 1 ? (
+                {index % rows.length === 1 ? (
                   <Tooltip title={row.name}>
                     <Typography variant='inherit' noWrap>
                       {row.name}
@@ -202,7 +202,7 @@ const ScrollTemplate = ({ maxHeight, maxWidth }) => (
                 </FormControl>
               </TableCell>
               <TableCell sx={{ maxWidth: 160 }}>
-                {index === 3 ? (
+                {index % rows.length === 3 ? (
                   <Tooltip title={row.description}>
                     <Typography variant='inherit' noWrap>
                       {row.description}
