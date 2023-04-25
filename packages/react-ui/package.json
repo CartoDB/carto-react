@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-ui",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "CARTO for React - UI",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -31,8 +31,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --collectCoverage",
-    "storybook:start": "start-storybook -c ./storybook/.storybook -p 6006",
-    "storybook:build": "build-storybook -c ./storybook/.storybook",
+    "storybook:start": "export NODE_OPTIONS=--openssl-legacy-provider && start-storybook -c ./storybook/.storybook -p 6006",
+    "storybook:build": "export NODE_OPTIONS=--openssl-legacy-provider && build-storybook -c ./storybook/.storybook",
     "storybook:publish": "yarn storybook:build && yarn firebase deploy --project cartodb-fb-storybook-react",
     "precommit": "lint-staged"
   },
@@ -78,7 +78,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^2.0.0",
+    "@carto/react-core": "^2.0.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.16",
