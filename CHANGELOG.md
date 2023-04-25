@@ -2,15 +2,16 @@
 
 ## Not released
 
-- New DS core component: table [#657](https://github.com/CartoDB/carto-react/pull/657)
+- New DS core component: Table [#657](https://github.com/CartoDB/carto-react/pull/657)
 - Improve upgrade guide documentation [#651](https://github.com/CartoDB/carto-react/pull/651)
 - Fix storybook publication with Node 18 [#654](https://github.com/CartoDB/carto-react/pull/654)
+- Fix Histogram widget when showing just one row of data [#653](https://github.com/CartoDB/carto-react/pull/653)
 
 ## 2.0
 
 ### 2.0.1 (2023-04-14)
 
-- New DS core component: accordion [#632](https://github.com/CartoDB/carto-react/pull/632)
+- New DS core component: Accordion [#632](https://github.com/CartoDB/carto-react/pull/632)
 - DS update: Disable ligatures in the monospaced font family [#649](https://github.com/CartoDB/carto-react/pull/649)
 - DS update: change action.disabledBackground color [#647](https://github.com/CartoDB/carto-react/pull/647)
 - Storybook documentation and fixes [#629](https://github.com/CartoDB/carto-react/pull/629)
