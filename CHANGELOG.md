@@ -2,6 +2,7 @@
 
 ## Not released
 
+- New DS core component: table [#657](https://github.com/CartoDB/carto-react/pull/657)
 - Improve upgrade guide documentation [#651](https://github.com/CartoDB/carto-react/pull/651)
 - Fix storybook publication with Node 18 [#654](https://github.com/CartoDB/carto-react/pull/654)
 
