@@ -175,7 +175,14 @@ function HistogramWidgetUI({
 
   // Series
   const seriesOptions = useMemo(() => {
-    const dataWithColor = formattedData.map((item, idx) => {
+    // We check if we have just one different value
+    const isUniqueDataRow = formattedData.filter((row) => row[2] !== 0).length === 1;
+
+    const data = isUniqueDataRow
+      ? [formattedData[0], formattedData[formattedData.length - 1]]
+      : formattedData;
+
+    const dataWithColor = data.map((item, idx) => {
       const isDisabled = selectedBars.length && selectedBars.indexOf(idx) === -1;
       const color = isDisabled ? theme.palette.black[25] : theme.palette.secondary.main;
 
@@ -200,9 +207,10 @@ function HistogramWidgetUI({
         return {
           type: 'rect',
           shape: {
-            x: x + (isFirst ? 0 : 1),
+            x: isUniqueDataRow ? x / 10 : x + (isFirst ? 0 : 1),
             y,
-            width: width - (isLast ? 0 : 1),
+            // Division by 10 in the next line is done to avoid that the only bar rendered inside the histogram widget gets all the width of it
+            width: isUniqueDataRow ? x - x / 10 : width - (isLast ? 0 : 1),
             height
           },
           style: { fill },
