@@ -209,6 +209,7 @@ function HistogramWidgetUI({
           shape: {
             x: isUniqueDataRow ? x / 10 : x + (isFirst ? 0 : 1),
             y,
+            // Division by 10 in the next line is done to avoid that the only bar rendered inside the histogram widget gets all the width of it
             width: isUniqueDataRow ? x - x / 10 : width - (isLast ? 0 : 1),
             height
           },
