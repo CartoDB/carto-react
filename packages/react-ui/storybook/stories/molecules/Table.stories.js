@@ -36,18 +36,7 @@ const rows = [
 const options = {
   title: 'Molecules/Table',
   component: Table,
-  argTypes: {
-    maxWidth: {
-      control: {
-        type: 'number'
-      }
-    },
-    maxHeight: {
-      control: {
-        type: 'number'
-      }
-    }
-  },
+  argTypes: {},
   parameters: {
     design: {
       type: 'figma',
@@ -63,7 +52,7 @@ export default options;
 
 const PlaygroundTemplate = (args) => {
   return (
-    <TableContainer sx={{ maxWidth: '100%' }}>
+    <TableContainer>
       <Table aria-label='simple table'>
         <TableHead>
           <TableRow>
@@ -133,9 +122,9 @@ const PlaygroundTemplate = (args) => {
 export const Playground = PlaygroundTemplate.bind({});
 Playground.args = {};
 
-const ScrollTemplate = ({ maxHeight, maxWidth }) => (
+const ScrollTemplate = (args) => (
   <Box sx={{ width: '100%', overflow: 'hidden' }}>
-    <TableContainer sx={{ maxWidth, maxHeight }}>
+    <TableContainer sx={{ maxWidth: 440, maxHeight: 300 }}>
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
         <TableHead>
           <TableRow>
@@ -202,14 +191,5 @@ const ScrollTemplate = ({ maxHeight, maxWidth }) => (
   </Box>
 );
 
-export const Scroll = ScrollTemplate.bind(
-  {},
-  {
-    maxHeight: 300,
-    maxWidth: 440
-  }
-);
-ScrollTemplate.args = {
-  maxHeight: 300,
-  maxWidth: 440
-};
+export const Scroll = ScrollTemplate.bind({});
+ScrollTemplate.args = {};
