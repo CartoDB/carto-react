@@ -114,9 +114,6 @@ const PlaygroundTemplate = (args) => {
   );
 };
 
-export const Playground = PlaygroundTemplate.bind({});
-Playground.args = {};
-
 const ScrollTemplate = (args) => (
   <Box sx={{ width: '100%', overflow: 'hidden' }}>
     <TableContainer sx={{ maxWidth: 440, maxHeight: 300 }}>
@@ -185,6 +182,9 @@ const ScrollTemplate = (args) => (
     </TableContainer>
   </Box>
 );
+
+export const Playground = PlaygroundTemplate.bind({});
+Playground.args = {};
 
 export const Scroll = ScrollTemplate.bind({});
 ScrollTemplate.args = {};
