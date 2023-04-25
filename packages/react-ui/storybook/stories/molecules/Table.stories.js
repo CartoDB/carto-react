@@ -14,6 +14,7 @@ import {
   TableBody,
   Table
 } from '@mui/material';
+import SelectField from '../../../src/components/atoms/SelectField';
 
 const rows = [
   { name: 'Test Data 1', type: 'string', mode: '', description: 'Test Data 1' },
@@ -84,21 +85,15 @@ const PlaygroundTemplate = (args) => {
                 <Chip size='small' color='default' label={row.type} />
               </TableCell>
               <TableCell>
-                <FormControl sx={{ minWidth: 120 }} size='small'>
-                  <Select
-                    placeholder='Placeholder'
-                    labelId='demo-select-small-label'
-                    id='demo-select-small'
-                    label='Age'
-                  >
-                    <MenuItem value='' selected>
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
-                </FormControl>
+                <SelectField
+                  variant='filled'
+                  placeholder='Placeholder'
+                  items={[
+                    { value: '1', label: 'One' },
+                    { value: '2', label: 'Two' },
+                    { value: '3', label: 'Three' }
+                  ]}
+                />
               </TableCell>
               <TableCell sx={{ maxWidth: 160 }}>
                 {index === 3 ? (
