@@ -6,6 +6,7 @@
 - Improve upgrade guide documentation [#651](https://github.com/CartoDB/carto-react/pull/651)
 - Fix storybook publication with Node 18 [#654](https://github.com/CartoDB/carto-react/pull/654)
 - Fix Histogram widget when showing just one row of data [#653](https://github.com/CartoDB/carto-react/pull/653)
+- WrapperWidgetUI component migrated from makeStyles to styled-components + cleanup [#633](https://github.com/CartoDB/carto-react/pull/633)
 
 ## 2.0
 
@@ -17,7 +18,6 @@
 - Storybook documentation and fixes [#629](https://github.com/CartoDB/carto-react/pull/629)
 - Note component cleaned styles from makeStyles [#630](https://github.com/CartoDB/carto-react/pull/630)
 - OpacityControl component migrated from makeStyles to styled-components + cleanup [#631](https://github.com/CartoDB/carto-react/pull/631)
-- WrapperWidgetUI component migrated from makeStyles to styled-components + cleanup [#633](https://github.com/CartoDB/carto-react/pull/633)
 
 ### 2.0.0 (2023-04-05)
 
