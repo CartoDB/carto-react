@@ -86,7 +86,7 @@ const PlaygroundTemplate = (args) => {
               </TableCell>
               <TableCell>
                 <SelectField
-                  variant='filled'
+                  size='small'
                   placeholder='Placeholder'
                   items={[
                     { value: '1', label: 'One' },
@@ -117,7 +117,7 @@ const PlaygroundTemplate = (args) => {
 const ScrollTemplate = (args) => (
   <Box sx={{ width: '100%', overflow: 'hidden' }}>
     <TableContainer sx={{ maxWidth: 440, maxHeight: 300 }}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+      <Table aria-label='simple table'>
         <TableHead>
           <TableRow>
             <TableCell>#</TableCell>
@@ -149,7 +149,7 @@ const ScrollTemplate = (args) => (
               </TableCell>
               <TableCell>
                 <SelectField
-                  variant='filled'
+                  size='small'
                   placeholder='Placeholder'
                   items={[
                     { value: '1', label: 'One' },
