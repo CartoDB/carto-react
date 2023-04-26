@@ -14,17 +14,8 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
-  tableHeadCellLabel: {
-    ...theme.typography.caption,
-    color: theme.palette.text.secondary
-  },
   tableRow: {
-    maxHeight: theme.spacing(6.5),
-    transition: 'background-color 0.25s ease',
-    '&.MuiTableRow-hover:hover': {
-      cursor: 'pointer',
-      backgroundColor: theme.palette.background.default
-    }
+    maxHeight: theme.spacing(6.5)
   },
   tableCell: {
     overflow: 'hidden',
