@@ -25,15 +25,12 @@ export function getGeometryToIntersect(viewport, geometry) {
 
 export function tileFeatures({
   tiles,
-  viewport,
-  geometry,
+  geometryToIntersect,
   uniqueIdProperty,
   tileFormat,
   geoColumName,
   spatialIndex
 }) {
-  const geometryToIntersect = getGeometryToIntersect(viewport, geometry);
-
   if (!geometryToIntersect) {
     return [];
   }

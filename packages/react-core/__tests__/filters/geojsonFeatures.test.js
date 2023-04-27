@@ -1,7 +1,10 @@
+import bboxPolygon from '@turf/bbox-polygon';
 import { geojsonFeatures } from '../../src/filters/geojsonFeatures';
 
 describe('viewport features with geojson data', () => {
+  /** @type { import('../../src').Viewport } */
   const viewport = [-10, -10, 10, 10]; // west - south - east - north
+  const viewportFeature = bboxPolygon(viewport);
 
   describe('return no data', () => {
     test('should return an empty array if no geojson features present', () => {
@@ -12,7 +15,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson,
-        viewport
+        geometryToIntersect: viewportFeature
       });
 
       expect(properties).toEqual([]);
@@ -39,7 +42,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: linestrings,
-        viewport,
+        geometryToIntersect: viewportFeature,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -70,7 +73,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: multilinestrings,
-        viewport,
+        geometryToIntersect: viewportFeature,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -101,7 +104,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: polygons,
-        viewport,
+        geometryToIntersect: viewportFeature,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -135,7 +138,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: multipolygons,
-        viewport,
+        geometryToIntersect: viewportFeature,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -167,7 +170,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: points,
-        viewport,
+        geometryToIntersect: viewportFeature,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -193,7 +196,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: linestrings,
-        viewport,
+        geometryToIntersect: viewportFeature,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -219,7 +222,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: multilinestrings,
-        viewport,
+        geometryToIntersect: viewportFeature,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -245,7 +248,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: polygons,
-        viewport,
+        geometryToIntersect: viewportFeature,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -274,7 +277,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: multipolygons,
-        viewport,
+        geometryToIntersect: viewportFeature,
         uniqueIdProperty: 'cartodb_id'
       });
 

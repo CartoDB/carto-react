@@ -1,3 +1,4 @@
+import bboxPolygon from '@turf/bbox-polygon';
 import {
   getFormula,
   getHistogram,
@@ -11,10 +12,10 @@ describe('Worker Methods', () => {
   beforeEach(() => {
     loadGeoJSONFeatures({ geojson: sampleGeoJson });
     getGeojsonFeatures({
-      viewport: [
+      geometryToIntersect: bboxPolygon([
         -119.8541879250893, 19.66738891368218, -61.31673251486329, 54.38309840045979
-      ],
-      geometry: null
+      ]),
+      uniqueIdProperty: undefined
     });
   });
   describe('getFormula', () => {

@@ -17,8 +17,7 @@ let currentGeoJSON;
 let currentTiles;
 
 export function getTileFeatures({
-  viewport,
-  geometry,
+  geometryToIntersect,
   uniqueIdProperty,
   tileFormat,
   geoColumName,
@@ -26,8 +25,7 @@ export function getTileFeatures({
 }) {
   currentFeatures = tileFeatures({
     tiles: currentTiles,
-    viewport,
-    geometry,
+    geometryToIntersect,
     uniqueIdProperty,
     tileFormat,
     geoColumName,
@@ -46,12 +44,11 @@ export function loadGeoJSONFeatures({ geojson }) {
   return true;
 }
 
-export function getGeojsonFeatures({ viewport, geometry, uniqueIdProperty }) {
+export function getGeojsonFeatures({ geometryToIntersect, uniqueIdProperty }) {
   if (currentGeoJSON) {
     currentFeatures = geojsonFeatures({
       geojson: currentGeoJSON,
-      viewport,
-      geometry,
+      geometryToIntersect,
       uniqueIdProperty
     });
   }
