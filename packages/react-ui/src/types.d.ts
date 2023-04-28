@@ -333,3 +333,17 @@ export type LabelWithIndicatorProps = {
 export interface AvatarProps extends MuiAvatarProps {
   size?: 'large' | 'medium' | 'small' | 'xsmall';
 }
+
+// AccordionGroup
+export type AccordionGroupProps = {
+  variant?: 'standard' | 'outlined';
+  items: [
+    {
+      summary: string;
+      content: string | React.ReactElement;
+      disabled?: boolean;
+      defaultExpanded?: boolean;
+      onChange?: Function;
+    }
+  ];
+};
