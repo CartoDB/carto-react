@@ -159,11 +159,11 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
     <Root>
       <ClearWrapper>
         {hasBeenModified && (
-          <ClearButton onClick={resetSlider} underline='hover'>
-            <Typography variant='caption' color='primary'>
+          <Typography variant='caption' color='primary'>
+            <ClearButton onClick={resetSlider} underline='hover'>
               Clear
-            </Typography>
-          </ClearButton>
+            </ClearButton>
+          </Typography>
         )}
       </ClearWrapper>
       <Box>
