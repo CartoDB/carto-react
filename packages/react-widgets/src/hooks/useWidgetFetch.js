@@ -1,25 +1,48 @@
-import { InvalidColumnError } from '@carto/react-core';
-import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
+import { InvalidColumnError, getGeometryToIntersect } from '@carto/react-core';
+import {
+  selectAreFeaturesReadyForSource,
+  selectSpatialFilter,
+  selectViewport
+} from '@carto/react-redux';
 import { dequal } from 'dequal';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { DEFAULT_INVALID_COLUMN_ERR } from '../widgets/utils/constants';
 import useCustomCompareEffect from './useCustomCompareEffect';
 import useWidgetSource from './useWidgetSource';
+import { isRemoteCalculationSupported } from '../models/utils';
 
 export default function useWidgetFetch(
   modelFn,
-  { id, dataSource, params, global, onError, enabled = true }
+  {
+    id,
+    dataSource,
+    params,
+    global,
+    onError,
+    enabled = true,
+    attemptRemoteCalculation = false
+  }
 ) {
   // State
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [warning, setWarning] = useState('');
 
-  const isSourceReady = useSelector(
-    (state) => global || selectAreFeaturesReadyForSource(state, dataSource)
-  );
   const source = useWidgetSource({ dataSource, id });
+  const remoteCalculation =
+    attemptRemoteCalculation && isRemoteCalculationSupported({ source });
+
+  const isSourceReady = useSelector(
+    (state) =>
+      global || remoteCalculation || selectAreFeaturesReadyForSource(state, dataSource)
+  );
+
+  const viewport = useSelector(selectViewport);
+  const spatialFilter = useSelector((state) => selectSpatialFilter(state, dataSource));
+  const geometryToIntersect = !global
+    ? getGeometryToIntersect(viewport, spatialFilter)
+    : null;
 
   useCustomCompareEffect(
     () => {
@@ -30,7 +53,9 @@ export default function useWidgetFetch(
         modelFn({
           source,
           ...params,
-          global
+          global,
+          remoteCalculation,
+          spatialFilter: geometryToIntersect
         })
           .then((data) => {
             if (data !== null && data !== undefined) {
@@ -49,7 +74,16 @@ export default function useWidgetFetch(
           });
       }
     },
-    [params, source, onError, isSourceReady, global, enabled],
+    [
+      params,
+      source,
+      onError,
+      isSourceReady,
+      global,
+      remoteCalculation,
+      geometryToIntersect,
+      enabled
+    ],
     dequal
   );
 

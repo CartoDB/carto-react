@@ -33,6 +33,8 @@ describe('getGeometryToIntersect', () => {
   test('returns null in case no viewport or geometry is present', () => {
     expect(getGeometryToIntersect(null, null)).toStrictEqual(null);
     expect(getGeometryToIntersect([], null)).toStrictEqual(null);
+    expect(getGeometryToIntersect(null, {})).toStrictEqual(null);
+    expect(getGeometryToIntersect([], {})).toStrictEqual(null);
   });
 
   test('returns the viewport as geometry', () => {

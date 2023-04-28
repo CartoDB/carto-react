@@ -1,6 +1,6 @@
 import { Credentials } from '@carto/react-api/';
 import { SourceProps } from '@carto/react-api/types';
-import { FiltersLogicalOperators, _FilterTypes } from '@carto/react-core';
+import { FiltersLogicalOperators, Viewport, _FilterTypes } from '@carto/react-core';
 import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/';
 import { InitialCartoState, CartoState, ViewState } from '../types';
 import { AnyAction, Reducer } from 'redux';
@@ -158,6 +158,8 @@ export function setFeatureSelectionEnabled(enabled: boolean): {
   type: CartoActions.SET_FEATURE_SELECTION_ENABLED;
   payload: boolean;
 };
+
+export function selectViewport(state: any): Viewport | null;
 
 export function selectSpatialFilter(state: any, sourceId?: string): Feature<Polygon | MultiPolygon> | null;
 

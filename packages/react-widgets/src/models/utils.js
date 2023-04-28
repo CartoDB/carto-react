@@ -1,8 +1,18 @@
 import { AggregationTypes, _filtersToSQL } from '@carto/react-core';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 
+export function isRemoteCalculationSupported(props) {
+  const { source } = props;
+
+  return (
+    source &&
+    source.type !== MAP_TYPES.TILESET &&
+    source.credentials.apiVersion !== API_VERSIONS.V2
+  );
+}
+
 export function wrapModelCall(props, fromLocal, fromRemote) {
-  const { source, global } = props;
+  const { source, global, remoteCalculation } = props;
 
   if (global) {
     if (source.type === MAP_TYPES.TILESET)
@@ -19,9 +29,13 @@ export function wrapModelCall(props, fromLocal, fromRemote) {
     }
 
     return fromRemote(props);
+  } else if (remoteCalculation && isRemoteCalculationSupported(props)) {
+    // The widget supports remote calculation, preferred whenever possible
+    return fromRemote(props);
+  } else {
+    // Local calculation, it requires data to be available
+    return fromLocal(props);
   }
-
-  return fromLocal(props);
 }
 
 export function formatTableNameWithFilters(props) {

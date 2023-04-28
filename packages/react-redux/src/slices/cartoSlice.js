@@ -337,6 +337,13 @@ export const checkIfSourceIsDroppingFeature = (state, id) =>
   state.carto.dataSources[id]?.isDroppingFeatures;
 
 /**
+ * Redux selector to select the active viewport
+ */
+export const selectViewport = (state) => {
+  return state.carto.viewport ? state.carto.viewport : null;
+};
+
+/**
  * Redux selector to select the spatial filter of a given sourceId or the root one
  */
 export const selectSpatialFilter = (state, sourceId) => {

@@ -16,7 +16,7 @@ import tileFeaturesSpatialIndex from './tileFeaturesSpatialIndex';
  * @returns { Geometry? } the geometry to use for filtering
  */
 export function getGeometryToIntersect(viewport, spatialFilter) {
-  return spatialFilter
+  return spatialFilter && spatialFilter.geometry
     ? spatialFilter.geometry
     : Array.isArray(viewport) && viewport.length === 4
     ? bboxPolygon(viewport).geometry
