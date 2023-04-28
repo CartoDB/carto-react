@@ -2,14 +2,17 @@
 
 ## Not released
 
+## 2.0
+
+### 2.0.2 (2023-04-26)
+
+- react-api: getStats request uses POST for big queries/queryParameters [#656](https://github.com/CartoDB/carto-react/pull/656)
 - New DS core component: Table [#657](https://github.com/CartoDB/carto-react/pull/657)
 - Improve upgrade guide documentation [#651](https://github.com/CartoDB/carto-react/pull/651)
 - Fix storybook publication with Node 18 [#654](https://github.com/CartoDB/carto-react/pull/654)
 - Fix Histogram widget when showing just one row of data [#653](https://github.com/CartoDB/carto-react/pull/653)
 - WrapperWidgetUI component migrated from makeStyles to styled-components + cleanup [#633](https://github.com/CartoDB/carto-react/pull/633)
 - LegendCategories component migrated from makeStyles to styled-components + cleanup [#634](https://github.com/CartoDB/carto-react/pull/634)
-
-## 2.0
 
 ### 2.0.1 (2023-04-14)
 
