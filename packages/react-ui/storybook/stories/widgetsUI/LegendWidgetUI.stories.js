@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import LegendWidgetUI from '../../../src/widgets/legend/LegendWidgetUI';
-import CartoIcon from '../../assets/carto-symbol.svg';
 
 const options = {
   title: 'Organisms/Widgets/LegendWidgetUI',
