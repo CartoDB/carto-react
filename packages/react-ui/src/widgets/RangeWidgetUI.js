@@ -4,21 +4,21 @@ import { Box, Link, Slider, TextField, styled } from '@mui/material';
 import { debounce } from '@carto/react-core';
 import Typography from '../components/atoms/Typography';
 
-const StyledRoot = styled(Box)(() => ({
+const Root = styled(Box)(() => ({
   position: 'relative'
 }));
 
-const StyledClearWrapper = styled(Box)(({ theme: { spacing } }) => ({
+const ClearWrapper = styled(Box)(({ theme: { spacing } }) => ({
   display: 'flex',
   flexDirection: 'row-reverse',
   height: spacing(1.5)
 }));
 
-const StyledClearButton = styled(Link)(() => ({
+const ClearButton = styled(Link)(() => ({
   cursor: 'pointer'
 }));
 
-const StyledTextField = styled(TextField)(({ theme: { spacing } }) => ({
+const LimitTextField = styled(TextField)(({ theme: { spacing } }) => ({
   maxWidth: spacing(9),
   margin: 0,
   '& fieldset': {
@@ -45,7 +45,7 @@ const StyledSlider = styled(Slider)(({ theme: { palette } }) => ({
   }
 }));
 
-const StyledSliderLimit = styled(Slider)(({ theme: { palette, spacing } }) => ({
+const SliderLimit = styled(Slider)(({ theme: { palette, spacing } }) => ({
   pointerEvents: 'none',
   position: 'absolute',
   zIndex: 1,
@@ -156,16 +156,16 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
   };
 
   return (
-    <StyledRoot>
-      <StyledClearWrapper>
+    <Root>
+      <ClearWrapper>
         {hasBeenModified && (
-          <StyledClearButton onClick={resetSlider} underline='hover'>
+          <ClearButton onClick={resetSlider} underline='hover'>
             <Typography variant='caption' color='primary'>
               Clear
             </Typography>
-          </StyledClearButton>
+          </ClearButton>
         )}
-      </StyledClearWrapper>
+      </ClearWrapper>
       <Box>
         <StyledSlider
           getAriaLabel={(index) => (index === 0 ? 'min value' : 'max value')}
@@ -175,7 +175,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
           onChange={(_, values) => changeSliderValues(values)}
         />
         {limits && limits.length === 2 && (
-          <StyledSliderLimit
+          <SliderLimit
             getAriaLabel={(index) => (index === 0 ? 'min limit' : 'max limit')}
             value={limits}
             min={min}
@@ -185,7 +185,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
         )}
       </Box>
       <Box display={'flex'} justifyContent={'space-between'} mb={1}>
-        <StyledTextField
+        <LimitTextField
           value={inputsValues[0]}
           size='small'
           onChange={(event) => handleInputChange(event, 0)}
@@ -197,7 +197,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
             'aria-label': 'min value'
           }}
         />
-        <StyledTextField
+        <LimitTextField
           value={inputsValues[1]}
           size='small'
           onChange={(event) => handleInputChange(event, 1)}
@@ -210,7 +210,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
           }}
         />
       </Box>
-    </StyledRoot>
+    </Root>
   );
 }
 
