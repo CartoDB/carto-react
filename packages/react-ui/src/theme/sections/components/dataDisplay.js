@@ -223,6 +223,7 @@ export const dataDisplayOverrides = {
         border: `2px solid ${commonPalette.divider}`,
         borderRadius: getSpacing(0.5),
         fontWeight: themeTypography.fontWeightMedium,
+        paddingRight: getSpacing(3),
         '& .MuiSelect-icon': {
           top: '50%',
           transform: 'translateY(-50%)',
