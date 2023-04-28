@@ -23,10 +23,9 @@ describe('LegendCategories', () => {
     render(<LegendCategories legend={DEFAULT_LEGEND} />);
     const elements = document.querySelectorAll('[class*="marker"]');
     getPalette(COLOR, 2).forEach((color, idx) => {
-        const styles = window.getComputedStyle(elements[idx]);
-        expect(styles['background-color']).toBe(hexToRgb(color))
-      }
-    );
+      const styles = window.getComputedStyle(elements[idx]);
+      expect(styles['background-color']).toBe(hexToRgb(color));
+    });
   });
   test('renders colors (hex) correctly', () => {
     render(<LegendCategories legend={{ ...DEFAULT_LEGEND, colors: ['#000', '#fff'] }} />);
@@ -41,8 +40,7 @@ describe('LegendCategories', () => {
     getPalette(COLOR, 2).forEach((color, idx) => {
       const styles = window.getComputedStyle(elements[idx]);
       expect(styles['border-color']).toBe(color);
-    }
-    );
+    });
   });
   test('renders masked icons correctly', () => {
     render(
