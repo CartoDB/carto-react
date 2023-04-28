@@ -76,7 +76,8 @@ function BarWidget({
       operation
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: true
   });
 
   const sortedData = useMemo(() => {
