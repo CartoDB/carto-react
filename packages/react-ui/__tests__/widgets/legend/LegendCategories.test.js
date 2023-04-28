@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, screen } from '../../widgets/utils/testUtils';
+import { render, screen } from '../utils/testUtils';
 import LegendCategories from '../../../src/widgets/legend/LegendCategories';
 import { getPalette } from '../../../src/utils/palette';
+import { hexToRgb } from '@mui/material';
 
 const COLOR = 'TealGrn';
 
@@ -21,8 +22,10 @@ describe('LegendCategories', () => {
   test('renders colors (CARTOColors) correctly', () => {
     render(<LegendCategories legend={DEFAULT_LEGEND} />);
     const elements = document.querySelectorAll('[class*="marker"]');
-    getPalette(COLOR, 2).forEach((color, idx) =>
-      expect(elements[idx]).toHaveStyle(`background-color: ${color}`)
+    getPalette(COLOR, 2).forEach((color, idx) => {
+        const styles = window.getComputedStyle(elements[idx]);
+        expect(styles['background-color']).toBe(hexToRgb(color))
+      }
     );
   });
   test('renders colors (hex) correctly', () => {
@@ -35,8 +38,10 @@ describe('LegendCategories', () => {
   test('renders stroked colors correctly', () => {
     render(<LegendCategories legend={{ ...DEFAULT_LEGEND, isStrokeColor: true }} />);
     const elements = document.querySelectorAll('[class*="marker"]');
-    getPalette(COLOR, 2).forEach((color, idx) =>
-      expect(elements[idx]).toHaveStyle(`border-color: ${color}`)
+    getPalette(COLOR, 2).forEach((color, idx) => {
+      const styles = window.getComputedStyle(elements[idx]);
+      expect(styles['border-color']).toBe(color);
+    }
     );
   });
   test('renders masked icons correctly', () => {
@@ -47,8 +52,9 @@ describe('LegendCategories', () => {
     );
     const elements = document.querySelectorAll('[class*="marker"]');
     getPalette(COLOR, 2).forEach((color, idx) => {
-      expect(elements[idx]).toHaveStyle(`mask-image: url(https://xyz.com/x.png)`);
-      expect(elements[idx]).toHaveStyle(`background-color: ${color}`);
+      const styles = window.getComputedStyle(elements[idx]);
+      expect(styles['mask-image']).toBe('url(https://xyz.com/x.png)');
+      expect(styles['background-color']).toBe(hexToRgb(color));
     });
   });
   test('renders non-masked icons correctly', () => {
@@ -63,8 +69,9 @@ describe('LegendCategories', () => {
     );
     const elements = document.querySelectorAll('[class*="marker"]');
     getPalette(COLOR, 2).forEach((color, idx) => {
-      expect(elements[idx]).toHaveStyle(`background-image: url(https://xyz.com/x.png)`);
-      expect(elements[idx]).toHaveStyle(`background-color: rgba(0,0,0,0)`);
+      const styles = window.getComputedStyle(elements[idx]);
+      expect(styles['background-image']).toBe('url(https://xyz.com/x.png)');
+      expect(styles['background-color']).toBe('rgba(0, 0, 0, 0)');
     });
   });
 });

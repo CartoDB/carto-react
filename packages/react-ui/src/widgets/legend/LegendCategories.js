@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Grid, Tooltip } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Box, Grid, Tooltip, styled } from '@mui/material';
 import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
 import Typography from '../../components/atoms/Typography';
@@ -65,61 +64,70 @@ LegendCategories.propTypes = {
 
 export default LegendCategories;
 
-// Aux
-const useStyles = makeStyles((theme) => ({
-  legendCategories: {
-    alignItems: 'center'
-  },
-  marker: {
-    whiteSpace: 'nowrap',
-    display: 'block',
-    width: '12px',
-    height: '12px',
-    borderRadius: '50%',
-    position: 'relative',
-    border: '2px solid transparent'
-  },
-  circle: {
-    border: '2px solid transparent',
-    '&::after': {
-      position: 'absolute',
-      display: ({ isMax }) => (isMax ? 'block' : 'none'),
-      content: '""',
-      width: '16px',
-      height: '16px',
-      border: `2px solid ${theme.palette.grey[900]}`,
-      transform: 'translate(-30%, -30%)',
-      borderRadius: '50%',
-      boxSizing: 'content-box'
-    }
-  },
-  icon: {
-    maskRepeat: 'no-repeat',
-    maskSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover'
-  },
-  flexParent: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  longTruncate: {
-    flex: 1,
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis'
-  },
-  titlePhantom: {
-    opacity: 0,
+const getCircleStyles = ({ isMax, color, isStrokeColor, theme }) => ({
+  border: '2px solid transparent',
+  '&::after': {
     position: 'absolute',
-    whiteSpace: 'nowrap',
-    pointerEvents: 'none'
-  }
+    display: isMax ? 'block' : 'none',
+    content: '""',
+    width: theme.spacing(2),
+    height: theme.spacing(2),
+    border: `2px solid ${theme.palette.grey[900]}`,
+    transform: 'translate(-30%, -30%)',
+    borderRadius: '50%',
+    boxSizing: 'content-box'
+  },
+  ...(isStrokeColor ? { borderColor: color } : { backgroundColor: color })
+});
+
+const getIconStyles = ({ icon, color, maskedIcon }) => ({
+  maskRepeat: 'no-repeat',
+  maskSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  ...(maskedIcon
+    ? {
+        backgroundColor: color,
+        maskImage: `url(${icon})`,
+        WebkitMaskImage: `url(${icon})`
+      }
+    : {
+        backgroundColor: `rgba(0,0,0,0)`,
+        backgroundImage: `url(${icon})`
+      })
+});
+
+const Marker = styled(Box, {
+  shouldForwardProp: (prop) =>
+    !['isMax', 'icon', 'maskedIcon', 'color', 'isStrokeColor'].includes(prop)
+})(({ isMax, icon, maskedIcon, color, isStrokeColor, theme }) => ({
+  whiteSpace: 'nowrap',
+  display: 'block',
+  width: theme.spacing(1.5),
+  height: theme.spacing(1.5),
+  borderRadius: '50%',
+  position: 'relative',
+  border: '2px solid transparent',
+  ...(icon
+    ? getIconStyles({ icon, color, maskedIcon })
+    : getCircleStyles({ isMax, color, isStrokeColor, theme }))
+}));
+
+const LongTruncate = styled(Typography)(() => ({
+  flex: 1,
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis'
+}));
+
+const TitlePhantom = styled(LongTruncate)(() => ({
+  opacity: 0,
+  position: 'absolute',
+  whiteSpace: 'nowrap',
+  pointerEvents: 'none'
 }));
 
 function Row({ label, isMax, isStrokeColor, color = '#000', icon, maskedIcon }) {
-  const classes = useStyles({ isMax });
-
   const [showTooltip, setShowTooltip] = useState(false);
   const labelRef = useRef(null);
   const labelPhantomRef = useRef(null);
@@ -135,48 +143,25 @@ function Row({ label, isMax, isStrokeColor, color = '#000', icon, maskedIcon }) 
 
   return (
     <Tooltip title={showTooltip ? label : ''} placement='left'>
-      <Grid
-        container
-        item
-        className={[classes.legendCategories, classes.flexParent].join(' ')}
-      >
+      <Grid container item alignContent={'center'}>
         <Tooltip title={isMax ? 'Most representative' : ''}>
-          <Box
+          <Marker
+            className='marker'
             mr={1.5}
             component='span'
-            className={[classes.marker, icon ? classes.icon : classes.circle].join(' ')}
-            style={
-              icon
-                ? maskedIcon
-                  ? {
-                      backgroundColor: color,
-                      maskImage: `url(${icon})`,
-                      WebkitMaskImage: `url(${icon})`
-                    }
-                  : {
-                      backgroundColor: `rgba(0,0,0,0)`,
-                      backgroundImage: `url(${icon})`
-                    }
-                : isStrokeColor
-                ? { borderColor: color }
-                : { backgroundColor: color }
-            }
+            isMax={isMax}
+            icon={icon}
+            maskedIcon={maskedIcon}
+            isStrokeColor={isStrokeColor}
+            color={color}
           />
         </Tooltip>
-        <Typography
-          ref={labelRef}
-          variant='overlineDelicate'
-          className={classes.longTruncate}
-        >
+        <LongTruncate ref={labelRef} variant='overlineDelicate'>
           {label}
-        </Typography>
-        <Typography
-          ref={labelPhantomRef}
-          variant='overlineDelicate'
-          className={[classes.longTruncate, classes.titlePhantom].join(' ')}
-        >
+        </LongTruncate>
+        <TitlePhantom ref={labelPhantomRef} variant='overlineDelicate'>
           {label}
-        </Typography>
+        </TitlePhantom>
       </Grid>
     </Tooltip>
   );
