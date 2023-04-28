@@ -67,7 +67,8 @@ function RangeWidget({
       column
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: true
   });
 
   const handleSelectedRangeChange = useCallback(
