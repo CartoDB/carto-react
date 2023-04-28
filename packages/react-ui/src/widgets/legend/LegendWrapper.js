@@ -82,7 +82,7 @@ export default function LegendWrapper({
       />
       {hasChildren && !!children && (
         <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
-          <Box sx={{ pt: 0, px: 2, pb: 3 }}>
+          <Box sx={{ pt: '2px', pl: 3, pr: 2, pb: 2 }}>
             <Grid container direction='column' spacing={1}>
               {attr && (
                 <Typography xs mb={1} variant='caption'>
