@@ -2,12 +2,34 @@
 
 ## Not released
 
-- Storybook documentation and fixes [#629](https://github.com/CartoDB/carto-react/pull/629)
-- Note component cleaned styles from makeStyles [#630](https://github.com/CartoDB/carto-react/pull/630)
-- OpacityControl component migrated from makeStyles to styled-components + cleanup [#631](https://github.com/CartoDB/carto-react/pull/631)
+- LegendCategories component migrated from makeStyles to styled-components + cleanup [#634](https://github.com/CartoDB/carto-react/pull/634)
+- LegendProportion component migrated from makeStyles to styled-components + cleanup [#635](https://github.com/CartoDB/carto-react/pull/635)
+- LegendRamp component migrated from makeStyles to styled-components + cleanup [#636](https://github.com/CartoDB/carto-react/pull/636)
+- LegendWidgetUI component migrated from makeStyles to styled-components + cleanup [#637](https://github.com/CartoDB/carto-react/pull/637)
+- GeocoderWidget component migrated from makeStyles to styled-components [#638](https://github.com/CartoDB/carto-react/pull/638)
+- RangeWidgetUI component migrated from makeStyles to styled-components [#639](https://github.com/CartoDB/carto-react/pull/639)
+- FeatureSelectionWidgetUI component migrated from makeStyles to styled-components [#640](https://github.com/CartoDB/carto-react/pull/640)
 - LegendWrapper component migrated from makeStyles to styled-components + cleanup [#641](https://github.com/CartoDB/carto-react/pull/641)
 
 ## 2.0
+
+### 2.0.2 (2023-04-26)
+
+- react-api: getStats request uses POST for big queries/queryParameters [#656](https://github.com/CartoDB/carto-react/pull/656)
+- New DS core component: Table [#657](https://github.com/CartoDB/carto-react/pull/657)
+- Improve upgrade guide documentation [#651](https://github.com/CartoDB/carto-react/pull/651)
+- Fix storybook publication with Node 18 [#654](https://github.com/CartoDB/carto-react/pull/654)
+- Fix Histogram widget when showing just one row of data [#653](https://github.com/CartoDB/carto-react/pull/653)
+- WrapperWidgetUI component migrated from makeStyles to styled-components + cleanup [#633](https://github.com/CartoDB/carto-react/pull/633)
+
+### 2.0.1 (2023-04-14)
+
+- New DS core component: Accordion [#632](https://github.com/CartoDB/carto-react/pull/632)
+- DS update: Disable ligatures in the monospaced font family [#649](https://github.com/CartoDB/carto-react/pull/649)
+- DS update: change action.disabledBackground color [#647](https://github.com/CartoDB/carto-react/pull/647)
+- Storybook documentation and fixes [#629](https://github.com/CartoDB/carto-react/pull/629)
+- Note component cleaned styles from makeStyles [#630](https://github.com/CartoDB/carto-react/pull/630)
+- OpacityControl component migrated from makeStyles to styled-components + cleanup [#631](https://github.com/CartoDB/carto-react/pull/631)
 
 ### 2.0.0 (2023-04-05)
 

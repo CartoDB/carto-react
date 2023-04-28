@@ -5,8 +5,13 @@ import { themeTypography } from './typography';
 export const CssBaseline = {
   // Custom scrollbars
   '*::-webkit-scrollbar': {
-    position: 'fixed',
+    position: 'fixed'
+  },
+  '*::-webkit-scrollbar:vertical': {
     width: '5px'
+  },
+  '*::-webkit-scrollbar:horizontal': {
+    height: '5px'
   },
   '*::-webkit-scrollbar-track': {
     boxShadow: 'none',
