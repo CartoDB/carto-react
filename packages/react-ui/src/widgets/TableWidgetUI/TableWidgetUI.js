@@ -8,23 +8,31 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
-  TablePagination
+  TablePagination,
+  styled
 } from '@mui/material';
 
-import makeStyles from '@mui/styles/makeStyles';
+const TableHeadCellLabel = styled(TableSortLabel)(({ theme }) => ({
+  ...theme.typography.caption,
+  color: theme.palette.text.secondary
+}));
 
-const useStyles = makeStyles((theme) => ({
-  tableRow: {
-    maxHeight: theme.spacing(6.5)
-  },
-  tableCell: {
+const TableRowStyled = styled(TableRow)(({ theme }) => ({
+  maxHeight: theme.spacing(6.5),
+  transition: 'background-color 0.25s ease',
+  '&.MuiTableRow-hover:hover': {
+    cursor: 'pointer',
+    backgroundColor: theme.palette.background.default
+  }
+}));
+
+const TableCellStyled = styled(TableCell)(() => ({
+  overflow: 'hidden',
+  '& p': {
+    maxWidth: '100%',
+    whiteSpace: 'nowrap',
     overflow: 'hidden',
-    '& p': {
-      maxWidth: '100%',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis'
-    }
+    textOverflow: 'ellipsis'
   }
 }));
 
@@ -101,22 +109,19 @@ function TableWidgetUI({
 }
 
 function TableHeaderComponent({ columns, sorting, sortBy, sortDirection, onSort }) {
-  const classes = useStyles();
-
   return (
     <TableHead>
       <TableRow>
         {columns.map(({ field, headerName, align }) => (
           <TableCell key={field} align={align || 'left'}>
             {sorting ? (
-              <TableSortLabel
+              <TableHeadCellLabel
                 active={sortBy === field}
                 direction={sortBy === field ? sortDirection : 'asc'}
                 onClick={() => onSort(field)}
-                className={classes.tableHeadCellLabel}
               >
                 {headerName}
-              </TableSortLabel>
+              </TableHeadCellLabel>
             ) : (
               headerName
             )}
@@ -128,34 +133,30 @@ function TableHeaderComponent({ columns, sorting, sortBy, sortDirection, onSort 
 }
 
 function TableBodyComponent({ columns, rows, onRowClick }) {
-  const classes = useStyles();
-
   return (
     <TableBody>
       {rows.map((row, i) => {
         const rowKey = row.cartodb_id || row.id || i;
 
         return (
-          <TableRow
+          <TableRowStyled
             key={rowKey}
-            className={classes.tableRow}
             hover={!!onRowClick}
             onClick={() => onRowClick && onRowClick(row)}
           >
             {columns.map(
               ({ field, headerName, align, component }) =>
                 headerName && (
-                  <TableCell
+                  <TableCellStyled
                     key={`${rowKey}_${field}`}
                     scope='row'
                     align={align || 'left'}
-                    className={classes.tableCell}
                   >
                     {component ? component(row[field]) : row[field]}
-                  </TableCell>
+                  </TableCellStyled>
                 )
             )}
-          </TableRow>
+          </TableRowStyled>
         );
       })}
     </TableBody>
