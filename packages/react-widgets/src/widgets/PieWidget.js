@@ -75,7 +75,8 @@ function PieWidget({
       operation
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: true
   });
 
   const handleSelectedCategoriesChange = useCallback(
