@@ -76,3 +76,9 @@ To deploy there a new update:
     yarn storybook:publish
   ```
 - That will publish the website to the Google Cloud Firebase project.
+
+- Note: if you have issues, even when logged in, you might need to force logout / login again, with
+  ```
+    firebase logout
+    firebase login
+  ```

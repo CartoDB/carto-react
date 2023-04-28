@@ -46,7 +46,6 @@ export default function OpacityControl({ opacity, onChangeOpacity }) {
               min={0}
               max={100}
               step={1}
-              xs
               mt={1}
               onChange={(_, value) => onChangeOpacity(value / 100)}
               aria-labelledby='input-slider'
