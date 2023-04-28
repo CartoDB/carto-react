@@ -50,7 +50,8 @@ function FormulaWidget({
       joinOperation
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: true
   });
 
   return (
