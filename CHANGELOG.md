@@ -11,6 +11,7 @@
 - FeatureSelectionWidgetUI component migrated from makeStyles to styled-components [#640](https://github.com/CartoDB/carto-react/pull/640)
 - LegendWrapper component migrated from makeStyles to styled-components + cleanup [#641](https://github.com/CartoDB/carto-react/pull/641)
 - TableWidgetUI component migrated from makeStyles to styled-components + cleanup [#642](https://github.com/CartoDB/carto-react/pull/642)
+- TimeSeriesWidgetUI component cleanup makeStyles and unnecessary className [#643](https://github.com/CartoDB/carto-react/pull/643)
 
 ## 2.0
 
