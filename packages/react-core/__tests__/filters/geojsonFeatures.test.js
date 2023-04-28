@@ -4,10 +4,11 @@ import { geojsonFeatures } from '../../src/filters/geojsonFeatures';
 describe('viewport features with geojson data', () => {
   /** @type { import('../../src').Viewport } */
   const viewport = [-10, -10, 10, 10]; // west - south - east - north
-  const viewportFeature = bboxPolygon(viewport);
+  const viewportGeometry = bboxPolygon(viewport).geometry;
 
   describe('return no data', () => {
     test('should return an empty array if no geojson features present', () => {
+      /** @type { import('geojson').FeatureCollection } */
       const geojson = {
         type: 'FeatureCollection',
         features: []
@@ -15,7 +16,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson,
-        geometryToIntersect: viewportFeature
+        geometryToIntersect: viewportGeometry
       });
 
       expect(properties).toEqual([]);
@@ -24,6 +25,7 @@ describe('viewport features with geojson data', () => {
 
   describe('correctly returns data', () => {
     test('should handle linestrings correctly fwsf', () => {
+      /** @type { import('geojson').FeatureCollection } */
       const linestrings = {
         type: 'FeatureCollection',
         features: [...Array(3)].map((_, i) => ({
@@ -42,7 +44,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: linestrings,
-        geometryToIntersect: viewportFeature,
+        geometryToIntersect: viewportGeometry,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -55,6 +57,7 @@ describe('viewport features with geojson data', () => {
     });
 
     test('should handle multilinestrings correctly', () => {
+      /** @type { import('geojson').FeatureCollection } */
       const multilinestrings = {
         type: 'FeatureCollection',
         features: [...Array(3)].map((_, i) => ({
@@ -73,7 +76,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: multilinestrings,
-        geometryToIntersect: viewportFeature,
+        geometryToIntersect: viewportGeometry,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -86,6 +89,7 @@ describe('viewport features with geojson data', () => {
     });
 
     test('should handle polygons correctly', () => {
+      /** @type { import('geojson').FeatureCollection } */
       const polygons = {
         type: 'FeatureCollection',
         features: [...Array(3)].map((_, i) => ({
@@ -104,7 +108,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: polygons,
-        geometryToIntersect: viewportFeature,
+        geometryToIntersect: viewportGeometry,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -117,6 +121,7 @@ describe('viewport features with geojson data', () => {
     });
 
     test('should handle multilipolygons correctly', () => {
+      /** @type { import('geojson').FeatureCollection } */
       const multipolygons = {
         type: 'FeatureCollection',
         features: [...Array(3)].map((_, i) => ({
@@ -138,7 +143,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: multipolygons,
-        geometryToIntersect: viewportFeature,
+        geometryToIntersect: viewportGeometry,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -153,6 +158,7 @@ describe('viewport features with geojson data', () => {
 
   describe('with repeated features', () => {
     test('should handle points correctly', () => {
+      /** @type { import('geojson').FeatureCollection } */
       const points = {
         type: 'FeatureCollection',
         features: [...Array(4)].map(() => ({
@@ -170,7 +176,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: points,
-        geometryToIntersect: viewportFeature,
+        geometryToIntersect: viewportGeometry,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -178,6 +184,7 @@ describe('viewport features with geojson data', () => {
     });
 
     test('should handle linestrings correctly', () => {
+      /** @type { import('geojson').FeatureCollection } */
       const linestrings = {
         type: 'FeatureCollection',
         features: [...Array(4)].map(() => ({
@@ -196,7 +203,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: linestrings,
-        geometryToIntersect: viewportFeature,
+        geometryToIntersect: viewportGeometry,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -204,6 +211,7 @@ describe('viewport features with geojson data', () => {
     });
 
     test('should handle multilinestrings correctly', () => {
+      /** @type { import('geojson').FeatureCollection } */
       const multilinestrings = {
         type: 'FeatureCollection',
         features: [...Array(4)].map(() => ({
@@ -222,7 +230,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: multilinestrings,
-        geometryToIntersect: viewportFeature,
+        geometryToIntersect: viewportGeometry,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -230,6 +238,7 @@ describe('viewport features with geojson data', () => {
     });
 
     test('should handle polygons correctly', () => {
+      /** @type { import('geojson').FeatureCollection } */
       const polygons = {
         type: 'FeatureCollection',
         features: [...Array(4)].map(() => ({
@@ -248,7 +257,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: polygons,
-        geometryToIntersect: viewportFeature,
+        geometryToIntersect: viewportGeometry,
         uniqueIdProperty: 'cartodb_id'
       });
 
@@ -256,6 +265,7 @@ describe('viewport features with geojson data', () => {
     });
 
     test('should handle multipolygons correctly', () => {
+      /** @type { import('geojson').FeatureCollection } */
       const multipolygons = {
         type: 'FeatureCollection',
         features: [...Array(4)].map(() => ({
@@ -277,7 +287,7 @@ describe('viewport features with geojson data', () => {
 
       const properties = geojsonFeatures({
         geojson: multipolygons,
-        geometryToIntersect: viewportFeature,
+        geometryToIntersect: viewportGeometry,
         uniqueIdProperty: 'cartodb_id'
       });
 

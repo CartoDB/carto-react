@@ -25,7 +25,8 @@ export default function useGeojsonFeatures({
     ({ geometryToIntersect, uniqueIdProperty }) => {
       executeTask(sourceId, Methods.GEOJSON_FEATURES, {
         geometryToIntersect,
-        uniqueIdProperty
+        uniqueIdProperty,
+        tileFormat: undefined
       })
         .then(() => {
           setSourceFeaturesReady(true);
