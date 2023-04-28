@@ -6,6 +6,7 @@
 - LegendProportion component migrated from makeStyles to styled-components + cleanup [#635](https://github.com/CartoDB/carto-react/pull/635)
 - LegendRamp component migrated from makeStyles to styled-components + cleanup [#636](https://github.com/CartoDB/carto-react/pull/636)
 - LegendWidgetUI component migrated from makeStyles to styled-components + cleanup [#637](https://github.com/CartoDB/carto-react/pull/637)
+- GeocoderWidget component migrated from makeStyles to styled-components [#638](https://github.com/CartoDB/carto-react/pull/638)
 
 ## 2.0
 
@@ -26,7 +27,6 @@
 - Storybook documentation and fixes [#629](https://github.com/CartoDB/carto-react/pull/629)
 - Note component cleaned styles from makeStyles [#630](https://github.com/CartoDB/carto-react/pull/630)
 - OpacityControl component migrated from makeStyles to styled-components + cleanup [#631](https://github.com/CartoDB/carto-react/pull/631)
-- GeocoderWidget component migrated from makeStyles to styled-components [#638](https://github.com/CartoDB/carto-react/pull/638)
 
 ### 2.0.0 (2023-04-05)
 
