@@ -112,7 +112,8 @@ function HistogramWidget({
     },
     global,
     onError,
-    enabled: !!ticks.length
+    enabled: !!ticks.length,
+    attemptRemoteCalculation: true
   });
 
   const thresholdsFromFilters = useWidgetFilterValues({
