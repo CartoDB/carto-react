@@ -6,6 +6,7 @@
 - LegendProportion component migrated from makeStyles to styled-components + cleanup [#635](https://github.com/CartoDB/carto-react/pull/635)
 - LegendRamp component migrated from makeStyles to styled-components + cleanup [#636](https://github.com/CartoDB/carto-react/pull/636)
 - LegendWidgetUI component migrated from makeStyles to styled-components + cleanup [#637](https://github.com/CartoDB/carto-react/pull/637)
+- GeocoderWidget component migrated from makeStyles to styled-components [#638](https://github.com/CartoDB/carto-react/pull/638)
 
 ## 2.0
 
