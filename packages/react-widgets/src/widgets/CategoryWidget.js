@@ -73,7 +73,8 @@ function CategoryWidget(props) {
       operation
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: true
   });
 
   const handleSelectedCategoriesChange = useCallback(
