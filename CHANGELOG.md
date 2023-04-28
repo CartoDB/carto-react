@@ -8,6 +8,7 @@
 - LegendWidgetUI component migrated from makeStyles to styled-components + cleanup [#637](https://github.com/CartoDB/carto-react/pull/637)
 - GeocoderWidget component migrated from makeStyles to styled-components [#638](https://github.com/CartoDB/carto-react/pull/638)
 - RangeWidgetUI component migrated from makeStyles to styled-components [#639](https://github.com/CartoDB/carto-react/pull/639)
+- FeatureSelectionWidgetUI component migrated from makeStyles to styled-components [#640](https://github.com/CartoDB/carto-react/pull/640)
 
 ## 2.0
 
