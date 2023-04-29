@@ -41,19 +41,34 @@ const fromRemote = jest.fn();
 
 describe('utils', () => {
   describe('wrapModelCall', () => {
-    test('should work correctly', () => {
-      const props = { source: V2_SOURCE, global: false };
-      wrapModelCall(props, fromLocal, fromRemote);
-      expect(fromLocal).toHaveBeenCalledWith(props);
+    const cases = [
+      // source, global, remoteCalculation, expectedFn
+      [V2_SOURCE, false, false, fromLocal],
+      [V3_SOURCE, false, false, fromLocal],
+      [V3_SOURCE, true, false, fromRemote],
+      [V2_SOURCE, false, true, fromLocal],
+      [V3_SOURCE, false, true, fromRemote],
+      [V3_SOURCE, true, true, fromRemote]
+    ];
 
-      const props2 = { source: V3_SOURCE, global: true };
-      wrapModelCall(props2, fromLocal, fromRemote);
-      expect(fromRemote).toHaveBeenCalledWith(props2);
-    });
+    test.each(cases)(
+      'should work correctly',
+      (source, global, remoteCalculation, expectedFn) => {
+        const props = { source, global, remoteCalculation };
+        wrapModelCall(props, fromLocal, fromRemote);
+        expect(expectedFn).toHaveBeenCalledWith(props);
+      }
+    );
 
     test('should throw error if global is true but fromRemote is missing', () => {
       expect(() =>
-        wrapModelCall({ source: V2_SOURCE, global: true }, fromLocal)
+        wrapModelCall({ source: V3_SOURCE, global: true }, fromLocal)
+      ).toThrowError();
+    });
+
+    test('should throw error if remoteCalculation is true but fromRemote is missing', () => {
+      expect(() =>
+        wrapModelCall({ source: V3_SOURCE, remoteCalculation: true }, fromLocal)
       ).toThrowError();
     });
 

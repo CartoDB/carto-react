@@ -30,6 +30,10 @@ export function wrapModelCall(props, fromLocal, fromRemote) {
 
     return fromRemote(props);
   } else if (remoteCalculation && isRemoteCalculationSupported(props)) {
+    if (!fromRemote) {
+      throw new Error(`Remote calculation isn't supported for this widget`);
+    }
+
     // The widget supports remote calculation, preferred whenever possible
     return fromRemote(props);
   } else {
