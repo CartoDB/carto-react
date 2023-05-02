@@ -137,13 +137,6 @@ TimeSeriesWidgetUI.defaultProps = {
 
 export default TimeSeriesWidgetUI;
 
-const useStyles = makeStyles((theme) => ({
-  currentStepSize: {
-    fontSize: 12,
-    marginLeft: theme.spacing(1)
-  }
-}));
-
 // Content is splitted from the default
 // component to be able to use context
 function TimeSeriesWidgetUIContent({
@@ -157,7 +150,6 @@ function TimeSeriesWidgetUIContent({
   showControls,
   animation
 }) {
-  const classes = useStyles();
   const [anchorSpeedEl, setAnchorSpeedEl] = useState(null);
   const [speed, setSpeed] = useState(1);
   const {
@@ -316,7 +308,9 @@ function TimeSeriesWidgetUIContent({
               {currentDate}
             </Typography>
             <Typography
-              className={classes.currentStepSize}
+              xs
+              fontSize={12}
+              ml={1}
               color='textSecondary'
               variant='caption'
             >

@@ -1,4 +1,5 @@
 import { AggregationTypes } from '@carto/react-core';
+import type { SxProps, Theme } from '@mui/material';
 
 type CommonWidgetProps = {
   id: string,
@@ -42,6 +43,7 @@ export type FormulaWidget = CommonWidgetProps & MonoColumnWidgetProps;
 
 export type GeocoderWidget = {
   className: string,
+  sx?: SxProps<Theme>,
   onError?: Function
 }
 
