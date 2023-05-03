@@ -11,7 +11,9 @@ import {
 import {
   GroupDateTypes,
   AggregationTypes,
-  _FilterTypes as FilterTypes
+  _FilterTypes as FilterTypes,
+  _hasFeatureFlag,
+  _FeatureFlags
 } from '@carto/react-core';
 import { capitalize, Menu, MenuItem, SvgIcon } from '@mui/material';
 import { PropTypes } from 'prop-types';
@@ -136,7 +138,7 @@ function TimeSeriesWidget({
     },
     global,
     onError,
-    attemptRemoteCalculation: true
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.DYNAMIC_TILING_V2)
   });
 
   const handleTimeWindowUpdate = useCallback(

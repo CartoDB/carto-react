@@ -1,5 +1,9 @@
 let featureFlags = [];
 
+export const Flags = Object.freeze({
+  DYNAMIC_TILING_V2: '2023-dynamic-tiling-v-2'
+});
+
 export function setFlags(flags) {
   const isValidFlag = (f) => typeof f === 'string' && f;
 

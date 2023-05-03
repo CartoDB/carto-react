@@ -3,7 +3,12 @@ import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI } from '@carto/react-ui';
-import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
+import {
+  _FilterTypes as FilterTypes,
+  AggregationTypes,
+  _hasFeatureFlag,
+  _FeatureFlags
+} from '@carto/react-core';
 import { getHistogram } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import useWidgetFetch from '../hooks/useWidgetFetch';
@@ -113,7 +118,7 @@ function HistogramWidget({
     global,
     onError,
     enabled: !!ticks.length,
-    attemptRemoteCalculation: true
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.DYNAMIC_TILING_V2)
   });
 
   const thresholdsFromFilters = useWidgetFilterValues({

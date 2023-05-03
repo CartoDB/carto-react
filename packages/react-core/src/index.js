@@ -49,6 +49,7 @@ export {
 } from './utils/featureSelectionConstants';
 
 export {
+  Flags as _FeatureFlags,
   hasFlag as _hasFeatureFlag,
   setFlags as _setFeatureFlags,
   clearFlags as _clearFeatureFlags

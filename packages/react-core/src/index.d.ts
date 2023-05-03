@@ -1,3 +1,5 @@
+import { _FeatureFlags } from '.';
+
 export {
   getRequest,
   postRequest,
@@ -38,6 +40,7 @@ export { SpatialIndex } from './operations/constants/SpatialIndexTypes'
 export { FEATURE_SELECTION_MODES, EDIT_MODES, MASK_ID } from './utils/featureSelectionConstants';
 
 export {
+  Flags as _FeatureFlags,
   hasFlag as _hasFeatureFlag,
   setFlags as _setFeatureFlags,
   clearFlags as _clearFeatureFlags
