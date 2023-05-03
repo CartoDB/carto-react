@@ -1,23 +1,36 @@
 import bboxPolygon from '@turf/bbox-polygon';
-import intersect from '@turf/intersect';
 import tileFeaturesGeometries from './tileFeaturesGeometries';
 import tileFeaturesSpatialIndex from './tileFeaturesSpatialIndex';
 
-export function getGeometryToIntersect(viewport, geometry) {
-  return geometry ? intersect(bboxPolygon(viewport), geometry) : bboxPolygon(viewport);
+/**
+ * Select the geometry to use for widget calculation and data filtering.
+ * If a spatial filter (mask) is set, use the mask otherwise use the current viewport.
+ * Since it's possible that no mask and no viewport is set, return null in this case.
+ *
+ * @typedef { import('geojson').Polygon | import('geojson').MultiPolygon } Geometry
+ * @typedef { import('geojson').Feature<Geometry> } Feature
+ * @typedef { import('geojson').BBox } BBox
+ *
+ * @param { BBox? } viewport viewport [minX, minY, maxX, maxY], if any
+ * @param { Feature? } spatialFilter the active spatial filter (mask), if any
+ * @returns { Geometry? } the geometry to use for filtering
+ */
+export function getGeometryToIntersect(viewport, spatialFilter) {
+  return spatialFilter
+    ? spatialFilter.geometry
+    : Array.isArray(viewport) && viewport.length === 4
+    ? bboxPolygon(viewport).geometry
+    : null;
 }
 
 export function tileFeatures({
   tiles,
-  viewport,
-  geometry,
+  geometryToIntersect,
   uniqueIdProperty,
   tileFormat,
   geoColumName,
   spatialIndex
 }) {
-  const geometryToIntersect = getGeometryToIntersect(viewport, geometry);
-
   if (!geometryToIntersect) {
     return [];
   }

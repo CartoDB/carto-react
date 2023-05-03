@@ -1,5 +1,5 @@
 import { TileFeatures, TileFeaturesResponse } from '../types';
-import { Geometry, Feature, Polygon, MultiPolygon } from 'geojson';
+import { Feature, Polygon, MultiPolygon } from 'geojson';
 
-export function getGeometryToIntersect(viewport: number[], geometry: Geometry | null): Feature<Polygon | MultiPolygon> | null;
+export function getGeometryToIntersect(viewport: number[] | null, spatialFilter: Feature<Polygon | MultiPolygon> | null): Polygon | MultiPolygon | null;
 export function tileFeatures(arg: TileFeatures): TileFeaturesResponse;

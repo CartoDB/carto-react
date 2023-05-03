@@ -7,6 +7,7 @@ import { getDataFilterExtensionProps } from './dataFilterExtensionUtil';
 import { getMaskExtensionProps } from './maskExtensionUtil';
 import FeaturesDroppedLoader from './FeaturesDroppedLoader';
 import { CLIENT_ID } from '../api/common';
+import { getGeometryToIntersect } from '@carto/react-core';
 
 const LOADERS = [FeaturesDroppedLoader];
 
@@ -19,19 +20,18 @@ export default function useCartoLayerProps({
 }) {
   const viewport = useSelector((state) => state.carto.viewport);
   const spatialFilter = useSelector((state) => selectSpatialFilter(state, source?.id));
+  const geometryToIntersect = getGeometryToIntersect(viewport, spatialFilter);
 
   const [onDataLoadForGeojson] = useGeojsonFeatures({
     source,
-    viewport,
-    spatialFilter,
+    geometryToIntersect,
     uniqueIdProperty,
     debounceTimeout: viewporFeaturesDebounceTimeout
   });
 
   const [onDataLoadForTile, onViewportLoad, fetch] = useTileFeatures({
     source,
-    viewport,
-    spatialFilter,
+    geometryToIntersect,
     uniqueIdProperty,
     debounceTimeout: viewporFeaturesDebounceTimeout
   });
