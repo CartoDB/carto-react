@@ -135,7 +135,8 @@ function TimeSeriesWidget({
       operation
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: true
   });
 
   const handleTimeWindowUpdate = useCallback(
