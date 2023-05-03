@@ -10,8 +10,7 @@ import { useDispatch } from 'react-redux';
 
 export default function useTileFeatures({
   source,
-  viewport,
-  spatialFilter,
+  geometryToIntersect,
   uniqueIdProperty,
   debounceTimeout = 250
 }) {
@@ -32,7 +31,7 @@ export default function useTileFeatures({
   const sourceId = source?.id;
 
   const computeFeatures = useCallback(
-    ({ viewport, spatialFilter, uniqueIdProperty }) => {
+    ({ geometryToIntersect, uniqueIdProperty }) => {
       if (!tileFormat) {
         return null;
       }
@@ -40,8 +39,7 @@ export default function useTileFeatures({
       setSourceFeaturesReady(false);
 
       executeTask(sourceId, Methods.TILE_FEATURES, {
-        viewport,
-        geometry: spatialFilter,
+        geometryToIntersect,
         uniqueIdProperty,
         tileFormat,
         geoColumName,
@@ -101,14 +99,12 @@ export default function useTileFeatures({
       clearDebounce();
       setSourceFeaturesReady(false);
       debounceIdRef.current = debouncedComputeFeatures({
-        viewport,
-        spatialFilter,
+        geometryToIntersect,
         uniqueIdProperty
       });
     }
   }, [
-    viewport,
-    spatialFilter,
+    geometryToIntersect,
     uniqueIdProperty,
     debouncedComputeFeatures,
     sourceId,
