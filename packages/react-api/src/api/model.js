@@ -41,8 +41,6 @@ export function executeModel(props) {
 
   let url = `${source.credentials.apiBaseUrl}/v3/sql/${source.connection}/model/${model}`;
 
-  console.log(url);
-
   const { filters, filtersLogicalOperator, data, type } = source;
   const queryParameters = source.queryParameters
     ? JSON.stringify(source.queryParameters)
@@ -59,8 +57,6 @@ export function executeModel(props) {
   if (spatialFilter) {
     queryParams.spatialFilter = JSON.stringify(spatialFilter);
   }
-
-  console.log(JSON.stringify(queryParams));
 
   const isGet = url.length + JSON.stringify(queryParams).length <= URL_LENGTH;
   if (isGet) {
