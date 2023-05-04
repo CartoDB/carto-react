@@ -2,10 +2,11 @@ import { GroupDateTypes } from '@carto/react-core';
 import {
   AppBarProps as MuiAppBarProps,
   TextFieldProps,
-  TypographyProps as MuiTypographyProps,
-  AvatarProps as MuiAvatarProps
+  AvatarProps as MuiAvatarProps,
+  SxProps,
+  Theme
 } from '@mui/material';
-import { CSSProperties } from 'react';
+export { TypographyProps } from './components/atoms/Typography';
 
 export type WrapperWidgetUI = {
   title: string;
@@ -268,13 +269,6 @@ export type ComparativePieWidgetUIProps = {
   selectedCategories?: string[];
   onCategorySelected?: (categories: string[]) => any;
 };
-
-// Typography
-export interface TypographyProps extends MuiTypographyProps {
-  weight?: 'regular' | 'medium' | 'strong';
-  italic?: boolean;
-  style?: CSSProperties;
-}
 
 // Tooltip data
 // Export types and component if we need it outsite C4R
