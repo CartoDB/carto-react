@@ -118,7 +118,7 @@ function HistogramWidget({
     global,
     onError,
     enabled: !!ticks.length,
-    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.DYNAMIC_TILING_V2)
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   const thresholdsFromFilters = useWidgetFilterValues({

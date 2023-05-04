@@ -1,5 +1,5 @@
 export enum Flags {
-    DYNAMIC_TILING_V2 = '2023-dynamic-tiling-v-2'
+  REMOTE_WIDGETS = '2023-remote-widgets'
 }
 export function setFlags(flags: Record<string, any> | string[]): void
 export function clearFlags(): void

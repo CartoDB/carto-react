@@ -1,7 +1,7 @@
 let featureFlags = [];
 
 export const Flags = Object.freeze({
-  DYNAMIC_TILING_V2: '2023-dynamic-tiling-v-2'
+  REMOTE_WIDGETS: '2023-remote-widgets'
 });
 
 export function setFlags(flags) {

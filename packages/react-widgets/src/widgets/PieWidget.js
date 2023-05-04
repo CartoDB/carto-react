@@ -81,7 +81,7 @@ function PieWidget({
     },
     global,
     onError,
-    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.DYNAMIC_TILING_V2)
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   const handleSelectedCategoriesChange = useCallback(
