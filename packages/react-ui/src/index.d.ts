@@ -25,7 +25,10 @@ import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import ComparativePieWidgetUI from './widgets/comparative/ComparativePieWidgetUI';
 import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
-import Typography from './components/atoms/Typography';
+import Typography, {
+  CartoFontWeight,
+  TypographyProps
+} from './components/atoms/Typography';
 import Button from './components/atoms/Button';
 import PasswordField from './components/atoms/PasswordField';
 import SelectField from './components/atoms/SelectField';
@@ -71,6 +74,8 @@ export {
   LegendProportion,
   LegendRamp,
   Typography,
+  TypographyProps,
+  CartoFontWeight,
   Button,
   PasswordField,
   SelectField,
