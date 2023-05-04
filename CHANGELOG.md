@@ -2,6 +2,18 @@
 
 ## Not released
 
+- Changed how widget are calculated when a mask is set: use just the mask, no more intersection between mask and viewport [#661](https://github.com/CartoDB/carto-react/pull/661)
+- LegendCategories component migrated from makeStyles to styled-components + cleanup [#634](https://github.com/CartoDB/carto-react/pull/634)
+- LegendProportion component migrated from makeStyles to styled-components + cleanup [#635](https://github.com/CartoDB/carto-react/pull/635)
+- LegendRamp component migrated from makeStyles to styled-components + cleanup [#636](https://github.com/CartoDB/carto-react/pull/636)
+- LegendWidgetUI component migrated from makeStyles to styled-components + cleanup [#637](https://github.com/CartoDB/carto-react/pull/637)
+- GeocoderWidget component migrated from makeStyles to styled-components [#638](https://github.com/CartoDB/carto-react/pull/638)
+- RangeWidgetUI component migrated from makeStyles to styled-components [#639](https://github.com/CartoDB/carto-react/pull/639)
+- FeatureSelectionWidgetUI component migrated from makeStyles to styled-components [#640](https://github.com/CartoDB/carto-react/pull/640)
+- LegendWrapper component migrated from makeStyles to styled-components + cleanup [#641](https://github.com/CartoDB/carto-react/pull/641)
+- TableWidgetUI component migrated from makeStyles to styled-components + cleanup [#642](https://github.com/CartoDB/carto-react/pull/642)
+- TimeSeriesWidgetUI component cleanup makeStyles and unnecessary className [#643](https://github.com/CartoDB/carto-react/pull/643)
+
 ## 2.0
 
 ### 2.0.2 (2023-04-26)

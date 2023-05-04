@@ -30,7 +30,7 @@ Actions props must have this format:
 ];
 */
 
-const Root = styled(Box,{
+const Root = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'margin'
 })(({ theme, margin }) => {
   return {
@@ -38,7 +38,7 @@ const Root = styled(Box,{
     position: 'relative',
     maxWidth: '100%',
     padding: margin !== undefined ? margin : theme.spacing(2, 2.5)
-  }
+  };
 });
 
 const LoadingBar = styled(LinearProgress)(({ theme }) => ({
@@ -78,7 +78,7 @@ const HeaderButton = styled(Button, {
   }
 }));
 
-const ParentIcon = ({theme}) => ({
+const ParentIcon = ({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -87,10 +87,9 @@ const ParentIcon = ({theme}) => ({
   color: theme.palette.text.secondary
 });
 
-const HideButton = styled(ExpandLess)(({ theme }) => ParentIcon({theme}));
+const HideButton = styled(ExpandLess)(({ theme }) => ParentIcon({ theme }));
 
-const ShowButton = styled(ExpandMore)(({ theme }) => ParentIcon({theme}));
-
+const ShowButton = styled(ExpandMore)(({ theme }) => ParentIcon({ theme }));
 
 const Text = styled(Typography, {
   shouldForwardProp: (prop) => prop !== 'expanded'
@@ -255,9 +254,7 @@ function WrapperWidgetUI(props) {
       </Header>
       {/* TODO: check collapse error */}
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
-        <Box pt={1}>
-          {props.children}
-        </Box>
+        <Box pt={1}>{props.children}</Box>
       </Collapse>
     </Root>
   );

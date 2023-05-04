@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '../../widgets/utils/testUtils';
 import LegendRamp from '../../../src/widgets/legend/LegendRamp';
 import { getPalette } from '../../../src/utils/palette';
+import { hexToRgb } from '@mui/material';
 
 const COLOR = 'TealGrn';
 
@@ -31,22 +32,28 @@ describe('LegendRamp', () => {
       expect(screen.queryByText('< 0')).toBeInTheDocument();
       expect(screen.queryByText('≥ 200')).toBeInTheDocument();
 
-      const elements = document.querySelectorAll('[class*="step"]');
+      const elements = document.querySelectorAll('[data-testid=step-discontinuous]');
       expect(elements.length).toBe(3);
-      getPalette(COLOR, 3).forEach((color, idx) =>
-        expect(elements[idx]).toHaveStyle(`background-color: ${color}`)
-      );
+      getPalette(COLOR, 3).forEach((color, idx) => {
+        const backgroundColor = window.getComputedStyle(elements[idx])[
+          'background-color'
+        ];
+        expect(backgroundColor).toBe(hexToRgb(color));
+      });
     });
     test('renders formatted labels correctly', () => {
       render(<LegendRamp legend={DEFAULT_LEGEND_WITH_FORMATTED_LABELS} />);
       expect(screen.queryByText('< 0 km')).toBeInTheDocument();
       expect(screen.queryByText('≥ 200 km')).toBeInTheDocument();
 
-      const elements = document.querySelectorAll('[class*="step"]');
+      const elements = document.querySelectorAll('[data-testid=step-discontinuous]');
       expect(elements.length).toBe(3);
-      getPalette(COLOR, 3).forEach((color, idx) =>
-        expect(elements[idx]).toHaveStyle(`background-color: ${color}`)
-      );
+      getPalette(COLOR, 3).forEach((color, idx) => {
+        const backgroundColor = window.getComputedStyle(elements[idx])[
+          'background-color'
+        ];
+        expect(backgroundColor).toBe(hexToRgb(color));
+      });
     });
   });
   describe('continuous', () => {
@@ -55,10 +62,10 @@ describe('LegendRamp', () => {
       expect(screen.queryByText('0')).toBeInTheDocument();
       expect(screen.queryByText('200')).toBeInTheDocument();
 
-      const ramp = document.querySelector('[class*="step"]');
+      const ramp = document.querySelector('[data-testid=step-continuous]');
       const palette = getPalette(COLOR, 2);
       expect(ramp).toHaveStyle(
-        `background-image: linear-gradient(to right, ${palette.join()})`
+        `background: linear-gradient(to right, ${palette.join()})`
       );
     });
     test('renders formatted labels correctly', () => {
@@ -68,10 +75,10 @@ describe('LegendRamp', () => {
       expect(screen.queryByText('0 km')).toBeInTheDocument();
       expect(screen.queryByText('200 km')).toBeInTheDocument();
 
-      const ramp = document.querySelector('[class*="step"]');
+      const ramp = document.querySelector('[data-testid=step-continuous]');
       const palette = getPalette(COLOR, 2);
       expect(ramp).toHaveStyle(
-        `background-image: linear-gradient(to right, ${palette.join()})`
+        `background: linear-gradient(to right, ${palette.join()})`
       );
     });
   });
