@@ -36,3 +36,9 @@ export { groupValuesByDateColumn } from './operations/groupByDate';
 export { SpatialIndex } from './operations/constants/SpatialIndexTypes'
 
 export { FEATURE_SELECTION_MODES, EDIT_MODES, MASK_ID } from './utils/featureSelectionConstants';
+
+export {
+  hasFlag as _hasFeatureFlag,
+  setFlags as _setFeatureFlags,
+  clearFlags as _clearFeatureFlags
+} from './utils/featureFlags';

@@ -47,3 +47,9 @@ export {
   EDIT_MODES,
   MASK_ID
 } from './utils/featureSelectionConstants';
+
+export {
+  hasFlag as _hasFeatureFlag,
+  setFlags as _setFeatureFlags,
+  clearFlags as _clearFeatureFlags
+} from './utils/featureFlags';
