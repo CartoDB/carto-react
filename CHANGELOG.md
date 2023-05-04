@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2.1
+
+## 2.1.0-alpha.0 (2021-05-11)
+
+- Calculation of widget using maps API #658](https://github.com/CartoDB/carto-react/pull/658)
+
 ## Not released
 
 - Changed how widget are calculated when a mask is set: use just the mask, no more intersection between mask and viewport [#661](https://github.com/CartoDB/carto-react/pull/661)
