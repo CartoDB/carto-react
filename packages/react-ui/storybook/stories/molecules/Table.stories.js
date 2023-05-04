@@ -2,9 +2,6 @@ import React from 'react';
 import {
   Box,
   Chip,
-  FormControl,
-  MenuItem,
-  Select,
   Tooltip,
   Typography,
   TableRow,
@@ -12,26 +9,48 @@ import {
   TableHead,
   TableContainer,
   TableBody,
-  Table
+  Table,
+  IconButton
 } from '@mui/material';
 import SelectField from '../../../src/components/atoms/SelectField';
+import { MoreVertOutlined } from '@mui/icons-material';
 
 const rows = [
-  { name: 'Test Data 1', type: 'string', mode: '', description: 'Test Data 1' },
+  {
+    name: 'Test Data 1',
+    type: 'string',
+    mode: '',
+    description: 'Test Data 1',
+    icon: ''
+  },
   {
     name: 'very long text that should trigger the overflow style',
     type: 'string',
     mode: '',
-    description: 'Test Data 2'
+    description: 'Test Data 2',
+    icon: ''
   },
-  { name: 'Test Data 3', type: 'string', mode: '', description: 'Test Data 3' },
+  {
+    name: 'Test Data 3',
+    type: 'string',
+    mode: '',
+    description: 'Test Data 3',
+    icon: ''
+  },
   {
     name: 'Test Data 4',
     type: 'string',
     mode: '',
-    description: 'very long text that should trigger the overflow style'
+    description: 'very long text that should trigger the overflow style',
+    icon: ''
   },
-  { name: 'Test Data 5', type: 'string', mode: '', description: 'Test Data 5' }
+  {
+    name: 'Test Data 5',
+    type: 'string',
+    mode: '',
+    description: 'Test Data 5',
+    icon: ''
+  }
 ];
 
 const options = {
@@ -62,6 +81,7 @@ const PlaygroundTemplate = (args) => {
             <TableCell>Type</TableCell>
             <TableCell>Mode</TableCell>
             <TableCell>Description</TableCell>
+            <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -106,6 +126,11 @@ const PlaygroundTemplate = (args) => {
                   row.description
                 )}
               </TableCell>
+              <TableCell>
+                <IconButton size='small'>
+                  <MoreVertOutlined />
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -125,6 +150,7 @@ const ScrollTemplate = (args) => (
             <TableCell>Type</TableCell>
             <TableCell>Mode</TableCell>
             <TableCell>Description</TableCell>
+            <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -168,6 +194,11 @@ const ScrollTemplate = (args) => (
                 ) : (
                   row.description
                 )}
+              </TableCell>
+              <TableCell>
+                <IconButton size='small'>
+                  <MoreVertOutlined />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}
