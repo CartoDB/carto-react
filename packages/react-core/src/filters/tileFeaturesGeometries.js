@@ -166,10 +166,6 @@ function createIndicesForPoints(data) {
   data.pointIndices.value.set([lastFeatureId + 1], featureIds.length);
 }
 
-export function getGeometryToIntersect(viewport, geometry) {
-  return geometry ? intersect(bboxPolygon(viewport), geometry) : bboxPolygon(viewport);
-}
-
 export default function tileFeaturesGeometries({
   tiles,
   tileFormat,

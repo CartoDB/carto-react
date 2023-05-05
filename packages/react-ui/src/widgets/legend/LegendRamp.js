@@ -1,20 +1,11 @@
-import React from 'react';
-import { Grid, Tooltip } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { getPalette } from '../../utils/palette';
+import { Grid, Tooltip, styled } from '@mui/material';
 import PropTypes from 'prop-types';
-import { getMinMax } from './LegendProportion';
-import LegendProportion from './LegendProportion';
+import React from 'react';
 import Typography from '../../components/atoms/Typography';
+import { getPalette } from '../../utils/palette';
+import LegendProportion, { getMinMax } from './LegendProportion';
 
-const useStyles = makeStyles(() => ({
-  errorContainer: {
-    maxWidth: 240
-  }
-}));
 function LegendRamp({ isContinuous = false, legend }) {
-  const classes = useStyles();
-
   const { labels = [], colors = [] } = legend;
 
   const palette = getPalette(
@@ -43,7 +34,7 @@ function LegendRamp({ isContinuous = false, legend }) {
   return (
     <Grid container item direction='column' spacing={1} data-testid='ramp-legend'>
       {error ? (
-        <Grid item className={classes.errorContainer}>
+        <Grid item xs maxWidth={240}>
           <Typography variant='overline'>
             You need to specify valid numbers for the labels property
           </Typography>
@@ -52,7 +43,7 @@ function LegendRamp({ isContinuous = false, legend }) {
         <>
           <Grid container item>
             {isContinuous ? (
-              <StepsContinuous palette={palette} />
+              <StepsContinuous data-testid='step-continuous' item xs palette={palette} />
             ) : (
               <StepsDiscontinuous
                 labels={formattedLabels}
@@ -95,36 +86,28 @@ LegendRamp.propTypes = {
 
 export default LegendRamp;
 
-// Aux
-const useStylesStepsContinuous = makeStyles(() => ({
-  step: {
-    height: 8,
-    borderRadius: 4
-  }
+const StepsContinuous = styled(Grid, {
+  shouldForwardProp: (prop) => prop !== 'palette'
+})(({ palette, theme }) => ({
+  height: theme.spacing(1),
+  borderRadius: theme.spacing(0.5),
+  background: `linear-gradient(to right, ${palette.join()})`
 }));
 
-function StepsContinuous({ palette = [] }) {
-  const classes = useStylesStepsContinuous();
-
-  const backgroundImage = `linear-gradient(to right, ${palette.join()})`;
-
-  return <Grid item xs className={classes.step} style={{ backgroundImage }} />;
-}
-
-const useStylesStepsDiscontinuous = makeStyles(() => ({
-  step: {
-    height: 8,
-    '&:first-child': {
-      borderRadius: '4px 0 0 4px'
-    },
-    '&:last-child': {
-      borderRadius: '0 4px 4px 0'
-    }
+const StepGrid = styled(Grid, {
+  shouldForwardProp: (prop) => prop !== 'color'
+})(({ color, theme }) => ({
+  height: theme.spacing(1),
+  backgroundColor: color,
+  '&:first-of-type': {
+    borderRadius: theme.spacing(0.5, 0, 0, 0.5)
+  },
+  '&:last-of-type': {
+    borderRadius: theme.spacing(0, 0.5, 0.5, 0)
   }
 }));
 
 function StepsDiscontinuous({ labels = [], palette = [], max, min }) {
-  const classes = useStylesStepsDiscontinuous();
   const rightLabels = labels.length ? [min, ...labels] : [min, max];
 
   return (
@@ -139,12 +122,7 @@ function StepsDiscontinuous({ labels = [], palette = [], max, min }) {
 
         return (
           <Tooltip key={idx} title={title}>
-            <Grid
-              item
-              xs
-              className={classes.step}
-              style={{ backgroundColor: palette[idx] }}
-            />
+            <StepGrid data-testid='step-discontinuous' item xs color={palette[idx]} />
           </Tooltip>
         );
       })}

@@ -2,6 +2,44 @@ import { TILE_FORMATS } from '@deck.gl/carto';
 import { geojsonToBinary } from '@loaders.gl/gis';
 import { tileFeatures } from '../../src';
 import * as transformToTileCoords from '../../src/utils/transformToTileCoords';
+import { getGeometryToIntersect } from '../../src/filters/tileFeatures';
+import bboxPolygon from '@turf/bbox-polygon';
+
+/** @type { import('../../src').Viewport } */
+const viewport = [-10, -10, 10, 10]; // west - south - east - north
+const viewportGeometry = bboxPolygon(viewport).geometry;
+
+/** @type { import('geojson').Polygon } */
+const filterGeometry = {
+  type: 'Polygon',
+  coordinates: [
+    [
+      [-1, -1],
+      [1, -1],
+      [1, 1],
+      [-1, 1],
+      [-1, -1]
+    ]
+  ]
+};
+
+describe('getGeometryToIntersect', () => {
+  test('returns null in case no viewport or geometry is present', () => {
+    expect(getGeometryToIntersect(null, null)).toStrictEqual(null);
+    expect(getGeometryToIntersect([], null)).toStrictEqual(null);
+  });
+
+  test('returns the viewport as geometry', () => {
+    expect(getGeometryToIntersect(viewport, null)).toStrictEqual(viewportGeometry);
+  });
+
+  test('returns the filter as geometry', () => {
+    expect(getGeometryToIntersect(null, filterGeometry)).toStrictEqual(filterGeometry);
+    expect(getGeometryToIntersect(viewport, filterGeometry)).toStrictEqual(
+      filterGeometry
+    );
+  });
+});
 
 describe('viewport features with binary mode', () => {
   const viewport = [-10, -10, 10, 10]; // west - south - east - north

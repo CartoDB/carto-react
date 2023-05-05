@@ -1,10 +1,10 @@
-import { FeatureCollection, Geometry } from 'geojson';
+import { FeatureCollection, Polygon, MultiPolygon } from 'geojson';
 import { Viewport, TileFeaturesResponse } from '../types';
 
 type GeojsonFeaturesArgs = {
   geojson: FeatureCollection,
-  viewport: Viewport,
-  geometry?: Geometry
+  viewport?: Viewport,
+  geometry?: Polygon | MultiPolygon,
   uniqueIdProperty?: string
 }
 
