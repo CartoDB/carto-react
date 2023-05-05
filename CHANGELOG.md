@@ -17,6 +17,7 @@
 - Restore backward compatibility of spatial filters [#665](https://github.com/CartoDB/carto-react/pull/665) modified by [#661](https://github.com/CartoDB/carto-react/pull/661)
 - BarWidgetUI component migrated from makeStyles to styled-components + cleanup [#644](https://github.com/CartoDB/carto-react/pull/644)
 - CategoryWidgetUI component migrated from makeStyles to styled-components + cleanup [#645](https://github.com/CartoDB/carto-react/pull/645)
+- HistogramWidgetUI component migrated from makeStyles to styled-components + cleanup [#646](https://github.com/CartoDB/carto-react/pull/646)
 
 ## 2.0
 
