@@ -16,6 +16,7 @@
 - TimeSeriesWidgetUI component cleanup makeStyles and unnecessary className [#643](https://github.com/CartoDB/carto-react/pull/643)
 - Restore backward compatibility of spatial filters [#665](https://github.com/CartoDB/carto-react/pull/665) modified by [#661](https://github.com/CartoDB/carto-react/pull/661)
 - BarWidgetUI component migrated from makeStyles to styled-components + cleanup [#644](https://github.com/CartoDB/carto-react/pull/644)
+- CategoryWidgetUI component migrated from makeStyles to styled-components + cleanup [#645](https://github.com/CartoDB/carto-react/pull/645)
 
 ## 2.0
 

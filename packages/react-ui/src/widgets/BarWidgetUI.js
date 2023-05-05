@@ -8,7 +8,6 @@ import Typography from '../components/atoms/Typography';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
 
-
 const OptionsSelectedBar = styled(Grid)(({ theme }) => ({
   marginBottom: theme.spacingValue * 2,
   direction: 'row',
@@ -296,10 +295,7 @@ function BarWidgetUI(props) {
             {selectedBars?.length || 'All'} selected
           </Typography>
           {selectedBars && selectedBars.length > 0 && (
-            <SelectAllButton
-              onClick={() => clearBars()}
-              underline='hover'
-            >
+            <SelectAllButton onClick={() => clearBars()} underline='hover'>
               Clear
             </SelectAllButton>
           )}
