@@ -25,7 +25,7 @@ export { scatterPlot } from './operations/scatterPlot';
 
 export { FilterTypes as _FilterTypes } from './filters/FilterTypes';
 
-export { tileFeatures } from './filters/tileFeatures';
+export { tileFeatures, getGeometryToIntersect } from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';
 
 export { AggregationFunctions, GroupByFeature, HistogramFeature, Viewport, TileFeatures } from './types';
@@ -36,3 +36,9 @@ export { groupValuesByDateColumn } from './operations/groupByDate';
 export { SpatialIndex } from './operations/constants/SpatialIndexTypes'
 
 export { FEATURE_SELECTION_MODES, EDIT_MODES, MASK_ID } from './utils/featureSelectionConstants';
+
+export {
+  hasFlag as _hasFeatureFlag,
+  setFlags as _setFeatureFlags,
+  clearFlags as _clearFeatureFlags
+} from './utils/featureFlags';

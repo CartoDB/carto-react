@@ -1,7 +1,11 @@
 import { checkCredentials, makeCall } from './common';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { getTileJson } from './tilejson';
-import { InvalidColumnError, _assert as assert } from '@carto/react-core/';
+import {
+  InvalidColumnError,
+  REQUEST_GET_MAX_URL_LENGTH,
+  _assert as assert
+} from '@carto/react-core/';
 
 /**
  * Execute a stats service request.
@@ -34,35 +38,41 @@ export async function getStats(props) {
     }
 
     return columnStats;
-  } else {
-    const url = buildUrl(source, column);
-
-    return makeCall({
-      url,
-      credentials: source.credentials,
-      opts,
-      queryParameters: source.queryParameters
-    });
   }
-}
 
-// Aux
-function buildUrl(source, column) {
   const isQuery = source.type === MAP_TYPES.QUERY;
-
-  const url = new URL(
+  const baseUrl = new URL(
     `${source.credentials.apiBaseUrl}/v3/stats/${source.connection}/${
       isQuery ? column : `${source.data}/${column}`
     }`
   );
 
+  const queryParams = {};
   if (isQuery) {
-    url.searchParams.set('q', source.data);
-
+    queryParams.q = source.data;
     if (source.queryParameters) {
-      url.searchParams.set('queryParameters', JSON.stringify(source.queryParameters));
+      queryParams.queryParameters = JSON.stringify(source.queryParameters);
     }
   }
 
-  return url;
+  const queryParamsFormatted = new URLSearchParams(queryParams).toString();
+  const getUrl = `${baseUrl}${queryParamsFormatted ? '?' + queryParamsFormatted : ''}`;
+  if (getUrl.length <= REQUEST_GET_MAX_URL_LENGTH) {
+    return makeCall({
+      url: getUrl,
+      credentials: source.credentials,
+      opts
+    });
+  } else {
+    queryParams.queryParameters = source.queryParameters;
+    return makeCall({
+      url: baseUrl,
+      credentials: source.credentials,
+      opts: {
+        ...opts,
+        method: 'POST',
+        body: JSON.stringify(queryParams)
+      }
+    });
+  }
 }
