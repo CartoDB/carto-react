@@ -107,8 +107,7 @@ export default function useTileFeatures({
       });
     }
   }, [
-    viewport,
-    spatialFilter,
+    spatialFilter ? spatialFilter : viewport,
     uniqueIdProperty,
     debouncedComputeFeatures,
     sourceId,

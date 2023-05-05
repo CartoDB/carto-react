@@ -55,8 +55,7 @@ export default function useGeojsonFeatures({
       });
     }
   }, [
-    viewport,
-    spatialFilter,
+    spatialFilter ? spatialFilter : viewport,
     uniqueIdProperty,
     sourceId,
     isGeoJsonLoaded,
