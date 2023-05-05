@@ -7,14 +7,13 @@ import AnimatedNumber, {
 } from '../../../custom-components/AnimatedNumber';
 import { transposedCategoryItemPropTypes } from './transposeCategoryData';
 import { OTHERS_KEY } from './ComparativeCategoryWidgetUI';
-import { useCategoryStyles } from './useCategoryStyles';
+import { Bullet, BulletWrapper, CategoryItemWrapperInner, CategoryItemWrapperRoot, Progressbar, ProgressbarWrapper, SignWrapper, StyledTooltip } from './comparative.styled';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
 
 function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_FN }) {
   const theme = useTheme();
-  const classes = useCategoryStyles();
   const reference = item.data[0];
   const data = item.data[index];
   const name = names[index];
@@ -34,20 +33,8 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
         {item.label}
       </Typography>
       <Box pt={1} pb={0.5}>
-        <Box
-          style={{
-            display: 'flex',
-            alignItems: 'baseline',
-            gap: theme.spacing(0.75)
-          }}
-        >
-          <div
-            className={classes.bullet}
-            style={{
-              backgroundColor:
-                item.key === OTHERS_KEY ? theme.palette.background.default : data.color
-            }}
-          ></div>
+        <BulletWrapper alignItems='baseline'>
+          <Bullet color={item.key === OTHERS_KEY ? theme.palette.background.default : data.color} />
           <Typography color='inherit' variant='caption'>
             {name}
           </Typography>
@@ -56,21 +43,13 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
               flexGrow: 1
             }}
           ></Box>
-          <Box
-            style={{
-              marginLeft: theme.spacing(1),
-              padding: theme.spacing(0, 1),
-              backgroundColor: numberColor,
-              color: 'white',
-              borderRadius: theme.spacing(2)
-            }}
-          >
+          <SignWrapper backgroundColor={numberColor}>
             <Typography color='inherit' variant='caption'>
               {signText}
               {formatter(Math.abs(compareValue))}
             </Typography>
-          </Box>
-        </Box>
+          </SignWrapper>
+        </BulletWrapper>
       </Box>
     </div>
   );
@@ -89,15 +68,6 @@ ComparativeCategoryTooltip.propTypes = {
   index: PropTypes.number
 };
 
-const StyledTooltip = withStyles((theme) => ({
-  tooltip: {
-    color: theme.palette.common.white,
-    maxWidth: 260,
-    marginBottom: 0,
-    overflow: 'hidden'
-  }
-}))(Tooltip);
-
 function CategoryItem({
   item,
   animation,
@@ -111,7 +81,6 @@ function CategoryItem({
   onClick = IDENTITY_FN,
   names
 }) {
-  const classes = useCategoryStyles();
   const theme = useTheme();
 
   function getProgressbarLength(value) {
@@ -128,26 +97,12 @@ function CategoryItem({
   );
 
   return (
-    <Box
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        flexWrap: 'nowrap',
-        overflow: 'hidden',
-        gap: theme.spacing(1)
-      }}
+    <CategoryItemWrapperRoot
       onClick={() => onClick(item.key)}
       className={className}
     >
       {showCheckbox ? <Checkbox checked={checkboxChecked} /> : null}
-      <Box
-        style={{
-          padding: theme.spacing(0.5, 0),
-          flexGrow: '1',
-          maxWidth: '100%',
-          minWidth: 0
-        }}
-      >
+      <CategoryItemWrapperInner>
         <Typography variant='body2' noWrap>
           {item.label}
         </Typography>
@@ -156,15 +111,10 @@ function CategoryItem({
             key={`${item.key}_${i}`}
             title={tooltipContent(i)}
             placement='top-start'
+            arrow={false}
           >
-            <Box
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: theme.spacing(2)
-              }}
-            >
-              <div className={classes.progressbar}>
+            <ProgressbarWrapper>
+              <Progressbar className='progressbar'>
                 <div
                   style={
                     /* @ts-ignore */ {
@@ -174,7 +124,7 @@ function CategoryItem({
                     }
                   }
                 ></div>
-              </div>
+              </Progressbar>
               <Typography
                 variant={i === 0 ? 'body2' : 'caption'}
                 color={i === 0 ? 'textPrimary' : 'textSecondary'}
@@ -186,11 +136,11 @@ function CategoryItem({
                   formatter={formatter}
                 />
               </Typography>
-            </Box>
+            </ProgressbarWrapper>
           </StyledTooltip>
         ))}
-      </Box>
-    </Box>
+      </CategoryItemWrapperInner>
+    </CategoryItemWrapperRoot>
   );
 }
 
