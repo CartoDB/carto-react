@@ -6,7 +6,8 @@ import useFeaturesCommons from './useFeaturesCommons';
 
 export default function useGeojsonFeatures({
   source,
-  geometryToIntersect,
+  viewport,
+  spatialFilter,
   uniqueIdProperty,
   debounceTimeout = 250
 }) {
@@ -22,9 +23,10 @@ export default function useGeojsonFeatures({
   const sourceId = source?.id;
 
   const computeFeatures = useCallback(
-    ({ geometryToIntersect, uniqueIdProperty }) => {
+    ({ viewport, spatialFilter, uniqueIdProperty }) => {
       executeTask(sourceId, Methods.GEOJSON_FEATURES, {
-        geometryToIntersect,
+        viewport,
+        geometry: spatialFilter?.geometry,
         uniqueIdProperty,
         tileFormat: undefined
       })
@@ -47,12 +49,14 @@ export default function useGeojsonFeatures({
       clearDebounce();
       setSourceFeaturesReady(false);
       debounceIdRef.current = debouncedComputeFeatures({
-        geometryToIntersect,
+        viewport,
+        spatialFilter,
         uniqueIdProperty
       });
     }
   }, [
-    geometryToIntersect,
+    viewport,
+    spatialFilter,
     uniqueIdProperty,
     sourceId,
     isGeoJsonLoaded,

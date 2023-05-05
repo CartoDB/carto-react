@@ -1,9 +1,10 @@
 import { FeatureCollection, Polygon, MultiPolygon } from 'geojson';
-import { TileFeaturesResponse } from '../types';
+import { Viewport, TileFeaturesResponse } from '../types';
 
 type GeojsonFeaturesArgs = {
   geojson: FeatureCollection,
-  geometryToIntersect: Polygon | MultiPolygon | null,
+  viewport?: Viewport,
+  geometry?: Polygon | MultiPolygon,
   uniqueIdProperty?: string
 }
 
