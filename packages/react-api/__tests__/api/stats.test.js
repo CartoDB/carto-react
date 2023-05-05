@@ -135,6 +135,82 @@ describe('stats', () => {
       });
     });
 
+    test('big query source - should return stats using POST', async () => {
+      const hugeQuery = Array.from(Array(5000)).join(',');
+      const QUERY_TEST = {
+        input: {
+          source: { ...QUERY_SOURCE, data: hugeQuery },
+          column: 'injuries'
+        },
+        url: `https://gcp-us-east1.api.carto.com/v3/stats/carto-ps-bq-developers/injuries`,
+        output: TABLE_AND_QUERY_STATS
+      };
+
+      const fetchMock = (global.fetch = jest.fn().mockImplementation(async () => {
+        return {
+          ok: true,
+          json: async () => QUERY_TEST.output
+        };
+      }));
+
+      const abortController = new AbortController();
+
+      const res = await getStats({ ...QUERY_TEST.input, opts: { abortController } });
+
+      expect(res).toEqual(QUERY_TEST.output);
+
+      expect(fetchMock).toBeCalledWith(QUERY_TEST.url, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${QUERY_TEST.input.source.credentials.accessToken}`,
+          'Content-Type': 'application/json'
+        },
+        signal: abortController.signal,
+        body: JSON.stringify({ q: hugeQuery })
+      });
+    });
+
+    test('query source - big queryParameters, should return stats using POST', async () => {
+      const huugeQueryParameters = Array.from(Array(5000)).reduce((r, _, i) => {
+        r[`param${i}`] = i;
+        return r;
+      }, {});
+      const QUERY_TEST = {
+        input: {
+          source: { ...QUERY_SOURCE, queryParameters: huugeQueryParameters },
+          column: 'injuries'
+        },
+        url: `https://gcp-us-east1.api.carto.com/v3/stats/carto-ps-bq-developers/injuries`,
+        output: TABLE_AND_QUERY_STATS
+      };
+
+      const fetchMock = (global.fetch = jest.fn().mockImplementation(async () => {
+        return {
+          ok: true,
+          json: async () => QUERY_TEST.output
+        };
+      }));
+
+      const abortController = new AbortController();
+
+      const res = await getStats({ ...QUERY_TEST.input, opts: { abortController } });
+
+      expect(res).toEqual(QUERY_TEST.output);
+
+      expect(fetchMock).toBeCalledWith(QUERY_TEST.url, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${QUERY_TEST.input.source.credentials.accessToken}`,
+          'Content-Type': 'application/json'
+        },
+        signal: abortController.signal,
+        body: JSON.stringify({
+          q: QUERY_SOURCE.data,
+          queryParameters: huugeQueryParameters
+        })
+      });
+    });
+
     test('tileset source - should return stats', async () => {
       const TILESET_TEST = {
         input: {

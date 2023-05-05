@@ -41,7 +41,7 @@ export default function useTileFeatures({
 
       executeTask(sourceId, Methods.TILE_FEATURES, {
         viewport,
-        geometry: spatialFilter,
+        geometry: spatialFilter?.geometry,
         uniqueIdProperty,
         tileFormat,
         geoColumName,
@@ -107,8 +107,7 @@ export default function useTileFeatures({
       });
     }
   }, [
-    viewport,
-    spatialFilter,
+    spatialFilter ? spatialFilter : viewport,
     uniqueIdProperty,
     debouncedComputeFeatures,
     sourceId,

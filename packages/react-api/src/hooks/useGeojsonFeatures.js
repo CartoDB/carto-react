@@ -26,8 +26,9 @@ export default function useGeojsonFeatures({
     ({ viewport, spatialFilter, uniqueIdProperty }) => {
       executeTask(sourceId, Methods.GEOJSON_FEATURES, {
         viewport,
-        geometry: spatialFilter,
-        uniqueIdProperty
+        geometry: spatialFilter?.geometry,
+        uniqueIdProperty,
+        tileFormat: undefined
       })
         .then(() => {
           setSourceFeaturesReady(true);
@@ -54,8 +55,7 @@ export default function useGeojsonFeatures({
       });
     }
   }, [
-    viewport,
-    spatialFilter,
+    spatialFilter ? spatialFilter : viewport,
     uniqueIdProperty,
     sourceId,
     isGeoJsonLoaded,
