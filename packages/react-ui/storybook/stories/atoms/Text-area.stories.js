@@ -1,7 +1,7 @@
 import { Grid, TextField } from '@mui/material';
 import React from 'react';
 import Typography from '../../../src/components/atoms/Typography';
-import { Container, Label } from '../common.stories.styled';
+import { Container, Label } from '../../utils/storyStyles';
 
 const options = {
   title: 'Atoms/Text Area',
@@ -67,9 +67,7 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Filled'}
-          </Label>
+          <Label variant='body2'>{'Filled'}</Label>
           <TextField
             {...rest}
             multiline
@@ -81,9 +79,7 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Outlined'}
-          </Label>
+          <Label variant='body2'>{'Outlined'}</Label>
           <TextField
             {...rest}
             multiline
@@ -98,14 +94,11 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
 };
 
 const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest }) => {
-
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Label + helper text'}
-          </Label>
+          <Label variant='body2'>{'Label + helper text'}</Label>
           <TextField
             {...rest}
             multiline
@@ -117,25 +110,19 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Without label + helper text'}
-          </Label>
+          <Label variant='body2'>{'Without label + helper text'}</Label>
           <TextField {...rest} multiline placeholder={placeholder} />
         </Container>
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Only label'}
-          </Label>
+          <Label variant='body2'>{'Only label'}</Label>
           <TextField {...rest} multiline label={label} placeholder={placeholder} />
         </Container>
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Only helper text'}
-          </Label>
+          <Label variant='body2'>{'Only helper text'}</Label>
           <TextField
             {...rest}
             multiline
@@ -386,13 +373,9 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
-        <Label variant='subtitle1'>
-          {'Height'}
-        </Label>
+        <Label variant='subtitle1'>{'Height'}</Label>
         <Container>
-          <Label variant='body2'>
-            {'Autosize'}
-          </Label>
+          <Label variant='body2'>{'Autosize'}</Label>
 
           <TextField
             {...rest}
@@ -407,9 +390,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
 
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Maximum height (rows="4")'}
-          </Label>
+          <Label variant='body2'>{'Maximum height (rows="4")'}</Label>
 
           <TextField
             {...rest}
@@ -424,13 +405,9 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
       </Grid>
 
       <Grid item>
-        <Label variant='subtitle1'>
-          {'Width'}
-        </Label>
+        <Label variant='subtitle1'>{'Width'}</Label>
         <Container>
-          <Label variant='body2'>
-            {'Default (fullWidth)'}
-          </Label>
+          <Label variant='body2'>{'Default (fullWidth)'}</Label>
           <TextField
             {...rest}
             multiline
@@ -441,9 +418,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
           />
         </Container>
         <Container>
-          <Label variant='body2'>
-            {'No fullWidth'}
-          </Label>
+          <Label variant='body2'>{'No fullWidth'}</Label>
           <TextField
             {...rest}
             multiline

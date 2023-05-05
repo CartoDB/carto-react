@@ -4,7 +4,7 @@ import React from 'react';
 import Button from '../../../src/components/atoms/Button';
 import TooltipData from '../../../src/components/organisms/TooltipData';
 import { commonPalette } from '../../../src/theme/sections/palette';
-import { Container, Label, Standalone } from '../common.stories.styled';
+import { Container, Label, Standalone } from '../../utils/storyStyles';
 
 const options = {
   title: 'Molecules/Tooltip',
@@ -42,9 +42,7 @@ export default options;
 const TooltipBox = ({ title, ...args }) => {
   return (
     <Container justifyContent='center'>
-      <Label variant='body2'>
-        {title}
-      </Label>
+      <Label variant='body2'>{title}</Label>
 
       <Tooltip {...args} title={title}>
         <IconButton>
@@ -175,7 +173,7 @@ const TooltipDataTemplate = () => {
 
 const TooltipArrowTemplate = (args) => {
   return (
-    <Grid container justifyContent='flex-start' direction='column' spacing={2}>
+    <Grid container alignItems='flex-start' direction='column' spacing={2}>
       <Grid item>
         <TooltipBox {...args} title='No arrow' arrow={false} />
       </Grid>
@@ -188,7 +186,7 @@ const TooltipArrowTemplate = (args) => {
 
 const TooltipPositionTemplate = (args) => {
   return (
-    <Grid container justifyContent='flex-start' direction='column' spacing={2}>
+    <Grid container alignItems='flex-start' direction='column' spacing={2}>
       <Grid item>
         <TooltipBox {...args} title='Tooltip top' />
       </Grid>
@@ -207,16 +205,14 @@ const TooltipPositionTemplate = (args) => {
 
 const TooltipBehaviorTemplate = (args) => {
   return (
-    <Grid container justifyContent='flex-start' direction='column' spacing={2}>
+    <Grid container alignItems='flex-start' direction='column' spacing={2}>
       <Grid item>
         <TooltipBox {...args} title='Default' />
       </Grid>
 
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Follow cursor'}
-          </Label>
+          <Label variant='body2'>{'Follow cursor'}</Label>
 
           <Tooltip
             {...args}

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Avatar, Chip, Grid, Box, Tooltip } from '@mui/material';
+import { Avatar, Chip, Grid, Tooltip } from '@mui/material';
 import { FileUploadOutlined } from '@mui/icons-material';
-import Typography from '../../../src/components/atoms/Typography';
-import { Container, Header, Label } from '../common.stories.styled';
+import { Container, Header, Label } from '../../utils/storyStyles';
 
 const options = {
   title: 'Molecules/Chip',
@@ -74,29 +73,23 @@ const options = {
 };
 export default options;
 
-
 const Template = ({ ...args }) => {
   return <Chip {...args} />;
 };
 
 const VariantsTemplate = ({ ...args }) => {
-
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Filled'}
-          </Label>
+          <Label variant='body2'>{'Filled'}</Label>
           <Chip {...args} />
         </Container>
       </Grid>
 
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Outlined'}
-          </Label>
+          <Label variant='body2'>{'Outlined'}</Label>
           <Chip {...args} variant='outlined' />
         </Container>
       </Grid>
@@ -105,14 +98,11 @@ const VariantsTemplate = ({ ...args }) => {
 };
 
 const PrefixTemplate = ({ ...args }) => {
-
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Primary'}
-          </Label>
+          <Label variant='body2'>{'Primary'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} avatar={<Avatar>M</Avatar>} />
@@ -142,9 +132,7 @@ const PrefixTemplate = ({ ...args }) => {
 
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Secondary'}
-          </Label>
+          <Label variant='body2'>{'Secondary'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} color='secondary' avatar={<Avatar>M</Avatar>} />
@@ -189,9 +177,7 @@ const PrefixTemplate = ({ ...args }) => {
 
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Default'}
-          </Label>
+          <Label variant='body2'>{'Default'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} color='default' avatar={<Avatar>M</Avatar>} />
@@ -238,14 +224,11 @@ const PrefixTemplate = ({ ...args }) => {
 };
 
 const RemovableTemplate = ({ ...args }) => {
-
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Primary'}
-          </Label>
+          <Label variant='body2'>{'Primary'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} />
@@ -259,9 +242,7 @@ const RemovableTemplate = ({ ...args }) => {
 
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Secondary'}
-          </Label>
+          <Label variant='body2'>{'Secondary'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} color='secondary' />
@@ -275,9 +256,7 @@ const RemovableTemplate = ({ ...args }) => {
 
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Default'}
-          </Label>
+          <Label variant='body2'>{'Default'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} color='default' />
@@ -293,14 +272,11 @@ const RemovableTemplate = ({ ...args }) => {
 };
 
 const ColorsTemplate = ({ ...args }) => {
-
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Primary'}
-          </Label>
+          <Label variant='body2'>{'Primary'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} />
@@ -313,9 +289,7 @@ const ColorsTemplate = ({ ...args }) => {
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Secondary'}
-          </Label>
+          <Label variant='body2'>{'Secondary'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} color='secondary' />
@@ -328,9 +302,7 @@ const ColorsTemplate = ({ ...args }) => {
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Default'}
-          </Label>
+          <Label variant='body2'>{'Default'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} color='default' />
@@ -346,17 +318,12 @@ const ColorsTemplate = ({ ...args }) => {
 };
 
 const SizeTemplate = ({ ...args }) => {
-
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
-        <Header variant='subtitle1'>
-          {'Primary'}
-        </Header>
+        <Header variant='subtitle1'>{'Primary'}</Header>
         <Container>
-          <Label variant='body2'>
-            {'Default (hover icon)'}
-          </Label>
+          <Label variant='body2'>{'Default (hover icon)'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} />
@@ -367,9 +334,7 @@ const SizeTemplate = ({ ...args }) => {
           </Grid>
         </Container>
         <Container>
-          <Label variant='body2'>
-            {'Clickable (hover chip)'}
-          </Label>
+          <Label variant='body2'>{'Clickable (hover chip)'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} clickable />
@@ -380,9 +345,7 @@ const SizeTemplate = ({ ...args }) => {
           </Grid>
         </Container>
         <Container>
-          <Label variant='body2'>
-            {'Disabled'}
-          </Label>
+          <Label variant='body2'>{'Disabled'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} disabled />
@@ -395,13 +358,9 @@ const SizeTemplate = ({ ...args }) => {
       </Grid>
 
       <Grid item>
-        <Header variant='subtitle1'>
-          {'Secondary'}
-        </Header>
+        <Header variant='subtitle1'>{'Secondary'}</Header>
         <Container>
-          <Label variant='body2'>
-            {'Default (hover icon)'}
-          </Label>
+          <Label variant='body2'>{'Default (hover icon)'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} color='secondary' />
@@ -412,9 +371,7 @@ const SizeTemplate = ({ ...args }) => {
           </Grid>
         </Container>
         <Container>
-          <Label variant='body2'>
-            {'Clickable (hover chip)'}
-          </Label>
+          <Label variant='body2'>{'Clickable (hover chip)'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} color='secondary' clickable />
@@ -425,9 +382,7 @@ const SizeTemplate = ({ ...args }) => {
           </Grid>
         </Container>
         <Container>
-          <Label variant='body2'>
-            {'Disabled'}
-          </Label>
+          <Label variant='body2'>{'Disabled'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} color='secondary' disabled />
@@ -440,13 +395,9 @@ const SizeTemplate = ({ ...args }) => {
       </Grid>
 
       <Grid item>
-        <Header variant='subtitle1'>
-          {'Default'}
-        </Header>
+        <Header variant='subtitle1'>{'Default'}</Header>
         <Container>
-          <Label variant='body2'>
-            {'Default (hover icon)'}
-          </Label>
+          <Label variant='body2'>{'Default (hover icon)'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} color='default' />
@@ -457,9 +408,7 @@ const SizeTemplate = ({ ...args }) => {
           </Grid>
         </Container>
         <Container>
-          <Label variant='body2'>
-            {'Clickable (hover chip)'}
-          </Label>
+          <Label variant='body2'>{'Clickable (hover chip)'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} color='default' clickable />
@@ -470,9 +419,7 @@ const SizeTemplate = ({ ...args }) => {
           </Grid>
         </Container>
         <Container>
-          <Label variant='body2'>
-            {'Disabled'}
-          </Label>
+          <Label variant='body2'>{'Disabled'}</Label>
           <Grid container item spacing={6}>
             <Grid item>
               <Chip {...args} color='default' disabled />
@@ -494,9 +441,7 @@ const BehaviorTemplate = ({ ...args }) => {
     <Grid container direction='column' spacing={3}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Overflow'}
-          </Label>
+          <Label variant='body2'>{'Overflow'}</Label>
           <Grid container spacing={1}>
             <Grid item>
               <Chip
@@ -518,9 +463,7 @@ const BehaviorTemplate = ({ ...args }) => {
 
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Hover with Tooltip'}
-          </Label>
+          <Label variant='body2'>{'Hover with Tooltip'}</Label>
           <Grid container spacing={1}>
             <Grid item>
               <Tooltip title={longLabel}>
@@ -539,9 +482,7 @@ const BehaviorTemplate = ({ ...args }) => {
 
       <Grid item>
         <Container style={{ maxWidth: '600px' }}>
-          <Label variant='body2'>
-            {'Pairing (Grid 8px)'}
-          </Label>
+          <Label variant='body2'>{'Pairing (Grid 8px)'}</Label>
           <Grid container spacing={1}>
             <Grid item>
               <Chip {...args} />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Box,
   Chip,
   FormControl,
   Grid,
@@ -8,10 +9,11 @@ import {
   OutlinedInput,
   Select,
   TextField,
+  styled
 } from '@mui/material';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
-import { Container, Label, ChipWrapper } from '../common.stories.styled';
+import { Container, Label } from '../../utils/storyStyles';
 
 const options = {
   title: 'Atoms/Select Field',
@@ -107,9 +109,7 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Filled'}
-          </Label>
+          <Label variant='body2'>{'Filled'}</Label>
           <SelectField
             {...rest}
             label={label}
@@ -121,9 +121,7 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Outlined'}
-          </Label>
+          <Label variant='body2'>{'Outlined'}</Label>
           <SelectField
             {...rest}
             label={label}
@@ -135,9 +133,7 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Standard'}
-          </Label>
+          <Label variant='body2'>{'Standard'}</Label>
           <SelectField
             {...rest}
             label={label}
@@ -156,9 +152,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Label + helper text'}
-          </Label>
+          <Label variant='body2'>{'Label + helper text'}</Label>
           <SelectField
             {...rest}
             label={label}
@@ -170,17 +164,13 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Without label + helper text'}
-          </Label>
+          <Label variant='body2'>{'Without label + helper text'}</Label>
           <SelectField {...rest} placeholder={placeholder} items={menuItems} />
         </Container>
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Only label'}
-          </Label>
+          <Label variant='body2'>{'Only label'}</Label>
           <SelectField
             {...rest}
             label={label}
@@ -191,9 +181,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Only helper text'}
-          </Label>
+          <Label variant='body2'>{'Only helper text'}</Label>
           <SelectField
             {...rest}
             placeholder={placeholder}
@@ -494,6 +482,16 @@ const SizeTemplate = ({
   );
 };
 
+const ChipWrapper = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'small'
+})(({ theme, small }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: theme.spacing(1),
+  overflow: 'auto',
+  height: theme.spacing(small ? 3 : 4)
+}));
+
 const MultipleTemplate = ({
   label,
   placeholder,
@@ -519,9 +517,7 @@ const MultipleTemplate = ({
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Default (custom component)'}
-          </Label>
+          <Label variant='body2'>{'Default (custom component)'}</Label>
           <SelectField
             {...rest}
             multiple
@@ -534,9 +530,7 @@ const MultipleTemplate = ({
       </Grid>
       <Grid item xs={3}>
         <Container>
-          <Label variant='body2'>
-            {'Select (with custom chips)'}
-          </Label>
+          <Label variant='body2'>{'Select (with custom chips)'}</Label>
           <Select
             {...rest}
             label={label}
@@ -580,13 +574,9 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Label variant='subtitle1'>
-          {'Overflow'}
-        </Label>
+        <Label variant='subtitle1'>{'Overflow'}</Label>
         <Container style={{ maxWidth: '440px' }}>
-          <Label variant='body2'>
-            {'Default'}
-          </Label>
+          <Label variant='body2'>{'Default'}</Label>
           <SelectField
             {...rest}
             label={label}
@@ -597,13 +587,9 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
       </Grid>
 
       <Grid item>
-        <Label variant='subtitle1'>
-          {'Grouping'}
-        </Label>
+        <Label variant='subtitle1'>{'Grouping'}</Label>
         <Container>
-          <Label variant='body2'>
-            {'Pairing'}
-          </Label>
+          <Label variant='body2'>{'Pairing'}</Label>
 
           <Grid container spacing={2}>
             <Grid item>
@@ -627,13 +613,9 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
       </Grid>
 
       <Grid item>
-        <Label variant='subtitle1'>
-          {'Width'}
-        </Label>
+        <Label variant='subtitle1'>{'Width'}</Label>
         <Container>
-          <Label variant='body2'>
-            {'Default (fullWidth)'}
-          </Label>
+          <Label variant='body2'>{'Default (fullWidth)'}</Label>
           <SelectField
             {...rest}
             label={label}
@@ -642,9 +624,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
           />
         </Container>
         <Container>
-          <Label variant='body2'>
-            {'No fullWidth'}
-          </Label>
+          <Label variant='body2'>{'No fullWidth'}</Label>
           <SelectField
             {...rest}
             label={label}

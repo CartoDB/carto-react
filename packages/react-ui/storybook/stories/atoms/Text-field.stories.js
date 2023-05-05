@@ -3,7 +3,7 @@ import { Grid, InputAdornment, TextField } from '@mui/material';
 import React from 'react';
 import PasswordField from '../../../src/components/atoms/PasswordField';
 import Typography from '../../../src/components/atoms/Typography';
-import { Container, Label } from '../common.stories.styled';
+import { Container, Label } from '../../utils/storyStyles';
 
 const options = {
   title: 'Atoms/Text Field',
@@ -82,17 +82,13 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Filled'}
-          </Label>
+          <Label variant='body2'>{'Filled'}</Label>
           <TextField {...rest} label={label} variant='filled' placeholder={placeholder} />
         </Container>
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Outlined'}
-          </Label>
+          <Label variant='body2'>{'Outlined'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -103,9 +99,7 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Standard'}
-          </Label>
+          <Label variant='body2'>{'Standard'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -123,9 +117,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Label + helper text'}
-          </Label>
+          <Label variant='body2'>{'Label + helper text'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -136,25 +128,19 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Without label + helper text'}
-          </Label>
+          <Label variant='body2'>{'Without label + helper text'}</Label>
           <TextField {...rest} placeholder={placeholder} />
         </Container>
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Only label'}
-          </Label>
+          <Label variant='body2'>{'Only label'}</Label>
           <TextField {...rest} label={label} placeholder={placeholder} />
         </Container>
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Only helper text'}
-          </Label>
+          <Label variant='body2'>{'Only helper text'}</Label>
           <TextField {...rest} placeholder={placeholder} helperText={helperText} />
         </Container>
       </Grid>
@@ -173,9 +159,7 @@ const PrefixAndSuffixTemplate = ({
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Prefix and suffix (text)'}
-          </Label>
+          <Label variant='body2'>{'Prefix and suffix (text)'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -189,9 +173,7 @@ const PrefixAndSuffixTemplate = ({
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Prefix and suffix (icon)'}
-          </Label>
+          <Label variant='body2'>{'Prefix and suffix (icon)'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -205,9 +187,7 @@ const PrefixAndSuffixTemplate = ({
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Prefix and suffix (mix)'}
-          </Label>
+          <Label variant='body2'>{'Prefix and suffix (mix)'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -221,9 +201,7 @@ const PrefixAndSuffixTemplate = ({
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Only prefix'}
-          </Label>
+          <Label variant='body2'>{'Only prefix'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -236,9 +214,7 @@ const PrefixAndSuffixTemplate = ({
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Only suffix'}
-          </Label>
+          <Label variant='body2'>{'Only suffix'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -251,9 +227,7 @@ const PrefixAndSuffixTemplate = ({
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'None'}
-          </Label>
+          <Label variant='body2'>{'None'}</Label>
           <TextField {...rest} label={label} placeholder={placeholder} />
         </Container>
       </Grid>
@@ -564,9 +538,7 @@ const PasswordFieldTemplate = ({
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Default'}
-          </Label>
+          <Label variant='body2'>{'Default'}</Label>
           <TextField
             {...rest}
             label='Password'
@@ -579,9 +551,7 @@ const PasswordFieldTemplate = ({
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Custom component'}
-          </Label>
+          <Label variant='body2'>{'Custom component'}</Label>
           <PasswordField
             {...rest}
             label='Password'
@@ -599,13 +569,9 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Label variant='subtitle1'>
-          {'Overflow'}
-        </Label>
+        <Label variant='subtitle1'>{'Overflow'}</Label>
         <Container style={{ maxWidth: '440px' }}>
-          <Label variant='body2'>
-            {'Default'}
-          </Label>
+          <Label variant='body2'>{'Default'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -616,13 +582,9 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
       </Grid>
 
       <Grid item>
-        <Label variant='subtitle1'>
-          {'Grouping'}
-        </Label>
+        <Label variant='subtitle1'>{'Grouping'}</Label>
         <Container>
-          <Label variant='body2'>
-            {'Pairing'}
-          </Label>
+          <Label variant='body2'>{'Pairing'}</Label>
 
           <Grid container spacing={2}>
             <Grid item>
@@ -637,13 +599,9 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
       </Grid>
 
       <Grid item>
-        <Label variant='subtitle1'>
-          {'Width'}
-        </Label>
+        <Label variant='subtitle1'>{'Width'}</Label>
         <Container>
-          <Label variant='body2'>
-            {'Default (fullWidth)'}
-          </Label>
+          <Label variant='body2'>{'Default (fullWidth)'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -652,9 +610,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
           />
         </Container>
         <Container>
-          <Label variant='body2'>
-            {'No fullWidth'}
-          </Label>
+          <Label variant='body2'>{'No fullWidth'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -666,13 +622,9 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
       </Grid>
 
       <Grid item>
-        <Label variant='subtitle1'>
-          {'Types'}
-        </Label>
+        <Label variant='subtitle1'>{'Types'}</Label>
         <Container>
-          <Label variant='body2'>
-            {'Examples'}
-          </Label>
+          <Label variant='body2'>{'Examples'}</Label>
 
           <TextField
             {...rest}

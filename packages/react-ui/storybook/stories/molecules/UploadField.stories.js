@@ -2,7 +2,7 @@ import { Grid } from '@mui/material';
 import React, { useState } from 'react';
 import Typography from '../../../src/components/atoms/Typography';
 import UploadField from '../../../src/components/molecules/UploadField/UploadField';
-import { Container, Label } from '../common.stories.styled';
+import { Container, Label } from '../../utils/storyStyles';
 
 const options = {
   title: 'Molecules/UploadField',
@@ -108,9 +108,7 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Filled'}
-          </Label>
+          <Label variant='body2'>{'Filled'}</Label>
           <UploadField
             {...rest}
             variant='filled'
@@ -123,9 +121,7 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Outlined'}
-          </Label>
+          <Label variant='body2'>{'Outlined'}</Label>
           <UploadField
             {...rest}
             variant='outlined'
@@ -162,9 +158,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Label + helper text'}
-          </Label>
+          <Label variant='body2'>{'Label + helper text'}</Label>
           <UploadField
             {...rest}
             label={label}
@@ -177,9 +171,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Without label + helper text'}
-          </Label>
+          <Label variant='body2'>{'Without label + helper text'}</Label>
           <UploadField
             {...rest}
             placeholder={placeholder}
@@ -190,9 +182,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Only label'}
-          </Label>
+          <Label variant='body2'>{'Only label'}</Label>
           <UploadField
             {...rest}
             label={label}
@@ -204,9 +194,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Only helper text'}
-          </Label>
+          <Label variant='body2'>{'Only helper text'}</Label>
           <UploadField
             {...rest}
             placeholder={placeholder}
@@ -369,9 +357,7 @@ const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...res
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
-          <Label variant='body2'>
-            {'Default'}
-          </Label>
+          <Label variant='body2'>{'Default'}</Label>
           <UploadField
             {...rest}
             multiple
@@ -395,13 +381,9 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Label variant='subtitle1'>
-          {'Overflow'}
-        </Label>
+        <Label variant='subtitle1'>{'Overflow'}</Label>
         <Container style={{ maxWidth: '440px' }}>
-          <Label variant='body2'>
-            {'Default'}
-          </Label>
+          <Label variant='body2'>{'Default'}</Label>
           <UploadField
             {...rest}
             label={label}
