@@ -14,7 +14,8 @@ describe('Worker Methods', () => {
       viewport: [
         -119.8541879250893, 19.66738891368218, -61.31673251486329, 54.38309840045979
       ],
-      geometry: null
+      geometry: null,
+      uniqueIdProperty: undefined
     });
   });
   describe('getFormula', () => {

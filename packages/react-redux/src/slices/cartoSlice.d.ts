@@ -4,6 +4,7 @@ import { FiltersLogicalOperators, _FilterTypes } from '@carto/react-core';
 import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/';
 import { InitialCartoState, CartoState, ViewState } from '../types';
 import { AnyAction, Reducer } from 'redux';
+import { Feature, Polygon, MultiPolygon } from 'geojson';
 
 type Source = SourceProps & {
   id: string
@@ -158,6 +159,6 @@ export function setFeatureSelectionEnabled(enabled: boolean): {
   payload: boolean;
 };
 
-export function selectSpatialFilter(state: any, sourceId?: string): object | null;
+export function selectSpatialFilter(state: any, sourceId?: string): Feature<Polygon | MultiPolygon> | null;
 
 export function selectFeatureSelectionMode(state: any): string | null;
