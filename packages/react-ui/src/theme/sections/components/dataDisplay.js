@@ -223,6 +223,7 @@ export const dataDisplayOverrides = {
         border: `2px solid ${commonPalette.divider}`,
         borderRadius: getSpacing(0.5),
         fontWeight: themeTypography.fontWeightMedium,
+        paddingRight: getSpacing(3),
         '& .MuiSelect-icon': {
           top: '50%',
           transform: 'translateY(-50%)',
@@ -248,11 +249,34 @@ export const dataDisplayOverrides = {
       }
     }
   },
+  MuiTable: {
+    defaultProps: {
+      stickyHeader: true
+    }
+  },
+  MuiTableRow: {
+    styleOverrides: {
+      root: {
+        transition: 'background-color 0.25s ease',
+        '&:not(.MuiTableRow-head) th, td': {
+          borderColor: commonPalette.divider,
+          '&:not(.MuiTableCell-sizeSmall)': {
+            padding: getSpacing(1, 2),
+            height: getSpacing(6)
+          }
+        },
+        '&.MuiTableRow-hover:hover': {
+          cursor: 'pointer'
+        }
+      }
+    }
+  },
   MuiTableCell: {
     styleOverrides: {
       head: {
         ...themeTypography.caption,
-        color: commonPalette.text.secondary
+        fontWeight: themeTypography.fontWeightMedium,
+        color: commonPalette.text.primary
       },
       stickyHeader: {
         backgroundColor: commonPalette.common.white

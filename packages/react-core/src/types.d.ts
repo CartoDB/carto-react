@@ -1,6 +1,6 @@
 import { TILE_FORMATS } from '@deck.gl/carto';
 import { AggregationTypes } from './operations/constants/AggregationTypes';
-import { Geometry } from 'geojson';
+import { Polygon, MultiPolygon } from 'geojson';
 import { SpatialIndex } from './operations/constants/SpatialIndexTypes';
 
 export type AggregationFunctions = Record<
@@ -27,8 +27,7 @@ export type Viewport = [number, number, number, number];
 
 export type TileFeatures = {
   tiles?: any; // TODO: add proper deck.gl type
-  viewport: Viewport;
-  geometry?: Geometry;
+  geometryToIntersect: Polygon | MultiPolygon | null;
   uniqueIdProperty?: string;
   tileFormat: TILE_FORMATS;
   geoColumName?: string;

@@ -34,7 +34,7 @@ export {
   applyFilters as _applyFilters
 } from './filters/Filter';
 
-export { tileFeatures } from './filters/tileFeatures';
+export { tileFeatures, getGeometryToIntersect } from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';
 
 export { GroupDateTypes } from './operations/constants/GroupDateTypes';
@@ -47,3 +47,9 @@ export {
   EDIT_MODES,
   MASK_ID
 } from './utils/featureSelectionConstants';
+
+export {
+  hasFlag as _hasFeatureFlag,
+  setFlags as _setFeatureFlags,
+  clearFlags as _clearFeatureFlags
+} from './utils/featureFlags';
