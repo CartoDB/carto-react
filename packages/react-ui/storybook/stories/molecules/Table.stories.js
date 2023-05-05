@@ -20,36 +20,31 @@ const rows = [
     name: 'Test Data 1',
     type: 'string',
     mode: '',
-    description: 'Test Data 1',
-    icon: ''
+    description: 'Test Data 1'
   },
   {
     name: 'very long text that should trigger the overflow style',
     type: 'string',
     mode: '',
-    description: 'Test Data 2',
-    icon: ''
+    description: 'Test Data 2'
   },
   {
     name: 'Test Data 3',
     type: 'string',
     mode: '',
-    description: 'Test Data 3',
-    icon: ''
+    description: 'Test Data 3'
   },
   {
     name: 'Test Data 4',
     type: 'string',
     mode: '',
-    description: 'very long text that should trigger the overflow style',
-    icon: ''
+    description: 'very long text that should trigger the overflow style'
   },
   {
     name: 'Test Data 5',
     type: 'string',
     mode: '',
-    description: 'Test Data 5',
-    icon: ''
+    description: 'Test Data 5'
   }
 ];
 
