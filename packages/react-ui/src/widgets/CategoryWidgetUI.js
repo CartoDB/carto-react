@@ -46,7 +46,7 @@ const Label = styled(Typography)(({ theme }) => ({
   marginRight: theme.spacing(2)
 }));
 
-const LinkAsButton = styled(Link)(({theme}) => ({
+const LinkAsButton = styled(Link)(({ theme }) => ({
   ...theme.typography.caption,
   cursor: 'pointer',
   '& + hr': {
@@ -68,35 +68,36 @@ const StylesGridElement = styled(Grid, {
   shouldForwardProp: (prop) => !['selectable', 'name', 'unselected'].includes(prop)
 })(({ theme, selectable, name, unselected }) => {
   return {
-  flexDirection: 'row',
-  ...(unselected && {
-    color: theme.palette.text.disabled,
-    '.progressbar div':{
-      backgroundColor: theme.palette.text.disabled
-    }
-  }),
-  ...(name !== REST_CATEGORY && selectable && {
-    cursor: 'pointer',
-    flexWrap: 'nowrap',
+    flexDirection: 'row',
+    ...(unselected && {
+      color: theme.palette.text.disabled,
+      '.progressbar div': {
+        backgroundColor: theme.palette.text.disabled
+      }
+    }),
+    ...(name !== REST_CATEGORY &&
+      selectable && {
+        cursor: 'pointer',
+        flexWrap: 'nowrap',
 
-    '&:hover .progressbar div': {
-      backgroundColor: theme.palette.secondary.dark
-    }
-  }),
-  ...(name === REST_CATEGORY && {
-    cursor: 'default',
-    '.progressbar div':{
-      backgroundColor: theme.palette.text.disabled
-    }
-  }),
-}
+        '&:hover .progressbar div': {
+          backgroundColor: theme.palette.secondary.dark
+        }
+      }),
+    ...(name === REST_CATEGORY && {
+      cursor: 'default',
+      '.progressbar div': {
+        backgroundColor: theme.palette.text.disabled
+      }
+    })
+  };
 });
 
 const StyledOptionsSelectedBar = styled(Grid)(({ theme: { spacing, palette } }) => ({
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginBottom: spacing(2),
+  marginBottom: spacing(1.5),
   paddingRight: spacing(1),
   '& .MuiTypography-caption': {
     color: palette.text.secondary
@@ -383,10 +384,10 @@ function CategoryWidgetUI(props) {
       };
     }, []);
 
-
-    const unselected = !showAll &&
-    selectedCategories.length > 0 &&
-    selectedCategories.indexOf(data.name) === -1
+    const unselected =
+      !showAll &&
+      selectedCategories.length > 0 &&
+      selectedCategories.indexOf(data.name) === -1;
     return (
       <StylesGridElement
         container
@@ -414,11 +415,7 @@ function CategoryWidgetUI(props) {
               title={getCategoryLabel(data.name)}
               disableHoverListener={!isOverflowed}
             >
-              <Label
-                variant='body2'
-                noWrap
-                ref={textElementRef}
-              >
+              <Label variant='body2' noWrap ref={textElementRef}>
                 {getCategoryLabel(data.name)}
               </Label>
             </Tooltip>
@@ -432,7 +429,7 @@ function CategoryWidgetUI(props) {
               <span>{value}</span>
             )}
           </Grid>
-          <Progressbar className='progressbar' item >
+          <Progressbar className='progressbar' item>
             <div style={{ width: getProgressbarLength(data.value) }}></div>
           </Progressbar>
         </Grid>
@@ -477,33 +474,21 @@ function CategoryWidgetUI(props) {
                 {selectedCategories.length ? selectedCategories.length : 'All'} selected
               </Typography>
               {showAll ? (
-                <LinkAsButton
-                  onClick={handleApplyClicked}
-                  underline='hover'
-                >
+                <LinkAsButton onClick={handleApplyClicked} underline='hover'>
                   Apply
                 </LinkAsButton>
               ) : blockedCategories.length > 0 ? (
-                <LinkAsButton
-                  onClick={handleUnblockClicked}
-                  underline='hover'
-                >
+                <LinkAsButton onClick={handleUnblockClicked} underline='hover'>
                   Unlock
                 </LinkAsButton>
               ) : (
                 selectedCategories.length > 0 && (
                   <Grid container direction='row' justifyContent='flex-end' item xs>
-                    <LinkAsButton
-                      onClick={handleBlockClicked}
-                      underline='hover'
-                    >
+                    <LinkAsButton onClick={handleBlockClicked} underline='hover'>
                       Lock
                     </LinkAsButton>
                     <Divider orientation='vertical' flexItem />
-                    <LinkAsButton
-                      onClick={handleClearClicked}
-                      underline='hover'
-                    >
+                    <LinkAsButton onClick={handleClearClicked} underline='hover'>
                       Clear
                     </LinkAsButton>
                   </Grid>
