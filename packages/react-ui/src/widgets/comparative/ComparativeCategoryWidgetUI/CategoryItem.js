@@ -1,5 +1,4 @@
-import { Box, Checkbox, darken, Tooltip, Typography, useTheme } from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
+import { Box, Checkbox, darken, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import PropTypes from 'prop-types';
 import AnimatedNumber, {
