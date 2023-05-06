@@ -14,7 +14,16 @@ import CategoryWidgetUI from '../../CategoryWidgetUI';
 import { transposeCategoryData } from './transposeCategoryData';
 import CategorySkeleton from './CategorySkeleton';
 import Typography from '../../../components/atoms/Typography';
-import { Bullet, BulletWrapper, BulletListWrapper, CategoriesList, SearchInput, Toolbar, Wrapper, CategoryItemStyled } from './comparative.styled';
+import {
+  Bullet,
+  BulletWrapper,
+  BulletListWrapper,
+  CategoriesList,
+  SearchInput,
+  Toolbar,
+  Wrapper,
+  CategoryItemStyled
+} from './comparative.styled';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
@@ -51,6 +60,7 @@ function SearchIcon() {
  * @param {string[]} [props.selectedCategories]
  * @param {(categories: string[]) => any} [props.onSelectedCategoriesChange]
  * @param {(v: any) => any} [props.formatter]
+ * @param {boolean} [props.tooltip]
  * @param {(v: any) => any} [props.tooltipFormatter]
  * -->
  */
@@ -68,6 +78,7 @@ function ComparativeCategoryWidgetUI({
   selectedCategories = EMPTY_ARRAY,
   onSelectedCategoriesChange = IDENTITY_FN,
   formatter = IDENTITY_FN,
+  tooltip = true,
   tooltipFormatter = IDENTITY_FN
 }) {
   const theme = useTheme();
@@ -290,6 +301,7 @@ function ComparativeCategoryWidgetUI({
             filterable={filterable}
             formatter={formatter}
             tooltipFormatter={tooltipFormatter}
+            tooltip={tooltip}
             onClick={clickHandler}
             names={names}
           />
@@ -335,6 +347,7 @@ ComparativeCategoryWidgetUI.defaultProps = {
   searchable: true,
   filterable: true,
   selectedCategories: [],
+  tooltip: true,
   onSelectedCategoriesChange: IDENTITY_FN,
   formatter: IDENTITY_FN,
   tooltipFormatter: IDENTITY_FN
@@ -358,6 +371,7 @@ ComparativeCategoryWidgetUI.propTypes = {
   searchable: PropTypes.bool,
   filterable: PropTypes.bool,
   selectedCategories: PropTypes.arrayOf(PropTypes.string),
+  tooltip: PropTypes.bool,
   onSelectedCategoriesChange: PropTypes.func,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func
