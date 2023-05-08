@@ -72,6 +72,16 @@ const options = {
 };
 export default options;
 
+const ChipWrapper = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'small'
+})(({ theme, small }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: theme.spacing(1),
+  overflow: 'auto',
+  height: theme.spacing(small ? 3 : 4)
+}));
+
 const menuItems = [
   {
     label: 'Ten: super large text with overflow',
@@ -481,16 +491,6 @@ const SizeTemplate = ({
     </Grid>
   );
 };
-
-const ChipWrapper = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'small'
-})(({ theme, small }) => ({
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: theme.spacing(1),
-  overflow: 'auto',
-  height: theme.spacing(small ? 3 : 4)
-}));
 
 const MultipleTemplate = ({
   label,

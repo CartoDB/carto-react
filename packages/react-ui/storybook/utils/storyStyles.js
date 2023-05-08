@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Box, Grid, Typography as TypographyMaterial } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import Typography from '../../src/components/atoms/Typography';
 
 export const GridVerticalContent = styled(Grid)(({ theme }) => ({
@@ -16,7 +16,7 @@ export const BoxContent = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(4)
 }));
 
-export const TitleContent = styled(TypographyMaterial)(({ theme }) => ({
+export const TitleContent = styled(Typography)(({ theme }) => ({
   minWidth: '200px'
 }));
 
