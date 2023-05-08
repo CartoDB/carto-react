@@ -22,12 +22,6 @@ const filterGeometry = {
     ]
   ]
 };
-/** @type { import('geojson').Feature<import('geojson').Polygon> } */
-const filterFeature = {
-  type: 'Feature',
-  geometry: filterGeometry,
-  properties: {}
-};
 
 describe('getGeometryToIntersect', () => {
   test('returns null in case no viewport or geometry is present', () => {
@@ -42,14 +36,16 @@ describe('getGeometryToIntersect', () => {
   });
 
   test('returns the filter as geometry', () => {
-    expect(getGeometryToIntersect(null, filterFeature)).toStrictEqual(filterGeometry);
-    expect(getGeometryToIntersect(viewport, filterFeature)).toStrictEqual(filterGeometry);
+    expect(getGeometryToIntersect(null, filterGeometry)).toStrictEqual(filterGeometry);
+    expect(getGeometryToIntersect(viewport, filterGeometry)).toStrictEqual(
+      filterGeometry
+    );
   });
 });
 
 describe('viewport features with binary mode', () => {
+  const viewport = [-10, -10, 10, 10]; // west - south - east - north
   const [west, south, east, north] = viewport;
-  const tileFormat = TILE_FORMATS.BINARY;
 
   describe('return no data', () => {
     test('tiles are not visible', () => {
@@ -57,8 +53,7 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTiles,
-        geometryToIntersect: viewportGeometry,
-        tileFormat
+        viewport
       });
       expect(properties).toEqual([]);
     });
@@ -68,8 +63,7 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTiles,
-        geometryToIntersect: viewportGeometry,
-        tileFormat
+        viewport
       });
       expect(properties).toEqual([]);
     });
@@ -79,8 +73,7 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTiles,
-        geometryToIntersect: viewportGeometry,
-        tileFormat
+        viewport
       });
       expect(properties).toEqual([]);
     });
@@ -90,8 +83,7 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTiles,
-        geometryToIntersect: viewportGeometry,
-        tileFormat
+        viewport
       });
       expect(properties).toEqual([]);
     });
@@ -122,9 +114,8 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTile,
-        geometryToIntersect: viewportGeometry,
-        uniqueIdProperty: 'cartodb_id',
-        tileFormat
+        viewport,
+        uniqueIdProperty: 'cartodb_id'
       });
 
       // prettier-ignore
@@ -159,9 +150,8 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTile,
-        geometryToIntersect: viewportGeometry,
-        uniqueIdProperty: 'cartodb_id',
-        tileFormat
+        viewport,
+        uniqueIdProperty: 'cartodb_id'
       });
       // prettier-ignore
       expect(properties).toEqual([
@@ -195,9 +185,8 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTile,
-        geometryToIntersect: viewportGeometry,
-        uniqueIdProperty: 'cartodb_id',
-        tileFormat
+        viewport,
+        uniqueIdProperty: 'cartodb_id'
       });
       // prettier-ignore
       expect(properties).toEqual([
@@ -234,9 +223,8 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTile,
-        geometryToIntersect: viewportGeometry,
-        uniqueIdProperty: 'cartodb_id',
-        tileFormat
+        viewport,
+        uniqueIdProperty: 'cartodb_id'
       });
       // prettier-ignore
       expect(properties).toEqual([
@@ -271,9 +259,8 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTile,
-        geometryToIntersect: viewportGeometry,
-        uniqueIdProperty: 'cartodb_id',
-        tileFormat
+        viewport,
+        uniqueIdProperty: 'cartodb_id'
       });
       expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
     });
@@ -302,9 +289,8 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTile,
-        geometryToIntersect: viewportGeometry,
-        uniqueIdProperty: 'cartodb_id',
-        tileFormat
+        viewport,
+        uniqueIdProperty: 'cartodb_id'
       });
       expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
     });
@@ -333,9 +319,8 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTile,
-        geometryToIntersect: viewportGeometry,
-        uniqueIdProperty: 'cartodb_id',
-        tileFormat
+        viewport,
+        uniqueIdProperty: 'cartodb_id'
       });
       expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
     });
@@ -364,9 +349,8 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTile,
-        geometryToIntersect: viewportGeometry,
-        uniqueIdProperty: 'cartodb_id',
-        tileFormat
+        viewport,
+        uniqueIdProperty: 'cartodb_id'
       });
       expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
     });
@@ -398,9 +382,8 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTile,
-        geometryToIntersect: viewportGeometry,
-        uniqueIdProperty: 'cartodb_id',
-        tileFormat
+        viewport,
+        uniqueIdProperty: 'cartodb_id'
       });
       expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
     });
@@ -445,9 +428,8 @@ describe('viewport features with binary mode', () => {
 
         const properties = tileFeatures({
           tiles: mockedTiles,
-          geometryToIntersect: viewportGeometry,
-          uniqueIdProperty: undefined,
-          tileFormat
+          viewport,
+          uniqueIdProperty: undefined
         });
 
         // prettier-ignore
@@ -483,9 +465,8 @@ describe('viewport features with binary mode', () => {
 
         const properties = tileFeatures({
           tiles: mockedTile,
-          geometryToIntersect: viewportGeometry,
-          uniqueIdProperty: undefined,
-          tileFormat
+          viewport,
+          uniqueIdProperty: undefined
         });
         // prettier-ignore
         expect(properties).toEqual([
@@ -520,9 +501,8 @@ describe('viewport features with binary mode', () => {
 
         const properties = tileFeatures({
           tiles: mockedTile,
-          geometryToIntersect: viewportGeometry,
-          uniqueIdProperty: undefined,
-          tileFormat
+          viewport,
+          uniqueIdProperty: undefined
         });
         // prettier-ignore
         expect(properties).toEqual([
@@ -556,9 +536,8 @@ describe('viewport features with binary mode', () => {
 
         const properties = tileFeatures({
           tiles: mockedTile,
-          geometryToIntersect: viewportGeometry,
-          uniqueIdProperty: undefined,
-          tileFormat
+          viewport,
+          uniqueIdProperty: undefined
         });
         // prettier-ignore
         expect(properties).toEqual([
@@ -594,9 +573,8 @@ describe('viewport features with binary mode', () => {
 
       const properties = tileFeatures({
         tiles: mockedTile,
-        geometryToIntersect: viewportGeometry,
-        uniqueIdProperty: 'user_id',
-        tileFormat
+        viewport,
+        uniqueIdProperty: 'user_id'
       });
       // prettier-ignore
       expect(properties).toEqual([
@@ -629,21 +607,21 @@ describe('viewport features with binary mode', () => {
 
       tileFeatures({
         tiles: mockedTile,
-        geometryToIntersect: viewportGeometry,
+        viewport,
         tileFormat: TILE_FORMATS.GEOJSON
       });
       expect(transformToTileCoordsSpy).toHaveBeenCalledTimes(0);
 
       tileFeatures({
         tiles: mockedTile,
-        geometryToIntersect: viewportGeometry,
+        viewport,
         tileFormat: TILE_FORMATS.BINARY
       });
       expect(transformToTileCoordsSpy).toHaveBeenCalledTimes(0);
 
       tileFeatures({
         tiles: mockedTile,
-        geometryToIntersect: viewportGeometry,
+        viewport,
         tileFormat: TILE_FORMATS.MVT
       });
       expect(transformToTileCoordsSpy).toHaveBeenCalledTimes(1);

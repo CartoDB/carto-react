@@ -9,102 +9,98 @@ import {
   Divider,
   SvgIcon,
   TextField,
-  Tooltip
+  Tooltip,
+  styled,
+  Box
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { Skeleton } from '@mui/material';
 
 import { animateValues } from './utils/animations';
 import Typography from '../components/atoms/Typography';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    ...theme.typography.body2
-  },
+const SkeletonProgressbar = styled(Skeleton)(({ theme }) => ({
+  height: theme.spacing(1),
+  width: '100%',
+  margin: theme.spacing(0.5, 0, 1, 0)
+}));
 
-  categoriesWrapper: {
-    maxHeight: theme.spacing(40),
-    overflow: 'auto',
-    padding: theme.spacing(0, 1, 1, 0)
-  },
+const Progressbar = styled(Grid)(({ theme }) => ({
+  height: theme.spacing(0.5),
+  width: '100%',
+  margin: theme.spacing(0.5, 0, 1, 0),
+  borderRadius: theme.spacing(0.5),
+  backgroundColor: theme.palette.action.disabledBackground,
 
-  selectable: {
-    cursor: 'pointer',
-    flexWrap: 'nowrap',
+  '& div': {
+    width: 0,
+    height: '100%',
+    borderRadius: theme.spacing(0.5),
+    backgroundColor: theme.palette.secondary.main,
+    transition: `background-color ${theme.transitions.easing.sharp} ${theme.transitions.duration.shortest}ms,
+                 width ${theme.transitions.easing.sharp} ${theme.transitions.duration.complex}ms`
+  }
+}));
 
-    '&:hover $progressbar div': {
-      backgroundColor: theme.palette.secondary.dark
-    }
-  },
+const Label = styled(Typography)(({ theme }) => ({
+  fontWeight: theme.typography.fontWeightBold,
+  marginRight: theme.spacing(2)
+}));
 
-  element: {
-    '&$unselected': {
+const LinkAsButton = styled(Link)(({ theme }) => ({
+  ...theme.typography.caption,
+  cursor: 'pointer',
+  '& + hr': {
+    margin: theme.spacing(0, 1)
+  }
+}));
+
+const StyledRoot = styled(Box)(({ theme: { typography } }) => ({
+  ...typography.body2
+}));
+
+const StyledCategoriesWrapper = styled(Grid)(({ theme: { spacing } }) => ({
+  maxHeight: spacing(40),
+  overflow: 'auto',
+  padding: spacing(0, 1, 1, 0)
+}));
+
+const StylesGridElement = styled(Grid, {
+  shouldForwardProp: (prop) => !['selectable', 'name', 'unselected'].includes(prop)
+})(({ theme, selectable, name, unselected }) => {
+  return {
+    flexDirection: 'row',
+    ...(unselected && {
       color: theme.palette.text.disabled,
-
-      '& $progressbar div': {
+      '.progressbar div': {
         backgroundColor: theme.palette.text.disabled
       }
-    },
+    }),
+    ...(name !== REST_CATEGORY &&
+      selectable && {
+        cursor: 'pointer',
+        flexWrap: 'nowrap',
 
-    '&$rest $progressbar div': {
-      backgroundColor: theme.palette.text.disabled
-    }
-  },
+        '&:hover .progressbar div': {
+          backgroundColor: theme.palette.secondary.dark
+        }
+      }),
+    ...(name === REST_CATEGORY && {
+      cursor: 'default',
+      '.progressbar div': {
+        backgroundColor: theme.palette.text.disabled
+      }
+    })
+  };
+});
 
-  label: {
-    fontWeight: theme.typography.fontWeightBold,
-    marginRight: theme.spacing(2)
-  },
-
-  progressbar: {
-    height: theme.spacing(0.5),
-    width: '100%',
-    margin: theme.spacing(0.5, 0, 1, 0),
-    borderRadius: theme.spacing(0.5),
-    backgroundColor: theme.palette.action.disabledBackground,
-
-    '& div': {
-      width: 0,
-      height: '100%',
-      borderRadius: theme.spacing(0.5),
-      backgroundColor: theme.palette.secondary.main,
-      transition: `background-color ${theme.transitions.easing.sharp} ${theme.transitions.duration.shortest}ms,
-                   width ${theme.transitions.easing.sharp} ${theme.transitions.duration.complex}ms`
-    }
-  },
-
-  skeletonProgressbar: {
-    height: theme.spacing(1),
-    width: '100%',
-    margin: theme.spacing(0.5, 0, 1, 0)
-  },
-
-  unselected: {},
-
-  rest: {
-    cursor: 'default'
-  },
-
-  optionsSelectedBar: {
-    marginBottom: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-
-    '& .MuiTypography-caption': {
-      color: theme.palette.text.secondary
-    }
-  },
-
-  linkAsButton: {
-    ...theme.typography.caption,
-    cursor: 'pointer',
-
-    '& + hr': {
-      margin: theme.spacing(0, 1)
-    }
-  },
-
-  searchInput: {
-    marginTop: theme.spacing(-0.5)
+const StyledOptionsSelectedBar = styled(Grid)(({ theme: { spacing, palette } }) => ({
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: spacing(1.5),
+  paddingRight: spacing(1),
+  '& .MuiTypography-caption': {
+    color: palette.text.secondary
   }
 }));
 
@@ -150,7 +146,6 @@ function CategoryWidgetUI(props) {
   const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
-  const classes = useStyles({ filterable });
 
   // Get blockedCategories in the same order as original data
   const sortBlockedSameAsData = (blockedCategories) =>
@@ -389,24 +384,19 @@ function CategoryWidgetUI(props) {
       };
     }, []);
 
+    const unselected =
+      !showAll &&
+      selectedCategories.length > 0 &&
+      selectedCategories.indexOf(data.name) === -1;
     return (
-      <Grid
+      <StylesGridElement
         container
         direction='row'
         spacing={1}
         onClick={filterable ? onCategoryClick : () => {}}
-        className={`
-          ${classes.element}
-          ${filterable ? classes.selectable : ''}
-          ${
-            !showAll &&
-            selectedCategories.length > 0 &&
-            selectedCategories.indexOf(data.name) === -1
-              ? classes.unselected
-              : ''
-          }
-          ${data.name === REST_CATEGORY ? classes.rest : ''}
-        `}
+        selectable={filterable}
+        unselected={unselected}
+        name={data.name === REST_CATEGORY ? REST_CATEGORY : ''}
       >
         {filterable && showAll && (
           <Grid item>
@@ -425,14 +415,9 @@ function CategoryWidgetUI(props) {
               title={getCategoryLabel(data.name)}
               disableHoverListener={!isOverflowed}
             >
-              <Typography
-                variant='body2'
-                className={classes.label}
-                noWrap
-                ref={textElementRef}
-              >
+              <Label variant='body2' noWrap ref={textElementRef}>
                 {getCategoryLabel(data.name)}
-              </Typography>
+              </Label>
             </Tooltip>
             {typeof value === 'object' && value !== null ? (
               <span>
@@ -444,30 +429,24 @@ function CategoryWidgetUI(props) {
               <span>{value}</span>
             )}
           </Grid>
-          <Grid item className={classes.progressbar}>
+          <Progressbar className='progressbar' item>
             <div style={{ width: getProgressbarLength(data.value) }}></div>
-          </Grid>
+          </Progressbar>
         </Grid>
-      </Grid>
+      </StylesGridElement>
     );
   };
 
   const CategoryItemSkeleton = () => (
     <>
-      <Grid
-        container
-        direction='row'
-        justifyContent='space-between'
-        alignItems='center'
-        className={classes.optionsSelectedBar}
-      >
+      <StyledOptionsSelectedBar container>
         <Typography variant='caption'>
           <Skeleton variant='text' width={100} />
         </Typography>
-      </Grid>
-      <Grid container item className={classes.categoriesWrapper}>
+      </StyledOptionsSelectedBar>
+      <StyledCategoriesWrapper container item>
         {[...Array(4)].map((_, i) => (
-          <Grid key={i} container direction='row' spacing={1} className={classes.element}>
+          <StylesGridElement key={i} container spacing={1}>
             <Grid container item xs zeroMinWidth>
               <Grid container item direction='row' justifyContent='space-between'>
                 <Typography variant='body2' noWrap>
@@ -477,82 +456,54 @@ function CategoryWidgetUI(props) {
                   <Skeleton variant='text' width={70} />
                 </Typography>
               </Grid>
-              <Skeleton variant='text' className={classes.skeletonProgressbar} />
+              <SkeletonProgressbar variant='text' />
             </Grid>
-          </Grid>
+          </StylesGridElement>
         ))}
-      </Grid>
+      </StyledCategoriesWrapper>
     </>
   );
 
   return (
-    <div className={classes.root}>
+    <StyledRoot>
       {data?.length > 0 ? (
         <>
           {filterable && sortedData.length > 0 && (
-            <Grid
-              container
-              direction='row'
-              justifyContent='space-between'
-              alignItems='center'
-              className={classes.optionsSelectedBar}
-            >
+            <StyledOptionsSelectedBar container>
               <Typography variant='caption'>
                 {selectedCategories.length ? selectedCategories.length : 'All'} selected
               </Typography>
               {showAll ? (
-                <Link
-                  className={classes.linkAsButton}
-                  onClick={handleApplyClicked}
-                  underline='hover'
-                >
+                <LinkAsButton onClick={handleApplyClicked} underline='hover'>
                   Apply
-                </Link>
+                </LinkAsButton>
               ) : blockedCategories.length > 0 ? (
-                <Link
-                  className={classes.linkAsButton}
-                  onClick={handleUnblockClicked}
-                  underline='hover'
-                >
+                <LinkAsButton onClick={handleUnblockClicked} underline='hover'>
                   Unlock
-                </Link>
+                </LinkAsButton>
               ) : (
                 selectedCategories.length > 0 && (
                   <Grid container direction='row' justifyContent='flex-end' item xs>
-                    <Link
-                      className={classes.linkAsButton}
-                      onClick={handleBlockClicked}
-                      underline='hover'
-                    >
+                    <LinkAsButton onClick={handleBlockClicked} underline='hover'>
                       Lock
-                    </Link>
+                    </LinkAsButton>
                     <Divider orientation='vertical' flexItem />
-                    <Link
-                      className={classes.linkAsButton}
-                      onClick={handleClearClicked}
-                      underline='hover'
-                    >
+                    <LinkAsButton onClick={handleClearClicked} underline='hover'>
                       Clear
-                    </Link>
+                    </LinkAsButton>
                   </Grid>
                 )
               )}
-            </Grid>
+            </StyledOptionsSelectedBar>
           )}
           {data.length > maxItems && showAll && (
-            <Grid
-              container
-              direction='row'
-              justifyContent='space-between'
-              alignItems='center'
-              className={classes.optionsSelectedBar}
-            >
+            <StyledOptionsSelectedBar container>
               <TextField
                 size='small'
+                mt={-0.5}
                 placeholder='Search'
                 onChange={handleSearchChange}
                 onFocus={handleSearchFocus}
-                className={classes.searchInput}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
@@ -561,9 +512,9 @@ function CategoryWidgetUI(props) {
                   )
                 }}
               />
-            </Grid>
+            </StyledOptionsSelectedBar>
           )}
-          <Grid container item className={classes.categoriesWrapper}>
+          <StyledCategoriesWrapper container item>
             {animValues.length ? (
               animValues.map((d, i) => (
                 <CategoryItem
@@ -584,7 +535,7 @@ function CategoryWidgetUI(props) {
                 </Typography>
               </>
             )}
-          </Grid>
+          </StyledCategoriesWrapper>
           {data.length > maxItems && searchable ? (
             showAll ? (
               <Button size='small' color='primary' onClick={handleCancelClicked}>
@@ -605,7 +556,7 @@ function CategoryWidgetUI(props) {
       ) : (
         <CategoryItemSkeleton />
       )}
-    </div>
+    </StyledRoot>
   );
 }
 
