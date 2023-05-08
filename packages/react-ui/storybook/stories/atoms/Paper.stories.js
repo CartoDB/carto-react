@@ -1,6 +1,5 @@
 import React from 'react';
-import { Grid, Paper } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Grid, Paper, styled } from '@mui/material';
 import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
@@ -27,24 +26,20 @@ const options = {
 };
 export default options;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.grey[50],
+const RootWrapper = styled(Grid)(({ theme }) => ({
+  backgroundColor: theme.palette.grey[50],
 
-    '& .MuiPaper-root': {
-      height: 100,
-      width: 100
-    }
+  '& .MuiPaper-root': {
+    height: 100,
+    width: 100
   }
 }));
 
 const Template = ({ ...args }) => {
-  const classes = useStyles();
-
   return (
-    <Grid container spacing={8} className={classes.root}>
+    <RootWrapper container spacing={8}>
       <PaperElementTemplate {...args} />
-    </Grid>
+    </RootWrapper>
   );
 };
 
@@ -62,10 +57,8 @@ const PaperElementTemplate = ({ elevation, ...args }) => {
 };
 
 const PaperTemplate = ({ ...args }) => {
-  const classes = useStyles();
-
   return (
-    <Grid container spacing={6} className={classes.root}>
+    <RootWrapper container spacing={6}>
       <Grid container item direction='row' spacing={2}>
         <Grid item xs={2}>
           <Typography variant='subtitle1'>Type</Typography>
@@ -105,7 +98,7 @@ const PaperTemplate = ({ ...args }) => {
           <PaperElementTemplate {...args} elevation={24} />
         </Grid>
       </Grid>
-    </Grid>
+    </RootWrapper>
   );
 };
 

@@ -1,9 +1,9 @@
-import React from 'react';
-import { Box, Grid, InputAdornment, TextField } from '@mui/material';
 import { EuroOutlined, InfoOutlined, MapOutlined } from '@mui/icons-material';
-import makeStyles from '@mui/styles/makeStyles';
-import Typography from '../../../src/components/atoms/Typography';
+import { Grid, InputAdornment, TextField } from '@mui/material';
+import React from 'react';
 import PasswordField from '../../../src/components/atoms/PasswordField';
+import Typography from '../../../src/components/atoms/Typography';
+import { Container, Label } from '../../utils/storyStyles';
 
 const options = {
   title: 'Atoms/Text Field',
@@ -62,21 +62,6 @@ const options = {
 };
 export default options;
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: theme.spacing(4)
-  },
-  standalone: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  label: {
-    minWidth: '200px'
-  }
-}));
-
 const startAdornmentText = <InputAdornment position='start'>Kg</InputAdornment>;
 const startAdornmentIcon = (
   <InputAdornment position='start'>
@@ -93,89 +78,71 @@ const endAdornmentIcon = (
 const PlaygroundTemplate = (args) => <TextField {...args}></TextField>;
 
 const VariantsTemplate = ({ label, placeholder, ...rest }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Filled'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Filled'}</Label>
           <TextField {...rest} label={label} variant='filled' placeholder={placeholder} />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Outlined'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Outlined'}</Label>
           <TextField
             {...rest}
             label={label}
             variant='outlined'
             placeholder={placeholder}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Standard'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Standard'}</Label>
           <TextField
             {...rest}
             label={label}
             variant='standard'
             placeholder={placeholder}
           />
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
 };
 
 const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Label + helper text'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Label + helper text'}</Label>
           <TextField
             {...rest}
             label={label}
             placeholder={placeholder}
             helperText={helperText}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Without label + helper text'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Without label + helper text'}</Label>
           <TextField {...rest} placeholder={placeholder} />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Only label'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Only label'}</Label>
           <TextField {...rest} label={label} placeholder={placeholder} />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Only helper text'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Only helper text'}</Label>
           <TextField {...rest} placeholder={placeholder} helperText={helperText} />
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
@@ -188,15 +155,11 @@ const PrefixAndSuffixTemplate = ({
   endAdornment,
   ...rest
 }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Prefix and suffix (text)'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Prefix and suffix (text)'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -206,13 +169,11 @@ const PrefixAndSuffixTemplate = ({
               endAdornment: endAdornmentText
             }}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Prefix and suffix (icon)'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Prefix and suffix (icon)'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -222,13 +183,11 @@ const PrefixAndSuffixTemplate = ({
               endAdornment: endAdornmentIcon
             }}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Prefix and suffix (mix)'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Prefix and suffix (mix)'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -238,13 +197,11 @@ const PrefixAndSuffixTemplate = ({
               endAdornment: endAdornmentIcon
             }}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Only prefix'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Only prefix'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -253,13 +210,11 @@ const PrefixAndSuffixTemplate = ({
               startAdornment: startAdornmentText
             }}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Only suffix'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Only suffix'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -268,15 +223,13 @@ const PrefixAndSuffixTemplate = ({
               endAdornment: endAdornmentText
             }}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'None'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'None'}</Label>
           <TextField {...rest} label={label} placeholder={placeholder} />
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
@@ -581,15 +534,11 @@ const PasswordFieldTemplate = ({
   helperText,
   ...rest
 }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Default'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Default'}</Label>
           <TextField
             {...rest}
             label='Password'
@@ -598,13 +547,11 @@ const PasswordFieldTemplate = ({
             helperText={helperText}
             type='password'
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Custom component'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Custom component'}</Label>
           <PasswordField
             {...rest}
             label='Password'
@@ -612,42 +559,32 @@ const PasswordFieldTemplate = ({
             defaultValue='1234'
             helperText={helperText}
           />
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
 };
 
 const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Typography variant='subtitle1' className={classes.label}>
-          {'Overflow'}
-        </Typography>
-        <Box className={classes.container} style={{ maxWidth: '440px' }}>
-          <Typography variant='body2' className={classes.label}>
-            {'Default'}
-          </Typography>
+        <Label variant='subtitle1'>{'Overflow'}</Label>
+        <Container style={{ maxWidth: '440px' }}>
+          <Label variant='body2'>{'Default'}</Label>
           <TextField
             {...rest}
             label={label}
             placeholder={placeholder}
             defaultValue='felipegutierrezsoriano@cartodb.com'
           />
-        </Box>
+        </Container>
       </Grid>
 
       <Grid item>
-        <Typography variant='subtitle1' className={classes.label}>
-          {'Grouping'}
-        </Typography>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Pairing'}
-          </Typography>
+        <Label variant='subtitle1'>{'Grouping'}</Label>
+        <Container>
+          <Label variant='body2'>{'Pairing'}</Label>
 
           <Grid container spacing={2}>
             <Grid item>
@@ -658,28 +595,22 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
               <TextField {...rest} label={label} placeholder={placeholder} />
             </Grid>
           </Grid>
-        </Box>
+        </Container>
       </Grid>
 
       <Grid item>
-        <Typography variant='subtitle1' className={classes.label}>
-          {'Width'}
-        </Typography>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Default (fullWidth)'}
-          </Typography>
+        <Label variant='subtitle1'>{'Width'}</Label>
+        <Container>
+          <Label variant='body2'>{'Default (fullWidth)'}</Label>
           <TextField
             {...rest}
             label={label}
             placeholder={placeholder}
             defaultValue='felipegutierrezsoriano@cartodb.com'
           />
-        </Box>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'No fullWidth'}
-          </Typography>
+        </Container>
+        <Container>
+          <Label variant='body2'>{'No fullWidth'}</Label>
           <TextField
             {...rest}
             label={label}
@@ -687,17 +618,13 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             defaultValue='felipegutierrezsoriano@cartodb.com'
             fullWidth={false}
           />
-        </Box>
+        </Container>
       </Grid>
 
       <Grid item>
-        <Typography variant='subtitle1' className={classes.label}>
-          {'Types'}
-        </Typography>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Examples'}
-          </Typography>
+        <Label variant='subtitle1'>{'Types'}</Label>
+        <Container>
+          <Label variant='body2'>{'Examples'}</Label>
 
           <TextField
             {...rest}
@@ -728,7 +655,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             defaultValue='1234'
             helperText={helperText}
           />
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );

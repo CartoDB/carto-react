@@ -8,11 +8,12 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
-  TextField
+  TextField,
+  styled
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
+import { Container, Label } from '../../utils/storyStyles';
 
 const options = {
   title: 'Atoms/Select Field',
@@ -71,25 +72,14 @@ const options = {
 };
 export default options;
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: theme.spacing(4)
-  },
-  standalone: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  label: {
-    minWidth: '200px'
-  },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: theme.spacing(1),
-    overflow: 'auto'
-  }
+const ChipWrapper = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'small'
+})(({ theme, small }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: theme.spacing(1),
+  overflow: 'auto',
+  height: theme.spacing(small ? 3 : 4)
 }));
 
 const menuItems = [
@@ -125,15 +115,11 @@ const menuItemsLong = [
 const PlaygroundTemplate = (args) => <SelectField {...args} items={menuItems} />;
 
 const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Filled'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Filled'}</Label>
           <SelectField
             {...rest}
             label={label}
@@ -141,13 +127,11 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             placeholder={placeholder}
             items={menuItems}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Outlined'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Outlined'}</Label>
           <SelectField
             {...rest}
             label={label}
@@ -155,13 +139,11 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             placeholder={placeholder}
             items={menuItems}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Standard'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Standard'}</Label>
           <SelectField
             {...rest}
             label={label}
@@ -169,22 +151,18 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             placeholder={placeholder}
             items={menuItems}
           />
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
 };
 
 const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Label + helper text'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Label + helper text'}</Label>
           <SelectField
             {...rest}
             label={label}
@@ -192,41 +170,35 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
             helperText={helperText}
             items={menuItems}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Without label + helper text'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Without label + helper text'}</Label>
           <SelectField {...rest} placeholder={placeholder} items={menuItems} />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Only label'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Only label'}</Label>
           <SelectField
             {...rest}
             label={label}
             placeholder={placeholder}
             items={menuItems}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Only helper text'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Only helper text'}</Label>
           <SelectField
             {...rest}
             placeholder={placeholder}
             helperText={helperText}
             items={menuItems}
           />
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
@@ -528,7 +500,6 @@ const MultipleTemplate = ({
   size,
   ...rest
 }) => {
-  const classes = useStyles();
   const [personName, setPersonName] = React.useState([]);
   const isSmall = size === 'small';
 
@@ -545,10 +516,8 @@ const MultipleTemplate = ({
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Default (custom component)'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Default (custom component)'}</Label>
           <SelectField
             {...rest}
             multiple
@@ -557,13 +526,11 @@ const MultipleTemplate = ({
             placeholder={placeholder}
             items={menuItems}
           />
-        </Box>
+        </Container>
       </Grid>
       <Grid item xs={3}>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Select (with custom chips)'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Select (with custom chips)'}</Label>
           <Select
             {...rest}
             label={label}
@@ -583,14 +550,11 @@ const MultipleTemplate = ({
               }
 
               return (
-                <Box
-                  className={classes.chips}
-                  style={{ height: isSmall ? '24px' : '32px' }}
-                >
+                <ChipWrapper small={isSmall}>
                   {selected.map((value) => (
                     <Chip size={size} color='default' key={value} label={value} />
                   ))}
-                </Box>
+                </ChipWrapper>
               );
             }}
           >
@@ -600,42 +564,32 @@ const MultipleTemplate = ({
               </MenuItem>
             ))}
           </Select>
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
 };
 
 const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Typography variant='subtitle1' className={classes.label}>
-          {'Overflow'}
-        </Typography>
-        <Box className={classes.container} style={{ maxWidth: '440px' }}>
-          <Typography variant='body2' className={classes.label}>
-            {'Default'}
-          </Typography>
+        <Label variant='subtitle1'>{'Overflow'}</Label>
+        <Container style={{ maxWidth: '440px' }}>
+          <Label variant='body2'>{'Default'}</Label>
           <SelectField
             {...rest}
             label={label}
             placeholder={placeholder}
             items={menuItemsLong}
           />
-        </Box>
+        </Container>
       </Grid>
 
       <Grid item>
-        <Typography variant='subtitle1' className={classes.label}>
-          {'Grouping'}
-        </Typography>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Pairing'}
-          </Typography>
+        <Label variant='subtitle1'>{'Grouping'}</Label>
+        <Container>
+          <Label variant='body2'>{'Pairing'}</Label>
 
           <Grid container spacing={2}>
             <Grid item>
@@ -655,28 +609,22 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
               />
             </Grid>
           </Grid>
-        </Box>
+        </Container>
       </Grid>
 
       <Grid item>
-        <Typography variant='subtitle1' className={classes.label}>
-          {'Width'}
-        </Typography>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Default (fullWidth)'}
-          </Typography>
+        <Label variant='subtitle1'>{'Width'}</Label>
+        <Container>
+          <Label variant='body2'>{'Default (fullWidth)'}</Label>
           <SelectField
             {...rest}
             label={label}
             placeholder={placeholder}
             items={menuItems}
           />
-        </Box>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'No fullWidth'}
-          </Typography>
+        </Container>
+        <Container>
+          <Label variant='body2'>{'No fullWidth'}</Label>
           <SelectField
             {...rest}
             label={label}
@@ -684,7 +632,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             fullWidth={false}
             items={menuItems}
           />
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
