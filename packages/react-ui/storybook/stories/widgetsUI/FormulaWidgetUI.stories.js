@@ -27,7 +27,10 @@ const Template = (args) => <FormulaWidgetUI {...args} />;
 const data = 10000;
 
 export const Empty = Template.bind({});
-Empty.args = { data };
+
+export const Basic = Template.bind({});
+const BasicProps = { data };
+Basic.args = BasicProps;
 
 export const Text = Template.bind({});
 const TextProps = { data: `$${data}` };
@@ -44,14 +47,3 @@ ValueSuffix.args = ValueSuffixProps;
 export const FormatterText = Template.bind({});
 const FormatterTextProps = { data, formatter: (v) => `${v} euros` };
 FormatterText.args = FormatterTextProps;
-
-// export const FormatterValueUnit = Template.bind({});
-// const FormatterValueUnitProps = { data };
-// FormatterValueUnit.args = FormatterValueUnitProps;
-
-// export const FormatterValueUnitBefore = Template.bind({});
-// const FormatterValueUnitBeforeProps = {
-//   data,
-//   unitBefore: true
-// };
-// FormatterValueUnitBefore.args = FormatterValueUnitBeforeProps;
