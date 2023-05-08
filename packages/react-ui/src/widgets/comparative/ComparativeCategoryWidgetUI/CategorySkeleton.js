@@ -2,7 +2,13 @@ import React from 'react';
 import { Box } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '../../../components/atoms/Typography';
-import { CategoriesList, LabelWrapper, Progressbar, Toolbar, Wrapper } from './comparative.styled';
+import {
+  CategoriesList,
+  LabelWrapper,
+  Progressbar,
+  Toolbar,
+  Wrapper
+} from './comparative.styled';
 
 export default function CategorySkeleton() {
   return (
