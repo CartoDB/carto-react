@@ -1,14 +1,14 @@
 import { TextFieldProps } from '@mui/material/TextField';
 
+type SelectFieldItem = {
+  label: string;
+  value: string | number;
+};
+
 export type SelectFieldProps = TextFieldProps & {
-  items: [
-    {
-      label: string;
-      value: string | number;
-    }
-  ];
+  items: SelectFieldItem[];
   multiple?: boolean;
-  placeholder: string;
+  placeholder?: React.ReactNode;
   size?: 'small' | 'medium';
 };
 
