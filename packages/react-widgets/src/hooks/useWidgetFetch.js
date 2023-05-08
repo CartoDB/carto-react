@@ -41,7 +41,7 @@ export default function useWidgetFetch(
   const viewport = useSelector(selectViewport);
   const spatialFilter = useSelector((state) => selectSpatialFilter(state, dataSource));
   const geometryToIntersect = !global
-    ? getGeometryToIntersect(viewport, spatialFilter)
+    ? getGeometryToIntersect(viewport, spatialFilter ? spatialFilter.geometry : null)
     : null;
 
   useCustomCompareEffect(
