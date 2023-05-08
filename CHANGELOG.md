@@ -19,6 +19,7 @@
 - CategoryWidgetUI component migrated from makeStyles to styled-components + cleanup [#645](https://github.com/CartoDB/carto-react/pull/645)
 - HistogramWidgetUI component migrated from makeStyles to styled-components + cleanup [#646](https://github.com/CartoDB/carto-react/pull/646)
 - ComparativeCategoryWidgetUI component migrated from makeStyles to styled-components + cleanup [#648](https://github.com/CartoDB/carto-react/pull/648)
+- FormulaWidgetUI component migrated from makeStyles to styled-components + cleanup [#666](https://github.com/CartoDB/carto-react/pull/666)
 
 ## 2.0
 
