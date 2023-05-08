@@ -2,6 +2,7 @@
 
 ## Not released
 - Added tooltip prop to ComparativeCategoryWidgetUI [#667](https://github.com/CartoDB/carto-react/pull/667)
+- Fix paired buttons spacing when the button is from a different variant [#668](https://github.com/CartoDB/carto-react/pull/668)
 - Added Storybook documentation on how to add an IconButton in a Table [#664](https://github.com/CartoDB/carto-react/pull/664)
 - Changed how widget are calculated when a mask is set: use just the mask, no more intersection between mask and viewport [#661](https://github.com/CartoDB/carto-react/pull/661)
 - LegendCategories component migrated from makeStyles to styled-components + cleanup [#634](https://github.com/CartoDB/carto-react/pull/634)
@@ -19,6 +20,7 @@
 - CategoryWidgetUI component migrated from makeStyles to styled-components + cleanup [#645](https://github.com/CartoDB/carto-react/pull/645)
 - HistogramWidgetUI component migrated from makeStyles to styled-components + cleanup [#646](https://github.com/CartoDB/carto-react/pull/646)
 - ComparativeCategoryWidgetUI component migrated from makeStyles to styled-components + cleanup [#648](https://github.com/CartoDB/carto-react/pull/648)
+- Migrate multiples components from storybook away from makeStyles [#652](https://github.com/CartoDB/carto-react/pull/652)
 
 ## 2.0
 
