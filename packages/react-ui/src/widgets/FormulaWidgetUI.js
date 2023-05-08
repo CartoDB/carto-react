@@ -1,21 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Box, styled } from '@mui/material';
 import { animateValue } from './utils/animations';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    ...theme.typography.h5,
-    fontWeight: theme.typography.fontWeightMedium,
-    color: theme.palette.text.primary
-  },
-  prefix: {
-    marginRight: '2px'
-  },
-  suffix: {
-    marginLeft: '2px'
-  }
+const Root = styled(Box)(({ theme }) => ({
+  ...theme.typography.h5,
+  fontWeight: theme.typography.fontWeightMedium,
+  color: theme.palette.text.primary
+}));
+
+const Prefix = styled('span')(() => ({
+  marginRight: '2px'
+}));
+
+const Suffix = styled('span')(() => ({
+  marginLeft: '2px'
 }));
 
 function usePrevious(value) {
@@ -27,7 +26,6 @@ function usePrevious(value) {
 }
 
 function FormulaWidgetUI(props) {
-  const classes = useStyles();
   const { data, formatter, animation } = props;
   const [value, setValue] = useState('-');
   const requestRef = useRef();
@@ -69,17 +67,17 @@ function FormulaWidgetUI(props) {
   const formattedValue = formatter(value);
 
   return (
-    <Box className={classes.root}>
+    <Root>
       {typeof formattedValue === 'object' && formattedValue !== null ? (
         <span>
-          <span className={classes.prefix}>{formattedValue.prefix}</span>
+          <Prefix>{formattedValue.prefix}</Prefix>
           {formattedValue.value}
-          <span className={classes.suffix}>{formattedValue.suffix}</span>
+          <Suffix>{formattedValue.suffix}</Suffix>
         </span>
       ) : (
         <span>{formattedValue}</span>
       )}
-    </Box>
+    </Root>
   );
 }
 
