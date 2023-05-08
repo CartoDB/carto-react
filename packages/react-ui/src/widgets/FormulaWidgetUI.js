@@ -1,13 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, styled } from '@mui/material';
+import { styled } from '@mui/material';
+import { Typography } from '@carto/react-ui';
 import { animateValue } from './utils/animations';
-
-const Root = styled(Box)(({ theme }) => ({
-  ...theme.typography.h5,
-  fontWeight: theme.typography.fontWeightMedium,
-  color: theme.palette.text.primary
-}));
 
 const Prefix = styled('span')(() => ({
   marginRight: '2px'
@@ -66,18 +61,18 @@ function FormulaWidgetUI(props) {
 
   const formattedValue = formatter(value);
 
-  return (
-    <Root>
-      {typeof formattedValue === 'object' && formattedValue !== null ? (
-        <span>
-          <Prefix>{formattedValue.prefix}</Prefix>
-          {formattedValue.value}
-          <Suffix>{formattedValue.suffix}</Suffix>
-        </span>
-      ) : (
-        <span>{formattedValue}</span>
-      )}
-    </Root>
+  const isComplexFormat = typeof formattedValue === 'object' && formattedValue !== null;
+
+  return isComplexFormat ? (
+    <Typography variant='h5' component='div' weight='medium'>
+      <Prefix>{formattedValue.prefix}</Prefix>
+      {formattedValue.value}
+      <Suffix>{formattedValue.suffix}</Suffix>
+    </Typography>
+  ) : (
+    <Typography variant='h5' component='div' weight='medium'>
+      {formattedValue}
+    </Typography>
   );
 }
 
