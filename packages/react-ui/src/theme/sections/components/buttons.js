@@ -63,7 +63,7 @@ export const buttonsOverrides = {
           fill: 'currentColor'
         },
         // Pairing buttons separation
-        '& + &': {
+        '& + .MuiButtonBase-root': {
           marginLeft: getSpacing(1)
         }
       }),
