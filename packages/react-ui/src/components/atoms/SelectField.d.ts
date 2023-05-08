@@ -5,7 +5,7 @@ type SelectFieldItem = {
   value: string | number;
 };
 
-export type SelectFieldProps = TextFieldProps & {
+export type SelectFieldProps = Omit<TextFieldProps, 'placeholder'> & {
   items: SelectFieldItem[];
   multiple?: boolean;
   placeholder?: React.ReactNode;
