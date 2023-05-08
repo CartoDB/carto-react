@@ -45,5 +45,12 @@ const ValueSuffixProps = { data: { value: data, suffix: '€' } };
 ValueSuffix.args = ValueSuffixProps;
 
 export const FormatterText = Template.bind({});
-const FormatterTextProps = { data, formatter: (v) => `${v} euros` };
+const formatter = (value) =>
+  Intl.NumberFormat('en', {
+    maximumFractionDigits: 1,
+    minimumFractionDigits: 0,
+    notation: 'compact',
+    compactDisplay: 'short'
+  }).format(value);
+const FormatterTextProps = { data, formatter };
 FormatterText.args = FormatterTextProps;
