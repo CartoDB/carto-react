@@ -7,7 +7,16 @@ import AnimatedNumber, {
 } from '../../../custom-components/AnimatedNumber';
 import { transposedCategoryItemPropTypes } from './transposeCategoryData';
 import { OTHERS_KEY } from './ComparativeCategoryWidgetUI';
-import { Bullet, BulletWrapper, CategoryItemWrapperInner, CategoryItemWrapperRoot, Progressbar, ProgressbarWrapper, SignWrapper, StyledTooltip } from './comparative.styled';
+import {
+  Bullet,
+  BulletWrapper,
+  CategoryItemWrapperInner,
+  CategoryItemWrapperRoot,
+  Progressbar,
+  ProgressbarWrapper,
+  SignWrapper,
+  StyledTooltip
+} from './comparative.styled';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
@@ -34,7 +43,11 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
       </Typography>
       <Box pt={1} pb={0.5}>
         <BulletWrapper alignItems='baseline'>
-          <Bullet color={item.key === OTHERS_KEY ? theme.palette.background.default : data.color} />
+          <Bullet
+            color={
+              item.key === OTHERS_KEY ? theme.palette.background.default : data.color
+            }
+          />
           <Typography color='inherit' variant='caption'>
             {name}
           </Typography>
@@ -97,10 +110,7 @@ function CategoryItem({
   );
 
   return (
-    <CategoryItemWrapperRoot
-      onClick={() => onClick(item.key)}
-      className={className}
-    >
+    <CategoryItemWrapperRoot onClick={() => onClick(item.key)} className={className}>
       {showCheckbox ? <Checkbox checked={checkboxChecked} /> : null}
       <CategoryItemWrapperInner>
         <Typography variant='body2' noWrap>

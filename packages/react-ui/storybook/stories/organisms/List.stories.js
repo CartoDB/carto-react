@@ -15,9 +15,9 @@ import {
   ListItemText,
   Typography,
   Switch,
-  Paper
+  Paper,
+  styled
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import {
   Drafts,
   Delete,
@@ -43,20 +43,15 @@ const options = {
 };
 export default options;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.grey[100]
-  },
-  nested: {
-    paddingLeft: theme.spacing(4)
-  }
+const RootWrapper = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.grey[100],
+  margin: theme.spacing(-4),
+  padding: theme.spacing(4)
 }));
 
 const Template = ({ secondary, ...args }) => {
-  const classes = useStyles();
-
   return (
-    <Grid container spacing={6} className={classes.root}>
+    <RootWrapper container spacing={6}>
       <Grid container item spacing={2}>
         <Grid item xs={3}>
           <Paper>
@@ -163,13 +158,11 @@ const Template = ({ secondary, ...args }) => {
           </Paper>
         </Grid>
       </Grid>
-    </Grid>
+    </RootWrapper>
   );
 };
 
 const TemplateMetaValue = ({ secondary, ...args }) => {
-  const classes = useStyles();
-
   const MetaValueLabel = ({ value }) => {
     return (
       <Box alignSelf='flex-start' marginY={0.75}>
@@ -181,7 +174,7 @@ const TemplateMetaValue = ({ secondary, ...args }) => {
   };
 
   return (
-    <Grid container spacing={6} className={classes.root}>
+    <RootWrapper container spacing={6}>
       <Grid container item spacing={2}>
         <Grid item xs={3}>
           <Paper>
@@ -225,15 +218,13 @@ const TemplateMetaValue = ({ secondary, ...args }) => {
           </Paper>
         </Grid>
       </Grid>
-    </Grid>
+    </RootWrapper>
   );
 };
 
 const TemplateSecondaryActions = ({ ...args }) => {
-  const classes = useStyles();
-
   return (
-    <Grid container spacing={6} className={classes.root}>
+    <RootWrapper container spacing={6}>
       <Grid container item spacing={2}>
         <Grid item xs={3}>
           <Paper>
@@ -343,15 +334,13 @@ const TemplateSecondaryActions = ({ ...args }) => {
           </Paper>
         </Grid>
       </Grid>
-    </Grid>
+    </RootWrapper>
   );
 };
 
 const TemplateNested = ({ ...args }) => {
-  const classes = useStyles();
-
   return (
-    <Grid container spacing={6} className={classes.root}>
+    <RootWrapper container spacing={6}>
       <Grid container item spacing={2}>
         <Grid item xs={3}>
           <Paper>
@@ -396,7 +385,7 @@ const TemplateNested = ({ ...args }) => {
           </Paper>
         </Grid>
       </Grid>
-    </Grid>
+    </RootWrapper>
   );
 };
 

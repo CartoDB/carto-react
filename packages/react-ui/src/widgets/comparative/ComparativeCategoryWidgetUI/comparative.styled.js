@@ -1,19 +1,19 @@
 import { Box, TextField, Tooltip, styled } from '@mui/material';
 import CategoryItem from './CategoryItem';
 
-export const Wrapper = styled('div')(({theme}) => ({
+export const Wrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(2, 0),
   ...theme.typography.body2
 }));
 
-export const CategoriesList = styled(Box)(({theme}) => ({
+export const CategoriesList = styled(Box)(({ theme }) => ({
   overflow: 'auto',
   maxHeight: theme.spacing(40),
   paddingRight: theme.spacing(1),
   margin: theme.spacing(0.5, 0)
 }));
 
-export const BulletListWrapper = styled(Box)(({theme}) => ({
+export const BulletListWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   flexWrap: 'wrap',
@@ -21,7 +21,7 @@ export const BulletListWrapper = styled(Box)(({theme}) => ({
   padding: theme.spacing(2, 0)
 }));
 
-export const BulletWrapper = styled(Box)(({theme, alignItems='center'}) => ({
+export const BulletWrapper = styled(Box)(({ theme, alignItems = 'center' }) => ({
   display: 'flex',
   alignItems,
   gap: theme.spacing(0.75)
@@ -29,24 +29,21 @@ export const BulletWrapper = styled(Box)(({theme, alignItems='center'}) => ({
 
 export const Bullet = styled('div', {
   shouldForwardProp: (prop) => prop !== 'color'
-}
-)(({theme, color: backgroundColor}) => ({
+})(({ theme, color: backgroundColor }) => ({
   flexShrink: 0,
   width: theme.spacing(1),
   height: theme.spacing(1),
   borderRadius: theme.spacing(1),
-  backgroundColor,
-
+  backgroundColor
 }));
 
-
-export const ProgressbarWrapper = styled(Box)(({theme}) => ({
+export const ProgressbarWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing(2)
 }));
 
-export const Progressbar = styled('div')(({theme}) => ({
+export const Progressbar = styled('div')(({ theme }) => ({
   height: theme.spacing(0.5),
   width: '100%',
   borderRadius: theme.spacing(0.5),
@@ -61,15 +58,15 @@ export const Progressbar = styled('div')(({theme}) => ({
   }
 }));
 
-export const Toolbar = styled(Box,  {
+export const Toolbar = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'center'
-})(({theme, center = false}) => ({
+})(({ theme, center = false }) => ({
   marginBottom: theme.spacing(2),
   paddingRight: theme.spacing(1),
   ...(center && {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   }),
   '& .MuiTypography-caption': {
     color: theme.palette.text.secondary
@@ -84,32 +81,28 @@ export const Toolbar = styled(Box,  {
   }
 }));
 
-
-export const StyledTooltip = styled(Tooltip)(({theme}) => ({
+export const StyledTooltip = styled(Tooltip)(({ theme }) => ({
   '.MuiTooltip-tooltip': {
     color: theme.palette.common.white,
     maxWidth: 260,
     marginBottom: 0,
-    overflow: 'hidden',
-  },
+    overflow: 'hidden'
+  }
 }));
 
-
-export const SearchInput = styled(TextField)(({theme}) => ({
+export const SearchInput = styled(TextField)(({ theme }) => ({
   marginTop: theme.spacing(-0.5)
 }));
-
 
 export const LabelWrapper = styled(Box)(() => ({
   display: 'flex',
   flexWrap: 'nowrap',
-  justifyContent: 'space-between',
+  justifyContent: 'space-between'
 }));
-
 
 export const CategoryItemStyled = styled(CategoryItem, {
   shouldForwardProp: (prop) => prop !== 'filterable'
-})(({theme, filterable}) => ({
+})(({ theme, filterable }) => ({
   '& .progressbar div': {
     backgroundColor: 'var(--color)'
   },
@@ -117,11 +110,11 @@ export const CategoryItemStyled = styled(CategoryItem, {
     cursor: 'pointer',
     '&:hover .progressbar div': {
       backgroundColor: 'var(--hover-color)'
-    },
+    }
   })
 }));
 
-export const CategoryItemWrapperRoot = styled(Box)(({theme}) => ({
+export const CategoryItemWrapperRoot = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   flexWrap: 'nowrap',
@@ -129,21 +122,19 @@ export const CategoryItemWrapperRoot = styled(Box)(({theme}) => ({
   gap: theme.spacing(1)
 }));
 
-export const CategoryItemWrapperInner = styled(Box)(({theme}) => ({
+export const CategoryItemWrapperInner = styled(Box)(({ theme }) => ({
   padding: theme.spacing(0.5, 0),
   flexGrow: '1',
   maxWidth: '100%',
   minWidth: 0
 }));
 
-
 export const SignWrapper = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'backgroundColor'
-})(({theme, backgroundColor}) => ({
+})(({ theme, backgroundColor }) => ({
   marginLeft: theme.spacing(1),
   padding: theme.spacing(0, 1),
   backgroundColor,
   color: 'white',
   borderRadius: theme.spacing(2)
 }));
-

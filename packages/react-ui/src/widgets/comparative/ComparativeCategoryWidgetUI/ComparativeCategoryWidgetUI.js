@@ -14,7 +14,16 @@ import CategoryWidgetUI from '../../CategoryWidgetUI';
 import { transposeCategoryData } from './transposeCategoryData';
 import CategorySkeleton from './CategorySkeleton';
 import Typography from '../../../components/atoms/Typography';
-import { Bullet, BulletWrapper, BulletListWrapper, CategoriesList, SearchInput, Toolbar, Wrapper, CategoryItemStyled } from './comparative.styled';
+import {
+  Bullet,
+  BulletWrapper,
+  BulletListWrapper,
+  CategoriesList,
+  SearchInput,
+  Toolbar,
+  Wrapper,
+  CategoryItemStyled
+} from './comparative.styled';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
