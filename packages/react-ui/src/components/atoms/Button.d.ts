@@ -1,6 +1,7 @@
-import { ButtonProps as MuiButtonProps } from '@mui/material/Button';
+import { ButtonProps, ButtonTypeMap } from '@mui/material/Button';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 
-export type ButtonProps = MuiButtonProps;
+export { ButtonProps };
 
-declare const Button: (props: ButtonProps) => JSX.Element;
+declare const Button: OverridableComponent<ButtonTypeMap>;
 export default Button;
