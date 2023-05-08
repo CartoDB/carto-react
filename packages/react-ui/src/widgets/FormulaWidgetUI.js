@@ -10,16 +10,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightMedium,
     color: theme.palette.text.primary
   },
-  unit: {
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(0.5),
-
-    '&.before': {
-      marginLeft: 0,
-      marginRight: theme.spacing(0.5)
-    }
+  prefix: {
+    marginRight: '2px'
   },
-  before: {}
+  suffix: {
+    marginLeft: '2px'
+  }
 }));
 
 function usePrevious(value) {
@@ -59,7 +55,8 @@ function FormulaWidgetUI(props) {
         start: referencedPrevValue.current.value,
         end: data.value,
         duration: 1000,
-        drawFrame: (val) => setValue({ value: val, unit: data.prefix }),
+        drawFrame: (val) =>
+          setValue({ value: val, prefix: data.prefix, suffix: data.suffix }),
         requestRef
       });
     } else {
@@ -75,9 +72,7 @@ function FormulaWidgetUI(props) {
     <Box className={classes.root}>
       {typeof formattedValue === 'object' && formattedValue !== null ? (
         <span>
-          <span className={`${classes.unit} ${classes.before}`}>
-            {formattedValue.prefix}
-          </span>
+          <span className={classes.prefix}>{formattedValue.prefix}</span>
           {formattedValue.value}
           <span className={classes.suffix}>{formattedValue.suffix}</span>
         </span>
@@ -91,7 +86,8 @@ function FormulaWidgetUI(props) {
 FormulaWidgetUI.defaultProps = {
   data: '-',
   formatter: (v) => v,
-  unitBefore: false,
+  prefix: '',
+  suffix: '',
   animation: true
 };
 
@@ -101,10 +97,10 @@ FormulaWidgetUI.propTypes = {
     PropTypes.number,
     PropTypes.shape({
       value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-      unit: PropTypes.string
+      prefix: PropTypes.string,
+      suffix: PropTypes.string
     })
   ]),
-  unitBefore: PropTypes.bool,
   formatter: PropTypes.func,
   animation: PropTypes.bool
 };

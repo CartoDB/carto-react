@@ -35,10 +35,9 @@ export type CategoryWidgetUI = {
 export type FormulaWidgetUIData =
   | string
   | number
-  | { value: string[] | number[]; unit: string };
+  | { value: string[] | number[]; prefix?: string; suffix?: string };
 export type FormulaWidgetUI = {
   data: FormulaWidgetUIData;
-  unitBefore?: boolean;
   formatter?: Function;
 };
 
