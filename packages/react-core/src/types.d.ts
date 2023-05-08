@@ -27,7 +27,8 @@ export type Viewport = [number, number, number, number];
 
 export type TileFeatures = {
   tiles?: any; // TODO: add proper deck.gl type
-  geometryToIntersect: Polygon | MultiPolygon | null;
+  viewport?: Viewport;
+  geometry?: Polygon | MultiPolygon;
   uniqueIdProperty?: string;
   tileFormat: TILE_FORMATS;
   geoColumName?: string;

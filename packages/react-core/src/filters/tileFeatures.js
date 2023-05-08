@@ -8,16 +8,15 @@ import tileFeaturesSpatialIndex from './tileFeaturesSpatialIndex';
  * Since it's possible that no mask and no viewport is set, return null in this case.
  *
  * @typedef { import('geojson').Polygon | import('geojson').MultiPolygon } Geometry
- * @typedef { import('geojson').Feature<Geometry> } Feature
  * @typedef { import('geojson').BBox } BBox
  *
  * @param { BBox? } viewport viewport [minX, minY, maxX, maxY], if any
- * @param { Feature? } spatialFilter the active spatial filter (mask), if any
+ * @param { Geometry? } geometry the active spatial filter (mask), if any
  * @returns { Geometry? } the geometry to use for filtering
  */
-export function getGeometryToIntersect(viewport, spatialFilter) {
-  return spatialFilter
-    ? spatialFilter.geometry
+export function getGeometryToIntersect(viewport, geometry) {
+  return geometry
+    ? geometry
     : Array.isArray(viewport) && viewport.length === 4
     ? bboxPolygon(viewport).geometry
     : null;
@@ -25,12 +24,15 @@ export function getGeometryToIntersect(viewport, spatialFilter) {
 
 export function tileFeatures({
   tiles,
-  geometryToIntersect,
+  viewport,
+  geometry,
   uniqueIdProperty,
   tileFormat,
   geoColumName,
   spatialIndex
 }) {
+  const geometryToIntersect = getGeometryToIntersect(viewport, geometry);
+
   if (!geometryToIntersect) {
     return [];
   }

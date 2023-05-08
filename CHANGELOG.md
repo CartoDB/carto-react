@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fix paired buttons spacing when the button is from a different variant [#668](https://github.com/CartoDB/carto-react/pull/668)
 - Added Storybook documentation on how to add an IconButton in a Table [#664](https://github.com/CartoDB/carto-react/pull/664)
 - Changed how widget are calculated when a mask is set: use just the mask, no more intersection between mask and viewport [#661](https://github.com/CartoDB/carto-react/pull/661)
 - LegendCategories component migrated from makeStyles to styled-components + cleanup [#634](https://github.com/CartoDB/carto-react/pull/634)
@@ -14,6 +15,11 @@
 - LegendWrapper component migrated from makeStyles to styled-components + cleanup [#641](https://github.com/CartoDB/carto-react/pull/641)
 - TableWidgetUI component migrated from makeStyles to styled-components + cleanup [#642](https://github.com/CartoDB/carto-react/pull/642)
 - TimeSeriesWidgetUI component cleanup makeStyles and unnecessary className [#643](https://github.com/CartoDB/carto-react/pull/643)
+- Restore backward compatibility of spatial filters [#665](https://github.com/CartoDB/carto-react/pull/665) modified by [#661](https://github.com/CartoDB/carto-react/pull/661)
+- BarWidgetUI component migrated from makeStyles to styled-components + cleanup [#644](https://github.com/CartoDB/carto-react/pull/644)
+- CategoryWidgetUI component migrated from makeStyles to styled-components + cleanup [#645](https://github.com/CartoDB/carto-react/pull/645)
+- HistogramWidgetUI component migrated from makeStyles to styled-components + cleanup [#646](https://github.com/CartoDB/carto-react/pull/646)
+- ComparativeCategoryWidgetUI component migrated from makeStyles to styled-components + cleanup [#648](https://github.com/CartoDB/carto-react/pull/648)
 
 ## 2.0
 
