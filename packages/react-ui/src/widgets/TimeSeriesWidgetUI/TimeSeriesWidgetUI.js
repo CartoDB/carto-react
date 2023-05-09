@@ -1,3 +1,4 @@
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import {
   Box,
   Menu,
@@ -8,11 +9,10 @@ import {
   capitalize,
   Link
 } from '@mui/material';
-import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import TimeSeriesChart from './components/TimeSeriesChart';
 import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesContext';
 import { CHART_TYPES } from './utils/constants';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { GroupDateTypes, getMonday } from '@carto/react-core';
 import Typography from '../../components/atoms/Typography';
 

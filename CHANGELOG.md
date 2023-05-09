@@ -23,6 +23,7 @@
 - ComparativeCategoryWidgetUI component migrated from makeStyles to styled-components + cleanup [#648](https://github.com/CartoDB/carto-react/pull/648)
 - Migrate multiples components from storybook away from makeStyles [#652](https://github.com/CartoDB/carto-react/pull/652)
 - Remove makeStyles leftovers [#669](https://github.com/CartoDB/carto-react/pull/669)
+- FormulaWidgetUI component migrated from makeStyles to styled-components + cleanup [#666](https://github.com/CartoDB/carto-react/pull/666)
 
 ## 2.0
 
