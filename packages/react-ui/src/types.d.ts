@@ -1,13 +1,12 @@
 import { GroupDateTypes } from '@carto/react-core';
-import {
-  AppBarProps as MuiAppBarProps,
-  TextFieldProps,
-  TypographyProps as MuiTypographyProps,
-  AvatarProps as MuiAvatarProps,
-  SxProps,
-  Theme
-} from '@mui/material';
-import { CSSProperties } from 'react';
+import { SxProps, Theme } from '@mui/material';
+export { SelectFieldProps } from './components/atoms/SelectField';
+export { TypographyProps } from './components/atoms/Typography';
+export { LabelWithIndicatorProps } from './components/atoms/LabelWithIndicator';
+export { AvatarProps } from './components/molecules/Avatar';
+export { AccordionGroupProps } from './components/molecules/AccordionGroup';
+export { UploadFieldProps } from './components/molecules/UploadField/UploadField';
+export { AppBarProps } from './components/organisms/AppBar/AppBar';
 
 export type WrapperWidgetUI = {
   title: string;
@@ -271,13 +270,6 @@ export type ComparativePieWidgetUIProps = {
   onCategorySelected?: (categories: string[]) => any;
 };
 
-// Typography
-export interface TypographyProps extends MuiTypographyProps {
-  weight?: 'regular' | 'medium' | 'strong';
-  italic?: boolean;
-  style?: CSSProperties;
-}
-
 // Tooltip data
 // Export types and component if we need it outsite C4R
 type TooltipDataProps = {
@@ -290,59 +282,4 @@ type TooltipDataProps = {
     }
   ];
   title?: string;
-};
-
-// SelectField
-export interface SelectFieldProps extends TextFieldProps {
-  items: [
-    {
-      label: string;
-      value: string | number;
-    }
-  ];
-  multiple?: boolean;
-  placeholder: string;
-  size?: 'small' | 'medium';
-}
-
-// UploadField
-export interface UploadFieldProps extends TextFieldProps {
-  buttonText?: string;
-  accept?: string[];
-  files?: [];
-  onChange: (file?: File | null) => void;
-}
-
-// AppBar
-export interface AppBarProps extends MuiAppBarProps {
-  brandLogo?: React.ReactElement;
-  brandText?: string | React.ReactElement;
-  secondaryText?: string | React.ReactElement;
-  onClickMenu?: Function;
-  showBurgerMenu?: boolean;
-}
-
-// LabelWithIndicator
-export type LabelWithIndicatorProps = {
-  label: string | React.ReactElement;
-  type?: 'optional' | 'required';
-};
-
-// Avatar
-export interface AvatarProps extends MuiAvatarProps {
-  size?: 'large' | 'medium' | 'small' | 'xsmall';
-}
-
-// AccordionGroup
-export type AccordionGroupProps = {
-  variant?: 'standard' | 'outlined';
-  items: [
-    {
-      summary: string;
-      content: string | React.ReactElement;
-      disabled?: boolean;
-      defaultExpanded?: boolean;
-      onChange?: Function;
-    }
-  ];
 };

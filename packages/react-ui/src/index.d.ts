@@ -25,21 +25,30 @@ import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import ComparativePieWidgetUI from './widgets/comparative/ComparativePieWidgetUI';
 import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
-import Typography from './components/atoms/Typography';
-import Button from './components/atoms/Button';
-import PasswordField from './components/atoms/PasswordField';
-import SelectField from './components/atoms/SelectField';
-import UploadField from './components/molecules/UploadField/UploadField';
-import AppBar from './components/organisms/AppBar/AppBar';
-import LabelWithIndicator from './components/atoms/LabelWithIndicator';
+import Typography, {
+  CartoFontWeight,
+  TypographyProps
+} from './components/atoms/Typography';
+import Button, { ButtonProps } from './components/atoms/Button';
+import PasswordField, { PasswordFieldProps } from './components/atoms/PasswordField';
+import SelectField, { SelectFieldProps } from './components/atoms/SelectField';
+import UploadField, {
+  UploadFieldProps
+} from './components/molecules/UploadField/UploadField';
+import AppBar, {AppBarProps} from './components/organisms/AppBar/AppBar';
+import LabelWithIndicator, {
+  LabelWithIndicatorProps
+} from './components/atoms/LabelWithIndicator';
 import { getCartoColorStylePropsForItem } from './utils/palette';
-import Avatar from './components/molecules/Avatar';
+import Avatar, { AvatarProps } from './components/molecules/Avatar';
 import {
   ICON_SIZE_SMALL,
   ICON_SIZE_MEDIUM,
   ICON_SIZE_LARGE
 } from './theme/themeConstants';
-import AccordionGroup from './components/molecules/AccordionGroup';
+import AccordionGroup, {
+  AccordionGroupProps
+} from './components/molecules/AccordionGroup';
 
 export {
   theme,
@@ -71,16 +80,27 @@ export {
   LegendProportion,
   LegendRamp,
   Typography,
+  TypographyProps,
+  CartoFontWeight,
   Button,
+  ButtonProps,
   PasswordField,
+  PasswordFieldProps,
   SelectField,
+  SelectFieldProps,
   UploadField,
+  UploadFieldProps,
   AppBar,
+  AppBarProps,
+
   LabelWithIndicator,
+  LabelWithIndicatorProps,
   getCartoColorStylePropsForItem,
   Avatar,
+  AvatarProps,
   ICON_SIZE_SMALL,
   ICON_SIZE_MEDIUM,
   ICON_SIZE_LARGE,
-  AccordionGroup
+  AccordionGroup,
+  AccordionGroupProps
 };
