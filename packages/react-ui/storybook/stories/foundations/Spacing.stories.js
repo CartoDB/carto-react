@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { makeStyles } from '@mui/styles';
 import Typography from '../../../src/components/atoms/Typography';
+import { FilledContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Foundations/Spacing',
@@ -28,31 +28,19 @@ const options = {
 };
 export default options;
 
-const useStyles = makeStyles((theme) => ({
-  text: {
-    marginBottom: theme.spacing(0.5)
-  },
-  container: {
-    marginBottom: theme.spacing(2),
-    padding: 0,
-    backgroundColor: theme.palette.primary.background,
-    borderRadius: theme.spacing(0.5)
-  }
-}));
-
 const SpacingBox = ({ size }) => {
   const theme = useTheme();
   const sizeVariant = theme.spacing(size);
-  const classes = useStyles();
 
   return (
     <Grid item xs={4} sm={3} md={2}>
-      <Box className={classes.text}>
+      <Box>
         <Typography variant='subtitle1'>{`Spacing ${size}`}</Typography>
-        <Typography variant='caption'>{sizeVariant}</Typography>
+        <Typography component='p' variant='caption' mb={0.5}>
+          {sizeVariant}
+        </Typography>
       </Box>
-      <Box
-        className={classes.container}
+      <FilledContainer
         style={{
           width: sizeVariant,
           height: sizeVariant
