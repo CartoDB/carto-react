@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material';
-import { Typography } from '@carto/react-ui';
 import { animateValue } from './utils/animations';
+import Typography from '../components/atoms/Typography';
 
 const Prefix = styled('span')(() => ({
   marginRight: '2px'
