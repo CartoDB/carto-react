@@ -29,6 +29,19 @@ export const Container = styled(Standalone)(({ theme }) => ({
   marginTop: theme.spacing(4)
 }));
 
+export const FilledContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: theme.spacing(12),
+  height: theme.spacing(12),
+  marginBottom: theme.spacing(2),
+  padding: 0,
+  backgroundColor: theme.palette.primary.background,
+  border: `1px solid ${theme.palette.primary.main}`,
+  borderRadius: theme.spacing(0.5)
+}));
+
 export const Label = styled(Typography)(({ theme }) => ({
   minWidth: theme.spacing(25)
 }));

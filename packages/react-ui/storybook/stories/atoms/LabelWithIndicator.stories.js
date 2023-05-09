@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Box,
   Grid,
   Autocomplete,
   TextField,
@@ -11,12 +10,11 @@ import {
   FormControlLabel,
   Checkbox
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import Typography from '../../../src/components/atoms/Typography';
 import PasswordField from '../../../src/components/atoms/PasswordField';
 import SelectField from '../../../src/components/atoms/SelectField';
 import LabelWithIndicator from '../../../src/components/atoms/LabelWithIndicator';
 import UploadField from '../../../src/components/molecules/UploadField/UploadField';
+import { Container, Label } from '../../utils/storyStyles';
 
 const options = {
   title: 'Atoms/LabelWithIndicator',
@@ -45,21 +43,6 @@ const options = {
   }
 };
 export default options;
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: theme.spacing(4)
-  },
-  standalone: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  label: {
-    minWidth: '200px'
-  }
-}));
 
 const menuItems = [
   {
@@ -96,36 +79,29 @@ const PlaygroundTemplate = (args) => (
 );
 
 const TypesTemplate = ({ ...args }) => {
-  const classes = useStyles();
-
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Optional'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Optional'}</Label>
           <InputLabel>
             <LabelWithIndicator {...args} />
           </InputLabel>
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Required'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Required'}</Label>
           <InputLabel>
             <LabelWithIndicator {...args} type='required' />
           </InputLabel>
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
 };
 
 const UseCasesTemplate = ({ label, ...rest }) => {
-  const classes = useStyles();
   const [files, setFiles] = useState([]);
   const handleUploadFieldChange = (files) => {
     setFiles(files);
@@ -134,10 +110,8 @@ const UseCasesTemplate = ({ label, ...rest }) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'TextField'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'TextField'}</Label>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
               <Grid item xs={3}>
@@ -165,13 +139,11 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               </Grid>
             </Grid>
           </Grid>
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'SelectField'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'SelectField'}</Label>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
               <Grid item xs={3}>
@@ -207,13 +179,11 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               </Grid>
             </Grid>
           </Grid>
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'UploadField'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'UploadField'}</Label>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
               <Grid item xs={3}>
@@ -253,13 +223,11 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               </Grid>
             </Grid>
           </Grid>
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'PasswordField'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'PasswordField'}</Label>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
               <Grid item xs={3}>
@@ -295,13 +263,11 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               </Grid>
             </Grid>
           </Grid>
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Autocomplete'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Autocomplete'}</Label>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
               <Grid item xs={3}>
@@ -353,13 +319,11 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               </Grid>
             </Grid>
           </Grid>
-        </Box>
+        </Container>
       </Grid>
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Checkbox / Radio group'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Checkbox / Radio group'}</Label>
           <Grid container spacing={2}>
             <Grid item container spacing={2}>
               <Grid item xs={3}>
@@ -422,7 +386,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               </Grid>
             </Grid>
           </Grid>
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
