@@ -40,7 +40,8 @@ function FormulaWidget({
   const {
     data = { value: undefined },
     isLoading,
-    warning
+    warning,
+    remoteCalculation
   } = useWidgetFetch(getFormula, {
     id,
     dataSource,
@@ -61,6 +62,7 @@ function FormulaWidget({
         warning={warning}
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
+        showDroppingFeaturesAlert={!remoteCalculation}
       >
         <FormulaWidgetUI
           data={Number.isFinite(data?.value) ? data.value : undefined}

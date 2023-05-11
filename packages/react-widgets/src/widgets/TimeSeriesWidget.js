@@ -125,7 +125,8 @@ function TimeSeriesWidget({
   const {
     data = [],
     isLoading,
-    warning
+    warning,
+    remoteCalculation
   } = useWidgetFetch(getTimeSeries, {
     id,
     dataSource,
@@ -244,6 +245,7 @@ function TimeSeriesWidget({
           global={global}
           droppingFeaturesAlertProps={droppingFeaturesAlertProps}
           noDataAlertProps={noDataAlertProps}
+          showDroppingFeaturesAlert={!remoteCalculation}
         >
           {(!!data.length || isLoading) && (
             <TimeSeriesWidgetUI

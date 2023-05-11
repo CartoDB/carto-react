@@ -106,7 +106,8 @@ function HistogramWidget({
   let {
     data = EMPTY_ARRAY,
     isLoading,
-    warning = _warning
+    warning = _warning,
+    remoteCalculation
   } = useWidgetFetch(getHistogram, {
     id,
     dataSource,
@@ -182,6 +183,7 @@ function HistogramWidget({
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
+        showDroppingFeaturesAlert={!remoteCalculation}
       >
         {(!!data.length || isLoading) && (
           <HistogramWidgetUI

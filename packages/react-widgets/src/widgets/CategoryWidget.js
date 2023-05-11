@@ -67,7 +67,8 @@ function CategoryWidget(props) {
   const {
     data = [],
     isLoading,
-    warning
+    warning,
+    remoteCalculation
   } = useWidgetFetch(getCategories, {
     id,
     dataSource,
@@ -115,6 +116,7 @@ function CategoryWidget(props) {
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
+        showDroppingFeaturesAlert={!remoteCalculation}
       >
         {(!!data.length || isLoading) && (
           <CategoryWidgetUI

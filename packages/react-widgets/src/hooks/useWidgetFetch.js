@@ -87,5 +87,5 @@ export default function useWidgetFetch(
     dequal
   );
 
-  return { data, isLoading, isSourceReady, source, warning };
+  return { data, isLoading, isSourceReady, source, warning, remoteCalculation };
 }

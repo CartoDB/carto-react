@@ -70,7 +70,8 @@ function BarWidget({
   const {
     data: _data = [],
     isLoading,
-    warning
+    warning,
+    remoteCalculation
   } = useWidgetFetch(getCategories, {
     id,
     dataSource,
@@ -147,6 +148,7 @@ function BarWidget({
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
+        showDroppingFeaturesAlert={!remoteCalculation}
       >
         {(!!sortedData.length || isLoading) && (
           <BarWidgetUI

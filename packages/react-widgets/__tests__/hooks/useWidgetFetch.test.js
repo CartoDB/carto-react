@@ -3,7 +3,7 @@ import { DEFAULT_INVALID_COLUMN_ERR } from '../../src/widgets/utils/constants';
 import { act, render, screen } from '@testing-library/react';
 import React from 'react';
 import useWidgetFetch from '../../src/hooks/useWidgetFetch';
-import { mockClear, mockReduxHooks, mockSetup } from '../mockReduxHooks';
+import { mockClear, mockSetup } from '../mockReduxHooks';
 import { selectViewport } from '@carto/react-redux';
 import bboxPolygon from '@turf/bbox-polygon';
 
