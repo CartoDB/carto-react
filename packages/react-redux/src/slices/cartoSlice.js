@@ -380,7 +380,9 @@ const NOT_ALLOWED_DECK_PROPS = [
 ];
 
 /**
- * Action to set the current ViewState
+ * Action to set the current ViewState.
+ *
+ * Requires redux-thunk middleware, also invokes debounced `setViewPort`.
  * @param {Object} viewState
  */
 export const setViewState = (viewState) => {
@@ -400,6 +402,26 @@ export const setViewState = (viewState) => {
     debouncedSetViewPort(dispatch, _setViewPort);
   };
 };
+
+/**
+ * Action to set the current ViewState.
+ *
+ * Doesn't refresh widgets immetiately, requires user to call `setViewPort` once all updates are ready.
+ * @param {Object} viewState
+ */
+export const setViewStateDirect = (viewState) => ({
+  type: 'carto/setViewState',
+  payload: viewState
+});
+
+/**
+ * Sync current viewport state deriving it from `viewState`.
+ *
+ * Causes widgets in remote mode to refresh its data.
+ */
+export const setViewPort = () => ({
+  type: 'carto/setViewPort'
+});
 
 /**
  * Action to set the ready features state of a layer
