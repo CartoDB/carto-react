@@ -119,7 +119,7 @@ function HistogramWidget({
     dataSource,
     id,
     column,
-    type: FilterTypes.CLOSED_OPEN
+    type: FilterTypes.BETWEEN
   });
 
   const selectedBars = useMemo(() => {
@@ -131,7 +131,7 @@ function HistogramWidget({
           return ticks.length;
         } else {
           const idx = ticks.indexOf(from);
-          return idx !== -1 ? idx + 1 : null;
+          return idx !== -1 ? idx + 1 : 0;
         }
       })
       .filter((v) => v !== null);
@@ -141,8 +141,8 @@ function HistogramWidget({
     (selectedBars) => {
       if (selectedBars?.length) {
         const thresholds = selectedBars.map((i) => {
-          let left = ticks[i - 1];
-          let right = ticks.length !== i ? ticks[i] : undefined;
+          let left = ticks[i - 1] || min;
+          let right = ticks.length !== i ? ticks[i] : max;
 
           return [left, right];
         });
@@ -150,7 +150,7 @@ function HistogramWidget({
           addFilter({
             id: dataSource,
             column,
-            type: FilterTypes.CLOSED_OPEN,
+            type: FilterTypes.BETWEEN,
             values: thresholds,
             owner: id
           })
@@ -165,7 +165,7 @@ function HistogramWidget({
         );
       }
     },
-    [column, dataSource, id, dispatch, ticks]
+    [column, dataSource, id, dispatch, ticks, min, max]
   );
 
   return (
