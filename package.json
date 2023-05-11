@@ -16,7 +16,6 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.125",
     "@mui/material": "^5.11.16",
-    "@mui/styles": "^5.11.16",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "styled-components": "^5.2.3",
