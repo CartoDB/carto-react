@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
 import { AggregationTypes, _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
@@ -67,7 +67,6 @@ function FormulaWidget({
         <FormulaWidgetUI
           data={Number.isFinite(data?.value) ? data.value : undefined}
           formatter={formatter}
-          unitBefore={true}
           animation={animation}
         />
       </WidgetWithAlert>

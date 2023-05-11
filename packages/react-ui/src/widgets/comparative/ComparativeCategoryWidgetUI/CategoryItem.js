@@ -1,5 +1,4 @@
-import { Box, Checkbox, darken, Tooltip, Typography, useTheme } from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
+import { Box, Checkbox, darken, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import PropTypes from 'prop-types';
 import AnimatedNumber, {
@@ -92,7 +91,8 @@ function CategoryItem({
   formatter,
   tooltipFormatter,
   onClick = IDENTITY_FN,
-  names
+  names,
+  tooltip
 }) {
   const theme = useTheme();
 
@@ -122,6 +122,7 @@ function CategoryItem({
             title={tooltipContent(i)}
             placement='top-start'
             arrow={false}
+            disableHoverListener={!tooltip}
           >
             <ProgressbarWrapper>
               <Progressbar className='progressbar'>

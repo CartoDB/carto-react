@@ -1,11 +1,10 @@
-import React from 'react';
-import { Box, Grid, IconButton, Tooltip } from '@mui/material';
 import { InfoOutlined } from '@mui/icons-material';
-import makeStyles from '@mui/styles/makeStyles';
-import { commonPalette } from '../../../src/theme/sections/palette';
-import TooltipData from '../../../src/components/organisms/TooltipData';
-import Typography from '../../../src/components/atoms/Typography';
+import { Grid, IconButton, Tooltip } from '@mui/material';
+import React from 'react';
 import Button from '../../../src/components/atoms/Button';
+import TooltipData from '../../../src/components/organisms/TooltipData';
+import { commonPalette } from '../../../src/theme/sections/palette';
+import { Container, Label, Standalone } from '../../utils/storyStyles';
 
 const options = {
   title: 'Molecules/Tooltip',
@@ -40,58 +39,35 @@ const options = {
 };
 export default options;
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: theme.spacing(4)
-  },
-  standalone: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  label: {
-    minWidth: '200px'
-  }
-}));
-
 const TooltipBox = ({ title, ...args }) => {
-  const classes = useStyles();
-
   return (
-    <Box className={classes.container}>
-      <Typography variant='body2' className={classes.label}>
-        {title}
-      </Typography>
+    <Container justifyContent='center'>
+      <Label variant='body2'>{title}</Label>
 
       <Tooltip {...args} title={title}>
         <IconButton>
           <InfoOutlined />
         </IconButton>
       </Tooltip>
-    </Box>
+    </Container>
   );
 };
 
 const TooltipPlaygroundTemplate = (args) => {
-  const classes = useStyles();
-
   return (
-    <Box className={classes.standalone}>
+    <Standalone>
       <Tooltip {...args}>
         <IconButton>
           <InfoOutlined />
         </IconButton>
       </Tooltip>
-    </Box>
+    </Standalone>
   );
 };
 
 const TooltipTextTemplate = () => {
-  const classes = useStyles();
-
   return (
-    <Box className={classes.container}>
+    <Container>
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Tooltip title='Tooltip'>
@@ -102,7 +78,7 @@ const TooltipTextTemplate = () => {
         </Grid>
         <Grid item xs={4}>
           <Tooltip
-            title='This is an example to show that 
+            title='This is an example to show that
 tooltip text can be longer.'
           >
             <IconButton>
@@ -111,7 +87,7 @@ tooltip text can be longer.'
           </Tooltip>
         </Grid>
       </Grid>
-    </Box>
+    </Container>
   );
 };
 
@@ -197,7 +173,7 @@ const TooltipDataTemplate = () => {
 
 const TooltipArrowTemplate = (args) => {
   return (
-    <Grid container direction='column' spacing={2}>
+    <Grid container alignItems='flex-start' direction='column' spacing={2}>
       <Grid item>
         <TooltipBox {...args} title='No arrow' arrow={false} />
       </Grid>
@@ -210,7 +186,7 @@ const TooltipArrowTemplate = (args) => {
 
 const TooltipPositionTemplate = (args) => {
   return (
-    <Grid container direction='column' spacing={2}>
+    <Grid container alignItems='flex-start' direction='column' spacing={2}>
       <Grid item>
         <TooltipBox {...args} title='Tooltip top' />
       </Grid>
@@ -228,19 +204,15 @@ const TooltipPositionTemplate = (args) => {
 };
 
 const TooltipBehaviorTemplate = (args) => {
-  const classes = useStyles();
-
   return (
-    <Grid container direction='column' spacing={2}>
+    <Grid container alignItems='flex-start' direction='column' spacing={2}>
       <Grid item>
         <TooltipBox {...args} title='Default' />
       </Grid>
 
       <Grid item>
-        <Box className={classes.container}>
-          <Typography variant='body2' className={classes.label}>
-            {'Follow cursor'}
-          </Typography>
+        <Container>
+          <Label variant='body2'>{'Follow cursor'}</Label>
 
           <Tooltip
             {...args}
@@ -250,7 +222,7 @@ const TooltipBehaviorTemplate = (args) => {
           >
             <Button variant='outlined'>{'Long Button'}</Button>
           </Tooltip>
-        </Box>
+        </Container>
       </Grid>
     </Grid>
   );
