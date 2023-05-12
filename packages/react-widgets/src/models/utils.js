@@ -63,7 +63,7 @@ export function normalizeObjectKeys(el) {
 
   return Object.entries(el).reduce((acc, [key, value]) => {
     acc[key.toLowerCase()] =
-      typeof value === 'object' ? normalizeObjectKeys(value) : value;
+      typeof value === 'object' && value ? normalizeObjectKeys(value) : value;
     return acc;
   }, {});
 }

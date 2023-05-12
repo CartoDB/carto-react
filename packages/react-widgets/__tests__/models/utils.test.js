@@ -117,20 +117,20 @@ describe('utils', () => {
   });
 
   describe('normalizeObjectKeys', () => {
-    test('should work correctly', () => {
-      const test = { VALUE: 1 };
-      const test2 = [{ TICK: 0, VALUE: 1 }];
-      const test3 = [{ TICK: [{ VALUE: 0 }], VALUE: 1 }];
-
-      expect(JSON.stringify(normalizeObjectKeys(test))).toEqual(
-        JSON.stringify(test).toLowerCase()
-      );
-      expect(JSON.stringify(normalizeObjectKeys(test2))).toEqual(
-        JSON.stringify(test2).toLowerCase()
-      );
-      expect(JSON.stringify(normalizeObjectKeys(test3))).toEqual(
-        JSON.stringify(test3).toLowerCase()
-      );
+    const tests = [
+      // single objects
+      { VALUE: 1 },
+      { A: null, B: undefined, C: 'hello' },
+      { A: { X: null }, B: { X: undefined }, C: 'hello' },
+      // array of objects
+      [{ TICK: 0, VALUE: 1 }],
+      [{ TICK: [{ VALUE: 0 }], VALUE: 1 }],
+      [{ A: null, B: undefined, C: 'hello' }],
+      [{ A: { X: null }, B: { X: undefined }, C: 'hello' }]
+    ];
+    test.each(tests)('should work correctly for %p', (test) => {
+      const normalized = normalizeObjectKeys(test);
+      expect(JSON.stringify(normalized)).toEqual(JSON.stringify(test).toLowerCase());
     });
   });
 
