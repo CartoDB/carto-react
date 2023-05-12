@@ -32,8 +32,11 @@ async function fromRemote(props) {
     opts: { abortController }
   }).then((res) => normalizeObjectKeys(res.rows));
 
-  const result = Array(ticks.length + 1).fill(0);
-  data.forEach(({ tick, value }) => (result[tick] = value));
+  if (data.length) {
+    const result = Array(ticks.length + 1).fill(0);
+    data.forEach(({ tick, value }) => (result[tick] = value));
+    return result;
+  }
 
-  return result;
+  return [];
 }
