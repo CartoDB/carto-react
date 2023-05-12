@@ -8,6 +8,7 @@
 
 ## Not released
 
+- Remove @mui/styles after dumping makeStyles [#670](https://github.com/CartoDB/carto-react/pull/670)
 - Add tooltip prop to ComparativeCategoryWidgetUI [#667](https://github.com/CartoDB/carto-react/pull/667)
 - react-ui: Add component typings [#663](https://github.com/CartoDB/carto-react/pull/663)
 - Fix paired buttons spacing when the button is from a different variant [#668](https://github.com/CartoDB/carto-react/pull/668)
@@ -31,6 +32,7 @@
 - Migrate multiples components from storybook away from makeStyles [#652](https://github.com/CartoDB/carto-react/pull/652)
 - Remove makeStyles leftovers [#669](https://github.com/CartoDB/carto-react/pull/669)
 - FormulaWidgetUI component migrated from makeStyles to styled-components + cleanup [#666](https://github.com/CartoDB/carto-react/pull/666)
+- Fix histogram widget filter for max/min values [#671](https://github.com/CartoDB/carto-react/pull/671)
 
 ## 2.0
 

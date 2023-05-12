@@ -67,6 +67,7 @@ type CustomPalette = Modify<
 >;
 
 // If we get every client to use 'default' theme types, module augmentation probably would allow us omiting this export
+// TODO: please let's reconsider this export
 export type CartoTheme = Modify<
   Theme,
   {
@@ -80,6 +81,7 @@ export type CartoTheme = Modify<
   TypeScript clients (eg: *makeStyles* using 'DefaultTheme' | *useTheme* using 'Theme')
 */
 
+// TODO: even if c4r doesn't require now @mui/styles, clients using it will be benefited from this module augmentation
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultTheme extends CartoTheme {}
