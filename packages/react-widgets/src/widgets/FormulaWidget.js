@@ -55,6 +55,8 @@ function FormulaWidget({
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
+  const value = Number.isFinite(data?.value) ? data.value : undefined;
+
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <WidgetWithAlert
@@ -64,11 +66,9 @@ function FormulaWidget({
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         showDroppingFeaturesAlert={!remoteCalculation}
       >
-        <FormulaWidgetUI
-          data={Number.isFinite(data?.value) ? data.value : undefined}
-          formatter={formatter}
-          animation={animation}
-        />
+        {value !== undefined && (
+          <FormulaWidgetUI data={value} formatter={formatter} animation={animation} />
+        )}
       </WidgetWithAlert>
     </WrapperWidgetUI>
   );
