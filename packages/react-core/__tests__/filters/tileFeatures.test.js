@@ -2,7 +2,7 @@ import { TILE_FORMATS } from '@deck.gl/carto';
 import { geojsonToBinary } from '@loaders.gl/gis';
 import { tileFeatures } from '../../src';
 import * as transformToTileCoords from '../../src/utils/transformToTileCoords';
-import { getGeometryToIntersect } from '../../src/filters/tileFeatures';
+import { getGeometryToIntersect, isGlobalViewport } from '../../src/filters/tileFeatures';
 import bboxPolygon from '@turf/bbox-polygon';
 
 /** @type { import('../../src').Viewport } */
@@ -23,6 +23,29 @@ const filterGeometry = {
   ]
 };
 
+describe('isGlobalViewport', () => {
+  const normalViewports = [
+    { v: null },
+    { v: viewport },
+    {
+      v: [-344.2596303029739, -75.05112877980663, 230.26452782294038, 75.05112877980655]
+    },
+    { v: [-125.2596303029739, -85.05112877980663, 230.26452782294038, 85.05112877980655] }
+  ];
+  const globalViewports = [
+    { v: [-344.2596303029739, -85.05112877980663, 230.26452782294038, 85.05112877980655] }
+  ];
+
+  test.each(normalViewports)('return false for normal viewports', ({ v }) => {
+    expect(!isGlobalViewport(v));
+  });
+
+  test.each(globalViewports)('return true for global viewports', ({ v }) => {
+    console.log(viewport);
+    expect(isGlobalViewport(v));
+  });
+});
+
 describe('getGeometryToIntersect', () => {
   test('returns null in case no viewport or geometry is present', () => {
     expect(getGeometryToIntersect(null, null)).toStrictEqual(null);
@@ -39,6 +62,14 @@ describe('getGeometryToIntersect', () => {
     expect(getGeometryToIntersect(null, filterGeometry)).toStrictEqual(filterGeometry);
     expect(getGeometryToIntersect(viewport, filterGeometry)).toStrictEqual(
       filterGeometry
+    );
+  });
+
+  test('resolves viewports wapping across the globe', () => {
+    const wrapping = [-200, 0, +190, 45];
+    const nonWrapping = [-180, 0, +180, 45];
+    expect(getGeometryToIntersect(wrapping, null)).toStrictEqual(
+      bboxPolygon(nonWrapping).geometry
     );
   });
 });

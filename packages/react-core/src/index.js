@@ -34,7 +34,11 @@ export {
   applyFilters as _applyFilters
 } from './filters/Filter';
 
-export { tileFeatures, getGeometryToIntersect } from './filters/tileFeatures';
+export {
+  tileFeatures,
+  getGeometryToIntersect,
+  isGlobalViewport
+} from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';
 
 export { GroupDateTypes } from './operations/constants/GroupDateTypes';
