@@ -2,6 +2,7 @@ import { Box, Grid, Tooltip } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import React, { useRef } from 'react';
 import Typography from '../../../src/components/atoms/Typography';
+import { DocContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Foundations/Palette',
@@ -171,6 +172,8 @@ const GreyTemplate = () => {
 const ShadesTemplate = () => {
   return (
     <>
+      <DocContainer severity='info'>{'Common alpha colors'}</DocContainer>
+
       <Typography variant='h6'>{'Black'}</Typography>
       <Container container>
         <ColorBox colorVariant={'black'} colorName={90} />

@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Box, Grid } from '@mui/material';
+import { Alert, Box, Grid } from '@mui/material';
 import Typography from '../../src/components/atoms/Typography';
 
 export const GridVerticalContent = styled(Grid)(({ theme }) => ({
@@ -40,6 +40,10 @@ export const FilledContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.primary.background,
   border: `1px solid ${theme.palette.primary.main}`,
   borderRadius: theme.spacing(0.5)
+}));
+
+export const DocContainer = styled(Alert)(({ theme }) => ({
+  marginBottom: theme.spacing(3)
 }));
 
 export const Label = styled(Typography)(({ theme }) => ({
