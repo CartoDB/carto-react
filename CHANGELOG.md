@@ -8,6 +8,7 @@
 
 ## Not released
 
+- Remove ReactDOMServer dependency and simplify avatar image fallback [#672](https://github.com/CartoDB/carto-react/pull/672)
 - Remove @mui/styles after dumping makeStyles [#670](https://github.com/CartoDB/carto-react/pull/670)
 - Add tooltip prop to ComparativeCategoryWidgetUI [#667](https://github.com/CartoDB/carto-react/pull/667)
 - react-ui: Add component typings [#663](https://github.com/CartoDB/carto-react/pull/663)
