@@ -105,7 +105,5 @@ const TableExampleTemplate = (args) => {
 };
 
 export const Playground = PlaygroundTemplate.bind({});
-Playground.args = {};
 
 export const TableExample = TableExampleTemplate.bind({});
-TableExample.args = {};
