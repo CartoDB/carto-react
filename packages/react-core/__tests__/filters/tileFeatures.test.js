@@ -64,14 +64,6 @@ describe('getGeometryToIntersect', () => {
       filterGeometry
     );
   });
-
-  test('resolves viewports wapping across the globe', () => {
-    const wrapping = [-200, 0, +190, 45];
-    const nonWrapping = [-180, 0, +180, 45];
-    expect(getGeometryToIntersect(wrapping, null)).toStrictEqual(
-      bboxPolygon(nonWrapping).geometry
-    );
-  });
 });
 
 describe('viewport features with binary mode', () => {

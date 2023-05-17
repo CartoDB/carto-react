@@ -2,19 +2,6 @@ import bboxPolygon from '@turf/bbox-polygon';
 import tileFeaturesGeometries from './tileFeaturesGeometries';
 import tileFeaturesSpatialIndex from './tileFeaturesSpatialIndex';
 
-function bboxToGeometry(viewport) {
-  let [minx, miny, maxx, maxy] = viewport;
-  if (maxx - minx > 360) {
-    minx = -180;
-    maxx = +180;
-  }
-  if (maxy - miny > 180) {
-    miny = -90;
-    maxy = +90;
-  }
-  return bboxPolygon([minx, miny, maxx, maxy]).geometry;
-}
-
 /**
  * Select the geometry to use for widget calculation and data filtering.
  * If a spatial filter (mask) is set, use the mask otherwise use the current viewport.
@@ -31,7 +18,7 @@ export function getGeometryToIntersect(viewport, geometry) {
   return geometry && geometry.coordinates
     ? geometry
     : Array.isArray(viewport) && viewport.length === 4
-    ? bboxToGeometry(viewport)
+    ? bboxPolygon(viewport).geometry
     : null;
 }
 
