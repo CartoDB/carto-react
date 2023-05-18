@@ -77,7 +77,7 @@ const TableExampleTemplate = (args) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {[...rows].map((row, index) => (
+            {[...rows, ...rows].map((row, index) => (
               <TableRow hover key={index}>
                 <TableCell component='th' scope='row'>
                   {index + 1}
@@ -90,12 +90,7 @@ const TableExampleTemplate = (args) => {
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TablePagination
-                count={20}
-                page={0}
-                rowsPerPage={5}
-                rowsPerPageOptions={[5, 10, 25, 50]}
-              />
+              <TablePagination count={20} page={0} rowsPerPage={10} />
             </TableRow>
           </TableFooter>
         </Table>
