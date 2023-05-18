@@ -13,6 +13,7 @@ export { debounce } from './utils/debounce';
 export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';
 export { assert as _assert } from './utils/assert';
+export { getGeometryToIntersect, isGlobalViewport } from './utils/geo';
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
@@ -34,11 +35,7 @@ export {
   applyFilters as _applyFilters
 } from './filters/Filter';
 
-export {
-  tileFeatures,
-  getGeometryToIntersect,
-  isGlobalViewport
-} from './filters/tileFeatures';
+export { tileFeatures } from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';
 
 export { GroupDateTypes } from './operations/constants/GroupDateTypes';

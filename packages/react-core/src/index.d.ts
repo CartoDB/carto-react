@@ -15,6 +15,7 @@ export { debounce } from './utils/debounce';
 export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';
 export { assert as _assert } from './utils/assert';
+export { getGeometryToIntersect, isGlobalViewport } from './utils/geo';
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
@@ -27,7 +28,7 @@ export { scatterPlot } from './operations/scatterPlot';
 
 export { FilterTypes as _FilterTypes } from './filters/FilterTypes';
 
-export { tileFeatures, getGeometryToIntersect, isGlobalViewport } from './filters/tileFeatures';
+export { tileFeatures } from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';
 
 export { AggregationFunctions, GroupByFeature, HistogramFeature, Viewport, TileFeatures } from './types';
