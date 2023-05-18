@@ -1,13 +1,8 @@
 # CHANGELOG
 
-## 2.1
-
-## 2.1.0-alpha.0 (2021-05-11)
-
-- Calculation of widget using maps API #658](https://github.com/CartoDB/carto-react/pull/658)
-
 ## Not released
 
+- Calculation of widget using maps API under FF [#658](https://github.com/CartoDB/carto-react/pull/658)
 - TablePagination fixes & DS application [#673](https://github.com/CartoDB/carto-react/pull/673)
 - Remove ReactDOMServer dependency and simplify avatar image fallback [#672](https://github.com/CartoDB/carto-react/pull/672)
 - Remove @mui/styles after dumping makeStyles [#670](https://github.com/CartoDB/carto-react/pull/670)
