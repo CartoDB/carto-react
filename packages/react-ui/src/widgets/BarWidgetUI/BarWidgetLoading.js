@@ -1,7 +1,4 @@
 import { Box, Skeleton, styled } from '@mui/material';
-import Typography from '../../components/atoms/Typography';
-
-const HeaderContainer = styled('div')(({ theme }) => ({}));
 
 const BarsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
