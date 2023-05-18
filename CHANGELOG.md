@@ -2,6 +2,10 @@
 
 ## Not released
 
+## 2.0
+
+### 2.0.3 (2023-05-18)
+
 - Calculation of widget using maps API under FF [#658](https://github.com/CartoDB/carto-react/pull/658)
 - TablePagination fixes & DS application [#673](https://github.com/CartoDB/carto-react/pull/673)
 - Remove ReactDOMServer dependency and simplify avatar image fallback [#672](https://github.com/CartoDB/carto-react/pull/672)
@@ -30,8 +34,6 @@
 - Remove makeStyles leftovers [#669](https://github.com/CartoDB/carto-react/pull/669)
 - FormulaWidgetUI component migrated from makeStyles to styled-components + cleanup [#666](https://github.com/CartoDB/carto-react/pull/666)
 - Fix histogram widget filter for max/min values [#671](https://github.com/CartoDB/carto-react/pull/671)
-
-## 2.0
 
 ### 2.0.2 (2023-04-26)
 
