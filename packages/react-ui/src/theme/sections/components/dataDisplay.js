@@ -2,6 +2,7 @@ import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE, ICON_SIZE_SMALL } from '../../themeC
 import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
+import Typography from '../../../components/atoms/Typography';
 
 const tooltipArrowSize = 1;
 const tooltipSeparation = 0.5;
@@ -211,39 +212,65 @@ export const dataDisplayOverrides = {
 
   // Table
   MuiTablePagination: {
+    defaultProps: {
+      SelectProps: {
+        variant: 'outlined',
+        size: 'small'
+      },
+      labelDisplayedRows: ({ from, to, count }) => {
+        return (
+          <>
+            <Typography
+              component='span'
+              variant='inherit'
+              weight='strong'
+              color='textPrimary'
+            >
+              {`${from}-${to}`}
+            </Typography>
+            {` of ${count}`}
+          </>
+        );
+      }
+    },
     styleOverrides: {
-      select: {
-        paddingRight: getSpacing(7.5),
-        paddingLeft: getSpacing(1.5)
-      },
-      input: {
-        height: getSpacing(4),
-        width: 'auto',
-        border: `2px solid ${commonPalette.divider}`,
-        borderRadius: getSpacing(0.5),
-        fontWeight: themeTypography.fontWeightMedium,
-        paddingRight: getSpacing(3),
-        '& .MuiSelect-icon': {
-          top: '50%',
-          transform: 'translateY(-50%)',
-          width: getSpacing(2.25),
-          height: getSpacing(2.25),
-          right: getSpacing(0.75)
-        }
-      },
-      caption: {
-        ...themeTypography.caption,
-        '&:first-of-type': {
-          color: commonPalette.text.secondary
-        }
+      root: {
+        borderBottom: 0
       },
       toolbar: {
-        minHeight: 0,
-        marginTop: getSpacing(1)
+        minHeight: '0 !important',
+        padding: '0 !important',
+        height: getSpacing(6)
+      },
+      selectLabel: {
+        margin: 0,
+        ...themeTypography.caption,
+        fontWeight: themeTypography.fontWeightMedium
+      },
+      selectIcon: {
+        '&.MuiSvgIcon-root': {
+          right: getSpacing(1)
+        }
+      },
+      input: {
+        marginRight: getSpacing(2),
+        marginLeft: getSpacing(1),
+        width: 'auto',
+        paddingRight: getSpacing(3)
+      },
+      displayedRows: {
+        color: commonPalette.text.secondary
       },
       actions: {
-        '& button:last-child': {
-          marginLeft: getSpacing(2)
+        marginLeft: getSpacing(1),
+
+        '.MuiIconButton-root': {
+          '&:not(.Mui-disabled)': {
+            color: commonPalette.text.secondary
+          },
+          '& + .MuiIconButton-root': {
+            marginLeft: getSpacing(0.5)
+          }
         }
       }
     }
@@ -257,13 +284,8 @@ export const dataDisplayOverrides = {
     styleOverrides: {
       root: {
         transition: 'background-color 0.25s ease',
-        '&:not(.MuiTableRow-head) th, td': {
-          borderColor: commonPalette.divider,
-          '&:not(.MuiTableCell-sizeSmall)': {
-            padding: getSpacing(1, 2),
-            height: getSpacing(6)
-          }
-        },
+        borderColor: commonPalette.divider,
+
         '&.MuiTableRow-hover:hover': {
           cursor: 'pointer'
         }
@@ -272,6 +294,17 @@ export const dataDisplayOverrides = {
   },
   MuiTableCell: {
     styleOverrides: {
+      root: {
+        padding: getSpacing(0.5, 2),
+        height: getSpacing(6),
+
+        '&.MuiTableCell-sizeSmall': {
+          height: getSpacing(4)
+        },
+        '&.MuiTableCell-footer': {
+          padding: 0
+        }
+      },
       head: {
         ...themeTypography.caption,
         fontWeight: themeTypography.fontWeightMedium,
