@@ -156,6 +156,7 @@ function BarWidget({
             height={height}
             animation={animation}
             filterable={filterable}
+            isLoading={isLoading}
           />
         )}
       </WidgetWithAlert>

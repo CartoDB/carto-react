@@ -69,6 +69,7 @@ export type BarWidgetUI = {
   height?: string | number;
   filterable?: boolean;
   animation?: boolean;
+  isLoading?: boolean;
 };
 
 export type PieWidgetUIData = { name: string; value: number }[];

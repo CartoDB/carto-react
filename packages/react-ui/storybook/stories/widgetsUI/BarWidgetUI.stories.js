@@ -1,5 +1,5 @@
 import React from 'react';
-import BarWidgetUI from '../../../src/widgets/BarWidgetUI';
+import BarWidgetUI from '../../../src/widgets/BarWidgetUI/BarWidgetUI';
 import { buildReactPropsAsString } from '../../utils/utils';
 
 const options = {
@@ -135,3 +135,12 @@ MultipleBarsCustomColors.parameters = buildReactPropsAsString(
   MultipleBarsCustomColorsProps,
   'BarWidgetUI'
 );
+
+export const Loading = Template.bind({});
+const LoadingProps = {
+  yAxisData,
+  xAxisData,
+  isLoading: true
+};
+Loading.args = LoadingProps;
+Loading.parameters = buildReactPropsAsString(LoadingProps, 'BarWidgetUI');

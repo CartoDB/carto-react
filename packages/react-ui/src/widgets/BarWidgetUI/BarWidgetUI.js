@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import ReactEcharts from '../custom-components/echarts-for-react';
+import ReactEcharts from '../../custom-components/echarts-for-react';
 import { Grid, Link, useTheme, darken, styled } from '@mui/material';
-import detectTouchScreen from './utils/detectTouchScreen';
-import { processFormatterRes } from './utils/formatterUtils';
-import Typography from '../components/atoms/Typography';
+import detectTouchScreen from '../utils/detectTouchScreen';
+import { processFormatterRes } from '../utils/formatterUtils';
+import Typography from '../../components/atoms/Typography';
+import BarWidgetLoading from './BarWidgetLoading';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
 
@@ -42,7 +43,8 @@ function BarWidgetUI(props) {
     stacked,
     height,
     filterable,
-    animation
+    animation,
+    isLoading
   } = useProcessedProps(props);
 
   const isMultiSeries = series.length > 1;
@@ -287,6 +289,8 @@ function BarWidgetUI(props) {
     [filterable, clickEvent]
   );
 
+  if (isLoading) return <BarWidgetLoading height={height} />;
+
   return (
     <div>
       {onSelectedBarsChange && (
@@ -326,7 +330,8 @@ BarWidgetUI.defaultProps = {
   onSelectedBarsChange: null,
   animation: true,
   filterable: true,
-  stacked: true
+  stacked: true,
+  isLoading: false
 };
 
 const numberOrString = PropTypes.oneOfType([PropTypes.number, PropTypes.string]);
@@ -352,7 +357,8 @@ BarWidgetUI.propTypes = {
   onSelectedBarsChange: PropTypes.func,
   height: numberOrString,
   filterable: PropTypes.bool,
-  animation: PropTypes.bool
+  animation: PropTypes.bool,
+  isLoading: PropTypes.bool
 };
 
 export default BarWidgetUI;
