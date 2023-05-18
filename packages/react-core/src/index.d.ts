@@ -1,3 +1,5 @@
+import { _FeatureFlags } from '.';
+
 export {
   getRequest,
   postRequest,
@@ -13,6 +15,7 @@ export { debounce } from './utils/debounce';
 export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';
 export { assert as _assert } from './utils/assert';
+export { getGeometryToIntersect, isGlobalViewport } from './utils/geo';
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
@@ -25,7 +28,7 @@ export { scatterPlot } from './operations/scatterPlot';
 
 export { FilterTypes as _FilterTypes } from './filters/FilterTypes';
 
-export { tileFeatures, getGeometryToIntersect } from './filters/tileFeatures';
+export { tileFeatures } from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';
 
 export { AggregationFunctions, GroupByFeature, HistogramFeature, Viewport, TileFeatures } from './types';
@@ -38,6 +41,7 @@ export { SpatialIndex } from './operations/constants/SpatialIndexTypes'
 export { FEATURE_SELECTION_MODES, EDIT_MODES, MASK_ID } from './utils/featureSelectionConstants';
 
 export {
+  Flags as _FeatureFlags,
   hasFlag as _hasFeatureFlag,
   setFlags as _setFeatureFlags,
   clearFlags as _clearFeatureFlags

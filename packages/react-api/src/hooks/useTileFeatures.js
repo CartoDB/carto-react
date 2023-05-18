@@ -96,26 +96,31 @@ export default function useTileFeatures({
     loadTiles
   ]);
 
-  useEffect(() => {
-    if (sourceId && isTilesetLoaded) {
-      clearDebounce();
-      setSourceFeaturesReady(false);
-      debounceIdRef.current = debouncedComputeFeatures({
-        viewport,
-        spatialFilter,
-        uniqueIdProperty
-      });
-    }
-  }, [
-    spatialFilter ? spatialFilter : viewport,
-    uniqueIdProperty,
-    debouncedComputeFeatures,
-    sourceId,
-    isTilesetLoaded,
-    setSourceFeaturesReady,
-    clearDebounce,
-    debounceIdRef
-  ]);
+  useEffect(
+    () => {
+      if (sourceId && isTilesetLoaded) {
+        clearDebounce();
+        setSourceFeaturesReady(false);
+        debounceIdRef.current = debouncedComputeFeatures({
+          viewport,
+          spatialFilter,
+          uniqueIdProperty
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      spatialFilter ? spatialFilter : viewport,
+      uniqueIdProperty,
+      debouncedComputeFeatures,
+      sourceId,
+      isTilesetLoaded,
+      setSourceFeaturesReady,
+      clearDebounce,
+      debounceIdRef
+    ]
+  );
 
   const onViewportLoad = useCallback(
     (tiles) => {

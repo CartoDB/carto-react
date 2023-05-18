@@ -94,8 +94,6 @@ function CategoryItem({
   names,
   tooltip
 }) {
-  const theme = useTheme();
-
   function getProgressbarLength(value) {
     return `${Math.min(100, ((value || 0) / maxValue) * 100)}%`;
   }

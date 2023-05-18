@@ -1,26 +1,6 @@
-import bboxPolygon from '@turf/bbox-polygon';
+import { getGeometryToIntersect } from '../utils/geo';
 import tileFeaturesGeometries from './tileFeaturesGeometries';
 import tileFeaturesSpatialIndex from './tileFeaturesSpatialIndex';
-
-/**
- * Select the geometry to use for widget calculation and data filtering.
- * If a spatial filter (mask) is set, use the mask otherwise use the current viewport.
- * Since it's possible that no mask and no viewport is set, return null in this case.
- *
- * @typedef { import('geojson').Polygon | import('geojson').MultiPolygon } Geometry
- * @typedef { import('geojson').BBox } BBox
- *
- * @param { BBox? } viewport viewport [minX, minY, maxX, maxY], if any
- * @param { Geometry? } geometry the active spatial filter (mask), if any
- * @returns { Geometry? } the geometry to use for filtering
- */
-export function getGeometryToIntersect(viewport, geometry) {
-  return geometry
-    ? geometry
-    : Array.isArray(viewport) && viewport.length === 4
-    ? bboxPolygon(viewport).geometry
-    : null;
-}
 
 export function tileFeatures({
   tiles,

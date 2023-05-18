@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-core",
-  "version": "2.1.0-alpha.6",
+  "version": "2.0.3-alpha.2",
   "description": "CARTO for React - Core",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -71,6 +71,6 @@
     "@turf/boolean-within": "^6.3.0",
     "@turf/intersect": "^6.3.0",
     "h3-js": "^3.7.2",
-    "quadbin": "^0.1.5"
+    "quadbin": "^0.1.9"
   }
 }

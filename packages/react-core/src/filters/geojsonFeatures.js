@@ -1,5 +1,5 @@
 import intersects from '@turf/boolean-intersects';
-import { getGeometryToIntersect } from './tileFeatures';
+import { getGeometryToIntersect } from '../utils/geo';
 
 export function geojsonFeatures({ geojson, viewport, geometry, uniqueIdProperty }) {
   let uniqueIdx = 0;
