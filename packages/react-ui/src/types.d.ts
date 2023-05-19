@@ -51,6 +51,7 @@ export type HistogramWidgetUI = {
   name?: string;
   onSelectedBarsChange?: Function;
   height?: number;
+  isLoading?: boolean;
 };
 
 export type BarWidgetUI = {

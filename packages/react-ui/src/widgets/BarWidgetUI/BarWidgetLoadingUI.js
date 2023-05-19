@@ -9,11 +9,11 @@ const BarWidgetLoading = ({ height, ...otherProps }) => {
       </Box>
 
       <SkeletonBarsGrid style={{ height: height }}>
-        <SkeletonBarItem variant='rectangular' width='20%' height='20%' />
-        <SkeletonBarItem variant='rectangular' width='20%' height='40%' />
-        <SkeletonBarItem variant='rectangular' width='20%' height='60%' />
-        <SkeletonBarItem variant='rectangular' width='20%' height='20%' />
-        <SkeletonBarItem variant='rectangular' width='20%' height='80%' />
+        <SkeletonBarItem variant='rectangular' height='20%' />
+        <SkeletonBarItem variant='rectangular' height='40%' />
+        <SkeletonBarItem variant='rectangular' height='60%' />
+        <SkeletonBarItem variant='rectangular' height='20%' />
+        <SkeletonBarItem variant='rectangular' height='80%' />
       </SkeletonBarsGrid>
     </>
   );
