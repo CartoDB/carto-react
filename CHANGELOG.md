@@ -4,6 +4,10 @@
 
 ## 2.0
 
+## 2.0.4 (2023-05-19)
+
+- Fix type propTypes issues [#677](https://github.com/CartoDB/carto-react/pull/677)
+
 ### 2.0.3 (2023-05-18)
 
 - Bump deck.gl to latest 8.9.15 [#675](https://github.com/CartoDB/carto-react/pull/675)
