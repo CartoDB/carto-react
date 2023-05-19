@@ -29,6 +29,10 @@ export const Container = styled(Standalone)(({ theme }) => ({
   marginTop: theme.spacing(4)
 }));
 
+export const ThinContainer = styled(Box)(({ theme }) => ({
+  width: theme.spacing(36)
+}));
+
 export const FilledContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',

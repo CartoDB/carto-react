@@ -5,7 +5,7 @@ import { Grid, Link, useTheme, darken, styled } from '@mui/material';
 import detectTouchScreen from '../utils/detectTouchScreen';
 import { processFormatterRes } from '../utils/formatterUtils';
 import Typography from '../../components/atoms/Typography';
-import BarWidgetLoading from './BarWidgetLoading';
+import BarWidgetLoadingUI from './BarWidgetLoadingUI';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
 
@@ -289,7 +289,7 @@ function BarWidgetUI(props) {
     [filterable, clickEvent]
   );
 
-  if (isLoading) return <BarWidgetLoading height={height} />;
+  if (isLoading) return <BarWidgetLoadingUI height={height} />;
 
   return (
     <div>

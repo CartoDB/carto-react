@@ -1,6 +1,7 @@
 import React from 'react';
 import BarWidgetUI from '../../../src/widgets/BarWidgetUI/BarWidgetUI';
 import { buildReactPropsAsString } from '../../utils/utils';
+import { ThinContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Organisms/Widgets/BarWidgetUI',
@@ -9,10 +10,17 @@ const options = {
 
 export default options;
 
-const Template = (args) => {
+const Template = ({ isLoading, ...args }) => {
   if (args.series && !Array.isArray(args.series)) {
     args.series = [];
   }
+
+  if (isLoading)
+    return (
+      <ThinContainer>
+        <BarWidgetUI isLoading={isLoading} {...args} />
+      </ThinContainer>
+    );
 
   return <BarWidgetUI {...args} />;
 };
