@@ -3,7 +3,12 @@ import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI } from '@carto/react-ui';
-import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
+import {
+  _FilterTypes as FilterTypes,
+  AggregationTypes,
+  _hasFeatureFlag,
+  _FeatureFlags
+} from '@carto/react-core';
 import { getHistogram } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import useWidgetFetch from '../hooks/useWidgetFetch';
@@ -101,7 +106,8 @@ function HistogramWidget({
   let {
     data = EMPTY_ARRAY,
     isLoading,
-    warning = _warning
+    warning = _warning,
+    remoteCalculation
   } = useWidgetFetch(getHistogram, {
     id,
     dataSource,
@@ -112,7 +118,8 @@ function HistogramWidget({
     },
     global,
     onError,
-    enabled: !!ticks.length
+    enabled: !!ticks.length,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   const thresholdsFromFilters = useWidgetFilterValues({
@@ -176,6 +183,7 @@ function HistogramWidget({
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
+        showDroppingFeaturesAlert={!remoteCalculation}
       >
         {(!!data.length || isLoading) && (
           <HistogramWidgetUI

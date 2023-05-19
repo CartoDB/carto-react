@@ -1,5 +1,9 @@
 let featureFlags = [];
 
+export const Flags = Object.freeze({
+  REMOTE_WIDGETS: '2023-remote-widgets'
+});
+
 export function setFlags(flags) {
   const isValidFlag = (f) => typeof f === 'string' && f;
 

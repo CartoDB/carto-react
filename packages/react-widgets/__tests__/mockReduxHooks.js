@@ -11,6 +11,10 @@ export function mockReduxHooks(dispatchValue, selectorValue) {
   useSelectorSpy.mockReturnValue(mockSelectorFn);
 }
 
+export function mockSetup() {
+  return { useDispatch: useDispatchSpy, useSelector: useSelectorSpy };
+}
+
 export function mockClear() {
   useDispatchSpy.mockClear();
   useSelectorSpy.mockClear();

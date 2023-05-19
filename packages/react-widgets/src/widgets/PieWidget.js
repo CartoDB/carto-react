@@ -3,7 +3,12 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, PieWidgetUI } from '@carto/react-ui';
-import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
+import {
+  _FilterTypes as FilterTypes,
+  AggregationTypes,
+  _hasFeatureFlag,
+  _FeatureFlags
+} from '@carto/react-core';
 import { getCategories } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import { columnAggregationOn } from './utils/propTypesFns';
@@ -64,7 +69,8 @@ function PieWidget({
   const {
     data = [],
     isLoading,
-    warning
+    warning,
+    remoteCalculation
   } = useWidgetFetch(getCategories, {
     id,
     dataSource,
@@ -75,7 +81,8 @@ function PieWidget({
       operation
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   const handleSelectedCategoriesChange = useCallback(
@@ -111,6 +118,7 @@ function PieWidget({
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
+        showDroppingFeaturesAlert={!remoteCalculation}
       >
         {(!!data.length || isLoading) && (
           <PieWidgetUI
