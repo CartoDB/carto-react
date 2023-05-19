@@ -8,7 +8,7 @@ export const SkeletonBarsGrid = styled('div')(({ theme }) => ({
   position: 'relative',
   padding: theme.spacing(0, 2),
 
-  // Creates the linear grid effect
+  // Linear grid effect
   '&::before': {
     content: '""',
     position: 'absolute',
@@ -27,6 +27,8 @@ export const SkeletonGraphGrid = styled('div')(({ theme }) => ({
   alignItems: 'flex-end',
   justifyContent: 'space-between',
   width: '100%',
+
+  // Square grid effect
   backgroundImage: `linear-gradient(${theme.palette.grey[50]} 0.5px, transparent 0.5px, transparent calc(100% - 0.5px), ${theme.palette.grey[50]} calc(100% - 0.5px)), linear-gradient(90deg, ${theme.palette.grey[50]} 0.5px, transparent 0.5px, transparent calc(100% - 0.5px), ${theme.palette.grey[50]} calc(100% - 0.5px))`,
   backgroundSize: '8.33% 20%',
   border: `0.5px solid ${theme.palette.grey[50]}`

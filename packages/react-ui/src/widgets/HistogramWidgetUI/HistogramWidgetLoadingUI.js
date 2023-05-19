@@ -1,7 +1,7 @@
 import { Box, Skeleton } from '@mui/material';
 import { SkeletonGraphGrid, SkeletonThinBarItem } from '../SkeletonWidgets';
 
-const HistogramWidgetLoading = ({ height, ...otherProps }) => {
+const HistogramWidgetLoadingUI = ({ height }) => {
   return (
     <>
       <Box mb={2}>
@@ -26,4 +26,4 @@ const HistogramWidgetLoading = ({ height, ...otherProps }) => {
   );
 };
 
-export default HistogramWidgetLoading;
+export default HistogramWidgetLoadingUI;
