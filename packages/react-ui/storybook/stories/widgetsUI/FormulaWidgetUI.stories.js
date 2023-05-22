@@ -1,6 +1,6 @@
 import React from 'react';
 import FormulaWidgetUI from '../../../src/widgets/FormulaWidgetUI/FormulaWidgetUI';
-import { ThinContainer } from '../../utils/storyStyles';
+import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Organisms/Widgets/FormulaWidgetUI',
@@ -23,15 +23,26 @@ const options = {
 
 export default options;
 
-const Template = ({ isLoading, ...args }) => {
-  if (isLoading)
-    return (
-      <ThinContainer>
-        <FormulaWidgetUI isLoading={isLoading} {...args} />
-      </ThinContainer>
-    );
-
+const Template = (args) => {
   return <FormulaWidgetUI {...args} />;
+};
+
+const LoadingTemplate = (args) => {
+  return (
+    <>
+      <Label variant='body1' mb={3}>
+        {'Limited width'}
+      </Label>
+      <ThinContainer>
+        <FormulaWidgetUI {...args} />
+      </ThinContainer>
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Responsive'}
+      </Label>
+      <FormulaWidgetUI {...args} />
+    </>
+  );
 };
 
 const data = 10000;
@@ -65,6 +76,6 @@ const formatter = (value) =>
 const FormatterTextProps = { data, formatter };
 FormatterText.args = FormatterTextProps;
 
-export const Loading = Template.bind({});
+export const Loading = LoadingTemplate.bind({});
 const LoadingProps = { data, isLoading: true };
 Loading.args = LoadingProps;
