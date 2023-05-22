@@ -2,7 +2,7 @@
 
 ## Not released
 
-- BarWidgetUI & HistogramWidgetUI: Add a skeleton for loading state [#674](https://github.com/CartoDB/carto-react/pull/674)
+- BarWidgetUI & HistogramWidgetUI & FormulaWidgetUI: Add a skeleton for loading state [#674](https://github.com/CartoDB/carto-react/pull/674)
 
 ## 2.0
 
