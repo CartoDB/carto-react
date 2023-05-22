@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, screen } from '../widgets/utils/testUtils';
 import userEvent from '@testing-library/user-event';
-import CategoryWidgetUI from '../../src/widgets/CategoryWidgetUI';
+import CategoryWidgetUI from '../../src/widgets/CategoryWidgetUI/CategoryWidgetUI';
 import { currencyFormatter } from './testUtils';
 
 const DATA = [...Array(5)].map((_, idx) => ({

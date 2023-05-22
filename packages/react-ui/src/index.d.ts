@@ -1,6 +1,6 @@
 import { theme, cartoThemeOptions, CartoTheme } from './theme/carto-theme';
 import WrapperWidgetUI from './widgets/WrapperWidgetUI';
-import CategoryWidgetUI from './widgets/CategoryWidgetUI';
+import CategoryWidgetUI from './widgets/CategoryWidgetUI/CategoryWidgetUI';
 import FormulaWidgetUI from './widgets/FormulaWidgetUI';
 import BarWidgetUI from './widgets/BarWidgetUI';
 import HistogramWidgetUI from './widgets/HistogramWidgetUI/HistogramWidgetUI';
@@ -35,7 +35,7 @@ import SelectField, { SelectFieldProps } from './components/atoms/SelectField';
 import UploadField, {
   UploadFieldProps
 } from './components/molecules/UploadField/UploadField';
-import AppBar, {AppBarProps} from './components/organisms/AppBar/AppBar';
+import AppBar, { AppBarProps } from './components/organisms/AppBar/AppBar';
 import LabelWithIndicator, {
   LabelWithIndicatorProps
 } from './components/atoms/LabelWithIndicator';
@@ -92,7 +92,6 @@ export {
   UploadFieldProps,
   AppBar,
   AppBarProps,
-
   LabelWithIndicator,
   LabelWithIndicatorProps,
   getCartoColorStylePropsForItem,
