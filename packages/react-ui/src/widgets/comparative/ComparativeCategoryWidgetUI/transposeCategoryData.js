@@ -1,5 +1,5 @@
 import { lighten } from '@mui/material/styles';
-import CategoryWidgetUI from '../../CategoryWidgetUI';
+import CategoryWidgetUI from '../../CategoryWidgetUI/CategoryWidgetUI';
 import PropTypes from 'prop-types';
 
 const ORDER_TYPES = CategoryWidgetUI.ORDER_TYPES;

@@ -10,9 +10,9 @@ import {
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { animationOptionsPropTypes } from '../../../custom-components/AnimatedNumber';
-import CategoryWidgetUI from '../../CategoryWidgetUI';
+import CategoryWidgetUI from '../../CategoryWidgetUI/CategoryWidgetUI';
 import { transposeCategoryData } from './transposeCategoryData';
-import CategorySkeleton from './CategorySkeleton';
+import CategorySkeleton from '../../CategoryWidgetUI/CategorySkeleton';
 import Typography from '../../../components/atoms/Typography';
 import {
   Bullet,
@@ -62,6 +62,7 @@ function SearchIcon() {
  * @param {(v: any) => any} [props.formatter]
  * @param {boolean} [props.tooltip]
  * @param {(v: any) => any} [props.tooltipFormatter]
+ * @param {boolean} [props.isLoading]
  * -->
  */
 function ComparativeCategoryWidgetUI({
@@ -79,7 +80,8 @@ function ComparativeCategoryWidgetUI({
   onSelectedCategoriesChange = IDENTITY_FN,
   formatter = IDENTITY_FN,
   tooltip = true,
-  tooltipFormatter = IDENTITY_FN
+  tooltipFormatter = IDENTITY_FN,
+  isLoading = false
 }) {
   const theme = useTheme();
   const [searchActive, setSearchActive] = useState(false);
@@ -156,7 +158,7 @@ function ComparativeCategoryWidgetUI({
   const otherCount = processedData.length - compressedData.length + 1;
   const showSearchToggle = searchable && !searchActive && maxItems < processedData.length;
 
-  if (processedData.length === 0) {
+  if (processedData.length === 0 || isLoading) {
     return <CategorySkeleton />;
   }
 
@@ -374,7 +376,8 @@ ComparativeCategoryWidgetUI.propTypes = {
   tooltip: PropTypes.bool,
   onSelectedCategoriesChange: PropTypes.func,
   formatter: PropTypes.func,
-  tooltipFormatter: PropTypes.func
+  tooltipFormatter: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default ComparativeCategoryWidgetUI;
