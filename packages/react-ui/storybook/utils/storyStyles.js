@@ -30,7 +30,7 @@ export const Container = styled(Standalone)(({ theme }) => ({
 }));
 
 export const ThinContainer = styled(Box)(({ theme }) => ({
-  width: theme.spacing(36)
+  maxWidth: theme.spacing(36)
 }));
 
 export const FilledContainer = styled(Box)(({ theme }) => ({
