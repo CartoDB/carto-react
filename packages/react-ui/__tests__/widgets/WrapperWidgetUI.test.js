@@ -6,7 +6,7 @@ import {
   waitForElementToBeRemoved
 } from '../widgets/utils/testUtils';
 import WrapperWidgetUI from '../../src/widgets/WrapperWidgetUI';
-import FormulaWidgetUI from '../../src/widgets/FormulaWidgetUI';
+import FormulaWidgetUI from '../../src/widgets/FormulaWidgetUI/FormulaWidgetUI';
 
 describe('WrapperWidgetUI', () => {
   const TITLE = 'test';

@@ -1,7 +1,7 @@
 import { theme, cartoThemeOptions, CartoTheme } from './theme/carto-theme';
 import WrapperWidgetUI from './widgets/WrapperWidgetUI';
 import CategoryWidgetUI from './widgets/CategoryWidgetUI';
-import FormulaWidgetUI from './widgets/FormulaWidgetUI';
+import FormulaWidgetUI from './widgets/FormulaWidgetUI/FormulaWidgetUI';
 import BarWidgetUI from './widgets/BarWidgetUI/BarWidgetUI';
 import HistogramWidgetUI from './widgets/HistogramWidgetUI/HistogramWidgetUI';
 import PieWidgetUI from './widgets/PieWidgetUI';

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material';
-import { animateValue } from './utils/animations';
-import Typography from '../components/atoms/Typography';
+import { animateValue } from '../utils/animations';
+import Typography from '../../components/atoms/Typography';
+import FormulaWidgetLoadingUI from './FormulaWidgetLoadingUI';
 
 const Prefix = styled('span')(() => ({
   marginRight: '2px'
@@ -21,7 +22,7 @@ function usePrevious(value) {
 }
 
 function FormulaWidgetUI(props) {
-  const { data, formatter, animation } = props;
+  const { data, formatter, animation, isLoading } = props;
   const [value, setValue] = useState('-');
   const requestRef = useRef();
   const prevValue = usePrevious(value);
@@ -63,6 +64,8 @@ function FormulaWidgetUI(props) {
 
   const isComplexFormat = typeof formattedValue === 'object' && formattedValue !== null;
 
+  if (isLoading) return <FormulaWidgetLoadingUI />;
+
   return isComplexFormat ? (
     <Typography variant='h5' component='div' weight='medium'>
       <Prefix>{formattedValue.prefix}</Prefix>
@@ -95,7 +98,8 @@ FormulaWidgetUI.propTypes = {
     })
   ]),
   formatter: PropTypes.func,
-  animation: PropTypes.bool
+  animation: PropTypes.bool,
+  isLoading: PropTypes.bool
 };
 
 export default FormulaWidgetUI;
