@@ -3,10 +3,9 @@
 ## Not released
 
 - Bar & Histogram & Formula Widgets: Add a skeleton for loading state [#674](https://github.com/CartoDB/carto-react/pull/674)
+- Category & ComparativeCategory Widgets: Add a skeleton for loading state [#679](https://github.com/CartoDB/carto-react/pull/679)
 
 ## 2.0
-
-- Category & ComparativeCategory Widgets: Add a skeleton for loading state [#679](https://github.com/CartoDB/carto-react/pull/679)
 
 ## 2.0.4 (2023-05-19)
 
