@@ -5,4 +5,4 @@ export function getGeometryToIntersect(viewport: Viewport | null, geometry: Poly
 
 export function isGlobalViewport(viewport: Viewport | null): boolean;
 
-export function normalizeGeometry(geometry: Polygon | MultiPolygon): Polygon | MultiPolygon | null
+export function normalizeGeometry(geometry: Polygon | MultiPolygon | null): Polygon | MultiPolygon | null

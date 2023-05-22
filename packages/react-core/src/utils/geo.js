@@ -94,30 +94,33 @@ function tx(geometry, distance) {
  *
  * It results in a Polygon or MultiPolygon strictly inside the validity range.
  *
- * @param {Geometry} geometry
+ * @param {Geometry?} geometry
  * @returns {Geometry?}
  */
 export function normalizeGeometry(geometry) {
-  const WORLD = [-180, -90, +180, +90];
+  let result = null;
 
-  const worldClip = clean(bboxClip(geometry, WORLD).geometry);
+  if (geometry) {
+    const WORLD = [-180, -90, +180, +90];
+    const worldClip = clean(bboxClip(geometry, WORLD).geometry);
 
-  const geometryTxWest = tx(geometry, 360);
-  const geometryTxEast = tx(geometry, -360);
+    const geometryTxWest = tx(geometry, 360);
+    const geometryTxEast = tx(geometry, -360);
 
-  let result = worldClip;
+    result = worldClip;
 
-  if (result && geometryTxWest) {
-    const worldWestClip = clean(bboxClip(geometryTxWest, WORLD).geometry);
-    if (worldWestClip) {
-      result = clean(union(result, worldWestClip)?.geometry);
+    if (result && geometryTxWest) {
+      const worldWestClip = clean(bboxClip(geometryTxWest, WORLD).geometry);
+      if (worldWestClip) {
+        result = clean(union(result, worldWestClip)?.geometry);
+      }
     }
-  }
 
-  if (result && geometryTxEast) {
-    const worldEastClip = clean(bboxClip(geometryTxEast, WORLD).geometry);
-    if (worldEastClip) {
-      result = clean(union(result, worldEastClip)?.geometry);
+    if (result && geometryTxEast) {
+      const worldEastClip = clean(bboxClip(geometryTxEast, WORLD).geometry);
+      if (worldEastClip) {
+        result = clean(union(result, worldEastClip)?.geometry);
+      }
     }
   }
 

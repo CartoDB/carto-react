@@ -241,4 +241,8 @@ describe('normalizeGeometry', () => {
     ]).geometry;
     expect(normalizeGeometry(input)).toStrictEqual(expected);
   });
+
+  test('it supports null', () => {
+    expect(normalizeGeometry(null)).toStrictEqual(null);
+  });
 });
