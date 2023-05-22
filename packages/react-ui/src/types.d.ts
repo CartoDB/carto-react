@@ -38,6 +38,7 @@ export type FormulaWidgetUIData =
 export type FormulaWidgetUI = {
   data: FormulaWidgetUIData;
   formatter?: Function;
+  isLoading?: boolean;
 };
 
 export type HistogramWidgetUIData = number[];
