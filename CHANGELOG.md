@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Range Widget: Add a skeleton for loading state [#681](https://github.com/CartoDB/carto-react/pull/681)
 - Bar & Histogram & Formula & ComparativeFormula Widgets: Add a skeleton for loading state [#674](https://github.com/CartoDB/carto-react/pull/674)
 
 ## 2.0
