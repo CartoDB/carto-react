@@ -1,7 +1,7 @@
 import { Skeleton } from '@mui/material';
 
-const FormulaWidgetLoadingUI = () => {
+const FormulaSkeleton = () => {
   return <Skeleton height={24} width={120} />;
 };
 
-export default FormulaWidgetLoadingUI;
+export default FormulaSkeleton;

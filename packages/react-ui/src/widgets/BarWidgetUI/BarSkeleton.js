@@ -1,7 +1,7 @@
 import { Box, Skeleton } from '@mui/material';
 import { SkeletonBarsGrid, SkeletonBarItem } from '../SkeletonWidgets';
 
-const BarWidgetLoadingUI = ({ height }) => {
+const BarSkeleton = ({ height }) => {
   return (
     <>
       <Box mb={2}>
@@ -19,4 +19,4 @@ const BarWidgetLoadingUI = ({ height }) => {
   );
 };
 
-export default BarWidgetLoadingUI;
+export default BarSkeleton;
