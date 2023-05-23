@@ -226,6 +226,7 @@ export type ComparativeFormulaWidgetUI = {
   animated?: boolean;
   animationOptions?: AnimationOptions;
   formatter?: (n: number) => React.ReactNode;
+  isLoading?: boolean;
 };
 
 export enum ORDER_TYPES {
