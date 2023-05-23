@@ -7,7 +7,7 @@ import { processFormatterRes } from '../utils/formatterUtils';
 import detectTouchscreen from '../utils/detectTouchScreen';
 import useHistogramInteractivity from './useHistogramInteractivity';
 import Typography from '../../components/atoms/Typography';
-import HistogramWidgetLoadingUI from './HistogramWidgetLoadingUI';
+import HistogramSkeleton from './HistogramSkeleton';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 
@@ -264,7 +264,7 @@ function HistogramWidgetUI({
     0
   );
 
-  if (isLoading) return <HistogramWidgetLoadingUI height={height} />;
+  if (isLoading) return <HistogramSkeleton height={height} />;
 
   return (
     <div>
