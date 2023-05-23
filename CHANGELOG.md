@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Pie & ComparativePie Widgets: Add a skeleton for loading state [#682](https://github.com/CartoDB/carto-react/pull/682)
 - Bar & Histogram & Formula & ComparativeFormula Widgets: Add a skeleton for loading state [#674](https://github.com/CartoDB/carto-react/pull/674)
 
 ## 2.0
