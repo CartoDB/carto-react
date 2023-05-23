@@ -1,14 +1,18 @@
 import { Box, Skeleton } from '@mui/material';
-import { SkeletonGraphGrid, SkeletonThinBarItem } from '../SkeletonWidgets';
+import {
+  SKELETON_HEIGHT,
+  SkeletonGraphGrid,
+  SkeletonThinBarItem
+} from '../SkeletonWidgets';
 
-const HistogramWidgetLoadingUI = ({ height }) => {
+const HistogramSkeleton = ({ height }) => {
   return (
     <>
       <Box mb={2}>
         <Skeleton width={48} height={8} />
       </Box>
 
-      <SkeletonGraphGrid style={{ height: height }}>
+      <SkeletonGraphGrid style={{ height: height || SKELETON_HEIGHT }}>
         <SkeletonThinBarItem variant='rectangular' height='20%' />
         <SkeletonThinBarItem variant='rectangular' height='40%' />
         <SkeletonThinBarItem variant='rectangular' height='60%' />
@@ -26,4 +30,4 @@ const HistogramWidgetLoadingUI = ({ height }) => {
   );
 };
 
-export default HistogramWidgetLoadingUI;
+export default HistogramSkeleton;

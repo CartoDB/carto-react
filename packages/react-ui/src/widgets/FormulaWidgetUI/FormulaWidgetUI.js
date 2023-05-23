@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/material';
 import { animateValue } from '../utils/animations';
 import Typography from '../../components/atoms/Typography';
-import FormulaWidgetLoadingUI from './FormulaWidgetLoadingUI';
+import FormulaSkeleton from './FormulaSkeleton';
 
 const Prefix = styled('span')(() => ({
   marginRight: '2px'
@@ -64,7 +64,7 @@ function FormulaWidgetUI(props) {
 
   const isComplexFormat = typeof formattedValue === 'object' && formattedValue !== null;
 
-  if (isLoading) return <FormulaWidgetLoadingUI />;
+  if (isLoading) return <FormulaSkeleton />;
 
   return isComplexFormat ? (
     <Typography variant='h5' component='div' weight='medium'>
