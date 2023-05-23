@@ -84,6 +84,7 @@ export type PieWidgetUI = {
   colors?: string[];
   selectedCategories?: string[];
   onSelectedCategoriesChange?: Function;
+  isLoading?: boolean;
 };
 
 export type Layer = {
@@ -271,6 +272,7 @@ export type ComparativePieWidgetUIProps = {
   tooltipFormatter?: (v: any) => string;
   selectedCategories?: string[];
   onCategorySelected?: (categories: string[]) => any;
+  isLoading?: boolean;
 };
 
 // Tooltip data

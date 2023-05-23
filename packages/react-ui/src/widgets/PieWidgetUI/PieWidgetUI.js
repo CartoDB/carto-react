@@ -1,9 +1,10 @@
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import ReactEcharts from '../custom-components/echarts-for-react';
+import ReactEcharts from '../../custom-components/echarts-for-react';
 import { useTheme } from '@mui/material';
-import { disableSerie, setColor } from './utils/chartUtils';
-import { processFormatterRes } from './utils/formatterUtils';
+import { disableSerie, setColor } from '../utils/chartUtils';
+import { processFormatterRes } from '../utils/formatterUtils';
+import PieSkeleton from './PieSkeleton';
 
 function PieWidgetUI({
   name,
@@ -16,7 +17,8 @@ function PieWidgetUI({
   animation,
   filterable,
   selectedCategories,
-  onSelectedCategoriesChange
+  onSelectedCategoriesChange,
+  isLoading
 }) {
   const theme = useTheme();
   const [showLabel, setShowLabel] = useState(true);
@@ -213,6 +215,8 @@ function PieWidgetUI({
     }
   };
 
+  if (isLoading) return <PieSkeleton height={height} />;
+
   return (
     <ReactEcharts
       option={options}
@@ -251,7 +255,8 @@ PieWidgetUI.propTypes = {
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   selectedCategories: PropTypes.array,
-  onSelectedCategoriesChange: PropTypes.func
+  onSelectedCategoriesChange: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default PieWidgetUI;
