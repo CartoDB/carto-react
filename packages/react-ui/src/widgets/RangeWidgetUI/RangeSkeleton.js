@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, styled } from '@mui/material';
 import { Skeleton } from '@mui/material';
+import { SkeletonSolid } from '../SkeletonWidgets';
 
 const Root = styled(Grid)(({ theme }) => ({
   position: 'relative',
@@ -10,6 +11,7 @@ const Root = styled(Grid)(({ theme }) => ({
 
 const DotsContainer = styled(Grid)(({ theme }) => ({
   position: 'absolute',
+  zIndex: 1,
   padding: theme.spacing(0, 3)
 }));
 
@@ -18,8 +20,8 @@ const RangeSkeleton = () => {
     <Grid container>
       <Root container item>
         <DotsContainer container item justifyContent='space-between'>
-          <Skeleton variant='circular' width={12} height={12} />
-          <Skeleton variant='circular' width={12} height={12} />
+          <SkeletonSolid variant='circular' width={12} height={12} />
+          <SkeletonSolid variant='circular' width={12} height={12} />
         </DotsContainer>
 
         <Skeleton height={2} width='100%' />
