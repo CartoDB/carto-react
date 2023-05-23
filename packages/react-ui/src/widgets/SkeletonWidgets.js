@@ -1,5 +1,7 @@
 import { Skeleton, styled } from '@mui/material';
 
+export const SKELETON_HEIGHT = 240;
+
 export const SkeletonBarsGrid = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'flex-end',
@@ -50,8 +52,4 @@ export const SkeletonThinBarItem = styled(Skeleton)(({ theme }) => ({
   '& + &': {
     marginLeft: '1px'
   }
-}));
-
-export const SkeletonMask = styled(Skeleton)(({ theme }) => ({
-  background: theme.palette.common.white
 }));
