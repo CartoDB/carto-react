@@ -87,7 +87,8 @@ const ColorBox = ({ colorVariant, colorName }) => {
       <Typography variant='caption'>
         {figmaColorName(colorVariant, String(colorName))}
         <pre style={{ margin: 0 }}>
-          theme.palette.{colorVariant}.{colorName}
+          theme.palette.{colorVariant}
+          {typeof colorName === 'string' ? `.${colorName}` : `[${colorName}]`}
         </pre>
       </Typography>
     </Box>
