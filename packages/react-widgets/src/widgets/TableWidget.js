@@ -65,16 +65,16 @@ function TableWidget({
     onError
   });
 
-  const { data: rows, totalCount } = data;
+  const { data: rows, pages, totalCount } = data;
 
   useEffect(() => {
     if (pageSize !== undefined) setRowsPerPage(pageSize);
   }, [pageSize]);
 
   useEffect(() => {
-    // force reset the page to 0 when the total number of rows change
+    // force reset the page to 0 when the total number of pages change
     setPage(0);
-  }, [dataSource, totalCount]);
+  }, [dataSource, pages]);
 
   const handleRowsPerPageChange = (newRowsPerPage) => {
     setRowsPerPage(newRowsPerPage);
