@@ -90,10 +90,10 @@ const ColorBox = ({ colorVariant, colorName }) => {
         {figmaColorName(colorVariant, colorName)}
         <pre style={{ margin: 0 }}>
           theme.palette.{colorVariant}
-          {typeof colorName === 'string'
-            ? `.${colorName}`
-            : typeof colorName === 'number'
+          {typeof colorName === 'number' || String(colorName).match(/^[0-9]/)
             ? `[${colorName}]`
+            : typeof colorName === 'string'
+            ? `.${colorName}`
             : ''}
         </pre>
       </Typography>
