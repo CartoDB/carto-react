@@ -1,5 +1,5 @@
-import { Box, Grid, Skeleton, styled } from '@mui/material';
-import { SkeletonMask } from '../SkeletonWidgets';
+import { Box, Skeleton, styled } from '@mui/material';
+import { SKELETON_HEIGHT, SkeletonMask } from '../SkeletonWidgets';
 
 const PieShape = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -22,19 +22,30 @@ const TextContainer = styled('div')(({ theme }) => ({
   zIndex: 2
 }));
 
-const GridLeyend = styled(Grid)(({ theme }) => ({
-  flexDirection: 'row',
-  height: theme.spacing(5.5),
+const Leyend = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(2)
+}));
+
+const LeyendItem = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(1.5),
+  height: theme.spacing(6),
   marginTop: theme.spacing(2)
 }));
 
 const PieSkeleton = ({ height }) => {
-  const PIE_SIZE = parseInt(height, 10);
+  const SIZE = parseInt(height, 10) || SKELETON_HEIGHT;
   const GUTTER = 16;
+  const LEYEND_SIZE = 64;
+
+  const PIE_SIZE = SIZE - LEYEND_SIZE;
   const PIE_INNER_SIZE = PIE_SIZE - GUTTER * 2;
 
   return (
-    <Box height={PIE_SIZE}>
+    <Box height={SIZE}>
       <PieShape>
         <Skeleton variant='circular' width={PIE_SIZE} height={PIE_SIZE} />
         <SkeletonCircleMask
@@ -49,18 +60,14 @@ const PieSkeleton = ({ height }) => {
         </TextContainer>
       </PieShape>
 
-      <GridLeyend container spacing={2}>
+      <Leyend height={LEYEND_SIZE}>
         {[...Array(2)].map((_, i) => (
-          <Grid key={i} item container spacing={1.5}>
-            <Grid item>
-              <Skeleton variant='circular' width={8} height={8} />
-            </Grid>
-            <Grid item>
-              <Skeleton width={48} height={8} />
-            </Grid>
-          </Grid>
+          <LeyendItem key={i}>
+            <Skeleton variant='circular' width={8} height={8} />
+            <Skeleton width={48} height={8} />
+          </LeyendItem>
         ))}
-      </GridLeyend>
+      </Leyend>
     </Box>
   );
 };
