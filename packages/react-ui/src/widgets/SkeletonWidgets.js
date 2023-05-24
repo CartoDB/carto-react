@@ -1,8 +1,8 @@
-import { Skeleton, styled } from '@mui/material';
+import { Box, Skeleton, styled } from '@mui/material';
 
 export const SKELETON_HEIGHT = 240;
 
-export const SkeletonBarsGrid = styled('div')(({ theme }) => ({
+export const SkeletonBarsGrid = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'flex-end',
   justifyContent: 'space-between',
@@ -24,7 +24,7 @@ export const SkeletonBarsGrid = styled('div')(({ theme }) => ({
   }
 }));
 
-export const SkeletonGraphGrid = styled('div')(({ theme }) => ({
+export const SkeletonGraphGrid = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'flex-end',
   justifyContent: 'space-between',

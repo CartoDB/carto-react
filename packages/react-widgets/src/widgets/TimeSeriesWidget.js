@@ -263,10 +263,10 @@ function TimeSeriesWidget({
               isPaused={isPaused}
               onPause={onPause}
               onStop={handleStop}
-              // timelinePosition={timelinePosition}
               onTimelineUpdate={handleTimelineUpdate}
               timeWindow={timeWindow}
               onTimeWindowUpdate={handleTimeWindowUpdate}
+              isLoading={isLoading}
             />
           )}
         </WidgetWithAlert>
