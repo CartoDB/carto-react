@@ -56,7 +56,17 @@ function capitalize(s) {
 }
 
 function figmaColorName(v, n) {
-  return ['Light', capitalize(v), capitalize(n)].filter((v) => v).join('/');
+  return ['Light', capitalize(v), capitalize(n)].filter(Boolean).join('/');
+}
+
+function jsColorSelector(v, n) {
+  return `theme.palette.${v}${
+    typeof n === 'number' || String(n).match(/^[0-9]/)
+      ? `[${n}]`
+      : typeof n === 'string'
+      ? `.${n}`
+      : ''
+  }`;
 }
 
 const Bullet = styled(Box, {
@@ -88,14 +98,7 @@ const ColorBox = ({ colorVariant, colorName }) => {
       <Bullet color={colorValue} />
       <Typography variant='caption'>
         {figmaColorName(colorVariant, colorName)}
-        <pre style={{ margin: 0 }}>
-          theme.palette.{colorVariant}
-          {typeof colorName === 'number' || String(colorName).match(/^[0-9]/)
-            ? `[${colorName}]`
-            : typeof colorName === 'string'
-            ? `.${colorName}`
-            : ''}
-        </pre>
+        <pre style={{ margin: 0 }}>{jsColorSelector(colorVariant, colorName)}</pre>
       </Typography>
     </Box>
   );
