@@ -50,11 +50,13 @@ function decamelCase(s) {
 }
 
 function capitalize(s) {
-  return s.substr(0, 1).toUpperCase() + decamelCase(s.substr(1));
+  return s
+    ? String(s).substring(0, 1).toUpperCase() + decamelCase(String(s).substring(1))
+    : '';
 }
 
 function figmaColorName(v, n) {
-  return ['Light', capitalize(v), capitalize(n)].join('/');
+  return ['Light', capitalize(v), capitalize(n)].filter((v) => v).join('/');
 }
 
 const Bullet = styled(Box, {
@@ -85,10 +87,14 @@ const ColorBox = ({ colorVariant, colorName }) => {
       </Box>
       <Bullet color={colorValue} />
       <Typography variant='caption'>
-        {figmaColorName(colorVariant, String(colorName))}
+        {figmaColorName(colorVariant, colorName)}
         <pre style={{ margin: 0 }}>
           theme.palette.{colorVariant}
-          {typeof colorName === 'string' ? `.${colorName}` : `[${colorName}]`}
+          {typeof colorName === 'string'
+            ? `.${colorName}`
+            : typeof colorName === 'number'
+            ? `[${colorName}]`
+            : ''}
         </pre>
       </Typography>
     </Box>
