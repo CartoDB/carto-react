@@ -16,6 +16,7 @@ export const CategoryItemGroup = styled(Grid, {
     flexDirection: 'row',
     ...(unselected && {
       color: theme.palette.text.disabled,
+
       '.progressbar div': {
         backgroundColor: theme.palette.text.disabled
       }
@@ -31,6 +32,7 @@ export const CategoryItemGroup = styled(Grid, {
       }),
     ...(name === REST_CATEGORY && {
       cursor: 'default',
+
       '.progressbar div': {
         backgroundColor: theme.palette.text.disabled
       }
@@ -81,6 +83,6 @@ export const LinkAsButton = styled(Link)(({ theme }) => ({
   }
 }));
 
-export const CategoriesRoot = styled(Box)(({ theme: { typography } }) => ({
-  ...typography.body2
+export const CategoriesRoot = styled(Box)(({ theme }) => ({
+  ...theme.typography.body2
 }));
