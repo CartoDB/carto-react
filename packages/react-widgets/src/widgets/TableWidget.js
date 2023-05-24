@@ -34,7 +34,6 @@ function TableWidget({
   onError,
   initialPageSize = 10,
   onPageSizeChange,
-  global,
   height,
   dense,
   droppingFeaturesAlertProps,
@@ -49,10 +48,8 @@ function TableWidget({
   const [sortDirection, setSortDirection] = useState('asc');
 
   const {
-    data = { data: EMPTY_ARRAY, totalCount: 0 },
+    data = { data: [], currentPage: 0, pages: 0, totalCount: 0 },
     isLoading,
-    isSourceReady,
-    source,
     warning
   } = useWidgetFetch(getTable, {
     id,
@@ -64,7 +61,7 @@ function TableWidget({
       sortDirection,
       sortByColumnType
     },
-    global,
+    global: false,
     onError
   });
 
@@ -75,9 +72,9 @@ function TableWidget({
   }, [pageSize]);
 
   useEffect(() => {
-    // force reset the page to 0 when the viewport or filters change
+    // force reset the page to 0 when the total number of rows change
     setPage(0);
-  }, [dataSource, isSourceReady, source?.filters]);
+  }, [dataSource, totalCount]);
 
   const handleRowsPerPageChange = (newRowsPerPage) => {
     setRowsPerPage(newRowsPerPage);
