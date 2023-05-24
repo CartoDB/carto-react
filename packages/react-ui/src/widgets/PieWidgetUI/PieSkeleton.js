@@ -1,6 +1,9 @@
 import { Box, Skeleton, styled } from '@mui/material';
 import { SKELETON_HEIGHT, SkeletonMask } from '../SkeletonWidgets';
 
+const GUTTER = 16;
+const LEYEND_SIZE = 64;
+
 const PieShape = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -25,7 +28,8 @@ const TextContainer = styled('div')(({ theme }) => ({
 const Leyend = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  gap: theme.spacing(2)
+  gap: theme.spacing(2),
+  height: LEYEND_SIZE
 }));
 
 const LeyendItem = styled('div')(({ theme }) => ({
@@ -37,20 +41,18 @@ const LeyendItem = styled('div')(({ theme }) => ({
 }));
 
 const PieSkeleton = ({ height }) => {
-  const SIZE = parseInt(height, 10) || SKELETON_HEIGHT;
-  const GUTTER = 16;
-  const LEYEND_SIZE = 64;
-  const PIE_SIZE = SIZE - LEYEND_SIZE;
-  const PIE_INNER_SIZE = PIE_SIZE - GUTTER * 2;
+  const size = parseInt(height, 10) || SKELETON_HEIGHT;
+  const pieSize = size - LEYEND_SIZE;
+  const pieInnerSize = pieSize - GUTTER * 2;
 
   return (
-    <Box height={SIZE}>
+    <Box height={size}>
       <PieShape>
-        <Skeleton variant='circular' width={PIE_SIZE} height={PIE_SIZE} />
+        <Skeleton variant='circular' width={pieSize} height={pieSize} />
         <SkeletonCircleMask
           variant='circular'
-          width={PIE_INNER_SIZE}
-          height={PIE_INNER_SIZE}
+          width={pieInnerSize}
+          height={pieInnerSize}
         />
 
         <TextContainer>
@@ -59,7 +61,7 @@ const PieSkeleton = ({ height }) => {
         </TextContainer>
       </PieShape>
 
-      <Leyend height={LEYEND_SIZE}>
+      <Leyend>
         {[...Array(2)].map((_, i) => (
           <LeyendItem key={i}>
             <Skeleton variant='circular' width={8} height={8} />
