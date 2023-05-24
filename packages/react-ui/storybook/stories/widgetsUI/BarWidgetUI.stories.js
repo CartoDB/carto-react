@@ -1,6 +1,7 @@
 import React from 'react';
-import BarWidgetUI from '../../../src/widgets/BarWidgetUI';
+import BarWidgetUI from '../../../src/widgets/BarWidgetUI/BarWidgetUI';
 import { buildReactPropsAsString } from '../../utils/utils';
+import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Organisms/Widgets/BarWidgetUI',
@@ -15,6 +16,28 @@ const Template = (args) => {
   }
 
   return <BarWidgetUI {...args} />;
+};
+
+const LoadingTemplate = (args) => {
+  if (args.series && !Array.isArray(args.series)) {
+    args.series = [];
+  }
+
+  return (
+    <>
+      <Label variant='body1' mb={3}>
+        {'Limited width'}
+      </Label>
+      <ThinContainer>
+        <BarWidgetUI {...args} />
+      </ThinContainer>
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Responsive'}
+      </Label>
+      <BarWidgetUI {...args} />
+    </>
+  );
 };
 
 const yAxisData = [100, 300, 500, 250, 50, 200];
@@ -135,3 +158,12 @@ MultipleBarsCustomColors.parameters = buildReactPropsAsString(
   MultipleBarsCustomColorsProps,
   'BarWidgetUI'
 );
+
+export const Loading = LoadingTemplate.bind({});
+const LoadingProps = {
+  yAxisData,
+  xAxisData,
+  isLoading: true
+};
+Loading.args = LoadingProps;
+Loading.parameters = buildReactPropsAsString(LoadingProps, 'BarWidgetUI');

@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Bar & Histogram & Formula & ComparativeFormula Widgets: Add a skeleton for loading state [#674](https://github.com/CartoDB/carto-react/pull/674)
+
 ## 2.0
 
 ## 2.0.4 (2023-05-19)
