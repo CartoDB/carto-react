@@ -8,7 +8,7 @@ const PieShape = styled('div')(({ theme }) => ({
   position: 'relative'
 }));
 
-const SkeletonCircleMask = styled(SkeletonMask)(({ theme }) => ({
+const SkeletonCircleMask = styled(SkeletonMask)(() => ({
   position: 'absolute',
   zIndex: 1
 }));
@@ -40,7 +40,6 @@ const PieSkeleton = ({ height }) => {
   const SIZE = parseInt(height, 10) || SKELETON_HEIGHT;
   const GUTTER = 16;
   const LEYEND_SIZE = 64;
-
   const PIE_SIZE = SIZE - LEYEND_SIZE;
   const PIE_INNER_SIZE = PIE_SIZE - GUTTER * 2;
 
