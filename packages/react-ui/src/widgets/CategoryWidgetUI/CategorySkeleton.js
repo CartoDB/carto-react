@@ -17,7 +17,7 @@ const CategorySkeleton = () => {
       <Skeleton width={48} height={8} />
 
       <CategoriesWrapper container mt={3}>
-        {[...Array(4)].map((_, i) => (
+        {[...Array(6)].map((_, i) => (
           <CategoryItemGroup key={i} container spacing={1}>
             <Grid container item direction='row' justifyContent='space-between'>
               <Skeleton width={isOdd(i) ? 72 : 48} height={8} />
