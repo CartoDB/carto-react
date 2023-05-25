@@ -7,10 +7,9 @@ import { AnyAction, Reducer } from 'redux';
 import { Feature, Polygon, MultiPolygon } from 'geojson';
 
 type Source = SourceProps & {
-  id: string
-  filters?: any
-  filtersLogicalOperator?: FiltersLogicalOperators
-  isDroppingFeatures?: boolean
+  filters?: any;
+  filtersLogicalOperator?: FiltersLogicalOperators;
+  isDroppingFeatures?: boolean;
 };
 
 type Layer = {
@@ -25,7 +24,7 @@ type FilterBasic = {
   type: _FilterTypes;
   values: string[] | number[] | number[][];
   owner?: string;
-  params?: Record<string, unknown>
+  params?: Record<string, unknown>;
 };
 
 type FilterCommonProps = {
@@ -71,7 +70,7 @@ declare enum CartoActions {
   SET_FEATURES_READY = 'carto/setFeaturesReady',
   SET_CREDENTIALS = 'carto/setCredentials',
   SET_FEATURE_SELECTION_MODE = 'carto/setFeatureSelectionMode',
-  SET_FEATURE_SELECTION_ENABLED = 'carto/setFeatureSelectionEnabled',
+  SET_FEATURE_SELECTION_ENABLED = 'carto/setFeatureSelectionEnabled'
 }
 
 export function createCartoSlice(
@@ -170,6 +169,9 @@ export function setFeatureSelectionEnabled(enabled: boolean): {
 
 export function selectViewport(state: any): Viewport | null;
 
-export function selectSpatialFilter(state: any, sourceId?: string): Feature<Polygon | MultiPolygon> | null;
+export function selectSpatialFilter(
+  state: any,
+  sourceId?: string
+): Feature<Polygon | MultiPolygon> | null;
 
 export function selectFeatureSelectionMode(state: any): string | null;
