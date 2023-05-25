@@ -4,6 +4,7 @@ import { Box } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { columns, rows } from '../../../src/widgets/TableWidgetUI/mockData';
 import Typography from '../../../src/components/atoms/Typography';
+import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Organisms/Widgets/TableWidgetUI',
@@ -21,6 +22,29 @@ export default options;
 
 const Template = (args) => {
   return <TableWidgetUI {...args} />;
+};
+
+const LoadingTemplate = (args) => {
+  return (
+    <>
+      <Label variant='body1' mb={3}>
+        {'Limited width'}
+      </Label>
+      <ThinContainer>
+        <TableWidgetUI {...args} />
+      </ThinContainer>
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Limited height'}
+      </Label>
+      <TableWidgetUI {...args} height='280px' />
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Responsive'}
+      </Label>
+      <TableWidgetUI {...args} />
+    </>
+  );
 };
 
 const DefaultProps = { columns, rows };
@@ -78,3 +102,6 @@ CustomComponent.args = {
   }),
   rows: rows.slice(0, 5)
 };
+
+export const Loading = LoadingTemplate.bind({});
+Loading.args = { ...DefaultProps, isLoading: true };
