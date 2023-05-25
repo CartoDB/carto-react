@@ -9,6 +9,7 @@ export default function GraphLine(props) {
         stroke='currentColor'
         strokeWidth='2'
         strokeLinejoin='round'
+        vectorEffect='non-scaling-stroke'
       />
     </SvgIcon>
   );
