@@ -7,6 +7,7 @@
 - Storybook: show figma codes/theme code snippets for colors [#684](https://github.com/CartoDB/carto-react/pull/684)
 - Bar & Histogram & Formula & ComparativeFormula Widgets: Add a skeleton for loading state [#674](https://github.com/CartoDB/carto-react/pull/674)
 - Category & ComparativeCategory Widgets: Add a skeleton for loading state [#679](https://github.com/CartoDB/carto-react/pull/679)
+- Improve Source types [#687](https://github.com/CartoDB/carto-react/pull/687)
 
 ## 2.0
 
