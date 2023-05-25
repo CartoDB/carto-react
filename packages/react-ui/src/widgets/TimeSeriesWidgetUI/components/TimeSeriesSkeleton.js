@@ -55,8 +55,8 @@ const TimeSeriesSkeleton = ({ height }) => {
 
         <Grid item>
           {[...Array(3)].map((_, i) => (
-            <Box mt={2}>
-              <Skeleton key={i} width={24} height={24} />
+            <Box key={i} mt={2}>
+              <Skeleton width={24} height={24} />
             </Box>
           ))}
         </Grid>
