@@ -2,8 +2,19 @@ import React from 'react';
 import { Box, Grid, styled } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { SKELETON_HEIGHT, SkeletonBarsGrid } from '../../SkeletonWidgets';
-import GraphLine from '../../../assets/images/GraphLine';
 import { BREAKPOINTS } from '../../../theme/themeConstants';
+import GraphLine from '../../../assets/images/GraphLine';
+
+const Root = styled(Grid)(({ theme }) => ({
+  alignItems: 'stretch',
+  containerType: 'inline-size',
+
+  [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
+    ' > div': {
+      marginRight: 0
+    }
+  }
+}));
 
 const Controls = styled(Grid)(({ theme }) => ({
   display: 'flex',
@@ -12,34 +23,37 @@ const Controls = styled(Grid)(({ theme }) => ({
   marginRight: theme.spacing(4)
 }));
 
-const Graph = styled(Grid)(() => ({
+const Graph = styled(Grid)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-end',
+  marginBottom: theme.spacing(2),
   containerType: 'inline-size',
 
   [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
     'svg path': {
-      strokeWidth: 8
+      height: theme.spacing(15)
     }
   }
 }));
 
-const SkeletonGraphLine = styled(GraphLine)(({ theme }) => ({
-  width: '100%',
-  height: 'auto',
-  paddingTop: theme.spacing(4),
-  fontSize: 'initial',
-  fill: 'none',
+const SkeletonGraphLine = styled(SkeletonBarsGrid)(({ theme }) => ({
+  svg: {
+    width: '100%',
+    height: 'auto',
+    paddingTop: theme.spacing(4),
+    fontSize: 'initial',
+    fill: 'none',
 
-  path: {
-    stroke: theme.palette.black[8]
+    path: {
+      stroke: theme.palette.black[8]
+    }
   }
 }));
 
 const TimeSeriesSkeleton = ({ height }) => {
   return (
-    <Grid container alignItems='stretch' height={height || SKELETON_HEIGHT}>
+    <Root container height={height || SKELETON_HEIGHT}>
       <Controls item>
         <Grid item>
           <Skeleton width={48} height={8} />
@@ -55,11 +69,11 @@ const TimeSeriesSkeleton = ({ height }) => {
       </Controls>
 
       <Graph item xs>
-        <SkeletonBarsGrid height='80%'>
-          <SkeletonGraphLine />
-        </SkeletonBarsGrid>
+        <SkeletonGraphLine height='80%'>
+          <GraphLine preserveAspectRatio='none' />
+        </SkeletonGraphLine>
       </Graph>
-    </Grid>
+    </Root>
   );
 };
 
