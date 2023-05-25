@@ -4,6 +4,7 @@ import { WrapperWidgetUI, TableWidgetUI } from '@carto/react-ui';
 import { getTable } from '../models';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
+import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
 
 const EMPTY_ARRAY = [];
 
@@ -63,7 +64,8 @@ function TableWidget({
       sortByColumnType
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   const { data: rows, pages, totalCount } = data;
