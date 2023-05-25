@@ -27,20 +27,14 @@ const Graph = styled(Grid)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-end',
-  marginBottom: theme.spacing(2),
-  containerType: 'inline-size',
-
-  [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
-    'svg path': {
-      height: theme.spacing(15)
-    }
-  }
+  marginBottom: theme.spacing(2)
 }));
 
 const SkeletonGraphLine = styled(SkeletonBarsGrid)(({ theme }) => ({
   svg: {
     width: '100%',
     height: 'auto',
+    minHeight: theme.spacing(20),
     paddingTop: theme.spacing(4),
     fontSize: 'initial',
     fill: 'none',
