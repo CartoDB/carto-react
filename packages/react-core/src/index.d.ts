@@ -15,7 +15,7 @@ export { debounce } from './utils/debounce';
 export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';
 export { assert as _assert } from './utils/assert';
-export { getGeometryToIntersect, isGlobalViewport } from './utils/geo';
+export { getGeometryToIntersect, isGlobalViewport, normalizeGeometry } from './utils/geo';
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
 

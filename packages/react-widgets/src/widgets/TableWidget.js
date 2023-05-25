@@ -49,10 +49,8 @@ function TableWidget({
   const [sortDirection, setSortDirection] = useState('asc');
 
   const {
-    data = { data: EMPTY_ARRAY, totalCount: 0 },
+    data = { data: [], currentPage: 0, pages: 0, totalCount: 0 },
     isLoading,
-    isSourceReady,
-    source,
     warning
   } = useWidgetFetch(getTable, {
     id,
@@ -68,16 +66,16 @@ function TableWidget({
     onError
   });
 
-  const { data: rows, totalCount } = data;
+  const { data: rows, pages, totalCount } = data;
 
   useEffect(() => {
     if (pageSize !== undefined) setRowsPerPage(pageSize);
   }, [pageSize]);
 
   useEffect(() => {
-    // force reset the page to 0 when the viewport or filters change
+    // force reset the page to 0 when the total number of pages change
     setPage(0);
-  }, [dataSource, isSourceReady, source?.filters]);
+  }, [dataSource, pages]);
 
   const handleRowsPerPageChange = (newRowsPerPage) => {
     setRowsPerPage(newRowsPerPage);
