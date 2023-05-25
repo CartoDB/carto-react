@@ -54,7 +54,7 @@ const NotExpandableProps = { title: 'Not Expandable', expandable: false };
 NotExpandable.args = NotExpandableProps;
 
 export const Loading = Template.bind({});
-const LoadingProps = { title: 'Loading', loading: true };
+const LoadingProps = { title: 'Loading', isLoading: true };
 Loading.args = LoadingProps;
 
 export const Disabled = Template.bind({});
