@@ -57,6 +57,7 @@ function TableWidget({
     id,
     dataSource,
     params: {
+      columns: columns.map((c) => c.field),
       rowsPerPage,
       page,
       sortBy,

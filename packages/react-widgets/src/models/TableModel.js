@@ -38,20 +38,19 @@ function paginationResult(res, rowsPerPage, page) {
   const totalCount = isDataComplete ? res.length : HARD_LIMIT;
   const pages = Math.ceil(totalCount / rowsPerPage);
   const result = { data, currentPage: page, pages, totalCount, isDataComplete };
-  console.log(result);
   return result;
 }
 
 // From remote
 function fromRemote(props) {
   const { source, rowsPerPage, page, spatialFilter, abortController, ...params } = props;
-  const { column, sortBy, sortDirection } = params;
+  const { columns, sortBy, sortDirection } = params;
 
   return _executeModel({
     model: 'table',
     source,
     spatialFilter,
-    params: { column: column || '*', sortBy, sortDirection, limit: HARD_LIMIT + 1 },
+    params: { column: columns, sortBy, sortDirection, limit: HARD_LIMIT + 1 },
     opts: { abortController }
   })
     .then((res) => normalizeObjectKeys(res.rows))
