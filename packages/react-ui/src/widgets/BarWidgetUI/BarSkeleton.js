@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Skeleton } from '@mui/material';
 import { SkeletonBarsGrid, SkeletonBarItem, SKELETON_HEIGHT } from '../SkeletonWidgets';
 
