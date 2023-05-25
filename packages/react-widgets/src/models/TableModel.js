@@ -3,7 +3,6 @@ import { Methods, executeTask } from '@carto/react-workers';
 import { normalizeObjectKeys, wrapModelCall } from './utils';
 
 // Make sure this is sync with the same constant in cloud-native/maps-api
-// but don't remove the `+ 1` you see there, the API must support HARD_LIMIT + 1
 const HARD_LIMIT = 100;
 
 export function getTable(props) {
@@ -33,9 +32,14 @@ function paginationResult(res, rowsPerPage, page) {
     rowsPerPage * Math.max(0, page),
     rowsPerPage * Math.max(1, page + 1)
   );
-  const totalCount = res.length;
+  // We can detect if the data is complete because we request HARD_LIMIT + 1
+  const isDataComplete = res.length <= HARD_LIMIT;
+  // The actual extra record is hidden from pagination
+  const totalCount = isDataComplete ? res.length : HARD_LIMIT;
   const pages = Math.ceil(totalCount / rowsPerPage);
-  return { data, currentPage: page, pages, totalCount };
+  const result = { data, currentPage: page, pages, totalCount, isDataComplete };
+  console.log(result);
+  return result;
 }
 
 // From remote
@@ -47,7 +51,7 @@ function fromRemote(props) {
     model: 'table',
     source,
     spatialFilter,
-    params: { column: column || '*', sortBy, sortDirection, limit: HARD_LIMIT },
+    params: { column: column || '*', sortBy, sortDirection, limit: HARD_LIMIT + 1 },
     opts: { abortController }
   })
     .then((res) => normalizeObjectKeys(res.rows))

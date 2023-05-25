@@ -233,6 +233,7 @@ export function getRawFeatures({
   let data = [];
   let numberPages = 0;
   let totalCount = 0;
+  const isDataComplete = true;
 
   if (currentFeatures) {
     data = applySorting(getFilteredFeatures(filters, filtersLogicalOperator), {
@@ -249,7 +250,7 @@ export function getRawFeatures({
     }
   }
 
-  return { data, currentPage: page, pages: numberPages, totalCount };
+  return { data, currentPage: page, pages: numberPages, totalCount, isDataComplete };
 }
 
 function applyPagination(features, { limit, page }) {
