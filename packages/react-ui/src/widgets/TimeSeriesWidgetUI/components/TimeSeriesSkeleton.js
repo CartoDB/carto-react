@@ -3,6 +3,7 @@ import { Box, Grid, styled } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { SKELETON_HEIGHT, SkeletonBarsGrid } from '../../SkeletonWidgets';
 import GraphLine from '../../../assets/images/GraphLine';
+import { BREAKPOINTS } from '../../../theme/themeConstants';
 
 const Controls = styled(Grid)(({ theme }) => ({
   display: 'flex',
@@ -14,7 +15,14 @@ const Controls = styled(Grid)(({ theme }) => ({
 const Graph = styled(Grid)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'flex-end'
+  justifyContent: 'flex-end',
+  containerType: 'inline-size',
+
+  [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
+    'svg path': {
+      strokeWidth: 8
+    }
+  }
 }));
 
 const SkeletonGraphLine = styled(GraphLine)(({ theme }) => ({
