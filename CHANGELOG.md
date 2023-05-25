@@ -2,9 +2,11 @@
 
 ## Not released
 
+- Avoid reset of able widget to page 0 when not necessary [#685](https://github.com/CartoDB/carto-react/pull/685)
+
 ## 2.0
 
-## 2.0.4 (2023-05-19)
+### 2.0.4 (2023-05-19)
 
 - Fix type propTypes issues [#677](https://github.com/CartoDB/carto-react/pull/677)
 
