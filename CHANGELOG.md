@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Table Widget: Add a skeleton for loading state [#689](https://github.com/CartoDB/carto-react/pull/689)
 - Avoid reset of Table widget to page 0 when not necessary [#685](https://github.com/CartoDB/carto-react/pull/685)
 - Fix widget calculation with very large viewports/masks [#680](https://github.com/CartoDB/carto-react/pull/680)
 - Storybook: show figma codes/theme code snippets for colors [#684](https://github.com/CartoDB/carto-react/pull/684)
