@@ -83,6 +83,7 @@ const MODE_SHAPE = PropTypes.shape({
 
 FeatureSelectionWidgetUI.propTypes = {
   sx: PropTypes.any,
+  className: PropTypes.any,
   selectionModes: PropTypes.arrayOf(MODE_SHAPE.isRequired).isRequired,
   editModes: PropTypes.arrayOf(MODE_SHAPE.isRequired),
   selectedMode: PropTypes.string.isRequired,

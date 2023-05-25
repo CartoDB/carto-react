@@ -1,7 +1,8 @@
 import {
   InvalidColumnError,
   getGeometryToIntersect,
-  isGlobalViewport
+  isGlobalViewport,
+  normalizeGeometry
 } from '@carto/react-core';
 import {
   selectAreFeaturesReadyForSource,
@@ -47,7 +48,9 @@ export default function useWidgetFetch(
   const geometryToIntersect =
     global || (!spatialFilter && isGlobalViewport(viewport))
       ? null
-      : getGeometryToIntersect(viewport, spatialFilter ? spatialFilter.geometry : null);
+      : normalizeGeometry(
+          getGeometryToIntersect(viewport, spatialFilter ? spatialFilter.geometry : null)
+        );
 
   useCustomCompareEffect(
     () => {
