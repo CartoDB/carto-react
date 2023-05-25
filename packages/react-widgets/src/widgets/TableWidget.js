@@ -34,6 +34,7 @@ function TableWidget({
   onError,
   initialPageSize = 10,
   onPageSizeChange,
+  global,
   height,
   dense,
   droppingFeaturesAlertProps,
@@ -61,7 +62,7 @@ function TableWidget({
       sortDirection,
       sortByColumnType
     },
-    global: false,
+    global,
     onError
   });
 
