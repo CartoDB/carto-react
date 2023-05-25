@@ -57,6 +57,7 @@ describe('Worker Methods', () => {
         currentPage: 0,
         pages: 1,
         totalCount: 6,
+        isDataComplete: true,
         data: sampleGeoJson.features.map((f) => f.properties)
       });
     });
@@ -65,6 +66,7 @@ describe('Worker Methods', () => {
         currentPage: 0,
         pages: 2,
         totalCount: 6,
+        isDataComplete: true,
         data: sampleGeoJson.features.slice(0, 3).map((f) => f.properties)
       });
     });
