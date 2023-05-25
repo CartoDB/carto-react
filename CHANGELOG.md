@@ -2,12 +2,13 @@
 
 ## Not released
 
+- Fix widget calculation with very large viewports/masks [#680](https://github.com/CartoDB/carto-react/pull/680)
 - Storybook: show figma codes/theme code snippets for colors [#684](https://github.com/CartoDB/carto-react/pull/684)
 - Bar & Histogram & Formula & ComparativeFormula Widgets: Add a skeleton for loading state [#674](https://github.com/CartoDB/carto-react/pull/674)
 
 ## 2.0
 
-## 2.0.4 (2023-05-19)
+### 2.0.4 (2023-05-19)
 
 - Fix type propTypes issues [#677](https://github.com/CartoDB/carto-react/pull/677)
 

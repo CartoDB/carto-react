@@ -1,5 +1,10 @@
 import bboxPolygon from '@turf/bbox-polygon';
-import { isGlobalViewport, getGeometryToIntersect } from '../../src/utils/geo';
+import {
+  isGlobalViewport,
+  getGeometryToIntersect,
+  normalizeGeometry
+} from '../../src/utils/geo';
+import { polygon, multiPolygon } from '@turf/helpers';
 
 /** @type { import('../../src').Viewport } */
 const viewport = [-10, -10, 10, 10]; // west - south - east - north
@@ -37,7 +42,6 @@ describe('isGlobalViewport', () => {
   });
 
   test.each(globalViewports)('return true for global viewports', ({ v }) => {
-    console.log(viewport);
     expect(isGlobalViewport(v));
   });
 });
@@ -59,5 +63,186 @@ describe('getGeometryToIntersect', () => {
     expect(getGeometryToIntersect(viewport, filterGeometry)).toStrictEqual(
       filterGeometry
     );
+  });
+});
+
+describe('normalizeGeometry', () => {
+  test('does not clip when not needed', () => {
+    const input = polygon([
+      [
+        [-90, 0],
+        [0, -45],
+        [90, 0],
+        [0, 45],
+        [-90, 0]
+      ]
+    ]).geometry;
+    const expected = input;
+    expect(normalizeGeometry(input)).toStrictEqual(expected);
+  });
+
+  test('it produces multipolygons wrapping from the west', () => {
+    const input = multiPolygon([
+      [
+        [
+          [-90, 0],
+          [0, -45],
+          [90, 0],
+          [0, 45],
+          [-90, 0]
+        ]
+      ],
+      [
+        [
+          [-190, -50],
+          [-170, -70],
+          [-170, 70],
+          [-190, 50],
+          [-190, -50]
+        ]
+      ]
+    ]).geometry;
+    const expected = multiPolygon([
+      [
+        [
+          [-180, -60],
+          [-170, -70],
+          [-170, 70],
+          [-180, 60],
+          [-180, -60]
+        ]
+      ],
+      [
+        [
+          [-90, 0],
+          [0, -45],
+          [90, 0],
+          [0, 45],
+          [-90, 0]
+        ]
+      ],
+      [
+        [
+          [170, -50],
+          [180, -60],
+          [180, 60],
+          [170, 50],
+          [170, -50]
+        ]
+      ]
+    ]).geometry;
+    expect(normalizeGeometry(input)).toStrictEqual(expected);
+  });
+
+  test('it produces multipolygons wrapping from the east', () => {
+    const input = multiPolygon([
+      [
+        [
+          [-90, 0],
+          [0, -45],
+          [90, 0],
+          [0, 45],
+          [-90, 0]
+        ]
+      ],
+      [
+        [
+          [170, -50],
+          [190, -70],
+          [190, 70],
+          [170, 50],
+          [170, -50]
+        ]
+      ]
+    ]).geometry;
+    const expected = multiPolygon([
+      [
+        [
+          [-180, -60],
+          [-170, -70],
+          [-170, 70],
+          [-180, 60],
+          [-180, -60]
+        ]
+      ],
+      [
+        [
+          [-90, 0],
+          [0, -45],
+          [90, 0],
+          [0, 45],
+          [-90, 0]
+        ]
+      ],
+      [
+        [
+          [170, -50],
+          [180, -60],
+          [180, 60],
+          [170, 50],
+          [170, -50]
+        ]
+      ]
+    ]).geometry;
+    expect(normalizeGeometry(input)).toStrictEqual(expected);
+  });
+
+  test('it unwraps large viewports', () => {
+    const input = polygon([
+      [
+        [-200, -80],
+        [210, -80],
+        [210, 75],
+        [-200, 75],
+        [-200, -80]
+      ]
+    ]).geometry;
+    const expected = polygon([
+      [
+        [-180, -80],
+        [180, -80],
+        [180, 75],
+        [-180, 75],
+        [-180, -80]
+      ]
+    ]).geometry;
+    expect(normalizeGeometry(input)).toStrictEqual(expected);
+  });
+
+  test('it absorbes unneeded polygons', () => {
+    const input = multiPolygon([
+      [
+        [
+          [-200, -80],
+          [210, -80],
+          [210, 75],
+          [-200, 75],
+          [-200, -80]
+        ]
+      ],
+      [
+        [
+          [-90, 0],
+          [0, -45],
+          [90, 0],
+          [0, 45],
+          [-90, 0]
+        ]
+      ]
+    ]).geometry;
+    const expected = polygon([
+      [
+        [-180, -80],
+        [180, -80],
+        [180, 75],
+        [-180, 75],
+        [-180, -80]
+      ]
+    ]).geometry;
+    expect(normalizeGeometry(input)).toStrictEqual(expected);
+  });
+
+  test('it supports null', () => {
+    expect(normalizeGeometry(null)).toStrictEqual(null);
   });
 });
