@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Avoid reset of able widget to page 0 when not necessary [#685](https://github.com/CartoDB/carto-react/pull/685)
+- Avoid reset of Table widget to page 0 when not necessary [#685](https://github.com/CartoDB/carto-react/pull/685)
 
 ## 2.0
 
