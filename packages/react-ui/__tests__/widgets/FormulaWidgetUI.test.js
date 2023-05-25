@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '../widgets/utils/testUtils';
-import FormulaWidgetUI from '../../src/widgets/FormulaWidgetUI';
+import FormulaWidgetUI from '../../src/widgets/FormulaWidgetUI/FormulaWidgetUI';
 import { currencyFormatter } from './testUtils';
 
 describe('FormulaWidgetUI', () => {

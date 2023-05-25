@@ -38,6 +38,7 @@ export type FormulaWidgetUIData =
 export type FormulaWidgetUI = {
   data: FormulaWidgetUIData;
   formatter?: Function;
+  isLoading?: boolean;
 };
 
 export type HistogramWidgetUIData = number[];
@@ -51,6 +52,7 @@ export type HistogramWidgetUI = {
   name?: string;
   onSelectedBarsChange?: Function;
   height?: number;
+  isLoading?: boolean;
 };
 
 export type BarWidgetUI = {
@@ -69,6 +71,7 @@ export type BarWidgetUI = {
   height?: string | number;
   filterable?: boolean;
   animation?: boolean;
+  isLoading?: boolean;
 };
 
 export type PieWidgetUIData = { name: string; value: number }[];
@@ -223,6 +226,7 @@ export type ComparativeFormulaWidgetUI = {
   animated?: boolean;
   animationOptions?: AnimationOptions;
   formatter?: (n: number) => React.ReactNode;
+  isLoading?: boolean;
 };
 
 export enum ORDER_TYPES {
