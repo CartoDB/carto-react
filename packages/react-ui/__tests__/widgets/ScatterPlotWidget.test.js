@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '../widgets/utils/testUtils';
-import ScatterPlotWidgetUI from '../../src/widgets/ScatterPlotWidgetUI';
+import ScatterPlotWidgetUI from '../../src/widgets/ScatterPlotWidgetUI/ScatterPlotWidgetUI';
 import { mockEcharts } from './testUtils';
 
 describe('ScatterPlotWidgetUI', () => {

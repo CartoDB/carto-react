@@ -123,6 +123,7 @@ export type ScatterPlotWidgetUI = {
   xAxisFormatter?: Function;
   yAxisFormatter?: Function;
   tooltipFormatter?: Function;
+  isLoading?: boolean;
 };
 
 export type TimeSeriesWidgetUIData = { name: number; value: number }[];

@@ -1,5 +1,6 @@
 import React from 'react';
-import ScatterPlotWidgetUI from '../../../src/widgets/ScatterPlotWidgetUI';
+import ScatterPlotWidgetUI from '../../../src/widgets/ScatterPlotWidgetUI/ScatterPlotWidgetUI';
+import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Organisms/Widgets/ScatterPlotWidgetUI',
@@ -22,9 +23,28 @@ const dataDefault = [
 
 const Template = (args) => <ScatterPlotWidgetUI {...args} />;
 
+const LoadingTemplate = (args) => {
+  return (
+    <>
+      <Label variant='body1' mb={3}>
+        {'Limited width'}
+      </Label>
+      <ThinContainer>
+        <ScatterPlotWidgetUI {...args} />
+      </ThinContainer>
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Responsive'}
+      </Label>
+      <ScatterPlotWidgetUI {...args} />
+    </>
+  );
+};
+
+const defaultProps = { data: dataDefault, name: 'name' };
+
 export const Default = Template.bind({});
-const DefaultProps = { data: dataDefault, name: 'name' };
-Default.args = DefaultProps;
+Default.args = defaultProps;
 
 export const xAxisFormatter = Template.bind({});
 const xAxisFormatterProps = {
@@ -50,3 +70,6 @@ const tooltipFormatterProps = {
 };
 
 tooltipFormatter.args = tooltipFormatterProps;
+
+export const Loading = Template.bind({});
+Loading.args = { ...defaultProps, isLoading: true };

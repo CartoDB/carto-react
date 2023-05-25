@@ -10,7 +10,7 @@ import LegendCategories from './widgets/legend/LegendCategories';
 import LegendIcon from './widgets/legend/LegendIcon';
 import LegendProportion from './widgets/legend/LegendProportion';
 import LegendRamp from './widgets/legend/LegendRamp';
-import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
+import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
 import RangeWidgetUI from './widgets/RangeWidgetUI';
