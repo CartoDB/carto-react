@@ -1,55 +1,45 @@
 import React from 'react';
-import { Box, Grid, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { SKELETON_HEIGHT, SkeletonGraphGrid } from '../SkeletonWidgets';
-import { BREAKPOINTS } from '../../theme/themeConstants';
 
-const Root = styled(Grid)(({ theme }) => ({
-  alignItems: 'stretch',
-  containerType: 'inline-size',
-
-  [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
-    ' > div': {
-      marginRight: 0
-    }
-  }
+const GraphGrid = styled(SkeletonGraphGrid)(({ theme }) => ({
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginLeft: theme.spacing(4)
 }));
 
-const Controls = styled(Grid)(({ theme }) => ({
+const DotsBox = styled(Box)(({ theme }) => ({
+  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  marginRight: theme.spacing(4)
-}));
-
-const Graph = styled(Grid)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'flex-end',
-  marginBottom: theme.spacing(2)
+  height: theme.spacing(8)
 }));
 
 const ScatterPlotSkeleton = ({ height }) => {
-  return (
-    <Root container height={height || SKELETON_HEIGHT}>
-      <Controls item>
-        <Grid item>
-          <Skeleton width={48} height={8} />
-        </Grid>
-      </Controls>
+  function multiplierNumber(number) {
+    return Math.floor(Math.random() * 4) + 2 + number;
+  }
 
-      <Graph item xs>
-        <SkeletonGraphGrid height={height || '80%'}>
-          {[...Array(4)].map((_, i) => (
-            <Box key={i} mt={2}>
-              <Skeleton variant='circular' width={12} height={12} />
-              <Skeleton variant='circular' width={12} height={12} />
-              <Skeleton variant='circular' width={12} height={12} />
-            </Box>
-          ))}
-        </SkeletonGraphGrid>
-      </Graph>
-    </Root>
+  return (
+    <Box height={height || SKELETON_HEIGHT}>
+      <Box mb={4}>
+        <Skeleton width={48} height={8} />
+      </Box>
+
+      <GraphGrid height={height || '80%'}>
+        {[...Array(4)].map((_, i) => (
+          <DotsBox key={i} mt={multiplierNumber(i + 1)}>
+            {[...Array(3)].map((_, i) => (
+              <Box ml={multiplierNumber(i + 1)}>
+                <Skeleton variant='circular' width={12} height={12} />
+              </Box>
+            ))}
+          </DotsBox>
+        ))}
+      </GraphGrid>
+    </Box>
   );
 };
 

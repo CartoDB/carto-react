@@ -71,5 +71,5 @@ const tooltipFormatterProps = {
 
 tooltipFormatter.args = tooltipFormatterProps;
 
-export const Loading = Template.bind({});
+export const Loading = LoadingTemplate.bind({});
 Loading.args = { ...defaultProps, isLoading: true };
