@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Table Widget: Add a skeleton for loading state [#689](https://github.com/CartoDB/carto-react/pull/689)
 - TimeSeries Widget: Add a skeleton for loading state [#686](https://github.com/CartoDB/carto-react/pull/686)
 - Pie & ComparativePie Widgets: Add a skeleton for loading state [#682](https://github.com/CartoDB/carto-react/pull/682)
 - Range Widget: Add a skeleton for loading state [#681](https://github.com/CartoDB/carto-react/pull/681)
