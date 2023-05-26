@@ -102,16 +102,16 @@ function ScatterPlotWidgetUI({
     });
   }, [data, name, animation, theme, xAxisFormatter, yAxisFormatter, tooltipFormatter]);
 
-  const height = 225;
+  const HEIGHT = 225;
 
-  if (isLoading) return <ScatterPlotSkeleton height={height} />;
+  if (isLoading) return <ScatterPlotSkeleton height={HEIGHT} />;
 
   return (
     <EchartsWrapper
       ref={chartInstance}
       option={options}
       lazyUpdate={true}
-      style={{ height: height }}
+      style={{ height: HEIGHT }}
     />
   );
 }
