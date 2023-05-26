@@ -2,12 +2,20 @@ import React from 'react';
 import { Box, styled } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { SKELETON_HEIGHT, SkeletonGraphGrid } from '../SkeletonWidgets';
+import { BREAKPOINTS } from '../../theme/themeConstants';
 
 const GraphGrid = styled(SkeletonGraphGrid)(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  marginLeft: theme.spacing(4)
+  marginLeft: theme.spacing(4),
+  containerType: 'inline-size',
+
+  [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
+    ' > div': {
+      maxWidth: '75%'
+    }
+  }
 }));
 
 const DotsBox = styled(Box)(({ theme }) => ({
@@ -15,12 +23,12 @@ const DotsBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   width: '80%',
-  maxWidth: '60%'
+  maxWidth: '50%'
 }));
 
 const ScatterPlotSkeleton = ({ height }) => {
   function getRandomValue() {
-    // get a random value between 0 and 5
+    // get a random integer value between 0 and 5
     return Math.floor(Math.random() * 5);
   }
 
@@ -32,10 +40,10 @@ const ScatterPlotSkeleton = ({ height }) => {
 
       <GraphGrid height={'80%'}>
         {[...Array(3)].map((_, i) => (
-          // Margins are used to create the effect of a scatter plot
+          // Random margins are used to create the effect of a scatter plot
           <DotsBox key={i} ml={i * 3}>
             {[...Array(4)].map((_, i) => (
-              <Box mt={getRandomValue(0)} ml={getRandomValue(0)}>
+              <Box mt={getRandomValue()} ml={getRandomValue()}>
                 <Skeleton variant='circular' width={12} height={12} />
               </Box>
             ))}
