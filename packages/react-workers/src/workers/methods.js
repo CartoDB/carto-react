@@ -224,37 +224,26 @@ export function getRange({ filters, filtersLogicalOperator, column }) {
 export function getRawFeatures({
   filters,
   filtersLogicalOperator,
-  limit = 10,
-  page = 0,
   sortBy,
   sortByDirection = 'asc',
   sortByColumnType
 }) {
-  let data = [];
-  let numberPages = 0;
+  let rows = [];
   let totalCount = 0;
-  const isDataComplete = true;
+  let hasData = false;
 
   if (currentFeatures) {
-    data = applySorting(getFilteredFeatures(filters, filtersLogicalOperator), {
+    rows = applySorting(getFilteredFeatures(filters, filtersLogicalOperator), {
       sortBy,
       sortByDirection,
       sortByColumnType
     });
 
-    totalCount = data.length;
-
-    if (limit) {
-      numberPages = Math.ceil(data.length / limit);
-      data = applyPagination(data, { limit, page });
-    }
+    totalCount = rows.length;
+    hasData = true;
   }
 
-  return { data, currentPage: page, pages: numberPages, totalCount, isDataComplete };
-}
-
-function applyPagination(features, { limit, page }) {
-  return features.slice(limit * Math.max(0, page), limit * Math.max(1, page + 1));
+  return { rows, totalCount, hasData, isDataComplete: true };
 }
 
 function getFilteredFeatures(filters = {}, filtersLogicalOperator) {

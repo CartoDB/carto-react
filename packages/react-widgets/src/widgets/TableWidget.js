@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { WrapperWidgetUI, TableWidgetUI } from '@carto/react-ui';
-import { getTable } from '../models';
+import { getTable, paginateTable } from '../models';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
-
-const EMPTY_ARRAY = [];
 
 /**
  * Renders a <TableWidget /> component
@@ -50,7 +48,7 @@ function TableWidget({
   const [sortDirection, setSortDirection] = useState('asc');
 
   const {
-    data = { data: [], currentPage: 0, pages: 0, totalCount: 0 },
+    data = { rows: [], totalCount: 0, hasData: false, isDataComplete: true },
     isLoading,
     warning
   } = useWidgetFetch(getTable, {
@@ -58,8 +56,6 @@ function TableWidget({
     dataSource,
     params: {
       columns: columns.map((c) => c.field),
-      rowsPerPage,
-      page,
       sortBy,
       sortDirection,
       sortByColumnType
@@ -69,14 +65,15 @@ function TableWidget({
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
-  const { data: rows, pages, totalCount } = data;
+  const { totalCount, hasData } = data;
+  const { rows, pages } = paginateTable(data, page, rowsPerPage);
 
   useEffect(() => {
     if (pageSize !== undefined) setRowsPerPage(pageSize);
   }, [pageSize]);
 
   useEffect(() => {
-    // force reset the page to 0 when the total number of pages change
+    // force reset to page 0 when the total number of pages changes
     setPage(0);
   }, [dataSource, pages]);
 
@@ -100,7 +97,7 @@ function TableWidget({
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
       >
-        {(!!rows.length || isLoading) && (
+        {(hasData || isLoading) && (
           <TableWidgetUI
             columns={columns}
             rows={rows}

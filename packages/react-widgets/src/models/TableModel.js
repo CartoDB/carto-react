@@ -24,26 +24,27 @@ function fromLocal(props) {
   });
 }
 
-// @todo we need to cache res somehow otherwise we'll hit the API
-// at every page change, HTTP cache saves us but better to avoid
-
-function paginationResult(res, rowsPerPage, page) {
-  const data = res.slice(
+export function paginateTable({ rows, totalCount }, page, rowsPerPage) {
+  const sliced = rows.slice(
     rowsPerPage * Math.max(0, page),
     rowsPerPage * Math.max(1, page + 1)
   );
+  const pages = Math.ceil(totalCount / rowsPerPage);
+  return { rows: sliced, pages };
+}
+
+function formatResult(res) {
+  const hasData = res.length > 0;
   // We can detect if the data is complete because we request HARD_LIMIT + 1
   const isDataComplete = res.length <= HARD_LIMIT;
-  // The actual extra record is hidden from pagination
+  // The actual extra record is hidden from pagination logic
   const totalCount = isDataComplete ? res.length : HARD_LIMIT;
-  const pages = Math.ceil(totalCount / rowsPerPage);
-  const result = { data, currentPage: page, pages, totalCount, isDataComplete };
-  return result;
+  return { rows: res, totalCount, hasData, isDataComplete };
 }
 
 // From remote
 function fromRemote(props) {
-  const { source, rowsPerPage, page, spatialFilter, abortController, ...params } = props;
+  const { source, spatialFilter, abortController, ...params } = props;
   const { columns, sortBy, sortDirection } = params;
 
   return _executeModel({
@@ -54,5 +55,5 @@ function fromRemote(props) {
     opts: { abortController }
   })
     .then((res) => normalizeObjectKeys(res.rows))
-    .then((res) => paginationResult(res, rowsPerPage, page));
+    .then(formatResult);
 }
