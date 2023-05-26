@@ -28,7 +28,7 @@ const TableSkeleton = ({ style }) => {
           {[...Array(10)].map((_, i) => (
             <TableRow key={i}>
               <TableSkeletonRow rows={1} width={8} />
-              <TableSkeletonRow />
+              <TableSkeletonRow rowNumber={i} />
             </TableRow>
           ))}
         </TableBody>
