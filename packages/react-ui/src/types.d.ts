@@ -29,6 +29,7 @@ export type CategoryWidgetUI = {
   selectedCategories?: string[];
   onSelectedCategoriesChange?: Function;
   order?: 'ranking' | 'fixed';
+  isLoading?: boolean;
 };
 
 export type FormulaWidgetUIData =
@@ -255,6 +256,7 @@ export type ComparativeCategoryWidgetUI = {
   onSelectedCategoriesChange?: (categories: string[]) => any;
   formatter?: (v: any) => string;
   tooltipFormatter?: (v: any) => string;
+  isLoading?: boolean;
 };
 
 export type PieData = {

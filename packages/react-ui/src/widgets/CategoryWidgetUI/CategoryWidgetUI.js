@@ -5,104 +5,24 @@ import {
   Checkbox,
   Grid,
   InputAdornment,
-  Link,
   Divider,
-  SvgIcon,
   TextField,
-  Tooltip,
-  styled,
-  Box
+  Tooltip
 } from '@mui/material';
-import { Skeleton } from '@mui/material';
 
-import { animateValues } from './utils/animations';
-import Typography from '../components/atoms/Typography';
-
-const SkeletonProgressbar = styled(Skeleton)(({ theme }) => ({
-  height: theme.spacing(1),
-  width: '100%',
-  margin: theme.spacing(0.5, 0, 1, 0)
-}));
-
-const Progressbar = styled(Grid)(({ theme }) => ({
-  height: theme.spacing(0.5),
-  width: '100%',
-  margin: theme.spacing(0.5, 0, 1, 0),
-  borderRadius: theme.spacing(0.5),
-  backgroundColor: theme.palette.action.disabledBackground,
-
-  '& div': {
-    width: 0,
-    height: '100%',
-    borderRadius: theme.spacing(0.5),
-    backgroundColor: theme.palette.secondary.main,
-    transition: `background-color ${theme.transitions.easing.sharp} ${theme.transitions.duration.shortest}ms,
-                 width ${theme.transitions.easing.sharp} ${theme.transitions.duration.complex}ms`
-  }
-}));
-
-const Label = styled(Typography)(({ theme }) => ({
-  fontWeight: theme.typography.fontWeightBold,
-  marginRight: theme.spacing(2)
-}));
-
-const LinkAsButton = styled(Link)(({ theme }) => ({
-  ...theme.typography.caption,
-  cursor: 'pointer',
-  '& + hr': {
-    margin: theme.spacing(0, 1)
-  }
-}));
-
-const StyledRoot = styled(Box)(({ theme: { typography } }) => ({
-  ...typography.body2
-}));
-
-const StyledCategoriesWrapper = styled(Grid)(({ theme: { spacing } }) => ({
-  maxHeight: spacing(40),
-  overflow: 'auto',
-  padding: spacing(0, 1, 1, 0)
-}));
-
-const StylesGridElement = styled(Grid, {
-  shouldForwardProp: (prop) => !['selectable', 'name', 'unselected'].includes(prop)
-})(({ theme, selectable, name, unselected }) => {
-  return {
-    flexDirection: 'row',
-    ...(unselected && {
-      color: theme.palette.text.disabled,
-      '.progressbar div': {
-        backgroundColor: theme.palette.text.disabled
-      }
-    }),
-    ...(name !== REST_CATEGORY &&
-      selectable && {
-        cursor: 'pointer',
-        flexWrap: 'nowrap',
-
-        '&:hover .progressbar div': {
-          backgroundColor: theme.palette.secondary.dark
-        }
-      }),
-    ...(name === REST_CATEGORY && {
-      cursor: 'default',
-      '.progressbar div': {
-        backgroundColor: theme.palette.text.disabled
-      }
-    })
-  };
-});
-
-const StyledOptionsSelectedBar = styled(Grid)(({ theme: { spacing, palette } }) => ({
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginBottom: spacing(1.5),
-  paddingRight: spacing(1),
-  '& .MuiTypography-caption': {
-    color: palette.text.secondary
-  }
-}));
+import { animateValues } from '../utils/animations';
+import Typography from '../../components/atoms/Typography';
+import CategorySkeleton from './CategorySkeleton';
+import {
+  CategoriesWrapper,
+  CategoryItemGroup,
+  CategoryLabel,
+  LinkAsButton,
+  OptionsSelectedBar,
+  ProgressBar,
+  CategoriesRoot
+} from './CategoryWidgetUI.styled';
+import SearchIcon from '../../assets/icons/SearchIcon';
 
 function usePrevious(value) {
   const ref = useRef();
@@ -114,16 +34,6 @@ function usePrevious(value) {
 
 const REST_CATEGORY = '__rest__';
 
-const SearchIcon = () => (
-  <SvgIcon>
-    <path
-      d='M11,4 C14.8659932,4 18,7.13400675 18,11 C18,12.7003211 17.3937669,14.2590489 16.3856562,15.4718279 L19.4748737,18.5606602 L18.0606602,19.9748737 L14.8998887,16.8138615 C13.7854137,17.5629194 12.4437497,18 11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 Z M11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 Z'
-      id='-↳Color'
-      fill='inherit'
-    ></path>
-  </SvgIcon>
-);
-
 function CategoryWidgetUI(props) {
   const {
     data,
@@ -134,7 +44,8 @@ function CategoryWidgetUI(props) {
     selectedCategories,
     animation,
     filterable,
-    searchable
+    searchable,
+    isLoading
   } = props;
   const [sortedData, setSortedData] = useState([]);
   const [maxValue, setMaxValue] = useState(1);
@@ -389,7 +300,7 @@ function CategoryWidgetUI(props) {
       selectedCategories.length > 0 &&
       selectedCategories.indexOf(data.name) === -1;
     return (
-      <StylesGridElement
+      <CategoryItemGroup
         container
         direction='row'
         spacing={1}
@@ -415,9 +326,9 @@ function CategoryWidgetUI(props) {
               title={getCategoryLabel(data.name)}
               disableHoverListener={!isOverflowed}
             >
-              <Label variant='body2' noWrap ref={textElementRef}>
+              <CategoryLabel variant='body2' noWrap ref={textElementRef}>
                 {getCategoryLabel(data.name)}
-              </Label>
+              </CategoryLabel>
             </Tooltip>
             {typeof value === 'object' && value !== null ? (
               <span>
@@ -429,134 +340,101 @@ function CategoryWidgetUI(props) {
               <span>{value}</span>
             )}
           </Grid>
-          <Progressbar className='progressbar' item>
+          <ProgressBar className='progressbar' item>
             <div style={{ width: getProgressbarLength(data.value) }}></div>
-          </Progressbar>
+          </ProgressBar>
         </Grid>
-      </StylesGridElement>
+      </CategoryItemGroup>
     );
   };
 
-  const CategoryItemSkeleton = () => (
-    <>
-      <StyledOptionsSelectedBar container>
-        <Typography variant='caption'>
-          <Skeleton variant='text' width={100} />
-        </Typography>
-      </StyledOptionsSelectedBar>
-      <StyledCategoriesWrapper container item>
-        {[...Array(4)].map((_, i) => (
-          <StylesGridElement key={i} container spacing={1}>
-            <Grid container item xs zeroMinWidth>
-              <Grid container item direction='row' justifyContent='space-between'>
-                <Typography variant='body2' noWrap>
-                  <Skeleton variant='text' width={100} />
-                </Typography>
-                <Typography variant='body2'>
-                  <Skeleton variant='text' width={70} />
-                </Typography>
-              </Grid>
-              <SkeletonProgressbar variant='text' />
-            </Grid>
-          </StylesGridElement>
-        ))}
-      </StyledCategoriesWrapper>
-    </>
-  );
+  if (data?.length === 0 || isLoading) return <CategorySkeleton />;
 
   return (
-    <StyledRoot>
-      {data?.length > 0 ? (
-        <>
-          {filterable && sortedData.length > 0 && (
-            <StyledOptionsSelectedBar container>
-              <Typography variant='caption'>
-                {selectedCategories.length ? selectedCategories.length : 'All'} selected
-              </Typography>
-              {showAll ? (
-                <LinkAsButton onClick={handleApplyClicked} underline='hover'>
-                  Apply
+    <CategoriesRoot>
+      {filterable && sortedData.length > 0 && (
+        <OptionsSelectedBar container>
+          <Typography variant='caption'>
+            {selectedCategories.length ? selectedCategories.length : 'All'} selected
+          </Typography>
+          {showAll ? (
+            <LinkAsButton onClick={handleApplyClicked} underline='hover'>
+              Apply
+            </LinkAsButton>
+          ) : blockedCategories.length > 0 ? (
+            <LinkAsButton onClick={handleUnblockClicked} underline='hover'>
+              Unlock
+            </LinkAsButton>
+          ) : (
+            selectedCategories.length > 0 && (
+              <Grid container direction='row' justifyContent='flex-end' item xs>
+                <LinkAsButton onClick={handleBlockClicked} underline='hover'>
+                  Lock
                 </LinkAsButton>
-              ) : blockedCategories.length > 0 ? (
-                <LinkAsButton onClick={handleUnblockClicked} underline='hover'>
-                  Unlock
+                <Divider orientation='vertical' flexItem />
+                <LinkAsButton onClick={handleClearClicked} underline='hover'>
+                  Clear
                 </LinkAsButton>
-              ) : (
-                selectedCategories.length > 0 && (
-                  <Grid container direction='row' justifyContent='flex-end' item xs>
-                    <LinkAsButton onClick={handleBlockClicked} underline='hover'>
-                      Lock
-                    </LinkAsButton>
-                    <Divider orientation='vertical' flexItem />
-                    <LinkAsButton onClick={handleClearClicked} underline='hover'>
-                      Clear
-                    </LinkAsButton>
-                  </Grid>
-                )
-              )}
-            </StyledOptionsSelectedBar>
-          )}
-          {data.length > maxItems && showAll && (
-            <StyledOptionsSelectedBar container>
-              <TextField
-                size='small'
-                mt={-0.5}
-                placeholder='Search'
-                onChange={handleSearchChange}
-                onFocus={handleSearchFocus}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>
-                      <SearchIcon />
-                    </InputAdornment>
-                  )
-                }}
-              />
-            </StyledOptionsSelectedBar>
-          )}
-          <StyledCategoriesWrapper container item>
-            {animValues.length ? (
-              animValues.map((d, i) => (
-                <CategoryItem
-                  key={i}
-                  data={d}
-                  onCategoryClick={() =>
-                    showAll
-                      ? handleCategoryBlocked(d.name)
-                      : handleCategorySelected(d.name)
-                  }
-                />
-              ))
-            ) : (
-              <>
-                <Typography variant='body2'>No results</Typography>
-                <Typography variant='caption'>
-                  Your search "{searchValue}" didn't match with any value.
-                </Typography>
-              </>
-            )}
-          </StyledCategoriesWrapper>
-          {data.length > maxItems && searchable ? (
-            showAll ? (
-              <Button size='small' color='primary' onClick={handleCancelClicked}>
-                Cancel
-              </Button>
-            ) : (
-              <Button
-                size='small'
-                color='primary'
-                startIcon={<SearchIcon />}
-                onClick={handleShowAllCategoriesClicked}
-              >
-                Search in {getCategoriesCount()} elements
-              </Button>
+              </Grid>
             )
-          ) : null}
-        </>
-      ) : (
-        <CategoryItemSkeleton />
+          )}
+        </OptionsSelectedBar>
       )}
-    </StyledRoot>
+      {data.length > maxItems && showAll && (
+        <OptionsSelectedBar container>
+          <TextField
+            size='small'
+            mt={-0.5}
+            placeholder='Search'
+            onChange={handleSearchChange}
+            onFocus={handleSearchFocus}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <SearchIcon />
+                </InputAdornment>
+              )
+            }}
+          />
+        </OptionsSelectedBar>
+      )}
+      <CategoriesWrapper container item>
+        {animValues.length ? (
+          animValues.map((d, i) => (
+            <CategoryItem
+              key={i}
+              data={d}
+              onCategoryClick={() =>
+                showAll ? handleCategoryBlocked(d.name) : handleCategorySelected(d.name)
+              }
+            />
+          ))
+        ) : (
+          <>
+            <Typography variant='body2'>No results</Typography>
+            <Typography variant='caption'>
+              Your search "{searchValue}" didn't match with any value.
+            </Typography>
+          </>
+        )}
+      </CategoriesWrapper>
+      {data.length > maxItems && searchable ? (
+        showAll ? (
+          <Button size='small' color='primary' onClick={handleCancelClicked}>
+            Cancel
+          </Button>
+        ) : (
+          <Button
+            size='small'
+            color='primary'
+            startIcon={<SearchIcon />}
+            onClick={handleShowAllCategoriesClicked}
+          >
+            Search in {getCategoriesCount()} elements
+          </Button>
+        )
+      ) : null}
+    </CategoriesRoot>
   );
 }
 
@@ -597,7 +475,8 @@ CategoryWidgetUI.propTypes = {
   order: PropTypes.oneOf(Object.values(CategoryWidgetUI.ORDER_TYPES)),
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
-  searchable: PropTypes.bool
+  searchable: PropTypes.bool,
+  isLoading: PropTypes.bool
 };
 
 export default CategoryWidgetUI;

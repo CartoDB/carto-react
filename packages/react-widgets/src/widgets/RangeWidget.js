@@ -145,6 +145,7 @@ function RangeWidget({
             {...(Number.isFinite(data.min) &&
               Number.isFinite(data.max) && { limits: [data.min, data.max] })}
             onSelectedRangeChange={handleSelectedRangeChange}
+            isLoading={isLoading}
           />
         )}
       </WidgetWithAlert>
