@@ -1,6 +1,6 @@
 import { theme, cartoThemeOptions } from './theme/carto-theme';
 import WrapperWidgetUI from './widgets/WrapperWidgetUI';
-import CategoryWidgetUI from './widgets/CategoryWidgetUI';
+import CategoryWidgetUI from './widgets/CategoryWidgetUI/CategoryWidgetUI';
 import FormulaWidgetUI from './widgets/FormulaWidgetUI/FormulaWidgetUI';
 import BarWidgetUI from './widgets/BarWidgetUI/BarWidgetUI';
 import HistogramWidgetUI from './widgets/HistogramWidgetUI/HistogramWidgetUI';
