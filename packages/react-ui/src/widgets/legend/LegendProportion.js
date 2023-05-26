@@ -1,6 +1,6 @@
+import React from 'react';
 import { Box, Grid, styled } from '@mui/material';
 import PropTypes from 'prop-types';
-import React from 'react';
 import Typography from '../../components/atoms/Typography';
 
 const sizes = {
