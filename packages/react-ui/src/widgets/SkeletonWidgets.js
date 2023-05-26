@@ -6,7 +6,6 @@ export const SkeletonBarsGrid = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'flex-end',
   justifyContent: 'space-between',
-  width: '100%',
   position: 'relative',
   padding: theme.spacing(0, 2),
 
@@ -28,7 +27,6 @@ export const SkeletonGraphGrid = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'flex-end',
   justifyContent: 'space-between',
-  width: '100%',
 
   // Square grid effect
   backgroundImage: `linear-gradient(${theme.palette.grey[50]} 0.5px, transparent 0.5px, transparent calc(100% - 0.5px), ${theme.palette.grey[50]} calc(100% - 0.5px)), linear-gradient(90deg, ${theme.palette.grey[50]} 0.5px, transparent 0.5px, transparent calc(100% - 0.5px), ${theme.palette.grey[50]} calc(100% - 0.5px))`,

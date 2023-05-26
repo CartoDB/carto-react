@@ -4,6 +4,7 @@ import { Skeleton } from '@mui/material';
 import { SKELETON_HEIGHT, SkeletonGraphGrid } from '../SkeletonWidgets';
 
 const GraphGrid = styled(SkeletonGraphGrid)(({ theme }) => ({
+  flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
   marginLeft: theme.spacing(4)
@@ -12,14 +13,15 @@ const GraphGrid = styled(SkeletonGraphGrid)(({ theme }) => ({
 const DotsBox = styled(Box)(({ theme }) => ({
   position: 'relative',
   display: 'flex',
-  flexDirection: 'column',
   justifyContent: 'space-between',
-  height: theme.spacing(8)
+  width: '80%',
+  maxWidth: '60%'
 }));
 
 const ScatterPlotSkeleton = ({ height }) => {
-  function multiplierNumber(number) {
-    return Math.floor(Math.random() * 4) + 2 + number;
+  function getRandomValue() {
+    // get a random value between 0 and 5
+    return Math.floor(Math.random() * 5);
   }
 
   return (
@@ -28,11 +30,12 @@ const ScatterPlotSkeleton = ({ height }) => {
         <Skeleton width={48} height={8} />
       </Box>
 
-      <GraphGrid height={height || '80%'}>
-        {[...Array(4)].map((_, i) => (
-          <DotsBox key={i} mt={multiplierNumber(i + 1)}>
-            {[...Array(3)].map((_, i) => (
-              <Box ml={multiplierNumber(i + 1)}>
+      <GraphGrid height={'80%'}>
+        {[...Array(3)].map((_, i) => (
+          // Margins are used to create the effect of a scatter plot
+          <DotsBox key={i} ml={i * 3}>
+            {[...Array(4)].map((_, i) => (
+              <Box mt={getRandomValue(0)} ml={getRandomValue(0)}>
                 <Skeleton variant='circular' width={12} height={12} />
               </Box>
             ))}
