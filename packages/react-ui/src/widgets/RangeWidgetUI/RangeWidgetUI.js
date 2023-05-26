@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Link, Slider, TextField, styled } from '@mui/material';
 import { debounce } from '@carto/react-core';
-import Typography from '../components/atoms/Typography';
+import Typography from '../../components/atoms/Typography';
+import RangeSkeleton from './RangeSkeleton';
 
 const Root = styled(Box)(() => ({
   position: 'relative'
@@ -79,10 +80,11 @@ const SliderLimit = styled(Slider)(({ theme: { palette, spacing } }) => ({
  * @param  {number} props.max - The absolute max value
  * @param  {number[]} props.limits - Array of two numbers that represent a relative min and max values. It is useful to represent the min and max value taking into account other filters.
  * @param  {Function} [props.onSelectedRangeChange] - This fuction will be cal when selected values change
+ * @param {boolean} [props.isLoading] - If true, the component will render a skeleton
 
  */
 
-function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
+function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoading }) {
   const [sliderValues, setSliderValues] = useState([min, max]);
   const [inputsValues, setInputsValues] = useState([min, max]);
 
@@ -155,6 +157,10 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
     changeSliderValues([min, max]);
   };
 
+  if (isLoading) {
+    return <RangeSkeleton />;
+  }
+
   return (
     <Root>
       <ClearWrapper>
@@ -219,7 +225,8 @@ RangeWidgetUI.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   limits: PropTypes.arrayOf(PropTypes.number),
-  onSelectedRangeChange: PropTypes.func
+  onSelectedRangeChange: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default RangeWidgetUI;
