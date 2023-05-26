@@ -5,13 +5,18 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
+  TableRow,
+  styled
 } from '@mui/material';
 import TableSkeletonRow from './TableSkeletonRow';
 
+const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+  overflow: 'hidden'
+}));
+
 const TableSkeleton = ({ style }) => {
   return (
-    <TableContainer style={style}>
+    <StyledTableContainer style={style}>
       <Table aria-label='skeleton table'>
         <TableHead>
           <TableRow>
@@ -28,7 +33,7 @@ const TableSkeleton = ({ style }) => {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </StyledTableContainer>
   );
 };
 
