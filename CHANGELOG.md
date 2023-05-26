@@ -2,6 +2,7 @@
 
 ## Not released
 
+- ScatterPlot Widget: Add a skeleton for loading state [#690](https://github.com/CartoDB/carto-react/pull/690)
 - Table Widget: Add a skeleton for loading state [#689](https://github.com/CartoDB/carto-react/pull/689)
 - TimeSeries Widget: Add a skeleton for loading state [#686](https://github.com/CartoDB/carto-react/pull/686)
 - Pie & ComparativePie Widgets: Add a skeleton for loading state [#682](https://github.com/CartoDB/carto-react/pull/682)

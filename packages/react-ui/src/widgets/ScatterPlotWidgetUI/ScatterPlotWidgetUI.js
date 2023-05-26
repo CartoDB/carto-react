@@ -1,8 +1,9 @@
 import { useTheme } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useRef, useState, useEffect } from 'react';
-import { areChartPropsEqual } from './utils/chartUtils';
-import ReactEcharts from '../custom-components/echarts-for-react';
+import { areChartPropsEqual } from '../utils/chartUtils';
+import ReactEcharts from '../../custom-components/echarts-for-react';
+import ScatterPlotSkeleton from './ScatterPlotSkeleton';
 
 function __generateDefaultConfig(
   { tooltipFormatter, xAxisFormatter = (v) => v, yAxisFormatter = (v) => v },
@@ -76,7 +77,8 @@ function ScatterPlotWidgetUI({
   animation,
   xAxisFormatter,
   yAxisFormatter,
-  tooltipFormatter
+  tooltipFormatter,
+  isLoading
 }) {
   const theme = useTheme();
   const chartInstance = useRef();
@@ -100,12 +102,16 @@ function ScatterPlotWidgetUI({
     });
   }, [data, name, animation, theme, xAxisFormatter, yAxisFormatter, tooltipFormatter]);
 
+  const HEIGHT = 225;
+
+  if (isLoading) return <ScatterPlotSkeleton height={HEIGHT} />;
+
   return (
     <EchartsWrapper
       ref={chartInstance}
       option={options}
       lazyUpdate={true}
-      style={{ height: 225 }}
+      style={{ height: HEIGHT }}
     />
   );
 }

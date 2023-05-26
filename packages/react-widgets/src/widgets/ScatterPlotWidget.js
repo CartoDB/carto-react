@@ -76,6 +76,7 @@ function ScatterPlotWidget({
             xAxisFormatter={xAxisFormatter}
             yAxisFormatter={yAxisFormatter}
             animation={animation}
+            isLoading={isLoading}
           />
         )}
       </WidgetWithAlert>
