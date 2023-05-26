@@ -146,6 +146,7 @@ export type TimeSeriesWidgetUI = {
   timeWindow?: any[];
   onTimeWindowUpdate?: Function;
   showControls?: boolean;
+  isLoading?: boolean;
 };
 
 export type NoDataAlert = {
