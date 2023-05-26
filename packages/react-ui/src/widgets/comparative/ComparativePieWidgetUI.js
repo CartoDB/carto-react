@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material';
 import { lighten } from '@mui/material/styles';
 import EchartsWrapper from '../../custom-components/echarts-for-react';
+import PieSkeleton from '../PieWidgetUI/PieSkeleton';
 
 /**
  * process incoming data to assign labels, colors and selected / unselected styles
@@ -71,6 +72,7 @@ const EMPTY_ARRAY = [];
  * @param {(v: any) => string} [props.tooltipFormatter]
  * @param {string[]} [props.selectedCategories]
  * @param {(categories: string[]) => any} [props.onCategorySelected]
+ * @param {boolean} [props.isLoading]
  * -->
  */
 function ComparativePieWidgetUI({
@@ -83,7 +85,8 @@ function ComparativePieWidgetUI({
   formatter = IDENTITY_FN,
   tooltipFormatter = defaultTooltipFormatter,
   selectedCategories = [],
-  onCategorySelected = IDENTITY_FN
+  onCategorySelected = IDENTITY_FN,
+  isLoading = false
 }) {
   /** @type {any} */
   const theme = useTheme();
@@ -265,6 +268,10 @@ function ComparativePieWidgetUI({
 
   if (!processedData.length) {
     return null;
+  }
+
+  if (isLoading) {
+    return <PieSkeleton height={height} />;
   }
 
   return (

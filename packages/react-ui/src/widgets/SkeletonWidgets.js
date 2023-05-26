@@ -53,3 +53,11 @@ export const SkeletonThinBarItem = styled(Skeleton)(({ theme }) => ({
     marginLeft: '1px'
   }
 }));
+
+export const SkeletonMask = styled(Skeleton)(({ theme }) => ({
+  backgroundColor: theme.palette.common.white
+}));
+
+export const SkeletonSolid = styled(Skeleton)(({ theme }) => ({
+  backgroundColor: theme.palette.grey[100]
+}));
