@@ -11,6 +11,7 @@ import {
   TablePagination,
   styled
 } from '@mui/material';
+import TableSkeleton from './Skeleton/TableSkeleton';
 
 const TableHeadCellLabel = styled(TableSortLabel)(({ theme }) => ({
   ...theme.typography.caption,
@@ -53,7 +54,8 @@ function TableWidgetUI({
   onSetRowsPerPage,
   onRowClick,
   height,
-  dense
+  dense,
+  isLoading
 }) {
   const paginationRef = useRef(null);
 
@@ -77,6 +79,8 @@ function TableWidgetUI({
     const paginationHeight = paginationRef?.current?.clientHeight || 0;
     fixedHeightStyle.height = `calc(${height} - ${paginationHeight}px)`;
   }
+
+  if (isLoading) return <TableSkeleton style={fixedHeightStyle} />;
 
   return (
     <>
@@ -189,7 +193,8 @@ TableWidgetUI.propTypes = {
   onSetRowsPerPage: PropTypes.func,
   onRowClick: PropTypes.func,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  dense: PropTypes.bool
+  dense: PropTypes.bool,
+  isLoading: PropTypes.bool
 };
 
 export default TableWidgetUI;
