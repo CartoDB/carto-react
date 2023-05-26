@@ -6,6 +6,7 @@ import LayerIcon from './icons/LayerIcon';
 import PolygonIcon from './icons/PolygonIcon';
 import RectangleIcon from './icons/RectangleIcon';
 import UploadIcon from './icons/UploadIcon';
+import SearchIcon from './icons/SearchIcon';
 
 export const icons = {
   ArrowDrop: ArrowDropIcon,
@@ -15,5 +16,6 @@ export const icons = {
   Layer: LayerIcon,
   Polygon: PolygonIcon,
   Rectangle: RectangleIcon,
-  Upload: UploadIcon
+  Upload: UploadIcon,
+  Search: SearchIcon
 };

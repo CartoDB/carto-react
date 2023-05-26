@@ -1,5 +1,6 @@
 import React from 'react';
-import CategoryWidgetUI from '../../../src/widgets/CategoryWidgetUI';
+import CategoryWidgetUI from '../../../src/widgets/CategoryWidgetUI/CategoryWidgetUI';
+import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Organisms/Widgets/CategoryWidgetUI',
@@ -32,6 +33,24 @@ export default options;
 
 const Template = (args) => {
   return <CategoryWidgetUI {...args} />;
+};
+
+const LoadingTemplate = (args) => {
+  return (
+    <>
+      <Label variant='body1' mb={3}>
+        {'Limited width'}
+      </Label>
+      <ThinContainer>
+        <CategoryWidgetUI {...args} />
+      </ThinContainer>
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Responsive'}
+      </Label>
+      <CategoryWidgetUI {...args} />
+    </>
+  );
 };
 
 const data = [...Array(7)].map((_, idx) => ({
@@ -72,3 +91,7 @@ const WithSelectedCategoriesProps = {
   onSelectedCategoriesChange: (categories) => console.log(categories)
 };
 WithSelectedCategories.args = WithSelectedCategoriesProps;
+
+export const Loading = LoadingTemplate.bind({});
+const LoadingProps = { data, isLoading: true };
+Loading.args = LoadingProps;

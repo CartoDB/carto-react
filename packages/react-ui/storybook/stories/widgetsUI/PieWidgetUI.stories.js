@@ -1,5 +1,6 @@
 import React from 'react';
-import PieWidgetUI from '../../../src/widgets/PieWidgetUI';
+import PieWidgetUI from '../../../src/widgets/PieWidgetUI/PieWidgetUI';
+import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Organisms/Widgets/PieWidgetUI',
@@ -21,6 +22,24 @@ const dataDefault = [
 ];
 
 const Template = (args) => <PieWidgetUI {...args} />;
+
+const LoadingTemplate = (args) => {
+  return (
+    <>
+      <Label variant='body1' mb={3}>
+        {'Limited width'}
+      </Label>
+      <ThinContainer>
+        <PieWidgetUI {...args} />
+      </ThinContainer>
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Responsive'}
+      </Label>
+      <PieWidgetUI {...args} />
+    </>
+  );
+};
 
 export const Default = Template.bind({});
 const DefaultProps = { data: dataDefault };
@@ -70,3 +89,7 @@ const SelectedCategoriesProps = {
   onSelectedCategoriesChange: (categories) => console.log(categories)
 };
 SelectedCategories.args = SelectedCategoriesProps;
+
+export const Loading = LoadingTemplate.bind({});
+const LoadingProps = { data: dataDefault, isLoading: true };
+Loading.args = LoadingProps;

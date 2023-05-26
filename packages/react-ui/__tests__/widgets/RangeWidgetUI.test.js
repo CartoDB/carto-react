@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen, waitFor } from '../widgets/utils/testUtils';
-import RangeWidgetUI from '../../src/widgets/RangeWidgetUI';
+import RangeWidgetUI from '../../src/widgets/RangeWidgetUI/RangeWidgetUI';
 
 describe('RangeWidgetUI', () => {
   const Widget = (props) => <RangeWidgetUI min={0} max={100} {...props} />;
