@@ -21,11 +21,12 @@ interface CredentialsCarto3 {
 export type Credentials = CredentialsCarto2 | CredentialsCarto3;
 
 export type SourceProps = {
+  id: string;
   data: string;
   type: MAP_TYPES.QUERY | MAP_TYPES.TABLE | MAP_TYPES.TILESET;
-  connection?: string;
-  credentials: Credentials;
-  queryParameters: QueryParameters;
+  connection: string;
+  credentials?: Credentials;
+  queryParameters?: QueryParameters;
 };
 
 export type LayerConfig = {
