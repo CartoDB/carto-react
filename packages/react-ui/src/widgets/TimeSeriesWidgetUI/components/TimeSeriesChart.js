@@ -56,6 +56,7 @@ export default function TimeSeriesChart({
         }
         return position;
       },
+      extraCssText: 'width: auto !important;',
       ...(tooltipFormatter ? { formatter: tooltipFormatter } : {})
     }),
     [theme, tooltip, tooltipFormatter]
