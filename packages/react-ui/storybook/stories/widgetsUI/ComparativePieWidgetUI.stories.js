@@ -1,6 +1,7 @@
 import React from 'react';
 import ComparativePieWidgetUI from '../../../src/widgets/comparative/ComparativePieWidgetUI';
 import { buildReactPropsAsString } from '../../utils/utils';
+import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Organisms/Widgets/ComparativePieWidgetUI',
@@ -10,6 +11,24 @@ const options = {
 export default options;
 
 const Template = (args) => <ComparativePieWidgetUI {...args} />;
+
+const LoadingTemplate = (args) => {
+  return (
+    <>
+      <Label variant='body1' mb={3}>
+        {'Limited width'}
+      </Label>
+      <ThinContainer>
+        <ComparativePieWidgetUI {...args} />
+      </ThinContainer>
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Responsive'}
+      </Label>
+      <ComparativePieWidgetUI {...args} />
+    </>
+  );
+};
 
 const sampleProps = {
   names: ['name 1', 'name 2'],
@@ -37,3 +56,7 @@ const sampleProps = {
 export const Default = Template.bind({});
 Default.args = sampleProps;
 Default.parameters = buildReactPropsAsString(sampleProps, 'ComparativePieWidgetUI');
+
+export const Loading = LoadingTemplate.bind({});
+Loading.args = { ...sampleProps, isLoading: true };
+Loading.parameters = buildReactPropsAsString(sampleProps, 'ComparativePieWidgetUI');

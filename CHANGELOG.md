@@ -2,12 +2,21 @@
 
 ## Not released
 
+## 2.0
+
+### 2.0.5 (2023-05-26)
+
+- ScatterPlot Widget: Add a skeleton for loading state [#690](https://github.com/CartoDB/carto-react/pull/690)
+- Table Widget: Add a skeleton for loading state [#689](https://github.com/CartoDB/carto-react/pull/689)
+- TimeSeries Widget: Add a skeleton for loading state [#686](https://github.com/CartoDB/carto-react/pull/686)
+- Pie & ComparativePie Widgets: Add a skeleton for loading state [#682](https://github.com/CartoDB/carto-react/pull/682)
+- Range Widget: Add a skeleton for loading state [#681](https://github.com/CartoDB/carto-react/pull/681)
 - Avoid reset of Table widget to page 0 when not necessary [#685](https://github.com/CartoDB/carto-react/pull/685)
 - Fix widget calculation with very large viewports/masks [#680](https://github.com/CartoDB/carto-react/pull/680)
 - Storybook: show figma codes/theme code snippets for colors [#684](https://github.com/CartoDB/carto-react/pull/684)
+- Category & ComparativeCategory Widgets: Add a skeleton for loading state [#679](https://github.com/CartoDB/carto-react/pull/679)
 - Bar & Histogram & Formula & ComparativeFormula Widgets: Add a skeleton for loading state [#674](https://github.com/CartoDB/carto-react/pull/674)
-
-## 2.0
+- Improve Source types [#687](https://github.com/CartoDB/carto-react/pull/687)
 
 ### 2.0.4 (2023-05-19)
 

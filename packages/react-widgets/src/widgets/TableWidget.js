@@ -114,6 +114,7 @@ function TableWidget({
             onSetSortDirection={setSortDirection}
             height={height}
             dense={dense}
+            isLoading={isLoading}
           />
         )}
       </WidgetWithAlert>

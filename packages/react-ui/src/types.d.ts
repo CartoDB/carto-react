@@ -29,6 +29,7 @@ export type CategoryWidgetUI = {
   selectedCategories?: string[];
   onSelectedCategoriesChange?: Function;
   order?: 'ranking' | 'fixed';
+  isLoading?: boolean;
 };
 
 export type FormulaWidgetUIData =
@@ -84,6 +85,7 @@ export type PieWidgetUI = {
   colors?: string[];
   selectedCategories?: string[];
   onSelectedCategoriesChange?: Function;
+  isLoading?: boolean;
 };
 
 export type Layer = {
@@ -123,6 +125,7 @@ export type ScatterPlotWidgetUI = {
   xAxisFormatter?: Function;
   yAxisFormatter?: Function;
   tooltipFormatter?: Function;
+  isLoading?: boolean;
 };
 
 export type TimeSeriesWidgetUIData = { name: number; value: number }[];
@@ -144,6 +147,7 @@ export type TimeSeriesWidgetUI = {
   timeWindow?: any[];
   onTimeWindowUpdate?: Function;
   showControls?: boolean;
+  isLoading?: boolean;
 };
 
 export type NoDataAlert = {
@@ -254,6 +258,7 @@ export type ComparativeCategoryWidgetUI = {
   onSelectedCategoriesChange?: (categories: string[]) => any;
   formatter?: (v: any) => string;
   tooltipFormatter?: (v: any) => string;
+  isLoading?: boolean;
 };
 
 export type PieData = {
@@ -272,6 +277,7 @@ export type ComparativePieWidgetUIProps = {
   tooltipFormatter?: (v: any) => string;
   selectedCategories?: string[];
   onCategorySelected?: (categories: string[]) => any;
+  isLoading?: boolean;
 };
 
 // Tooltip data

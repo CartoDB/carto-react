@@ -1,22 +1,22 @@
 import { theme, cartoThemeOptions, CartoTheme } from './theme/carto-theme';
 import WrapperWidgetUI from './widgets/WrapperWidgetUI';
-import CategoryWidgetUI from './widgets/CategoryWidgetUI';
+import CategoryWidgetUI from './widgets/CategoryWidgetUI/CategoryWidgetUI';
 import FormulaWidgetUI from './widgets/FormulaWidgetUI/FormulaWidgetUI';
 import BarWidgetUI from './widgets/BarWidgetUI/BarWidgetUI';
 import HistogramWidgetUI from './widgets/HistogramWidgetUI/HistogramWidgetUI';
-import PieWidgetUI from './widgets/PieWidgetUI';
+import PieWidgetUI from './widgets/PieWidgetUI/PieWidgetUI';
 import LegendWidgetUI, { LEGEND_TYPES } from './widgets/legend/LegendWidgetUI';
 import LegendCategories from './widgets/legend/LegendCategories';
 import LegendIcon from './widgets/legend/LegendIcon';
 import LegendProportion from './widgets/legend/LegendProportion';
 import LegendRamp from './widgets/legend/LegendRamp';
-import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
+import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import {
   useTimeSeriesContext,
   TimeSeriesProvider
 } from './widgets/TimeSeriesWidgetUI/hooks/TimeSeriesContext';
-import RangeWidgetUI from './widgets/RangeWidgetUI';
+import RangeWidgetUI from './widgets/RangeWidgetUI/RangeWidgetUI';
 import useTimeSeriesInteractivity from './widgets/TimeSeriesWidgetUI/hooks/useTimeSeriesInteractivity';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';

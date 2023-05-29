@@ -128,6 +128,7 @@ function CategoryWidget(props) {
             animation={animation}
             filterable={filterable}
             searchable={searchable}
+            isLoading={isLoading}
           />
         )}
       </WidgetWithAlert>

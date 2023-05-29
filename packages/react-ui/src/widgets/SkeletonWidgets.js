@@ -1,12 +1,11 @@
-import { Skeleton, styled } from '@mui/material';
+import { Box, Skeleton, styled } from '@mui/material';
 
 export const SKELETON_HEIGHT = 240;
 
-export const SkeletonBarsGrid = styled('div')(({ theme }) => ({
+export const SkeletonBarsGrid = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'flex-end',
   justifyContent: 'space-between',
-  width: '100%',
   position: 'relative',
   padding: theme.spacing(0, 2),
 
@@ -24,11 +23,10 @@ export const SkeletonBarsGrid = styled('div')(({ theme }) => ({
   }
 }));
 
-export const SkeletonGraphGrid = styled('div')(({ theme }) => ({
+export const SkeletonGraphGrid = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'flex-end',
   justifyContent: 'space-between',
-  width: '100%',
 
   // Square grid effect
   backgroundImage: `linear-gradient(${theme.palette.grey[50]} 0.5px, transparent 0.5px, transparent calc(100% - 0.5px), ${theme.palette.grey[50]} calc(100% - 0.5px)), linear-gradient(90deg, ${theme.palette.grey[50]} 0.5px, transparent 0.5px, transparent calc(100% - 0.5px), ${theme.palette.grey[50]} calc(100% - 0.5px))`,
@@ -52,4 +50,12 @@ export const SkeletonThinBarItem = styled(Skeleton)(({ theme }) => ({
   '& + &': {
     marginLeft: '1px'
   }
+}));
+
+export const SkeletonMask = styled(Skeleton)(({ theme }) => ({
+  backgroundColor: theme.palette.common.white
+}));
+
+export const SkeletonSolid = styled(Skeleton)(({ theme }) => ({
+  backgroundColor: theme.palette.grey[100]
 }));

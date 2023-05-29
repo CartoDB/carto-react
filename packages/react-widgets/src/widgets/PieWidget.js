@@ -132,6 +132,7 @@ function PieWidget({
             filterable={filterable}
             selectedCategories={selectedCategories}
             onSelectedCategoriesChange={handleSelectedCategoriesChange}
+            isLoading={isLoading}
           />
         )}
       </WidgetWithAlert>
