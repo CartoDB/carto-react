@@ -28,6 +28,15 @@ export { scatterPlot } from './operations/scatterPlot';
 
 export { FilterTypes as _FilterTypes } from './filters/FilterTypes';
 
+export {
+  filtersToSQL as _filtersToSQL,
+  getApplicableFilters as _getApplicableFilters
+} from './filters/FilterQueryBuilder';
+export {
+  buildFeatureFilter as _buildFeatureFilter,
+  applyFilters as _applyFilters
+} from './filters/Filter';
+
 export { tileFeatures } from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';
 
