@@ -26,8 +26,8 @@ function fromLocal(props) {
 
 export function paginateTable({ rows, totalCount }, page, rowsPerPage) {
   const sliced = rows.slice(
-    rowsPerPage * Math.max(0, page),
-    rowsPerPage * Math.max(1, page + 1)
+    Math.min(rowsPerPage * Math.max(0, page), totalCount),
+    Math.min(rowsPerPage * Math.max(1, page + 1), totalCount)
   );
   const pages = Math.ceil(totalCount / rowsPerPage);
   return { rows: sliced, pages };
