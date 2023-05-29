@@ -1,7 +1,7 @@
 import { SourceProps, LayerConfig, UseCartoLayerFilterProps } from '../types';
 
 interface UseCartoLayerProps {
-  source: SourceProps;
+  source: SourceProps & { id: string };
   layerConfig?: LayerConfig;
   uniqueIdProperty?: string;
   viewportFeatures?: boolean;

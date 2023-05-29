@@ -23,7 +23,6 @@ interface CredentialsCarto3 {
 export type Credentials = CredentialsCarto2 | CredentialsCarto3;
 
 export type SourceProps = {
-  id: string;
   data: string;
   type: MapTypesType['QUERY'] | MapTypesType['TABLE'] | MapTypesType['TILESET'];
   connection: string;
