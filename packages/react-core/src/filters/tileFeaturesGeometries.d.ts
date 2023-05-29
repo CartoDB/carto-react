@@ -1,11 +1,10 @@
-import { TILE_FORMATS } from '@deck.gl/carto';
+import { TILE_FORMATS } from '@deck.gl/carto/typed';
 import { Polygon, MultiPolygon } from 'geojson';
-import { TileFeaturesResponse } from "../types";
+import { TileFeaturesResponse } from '../types';
 
 export default function tileFeaturesGeometries(arg: {
   tiles: any;
-  tileFormat: TILE_FORMATS;
+  tileFormat: typeof TILE_FORMATS;
   geometryToIntersect: Polygon | MultiPolygon;
   uniqueIdProperty?: string;
 }): TileFeaturesResponse;
-

@@ -1,9 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { WebMercatorViewport } from '@deck.gl/core';
-import { debounce } from '@carto/react-core';
+import { WebMercatorViewport } from '@deck.gl/core/typed';
+import { setDefaultCredentials } from '@deck.gl/carto/typed';
 import { removeWorker } from '@carto/react-workers';
-import { setDefaultCredentials } from '@deck.gl/carto';
-import { FEATURE_SELECTION_MODES, FiltersLogicalOperators } from '@carto/react-core';
+import {
+  FEATURE_SELECTION_MODES,
+  FiltersLogicalOperators,
+  debounce
+} from '@carto/react-core';
 
 /**
  *
@@ -202,7 +205,7 @@ export const createCartoSlice = (initialState) => {
  * @param {Object} credentials - (optional) Custom credentials to be used in the source
  * @param {string} connection - connection name for carto 3 source
  * @param {FiltersLogicalOperators} filtersLogicalOperator - logical operator that defines how filters for different columns are joined together
- * @param {import('@deck.gl/carto').QueryParameters} queryParameters - SQL query parameters
+ * @param {import('@deck.gl/carto/typed').QueryParameters} queryParameters - SQL query parameters
  */
 export const addSource = ({
   id,
