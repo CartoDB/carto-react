@@ -3,14 +3,12 @@ import { AggregationTypes, SpatialIndex, _filtersToSQL } from '@carto/react-core
 
 export function isRemoteCalculationSupported(props) {
   const { source } = props;
-  const isSpatialIndex =
-    source.geoColumn && Object.values(SpatialIndex).includes(source.geoColumn);
 
   return (
     source &&
     source.type !== MAP_TYPES.TILESET &&
     source.credentials.apiVersion !== API_VERSIONS.V2 &&
-    !isSpatialIndex
+    !(!!source.geoColumn && Object.values(SpatialIndex).includes(source.geoColumn)) // spatial index
   );
 }
 
