@@ -11,13 +11,11 @@ export function getTable(props) {
 
 function fromLocal(props) {
   // Injecting sortByColumnType externally from metadata gives better results. It allows to avoid deriving type from row value itself (with potential null values)
-  const { source, rowsPerPage, page, sortBy, sortDirection, sortByColumnType } = props;
+  const { source, sortBy, sortDirection, sortByColumnType } = props;
 
   return executeTask(source.id, Methods.FEATURES_RAW, {
     filters: source.filters,
     filtersLogicalOperator: source.filtersLogicalOperator,
-    limit: rowsPerPage,
-    page,
     sortBy,
     sortByDirection: sortDirection,
     sortByColumnType
