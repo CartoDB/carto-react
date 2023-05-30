@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { GoogleMapsOverlay } from '@deck.gl/google-maps';
+import { GoogleMapsOverlay } from '@deck.gl/google-maps/typed';
 import { debounce } from '@carto/react-core';
 
 /**

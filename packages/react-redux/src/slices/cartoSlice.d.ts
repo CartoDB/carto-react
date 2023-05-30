@@ -3,6 +3,7 @@ import { FiltersLogicalOperators, Viewport, _FilterTypes } from '@carto/react-co
 import { InitialCartoState, CartoState, ViewState } from '../types';
 import { AnyAction, Reducer } from 'redux';
 import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/index';
+import { Feature, Polygon, MultiPolygon } from 'geojson';
 
 type Source = SourceProps & {
   id: string

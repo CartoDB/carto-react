@@ -1,6 +1,6 @@
 import { encodeParameter, getRequest, postRequest } from '@carto/react-core';
 import { REQUEST_GET_MAX_URL_LENGTH } from '@carto/react-core';
-import { API_VERSIONS } from '@deck.gl/carto';
+import { API_VERSIONS } from '@deck.gl/carto/typed';
 
 import { dealWithApiError, CLIENT_ID } from './common';
 
@@ -16,8 +16,8 @@ const DEFAULT_USER_COMPONENT_IN_URL = '{user}';
  * @param { string } props.credentials.serverUrlTemplate - CARTO server URL template
  * @param { string } props.query - SQL query to be executed
  * @param { string } props.connection - connection name required for CARTO cloud native
- * @param { Object } props.opts - Additional options for the HTTP request
- * @param { import('@deck.gl/carto').QueryParameters } props.queryParameters - SQL query parameters
+ * @param { Object } props.opts - Additional options for the HTTP request (eg `{ headers: {} }`)
+ * @param { import('@deck.gl/carto/typed').QueryParameters } props.queryParameters - SQL query parameters
  */
 export const executeSQL = async ({
   credentials,
@@ -119,9 +119,7 @@ function createRequest({
 
   // Post request
   const urlParamsForPost =
-    apiVersion === API_VERSIONS.V3
-      ? [`client=${CLIENT_ID}`]
-      : null;
+    apiVersion === API_VERSIONS.V3 ? [`client=${CLIENT_ID}`] : null;
 
   const payload = {
     ...rawParams,

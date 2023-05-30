@@ -10,6 +10,7 @@
 - Mask, when set, is applied to global widgets as well as to viewport-based widgets [#704](https://github.com/CartoDB/carto-react/pull/704)
 - Support for remote scatter plot widget [#704](https://github.com/CartoDB/carto-react/pull/704)
 - Fix spatial filter was not being applied to Timeseries widgets [#719](https://github.com/CartoDB/carto-react/pull/719)
+- Add typed imports, from deck.gl typed [#693](https://github.com/CartoDB/carto-react/pull/693)
 
 ## 1.5
 
