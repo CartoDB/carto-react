@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Add typed imports, from deck.gl typed [#693](https://github.com/CartoDB/carto-react/pull/693)
+
 ## 2.0
 
 ### 2.0.5 (2023-05-26)

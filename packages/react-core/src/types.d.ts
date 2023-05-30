@@ -1,4 +1,4 @@
-import { TILE_FORMATS } from '@deck.gl/carto';
+import { TILE_FORMATS } from '@deck.gl/carto/typed';
 import { AggregationTypes } from './operations/constants/AggregationTypes';
 import { Polygon, MultiPolygon } from 'geojson';
 import { SpatialIndex } from './operations/constants/SpatialIndexTypes';
@@ -19,7 +19,12 @@ export type GroupByFeature =
     }[]
   | [];
 
-export type HistogramFeature = { min?: number; max?: number; data?: number[]; ticks?: number[] };
+export type HistogramFeature = {
+  min?: number;
+  max?: number;
+  data?: number[];
+  ticks?: number[];
+};
 
 export type ScatterPlotFeature = [number, number][];
 
@@ -30,7 +35,7 @@ export type TileFeatures = {
   viewport?: Viewport;
   geometry?: Polygon | MultiPolygon;
   uniqueIdProperty?: string;
-  tileFormat: TILE_FORMATS;
+  tileFormat: typeof TILE_FORMATS;
   geoColumName?: string;
   spatialIndex?: SpatialIndex;
 };

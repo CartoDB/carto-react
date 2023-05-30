@@ -1,5 +1,5 @@
+import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto/typed';
 import { AggregationTypes, _filtersToSQL } from '@carto/react-core';
-import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 
 export function isRemoteCalculationSupported(props) {
   const { source } = props;
