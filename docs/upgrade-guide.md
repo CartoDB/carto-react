@@ -2,12 +2,12 @@
 
 ## Upgrading from @carto/react v1.0 to v1.1
 
-### executeSQL parameters via destructuring 
+### executeSQL parameters via destructuring
 
 ExecuteSQL parameters are passed using object destructuring.
 
 ```javascript
-executeSQL({ credentials, query })
+executeSQL({ credentials, query });
 ```
 
 ### Credentials apiVersion
@@ -15,7 +15,7 @@ executeSQL({ credentials, query })
 A new `apiVersion` parameter is included in cartoSlice to indicate the CARTO API to be used.
 
 ```javascript
-import { API_VERSIONS } from '@deck.gl/carto';
+import { API_VERSIONS } from '@deck.gl/carto/typed';
 
 export const initialState = {
   ...

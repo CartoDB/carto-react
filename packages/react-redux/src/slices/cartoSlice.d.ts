@@ -7,6 +7,7 @@ import { AnyAction, Reducer } from 'redux';
 import { Feature, Polygon, MultiPolygon } from 'geojson';
 
 type Source = SourceProps & {
+  id: string;
   filters?: any;
   filtersLogicalOperator?: FiltersLogicalOperators;
   isDroppingFeatures?: boolean;
