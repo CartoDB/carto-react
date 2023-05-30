@@ -8,7 +8,10 @@ const RESULT = {
     { id: 30, city: 'Madrid', value: 300 },
     { id: 40, city: 'Paris', value: 400 },
     { id: 50, city: 'London', value: 500 }
-  ]
+  ],
+  totalCount: 5,
+  hasData: true,
+  isDataComplete: true
 };
 
 const mockedExecuteModel = jest.fn();
@@ -16,7 +19,7 @@ const mockedExecuteModel = jest.fn();
 jest.mock('@carto/react-api', () => ({
   _executeModel: (props) => {
     mockedExecuteModel(props);
-    return Promise.resolve({ rows: [{ VALUE: RESULT }] });
+    return Promise.resolve(RESULT);
   }
 }));
 
@@ -33,10 +36,10 @@ describe('paginateTable', () => {
     totalCount: 10 // not 11
   };
   const tests = [
-    [0, 5, [1, 2, 3, 4, 5], 2], // first 5
-    [1, 5, [6, 7, 8, 9, 10], 2], // second 5
-    [0, 7, [1, 2, 3, 4, 5, 6, 7], 2], // first 7
-    [1, 7, [8, 9, 10], 2], // second 7, but not 11 that is hidden
+    [0, 5, [1, 2, 3, 4, 5], 2], // first 5 elems
+    [1, 5, [6, 7, 8, 9, 10], 2], // second 5 elems
+    [0, 7, [1, 2, 3, 4, 5, 6, 7], 2], // first 7 elems
+    [1, 7, [8, 9, 10], 2], // second 7 elems, but not 11 that is hidden
     [2, 5, [], 2], // 11 is hidden
     [3, 5, [], 2], // no data at all
     [0, 10, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 1] // corner case, 1 page not 2
@@ -61,7 +64,7 @@ describe('getTable', () => {
       data: 'SELECT * FROM test',
       filters: {},
       credentials: {
-        apiVersion: 'v2'
+        apiVersion: 'v3'
       }
     },
     columns: ['id', 'city', 'value'],
@@ -72,16 +75,26 @@ describe('getTable', () => {
   describe('local model', () => {
     test('correctly returns data', async () => {
       executeTask.mockImplementation(() =>
-        Promise.resolve([
+        Promise.resolve({
+          rows: [
+            { id: 0, city: 'a', value: 2 },
+            { id: 7, city: 'b', value: 1 }
+          ],
+          totalCount: 2,
+          hasData: true,
+          isDataComplete: true
+        })
+      );
+      const data = await getTable(tableParams);
+      expect(data).toEqual({
+        rows: [
           { id: 0, city: 'a', value: 2 },
           { id: 7, city: 'b', value: 1 }
-        ])
-      );
-      const categories = await getTable(tableParams);
-      expect(categories).toEqual([
-        { id: 0, city: 'a', value: 2 },
-        { id: 7, city: 'b', value: 1 }
-      ]);
+        ],
+        totalCount: 2,
+        hasData: true,
+        isDataComplete: true
+      });
     });
 
     test('correctly called', async () => {
@@ -100,6 +113,9 @@ describe('getTable', () => {
   });
 
   describe('remote mode', () => {
-    // TODO: complete
+    test('correctly returns data', async () => {
+      const data = await getTable({ ...tableParams, remoteCalculation: true });
+      expect(data).toStrictEqual(RESULT);
+    });
   });
 });
