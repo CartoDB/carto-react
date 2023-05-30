@@ -14,6 +14,9 @@ export function isRemoteCalculationSupported(props) {
 export function wrapModelCall(props, fromLocal, fromRemote) {
   const { source, global, remoteCalculation } = props;
 
+  // TODO CHECK THIS
+  if (source.geoColumn) return fromLocal(props);
+
   if (global) {
     if (source.type === MAP_TYPES.TILESET)
       throw new Error('Tileset sources are not supported in global mode.');
