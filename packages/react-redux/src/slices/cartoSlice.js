@@ -206,6 +206,8 @@ export const createCartoSlice = (initialState) => {
  * @param {string} connection - connection name for carto 3 source
  * @param {FiltersLogicalOperators} filtersLogicalOperator - logical operator that defines how filters for different columns are joined together
  * @param {import('@deck.gl/carto/typed').QueryParameters} queryParameters - SQL query parameters
+ * @param {string} geoColumn - (optional) geoColumn, for spatial index data
+ * @param {string} aggregationExp - (optional) aggregationExp, for spatial index data
  */
 export const addSource = ({
   id,
@@ -214,7 +216,9 @@ export const addSource = ({
   credentials,
   connection,
   filtersLogicalOperator = FiltersLogicalOperators.AND,
-  queryParameters = []
+  queryParameters = [],
+  geoColumn,
+  aggregationExp
 }) => ({
   type: 'carto/addSource',
   payload: {
@@ -224,7 +228,9 @@ export const addSource = ({
     credentials,
     connection,
     filtersLogicalOperator,
-    queryParameters
+    queryParameters,
+    geoColumn,
+    aggregationExp
   }
 });
 
