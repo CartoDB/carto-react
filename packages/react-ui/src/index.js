@@ -12,7 +12,10 @@ import LegendProportion from './widgets/legend/LegendProportion';
 import LegendRamp from './widgets/legend/LegendRamp';
 import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
-import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
+import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI/FeatureSelectionWidgetUI';
+import FeatureSelectionUIDropdown from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIDropdown';
+import FeatureSelectionUIGeometryChips from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIGeometryChips';
+import FeatureSelectionUIToggleButton from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIToggleButton';
 import RangeWidgetUI from './widgets/RangeWidgetUI/RangeWidgetUI';
 import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
@@ -61,6 +64,9 @@ export {
   PieWidgetUI,
   ScatterPlotWidgetUI,
   FeatureSelectionWidgetUI,
+  FeatureSelectionUIDropdown,
+  FeatureSelectionUIGeometryChips,
+  FeatureSelectionUIToggleButton,
   TimeSeriesWidgetUI,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
   TableWidgetUI,
