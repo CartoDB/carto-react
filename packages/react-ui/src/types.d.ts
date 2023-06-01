@@ -22,7 +22,6 @@ export type WrapperWidgetUI = {
 export type CategoryWidgetUIData = { name: number | string | boolean; value: number }[];
 export type CategoryWidgetUI = {
   data: CategoryWidgetUIData;
-  isLoading?: boolean;
   formatter?: Function;
   labels?: object;
   maxItems?: number;
