@@ -167,7 +167,7 @@ export type FeatureSelectionWidgetUI = {
   onSelectMode?: Function;
   activated?: boolean;
   onActivatedChange?: Function;
-  geometry?: any;
+  geometry?: GeoJSON.Feature;
   onSelectGeometry?: Function;
   tooltipPlacement?: string;
   className?: string;
