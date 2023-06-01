@@ -52,7 +52,10 @@ const LoadingTemplate = (args) => {
 const DefaultProps = { columns, rows };
 
 export const Playground = Template.bind({});
-Playground.args = { ...DefaultProps, rows: rows.slice(0, 5) };
+Playground.args = {
+  ...DefaultProps,
+  rows: rows.slice(0, 5)
+};
 
 export const DenseLayout = Template.bind({});
 DenseLayout.args = {
@@ -66,10 +69,12 @@ Pagination.args = {
   ...DefaultProps,
   rowsPerPage: 6,
   rows: rows.slice(0, 6),
-  page: 0,
+  page: 1,
   pagination: true,
   rowsPerPageOptions: [4, 6, 8],
-  totalCount: rows.length
+  totalCount: rows.length,
+  lastPageTooltip: 'Custom text for the last page',
+  isDataComplete: true
 };
 
 export const RowClick = Template.bind({});

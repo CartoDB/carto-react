@@ -5,13 +5,14 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TablePagination,
   TableHead,
   TableRow,
   TableSortLabel,
-  TablePagination,
   styled
 } from '@mui/material';
 import TableSkeleton from './Skeleton/TableSkeleton';
+import TablePaginationActions from '../../components/molecules/Table/TablePaginationActions';
 
 const TableHeadCellLabel = styled(TableSortLabel)(({ theme }) => ({
   ...theme.typography.caption,
@@ -55,7 +56,9 @@ function TableWidgetUI({
   onRowClick,
   height,
   dense,
-  isLoading
+  isLoading,
+  isDataComplete,
+  lastPageTooltip
 }) {
   const paginationRef = useRef(null);
 
@@ -106,6 +109,15 @@ function TableWidgetUI({
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          ActionsComponent={() => (
+            <TablePaginationActions
+              count={totalCount}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              lastPageTooltip={isDataComplete ? lastPageTooltip : undefined}
+            />
+          )}
         />
       )}
     </>
@@ -194,7 +206,9 @@ TableWidgetUI.propTypes = {
   onRowClick: PropTypes.func,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   dense: PropTypes.bool,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  isDataComplete: PropTypes.bool,
+  lastPageTooltip: PropTypes.string
 };
 
 export default TableWidgetUI;
