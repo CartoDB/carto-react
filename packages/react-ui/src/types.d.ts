@@ -1,5 +1,5 @@
 import { GroupDateTypes } from '@carto/react-core';
-import { SxProps, Theme } from '@mui/material';
+import { SxProps, Theme, TooltipProps } from '@mui/material';
 export { SelectFieldProps } from './components/atoms/SelectField';
 export { TypographyProps } from './components/atoms/Typography';
 export { LabelWithIndicatorProps } from './components/atoms/LabelWithIndicator';
@@ -157,20 +157,55 @@ export type NoDataAlert = {
 export type FeatureSelectionWidgetUIData = {
   id: string;
   label: string;
-  icon: React.ReactElement;
+  icon: React.ReactNode;
 };
 export type FeatureSelectionWidgetUI = {
+  selectionModes: FeatureSelectionWidgetUIData[];
+  editModes?: FeatureSelectionWidgetUIData[];
+  selectedMode: string;
+  onSelectMode?: Function;
+  enabled?: boolean;
+  onEnabledChange?: Function;
+  geometry?: GeoJSON.Feature;
+  onSelectGeometry?: Function;
+  onDeleteGeometry?: Function;
+  tooltipPlacement?: string;
+  className?: string;
+  sx?: SxProps<Theme>;
+  tooltipPlacement?: TooltipProps['placement'];
+};
+
+export type FeatureSelectionUIDropdown = {
+  className?: string;
+  sx?: SxProps<Theme>;
   selectionModes: FeatureSelectionWidgetUIData[];
   editModes: FeatureSelectionWidgetUIData[];
   selectedMode: string;
   onSelectMode?: Function;
-  activated?: boolean;
-  onActivatedChange?: Function;
-  geometry?: GeoJSON.Feature;
-  onSelectGeometry?: Function;
-  tooltipPlacement?: string;
+  enabled?: boolean;
+  onEnabledChange?: Function;
+  tooltipPlacement?: TooltipProps['placement'];
+};
+export type FeatureSelectionUIGeometryChips = {
   className?: string;
   sx?: SxProps<Theme>;
+  features: GeoJSON.Feature[];
+  onSelectGeometry?: Function;
+  onDeleteGeometry?: Function;
+  chipTooltip?: string;
+  disabledChipTooltip?: string;
+  size?: 'small' | 'medium';
+  tooltipPlacement?: TooltipProps['placement'];
+};
+export type FeatureSelectionUIToggleButton = {
+  className?: string;
+  sx?: SxProps<Theme>;
+  icon: React.ReactNode;
+  hoverTooltip?: string;
+  clickTooltip?: string;
+  enabled?: boolean;
+  onEnabledChange?: Function;
+  tooltipPlacement?: TooltipProps['placement'];
 };
 
 // Legends
