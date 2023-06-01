@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, queryByAttribute, fireEvent } from '../widgets/utils/testUtils';
-import FeatureSelectionWidgetUI from '../../src/widgets/FeatureSelectionWidgetUI';
+import FeatureSelectionWidgetUI from '../../src/widgets/FeatureSelectionWidgetUI/FeatureSelectionWidgetUI';
 import { capitalize } from '@mui/material';
 import CursorIcon from '../../src/assets/icons/CursorIcon';
 import PolygonIcon from '../../src/assets/icons/PolygonIcon';
