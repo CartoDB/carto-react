@@ -37,7 +37,7 @@ function FeatureSelectionUIGeometryChips({
   sx,
   features,
   onSelectGeometry = NOOP,
-  onDeleteGeometry = NOOP,
+  onDeleteGeometry,
   chipTooltip,
   disabledChipTooltip,
   size = 'medium',
@@ -76,7 +76,7 @@ function FeatureSelectionUIGeometryChips({
                   label={getFeatureChipLabel(geometry, index)}
                   color={isDisabled ? 'default' : 'secondary'}
                   onClick={() => onSelectGeometry(geometry)}
-                  onDelete={() => onDeleteGeometry(geometry)}
+                  onDelete={onDeleteGeometry ? () => onDeleteGeometry(geometry) : null}
                 />
               </Tooltip>
             </ListItem>
@@ -115,8 +115,7 @@ FeatureSelectionUIGeometryChips.defaultProps = {
   className: '',
   size: 'medium',
   tooltipPlacement: 'bottom',
-  onSelectGeometry: NOOP,
-  onDeleteGeometry: NOOP
+  onSelectGeometry: NOOP
 };
 
 export default FeatureSelectionUIGeometryChips;
