@@ -53,10 +53,10 @@ describe('FeatureSelectionWidgetUI', () => {
       render(
         <FeatureSelectionWidgetUI
           selectionModes={FEATURE_SELECTION_MODES}
-          selectedMode={'IInvented'}
+          selectedMode={'Invented'}
         />
       )
-    ).toThrowError('Selected mode not supported');
+    ).toThrowError('Selected mode "Invented" not supported');
   });
 
   test('activate selected mode event is correctly raised', () => {
@@ -81,7 +81,7 @@ describe('FeatureSelectionWidgetUI', () => {
 
   test('selectionModes and editModes are rendered correctly in modes menu', async () => {
     const rendered = render(<CommonFeatureSelectionWidgetUI />);
-    const menuBtn = await rendered.findByLabelText('Select a mode');
+    const menuBtn = await rendered.findByLabelText('Choose a tool');
     // Open menu
     fireEvent.click(menuBtn);
     // Once the menu is opened, check everything is okey rendered
