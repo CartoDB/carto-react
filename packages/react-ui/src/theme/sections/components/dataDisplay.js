@@ -4,6 +4,7 @@ import { getSpacing } from '../../themeUtils';
 import { commonPalette } from '../palette';
 import { themeTypography } from '../typography';
 import Typography from '../../../components/atoms/Typography';
+import TablePaginationActions from '../../../components/molecules/Table/TablePaginationActions';
 
 const tooltipArrowSize = 1;
 const tooltipSeparation = 0.5;
@@ -232,7 +233,8 @@ export const dataDisplayOverrides = {
             {` of ${count}`}
           </>
         );
-      }
+      },
+      ActionsComponent: TablePaginationActions
     },
     styleOverrides: {
       root: {
@@ -261,18 +263,6 @@ export const dataDisplayOverrides = {
       },
       displayedRows: {
         color: commonPalette.text.secondary
-      },
-      actions: {
-        marginLeft: getSpacing(1),
-
-        '.MuiIconButton-root': {
-          '&:not(.Mui-disabled)': {
-            color: commonPalette.text.secondary
-          },
-          '& + .MuiIconButton-root': {
-            marginLeft: getSpacing(0.5)
-          }
-        }
       }
     }
   },
