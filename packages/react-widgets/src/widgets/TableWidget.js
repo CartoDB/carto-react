@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { WrapperWidgetUI, TableWidgetUI } from '@carto/react-ui';
-import { getTable, paginateTable } from '../models';
+import { getTable, paginateTable, TABLE_HARD_LIMIT } from '../models';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
@@ -65,8 +65,12 @@ function TableWidget({
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
-  const { totalCount, hasData } = data;
+  const { totalCount, hasData, isDataComplete } = data;
   const { rows, pages } = paginateTable(data, page, rowsPerPage);
+
+  const lastPageTooltip = isDataComplete
+    ? undefined
+    : `This view is limited to ${TABLE_HARD_LIMIT} rows`;
 
   useEffect(() => {
     if (pageSize !== undefined) setRowsPerPage(pageSize);
@@ -115,6 +119,7 @@ function TableWidget({
             height={height}
             dense={dense}
             isLoading={isLoading}
+            lastPageTooltip={lastPageTooltip}
           />
         )}
       </WidgetWithAlert>

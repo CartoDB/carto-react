@@ -3,7 +3,7 @@ import { Methods, executeTask } from '@carto/react-workers';
 import { normalizeObjectKeys, wrapModelCall } from './utils';
 
 // Make sure this is sync with the same constant in cloud-native/maps-api
-const HARD_LIMIT = 100;
+export const HARD_LIMIT = 100;
 
 export function getTable(props) {
   return wrapModelCall(props, fromLocal, fromRemote);
