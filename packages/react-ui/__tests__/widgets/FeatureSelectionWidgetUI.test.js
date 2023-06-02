@@ -96,7 +96,7 @@ describe('FeatureSelectionWidgetUI', () => {
       <CommonFeatureSelectionWidgetUI onSelectMode={onSelectMode} />
     );
 
-    const menuBtn = await rendered.findByLabelText('Select a mode');
+    const menuBtn = await rendered.findByLabelText('Choose a tool');
     // Open menu
     fireEvent.click(menuBtn);
 
@@ -109,7 +109,16 @@ describe('FeatureSelectionWidgetUI', () => {
     expect(onSelectMode).toHaveBeenCalledWith(anotherMode.id);
   });
 
-  const GEOMETRY = { geometry: 1 };
+  const GEOMETRY = {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [125.6, 10.1]
+    },
+    properties: {
+      name: 'Mask'
+    }
+  };
   test('geometry is rendered correctly', () => {
     const rendered = render(<CommonFeatureSelectionWidgetUI geometry={GEOMETRY} />);
     expect(rendered.getByText('Mask')).toBeDefined();
