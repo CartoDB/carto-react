@@ -169,7 +169,6 @@ export type FeatureSelectionWidgetUI = {
   geometry?: GeoJSON.Feature;
   onSelectGeometry?: Function;
   onDeleteGeometry?: Function;
-  tooltipPlacement?: string;
   className?: string;
   sx?: SxProps<Theme>;
   tooltipPlacement?: TooltipProps['placement'];
