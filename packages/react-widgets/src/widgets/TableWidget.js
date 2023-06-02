@@ -65,7 +65,7 @@ function TableWidget({
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
-  const { totalCount, hasData, isDataComplete } = data;
+  const { totalCount, hasData } = data;
   const { rows, pages } = paginateTable(data, page, rowsPerPage);
 
   useEffect(() => {
@@ -115,7 +115,6 @@ function TableWidget({
             height={height}
             dense={dense}
             isLoading={isLoading}
-            isDataComplete={isDataComplete}
           />
         )}
       </WidgetWithAlert>

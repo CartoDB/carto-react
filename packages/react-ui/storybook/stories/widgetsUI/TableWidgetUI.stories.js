@@ -73,8 +73,7 @@ Pagination.args = {
   pagination: true,
   rowsPerPageOptions: [4, 6, 8],
   totalCount: rows.length,
-  lastPageTooltip: 'Custom text for the last page',
-  isDataComplete: true
+  lastPageTooltip: 'Custom text for the last page'
 };
 
 export const RowClick = Template.bind({});

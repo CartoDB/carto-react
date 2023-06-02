@@ -57,7 +57,6 @@ function TableWidgetUI({
   height,
   dense,
   isLoading,
-  isDataComplete,
   lastPageTooltip
 }) {
   const paginationRef = useRef(null);
@@ -115,7 +114,7 @@ function TableWidgetUI({
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
-              lastPageTooltip={isDataComplete ? lastPageTooltip : undefined}
+              lastPageTooltip={lastPageTooltip}
             />
           )}
         />
@@ -207,7 +206,6 @@ TableWidgetUI.propTypes = {
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   dense: PropTypes.bool,
   isLoading: PropTypes.bool,
-  isDataComplete: PropTypes.bool,
   lastPageTooltip: PropTypes.string
 };
 
