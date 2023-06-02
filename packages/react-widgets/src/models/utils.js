@@ -12,7 +12,7 @@ export function isRemoteCalculationSupported(props) {
     source &&
     source.type !== MAP_TYPES.TILESET &&
     source.credentials.apiVersion !== API_VERSIONS.V2 &&
-    !(!!source.geoColumn && getSpatialIndexFromGeoColumn(source.geoColumn) !== null)
+    !(source.geoColumn && getSpatialIndexFromGeoColumn(source.geoColumn))
   );
 }
 
