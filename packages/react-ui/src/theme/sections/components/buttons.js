@@ -1,3 +1,4 @@
+import { createTheme } from '@mui/material/styles';
 import { getSpacing } from '../../themeUtils';
 import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE } from '../../themeConstants';
 
@@ -6,7 +7,7 @@ const sizeMedium = getSpacing(4);
 const sizeLarge = getSpacing(6);
 const radius = getSpacing(0.5);
 
-export const buttonsOverrides = {
+export const buttonsOverrides = createTheme({
   // Button Base
   MuiButtonBase: {
     defaultProps: {
@@ -510,4 +511,4 @@ export const buttonsOverrides = {
       })
     }
   }
-};
+});
