@@ -16,6 +16,8 @@ const ChipList = styled(List)(({ theme: { spacing } }) => ({
   }
 }));
 
+const NOOP = () => {};
+
 /**
  * Renders a list of chips from geojson features with tooltip, click and delete handlers
  * @param {Object} props
@@ -34,8 +36,8 @@ function FeatureSelectionUIGeometryChips({
   className,
   sx,
   features,
-  onSelectGeometry,
-  onDeleteGeometry,
+  onSelectGeometry = NOOP,
+  onDeleteGeometry = NOOP,
   chipTooltip,
   disabledChipTooltip,
   size = 'medium',
@@ -71,11 +73,10 @@ function FeatureSelectionUIGeometryChips({
               >
                 <Chip
                   size={size}
-                  clickable={!!onSelectGeometry || !!onDeleteGeometry}
                   label={getFeatureChipLabel(geometry, index)}
                   color={isDisabled ? 'default' : 'secondary'}
-                  onClick={!!onSelectGeometry && (() => onSelectGeometry(geometry))}
-                  onDelete={onDeleteGeometry}
+                  onClick={() => onSelectGeometry(geometry)}
+                  onDelete={() => onDeleteGeometry(geometry)}
                 />
               </Tooltip>
             </ListItem>
@@ -113,7 +114,9 @@ FeatureSelectionUIGeometryChips.propTypes = {
 FeatureSelectionUIGeometryChips.defaultProps = {
   className: '',
   size: 'medium',
-  tooltipPlacement: 'bottom'
+  tooltipPlacement: 'bottom',
+  onSelectGeometry: NOOP,
+  onDeleteGeometry: NOOP
 };
 
 export default FeatureSelectionUIGeometryChips;

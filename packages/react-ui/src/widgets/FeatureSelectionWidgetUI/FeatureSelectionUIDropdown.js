@@ -65,7 +65,9 @@ function FeatureSelectionUIDropdown({
   };
 
   const handleSelectMode = (newSelectedMode) => {
-    onSelectMode(newSelectedMode);
+    if (onSelectMode) {
+      onSelectMode(newSelectedMode);
+    }
     closeDropdown();
   };
 

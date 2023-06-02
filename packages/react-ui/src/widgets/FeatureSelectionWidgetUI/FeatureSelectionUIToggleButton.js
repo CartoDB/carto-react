@@ -39,7 +39,7 @@ function FeatureSelectionUIToggleButton({
     if (enabled) {
       const fn = (ev) => {
         if (ev.key === 'Escape') {
-          onEnabledChange(false);
+          if (onEnabledChange) onEnabledChange(false);
         }
       };
       window.addEventListener('keydown', fn);
@@ -67,7 +67,7 @@ function FeatureSelectionUIToggleButton({
         <ToggleButton
           value='selectedMode'
           selected={enabled}
-          onClick={() => onEnabledChange(!enabled)}
+          onClick={() => onEnabledChange && onEnabledChange(!enabled)}
           sx={{
             color: enabled ? palette.primary.main : palette.text.secondary,
             backgroundColor: enabled ? alpha(palette.primary.main, 0.05) : ''
