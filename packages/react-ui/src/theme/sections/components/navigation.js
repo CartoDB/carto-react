@@ -1,16 +1,13 @@
 import { ICON_SIZE_MEDIUM } from '../../themeConstants';
-import { getSpacing } from '../../themeUtils';
-import { commonPalette } from '../palette';
-import { themeTypography } from '../typography';
 
 export const navigationOverrides = {
   // Menu
   MuiMenuItem: {
     styleOverrides: {
-      root: {
-        ...themeTypography.body2,
-        minHeight: getSpacing(4),
-        height: getSpacing(4),
+      root: ({ theme }) => ({
+        ...theme.typography.body2,
+        minHeight: theme.spacing(4),
+        height: theme.spacing(4),
         transition: 'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
         '&:focus-visible': {
@@ -18,21 +15,21 @@ export const navigationOverrides = {
           backgroundColor: 'transparent',
 
           '&:hover': {
-            backgroundColor: commonPalette.action.hover
+            backgroundColor: theme.palette.action.hover
           }
         },
         '&.Mui-selected': {
-          color: commonPalette.primary.main,
+          color: theme.palette.primary.main,
 
           '&:focus-visible': {
             // Solves a known Mui issue: https://github.com/mui/material-ui/issues/23747
-            backgroundColor: commonPalette.primary.background
+            backgroundColor: theme.palette.primary.background
           },
           '&:hover': {
-            backgroundColor: commonPalette.action.hover
+            backgroundColor: theme.palette.action.hover
           },
           '& .MuiTypography-root, & .MuiSvgIcon-root': {
-            color: commonPalette.primary.main
+            color: theme.palette.primary.main
           }
         },
         '&.Mui-disabled:empty': {
@@ -40,13 +37,13 @@ export const navigationOverrides = {
           padding: 0
         },
         '& .MuiCheckbox-root, & > .MuiSvgIcon-root': {
-          marginRight: getSpacing(1)
+          marginRight: theme.spacing(1)
         }
-      },
-      dense: {
-        minHeight: getSpacing(3),
-        height: getSpacing(3)
-      }
+      }),
+      dense: ({ theme }) => ({
+        minHeight: theme.spacing(3),
+        height: theme.spacing(3)
+      })
     }
   },
 
@@ -60,14 +57,14 @@ export const navigationOverrides = {
       }
     },
     styleOverrides: {
-      root: ({ ownerState }) => ({
+      root: ({ theme }) => ({
         boxSizing: 'content-box',
-        boxShadow: `0 1px 0 0 ${commonPalette.black[12]}`
+        boxShadow: `0 1px 0 0 ${theme.palette.black[12]}`
       }),
 
-      vertical: {
+      vertical: () => ({
         borderBottom: 0
-      }
+      })
     }
   },
 
@@ -78,24 +75,24 @@ export const navigationOverrides = {
     },
 
     styleOverrides: {
-      root: {
-        minHeight: getSpacing(6),
-        minWidth: getSpacing(6),
-        padding: getSpacing(0, 2),
+      root: ({ theme }) => ({
+        minHeight: theme.spacing(6),
+        minWidth: theme.spacing(6),
+        padding: theme.spacing(0, 2),
         paddingTop: '2px',
         borderBottom: '2px solid transparent',
-        ...themeTypography.subtitle2,
-        color: commonPalette.text.primary,
+        ...theme.typography.subtitle2,
+        color: theme.palette.text.primary,
         transition: 'border 300ms cubic-bezier(0.4, 0, 0.2, 1)',
 
         '&:hover': {
-          borderBottomColor: commonPalette.text.primary
+          borderBottomColor: theme.palette.text.primary
         },
         '&.Mui-selected': {
           pointerEvents: 'none',
 
           '& svg:not(.doNotFillIcon) path': {
-            fill: commonPalette.primary.main
+            fill: theme.palette.primary.main
           }
         },
         '.MuiTabs-vertical &': {
@@ -105,36 +102,36 @@ export const navigationOverrides = {
           borderRight: '2px solid transparent',
 
           '&:hover': {
-            borderRightColor: commonPalette.text.primary
+            borderRightColor: theme.palette.text.primary
           }
         }
-      },
-      wrapped: {
+      }),
+      wrapped: () => ({
         maxWidth: '240px'
-      }
+      })
     }
   },
 
   // Breadcrumbs
   MuiBreadcrumbs: {
     styleOverrides: {
-      li: {
+      li: ({ theme }) => ({
         '& .MuiTypography-root': {
-          ...themeTypography.body2,
+          ...theme.typography.body2,
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center'
         },
         '& .MuiSvgIcon-root': {
           fontSize: ICON_SIZE_MEDIUM,
-          marginRight: getSpacing(1)
+          marginRight: theme.spacing(1)
         }
-      },
+      }),
 
-      separator: {
-        marginLeft: getSpacing(0.5),
-        marginRight: getSpacing(0.5)
-      }
+      separator: ({ theme }) => ({
+        marginLeft: theme.spacing(0.5),
+        marginRight: theme.spacing(0.5)
+      })
     }
   },
 

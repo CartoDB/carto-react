@@ -122,18 +122,6 @@ export const cartoThemeOptions = {
     ...dataDisplayOverrides,
     ...feedbackOverrides,
     ...surfacesOverrides
-    /*     MuiButton: {
-      styleOverrides: {
-        contained: ({ theme }) => ({
-          backgroundColor: theme.palette.warning.main
-        }),
-        containedPrimary: ({ theme }) => ({
-          '&:hover, &:focus-visible': {
-            backgroundColor: theme.palette.warning.dark
-          }
-        })
-      }
-    } */
   }
 };
 

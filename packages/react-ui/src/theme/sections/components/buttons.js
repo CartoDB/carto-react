@@ -14,7 +14,7 @@ export const buttonsOverrides = {
     },
 
     styleOverrides: {
-      root: {
+      root: () => ({
         '& .MuiSvgIcon-root, & svg': {
           display: 'flex',
           fontSize: ICON_SIZE_MEDIUM,
@@ -22,7 +22,7 @@ export const buttonsOverrides = {
           minWidth: ICON_SIZE_MEDIUM,
           height: ICON_SIZE_MEDIUM
         }
-      }
+      })
     }
   },
 
@@ -61,7 +61,7 @@ export const buttonsOverrides = {
         },
         // Pairing buttons separation
         '& + .MuiButtonBase-root': {
-          marginLeft: getSpacing(1)
+          marginLeft: theme.spacing(1)
         }
       }),
 
@@ -100,7 +100,7 @@ export const buttonsOverrides = {
       }),
 
       startIcon: ({ theme }) => ({
-        marginRight: getSpacing(0.75),
+        marginRight: theme.spacing(0.75),
 
         '& .MuiSvgIcon-root, & svg': {
           fontSize: ICON_SIZE_MEDIUM,
@@ -109,12 +109,12 @@ export const buttonsOverrides = {
           height: ICON_SIZE_MEDIUM
         },
         '&.MuiButton-iconSizeSmall': {
-          marginRight: getSpacing(0.5),
-          marginLeft: getSpacing(-0.5)
+          marginRight: theme.spacing(0.5),
+          marginLeft: theme.spacing(-0.5)
         }
       }),
       endIcon: ({ theme }) => ({
-        marginLeft: getSpacing(0.75),
+        marginLeft: theme.spacing(0.75),
 
         '& .MuiSvgIcon-root, & svg': {
           fontSize: ICON_SIZE_MEDIUM,
@@ -123,14 +123,14 @@ export const buttonsOverrides = {
           height: ICON_SIZE_MEDIUM
         },
         '&.MuiButton-iconSizeSmall': {
-          marginLeft: getSpacing(0.5),
-          marginRight: getSpacing(-0.5)
+          marginLeft: theme.spacing(0.5),
+          marginRight: theme.spacing(-0.5)
         }
       }),
 
       sizeSmall: ({ theme }) => ({
         height: sizeSmall,
-        padding: getSpacing(0, 1.5),
+        padding: theme.spacing(0, 1.5),
         ...theme.typography.caption,
         lineHeight: sizeSmall,
         fontWeight: 500,
@@ -138,12 +138,12 @@ export const buttonsOverrides = {
       }),
       sizeMedium: ({ theme }) => ({
         height: sizeMedium,
-        padding: getSpacing(0, 2),
+        padding: theme.spacing(0, 2),
         lineHeight: sizeMedium
       }),
       sizeLarge: ({ theme }) => ({
         height: sizeLarge,
-        padding: getSpacing(0, 2.5),
+        padding: theme.spacing(0, 2.5),
         ...theme.typography.body1,
         lineHeight: sizeLarge,
         fontWeight: 500,
@@ -272,7 +272,7 @@ export const buttonsOverrides = {
   MuiIconButton: {
     styleOverrides: {
       root: ({ ownerState, theme }) => ({
-        borderRadius: getSpacing(0.5),
+        borderRadius: theme.spacing(0.5),
 
         ...(ownerState.color === 'default' && {
           color: theme.palette.text.secondary
@@ -299,18 +299,18 @@ export const buttonsOverrides = {
         }
       }),
 
-      sizeSmall: {
+      sizeSmall: () => ({
         width: sizeSmall,
         height: sizeSmall
-      },
-      sizeMedium: {
+      }),
+      sizeMedium: () => ({
         width: sizeMedium,
         height: sizeMedium
-      },
-      sizeLarge: {
+      }),
+      sizeLarge: () => ({
         width: sizeLarge,
         height: sizeLarge
-      }
+      })
     }
   },
 
@@ -320,7 +320,7 @@ export const buttonsOverrides = {
       root: ({ theme }) => ({
         minWidth: sizeMedium,
         height: sizeMedium,
-        padding: getSpacing(0, 1),
+        padding: theme.spacing(0, 1),
         color: theme.palette.text.secondary,
         border: 'none',
         borderRadius: radius,
@@ -331,10 +331,10 @@ export const buttonsOverrides = {
         },
         // Pairing buttons separation
         '& + &': {
-          marginLeft: getSpacing(0.5)
+          marginLeft: theme.spacing(0.5)
         },
         '.MuiSvgIcon-root, & svg': {
-          margin: getSpacing(0, -0.75)
+          margin: theme.spacing(0, -0.75)
         },
         '&.Mui-selected': {
           color: theme.palette.primary.main,
@@ -373,7 +373,7 @@ export const buttonsOverrides = {
       root: ({ theme }) => ({
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: getSpacing(1),
+        borderRadius: theme.spacing(1),
         boxShadow: theme.shadows[1],
         backgroundColor: theme.palette.background.paper,
 
@@ -383,26 +383,26 @@ export const buttonsOverrides = {
           },
         '.MuiDivider-root': {
           height: sizeLarge,
-          margin: getSpacing(0, 1),
-          marginLeft: getSpacing(0.5)
+          margin: theme.spacing(0, 1),
+          marginLeft: theme.spacing(0.5)
         }
       }),
       // Styles applied to the children if orientation="horizontal"
       groupedHorizontal: ({ theme }) => ({
         height: sizeMedium,
-        margin: getSpacing(1),
+        margin: theme.spacing(1),
 
         '&:not(:last-of-type)': {
-          marginRight: getSpacing(0.5),
+          marginRight: theme.spacing(0.5),
           marginLeft: 0,
           borderLeft: 'none'
         },
         '&:first-of-type': {
-          marginLeft: getSpacing(1)
+          marginLeft: theme.spacing(1)
         },
         '&.MuiToggleButton-sizeSmall': {
           height: sizeSmall,
-          margin: getSpacing(0.5),
+          margin: theme.spacing(0.5),
 
           '&:not(:first-of-type)': {
             marginLeft: 0
@@ -415,15 +415,15 @@ export const buttonsOverrides = {
       // Styles applied to the children if orientation="vertical"
       groupedVertical: ({ theme }) => ({
         width: sizeMedium,
-        margin: getSpacing(1),
+        margin: theme.spacing(1),
 
         '&.MuiToggleButton-root': {
-          marginLeft: getSpacing(1),
-          marginBottom: getSpacing(0.5)
+          marginLeft: theme.spacing(1),
+          marginBottom: theme.spacing(0.5)
         },
         '&.MuiToggleButton-sizeSmall': {
           width: sizeSmall,
-          margin: getSpacing(0.5),
+          margin: theme.spacing(0.5),
 
           '&:not(:first-of-type)': {
             marginTop: 0
@@ -455,12 +455,12 @@ export const buttonsOverrides = {
           ...theme.typography.body1,
           fontWeight: 500,
           width: 'auto',
-          height: getSpacing(7),
-          paddingRight: getSpacing(3),
-          borderRadius: getSpacing(8),
+          height: theme.spacing(7),
+          paddingRight: theme.spacing(3),
+          borderRadius: theme.spacing(8),
 
           '& .MuiSvgIcon-root': {
-            marginRight: getSpacing(1.5)
+            marginRight: theme.spacing(1.5)
           }
         },
 
@@ -475,9 +475,9 @@ export const buttonsOverrides = {
       }),
 
       sizeSmall: ({ theme }) => ({
-        width: getSpacing(4),
-        height: getSpacing(4),
-        minHeight: getSpacing(4),
+        width: theme.spacing(4),
+        height: theme.spacing(4),
+        minHeight: theme.spacing(4),
 
         '& .MuiSvgIcon-root, & svg': {
           fontSize: ICON_SIZE_MEDIUM,
@@ -488,18 +488,18 @@ export const buttonsOverrides = {
         '&.MuiFab-extended': {
           ...theme.typography.caption,
           width: 'auto',
-          height: getSpacing(4),
-          paddingRight: getSpacing(2),
+          height: theme.spacing(4),
+          paddingRight: theme.spacing(2),
 
           '& .MuiSvgIcon-root': {
-            marginRight: getSpacing(1)
+            marginRight: theme.spacing(1)
           }
         }
       }),
       sizeMedium: ({ theme }) => ({
         '&.MuiFab-extended': {
           ...theme.typography.button,
-          height: getSpacing(6)
+          height: theme.spacing(6)
         }
       }),
 

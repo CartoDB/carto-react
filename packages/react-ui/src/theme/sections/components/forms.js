@@ -1,9 +1,5 @@
 import React from 'react';
 import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE } from '../../themeConstants';
-import { getSpacing } from '../../themeUtils';
-import { commonPalette } from '../palette';
-import { themeShadows } from '../shadows';
-import { themeTypography } from '../typography';
 import ArrowDropIcon from '../../../assets/icons/ArrowDropIcon';
 
 const switchSizeS = 2;
@@ -11,22 +7,22 @@ const switchSizeM = 3;
 const switchSizeL = 4;
 
 const checkboxRadioOverrides = {
-  root: ({ ownerState }) => ({
-    padding: getSpacing(0.5),
+  root: ({ ownerState, theme }) => ({
+    padding: theme.spacing(0.5),
 
     ...(ownerState.size === 'small' && {
       padding: '3px' // Forced to a non-standard value to meet with design
     }),
 
     '&:hover, &:focus-visible': {
-      backgroundColor: commonPalette.primary.background
+      backgroundColor: theme.palette.primary.background
     },
     '& + .MuiFormControlLabel-label': {
-      ...themeTypography.body2,
-      marginLeft: getSpacing(0.25),
+      ...theme.typography.body2,
+      marginLeft: theme.spacing(0.25),
 
       ...(ownerState.size === 'small' && {
-        marginLeft: getSpacing(0.5)
+        marginLeft: theme.spacing(0.5)
       })
     },
 
@@ -41,38 +37,38 @@ const checkboxRadioOverrides = {
 };
 
 const LabelOverrides = {
-  root: {
+  root: ({ theme }) => ({
     position: 'static',
     transform: 'none',
-    marginBottom: getSpacing(1),
-    ...themeTypography.caption,
+    marginBottom: theme.spacing(1),
+    ...theme.typography.caption,
     fontWeight: 500,
-    color: commonPalette.text.primary
-  },
-  sizeSmall: {
-    marginBottom: getSpacing(0.5)
-  },
-  standard: {
+    color: theme.palette.text.primary
+  }),
+  sizeSmall: ({ theme }) => ({
+    marginBottom: theme.spacing(0.5)
+  }),
+  standard: () => ({
     marginBottom: 0
-  },
+  }),
   // Temporal workaroud to give a faster solution for a Workflows demand: https://app.shortcut.com/cartoteam/story/294539/distinction-among-parameters-optional-inputs-units-in-the-ui
   // These styles avoid (by now) the need to review current forms and change those with a required mark.
   // TODO: remored asterisk completely and use instead LabelWithIndicator component to mark also required ones.
-  asterisk: {
+  asterisk: ({ theme }) => ({
     '&, &.Mui-error': {
       color: 'transparent'
     },
     '&::after': {
       content: '"(required)"',
-      marginLeft: getSpacing(-0.5),
-      color: commonPalette.text.secondary,
+      marginLeft: theme.spacing(-0.5),
+      color: theme.palette.text.secondary,
       fontWeight: 400,
 
       '.Mui-disabled &': {
-        color: commonPalette.text.disabled
+        color: theme.palette.text.disabled
       }
     }
-  }
+  })
 };
 
 export const formsOverrides = {
@@ -105,7 +101,7 @@ export const formsOverrides = {
       }
     },
     styleOverrides: {
-      root: ({ ownerState }) => ({
+      root: ({ ownerState, theme }) => ({
         '& legend': {
           display: 'none'
         },
@@ -119,14 +115,14 @@ export const formsOverrides = {
               padding: 0
             },
             '& .MuiInputAdornment-positionEnd': {
-              marginRight: getSpacing(3)
+              marginRight: theme.spacing(3)
             },
             '& .MuiSelect-select': {
-              padding: getSpacing(1.5),
+              padding: theme.spacing(1.5),
 
               '&.MuiInputBase-input': {
-                paddingLeft: getSpacing(2),
-                paddingRight: getSpacing(5),
+                paddingLeft: theme.spacing(2),
+                paddingRight: theme.spacing(5),
 
                 '&.MuiSelect-standard': {
                   paddingLeft: 0
@@ -142,8 +138,8 @@ export const formsOverrides = {
               }
             },
             '& .MuiSelect-icon': {
-              right: getSpacing(2),
-              color: commonPalette.text.secondary
+              right: theme.spacing(2),
+              color: theme.palette.text.secondary
             },
             '& .MuiSelect-iconStandard': {
               right: 0
@@ -155,19 +151,19 @@ export const formsOverrides = {
               padding: 0
             },
             '& .MuiSelect-select': {
-              ...themeTypography.body2,
-              padding: getSpacing(0.75),
+              ...theme.typography.body2,
+              padding: theme.spacing(0.75),
 
               '&.MuiInputBase-input': {
-                paddingLeft: getSpacing(1.5),
-                paddingRight: getSpacing(4)
+                paddingLeft: theme.spacing(1.5),
+                paddingRight: theme.spacing(4)
               }
             },
             '&.MuiOutlinedInput-root.MuiInputBase-sizeSmall': {
               padding: 0
             },
             '& .MuiSelect-icon': {
-              right: getSpacing(1.5)
+              right: theme.spacing(1.5)
             }
           }
         })
@@ -178,10 +174,10 @@ export const formsOverrides = {
   // Input Base
   MuiInputBase: {
     styleOverrides: {
-      root: {
-        height: getSpacing(6),
-        padding: getSpacing(0, 2),
-        ...themeTypography.body1,
+      root: ({ theme }) => ({
+        height: theme.spacing(6),
+        padding: theme.spacing(0, 2),
+        ...theme.typography.body1,
 
         '& input': {
           padding: 0,
@@ -191,7 +187,7 @@ export const formsOverrides = {
 
           '&::placeholder': {
             opacity: 1,
-            color: commonPalette.text.hint
+            color: theme.palette.text.hint
           }
         },
 
@@ -208,38 +204,38 @@ export const formsOverrides = {
 
         // Variants
         '&.MuiFilledInput-root': {
-          padding: getSpacing(0, 2),
-          borderRadius: getSpacing(0.5),
-          backgroundColor: commonPalette.default.background,
+          padding: theme.spacing(0, 2),
+          borderRadius: theme.spacing(0.5),
+          backgroundColor: theme.palette.default.background,
 
           '&:hover': {
-            backgroundColor: commonPalette.default.background
+            backgroundColor: theme.palette.default.background
           },
           '&::before': {
             top: 0,
-            borderRadius: getSpacing(0.5),
+            borderRadius: theme.spacing(0.5),
             border: '1px solid transparent',
             transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
           },
           '&:hover:not(.Mui-disabled)::before': {
-            borderColor: commonPalette.text.primary
+            borderColor: theme.palette.text.primary
           },
           '&::after': {
-            borderRadius: getSpacing(0.5),
+            borderRadius: theme.spacing(0.5),
             border: '1px solid transparent'
           },
           '&.MuiInputBase-sizeSmall': {
-            padding: getSpacing(0, 1.5)
+            padding: theme.spacing(0, 1.5)
           },
           '&.Mui-focused': {
-            backgroundColor: commonPalette.background.paper,
+            backgroundColor: theme.palette.background.paper,
 
             '&::after': {
-              border: `2px solid ${commonPalette.primary.main}`
+              border: `2px solid ${theme.palette.primary.main}`
             }
           },
           '&.Mui-disabled': {
-            backgroundColor: commonPalette.default.background,
+            backgroundColor: theme.palette.default.background,
 
             '&::before': {
               borderBottomStyle: 'solid'
@@ -247,32 +243,32 @@ export const formsOverrides = {
           },
           '&.Mui-error::after': {
             opacity: 1,
-            border: `2px solid ${commonPalette.error.light}`
+            border: `2px solid ${theme.palette.error.light}`
           }
         },
 
         '&.MuiOutlinedInput-root': {
-          padding: getSpacing(0, 2),
+          padding: theme.spacing(0, 2),
 
           '&.MuiInputBase-sizeSmall': {
-            padding: getSpacing(0, 1.5)
+            padding: theme.spacing(0, 1.5)
           },
           '&.Mui-focused': {
-            backgroundColor: commonPalette.background.paper
+            backgroundColor: theme.palette.background.paper
           },
           '&.Mui-disabled': {
-            backgroundColor: commonPalette.default.background
+            backgroundColor: theme.palette.default.background
           },
           '& .MuiOutlinedInput-notchedOutline': {
             top: 0,
-            borderColor: commonPalette.default.outlinedBorder,
+            borderColor: theme.palette.default.outlinedBorder,
             transition: 'border 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
           },
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
             transition: 'none'
           },
           '&.Mui-error .MuiOutlinedInput-notchedOutline': {
-            border: `2px solid ${commonPalette.error.light}`
+            border: `2px solid ${theme.palette.error.light}`
           }
         },
 
@@ -281,20 +277,20 @@ export const formsOverrides = {
           padding: 0,
 
           '&::before': {
-            borderColor: commonPalette.default.outlinedBorder
+            borderColor: theme.palette.default.outlinedBorder
           },
           '&:hover:not(.Mui-disabled)::before': {
-            borderBottom: `1px solid ${commonPalette.text.primary}`
+            borderBottom: `1px solid ${theme.palette.text.primary}`
           },
           '&:not(.Mui-disabled)::after': {
             borderBottom: '1px solid transparent'
           },
           '&.Mui-focused::after': {
-            borderBottom: `2px solid ${commonPalette.primary.main}`
+            borderBottom: `2px solid ${theme.palette.primary.main}`
           },
           '&.Mui-error::after': {
             opacity: 1,
-            borderBottom: `2px solid ${commonPalette.error.light}`
+            borderBottom: `2px solid ${theme.palette.error.light}`
           },
           '&.Mui-disabled::before': {
             borderBottomStyle: 'solid'
@@ -304,27 +300,27 @@ export const formsOverrides = {
         // TextArea (multiline)
         '&.MuiInputBase-multiline': {
           height: 'auto',
-          minHeight: getSpacing(12),
+          minHeight: theme.spacing(12),
           alignItems: 'flex-start',
-          padding: getSpacing(0, 0.25),
+          padding: theme.spacing(0, 0.25),
 
           '& textarea': {
-            padding: getSpacing(1.5, 1.75),
-            ...themeTypography.body1,
+            padding: theme.spacing(1.5, 1.75),
+            ...theme.typography.body1,
 
             '&::placeholder, &.Mui-disabled::placeholder': {
               opacity: 1,
-              color: commonPalette.text.hint
+              color: theme.palette.text.hint
             }
           },
 
           '&.MuiInputBase-sizeSmall': {
-            minHeight: getSpacing(9),
-            padding: getSpacing(0, 0.25),
+            minHeight: theme.spacing(9),
+            padding: theme.spacing(0, 0.25),
 
             '& textarea': {
-              padding: getSpacing(1, 1.25),
-              ...themeTypography.body2
+              padding: theme.spacing(1, 1.25),
+              ...theme.typography.body2
             }
           }
         },
@@ -332,33 +328,33 @@ export const formsOverrides = {
         // Select Multiple selection
         '&.MuiInputBase-root .MuiSelect-multiple.MuiInputBase-input': {
           paddingLeft: 0,
-          paddingRight: getSpacing(3)
+          paddingRight: theme.spacing(3)
         }
-      },
+      }),
 
       // size
-      sizeSmall: {
-        height: getSpacing(4),
-        padding: getSpacing(0, 1.5),
+      sizeSmall: ({ theme }) => ({
+        height: theme.spacing(4),
+        padding: theme.spacing(0, 1.5),
 
         '& input': {
-          ...themeTypography.body2
+          ...theme.typography.body2
         }
-      }
+      })
     }
   },
 
   // Input Adornment
   MuiInputAdornment: {
     styleOverrides: {
-      root: {
+      root: ({ theme }) => ({
         '& .MuiTypography-root': {
-          ...themeTypography.body1,
-          color: commonPalette.text.secondary
+          ...theme.typography.body1,
+          color: theme.palette.text.secondary
         },
         '&.MuiInputAdornment-sizeSmall': {
           '& .MuiTypography-root': {
-            ...themeTypography.body2
+            ...theme.typography.body2
           }
         },
         '&.MuiInputAdornment-positionStart.MuiInputAdornment-root:not(.MuiInputAdornment-hiddenLabel)':
@@ -370,14 +366,14 @@ export const formsOverrides = {
           width: ICON_SIZE_MEDIUM,
           minWidth: ICON_SIZE_MEDIUM,
           height: ICON_SIZE_MEDIUM,
-          color: commonPalette.text.secondary
+          color: theme.palette.text.secondary
         },
         '.Mui-disabled &': {
           '& .MuiTypography-root, & .MuiSvgIcon-root': {
-            color: commonPalette.text.disabled
+            color: theme.palette.text.disabled
           }
         }
-      }
+      })
     }
   },
 
@@ -391,23 +387,23 @@ export const formsOverrides = {
   // Form Control Label (radio, checkbox and switch wrapper)
   MuiFormControlLabel: {
     styleOverrides: {
-      root: {
-        marginLeft: getSpacing(-0.5),
+      root: ({ theme }) => ({
+        marginLeft: theme.spacing(-0.5),
 
         '& .MuiSwitch-root': {
-          marginLeft: getSpacing(0.5)
+          marginLeft: theme.spacing(0.5)
         }
-      }
+      })
     }
   },
 
   // Form Helper Text
   MuiFormHelperText: {
     styleOverrides: {
-      root: {
+      root: ({ theme }) => ({
         margin: 0,
-        marginTop: getSpacing(1)
-      }
+        marginTop: theme.spacing(1)
+      })
     }
   },
 
@@ -432,12 +428,12 @@ export const formsOverrides = {
     },
 
     styleOverrides: {
-      root: {
+      root: ({ theme }) => ({
         padding: 0,
 
         '& .MuiSelect-icon': {
-          right: getSpacing(2),
-          color: commonPalette.text.secondary
+          right: theme.spacing(2),
+          color: theme.palette.text.secondary
         },
         '& .MuiSelect-iconStandard': {
           right: 0
@@ -459,12 +455,12 @@ export const formsOverrides = {
 
         // Size Small
         '&.MuiInputBase-sizeSmall': {
-          ...themeTypography.body2,
+          ...theme.typography.body2,
 
           '& .MuiSelect-select': {
             '&.MuiInputBase-input': {
-              paddingLeft: getSpacing(1.5),
-              paddingRight: getSpacing(4)
+              paddingLeft: theme.spacing(1.5),
+              paddingRight: theme.spacing(4)
             },
             '&.MuiSelect-standard': {
               paddingLeft: 0
@@ -475,16 +471,16 @@ export const formsOverrides = {
               padding: 0
             },
           '& .MuiSelect-icon': {
-            right: getSpacing(1.5)
+            right: theme.spacing(1.5)
           }
         }
-      },
-      select: {
-        padding: getSpacing(1.5),
+      }),
+      select: ({ theme }) => ({
+        padding: theme.spacing(1.5),
 
         '&.MuiInputBase-input': {
-          paddingLeft: getSpacing(2),
-          paddingRight: getSpacing(5),
+          paddingLeft: theme.spacing(2),
+          paddingRight: theme.spacing(5),
 
           '&.MuiSelect-standard': {
             paddingLeft: 0
@@ -500,9 +496,9 @@ export const formsOverrides = {
         },
 
         '&.MuiInputBase-inputSizeSmall': {
-          padding: getSpacing(0.75)
+          padding: theme.spacing(0.75)
         }
-      }
+      })
     }
   },
 
@@ -513,21 +509,21 @@ export const formsOverrides = {
     },
 
     styleOverrides: {
-      root: {
+      root: ({ theme }) => ({
         '& .MuiInputBase-root .MuiAutocomplete-endAdornment': {
-          top: getSpacing(1),
-          right: getSpacing(1.5)
+          top: theme.spacing(1),
+          right: theme.spacing(1.5)
         },
         '& .MuiInputBase-sizeSmall .MuiAutocomplete-endAdornment': {
           top: 0,
-          right: getSpacing(0.75)
+          right: theme.spacing(0.75)
         },
         '& .MuiFormLabel-root': {
           pointerEvents: 'auto'
         }
-      },
+      }),
 
-      inputRoot: {
+      inputRoot: () => ({
         '&[class*="MuiOutlinedInput-root"]': {
           '& .MuiAutocomplete-input': {
             padding: 0
@@ -537,18 +533,18 @@ export const formsOverrides = {
           {
             backgroundColor: 'transparent'
           }
-      },
+      }),
 
-      listbox: {
+      listbox: ({ theme }) => ({
         '& .MuiAutocomplete-option': {
-          minHeight: getSpacing(4),
-          padding: getSpacing(0, 2)
+          minHeight: theme.spacing(4),
+          padding: theme.spacing(0, 2)
         }
-      },
+      }),
 
-      option: {
-        ...themeTypography.body2
-      }
+      option: ({ theme }) => ({
+        ...theme.typography.body2
+      })
     }
   },
 
@@ -559,39 +555,39 @@ export const formsOverrides = {
     },
 
     styleOverrides: {
-      root: {
-        width: getSpacing(switchSizeM),
-        height: getSpacing(switchSizeS),
+      root: ({ theme }) => ({
+        width: theme.spacing(switchSizeM),
+        height: theme.spacing(switchSizeS),
         padding: 0,
         overflow: 'visible',
 
         '& + .MuiTypography-root': {
-          marginLeft: getSpacing(1),
-          color: commonPalette.text.primary
+          marginLeft: theme.spacing(1),
+          color: theme.palette.text.primary
         },
         '& + .MuiFormControlLabel-label': {
-          ...themeTypography.body2
+          ...theme.typography.body2
         }
-      },
+      }),
 
-      switchBase: {
-        width: getSpacing(switchSizeL),
-        height: getSpacing(switchSizeL),
-        padding: getSpacing(0.5),
+      switchBase: ({ theme }) => ({
+        width: theme.spacing(switchSizeL),
+        height: theme.spacing(switchSizeL),
+        padding: theme.spacing(0.5),
         borderRadius: '50%',
-        color: commonPalette.text.secondary,
+        color: theme.palette.text.secondary,
         transform: 'translate(-8px, -8px)',
 
         '&:hover': {
-          backgroundColor: commonPalette.action.hover
+          backgroundColor: theme.palette.action.hover
         },
         '&.MuiSwitch-switchBase input': {
-          top: getSpacing(1),
-          left: getSpacing(1)
+          top: theme.spacing(1),
+          left: theme.spacing(1)
         },
         '&.Mui-checked': {
           transform: 'translate(0, -8px)',
-          color: commonPalette.common.white,
+          color: theme.palette.common.white,
 
           '&.MuiSwitch-switchBase input': {
             left: 0
@@ -601,57 +597,57 @@ export const formsOverrides = {
             border: 0
           }
         }
-      },
+      }),
 
-      thumb: {
-        width: getSpacing(1),
-        height: getSpacing(1),
-        boxShadow: themeShadows[0],
+      thumb: ({ theme }) => ({
+        width: theme.spacing(1),
+        height: theme.spacing(1),
+        boxShadow: theme.shadows[0],
 
         '.Mui-checked &': {
-          boxShadow: themeShadows[1]
+          boxShadow: theme.shadows[1]
         },
         '.Mui-disabled &': {
-          backgroundColor: commonPalette.text.disabled
+          backgroundColor: theme.palette.text.disabled
         },
         '.Mui-disabled.Mui-checked &': {
-          backgroundColor: commonPalette.common.white
+          backgroundColor: theme.palette.common.white
         }
-      },
+      }),
 
-      input: {
-        width: getSpacing(switchSizeM),
-        height: getSpacing(switchSizeS),
+      input: ({ theme }) => ({
+        width: theme.spacing(switchSizeM),
+        height: theme.spacing(switchSizeS),
         left: 0
-      },
+      }),
 
-      track: {
+      track: ({ theme }) => ({
         height: 'auto',
-        border: `1px solid ${commonPalette.text.secondary}`,
-        borderRadius: getSpacing(2),
+        border: `1px solid ${theme.palette.text.secondary}`,
+        borderRadius: theme.spacing(2),
         opacity: 1,
-        backgroundColor: commonPalette.common.white,
+        backgroundColor: theme.palette.common.white,
         transitionDuration: '300ms',
 
         '.MuiButtonBase-root.MuiSwitch-switchBase.Mui-disabled + &': {
           opacity: 1,
-          borderColor: commonPalette.text.disabled
+          borderColor: theme.palette.text.disabled
         },
         '.MuiButtonBase-root.Mui-checked.Mui-disabled + &': {
-          backgroundColor: commonPalette.text.disabled
+          backgroundColor: theme.palette.text.disabled
         }
-      },
+      }),
 
-      colorPrimary: {
+      colorPrimary: ({ theme }) => ({
         '&.Mui-checked:hover': {
-          backgroundColor: commonPalette.primary.background
+          backgroundColor: theme.palette.primary.background
         }
-      },
-      colorSecondary: {
+      }),
+      colorSecondary: ({ theme }) => ({
         '&.Mui-checked:hover': {
-          backgroundColor: commonPalette.secondary.background
+          backgroundColor: theme.palette.secondary.background
         }
-      }
+      })
     }
   },
 
@@ -672,11 +668,11 @@ export const formsOverrides = {
     },
 
     styleOverrides: {
-      thumb: {
+      thumb: ({ theme }) => ({
         '&:hover, &.Mui-focusVisible': {
-          boxShadow: `0 0 0 ${getSpacing(1)} ${commonPalette.primary.background}`
+          boxShadow: `0 0 0 ${theme.spacing(1)} ${theme.palette.primary.background}`
         }
-      }
+      })
     }
   }
 };
