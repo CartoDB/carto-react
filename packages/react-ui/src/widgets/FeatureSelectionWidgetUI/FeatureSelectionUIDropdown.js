@@ -6,13 +6,13 @@ import {
   Menu,
   MenuItem,
   Tooltip,
-  Typography,
   capitalize,
   styled,
   useTheme
 } from '@mui/material';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Typography from '../../components/atoms/Typography';
 
 const StyledButtonArrow = styled(IconButton)(({ theme: { spacing, palette } }) => ({
   color: palette.text.secondary,
