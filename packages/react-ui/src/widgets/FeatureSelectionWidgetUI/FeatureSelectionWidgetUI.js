@@ -1,20 +1,15 @@
 import React, { useMemo } from 'react';
-import { capitalize, styled } from '@mui/material';
+import { Paper, capitalize, styled } from '@mui/material';
 import PropTypes from 'prop-types';
 import FeatureSelectionUIToggleButton from './FeatureSelectionUIToggleButton';
 import FeatureSelectionUIGeometryChips from './FeatureSelectionUIGeometryChips';
 import FeatureSelectionUIDropdown from './FeatureSelectionUIDropdown';
 
-const StylesWrapper = styled('div')(({ theme: { spacing, palette, shape } }) => ({
+const StylesWrapper = styled(Paper)(({ theme: { spacing, palette, shape } }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: spacing(0.5),
-  backgroundColor: palette.common.white,
-  color: palette.text.primary,
-  borderRadius: shape.borderRadius,
-  boxShadow:
-    '0px 3px 5px -1px rgb(0 0 0 / 16%), 0px 5px 8px 0px rgb(0 0 0 / 8%), 0px 1px 14px 0px rgb(0 0 0 / 4%)'
+  padding: spacing(0.5)
 }));
 
 /**
