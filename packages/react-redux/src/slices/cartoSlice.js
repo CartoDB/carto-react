@@ -201,13 +201,14 @@ export const createCartoSlice = (initialState) => {
  *
  * @param {string} id - unique id for the source
  * @param {string} data - data definition for the source. Query for SQL dataset or the name of the tileset for BigQuery Tileset
- * @param {string} type - type of source. Posible values are sql or bigquery
+ * @param {string} type - type of source. Possible values are sql or bigquery
  * @param {Object} credentials - (optional) Custom credentials to be used in the source
  * @param {string} connection - connection name for carto 3 source
  * @param {FiltersLogicalOperators} filtersLogicalOperator - logical operator that defines how filters for different columns are joined together
  * @param {import('@deck.gl/carto/typed').QueryParameters} queryParameters - SQL query parameters
  * @param {string} geoColumn - (optional) geoColumn, for spatial index data
  * @param {string} aggregationExp - (optional) aggregationExp, for spatial index data
+ * @param {string} provider - (optional) type of the dataware house
  */
 export const addSource = ({
   id,
@@ -218,7 +219,8 @@ export const addSource = ({
   filtersLogicalOperator = FiltersLogicalOperators.AND,
   queryParameters = [],
   geoColumn,
-  aggregationExp
+  aggregationExp,
+  provider
 }) => ({
   type: 'carto/addSource',
   payload: {
@@ -230,7 +232,8 @@ export const addSource = ({
     filtersLogicalOperator,
     queryParameters,
     geoColumn,
-    aggregationExp
+    aggregationExp,
+    provider
   }
 });
 

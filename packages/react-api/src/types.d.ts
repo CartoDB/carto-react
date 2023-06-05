@@ -34,6 +34,7 @@ export type SourceProps = {
   aggregationExp?: string;
   credentials?: Credentials;
   queryParameters?: QueryParameters;
+  provider?: 'bigquery' | 'postgres' | 'snowflake' | 'redshift' | 'databricks';
 };
 
 export type LayerConfig = {

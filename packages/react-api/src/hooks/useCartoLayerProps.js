@@ -80,6 +80,7 @@ export default function useCartoLayerProps({
     type: source?.type,
     geoColumn: source?.geoColumn,
     aggregationExp: source?.aggregationExp,
+    provider: source?.provider,
     connection: source?.connection,
     credentials: source?.credentials,
     clientId: CLIENT_ID,
