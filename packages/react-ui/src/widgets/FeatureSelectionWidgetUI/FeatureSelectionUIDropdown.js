@@ -25,8 +25,6 @@ const StyledButtonArrow = styled(IconButton)(({ theme: { spacing, palette } }) =
  *
  * <!--
  * @param {Object} props
- * @param {string} [props.className]
- * @param {Object} [props.sx]
  * @param {Object[]} props.selectionModes
  * @param {string} props.selectionModes[].id
  * @param {string} props.selectionModes[].label
@@ -42,8 +40,6 @@ const StyledButtonArrow = styled(IconButton)(({ theme: { spacing, palette } }) =
  * -->
  */
 function FeatureSelectionUIDropdown({
-  className,
-  sx,
   selectionModes,
   editModes,
   selectedMode,
@@ -89,7 +85,7 @@ function FeatureSelectionUIDropdown({
   );
 
   return (
-    <Box sx={sx} className={className}>
+    <>
       <Tooltip title='Choose a tool' placement={tooltipPlacement}>
         <StyledButtonArrow
           id='feature-selection-menu-button'
@@ -116,7 +112,7 @@ function FeatureSelectionUIDropdown({
         {showDivider && <Divider sx={{ margin: ({ spacing }) => spacing(1, 0) }} />}
         {!!editModes.length && editModes.map(createMenuItemWrapper)}
       </Menu>
-    </Box>
+    </>
   );
 }
 
@@ -127,8 +123,6 @@ const MODE_SHAPE = PropTypes.shape({
 });
 
 FeatureSelectionUIDropdown.propTypes = {
-  className: PropTypes.string,
-  sx: PropTypes.any,
   selectionModes: PropTypes.arrayOf(MODE_SHAPE.isRequired).isRequired,
   editModes: PropTypes.arrayOf(MODE_SHAPE.isRequired),
   selectedMode: PropTypes.string.isRequired,
@@ -137,8 +131,6 @@ FeatureSelectionUIDropdown.propTypes = {
   tooltipPlacement: PropTypes.string
 };
 FeatureSelectionUIDropdown.defaultProps = {
-  className: '',
-  sx: undefined,
   onSelectMode: () => {},
   tooltipPlacement: 'bottom'
 };
