@@ -29,7 +29,7 @@ const NOOP = () => {};
  * @param {string} [props.chipTooltip]
  * @param {string} [props.disabledChipTooltip]
  * @param { "medium" | "small" } [props.size]
- * @param { "bottom" | "left" | "right" | "top" | "bottom-end" | "bottom-start" | "left-end" | "left-start" | "right-end" | "right-start" | "top-end" | "top-start" | undefined } [props.tooltipPlacement]
+ * @param { "bottom" | "left" | "right" | "top" | undefined } [props.tooltipPlacement]
  * @returns
  */
 function FeatureSelectionUIGeometryChips({
@@ -76,7 +76,9 @@ function FeatureSelectionUIGeometryChips({
                   label={getFeatureChipLabel(geometry, index)}
                   color={isDisabled ? 'default' : 'secondary'}
                   onClick={() => onSelectGeometry(geometry)}
-                  onDelete={onDeleteGeometry ? () => onDeleteGeometry(geometry) : null}
+                  onDelete={
+                    onDeleteGeometry ? () => onDeleteGeometry(geometry) : undefined
+                  }
                 />
               </Tooltip>
             </ListItem>

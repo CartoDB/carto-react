@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
  * @param {string} props.clickTooltip
  * @param {boolean} [props.enabled]
  * @param {function} [props.onEnabledChange]
- * @param { "bottom" | "left" | "right" | "top" | "bottom-end" | "bottom-start" | "left-end" | "left-start" | "right-end" | "right-start" | "top-end" | "top-start" | undefined } [props.tooltipPlacement]
+ * @param { "bottom" | "left" | "right" | "top" | undefined } [props.tooltipPlacement]
  * -->
  */
 function FeatureSelectionUIToggleButton({

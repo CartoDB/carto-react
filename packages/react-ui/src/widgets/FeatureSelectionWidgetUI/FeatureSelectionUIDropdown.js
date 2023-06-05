@@ -36,7 +36,7 @@ const StyledButtonArrow = styled(IconButton)(({ theme: { spacing, palette } }) =
  * @param {string} props.selectedMode
  * @param {boolean} [props.enabled]
  * @param {function} [props.onSelectMode]
- * @param { "bottom" | "left" | "right" | "top" | "bottom-end" | "bottom-start" | "left-end" | "left-start" | "right-end" | "right-start" | "top-end" | "top-start" | undefined } [props.tooltipPlacement]
+ * @param { "bottom" | "left" | "right" | "top" | undefined } [props.tooltipPlacement]
  * -->
  */
 function FeatureSelectionUIDropdown({

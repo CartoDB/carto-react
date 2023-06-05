@@ -171,7 +171,7 @@ export type FeatureSelectionWidgetUI = {
   onDeleteGeometry?: Function;
   className?: string;
   sx?: SxProps<Theme>;
-  tooltipPlacement?: TooltipProps['placement'];
+  tooltipPlacement?: "bottom" | "left" | "right" | "top";
 };
 
 export type FeatureSelectionUIDropdown = {
@@ -183,7 +183,7 @@ export type FeatureSelectionUIDropdown = {
   onSelectMode?: Function;
   enabled?: boolean;
   onEnabledChange?: Function;
-  tooltipPlacement?: TooltipProps['placement'];
+  tooltipPlacement?: "bottom" | "left" | "right" | "top";
 };
 export type FeatureSelectionUIGeometryChips = {
   className?: string;
@@ -194,7 +194,7 @@ export type FeatureSelectionUIGeometryChips = {
   chipTooltip?: string;
   disabledChipTooltip?: string;
   size?: 'small' | 'medium';
-  tooltipPlacement?: TooltipProps['placement'];
+  tooltipPlacement?: "bottom" | "left" | "right" | "top";
 };
 export type FeatureSelectionUIToggleButton = {
   className?: string;
@@ -204,7 +204,7 @@ export type FeatureSelectionUIToggleButton = {
   clickTooltip?: string;
   enabled?: boolean;
   onEnabledChange?: Function;
-  tooltipPlacement?: TooltipProps['placement'];
+  tooltipPlacement?: "bottom" | "left" | "right" | "top";
 };
 
 // Legends

@@ -34,7 +34,7 @@ const StylesWrapper = styled(Paper)(({ theme: { spacing, palette, shape } }) => 
  * @param {GeoJSON.Feature} [props.geometry]
  * @param {function} [props.onSelectGeometry]
  * @param {function} [props.onDeleteGeometry]
- * @param { "bottom" | "left" | "right" | "top" | "bottom-end" | "bottom-start" | "left-end" | "left-start" | "right-end" | "right-start" | "top-end" | "top-start" | undefined } [props.tooltipPlacement]
+ * @param { "bottom" | "left" | "right" | "top" | undefined } [props.tooltipPlacement]
  * -->
  */
 function FeatureSelectionWidgetUI({
