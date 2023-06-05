@@ -127,13 +127,7 @@ export const cartoThemeOptions = {
           }
         })
       }
-    },
-    //...buttonsOverrides,
-    ...formsOverrides,
-    ...navigationOverrides,
-    ...dataDisplayOverrides,
-    ...feedbackOverrides,
-    ...surfacesOverrides
+    }
   }
 };
 
