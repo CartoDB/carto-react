@@ -1,4 +1,4 @@
-import { ClickAwayListener, ToggleButton, Tooltip, alpha, useTheme } from '@mui/material';
+import { ClickAwayListener, ToggleButton, Tooltip } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -27,7 +27,6 @@ function FeatureSelectionUIToggleButton({
   onEnabledChange,
   tooltipPlacement = 'bottom'
 }) {
-  const { palette } = useTheme();
   const [tooltipShown, setTooltipShown] = useState(false);
   const [showClickAwayTooltip, setShowClickAwayTooltip] = useState(enabled);
 
@@ -68,10 +67,6 @@ function FeatureSelectionUIToggleButton({
           value='selectedMode'
           selected={enabled}
           onClick={() => onEnabledChange && onEnabledChange(!enabled)}
-          sx={{
-            color: enabled ? palette.primary.main : palette.text.secondary,
-            backgroundColor: enabled ? alpha(palette.primary.main, 0.05) : ''
-          }}
         >
           {icon}
         </ToggleButton>
