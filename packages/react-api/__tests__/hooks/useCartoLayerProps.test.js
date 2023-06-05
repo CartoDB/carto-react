@@ -23,6 +23,7 @@ describe('useCartoLayerProps', () => {
       'type',
       'geoColumn',
       'aggregationExp',
+      'provider',
       'connection',
       'credentials',
       'clientId',
