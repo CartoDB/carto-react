@@ -21,10 +21,10 @@ export const feedbackOverrides = {
         backgroundColor: theme.palette.black[8]
       }),
       rounded: ({ theme }) => ({
-        borderRadius: theme.pacing(0.5)
+        borderRadius: theme.spacing(0.5)
       }),
       text: ({ theme }) => ({
-        borderRadius: theme.pacing(0.5)
+        borderRadius: theme.spacing(0.5)
       }),
       wave: ({ theme }) => ({
         '&::after': {
