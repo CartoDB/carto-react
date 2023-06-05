@@ -4,7 +4,9 @@
 
 - Add Tooltip to Mui TablePagination and TableWidgetUI [#695](https://github.com/CartoDB/carto-react/pull/695)
 - Add typed imports, from deck.gl typed [#693](https://github.com/CartoDB/carto-react/pull/693)
-- API change, geoColumn and aggregationExp moved to Source
+- Developer API change:
+  - geoColumn and aggregationExp moved to Source, remote widgests disabled for spatial indexes
+  - (optional) provider type added to Source, remote widgets disabled for Databricks
 
 ## 2.0
 
