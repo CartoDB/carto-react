@@ -116,7 +116,13 @@ export const cartoThemeOptions = {
         ...CssBaseline
       }
     },
-    MuiButton: {
+    ...buttonsOverrides,
+    ...formsOverrides,
+    ...navigationOverrides,
+    ...dataDisplayOverrides,
+    ...feedbackOverrides,
+    ...surfacesOverrides
+    /*     MuiButton: {
       styleOverrides: {
         contained: ({ theme }) => ({
           backgroundColor: theme.palette.warning.main
@@ -127,7 +133,7 @@ export const cartoThemeOptions = {
           }
         })
       }
-    }
+    } */
   }
 };
 
