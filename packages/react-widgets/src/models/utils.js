@@ -12,7 +12,8 @@ export function isRemoteCalculationSupported(props) {
     source &&
     source.type !== MAP_TYPES.TILESET &&
     source.credentials.apiVersion !== API_VERSIONS.V2 &&
-    !(source.geoColumn && getSpatialIndexFromGeoColumn(source.geoColumn))
+    !(source.geoColumn && getSpatialIndexFromGeoColumn(source.geoColumn)) &&
+    source.provider !== 'databricks'
   );
 }
 
