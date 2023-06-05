@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fix Theme overrides [#696](https://github.com/CartoDB/carto-react/pull/696)
 - Add typed imports, from deck.gl typed [#693](https://github.com/CartoDB/carto-react/pull/693)
 
 ## 2.0

@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-auth",
-  "version": "2.0.5-alpha.theme-overrides.0.7",
+  "version": "2.0.5",
   "description": "CARTO for React - Auth",
   "author": "CARTO Dev Team",
   "keywords": [
