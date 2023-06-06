@@ -81,7 +81,7 @@ describe('FeatureSelectionWidgetUI', () => {
 
   test('selectionModes and editModes are rendered correctly in modes menu', async () => {
     const rendered = render(<CommonFeatureSelectionWidgetUI />);
-    const menuBtn = await rendered.findByLabelText('Choose a tool');
+    const menuBtn = await rendered.findByLabelText('Select a mode');
     // Open menu
     fireEvent.click(menuBtn);
     // Once the menu is opened, check everything is okey rendered
@@ -96,7 +96,7 @@ describe('FeatureSelectionWidgetUI', () => {
       <CommonFeatureSelectionWidgetUI onSelectMode={onSelectMode} />
     );
 
-    const menuBtn = await rendered.findByLabelText('Choose a tool');
+    const menuBtn = await rendered.findByLabelText('Select a mode');
     // Open menu
     fireEvent.click(menuBtn);
 
