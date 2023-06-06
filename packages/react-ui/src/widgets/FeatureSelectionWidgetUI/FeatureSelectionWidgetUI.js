@@ -17,8 +17,6 @@ const StylesWrapper = styled(Paper)(({ theme: { spacing, palette, shape } }) => 
  *
  * <!--
  * @param {Object} props
- * @param {string} [props.className]
- * @param {Object} [props.sx]
  * @param {Object[]} props.selectionModes
  * @param {string} props.selectionModes[].id
  * @param {string} props.selectionModes[].label
@@ -38,8 +36,6 @@ const StylesWrapper = styled(Paper)(({ theme: { spacing, palette, shape } }) => 
  * -->
  */
 function FeatureSelectionWidgetUI({
-  className,
-  sx,
   selectionModes,
   editModes = [],
   selectedMode,
@@ -63,15 +59,14 @@ function FeatureSelectionWidgetUI({
     return foundMode;
   }, [editModes, selectionModes, selectedMode]);
 
-  const hoverTooltip = `${capitalize(selectedModeData?.label || '')} ${
-    selectedModeData?.isEdit ? '' : ' tool'
-  }`;
+  const label = capitalize(selectedModeData?.label || '');
+  const hoverTooltip = selectedModeData?.isEdit ? label : `Select a ${label}`;
   const clickTooltip = selectedModeData?.isEdit
     ? 'Click on the mask to edit it'
     : 'Click on the map to create a mask';
 
   return (
-    <StylesWrapper sx={sx} className={className}>
+    <StylesWrapper>
       <FeatureSelectionUIToggleButton
         icon={selectedModeData?.icon}
         hoverTooltip={hoverTooltip}
@@ -105,7 +100,6 @@ function FeatureSelectionWidgetUI({
 }
 
 FeatureSelectionWidgetUI.defaultProps = {
-  sx: undefined,
   enabled: false,
   tooltipPlacement: 'bottom',
   editModes: []
@@ -118,8 +112,6 @@ const MODE_SHAPE = PropTypes.shape({
 });
 
 FeatureSelectionWidgetUI.propTypes = {
-  sx: PropTypes.any,
-  className: PropTypes.any,
   selectionModes: PropTypes.arrayOf(MODE_SHAPE.isRequired).isRequired,
   editModes: PropTypes.arrayOf(MODE_SHAPE.isRequired),
   selectedMode: PropTypes.string.isRequired,

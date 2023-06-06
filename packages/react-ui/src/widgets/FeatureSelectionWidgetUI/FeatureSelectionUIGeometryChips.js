@@ -21,8 +21,6 @@ const NOOP = () => {};
 /**
  * Renders a list of chips from geojson features with tooltip, click and delete handlers
  * @param {Object} props
- * @param {string} [props.className]
- * @param {Object} [props.sx]
  * @param {GeoJSON.Feature[]} props.features
  * @param {function} [props.onSelectGeometry]
  * @param {function} [props.onDeleteGeometry]
@@ -33,8 +31,6 @@ const NOOP = () => {};
  * @returns
  */
 function FeatureSelectionUIGeometryChips({
-  className,
-  sx,
   features,
   onSelectGeometry = NOOP,
   onDeleteGeometry,
@@ -60,7 +56,7 @@ function FeatureSelectionUIGeometryChips({
   }
 
   return (
-    <Box className={className} sx={{ ...sx, overflowX: 'auto' }}>
+    <Box sx={{ overflowX: 'auto' }}>
       <ChipList sx={{ gap: size === 'small' ? 0.5 : 1 }}>
         {features.map((geometry, index) => {
           const isDisabled = geometry.properties?.disabled;
@@ -90,8 +86,6 @@ function FeatureSelectionUIGeometryChips({
 }
 
 FeatureSelectionUIGeometryChips.propTypes = {
-  className: PropTypes.string,
-  sx: PropTypes.any,
   features: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSelectGeometry: PropTypes.func,
   onDeleteGeometry: PropTypes.func,
@@ -114,7 +108,6 @@ FeatureSelectionUIGeometryChips.propTypes = {
   ])
 };
 FeatureSelectionUIGeometryChips.defaultProps = {
-  className: '',
   size: 'medium',
   tooltipPlacement: 'bottom',
   onSelectGeometry: NOOP

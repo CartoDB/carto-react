@@ -169,14 +169,10 @@ export type FeatureSelectionWidgetUI = {
   geometry?: GeoJSON.Feature;
   onSelectGeometry?: Function;
   onDeleteGeometry?: Function;
-  className?: string;
-  sx?: SxProps<Theme>;
   tooltipPlacement?: "bottom" | "left" | "right" | "top";
 };
 
 export type FeatureSelectionUIDropdown = {
-  className?: string;
-  sx?: SxProps<Theme>;
   selectionModes: FeatureSelectionWidgetUIData[];
   editModes: FeatureSelectionWidgetUIData[];
   selectedMode: string;
@@ -186,8 +182,6 @@ export type FeatureSelectionUIDropdown = {
   tooltipPlacement?: "bottom" | "left" | "right" | "top";
 };
 export type FeatureSelectionUIGeometryChips = {
-  className?: string;
-  sx?: SxProps<Theme>;
   features: GeoJSON.Feature[];
   onSelectGeometry?: Function;
   onDeleteGeometry?: Function;
@@ -197,8 +191,6 @@ export type FeatureSelectionUIGeometryChips = {
   tooltipPlacement?: "bottom" | "left" | "right" | "top";
 };
 export type FeatureSelectionUIToggleButton = {
-  className?: string;
-  sx?: SxProps<Theme>;
   icon: React.ReactNode;
   hoverTooltip?: string;
   clickTooltip?: string;
