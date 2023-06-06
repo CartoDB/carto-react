@@ -17,5 +17,8 @@ export const AggregationTypes = Object.freeze({
   MAX: 'max',
 
   /** Sum */
-  SUM: 'sum'
+  SUM: 'sum',
+
+  /** Custom aggregation expression */
+  CUSTOM: 'custom'
 });
