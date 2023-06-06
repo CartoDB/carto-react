@@ -109,9 +109,11 @@ function FeatureSelectionUIDropdown({
         onClose={closeDropdown}
         MenuListProps={{ 'aria-labelledby': 'feature-selection-menu-button' }}
       >
-        <MenuItem disabled>
-          <Typography variant='caption'>{menuHeaderText}</Typography>
-        </MenuItem>
+        {menuHeaderText && (
+          <MenuItem disabled>
+            <Typography variant='caption'>{menuHeaderText}</Typography>
+          </MenuItem>
+        )}
         {!!selectionModes.length && selectionModes.map(createMenuItemWrapper)}
         {showDivider && <Divider sx={{ margin: ({ spacing }) => spacing(1, 0) }} />}
         {!!editModes.length && editModes.map(createMenuItemWrapper)}
