@@ -1,6 +1,7 @@
 import { _executeModel } from '@carto/react-api';
 import { Methods, executeTask } from '@carto/react-workers';
 import { normalizeObjectKeys, wrapModelCall } from './utils';
+import { AggregationTypes } from '@carto/react-core';
 
 export function getFormula(props) {
   return wrapModelCall(props, fromLocal, fromRemote);
@@ -10,6 +11,9 @@ export function getFormula(props) {
 function fromLocal(props) {
   const { source, operation, column, joinOperation } = props;
 
+  if (operation === AggregationTypes.CUSTOM) {
+    throw new Error('Custom aggregation not supported for local widget calculation');
+  }
   return executeTask(source.id, Methods.FEATURES_FORMULA, {
     filters: source.filters,
     filtersLogicalOperator: source.filtersLogicalOperator,
@@ -21,14 +25,14 @@ function fromLocal(props) {
 
 // From remote
 function fromRemote(props) {
-  const { source, spatialFilter, abortController, ...params } = props;
+  const { source, spatialFilter, abortController, operationExp, ...params } = props;
   const { column, operation } = params;
 
   return _executeModel({
     model: 'formula',
     source,
     spatialFilter,
-    params: { column: column || '*', operation },
+    params: { column: column || '*', operation, operationExp },
     opts: { abortController }
   }).then((res) => normalizeObjectKeys(res.rows[0]));
 }

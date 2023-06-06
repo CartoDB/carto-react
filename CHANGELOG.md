@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Formula widget supports custom aggregation expression [xxx](https://github.com/CartoDB/carto-react/pull/XXX)
 - Fix executeModel get url calculation [xxx](https://github.com/CartoDB/carto-react/pull/XXX)
 - Fix Theme overrides [#696](https://github.com/CartoDB/carto-react/pull/696)
 - Add typed imports, from deck.gl typed [#693](https://github.com/CartoDB/carto-react/pull/693)
