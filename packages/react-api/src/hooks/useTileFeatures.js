@@ -54,6 +54,8 @@ export default function useTileFeatures({
         .finally(clearDebounce);
     },
     [
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      spatialFilter ? spatialFilter : viewport,
       tileFormat,
       setSourceFeaturesReady,
       sourceId,
