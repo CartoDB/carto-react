@@ -10,7 +10,7 @@
 ### 2.1.1 (2023-06-22)
 
 - Fix spatial filter was not being applied to Timeseries widgets [#719](https://github.com/CartoDB/carto-react/pull/719)
-- Bugfix: The pagination is out of alignment [#711](https://github.com/CartoDB/carto-react/pull/711). 
+- Bugfix: The pagination is out of alignment [#711](https://github.com/CartoDB/carto-react/pull/711).
 
 ### 2.1.0 (2023-06-16)
 
