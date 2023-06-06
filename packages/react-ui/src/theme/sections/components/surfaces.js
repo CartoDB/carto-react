@@ -1,41 +1,37 @@
 import React from 'react';
-import { getSpacing } from '../../themeUtils';
 import { APPBAR_SIZE } from '../../themeConstants';
-import { commonPalette } from '../palette';
-import { themeShadows } from '../shadows';
 import { ExpandMoreOutlined } from '@mui/icons-material';
-import { themeTypography } from '../typography';
 
 export const surfacesOverrides = {
   // AppBar
   MuiAppBar: {
     styleOverrides: {
-      root: {
+      root: ({ theme }) => ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         height: APPBAR_SIZE,
-        backgroundColor: commonPalette.brand.navyBlue,
-        color: commonPalette.common.white,
-        boxShadow: themeShadows[0],
+        backgroundColor: theme.palette.brand.navyBlue,
+        color: theme.palette.common.white,
+        boxShadow: theme.shadows[0],
 
         '& .MuiToolbar-root': {
           justifyContent: 'space-between',
           width: '100%',
-          padding: getSpacing(0, 1),
+          padding: theme.spacing(0, 1),
           minHeight: APPBAR_SIZE
         },
         '& .MuiTypography-root': {
-          color: commonPalette.common.white
+          color: theme.palette.common.white
         },
         '& .MuiIconButton-root path': {
-          fill: commonPalette.common.white
+          fill: theme.palette.common.white
         },
         '& .MuiAvatar-root': {
-          width: getSpacing(4),
-          height: getSpacing(4)
+          width: theme.spacing(4),
+          height: theme.spacing(4)
         }
-      }
+      })
     }
   },
 
@@ -46,10 +42,10 @@ export const surfacesOverrides = {
       elevation: 0
     },
     styleOverrides: {
-      root: {
-        ...themeTypography.body2,
+      root: ({ theme }) => ({
+        ...theme.typography.body2,
         backgroundColor: 'transparent',
-        boxShadow: `inset 0 -1px 0 0 ${commonPalette.divider}`,
+        boxShadow: `inset 0 -1px 0 0 ${theme.palette.divider}`,
 
         '&:last-of-type': {
           boxShadow: 'none'
@@ -60,7 +56,7 @@ export const surfacesOverrides = {
         '&.Mui-disabled': {
           backgroundColor: 'transparent'
         }
-      }
+      })
     }
   },
   // MuiAccordionSummary
@@ -69,31 +65,31 @@ export const surfacesOverrides = {
       expandIcon: <ExpandMoreOutlined />
     },
     styleOverrides: {
-      root: {
-        ...themeTypography.button,
+      root: ({ theme }) => ({
+        ...theme.typography.button,
 
         '&.Mui-disabled': {
           opacity: 1,
-          color: commonPalette.text.disabled
+          color: theme.palette.text.disabled
         }
-      },
-      expandIconWrapper: {
+      }),
+      expandIconWrapper: ({ theme }) => ({
         '& svg': {
-          color: commonPalette.text.secondary,
+          color: theme.palette.text.secondary,
 
           '.Mui-disabled &': {
-            color: commonPalette.text.disabled
+            color: theme.palette.text.disabled
           }
         }
-      }
+      })
     }
   },
   // MuiAccordionDetails
   MuiAccordionDetails: {
     styleOverrides: {
-      root: {
-        paddingBottom: getSpacing(3)
-      }
+      root: ({ theme }) => ({
+        paddingBottom: theme.spacing(3)
+      })
     }
   }
 };
