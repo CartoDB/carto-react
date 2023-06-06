@@ -44,6 +44,7 @@ import {
   ICON_SIZE_LARGE
 } from './theme/themeConstants';
 import AccordionGroup from './components/molecules/AccordionGroup';
+import Alert from './components/molecules/Alert';
 
 const featureSelectionIcons = {
   CursorIcon,
@@ -95,5 +96,6 @@ export {
   ICON_SIZE_SMALL,
   ICON_SIZE_MEDIUM,
   ICON_SIZE_LARGE,
-  AccordionGroup
+  AccordionGroup,
+  Alert
 };
