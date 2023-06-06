@@ -87,6 +87,8 @@ function FeatureSelectionWidgetUI({
         onSelectMode={onSelectMode}
         enabled={enabled}
         tooltipPlacement={tooltipPlacement}
+        tooltipText='Select a mode'
+        menuHeaderText='Choose a selection mode'
       />
       {!!geometry && (
         <FeatureSelectionUIGeometryChips

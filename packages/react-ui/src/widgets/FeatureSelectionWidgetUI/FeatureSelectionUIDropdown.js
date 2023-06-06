@@ -37,6 +37,8 @@ const StyledButtonArrow = styled(IconButton)(({ theme: { spacing, palette } }) =
  * @param {boolean} [props.enabled]
  * @param {function} [props.onSelectMode]
  * @param { "bottom" | "left" | "right" | "top" | undefined } [props.tooltipPlacement]
+ * @param {string} [props.tooltipText]
+ * @param {string} [props.menuHeaderText]
  * -->
  */
 function FeatureSelectionUIDropdown({
@@ -45,7 +47,9 @@ function FeatureSelectionUIDropdown({
   selectedMode,
   onSelectMode,
   enabled,
-  tooltipPlacement
+  tooltipPlacement,
+  tooltipText = '',
+  menuHeaderText = ''
 }) {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -86,7 +90,7 @@ function FeatureSelectionUIDropdown({
 
   return (
     <>
-      <Tooltip title='Choose a tool' placement={tooltipPlacement}>
+      <Tooltip title={tooltipText} placement={tooltipPlacement}>
         <StyledButtonArrow
           id='feature-selection-menu-button'
           aria-controls='feature-selection-menu'
@@ -106,7 +110,7 @@ function FeatureSelectionUIDropdown({
         MenuListProps={{ 'aria-labelledby': 'feature-selection-menu-button' }}
       >
         <MenuItem disabled>
-          <Typography variant='caption'>Choose a drawing tool</Typography>
+          <Typography variant='caption'>{menuHeaderText}</Typography>
         </MenuItem>
         {!!selectionModes.length && selectionModes.map(createMenuItemWrapper)}
         {showDivider && <Divider sx={{ margin: ({ spacing }) => spacing(1, 0) }} />}
@@ -128,11 +132,15 @@ FeatureSelectionUIDropdown.propTypes = {
   selectedMode: PropTypes.string.isRequired,
   onSelectMode: PropTypes.func,
   enabled: PropTypes.bool,
-  tooltipPlacement: PropTypes.string
+  tooltipPlacement: PropTypes.string,
+  tooltipText: PropTypes.string,
+  menuHeaderText: PropTypes.string
 };
 FeatureSelectionUIDropdown.defaultProps = {
   onSelectMode: () => {},
-  tooltipPlacement: 'bottom'
+  tooltipPlacement: 'bottom',
+  tooltipText: '',
+  menuHeaderText: ''
 };
 
 export default FeatureSelectionUIDropdown;
