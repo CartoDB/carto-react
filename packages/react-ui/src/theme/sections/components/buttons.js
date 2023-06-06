@@ -128,26 +128,38 @@ export const buttonsOverrides = {
         }
       }),
 
-      sizeSmall: ({ theme }) => ({
+      sizeSmall: ({ theme, ownerState }) => ({
         height: sizeSmall,
         padding: theme.spacing(0, 1.5),
         ...theme.typography.caption,
         lineHeight: sizeSmall,
         fontWeight: 500,
-        letterSpacing: '0.4px'
+        letterSpacing: '0.4px',
+
+        ...(ownerState.variant === 'text' && {
+          padding: theme.spacing(0, 0.5)
+        })
       }),
-      sizeMedium: ({ theme }) => ({
+      sizeMedium: ({ theme, ownerState }) => ({
         height: sizeMedium,
         padding: theme.spacing(0, 2),
-        lineHeight: sizeMedium
+        lineHeight: sizeMedium,
+
+        ...(ownerState.variant === 'text' && {
+          padding: theme.spacing(0, 0.5)
+        })
       }),
-      sizeLarge: ({ theme }) => ({
+      sizeLarge: ({ theme, ownerState }) => ({
         height: sizeLarge,
         padding: theme.spacing(0, 2.5),
         ...theme.typography.body1,
         lineHeight: sizeLarge,
         fontWeight: 500,
-        letterSpacing: '0.25px'
+        letterSpacing: '0.25px',
+
+        ...(ownerState.variant === 'text' && {
+          padding: theme.spacing(0, 1.5)
+        })
       })
     },
 
