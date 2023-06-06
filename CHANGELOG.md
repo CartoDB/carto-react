@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Formula widget supports custom aggregation expression [xxx](https://github.com/CartoDB/carto-react/pull/XXX)
 - Fix: table widget was not showing data due to case sensitive [#721](https://github.com/CartoDB/carto-react/pull/721)
 - Supporting for `client` parameter for Widgets API calls [#722](https://github.com/CartoDB/carto-react/pull/722)
 

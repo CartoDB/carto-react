@@ -16,6 +16,7 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
  * @param  {string | string[]} props.column - Name of the data source's column(s) to get the data from. If multiples are provided, they will be merged into a single one using joinOperation property.
  * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple columns into a single one.
  * @param  {AggregationTypes} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
+ * @param  {string} [props.operationExp] - Custom aggregation expression to be used if `operation='custom'`
  * @param  {Function} [props.formatter] - Function to format each value returned.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
@@ -31,6 +32,7 @@ function FormulaWidget({
   column,
   operation,
   joinOperation,
+  operationExp,
   formatter,
   animation,
   global,
@@ -51,7 +53,8 @@ function FormulaWidget({
       operation,
       column,
       joinOperation,
-      client
+      client,
+      operationExp
     },
     global,
     onError,
