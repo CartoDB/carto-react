@@ -35,20 +35,28 @@ describe('model', () => {
       });
     });
 
-    test('works correctly with a query source', () => {
-      executeModel({ model: 'formula', source: QUERY_SOURCE, params: DEFAULT_PARAMS });
+    test('works correctly with a query source that fits GET url length', () => {
+      const longButStillFittingGetSource = {
+        ...QUERY_SOURCE,
+        data: 'a'.repeat(1819)
+      };
+      executeModel({
+        model: 'formula',
+        source: longButStillFittingGetSource,
+        params: DEFAULT_PARAMS
+      });
 
       expect(mockedMakeCall).toHaveBeenCalledWith({
         credentials: TABLE_SOURCE.credentials,
         opts: { method: 'GET' },
-        url: 'https://gcp-us-east1.api.carto.com/v3/sql/carto-ps-bq-developers/model/formula?type=query&source=SELECT+*+FROM+%60cartobq.public_account.seattle_collisions%60&params=%7B%22column%22%3A%22__test__%22%2C%22operation%22%3A%22avg%22%7D&queryParameters=&filters=%7B%7D&filtersLogicalOperator=AND'
+        url: `https://gcp-us-east1.api.carto.com/v3/sql/carto-ps-bq-developers/model/formula?type=query&source=${longButStillFittingGetSource.data}&params=%7B%22column%22%3A%22__test__%22%2C%22operation%22%3A%22avg%22%7D&queryParameters=&filters=%7B%7D&filtersLogicalOperator=AND`
       });
     });
 
-    test('works correctly when the source is very large', () => {
+    test('uses POST for when URL length exceeds limit', () => {
       const longQuerySource = {
         ...QUERY_SOURCE,
-        data: 'a'.repeat(2048)
+        data: 'a'.repeat(1820)
       };
 
       executeModel({ model: 'formula', source: longQuerySource, params: DEFAULT_PARAMS });

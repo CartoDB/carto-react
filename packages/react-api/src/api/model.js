@@ -2,7 +2,7 @@ import { checkCredentials, makeCall } from './common';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto/typed';
 import { _assert as assert } from '@carto/react-core/';
 
-const URL_LENGTH = 2048;
+import { REQUEST_GET_MAX_URL_LENGTH } from '@carto/react-core';
 
 const AVAILABLE_MODELS = [
   'category',
@@ -75,9 +75,12 @@ export function executeModel(props) {
     queryParams.spatialFilters = JSON.stringify(spatialFilters);
   }
 
-  const isGet = url.length + JSON.stringify(queryParams).length <= URL_LENGTH;
+  const queryParamsString = new URLSearchParams(queryParams).toString();
+  const getUrl = `${url}?${queryParamsString}`;
+  const isGet = getUrl.length <= REQUEST_GET_MAX_URL_LENGTH;
+
   if (isGet) {
-    url += '?' + new URLSearchParams(queryParams).toString();
+    url = getUrl;
   } else {
     // undo the JSON.stringify, @todo find a better pattern
     queryParams.params = params;

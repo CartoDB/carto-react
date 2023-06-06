@@ -2,8 +2,9 @@
 
 ## Not released
 
+- Fix executeModel get url calculation [xxx](https://github.com/CartoDB/carto-react/pull/XXX)
 - Fix spatial filter was not being applied to Timeseries widgets [#719](https://github.com/CartoDB/carto-react/pull/719)
-- Bugfix: The pagination is out of alignment [#711](https://github.com/CartoDB/carto-react/pull/711). 
+- Bugfix: The pagination is out of alignment [#711](https://github.com/CartoDB/carto-react/pull/711).
 
 ## 2.1
 
