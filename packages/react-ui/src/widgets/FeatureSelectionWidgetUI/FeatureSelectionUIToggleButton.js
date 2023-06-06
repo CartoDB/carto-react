@@ -7,8 +7,6 @@ import PropTypes from 'prop-types';
  * handles tooltip logic for click away listener and listens on escape key to disable the button
  * <!--
  * @param {Object} props
- * @param {string} [props.className]
- * @param {Object} [props.sx]
  * @param {React.ReactNode} props.icon
  * @param {string} props.hoverTooltip
  * @param {string} props.clickTooltip
@@ -18,8 +16,6 @@ import PropTypes from 'prop-types';
  * -->
  */
 function FeatureSelectionUIToggleButton({
-  className,
-  sx,
   icon,
   hoverTooltip,
   clickTooltip,
@@ -53,8 +49,6 @@ function FeatureSelectionUIToggleButton({
   return (
     <ClickAwayListener onClickAway={() => setShowClickAwayTooltip(false)}>
       <Tooltip
-        className={className}
-        sx={sx}
         title={tooltipTitle}
         placement={tooltipPlacement}
         open={tooltipShown}
@@ -76,8 +70,6 @@ function FeatureSelectionUIToggleButton({
 }
 
 FeatureSelectionUIToggleButton.propTypes = {
-  className: PropTypes.string,
-  sx: PropTypes.any,
   icon: PropTypes.element.isRequired,
   hoverTooltip: PropTypes.string.isRequired,
   clickTooltip: PropTypes.string.isRequired,
@@ -86,8 +78,6 @@ FeatureSelectionUIToggleButton.propTypes = {
   tooltipPlacement: PropTypes.string
 };
 FeatureSelectionUIToggleButton.defaultProps = {
-  className: '',
-  sx: undefined,
   onEnabledChange: () => {},
   tooltipPlacement: 'bottom'
 };
