@@ -18,7 +18,11 @@ export function dealWithApiError({ response, data }) {
     case 403:
       throw new Error('Forbidden access to the requested data');
     default:
-      throw new Error(`${JSON.stringify(data?.hint || data.error?.[0])}`);
+      const msg =
+        data && data.error && typeof data.error === 'string'
+          ? data.error
+          : JSON.stringify(data?.hint || data.error?.[0]);
+      throw new Error(msg);
   }
 }
 
