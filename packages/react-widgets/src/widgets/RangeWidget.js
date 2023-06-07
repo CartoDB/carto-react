@@ -21,11 +21,11 @@ import useStats from '../hooks/useStats';
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's column(s) to get the data from. If multiples are provided, they will be merged into a single one using joinOperation property.
- * @param  {number} [props.min] - Min value of the indicated column
- * @param  {number} [props.max] - Max value of the indicated column
+ * @param  {number} [props.min] - Min value of the indicated column.
+ * @param  {number} [props.max] - Max value of the indicated column.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  */
 function RangeWidget({
   id,
