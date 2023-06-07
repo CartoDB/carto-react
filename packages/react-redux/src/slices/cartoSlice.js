@@ -196,16 +196,21 @@ export const createCartoSlice = (initialState) => {
 
   return slice.reducer;
 };
+
 /**
- * Action to add a source to the store
+ * Action to add a source to the store.
  *
- * @param {string} id - unique id for the source
- * @param {string} data - data definition for the source. Query for SQL dataset or the name of the tileset for BigQuery Tileset
- * @param {string} type - type of source. Posible values are sql or bigquery
- * @param {Object} credentials - (optional) Custom credentials to be used in the source
- * @param {string} connection - connection name for carto 3 source
- * @param {FiltersLogicalOperators} filtersLogicalOperator - logical operator that defines how filters for different columns are joined together
- * @param {import('@deck.gl/carto/typed').QueryParameters} queryParameters - SQL query parameters
+ * @param {object} data
+ * @param {string} data.id - unique id for the source.
+ * @param {string} data.data - data definition for the source. Query for SQL dataset or the name of the tileset for BigQuery Tileset.
+ * @param {string} data.type - type of source. Possible values are sql or bigquery.
+ * @param {object=} data.credentials - (optional) Custom credentials to be used in the source.
+ * @param {string} data.connection - connection name for CARTO 3 source.
+ * @param {FiltersLogicalOperators=} data.filtersLogicalOperator - logical operator that defines how filters for different columns are joined together.
+ * @param {import('@deck.gl/carto/typed').QueryParameters} data.queryParameters - SQL query parameters.
+ * @param {string=} data.geoColumn - (optional) name of column containing geometries or spatial index data.
+ * @param {string=} data.aggregationExp - (optional) for spatial index data.
+ * @param {string=} data.provider - (optional) type of the data warehouse.
  */
 export const addSource = ({
   id,
@@ -214,7 +219,10 @@ export const addSource = ({
   credentials,
   connection,
   filtersLogicalOperator = FiltersLogicalOperators.AND,
-  queryParameters = []
+  queryParameters = [],
+  geoColumn,
+  aggregationExp,
+  provider
 }) => ({
   type: 'carto/addSource',
   payload: {
@@ -224,14 +232,18 @@ export const addSource = ({
     credentials,
     connection,
     filtersLogicalOperator,
-    queryParameters
+    queryParameters,
+    geoColumn,
+    aggregationExp,
+    provider
   }
 });
 
 /**
- * Action to set the `isDroppingFeature` flag
- * @param {string} id - unique id for the source
- * @param {boolean} isDroppingFeatures - flag that indicate if tiles are generated using a dropping feature strategy
+ * Action to set the `isDroppingFeature` flag.
+ * @param {object} data
+ * @param {string} data.id - unique id for the source.
+ * @param {boolean} data.isDroppingFeatures - flag that indicate if tiles are generated using a dropping feature strategy.
  */
 export const setIsDroppingFeatures = ({ id, isDroppingFeatures }) => ({
   type: 'carto/setIsDroppingFeatures',
@@ -248,10 +260,11 @@ export const removeSource = (sourceId) => ({
 });
 
 /**
- * Action to add a Layer to the store
- * @param {string} id - unique id for the layer
- * @param {string} source - id of the source of the layer
- * @param {object} layerAttributes - custom attributes to pass to the layer
+ * Action to add a Layer to the store.
+ * @param {object} data
+ * @param {string} data.id - unique id for the layer.
+ * @param {string} data.source - id of the source of the layer.
+ * @param {object} data.layerAttributes - custom attributes to pass to the layer.
  */
 export const addLayer = ({ id, source, layerAttributes = {} }) => ({
   type: 'carto/addLayer',
@@ -259,9 +272,10 @@ export const addLayer = ({ id, source, layerAttributes = {} }) => ({
 });
 
 /**
- * Action to update a Layer in the store
- * @param {string} id - id of the layer to update
- * @param {object} layerAttributes - layer attributes to update (source, or other custom attributes)
+ * Action to update a Layer in the store.
+ * @param {object} data
+ * @param {string} data.id - id of the layer to update.
+ * @param {object} data.layerAttributes - layer attributes to update (source, or other custom attributes).
  */
 export const updateLayer = ({ id, layerAttributes }) => ({
   type: 'carto/updateLayer',
@@ -269,22 +283,22 @@ export const updateLayer = ({ id, layerAttributes }) => ({
 });
 
 /**
- * Action to remove a layer from the store
- * @param {string} id - id of the layer to remove
+ * Action to remove a layer from the store.
+ * @param {string} id - id of the layer to remove.
  */
 export const removeLayer = (id) => ({ type: 'carto/removeLayer', payload: id });
 
 /**
- * Action to set a basemap
- * @param {String} basemap - the new basemap to add
+ * Action to set a basemap.
+ * @param {string} basemap - the new basemap to add.
  */
 export const setBasemap = (basemap) => ({ type: 'carto/setBasemap', payload: basemap });
 
 /**
- * Action to add a spatial filter
- * @param {object} params
- * @param {string} [params.sourceId] - If indicated, mask is applied to that source. If not, it's applied to every source
- * @param {GeoJSON} params.geometry - valid geojson object
+ * Action to add a spatial filter.
+ * @param {object} data
+ * @param {string=} data.sourceId - if indicated, mask is applied to that source. If not, it's applied to every source.
+ * @param {GeoJSON} data.geometry - valid geojson object.
  */
 export const addSpatialFilter = ({ sourceId, geometry }) => ({
   type: 'carto/addSpatialFilter',
@@ -292,8 +306,8 @@ export const addSpatialFilter = ({ sourceId, geometry }) => ({
 });
 
 /**
- * Action to remove a spatial filter on a given source
- * @param {string} [sourceId] - sourceId of the source to apply the filter on. If missing, root spatial filter is removed
+ * Action to remove a spatial filter on a given source.
+ * @param {string=} sourceId - sourceId of the source to apply the filter on. If missing, root spatial filter is removed.
  */
 export const removeSpatialFilter = (sourceId) => ({
   type: 'carto/removeSpatialFilter',
@@ -301,12 +315,14 @@ export const removeSpatialFilter = (sourceId) => ({
 });
 
 /**
- * Action to add a filter on a given source and column
- * @param {string} id - sourceId of the source to apply the filter on
- * @param {string} column - column to use by the filter at the source
- * @param {FilterTypes} type - FilterTypes.IN, FilterTypes.BETWEEN, FilterTypes.CLOSED_OPEN and FilterTypes.TIME
- * @param {array} values -  Values for the filter (eg: ['a', 'b'] for IN or [10, 20] for BETWEEN)
- * @param {string} owner - (optional) id of the widget triggering the filter (to be excluded)
+ * Action to add a filter on a given source and column.
+ * @param {object} data
+ * @param {string} data.id - sourceId of the source to apply the filter on.
+ * @param {string} data.column - column to use by the filter at the source.
+ * @param {import('@carto/react-core')._FilterTypes} data.type - FilterTypes.IN, FilterTypes.BETWEEN, FilterTypes.CLOSED_OPEN and FilterTypes.TIME
+ * @param {array} data.values -  values for the filter (eg: ['a', 'b'] for IN or [10, 20] for BETWEEN).
+ * @param {string} data.owner - (optional) id of the widget triggering the filter (to be excluded).
+ * @param {object=} data.params - (optional) additional filter parameters.
  */
 export const addFilter = ({ id, column, type, values, owner, params }) => ({
   type: 'carto/addFilter',
@@ -314,10 +330,11 @@ export const addFilter = ({ id, column, type, values, owner, params }) => ({
 });
 
 /**
- * Action to remove a column filter from a source
- * @param {string} id - sourceId of the filter to remove
- * @param {string} column - column of the filter to remove
- * @param {string} owner  - (optional) id of the widget triggering the filter
+ * Action to remove a column filter from a source.
+ * @param {object} data
+ * @param {string} data.id - sourceId of the filter to remove.
+ * @param {string} data.column - column of the filter to remove.
+ * @param {string=} data.owner - (optional) id of the widget triggering the filter.
  */
 export const removeFilter = ({ id, column, owner }) => ({
   type: 'carto/removeFilter',
@@ -325,13 +342,14 @@ export const removeFilter = ({ id, column, owner }) => ({
 });
 
 /**
- * Action to remove all filters from a source
- * @param {id} - sourceId
+ * Action to remove all filters from a source.
+ * @param {string} id - sourceId.
  */
 export const clearFilters = (id) => ({ type: 'carto/clearFilters', payload: { id } });
 
 const _setViewState = (payload) => ({ type: 'carto/setViewState', payload });
 const _setViewPort = (payload) => ({ type: 'carto/setViewPort', payload });
+
 /**
  * Redux selector to get a source by ID
  */
@@ -386,7 +404,7 @@ const NOT_ALLOWED_DECK_PROPS = [
  * Action to set the current ViewState.
  *
  * Requires redux-thunk middleware, also invokes debounced `setViewPort`.
- * @param {Object} viewState
+ * @param {object} viewState
  */
 export const setViewState = (viewState) => {
   return (dispatch) => {
@@ -410,7 +428,7 @@ export const setViewState = (viewState) => {
  * Action to set the current ViewState.
  *
  * Doesn't refresh widgets immetiately, requires user to call `setViewPort` once all updates are ready.
- * @param {Object} viewState
+ * @param {object} viewState
  */
 export const setViewStateDirect = (viewState) => ({
   type: 'carto/setViewState',
@@ -427,9 +445,10 @@ export const setViewPort = () => ({
 });
 
 /**
- * Action to set the ready features state of a layer
- * @param {object} sourceId - the id of the source
- * @param {object} ready - Viewport features have been calculated
+ * Action to set the ready features state of a layer.
+ * @param {object} data
+ * @param {object} data.sourceId - the id of the source.
+ * @param {object} data.ready - viewport features have been calculated.
  */
 export const setFeaturesReady = (data) => ({
   type: 'carto/setFeaturesReady',
@@ -437,16 +456,16 @@ export const setFeaturesReady = (data) => ({
 });
 
 /**
- * Action to set credentials
- * @param {object} credentials - credentials props to ovewrite
+ * Action to set credentials.
+ * @param {object} credentials - credentials props to ovewrite.
  */
-export const setCredentials = (data) => ({
+export const setCredentials = (credentials) => ({
   type: 'carto/setCredentials',
-  payload: data
+  payload: credentials
 });
 
 /**
- * Action to set feature selection mode
+ * Action to set feature selection mode.
  * @param {boolean} mode
  */
 export const setFeatureSelectionMode = (mode) => ({
@@ -455,7 +474,7 @@ export const setFeatureSelectionMode = (mode) => ({
 });
 
 /**
- * Action to set if feature selection tool is enabled
+ * Action to set if feature selection tool is enabled.
  * @param {boolean} enabled
  */
 export const setFeatureSelectionEnabled = (enabled) => ({

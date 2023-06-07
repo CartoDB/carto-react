@@ -19,6 +19,8 @@ export { getGeometryToIntersect, isGlobalViewport, normalizeGeometry } from './u
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
+export { getColumnNameFromGeoColumn, getSpatialIndexFromGeoColumn } from './utils/columns';
+
 export { FiltersLogicalOperators } from './operations/constants/FiltersLogicalOperators';
 export { AggregationTypes } from './operations/constants/AggregationTypes';
 export { aggregationFunctions } from './operations/aggregation';
@@ -27,6 +29,15 @@ export { histogram } from './operations/histogram';
 export { scatterPlot } from './operations/scatterPlot';
 
 export { FilterTypes as _FilterTypes } from './filters/FilterTypes';
+
+export {
+  filtersToSQL as _filtersToSQL,
+  getApplicableFilters as _getApplicableFilters
+} from './filters/FilterQueryBuilder';
+export {
+  buildFeatureFilter as _buildFeatureFilter,
+  applyFilters as _applyFilters
+} from './filters/Filter';
 
 export { tileFeatures } from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';

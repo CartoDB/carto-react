@@ -4,7 +4,16 @@ import { _assert as assert } from '@carto/react-core/';
 
 const URL_LENGTH = 2048;
 
-const AVAILABLE_MODELS = ['category', 'histogram', 'formula', 'timeseries', 'range'];
+const AVAILABLE_MODELS = [
+  'category',
+  'histogram',
+  'formula',
+  'timeseries',
+  'range',
+  'table'
+];
+
+const DEFAULT_GEO_COLUMN = 'geom';
 
 /**
  * Execute a SQL model request.
@@ -54,8 +63,15 @@ export function executeModel(props) {
     filtersLogicalOperator
   };
 
-  if (spatialFilter) {
-    queryParams.spatialFilter = JSON.stringify(spatialFilter);
+  // API supports multiple filters, we apply it only to geoColumn
+  const spatialFilters = spatialFilter
+    ? {
+        [source.geoColumn ? source.geoColumn : DEFAULT_GEO_COLUMN]: spatialFilter
+      }
+    : undefined;
+
+  if (spatialFilters) {
+    queryParams.spatialFilters = JSON.stringify(spatialFilters);
   }
 
   const isGet = url.length + JSON.stringify(queryParams).length <= URL_LENGTH;
@@ -66,8 +82,8 @@ export function executeModel(props) {
     queryParams.params = params;
     queryParams.filters = filters;
     queryParams.queryParameters = source.queryParameters;
-    if (spatialFilter) {
-      queryParams.spatialFilter = spatialFilter;
+    if (spatialFilters) {
+      queryParams.spatialFilters = spatialFilters;
     }
   }
   return makeCall({
