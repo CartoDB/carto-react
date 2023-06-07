@@ -1,6 +1,3 @@
-import { getSpacing } from '../../themeUtils';
-import { commonPalette } from '../palette';
-
 export const feedbackOverrides = {
   // SnackBar
   MuiSnackbar: {
@@ -20,20 +17,20 @@ export const feedbackOverrides = {
     },
 
     styleOverrides: {
-      root: {
-        backgroundColor: commonPalette.black[8]
-      },
-      rounded: {
-        borderRadius: getSpacing(0.5)
-      },
-      text: {
-        borderRadius: getSpacing(0.5)
-      },
-      wave: {
+      root: ({ theme }) => ({
+        backgroundColor: theme.palette.black[8]
+      }),
+      rounded: ({ theme }) => ({
+        borderRadius: theme.spacing(0.5)
+      }),
+      text: ({ theme }) => ({
+        borderRadius: theme.spacing(0.5)
+      }),
+      wave: ({ theme }) => ({
         '&::after': {
-          background: `linear-gradient( 90deg, transparent, ${commonPalette.black[4]}, transparent )`
+          background: `linear-gradient( 90deg, transparent, ${theme.palette.black[4]}, transparent )`
         }
-      }
+      })
     }
   }
 };
