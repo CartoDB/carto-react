@@ -15,6 +15,7 @@
 
 ### 2.0.6 (2023-06-07)
 
+- Bump deck.gl to latest 8.9.17 [#700](https://github.com/CartoDB/carto-react/pull/700)
 - Feature selection UI refactor [#697](https://github.com/CartoDB/carto-react/pull/697)
 - Fix Theme overrides [#696](https://github.com/CartoDB/carto-react/pull/696)
 - Add Tooltip to Mui TablePagination and TableWidgetUI [#695](https://github.com/CartoDB/carto-react/pull/695)
