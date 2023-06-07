@@ -9,6 +9,7 @@
 
 ## Not released
 
+- Feature selection UI refactor [#697](https://github.com/CartoDB/carto-react/pull/697)
 - Fix Theme overrides [#696](https://github.com/CartoDB/carto-react/pull/696)
 - Add Tooltip to Mui TablePagination and TableWidgetUI [#695](https://github.com/CartoDB/carto-react/pull/695)
 - Add typed imports, from deck.gl typed [#693](https://github.com/CartoDB/carto-react/pull/693)

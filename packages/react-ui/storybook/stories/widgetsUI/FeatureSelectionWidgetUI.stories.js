@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import React, { useState } from 'react';
-import FeatureSelectionWidgetUI from '../../../src/widgets/FeatureSelectionWidgetUI';
+import FeatureSelectionWidgetUI from '../../../src/widgets/FeatureSelectionWidgetUI/FeatureSelectionWidgetUI';
 import CursorIcon from '../../../src/assets/icons/CursorIcon';
 import PolygonIcon from '../../../src/assets/icons/PolygonIcon';
 import RectangleIcon from '../../../src/assets/icons/RectangleIcon';
@@ -38,7 +38,7 @@ const Template = (args) => {
   const [selectedMode, setSelectedMode] = useState(FEATURE_SELECTION_MODES[0].id);
 
   return (
-    <Box display='inline-block' minWidth={72}>
+    <Box display='inline-block' minWidth={72} maxWidth={400}>
       <FeatureSelectionWidgetUI
         selectionModes={FEATURE_SELECTION_MODES}
         editModes={EDIT_MODES}
@@ -70,7 +70,16 @@ WithoutEdit.args = WithoutEditProps;
 
 export const WithGeometry = Template.bind({});
 const WithGeometryProps = {
-  geometry: [{ geometry: 1 }],
+  geometry: {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [0.5, 0.5]
+    },
+    properties: {
+      name: 'Mask'
+    }
+  },
   onSelectGeometry: () => console.log('onSelectGeometry'),
   onDeleteGeometry: () => console.log('onDeleteGeometry')
 };
