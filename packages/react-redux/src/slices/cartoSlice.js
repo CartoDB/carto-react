@@ -210,7 +210,7 @@ export const createCartoSlice = (initialState) => {
  * @param {import('@deck.gl/carto/typed').QueryParameters} data.queryParameters - SQL query parameters.
  * @param {string=} data.geoColumn - (optional) name of column containing geometries or spatial index data.
  * @param {string=} data.aggregationExp - (optional) for spatial index data.
- * @param {string=} data.provider - (optional) type of the dataware house.
+ * @param {string=} data.provider - (optional) type of the data warehouse.
  */
 export const addSource = ({
   id,

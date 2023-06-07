@@ -2,7 +2,7 @@
 
 ## To be announcted in 2.1
 
-- Widgets processing moved to the dataware houses for table and query sources
+- Widgets processing moved to the data warehouses for table and query sources
 - Developer API change:
   - geoColumn and aggregationExp moved to Source, remote widgests disabled for spatial indexes
   - (optional) provider type added to Source, remote widgets disabled for Databricks
