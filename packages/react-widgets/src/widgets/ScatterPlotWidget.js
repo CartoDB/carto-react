@@ -21,9 +21,9 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
  * @param  {Function} [props.yAxisFormatter] - Function to format Y axis values.
  * @param  {Function} [props.tooltipFormatter] - Function to format Y axis values.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
- * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
- * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
+ * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
+ * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
+ * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  */
 function ScatterPlotWidget({
   id,

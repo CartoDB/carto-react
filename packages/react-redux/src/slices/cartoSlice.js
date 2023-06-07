@@ -320,9 +320,9 @@ export const removeSpatialFilter = (sourceId) => ({
  * @param {string} data.id - sourceId of the source to apply the filter on.
  * @param {string} data.column - column to use by the filter at the source.
  * @param {import('@carto/react-core')._FilterTypes} data.type - FilterTypes.IN, FilterTypes.BETWEEN, FilterTypes.CLOSED_OPEN and FilterTypes.TIME
- * @param {array} data.values -  Values for the filter (eg: ['a', 'b'] for IN or [10, 20] for BETWEEN).
+ * @param {array} data.values -  values for the filter (eg: ['a', 'b'] for IN or [10, 20] for BETWEEN).
  * @param {string} data.owner - (optional) id of the widget triggering the filter (to be excluded).
- * @param {any} data.params - (optional) additiona parameters.
+ * @param {object=} data.params - (optional) additional filter parameters.
  */
 export const addFilter = ({ id, column, type, values, owner, params }) => ({
   type: 'carto/addFilter',
