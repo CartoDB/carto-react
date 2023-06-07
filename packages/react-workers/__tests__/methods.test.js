@@ -20,7 +20,15 @@ describe('Worker Methods', () => {
   });
   describe('getFormula', () => {
     it('counts features', () => {
-      expect(getFormula({ operation: 'count' })).toEqual({ value: 6 });
+      expect(
+        getFormula({
+          operation: 'count',
+          column: undefined,
+          filters: {},
+          filtersLogicalOperator: undefined,
+          joinOperation: undefined
+        })
+      ).toEqual({ value: 6 });
     });
     it('counts features with filter', () => {
       expect(
@@ -33,6 +41,9 @@ describe('Worker Methods', () => {
               }
             }
           },
+          filtersLogicalOperator: undefined,
+          column: undefined,
+          joinOperation: undefined,
           operation: 'count'
         })
       ).toEqual({
@@ -46,26 +57,47 @@ describe('Worker Methods', () => {
         getHistogram({
           column: 'revenue',
           operation: 'count',
-          ticks: [997472.3, 1716077, 2056468.7]
+          ticks: [997472.3, 1716077, 2056468.7],
+          filters: {},
+          filtersLogicalOperator: undefined,
+          joinOperation: undefined
         })
       ).toEqual([0, 4, 2, 0]);
     });
   });
   describe('getRawFeatures', () => {
-    it('returns all features properties', () => {
-      expect(getRawFeatures({})).toEqual({
-        currentPage: 0,
-        pages: 1,
+    it('returns all features properties in unspecified order', () => {
+      expect(
+        getRawFeatures({
+          filters: {},
+          filtersLogicalOperator: undefined,
+          sortBy: undefined,
+          sortByDirection: undefined,
+          sortByColumnType: undefined
+        })
+      ).toEqual({
         totalCount: 6,
-        data: sampleGeoJson.features.map((f) => f.properties)
+        hasData: true,
+        isDataComplete: true,
+        rows: sampleGeoJson.features.map((f) => f.properties)
       });
     });
-    it('supports limit and returns paging info', () => {
-      expect(getRawFeatures({ limit: 3 })).toEqual({
-        currentPage: 0,
-        pages: 2,
+    it('returns all features properties in specified order', () => {
+      expect(
+        getRawFeatures({
+          filters: {},
+          filtersLogicalOperator: undefined,
+          sortBy: 'size_m2',
+          sortByDirection: 'desc',
+          sortByColumnType: 'number'
+        })
+      ).toEqual({
         totalCount: 6,
-        data: sampleGeoJson.features.slice(0, 3).map((f) => f.properties)
+        hasData: true,
+        isDataComplete: true,
+        rows: sampleGeoJson.features
+          .map((f) => f.properties)
+          .sort((a, b) => b.size_m2 - a.size_m2)
       });
     });
   });
