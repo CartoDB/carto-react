@@ -135,10 +135,10 @@ function TableHeaderComponent({ columns, sorting, sortBy, sortDirection, onSort 
                 direction={sortBy === field ? sortDirection : 'asc'}
                 onClick={() => onSort(field)}
               >
-                {headerName}
+                {headerName || field}
               </TableHeadCellLabel>
             ) : (
-              headerName
+              headerName || field
             )}
           </TableCell>
         ))}
@@ -161,7 +161,7 @@ function TableBodyComponent({ columns, rows, onRowClick }) {
           >
             {columns.map(
               ({ field, headerName, align, component }) =>
-                headerName && (
+                (headerName || field) && (
                   <TableCellStyled
                     key={`${rowKey}_${field}`}
                     scope='row'

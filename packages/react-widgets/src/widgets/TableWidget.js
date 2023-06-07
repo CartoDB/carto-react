@@ -12,7 +12,7 @@ import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
- * @param  {object[]} props.columns - List of data columns to display. If not specified, all the columns in the data source will be displayed.
+ * @param  {{ field: string, headerName?: string, align?: string, type?: string }[]} props.columns - List of data columns to display.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
