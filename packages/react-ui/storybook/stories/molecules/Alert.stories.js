@@ -139,7 +139,6 @@ const SeverityTemplate = (args) => {
               severity='neutral'
               title={title}
               icon={<SparklesIcon />}
-              onClose={() => {}}
               action={singleAction}
             />
           </ThinContainer>
@@ -154,7 +153,6 @@ const SeverityTemplate = (args) => {
               severity={severity}
               title={title}
               action={singleAction}
-              onClose={() => {}}
             />
           </ThinContainer>
         </Row>
@@ -226,18 +224,12 @@ const RemovableTemplate = (args) => {
   return (
     <Box display='flex' flexDirection='column' gap={3}>
       <Row title='Block content'>
-        <Alert
-          {...args}
-          {...blockProps}
-          title={title}
-          onClose={() => {}}
-          action={twoActions}
-        />
-        <Alert {...args} {...blockProps} title={title} onClose={() => {}} />
+        <ThinContainer>
+          <Alert {...args} {...blockProps} title={title} onClose={() => {}} />
+        </ThinContainer>
       </Row>
 
       <Row title='Inline content'>
-        <Alert {...args} {...inlineProps} onClose={() => {}} action={twoActions} />
         <Alert {...args} {...inlineProps} onClose={() => {}} />
       </Row>
     </Box>

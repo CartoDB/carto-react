@@ -1,15 +1,28 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Alert as MuiAlert, Fade, Box, styled } from '@mui/material';
+import { Alert as MuiAlert, AlertTitle, Fade, Box, styled } from '@mui/material';
 import Typography from '../atoms/Typography';
 
 const StyledAlert = styled(MuiAlert, {
-  shouldForwardProp: (prop) => prop !== 'isNeutral'
-})(({ isNeutral, theme }) => ({
+  shouldForwardProp: (prop) => !['isNeutral', 'layout', 'hasCloseButton'].includes(prop)
+})(({ isNeutral, layout, hasCloseButton, theme }) => ({
   borderRadius: theme.spacing(1),
   paddingLeft: theme.spacing(1.5),
+  paddingRight: hasCloseButton ? theme.spacing(2) : theme.spacing(1.5),
   alignSelf: 'start',
   width: '100%',
+  display: 'grid',
+  columnGap: theme.spacing(1),
+  gridTemplateAreas:
+    layout === 'inline' || hasCloseButton
+      ? `"icon message actions"`
+      : `
+    "icon message"
+    "icon actions"
+  `,
+  gridTemplateColumns: hasCloseButton
+    ? `${theme.spacing(2)} 1fr ${theme.spacing(2)}`
+    : `${theme.spacing(2)}`,
   ...(isNeutral
     ? {
         backgroundColor: theme.palette.background.default,
@@ -17,33 +30,42 @@ const StyledAlert = styled(MuiAlert, {
       }
     : {}),
   '.MuiAlert-message': {
-    paddingTop: theme.spacing(0.75),
-    paddingBottom: theme.spacing(0.75),
-    width: '100%'
+    gridArea: 'message'
   },
   '.MuiAlert-icon': {
     ...(isNeutral ? { color: theme.palette.text.primary } : {}),
-    paddingTop: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    marginRight: 0,
     svg: {
       width: theme.spacing(2),
       height: theme.spacing(2)
-    }
+    },
+    gridArea: 'icon'
   },
   '.MuiAlert-action': {
-    paddingLeft: theme.spacing(1)
+    gridArea: 'actions',
+    padding: 0,
+    alignItems: layout === 'inline' ? 'center' : 'flex-start',
+    marginTop: hasCloseButton ? theme.spacing(0.5) : 0,
+    marginBottom: layout === 'block' && !hasCloseButton ? theme.spacing(1) : 0,
+    marginLeft: layout === 'inline' || hasCloseButton ? 'auto' : 0,
+    marginRight: hasCloseButton ? theme.spacing(0.5) : 0
+  },
+  '.MuiAlertTitle-root': {
+    ...theme.typography.body2,
+    fontWeight: theme.typography.fontWeightBold,
+    color: 'inherit'
   }
 }));
 
 const Alert = ({ title, severity, layout, children, onClose, action, ...otherProps }) => {
   const [open, setOpen] = useState(true);
 
-  const handleClose = () => {
-    if (onClose) {
-      onClose();
-    }
-    setOpen(false);
-  };
+  const handleClose = onClose
+    ? () => {
+        onClose();
+        setOpen(false);
+      }
+    : undefined;
 
   const isNeutral = severity === 'neutral';
 
@@ -52,29 +74,16 @@ const Alert = ({ title, severity, layout, children, onClose, action, ...otherPro
       <StyledAlert
         severity={isNeutral ? 'info' : severity}
         isNeutral={isNeutral}
-        onClose={onClose ? handleClose : undefined}
+        layout={layout}
+        action={action}
+        onClose={handleClose}
+        hasCloseButton={Boolean(onClose)}
         {...otherProps}
       >
-        <Box
-          display='flex'
-          flexDirection={layout === 'inline' ? 'row' : 'column'}
-          justifyContent='space-between'
-          alignItems={layout === 'inline' ? 'center' : 'auto'}
-          width='100%'
-          gap={1}
-        >
-          <Box>
-            {title && (
-              <Typography variant='body2' weight='strong' color='inherit'>
-                {title}
-              </Typography>
-            )}
-            <Typography variant='caption' color='inherit'>
-              {children}
-            </Typography>
-          </Box>
-          {action && <Box>{action}</Box>}
-        </Box>
+        {title && <AlertTitle>{title}</AlertTitle>}
+        <Typography variant='caption' color='inherit' component='p'>
+          {children}
+        </Typography>
       </StyledAlert>
     </Fade>
   );
