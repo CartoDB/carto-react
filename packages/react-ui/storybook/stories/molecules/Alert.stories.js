@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Button, Typography, capitalize, styled } from '@mui/material';
-import { Standalone } from '../../utils/storyStyles';
+import { Box, Button, Typography, Badge, capitalize, styled } from '@mui/material';
+import { Standalone, ThinContainer } from '../../utils/storyStyles';
 import Alert from '../../../../react-ui/src/components/molecules/Alert';
+import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
 
 const title = 'This is a title';
 const inlineText = 'This is a Inline content alert';
@@ -90,16 +91,8 @@ const twoActions = (
   </>
 );
 
-const GreenDotIcon = styled('div')(({ theme }) => ({
-  width: theme.spacing(1),
-  height: theme.spacing(1),
-  margin: theme.spacing(0.5),
-  borderRadius: '50%',
-  backgroundColor: theme.palette.secondary.main
-}));
-
-const LimitWidth = styled('div')(({ theme }) => ({
-  width: 300
+const SparklesIcon = styled(AutoAwesomeOutlinedIcon)(({ theme }) => ({
+  color: theme.palette.warning.light
 }));
 
 const SeverityTemplate = (args) => {
@@ -122,7 +115,11 @@ const SeverityTemplate = (args) => {
               layout='inline'
               severity='neutral'
               title='You haven’t published the lastest changes made.'
-              icon={<GreenDotIcon />}
+              icon={
+                <Box px={1} mt={-1.25}>
+                  <Badge color='secondary' variant='dot' />
+                </Box>
+              }
               action={
                 <>
                   <Button size='small'>Open public map</Button>
@@ -135,21 +132,22 @@ const SeverityTemplate = (args) => {
               Last published 11 sec. ago
             </Alert>
           </Box>
-          <LimitWidth>
+          <ThinContainer>
             <Alert
               {...args}
               {...blockProps}
               severity='neutral'
               title={title}
+              icon={<SparklesIcon />}
               onClose={() => {}}
               action={singleAction}
             />
-          </LimitWidth>
+          </ThinContainer>
         </Box>
       </Row>
       {['info', 'success', 'warning', 'error'].map((severity) => (
         <Row key={severity} title={capitalize(severity)}>
-          <LimitWidth>
+          <ThinContainer>
             <Alert
               {...args}
               {...blockProps}
@@ -158,7 +156,7 @@ const SeverityTemplate = (args) => {
               action={singleAction}
               onClose={() => {}}
             />
-          </LimitWidth>
+          </ThinContainer>
         </Row>
       ))}
     </Box>

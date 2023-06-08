@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Alert as MuiAlert, Fade, Box, styled } from '@mui/material';
 import Typography from '../atoms/Typography';
-import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
 
 const StyledAlert = styled(MuiAlert, {
   shouldForwardProp: (prop) => prop !== 'isNeutral'
@@ -23,6 +22,7 @@ const StyledAlert = styled(MuiAlert, {
     width: '100%'
   },
   '.MuiAlert-icon': {
+    ...(isNeutral ? { color: theme.palette.text.primary } : {}),
     paddingTop: theme.spacing(1),
     marginRight: theme.spacing(1),
     svg: {
@@ -35,20 +35,7 @@ const StyledAlert = styled(MuiAlert, {
   }
 }));
 
-const NeutralIcon = styled(AutoAwesomeOutlinedIcon)(({ theme }) => ({
-  color: theme.palette.warning.light
-}));
-
-const Alert = ({
-  title,
-  severity,
-  layout,
-  children,
-  onClose,
-  action,
-  icon,
-  ...otherProps
-}) => {
+const Alert = ({ title, severity, layout, children, onClose, action, ...otherProps }) => {
   const [open, setOpen] = useState(true);
 
   const handleClose = () => {
@@ -63,10 +50,9 @@ const Alert = ({
   return (
     <Fade in={open} appear={false}>
       <StyledAlert
-        severity={isNeutral ? undefined : severity}
+        severity={isNeutral ? 'info' : severity}
         isNeutral={isNeutral}
         onClose={onClose ? handleClose : undefined}
-        icon={isNeutral && !icon ? <NeutralIcon /> : icon}
         {...otherProps}
       >
         <Box
