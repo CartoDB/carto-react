@@ -9,7 +9,7 @@
 
 ## Not released
 
--
+- Remove styles props from components: className and sx [#701](https://github.com/CartoDB/carto-react/pull/701)
 
 ## 2.0
 
