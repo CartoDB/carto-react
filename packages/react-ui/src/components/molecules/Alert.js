@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Alert as MuiAlert, AlertTitle, Fade, Box, styled } from '@mui/material';
+import { Alert as MuiAlert, AlertTitle, Fade, styled } from '@mui/material';
 import Typography from '../atoms/Typography';
 
 const StyledAlert = styled(MuiAlert, {
-  shouldForwardProp: (prop) => !['isNeutral', 'layout', 'hasCloseButton'].includes(prop)
-})(({ isNeutral, layout, hasCloseButton, theme }) => ({
+  shouldForwardProp: (prop) => !['isNeutral', 'content', 'hasCloseButton'].includes(prop)
+})(({ isNeutral, content, hasCloseButton, theme }) => ({
   borderRadius: theme.spacing(1),
   paddingLeft: theme.spacing(1.5),
   paddingRight: hasCloseButton ? theme.spacing(2) : theme.spacing(1.5),
@@ -14,7 +14,7 @@ const StyledAlert = styled(MuiAlert, {
   display: 'grid',
   columnGap: theme.spacing(1),
   gridTemplateAreas:
-    layout === 'inline' || hasCloseButton
+    content === 'inline' || hasCloseButton
       ? `"icon message actions"`
       : `
     "icon message"
@@ -44,10 +44,10 @@ const StyledAlert = styled(MuiAlert, {
   '.MuiAlert-action': {
     gridArea: 'actions',
     padding: 0,
-    alignItems: layout === 'inline' ? 'center' : 'flex-start',
+    alignItems: content === 'inline' ? 'center' : 'flex-start',
     marginTop: hasCloseButton ? theme.spacing(0.5) : 0,
-    marginBottom: layout === 'block' && !hasCloseButton ? theme.spacing(1) : 0,
-    marginLeft: layout === 'inline' || hasCloseButton ? 'auto' : 0,
+    marginBottom: content === 'block' && !hasCloseButton ? theme.spacing(1) : 0,
+    marginLeft: content === 'inline' || hasCloseButton ? 'auto' : 0,
     marginRight: hasCloseButton ? theme.spacing(0.5) : 0
   },
   '.MuiAlertTitle-root': {
@@ -57,7 +57,15 @@ const StyledAlert = styled(MuiAlert, {
   }
 }));
 
-const Alert = ({ title, severity, layout, children, onClose, action, ...otherProps }) => {
+const Alert = ({
+  title,
+  severity,
+  content,
+  children,
+  onClose,
+  action,
+  ...otherProps
+}) => {
   const [open, setOpen] = useState(true);
 
   const handleClose = onClose
@@ -74,7 +82,7 @@ const Alert = ({ title, severity, layout, children, onClose, action, ...otherPro
       <StyledAlert
         severity={isNeutral ? 'info' : severity}
         isNeutral={isNeutral}
-        layout={layout}
+        content={content}
         action={action}
         onClose={handleClose}
         hasCloseButton={Boolean(onClose)}
@@ -91,14 +99,14 @@ const Alert = ({ title, severity, layout, children, onClose, action, ...otherPro
 
 Alert.defaultProps = {
   severity: 'neutral',
-  layout: 'inline',
+  content: 'inline',
   removable: false,
   variant: 'standard'
 };
 Alert.propTypes = {
   title: PropTypes.node,
   severity: PropTypes.oneOf(['neutral', 'info', 'success', 'warning', 'error']),
-  layout: PropTypes.oneOf(['block', 'inline']),
+  content: PropTypes.oneOf(['block', 'inline']),
   removable: PropTypes.bool,
   variant: PropTypes.string,
   icon: PropTypes.node

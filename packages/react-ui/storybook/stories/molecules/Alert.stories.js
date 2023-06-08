@@ -24,7 +24,7 @@ const options = {
         options: ['neutral', 'info', 'success', 'warning', 'error']
       }
     },
-    layout: {
+    content: {
       control: {
         type: 'select',
         options: ['inline', 'block']
@@ -68,12 +68,12 @@ const Row = ({ title, description, children }) => (
 );
 
 const inlineProps = {
-  layout: 'inline',
+  content: 'inline',
   children: inlineText
 };
 
 const blockProps = {
-  layout: 'block',
+  content: 'block',
   children: blockText
 };
 
@@ -112,8 +112,6 @@ const SeverityTemplate = (args) => {
           <Box mb={2}>
             <Alert
               {...args}
-              layout='inline'
-              severity='neutral'
               title='You haven’t published the lastest changes made.'
               icon={
                 <Box px={1} mt={-1.25}>
