@@ -37,7 +37,6 @@ const SearchIcon = (args) => (
 /**
  * Renders a <GeocoderWidget /> component
  * @param  {object} props
- * @param  {object} [props.sx] - MUI5 for styling with sx prop
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  */
 function GeocoderWidget(props = {}) {
@@ -70,7 +69,7 @@ function GeocoderWidget(props = {}) {
   }, [geocoderResult, dispatch]);
 
   return (
-    <StyledPaper elevation={2} sx={props.sx}>
+    <StyledPaper elevation={2}>
       {loading ? (
         <CircularProgress size={18} sx={svgStyle} />
       ) : (
@@ -94,7 +93,6 @@ function GeocoderWidget(props = {}) {
 }
 
 GeocoderWidget.propTypes = {
-  sx: PropTypes.object,
   onError: PropTypes.func
 };
 
