@@ -137,7 +137,7 @@ export const buttonsOverrides = {
         letterSpacing: '0.4px',
 
         ...(ownerState.variant === 'text' && {
-          padding: theme.spacing(0, 0.5)
+          padding: theme.spacing(0, 1)
         })
       }),
       sizeMedium: ({ theme, ownerState }) => ({
@@ -146,7 +146,7 @@ export const buttonsOverrides = {
         lineHeight: sizeMedium,
 
         ...(ownerState.variant === 'text' && {
-          padding: theme.spacing(0, 0.5)
+          padding: theme.spacing(0, 1)
         })
       }),
       sizeLarge: ({ theme, ownerState }) => ({
@@ -158,7 +158,7 @@ export const buttonsOverrides = {
         letterSpacing: '0.25px',
 
         ...(ownerState.variant === 'text' && {
-          padding: theme.spacing(0, 1.5)
+          padding: theme.spacing(0, 2)
         })
       })
     },
