@@ -42,7 +42,6 @@ export type BarWidget = {
 export type FormulaWidget = CommonWidgetProps & MonoColumnWidgetProps;
 
 export type GeocoderWidget = {
-  className: string,
   sx?: SxProps<Theme>,
   onError?: Function
 }
@@ -97,7 +96,6 @@ export type TimeSeriesWidget = {
 } & CommonWidgetProps & MonoColumnWidgetProps;
 
 export type LegendWidget = {
-  className?: string;
   initialCollapsed?: boolean;
   customLegendTypes?: Record<string, Function>;
   layerOrder?: string[];
@@ -112,7 +110,6 @@ export type WidgetWithAlert = {
 }
 
 export type FeatureSelectionWidget = {
-  className?: string;
   selectionModes?: string[],
   editModes?: string[],
   tooltipPlacement?: string,
