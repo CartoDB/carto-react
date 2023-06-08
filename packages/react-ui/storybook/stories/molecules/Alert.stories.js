@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button, Typography, capitalize, styled } from '@mui/material';
 import { Standalone } from '../../utils/storyStyles';
-import { Alert } from '@carto/react-ui';
+import Alert from '../../../../react-ui/src/components/molecules/Alert';
 
 const title = 'This is a title';
 const inlineText = 'This is a Inline content alert';
