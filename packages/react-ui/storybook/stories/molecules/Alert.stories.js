@@ -20,7 +20,7 @@ const options = {
     severity: {
       control: {
         type: 'select',
-        options: ['info', 'success', 'warning', 'error']
+        options: ['neutral', 'info', 'success', 'warning', 'error']
       }
     },
     layout: {

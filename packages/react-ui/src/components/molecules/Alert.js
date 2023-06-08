@@ -95,7 +95,7 @@ const Alert = ({
 };
 
 Alert.defaultProps = {
-  severity: 'info',
+  severity: 'neutral',
   layout: 'inline',
   removable: false,
   variant: 'standard'
