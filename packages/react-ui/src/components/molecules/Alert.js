@@ -64,9 +64,10 @@ const Alert = ({
   children,
   onClose,
   action,
+  open: controlledOpen,
   ...otherProps
 }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(controlledOpen !== undefined ? controlledOpen : true);
 
   const handleClose = onClose
     ? () => {
@@ -77,8 +78,10 @@ const Alert = ({
 
   const isNeutral = severity === 'neutral';
 
+  const isOpen = controlledOpen !== undefined ? controlledOpen : open;
+
   return (
-    <Fade in={open} appear={false}>
+    <Fade in={isOpen} appear={false}>
       <StyledAlert
         severity={isNeutral ? 'info' : severity}
         isNeutral={isNeutral}
@@ -100,16 +103,15 @@ const Alert = ({
 Alert.defaultProps = {
   severity: 'neutral',
   content: 'inline',
-  removable: false,
   variant: 'standard'
 };
 Alert.propTypes = {
   title: PropTypes.node,
   severity: PropTypes.oneOf(['neutral', 'info', 'success', 'warning', 'error']),
   content: PropTypes.oneOf(['block', 'inline']),
-  removable: PropTypes.bool,
   variant: PropTypes.string,
-  icon: PropTypes.node
+  icon: PropTypes.node,
+  open: PropTypes.bool
 };
 
 export default Alert;
