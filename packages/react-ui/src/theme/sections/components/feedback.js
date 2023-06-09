@@ -32,5 +32,33 @@ export const feedbackOverrides = {
         }
       })
     }
+  },
+
+  // Alert
+  MuiAlert: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        borderRadius: theme.spacing(1),
+        alignSelf: 'start',
+        width: '100%'
+      }),
+      icon: ({ theme }) => ({
+        svg: {
+          width: theme.spacing(2),
+          height: theme.spacing(2)
+        }
+      })
+    }
+  },
+
+  // AlertTitle
+  MuiAlertTitle: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        ...theme.typography.body2,
+        fontWeight: theme.typography.fontWeightBold,
+        color: 'inherit'
+      })
+    }
   }
 };

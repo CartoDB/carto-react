@@ -6,11 +6,8 @@ import Typography from '../atoms/Typography';
 const StyledAlert = styled(MuiAlert, {
   shouldForwardProp: (prop) => !['isNeutral', 'content', 'hasCloseButton'].includes(prop)
 })(({ isNeutral, content, hasCloseButton, theme }) => ({
-  borderRadius: theme.spacing(1),
   paddingLeft: theme.spacing(1.5),
   paddingRight: hasCloseButton ? theme.spacing(2) : theme.spacing(1.5),
-  alignSelf: 'start',
-  width: '100%',
   display: 'grid',
   columnGap: theme.spacing(1),
   gridTemplateAreas:
@@ -35,10 +32,6 @@ const StyledAlert = styled(MuiAlert, {
   '.MuiAlert-icon': {
     ...(isNeutral ? { color: theme.palette.text.primary } : {}),
     marginRight: 0,
-    svg: {
-      width: theme.spacing(2),
-      height: theme.spacing(2)
-    },
     gridArea: 'icon'
   },
   '.MuiAlert-action': {
@@ -49,11 +42,6 @@ const StyledAlert = styled(MuiAlert, {
     marginBottom: content === 'block' && !hasCloseButton ? theme.spacing(1) : 0,
     marginLeft: content === 'inline' || hasCloseButton ? 'auto' : 0,
     marginRight: hasCloseButton ? theme.spacing(0.5) : 0
-  },
-  '.MuiAlertTitle-root': {
-    ...theme.typography.body2,
-    fontWeight: theme.typography.fontWeightBold,
-    color: 'inherit'
   }
 }));
 
