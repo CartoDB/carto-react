@@ -21,6 +21,9 @@ describe('useCartoLayerProps', () => {
       'uniqueIdProperty',
       'data',
       'type',
+      'geoColumn',
+      'aggregationExp',
+      'provider',
       'connection',
       'credentials',
       'clientId',
@@ -85,6 +88,22 @@ describe('useCartoLayerProps', () => {
 
         expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
+    });
+
+    test('should return correct props when source geo column is set', () => {
+      const source = {
+        credentials: {
+          apiVersion: API_VERSIONS.V2
+        },
+        geoColumn: 'column_name',
+        aggregationExp: 'agg_exp'
+      };
+
+      const { result } = renderHook(() => useCartoLayerProps({ source }));
+
+      expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
+      expect(result.current.geoColumn).toBe(source.geoColumn);
+      expect(result.current.aggregationExp).toBe(source.aggregationExp);
     });
 
     describe('when maps_api_version is V3', () => {

@@ -1,5 +1,9 @@
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto/typed';
-import { AggregationTypes, _filtersToSQL } from '@carto/react-core';
+import {
+  AggregationTypes,
+  getSpatialIndexFromGeoColumn,
+  _filtersToSQL
+} from '@carto/react-core';
 
 export function isRemoteCalculationSupported(props) {
   const { source } = props;
@@ -7,7 +11,9 @@ export function isRemoteCalculationSupported(props) {
   return (
     source &&
     source.type !== MAP_TYPES.TILESET &&
-    source.credentials.apiVersion !== API_VERSIONS.V2
+    source.credentials.apiVersion !== API_VERSIONS.V2 &&
+    !(source.geoColumn && getSpatialIndexFromGeoColumn(source.geoColumn)) &&
+    source.provider !== 'databricks'
   );
 }
 

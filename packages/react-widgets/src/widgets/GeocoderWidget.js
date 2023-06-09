@@ -37,8 +37,8 @@ const SearchIcon = (args) => (
 /**
  * Renders a <GeocoderWidget /> component
  * @param  {object} props
- * @param  {Object} [props.className] - Material-UI withStyle class for styling
- * @param  {Object} [props.sx] - MUI5 for styling with sx prop
+ * @param  {object} [props.className] - Material-UI withStyle class for styling
+ * @param  {object} [props.sx] - MUI5 for styling with sx prop
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  */
 function GeocoderWidget(props = {}) {

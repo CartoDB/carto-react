@@ -22,7 +22,6 @@ export type WrapperWidgetUI = {
 export type CategoryWidgetUIData = { name: number | string | boolean; value: number }[];
 export type CategoryWidgetUI = {
   data: CategoryWidgetUIData;
-  isLoading?: boolean;
   formatter?: Function;
   labels?: object;
   maxItems?: number;
@@ -158,20 +157,46 @@ export type NoDataAlert = {
 export type FeatureSelectionWidgetUIData = {
   id: string;
   label: string;
-  icon: React.ReactElement;
+  icon: React.ReactNode;
 };
 export type FeatureSelectionWidgetUI = {
+  selectionModes: FeatureSelectionWidgetUIData[];
+  editModes?: FeatureSelectionWidgetUIData[];
+  selectedMode: string;
+  onSelectMode?: Function;
+  enabled?: boolean;
+  onEnabledChange?: Function;
+  geometry?: GeoJSON.Feature;
+  onSelectGeometry?: Function;
+  onDeleteGeometry?: Function;
+  tooltipPlacement?: "bottom" | "left" | "right" | "top";
+};
+
+export type FeatureSelectionUIDropdown = {
   selectionModes: FeatureSelectionWidgetUIData[];
   editModes: FeatureSelectionWidgetUIData[];
   selectedMode: string;
   onSelectMode?: Function;
-  activated?: boolean;
-  onActivatedChange?: Function;
-  geometry?: any;
+  enabled?: boolean;
+  onEnabledChange?: Function;
+  tooltipPlacement?: "bottom" | "left" | "right" | "top";
+};
+export type FeatureSelectionUIGeometryChips = {
+  features: GeoJSON.Feature[];
   onSelectGeometry?: Function;
-  tooltipPlacement?: string;
-  className?: string;
-  sx?: SxProps<Theme>;
+  onDeleteGeometry?: Function;
+  chipTooltip?: string;
+  disabledChipTooltip?: string;
+  size?: 'small' | 'medium';
+  tooltipPlacement?: "bottom" | "left" | "right" | "top";
+};
+export type FeatureSelectionUIToggleButton = {
+  icon: React.ReactNode;
+  hoverTooltip?: string;
+  clickTooltip?: string;
+  enabled?: boolean;
+  onEnabledChange?: Function;
+  tooltipPlacement?: "bottom" | "left" | "right" | "top";
 };
 
 // Legends

@@ -21,7 +21,10 @@ import useTimeSeriesInteractivity from './widgets/TimeSeriesWidgetUI/hooks/useTi
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
-import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
+import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI/FeatureSelectionWidgetUI';
+import FeatureSelectionUIDropdown from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIDropdown';
+import FeatureSelectionUIGeometryChips from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIGeometryChips';
+import FeatureSelectionUIToggleButton from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIToggleButton';
 import ComparativePieWidgetUI from './widgets/comparative/ComparativePieWidgetUI';
 import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
@@ -71,6 +74,9 @@ export {
   RangeWidgetUI,
   ComparativePieWidgetUI,
   FeatureSelectionWidgetUI,
+  FeatureSelectionUIDropdown,
+  FeatureSelectionUIGeometryChips,
+  FeatureSelectionUIToggleButton,
   ComparativeFormulaWidgetUI,
   ComparativeCategoryWidgetUI,
   LEGEND_TYPES,

@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useState } from 'react';
-import { debounce, SpatialIndex } from '@carto/react-core';
+import { debounce, SpatialIndex, getColumnNameFromGeoColumn } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { setIsDroppingFeatures } from '@carto/react-redux';
 import { Layer } from '@deck.gl/core/typed';
@@ -54,6 +54,8 @@ export default function useTileFeatures({
         .finally(clearDebounce);
     },
     [
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      spatialFilter ? spatialFilter : viewport,
       tileFormat,
       setSourceFeaturesReady,
       sourceId,
@@ -154,8 +156,3 @@ export default function useTileFeatures({
 
   return [onDataLoad, onViewportLoad, fetch];
 }
-
-const getColumnNameFromGeoColumn = (geoColumn) => {
-  const parts = geoColumn.split(':');
-  return parts.length === 1 ? parts[0] : parts.length === 2 ? parts[1] : null;
-};

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE, ICON_SIZE_SMALL } from '../../themeConstants';
 import Typography from '../../../components/atoms/Typography';
+import TablePaginationActions from '../../../components/molecules/Table/TablePaginationActions';
 
 const tooltipArrowSize = 1;
 const tooltipSeparation = 0.5;
@@ -229,7 +230,8 @@ export const dataDisplayOverrides = {
             {` of ${count}`}
           </>
         );
-      }
+      },
+      ActionsComponent: TablePaginationActions
     },
     styleOverrides: {
       root: () => ({
@@ -258,18 +260,6 @@ export const dataDisplayOverrides = {
       }),
       displayedRows: ({ theme }) => ({
         color: theme.palette.text.secondary
-      }),
-      actions: ({ theme }) => ({
-        marginLeft: theme.spacing(1),
-
-        '.MuiIconButton-root': {
-          '&:not(.Mui-disabled)': {
-            color: theme.palette.text.secondary
-          },
-          '& + .MuiIconButton-root': {
-            marginLeft: theme.spacing(0.5)
-          }
-        }
       })
     }
   },

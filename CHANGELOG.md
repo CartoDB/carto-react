@@ -1,11 +1,25 @@
 # CHANGELOG
 
+## To be announced in 2.1
+
+- Widgets processing moved to the data warehouses for table and query sources
+- Developer API change:
+  - geoColumn and aggregationExp moved to Source, remote widgests disabled for spatial indexes
+  - (optional) provider type added to Source, remote widgets disabled for Databricks
+
 ## Not released
 
-- Fix Theme overrides [#696](https://github.com/CartoDB/carto-react/pull/696)
-- Add typed imports, from deck.gl typed [#693](https://github.com/CartoDB/carto-react/pull/693)
+-
 
 ## 2.0
+
+### 2.0.6 (2023-06-07)
+
+- Bump deck.gl to latest 8.9.17 [#700](https://github.com/CartoDB/carto-react/pull/700)
+- Feature selection UI refactor [#697](https://github.com/CartoDB/carto-react/pull/697)
+- Fix Theme overrides [#696](https://github.com/CartoDB/carto-react/pull/696)
+- Add Tooltip to Mui TablePagination and TableWidgetUI [#695](https://github.com/CartoDB/carto-react/pull/695)
+- Add typed imports, from deck.gl typed [#693](https://github.com/CartoDB/carto-react/pull/693)
 
 ### 2.0.5 (2023-05-26)
 

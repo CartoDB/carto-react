@@ -17,6 +17,11 @@ export { getGeometryToIntersect, isGlobalViewport, normalizeGeometry } from './u
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
+export {
+  getColumnNameFromGeoColumn,
+  getSpatialIndexFromGeoColumn
+} from './utils/columns';
+
 export { FiltersLogicalOperators } from './operations/constants/FiltersLogicalOperators';
 export { AggregationTypes } from './operations/constants/AggregationTypes';
 export { aggregationFunctions } from './operations/aggregation';
