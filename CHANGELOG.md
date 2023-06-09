@@ -9,7 +9,7 @@
 
 ## Not released
 
--
+- Fix histogramWidget not passing down loading state to widgetUI [#702](https://github.com/CartoDB/carto-react/pull/702)
 
 ## 2.0
 
