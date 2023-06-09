@@ -73,6 +73,9 @@ export const buttonsOverrides = {
           backgroundColor: theme.palette.action.disabledBackground
         }
       }),
+      text: ({ theme }) => ({
+        minWidth: theme.spacing(7)
+      }),
       outlined: ({ theme }) => ({
         '&.Mui-disabled': {
           color: theme.palette.text.disabled,
