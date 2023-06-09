@@ -241,7 +241,7 @@ export const Severity = SeverityTemplate.bind({});
 
 export const Layout = LayoutTemplate.bind({});
 
-export const Title = TitleTemplate.bind({ title: 'popo' });
+export const Title = TitleTemplate.bind({});
 
 export const Actions = ActionsTemplate.bind({});
 
