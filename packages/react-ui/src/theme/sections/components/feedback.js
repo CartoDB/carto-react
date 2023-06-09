@@ -1,3 +1,5 @@
+import { ICON_SIZE_MEDIUM } from '../../themeConstants';
+
 export const feedbackOverrides = {
   // SnackBar
   MuiSnackbar: {
@@ -44,8 +46,8 @@ export const feedbackOverrides = {
       }),
       icon: ({ theme }) => ({
         svg: {
-          width: theme.spacing(2),
-          height: theme.spacing(2)
+          width: ICON_SIZE_MEDIUM,
+          height: ICON_SIZE_MEDIUM
         }
       })
     }

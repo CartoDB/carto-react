@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Alert as MuiAlert, AlertTitle, Fade, styled } from '@mui/material';
 import Typography from '../atoms/Typography';
+import { ICON_SIZE_MEDIUM } from '../../theme/themeConstants';
 
 const StyledAlert = styled(MuiAlert, {
   shouldForwardProp: (prop) => !['isNeutral', 'content', 'hasCloseButton'].includes(prop)
@@ -18,8 +19,8 @@ const StyledAlert = styled(MuiAlert, {
     "icon actions"
   `,
   gridTemplateColumns: hasCloseButton
-    ? `${theme.spacing(2)} 1fr ${theme.spacing(2)}`
-    : `${theme.spacing(2)}`,
+    ? `${ICON_SIZE_MEDIUM} 1fr ${theme.spacing(2)}`
+    : `${ICON_SIZE_MEDIUM}`,
   ...(isNeutral
     ? {
         backgroundColor: theme.palette.background.default,
