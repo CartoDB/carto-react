@@ -9,7 +9,7 @@
 
 ## Not released
 
--
+- [Design system] Text button change to improve layout [#703](https://github.com/CartoDB/carto-react/pull/703)
 
 ## 2.0
 
