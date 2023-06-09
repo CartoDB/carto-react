@@ -199,6 +199,7 @@ function HistogramWidget({
             yAxisFormatter={formatter}
             animation={animation}
             filterable={filterable}
+            isLoading={isLoading}
           />
         )}
       </WidgetWithAlert>
