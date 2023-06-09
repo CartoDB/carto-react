@@ -1,7 +1,7 @@
 import { AlertProps as MuiAlertProps } from '@mui/material/Alert';
 
 export type AlertProps = Omit<MuiAlertProps, 'severity'> & {
-  layout?: 'inline' | 'block';
+  content?: 'inline' | 'block';
   severity?: CartoAlertSeverity;
   open?: boolean;
 };
