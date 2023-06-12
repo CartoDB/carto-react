@@ -1,5 +1,4 @@
 import { GroupDateTypes } from '@carto/react-core';
-import { SxProps, Theme } from '@mui/material';
 export { SelectFieldProps } from './components/atoms/SelectField';
 export { TypographyProps } from './components/atoms/Typography';
 export { LabelWithIndicatorProps } from './components/atoms/LabelWithIndicator';
@@ -107,7 +106,6 @@ export type LegendWidgetUIData = {
 };
 
 export type LegendWidgetUI = {
-  className?: string;
   customLegendTypes?: Record<string, Function>;
   layers?: LegendWidgetUIData[];
   collapsed?: boolean;
@@ -169,7 +167,7 @@ export type FeatureSelectionWidgetUI = {
   geometry?: GeoJSON.Feature;
   onSelectGeometry?: Function;
   onDeleteGeometry?: Function;
-  tooltipPlacement?: "bottom" | "left" | "right" | "top";
+  tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
 };
 
 export type FeatureSelectionUIDropdown = {
@@ -179,7 +177,7 @@ export type FeatureSelectionUIDropdown = {
   onSelectMode?: Function;
   enabled?: boolean;
   onEnabledChange?: Function;
-  tooltipPlacement?: "bottom" | "left" | "right" | "top";
+  tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
 };
 export type FeatureSelectionUIGeometryChips = {
   features: GeoJSON.Feature[];
@@ -188,7 +186,7 @@ export type FeatureSelectionUIGeometryChips = {
   chipTooltip?: string;
   disabledChipTooltip?: string;
   size?: 'small' | 'medium';
-  tooltipPlacement?: "bottom" | "left" | "right" | "top";
+  tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
 };
 export type FeatureSelectionUIToggleButton = {
   icon: React.ReactNode;
@@ -196,7 +194,7 @@ export type FeatureSelectionUIToggleButton = {
   clickTooltip?: string;
   enabled?: boolean;
   onEnabledChange?: Function;
-  tooltipPlacement?: "bottom" | "left" | "right" | "top";
+  tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
 };
 
 // Legends

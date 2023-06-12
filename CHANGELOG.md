@@ -10,6 +10,9 @@
 ## Not released
 
 - Mask, when set, is applied to global widgets as well as to viewport-based widgets [#704](https://github.com/CartoDB/carto-react/pull/704)
+- [Design system] Text button change to improve layout [#703](https://github.com/CartoDB/carto-react/pull/703)
+- Remove styles props from components: className and sx [#701](https://github.com/CartoDB/carto-react/pull/701)
+- Fix histogramWidget not passing down loading state to widgetUI [#702](https://github.com/CartoDB/carto-react/pull/702)
 
 ## 2.0
 
