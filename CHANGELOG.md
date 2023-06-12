@@ -9,7 +9,7 @@
 
 ## Not released
 
--
+- Mask, when set, is applied to global widgets as well as to viewport-based widgets
 
 ## 2.0
 

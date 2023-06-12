@@ -46,7 +46,7 @@ export default function useWidgetFetch(
   const viewport = useSelector(selectViewport);
   const spatialFilter = useSelector((state) => selectSpatialFilter(state, dataSource));
   const geometryToIntersect =
-    global || (!spatialFilter && isGlobalViewport(viewport))
+    !spatialFilter && (global || isGlobalViewport(viewport))
       ? null
       : normalizeGeometry(
           getGeometryToIntersect(viewport, spatialFilter ? spatialFilter.geometry : null)
