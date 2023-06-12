@@ -9,7 +9,7 @@
 
 ## Not released
 
-- Mask, when set, is applied to global widgets as well as to viewport-based widgets
+- Mask, when set, is applied to global widgets as well as to viewport-based widgets [#704](https://github.com/CartoDB/carto-react/pull/704)
 
 ## 2.0
 
