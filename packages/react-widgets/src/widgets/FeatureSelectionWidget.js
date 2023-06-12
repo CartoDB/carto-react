@@ -43,7 +43,6 @@ const EDIT_MODES_MAP = {
 };
 
 function FeatureSelectionWidget({
-  className,
   selectionModes: selectionModesKeys,
   editModes: editModesKeys,
   tooltipPlacement
@@ -95,7 +94,6 @@ function FeatureSelectionWidget({
 
   return (
     <FeatureSelectionWidgetUI
-      className={className}
       selectionModes={selectionModes}
       editModes={editModes}
       selectedMode={selectedMode}
@@ -117,7 +115,6 @@ FeatureSelectionWidget.defaultProps = {
 };
 
 FeatureSelectionWidget.propTypes = {
-  className: FeatureSelectionWidgetUI.propTypes.className,
   selectionModes: PropTypes.arrayOf(
     PropTypes.oneOf(Object.values(FEATURE_SELECTION_MODES))
   ),
