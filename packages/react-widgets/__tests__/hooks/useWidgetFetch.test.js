@@ -2,7 +2,9 @@ import { InvalidColumnError } from '@carto/react-core/';
 import { DEFAULT_INVALID_COLUMN_ERR } from '../../src/widgets/utils/constants';
 import { act, render, screen } from '@testing-library/react';
 import React from 'react';
-import useWidgetFetch from '../../src/hooks/useWidgetFetch';
+import useWidgetFetch, {
+  selectGeometryToIntersect
+} from '../../src/hooks/useWidgetFetch';
 import { mockClear, mockSetup } from '../mockReduxHooks';
 import { selectViewport } from '@carto/react-redux';
 import bboxPolygon from '@turf/bbox-polygon';
@@ -21,7 +23,27 @@ const SOURCE_MOCK = {
 };
 
 const viewport = [-10, -5, 8, 9];
-const spatialFilter = bboxPolygon([-10, -5, 8, 9]).geometry;
+const viewportSpatialFilter = bboxPolygon([-10, -5, 8, 9]).geometry;
+const globalViewport = [-180, -89, 180, 89];
+const mask = bboxPolygon([-5, -5, 5, 5]);
+const maskSpatialFilter = mask.geometry;
+
+describe('selectGeometryToIntersect', () => {
+  const tests = [
+    { global: false, viewport: viewport, mask: null, expected: viewportSpatialFilter },
+    { global: false, viewport: globalViewport, mask: null, expected: null },
+    { global: false, viewport: viewport, mask: mask, expected: maskSpatialFilter },
+    { global: true, viewport: viewport, mask: null, expected: null },
+    { global: true, viewport: globalViewport, mask: null, expected: null },
+    { global: true, viewport: viewport, mask: mask, expected: maskSpatialFilter }
+  ];
+
+  it.each(tests)('return the expected geometry %p', (p) => {
+    const { global, viewport, mask, expected } = p;
+    const result = selectGeometryToIntersect(global, viewport, mask);
+    expect(result).toStrictEqual(expected);
+  });
+});
 
 jest.mock('../../src/hooks/useWidgetSource', () => () => SOURCE_MOCK);
 
@@ -29,6 +51,8 @@ describe('useWidgetFetch', () => {
   beforeAll(() => {
     const { useDispatch, useSelector } = mockSetup();
     const defaultSelector = jest.fn();
+
+    // We test with a viewport set and a mask not set
 
     useDispatch.mockReturnValue(jest.fn());
     useSelector.mockImplementation((selector) => {
@@ -71,7 +95,7 @@ describe('useWidgetFetch', () => {
       ...PARAMS_MOCK,
       global: false,
       remoteCalculation: false,
-      spatialFilter: spatialFilter
+      spatialFilter: viewportSpatialFilter
     });
 
     expect(screen.getByText('loading')).toBeInTheDocument();
@@ -164,7 +188,7 @@ describe('useWidgetFetch', () => {
       ...PARAMS_MOCK,
       global: false,
       remoteCalculation: true,
-      spatialFilter: spatialFilter
+      spatialFilter: viewportSpatialFilter
     });
   });
 
