@@ -32,7 +32,7 @@ import { isRemoteCalculationSupported } from '../models/utils';
  */
 export function selectGeometryToIntersect(global, viewport, spatialFilter) {
   if (global) {
-    // global widgets work with no filter or the mask, if set
+    // global widgets work with selection mask, if set, otherwise no filter at all
     if (spatialFilter?.geometry?.coordinates) {
       return normalizeGeometry(spatialFilter.geometry);
     } else {
@@ -43,7 +43,7 @@ export function selectGeometryToIntersect(global, viewport, spatialFilter) {
     if (!spatialFilter && isGlobalViewport(viewport)) {
       return null;
     } else {
-      // non-global widgets work with mask, if any, otherwise viewport
+      // non-global widgets work with selection mask, if set, otherwise viewport
       return normalizeGeometry(
         getGeometryToIntersect(viewport, spatialFilter ? spatialFilter.geometry : null)
       );
