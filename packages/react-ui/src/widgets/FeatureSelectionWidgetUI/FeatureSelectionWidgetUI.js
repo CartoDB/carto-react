@@ -33,6 +33,9 @@ const StylesWrapper = styled(Paper)(({ theme: { spacing, palette, shape } }) => 
  * @param {function} [props.onSelectGeometry]
  * @param {function} [props.onDeleteGeometry]
  * @param { "bottom" | "left" | "right" | "top" | undefined } [props.tooltipPlacement]
+ * @param { "small" | "medium" | undefined } [props.size]
+ * @param {string} [props.chipLabel]
+ *
  * -->
  */
 function FeatureSelectionWidgetUI({
@@ -45,7 +48,9 @@ function FeatureSelectionWidgetUI({
   geometry,
   onSelectGeometry,
   onDeleteGeometry,
-  tooltipPlacement = 'bottom'
+  tooltipPlacement = 'bottom',
+  size = 'medium',
+  chipLabel
 }) {
   const selectedModeData = useMemo(() => {
     const modes = [
@@ -84,15 +89,18 @@ function FeatureSelectionWidgetUI({
         tooltipPlacement={tooltipPlacement}
         tooltipText='Select a mode'
         menuHeaderText='Choose a selection mode'
+        editDisabled={!geometry}
       />
       {!!geometry && (
         <FeatureSelectionUIGeometryChips
           features={[geometry]}
           onSelectGeometry={onSelectGeometry}
           onDeleteGeometry={onDeleteGeometry}
-          chipTooltip='Apply mask'
-          disabledChipTooltip='Clear mask'
+          disabledChipTooltip='Apply mask'
+          chipTooltip='Clear mask'
           tooltipPlacement={tooltipPlacement}
+          size={size}
+          chipLabel={chipLabel}
         />
       )}
     </StylesWrapper>
@@ -102,7 +110,8 @@ function FeatureSelectionWidgetUI({
 FeatureSelectionWidgetUI.defaultProps = {
   enabled: false,
   tooltipPlacement: 'bottom',
-  editModes: []
+  editModes: [],
+  size: 'medium'
 };
 
 const MODE_SHAPE = PropTypes.shape({
@@ -120,7 +129,9 @@ FeatureSelectionWidgetUI.propTypes = {
   onEnabledChange: PropTypes.func,
   geometry: PropTypes.any,
   onSelectGeometry: PropTypes.func,
-  tooltipPlacement: PropTypes.string
+  tooltipPlacement: PropTypes.string,
+  size: PropTypes.oneOf(['small', 'medium']),
+  chipLabel: PropTypes.string
 };
 
 export default FeatureSelectionWidgetUI;

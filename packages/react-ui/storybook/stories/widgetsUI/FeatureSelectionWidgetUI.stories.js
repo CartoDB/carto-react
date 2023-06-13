@@ -38,7 +38,7 @@ const Template = (args) => {
   const [selectedMode, setSelectedMode] = useState(FEATURE_SELECTION_MODES[0].id);
 
   return (
-    <Box display='inline-block' minWidth={72} maxWidth={400}>
+    <Box display='inline-block'>
       <FeatureSelectionWidgetUI
         selectionModes={FEATURE_SELECTION_MODES}
         editModes={EDIT_MODES}
@@ -64,7 +64,7 @@ Enabled.args = EnabledProps;
 
 export const WithoutEdit = Template.bind({});
 const WithoutEditProps = {
-  editModes: []
+  //editModes: []
 };
 WithoutEdit.args = WithoutEditProps;
 

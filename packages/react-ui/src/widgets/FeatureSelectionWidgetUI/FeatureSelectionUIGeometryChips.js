@@ -1,6 +1,7 @@
+import { Cancel } from '@mui/icons-material';
 import { Box, Chip, List, ListItem, Tooltip, styled } from '@mui/material';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 
 const ChipList = styled(List)(({ theme: { spacing } }) => ({
   display: 'flex',
@@ -28,6 +29,7 @@ const NOOP = () => {};
  * @param {string} [props.disabledChipTooltip]
  * @param { "medium" | "small" } [props.size]
  * @param { "bottom" | "left" | "right" | "top" | undefined } [props.tooltipPlacement]
+ * @param {string} [props.chipLabel]
  * @returns
  */
 function FeatureSelectionUIGeometryChips({
@@ -37,7 +39,8 @@ function FeatureSelectionUIGeometryChips({
   chipTooltip,
   disabledChipTooltip,
   size = 'medium',
-  tooltipPlacement = 'bottom'
+  tooltipPlacement = 'bottom',
+  chipLabel
 }) {
   /**
    * @param {GeoJSON.Geometry['type']} type
@@ -52,19 +55,27 @@ function FeatureSelectionUIGeometryChips({
 
   function getFeatureChipLabel(feature, index) {
     const type = translateType(feature.geometry.type);
-    return feature.properties?.name || `${type} ${index + 1}`;
+    return chipLabel || feature.properties?.name || `${type} ${index + 1}`;
   }
+
+  const [onMouseElement, setOnMouseElement] = useState(false);
 
   return (
     <Box sx={{ overflowX: 'auto' }}>
       <ChipList sx={{ gap: size === 'small' ? 0.5 : 1 }}>
         {features.map((geometry, index) => {
           const isDisabled = geometry.properties?.disabled;
+          const tooltipText = isDisabled
+            ? disabledChipTooltip || chipTooltip
+            : onMouseElement
+            ? 'Remove'
+            : chipTooltip;
+
           return (
             <ListItem disablePadding key={index}>
               <Tooltip
                 disableHoverListener={isDisabled ? !disabledChipTooltip : !chipTooltip}
-                title={isDisabled ? disabledChipTooltip || chipTooltip : chipTooltip}
+                title={tooltipText}
                 placement={tooltipPlacement}
               >
                 <Chip
@@ -74,6 +85,12 @@ function FeatureSelectionUIGeometryChips({
                   onClick={() => onSelectGeometry(geometry)}
                   onDelete={
                     onDeleteGeometry ? () => onDeleteGeometry(geometry) : undefined
+                  }
+                  deleteIcon={
+                    <Cancel
+                      onMouseEnter={() => setOnMouseElement(true)}
+                      onMouseLeave={() => setOnMouseElement(false)}
+                    />
                   }
                 />
               </Tooltip>
@@ -105,7 +122,8 @@ FeatureSelectionUIGeometryChips.propTypes = {
     'right-start',
     'top-end',
     'top-start'
-  ])
+  ]),
+  chipLabel: PropTypes.string
 };
 FeatureSelectionUIGeometryChips.defaultProps = {
   size: 'medium',
