@@ -11,6 +11,12 @@ const options = {
   argTypes: {
     enabled: {
       control: { type: 'boolean' }
+    },
+    size: {
+      control: {
+        type: 'select',
+        options: ['small', 'medium']
+      }
     }
   },
   parameters: {
@@ -38,7 +44,7 @@ const Template = (args) => {
   const [selectedMode, setSelectedMode] = useState(FEATURE_SELECTION_MODES[0].id);
 
   return (
-    <Box display='inline-block' minWidth={72} maxWidth={400}>
+    <Box display='inline-block'>
       <FeatureSelectionWidgetUI
         selectionModes={FEATURE_SELECTION_MODES}
         editModes={EDIT_MODES}
@@ -84,3 +90,21 @@ const WithGeometryProps = {
   onDeleteGeometry: () => console.log('onDeleteGeometry')
 };
 WithGeometry.args = WithGeometryProps;
+
+export const SmallSize = Template.bind({});
+const SmallSizeProps = {
+  geometry: {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [0.5, 0.5]
+    },
+    properties: {
+      name: 'Mask'
+    }
+  },
+  size: 'small',
+  onSelectGeometry: () => console.log('onSelectGeometry'),
+  onDeleteGeometry: () => console.log('onDeleteGeometry')
+};
+SmallSize.args = SmallSizeProps;
