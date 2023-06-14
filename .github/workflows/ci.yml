@@ -9,6 +9,10 @@ on:
       - master
   pull_request:
 
+env:
+  # https://github.com/CartoDB/terraform-gcp-cartodb-fb-storybook-react/tree/master
+  GCP_PROJECT: cartodb-fb-storybook-react
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,20 +22,47 @@ jobs:
         node-version: [18.x]
 
     steps:
-      - uses: actions/checkout@v2
+      # Setup
+
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install -g yarn
+
+      # Install dependencies, lint, build and test
+
       - run: yarn
       - run: yarn lint
       - run: yarn build
       - run: yarn test:coverage
 
+      # Coveralls
       - name: Coveralls
-        uses: coverallsapp/github-action@master
+        uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
           CI: true
+
+      # Firebase
+
+      - name: Setup Firebase for deploying
+        run: |
+          set -eu
+          npm install -g firebase-tools
+          # Generate the necessary .firebaserc
+          firebase \
+            --project ${GCP_PROJECT} \
+            --config firebase.json target:apply hosting default ${GCP_PROJECT}
+
+      - name: Deploy assets to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          target: default
+          # With channelId commented a preview channel and its ID will be
+          # auto-generated per branch or PR
+          # channelId: live
+          projectId: ${{ env.GCP_PROJECT }}
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
