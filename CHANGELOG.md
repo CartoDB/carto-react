@@ -9,6 +9,8 @@
 
 ## Not released
 
+- Fix HistogramWidget breaking onZr events after adding skeleton [#698](https://github.com/CartoDB/carto-react/pull/698)
+
 ## 2.0
 
 ### 2.0.8 (2023-06-13)
