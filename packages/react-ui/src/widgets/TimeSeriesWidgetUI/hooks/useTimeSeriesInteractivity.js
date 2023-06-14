@@ -120,7 +120,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
         updateCursor('grabbing');
       }
 
-      if (isMarkAreaSelected) {
+      if (isMarkAreaSelected && echartsInstance) {
         const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
           params.offsetX,
           params.offsetY
@@ -159,7 +159,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
         }
       }
 
-      if (isMarkAreaMoving) {
+      if (isMarkAreaMoving && echartsInstance) {
         const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
           params.offsetX,
           params.offsetY
@@ -242,7 +242,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
 
 // Aux
 function addEventWithCleanUp(zr, eventKey, event) {
-  if (zr) {
+  if (zr && zr.handler) {
     events[eventKey] = event;
     zr.on(eventKey, event);
 
