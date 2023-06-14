@@ -15,7 +15,8 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: CI
+    runs-on: ubuntu-22.04
 
     strategy:
       matrix:
