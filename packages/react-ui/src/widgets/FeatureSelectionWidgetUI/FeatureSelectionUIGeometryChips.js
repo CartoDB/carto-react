@@ -7,11 +7,12 @@ const ChipList = styled(List)(({ theme: { spacing } }) => ({
   display: 'flex',
   alignItems: 'center',
   margin: 0,
-  padding: spacing(0, 1),
+  padding: 0,
   overflowX: 'auto',
   maxWidth: '100%',
   scrollbarWidth: 'none',
   msOverflowStyle: 'none',
+
   '&::-webkit-scrollbar': {
     display: 'none'
   }
@@ -27,7 +28,7 @@ const NOOP = () => {};
  * @param {function} [props.onDeleteGeometry]
  * @param {string} [props.chipTooltip]
  * @param {string} [props.disabledChipTooltip]
- * @param { "medium" | "small" } [props.size]
+ * @param { "medium" | "small" | undefined } [props.size]
  * @param { "bottom" | "left" | "right" | "top" | undefined } [props.tooltipPlacement]
  * @param {string} [props.chipLabel]
  * @returns

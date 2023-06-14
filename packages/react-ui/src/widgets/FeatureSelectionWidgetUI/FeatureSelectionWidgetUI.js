@@ -5,11 +5,12 @@ import FeatureSelectionUIToggleButton from './FeatureSelectionUIToggleButton';
 import FeatureSelectionUIGeometryChips from './FeatureSelectionUIGeometryChips';
 import FeatureSelectionUIDropdown from './FeatureSelectionUIDropdown';
 
-const StylesWrapper = styled(Paper)(({ theme: { spacing, palette, shape } }) => ({
+const StylesWrapper = styled(Paper)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: spacing(0.5)
+  maxHeight: theme.spacing(5),
+  padding: theme.spacing(0.5)
 }));
 
 /**

@@ -11,6 +11,12 @@ const options = {
   argTypes: {
     enabled: {
       control: { type: 'boolean' }
+    },
+    size: {
+      control: {
+        type: 'select',
+        options: ['small', 'medium']
+      }
     }
   },
   parameters: {
@@ -64,7 +70,7 @@ Enabled.args = EnabledProps;
 
 export const WithoutEdit = Template.bind({});
 const WithoutEditProps = {
-  //editModes: []
+  editModes: []
 };
 WithoutEdit.args = WithoutEditProps;
 
@@ -84,3 +90,21 @@ const WithGeometryProps = {
   onDeleteGeometry: () => console.log('onDeleteGeometry')
 };
 WithGeometry.args = WithGeometryProps;
+
+export const SmallSize = Template.bind({});
+const SmallSizeProps = {
+  geometry: {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [0.5, 0.5]
+    },
+    properties: {
+      name: 'Mask'
+    }
+  },
+  size: 'small',
+  onSelectGeometry: () => console.log('onSelectGeometry'),
+  onDeleteGeometry: () => console.log('onDeleteGeometry')
+};
+SmallSize.args = SmallSizeProps;
