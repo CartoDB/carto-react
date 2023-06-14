@@ -312,7 +312,7 @@ function TimeSeriesWidgetUIContent({
             <Typography color='textSecondary' variant='caption'>
               {currentDate}
             </Typography>
-            <Typography xs fontSize={12} ml={1} color='textSecondary' variant='caption'>
+            <Typography fontSize={12} ml={1} color='textSecondary' variant='caption'>
               ({capitalize(stepSize)})
             </Typography>
           </Box>

@@ -1212,7 +1212,7 @@
     "@types/react" "*"
     indefinitely-typed "^1.1.0"
 
-"@deck.gl/aggregation-layers@^8.9.17":
+"@deck.gl/aggregation-layers@^8.9.18":
   version "8.9.18"
   resolved "https://registry.yarnpkg.com/@deck.gl/aggregation-layers/-/aggregation-layers-8.9.18.tgz#0cb97e2a22458146bc32ea36afee31a13c1f45e7"
   integrity sha512-9yyeUmb4jM4wdBHTHYOEP23fWPB2zWy/g/RbiifkzvGn1aTyCs45oDGPbq6YeaZ3rcepg6qn/Br4oaBAn6g6Qg==
@@ -1222,7 +1222,7 @@
     "@math.gl/web-mercator" "^3.6.2"
     d3-hexbin "^0.2.1"
 
-"@deck.gl/carto@^8.9.17":
+"@deck.gl/carto@^8.9.18":
   version "8.9.18"
   resolved "https://registry.yarnpkg.com/@deck.gl/carto/-/carto-8.9.18.tgz#b5079c8d452ced2131920f13785ec031e2d6ca1c"
   integrity sha512-C2hDFdg6TnAmdkBGQ6c5gY9F0wkTxc/o/13QGTY3Zd5MFQMwImzb4Nzh32n0CIancaXXj9x39NdEv04+paX/Wg==
@@ -1243,7 +1243,7 @@
     pbf "^3.2.1"
     quadbin "^0.1.9"
 
-"@deck.gl/core@^8.9.17":
+"@deck.gl/core@^8.9.18":
   version "8.9.18"
   resolved "https://registry.yarnpkg.com/@deck.gl/core/-/core-8.9.18.tgz#4a09defbc0f226a85c49864e2bbe324e2f9e43d5"
   integrity sha512-zliaY4ZHebPCfMVEN6lxWuKDN+iNRL3XQwCLRX9N6ZqzzNFUXTLs//Vasdj+x8v4qEAQCJBEngzFPa0BemtvOQ==
@@ -1263,14 +1263,14 @@
     math.gl "^3.6.2"
     mjolnir.js "^2.7.0"
 
-"@deck.gl/extensions@^8.9.17":
+"@deck.gl/extensions@^8.9.18":
   version "8.9.18"
   resolved "https://registry.yarnpkg.com/@deck.gl/extensions/-/extensions-8.9.18.tgz#899136199d9e14af052e29e3940dd01de49f0e1f"
   integrity sha512-Tyrea4UiOm7KQQGjaEcXvtT1OHDjQErhZEt9GJcZx4MIbF6g2RZkR/gsXcNPYq4/sPg7evRlspe43TUMKUjYZw==
   dependencies:
     "@luma.gl/shadertools" "^8.5.20"
 
-"@deck.gl/geo-layers@^8.9.17":
+"@deck.gl/geo-layers@^8.9.18":
   version "8.9.18"
   resolved "https://registry.yarnpkg.com/@deck.gl/geo-layers/-/geo-layers-8.9.18.tgz#d4b2cec11a5491081d9a383c3db87bd92d2c0cb7"
   integrity sha512-vjOuMXK331JYvzdPUbMQK7DiPfYGXMuoFWtIAvmCihRg2Cw5nQspRTwIx7X2JxCQFYiKDmkq/4CRyE9Oz0X9Nw==
@@ -1292,12 +1292,12 @@
     h3-js "^3.7.0"
     long "^3.2.0"
 
-"@deck.gl/google-maps@^8.9.17":
+"@deck.gl/google-maps@^8.9.18":
   version "8.9.18"
   resolved "https://registry.yarnpkg.com/@deck.gl/google-maps/-/google-maps-8.9.18.tgz#7c689af409e2ea95c10944eedabfd67079a40eed"
   integrity sha512-DGc0QeAJrRMI7aRBQq2i6bAEXVgGViUqUV6M5055rjK+ybtrhhQSwztzPYEFVJjqA0G6ITo7EeyjbBU0/7Nxww==
 
-"@deck.gl/layers@^8.9.17":
+"@deck.gl/layers@^8.9.18":
   version "8.9.18"
   resolved "https://registry.yarnpkg.com/@deck.gl/layers/-/layers-8.9.18.tgz#1222f2ec3a5e4151c76e5d7655906c2d86258a18"
   integrity sha512-O6X8ueTBp0r//47UeXCHXvr+TNKJPjdfmwQVzGSogFejOif1IVpU2hycIOJ5pMl/PdYs8uZK8VbZj7qYibsrMQ==
@@ -1311,7 +1311,7 @@
     "@math.gl/web-mercator" "^3.6.2"
     earcut "^2.2.4"
 
-"@deck.gl/mesh-layers@^8.9.17":
+"@deck.gl/mesh-layers@^8.9.18":
   version "8.9.18"
   resolved "https://registry.yarnpkg.com/@deck.gl/mesh-layers/-/mesh-layers-8.9.18.tgz#c57262210773161d0ea0511625b4372892ca915c"
   integrity sha512-1/kH8T7q2UbpUzxrbTiDGA1g75W99Oiz3vvNpPz18W+qEyWMyrxIv80yIdT1s4DKe9uPIfiktNjdYPuhD6q9xw==
