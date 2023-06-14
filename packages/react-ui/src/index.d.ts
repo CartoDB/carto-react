@@ -52,6 +52,7 @@ import {
 import AccordionGroup, {
   AccordionGroupProps
 } from './components/molecules/AccordionGroup';
+import Alert, { CartoAlertSeverity, AlertProps } from './components/molecules/Alert';
 
 export {
   theme,
@@ -107,5 +108,8 @@ export {
   ICON_SIZE_MEDIUM,
   ICON_SIZE_LARGE,
   AccordionGroup,
-  AccordionGroupProps
+  AccordionGroupProps,
+  Alert,
+  AlertProps,
+  CartoAlertSeverity
 };
