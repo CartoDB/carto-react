@@ -57,7 +57,7 @@ const DisabledMenuItem = styled(MenuItem)(({ theme }) => ({
  * @param { "bottom" | "left" | "right" | "top" | undefined } [props.tooltipPlacement]
  * @param {string} [props.tooltipText]
  * @param {string} [props.menuHeaderText]
- * @param {boolean} props.editModes[].disabled
+ * @param {boolean} [props.editDisabled]
  * -->
  */
 function FeatureSelectionUIDropdown({
