@@ -38,6 +38,9 @@ jobs:
       - run: yarn build
       - run: yarn test:coverage
 
+      # FIXME:
+      - run: yarn storybook:build
+
       # Coveralls
       - name: Coveralls
         uses: coverallsapp/github-action@v2
