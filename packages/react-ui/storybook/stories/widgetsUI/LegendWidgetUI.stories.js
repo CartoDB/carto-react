@@ -5,6 +5,11 @@ const options = {
   title: 'Organisms/Widgets/LegendWidgetUI',
   component: LegendWidgetUI,
   argTypes: {
+    className: {
+      control: {
+        type: 'text'
+      }
+    },
     layers: {
       defaultValue: [],
       control: {
