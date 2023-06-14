@@ -38,9 +38,6 @@ jobs:
       - run: yarn build
       - run: yarn test:coverage
 
-      - if: github.event_name == 'pull_request'
-        run: yarn storybook:build
-
       # Coveralls
       - name: Coveralls
         uses: coverallsapp/github-action@v2
@@ -51,7 +48,7 @@ jobs:
 
       # Firebase (live preview)
 
-      - name: Setup Firebase for deploying
+      - name: Setup Firebase for deploying (Pull Request)
         if: github.event_name == 'pull_request'
         working-directory: packages/react-ui
         run: |
@@ -62,7 +59,11 @@ jobs:
             --project ${GCP_PROJECT} \
             --config firebase.json target:apply hosting default ${GCP_PROJECT}
 
-      - name: Deploy assets to Firebase
+      - name: Build storybook (Pull Request)
+        if: github.event_name == 'pull_request'
+        run: yarn storybook:build
+
+      - name: Deploy assets to Firebase (Pull Request)
         if: github.event_name == 'pull_request'
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
