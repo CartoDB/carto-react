@@ -9,6 +9,8 @@
 
 ## Not released
 
+- FeatureSelection widget fixes [#708](https://github.com/CartoDB/carto-react/pull/708)
+
 ## 2.0
 
 ### 2.0.8 (2023-06-13)
