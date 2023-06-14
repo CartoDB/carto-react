@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "target": "default",
     "public": "storybook-static",
     "ignore": [
       "firebase.json",
