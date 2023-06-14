@@ -38,8 +38,8 @@ jobs:
       - run: yarn build
       - run: yarn test:coverage
 
-      # FIXME:
-      - run: yarn storybook:build
+      - if: github.event_name == 'pull_request'
+        run: yarn storybook:build
 
       # Coveralls
       - name: Coveralls
@@ -49,9 +49,11 @@ jobs:
         env:
           CI: true
 
-      # Firebase
+      # Firebase (live preview)
 
       - name: Setup Firebase for deploying
+        if: github.event_name == 'pull_request'
+        working-directory: packages/react-ui
         run: |
           set -eu
           npm install -g firebase-tools
@@ -61,10 +63,12 @@ jobs:
             --config firebase.json target:apply hosting default ${GCP_PROJECT}
 
       - name: Deploy assets to Firebase
+        if: github.event_name == 'pull_request'
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           target: default
+          entryPoint: packages/react-ui
           # With channelId commented a preview channel and its ID will be
           # auto-generated per branch or PR
           # channelId: live
