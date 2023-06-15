@@ -6,6 +6,8 @@
 - Developer API change:
   - geoColumn and aggregationExp moved to Source, remote widgests disabled for spatial indexes
   - (optional) provider type added to Source, remote widgets disabled for Databricks
+- Mask, when set, is applied to global widgets as well as to viewport-based widgets [#704](https://github.com/CartoDB/carto-react/pull/704)
+- Support for remote scatter plot widget
 
 ## Not released
 
