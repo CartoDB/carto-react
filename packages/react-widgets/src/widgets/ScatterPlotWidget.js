@@ -1,10 +1,11 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { WrapperWidgetUI, ScatterPlotWidgetUI } from '@carto/react-ui';
 import { getScatter } from '../models';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
+import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
 
 /**
  * Renders a <ScatterPlotWidget /> component
@@ -20,6 +21,7 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
  * @param  {Function} [props.xAxisFormatter] - Function to format X axis values.
  * @param  {Function} [props.yAxisFormatter] - Function to format Y axis values.
  * @param  {Function} [props.tooltipFormatter] - Function to format Y axis values.
+ * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
  * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
@@ -57,7 +59,8 @@ function ScatterPlotWidget({
       yAxisJoinOperation
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   return (

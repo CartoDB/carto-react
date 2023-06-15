@@ -4,7 +4,15 @@ import { _assert as assert } from '@carto/react-core/';
 
 import { REQUEST_GET_MAX_URL_LENGTH, _getClient } from '@carto/react-core';
 
-const AVAILABLE_MODELS = ['category', 'histogram', 'formula', 'timeseries', 'range'];
+const AVAILABLE_MODELS = [
+  'category',
+  'histogram',
+  'formula',
+  'timeseries',
+  'range',
+  'scatterplot',
+  'table'
+];
 
 const DEFAULT_GEO_COLUMN = 'geom';
 
