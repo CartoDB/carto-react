@@ -305,8 +305,8 @@ HistogramWidgetUI.defaultProps = {
 HistogramWidgetUI.propTypes = {
   data: PropTypes.arrayOf(PropTypes.number).isRequired,
   ticks: PropTypes.arrayOf(PropTypes.number).isRequired,
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
+  min: PropTypes.number,
+  max: PropTypes.number,
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
   xAxisFormatter: PropTypes.func,
