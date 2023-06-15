@@ -9,10 +9,12 @@
 
 ## Not released
 
+## 2.0
+
+### 2.0.10 (2023-06-15)
+
 - Fix breaking change for styles (sx / classname) in 2.0.x [#713](https://github.com/CartoDB/carto-react/pull/713)
 - FeatureSelection widget fixes [#708](https://github.com/CartoDB/carto-react/pull/708)
-
-## 2.0
 
 ### 2.0.9 (2023-06-14)
 
