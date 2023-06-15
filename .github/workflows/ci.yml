@@ -110,10 +110,17 @@ jobs:
 
       # Install dependencies, lint, build and test
 
-      - run: yarn
-      - run: yarn lint
-      - run: yarn build
-      - run: yarn test:coverage
+      - name: Install dependencies
+        run: yarn
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Build
+        run: yarn build
+
+      - name: Coverage
+        run: yarn test:coverage
 
       # Coveralls
       - name: Coveralls
@@ -129,7 +136,7 @@ jobs:
         if: steps.get-environment.outputs.firebase-deploy == 'true'
         working-directory: packages/react-ui
         env:
-          GCP_PROJEC: ${{ steps.get-environment.outputs.gcp-project }}}
+          GCP_PROJECT: ${{ steps.get-environment.outputs.gcp-project }}
         run: |
           set -eu
           npm install -g firebase-tools
