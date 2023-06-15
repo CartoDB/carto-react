@@ -9,6 +9,9 @@
 
 ## Not released
 
+- Bugfix: The pagination is out of alignment [#711](https://github.com/CartoDB/carto-react/pull/711). 
+
+
 ## 2.0
 
 ### 2.0.9 (2023-06-14)
