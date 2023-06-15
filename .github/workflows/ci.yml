@@ -45,6 +45,7 @@ jobs:
 
           # Default values
           FIREBASE_DEPLOY="false"
+          FIREBASE_SERVICE_ACCOUNT_SECRET="FIREBASE_SERVICE_ACCOUNT_DEV"
 
           # Firebase channel ID
           # The ID of the channel to deploy to. If you leave this blank, a preview
@@ -79,6 +80,7 @@ jobs:
               EVENT="Manual deploy to the production environment"
               FIREBASE_DEPLOY="true"
               FIREBASE_CHANNEL_ID="live"
+              FIREBASE_SERVICE_ACCOUNT_SECRET="FIREBASE_SERVICE_ACCOUNT"
               GCP_PROJECT="cartodb-fb-storybook-react"
               ;;
             *)
@@ -97,6 +99,7 @@ jobs:
             echo "Google project: ${GCP_PROJECT}"
 
             echo "firebase-channel-id=${FIREBASE_CHANNEL_ID}" >> $GITHUB_OUTPUT
+            echo "firebase-service-account-secret=${FIREBASE_SERVICE_ACCOUNT_SECRET}" >> $GITHUB_OUTPUT
             echo "gcp-project=${GCP_PROJECT}" >> $GITHUB_OUTPUT
           else
             echo "Skipping deployment"
@@ -153,7 +156,7 @@ jobs:
         if: steps.get-environment.outputs.firebase-deploy == 'true'
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          firebaseServiceAccount: ${{ secrets[format('{0}', steps.get-environment.outputs.firebase-service-account-secret)] }}
           target: default
           entryPoint: packages/react-ui
           # With channelId commented a preview channel and its ID will be
