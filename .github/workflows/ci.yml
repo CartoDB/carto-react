@@ -35,12 +35,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Check the environment to deploy to
+      - name: Get the environment to deploy to
+        id: get-environment
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: |
           # FIXME: Remove debug
-          set -xeu
+          set -eu
 
           # Default values
           FIREBASE_DEPLOY="false"
@@ -92,7 +93,7 @@ jobs:
           echo "firebase-deploy=${FIREBASE_DEPLOY}" >> $GITHUB_OUTPUT
 
           if [[ "${FIREBASE_DEPLOY}" == "true" ]]; then
-            echo "Branch: ${GITHUB_BASE_REF:-${GITHUB_REF_NAME}}"
+            echo "Branch: ${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
             echo "Google project: ${GCP_PROJECT}"
 
             echo "firebase-channel-id=${FIREBASE_CHANNEL_ID}" >> $GITHUB_OUTPUT
@@ -102,55 +103,52 @@ jobs:
             exit 0
           fi
 
-      # FIXME: Uncomment
-      # - name: Use Node.js ${{ matrix.node-version }}
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
 
       # Install dependencies, lint, build and test
 
-      # FIXME: Uncomment
-      # - run: yarn
-      # - run: yarn lint
-      # - run: yarn build
-      # - run: yarn test:coverage
+      - run: yarn
+      - run: yarn lint
+      - run: yarn build
+      - run: yarn test:coverage
 
-      # FIXME: Uncomment
-      # # Coveralls
-      # - name: Coveralls
-      #   uses: coverallsapp/github-action@v2
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #   env:
-      #     CI: true
+      # Coveralls
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          CI: true
 
-      # Firebase (live preview)
+      # Firebase
 
-      # - name: Setup Firebase for deploying (Pull Request)
-      #   if: github.event_name == 'pull_request'
-      #   working-directory: packages/react-ui
-      #   run: |
-      #     set -eu
-      #     npm install -g firebase-tools
-      #     # Generate the necessary .firebaserc
-      #     firebase \
-      #       --project ${GCP_PROJECT} \
-      #       --config firebase.json target:apply hosting default ${GCP_PROJECT}
+      - name: Setup Firebase for deploying
+        if: steps.get-environment.outputs.firebase-deploy == 'true'
+        working-directory: packages/react-ui
+        run: |
+          set -eu
+          npm install -g firebase-tools
+          # Generate the necessary .firebaserc
+          firebase \
+            --project ${GCP_PROJECT} \
+            --config firebase.json target:apply hosting default ${GCP_PROJECT}
 
-      # - name: Build storybook (Pull Request)
-      #   if: github.event_name == 'pull_request'
-      #   run: yarn storybook:build
+      - name: Build storybook
+        if: steps.get-environment.outputs.firebase-deploy == 'true'
+        run: yarn storybook:build
 
-      # - name: Deploy assets to Firebase (Pull Request)
-      #   if: github.event_name == 'pull_request'
-      #   uses: FirebaseExtended/action-hosting-deploy@v0
-      #   with:
-      #     firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-      #     target: default
-      #     entryPoint: packages/react-ui
-      #     # With channelId commented a preview channel and its ID will be
-      #     # auto-generated per branch or PR
-      #     # channelId: live
-      #     projectId: ${{ env.GCP_PROJECT }}
-      #     repoToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy assets to Firebase
+        if: steps.get-environment.outputs.firebase-deploy == 'true'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          target: default
+          entryPoint: packages/react-ui
+          # With channelId commented a preview channel and its ID will be
+          # auto-generated per branch or PR
+          # channelId: live
+          projectId: ${{ env.GCP_PROJECT }}
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
