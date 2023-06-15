@@ -78,8 +78,15 @@ function TableWidgetUI({
 
   const fixedHeightStyle = {};
   if (height) {
-    const paginationHeight = paginationRef?.current?.clientHeight || 0;
-    fixedHeightStyle.height = `calc(${height} - ${paginationHeight}px)`;
+    if (isLoading) {
+      fixedHeightStyle.height = `${height}px`;
+    } else {
+      const paginationHeight = Math.max(
+        paginationRef?.current?.clientHeight || 0,
+        pagination ? 48 : 0
+      );
+      fixedHeightStyle.height = `calc(${height} - ${paginationHeight}px)`;
+    }
   }
 
   if (isLoading) return <TableSkeleton style={fixedHeightStyle} />;
