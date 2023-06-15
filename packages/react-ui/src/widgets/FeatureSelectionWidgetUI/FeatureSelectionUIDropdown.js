@@ -1,4 +1,4 @@
-import { ArrowDropDown } from '@mui/icons-material';
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
   Divider,
@@ -14,11 +14,29 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '../../components/atoms/Typography';
 
-const StyledButtonArrow = styled(IconButton)(({ theme: { spacing, palette } }) => ({
-  color: palette.text.secondary,
-  width: spacing(3)
+const ArrowButton = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== 'isOpen'
+})(({ isOpen, theme }) => ({
+  color: theme.palette.text.secondary,
+  width: theme.spacing(3),
+  transform: `rotate(${isOpen ? '180' : '0'}deg)`,
+  backgroundColor: isOpen ? theme.palette.action.hover : undefined
 }));
 
+const SelectionMenuItem = styled(MenuItem, {
+  shouldForwardProp: (prop) => prop !== 'disabled'
+})(({ disabled, theme }) => ({
+  ...(disabled && {
+    pointerEvents: 'none',
+    color: theme.palette.text.disabled
+  })
+}));
+
+const DisabledMenuItem = styled(MenuItem)(({ theme }) => ({
+  '&.Mui-disabled': {
+    opacity: 1
+  }
+}));
 /**
  * Renders a `<FeatureSelectionUIDropdown />` component.
  * This component displays the dropdown layout with all available edit and selection modes
@@ -39,6 +57,7 @@ const StyledButtonArrow = styled(IconButton)(({ theme: { spacing, palette } }) =
  * @param { "bottom" | "left" | "right" | "top" | undefined } [props.tooltipPlacement]
  * @param {string} [props.tooltipText]
  * @param {string} [props.menuHeaderText]
+ * @param {boolean} [props.editDisabled]
  * -->
  */
 function FeatureSelectionUIDropdown({
@@ -49,7 +68,8 @@ function FeatureSelectionUIDropdown({
   enabled,
   tooltipPlacement,
   tooltipText = '',
-  menuHeaderText = ''
+  menuHeaderText = '',
+  editDisabled
 }) {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -72,34 +92,39 @@ function FeatureSelectionUIDropdown({
   };
 
   const showDivider = !!selectionModes.length && !!editModes.length;
+  const isEditItem = (mode) => editModes.find((editMode) => editMode.id === mode.id);
 
   const createMenuItemWrapper = (mode) => (
-    <MenuItem
+    <SelectionMenuItem
       key={mode.id}
       selected={enabled && selectedMode === mode.id}
       onClick={() => handleSelectMode(mode.id)}
+      disabled={editDisabled && isEditItem(mode)}
     >
       <Box display='flex' justifyContent='space-between' alignItems='center'>
         {mode.icon}
         <Box ml={2}>
-          <Typography variant='body2'>{capitalize(mode.label)}</Typography>
+          <Typography variant='body2' color='inherit'>
+            {capitalize(mode.label)}
+          </Typography>
         </Box>
       </Box>
-    </MenuItem>
+    </SelectionMenuItem>
   );
 
   return (
     <>
       <Tooltip title={tooltipText} placement={tooltipPlacement}>
-        <StyledButtonArrow
+        <ArrowButton
           id='feature-selection-menu-button'
           aria-controls='feature-selection-menu'
           aria-haspopup='true'
           aria-expanded={open ? 'true' : undefined}
           onClick={openDropdown}
+          isOpen={open}
         >
-          <ArrowDropDown />
-        </StyledButtonArrow>
+          <KeyboardArrowDown />
+        </ArrowButton>
       </Tooltip>
       <Menu
         id='feature-selection-menu'
@@ -110,9 +135,11 @@ function FeatureSelectionUIDropdown({
         MenuListProps={{ 'aria-labelledby': 'feature-selection-menu-button' }}
       >
         {menuHeaderText && (
-          <MenuItem disabled>
-            <Typography variant='caption'>{menuHeaderText}</Typography>
-          </MenuItem>
+          <DisabledMenuItem disabled>
+            <Typography variant='caption' color='textSecondary'>
+              {menuHeaderText}
+            </Typography>
+          </DisabledMenuItem>
         )}
         {!!selectionModes.length && selectionModes.map(createMenuItemWrapper)}
         {showDivider && <Divider sx={{ margin: ({ spacing }) => spacing(1, 0) }} />}
@@ -136,7 +163,8 @@ FeatureSelectionUIDropdown.propTypes = {
   enabled: PropTypes.bool,
   tooltipPlacement: PropTypes.string,
   tooltipText: PropTypes.string,
-  menuHeaderText: PropTypes.string
+  menuHeaderText: PropTypes.string,
+  editDisabled: PropTypes.bool
 };
 FeatureSelectionUIDropdown.defaultProps = {
   onSelectMode: () => {},
