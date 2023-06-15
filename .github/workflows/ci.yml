@@ -150,5 +150,5 @@ jobs:
           # With channelId commented a preview channel and its ID will be
           # auto-generated per branch or PR
           # channelId: live
-          projectId: ${{ env.GCP_PROJECT }}
+          projectId: ${{ steps.get-environment.outputs.gcp-project }}
           repoToken: ${{ secrets.GITHUB_TOKEN }}
