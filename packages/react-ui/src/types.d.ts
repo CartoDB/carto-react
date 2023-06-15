@@ -1,4 +1,5 @@
 import { GroupDateTypes } from '@carto/react-core';
+import { SxProps, Theme } from '@mui/material';
 export { SelectFieldProps } from './components/atoms/SelectField';
 export { TypographyProps } from './components/atoms/Typography';
 export { LabelWithIndicatorProps } from './components/atoms/LabelWithIndicator';
@@ -106,6 +107,7 @@ export type LegendWidgetUIData = {
 };
 
 export type LegendWidgetUI = {
+  className?: string;
   customLegendTypes?: Record<string, Function>;
   layers?: LegendWidgetUIData[];
   collapsed?: boolean;
@@ -168,6 +170,8 @@ export type FeatureSelectionWidgetUI = {
   onSelectGeometry?: Function;
   onDeleteGeometry?: Function;
   tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
+  className?: string;
+  sx?: SxProps<Theme>;
   size?: 'small' | 'medium';
   chipLabel?: string;
 };
