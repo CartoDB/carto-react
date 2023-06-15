@@ -40,7 +40,6 @@ jobs:
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: |
-          # FIXME: Remove debug
           set -eu
 
           # Default values
@@ -107,7 +106,7 @@ jobs:
           fi
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
