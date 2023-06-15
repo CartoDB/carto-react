@@ -158,8 +158,6 @@ jobs:
           firebaseServiceAccount: ${{ secrets[format('{0}', steps.get-environment.outputs.firebase-service-account-secret)] }}
           target: default
           entryPoint: packages/react-ui
-          # With channelId commented a preview channel and its ID will be
-          # auto-generated per branch or PR
-          # channelId: live
+          channelId: ${{ steps.get-environment.outputs.firebase-channel-id }}
           projectId: ${{ steps.get-environment.outputs.gcp-project }}
           repoToken: ${{ secrets.GITHUB_TOKEN }}
