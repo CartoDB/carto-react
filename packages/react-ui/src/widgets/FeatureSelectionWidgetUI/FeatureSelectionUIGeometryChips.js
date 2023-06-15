@@ -3,10 +3,10 @@ import { Box, Chip, List, ListItem, Tooltip, styled } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
-const ChipList = styled(List)(({ theme: { spacing } }) => ({
+const ChipList = styled(List)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  margin: 0,
+  marginLeft: theme.spacing(1.5),
   padding: 0,
   overflowX: 'auto',
   maxWidth: '100%',
@@ -59,7 +59,7 @@ function FeatureSelectionUIGeometryChips({
     return chipLabel || feature.properties?.name || `${type} ${index + 1}`;
   }
 
-  const [onMouseElement, setOnMouseElement] = useState(false);
+  const [showDeleteTooltip, setShowDeleteTooltip] = useState(false);
 
   return (
     <Box sx={{ overflowX: 'auto' }}>
@@ -68,7 +68,7 @@ function FeatureSelectionUIGeometryChips({
           const isDisabled = geometry.properties?.disabled;
           const tooltipText = isDisabled
             ? disabledChipTooltip || chipTooltip
-            : onMouseElement
+            : showDeleteTooltip
             ? 'Remove'
             : chipTooltip;
 
@@ -89,8 +89,8 @@ function FeatureSelectionUIGeometryChips({
                   }
                   deleteIcon={
                     <Cancel
-                      onMouseEnter={() => setOnMouseElement(true)}
-                      onMouseLeave={() => setOnMouseElement(false)}
+                      onMouseEnter={() => setShowDeleteTooltip(true)}
+                      onMouseLeave={() => setShowDeleteTooltip(false)}
                     />
                   }
                 />
