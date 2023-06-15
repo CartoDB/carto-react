@@ -1,5 +1,14 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+#
+# This workflow will do a clean install of the node dependencies, build the
+# source code and run tests acrross different versions of node.
+#
+# If we pushing changes to the dev branch, it will deploy the changes to the
+# development environment. If we are pushing to a Pull Request a short-live
+# preview will be generated.
+#
+# No automatic deployment for the master branch and production environment, this
+# needs to be done manually via GitHub Actions
+#
 
 name: CI
 
@@ -7,11 +16,9 @@ on:
   push:
     branches:
       - master
+      - dev
   pull_request:
-
-env:
-  # https://github.com/CartoDB/terraform-gcp-cartodb-fb-storybook-react/tree/master
-  GCP_PROJECT: cartodb-fb-storybook-react
+  workflow_dispatch:
 
 jobs:
   build:
@@ -25,53 +32,125 @@ jobs:
     steps:
       # Setup
 
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check the environment to deploy to
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        run: |
+          # FIXME: Remove debug
+          set -xeu
+
+          # Default values
+          FIREBASE_DEPLOY="false"
+
+          # Firebase channel ID
+          # The ID of the channel to deploy to. If you leave this blank, a preview
+          # channel and its ID will be auto-generated per branch or PR. If you set
+          # it to live, the action deploys to the live channel of your default
+          # Hosting site.
+          # https://github.com/marketplace/actions/deploy-to-firebase-hosting#channelid-string
+
+          case "${GITHUB_EVENT_NAME}" in
+            # Automatic deploy the Pull Request changes to a short-live preview
+            pull_request)
+              EVENT="Pull Request short-live preview"
+              FIREBASE_DEPLOY="true"
+              FIREBASE_CHANNEL_ID=""
+              GCP_PROJECT="cartodb-fb-storybook-react-dev"
+              ;;
+            # Automatic deploy to the development environment when pushing
+            # changes to the dev branch
+            push)
+              if [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
+                EVENT="Automatic deploy to the development environment"
+                FIREBASE_DEPLOY="true"
+                FIREBASE_CHANNEL_ID="live"
+                GCP_PROJECT="cartodb-fb-storybook-react-dev"
+              elif [[ "${GITHUB_REF_NAME}" == "master" ]]; then
+                EVENT="Pushing to master, no deploy required"
+              fi
+              ;;
+            # Manual deploy to the production environment the changes from the
+            # master branch
+            workflow_dispatch)
+              EVENT="Manual deploy to the production environment"
+              FIREBASE_DEPLOY="true"
+              FIREBASE_CHANNEL_ID="live"
+              GCP_PROJECT="cartodb-fb-storybook-react"
+              ;;
+            *)
+              echo "Unknown event ${GITHUB_EVENT_NAME}"
+              exit 1
+              ;;
+          esac
+
+          echo "Event: ${EVENT}"
+          echo "Deploy to Firebase?: ${FIREBASE_DEPLOY}"
+
+          echo "firebase-deploy=${FIREBASE_DEPLOY}" >> $GITHUB_OUTPUT
+
+          if [[ "${FIREBASE_DEPLOY}" == "true" ]]; then
+            echo "Branch: ${GITHUB_BASE_REF:-${GITHUB_REF_NAME}}"
+            echo "Google project: ${GCP_PROJECT}"
+
+            echo "firebase-channel-id=${FIREBASE_CHANNEL_ID}" >> $GITHUB_OUTPUT
+            echo "gcp-project=${GCP_PROJECT}" >> $GITHUB_OUTPUT
+          else
+            echo "Skipping deployment"
+            exit 0
+          fi
+
+      # FIXME: Uncomment
+      # - name: Use Node.js ${{ matrix.node-version }}
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
 
       # Install dependencies, lint, build and test
 
-      - run: yarn
-      - run: yarn lint
-      - run: yarn build
-      - run: yarn test:coverage
+      # FIXME: Uncomment
+      # - run: yarn
+      # - run: yarn lint
+      # - run: yarn build
+      # - run: yarn test:coverage
 
-      # Coveralls
-      - name: Coveralls
-        uses: coverallsapp/github-action@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          CI: true
+      # FIXME: Uncomment
+      # # Coveralls
+      # - name: Coveralls
+      #   uses: coverallsapp/github-action@v2
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #   env:
+      #     CI: true
 
       # Firebase (live preview)
 
-      - name: Setup Firebase for deploying (Pull Request)
-        if: github.event_name == 'pull_request'
-        working-directory: packages/react-ui
-        run: |
-          set -eu
-          npm install -g firebase-tools
-          # Generate the necessary .firebaserc
-          firebase \
-            --project ${GCP_PROJECT} \
-            --config firebase.json target:apply hosting default ${GCP_PROJECT}
+      # - name: Setup Firebase for deploying (Pull Request)
+      #   if: github.event_name == 'pull_request'
+      #   working-directory: packages/react-ui
+      #   run: |
+      #     set -eu
+      #     npm install -g firebase-tools
+      #     # Generate the necessary .firebaserc
+      #     firebase \
+      #       --project ${GCP_PROJECT} \
+      #       --config firebase.json target:apply hosting default ${GCP_PROJECT}
 
-      - name: Build storybook (Pull Request)
-        if: github.event_name == 'pull_request'
-        run: yarn storybook:build
+      # - name: Build storybook (Pull Request)
+      #   if: github.event_name == 'pull_request'
+      #   run: yarn storybook:build
 
-      - name: Deploy assets to Firebase (Pull Request)
-        if: github.event_name == 'pull_request'
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          target: default
-          entryPoint: packages/react-ui
-          # With channelId commented a preview channel and its ID will be
-          # auto-generated per branch or PR
-          # channelId: live
-          projectId: ${{ env.GCP_PROJECT }}
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Deploy assets to Firebase (Pull Request)
+      #   if: github.event_name == 'pull_request'
+      #   uses: FirebaseExtended/action-hosting-deploy@v0
+      #   with:
+      #     firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+      #     target: default
+      #     entryPoint: packages/react-ui
+      #     # With channelId commented a preview channel and its ID will be
+      #     # auto-generated per branch or PR
+      #     # channelId: live
+      #     projectId: ${{ env.GCP_PROJECT }}
+      #     repoToken: ${{ secrets.GITHUB_TOKEN }}
