@@ -102,7 +102,6 @@ jobs:
             echo "gcp-project=${GCP_PROJECT}" >> $GITHUB_OUTPUT
           else
             echo "Skipping deployment"
-            exit 0
           fi
 
       - name: Use Node.js ${{ matrix.node-version }}
