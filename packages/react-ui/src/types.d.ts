@@ -170,6 +170,8 @@ export type FeatureSelectionWidgetUI = {
   onSelectGeometry?: Function;
   onDeleteGeometry?: Function;
   tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
+  className?: string;
+  sx?: SxProps<Theme>;
   size?: 'small' | 'medium';
   chipLabel?: string;
 };
