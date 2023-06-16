@@ -72,41 +72,39 @@ function FeatureSelectionWidgetUI({
     : 'Click on the map to create a mask';
 
   return (
-    <div>
-      <StylesWrapper>
-        <FeatureSelectionUIToggleButton
-          icon={selectedModeData?.icon}
-          hoverTooltip={hoverTooltip}
-          clickTooltip={clickTooltip}
-          enabled={enabled}
-          onEnabledChange={onEnabledChange}
+    <StylesWrapper>
+      <FeatureSelectionUIToggleButton
+        icon={selectedModeData?.icon}
+        hoverTooltip={hoverTooltip}
+        clickTooltip={clickTooltip}
+        enabled={enabled}
+        onEnabledChange={onEnabledChange}
+        tooltipPlacement={tooltipPlacement}
+      />
+      <FeatureSelectionUIDropdown
+        selectionModes={selectionModes}
+        editModes={editModes}
+        selectedMode={selectedMode}
+        onSelectMode={onSelectMode}
+        enabled={enabled}
+        tooltipPlacement={tooltipPlacement}
+        tooltipText='Select a mode'
+        menuHeaderText='Choose a selection mode'
+        editDisabled={!geometry}
+      />
+      {!!geometry && (
+        <FeatureSelectionUIGeometryChips
+          features={[geometry]}
+          onSelectGeometry={onSelectGeometry}
+          onDeleteGeometry={onDeleteGeometry}
+          disabledChipTooltip='Apply mask'
+          chipTooltip='Clear mask'
           tooltipPlacement={tooltipPlacement}
+          size={size}
+          chipLabel={chipLabel}
         />
-        <FeatureSelectionUIDropdown
-          selectionModes={selectionModes}
-          editModes={editModes}
-          selectedMode={selectedMode}
-          onSelectMode={onSelectMode}
-          enabled={enabled}
-          tooltipPlacement={tooltipPlacement}
-          tooltipText='Select a mode'
-          menuHeaderText='Choose a selection mode'
-          editDisabled={!geometry}
-        />
-        {!!geometry && (
-          <FeatureSelectionUIGeometryChips
-            features={[geometry]}
-            onSelectGeometry={onSelectGeometry}
-            onDeleteGeometry={onDeleteGeometry}
-            disabledChipTooltip='Apply mask'
-            chipTooltip='Clear mask'
-            tooltipPlacement={tooltipPlacement}
-            size={size}
-            chipLabel={chipLabel}
-          />
-        )}
-      </StylesWrapper>
-    </div>
+      )}
+    </StylesWrapper>
   );
 }
 

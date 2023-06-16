@@ -95,20 +95,22 @@ function FeatureSelectionWidget({
   };
 
   return (
-    <FeatureSelectionWidgetUI
-      selectionModes={selectionModes}
-      editModes={editModes}
-      selectedMode={selectedMode}
-      onSelectMode={handleSelectMode}
-      enabled={enabled}
-      onEnabledChange={handleEnabledChange}
-      tooltipPlacement={tooltipPlacement}
-      geometry={geometry}
-      onSelectGeometry={handleSelectGeometry}
-      onDeleteGeometry={handleDeleteGeometry}
-      size={size}
-      chipLabel={chipLabel}
-    />
+    <div>
+      <FeatureSelectionWidgetUI
+        selectionModes={selectionModes}
+        editModes={editModes}
+        selectedMode={selectedMode}
+        onSelectMode={handleSelectMode}
+        enabled={enabled}
+        onEnabledChange={handleEnabledChange}
+        tooltipPlacement={tooltipPlacement}
+        geometry={geometry}
+        onSelectGeometry={handleSelectGeometry}
+        onDeleteGeometry={handleDeleteGeometry}
+        size={size}
+        chipLabel={chipLabel}
+      />
+    </div>
   );
 }
 
