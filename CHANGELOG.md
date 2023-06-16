@@ -6,7 +6,7 @@
 - Developer API change:
   - geoColumn and aggregationExp moved to Source, remote widgests disabled for spatial indexes
   - (optional) provider type added to Source, remote widgets disabled for Databricks
-  - className and sx props removed from: Legend, Geocoder, Category and FeatureSelection widgets. Use styled API instead
+  - className and sx props removed from: Legend, Geocoder, Category and FeatureSelection widgets. Use styled API instead to wrap the widgets
 - Mask, when set, is applied to global widgets as well as to viewport-based widgets [#704](https://github.com/CartoDB/carto-react/pull/704)
 - Support for remote scatter plot widget
 
