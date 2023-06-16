@@ -40,8 +40,6 @@ const StylesWrapper = styled(Paper)(({ theme }) => ({
  * -->
  */
 function FeatureSelectionWidgetUI({
-  className,
-  sx,
   selectionModes,
   editModes = [],
   selectedMode,
@@ -74,7 +72,7 @@ function FeatureSelectionWidgetUI({
     : 'Click on the map to create a mask';
 
   return (
-    <StylesWrapper sx={sx} className={className}>
+    <StylesWrapper>
       <FeatureSelectionUIToggleButton
         icon={selectedModeData?.icon}
         hoverTooltip={hoverTooltip}
@@ -111,7 +109,6 @@ function FeatureSelectionWidgetUI({
 }
 
 FeatureSelectionWidgetUI.defaultProps = {
-  sx: undefined,
   enabled: false,
   tooltipPlacement: 'bottom',
   editModes: [],
@@ -125,8 +122,6 @@ const MODE_SHAPE = PropTypes.shape({
 });
 
 FeatureSelectionWidgetUI.propTypes = {
-  sx: PropTypes.any,
-  className: PropTypes.any,
   selectionModes: PropTypes.arrayOf(MODE_SHAPE.isRequired).isRequired,
   editModes: PropTypes.arrayOf(MODE_SHAPE.isRequired),
   selectedMode: PropTypes.string.isRequired,
