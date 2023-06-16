@@ -35,6 +35,7 @@ const LegendBox = styled(Box)(({ theme }) => ({
 }));
 
 function LegendWidgetUI({
+  className,
   customLegendTypes,
   customLayerOptions,
   layers = [],
@@ -48,7 +49,7 @@ function LegendWidgetUI({
   const isSingle = layers.length === 1;
 
   return (
-    <LegendBox>
+    <LegendBox className={className}>
       <LegendContainer
         isSingle={isSingle}
         collapsed={collapsed}
@@ -77,6 +78,7 @@ LegendWidgetUI.defaultProps = {
 };
 
 LegendWidgetUI.propTypes = {
+  className: PropTypes.string,
   customLegendTypes: PropTypes.objectOf(PropTypes.func),
   customLayerOptions: PropTypes.objectOf(PropTypes.func),
   layers: PropTypes.array,

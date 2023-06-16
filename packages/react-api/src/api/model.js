@@ -10,6 +10,7 @@ const AVAILABLE_MODELS = [
   'formula',
   'timeseries',
   'range',
+  'scatterplot',
   'table'
 ];
 

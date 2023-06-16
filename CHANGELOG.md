@@ -6,12 +6,17 @@
 - Developer API change:
   - geoColumn and aggregationExp moved to Source, remote widgests disabled for spatial indexes
   - (optional) provider type added to Source, remote widgets disabled for Databricks
+- Mask, when set, is applied to global widgets as well as to viewport-based widgets [#704](https://github.com/CartoDB/carto-react/pull/704)
+- Support for remote scatter plot widget
 
 ## Not released
 
-- FeatureSelection widget fixes [#708](https://github.com/CartoDB/carto-react/pull/708)
-
 ## 2.0
+
+### 2.0.10 (2023-06-15)
+
+- Fix breaking change for styles (sx / classname) in 2.0.x [#713](https://github.com/CartoDB/carto-react/pull/713)
+- FeatureSelection widget fixes [#708](https://github.com/CartoDB/carto-react/pull/708)
 
 ### 2.0.9 (2023-06-14)
 

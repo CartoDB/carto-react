@@ -17,6 +17,40 @@ import useCustomCompareEffect from './useCustomCompareEffect';
 import useWidgetSource from './useWidgetSource';
 import { isRemoteCalculationSupported } from '../models/utils';
 
+/**
+ * Select a geometry to intersect features with, given the widget configuration.
+ *
+ * @typedef { import('geojson').Polygon | import('geojson').MultiPolygon } Geometry
+ * @typedef { import('geojson').Feature<Geometry> } Feature
+ * @typedef { import('@carto/react-core').Viewport } Viewport
+ *
+ * @param {boolean} global if the widget is in global mode
+ * @param {Viewport?} viewport the current viewport
+ * @param {Feature?} spatialFilter the current active mask, if set
+ * @returns {Geometry?}
+ *   the geometry to intersect, if any, to be used as spatial filter for queries
+ */
+export function selectGeometryToIntersect(global, viewport, spatialFilter) {
+  if (global) {
+    // global widgets work with selection mask, if set, otherwise no filter at all
+    if (spatialFilter?.geometry?.coordinates) {
+      return normalizeGeometry(spatialFilter.geometry);
+    } else {
+      return null;
+    }
+  } else {
+    // shortcut to remove viewports that cover the world anyway
+    if (!spatialFilter && isGlobalViewport(viewport)) {
+      return null;
+    } else {
+      // non-global widgets work with selection mask, if set, otherwise viewport
+      return normalizeGeometry(
+        getGeometryToIntersect(viewport, spatialFilter ? spatialFilter.geometry : null)
+      );
+    }
+  }
+}
+
 export default function useWidgetFetch(
   modelFn,
   {
@@ -45,12 +79,7 @@ export default function useWidgetFetch(
 
   const viewport = useSelector(selectViewport);
   const spatialFilter = useSelector((state) => selectSpatialFilter(state, dataSource));
-  const geometryToIntersect =
-    global || (!spatialFilter && isGlobalViewport(viewport))
-      ? null
-      : normalizeGeometry(
-          getGeometryToIntersect(viewport, spatialFilter ? spatialFilter.geometry : null)
-        );
+  const geometryToIntersect = selectGeometryToIntersect(global, viewport, spatialFilter);
 
   useCustomCompareEffect(
     () => {
