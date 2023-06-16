@@ -57,7 +57,7 @@ jobs:
           case "${GITHUB_EVENT_NAME}" in
             # Automatically deploy pull request changes to a short-lived preview
             pull_request)
-              EVENT="Pull Request short-live preview"
+              EVENT="Deploy to a short-live preview"
               FIREBASE_DEPLOY="true"
               FIREBASE_CHANNEL_ID=""
               GCP_PROJECT="cartodb-fb-storybook-react-dev"
@@ -66,7 +66,7 @@ jobs:
             # changes to the dev branch
             push)
               if [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
-                EVENT="Automaticatically deploy to the development environment"
+                EVENT="Automatically deploy to the development environment"
                 FIREBASE_DEPLOY="true"
                 FIREBASE_CHANNEL_ID="live"
                 GCP_PROJECT="cartodb-fb-storybook-react-dev"
