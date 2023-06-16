@@ -3,8 +3,8 @@
 # source code and run tests on different versions of node.
 #
 # When we push changes to the dev branch, it will push the changes to the
-# development environment. When we push to a pull request, a short-lived #
-# preview is generated.
+# development environment. When we push to a pull request, a short-lived preview
+# is generated.
 #
 # No automatic deployment to the master branch and production environment, this
 # has to be done manually via GitHub actions executing this workflow
