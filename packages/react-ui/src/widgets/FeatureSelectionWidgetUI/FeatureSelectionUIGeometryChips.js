@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 const ChipList = styled(List)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  marginLeft: theme.spacing(1.5),
+  marginLeft: theme.spacing(1),
   padding: 0,
   overflowX: 'auto',
   maxWidth: '100%',
