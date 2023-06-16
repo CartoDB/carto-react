@@ -1,13 +1,13 @@
 #
-# This workflow will do a clean install of the node dependencies, build the
-# source code and run tests acrross different versions of node.
+# This workflow will perform a clean install of the node dependencies, build the
+# source code and run tests on different versions of node.
 #
-# If we pushing changes to the dev branch, it will deploy the changes to the
-# development environment. If we are pushing to a Pull Request a short-live
-# preview will be generated.
+# When we push changes to the dev branch, it will push the changes to the
+# development environment. When we push to a pull request, a short-lived preview
+# is generated.
 #
-# No automatic deployment for the master branch and production environment, this
-# needs to be done manually via GitHub Actions
+# No automatic deployment to the master branch and production environment, this
+# has to be done manually via GitHub actions executing this workflow
 #
 
 name: CI
@@ -17,6 +17,7 @@ on:
     branches:
       - master
       - dev
+
   pull_request:
   workflow_dispatch:
 
@@ -54,18 +55,18 @@ jobs:
           # https://github.com/marketplace/actions/deploy-to-firebase-hosting#channelid-string
 
           case "${GITHUB_EVENT_NAME}" in
-            # Automatic deploy the Pull Request changes to a short-live preview
+            # Automatically deploy pull request changes to a short-lived preview
             pull_request)
-              EVENT="Pull Request short-live preview"
+              EVENT="Deploy to a short-live preview"
               FIREBASE_DEPLOY="true"
               FIREBASE_CHANNEL_ID=""
               GCP_PROJECT="cartodb-fb-storybook-react-dev"
               ;;
-            # Automatic deploy to the development environment when pushing
+            # Automatically deploy to the development environment when pushing
             # changes to the dev branch
             push)
               if [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
-                EVENT="Automatic deploy to the development environment"
+                EVENT="Automatically deploy to the development environment"
                 FIREBASE_DEPLOY="true"
                 FIREBASE_CHANNEL_ID="live"
                 GCP_PROJECT="cartodb-fb-storybook-react-dev"
@@ -73,10 +74,10 @@ jobs:
                 EVENT="Pushing to master, no deploy required"
               fi
               ;;
-            # Manual deploy to the production environment the changes from the
+            # Manually deploy to the production environment the changes from the
             # master branch
             workflow_dispatch)
-              EVENT="Manual deploy to the production environment"
+              EVENT="Manually deploy to the production environment"
               FIREBASE_DEPLOY="true"
               FIREBASE_CHANNEL_ID="live"
               FIREBASE_SERVICE_ACCOUNT_SECRET="FIREBASE_SERVICE_ACCOUNT"
@@ -88,7 +89,7 @@ jobs:
               ;;
           esac
 
-          echo "Event: ${EVENT}"
+          echo "Event type: ${EVENT}"
           echo "Deploy to Firebase?: ${FIREBASE_DEPLOY}"
 
           echo "firebase-deploy=${FIREBASE_DEPLOY}" >> $GITHUB_OUTPUT
@@ -133,6 +134,10 @@ jobs:
 
       # Firebase
 
+      - name: Build storybook
+        if: steps.get-environment.outputs.firebase-deploy == 'true'
+        run: yarn storybook:build
+
       - name: Setup Firebase for deploying
         if: steps.get-environment.outputs.firebase-deploy == 'true'
         working-directory: packages/react-ui
@@ -145,10 +150,6 @@ jobs:
           firebase \
             --project ${GCP_PROJECT} \
             --config firebase.json target:apply hosting default ${GCP_PROJECT}
-
-      - name: Build storybook
-        if: steps.get-environment.outputs.firebase-deploy == 'true'
-        run: yarn storybook:build
 
       - name: Deploy assets to Firebase
         if: steps.get-environment.outputs.firebase-deploy == 'true'
