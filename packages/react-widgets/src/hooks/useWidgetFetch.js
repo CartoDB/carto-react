@@ -59,6 +59,7 @@ export default function useWidgetFetch(
     params,
     global,
     onError,
+    onStateChange,
     enabled = true,
     attemptRemoteCalculation = false
   }
@@ -86,6 +87,7 @@ export default function useWidgetFetch(
       setIsLoading(true);
       setWarning('');
 
+      onStateChange?.({ state: 'loading' });
       if (source && isSourceReady && enabled) {
         modelFn({
           source,
@@ -95,15 +97,17 @@ export default function useWidgetFetch(
           spatialFilter: geometryToIntersect
         })
           .then((data) => {
+            onStateChange?.({ state: 'success', data });
             if (data !== null && data !== undefined) {
               setData(data);
             }
           })
           .catch((error) => {
+            onStateChange?.({ state: 'error', error });
             if (InvalidColumnError.is(error)) {
               setWarning(DEFAULT_INVALID_COLUMN_ERR);
-            } else if (onError) {
-              onError(error);
+            } else {
+              onError?.(error);
             }
           })
           .finally(() => {
