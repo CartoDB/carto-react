@@ -32,7 +32,7 @@ function fromRemote(props) {
     model: 'formula',
     source,
     spatialFilter,
-    params: { column: column || '*', operation, operationExp },
+    params: { column: column ?? '*', operation, operationExp },
     opts: { abortController }
   }).then((res) => normalizeObjectKeys(res.rows[0]));
 }
