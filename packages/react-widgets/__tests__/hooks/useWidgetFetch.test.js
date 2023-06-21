@@ -1,6 +1,6 @@
 import { InvalidColumnError } from '@carto/react-core/';
 import { DEFAULT_INVALID_COLUMN_ERR } from '../../src/widgets/utils/constants';
-import { act, render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import useWidgetFetch, {
   selectGeometryToIntersect
@@ -69,6 +69,7 @@ describe('useWidgetFetch', () => {
 
   it('should work correctly (no remote attempt)', async () => {
     const onError = jest.fn();
+    const onStateChange = jest.fn();
     const modelFn = jest
       .fn()
       .mockImplementation(
@@ -84,7 +85,8 @@ describe('useWidgetFetch', () => {
           params: PARAMS_MOCK,
           global: false,
           attemptRemoteCalculation: false,
-          onError
+          onError,
+          onStateChange
         }}
       />
     );
@@ -99,10 +101,16 @@ describe('useWidgetFetch', () => {
     });
 
     expect(screen.getByText('loading')).toBeInTheDocument();
+    await waitFor(() => expect(onStateChange).toBeCalledWith({ state: 'loading' }));
 
     await act(() => sleep(250));
 
+
     expect(screen.getByText('data')).toBeInTheDocument();
+
+    expect(onStateChange).toBeCalledWith({ state: 'success', data: 'data' });
+
+    onStateChange.mockReset();
 
     modelFn.mockImplementation(
       () => new Promise((resolve, reject) => setTimeout(() => reject('ERROR'), 100))
@@ -117,7 +125,8 @@ describe('useWidgetFetch', () => {
           params: PARAMS_MOCK,
           global: true,
           attemptRemoteCalculation: false,
-          onError
+          onError,
+          onStateChange
         }}
       />
     );
@@ -131,11 +140,14 @@ describe('useWidgetFetch', () => {
       spatialFilter: null // never in global mode
     });
 
-    expect(screen.getByText('loading')).toBeInTheDocument();
+    expect(onStateChange).toBeCalledWith({ state: 'loading' });
+
+    await waitFor(() => expect(onStateChange).toBeCalledWith({ state: 'loading' }));
     await act(() => sleep(250));
     expect(screen.queryByText('loading')).not.toBeInTheDocument();
 
     expect(onError).toBeCalledTimes(1);
+    expect(onStateChange).toBeCalledWith({ state: 'error', error: 'ERROR' });
 
     modelFn.mockRejectedValue(new InvalidColumnError('Invalid column'));
 
@@ -162,6 +174,7 @@ describe('useWidgetFetch', () => {
 
   it('should work correctly (non-global, remote attempt)', async () => {
     const onError = jest.fn();
+    const onStateChange = jest.fn();
     const modelFn = jest
       .fn()
       .mockImplementation(
@@ -177,7 +190,8 @@ describe('useWidgetFetch', () => {
           params: PARAMS_MOCK,
           global: false,
           attemptRemoteCalculation: true,
-          onError
+          onError,
+          onStateChange
         }}
       />
     );
@@ -190,6 +204,8 @@ describe('useWidgetFetch', () => {
       remoteCalculation: true,
       spatialFilter: viewportSpatialFilter
     });
+    await waitFor(() => expect(onStateChange).toBeCalledWith({ state: 'loading' }));
+    await waitFor(() => expect(onStateChange).toBeCalledWith({ state: 'success', data: 'data' }));
   });
 
   it('should work correctly (global, remote attempt)', async () => {
