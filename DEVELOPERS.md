@@ -45,9 +45,10 @@ You will need npm credentials under @carto organization.
 6. Ensure current versions in package.json files are ok (eg. not 1 package with rc.2 and another one with rc.3, also in internal dependencies & peerdependencies among packages). The effective bump will be done with lerna in a step later (so we're talking just about dependencies, not the main 'version' field in packages).
 7. Once it's ok execute locally `yarn publish:prerelease`
 8. Choose `Custom prerelease` and ensure the packages version proposed is correct (eg. change suffix to 'alpha' or 'beta', instead of 'rc' if required)
-9. Once the npm package has been published, `Merge the PR` to master from github
-10. Update the storybook (if required)
-11. Coordinate with the design team on minor and major bump versions. C4R and Design system library must have the same paired version.
+9. Adjust manually peer deps to latest published version
+10. Once the npm package has been published, `Merge the PR` to master from github
+11. Update the storybook (if required, just official not prerelease versions are published). See next section below
+12. Coordinate with the design team on minor and major bump versions. C4R and Design system library must have the same paired version.
 
 ### To make an official **release**:
 
@@ -67,18 +68,6 @@ You will need npm credentials under @carto organization.
 
 To deploy there a new update:
 
-- Ensure you have the firebase CLI properly (installed and) configured
-  ```
-    firebase login
-  ```
-- Execute from root path:
-  ```
-    yarn storybook:publish
-  ```
-- That will publish the website to the Google Cloud Firebase project.
+- Go to CI: https://github.com/CartoDB/carto-react/actions/workflows/ci.yml
 
-- Note: if you have issues, even when logged in, you might need to force logout / login again, with
-  ```
-    firebase logout
-    firebase login
-  ```
+- Run workflow, choosing the correct branch

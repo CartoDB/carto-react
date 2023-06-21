@@ -1,16 +1,18 @@
+import { Cancel } from '@mui/icons-material';
 import { Box, Chip, List, ListItem, Tooltip, styled } from '@mui/material';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 
-const ChipList = styled(List)(({ theme: { spacing } }) => ({
+const ChipList = styled(List)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  margin: 0,
-  padding: spacing(0, 1),
+  marginLeft: theme.spacing(1.5),
+  padding: 0,
   overflowX: 'auto',
   maxWidth: '100%',
   scrollbarWidth: 'none',
   msOverflowStyle: 'none',
+
   '&::-webkit-scrollbar': {
     display: 'none'
   }
@@ -26,8 +28,9 @@ const NOOP = () => {};
  * @param {function} [props.onDeleteGeometry]
  * @param {string} [props.chipTooltip]
  * @param {string} [props.disabledChipTooltip]
- * @param { "medium" | "small" } [props.size]
+ * @param { "medium" | "small" | undefined } [props.size]
  * @param { "bottom" | "left" | "right" | "top" | undefined } [props.tooltipPlacement]
+ * @param {string} [props.chipLabel]
  * @returns
  */
 function FeatureSelectionUIGeometryChips({
@@ -37,7 +40,8 @@ function FeatureSelectionUIGeometryChips({
   chipTooltip,
   disabledChipTooltip,
   size = 'medium',
-  tooltipPlacement = 'bottom'
+  tooltipPlacement = 'bottom',
+  chipLabel
 }) {
   /**
    * @param {GeoJSON.Geometry['type']} type
@@ -52,19 +56,27 @@ function FeatureSelectionUIGeometryChips({
 
   function getFeatureChipLabel(feature, index) {
     const type = translateType(feature.geometry.type);
-    return feature.properties?.name || `${type} ${index + 1}`;
+    return chipLabel || feature.properties?.name || `${type} ${index + 1}`;
   }
+
+  const [showDeleteTooltip, setShowDeleteTooltip] = useState(false);
 
   return (
     <Box sx={{ overflowX: 'auto' }}>
       <ChipList sx={{ gap: size === 'small' ? 0.5 : 1 }}>
         {features.map((geometry, index) => {
           const isDisabled = geometry.properties?.disabled;
+          const tooltipText = isDisabled
+            ? disabledChipTooltip || chipTooltip
+            : showDeleteTooltip
+            ? 'Remove'
+            : chipTooltip;
+
           return (
             <ListItem disablePadding key={index}>
               <Tooltip
                 disableHoverListener={isDisabled ? !disabledChipTooltip : !chipTooltip}
-                title={isDisabled ? disabledChipTooltip || chipTooltip : chipTooltip}
+                title={tooltipText}
                 placement={tooltipPlacement}
               >
                 <Chip
@@ -74,6 +86,12 @@ function FeatureSelectionUIGeometryChips({
                   onClick={() => onSelectGeometry(geometry)}
                   onDelete={
                     onDeleteGeometry ? () => onDeleteGeometry(geometry) : undefined
+                  }
+                  deleteIcon={
+                    <Cancel
+                      onMouseEnter={() => setShowDeleteTooltip(true)}
+                      onMouseLeave={() => setShowDeleteTooltip(false)}
+                    />
                   }
                 />
               </Tooltip>
@@ -105,7 +123,8 @@ FeatureSelectionUIGeometryChips.propTypes = {
     'right-start',
     'top-end',
     'top-start'
-  ])
+  ]),
+  chipLabel: PropTypes.string
 };
 FeatureSelectionUIGeometryChips.defaultProps = {
   size: 'medium',

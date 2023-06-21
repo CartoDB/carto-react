@@ -168,6 +168,8 @@ export type FeatureSelectionWidgetUI = {
   onSelectGeometry?: Function;
   onDeleteGeometry?: Function;
   tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
+  size?: 'small' | 'medium';
+  chipLabel?: string;
 };
 
 export type FeatureSelectionUIDropdown = {
@@ -178,6 +180,7 @@ export type FeatureSelectionUIDropdown = {
   enabled?: boolean;
   onEnabledChange?: Function;
   tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
+  editDisabled?: boolean;
 };
 export type FeatureSelectionUIGeometryChips = {
   features: GeoJSON.Feature[];
@@ -187,6 +190,7 @@ export type FeatureSelectionUIGeometryChips = {
   disabledChipTooltip?: string;
   size?: 'small' | 'medium';
   tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
+  chipLabel?: string;
 };
 export type FeatureSelectionUIToggleButton = {
   icon: React.ReactNode;

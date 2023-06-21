@@ -1,18 +1,28 @@
 # CHANGELOG
 
-## To be announced in 2.1
-
-- Widgets processing moved to the data warehouses for table and query sources
-- Developer API change:
-  - geoColumn and aggregationExp moved to Source, remote widgests disabled for spatial indexes
-  - (optional) provider type added to Source, remote widgets disabled for Databricks
-
 ## Not released
 
 - Bugfix: The pagination is out of alignment [#711](https://github.com/CartoDB/carto-react/pull/711). 
 
+## 2.1
+
+### 2.1.0 (2023-06-16)
+
+- Widgets processing moved to the data warehouses for table and query sources
+- Developer API change:
+  - geoColumn and aggregationExp moved to Source, remote widgets disabled for spatial indexes
+  - (optional) provider type added to Source, remote widgets disabled for Databricks
+  - className and sx props removed from: Legend, Geocoder, Category and FeatureSelection widgets. Use styled API instead to wrap the widgets
+- Mask, when set, is applied to global widgets as well as to viewport-based widgets [#704](https://github.com/CartoDB/carto-react/pull/704)
+- Support for remote scatter plot widget [#704](https://github.com/CartoDB/carto-react/pull/704)
+- Breaking change for styles: sx / classname props removal [#715](https://github.com/CartoDB/carto-react/pull/715)
 
 ## 2.0
+
+### 2.0.10 (2023-06-15)
+
+- Fix breaking change for styles (sx / classname) in 2.0.x [#713](https://github.com/CartoDB/carto-react/pull/713)
+- FeatureSelection widget fixes [#708](https://github.com/CartoDB/carto-react/pull/708)
 
 ### 2.0.9 (2023-06-14)
 

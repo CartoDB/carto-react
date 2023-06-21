@@ -1,5 +1,14 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+#
+# This workflow will perform a clean install of the node dependencies, build the
+# source code and run tests on different versions of node.
+#
+# When we push changes to the dev branch, it will push the changes to the
+# development environment. When we push to a pull request, a short-lived preview
+# is generated.
+#
+# No automatic deployment to the master branch and production environment, this
+# has to be done manually via GitHub actions executing this workflow
+#
 
 name: CI
 
@@ -7,31 +16,148 @@ on:
   push:
     branches:
       - master
+      - dev
+
   pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: CI
+    runs-on: ubuntu-22.04
 
     strategy:
       matrix:
         node-version: [18.x]
 
     steps:
-      - uses: actions/checkout@v2
+      # Setup
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get the environment to deploy to
+        id: get-environment
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -eu
+
+          # Default values
+          FIREBASE_DEPLOY="false"
+          FIREBASE_SERVICE_ACCOUNT_SECRET="FIREBASE_SERVICE_ACCOUNT_DEV"
+
+          # Firebase channel ID
+          # The ID of the channel to deploy to. If you leave this blank, a preview
+          # channel and its ID will be auto-generated per branch or PR. If you set
+          # it to live, the action deploys to the live channel of your default
+          # Hosting site.
+          # https://github.com/marketplace/actions/deploy-to-firebase-hosting#channelid-string
+
+          case "${GITHUB_EVENT_NAME}" in
+            # Automatically deploy pull request changes to a short-lived preview
+            pull_request)
+              EVENT="Deploy to a short-live preview"
+              FIREBASE_DEPLOY="true"
+              FIREBASE_CHANNEL_ID=""
+              GCP_PROJECT="cartodb-fb-storybook-react-dev"
+              ;;
+            # Automatically deploy to the development environment when pushing
+            # changes to the dev branch
+            push)
+              if [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
+                EVENT="Automatically deploy to the development environment"
+                FIREBASE_DEPLOY="true"
+                FIREBASE_CHANNEL_ID="live"
+                GCP_PROJECT="cartodb-fb-storybook-react-dev"
+              elif [[ "${GITHUB_REF_NAME}" == "master" ]]; then
+                EVENT="Pushing to master, no deploy required"
+              fi
+              ;;
+            # Manually deploy to the production environment the changes from the
+            # master branch
+            workflow_dispatch)
+              EVENT="Manually deploy to the production environment"
+              FIREBASE_DEPLOY="true"
+              FIREBASE_CHANNEL_ID="live"
+              FIREBASE_SERVICE_ACCOUNT_SECRET="FIREBASE_SERVICE_ACCOUNT"
+              GCP_PROJECT="cartodb-fb-storybook-react"
+              ;;
+            *)
+              echo "Unknown event ${GITHUB_EVENT_NAME}"
+              exit 1
+              ;;
+          esac
+
+          echo "Event type: ${EVENT}"
+          echo "Deploy to Firebase?: ${FIREBASE_DEPLOY}"
+
+          echo "firebase-deploy=${FIREBASE_DEPLOY}" >> $GITHUB_OUTPUT
+
+          if [[ "${FIREBASE_DEPLOY}" == "true" ]]; then
+            echo "Branch: ${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
+            echo "Google project: ${GCP_PROJECT}"
+
+            echo "firebase-channel-id=${FIREBASE_CHANNEL_ID}" >> $GITHUB_OUTPUT
+            echo "firebase-service-account-secret=${FIREBASE_SERVICE_ACCOUNT_SECRET}" >> $GITHUB_OUTPUT
+            echo "gcp-project=${GCP_PROJECT}" >> $GITHUB_OUTPUT
+          else
+            echo "Skipping deployment"
+          fi
+
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install -g yarn
-      - run: yarn
-      - run: yarn lint
-      - run: yarn build
-      - run: yarn test:coverage
 
+      # Install dependencies, lint, build and test
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Build
+        run: yarn build
+
+      - name: Coverage
+        run: yarn test:coverage
+
+      # Coveralls
       - name: Coveralls
-        uses: coverallsapp/github-action@master
+        uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
           CI: true
+
+      # Firebase
+
+      - name: Build storybook
+        if: steps.get-environment.outputs.firebase-deploy == 'true'
+        run: yarn storybook:build
+
+      - name: Setup Firebase for deploying
+        if: steps.get-environment.outputs.firebase-deploy == 'true'
+        working-directory: packages/react-ui
+        env:
+          GCP_PROJECT: ${{ steps.get-environment.outputs.gcp-project }}
+        run: |
+          set -eu
+          npm install -g firebase-tools
+          # Generate the necessary .firebaserc
+          firebase \
+            --project ${GCP_PROJECT} \
+            --config firebase.json target:apply hosting default ${GCP_PROJECT}
+
+      - name: Deploy assets to Firebase
+        if: steps.get-environment.outputs.firebase-deploy == 'true'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          firebaseServiceAccount: ${{ secrets[format('{0}', steps.get-environment.outputs.firebase-service-account-secret)] }}
+          target: default
+          entryPoint: packages/react-ui
+          channelId: ${{ steps.get-environment.outputs.firebase-channel-id }}
+          projectId: ${{ steps.get-environment.outputs.gcp-project }}
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
