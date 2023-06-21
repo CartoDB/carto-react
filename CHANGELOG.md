@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix spatial filter was not being applied to Timeseries widgets [#719](https://github.com/CartoDB/carto-react/pull/719)
+
 ## 2.1
 
 ### 2.1.0 (2023-06-16)
@@ -61,8 +63,7 @@
 
 - Fix type propTypes issues [#677](https://github.com/CartoDB/carto-react/pull/677)
 
-### 2.0.3 (2023-05-18)
-
+-
 - Bump deck.gl to latest 8.9.15 [#675](https://github.com/CartoDB/carto-react/pull/675)
 - Calculation of widget using maps API under FF [#658](https://github.com/CartoDB/carto-react/pull/658)
 - TablePagination fixes & DS application [#673](https://github.com/CartoDB/carto-react/pull/673)
