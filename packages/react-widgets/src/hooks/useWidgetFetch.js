@@ -17,6 +17,12 @@ import useCustomCompareEffect from './useCustomCompareEffect';
 import useWidgetSource from './useWidgetSource';
 import { isRemoteCalculationSupported } from '../models/utils';
 
+export const WidgetStateType = {
+  Loading: 'loading',
+  Success: 'success',
+  Error: 'error'
+};
+
 /**
  * Select a geometry to intersect features with, given the widget configuration.
  *
@@ -87,7 +93,7 @@ export default function useWidgetFetch(
       setIsLoading(true);
       setWarning('');
 
-      onStateChange?.({ state: 'loading' });
+      onStateChange?.({ state: WidgetStateType.Loading });
       if (source && isSourceReady && enabled) {
         modelFn({
           source,
@@ -97,13 +103,13 @@ export default function useWidgetFetch(
           spatialFilter: geometryToIntersect
         })
           .then((data) => {
-            onStateChange?.({ state: 'success', data });
+            onStateChange?.({ state: WidgetStateType.Success, data });
             if (data !== null && data !== undefined) {
               setData(data);
             }
           })
           .catch((error) => {
-            onStateChange?.({ state: 'error', error });
+            onStateChange?.({ state: WidgetStateType.Error, error });
             if (InvalidColumnError.is(error)) {
               setWarning(DEFAULT_INVALID_COLUMN_ERR);
             } else {
