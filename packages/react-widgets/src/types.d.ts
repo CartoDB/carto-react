@@ -1,21 +1,21 @@
 import { AggregationTypes } from '@carto/react-core';
 
-declare enum WidgetStateType {
+export enum WidgetStateType {
   Loading = 'loading',
   Success = 'success',
   Error = 'error'
 }
 
-type WidgetState =
+export type WidgetState =
   | {
-      type: WidgetStateType.Loading;
+      state: WidgetStateType.Loading;
     }
   | {
-      type: WidgetStateType.Success;
+      state: WidgetStateType.Success;
       data: unknown;
     }
   | {
-      type: WidgetStateType.Error;
+      state: WidgetStateType.Error;
       error?: string;
     };
 

@@ -109,7 +109,7 @@ export default function useWidgetFetch(
             }
           })
           .catch((error) => {
-            onStateChange?.({ state: WidgetStateType.Error, error });
+            onStateChange?.({ state: WidgetStateType.Error, error: String(error) });
             if (InvalidColumnError.is(error)) {
               setWarning(DEFAULT_INVALID_COLUMN_ERR);
             } else {
