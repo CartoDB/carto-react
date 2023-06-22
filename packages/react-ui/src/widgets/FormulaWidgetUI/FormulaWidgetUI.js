@@ -54,7 +54,7 @@ function FormulaWidgetUI(props) {
         requestRef
       });
     } else {
-      setValue(data);
+      setValue(data !== null && data !== undefined ? data : '-');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => cancelAnimationFrame(requestRef.current);
@@ -63,6 +63,7 @@ function FormulaWidgetUI(props) {
   const formattedValue = formatter(value);
 
   const isComplexFormat = typeof formattedValue === 'object' && formattedValue !== null;
+  const isDisabled = formattedValue === '-';
 
   if (isLoading) return <FormulaSkeleton />;
 
@@ -73,7 +74,12 @@ function FormulaWidgetUI(props) {
       <Suffix>{formattedValue.suffix}</Suffix>
     </Typography>
   ) : (
-    <Typography variant='h5' component='div' weight='medium'>
+    <Typography
+      variant='h5'
+      component='div'
+      weight='medium'
+      color={isDisabled ? 'text.disabled' : 'default'}
+    >
       {formattedValue}
     </Typography>
   );

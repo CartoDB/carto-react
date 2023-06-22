@@ -75,14 +75,12 @@ function FormulaWidget({
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         showDroppingFeaturesAlert={!remoteCalculation}
       >
-        {value !== undefined && (
-          <FormulaWidgetUI
-            data={value}
-            formatter={formatter}
-            animation={animation}
-            isLoading={isLoading}
-          />
-        )}
+        <FormulaWidgetUI
+          data={value}
+          formatter={formatter}
+          animation={animation}
+          isLoading={isLoading}
+        />
       </WidgetWithAlert>
     </WrapperWidgetUI>
   );
