@@ -104,11 +104,10 @@ export default function useWidgetFetch(
         })
           .then((data) => {
             onStateChange?.({ state: WidgetStateType.Success, data });
-            if (data !== null && data !== undefined) {
-              setData(data);
-            }
+            setData(data);
           })
           .catch((error) => {
+            setData(undefined);
             onStateChange?.({ state: WidgetStateType.Error, error: String(error) });
             if (InvalidColumnError.is(error)) {
               setWarning(DEFAULT_INVALID_COLUMN_ERR);
