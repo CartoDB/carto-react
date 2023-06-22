@@ -2,7 +2,10 @@
 
 ## Not released
 
-- Formula widget supports custom aggregation expression [699](https://github.com/CartoDB/carto-react/pull/699)
+- FormulaWidget custom aggregation expression support [699](https://github.com/CartoDB/carto-react/pull/699)
+  - custom aggregation expression e.g `operation=custom / operationExp = SUM(revenue) * 100`
+  - new onStateChange callback
+  - display empty/error state as '-'
 - Fix executeModel get url calculation [699](https://github.com/CartoDB/carto-react/pull/699)
 - Fix spatial filter was not being applied to Timeseries widgets [#719](https://github.com/CartoDB/carto-react/pull/719)
 - Bugfix: The pagination is out of alignment [#711](https://github.com/CartoDB/carto-react/pull/711).
