@@ -6,6 +6,7 @@
   - custom aggregation expression e.g `operation=custom / operationExp = SUM(revenue) * 100`
   - new onStateChange callback
   - display empty/error state as '-'
+  - useWidgetFetch to ignore outdated results
 - Fix: table widget was not showing data due to case sensitive [#721](https://github.com/CartoDB/carto-react/pull/721)
 - Supporting for `client` parameter for Widgets API calls [#722](https://github.com/CartoDB/carto-react/pull/722)
 
