@@ -2,7 +2,7 @@
 
 ## Not released
 
-
+- Supporting for `client` parameter for Widgets API calls [#722](https://github.com/CartoDB/carto-react/pull/722)
 
 ## 2.1
 
