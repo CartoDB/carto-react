@@ -241,7 +241,7 @@ describe('useWidgetFetch', () => {
     });
   });
 
-  it('should ignore outdate requests', async () => {
+  it('should ignore results of outdated requests', async () => {
     const onStateChange = jest.fn();
 
     let modelCallCount = 0;
