@@ -83,7 +83,7 @@ describe('TableWidgetUI', () => {
       render(<Widget columns={filteredColumns} />);
 
       const row = rows[1];
-      screen.getByText(row.address);
+      expect(screen.queryByText(row.address)).toBeInTheDocument();
     });
   });
 });
