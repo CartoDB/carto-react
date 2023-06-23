@@ -105,7 +105,6 @@ describe('useWidgetFetch', () => {
 
     await act(() => sleep(250));
 
-
     expect(screen.getByText('data')).toBeInTheDocument();
 
     expect(onStateChange).toBeCalledWith({ state: 'success', data: 'data' });
@@ -205,7 +204,9 @@ describe('useWidgetFetch', () => {
       spatialFilter: viewportSpatialFilter
     });
     await waitFor(() => expect(onStateChange).toBeCalledWith({ state: 'loading' }));
-    await waitFor(() => expect(onStateChange).toBeCalledWith({ state: 'success', data: 'data' }));
+    await waitFor(() =>
+      expect(onStateChange).toBeCalledWith({ state: 'success', data: 'data' })
+    );
   });
 
   it('should work correctly (global, remote attempt)', async () => {
@@ -238,6 +239,54 @@ describe('useWidgetFetch', () => {
       remoteCalculation: true,
       spatialFilter: null // no spatial filter for glboal case
     });
+  });
+
+  it('should ignore outdate requests', async () => {
+    const onStateChange = jest.fn();
+
+    let modelCallCount = 0;
+    const modelFn = jest.fn().mockImplementation(async () => {
+      modelCallCount++;
+      if (modelCallCount === 1) {
+        await sleep(100);
+        return 'firstSlowOutdated';
+      }
+      if (modelCallCount === 2) {
+        await sleep(50);
+        return 'secondFast';
+      }
+    });
+
+    const defaultArgs = {
+      id: 'test',
+      dataSource: 'test',
+      params: PARAMS_MOCK,
+      global: false,
+      attemptRemoteCalculation: true,
+      onStateChange
+    };
+    const { rerender } = render(<TestComponent modelFn={modelFn} args={defaultArgs} />);
+
+    await act(() => sleep(10));
+
+    rerender(
+      <TestComponent
+        modelFn={modelFn}
+        args={{ ...defaultArgs, params: { ...defaultArgs.params, x: 'xxx' } }}
+      />
+    );
+
+    await act(() => sleep(200));
+
+    // Test modelFn is called with the right params
+    expect(modelFn).toBeCalledTimes(2);
+    // expect(onStateChange).toBeCalledTimes(2);
+    expect(onStateChange).toBeCalledWith({ state: 'loading' });
+    expect(onStateChange).not.toBeCalledWith({
+      state: 'success',
+      data: 'firstSlowOutdated'
+    });
+    expect(onStateChange).toBeCalledWith({ state: 'success', data: 'secondFast' });
   });
 });
 
