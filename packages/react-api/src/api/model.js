@@ -26,6 +26,7 @@ const DEFAULT_GEO_COLUMN = 'geom';
  * @param { object } props.params - widget's props
  * @param { SpatialFilter= } props.spatialFilter - restrict widget calculation to an area
  * @param { object= } props.opts - Additional options for the HTTP request
+ * @param { string } [props.client] - (Optional) Client for metrics
  */
 export function executeModel(props) {
   assert(props.source, 'executeModel: missing source');
@@ -39,7 +40,7 @@ export function executeModel(props) {
     )}`
   );
 
-  const { source, model, params, spatialFilter, opts } = props;
+  const { source, model, params, spatialFilter, client, opts } = props;
 
   checkCredentials(source.credentials);
 
@@ -75,9 +76,14 @@ export function executeModel(props) {
     queryParams.spatialFilters = JSON.stringify(spatialFilters);
   }
 
-  const isGet = url.length + JSON.stringify(queryParams).length <= URL_LENGTH;
+  if (client) {
+    queryParams.client = client;
+  }
+
+  const urlWithSearchParams = url + '?' + new URLSearchParams(queryParams).toString();
+  const isGet = urlWithSearchParams.length <= URL_LENGTH;
   if (isGet) {
-    url += '?' + new URLSearchParams(queryParams).toString();
+    url = urlWithSearchParams;
   } else {
     // undo the JSON.stringify, @todo find a better pattern
     queryParams.params = params;

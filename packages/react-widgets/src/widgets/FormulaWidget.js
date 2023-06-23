@@ -22,6 +22,7 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
+ * @param  {string} [props.client] - (Optional) Client for metrics
  */
 function FormulaWidget({
   id,
@@ -35,7 +36,8 @@ function FormulaWidget({
   global,
   onError,
   wrapperProps,
-  droppingFeaturesAlertProps
+  droppingFeaturesAlertProps,
+  client
 }) {
   const {
     data = { value: undefined },
@@ -48,7 +50,8 @@ function FormulaWidget({
     params: {
       operation,
       column,
-      joinOperation
+      joinOperation,
+      client
     },
     global,
     onError,
@@ -91,7 +94,8 @@ FormulaWidget.propTypes = {
   global: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object
+  droppingFeaturesAlertProps: PropTypes.object,
+  client: PropTypes.string
 };
 
 FormulaWidget.defaultProps = {

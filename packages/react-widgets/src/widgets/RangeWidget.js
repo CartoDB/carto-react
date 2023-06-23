@@ -26,6 +26,7 @@ import useStats from '../hooks/useStats';
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
+ * @param  {object} [props.client] - (Optional) Client for metrics
  */
 function RangeWidget({
   id,
@@ -36,7 +37,8 @@ function RangeWidget({
   max: _max,
   global,
   onError,
-  wrapperProps
+  wrapperProps,
+  client
 }) {
   const dispatch = useDispatch();
   const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
@@ -68,7 +70,8 @@ function RangeWidget({
     id,
     dataSource,
     params: {
-      column
+      column,
+      client
     },
     global,
     onError,
