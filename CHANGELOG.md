@@ -2,7 +2,7 @@
 
 ## Not released
 
-
+- Fix: table widget was not showing data due to case sensitive [#721](https://github.com/CartoDB/carto-react/pull/721)
 
 ## 2.1
 
