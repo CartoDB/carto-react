@@ -37,6 +37,7 @@ const EMPTY_ARRAY = [];
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
+ * @param  {string} [props.client] - (Optional) Client for metrics
  */
 function CategoryWidget(props) {
   const {
@@ -56,7 +57,8 @@ function CategoryWidget(props) {
     onError,
     wrapperProps,
     noDataAlertProps,
-    droppingFeaturesAlertProps
+    droppingFeaturesAlertProps,
+    client
   } = props;
   const dispatch = useDispatch();
 
@@ -76,7 +78,8 @@ function CategoryWidget(props) {
       column,
       operationColumn,
       joinOperation,
-      operation
+      operation,
+      client
     },
     global,
     onError,
@@ -156,7 +159,8 @@ CategoryWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object
+  droppingFeaturesAlertProps: PropTypes.object,
+  client: PropTypes.string
 };
 
 CategoryWidget.defaultProps = {

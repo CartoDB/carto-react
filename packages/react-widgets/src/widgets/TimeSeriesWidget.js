@@ -68,6 +68,7 @@ const STEP_SIZE_RANGE_MAPPING = {
  * @param  {function} [props.onTimelineUpdate] - Event raised when the timeline is updated. It happens when the animation is playing. The function receive as param the date that is being shown.
  * @param  {function} [props.onTimeWindowUpdate] - Event raised when the timeWindow is updated. It happens when the animation is playing with a timeWindow enabled. The function receive as param an array of two date objects.
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
+ * @param  {string} [props.client] - (optional) Client for metrics
  */
 function TimeSeriesWidget({
   // Widget
@@ -101,7 +102,8 @@ function TimeSeriesWidget({
   timeWindow,
   onTimeWindowUpdate,
   // Both
-  stepSize
+  stepSize,
+  client
 }) {
   const dispatch = useDispatch();
 
@@ -135,7 +137,8 @@ function TimeSeriesWidget({
       joinOperation,
       stepSize: selectedStepSize,
       operationColumn,
-      operation
+      operation,
+      client
     },
     global,
     onError,
@@ -330,7 +333,8 @@ TimeSeriesWidget.propTypes = {
   showControls: PropTypes.bool,
   chartType: PropTypes.oneOf(Object.values(TIME_SERIES_CHART_TYPES)),
   // Both
-  stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired
+  stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired,
+  client: PropTypes.string
 };
 
 TimeSeriesWidget.defaultProps = {
