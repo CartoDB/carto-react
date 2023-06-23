@@ -90,35 +90,49 @@ export default function useWidgetFetch(
 
   useCustomCompareEffect(
     () => {
+      let outdated = false;
       setIsLoading(true);
       setWarning('');
 
-      onStateChange?.({ state: WidgetStateType.Loading });
-      if (source && isSourceReady && enabled) {
-        modelFn({
-          source,
-          ...params,
-          global,
-          remoteCalculation,
-          spatialFilter: geometryToIntersect
-        })
-          .then((data) => {
-            onStateChange?.({ state: WidgetStateType.Success, data });
-            setData(data);
-          })
-          .catch((error) => {
-            setData(undefined);
-            onStateChange?.({ state: WidgetStateType.Error, error: String(error) });
-            if (InvalidColumnError.is(error)) {
-              setWarning(DEFAULT_INVALID_COLUMN_ERR);
-            } else {
-              onError?.(error);
-            }
-          })
-          .finally(() => {
-            setIsLoading(false);
-          });
+      if (!source || !isSourceReady || !enabled) {
+        return;
       }
+
+      onStateChange?.({ state: WidgetStateType.Loading });
+
+      modelFn({
+        source,
+        ...params,
+        global,
+        remoteCalculation,
+        spatialFilter: geometryToIntersect
+      })
+        .then((data) => {
+          if (outdated) return;
+
+          onStateChange?.({ state: WidgetStateType.Success, data });
+          setData(data);
+        })
+        .catch((error) => {
+          if (outdated) return;
+
+          setData(undefined);
+          onStateChange?.({ state: WidgetStateType.Error, error: String(error) });
+          if (InvalidColumnError.is(error)) {
+            setWarning(DEFAULT_INVALID_COLUMN_ERR);
+          } else {
+            onError?.(error);
+          }
+        })
+        .finally(() => {
+          if (outdated) return;
+
+          setIsLoading(false);
+        });
+
+      return () => {
+        outdated = true;
+      };
     },
     [
       params,
