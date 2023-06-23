@@ -166,18 +166,22 @@ function TableBodyComponent({ columns, rows, onRowClick }) {
             hover={!!onRowClick}
             onClick={() => onRowClick && onRowClick(row)}
           >
-            {columns.map(
-              ({ field, headerName, align, component }) =>
+            {columns.map(({ field, headerName, align, component }) => {
+              const cellValue = Object.entries(row).find(([key]) => {
+                return key.toUpperCase() === field.toUpperCase();
+              })?.[1];
+              return (
                 (headerName || field) && (
                   <TableCellStyled
                     key={`${rowKey}_${field}`}
                     scope='row'
                     align={align || 'left'}
                   >
-                    {component ? component(row[field]) : row[field]}
+                    {component ? component(cellValue) : cellValue}
                   </TableCellStyled>
                 )
-            )}
+              );
+            })}
           </TableRowStyled>
         );
       })}
