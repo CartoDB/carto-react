@@ -2,10 +2,12 @@
 
 ## Not released
 
+## 2.1
+
+### 2.1.2 (2023-06-26)
+
 - Fix: table widget was not showing data due to case sensitive [#721](https://github.com/CartoDB/carto-react/pull/721)
 - Supporting for `client` parameter for Widgets API calls [#722](https://github.com/CartoDB/carto-react/pull/722)
-
-## 2.1
 
 ### 2.1.1 (2023-06-22)
 
