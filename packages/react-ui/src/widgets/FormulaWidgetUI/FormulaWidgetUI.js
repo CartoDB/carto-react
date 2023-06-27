@@ -79,6 +79,9 @@ function FormulaWidgetUI(props) {
       component='div'
       weight='medium'
       color={isDisabled ? 'text.disabled' : 'default'}
+      whiteSpace='nowrap'
+      textOverflow='ellipsis'
+      overflow='hidden'
     >
       {formattedValue}
     </Typography>
