@@ -41,6 +41,16 @@ describe('FormulaWidgetUI', () => {
     expect(await screen.findByText(0)).toBeInTheDocument();
   });
 
+  test('should render undefined as -', async () => {
+    render(<FormulaWidgetUI data={undefined} />);
+    expect(await screen.findByText('-')).toBeInTheDocument();
+  });
+
+  test('should render null as -', async () => {
+    render(<FormulaWidgetUI data={null} />);
+    expect(await screen.findByText('-')).toBeInTheDocument();
+  });
+
   test('with currency formatter', () => {
     const DATA = '1234';
     render(<FormulaWidgetUI data={DATA} formatter={currencyFormatter} />);

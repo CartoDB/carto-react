@@ -2,7 +2,7 @@ import { checkCredentials, makeCall } from './common';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto/typed';
 import { _assert as assert } from '@carto/react-core/';
 
-const URL_LENGTH = 2048;
+import { REQUEST_GET_MAX_URL_LENGTH } from '@carto/react-core';
 
 const AVAILABLE_MODELS = [
   'category',
@@ -81,7 +81,7 @@ export function executeModel(props) {
   }
 
   const urlWithSearchParams = url + '?' + new URLSearchParams(queryParams).toString();
-  const isGet = urlWithSearchParams.length <= URL_LENGTH;
+  const isGet = urlWithSearchParams.length <= REQUEST_GET_MAX_URL_LENGTH;
   if (isGet) {
     url = urlWithSearchParams;
   } else {

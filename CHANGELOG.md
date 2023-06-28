@@ -2,6 +2,13 @@
 
 ## Not released
 
+- FormulaWidget custom aggregation expression support and fixes [#699](https://github.com/CartoDB/carto-react/pull/699)
+  - custom aggregation expression e.g `operation=custom / operationExp = SUM(revenue) * 100`
+  - new onStateChange callback
+  - display empty/error state as '-'
+  - useWidgetFetch to ignore outdated results
+  - Fix: Long values cause text-overflow
+
 ## 2.1
 
 ### 2.1.2 (2023-06-26)
@@ -12,7 +19,7 @@
 ### 2.1.1 (2023-06-22)
 
 - Fix spatial filter was not being applied to Timeseries widgets [#719](https://github.com/CartoDB/carto-react/pull/719)
-- Bugfix: The pagination is out of alignment [#711](https://github.com/CartoDB/carto-react/pull/711). 
+- Bugfix: The pagination is out of alignment [#711](https://github.com/CartoDB/carto-react/pull/711).
 
 ### 2.1.0 (2023-06-16)
 

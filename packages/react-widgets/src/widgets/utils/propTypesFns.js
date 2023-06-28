@@ -16,6 +16,9 @@ export const columnAggregationOn = (columnPropName) => (props, propName) => {
 // FormulaWidget
 export const checkFormulaColumn = (props, propName) => {
   const propValue = props[propName];
+  if (props.operation === AggregationTypes.CUSTOM) {
+    return;
+  }
 
   const isValidString = !!propValue && typeof propValue === 'string';
   const isValidArray = Array.isArray(propValue) && propValue.length;
