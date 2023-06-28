@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-auth",
-  "version": "2.1.3-alpha-custom-agg-formula.0",
+  "version": "2.1.3",
   "description": "CARTO for React - Auth",
   "author": "CARTO Dev Team",
   "keywords": [
