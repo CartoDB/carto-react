@@ -184,13 +184,15 @@ export const dataDisplayOverrides = {
 
     styleOverrides: {
       root: ({ theme }) => ({
-        padding: theme.spacing(3, 3, 2)
+        padding: theme.spacing(2)
       })
     }
   },
   MuiDialogContent: {
     styleOverrides: {
       root: ({ theme }) => ({
+        padding: theme.spacing(0, 2, 2),
+
         '& .MuiFormGroup-root': {
           padding: theme.spacing(1, 0)
         }
@@ -205,6 +207,13 @@ export const dataDisplayOverrides = {
     styleOverrides: {
       root: ({ theme }) => ({
         color: theme.palette.text.primary
+      })
+    }
+  },
+  MuiDialogActions: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        padding: theme.spacing(2)
       })
     }
   },
