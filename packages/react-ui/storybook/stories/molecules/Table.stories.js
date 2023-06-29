@@ -190,7 +190,7 @@ const ScrollTemplate = (args) => (
                   row.description
                 )}
               </TableCell>
-              <TableCell padding='none'>
+              <TableCell padding='checkbox'>
                 <IconButton size='small'>
                   <MoreVertOutlined />
                 </IconButton>
