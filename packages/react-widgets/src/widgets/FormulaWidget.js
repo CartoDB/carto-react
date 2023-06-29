@@ -16,10 +16,12 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
  * @param  {string | string[]} props.column - Name of the data source's column(s) to get the data from. If multiples are provided, they will be merged into a single one using joinOperation property.
  * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple columns into a single one.
  * @param  {AggregationTypes} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
+ * @param  {string} [props.operationExp] - Custom aggregation expression to be used if `operation='custom'`
  * @param  {Function} [props.formatter] - Function to format each value returned.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Function} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  * @param  {string} [props.client] - (Optional) Client for metrics
@@ -31,10 +33,12 @@ function FormulaWidget({
   column,
   operation,
   joinOperation,
+  operationExp,
   formatter,
   animation,
   global,
   onError,
+  onStateChange,
   wrapperProps,
   droppingFeaturesAlertProps,
   client
@@ -51,10 +55,12 @@ function FormulaWidget({
       operation,
       column,
       joinOperation,
-      client
+      client,
+      operationExp
     },
     global,
     onError,
+    onStateChange,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
@@ -69,14 +75,12 @@ function FormulaWidget({
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         showDroppingFeaturesAlert={!remoteCalculation}
       >
-        {value !== undefined && (
-          <FormulaWidgetUI
-            data={value}
-            formatter={formatter}
-            animation={animation}
-            isLoading={isLoading}
-          />
-        )}
+        <FormulaWidgetUI
+          data={value}
+          formatter={formatter}
+          animation={animation}
+          isLoading={isLoading}
+        />
       </WidgetWithAlert>
     </WrapperWidgetUI>
   );

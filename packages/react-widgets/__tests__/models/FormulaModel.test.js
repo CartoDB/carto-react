@@ -70,6 +70,7 @@ describe('getFormula', () => {
           connection: '__test_connection__'
         },
         operation: AggregationTypes.SUM,
+        operationExp: 'abc',
         column: 'column_1',
         global: true
       };
@@ -81,7 +82,7 @@ describe('getFormula', () => {
       expect(mockedExecuteModel).toHaveBeenCalledWith({
         model: 'formula',
         opts: { abortController: undefined },
-        params: { column: 'column_1', operation: 'sum' },
+        params: { column: 'column_1', operation: 'sum', operationExp: 'abc' },
         source: {
           connection: '__test_connection__',
           credentials: { accessToken: '__test_token__', apiVersion: 'v3' },

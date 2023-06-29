@@ -17,6 +17,12 @@ import useCustomCompareEffect from './useCustomCompareEffect';
 import useWidgetSource from './useWidgetSource';
 import { isRemoteCalculationSupported } from '../models/utils';
 
+export const WidgetStateType = {
+  Loading: 'loading',
+  Success: 'success',
+  Error: 'error'
+};
+
 /**
  * Select a geometry to intersect features with, given the widget configuration.
  *
@@ -59,6 +65,7 @@ export default function useWidgetFetch(
     params,
     global,
     onError,
+    onStateChange,
     enabled = true,
     attemptRemoteCalculation = false
   }
@@ -83,33 +90,49 @@ export default function useWidgetFetch(
 
   useCustomCompareEffect(
     () => {
+      let outdated = false;
       setIsLoading(true);
       setWarning('');
 
-      if (source && isSourceReady && enabled) {
-        modelFn({
-          source,
-          ...params,
-          global,
-          remoteCalculation,
-          spatialFilter: geometryToIntersect
-        })
-          .then((data) => {
-            if (data !== null && data !== undefined) {
-              setData(data);
-            }
-          })
-          .catch((error) => {
-            if (InvalidColumnError.is(error)) {
-              setWarning(DEFAULT_INVALID_COLUMN_ERR);
-            } else if (onError) {
-              onError(error);
-            }
-          })
-          .finally(() => {
-            setIsLoading(false);
-          });
+      if (!source || !isSourceReady || !enabled) {
+        return;
       }
+
+      onStateChange?.({ state: WidgetStateType.Loading });
+
+      modelFn({
+        source,
+        ...params,
+        global,
+        remoteCalculation,
+        spatialFilter: geometryToIntersect
+      })
+        .then((data) => {
+          if (outdated) return;
+
+          onStateChange?.({ state: WidgetStateType.Success, data });
+          setData(data);
+        })
+        .catch((error) => {
+          if (outdated) return;
+
+          setData(undefined);
+          onStateChange?.({ state: WidgetStateType.Error, error: String(error) });
+          if (InvalidColumnError.is(error)) {
+            setWarning(DEFAULT_INVALID_COLUMN_ERR);
+          } else {
+            onError?.(error);
+          }
+        })
+        .finally(() => {
+          if (outdated) return;
+
+          setIsLoading(false);
+        });
+
+      return () => {
+        outdated = true;
+      };
     },
     [
       params,

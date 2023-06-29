@@ -300,6 +300,12 @@ export const dataDisplayOverrides = {
       }),
       stickyHeader: ({ theme }) => ({
         backgroundColor: theme.palette.common.white
+      }),
+      paddingCheckbox: ({ theme }) => ({
+        padding: theme.spacing(0.5, 1)
+      }),
+      paddingNone: ({ theme }) => ({
+        padding: 0
       })
     }
   },
