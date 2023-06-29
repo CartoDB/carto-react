@@ -56,6 +56,8 @@ export const createCartoSlice = (initialState) => {
       featureSelectionMode: FEATURE_SELECTION_MODES.POLYGON,
       featureSelectionEnabled: false,
       featuresReady: {},
+      language: 'en',
+      localizationMessages: null,
       ...initialState
     },
     reducers: {
@@ -190,6 +192,12 @@ export const createCartoSlice = (initialState) => {
       },
       setFeatureSelectionEnabled: (state, action) => {
         state.featureSelectionEnabled = action.payload;
+      },
+      setLanguage: (state, action) => {
+        state.language = action.payload;
+      },
+      setCustomLocalizationMessages: (state, action) => {
+        state.localizationMessages = action.payload;
       }
     }
   });
@@ -480,4 +488,22 @@ export const setFeatureSelectionMode = (mode) => ({
 export const setFeatureSelectionEnabled = (enabled) => ({
   type: 'carto/setFeatureSelectionEnabled',
   payload: enabled
+});
+
+/**
+ * Action to set language.
+ * @param {string} language
+ */
+export const setLanguage = (language) => ({
+  type: 'carto/setLanguage',
+  payload: language
+});
+
+/**
+ * Action to set localizationMessages messages
+ * @param {any} localizationMessages
+ */
+export const setCustomLocalizationMessages = (localizationMessages) => ({
+  type: 'carto/setCustomLocalizationMessages',
+  payload: localizationMessages
 });
