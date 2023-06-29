@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, CategoryWidgetUI } from '@carto/react-ui';
@@ -38,6 +38,7 @@ const EMPTY_ARRAY = [];
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  * @param  {string} [props.client] - (Optional) Client for metrics
+ * @param  {object} [props.localizationMessages] - (Optional) Custom localization messages
  */
 function CategoryWidget(props) {
   const {
@@ -65,6 +66,9 @@ function CategoryWidget(props) {
   const selectedCategories =
     useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
     EMPTY_ARRAY;
+
+  const language = useSelector((state) => state.carto.language);
+  const localizationMessages = useSelector((state) => state.carto.localizationMessages);
 
   const {
     data = [],
@@ -132,6 +136,8 @@ function CategoryWidget(props) {
             filterable={filterable}
             searchable={searchable}
             isLoading={isLoading}
+            language={language}
+            localizationMessages={localizationMessages}
           />
         )}
       </WidgetWithAlert>
@@ -152,6 +158,8 @@ CategoryWidget.propTypes = {
   operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
   formatter: PropTypes.func,
   labels: PropTypes.object,
+  language: PropTypes.string,
+  localization: PropTypes.object,
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   searchable: PropTypes.bool,
