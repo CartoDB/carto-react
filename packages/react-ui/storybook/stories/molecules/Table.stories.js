@@ -121,7 +121,7 @@ const PlaygroundTemplate = (args) => {
                   row.description
                 )}
               </TableCell>
-              <TableCell>
+              <TableCell padding='checkbox'>
                 <IconButton size='small'>
                   <MoreVertOutlined />
                 </IconButton>
@@ -190,7 +190,7 @@ const ScrollTemplate = (args) => (
                   row.description
                 )}
               </TableCell>
-              <TableCell>
+              <TableCell padding='none'>
                 <IconButton size='small'>
                   <MoreVertOutlined />
                 </IconButton>
