@@ -23,6 +23,8 @@ import {
   CategoriesRoot
 } from './CategoryWidgetUI.styled';
 import SearchIcon from '../../assets/icons/SearchIcon';
+import { RawIntlProvider, FormattedMessage } from 'react-intl';
+import useLocale from '../../hooks/useLocale';
 
 function usePrevious(value) {
   const ref = useRef();
@@ -33,7 +35,6 @@ function usePrevious(value) {
 }
 
 const REST_CATEGORY = '__rest__';
-
 function CategoryWidgetUI(props) {
   const {
     data,
@@ -45,7 +46,8 @@ function CategoryWidgetUI(props) {
     animation,
     filterable,
     searchable,
-    isLoading
+    isLoading,
+    localizationMessages
   } = props;
   const [sortedData, setSortedData] = useState([]);
   const [maxValue, setMaxValue] = useState(1);
@@ -57,6 +59,7 @@ function CategoryWidgetUI(props) {
   const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
+  const intl = useLocale(localizationMessages);
 
   // Get blockedCategories in the same order as original data
   const sortBlockedSameAsData = (blockedCategories) =>
@@ -351,90 +354,113 @@ function CategoryWidgetUI(props) {
   if (data?.length === 0 || isLoading) return <CategorySkeleton />;
 
   return (
-    <CategoriesRoot>
-      {filterable && sortedData.length > 0 && (
-        <OptionsSelectedBar container>
-          <Typography variant='caption'>
-            {selectedCategories.length ? selectedCategories.length : 'All'} selected
-          </Typography>
-          {showAll ? (
-            <LinkAsButton onClick={handleApplyClicked} underline='hover'>
-              Apply
-            </LinkAsButton>
-          ) : blockedCategories.length > 0 ? (
-            <LinkAsButton onClick={handleUnblockClicked} underline='hover'>
-              Unlock
-            </LinkAsButton>
-          ) : (
-            selectedCategories.length > 0 && (
-              <Grid container direction='row' justifyContent='flex-end' item xs>
-                <LinkAsButton onClick={handleBlockClicked} underline='hover'>
-                  Lock
-                </LinkAsButton>
-                <Divider orientation='vertical' flexItem />
-                <LinkAsButton onClick={handleClearClicked} underline='hover'>
-                  Clear
-                </LinkAsButton>
-              </Grid>
-            )
-          )}
-        </OptionsSelectedBar>
-      )}
-      {data.length > maxItems && showAll && (
-        <OptionsSelectedBar container>
-          <TextField
-            size='small'
-            mt={-0.5}
-            placeholder='Search'
-            onChange={handleSearchChange}
-            onFocus={handleSearchFocus}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position='start'>
-                  <SearchIcon />
-                </InputAdornment>
-              )
-            }}
-          />
-        </OptionsSelectedBar>
-      )}
-      <CategoriesWrapper container item>
-        {animValues.length ? (
-          animValues.map((d, i) => (
-            <CategoryItem
-              key={i}
-              data={d}
-              onCategoryClick={() =>
-                showAll ? handleCategoryBlocked(d.name) : handleCategorySelected(d.name)
-              }
-            />
-          ))
-        ) : (
-          <>
-            <Typography variant='body2'>No results</Typography>
+    <RawIntlProvider value={intl}>
+      <CategoriesRoot>
+        {filterable && sortedData.length > 0 && (
+          <OptionsSelectedBar container>
             <Typography variant='caption'>
-              Your search "{searchValue}" didn't match with any value.
+              <FormattedMessage
+                id='c4r.widgets.category.selectedItems'
+                values={{
+                  items: selectedCategories.length ? (
+                    selectedCategories.length
+                  ) : (
+                    <FormattedMessage id='c4r.widgets.category.all' />
+                  )
+                }}
+              />
             </Typography>
-          </>
+            {showAll ? (
+              <LinkAsButton onClick={handleApplyClicked} underline='hover'>
+                <FormattedMessage id='c4r.widgets.category.apply' />
+              </LinkAsButton>
+            ) : blockedCategories.length > 0 ? (
+              <LinkAsButton onClick={handleUnblockClicked} underline='hover'>
+                <FormattedMessage id='c4r.widgets.category.unlock' />
+              </LinkAsButton>
+            ) : (
+              selectedCategories.length > 0 && (
+                <Grid container direction='row' justifyContent='flex-end' item xs>
+                  <LinkAsButton onClick={handleBlockClicked} underline='hover'>
+                    <FormattedMessage id='c4r.widgets.category.lock' />
+                  </LinkAsButton>
+                  <Divider orientation='vertical' flexItem />
+                  <LinkAsButton onClick={handleClearClicked} underline='hover'>
+                    <FormattedMessage id='c4r.widgets.category.clear' />
+                  </LinkAsButton>
+                </Grid>
+              )
+            )}
+          </OptionsSelectedBar>
         )}
-      </CategoriesWrapper>
-      {data.length > maxItems && searchable ? (
-        showAll ? (
-          <Button size='small' color='primary' onClick={handleCancelClicked}>
-            Cancel
-          </Button>
-        ) : (
-          <Button
-            size='small'
-            color='primary'
-            startIcon={<SearchIcon />}
-            onClick={handleShowAllCategoriesClicked}
-          >
-            Search in {getCategoriesCount()} elements
-          </Button>
-        )
-      ) : null}
-    </CategoriesRoot>
+        {data.length > maxItems && showAll && (
+          <OptionsSelectedBar container>
+            <TextField
+              size='small'
+              mt={-0.5}
+              placeholder={intl.formatMessage({ id: 'c4r.widgets.category.search' })}
+              onChange={handleSearchChange}
+              onFocus={handleSearchFocus}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <SearchIcon />
+                  </InputAdornment>
+                )
+              }}
+            />
+          </OptionsSelectedBar>
+        )}
+        <CategoriesWrapper container item>
+          {animValues.length ? (
+            animValues.map((d, i) => (
+              <CategoryItem
+                key={i}
+                data={d}
+                onCategoryClick={() =>
+                  showAll ? handleCategoryBlocked(d.name) : handleCategorySelected(d.name)
+                }
+              />
+            ))
+          ) : (
+            <>
+              <Typography variant='body2'>
+                <FormattedMessage id='c4r.widgets.category.noResults' />
+              </Typography>
+              <Typography variant='caption'>
+                <FormattedMessage
+                  id='c4r.widgets.category.noResultsMessage'
+                  values={{
+                    searchValue
+                  }}
+                />
+              </Typography>
+            </>
+          )}
+        </CategoriesWrapper>
+        {data.length > maxItems && searchable ? (
+          showAll ? (
+            <Button size='small' color='primary' onClick={handleCancelClicked}>
+              <FormattedMessage id='c4r.widgets.category.cancel' />
+            </Button>
+          ) : (
+            <Button
+              size='small'
+              color='primary'
+              startIcon={<SearchIcon />}
+              onClick={handleShowAllCategoriesClicked}
+            >
+              <FormattedMessage
+                id='c4r.widgets.category.searchInfo'
+                values={{
+                  elements: getCategoriesCount()
+                }}
+              />
+            </Button>
+          )
+        ) : null}
+      </CategoriesRoot>
+    </RawIntlProvider>
   );
 }
 
@@ -476,7 +502,9 @@ CategoryWidgetUI.propTypes = {
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   searchable: PropTypes.bool,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  localizationMessages: PropTypes.object,
+  language: PropTypes.string
 };
 
 export default CategoryWidgetUI;
