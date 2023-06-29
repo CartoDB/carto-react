@@ -2,9 +2,11 @@
 
 ## Not released
 
-- Add TableCell styles for padding prop [#725](https://github.com/CartoDB/carto-react/pull/725)
-
 ## 2.1
+
+### 2.1.4 (2023-06-29)
+
+- Add TableCell styles for padding prop [#725](https://github.com/CartoDB/carto-react/pull/725)
 
 ### 2.1.3 (2023-06-28)
 
