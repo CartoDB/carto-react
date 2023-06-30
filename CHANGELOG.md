@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Add client parameter to Histogram Widget [#728](https://github.com/CartoDB/carto-react/pull/728)
+
 ## 2.1
 
 ### 2.1.4 (2023-06-29)
