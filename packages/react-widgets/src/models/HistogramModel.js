@@ -21,13 +21,14 @@ function fromLocal(props) {
 
 // From remote
 async function fromRemote(props) {
-  const { source, spatialFilter, abortController, ...params } = props;
+  const { source, spatialFilter, abortController, client, ...params } = props;
   const { column, operation, ticks } = params;
 
   const data = await _executeModel({
     model: 'histogram',
     source,
     spatialFilter,
+    client,
     params: { column, operation, ticks },
     opts: { abortController }
   }).then((res) => normalizeObjectKeys(res.rows));

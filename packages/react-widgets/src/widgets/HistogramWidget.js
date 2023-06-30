@@ -37,9 +37,11 @@ const EMPTY_ARRAY = [];
  * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Function} [props.onStateChange] - Function to handle error messages from the widget.
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
+ * @param  {object} [props.client] - (Optional) Client for metrics
  */
 function HistogramWidget({
   id,
@@ -59,9 +61,11 @@ function HistogramWidget({
   filterable,
   global,
   onError,
+  onStateChange,
   wrapperProps,
   noDataAlertProps,
-  droppingFeaturesAlertProps
+  droppingFeaturesAlertProps,
+  client
 }) {
   const dispatch = useDispatch();
 
@@ -114,10 +118,12 @@ function HistogramWidget({
     params: {
       column,
       operation,
-      ticks
+      ticks,
+      client
     },
     global,
     onError,
+    onStateChange,
     enabled: !!ticks.length,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
@@ -227,7 +233,8 @@ HistogramWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object
+  droppingFeaturesAlertProps: PropTypes.object,
+  client: PropTypes.string
 };
 
 HistogramWidget.defaultProps = {
