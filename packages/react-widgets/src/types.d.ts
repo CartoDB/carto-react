@@ -1,10 +1,30 @@
 import { AggregationTypes } from '@carto/react-core';
 
+export enum WidgetStateType {
+  Loading = 'loading',
+  Success = 'success',
+  Error = 'error'
+}
+
+export type WidgetState =
+  | {
+      state: WidgetStateType.Loading;
+    }
+  | {
+      state: WidgetStateType.Success;
+      data: unknown;
+    }
+  | {
+      state: WidgetStateType.Error;
+      error?: string;
+    };
+
 type CommonWidgetProps = {
   id: string,
   title: string,
   dataSource: string,
   onError?: Function,
+  onStateChange?: (stateEvent: WidgetState) => void
   wrapperProps?: object,
   noDataAlertProps?: object
   droppingFeaturesAlertProps?: object
