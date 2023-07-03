@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Supporting for `client` parameter for Widgets API calls without passing client as component attribute [#729](https://github.com/CartoDB/carto-react/pull/729)
+
 ## 2.1
 
 ### 2.1.4 (2023-06-29)
