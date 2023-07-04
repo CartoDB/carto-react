@@ -2,7 +2,6 @@ import { useEffect, useCallback, useState } from 'react';
 import { debounce, SpatialIndex } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { setIsDroppingFeatures } from '@carto/react-redux';
-import { parse } from '@loaders.gl/core';
 import { Layer } from '@deck.gl/core';
 import { TILE_FORMATS } from '@deck.gl/carto';
 import { throwError } from './utils';
@@ -138,7 +137,7 @@ export default function useTileFeatures({
       stopAnyCompute();
       return Layer.defaultProps.fetch.value(...args);
     },
-    [stopAnyCompute, spatialIndex]
+    [stopAnyCompute]
   );
 
   const onDataLoad = useCallback(({ tiles: [tile], scheme }) => {

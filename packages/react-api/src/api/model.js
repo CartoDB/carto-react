@@ -2,9 +2,11 @@ import { checkCredentials, makeCall } from './common';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { _assert as assert } from '@carto/react-core/';
 
-const URL_LENGTH = 2048;
+import { REQUEST_GET_MAX_URL_LENGTH, _getClient } from '@carto/react-core';
 
 const AVAILABLE_MODELS = ['category', 'histogram', 'formula', 'timeseries', 'range'];
+
+const DEFAULT_GEO_COLUMN = 'geom';
 
 /**
  * Execute a SQL model request.
@@ -47,6 +49,7 @@ export function executeModel(props) {
     : '';
   let queryParams = {
     type,
+    client: _getClient(),
     source: data,
     params: JSON.stringify(params),
     queryParameters,
@@ -54,11 +57,19 @@ export function executeModel(props) {
     filtersLogicalOperator
   };
 
-  if (spatialFilter) {
-    queryParams.spatialFilter = JSON.stringify(spatialFilter);
+  // API supports multiple filters, we apply it only to geoColumn
+  const spatialFilters = spatialFilter
+    ? {
+        [source.geoColumn ? source.geoColumn : DEFAULT_GEO_COLUMN]: spatialFilter
+      }
+    : undefined;
+
+  if (spatialFilters) {
+    queryParams.spatialFilters = JSON.stringify(spatialFilters);
   }
 
-  const isGet = url.length + JSON.stringify(queryParams).length <= URL_LENGTH;
+  const urlWithSearchParams = url + '?' + new URLSearchParams(queryParams).toString();
+  const isGet = urlWithSearchParams.length <= REQUEST_GET_MAX_URL_LENGTH;
   if (isGet) {
     url += '?' + new URLSearchParams(queryParams).toString();
   } else {

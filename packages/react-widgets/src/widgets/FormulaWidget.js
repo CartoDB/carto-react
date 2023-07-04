@@ -15,13 +15,15 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string | string[]} props.column - Name of the data source's column(s) to get the data from. If multiples are provided, they will be merged into a single one using joinOperation property.
  * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple columns into a single one.
+ * @param  {string} [props.operationExp] - Custom aggregation expression to be used if `operation='custom'`
  * @param  {AggregationTypes} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.formatter] - Function to format each value returned.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
- * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
+ * @param  {Function} [props.onStateChange] - Callback to handle state updates of widgets
+ * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
+ * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  */
 function FormulaWidget({
   id,
@@ -30,6 +32,7 @@ function FormulaWidget({
   column,
   operation,
   joinOperation,
+  operationExp,
   formatter,
   animation,
   global,
@@ -48,7 +51,8 @@ function FormulaWidget({
     params: {
       operation,
       column,
-      joinOperation
+      joinOperation,
+      operationExp
     },
     global,
     onError,

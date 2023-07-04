@@ -1,9 +1,8 @@
-import { Credentials } from '@carto/react-api/';
-import { SourceProps } from '@carto/react-api/types';
+import { Credentials, SourceProps } from '@carto/react-api/types';
 import { FiltersLogicalOperators, Viewport, _FilterTypes } from '@carto/react-core';
-import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/';
 import { InitialCartoState, CartoState, ViewState } from '../types';
 import { AnyAction, Reducer } from 'redux';
+import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/index';
 
 type Source = SourceProps & {
   id: string

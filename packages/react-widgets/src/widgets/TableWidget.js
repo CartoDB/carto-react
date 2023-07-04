@@ -15,14 +15,15 @@ const EMPTY_ARRAY = [];
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {object[]} props.columns - List of data columns to display. If not specified, all the columns in the data source will be displayed.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
- * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
- * @param  {number} [props.initialPageSize] - Initial number of rows per page
- * @param  {Function} [props.onPageSizeChange] - Function called when the page size is changed internally
- * @param  {string} [props.height] - Static widget height, required for scrollable table content
- * @param  {boolean} [props.dense] - Whether the table should use a compact layout with smaller cell paddings
- * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
- * @param  {number} [props.pageSize] - Number of rows per page. This is used to manage internal state externally
+ * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
+ * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
+ * @param  {number} [props.initialPageSize] - Initial number of rows per page.
+ * @param  {Function} [props.onPageSizeChange] - Function called when the page size is changed internally.
+ * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
+ * @param  {string} [props.height] - Static widget height, required for scrollable table content.
+ * @param  {boolean} [props.dense] - Whether the table should use a compact layout with smaller cell paddings.
+ * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
+ * @param  {number} [props.pageSize] - Number of rows per page. This is used to manage internal state externally.
  */
 function TableWidget({
   id,
