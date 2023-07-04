@@ -57,3 +57,8 @@ export {
   setFlags as _setFeatureFlags,
   clearFlags as _clearFeatureFlags
 } from './utils/featureFlags';
+
+export {
+  setClient as _setClient,
+  getClient as _getClient
+} from './utils/clientParameter';

@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-api",
-  "version": "2.1.4",
+  "version": "2.1.5-alpha-widget-client.0",
   "description": "CARTO for React - Api",
   "author": "CARTO Dev Team",
   "keywords": [
