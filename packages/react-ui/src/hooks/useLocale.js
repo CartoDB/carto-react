@@ -3,12 +3,12 @@ import { messages } from '../localization';
 import { useMemo } from 'react';
 
 const DEFAULT_LANGUAGE = 'en';
+const cache = createIntlCache();
 /**
  * React hook to handle custom locale messages to override default ones
  * @param {object} localizationMessages
  */
 export default function useLocale(localizationMessages) {
-  const cache = createIntlCache();
   const intl = useMemo(
     () =>
       createIntl(
@@ -18,7 +18,7 @@ export default function useLocale(localizationMessages) {
         },
         cache
       ),
-    [localizationMessages, cache]
+    [localizationMessages]
   );
 
   return intl;
