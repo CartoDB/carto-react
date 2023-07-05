@@ -2,6 +2,10 @@
 
 ## Not released
 
+## 2.1
+
+### 2.1.5-alpha.0 (2023-07-05)
+
 - Search by coordinates supported in useGeocoderWidgetController hook [#731](https://github.com/CartoDB/carto-react/pull/731)
 
 ## 2.1
