@@ -4,5 +4,5 @@
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "2.1.5-alpha-widget-client.0"
+  "version": "2.1.5"
 }
