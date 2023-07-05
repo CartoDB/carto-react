@@ -3,6 +3,7 @@
 ## Not released
 
 - Search by coordinates supported in useGeocoderWidgetController hook [#731](https://github.com/CartoDB/carto-react/pull/731)
+- Fix blank map when loading widgets for tilesets [#733](https://github.com/CartoDB/carto-react/pull/733)
 
 ## 2.1
 
