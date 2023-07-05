@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { geocodeStreetPoint } from '../models/GeocodingModel';
+import {
+  isCoordinate,
+  validateAndGenerateCoordsResult
+} from '../widgets/utils/validateCoordinates';
 
 const DEFAULT_COUNTRY = ''; // 'SPAIN', 'USA'
 
@@ -14,12 +18,15 @@ const setGeocoderResult = (payload) => ({
  *
  * @param  {object} props
  * @param  {Function=} [props.onError] - Function to handle error messages from the widget.
+ * @param  {boolean} [props.allowSearchByCoords]
  */
 export default function useGeocoderWidgetController(props = {}) {
   const credentials = useSelector((state) => state.carto.credentials);
   // Component local state and events handling
   const [searchText, setSearchText] = useState('');
   const [loading, setIsLoading] = useState(false);
+
+  const { allowSearchByCoords } = props;
 
   // Actions dispatched
   const dispatch = useDispatch();
@@ -54,10 +61,15 @@ export default function useGeocoderWidgetController(props = {}) {
     }
     try {
       setIsLoading(true);
-      const result = await geocodeStreetPoint(credentials, {
-        searchText,
-        country: DEFAULT_COUNTRY
-      });
+      let result;
+      if (allowSearchByCoords && isCoordinate(searchText)) {
+        result = validateAndGenerateCoordsResult(searchText);
+      } else {
+        result = await geocodeStreetPoint(credentials, {
+          searchText,
+          country: DEFAULT_COUNTRY
+        });
+      }
       if (result) {
         updateMarker(result);
       }
