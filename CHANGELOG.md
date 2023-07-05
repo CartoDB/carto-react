@@ -2,10 +2,12 @@
 
 ## Not released
 
+## 2.1
+
+### 2.1.6 (2023-07-05)
+
 - Search by coordinates supported in useGeocoderWidgetController hook [#731](https://github.com/CartoDB/carto-react/pull/731)
 - Fix blank map when loading widgets for tilesets [#733](https://github.com/CartoDB/carto-react/pull/733)
-
-## 2.1
 
 ### 2.1.5 (2023-07-05)
 
