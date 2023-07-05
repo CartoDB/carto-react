@@ -19,10 +19,11 @@ export const aggregationFunctions = {
 };
 
 export function aggregate(feature, keys, operation) {
+  // Forced casting to Number in this method allows to work-around some specific situations, where a big numeric field is transformed into a string when generating the tileset (eg. PG)
   if (!keys?.length) {
     throw new Error('Cannot aggregate a feature without having keys');
   } else if (keys.length === 1) {
-    return feature[keys[0]];
+    return Number(feature[keys[0]]);
   }
 
   const aggregationFn = aggregationFunctions[operation];
@@ -31,7 +32,7 @@ export function aggregate(feature, keys, operation) {
     throw new Error(`${operation} isn't a valid aggregation function`);
   }
 
-  return aggregationFn(keys.map((column) => feature[column]));
+  return aggregationFn(keys.map((column) => Number(feature[column])));
 }
 
 function filterFalsyElements(values, keys) {
