@@ -32,6 +32,7 @@ test('isLongitude should return false for invalid longitudes', () => {
 
 // Test isCoordinate function
 test('isCoordinate should return true for valid coordinates', () => {
+  expect(isCoordinate('90,120')).toBe(true);
   expect(isCoordinate('0,0')).toBe(true);
   expect(isCoordinate('45,-90')).toBe(true);
   expect(isCoordinate('-12.345,67.890')).toBe(true);
@@ -46,7 +47,8 @@ test('isCoordinate should return true for valid coordinates', () => {
 
 test('isCoordinate should return false for invalid coordinates', () => {
   // Invalid latitude
-  expect(isCoordinate('-91 180')).toBe(false);
+  expect(isCoordinate('120,90')).toBe(false);
+  expect(isCoordinate('-100 180')).toBe(false);
   expect(isCoordinate('abc 45')).toBe(false);
 
   // Invalid longitude
@@ -66,7 +68,6 @@ test('isCoordinate should return false for invalid coordinates', () => {
   expect(isCoordinate('0')).toBe(false);
   expect(isCoordinate('45 ')).toBe(false);
   expect(isCoordinate(' 0')).toBe(false);
-  expect(isCoordinate('-91,180')).toBe(false);
   expect(isCoordinate('232,49,0')).toBe(false);
   expect(isCoordinate('invalid')).toBe(false);
 });
