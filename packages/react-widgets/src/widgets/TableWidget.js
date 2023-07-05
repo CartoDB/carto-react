@@ -24,7 +24,6 @@ import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
  * @param  {boolean} [props.dense] - Whether the table should use a compact layout with smaller cell paddings.
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  * @param  {number} [props.pageSize] - Number of rows per page. This is used to manage internal state externally.
- * @param  {string} [props.client] - (Optional) Client for metrics
  */
 function TableWidget({
   id,
@@ -41,8 +40,7 @@ function TableWidget({
   dense,
   droppingFeaturesAlertProps,
   // Internal state
-  pageSize,
-  client
+  pageSize
 }) {
   const [rowsPerPage, setRowsPerPage] = useState(initialPageSize);
   const [page, setPage] = useState(0);
@@ -62,8 +60,7 @@ function TableWidget({
       columns: columns.map((c) => c.field),
       sortBy,
       sortDirection,
-      sortByColumnType,
-      client
+      sortByColumnType
     },
     global,
     onError,
@@ -152,8 +149,7 @@ TableWidget.propTypes = {
   height: PropTypes.string,
   dense: PropTypes.bool,
   // Internal state
-  pageSize: PropTypes.number,
-  client: PropTypes.string
+  pageSize: PropTypes.number
 };
 
 export default TableWidget;

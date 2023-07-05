@@ -25,14 +25,13 @@ function fromLocal(props) {
 
 // From remote
 function fromRemote(props) {
-  const { source, spatialFilter, abortController, client, operationExp, ...params } = props;
+  const { source, spatialFilter, abortController, operationExp, ...params } = props;
   const { column, operation } = params;
 
   return _executeModel({
     model: 'formula',
     source,
     spatialFilter,
-    client,
     params: { column: column ?? '*', operation, operationExp },
     opts: { abortController }
   }).then((res) => normalizeObjectKeys(res.rows[0]));
