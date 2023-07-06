@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { BarWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
@@ -86,6 +86,8 @@ function BarWidget({
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
+  const locale = useSelector((state) => state.carto.locale);
+
   const sortedData = useMemo(() => {
     if (!_data.length) return _data;
 
@@ -165,6 +167,7 @@ function BarWidget({
             animation={animation}
             filterable={filterable}
             isLoading={isLoading}
+            locale={locale}
           />
         )}
       </WidgetWithAlert>

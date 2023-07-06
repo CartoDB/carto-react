@@ -6,6 +6,7 @@ import detectTouchScreen from '../utils/detectTouchScreen';
 import { processFormatterRes } from '../utils/formatterUtils';
 import Typography from '../../components/atoms/Typography';
 import BarSkeleton from './BarSkeleton';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
 
@@ -44,12 +45,15 @@ function BarWidgetUI(props) {
     height,
     filterable,
     animation,
-    isLoading
+    isLoading,
+    locale
   } = useProcessedProps(props);
 
   const isMultiSeries = series.length > 1;
 
   const theme = useTheme();
+
+  const intl = useImperativeIntl({ locale });
 
   // Tooltip
   const tooltipOptions = useMemo(
@@ -296,11 +300,16 @@ function BarWidgetUI(props) {
       {onSelectedBarsChange && (
         <OptionsSelectedBar container>
           <Typography variant='caption'>
-            {selectedBars?.length || 'All'} selected
+            {selectedBars.length > 0
+              ? intl.formatMessage(
+                  { id: 'c4r.widgets.bar.selectedItems' },
+                  { items: selectedBars.length }
+                )
+              : intl.formatMessage({ id: 'c4r.widgets.bar.all' })}
           </Typography>
           {selectedBars && selectedBars.length > 0 && (
             <SelectAllButton onClick={() => clearBars()} underline='hover'>
-              Clear
+              {intl.formatMessage({ id: 'c4r.widgets.bar.clear' })}
             </SelectAllButton>
           )}
         </OptionsSelectedBar>
@@ -357,7 +366,8 @@ BarWidgetUI.propTypes = {
   height: numberOrString,
   filterable: PropTypes.bool,
   animation: PropTypes.bool,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  locale: PropTypes.object
 };
 
 export default BarWidgetUI;
