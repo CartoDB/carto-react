@@ -2,9 +2,11 @@
 
 ## Not released
 
-- Force numbers for aggregated computations on numbers (workaround for big numeric field transformed to string in PG tileset) [#731](https://github.com/CartoDB/carto-react/pull/731)
-
 ## 2.1
+
+## 2.1.7 (2023-07-06)
+
+- Force numbers for aggregated computations on numbers (workaround for big numeric field transformed to string in PG tileset) [#731](https://github.com/CartoDB/carto-react/pull/731)
 
 ### 2.1.6 (2023-07-05)
 
