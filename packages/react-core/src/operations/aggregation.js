@@ -23,9 +23,7 @@ export const aggregationFunctions = {
   some specific situations, where a big numeric field is transformed into a string when generating the tileset(eg.PG)
   */
 function isPotentiallyValidNumber(value) {
-  return (
-    typeof value === 'number' || (typeof value === 'string' && value.trim().length > 0)
-  );
+  return typeof value === 'string' && value.trim().length > 0;
 }
 
 export function aggregate(feature, keys, operation) {
