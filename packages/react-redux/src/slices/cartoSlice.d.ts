@@ -72,7 +72,7 @@ declare enum CartoActions {
   SET_CREDENTIALS = 'carto/setCredentials',
   SET_FEATURE_SELECTION_MODE = 'carto/setFeatureSelectionMode',
   SET_FEATURE_SELECTION_ENABLED = 'carto/setFeatureSelectionEnabled',
-  SET_CUSTOM_LOCALIZATION_MESSAGES = 'carto/setCustomLocalizationMessages'
+  SET_LOCALE = 'carto/setLocale'
 }
 
 export function createCartoSlice(
@@ -178,7 +178,7 @@ export function selectSpatialFilter(
 
 export function selectFeatureSelectionMode(state: any): string | null;
 
-export function setCustomLocalizationMessages(localization: any): {
-  type: CartoActions.SET_CUSTOM_LOCALIZATION_MESSAGES;
+export function setLocale(localization: any): {
+  type: CartoActions.SET_LOCALE;
   payload: any;
 };
