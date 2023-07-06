@@ -38,7 +38,6 @@ const EMPTY_ARRAY = [];
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  * @param  {string} [props.client] - (Optional) Client for metrics
- * @param  {object} [props.locale] - (Optional) Custom localization messages
  */
 function CategoryWidget(props) {
   const {
