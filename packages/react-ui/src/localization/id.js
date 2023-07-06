@@ -14,6 +14,11 @@ const appMessages = {
         selectedItems: '{items} dipilih',
         all: 'Semua',
         search: 'Cari'
+      },
+      bar: {
+        all: 'Semua',
+        selectedItems: '{items} dipilih',
+        clear: 'Bersihkan'
       }
     }
   }

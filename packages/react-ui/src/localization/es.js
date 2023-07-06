@@ -14,6 +14,11 @@ const appMessages = {
         selectedItems: '{items} seleccionados',
         all: 'Todos',
         search: 'Buscar'
+      },
+      bar: {
+        all: 'Todos',
+        selectedItems: '{items} seleccionados',
+        clear: 'Limpiar selección'
       }
     }
   }

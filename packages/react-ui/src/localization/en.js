@@ -13,6 +13,11 @@ const locales = {
         selectedItems: '{items} selected',
         all: 'All',
         search: 'Search'
+      },
+      bar: {
+        all: 'All',
+        selectedItems: '{items} selected',
+        clear: 'Clear'
       }
     }
   }
