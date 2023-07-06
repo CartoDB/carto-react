@@ -42,14 +42,13 @@ function formatResult(res) {
 
 // From remote
 function fromRemote(props) {
-  const { source, spatialFilter, abortController, client, ...params } = props;
+  const { source, spatialFilter, abortController, ...params } = props;
   const { columns, sortBy, sortDirection } = params;
 
   return _executeModel({
     model: 'table',
     source,
     spatialFilter,
-    client,
     params: { column: columns, sortBy, sortDirection, limit: HARD_LIMIT + 1 },
     opts: { abortController }
   })

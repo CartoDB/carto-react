@@ -58,8 +58,7 @@ function CategoryWidget(props) {
     onError,
     wrapperProps,
     noDataAlertProps,
-    droppingFeaturesAlertProps,
-    client
+    droppingFeaturesAlertProps
   } = props;
   const dispatch = useDispatch();
 
@@ -82,8 +81,7 @@ function CategoryWidget(props) {
       column,
       operationColumn,
       joinOperation,
-      operation,
-      client
+      operation
     },
     global,
     onError,
@@ -167,8 +165,7 @@ CategoryWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object,
-  client: PropTypes.string
+  droppingFeaturesAlertProps: PropTypes.object
 };
 
 CategoryWidget.defaultProps = {

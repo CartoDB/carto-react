@@ -2,9 +2,20 @@
 
 ## Not released
 
-- Add TableCell styles for padding prop [#725](https://github.com/CartoDB/carto-react/pull/725)
-
 ## 2.1
+
+### 2.1.6 (2023-07-05)
+
+- Search by coordinates supported in useGeocoderWidgetController hook [#731](https://github.com/CartoDB/carto-react/pull/731)
+- Fix blank map when loading widgets for tilesets [#733](https://github.com/CartoDB/carto-react/pull/733)
+
+### 2.1.5 (2023-07-05)
+
+- Supporting for `client` parameter for Widgets API calls without passing client as component attribute [#729](https://github.com/CartoDB/carto-react/pull/729)
+
+### 2.1.4 (2023-06-29)
+
+- Add TableCell styles for padding prop [#725](https://github.com/CartoDB/carto-react/pull/725)
 
 ### 2.1.3 (2023-06-28)
 

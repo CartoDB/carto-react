@@ -111,7 +111,7 @@ export default function useWidgetFetch(
           if (outdated) return;
 
           onStateChange?.({ state: WidgetStateType.Success, data });
-          setData(data);
+          setData(data ?? undefined);
         })
         .catch((error) => {
           if (outdated) return;
