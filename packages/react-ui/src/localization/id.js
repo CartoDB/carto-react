@@ -1,7 +1,22 @@
-import c4r from './id/c4r';
-
 const appMessages = {
-  c4r
+  c4r: {
+    widgets: {
+      category: {
+        apply: 'Terapkan',
+        unlock: 'Buka',
+        lock: 'Kunci',
+        clear: 'Bersihkan',
+        noResults: 'Tidak ada hasil',
+        noResultsMessage:
+          'Pencarian Anda "{searchValue}" tidak cocok dengan nilai apapun.',
+        cancel: 'Batal',
+        searchInfo: 'Cari dalam {elements} elemen',
+        selectedItems: '{items} dipilih',
+        all: 'Semua',
+        search: 'Cari'
+      }
+    }
+  }
 };
 
 export default appMessages;
