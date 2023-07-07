@@ -53,7 +53,7 @@ function BarWidgetUI(props) {
 
   const theme = useTheme();
 
-  const intl = useImperativeIntl({ locale });
+  const intl = useImperativeIntl(locale);
 
   // Tooltip
   const tooltipOptions = useMemo(
