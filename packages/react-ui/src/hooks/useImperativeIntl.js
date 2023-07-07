@@ -12,7 +12,7 @@ const cache = createIntlCache();
  * @param {string} locale - The locale to use.
  * @returns the `intl` object.
  */
-export default function useImperativeIntl({ locale }) {
+export default function useImperativeIntl(locale) {
   const intl = createIntl(
     {
       locale: locale,
