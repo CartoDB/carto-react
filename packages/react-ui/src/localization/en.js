@@ -18,6 +18,19 @@ const locales = {
         all: 'All',
         selectedItems: '{items} selected',
         clear: 'Clear'
+      },
+      histogram: {
+        all: 'All',
+        selectedItems: '{items} selected',
+        clear: 'Clear'
+      },
+      legend: {
+        by: 'By',
+        layerOptions: 'Layer options',
+        hide: 'Hide',
+        show: 'Show',
+        layer: 'layer',
+        opacity: 'Opacity'
       }
     }
   }
