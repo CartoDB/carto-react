@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Add client param to LDS Api in geocoding [#737](https://github.com/CartoDB/carto-react/pull/737)
+
 ## 2.1
 
 ## 2.1.7 (2023-07-06)
