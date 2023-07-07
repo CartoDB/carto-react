@@ -22,6 +22,9 @@ function LegendWidget({
   title
 }) {
   const dispatch = useDispatch();
+
+  const locale = useSelector((state) => state.carto.locale);
+
   const layers = useSelector((state) =>
     sortLayers(
       Object.values(state.carto.layers).filter((layer) => !!layer.legend),
@@ -72,6 +75,7 @@ function LegendWidget({
       collapsed={collapsed}
       onChangeCollapsed={setCollapsed}
       onChangeLegendRowCollapsed={handleChangeLegendRowCollapsed}
+      locale={locale}
     />
   );
 }

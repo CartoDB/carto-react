@@ -15,6 +15,7 @@ import LayerIcon from '../../assets/icons/LayerIcon';
 import Typography from '../../components/atoms/Typography';
 import OpacityControl from '../OpacityControl';
 import Note from './Note';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const Wrapper = styled(Box)(() => ({
   position: 'relative',
@@ -43,11 +44,14 @@ export default function LegendWrapper({
   opacity,
   onChangeOpacity,
   onChangeVisibility,
-  onChangeCollapsed
+  onChangeCollapsed,
+  locale
 }) {
   const wrapper = createRef();
   const expanded = !collapsed;
   const [isLayerOptionsExpanded, setIsLayerOptionsExpanded] = useState(false);
+
+  const intl = useImperativeIntl(locale);
 
   const handleChangeOpacity = (newOpacity) => {
     if (onChangeOpacity) onChangeOpacity({ id, opacity: newOpacity });
@@ -79,6 +83,7 @@ export default function LegendWrapper({
         layerOptionsEnabled={showOpacityControl || layerOptions.length > 0}
         onToggleLayerOptions={handleToggleLayerOptions}
         isLayerOptionsExpanded={isLayerOptionsExpanded}
+        locale={locale}
       />
       {hasChildren && !!children && (
         <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
@@ -86,7 +91,7 @@ export default function LegendWrapper({
             <Grid container direction='column' spacing={1}>
               {attr && (
                 <Typography xs mb={1} variant='caption'>
-                  By {attr}
+                  {intl.formatMessage({ id: 'c4r.widgets.legend.by' })} {attr}
                 </Typography>
               )}
               {children}
@@ -96,6 +101,7 @@ export default function LegendWrapper({
                     <OpacityControl
                       opacity={opacity}
                       onChangeOpacity={handleChangeOpacity}
+                      locale={locale}
                     />
                   )}
                   {layerOptions}
@@ -151,9 +157,12 @@ function Header({
   onChangeVisibility,
   layerOptionsEnabled,
   onToggleLayerOptions,
-  isLayerOptionsExpanded
+  isLayerOptionsExpanded,
+  locale
 }) {
   const ExpandIcon = expanded ? LessIconHeader : MoreIconHeader;
+
+  const intl = useImperativeIntl(locale);
 
   return (
     <GridHeader container>
@@ -171,7 +180,7 @@ function Header({
         <Typography variant='subtitle1'>{title}</Typography>
       </ButtonHeader>
       {!!layerOptionsEnabled && (
-        <Tooltip title='Layer options'>
+        <Tooltip title={intl.formatMessage({ id: 'c4r.widgets.legend.layerOptions' })}>
           <ToggleButton
             selected={isLayerOptionsExpanded}
             onClick={onToggleLayerOptions}
@@ -182,7 +191,14 @@ function Header({
         </Tooltip>
       )}
       {switchable && (
-        <Tooltip title={(visible ? 'Hide' : 'Show') + ' layer'}>
+        <Tooltip
+          title={
+            (visible
+              ? intl.formatMessage({ id: 'c4r.widgets.legend.hide' })
+              : intl.formatMessage({ id: 'c4r.widgets.legend.show' })) +
+            ` ${intl.formatMessage({ id: 'c4r.widgets.legend.layer' })}`
+          }
+        >
           <Switch checked={visible} onChange={onChangeVisibility} />
         </Tooltip>
       )}
