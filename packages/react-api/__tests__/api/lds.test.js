@@ -36,7 +36,7 @@ describe('lds', () => {
       ).toEqual([someCoordinates]);
 
       expect(fetchMock).toBeCalledWith(
-        'https://api.com//v3/lds/geocoding/geocode?address=boston&country=US&limit=4',
+        'https://api.com//v3/lds/geocoding/geocode?client=c4react&address=boston&country=US&limit=4',
         {
           headers: {
             Authorization: `Bearer ${sampleCredentialsV3.accessToken}`
