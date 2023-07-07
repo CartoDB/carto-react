@@ -1,3 +1,4 @@
+import { _getClient } from '@carto/react-core';
 import { checkCredentials, makeCall } from './common';
 
 /**
@@ -20,6 +21,7 @@ export async function ldsGeocode({ credentials, address, country, limit, opts })
   }
 
   const url = new URL(`${credentials.apiBaseUrl}/v3/lds/geocoding/geocode`);
+  url.searchParams.set('client', _getClient());
   url.searchParams.set('address', address);
   if (country) {
     url.searchParams.set('country', country);
