@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI } from '@carto/react-ui';
@@ -64,6 +64,8 @@ function HistogramWidget({
   droppingFeaturesAlertProps
 }) {
   const dispatch = useDispatch();
+
+  const locale = useSelector((state) => state.carto.locale);
 
   const hasExternalMinMax =
     Number.isFinite(externalMin) &&
@@ -200,6 +202,7 @@ function HistogramWidget({
             animation={animation}
             filterable={filterable}
             isLoading={isLoading}
+            locale={locale}
           />
         )}
       </WidgetWithAlert>

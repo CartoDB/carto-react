@@ -59,7 +59,7 @@ function CategoryWidgetUI(props) {
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
 
-  const intl = useImperativeIntl({ locale });
+  const intl = useImperativeIntl(locale);
 
   // Get blockedCategories in the same order as original data
   const sortBlockedSameAsData = (blockedCategories) =>

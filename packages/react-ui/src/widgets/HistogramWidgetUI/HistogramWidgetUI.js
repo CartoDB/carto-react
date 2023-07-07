@@ -8,6 +8,7 @@ import detectTouchscreen from '../utils/detectTouchScreen';
 import useHistogramInteractivity from './useHistogramInteractivity';
 import Typography from '../../components/atoms/Typography';
 import HistogramSkeleton from './HistogramSkeleton';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 
@@ -41,9 +42,12 @@ function HistogramWidgetUI({
   animation,
   filterable: _filterable,
   height,
-  isLoading
+  isLoading,
+  locale
 }) {
   const theme = useTheme();
+
+  const intl = useImperativeIntl(locale);
 
   const filterable = _filterable && !!onSelectedBarsChange;
 
@@ -271,11 +275,16 @@ function HistogramWidgetUI({
       {filterable && (
         <OptionsSelectedBar container>
           <Typography variant='caption' weight='strong'>
-            {selectedBars.length ? yAxisFormatter(countSelectedElements) : 'All'} selected
+            {selectedBars.length > 0
+              ? intl.formatMessage(
+                  { id: 'c4r.widgets.histogram.selectedItems' },
+                  { items: yAxisFormatter(countSelectedElements) }
+                )
+              : intl.formatMessage({ id: 'c4r.widgets.histogram.all' })}
           </Typography>
           {selectedBars.length > 0 && (
             <ClearButton onClick={() => onSelectedBarsChange([])} underline='hover'>
-              Clear
+              {intl.formatMessage({ id: 'c4r.widgets.histogram.apply' })}
             </ClearButton>
           )}
         </OptionsSelectedBar>
@@ -316,7 +325,8 @@ HistogramWidgetUI.propTypes = {
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   height: PropTypes.number,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  locale: PropTypes.string
 };
 
 export default HistogramWidgetUI;
