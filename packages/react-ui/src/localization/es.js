@@ -32,6 +32,13 @@ const appMessages = {
         show: 'Mostrar',
         layer: 'capa',
         opacity: 'Opacidad'
+      },
+      range: {
+        clear: 'Limpiar selección',
+        minLimit: 'límite mínimo',
+        maxLimit: 'límite máximo',
+        minValue: 'valor mínimo',
+        maxValue: 'valor máximo'
       }
     }
   }

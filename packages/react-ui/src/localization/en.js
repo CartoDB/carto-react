@@ -31,6 +31,13 @@ const locales = {
         show: 'Show',
         layer: 'layer',
         opacity: 'Opacity'
+      },
+      range: {
+        clear: 'Clear',
+        minLimit: 'min limit',
+        maxLimit: 'max limit',
+        minValue: 'min value',
+        maxValue: 'max value'
       }
     }
   }

@@ -32,6 +32,13 @@ const appMessages = {
         show: 'Tampilkan',
         layer: 'lapisan',
         opacity: 'Keburaman'
+      },
+      range: {
+        clear: 'Bersihkan',
+        minLimit: 'batas minimum',
+        maxLimit: 'batas maksimum',
+        minValue: 'nilai minimum',
+        maxValue: 'nilai maksimum'
       }
     }
   }
