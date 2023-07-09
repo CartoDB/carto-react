@@ -38,6 +38,9 @@ const locales = {
         maxLimit: 'max limit',
         minValue: 'min value',
         maxValue: 'max value'
+      },
+      table: {
+        rowsPerPage: 'Rows per page'
       }
     }
   }

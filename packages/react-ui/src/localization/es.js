@@ -39,6 +39,9 @@ const appMessages = {
         maxLimit: 'límite máximo',
         minValue: 'valor mínimo',
         maxValue: 'valor máximo'
+      },
+      table: {
+        rowsPerPage: 'Filas por página'
       }
     }
   }

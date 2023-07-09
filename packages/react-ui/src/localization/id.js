@@ -39,6 +39,9 @@ const appMessages = {
         maxLimit: 'batas maksimum',
         minValue: 'nilai minimum',
         maxValue: 'nilai maksimum'
+      },
+      table: {
+        rowsPerPage: 'Baris per halaman'
       }
     }
   }
