@@ -493,7 +493,7 @@ CategoryWidgetUI.propTypes = {
   filterable: PropTypes.bool,
   searchable: PropTypes.bool,
   isLoading: PropTypes.bool,
-  locale: PropTypes.object
+  locale: PropTypes.string
 };
 
 export default CategoryWidgetUI;

@@ -367,7 +367,7 @@ BarWidgetUI.propTypes = {
   filterable: PropTypes.bool,
   animation: PropTypes.bool,
   isLoading: PropTypes.bool,
-  locale: PropTypes.object
+  locale: PropTypes.string
 };
 
 export default BarWidgetUI;

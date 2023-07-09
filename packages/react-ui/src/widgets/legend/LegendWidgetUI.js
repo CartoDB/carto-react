@@ -88,7 +88,7 @@ LegendWidgetUI.propTypes = {
   onChangeVisibility: PropTypes.func,
   onChangeOpacity: PropTypes.func,
   title: PropTypes.string,
-  locale: PropTypes.object
+  locale: PropTypes.string
 };
 
 export default LegendWidgetUI;
