@@ -39,6 +39,8 @@ function RangeWidget({
   wrapperProps
 }) {
   const dispatch = useDispatch();
+
+  const locale = useSelector((state) => state.carto.locale);
   const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
   const [[min, max], setMinMax] = useState([_min, _max]);
 
@@ -146,6 +148,7 @@ function RangeWidget({
               Number.isFinite(data.max) && { limits: [data.min, data.max] })}
             onSelectedRangeChange={handleSelectedRangeChange}
             isLoading={isLoading}
+            locale={locale}
           />
         )}
       </WidgetWithAlert>
