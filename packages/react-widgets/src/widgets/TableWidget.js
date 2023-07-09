@@ -5,6 +5,7 @@ import { getTable, paginateTable, TABLE_HARD_LIMIT } from '../models';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
+import { useSelector } from 'react-redux';
 
 /**
  * Renders a <TableWidget /> component
@@ -70,6 +71,8 @@ function TableWidget({
   const { totalCount, hasData, isDataComplete } = data;
   const { rows, pages } = paginateTable(data, page, rowsPerPage);
 
+  const locale = useSelector((state) => state.carto.locale);
+
   const lastPageTooltip = isDataComplete
     ? undefined
     : `This view is limited to ${TABLE_HARD_LIMIT} rows`;
@@ -122,6 +125,7 @@ function TableWidget({
             dense={dense}
             isLoading={isLoading}
             lastPageTooltip={lastPageTooltip}
+            locale={locale}
           />
         )}
       </WidgetWithAlert>
