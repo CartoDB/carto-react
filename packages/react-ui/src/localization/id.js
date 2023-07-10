@@ -41,7 +41,9 @@ const appMessages = {
         maxValue: 'nilai maksimum'
       },
       table: {
-        rowsPerPage: 'Baris per halaman'
+        rowsPerPage: 'Baris per halaman',
+        of: 'dari',
+        moreThan: 'lebih dari'
       }
     }
   }

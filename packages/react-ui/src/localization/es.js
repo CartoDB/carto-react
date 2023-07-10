@@ -5,7 +5,7 @@ const appMessages = {
         apply: 'Aplicar',
         unlock: 'Desbloquear',
         lock: 'Bloquear',
-        clear: 'Limpiar selección',
+        clear: 'Limpiar',
         noResults: 'Sin resultados',
         noResultsMessage:
           'Tu búsqueda "{searchValue}" no ha obtenido ninguna coincidencia.',
@@ -18,12 +18,12 @@ const appMessages = {
       bar: {
         all: 'Todos',
         selectedItems: '{items} {items, plural, =1 {seleccionado} other {seleccionados}}',
-        clear: 'Limpiar selección'
+        clear: 'Limpiar'
       },
       histogram: {
         all: 'Todos',
         selectedItems: '{items} {items, plural, =1 {seleccionado} other {seleccionados}}',
-        clear: 'Limpiar selección'
+        clear: 'Limpiar'
       },
       legend: {
         by: 'Por',
@@ -34,14 +34,16 @@ const appMessages = {
         opacity: 'Opacidad'
       },
       range: {
-        clear: 'Limpiar selección',
+        clear: 'Limpiar',
         minLimit: 'límite mínimo',
         maxLimit: 'límite máximo',
         minValue: 'valor mínimo',
         maxValue: 'valor máximo'
       },
       table: {
-        rowsPerPage: 'Filas por página'
+        rowsPerPage: 'Filas por página',
+        of: 'de',
+        moreThan: 'más de'
       }
     }
   }

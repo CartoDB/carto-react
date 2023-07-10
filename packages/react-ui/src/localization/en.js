@@ -40,7 +40,9 @@ const locales = {
         maxValue: 'max value'
       },
       table: {
-        rowsPerPage: 'Rows per page'
+        rowsPerPage: 'Rows per page',
+        of: 'of',
+        moreThan: 'more than'
       }
     }
   }
