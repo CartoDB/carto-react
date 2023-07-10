@@ -24,6 +24,7 @@ import {
   Wrapper,
   CategoryItemStyled
 } from './comparative.styled';
+import useImperativeIntl from '../../../hooks/useImperativeIntl';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
@@ -63,6 +64,7 @@ function SearchIcon() {
  * @param {boolean} [props.tooltip]
  * @param {(v: any) => any} [props.tooltipFormatter]
  * @param {boolean} [props.isLoading]
+ * @param {string} [props.locale]
  * -->
  */
 function ComparativeCategoryWidgetUI({
@@ -81,13 +83,16 @@ function ComparativeCategoryWidgetUI({
   formatter = IDENTITY_FN,
   tooltip = true,
   tooltipFormatter = IDENTITY_FN,
-  isLoading = false
+  isLoading = false,
+  locale = 'en'
 }) {
   const theme = useTheme();
   const [searchActive, setSearchActive] = useState(false);
   const [blockingActive, setBlockingActive] = useState(false);
   const [tempSelection, setTempSelection] = useState(selectedCategories);
   const [searchValue, setSearchValue] = useState('');
+
+  const intl = useImperativeIntl(locale);
 
   // process incoming data to group items by column, apply colors and labels
   const processedData = useMemo(() => {
@@ -241,14 +246,22 @@ function ComparativeCategoryWidgetUI({
       {filterable ? (
         <Toolbar center={true}>
           <Typography variant='caption'>
-            {selectedCategories.length ? selectedCategories.length : 'All'}
-            {' selected'}
+            {selectedCategories.length > 0
+              ? intl.formatMessage(
+                  { id: 'c4r.widgets.category.selectedItems' },
+                  { items: selectedCategories.length }
+                )
+              : intl.formatMessage({ id: 'c4r.widgets.category.all' })}
           </Typography>
           <Typography variant='caption'>
             {searchActive ? (
-              <Link onClick={applyTempSelection}>Apply</Link>
+              <Link onClick={applyTempSelection}>
+                {intl.formatMessage({ id: 'c4r.widgets.category.apply' })}
+              </Link>
             ) : blockingActive ? (
-              <Link onClick={disableBlocking}>Unlock</Link>
+              <Link onClick={disableBlocking}>
+                {intl.formatMessage({ id: 'c4r.widgets.category.unlock' })}
+              </Link>
             ) : selectedCategories.length ? (
               <Box
                 style={{
@@ -257,9 +270,13 @@ function ComparativeCategoryWidgetUI({
                   gap: theme.spacing(1)
                 }}
               >
-                <Link onClick={enableBlocking}>Lock</Link>
+                <Link onClick={enableBlocking}>
+                  {intl.formatMessage({ id: 'c4r.widgets.category.lock' })}
+                </Link>
                 <Divider orientation='vertical' flexItem />
-                <Link onClick={clearSelection}>Clear</Link>
+                <Link onClick={clearSelection}>
+                  {intl.formatMessage({ id: 'c4r.widgets.category.clear' })}
+                </Link>
               </Box>
             ) : null}
           </Typography>
@@ -269,7 +286,7 @@ function ComparativeCategoryWidgetUI({
         <Toolbar>
           <SearchInput
             size='small'
-            placeholder='Search'
+            placeholder={intl.formatMessage({ id: 'c4r.widgets.category.search' })}
             onChange={(ev) => setSearchValue(ev.currentTarget.value)}
             onFocus={(ev) => ev.currentTarget.scrollIntoView()}
             InputProps={{
@@ -285,9 +302,14 @@ function ComparativeCategoryWidgetUI({
       <CategoriesList>
         {list.length === 0 ? (
           <>
-            <Typography variant='body2'>No results</Typography>
+            <Typography variant='body2'>
+              {intl.formatMessage({ id: 'c4r.widgets.category.noResults' })}
+            </Typography>
             <Typography variant='caption'>
-              Your search "{searchValue}" didn't match with any value.
+              {intl.formatMessage(
+                { id: 'c4r.widgets.category.noResultsMessage' },
+                { searchValue }
+              )}
             </Typography>
           </>
         ) : null}
@@ -316,12 +338,15 @@ function ComparativeCategoryWidgetUI({
           startIcon={<SearchIcon />}
           onClick={enableSearchMode}
         >
-          Search in {otherCount} elements
+          {intl.formatMessage(
+            { id: 'c4r.widgets.category.searchInfo' },
+            { elements: otherCount }
+          )}
         </Button>
       ) : null}
       {searchActive ? (
         <Button size='small' color='primary' onClick={disableSearchMode}>
-          Cancel
+          {intl.formatMessage({ id: 'c4r.widgets.category.cancel' })}
         </Button>
       ) : null}
       <BulletListWrapper>
@@ -377,7 +402,8 @@ ComparativeCategoryWidgetUI.propTypes = {
   onSelectedCategoriesChange: PropTypes.func,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  locale: PropTypes.string
 };
 
 export default ComparativeCategoryWidgetUI;
