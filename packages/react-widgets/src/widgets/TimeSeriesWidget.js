@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getTimeSeries } from '../models';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import {
@@ -104,6 +104,8 @@ function TimeSeriesWidget({
   stepSize
 }) {
   const dispatch = useDispatch();
+
+  const locale = useSelector((state) => state.carto.locale);
 
   const [selectedStepSize, setSelectedStepSize] = useState(stepSize);
 
@@ -267,6 +269,7 @@ function TimeSeriesWidget({
               timeWindow={timeWindow}
               onTimeWindowUpdate={handleTimeWindowUpdate}
               isLoading={isLoading}
+              locale={locale}
             />
           )}
         </WidgetWithAlert>
