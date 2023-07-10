@@ -44,6 +44,17 @@ const appMessages = {
         rowsPerPage: 'Baris per halaman',
         of: 'dari',
         moreThan: 'lebih dari'
+      },
+      timeSeries: {
+        speed: 'Kecepatan',
+        weekOf: 'Minggu',
+        clear: 'Bersihkan',
+        year: 'Tahun',
+        month: 'Bulan',
+        week: 'Minggu',
+        day: 'Hari',
+        hour: 'Jam',
+        minute: 'Menit'
       }
     }
   }

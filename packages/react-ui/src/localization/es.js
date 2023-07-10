@@ -44,6 +44,17 @@ const appMessages = {
         rowsPerPage: 'Filas por página',
         of: 'de',
         moreThan: 'más de'
+      },
+      timeSeries: {
+        speed: 'Velocidad',
+        weekOf: 'Semana del',
+        clear: 'Limpiar',
+        year: 'Año',
+        month: 'Mes',
+        week: 'Semana',
+        day: 'Día',
+        hour: 'Hora',
+        minute: 'Minuto'
       }
     }
   }

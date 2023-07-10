@@ -43,6 +43,17 @@ const locales = {
         rowsPerPage: 'Rows per page',
         of: 'of',
         moreThan: 'more than'
+      },
+      timeSeries: {
+        speed: 'Speed',
+        weekOf: 'Week of',
+        clear: 'Clear',
+        year: 'Year',
+        month: 'Month',
+        week: 'Week',
+        day: 'Day',
+        hour: 'Hour',
+        minute: 'Minute'
       }
     }
   }
