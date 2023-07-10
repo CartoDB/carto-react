@@ -50,6 +50,9 @@ function FeatureSelectionWidget({
   chipLabel
 }) {
   const dispatch = useDispatch();
+
+  const locale = useSelector((state) => state.carto.locale);
+
   const geometry = useSelector((state) => state.carto.spatialFilter);
   const selectedMode = useSelector((state) => state.carto.featureSelectionMode);
   const enabled = useSelector((state) => state.carto.featureSelectionEnabled);
@@ -108,6 +111,7 @@ function FeatureSelectionWidget({
       onDeleteGeometry={handleDeleteGeometry}
       size={size}
       chipLabel={chipLabel}
+      locale={locale}
     />
   );
 }
