@@ -54,6 +54,20 @@ const locales = {
         day: 'Day',
         hour: 'Hour',
         minute: 'Minute'
+      },
+      featureSelection: {
+        drawPolygonMode: 'Polygon',
+        drawRectangleMode: 'Rectangle',
+        drawPolygonByDraggingMode: 'Lasso tool',
+        drawCircleFromCenterMode: 'Circle',
+        edit: 'Edit mask',
+        clickToEdit: 'Click on the mask to edit it',
+        clickToCreate: 'Click on the map to create a mask',
+        selectTool: 'Select a {label}',
+        selectMode: 'Select a mode',
+        chooseSelectionMode: 'Choose a selection mode',
+        applyMask: 'Apply mask',
+        clearMask: 'Clear mask'
       }
     }
   }

@@ -55,6 +55,20 @@ const appMessages = {
         day: 'Día',
         hour: 'Hora',
         minute: 'Minuto'
+      },
+      featureSelection: {
+        drawPolygonMode: 'Polígono',
+        drawRectangleMode: 'Rectángulo',
+        drawPolygonByDraggingMode: 'Herramienta lazo',
+        drawCircleFromCenterMode: 'Círculo',
+        edit: 'Editar máscara',
+        clickToEdit: 'Haz click en la máscara para editarla',
+        clickToCreate: 'Haz click en el mapa para crear una máscara',
+        selectTool: 'Selecciona un {label}',
+        selectMode: 'Seleccionar un modo',
+        chooseSelectionMode: 'Elegir un modo de selección',
+        applyMask: 'Aplicar máscara',
+        clearMask: 'Limpiar máscara'
       }
     }
   }

@@ -55,6 +55,20 @@ const appMessages = {
         day: 'Hari',
         hour: 'Jam',
         minute: 'Menit'
+      },
+      featureSelection: {
+        drawPolygonMode: 'Poligon',
+        drawRectangleMode: 'Persegi panjang',
+        drawPolygonByDraggingMode: 'Alat lasso',
+        drawCircleFromCenterMode: 'Lingkaran',
+        edit: 'Edit',
+        clickToEdit: 'Klik pada masker untuk mengeditnya',
+        clickToCreate: 'Klik pada peta untuk membuat sebuah masker',
+        selectTool: 'Pilih {label}',
+        selectMode: 'Pilih mode',
+        chooseSelectionMode: 'Pilih mode seleksi',
+        applyMask: 'Terapkan masker',
+        clearMask: 'Hapus masker'
       }
     }
   }
