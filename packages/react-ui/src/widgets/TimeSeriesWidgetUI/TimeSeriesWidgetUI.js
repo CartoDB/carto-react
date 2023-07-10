@@ -266,8 +266,6 @@ function TimeSeriesWidgetUIContent({
     const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
     const weeOfMessage = intl.formatMessage({ id: 'c4r.widgets.timeSeries.weekOf' });
 
-    console.log('formatter', formatter, stepSize);
-
     // If widget is reset, then first and last date
     if (!isPlaying && !isPaused) {
       const firstDate = new Date(data[0].name);
