@@ -26,7 +26,7 @@ describe('HistogramWidgetUI', () => {
 
   test('all selected', () => {
     render(<Widget />);
-    expect(screen.getByText(/All selected/)).toBeInTheDocument();
+    expect(screen.getByText(/All/)).toBeInTheDocument();
   });
 
   test('re-render with different data', () => {

@@ -284,7 +284,7 @@ function HistogramWidgetUI({
           </Typography>
           {selectedBars.length > 0 && (
             <ClearButton onClick={() => onSelectedBarsChange([])} underline='hover'>
-              {intl.formatMessage({ id: 'c4r.widgets.histogram.apply' })}
+              {intl.formatMessage({ id: 'c4r.widgets.histogram.clear' })}
             </ClearButton>
           )}
         </OptionsSelectedBar>
