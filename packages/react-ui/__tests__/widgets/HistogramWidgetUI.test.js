@@ -29,6 +29,11 @@ describe('HistogramWidgetUI', () => {
     expect(screen.getByText(/All/)).toBeInTheDocument();
   });
 
+  test('all selected with locale', () => {
+    render(<Widget locale='es-ES' />);
+    expect(screen.getByText(/Todos/)).toBeInTheDocument();
+  });
+
   test('re-render with different data', () => {
     const { rerender } = render(<Widget />);
 

@@ -54,6 +54,11 @@ describe('BarWidgetUI', () => {
     expect(screen.getByText(/All/)).toBeInTheDocument();
   });
 
+  test('all selected with locale', () => {
+    render(<Widget locale='es-ES' />);
+    expect(screen.getByText(/Todos/)).toBeInTheDocument();
+  });
+
   test('renders with stacked false', () => {
     render(<Widget stacked={false} />);
   });
