@@ -1,6 +1,6 @@
-import enUS from './enUS';
-import esES from './esES';
-import idID from './idID';
+import enUS from './en-US';
+import esES from './es-ES';
+import idID from './id-ID';
 
 import { flattenMessages } from './localeUtils';
 
@@ -9,7 +9,7 @@ const esESFlat = flattenMessages(esES);
 const idIDFlat = flattenMessages(idID);
 
 export const messages = {
-  enUS: enUSFlat,
-  esES: esESFlat,
-  idID: idIDFlat
+  'en-US': enUSFlat,
+  'es-ES': esESFlat,
+  'id-ID': idIDFlat
 };

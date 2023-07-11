@@ -13,9 +13,7 @@ const cache = createIntlCache();
  * @returns the `intl` object.
  */
 export default function useImperativeIntl(locale) {
-  // NOTE: We need to remove the dash from the locale to match the messages file keys, ex: 'es-ES' -> 'esES'
-  const internalLocale = locale.replace(/-/, '');
-  // Regex to check if the locale is valid ISO 5 letters code (ex: 'en-US', 'es-ES', 'id-ID')
+  // Check if the locale is valid ISO 5 letters code (ex: 'en-US', 'es-ES', 'id-ID')
   const testLocale = /^[a-z]{2}-[A-Z]{2}$/;
   const validLocale = testLocale.test(locale) ? locale : DEFAULT_LOCALE;
 
@@ -24,11 +22,11 @@ export default function useImperativeIntl(locale) {
       createIntl(
         {
           locale: validLocale,
-          messages: messages[internalLocale] || messages[DEFAULT_LOCALE.replace(/-/, '')]
+          messages: messages[validLocale] || messages[DEFAULT_LOCALE]
         },
         cache
       ),
-    [validLocale, internalLocale]
+    [validLocale]
   );
 
   return intl;
