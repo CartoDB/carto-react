@@ -308,7 +308,8 @@ HistogramWidgetUI.defaultProps = {
   selectedBars: [],
   animation: true,
   filterable: true,
-  height: 200
+  height: 200,
+  locale: 'en-US'
 };
 
 HistogramWidgetUI.propTypes = {
