@@ -56,7 +56,7 @@ export const createCartoSlice = (initialState) => {
       featureSelectionMode: FEATURE_SELECTION_MODES.POLYGON,
       featureSelectionEnabled: false,
       featuresReady: {},
-      locale: 'en',
+      locale: 'en-US',
       ...initialState
     },
     reducers: {

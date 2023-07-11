@@ -1,15 +1,15 @@
-import en from './en';
-import es from './es';
-import id from './id';
+import enUS from './enUS';
+import esES from './esES';
+import idID from './idID';
 
 import { flattenMessages } from './localeUtils';
 
-const enFlat = flattenMessages(en);
-const esFlat = flattenMessages(es);
-const idFlat = flattenMessages(id);
+const enUSFlat = flattenMessages(enUS);
+const esESFlat = flattenMessages(esES);
+const idIDFlat = flattenMessages(idID);
 
 export const messages = {
-  en: enFlat,
-  es: esFlat,
-  id: idFlat
+  enUS: enUSFlat,
+  esES: esESFlat,
+  idID: idIDFlat
 };

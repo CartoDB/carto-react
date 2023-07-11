@@ -1,9 +1,8 @@
 import { createIntl, createIntlCache } from 'react-intl';
 import { messages } from '../localization';
+import { useMemo } from 'react';
 
-const DEFAULT_LOCALE = 'en';
-// This is optional but highly recommended
-// since it prevents memory leak
+const DEFAULT_LOCALE = 'en-US';
 const cache = createIntlCache();
 
 /**
@@ -14,14 +13,23 @@ const cache = createIntlCache();
  * @returns the `intl` object.
  */
 export default function useImperativeIntl(locale) {
-  const existsLocale = Object.keys(messages).includes(locale);
+  // NOTE: We need to remove the dash from the locale to match the messages file keys, ex: 'es-ES' -> 'esES'
+  const internalLocale = locale.replace(/-/, '');
+  // Regex to check if the locale is valid ISO 5 letters code (ex: 'en-US', 'es-ES', 'id-ID')
+  const testLocale = /^[a-z]{2}-[A-Z]{2}$/;
+  const validLocale = testLocale.test(locale) ? locale : DEFAULT_LOCALE;
 
-  const intl = createIntl(
-    {
-      locale: existsLocale ? locale : DEFAULT_LOCALE,
-      messages: messages[locale] || messages[DEFAULT_LOCALE]
-    },
-    cache
+  const intl = useMemo(
+    () =>
+      createIntl(
+        {
+          locale: validLocale,
+          messages: messages[internalLocale] || messages[DEFAULT_LOCALE.replace(/-/, '')]
+        },
+        cache
+      ),
+    [validLocale, internalLocale]
   );
+
   return intl;
 }
