@@ -180,5 +180,5 @@ export function selectFeatureSelectionMode(state: any): string | null;
 
 export function setLocale(localization: any): {
   type: CartoActions.SET_LOCALE;
-  payload: any;
+  payload: string;
 };
