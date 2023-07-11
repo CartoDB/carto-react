@@ -161,7 +161,8 @@ FeatureSelectionWidgetUI.defaultProps = {
   enabled: false,
   tooltipPlacement: 'bottom',
   editModes: [],
-  size: 'medium'
+  size: 'medium',
+  locale: 'en-US'
 };
 
 const MODE_SHAPE = PropTypes.shape({
