@@ -11,8 +11,12 @@ const POLYGON_ICON_ID = 'polygon-icon';
 const RECTANGLE_ICON_ID = 'rectangle-icon';
 
 const FEATURE_SELECTION_MODES = [
-  { id: 'polygon', label: 'polygon', icon: <PolygonIcon id={POLYGON_ICON_ID} /> },
-  { id: 'rectangle', label: 'rectangle', icon: <RectangleIcon id={RECTANGLE_ICON_ID} /> }
+  { id: 'drawPolygonMode', label: 'polygon', icon: <PolygonIcon id={POLYGON_ICON_ID} /> },
+  {
+    id: 'drawRectangleMode',
+    label: 'rectangle',
+    icon: <RectangleIcon id={RECTANGLE_ICON_ID} />
+  }
 ];
 
 const EDIT_MODES = [{ id: 'edit', label: 'Edit mask', icon: <CursorIcon /> }];
