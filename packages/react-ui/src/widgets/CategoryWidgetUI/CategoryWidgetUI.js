@@ -472,7 +472,8 @@ CategoryWidgetUI.defaultProps = {
   selectedCategories: [],
   animation: true,
   filterable: true,
-  searchable: true
+  searchable: true,
+  locale: 'en-US'
 };
 
 CategoryWidgetUI.propTypes = {
