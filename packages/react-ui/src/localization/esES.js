@@ -42,7 +42,7 @@ const appMessages = {
       },
       table: {
         rowsPerPage: 'Filas por página',
-        of: 'de',
+        of: '{from}–{to} de {count}',
         moreThan: 'más de'
       },
       timeSeries: {

@@ -42,7 +42,7 @@ const appMessages = {
       },
       table: {
         rowsPerPage: 'Baris per halaman',
-        of: 'dari',
+        of: '{from}–{to} dari {count}',
         moreThan: 'lebih dari'
       },
       timeSeries: {

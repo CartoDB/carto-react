@@ -66,11 +66,7 @@ function TableWidgetUI({
   const intl = useImperativeIntl(locale);
 
   const defaultLabelDisplayedRows = ({ from, to, count }) => {
-    return `${from}–${to} ${intl.formatMessage({ id: 'c4r.widgets.table.of' })} ${
-      count !== -1
-        ? count
-        : `${intl.formatMessage({ id: 'c4r.widgets.table.moreThan' })} ${to}`
-    }`;
+    return intl.formatMessage({ id: 'c4r.widgets.table.of' }, { from, to, count });
   };
 
   const handleSort = (sortField) => {

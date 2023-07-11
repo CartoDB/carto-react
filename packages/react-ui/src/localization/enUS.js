@@ -41,7 +41,7 @@ const locales = {
       },
       table: {
         rowsPerPage: 'Rows per page',
-        of: 'of',
+        of: '{from}–{to} of {count}',
         moreThan: 'more than'
       },
       timeSeries: {
