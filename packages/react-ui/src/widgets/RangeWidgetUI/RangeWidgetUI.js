@@ -75,6 +75,8 @@ const SliderLimit = styled(Slider)(({ theme: { palette, spacing } }) => ({
 
 /**
  * Renders a <RangeWidget /> component
+ *
+ * <!--
  * @param  {object} props
  * @param  {number[]} props.data - Array of two numbers with the selected values
  * @param  {number} props.min - The absolute min value
@@ -83,6 +85,8 @@ const SliderLimit = styled(Slider)(({ theme: { palette, spacing } }) => ({
  * @param  {Function} [props.onSelectedRangeChange] - This fuction will be cal when selected values change
  * @param {boolean} [props.isLoading] - If true, the component will render a skeleton
  * @param {string} [props.locale] - Locale to be used
+ *
+ * -->
  */
 
 function RangeWidgetUI({
@@ -92,7 +96,7 @@ function RangeWidgetUI({
   limits,
   onSelectedRangeChange,
   isLoading,
-  locale
+  locale = 'en-US'
 }) {
   const [sliderValues, setSliderValues] = useState([min, max]);
   const [inputsValues, setInputsValues] = useState([min, max]);
