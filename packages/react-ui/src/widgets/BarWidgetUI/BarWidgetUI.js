@@ -339,7 +339,8 @@ BarWidgetUI.defaultProps = {
   onSelectedBarsChange: null,
   animation: true,
   filterable: true,
-  stacked: true
+  stacked: true,
+  locale: 'en-US'
 };
 
 const numberOrString = PropTypes.oneOfType([PropTypes.number, PropTypes.string]);
