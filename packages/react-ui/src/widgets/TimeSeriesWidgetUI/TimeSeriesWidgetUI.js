@@ -141,7 +141,8 @@ TimeSeriesWidgetUI.defaultProps = {
   timelinePosition: 0,
   timeWindow: [],
   showControls: true,
-  isLoading: false
+  isLoading: false,
+  locale: 'en-US'
 };
 
 export default TimeSeriesWidgetUI;
@@ -272,7 +273,11 @@ function TimeSeriesWidgetUIContent({
       const lastDate = new Date(data[data.length - 1].name);
 
       return stepSize === GroupDateTypes.WEEKS
-        ? `${formatter(firstDate, weeOfMessage)} - ${formatter(lastDate, weeOfMessage)}`
+        ? `${formatter(firstDate, weeOfMessage)} - ${formatter(
+            lastDate,
+            weeOfMessage,
+            locale
+          )}`
         : `${formatter(firstDate)} - ${formatter(lastDate)}`;
     }
 
@@ -280,10 +285,10 @@ function TimeSeriesWidgetUIContent({
     if (timelinePosition >= 0 && data[timelinePosition]) {
       const currentDate = new Date(data[timelinePosition].name);
       return stepSize === GroupDateTypes.WEEKS
-        ? formatter(currentDate, weeOfMessage)
+        ? formatter(currentDate, weeOfMessage, locale)
         : formatter(currentDate);
     }
-  }, [data, stepSize, isPlaying, isPaused, timeWindow, timelinePosition, intl]);
+  }, [data, stepSize, isPlaying, isPaused, timeWindow, timelinePosition, intl, locale]);
 
   const showClearButton = useMemo(() => {
     return isPlaying || isPaused || timeWindow.length > 0;
@@ -434,8 +439,11 @@ function daysCurrentDateRange(date) {
   return date.toLocaleDateString();
 }
 
-function weeksCurrentDateRange(date, prefix = '') {
-  return `${prefix} ${new Date(getMonday(date)).toLocaleDateString()}`;
+function weeksCurrentDateRange(date, prefix = '', locale = 'en-US') {
+  const isValidISOLocaleLength = locale.length === 5;
+  return `${prefix} ${new Date(getMonday(date)).toLocaleDateString(
+    isValidISOLocaleLength ? locale : undefined
+  )}`;
 }
 
 function yearCurrentDateRange(date) {
