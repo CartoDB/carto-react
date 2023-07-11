@@ -62,9 +62,7 @@ function FeatureSelectionWidgetUI({
     return selectionModes.map((mode) => ({
       ...mode,
       label: intl.formatMessage({
-        id: `c4r.widgets.featureSelection.${
-          mode.id.charAt(0).toLowerCase() + mode.id.slice(1)
-        }`
+        id: `c4r.widgets.featureSelection.${getModeKeyForLocale(mode.id)}`
       })
     }));
   }, [selectionModes, intl]);
@@ -73,9 +71,7 @@ function FeatureSelectionWidgetUI({
     return editModes.map((mode) => ({
       ...mode,
       label: intl.formatMessage({
-        id: `c4r.widgets.featureSelection.${
-          mode.id.charAt(0).toLowerCase() + mode.id.slice(1)
-        }`
+        id: `c4r.widgets.featureSelection.${getModeKeyForLocale(mode.id)}`
       })
     }));
   }, [editModes, intl]);
@@ -190,3 +186,8 @@ FeatureSelectionWidgetUI.propTypes = {
 };
 
 export default FeatureSelectionWidgetUI;
+
+// Aux
+function getModeKeyForLocale(id) {
+  return id.charAt(0).toLowerCase() + id.slice(1);
+}
