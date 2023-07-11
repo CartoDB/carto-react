@@ -75,7 +75,8 @@ LegendWidgetUI.defaultProps = {
   customLegendTypes: {},
   customLayerOptions: {},
   collapsed: false,
-  title: 'Layers'
+  title: 'Layers',
+  locale: 'en-US'
 };
 
 LegendWidgetUI.propTypes = {
