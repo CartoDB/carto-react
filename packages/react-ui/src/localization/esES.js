@@ -26,7 +26,7 @@ const appMessages = {
         clear: 'Limpiar'
       },
       legend: {
-        by: 'Por',
+        by: 'Por {attr}',
         layerOptions: 'Opciones de capa',
         hide: 'Ocultar',
         show: 'Mostrar',

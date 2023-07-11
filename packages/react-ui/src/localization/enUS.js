@@ -25,7 +25,7 @@ const locales = {
         clear: 'Clear'
       },
       legend: {
-        by: 'By',
+        by: 'By {attr}',
         layerOptions: 'Layer options',
         hide: 'Hide',
         show: 'Show',

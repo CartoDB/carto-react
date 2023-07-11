@@ -26,7 +26,7 @@ const appMessages = {
         clear: 'Bersihkan'
       },
       legend: {
-        by: 'Dengan',
+        by: 'Dengan {attr}',
         layerOptions: 'Opsi lapisan',
         hide: 'Sembunyikan',
         show: 'Tampilkan',

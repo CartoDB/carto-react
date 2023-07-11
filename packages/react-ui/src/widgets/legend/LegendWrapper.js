@@ -91,7 +91,7 @@ export default function LegendWrapper({
             <Grid container direction='column' spacing={1}>
               {attr && (
                 <Typography xs mb={1} variant='caption'>
-                  {intl.formatMessage({ id: 'c4r.widgets.legend.by' })} {attr}
+                  {intl.formatMessage({ id: 'c4r.widgets.legend.by' }, { attr })}
                 </Typography>
               )}
               {children}
