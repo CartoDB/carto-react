@@ -84,7 +84,7 @@ function ComparativeCategoryWidgetUI({
   tooltip = true,
   tooltipFormatter = IDENTITY_FN,
   isLoading = false,
-  locale = 'en'
+  locale = 'en-US'
 }) {
   const theme = useTheme();
   const [searchActive, setSearchActive] = useState(false);
