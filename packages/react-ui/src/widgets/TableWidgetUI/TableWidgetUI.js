@@ -205,7 +205,8 @@ TableWidgetUI.defaultProps = {
   pagination: false,
   rowsPerPage: 10,
   rowsPerPageOptions: [5, 10, 25],
-  dense: false
+  dense: false,
+  locale: 'en-ES'
 };
 
 TableWidgetUI.propTypes = {
