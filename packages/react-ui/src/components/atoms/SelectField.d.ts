@@ -1,15 +1,12 @@
 import { TextFieldProps } from '@mui/material/TextField';
-
-type SelectFieldItem = {
-  label: string;
-  value: string | number;
-};
+import React from 'react';
 
 export type SelectFieldProps = Omit<TextFieldProps, 'placeholder'> & {
-  items: SelectFieldItem[];
-  multiple?: boolean;
+  children: React.ReactNode;
+  onChange: Function;
   placeholder?: React.ReactNode;
   size?: 'small' | 'medium';
+  customSelectProps?: Object;
 };
 
 declare const SelectField: (props: SelectFieldProps) => JSX.Element;

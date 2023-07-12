@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import {
-  Box,
-  Chip,
   FormControl,
   Grid,
   InputLabel,
+  Link,
   MenuItem,
-  OutlinedInput,
   Select,
-  TextField,
-  styled
+  TextField
 } from '@mui/material';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
@@ -72,16 +69,6 @@ const options = {
 };
 export default options;
 
-const ChipWrapper = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'small'
-})(({ theme, small }) => ({
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: theme.spacing(1),
-  overflow: 'auto',
-  height: theme.spacing(small ? 3 : 4)
-}));
-
 const menuItems = [
   {
     label: 'Ten: super large text with overflow',
@@ -112,7 +99,58 @@ const menuItemsLong = [
   }
 ];
 
-const PlaygroundTemplate = (args) => <SelectField {...args} items={menuItems} />;
+const SelectFieldItem = ({
+  label,
+  required,
+  placeholder,
+  variant,
+  helperText,
+  size,
+  focused,
+  disabled,
+  error,
+  ...rest
+}) => {
+  const [content, setContent] = useState([]);
+
+  const handleChange = (event) => {
+    const {
+      target: { value }
+    } = event;
+    setContent(
+      // On autofill we get a stringified value
+      typeof value === 'string' ? value.split(',') : value
+    );
+  };
+
+  return (
+    <SelectField
+      {...rest}
+      label={label}
+      variant={variant}
+      placeholder={placeholder}
+      items={menuItems}
+      helperText={helperText}
+      onChange={handleChange}
+      value={content}
+      focused={focused}
+      disabled={disabled}
+      error={error}
+      size={size}
+      fullWidth={rest.fullWidth}
+    >
+      {[...Array(20)].map((item, index) => {
+        return (
+          <MenuItem key={index} value={`Item ${index + 1}`}>
+            Item {index + 1}
+          </MenuItem>
+        );
+      })}
+    </SelectField>
+  );
+};
+
+const PlaygroundTemplate = (args) => <SelectFieldItem {...args} />;
 
 const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
   return (
@@ -120,7 +158,7 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Filled'}</Label>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             label={label}
             variant='filled'
@@ -132,7 +170,7 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Outlined'}</Label>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             label={label}
             variant='outlined'
@@ -144,7 +182,7 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Standard'}</Label>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             label={label}
             variant='standard'
@@ -163,7 +201,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
       <Grid item>
         <Container>
           <Label variant='body2'>{'Label + helper text'}</Label>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             label={label}
             placeholder={placeholder}
@@ -175,13 +213,13 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
       <Grid item>
         <Container>
           <Label variant='body2'>{'Without label + helper text'}</Label>
-          <SelectField {...rest} placeholder={placeholder} items={menuItems} />
+          <SelectFieldItem {...rest} placeholder={placeholder} items={menuItems} />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only label'}</Label>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             label={label}
             placeholder={placeholder}
@@ -192,7 +230,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only helper text'}</Label>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             placeholder={placeholder}
             helperText={helperText}
@@ -233,7 +271,7 @@ const SizeTemplate = ({
           <Typography variant='body2'>Custom component</Typography>
         </Grid>
         <Grid item xs={3}>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             variant='filled'
             label={label}
@@ -243,7 +281,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs={3}>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             variant='outlined'
             label={label}
@@ -253,7 +291,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs={3}>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             variant='standard'
             label={label}
@@ -374,7 +412,7 @@ const SizeTemplate = ({
           <Typography>Focused</Typography>
         </Grid>
         <Grid item xs={3}>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             variant='filled'
             label={label}
@@ -385,7 +423,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs={3}>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             variant='outlined'
             label={label}
@@ -396,7 +434,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs={3}>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             variant='standard'
             label={label}
@@ -413,7 +451,7 @@ const SizeTemplate = ({
           <Typography>Disabled</Typography>
         </Grid>
         <Grid item xs={3}>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             variant='filled'
             label={label}
@@ -424,7 +462,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs={3}>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             variant='outlined'
             label={label}
@@ -435,7 +473,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs={3}>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             variant='standard'
             label={label}
@@ -452,7 +490,7 @@ const SizeTemplate = ({
           <Typography>Error</Typography>
         </Grid>
         <Grid item xs={3}>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             variant='filled'
             label={label}
@@ -464,7 +502,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs={3}>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             variant='outlined'
             label={label}
@@ -476,7 +514,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs={3}>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             variant='standard'
             label={label}
@@ -500,73 +538,14 @@ const MultipleTemplate = ({
   size,
   ...rest
 }) => {
-  const [personName, setPersonName] = React.useState([]);
-  const isSmall = size === 'small';
-
-  const handleChange = (event) => {
-    const {
-      target: { value }
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value
-    );
-  };
-
   return (
-    <Grid container direction='column' spacing={6}>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Default (custom component)'}</Label>
-          <SelectField
-            {...rest}
-            multiple
-            size={size}
-            label={label}
-            placeholder={placeholder}
-            items={menuItems}
-          />
-        </Container>
-      </Grid>
-      <Grid item xs={3}>
-        <Container>
-          <Label variant='body2'>{'Select (with custom chips)'}</Label>
-          <Select
-            {...rest}
-            label={label}
-            size={size}
-            multiple
-            displayEmpty
-            value={personName}
-            onChange={handleChange}
-            input={<OutlinedInput id='select-multiple-chip' label='Chip' />}
-            renderValue={(selected) => {
-              if (selected.length === 0) {
-                return (
-                  <Typography variant={isSmall ? 'body2' : 'body1'} color='text.hint'>
-                    Placeholder
-                  </Typography>
-                );
-              }
-
-              return (
-                <ChipWrapper small={isSmall}>
-                  {selected.map((value) => (
-                    <Chip size={size} color='default' key={value} label={value} />
-                  ))}
-                </ChipWrapper>
-              );
-            }}
-          >
-            {[...Array(10)].map((x, index) => (
-              <MenuItem key={index} value={`Option item ${index + 1}`}>
-                {`Option item ${index + 1}`}
-              </MenuItem>
-            ))}
-          </Select>
-        </Container>
-      </Grid>
-    </Grid>
+    <Typography variant='subtitle1'>
+      Check{' '}
+      <Link href='/?path=/docs/atoms-multiple-select-field--playground'>
+        MultipleSelectField
+      </Link>{' '}
+      component documentation
+    </Typography>
   );
 };
 
@@ -577,7 +556,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
         <Label variant='subtitle1'>{'Overflow'}</Label>
         <Container style={{ maxWidth: '440px' }}>
           <Label variant='body2'>{'Default'}</Label>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             label={label}
             placeholder={placeholder}
@@ -593,7 +572,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
 
           <Grid container spacing={2}>
             <Grid item>
-              <SelectField
+              <SelectFieldItem
                 {...rest}
                 label={label}
                 placeholder={placeholder}
@@ -601,7 +580,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
               />
             </Grid>
             <Grid item>
-              <SelectField
+              <SelectFieldItem
                 {...rest}
                 label={label}
                 placeholder={placeholder}
@@ -616,7 +595,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
         <Label variant='subtitle1'>{'Width'}</Label>
         <Container>
           <Label variant='body2'>{'Default (fullWidth)'}</Label>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             label={label}
             placeholder={placeholder}
@@ -625,7 +604,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
         </Container>
         <Container>
           <Label variant='body2'>{'No fullWidth'}</Label>
-          <SelectField
+          <SelectFieldItem
             {...rest}
             label={label}
             placeholder={placeholder}
@@ -643,28 +622,33 @@ const commonArgs = {
   placeholder: 'Placeholder text',
   helperText: 'Helper text.'
 };
+
 const sizeArgs = {
   helperText: 'This is a error message.'
 };
 
-const disabledControlsVariantsArgTypes = {
-  variant: { table: { disable: true } }
-};
-const disabledControlsSizeArgTypes = {
+const disabledControlsArgTypes = {
   variant: { table: { disable: true } },
+  multiple: { table: { disable: true } }
+};
+
+const disabledControlsSizeArgTypes = {
+  ...disabledControlsArgTypes,
   error: { table: { disable: true } },
   defaultValue: { table: { disable: true } }
 };
 
 export const Playground = PlaygroundTemplate.bind({});
 Playground.args = { ...commonArgs };
+Playground.argTypes = disabledControlsArgTypes;
 
 export const Variants = VariantsTemplate.bind({});
 Variants.args = { ...commonArgs };
-Variants.argTypes = disabledControlsVariantsArgTypes;
+Variants.argTypes = disabledControlsArgTypes;
 
 export const LabelAndHelperText = LabelAndHelperTextTemplate.bind({});
 LabelAndHelperText.args = { ...commonArgs };
+LabelAndHelperText.argTypes = disabledControlsArgTypes;
 
 export const Medium = SizeTemplate.bind({});
 Medium.args = { ...commonArgs, ...sizeArgs, size: 'medium' };
@@ -676,6 +660,8 @@ Small.argTypes = disabledControlsSizeArgTypes;
 
 export const MultipleSelection = MultipleTemplate.bind({});
 MultipleSelection.args = { ...commonArgs };
+MultipleSelection.argTypes = disabledControlsArgTypes;
 
 export const Behavior = BehaviorTemplate.bind({});
 Behavior.args = { ...commonArgs };
+Behavior.argTypes = disabledControlsArgTypes;
