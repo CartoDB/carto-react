@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import { GroupDateTypes, getMonday } from '@carto/react-core';
 import Typography from '../../components/atoms/Typography';
 import TimeSeriesSkeleton from './components/TimeSeriesSkeleton';
-import useImperativeIntl from '../../hooks/useImperativeIntl';
+import useImperativeIntl, { DEFAULT_LOCALE } from '../../hooks/useImperativeIntl';
 
 const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.YEARS]: yearCurrentDateRange,
@@ -142,7 +142,7 @@ TimeSeriesWidgetUI.defaultProps = {
   timeWindow: [],
   showControls: true,
   isLoading: false,
-  locale: 'en-US'
+  locale: DEFAULT_LOCALE
 };
 
 export default TimeSeriesWidgetUI;
@@ -439,7 +439,7 @@ function daysCurrentDateRange(date) {
   return date.toLocaleDateString();
 }
 
-function weeksCurrentDateRange(date, prefix = '', locale = 'en-US') {
+function weeksCurrentDateRange(date, prefix = '', locale = DEFAULT_LOCALE) {
   const isValidISOLocaleLength = locale.length === 5;
   return `${prefix} ${new Date(getMonday(date)).toLocaleDateString(
     isValidISOLocaleLength ? locale : undefined

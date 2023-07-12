@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import FeatureSelectionUIToggleButton from './FeatureSelectionUIToggleButton';
 import FeatureSelectionUIGeometryChips from './FeatureSelectionUIGeometryChips';
 import FeatureSelectionUIDropdown from './FeatureSelectionUIDropdown';
-import useImperativeIntl from '../../hooks/useImperativeIntl';
+import useImperativeIntl, { DEFAULT_LOCALE } from '../../hooks/useImperativeIntl';
 
 const StylesWrapper = styled(Paper)(({ theme }) => ({
   display: 'flex',
@@ -162,7 +162,7 @@ FeatureSelectionWidgetUI.defaultProps = {
   tooltipPlacement: 'bottom',
   editModes: [],
   size: 'medium',
-  locale: 'en-US'
+  locale: DEFAULT_LOCALE
 };
 
 const MODE_SHAPE = PropTypes.shape({

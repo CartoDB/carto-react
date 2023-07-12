@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import TableSkeleton from './Skeleton/TableSkeleton';
 import TablePaginationActions from '../../components/molecules/Table/TablePaginationActions';
-import useImperativeIntl from '../../hooks/useImperativeIntl';
+import useImperativeIntl, { DEFAULT_LOCALE } from '../../hooks/useImperativeIntl';
 
 const TableHeadCellLabel = styled(TableSortLabel)(({ theme }) => ({
   ...theme.typography.caption,
@@ -206,7 +206,7 @@ TableWidgetUI.defaultProps = {
   rowsPerPage: 10,
   rowsPerPageOptions: [5, 10, 25],
   dense: false,
-  locale: 'en-US'
+  locale: DEFAULT_LOCALE
 };
 
 TableWidgetUI.propTypes = {

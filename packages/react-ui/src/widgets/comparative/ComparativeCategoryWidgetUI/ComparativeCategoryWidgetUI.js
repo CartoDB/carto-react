@@ -24,7 +24,7 @@ import {
   Wrapper,
   CategoryItemStyled
 } from './comparative.styled';
-import useImperativeIntl from '../../../hooks/useImperativeIntl';
+import useImperativeIntl, { DEFAULT_LOCALE } from '../../../hooks/useImperativeIntl';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
@@ -84,7 +84,7 @@ function ComparativeCategoryWidgetUI({
   tooltip = true,
   tooltipFormatter = IDENTITY_FN,
   isLoading = false,
-  locale = 'en-US'
+  locale = DEFAULT_LOCALE
 }) {
   const theme = useTheme();
   const [searchActive, setSearchActive] = useState(false);

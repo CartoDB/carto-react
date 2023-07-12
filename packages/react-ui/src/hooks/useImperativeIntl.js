@@ -2,7 +2,7 @@ import { createIntl, createIntlCache } from 'react-intl';
 import { messages } from '../localization';
 import { useMemo } from 'react';
 
-const DEFAULT_LOCALE = 'en-US';
+export const DEFAULT_LOCALE = 'en-US';
 const cache = createIntlCache();
 
 /**

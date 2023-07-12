@@ -6,7 +6,7 @@ import detectTouchScreen from '../utils/detectTouchScreen';
 import { processFormatterRes } from '../utils/formatterUtils';
 import Typography from '../../components/atoms/Typography';
 import BarSkeleton from './BarSkeleton';
-import useImperativeIntl from '../../hooks/useImperativeIntl';
+import useImperativeIntl, { DEFAULT_LOCALE } from '../../hooks/useImperativeIntl';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
 
@@ -340,7 +340,7 @@ BarWidgetUI.defaultProps = {
   animation: true,
   filterable: true,
   stacked: true,
-  locale: 'en-US'
+  locale: DEFAULT_LOCALE
 };
 
 const numberOrString = PropTypes.oneOfType([PropTypes.number, PropTypes.string]);

@@ -23,7 +23,7 @@ import {
   CategoriesRoot
 } from './CategoryWidgetUI.styled';
 import SearchIcon from '../../assets/icons/SearchIcon';
-import useImperativeIntl from '../../hooks/useImperativeIntl';
+import useImperativeIntl, { DEFAULT_LOCALE } from '../../hooks/useImperativeIntl';
 
 function usePrevious(value) {
   const ref = useRef();
@@ -473,7 +473,7 @@ CategoryWidgetUI.defaultProps = {
   animation: true,
   filterable: true,
   searchable: true,
-  locale: 'en-US'
+  locale: DEFAULT_LOCALE
 };
 
 CategoryWidgetUI.propTypes = {

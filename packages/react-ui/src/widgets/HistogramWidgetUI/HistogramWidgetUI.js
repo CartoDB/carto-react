@@ -8,7 +8,7 @@ import detectTouchscreen from '../utils/detectTouchScreen';
 import useHistogramInteractivity from './useHistogramInteractivity';
 import Typography from '../../components/atoms/Typography';
 import HistogramSkeleton from './HistogramSkeleton';
-import useImperativeIntl from '../../hooks/useImperativeIntl';
+import useImperativeIntl, { DEFAULT_LOCALE } from '../../hooks/useImperativeIntl';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 
@@ -309,7 +309,7 @@ HistogramWidgetUI.defaultProps = {
   animation: true,
   filterable: true,
   height: 200,
-  locale: 'en-US'
+  locale: DEFAULT_LOCALE
 };
 
 HistogramWidgetUI.propTypes = {

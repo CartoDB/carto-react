@@ -4,7 +4,7 @@ import { Box, Link, Slider, TextField, styled } from '@mui/material';
 import { debounce } from '@carto/react-core';
 import Typography from '../../components/atoms/Typography';
 import RangeSkeleton from './RangeSkeleton';
-import useImperativeIntl from '../../hooks/useImperativeIntl';
+import useImperativeIntl, { DEFAULT_LOCALE } from '../../hooks/useImperativeIntl';
 
 const Root = styled(Box)(() => ({
   position: 'relative'
@@ -96,7 +96,7 @@ function RangeWidgetUI({
   limits,
   onSelectedRangeChange,
   isLoading,
-  locale = 'en-US'
+  locale = DEFAULT_LOCALE
 }) {
   const [sliderValues, setSliderValues] = useState([min, max]);
   const [inputsValues, setInputsValues] = useState([min, max]);
