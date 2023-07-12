@@ -7,7 +7,7 @@ import LegendRamp from './LegendRamp';
 import LegendProportion from './LegendProportion';
 import PropTypes from 'prop-types';
 import Typography from '../../components/atoms/Typography';
-import { DEFAULT_LOCALE } from '@carto/react-ui/hooks/useImperativeIntl';
+import { DEFAULT_LOCALE } from '../../hooks/useImperativeIntl';
 
 const LayersIcon = () => (
   <SvgIcon width='24' height='24' viewBox='0 0 24 24'>
