@@ -21,6 +21,7 @@ type InitialCarto2State = {
   credentials: Credentials,
   googleApiKey: string,
   googleMapId: string,
+  locale: string,
 }
 
 type OauthCarto3 = {
