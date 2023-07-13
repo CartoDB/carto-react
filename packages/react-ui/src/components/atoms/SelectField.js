@@ -1,18 +1,13 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { Box, MenuItem, TextField } from '@mui/material';
-import { styled } from '@mui/material/styles';
-
+import { MenuItem, TextField } from '@mui/material';
 import Typography from './Typography';
 
-const BoxContent = styled(Box)({
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis'
-});
-
 const SelectField = forwardRef(
-  ({ children, onChange, placeholder, size, customSelectProps, ...otherProps }, ref) => {
+  (
+    { children, onChange, placeholder, size, multiple, customRenderValue, ...otherProps },
+    ref
+  ) => {
     // forwardRef needed to be able to hold a reference, in this way it can be a child for some Mui components, like Tooltip
     // https://mui.com/material-ui/guides/composition/#caveat-with-refs
 
@@ -26,25 +21,26 @@ const SelectField = forwardRef(
         ref={ref}
         size={size}
         SelectProps={{
-          ...customSelectProps,
+          multiple: multiple,
           displayEmpty: !!placeholder,
           size: size,
-          renderValue: (selected) => {
-            if (selected.length === 0) {
-              return (
-                <BoxContent>
+          renderValue:
+            customRenderValue ||
+            ((selected) => {
+              if (selected.length === 0) {
+                return (
                   <Typography
                     variant={isSmall ? 'body2' : 'body1'}
                     color='text.hint'
                     component='span'
+                    noWrap
                   >
                     {placeholder}
                   </Typography>
-                </BoxContent>
-              );
-            }
-            return selected.join(', ');
-          },
+                );
+              }
+              return selected.join(', ');
+            }),
           MenuProps: {
             anchorOrigin: {
               vertical: 'bottom',
@@ -65,6 +61,7 @@ const SelectField = forwardRef(
 );
 
 SelectField.defaultProps = {
+  multiple: false,
   size: 'small'
 };
 SelectField.propTypes = {
@@ -72,7 +69,7 @@ SelectField.propTypes = {
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium']),
-  customSelectProps: PropTypes.object
+  customRenderValue: PropTypes.func
 };
 
 export default SelectField;

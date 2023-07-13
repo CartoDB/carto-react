@@ -6,7 +6,7 @@ export type SelectFieldProps = Omit<TextFieldProps, 'placeholder'> & {
   onChange: Function;
   placeholder?: React.ReactNode;
   size?: 'small' | 'medium';
-  customSelectProps?: Object;
+  customRenderValue?: (value) => React.ReactNode;
 };
 
 declare const SelectField: (props: SelectFieldProps) => JSX.Element;

@@ -140,9 +140,14 @@ const SelectFieldItem = ({
       fullWidth={rest.fullWidth}
     >
       {[...Array(20)].map((item, index) => {
+        const itemText =
+          index === 1
+            ? `Very long item text with overflow ${index + 1}`
+            : `Item ${index + 1}`;
+
         return (
-          <MenuItem key={index} value={`Item ${index + 1}`}>
-            Item {index + 1}
+          <MenuItem key={index} value={itemText}>
+            {itemText}
           </MenuItem>
         );
       })}
@@ -309,37 +314,19 @@ const SizeTemplate = ({
         <Grid item xs={3}>
           <FormControl>
             <InputLabel>{label}</InputLabel>
-            <Select {...rest} variant='filled' size={size}>
-              {menuItems.map((option) => (
-                <MenuItem key={option.label} value={option.label}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
+            <SelectFieldItem {...rest} variant='filled' size={size} items={menuItems} />
           </FormControl>
         </Grid>
         <Grid item xs={3}>
           <FormControl>
             <InputLabel>{label}</InputLabel>
-            <Select {...rest} variant='outlined' size={size}>
-              {menuItems.map((option) => (
-                <MenuItem key={option.label} value={option.label}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
+            <SelectFieldItem {...rest} variant='outlined' size={size} items={menuItems} />
           </FormControl>
         </Grid>
         <Grid item xs={3}>
           <FormControl>
             <InputLabel>{label}</InputLabel>
-            <Select {...rest} variant='standard' size={size}>
-              {menuItems.map((option) => (
-                <MenuItem key={option.label} value={option.label}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
+            <SelectFieldItem {...rest} variant='standard' size={size} items={menuItems} />
           </FormControl>
         </Grid>
       </Grid>
