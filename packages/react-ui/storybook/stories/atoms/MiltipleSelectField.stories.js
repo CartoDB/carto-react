@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MultipleSelectField from '../../../src/components/atoms/MultipleSelectField';
+import { MenuItem } from '@mui/material';
 
 const options = {
   title: 'Atoms/Multiple Select Field',
@@ -94,6 +95,8 @@ const PlaygroundTemplate = ({ label, placeholder, ...rest }) => {
     );
   };
 
+  const isItemSelected = menuItems.map((item) => content.includes(item.value));
+
   return (
     <MultipleSelectField
       {...rest}
@@ -102,6 +105,7 @@ const PlaygroundTemplate = ({ label, placeholder, ...rest }) => {
       items={menuItems}
       onChange={handleChange}
       value={content}
+      itemChecked={isItemSelected}
     />
   );
 };

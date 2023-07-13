@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Checkbox, MenuItem, styled } from '@mui/material';
 import SelectField from './SelectField';
@@ -11,20 +11,9 @@ const BoxContent = styled(Box)({
 });
 
 const MultipleSelectField = forwardRef(
-  ({ items, size, placeholder, counter, ...otherProps }, ref) => {
+  ({ items, size, placeholder, counter, itemChecked, ...otherProps }, ref) => {
     // forwardRef needed to be able to hold a reference, in this way it can be a child for some Mui components, like Tooltip
     // https://mui.com/material-ui/guides/composition/#caveat-with-refs
-    const [content, setContent] = useState([]);
-
-    const handleChange = (event) => {
-      const {
-        target: { value }
-      } = event;
-      setContent(
-        // On autofill we get a stringified value
-        typeof value === 'string' ? value.split(',') : value
-      );
-    };
 
     const isSmall = size === 'small';
     const paddingSize = isSmall ? 1.5 : 2;
@@ -33,8 +22,6 @@ const MultipleSelectField = forwardRef(
       <SelectField
         {...otherProps}
         ref={ref}
-        value={content}
-        onChange={handleChange}
         multiple
         customRenderValue={(selected) => {
           if (selected.length === 0) {
@@ -68,7 +55,7 @@ const MultipleSelectField = forwardRef(
       >
         {items.map((item, index) => (
           <MenuItem key={index} value={item.value}>
-            <Checkbox checked={content.indexOf(item.value) > -1} size='small' />
+            <Checkbox checked={itemChecked[index]} size='small' />
             {item.label}
           </MenuItem>
         ))}
@@ -78,7 +65,8 @@ const MultipleSelectField = forwardRef(
 );
 
 MultipleSelectField.defaultProps = {
-  size: 'small'
+  size: 'small',
+  itemChecked: false
 };
 
 MultipleSelectField.propTypes = {
@@ -87,7 +75,8 @@ MultipleSelectField.propTypes = {
       label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
       value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
     })
-  ).isRequired
+  ).isRequired,
+  itemChecked: PropTypes.bool.isRequired
 };
 
 export default MultipleSelectField;
