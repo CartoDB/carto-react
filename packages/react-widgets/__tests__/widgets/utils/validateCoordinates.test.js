@@ -43,6 +43,7 @@ test('isCoordinate should return true for valid coordinates', () => {
   expect(isCoordinate('-12.345 67.890')).toBe(true);
   expect(isCoordinate('0.1234 -45.6789')).toBe(true);
   expect(isCoordinate('12.3456789 0')).toBe(true);
+  expect(isCoordinate('12.3456789123456789 123.4567891234567891')).toBe(true);
 });
 
 test('isCoordinate should return false for invalid coordinates', () => {
@@ -50,12 +51,18 @@ test('isCoordinate should return false for invalid coordinates', () => {
   expect(isCoordinate('120,90')).toBe(false);
   expect(isCoordinate('-100 180')).toBe(false);
   expect(isCoordinate('abc 45')).toBe(false);
+  expect(isCoordinate('-90.001,123.456')).toBe(false);
+  expect(isCoordinate('-120.123,45.678')).toBe(false);
+  expect(isCoordinate('12.34567891234567891 123.456')).toBe(false);
 
   // Invalid longitude
   expect(isCoordinate('0 181')).toBe(false);
   expect(isCoordinate('45 -181')).toBe(false);
   expect(isCoordinate('12.345 200')).toBe(false);
   expect(isCoordinate('45 def')).toBe(false);
+  expect(isCoordinate('12.345,180.001')).toBe(false);
+  expect(isCoordinate('12.345,250')).toBe(false);
+  expect(isCoordinate('12.345 123.45678912345678912')).toBe(false);
 
   // Extra characters
   expect(isCoordinate('0 0 extra')).toBe(false);
