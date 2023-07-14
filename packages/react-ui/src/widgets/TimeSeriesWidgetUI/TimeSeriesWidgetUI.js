@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import { GroupDateTypes, getMonday } from '@carto/react-core';
 import Typography from '../../components/atoms/Typography';
 import TimeSeriesSkeleton from './components/TimeSeriesSkeleton';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.YEARS]: yearCurrentDateRange,
@@ -169,6 +170,8 @@ function TimeSeriesWidgetUIContent({
   } = useTimeSeriesContext();
   const animationRef = useRef({ animationFrameId: null, timeoutId: null });
 
+  const intl = useImperativeIntl();
+
   // If data changes, stop animation. useDidMountEffect is used to avoid
   // being executed in the initial rendering because that cause
   // resetting (stop) the state settled by the user using props.
@@ -257,21 +260,26 @@ function TimeSeriesWidgetUIContent({
     }
 
     const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
+    const weeOfMessage = intl.formatMessage({ id: 'c4r.widgets.timeSeries.weekOf' });
 
     // If widget is reset, then first and last date
     if (!isPlaying && !isPaused) {
       const firstDate = new Date(data[0].name);
       const lastDate = new Date(data[data.length - 1].name);
 
-      return `${formatter(firstDate)} - ${formatter(lastDate)}`;
+      return stepSize === GroupDateTypes.WEEKS
+        ? `${formatter(firstDate, weeOfMessage)} - ${formatter(lastDate, weeOfMessage)}`
+        : `${formatter(firstDate)} - ${formatter(lastDate)}`;
     }
 
     // If animation is active
     if (timelinePosition >= 0 && data[timelinePosition]) {
       const currentDate = new Date(data[timelinePosition].name);
-      return formatter(currentDate);
+      return stepSize === GroupDateTypes.WEEKS
+        ? formatter(currentDate, weeOfMessage)
+        : formatter(currentDate);
     }
-  }, [data, stepSize, isPlaying, isPaused, timeWindow, timelinePosition]);
+  }, [data, stepSize, isPlaying, isPaused, timeWindow, timelinePosition, intl]);
 
   const showClearButton = useMemo(() => {
     return isPlaying || isPaused || timeWindow.length > 0;
@@ -313,7 +321,11 @@ function TimeSeriesWidgetUIContent({
               {currentDate}
             </Typography>
             <Typography fontSize={12} ml={1} color='textSecondary' variant='caption'>
-              ({capitalize(stepSize)})
+              (
+              {capitalize(
+                intl.formatMessage({ id: `c4r.widgets.timeSeries.${stepSize}` })
+              )}
+              )
             </Typography>
           </Box>
         )}
@@ -324,7 +336,7 @@ function TimeSeriesWidgetUIContent({
             onClick={handleStop}
             underline='hover'
           >
-            Clear
+            {intl.formatMessage({ id: 'c4r.widgets.timeSeries.clear' })}
           </Link>
         )}
       </Box>
@@ -347,7 +359,7 @@ function TimeSeriesWidgetUIContent({
             >
               <MenuItem disabled>
                 <Typography variant='caption' color='textSecondary'>
-                  Speed
+                  {intl.formatMessage({ id: 'c4r.widgets.timeSeries.speed' })}
                 </Typography>
               </MenuItem>
               {SPEED_FACTORS.map((speedItem) => (
@@ -418,8 +430,8 @@ function daysCurrentDateRange(date) {
   return date.toLocaleDateString();
 }
 
-function weeksCurrentDateRange(date) {
-  return `Week of ${new Date(getMonday(date)).toLocaleDateString()}`;
+function weeksCurrentDateRange(date, prefix = '') {
+  return `${prefix} ${new Date(getMonday(date)).toLocaleDateString()}`;
 }
 
 function yearCurrentDateRange(date) {

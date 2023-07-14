@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import TableSkeleton from './Skeleton/TableSkeleton';
 import TablePaginationActions from '../../components/molecules/Table/TablePaginationActions';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const TableHeadCellLabel = styled(TableSortLabel)(({ theme }) => ({
   ...theme.typography.caption,
@@ -60,6 +61,12 @@ function TableWidgetUI({
   lastPageTooltip
 }) {
   const paginationRef = useRef(null);
+
+  const intl = useImperativeIntl();
+
+  const defaultLabelDisplayedRows = ({ from, to, count }) => {
+    return intl.formatMessage({ id: 'c4r.widgets.table.of' }, { from, to, count });
+  };
 
   const handleSort = (sortField) => {
     const isAsc = sortBy === sortField && sortDirection === 'asc';
@@ -109,6 +116,8 @@ function TableWidgetUI({
         <TablePagination
           ref={paginationRef}
           rowsPerPageOptions={rowsPerPageOptions}
+          labelRowsPerPage={intl.formatMessage({ id: 'c4r.widgets.table.rowsPerPage' })}
+          labelDisplayedRows={defaultLabelDisplayedRows}
           component='div'
           count={totalCount}
           rowsPerPage={rowsPerPage}

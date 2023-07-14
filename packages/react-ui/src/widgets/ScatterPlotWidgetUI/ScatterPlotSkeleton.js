@@ -44,7 +44,7 @@ const ScatterPlotSkeleton = ({ height }) => {
           <DotsBox key={i} ml={i * 3}>
             {[...Array(4)].map((_, i) => (
               // Random margins are used to create the effect of a scatter plot
-              <Box mt={getRandomValue()} ml={getRandomValue()}>
+              <Box key={i} mt={getRandomValue()} ml={getRandomValue()}>
                 <Skeleton variant='circular' width={12} height={12} />
               </Box>
             ))}
