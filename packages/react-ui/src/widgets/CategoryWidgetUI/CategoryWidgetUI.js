@@ -45,8 +45,7 @@ function CategoryWidgetUI(props) {
     animation,
     filterable,
     searchable,
-    isLoading,
-    locale
+    isLoading
   } = props;
   const [sortedData, setSortedData] = useState([]);
   const [maxValue, setMaxValue] = useState(1);

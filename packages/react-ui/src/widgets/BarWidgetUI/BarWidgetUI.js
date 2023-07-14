@@ -45,8 +45,7 @@ function BarWidgetUI(props) {
     height,
     filterable,
     animation,
-    isLoading,
-    locale
+    isLoading
   } = useProcessedProps(props);
 
   const isMultiSeries = series.length > 1;
