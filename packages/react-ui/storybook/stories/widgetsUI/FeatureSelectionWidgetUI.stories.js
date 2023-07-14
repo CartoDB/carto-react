@@ -33,8 +33,8 @@ export default options;
 // MODES
 
 const FEATURE_SELECTION_MODES = [
-  { id: 'polygon', label: 'polygon', icon: <PolygonIcon /> },
-  { id: 'rectangle', label: 'rectangle', icon: <RectangleIcon /> }
+  { id: 'drawPolygonMode', label: 'polygon', icon: <PolygonIcon /> },
+  { id: 'drawRectangleMode', label: 'rectangle', icon: <RectangleIcon /> }
 ];
 
 const EDIT_MODES = [{ id: 'edit', label: 'Edit geometry', icon: <CursorIcon /> }];
