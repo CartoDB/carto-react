@@ -5,7 +5,16 @@ import Typography from './Typography';
 
 const SelectField = forwardRef(
   (
-    { children, onChange, placeholder, size, multiple, customRenderValue, ...otherProps },
+    {
+      children,
+      onChange,
+      placeholder,
+      size,
+      multiple,
+      displayEmpty,
+      customRenderValue,
+      ...otherProps
+    },
     ref
   ) => {
     // forwardRef needed to be able to hold a reference, in this way it can be a child for some Mui components, like Tooltip
@@ -23,7 +32,7 @@ const SelectField = forwardRef(
         placeholder={placeholder}
         SelectProps={{
           multiple: multiple,
-          displayEmpty: !!placeholder,
+          displayEmpty: displayEmpty || !!placeholder,
           size: size,
           renderValue:
             customRenderValue ||
@@ -66,8 +75,8 @@ SelectField.defaultProps = {
   size: 'small'
 };
 SelectField.propTypes = {
-  children: PropTypes.node.isRequired,
-  onChange: PropTypes.func.isRequired,
+  children: PropTypes.node,
+  onChange: PropTypes.func,
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium']),
   customRenderValue: PropTypes.func
