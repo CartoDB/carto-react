@@ -66,8 +66,7 @@ const MultipleSelectField = forwardRef(
 );
 
 MultipleSelectField.defaultProps = {
-  size: 'small',
-  itemChecked: false
+  size: 'small'
 };
 
 MultipleSelectField.propTypes = {
