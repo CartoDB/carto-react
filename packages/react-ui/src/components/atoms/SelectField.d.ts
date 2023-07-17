@@ -5,7 +5,6 @@ import React from 'react';
 
 export type SelectFieldProps = Omit<TextFieldProps, 'placeholder'> &
   Omit<SelectProps, 'placeholder'> & {
-    children?: React.ReactNode;
     placeholder?: React.ReactNode;
     size?: 'small' | 'medium';
     customSelectProps?: Partial<SelectProps<unknown>>;
