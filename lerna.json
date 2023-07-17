@@ -4,5 +4,5 @@
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "2.1.8-alpha-selectfield.0.4"
+  "version": "2.1.8-alpha-selectfield.0.5"
 }
