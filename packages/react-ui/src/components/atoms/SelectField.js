@@ -80,7 +80,6 @@ SelectField.defaultProps = {
 };
 SelectField.propTypes = {
   children: PropTypes.node,
-  onChange: PropTypes.func,
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium']),
   customSelectProps: PropTypes.object,

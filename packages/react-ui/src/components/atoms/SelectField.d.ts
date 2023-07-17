@@ -3,10 +3,9 @@ import { SelectChangeEvent, SelectProps } from '@mui/material/Select';
 import { TextFieldProps } from '@mui/material/TextField';
 import React from 'react';
 
-export type SelectFieldProps = Omit<SelectProps, 'placeholder'> &
-  Omit<TextFieldProps, 'placeholder'> & {
+export type SelectFieldProps = Omit<TextFieldProps, 'placeholder'> &
+  Omit<SelectProps, 'placeholder'> & {
     children?: React.ReactNode;
-    onChange?: (event: SelectChangeEvent<any>, child: React.ReactNode) => void;
     placeholder?: React.ReactNode;
     size?: 'small' | 'medium';
     customSelectProps?: Partial<SelectProps<unknown>>;
