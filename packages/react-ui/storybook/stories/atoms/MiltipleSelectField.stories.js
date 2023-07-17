@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import MultipleSelectField from '../../../src/components/atoms/MultipleSelectField';
-import { MenuItem } from '@mui/material';
 
 const options = {
   title: 'Atoms/Multiple Select Field',

@@ -8,7 +8,7 @@ type MultipleSelectFieldItem = {
 
 export type MultipleSelectFieldProps = SelectFieldProps & {
   items: MultipleSelectFieldItem[];
-  itemChecked: Boolean;
+  itemChecked: Boolean[];
 };
 
 declare const MultipleSelectField: (props: MultipleSelectFieldProps) => JSX.Element;

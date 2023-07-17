@@ -23,6 +23,7 @@ const MultipleSelectField = forwardRef(
         {...otherProps}
         ref={ref}
         multiple
+        placeholder={placeholder}
         customRenderValue={(selected) => {
           if (selected.length === 0) {
             return (
@@ -76,7 +77,7 @@ MultipleSelectField.propTypes = {
       value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
     })
   ).isRequired,
-  itemChecked: PropTypes.bool.isRequired
+  itemChecked: PropTypes.arrayOf(PropTypes.bool).isRequired
 };
 
 export default MultipleSelectField;

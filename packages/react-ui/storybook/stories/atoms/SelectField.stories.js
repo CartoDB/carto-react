@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  FormControl,
-  Grid,
-  InputLabel,
-  Link,
-  MenuItem,
-  Select,
-  TextField
-} from '@mui/material';
+import { FormControl, Grid, InputLabel, Link, MenuItem, TextField } from '@mui/material';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
 import { Container, Label } from '../../utils/storyStyles';
@@ -256,7 +248,7 @@ const SizeTemplate = ({
   ...rest
 }) => {
   const [fixedValue, setFixedValue] = useState('Twenty');
-  const [fixedValue2, setFixedValue2] = useState('Ten');
+  const [fixedValue2, setFixedValue2] = useState('Twenty');
   const [fixedValue3, setFixedValue3] = useState('Thirty');
   const handleChange = (event) => {
     setFixedValue(event.target.value);

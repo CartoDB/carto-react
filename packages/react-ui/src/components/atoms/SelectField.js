@@ -20,6 +20,7 @@ const SelectField = forwardRef(
         onChange={onChange}
         ref={ref}
         size={size}
+        placeholder={placeholder}
         SelectProps={{
           multiple: multiple,
           displayEmpty: !!placeholder,
