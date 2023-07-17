@@ -1,77 +1,61 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Checkbox, MenuItem, TextField } from '@mui/material';
-import { styled } from '@mui/material/styles';
-
+import { MenuItem, TextField } from '@mui/material';
 import Typography from './Typography';
 
-const BoxContent = styled(Box)({
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis'
-});
-
 const SelectField = forwardRef(
-  ({ placeholder, items, multiple, size, ...otherProps }, ref) => {
+  (
+    {
+      children,
+      onChange,
+      placeholder,
+      size,
+      multiple,
+      displayEmpty,
+      customSelectProps,
+      customRenderValue,
+      customMenuProps,
+      ...otherProps
+    },
+    ref
+  ) => {
     // forwardRef needed to be able to hold a reference, in this way it can be a child for some Mui components, like Tooltip
     // https://mui.com/material-ui/guides/composition/#caveat-with-refs
-    const [content, setContent] = useState([]);
-
-    const handleChange = (event) => {
-      const {
-        target: { value }
-      } = event;
-      setContent(
-        // On autofill we get a stringified value
-        typeof value === 'string' ? value.split(',') : value
-      );
-    };
 
     const isSmall = size === 'small';
-    const paddingSize = isSmall ? 1.5 : 2;
 
     return (
       <TextField
         {...otherProps}
         select
+        onChange={onChange}
         ref={ref}
-        value={content}
-        onChange={handleChange}
         size={size}
+        placeholder={placeholder}
         SelectProps={{
+          ...customSelectProps,
           multiple: multiple,
-          displayEmpty: !!placeholder,
+          displayEmpty: displayEmpty || !!placeholder,
           size: size,
-          renderValue: (selected) => {
-            if (selected.length === 0) {
-              return (
-                <BoxContent ml={multiple && paddingSize}>
+          renderValue:
+            customRenderValue ||
+            ((selected) => {
+              if (selected.length === 0) {
+                return (
                   <Typography
                     variant={isSmall ? 'body2' : 'body1'}
                     color='text.hint'
                     component='span'
+                    noWrap
                   >
                     {placeholder}
                   </Typography>
-                </BoxContent>
-              );
-            }
-            return (
-              <BoxContent ml={multiple && paddingSize}>
-                {selected.map((value, index) => (
-                  <Typography
-                    key={index}
-                    variant={isSmall ? 'body2' : 'body1'}
-                    component='span'
-                  >
-                    {items.find((item) => item.value === value).label}
-                    {multiple && ', '}
-                  </Typography>
-                ))}
-              </BoxContent>
-            );
-          },
+                );
+              }
+              return selected.join(', ');
+            }),
           MenuProps: {
+            ...customMenuProps,
             anchorOrigin: {
               vertical: 'bottom',
               horizontal: 'left'
@@ -84,14 +68,7 @@ const SelectField = forwardRef(
         }}
       >
         <MenuItem key='empty' disabled value={''}></MenuItem>
-        {items.map((item, index) => (
-          <MenuItem key={index} value={item.value}>
-            {multiple && (
-              <Checkbox checked={content.indexOf(item.value) > -1} size='small' />
-            )}
-            {item.label}
-          </MenuItem>
-        ))}
+        {children}
       </TextField>
     );
   }
@@ -102,15 +79,12 @@ SelectField.defaultProps = {
   size: 'small'
 };
 SelectField.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
-    })
-  ).isRequired,
-  placeholder: PropTypes.string.isRequired,
-  multiple: PropTypes.bool,
-  size: PropTypes.oneOf(['small', 'medium'])
+  children: PropTypes.node,
+  placeholder: PropTypes.string,
+  size: PropTypes.oneOf(['small', 'medium']),
+  customSelectProps: PropTypes.object,
+  customRenderValue: PropTypes.func,
+  customMenuProps: PropTypes.object
 };
 
 export default SelectField;
