@@ -1,5 +1,5 @@
 import { MenuProps } from '@mui/material';
-import { SelectChangeEvent, SelectProps } from '@mui/material/Select';
+import { SelectProps } from '@mui/material/Select';
 import { TextFieldProps } from '@mui/material/TextField';
 import React from 'react';
 
