@@ -6,10 +6,7 @@ import React from 'react';
 export type SelectFieldProps = Omit<SelectProps, 'placeholder'> &
   Omit<TextFieldProps, 'placeholder'> & {
     children?: React.ReactNode;
-    onChange?: (
-      event: SelectChangeEvent<{ value: unknown }>,
-      child: React.ReactNode
-    ) => void;
+    onChange?: (event: SelectChangeEvent<any>, child: React.ReactNode) => void;
     placeholder?: React.ReactNode;
     size?: 'small' | 'medium';
     customSelectProps?: Partial<SelectProps<unknown>>;
