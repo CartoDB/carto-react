@@ -12,7 +12,9 @@ const SelectField = forwardRef(
       size,
       multiple,
       displayEmpty,
+      customSelectProps,
       customRenderValue,
+      customMenuProps,
       ...otherProps
     },
     ref
@@ -31,6 +33,7 @@ const SelectField = forwardRef(
         size={size}
         placeholder={placeholder}
         SelectProps={{
+          ...customSelectProps,
           multiple: multiple,
           displayEmpty: displayEmpty || !!placeholder,
           size: size,
@@ -52,6 +55,7 @@ const SelectField = forwardRef(
               return selected.join(', ');
             }),
           MenuProps: {
+            ...customMenuProps,
             anchorOrigin: {
               vertical: 'bottom',
               horizontal: 'left'
@@ -79,7 +83,9 @@ SelectField.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium']),
-  customRenderValue: PropTypes.func
+  customSelectProps: PropTypes.object,
+  customRenderValue: PropTypes.func,
+  customMenuProps: PropTypes.object
 };
 
 export default SelectField;
