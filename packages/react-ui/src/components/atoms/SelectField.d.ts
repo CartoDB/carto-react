@@ -7,9 +7,9 @@ export type SelectFieldProps = Omit<TextFieldProps, 'placeholder'> &
   Omit<SelectProps, 'placeholder'> & {
     placeholder?: React.ReactNode;
     size?: 'small' | 'medium';
-    customSelectProps?: Partial<SelectProps<unknown>>;
-    customRenderValue?: (value: string[]) => React.ReactNode;
-    customMenuProps?: Partial<MenuProps>;
+    selectProps?: Partial<SelectProps<unknown>>;
+    renderValue?: (value: string[]) => React.ReactNode;
+    menuProps?: Partial<MenuProps>;
   };
 
 declare const SelectField: (props: SelectFieldProps) => JSX.Element;

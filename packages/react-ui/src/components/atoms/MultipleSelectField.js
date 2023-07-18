@@ -18,41 +18,47 @@ const MultipleSelectField = forwardRef(
     const isSmall = size === 'small';
     const paddingSize = isSmall ? 1.5 : 2;
 
+    const renderValue = React.useCallback(
+      (selected) => {
+        if (selected.length === 0) {
+          return (
+            <Typography
+              variant={isSmall ? 'body2' : 'body1'}
+              color='text.hint'
+              component='span'
+              noWrap
+              ml={paddingSize}
+            >
+              {placeholder}
+            </Typography>
+          );
+        }
+
+        return (
+          <BoxContent ml={paddingSize}>
+            {selected.map((value, index) => (
+              <Typography
+                key={index}
+                variant={isSmall ? 'body2' : 'body1'}
+                component='span'
+              >
+                {items.find((item) => item.value === value).label}
+                {selected.length > 1 && ', '}
+              </Typography>
+            ))}
+          </BoxContent>
+        );
+      },
+      [paddingSize, isSmall, placeholder, items]
+    );
+
     return (
       <SelectField
         {...otherProps}
         ref={ref}
         multiple
         placeholder={placeholder}
-        customRenderValue={(selected) => {
-          if (selected.length === 0) {
-            return (
-              <Typography
-                variant={isSmall ? 'body2' : 'body1'}
-                color='text.hint'
-                component='span'
-                noWrap
-                ml={paddingSize}
-              >
-                {placeholder}
-              </Typography>
-            );
-          }
-          return (
-            <BoxContent ml={paddingSize}>
-              {selected.map((value, index) => (
-                <Typography
-                  key={index}
-                  variant={isSmall ? 'body2' : 'body1'}
-                  component='span'
-                >
-                  {items.find((item) => item.value === value).label}
-                  {', '}
-                </Typography>
-              ))}
-            </BoxContent>
-          );
-        }}
+        renderValue={renderValue}
       >
         {items.map((item, index) => (
           <MenuItem key={index} value={item.value}>

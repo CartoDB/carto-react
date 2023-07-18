@@ -12,9 +12,9 @@ const SelectField = forwardRef(
       size,
       multiple,
       displayEmpty,
-      customSelectProps,
-      customRenderValue,
-      customMenuProps,
+      selectProps,
+      renderValue,
+      menuProps,
       ...otherProps
     },
     ref
@@ -23,6 +23,25 @@ const SelectField = forwardRef(
     // https://mui.com/material-ui/guides/composition/#caveat-with-refs
 
     const isSmall = size === 'small';
+
+    const defaultRenderValue = React.useCallback(
+      (selected) => {
+        if (selected.length === 0) {
+          return (
+            <Typography
+              variant={isSmall ? 'body2' : 'body1'}
+              color='text.hint'
+              component='span'
+              noWrap
+            >
+              {placeholder}
+            </Typography>
+          );
+        }
+        return selected.join(', ');
+      },
+      [isSmall, placeholder]
+    );
 
     return (
       <TextField
@@ -33,29 +52,13 @@ const SelectField = forwardRef(
         size={size}
         placeholder={placeholder}
         SelectProps={{
-          ...customSelectProps,
+          ...selectProps,
           multiple: multiple,
           displayEmpty: displayEmpty || !!placeholder,
           size: size,
-          renderValue:
-            customRenderValue ||
-            ((selected) => {
-              if (selected.length === 0) {
-                return (
-                  <Typography
-                    variant={isSmall ? 'body2' : 'body1'}
-                    color='text.hint'
-                    component='span'
-                    noWrap
-                  >
-                    {placeholder}
-                  </Typography>
-                );
-              }
-              return selected.join(', ');
-            }),
+          renderValue: renderValue || defaultRenderValue,
           MenuProps: {
-            ...customMenuProps,
+            ...menuProps,
             anchorOrigin: {
               vertical: 'bottom',
               horizontal: 'left'
@@ -81,9 +84,9 @@ SelectField.defaultProps = {
 SelectField.propTypes = {
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium']),
-  customSelectProps: PropTypes.object,
-  customRenderValue: PropTypes.func,
-  customMenuProps: PropTypes.object
+  selectProps: PropTypes.object,
+  renderValue: PropTypes.func,
+  menuProps: PropTypes.object
 };
 
 export default SelectField;
