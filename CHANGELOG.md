@@ -2,6 +2,12 @@
 
 ## Not released
 
+- Developer API change:
+  - SelectField props removal: `items` no longer available, use a children instead.
+  - Changed to a controlled component. So now it need to handle onChange function in the parent.
+  - For multiple selection, now use MultipleSelectField.
+- Breaking change in SelectField component: simplification & MultipleSelectField split [#743](https://github.com/CartoDB/carto-react/pull/743)
+
 ## 2.1
 
 ## 2.1.8 (2023-07-07)
