@@ -213,7 +213,7 @@ For external use: `import { PasswordField } from '@carto/react-ui';`.
 
 ### SelectField
 
-This component add the `placeholder` logic on top of TextField Mui component.
+This component adds the `placeholder` logic on top of TextField Mui component.
 
 Instead of `<TextField select /> ` or `<Select />` you should use:
 `react-ui/src/components/atoms/SelectField`
@@ -222,7 +222,7 @@ For external use: `import { SelectField } from '@carto/react-ui';`.
 
 ### MultipleSelectField
 
-This component add the `multiple selection` logic on top of SelectField component.
+This component adds the `multiple selection` logic on top of SelectField component.
 
 Instead of `<Select multiple /> ` you should use:
 `react-ui/src/components/atoms/MultipleSelectField`
