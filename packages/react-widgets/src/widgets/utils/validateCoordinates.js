@@ -8,7 +8,7 @@ export const isLongitude = (lng) => {
 
 export const isCoordinate = (str) => {
   const coordinateRegexp =
-    /^-?(\d{1,2}|[1-8]\d|\d{1,2}\.\d{1,9}|[1-8]\d\.\d{1,9}|90(\.0{1,9})?)(\s|-|,\s?)-?(\d{1,2}|1[0-7]\d|\d{1,2}\.\d{1,9}|1[0-7]\d\.\d{1,9}|180(\.0{1,6})?)$/;
+    /^-?([1-8]?\d(\.\d{1,16})?|90(\.0{1,16})?)(,?\s?)-?((1?[0-7]|\d)?\d(\.\d{1,16})?|180(\.0{1,16})?)$/;
   return coordinateRegexp.test(str);
 };
 

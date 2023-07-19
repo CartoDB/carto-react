@@ -4,6 +4,7 @@
 
 - Fix size of image placed inside a Chip [#744](https://github.com/CartoDB/carto-react/pull/744)
 - Fix to build more accurate ranges for time filters [#655](https://github.com/CartoDB/carto-react/pull/655)
+- Improve regex to detect coordinate pairs on search location widget [#742](https://github.com/CartoDB/carto-react/pull/742)
 
 ## 2.1
 
