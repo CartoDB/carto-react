@@ -85,7 +85,7 @@ export default function LegendWrapper({
           <Box sx={{ pt: '2px', pl: 3, pr: 2, pb: 2 }}>
             <Grid container direction='column' spacing={1}>
               {attr && (
-                <Typography xs mb={1} variant='caption'>
+                <Typography mb={1} variant='caption'>
                   By {attr}
                 </Typography>
               )}

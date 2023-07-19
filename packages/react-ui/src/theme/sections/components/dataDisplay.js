@@ -326,6 +326,7 @@ export const dataDisplayOverrides = {
 
         '& .MuiAvatar-root': {
           width: ICON_SIZE_LARGE,
+          minWidth: ICON_SIZE_LARGE,
           height: ICON_SIZE_LARGE,
           margin: 0,
           color: theme.palette.secondary.contrastText,
@@ -338,6 +339,7 @@ export const dataDisplayOverrides = {
         },
         '& img': {
           width: ICON_SIZE_LARGE,
+          minWidth: ICON_SIZE_LARGE,
           height: ICON_SIZE_LARGE
         },
         '&.Mui-disabled': {
@@ -398,10 +400,12 @@ export const dataDisplayOverrides = {
       sizeSmall: ({ theme }) => ({
         '& img': {
           width: ICON_SIZE_MEDIUM,
+          minWidth: ICON_SIZE_MEDIUM,
           height: ICON_SIZE_MEDIUM
         },
         '& .MuiAvatar-root': {
           width: ICON_SIZE_MEDIUM,
+          minWidth: ICON_SIZE_MEDIUM,
           height: ICON_SIZE_MEDIUM
         },
         '& .MuiChip-icon': {
