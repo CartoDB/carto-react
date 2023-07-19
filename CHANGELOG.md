@@ -3,6 +3,7 @@
 ## Not released
 
 - Fix size of image placed inside a Chip [#744](https://github.com/CartoDB/carto-react/pull/744)
+- Fix to build more accurate ranges for time filters [#655](https://github.com/CartoDB/carto-react/pull/655)
 
 ## 2.1
 
