@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-redux",
-  "version": "2.1.8",
+  "version": "2.2.0",
   "description": "CARTO for React - Redux",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -63,8 +63,8 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^2.1.8",
-    "@carto/react-workers": "^2.1.8",
+    "@carto/react-core": "^2.2.0",
+    "@carto/react-workers": "^2.2.0",
     "@deck.gl/carto": "^8.9.18",
     "@deck.gl/core": "^8.9.18",
     "@reduxjs/toolkit": "^1.5.0"
