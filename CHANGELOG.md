@@ -54,6 +54,7 @@
 - Mask, when set, is applied to global widgets as well as to viewport-based widgets [#704](https://github.com/CartoDB/carto-react/pull/704)
 - Support for remote scatter plot widget [#704](https://github.com/CartoDB/carto-react/pull/704)
 - Breaking change for styles: sx / classname props removal [#715](https://github.com/CartoDB/carto-react/pull/715)
+- Fix size of image placed inside a Chip [#744](https://github.com/CartoDB/carto-react/pull/744)
 
 ## 2.0
 
