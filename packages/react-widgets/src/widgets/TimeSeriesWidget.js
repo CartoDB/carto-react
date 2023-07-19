@@ -11,7 +11,9 @@ import {
 import {
   GroupDateTypes,
   AggregationTypes,
-  _FilterTypes as FilterTypes
+  _FilterTypes as FilterTypes,
+  _hasFeatureFlag,
+  _FeatureFlags
 } from '@carto/react-core';
 import { capitalize, Menu, MenuItem, SvgIcon } from '@mui/material';
 import { PropTypes } from 'prop-types';
@@ -63,8 +65,8 @@ function calculateNextStep(time, stepType) {
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
- * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
+ * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
+ * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
  * Internal state
  * @param  {boolean} [props.isPlaying] - If true, the animation starts.
  * @param  {boolean} [props.isPaused] - If true and isPlaying false, the animation is paused.
@@ -75,7 +77,7 @@ function calculateNextStep(time, stepType) {
  * @param  {function} [props.onStop] - Event raised when the animation is stopped.
  * @param  {function} [props.onTimelineUpdate] - Event raised when the timeline is updated. It happens when the animation is playing. The function receive as param the date that is being shown.
  * @param  {function} [props.onTimeWindowUpdate] - Event raised when the timeWindow is updated. It happens when the animation is playing with a timeWindow enabled. The function receive as param an array of two date objects.
- * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
+ * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  */
 function TimeSeriesWidget({
   // Widget
@@ -133,7 +135,8 @@ function TimeSeriesWidget({
   const {
     data = [],
     isLoading,
-    warning
+    warning,
+    remoteCalculation
   } = useWidgetFetch(getTimeSeries, {
     id,
     dataSource,
@@ -145,7 +148,8 @@ function TimeSeriesWidget({
       operation
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   const handleTimeWindowUpdate = useCallback(
@@ -251,6 +255,7 @@ function TimeSeriesWidget({
           global={global}
           droppingFeaturesAlertProps={droppingFeaturesAlertProps}
           noDataAlertProps={noDataAlertProps}
+          showDroppingFeaturesAlert={!remoteCalculation}
         >
           {(!!data.length || isLoading) && (
             <TimeSeriesWidgetUI
@@ -268,10 +273,10 @@ function TimeSeriesWidget({
               isPaused={isPaused}
               onPause={onPause}
               onStop={handleStop}
-              // timelinePosition={timelinePosition}
               onTimelineUpdate={handleTimelineUpdate}
               timeWindow={timeWindow}
               onTimeWindowUpdate={handleTimeWindowUpdate}
+              isLoading={isLoading}
             />
           )}
         </WidgetWithAlert>

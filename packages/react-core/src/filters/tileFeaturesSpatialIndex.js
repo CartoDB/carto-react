@@ -20,11 +20,7 @@ export default function tileFeaturesSpatialIndex({
   if (!resolution) {
     return [];
   }
-  const cells = getCellsCoverGeometry(
-    geometryToIntersect.geometry,
-    spatialIndex,
-    resolution
-  );
+  const cells = getCellsCoverGeometry(geometryToIntersect, spatialIndex, resolution);
 
   if (!cells?.length) {
     return [];
@@ -41,7 +37,7 @@ export default function tileFeaturesSpatialIndex({
     }
 
     tile.data.forEach((d) => {
-      if (cellsDictionary[d.id]) {
+      if (d.id in cellsDictionary) {
         map.set(d.id, { ...d.properties, [spatialIndexIDName]: d.id });
       }
     });

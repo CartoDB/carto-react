@@ -26,8 +26,9 @@ export default function useGeojsonFeatures({
     ({ viewport, spatialFilter, uniqueIdProperty }) => {
       executeTask(sourceId, Methods.GEOJSON_FEATURES, {
         viewport,
-        geometry: spatialFilter,
-        uniqueIdProperty
+        geometry: spatialFilter?.geometry,
+        uniqueIdProperty,
+        tileFormat: undefined
       })
         .then(() => {
           setSourceFeaturesReady(true);
@@ -43,27 +44,31 @@ export default function useGeojsonFeatures({
     [computeFeatures]
   );
 
-  useEffect(() => {
-    if (sourceId && isGeoJsonLoaded) {
-      clearDebounce();
-      setSourceFeaturesReady(false);
-      debounceIdRef.current = debouncedComputeFeatures({
-        viewport,
-        spatialFilter,
-        uniqueIdProperty
-      });
-    }
-  }, [
-    viewport,
-    spatialFilter,
-    uniqueIdProperty,
-    sourceId,
-    isGeoJsonLoaded,
-    debouncedComputeFeatures,
-    setSourceFeaturesReady,
-    clearDebounce,
-    debounceIdRef
-  ]);
+  useEffect(
+    () => {
+      if (sourceId && isGeoJsonLoaded) {
+        clearDebounce();
+        setSourceFeaturesReady(false);
+        debounceIdRef.current = debouncedComputeFeatures({
+          viewport,
+          spatialFilter,
+          uniqueIdProperty
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      spatialFilter ? spatialFilter : viewport,
+      uniqueIdProperty,
+      sourceId,
+      isGeoJsonLoaded,
+      debouncedComputeFeatures,
+      setSourceFeaturesReady,
+      clearDebounce,
+      debounceIdRef
+    ]
+  );
 
   const onDataLoad = useCallback(
     (geojson) => {

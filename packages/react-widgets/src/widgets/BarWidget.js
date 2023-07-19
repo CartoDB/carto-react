@@ -3,7 +3,12 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { BarWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
-import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
+import {
+  _FilterTypes as FilterTypes,
+  AggregationTypes,
+  _hasFeatureFlag,
+  _FeatureFlags
+} from '@carto/react-core';
 import { getCategories } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import { columnAggregationOn } from './utils/propTypesFns';
@@ -24,18 +29,18 @@ const EMPTY_ARRAY = [];
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.xAxisFormatter] - Function to format each value in the x axis.
  * @param  {Function} [props.yAxisFormatter] - Function to format each value in the y axis.
- * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
+ * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not.
  * @param  {Function} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
  * @param  {string[]} [props.order] - Set a custom order for the categories. By default, they are ordered by the axis Y.
- * @param  {Object} [props.labels] - Overwrite category labels.
+ * @param  {object} [props.labels] - Overwrite category labels.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
- * @param  {string} [props.height] - Static widget height
+ * @param  {string} [props.height] - Static widget height.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
- * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
- * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
+ * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
+ * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
+ * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  */
 function BarWidget({
   id,
@@ -65,7 +70,8 @@ function BarWidget({
   const {
     data: _data = [],
     isLoading,
-    warning
+    warning,
+    remoteCalculation
   } = useWidgetFetch(getCategories, {
     id,
     dataSource,
@@ -76,7 +82,8 @@ function BarWidget({
       operation
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   const sortedData = useMemo(() => {
@@ -141,6 +148,7 @@ function BarWidget({
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
+        showDroppingFeaturesAlert={!remoteCalculation}
       >
         {(!!sortedData.length || isLoading) && (
           <BarWidgetUI
@@ -156,6 +164,7 @@ function BarWidget({
             height={height}
             animation={animation}
             filterable={filterable}
+            isLoading={isLoading}
           />
         )}
       </WidgetWithAlert>

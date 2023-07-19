@@ -1,19 +1,22 @@
 import { theme, cartoThemeOptions } from './theme/carto-theme';
 import WrapperWidgetUI from './widgets/WrapperWidgetUI';
-import CategoryWidgetUI from './widgets/CategoryWidgetUI';
-import FormulaWidgetUI from './widgets/FormulaWidgetUI';
-import BarWidgetUI from './widgets/BarWidgetUI';
+import CategoryWidgetUI from './widgets/CategoryWidgetUI/CategoryWidgetUI';
+import FormulaWidgetUI from './widgets/FormulaWidgetUI/FormulaWidgetUI';
+import BarWidgetUI from './widgets/BarWidgetUI/BarWidgetUI';
 import HistogramWidgetUI from './widgets/HistogramWidgetUI/HistogramWidgetUI';
-import PieWidgetUI from './widgets/PieWidgetUI';
+import PieWidgetUI from './widgets/PieWidgetUI/PieWidgetUI';
 import LegendWidgetUI, { LEGEND_TYPES } from './widgets/legend/LegendWidgetUI';
 import LegendCategories from './widgets/legend/LegendCategories';
 import LegendIcon from './widgets/legend/LegendIcon';
 import LegendProportion from './widgets/legend/LegendProportion';
 import LegendRamp from './widgets/legend/LegendRamp';
-import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
+import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
-import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
-import RangeWidgetUI from './widgets/RangeWidgetUI';
+import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI/FeatureSelectionWidgetUI';
+import FeatureSelectionUIDropdown from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIDropdown';
+import FeatureSelectionUIGeometryChips from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIGeometryChips';
+import FeatureSelectionUIToggleButton from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIToggleButton';
+import RangeWidgetUI from './widgets/RangeWidgetUI/RangeWidgetUI';
 import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
@@ -41,6 +44,7 @@ import {
   ICON_SIZE_LARGE
 } from './theme/themeConstants';
 import AccordionGroup from './components/molecules/AccordionGroup';
+import Alert from './components/molecules/Alert';
 
 const featureSelectionIcons = {
   CursorIcon,
@@ -61,6 +65,9 @@ export {
   PieWidgetUI,
   ScatterPlotWidgetUI,
   FeatureSelectionWidgetUI,
+  FeatureSelectionUIDropdown,
+  FeatureSelectionUIGeometryChips,
+  FeatureSelectionUIToggleButton,
   TimeSeriesWidgetUI,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
   TableWidgetUI,
@@ -89,5 +96,6 @@ export {
   ICON_SIZE_SMALL,
   ICON_SIZE_MEDIUM,
   ICON_SIZE_LARGE,
-  AccordionGroup
+  AccordionGroup,
+  Alert
 };

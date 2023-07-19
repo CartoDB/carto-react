@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
 import LegendWidgetUI from '../../../src/widgets/legend/LegendWidgetUI';
-import CartoIcon from '../../assets/carto-symbol.svg';
 
 const options = {
   title: 'Organisms/Widgets/LegendWidgetUI',
   component: LegendWidgetUI,
   argTypes: {
-    className: {
-      control: {
-        type: 'text'
-      }
-    },
     layers: {
       defaultValue: [],
       control: {

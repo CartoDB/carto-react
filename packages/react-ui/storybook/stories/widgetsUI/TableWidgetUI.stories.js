@@ -1,9 +1,10 @@
 import React from 'react';
 import TableWidgetUI from '../../../src/widgets/TableWidgetUI/TableWidgetUI';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { columns, rows } from '../../../src/widgets/TableWidgetUI/mockData';
 import Typography from '../../../src/components/atoms/Typography';
+import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Organisms/Widgets/TableWidgetUI',
@@ -23,10 +24,38 @@ const Template = (args) => {
   return <TableWidgetUI {...args} />;
 };
 
+const LoadingTemplate = (args) => {
+  const theme = useTheme();
+
+  return (
+    <>
+      <Label variant='body1' mb={3}>
+        {'Limited width'}
+      </Label>
+      <ThinContainer>
+        <TableWidgetUI {...args} />
+      </ThinContainer>
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Limited height'}
+      </Label>
+      <TableWidgetUI {...args} height={theme.spacing(36)} />
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Responsive'}
+      </Label>
+      <TableWidgetUI {...args} />
+    </>
+  );
+};
+
 const DefaultProps = { columns, rows };
 
 export const Playground = Template.bind({});
-Playground.args = { ...DefaultProps, rows: rows.slice(0, 5) };
+Playground.args = {
+  ...DefaultProps,
+  rows: rows.slice(0, 5)
+};
 
 export const DenseLayout = Template.bind({});
 DenseLayout.args = {
@@ -40,10 +69,11 @@ Pagination.args = {
   ...DefaultProps,
   rowsPerPage: 6,
   rows: rows.slice(0, 6),
-  page: 0,
+  page: 1,
   pagination: true,
   rowsPerPageOptions: [4, 6, 8],
-  totalCount: rows.length
+  totalCount: rows.length,
+  lastPageTooltip: 'Custom text for the last page'
 };
 
 export const RowClick = Template.bind({});
@@ -78,3 +108,6 @@ CustomComponent.args = {
   }),
   rows: rows.slice(0, 5)
 };
+
+export const Loading = LoadingTemplate.bind({});
+Loading.args = { ...DefaultProps, isLoading: true };

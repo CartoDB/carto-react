@@ -2,6 +2,7 @@ import React from 'react';
 import TimeSeriesWidgetUI from '../../../src/widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import { GroupDateTypes } from '@carto/react-core';
 import { TIME_SERIES_CHART_TYPES } from '@carto/react-ui';
+import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const data = [
   { name: 1514761200000, value: 310 },
@@ -154,6 +155,28 @@ const Template = (args) => {
   return <TimeSeriesWidgetUI {...args} />;
 };
 
+const LoadingTemplate = (args) => {
+  if (args.timeWindow && !Array.isArray(args.timeWindow)) {
+    args.timeWindow = [];
+  }
+
+  return (
+    <>
+      <Label variant='body1' mb={3}>
+        {'Limited width'}
+      </Label>
+      <ThinContainer>
+        <TimeSeriesWidgetUI {...args} />
+      </ThinContainer>
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Responsive'}
+      </Label>
+      <TimeSeriesWidgetUI {...args} />
+    </>
+  );
+};
+
 const requiredProps = {
   data,
   stepSize: GroupDateTypes.WEEKS,
@@ -162,3 +185,6 @@ const requiredProps = {
 
 export const Default = Template.bind({});
 Default.args = requiredProps;
+
+export const Loading = LoadingTemplate.bind({});
+Loading.args = { ...requiredProps, isLoading: true };

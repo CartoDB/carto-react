@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-ui",
-  "version": "2.0.1",
+  "version": "2.1.8",
   "description": "CARTO for React - UI",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -78,13 +78,12 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^2.0.1",
+    "@carto/react-core": "^2.1.8",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.125",
     "@mui/material": "^5.11.16",
-    "@mui/styles": "^5.11.16",
     "echarts": "^5.4.2",
     "echarts-for-react": "^3.0.2",
     "react": "17.x || 18.x",

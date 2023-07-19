@@ -5,26 +5,36 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TablePagination,
   TableHead,
   TableRow,
   TableSortLabel,
-  TablePagination
+  styled
 } from '@mui/material';
+import TableSkeleton from './Skeleton/TableSkeleton';
+import TablePaginationActions from '../../components/molecules/Table/TablePaginationActions';
 
-import makeStyles from '@mui/styles/makeStyles';
+const TableHeadCellLabel = styled(TableSortLabel)(({ theme }) => ({
+  ...theme.typography.caption,
+  color: theme.palette.text.secondary
+}));
 
-const useStyles = makeStyles((theme) => ({
-  tableRow: {
-    maxHeight: theme.spacing(6.5)
-  },
-  tableCell: {
+const TableRowStyled = styled(TableRow)(({ theme }) => ({
+  maxHeight: theme.spacing(6.5),
+  transition: 'background-color 0.25s ease',
+  '&.MuiTableRow-hover:hover': {
+    cursor: 'pointer',
+    backgroundColor: theme.palette.background.default
+  }
+}));
+
+const TableCellStyled = styled(TableCell)(() => ({
+  overflow: 'hidden',
+  '& p': {
+    maxWidth: '100%',
+    whiteSpace: 'nowrap',
     overflow: 'hidden',
-    '& p': {
-      maxWidth: '100%',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis'
-    }
+    textOverflow: 'ellipsis'
   }
 }));
 
@@ -45,7 +55,9 @@ function TableWidgetUI({
   onSetRowsPerPage,
   onRowClick,
   height,
-  dense
+  dense,
+  isLoading,
+  lastPageTooltip
 }) {
   const paginationRef = useRef(null);
 
@@ -66,9 +78,18 @@ function TableWidgetUI({
 
   const fixedHeightStyle = {};
   if (height) {
-    const paginationHeight = paginationRef?.current?.clientHeight || 0;
-    fixedHeightStyle.height = `calc(${height} - ${paginationHeight}px)`;
+    if (isLoading) {
+      fixedHeightStyle.height = `${height}px`;
+    } else {
+      const paginationHeight = Math.max(
+        paginationRef?.current?.clientHeight || 0,
+        pagination ? 48 : 0
+      );
+      fixedHeightStyle.height = `calc(${height} - ${paginationHeight}px)`;
+    }
   }
+
+  if (isLoading) return <TableSkeleton style={fixedHeightStyle} />;
 
   return (
     <>
@@ -94,6 +115,15 @@ function TableWidgetUI({
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          ActionsComponent={() => (
+            <TablePaginationActions
+              count={totalCount}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              lastPageTooltip={lastPageTooltip}
+            />
+          )}
         />
       )}
     </>
@@ -101,24 +131,21 @@ function TableWidgetUI({
 }
 
 function TableHeaderComponent({ columns, sorting, sortBy, sortDirection, onSort }) {
-  const classes = useStyles();
-
   return (
     <TableHead>
       <TableRow>
         {columns.map(({ field, headerName, align }) => (
           <TableCell key={field} align={align || 'left'}>
             {sorting ? (
-              <TableSortLabel
+              <TableHeadCellLabel
                 active={sortBy === field}
                 direction={sortBy === field ? sortDirection : 'asc'}
                 onClick={() => onSort(field)}
-                className={classes.tableHeadCellLabel}
               >
-                {headerName}
-              </TableSortLabel>
+                {headerName || field}
+              </TableHeadCellLabel>
             ) : (
-              headerName
+              headerName || field
             )}
           </TableCell>
         ))}
@@ -128,34 +155,34 @@ function TableHeaderComponent({ columns, sorting, sortBy, sortDirection, onSort 
 }
 
 function TableBodyComponent({ columns, rows, onRowClick }) {
-  const classes = useStyles();
-
   return (
     <TableBody>
       {rows.map((row, i) => {
         const rowKey = row.cartodb_id || row.id || i;
 
         return (
-          <TableRow
+          <TableRowStyled
             key={rowKey}
-            className={classes.tableRow}
             hover={!!onRowClick}
             onClick={() => onRowClick && onRowClick(row)}
           >
-            {columns.map(
-              ({ field, headerName, align, component }) =>
-                headerName && (
-                  <TableCell
+            {columns.map(({ field, headerName, align, component }) => {
+              const cellValue = Object.entries(row).find(([key]) => {
+                return key.toUpperCase() === field.toUpperCase();
+              })?.[1];
+              return (
+                (headerName || field) && (
+                  <TableCellStyled
                     key={`${rowKey}_${field}`}
                     scope='row'
                     align={align || 'left'}
-                    className={classes.tableCell}
                   >
-                    {component ? component(row[field]) : row[field]}
-                  </TableCell>
+                    {component ? component(cellValue) : cellValue}
+                  </TableCellStyled>
                 )
-            )}
-          </TableRow>
+              );
+            })}
+          </TableRowStyled>
         );
       })}
     </TableBody>
@@ -188,7 +215,9 @@ TableWidgetUI.propTypes = {
   onSetRowsPerPage: PropTypes.func,
   onRowClick: PropTypes.func,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  dense: PropTypes.bool
+  dense: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  lastPageTooltip: PropTypes.string
 };
 
 export default TableWidgetUI;

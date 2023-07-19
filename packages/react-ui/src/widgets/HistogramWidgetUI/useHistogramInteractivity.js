@@ -29,7 +29,7 @@ export default function useHistogramInteractivity({
     }
 
     function mouseMoveEvent(params) {
-      if (initialTimeWindow !== null) {
+      if (echartsInstance && initialTimeWindow !== null) {
         const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
           params.offsetX,
           params.offsetY
@@ -42,7 +42,7 @@ export default function useHistogramInteractivity({
       }
     }
 
-    if (filterable) {
+    if (echartsInstance && filterable) {
       const mouseDownCleanUp = addEventWithCleanUp(zr, 'mousedown', mouseDownEvent);
       const mouseMoveCleanUp = addEventWithCleanUp(zr, 'mousemove', mouseMoveEvent);
 
@@ -75,7 +75,7 @@ export default function useHistogramInteractivity({
       initialTimeWindow = null;
     }
 
-    if (filterable) {
+    if (echartsInstance && filterable) {
       return addEventWithCleanUp(zr, 'mouseup', mouseUpEvent);
     }
   }, [zr, echartsInstance, markArea, data, onSelectedBarsChange, filterable]);
@@ -114,7 +114,7 @@ export default function useHistogramInteractivity({
 
 // Aux
 function addEventWithCleanUp(zr, eventKey, event) {
-  if (zr) {
+  if (zr && zr.handler) {
     events[eventKey] = event;
     zr.on(eventKey, event);
 

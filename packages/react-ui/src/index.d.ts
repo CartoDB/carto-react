@@ -1,45 +1,58 @@
 import { theme, cartoThemeOptions, CartoTheme } from './theme/carto-theme';
 import WrapperWidgetUI from './widgets/WrapperWidgetUI';
-import CategoryWidgetUI from './widgets/CategoryWidgetUI';
-import FormulaWidgetUI from './widgets/FormulaWidgetUI';
-import BarWidgetUI from './widgets/BarWidgetUI';
+import CategoryWidgetUI from './widgets/CategoryWidgetUI/CategoryWidgetUI';
+import FormulaWidgetUI from './widgets/FormulaWidgetUI/FormulaWidgetUI';
+import BarWidgetUI from './widgets/BarWidgetUI/BarWidgetUI';
 import HistogramWidgetUI from './widgets/HistogramWidgetUI/HistogramWidgetUI';
-import PieWidgetUI from './widgets/PieWidgetUI';
+import PieWidgetUI from './widgets/PieWidgetUI/PieWidgetUI';
 import LegendWidgetUI, { LEGEND_TYPES } from './widgets/legend/LegendWidgetUI';
 import LegendCategories from './widgets/legend/LegendCategories';
 import LegendIcon from './widgets/legend/LegendIcon';
 import LegendProportion from './widgets/legend/LegendProportion';
 import LegendRamp from './widgets/legend/LegendRamp';
-import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI';
+import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import {
   useTimeSeriesContext,
   TimeSeriesProvider
 } from './widgets/TimeSeriesWidgetUI/hooks/TimeSeriesContext';
-import RangeWidgetUI from './widgets/RangeWidgetUI';
+import RangeWidgetUI from './widgets/RangeWidgetUI/RangeWidgetUI';
 import useTimeSeriesInteractivity from './widgets/TimeSeriesWidgetUI/hooks/useTimeSeriesInteractivity';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
 import TableWidgetUI from './widgets/TableWidgetUI/TableWidgetUI';
 import NoDataAlert from './widgets/NoDataAlert';
-import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI';
+import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI/FeatureSelectionWidgetUI';
+import FeatureSelectionUIDropdown from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIDropdown';
+import FeatureSelectionUIGeometryChips from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIGeometryChips';
+import FeatureSelectionUIToggleButton from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIToggleButton';
 import ComparativePieWidgetUI from './widgets/comparative/ComparativePieWidgetUI';
 import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
-import Typography from './components/atoms/Typography';
-import Button from './components/atoms/Button';
-import PasswordField from './components/atoms/PasswordField';
-import SelectField from './components/atoms/SelectField';
-import UploadField from './components/molecules/UploadField/UploadField';
-import AppBar from './components/organisms/AppBar/AppBar';
-import LabelWithIndicator from './components/atoms/LabelWithIndicator';
+import Typography, {
+  CartoFontWeight,
+  TypographyProps
+} from './components/atoms/Typography';
+import Button, { ButtonProps } from './components/atoms/Button';
+import PasswordField, { PasswordFieldProps } from './components/atoms/PasswordField';
+import SelectField, { SelectFieldProps } from './components/atoms/SelectField';
+import UploadField, {
+  UploadFieldProps
+} from './components/molecules/UploadField/UploadField';
+import AppBar, { AppBarProps } from './components/organisms/AppBar/AppBar';
+import LabelWithIndicator, {
+  LabelWithIndicatorProps
+} from './components/atoms/LabelWithIndicator';
 import { getCartoColorStylePropsForItem } from './utils/palette';
-import Avatar from './components/molecules/Avatar';
+import Avatar, { AvatarProps } from './components/molecules/Avatar';
 import {
   ICON_SIZE_SMALL,
   ICON_SIZE_MEDIUM,
   ICON_SIZE_LARGE
 } from './theme/themeConstants';
-import AccordionGroup from './components/molecules/AccordionGroup';
+import AccordionGroup, {
+  AccordionGroupProps
+} from './components/molecules/AccordionGroup';
+import Alert, { CartoAlertSeverity, AlertProps } from './components/molecules/Alert';
 
 export {
   theme,
@@ -62,6 +75,9 @@ export {
   RangeWidgetUI,
   ComparativePieWidgetUI,
   FeatureSelectionWidgetUI,
+  FeatureSelectionUIDropdown,
+  FeatureSelectionUIGeometryChips,
+  FeatureSelectionUIToggleButton,
   ComparativeFormulaWidgetUI,
   ComparativeCategoryWidgetUI,
   LEGEND_TYPES,
@@ -71,16 +87,29 @@ export {
   LegendProportion,
   LegendRamp,
   Typography,
+  TypographyProps,
+  CartoFontWeight,
   Button,
+  ButtonProps,
   PasswordField,
+  PasswordFieldProps,
   SelectField,
+  SelectFieldProps,
   UploadField,
+  UploadFieldProps,
   AppBar,
+  AppBarProps,
   LabelWithIndicator,
+  LabelWithIndicatorProps,
   getCartoColorStylePropsForItem,
   Avatar,
+  AvatarProps,
   ICON_SIZE_SMALL,
   ICON_SIZE_MEDIUM,
   ICON_SIZE_LARGE,
-  AccordionGroup
+  AccordionGroup,
+  AccordionGroupProps,
+  Alert,
+  AlertProps,
+  CartoAlertSeverity
 };

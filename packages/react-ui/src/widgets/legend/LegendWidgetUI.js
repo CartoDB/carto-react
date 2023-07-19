@@ -1,6 +1,5 @@
 import React, { createRef, Fragment } from 'react';
-import { Box, Button, Collapse, Divider, Grid, SvgIcon } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Box, Button, Collapse, Divider, Grid, styled, SvgIcon } from '@mui/material';
 import LegendWrapper from './LegendWrapper';
 import LegendCategories from './LegendCategories';
 import LegendIcon from './LegendIcon';
@@ -28,17 +27,14 @@ const LayersIcon = () => (
   </SvgIcon>
 );
 
-const useStyles = makeStyles((theme) => ({
-  legend: {
-    minWidth: '240px',
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[1],
-    borderRadius: 4
-  }
+const LegendBox = styled(Box)(({ theme }) => ({
+  minWidth: theme.spacing(30),
+  backgroundColor: theme.palette.background.paper,
+  boxShadow: theme.shadows[1],
+  borderRadius: theme.spacing(0.5)
 }));
 
 function LegendWidgetUI({
-  className,
   customLegendTypes,
   customLayerOptions,
   layers = [],
@@ -49,11 +45,10 @@ function LegendWidgetUI({
   onChangeLegendRowCollapsed,
   title
 }) {
-  const classes = useStyles();
   const isSingle = layers.length === 1;
 
   return (
-    <Box className={`${classes.legend} ${className}`}>
+    <LegendBox>
       <LegendContainer
         isSingle={isSingle}
         collapsed={collapsed}
@@ -69,7 +64,7 @@ function LegendWidgetUI({
           onChangeCollapsed={onChangeLegendRowCollapsed}
         />
       </LegendContainer>
-    </Box>
+    </LegendBox>
   );
 }
 
@@ -82,7 +77,6 @@ LegendWidgetUI.defaultProps = {
 };
 
 LegendWidgetUI.propTypes = {
-  className: PropTypes.string,
   customLegendTypes: PropTypes.objectOf(PropTypes.func),
   customLayerOptions: PropTypes.objectOf(PropTypes.func),
   layers: PropTypes.array,
@@ -96,22 +90,25 @@ LegendWidgetUI.propTypes = {
 
 export default LegendWidgetUI;
 
-const useStylesLegendContainer = makeStyles((theme) => ({
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: '36px'
-  },
-  button: {
-    flex: '1 1 auto',
-    justifyContent: 'space-between',
-    padding: theme.spacing(0.75, 1.25, 0.75, 3),
-    borderTop: ({ collapsed }) =>
-      collapsed ? 'none' : `1px solid ${theme.palette.divider}`,
-    cursor: 'pointer'
-  },
-  wrapperInner: {
+const Header = styled(Grid)(({ theme }) => ({
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  height: theme.spacing(4.5)
+}));
+
+const HeaderButton = styled(Button, {
+  shouldForwardProp: (prop) => prop !== 'collapsed'
+})(({ theme, collapsed }) => ({
+  flex: '1 1 auto',
+  justifyContent: 'space-between',
+  padding: theme.spacing(0.75, 1.25, 0.75, 3),
+  borderTop: collapsed ? 'none' : `1px solid ${theme.palette.divider}`,
+  cursor: 'pointer'
+}));
+
+const CollapseWrapper = styled(Collapse)(() => ({
+  '.MuiCollapse-wrapperInner': {
     maxHeight: 'max(350px, 80vh)',
     overflowY: 'auto',
     overflowX: 'hidden'
@@ -120,9 +117,6 @@ const useStylesLegendContainer = makeStyles((theme) => ({
 
 function LegendContainer({ isSingle, children, collapsed, onChangeCollapsed, title }) {
   const wrapper = createRef();
-  const classes = useStylesLegendContainer({
-    collapsed
-  });
 
   const handleExpandClick = () => {
     if (onChangeCollapsed) onChangeCollapsed(!collapsed);
@@ -132,26 +126,18 @@ function LegendContainer({ isSingle, children, collapsed, onChangeCollapsed, tit
     children
   ) : (
     <>
-      <Collapse
-        ref={wrapper}
-        in={!collapsed}
-        timeout='auto'
-        unmountOnExit
-        classes={{
-          wrapperInner: classes.wrapperInner
-        }}
-      >
+      <CollapseWrapper ref={wrapper} in={!collapsed} timeout='auto' unmountOnExit>
         {children}
-      </Collapse>
-      <Grid container className={classes.header}>
-        <Button
-          className={classes.button}
+      </CollapseWrapper>
+      <Header container>
+        <HeaderButton
+          collapsed={collapsed}
           endIcon={<LayersIcon />}
           onClick={handleExpandClick}
         >
           <Typography variant='subtitle1'>{title}</Typography>
-        </Button>
-      </Grid>
+        </HeaderButton>
+      </Header>
     </>
   );
 }

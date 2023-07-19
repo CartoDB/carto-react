@@ -3,7 +3,12 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, PieWidgetUI } from '@carto/react-ui';
-import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
+import {
+  _FilterTypes as FilterTypes,
+  AggregationTypes,
+  _hasFeatureFlag,
+  _FeatureFlags
+} from '@carto/react-core';
 import { getCategories } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import { columnAggregationOn } from './utils/propTypesFns';
@@ -24,15 +29,16 @@ const EMPTY_ARRAY = [];
  * @param  {string} props.operation - Operation to apply to the operationColumn. Must be one of those defined in `AggregationTypes` object.
  * @param  {Function} [props.formatter] - Function to format the value that appears in the tooltip.
  * @param  {Function} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
- * @param  {object} props.labels - Object that maps category name with a chosen label
- * @param  {string} props.height - Height of the chart
+ * @param  {object} props.labels - Object that maps category name with a chosen label.
+ * @param  {string} props.height - Height of the chart.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
+ * @param  {string[]} [props.colors] - Colors to be used in the pie chart.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
- * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
- * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
+ * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
+ * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
+ * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  */
 function PieWidget({
   id,
@@ -64,7 +70,8 @@ function PieWidget({
   const {
     data = [],
     isLoading,
-    warning
+    warning,
+    remoteCalculation
   } = useWidgetFetch(getCategories, {
     id,
     dataSource,
@@ -75,7 +82,8 @@ function PieWidget({
       operation
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   const handleSelectedCategoriesChange = useCallback(
@@ -111,6 +119,7 @@ function PieWidget({
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
+        showDroppingFeaturesAlert={!remoteCalculation}
       >
         {(!!data.length || isLoading) && (
           <PieWidgetUI
@@ -124,6 +133,7 @@ function PieWidget({
             filterable={filterable}
             selectedCategories={selectedCategories}
             onSelectedCategoriesChange={handleSelectedCategoriesChange}
+            isLoading={isLoading}
           />
         )}
       </WidgetWithAlert>

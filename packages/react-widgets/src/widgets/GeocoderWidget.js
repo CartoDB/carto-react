@@ -4,33 +4,26 @@ import { PropTypes } from 'prop-types';
 
 import { addLayer, setViewState } from '@carto/react-redux';
 
-import { CircularProgress, InputBase, Paper, SvgIcon } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { CircularProgress, InputBase, Paper, SvgIcon, styled } from '@mui/material';
 import useGeocoderWidgetController from '../hooks/useGeocoderWidgetController';
 
-const useStyles = makeStyles((theme) => ({
-  paperInput: {
-    height: theme.spacing(4.5),
-    width: theme.spacing(30),
-    paddingLeft: theme.spacing(1.5),
-    borderRadius: 4,
-    display: 'flex',
-    alignItems: 'center'
-  },
-  icon: {
-    fill: theme.palette.text.secondary,
-    height: '1em',
-    fontSize: `${theme.typography.body2.lineHeight}em`
-  },
-  clear: {
-    ...theme.typography.body2
-  },
-  input: {
-    ...theme.typography.body2,
-    width: `calc(100% - ${theme.spacing(5)})`,
-    marginLeft: theme.spacing(1)
-  }
+const StyledPaper = styled(Paper)(({ theme: { spacing } }) => ({
+  height: spacing(4.5),
+  width: spacing(30),
+  paddingLeft: spacing(1.5),
+  borderRadius: spacing(0.5),
+  display: 'flex',
+  alignItems: 'center'
 }));
+
+const InputSearch = styled(InputBase)(({ theme: { spacing } }) => ({
+  width: `calc(100% - ${spacing(5)})`,
+  marginLeft: spacing(1)
+}));
+
+const svgStyle = {
+  fill: ({ palette }) => palette.text.secondary
+};
 
 const SearchIcon = (args) => (
   <SvgIcon {...args}>
@@ -44,11 +37,9 @@ const SearchIcon = (args) => (
 /**
  * Renders a <GeocoderWidget /> component
  * @param  {object} props
- * @param  {Object} [props.className] - Material-UI withStyle class for styling
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  */
 function GeocoderWidget(props = {}) {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const geocoderResult = useSelector((state) => state.carto.geocoderResult);
 
@@ -78,19 +69,18 @@ function GeocoderWidget(props = {}) {
   }, [geocoderResult, dispatch]);
 
   return (
-    <Paper className={`${props.className} ${classes.paperInput}`} elevation={2}>
+    <StyledPaper elevation={2}>
       {loading ? (
-        <CircularProgress size={20} className={classes.icon} />
+        <CircularProgress size={18} sx={svgStyle} />
       ) : (
-        <SearchIcon className={classes.icon} />
+        <SearchIcon sx={svgStyle} />
       )}
 
-      <InputBase
+      <InputSearch
         type='search'
         tabIndex={-1}
         size='small'
         placeholder='Search address'
-        className={classes.input}
         value={searchText}
         inputProps={{ 'aria-label': 'GeocoderSearch' }}
         onChange={handleChange}
@@ -98,12 +88,11 @@ function GeocoderWidget(props = {}) {
         onKeyDown={handleKeyPress}
         onBlur={handleBlur}
       />
-    </Paper>
+    </StyledPaper>
   );
 }
 
 GeocoderWidget.propTypes = {
-  className: PropTypes.string,
   onError: PropTypes.func
 };
 

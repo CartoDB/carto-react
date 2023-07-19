@@ -1,25 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { animateValue } from './utils/animations';
+import { styled } from '@mui/material';
+import { animateValue } from '../utils/animations';
+import Typography from '../../components/atoms/Typography';
+import FormulaSkeleton from './FormulaSkeleton';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    ...theme.typography.h5,
-    fontWeight: theme.typography.fontWeightMedium,
-    color: theme.palette.text.primary
-  },
-  unit: {
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(0.5),
+const Prefix = styled('span')(() => ({
+  marginRight: '2px'
+}));
 
-    '&.before': {
-      marginLeft: 0,
-      marginRight: theme.spacing(0.5)
-    }
-  },
-  before: {}
+const Suffix = styled('span')(() => ({
+  marginLeft: '2px'
 }));
 
 function usePrevious(value) {
@@ -31,8 +22,7 @@ function usePrevious(value) {
 }
 
 function FormulaWidgetUI(props) {
-  const classes = useStyles();
-  const { data, formatter, animation } = props;
+  const { data, formatter, animation, isLoading } = props;
   const [value, setValue] = useState('-');
   const requestRef = useRef();
   const prevValue = usePrevious(value);
@@ -59,11 +49,12 @@ function FormulaWidgetUI(props) {
         start: referencedPrevValue.current.value,
         end: data.value,
         duration: 1000,
-        drawFrame: (val) => setValue({ value: val, unit: data.prefix }),
+        drawFrame: (val) =>
+          setValue({ value: val, prefix: data.prefix, suffix: data.suffix }),
         requestRef
       });
     } else {
-      setValue(data);
+      setValue(data !== null && data !== undefined ? data : '-');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => cancelAnimationFrame(requestRef.current);
@@ -71,27 +62,37 @@ function FormulaWidgetUI(props) {
 
   const formattedValue = formatter(value);
 
-  return (
-    <Box className={classes.root}>
-      {typeof formattedValue === 'object' && formattedValue !== null ? (
-        <span>
-          <span className={`${classes.unit} ${classes.before}`}>
-            {formattedValue.prefix}
-          </span>
-          {formattedValue.value}
-          <span className={classes.suffix}>{formattedValue.suffix}</span>
-        </span>
-      ) : (
-        <span>{formattedValue}</span>
-      )}
-    </Box>
+  const isComplexFormat = typeof formattedValue === 'object' && formattedValue !== null;
+  const isDisabled = formattedValue === '-';
+
+  if (isLoading) return <FormulaSkeleton />;
+
+  return isComplexFormat ? (
+    <Typography variant='h5' component='div' weight='medium'>
+      <Prefix>{formattedValue.prefix}</Prefix>
+      {formattedValue.value}
+      <Suffix>{formattedValue.suffix}</Suffix>
+    </Typography>
+  ) : (
+    <Typography
+      variant='h5'
+      component='div'
+      weight='medium'
+      color={isDisabled ? 'text.disabled' : 'default'}
+      whiteSpace='nowrap'
+      textOverflow='ellipsis'
+      overflow='hidden'
+    >
+      {formattedValue}
+    </Typography>
   );
 }
 
 FormulaWidgetUI.defaultProps = {
   data: '-',
   formatter: (v) => v,
-  unitBefore: false,
+  prefix: '',
+  suffix: '',
   animation: true
 };
 
@@ -101,12 +102,13 @@ FormulaWidgetUI.propTypes = {
     PropTypes.number,
     PropTypes.shape({
       value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-      unit: PropTypes.string
+      prefix: PropTypes.string,
+      suffix: PropTypes.string
     })
   ]),
-  unitBefore: PropTypes.bool,
   formatter: PropTypes.func,
-  animation: PropTypes.bool
+  animation: PropTypes.bool,
+  isLoading: PropTypes.bool
 };
 
 export default FormulaWidgetUI;

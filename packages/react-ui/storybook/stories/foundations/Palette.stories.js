@@ -1,7 +1,6 @@
-import React, { useRef } from 'react';
 import { Box, Grid, Tooltip } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { useTheme } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
+import React, { useRef } from 'react';
 import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
@@ -35,51 +34,72 @@ const options = {
 };
 export default options;
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)',
-    gap: theme.spacing(1)
-  },
-  text: {
-    marginBottom: theme.spacing(0.5)
-  },
-  textValue: {
-    display: 'block',
-    maxWidth: '144px'
-  },
-  color: {
-    height: 48,
-    width: '100%',
-    marginBottom: theme.spacing(3),
-    border: `1px solid ${theme.palette.grey[100]}`,
-    borderRadius: theme.spacing(0.5)
-  }
+const Container = styled(Grid)(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(4, 1fr)',
+  gap: theme.spacing(1)
+}));
+
+const TextColor = styled(Typography)(({ theme }) => ({
+  display: 'block',
+  maxWidth: theme.spacing(18)
+}));
+
+function decamelCase(s) {
+  return s.replaceAll(/([a-z])([A-Z])/g, (x, p1, p2) => `${p1} ${p2}`);
+}
+
+function capitalize(s) {
+  return s
+    ? String(s).substring(0, 1).toUpperCase() + decamelCase(String(s).substring(1))
+    : '';
+}
+
+function figmaColorName(v, n) {
+  return ['Light', capitalize(v), capitalize(n)].filter(Boolean).join('/');
+}
+
+function jsColorSelector(v, n) {
+  return `theme.palette.${v}${
+    typeof n === 'number' || String(n).match(/^[0-9]/)
+      ? `[${n}]`
+      : typeof n === 'string'
+      ? `.${n}`
+      : ''
+  }`;
+}
+
+const Bullet = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'color'
+})(({ theme, color: background }) => ({
+  height: 48,
+  width: '100%',
+  border: `1px solid ${theme.palette.grey[100]}`,
+  borderRadius: theme.spacing(0.5),
+  background
 }));
 
 const ColorBox = ({ colorVariant, colorName }) => {
   const theme = useTheme();
   const color = theme.palette[colorVariant];
   const colorValue = colorName ? color[colorName] : color;
-  const classes = useStyles();
   const textRef = useRef();
 
   return (
-    <Box>
-      <Box className={classes.text}>
+    <Box mb={3}>
+      <Box mt={0.5}>
         <Typography variant='subtitle1'>{colorName}</Typography>
         <Tooltip title={colorValue} enterDelay={600}>
-          <Typography
-            variant='caption'
-            noWrap
-            className={classes.textValue}
-            ref={textRef}
-          >
+          <TextColor variant='caption' noWrap ref={textRef}>
             {colorValue}
-          </Typography>
+          </TextColor>
         </Tooltip>
       </Box>
-      <Box className={classes.color} style={{ background: colorValue }} />
+      <Bullet color={colorValue} />
+      <Typography variant='caption'>
+        {figmaColorName(colorVariant, colorName)}
+        <pre style={{ margin: 0 }}>{jsColorSelector(colorVariant, colorName)}</pre>
+      </Typography>
     </Box>
   );
 };
@@ -87,10 +107,9 @@ const ColorBox = ({ colorVariant, colorName }) => {
 const ColorTemplate = ({ colorVariant }) => {
   const theme = useTheme();
   const colorDef = theme.palette[colorVariant];
-  const classes = useStyles();
 
   return (
-    <Grid container className={classes.container}>
+    <Container container>
       <ColorBox colorVariant={colorVariant} colorName={'main'} />
       <ColorBox colorVariant={colorVariant} colorName={'dark'} />
       <ColorBox colorVariant={colorVariant} colorName={'light'} />
@@ -109,65 +128,55 @@ const ColorTemplate = ({ colorVariant }) => {
       {colorDef.outlinedBorder && (
         <ColorBox colorVariant={colorVariant} colorName={'outlinedBorder'} />
       )}
-    </Grid>
+    </Container>
   );
 };
 
 const TextTemplate = () => {
-  const classes = useStyles();
-
   return (
-    <Grid container className={classes.container}>
+    <Container container>
       <ColorBox colorVariant={'text'} colorName={'primary'} />
       <ColorBox colorVariant={'text'} colorName={'secondary'} />
       <ColorBox colorVariant={'text'} colorName={'disabled'} />
       <ColorBox colorVariant={'text'} colorName={'hint'} />
-    </Grid>
+    </Container>
   );
 };
 
 const CommonTemplate = () => {
-  const classes = useStyles();
-
   return (
-    <Grid container className={classes.container}>
+    <Container container>
       <ColorBox colorVariant={'common'} colorName={'black'} />
       <ColorBox colorVariant={'common'} colorName={'white'} />
-    </Grid>
+    </Container>
   );
 };
 
 const BackgroundTemplate = () => {
-  const classes = useStyles();
-
   return (
-    <Grid container className={classes.container}>
+    <Container container>
       <ColorBox colorVariant={'background'} colorName={'paper'} />
       <ColorBox colorVariant={'background'} colorName={'default'} />
-    </Grid>
+    </Container>
   );
 };
 
 const ActionTemplate = () => {
-  const classes = useStyles();
-
   return (
-    <Grid container className={classes.container}>
+    <Container container>
       <ColorBox colorVariant={'action'} colorName={'active'} />
       <ColorBox colorVariant={'action'} colorName={'hover'} />
       <ColorBox colorVariant={'action'} colorName={'disabledBackground'} />
       <ColorBox colorVariant={'action'} colorName={'disabled'} />
       <ColorBox colorVariant={'action'} colorName={'selected'} />
       <ColorBox colorVariant={'action'} colorName={'focus'} />
-    </Grid>
+    </Container>
   );
 };
 
 const GreyTemplate = () => {
-  const classes = useStyles();
-
   return (
-    <Grid container className={classes.container}>
+    <Container container>
       <ColorBox colorVariant={'grey'} colorName={'900'} />
       <ColorBox colorVariant={'grey'} colorName={'800'} />
       <ColorBox colorVariant={'grey'} colorName={'700'} />
@@ -182,17 +191,15 @@ const GreyTemplate = () => {
       <ColorBox colorVariant={'grey'} colorName={'A200'} />
       <ColorBox colorVariant={'grey'} colorName={'A400'} />
       <ColorBox colorVariant={'grey'} colorName={'A700'} />
-    </Grid>
+    </Container>
   );
 };
 
 const ShadesTemplate = () => {
-  const classes = useStyles();
-
   return (
     <>
       <Typography variant='h6'>{'Black'}</Typography>
-      <Grid container className={classes.container}>
+      <Container container>
         <ColorBox colorVariant={'black'} colorName={90} />
         <ColorBox colorVariant={'black'} colorName={60} />
         <ColorBox colorVariant={'black'} colorName={40} />
@@ -200,10 +207,10 @@ const ShadesTemplate = () => {
         <ColorBox colorVariant={'black'} colorName={12} />
         <ColorBox colorVariant={'black'} colorName={8} />
         <ColorBox colorVariant={'black'} colorName={4} />
-      </Grid>
+      </Container>
 
       <Typography variant='h6'>{'White'}</Typography>
-      <Grid container className={classes.container}>
+      <Container container>
         <ColorBox colorVariant={'white'} colorName={90} />
         <ColorBox colorVariant={'white'} colorName={60} />
         <ColorBox colorVariant={'white'} colorName={40} />
@@ -211,31 +218,27 @@ const ShadesTemplate = () => {
         <ColorBox colorVariant={'white'} colorName={12} />
         <ColorBox colorVariant={'white'} colorName={8} />
         <ColorBox colorVariant={'white'} colorName={4} />
-      </Grid>
+      </Container>
     </>
   );
 };
 
 const BrandTemplate = () => {
-  const classes = useStyles();
-
   return (
-    <Grid container className={classes.container}>
+    <Container container>
       <ColorBox colorVariant={'brand'} colorName={'navyBlue'} />
       <ColorBox colorVariant={'brand'} colorName={'locationRed'} />
       <ColorBox colorVariant={'brand'} colorName={'predictionBlue'} />
       <ColorBox colorVariant={'brand'} colorName={'softBlue'} />
-    </Grid>
+    </Container>
   );
 };
 
 const DividerTemplate = () => {
-  const classes = useStyles();
-
   return (
-    <Grid container className={classes.container}>
+    <Container container>
       <ColorBox colorVariant={'divider'} />
-    </Grid>
+    </Container>
   );
 };
 

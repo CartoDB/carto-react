@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
-import { OPERATION } from '@deck.gl/core';
-import { SolidPolygonLayer } from '@deck.gl/layers';
+import { SolidPolygonLayer } from '@deck.gl/layers/typed';
 import { MASK_ID } from '@carto/react-core/';
 import { selectSpatialFilter } from '@carto/react-redux/';
 
@@ -12,7 +11,7 @@ export default function MaskLayer() {
 
   return new SolidPolygonLayer({
     id: MASK_ID,
-    operation: OPERATION.MASK,
+    operation: 'mask',
     data: maskData,
     getFillColor: [255, 255, 255, 255]
   });

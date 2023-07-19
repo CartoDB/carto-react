@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import React, { useState } from 'react';
-import FeatureSelectionWidgetUI from '../../../src/widgets/FeatureSelectionWidgetUI';
+import FeatureSelectionWidgetUI from '../../../src/widgets/FeatureSelectionWidgetUI/FeatureSelectionWidgetUI';
 import CursorIcon from '../../../src/assets/icons/CursorIcon';
 import PolygonIcon from '../../../src/assets/icons/PolygonIcon';
 import RectangleIcon from '../../../src/assets/icons/RectangleIcon';
@@ -11,6 +11,12 @@ const options = {
   argTypes: {
     enabled: {
       control: { type: 'boolean' }
+    },
+    size: {
+      control: {
+        type: 'select',
+        options: ['small', 'medium']
+      }
     }
   },
   parameters: {
@@ -38,7 +44,7 @@ const Template = (args) => {
   const [selectedMode, setSelectedMode] = useState(FEATURE_SELECTION_MODES[0].id);
 
   return (
-    <Box display='inline-block' minWidth={72}>
+    <Box display='inline-block'>
       <FeatureSelectionWidgetUI
         selectionModes={FEATURE_SELECTION_MODES}
         editModes={EDIT_MODES}
@@ -70,8 +76,35 @@ WithoutEdit.args = WithoutEditProps;
 
 export const WithGeometry = Template.bind({});
 const WithGeometryProps = {
-  geometry: [{ geometry: 1 }],
+  geometry: {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [0.5, 0.5]
+    },
+    properties: {
+      name: 'Mask'
+    }
+  },
   onSelectGeometry: () => console.log('onSelectGeometry'),
   onDeleteGeometry: () => console.log('onDeleteGeometry')
 };
 WithGeometry.args = WithGeometryProps;
+
+export const SmallSize = Template.bind({});
+const SmallSizeProps = {
+  geometry: {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [0.5, 0.5]
+    },
+    properties: {
+      name: 'Mask'
+    }
+  },
+  size: 'small',
+  onSelectGeometry: () => console.log('onSelectGeometry'),
+  onDeleteGeometry: () => console.log('onDeleteGeometry')
+};
+SmallSize.args = SmallSizeProps;

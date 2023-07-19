@@ -1,4 +1,4 @@
-import { TILE_FORMATS } from '@deck.gl/carto';
+import { TILE_FORMATS } from '@deck.gl/carto/typed';
 import bboxPolygon from '@turf/bbox-polygon';
 import intersects from '@turf/boolean-intersects';
 import booleanWithin from '@turf/boolean-within';
@@ -164,10 +164,6 @@ function createIndicesForPoints(data) {
   };
   data.pointIndices.value.set(featureIds);
   data.pointIndices.value.set([lastFeatureId + 1], featureIds.length);
-}
-
-export function getGeometryToIntersect(viewport, geometry) {
-  return geometry ? intersect(bboxPolygon(viewport), geometry) : bboxPolygon(viewport);
 }
 
 export default function tileFeaturesGeometries({

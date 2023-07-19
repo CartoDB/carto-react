@@ -1,69 +1,74 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Link, Slider, TextField } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Box, Link, Slider, TextField, styled } from '@mui/material';
 import { debounce } from '@carto/react-core';
+import Typography from '../../components/atoms/Typography';
+import RangeSkeleton from './RangeSkeleton';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'relative'
+const Root = styled(Box)(() => ({
+  position: 'relative'
+}));
+
+const ClearWrapper = styled(Box)(({ theme: { spacing } }) => ({
+  display: 'flex',
+  flexDirection: 'row-reverse',
+  height: spacing(1.5)
+}));
+
+const ClearButton = styled(Link)(() => ({
+  cursor: 'pointer'
+}));
+
+const LimitTextField = styled(TextField)(({ theme: { spacing } }) => ({
+  maxWidth: spacing(9),
+  margin: 0,
+  '& fieldset': {
+    borderWidth: 1
   },
-  sliderWithThumbRail: {
-    color: theme.palette.text.hint
-  },
-  sliderLimit: {
-    pointerEvents: 'none',
-    position: 'absolute',
-    zIndex: 1,
-    left: 0,
-    right: 0
-  },
-  sliderLimitThumb: {
+  '& input': {
+    '&[type=number]': {
+      appearance: 'textfield'
+    },
+    '&::-webkit-outer-spin-button': {
+      appearance: 'none',
+      margin: 0
+    },
+    '&::-webkit-inner-spin-button': {
+      appearance: 'none',
+      margin: 0
+    }
+  }
+}));
+
+const StyledSlider = styled(Slider)(({ theme: { palette } }) => ({
+  '& .MuiSlider-rail': {
+    color: palette.text.hint
+  }
+}));
+
+const SliderLimit = styled(Slider)(({ theme: { palette, spacing } }) => ({
+  pointerEvents: 'none',
+  position: 'absolute',
+  zIndex: 1,
+  left: 0,
+  right: 0,
+  '& .MuiSlider-rail': {
     display: 'none'
   },
-  sliderLimitRail: {
+  '& .MuiSlider-thumb': {
     display: 'none'
   },
-  sliderLimitMarks: {
-    backgroundColor: theme.palette.primary.main,
-    opacity: 0.38,
-    height: theme.spacing(1),
-    width: theme.spacing(0.25),
-    top: '50%',
-    transform: 'translateY(-50%)'
-  },
-  sliderLimitsTrack: {
-    color: theme.palette.primary.main,
+  '& .MuiSlider-track': {
+    color: palette.primary.main,
     opacity: 0.38
   },
-  input: {
-    maxWidth: theme.spacing(9),
-    margin: 0,
-    '& fieldset': {
-      borderWidth: 1
-    },
-    '& input': {
-      '&[type=number]': {
-        appearance: 'textfield'
-      },
-      '&::-webkit-outer-spin-button': {
-        appearance: 'none',
-        margin: 0
-      },
-      '&::-webkit-inner-spin-button': {
-        appearance: 'none',
-        margin: 0
-      }
-    }
-  },
-  clearWrapper: {
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    height: theme.spacing(1.5)
-  },
-  clearButton: {
-    ...theme.typography.caption,
-    cursor: 'pointer'
+  '& .MuiSlider-mark, & .MuiSlider-markActive': {
+    backgroundColor: palette.primary.main,
+    opacity: 0.38,
+    height: spacing(1),
+    width: spacing(0.25),
+    top: '50%',
+    transform: 'translateY(-50%)'
   }
 }));
 
@@ -75,11 +80,11 @@ const useStyles = makeStyles((theme) => ({
  * @param  {number} props.max - The absolute max value
  * @param  {number[]} props.limits - Array of two numbers that represent a relative min and max values. It is useful to represent the min and max value taking into account other filters.
  * @param  {Function} [props.onSelectedRangeChange] - This fuction will be cal when selected values change
+ * @param {boolean} [props.isLoading] - If true, the component will render a skeleton
 
  */
 
-function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
-  const classes = useStyles();
+function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoading }) {
   const [sliderValues, setSliderValues] = useState([min, max]);
   const [inputsValues, setInputsValues] = useState([min, max]);
 
@@ -152,37 +157,32 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
     changeSliderValues([min, max]);
   };
 
+  if (isLoading) {
+    return <RangeSkeleton />;
+  }
+
   return (
-    <Box className={classes.root}>
-      <Box className={classes.clearWrapper}>
+    <Root>
+      <ClearWrapper>
         {hasBeenModified && (
-          <Link onClick={resetSlider} className={classes.clearButton} underline='hover'>
-            Clear
-          </Link>
+          <Typography variant='caption' color='primary'>
+            <ClearButton onClick={resetSlider} underline='hover'>
+              Clear
+            </ClearButton>
+          </Typography>
         )}
-      </Box>
+      </ClearWrapper>
       <Box>
-        <Slider
+        <StyledSlider
           getAriaLabel={(index) => (index === 0 ? 'min value' : 'max value')}
-          classes={{
-            rail: classes.sliderWithThumbRail
-          }}
           value={sliderValues}
           min={min}
           max={max}
           onChange={(_, values) => changeSliderValues(values)}
         />
         {limits && limits.length === 2 && (
-          <Slider
+          <SliderLimit
             getAriaLabel={(index) => (index === 0 ? 'min limit' : 'max limit')}
-            className={classes.sliderLimit}
-            classes={{
-              rail: classes.sliderLimitRail,
-              thumb: classes.sliderLimitThumb,
-              track: classes.sliderLimitsTrack,
-              mark: classes.sliderLimitMarks,
-              markActive: classes.sliderLimitMarks
-            }}
             value={limits}
             min={min}
             max={max}
@@ -191,8 +191,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
         )}
       </Box>
       <Box display={'flex'} justifyContent={'space-between'} mb={1}>
-        <TextField
-          className={classes.input}
+        <LimitTextField
           value={inputsValues[0]}
           size='small'
           onChange={(event) => handleInputChange(event, 0)}
@@ -204,8 +203,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
             'aria-label': 'min value'
           }}
         />
-        <TextField
-          className={classes.input}
+        <LimitTextField
           value={inputsValues[1]}
           size='small'
           onChange={(event) => handleInputChange(event, 1)}
@@ -218,7 +216,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange }) {
           }}
         />
       </Box>
-    </Box>
+    </Root>
   );
 }
 
@@ -227,7 +225,8 @@ RangeWidgetUI.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   limits: PropTypes.arrayOf(PropTypes.number),
-  onSelectedRangeChange: PropTypes.func
+  onSelectedRangeChange: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default RangeWidgetUI;

@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-workers",
-  "version": "2.0.1",
+  "version": "2.1.8",
   "description": "CARTO for React - Workers",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.9",
-    "@carto/react-core": "^2.0.1",
+    "@carto/react-core": "^2.1.8",
     "@turf/bbox-polygon": "^6.3.0",
     "@turf/boolean-intersects": "^6.3.0",
     "@turf/boolean-within": "^6.3.0",

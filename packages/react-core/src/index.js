@@ -13,8 +13,14 @@ export { debounce } from './utils/debounce';
 export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';
 export { assert as _assert } from './utils/assert';
+export { getGeometryToIntersect, isGlobalViewport, normalizeGeometry } from './utils/geo';
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
+
+export {
+  getColumnNameFromGeoColumn,
+  getSpatialIndexFromGeoColumn
+} from './utils/columns';
 
 export { FiltersLogicalOperators } from './operations/constants/FiltersLogicalOperators';
 export { AggregationTypes } from './operations/constants/AggregationTypes';
@@ -47,3 +53,15 @@ export {
   EDIT_MODES,
   MASK_ID
 } from './utils/featureSelectionConstants';
+
+export {
+  Flags as _FeatureFlags,
+  hasFlag as _hasFeatureFlag,
+  setFlags as _setFeatureFlags,
+  clearFlags as _clearFeatureFlags
+} from './utils/featureFlags';
+
+export {
+  setClient as _setClient,
+  getClient as _getClient
+} from './utils/clientParameter';

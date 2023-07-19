@@ -1,27 +1,27 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import ReactEcharts from '../custom-components/echarts-for-react';
-import { Grid, Link, useTheme, darken } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import detectTouchScreen from './utils/detectTouchScreen';
-import { processFormatterRes } from './utils/formatterUtils';
-import Typography from '../components/atoms/Typography';
+import ReactEcharts from '../../custom-components/echarts-for-react';
+import { Grid, Link, useTheme, darken, styled } from '@mui/material';
+import detectTouchScreen from '../utils/detectTouchScreen';
+import { processFormatterRes } from '../utils/formatterUtils';
+import Typography from '../../components/atoms/Typography';
+import BarSkeleton from './BarSkeleton';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
 
-const useStyles = makeStyles((theme) => ({
-  optionsSelectedBar: {
-    marginBottom: theme.spacingValue * 2,
-
-    '& .MuiTypography-caption': {
-      color: theme.palette.text.secondary
-    }
-  },
-
-  selectAllButton: {
-    ...theme.typography.caption,
-    cursor: 'pointer'
+const OptionsSelectedBar = styled(Grid)(({ theme }) => ({
+  marginBottom: theme.spacingValue * 2,
+  direction: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  '& .MuiTypography-caption': {
+    color: theme.palette.text.secondary
   }
+}));
+
+const SelectAllButton = styled(Link)(({ theme }) => ({
+  ...theme.typography.caption,
+  cursor: 'pointer'
 }));
 
 function BarWidgetUI(props) {
@@ -43,13 +43,13 @@ function BarWidgetUI(props) {
     stacked,
     height,
     filterable,
-    animation
+    animation,
+    isLoading
   } = useProcessedProps(props);
 
   const isMultiSeries = series.length > 1;
 
   const theme = useTheme();
-  const classes = useStyles();
 
   // Tooltip
   const tooltipOptions = useMemo(
@@ -289,29 +289,21 @@ function BarWidgetUI(props) {
     [filterable, clickEvent]
   );
 
+  if (isLoading) return <BarSkeleton height={height} />;
+
   return (
     <div>
       {onSelectedBarsChange && (
-        <Grid
-          container
-          direction='row'
-          justifyContent='space-between'
-          alignItems='center'
-          className={classes.optionsSelectedBar}
-        >
+        <OptionsSelectedBar container>
           <Typography variant='caption'>
             {selectedBars?.length || 'All'} selected
           </Typography>
           {selectedBars && selectedBars.length > 0 && (
-            <Link
-              className={classes.selectAllButton}
-              onClick={() => clearBars()}
-              underline='hover'
-            >
+            <SelectAllButton onClick={() => clearBars()} underline='hover'>
               Clear
-            </Link>
+            </SelectAllButton>
           )}
-        </Grid>
+        </OptionsSelectedBar>
       )}
       {!!options && (
         <ReactEcharts
@@ -364,7 +356,8 @@ BarWidgetUI.propTypes = {
   onSelectedBarsChange: PropTypes.func,
   height: numberOrString,
   filterable: PropTypes.bool,
-  animation: PropTypes.bool
+  animation: PropTypes.bool,
+  isLoading: PropTypes.bool
 };
 
 export default BarWidgetUI;

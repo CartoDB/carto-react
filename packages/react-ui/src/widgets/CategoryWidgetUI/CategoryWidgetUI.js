@@ -5,108 +5,24 @@ import {
   Checkbox,
   Grid,
   InputAdornment,
-  Link,
   Divider,
-  SvgIcon,
   TextField,
   Tooltip
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { Skeleton } from '@mui/material';
 
-import { animateValues } from './utils/animations';
-import Typography from '../components/atoms/Typography';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    ...theme.typography.body2
-  },
-
-  categoriesWrapper: {
-    maxHeight: theme.spacing(40),
-    overflow: 'auto',
-    padding: theme.spacing(0, 1, 1, 0)
-  },
-
-  selectable: {
-    cursor: 'pointer',
-    flexWrap: 'nowrap',
-
-    '&:hover $progressbar div': {
-      backgroundColor: theme.palette.secondary.dark
-    }
-  },
-
-  element: {
-    '&$unselected': {
-      color: theme.palette.text.disabled,
-
-      '& $progressbar div': {
-        backgroundColor: theme.palette.text.disabled
-      }
-    },
-
-    '&$rest $progressbar div': {
-      backgroundColor: theme.palette.text.disabled
-    }
-  },
-
-  label: {
-    fontWeight: theme.typography.fontWeightBold,
-    marginRight: theme.spacing(2)
-  },
-
-  progressbar: {
-    height: theme.spacing(0.5),
-    width: '100%',
-    margin: theme.spacing(0.5, 0, 1, 0),
-    borderRadius: theme.spacing(0.5),
-    backgroundColor: theme.palette.action.disabledBackground,
-
-    '& div': {
-      width: 0,
-      height: '100%',
-      borderRadius: theme.spacing(0.5),
-      backgroundColor: theme.palette.secondary.main,
-      transition: `background-color ${theme.transitions.easing.sharp} ${theme.transitions.duration.shortest}ms,
-                   width ${theme.transitions.easing.sharp} ${theme.transitions.duration.complex}ms`
-    }
-  },
-
-  skeletonProgressbar: {
-    height: theme.spacing(1),
-    width: '100%',
-    margin: theme.spacing(0.5, 0, 1, 0)
-  },
-
-  unselected: {},
-
-  rest: {
-    cursor: 'default'
-  },
-
-  optionsSelectedBar: {
-    marginBottom: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-
-    '& .MuiTypography-caption': {
-      color: theme.palette.text.secondary
-    }
-  },
-
-  linkAsButton: {
-    ...theme.typography.caption,
-    cursor: 'pointer',
-
-    '& + hr': {
-      margin: theme.spacing(0, 1)
-    }
-  },
-
-  searchInput: {
-    marginTop: theme.spacing(-0.5)
-  }
-}));
+import { animateValues } from '../utils/animations';
+import Typography from '../../components/atoms/Typography';
+import CategorySkeleton from './CategorySkeleton';
+import {
+  CategoriesWrapper,
+  CategoryItemGroup,
+  CategoryLabel,
+  LinkAsButton,
+  OptionsSelectedBar,
+  ProgressBar,
+  CategoriesRoot
+} from './CategoryWidgetUI.styled';
+import SearchIcon from '../../assets/icons/SearchIcon';
 
 function usePrevious(value) {
   const ref = useRef();
@@ -118,16 +34,6 @@ function usePrevious(value) {
 
 const REST_CATEGORY = '__rest__';
 
-const SearchIcon = () => (
-  <SvgIcon>
-    <path
-      d='M11,4 C14.8659932,4 18,7.13400675 18,11 C18,12.7003211 17.3937669,14.2590489 16.3856562,15.4718279 L19.4748737,18.5606602 L18.0606602,19.9748737 L14.8998887,16.8138615 C13.7854137,17.5629194 12.4437497,18 11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 Z M11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 Z'
-      id='-↳Color'
-      fill='inherit'
-    ></path>
-  </SvgIcon>
-);
-
 function CategoryWidgetUI(props) {
   const {
     data,
@@ -138,7 +44,8 @@ function CategoryWidgetUI(props) {
     selectedCategories,
     animation,
     filterable,
-    searchable
+    searchable,
+    isLoading
   } = props;
   const [sortedData, setSortedData] = useState([]);
   const [maxValue, setMaxValue] = useState(1);
@@ -150,7 +57,6 @@ function CategoryWidgetUI(props) {
   const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
-  const classes = useStyles({ filterable });
 
   // Get blockedCategories in the same order as original data
   const sortBlockedSameAsData = (blockedCategories) =>
@@ -389,24 +295,19 @@ function CategoryWidgetUI(props) {
       };
     }, []);
 
+    const unselected =
+      !showAll &&
+      selectedCategories.length > 0 &&
+      selectedCategories.indexOf(data.name) === -1;
     return (
-      <Grid
+      <CategoryItemGroup
         container
         direction='row'
         spacing={1}
         onClick={filterable ? onCategoryClick : () => {}}
-        className={`
-          ${classes.element}
-          ${filterable ? classes.selectable : ''}
-          ${
-            !showAll &&
-            selectedCategories.length > 0 &&
-            selectedCategories.indexOf(data.name) === -1
-              ? classes.unselected
-              : ''
-          }
-          ${data.name === REST_CATEGORY ? classes.rest : ''}
-        `}
+        selectable={filterable}
+        unselected={unselected}
+        name={data.name === REST_CATEGORY ? REST_CATEGORY : ''}
       >
         {filterable && showAll && (
           <Grid item>
@@ -425,14 +326,9 @@ function CategoryWidgetUI(props) {
               title={getCategoryLabel(data.name)}
               disableHoverListener={!isOverflowed}
             >
-              <Typography
-                variant='body2'
-                className={classes.label}
-                noWrap
-                ref={textElementRef}
-              >
+              <CategoryLabel variant='body2' noWrap ref={textElementRef}>
                 {getCategoryLabel(data.name)}
-              </Typography>
+              </CategoryLabel>
             </Tooltip>
             {typeof value === 'object' && value !== null ? (
               <span>
@@ -444,168 +340,101 @@ function CategoryWidgetUI(props) {
               <span>{value}</span>
             )}
           </Grid>
-          <Grid item className={classes.progressbar}>
+          <ProgressBar className='progressbar' item>
             <div style={{ width: getProgressbarLength(data.value) }}></div>
-          </Grid>
+          </ProgressBar>
         </Grid>
-      </Grid>
+      </CategoryItemGroup>
     );
   };
 
-  const CategoryItemSkeleton = () => (
-    <>
-      <Grid
-        container
-        direction='row'
-        justifyContent='space-between'
-        alignItems='center'
-        className={classes.optionsSelectedBar}
-      >
-        <Typography variant='caption'>
-          <Skeleton variant='text' width={100} />
-        </Typography>
-      </Grid>
-      <Grid container item className={classes.categoriesWrapper}>
-        {[...Array(4)].map((_, i) => (
-          <Grid key={i} container direction='row' spacing={1} className={classes.element}>
-            <Grid container item xs zeroMinWidth>
-              <Grid container item direction='row' justifyContent='space-between'>
-                <Typography variant='body2' noWrap>
-                  <Skeleton variant='text' width={100} />
-                </Typography>
-                <Typography variant='body2'>
-                  <Skeleton variant='text' width={70} />
-                </Typography>
-              </Grid>
-              <Skeleton variant='text' className={classes.skeletonProgressbar} />
-            </Grid>
-          </Grid>
-        ))}
-      </Grid>
-    </>
-  );
+  if (data?.length === 0 || isLoading) return <CategorySkeleton />;
 
   return (
-    <div className={classes.root}>
-      {data?.length > 0 ? (
-        <>
-          {filterable && sortedData.length > 0 && (
-            <Grid
-              container
-              direction='row'
-              justifyContent='space-between'
-              alignItems='center'
-              className={classes.optionsSelectedBar}
-            >
-              <Typography variant='caption'>
-                {selectedCategories.length ? selectedCategories.length : 'All'} selected
-              </Typography>
-              {showAll ? (
-                <Link
-                  className={classes.linkAsButton}
-                  onClick={handleApplyClicked}
-                  underline='hover'
-                >
-                  Apply
-                </Link>
-              ) : blockedCategories.length > 0 ? (
-                <Link
-                  className={classes.linkAsButton}
-                  onClick={handleUnblockClicked}
-                  underline='hover'
-                >
-                  Unlock
-                </Link>
-              ) : (
-                selectedCategories.length > 0 && (
-                  <Grid container direction='row' justifyContent='flex-end' item xs>
-                    <Link
-                      className={classes.linkAsButton}
-                      onClick={handleBlockClicked}
-                      underline='hover'
-                    >
-                      Lock
-                    </Link>
-                    <Divider orientation='vertical' flexItem />
-                    <Link
-                      className={classes.linkAsButton}
-                      onClick={handleClearClicked}
-                      underline='hover'
-                    >
-                      Clear
-                    </Link>
-                  </Grid>
-                )
-              )}
-            </Grid>
-          )}
-          {data.length > maxItems && showAll && (
-            <Grid
-              container
-              direction='row'
-              justifyContent='space-between'
-              alignItems='center'
-              className={classes.optionsSelectedBar}
-            >
-              <TextField
-                size='small'
-                placeholder='Search'
-                onChange={handleSearchChange}
-                onFocus={handleSearchFocus}
-                className={classes.searchInput}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start'>
-                      <SearchIcon />
-                    </InputAdornment>
-                  )
-                }}
-              />
-            </Grid>
-          )}
-          <Grid container item className={classes.categoriesWrapper}>
-            {animValues.length ? (
-              animValues.map((d, i) => (
-                <CategoryItem
-                  key={i}
-                  data={d}
-                  onCategoryClick={() =>
-                    showAll
-                      ? handleCategoryBlocked(d.name)
-                      : handleCategorySelected(d.name)
-                  }
-                />
-              ))
-            ) : (
-              <>
-                <Typography variant='body2'>No results</Typography>
-                <Typography variant='caption'>
-                  Your search "{searchValue}" didn't match with any value.
-                </Typography>
-              </>
-            )}
-          </Grid>
-          {data.length > maxItems && searchable ? (
-            showAll ? (
-              <Button size='small' color='primary' onClick={handleCancelClicked}>
-                Cancel
-              </Button>
-            ) : (
-              <Button
-                size='small'
-                color='primary'
-                startIcon={<SearchIcon />}
-                onClick={handleShowAllCategoriesClicked}
-              >
-                Search in {getCategoriesCount()} elements
-              </Button>
+    <CategoriesRoot>
+      {filterable && sortedData.length > 0 && (
+        <OptionsSelectedBar container>
+          <Typography variant='caption'>
+            {selectedCategories.length ? selectedCategories.length : 'All'} selected
+          </Typography>
+          {showAll ? (
+            <LinkAsButton onClick={handleApplyClicked} underline='hover'>
+              Apply
+            </LinkAsButton>
+          ) : blockedCategories.length > 0 ? (
+            <LinkAsButton onClick={handleUnblockClicked} underline='hover'>
+              Unlock
+            </LinkAsButton>
+          ) : (
+            selectedCategories.length > 0 && (
+              <Grid container direction='row' justifyContent='flex-end' item xs>
+                <LinkAsButton onClick={handleBlockClicked} underline='hover'>
+                  Lock
+                </LinkAsButton>
+                <Divider orientation='vertical' flexItem />
+                <LinkAsButton onClick={handleClearClicked} underline='hover'>
+                  Clear
+                </LinkAsButton>
+              </Grid>
             )
-          ) : null}
-        </>
-      ) : (
-        <CategoryItemSkeleton />
+          )}
+        </OptionsSelectedBar>
       )}
-    </div>
+      {data.length > maxItems && showAll && (
+        <OptionsSelectedBar container>
+          <TextField
+            size='small'
+            mt={-0.5}
+            placeholder='Search'
+            onChange={handleSearchChange}
+            onFocus={handleSearchFocus}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <SearchIcon />
+                </InputAdornment>
+              )
+            }}
+          />
+        </OptionsSelectedBar>
+      )}
+      <CategoriesWrapper container item>
+        {animValues.length ? (
+          animValues.map((d, i) => (
+            <CategoryItem
+              key={i}
+              data={d}
+              onCategoryClick={() =>
+                showAll ? handleCategoryBlocked(d.name) : handleCategorySelected(d.name)
+              }
+            />
+          ))
+        ) : (
+          <>
+            <Typography variant='body2'>No results</Typography>
+            <Typography variant='caption'>
+              Your search "{searchValue}" didn't match with any value.
+            </Typography>
+          </>
+        )}
+      </CategoriesWrapper>
+      {data.length > maxItems && searchable ? (
+        showAll ? (
+          <Button size='small' color='primary' onClick={handleCancelClicked}>
+            Cancel
+          </Button>
+        ) : (
+          <Button
+            size='small'
+            color='primary'
+            startIcon={<SearchIcon />}
+            onClick={handleShowAllCategoriesClicked}
+          >
+            Search in {getCategoriesCount()} elements
+          </Button>
+        )
+      ) : null}
+    </CategoriesRoot>
   );
 }
 
@@ -646,7 +475,8 @@ CategoryWidgetUI.propTypes = {
   order: PropTypes.oneOf(Object.values(CategoryWidgetUI.ORDER_TYPES)),
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
-  searchable: PropTypes.bool
+  searchable: PropTypes.bool,
+  isLoading: PropTypes.bool
 };
 
 export default CategoryWidgetUI;

@@ -1,11 +1,6 @@
-import bboxPolygon from '@turf/bbox-polygon';
-import intersect from '@turf/intersect';
+import { getGeometryToIntersect } from '../utils/geo';
 import tileFeaturesGeometries from './tileFeaturesGeometries';
 import tileFeaturesSpatialIndex from './tileFeaturesSpatialIndex';
-
-export function getGeometryToIntersect(viewport, geometry) {
-  return geometry ? intersect(bboxPolygon(viewport), geometry) : bboxPolygon(viewport);
-}
 
 export function tileFeatures({
   tiles,

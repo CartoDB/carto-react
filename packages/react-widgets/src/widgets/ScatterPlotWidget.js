@@ -1,10 +1,11 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { WrapperWidgetUI, ScatterPlotWidgetUI } from '@carto/react-ui';
 import { getScatter } from '../models';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
+import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
 
 /**
  * Renders a <ScatterPlotWidget /> component
@@ -13,17 +14,18 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string | string[]} props.xAxisColumn - Name of the data source's column to get the x axis from. If multiples are provided, they will be merged into a single one using xAxisJoinOperation property.
- * @param  {AggregationTypes} [props.xAxisJoinOperation] - Operation applied to aggregate multiple xAxis columns into a single one.
+ * @param  {import('@carto/react-core').AggregationTypes} [props.xAxisJoinOperation] - Operation applied to aggregate multiple xAxis columns into a single one.
  * @param  {string | string[]} props.yAxisColumn - Name of the data source's column to get the y axis from. If multiples are provided, they will be merged into a single one using yAxisJoinOperation property.
- * @param  {AggregationTypes} [props.yAxisJoinOperation] - Operation applied to aggregate multiple yAxis columns into a single one.
+ * @param  {import('@carto/react-core').AggregationTypes} [props.yAxisJoinOperation] - Operation applied to aggregate multiple yAxis columns into a single one.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {Function} [props.xAxisFormatter] - Function to format X axis values.
  * @param  {Function} [props.yAxisFormatter] - Function to format Y axis values.
  * @param  {Function} [props.tooltipFormatter] - Function to format Y axis values.
+ * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
- * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
- * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
+ * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
+ * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
+ * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  */
 function ScatterPlotWidget({
   id,
@@ -57,7 +59,8 @@ function ScatterPlotWidget({
       yAxisJoinOperation
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   return (
@@ -76,6 +79,7 @@ function ScatterPlotWidget({
             xAxisFormatter={xAxisFormatter}
             yAxisFormatter={yAxisFormatter}
             animation={animation}
+            isLoading={isLoading}
           />
         )}
       </WidgetWithAlert>

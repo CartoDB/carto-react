@@ -3,5 +3,6 @@ export enum AggregationTypes {
   AVG = 'avg',
   MIN = 'min',
   MAX = 'max',
-  SUM = 'sum'
+  SUM = 'sum',
+  CUSTOM = 'custom'
 }

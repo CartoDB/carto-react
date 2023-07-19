@@ -1,5 +1,4 @@
-import { Box, Checkbox, darken, Tooltip, Typography, useTheme } from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
+import { Box, Checkbox, darken, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import PropTypes from 'prop-types';
 import AnimatedNumber, {
@@ -7,14 +6,22 @@ import AnimatedNumber, {
 } from '../../../custom-components/AnimatedNumber';
 import { transposedCategoryItemPropTypes } from './transposeCategoryData';
 import { OTHERS_KEY } from './ComparativeCategoryWidgetUI';
-import { useCategoryStyles } from './useCategoryStyles';
+import {
+  Bullet,
+  BulletWrapper,
+  CategoryItemWrapperInner,
+  CategoryItemWrapperRoot,
+  Progressbar,
+  ProgressbarWrapper,
+  SignWrapper,
+  StyledTooltip
+} from './comparative.styled';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
 
 function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_FN }) {
   const theme = useTheme();
-  const classes = useCategoryStyles();
   const reference = item.data[0];
   const data = item.data[index];
   const name = names[index];
@@ -34,20 +41,12 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
         {item.label}
       </Typography>
       <Box pt={1} pb={0.5}>
-        <Box
-          style={{
-            display: 'flex',
-            alignItems: 'baseline',
-            gap: theme.spacing(0.75)
-          }}
-        >
-          <div
-            className={classes.bullet}
-            style={{
-              backgroundColor:
-                item.key === OTHERS_KEY ? theme.palette.background.default : data.color
-            }}
-          ></div>
+        <BulletWrapper alignItems='baseline'>
+          <Bullet
+            color={
+              item.key === OTHERS_KEY ? theme.palette.background.default : data.color
+            }
+          />
           <Typography color='inherit' variant='caption'>
             {name}
           </Typography>
@@ -56,21 +55,13 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
               flexGrow: 1
             }}
           ></Box>
-          <Box
-            style={{
-              marginLeft: theme.spacing(1),
-              padding: theme.spacing(0, 1),
-              backgroundColor: numberColor,
-              color: 'white',
-              borderRadius: theme.spacing(2)
-            }}
-          >
+          <SignWrapper backgroundColor={numberColor}>
             <Typography color='inherit' variant='caption'>
               {signText}
               {formatter(Math.abs(compareValue))}
             </Typography>
-          </Box>
-        </Box>
+          </SignWrapper>
+        </BulletWrapper>
       </Box>
     </div>
   );
@@ -89,15 +80,6 @@ ComparativeCategoryTooltip.propTypes = {
   index: PropTypes.number
 };
 
-const StyledTooltip = withStyles((theme) => ({
-  tooltip: {
-    color: theme.palette.common.white,
-    maxWidth: 260,
-    marginBottom: 0,
-    overflow: 'hidden'
-  }
-}))(Tooltip);
-
 function CategoryItem({
   item,
   animation,
@@ -105,15 +87,12 @@ function CategoryItem({
   maxValue,
   showCheckbox,
   checkboxChecked,
-  className,
   formatter,
   tooltipFormatter,
   onClick = IDENTITY_FN,
-  names
+  names,
+  tooltip
 }) {
-  const classes = useCategoryStyles();
-  const theme = useTheme();
-
   function getProgressbarLength(value) {
     return `${Math.min(100, ((value || 0) / maxValue) * 100)}%`;
   }
@@ -128,26 +107,9 @@ function CategoryItem({
   );
 
   return (
-    <Box
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        flexWrap: 'nowrap',
-        overflow: 'hidden',
-        gap: theme.spacing(1)
-      }}
-      onClick={() => onClick(item.key)}
-      className={className}
-    >
+    <CategoryItemWrapperRoot onClick={() => onClick(item.key)}>
       {showCheckbox ? <Checkbox checked={checkboxChecked} /> : null}
-      <Box
-        style={{
-          padding: theme.spacing(0.5, 0),
-          flexGrow: '1',
-          maxWidth: '100%',
-          minWidth: 0
-        }}
-      >
+      <CategoryItemWrapperInner>
         <Typography variant='body2' noWrap>
           {item.label}
         </Typography>
@@ -156,15 +118,11 @@ function CategoryItem({
             key={`${item.key}_${i}`}
             title={tooltipContent(i)}
             placement='top-start'
+            arrow={false}
+            disableHoverListener={!tooltip}
           >
-            <Box
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: theme.spacing(2)
-              }}
-            >
-              <div className={classes.progressbar}>
+            <ProgressbarWrapper>
+              <Progressbar className='progressbar'>
                 <div
                   style={
                     /* @ts-ignore */ {
@@ -174,7 +132,7 @@ function CategoryItem({
                     }
                   }
                 ></div>
-              </div>
+              </Progressbar>
               <Typography
                 variant={i === 0 ? 'body2' : 'caption'}
                 color={i === 0 ? 'textPrimary' : 'textSecondary'}
@@ -186,11 +144,11 @@ function CategoryItem({
                   formatter={formatter}
                 />
               </Typography>
-            </Box>
+            </ProgressbarWrapper>
           </StyledTooltip>
         ))}
-      </Box>
-    </Box>
+      </CategoryItemWrapperInner>
+    </CategoryItemWrapperRoot>
   );
 }
 
@@ -198,7 +156,6 @@ CategoryItem.displayName = 'CategoryItem';
 CategoryItem.defaultProps = {
   animation: true,
   animationOptions: {},
-  className: '',
   formatter: IDENTITY_FN,
   tooltipFormatter: IDENTITY_FN,
   onClick: IDENTITY_FN
@@ -210,7 +167,6 @@ CategoryItem.propTypes = {
   maxValue: PropTypes.number.isRequired,
   showCheckbox: PropTypes.bool.isRequired,
   checkboxChecked: PropTypes.bool.isRequired,
-  className: PropTypes.string,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   onClick: PropTypes.func,

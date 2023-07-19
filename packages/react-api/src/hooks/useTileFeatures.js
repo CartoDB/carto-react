@@ -1,9 +1,9 @@
 import { useEffect, useCallback, useState } from 'react';
-import { debounce, SpatialIndex } from '@carto/react-core';
+import { debounce, SpatialIndex, getColumnNameFromGeoColumn } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { setIsDroppingFeatures } from '@carto/react-redux';
-import { Layer } from '@deck.gl/core';
-import { TILE_FORMATS } from '@deck.gl/carto';
+import { Layer } from '@deck.gl/core/typed';
+import { TILE_FORMATS } from '@deck.gl/carto/typed';
 import { throwError } from './utils';
 import useFeaturesCommons from './useFeaturesCommons';
 import { useDispatch } from 'react-redux';
@@ -41,7 +41,7 @@ export default function useTileFeatures({
 
       executeTask(sourceId, Methods.TILE_FEATURES, {
         viewport,
-        geometry: spatialFilter,
+        geometry: spatialFilter?.geometry,
         uniqueIdProperty,
         tileFormat,
         geoColumName,
@@ -54,6 +54,8 @@ export default function useTileFeatures({
         .finally(clearDebounce);
     },
     [
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      spatialFilter ? spatialFilter : viewport,
       tileFormat,
       setSourceFeaturesReady,
       sourceId,
@@ -96,27 +98,31 @@ export default function useTileFeatures({
     loadTiles
   ]);
 
-  useEffect(() => {
-    if (sourceId && isTilesetLoaded) {
-      clearDebounce();
-      setSourceFeaturesReady(false);
-      debounceIdRef.current = debouncedComputeFeatures({
-        viewport,
-        spatialFilter,
-        uniqueIdProperty
-      });
-    }
-  }, [
-    viewport,
-    spatialFilter,
-    uniqueIdProperty,
-    debouncedComputeFeatures,
-    sourceId,
-    isTilesetLoaded,
-    setSourceFeaturesReady,
-    clearDebounce,
-    debounceIdRef
-  ]);
+  useEffect(
+    () => {
+      if (sourceId && isTilesetLoaded) {
+        clearDebounce();
+        setSourceFeaturesReady(false);
+        debounceIdRef.current = debouncedComputeFeatures({
+          viewport,
+          spatialFilter,
+          uniqueIdProperty
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      spatialFilter ? spatialFilter : viewport,
+      uniqueIdProperty,
+      debouncedComputeFeatures,
+      sourceId,
+      isTilesetLoaded,
+      setSourceFeaturesReady,
+      clearDebounce,
+      debounceIdRef
+    ]
+  );
 
   const onViewportLoad = useCallback(
     (tiles) => {
@@ -150,8 +156,3 @@ export default function useTileFeatures({
 
   return [onDataLoad, onViewportLoad, fetch];
 }
-
-const getColumnNameFromGeoColumn = (geoColumn) => {
-  const parts = geoColumn.split(':');
-  return parts.length === 1 ? parts[0] : parts.length === 2 ? parts[1] : null;
-};

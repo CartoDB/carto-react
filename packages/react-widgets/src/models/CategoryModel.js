@@ -22,12 +22,13 @@ function fromLocal(props) {
 
 // From remote
 function fromRemote(props) {
-  const { source, abortController, ...params } = props;
+  const { source, spatialFilter, abortController, ...params } = props;
   const { column, operation, operationColumn } = params;
 
   return _executeModel({
     model: 'category',
     source,
+    spatialFilter,
     params: {
       column,
       operation,

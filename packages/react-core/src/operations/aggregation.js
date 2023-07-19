@@ -18,11 +18,20 @@ export const aggregationFunctions = {
   [AggregationTypes.AVG]: (...args) => applyAggregationFunction(avg, ...args)
 };
 
+/*
+  Forced casting to Number (just of non empty strings) allows to work-around
+  some specific situations, where a big numeric field is transformed into a string when generating the tileset(eg.PG)
+  */
+function isPotentiallyValidNumber(value) {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
 export function aggregate(feature, keys, operation) {
   if (!keys?.length) {
     throw new Error('Cannot aggregate a feature without having keys');
   } else if (keys.length === 1) {
-    return feature[keys[0]];
+    const value = feature[keys[0]];
+    return isPotentiallyValidNumber(value) ? Number(value) : value;
   }
 
   const aggregationFn = aggregationFunctions[operation];
@@ -31,7 +40,12 @@ export function aggregate(feature, keys, operation) {
     throw new Error(`${operation} isn't a valid aggregation function`);
   }
 
-  return aggregationFn(keys.map((column) => feature[column]));
+  return aggregationFn(
+    keys.map((column) => {
+      const value = feature[column];
+      return isPotentiallyValidNumber(value) ? Number(value) : value;
+    })
+  );
 }
 
 function filterFalsyElements(values, keys) {

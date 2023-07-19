@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { makeStyles } from '@mui/styles';
 import Typography from '../../../src/components/atoms/Typography';
+import { FilledContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Foundations/Elevations',
@@ -29,33 +29,21 @@ const options = {
 };
 export default options;
 
-const useStyles = makeStyles((theme) => ({
-  text: {
-    marginBottom: theme.spacing(0.5)
-  },
-  container: {
-    width: theme.spacing(12),
-    height: theme.spacing(12),
-    marginBottom: theme.spacing(2),
-    padding: 0,
-    backgroundColor: theme.palette.primary.background,
-    borderRadius: theme.spacing(0.5)
-  }
-}));
-
 const ShadowBox = ({ size }) => {
   const theme = useTheme();
   const sizeVariant = theme.shadows[size];
-  const classes = useStyles();
 
   return (
     <Grid item xs={4} sm={3} md={2}>
-      <Box className={classes.text}>
+      <Box>
         <Typography variant='subtitle1'>{`Elevation ${size}`}</Typography>
-        <Typography variant='caption'>{`shadows[${size}]`}</Typography>
+        <Typography
+          component='p'
+          variant='caption'
+          mb={0.5}
+        >{`shadows[${size}]`}</Typography>
       </Box>
-      <Box
-        className={classes.container}
+      <FilledContainer
         style={{
           boxShadow: sizeVariant
         }}

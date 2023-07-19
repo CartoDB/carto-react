@@ -5,18 +5,25 @@ import {
   InputAdornment,
   Link,
   SvgIcon,
-  TextField,
   useTheme
 } from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { animationOptionsPropTypes } from '../../../custom-components/AnimatedNumber';
-import CategoryWidgetUI from '../../CategoryWidgetUI';
+import CategoryWidgetUI from '../../CategoryWidgetUI/CategoryWidgetUI';
 import { transposeCategoryData } from './transposeCategoryData';
-import { useCategoryStyles } from './useCategoryStyles';
-import CategoryItem from './CategoryItem';
-import CategorySkeleton from './CategorySkeleton';
+import CategorySkeleton from '../../CategoryWidgetUI/CategorySkeleton';
 import Typography from '../../../components/atoms/Typography';
+import {
+  Bullet,
+  BulletWrapper,
+  BulletListWrapper,
+  CategoriesList,
+  SearchInput,
+  Toolbar,
+  Wrapper,
+  CategoryItemStyled
+} from './comparative.styled';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
@@ -53,7 +60,9 @@ function SearchIcon() {
  * @param {string[]} [props.selectedCategories]
  * @param {(categories: string[]) => any} [props.onSelectedCategoriesChange]
  * @param {(v: any) => any} [props.formatter]
+ * @param {boolean} [props.tooltip]
  * @param {(v: any) => any} [props.tooltipFormatter]
+ * @param {boolean} [props.isLoading]
  * -->
  */
 function ComparativeCategoryWidgetUI({
@@ -70,9 +79,10 @@ function ComparativeCategoryWidgetUI({
   selectedCategories = EMPTY_ARRAY,
   onSelectedCategoriesChange = IDENTITY_FN,
   formatter = IDENTITY_FN,
-  tooltipFormatter = IDENTITY_FN
+  tooltip = true,
+  tooltipFormatter = IDENTITY_FN,
+  isLoading = false
 }) {
-  const classes = useCategoryStyles();
   const theme = useTheme();
   const [searchActive, setSearchActive] = useState(false);
   const [blockingActive, setBlockingActive] = useState(false);
@@ -148,7 +158,7 @@ function ComparativeCategoryWidgetUI({
   const otherCount = processedData.length - compressedData.length + 1;
   const showSearchToggle = searchable && !searchActive && maxItems < processedData.length;
 
-  if (processedData.length === 0) {
+  if (processedData.length === 0 || isLoading) {
     return <CategorySkeleton />;
   }
 
@@ -227,16 +237,9 @@ function ComparativeCategoryWidgetUI({
     : undefined;
 
   return (
-    <div className={classes.wrapper}>
+    <Wrapper>
       {filterable ? (
-        <Box
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}
-          className={classes.toolbar}
-        >
+        <Toolbar center={true}>
           <Typography variant='caption'>
             {selectedCategories.length ? selectedCategories.length : 'All'}
             {' selected'}
@@ -260,16 +263,15 @@ function ComparativeCategoryWidgetUI({
               </Box>
             ) : null}
           </Typography>
-        </Box>
+        </Toolbar>
       ) : null}
       {searchActive ? (
-        <Box className={classes.toolbar}>
-          <TextField
+        <Toolbar>
+          <SearchInput
             size='small'
             placeholder='Search'
             onChange={(ev) => setSearchValue(ev.currentTarget.value)}
             onFocus={(ev) => ev.currentTarget.scrollIntoView()}
-            className={classes.searchInput}
             InputProps={{
               startAdornment: (
                 <InputAdornment position='start'>
@@ -278,9 +280,9 @@ function ComparativeCategoryWidgetUI({
               )
             }}
           />
-        </Box>
+        </Toolbar>
       ) : null}
-      <Box className={classes.categoriesList}>
+      <CategoriesList>
         {list.length === 0 ? (
           <>
             <Typography variant='body2'>No results</Typography>
@@ -290,7 +292,7 @@ function ComparativeCategoryWidgetUI({
           </>
         ) : null}
         {list.map((d) => (
-          <CategoryItem
+          <CategoryItemStyled
             key={d.key}
             item={d}
             animation={animation}
@@ -298,14 +300,15 @@ function ComparativeCategoryWidgetUI({
             maxValue={maxValue}
             showCheckbox={filterable && searchActive}
             checkboxChecked={tempSelection.indexOf(d.key) !== -1}
-            className={filterable ? classes.categoryGroupHover : classes.categoryGroup}
+            filterable={filterable}
             formatter={formatter}
             tooltipFormatter={tooltipFormatter}
+            tooltip={tooltip}
             onClick={clickHandler}
             names={names}
           />
         ))}
-      </Box>
+      </CategoriesList>
       {showSearchToggle ? (
         <Button
           size='small'
@@ -321,35 +324,15 @@ function ComparativeCategoryWidgetUI({
           Cancel
         </Button>
       ) : null}
-      <Box
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: theme.spacing(1.5),
-          padding: theme.spacing(2, 0)
-        }}
-      >
+      <BulletListWrapper>
         {names.map((name, i) => (
-          <Box
-            key={names[i]}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: theme.spacing(0.75)
-            }}
-          >
-            <div
-              className={classes.bullet}
-              style={{
-                backgroundColor: colors?.[i] || theme.palette.background.default
-              }}
-            ></div>
+          <BulletWrapper key={names[i]}>
+            <Bullet color={colors?.[i] || theme.palette.background.default} />
             <Typography variant='overline'>{name}</Typography>
-          </Box>
+          </BulletWrapper>
         ))}
-      </Box>
-    </div>
+      </BulletListWrapper>
+    </Wrapper>
   );
 }
 
@@ -366,6 +349,7 @@ ComparativeCategoryWidgetUI.defaultProps = {
   searchable: true,
   filterable: true,
   selectedCategories: [],
+  tooltip: true,
   onSelectedCategoriesChange: IDENTITY_FN,
   formatter: IDENTITY_FN,
   tooltipFormatter: IDENTITY_FN
@@ -389,9 +373,11 @@ ComparativeCategoryWidgetUI.propTypes = {
   searchable: PropTypes.bool,
   filterable: PropTypes.bool,
   selectedCategories: PropTypes.arrayOf(PropTypes.string),
+  tooltip: PropTypes.bool,
   onSelectedCategoriesChange: PropTypes.func,
   formatter: PropTypes.func,
-  tooltipFormatter: PropTypes.func
+  tooltipFormatter: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default ComparativeCategoryWidgetUI;

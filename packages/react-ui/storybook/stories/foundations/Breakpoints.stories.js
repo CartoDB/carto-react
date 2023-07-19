@@ -1,8 +1,7 @@
 import React from 'react';
-import { Box } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import { BREAKPOINTS } from '../../../src/theme/themeConstants';
 import Typography from '../../../src/components/atoms/Typography';
+import { FilledContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Foundations/Breakpoints',
@@ -27,32 +26,15 @@ const options = {
 };
 export default options;
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: theme.spacing(6),
-    marginBottom: theme.spacing(2),
-    padding: 0,
-    backgroundColor: theme.palette.primary.background,
-    border: `1px solid ${theme.palette.primary.main}`,
-    borderRadius: theme.spacing(0.5)
-  }
-}));
-
 const BreakpointBox = ({ breakpoint }) => {
-  const classes = useStyles();
-
   return (
-    <Box
-      className={classes.container}
+    <FilledContainer
       style={{
         width: breakpoint
       }}
     >
       <Typography variant={'subtitle1'}>{breakpoint}</Typography>
-    </Box>
+    </FilledContainer>
   );
 };
 
