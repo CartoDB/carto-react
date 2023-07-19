@@ -2,6 +2,10 @@
 
 ## Not released
 
+## 2.2
+
+### 2.2.0 (2023-07-19)
+
 - Developer API change:
   - SelectField props removal: `items` no longer available, use a children instead.
   - Changed to a controlled component. So now it needs to handle onChange function in the parent.
