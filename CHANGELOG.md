@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix to build more accurate ranges for time filters [#655](https://github.com/CartoDB/carto-react/pull/655)
+
 ## 2.1
 
 ## 2.1.8 (2023-07-07)
