@@ -3,6 +3,7 @@
 ## Not released
 
 - SelectField Storybook leftovers [#746](https://github.com/CartoDB/carto-react/pull/746)
+- Add onClick event handler to GoogleMap component [#XXX](https://github.com/CartoDB/carto-react/pull/XXX)
 
 ## 2.2
 
