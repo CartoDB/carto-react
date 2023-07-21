@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Fix MuiList: add more specificity to apply max-height [#748](https://github.com/CartoDB/carto-react/pull/748)
 - SelectField Storybook leftovers [#746](https://github.com/CartoDB/carto-react/pull/746)
 
 ## 2.2

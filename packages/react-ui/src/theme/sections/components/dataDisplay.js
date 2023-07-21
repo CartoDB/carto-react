@@ -30,8 +30,10 @@ export const dataDisplayOverrides = {
   MuiList: {
     styleOverrides: {
       root: ({ theme }) => ({
-        maxHeight: theme.spacing(39), // 312px, defined by design
-        overflowY: 'auto',
+        '.MuiPopover-root &, .MuiPopper-root &': {
+          maxHeight: theme.spacing(39), // 312px, defined by design
+          overflowY: 'auto'
+        },
 
         // Indent sublevels, ugly but needed to avoid issues with hover
         '& .MuiList-root': {
