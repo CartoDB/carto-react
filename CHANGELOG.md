@@ -2,6 +2,8 @@
 
 ## Not released
 
+- SelectField Storybook leftovers [#746](https://github.com/CartoDB/carto-react/pull/746)
+
 ## 2.2
 
 ### 2.2.0 (2023-07-19)

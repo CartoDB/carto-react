@@ -76,21 +76,6 @@ const menuItems = [
   }
 ];
 
-const menuItemsLong = [
-  {
-    label: 'table_openstreetmap_pointsofinterest',
-    value: '10Long'
-  },
-  {
-    label: 'Twenty',
-    value: '20'
-  },
-  {
-    label: 'Thirty',
-    value: '30'
-  }
-];
-
 const SelectFieldItem = ({
   label,
   required,
@@ -121,7 +106,6 @@ const SelectFieldItem = ({
       label={label}
       variant={variant}
       placeholder={placeholder}
-      items={menuItems}
       helperText={helperText}
       onChange={handleChange}
       value={content}
@@ -160,7 +144,6 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             label={label}
             variant='filled'
             placeholder={placeholder}
-            items={menuItems}
           />
         </Container>
       </Grid>
@@ -172,7 +155,6 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             label={label}
             variant='outlined'
             placeholder={placeholder}
-            items={menuItems}
           />
         </Container>
       </Grid>
@@ -184,7 +166,6 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
             label={label}
             variant='standard'
             placeholder={placeholder}
-            items={menuItems}
           />
         </Container>
       </Grid>
@@ -203,36 +184,25 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             helperText={helperText}
-            items={menuItems}
           />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Without label + helper text'}</Label>
-          <SelectFieldItem {...rest} placeholder={placeholder} items={menuItems} />
+          <SelectFieldItem {...rest} placeholder={placeholder} />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only label'}</Label>
-          <SelectFieldItem
-            {...rest}
-            label={label}
-            placeholder={placeholder}
-            items={menuItems}
-          />
+          <SelectFieldItem {...rest} label={label} placeholder={placeholder} />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only helper text'}</Label>
-          <SelectFieldItem
-            {...rest}
-            placeholder={placeholder}
-            helperText={helperText}
-            items={menuItems}
-          />
+          <SelectFieldItem {...rest} placeholder={placeholder} helperText={helperText} />
         </Container>
       </Grid>
     </Grid>
@@ -273,7 +243,6 @@ const SizeTemplate = ({
             variant='filled'
             label={label}
             placeholder={placeholder}
-            items={menuItems}
             size={size}
           />
         </Grid>
@@ -283,7 +252,6 @@ const SizeTemplate = ({
             variant='outlined'
             label={label}
             placeholder={placeholder}
-            items={menuItems}
             size={size}
           />
         </Grid>
@@ -293,7 +261,6 @@ const SizeTemplate = ({
             variant='standard'
             label={label}
             placeholder={placeholder}
-            items={menuItems}
             size={size}
           />
         </Grid>
@@ -306,19 +273,19 @@ const SizeTemplate = ({
         <Grid item xs={3}>
           <FormControl>
             <InputLabel>{label}</InputLabel>
-            <SelectFieldItem {...rest} variant='filled' size={size} items={menuItems} />
+            <SelectFieldItem {...rest} variant='filled' size={size} />
           </FormControl>
         </Grid>
         <Grid item xs={3}>
           <FormControl>
             <InputLabel>{label}</InputLabel>
-            <SelectFieldItem {...rest} variant='outlined' size={size} items={menuItems} />
+            <SelectFieldItem {...rest} variant='outlined' size={size} />
           </FormControl>
         </Grid>
         <Grid item xs={3}>
           <FormControl>
             <InputLabel>{label}</InputLabel>
-            <SelectFieldItem {...rest} variant='standard' size={size} items={menuItems} />
+            <SelectFieldItem {...rest} variant='standard' size={size} />
           </FormControl>
         </Grid>
       </Grid>
@@ -398,7 +365,6 @@ const SizeTemplate = ({
             placeholder={placeholder}
             focused
             size={size}
-            items={menuItems}
           />
         </Grid>
         <Grid item xs={3}>
@@ -409,7 +375,6 @@ const SizeTemplate = ({
             placeholder={placeholder}
             focused
             size={size}
-            items={menuItems}
           />
         </Grid>
         <Grid item xs={3}>
@@ -420,7 +385,6 @@ const SizeTemplate = ({
             placeholder={placeholder}
             focused
             size={size}
-            items={menuItems}
           />
         </Grid>
       </Grid>
@@ -437,7 +401,6 @@ const SizeTemplate = ({
             placeholder={placeholder}
             disabled
             size={size}
-            items={menuItems}
           />
         </Grid>
         <Grid item xs={3}>
@@ -448,7 +411,6 @@ const SizeTemplate = ({
             placeholder={placeholder}
             disabled
             size={size}
-            items={menuItems}
           />
         </Grid>
         <Grid item xs={3}>
@@ -459,7 +421,6 @@ const SizeTemplate = ({
             placeholder={placeholder}
             disabled
             size={size}
-            items={menuItems}
           />
         </Grid>
       </Grid>
@@ -477,7 +438,6 @@ const SizeTemplate = ({
             helperText={helperText}
             error
             size={size}
-            items={menuItems}
           />
         </Grid>
         <Grid item xs={3}>
@@ -489,7 +449,6 @@ const SizeTemplate = ({
             helperText={helperText}
             error
             size={size}
-            items={menuItems}
           />
         </Grid>
         <Grid item xs={3}>
@@ -501,7 +460,6 @@ const SizeTemplate = ({
             helperText={helperText}
             error
             size={size}
-            items={menuItems}
           />
         </Grid>
       </Grid>
@@ -535,12 +493,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
         <Label variant='subtitle1'>{'Overflow'}</Label>
         <Container style={{ maxWidth: '440px' }}>
           <Label variant='body2'>{'Default'}</Label>
-          <SelectFieldItem
-            {...rest}
-            label={label}
-            placeholder={placeholder}
-            items={menuItemsLong}
-          />
+          <SelectFieldItem {...rest} label={label} placeholder={placeholder} />
         </Container>
       </Grid>
 
@@ -551,20 +504,10 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
 
           <Grid container spacing={2}>
             <Grid item>
-              <SelectFieldItem
-                {...rest}
-                label={label}
-                placeholder={placeholder}
-                items={menuItems}
-              />
+              <SelectFieldItem {...rest} label={label} placeholder={placeholder} />
             </Grid>
             <Grid item>
-              <SelectFieldItem
-                {...rest}
-                label={label}
-                placeholder={placeholder}
-                items={menuItems}
-              />
+              <SelectFieldItem {...rest} label={label} placeholder={placeholder} />
             </Grid>
           </Grid>
         </Container>
@@ -574,12 +517,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
         <Label variant='subtitle1'>{'Width'}</Label>
         <Container>
           <Label variant='body2'>{'Default (fullWidth)'}</Label>
-          <SelectFieldItem
-            {...rest}
-            label={label}
-            placeholder={placeholder}
-            items={menuItems}
-          />
+          <SelectFieldItem {...rest} label={label} placeholder={placeholder} />
         </Container>
         <Container>
           <Label variant='body2'>{'No fullWidth'}</Label>
@@ -588,7 +526,6 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             label={label}
             placeholder={placeholder}
             fullWidth={false}
-            items={menuItems}
           />
         </Container>
       </Grid>
