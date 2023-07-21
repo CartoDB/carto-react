@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-core",
-  "version": "2.2.0-alpha.muilist.0.0",
+  "version": "2.2.1",
   "description": "CARTO for React - Core",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -75,6 +75,5 @@
     "@turf/union": "^6.3.0",
     "h3-js": "^3.7.2",
     "quadbin": "^0.1.9"
-  },
-  "gitHead": "ee5352d7912a14eddbc582b8d7bee2d55f8806c7"
+  }
 }

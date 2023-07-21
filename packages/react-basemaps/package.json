@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-basemaps",
-  "version": "2.2.0-alpha.muilist.0.0",
+  "version": "2.2.1",
   "description": "CARTO for React - Basemaps",
   "keywords": [
     "carto",
@@ -68,6 +68,5 @@
     "@deck.gl/google-maps": "^8.9.18",
     "react": "17.x || 18.x",
     "react-dom": "17.x || 18.x"
-  },
-  "gitHead": "ee5352d7912a14eddbc582b8d7bee2d55f8806c7"
+  }
 }

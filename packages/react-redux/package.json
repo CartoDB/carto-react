@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-redux",
-  "version": "2.2.0-alpha.muilist.0.0",
+  "version": "2.2.1",
   "description": "CARTO for React - Redux",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -68,6 +68,5 @@
     "@deck.gl/carto": "^8.9.18",
     "@deck.gl/core": "^8.9.18",
     "@reduxjs/toolkit": "^1.5.0"
-  },
-  "gitHead": "ee5352d7912a14eddbc582b8d7bee2d55f8806c7"
+  }
 }
