@@ -200,7 +200,9 @@ const GreyTemplate = () => {
 const ShadesTemplate = () => {
   return (
     <>
-      <DocContainer severity='info'>{'Common alpha colors'}</DocContainer>
+      <DocContainer severity='info'>
+        {'Standarized alpha colors, us these instead of custom alpha function'}
+      </DocContainer>
 
       <Typography variant='h6'>{'Black'}</Typography>
       <Container container>

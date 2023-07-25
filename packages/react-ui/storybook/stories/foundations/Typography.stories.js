@@ -108,7 +108,7 @@ const DocTemplate = () => {
         .
       </Typography>
       <Typography variant='inherit' color='inherit' mt={2} mb={2}>
-        For more details, check the usage guide before using CARTO typographies
+        For more details, check the usage guide before using CARTO Typography
       </Typography>
     </DocContainer>
   );

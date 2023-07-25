@@ -3,7 +3,7 @@ import { Box, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Typography from '../../../src/components/atoms/Typography';
 import Button from '../../../src/components/atoms/Button';
-import { DocContainer, FilledContainer } from '../../utils/storyStyles';
+import { DocContainer, DocTextHighlight, FilledContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Foundations/Spacing',
@@ -87,7 +87,15 @@ const DocTemplate = () => {
         </Button>
       }
     >
-      Check the usage guide before using spacing values, specially theme.spacing function.
+      Check the usage guide before using{' '}
+      <DocTextHighlight variant='inherit' component='span'>
+        spacing
+      </DocTextHighlight>{' '}
+      values, specially{' '}
+      <DocTextHighlight variant='inherit' component='span'>
+        theme.spacing
+      </DocTextHighlight>{' '}
+      function.
     </DocContainer>
   );
 };

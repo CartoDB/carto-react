@@ -97,8 +97,9 @@ const DocTemplate = () => {
       <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/organisms/AppBar/AppBar.js'>
         AppBar
       </DocLink>{' '}
-      to build the basic structure and styles on top of <i>Mui AppBar</i> and normalize
-      size and position of common elements like logo, texts, avatar and burger menu icon.
+      to build the basic structure and styles on top of <i>Mui AppBar</i>. It normalizes
+      the size and position of common elements like:{' '}
+      <i>logo, texts, avatar and burger menu icon</i>.
       <Typography variant='inherit' color='inherit' mt={2}>
         So, instead of Mui AppBar, you should use this one:{' '}
         <DocTextHighlight variant='inherit' component='span'>
