@@ -4,7 +4,13 @@ import React from 'react';
 import Button from '../../../src/components/atoms/Button';
 import TooltipData from '../../../src/components/organisms/TooltipData';
 import { commonPalette } from '../../../src/theme/sections/palette';
-import { Container, Label, Standalone } from '../../utils/storyStyles';
+import {
+  Container,
+  DocContainer,
+  DocTextHighlight,
+  Label,
+  Standalone
+} from '../../utils/storyStyles';
 
 const options = {
   title: 'Molecules/Tooltip',
@@ -16,12 +22,14 @@ const options = {
       }
     },
     placement: {
+      defaultValue: 'top',
       control: {
         type: 'select',
         options: ['top', 'left', 'right', 'bottom']
       }
     },
     arrow: {
+      defaultValue: true,
       control: {
         type: 'boolean'
       }
@@ -228,8 +236,26 @@ const TooltipBehaviorTemplate = (args) => {
   );
 };
 
+const DocTemplate = () => {
+  return (
+    <DocContainer severity='warning'>
+      By default a Tooltip is placed{' '}
+      <DocTextHighlight variant='inherit' component='span'>
+        top
+      </DocTextHighlight>{' '}
+      and has an{' '}
+      <DocTextHighlight variant='inherit' component='span'>
+        arrow
+      </DocTextHighlight>{' '}
+      indicator, so you don't need to specify these properties anymore.
+    </DocContainer>
+  );
+};
+
 export const Playground = TooltipPlaygroundTemplate;
 Playground.args = { title: 'Text' };
+
+export const Guide = DocTemplate.bind({});
 
 export const Text = TooltipTextTemplate.bind({});
 

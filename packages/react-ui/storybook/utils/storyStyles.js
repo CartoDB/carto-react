@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Link } from '@mui/material';
 import Typography from '../../src/components/atoms/Typography';
 import Alert from '../../src/components/molecules/Alert';
 
@@ -49,6 +49,17 @@ export const FilledContainer = styled(Box)(({ theme }) => ({
 
 export const DocContainer = styled(Alert)(({ theme }) => ({
   marginBottom: theme.spacing(3)
+}));
+
+export const DocTextHighlight = styled(Typography)(({ theme }) => ({
+  display: 'inline',
+  fontWeight: theme.typography.fontWeightBold,
+  color: 'inherit'
+}));
+
+export const DocLink = styled(Link)(({ theme }) => ({
+  textDecoration: 'underline',
+  color: 'inherit'
 }));
 
 export const Label = styled(Typography)(({ theme }) => ({

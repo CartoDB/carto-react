@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Increase documentation discoverability [#751](https://github.com/CartoDB/carto-react/pull/751)
+
 ## 2.2
 
 ### 2.2.1 (2023-07-21)
