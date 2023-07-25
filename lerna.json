@@ -4,5 +4,5 @@
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "2.2.2-cra-sso-support.2"
+  "version": "2.2.2-cra-sso-support.3"
 }
