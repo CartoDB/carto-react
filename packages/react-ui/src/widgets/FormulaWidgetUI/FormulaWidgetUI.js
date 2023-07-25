@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material';
-import { animateValue } from './utils/animations';
-import Typography from '../components/atoms/Typography';
+import { animateValue } from '../utils/animations';
+import Typography from '../../components/atoms/Typography';
+import FormulaSkeleton from './FormulaSkeleton';
 
 const Prefix = styled('span')(() => ({
   marginRight: '2px'
@@ -21,7 +22,7 @@ function usePrevious(value) {
 }
 
 function FormulaWidgetUI(props) {
-  const { data, formatter, animation } = props;
+  const { data, formatter, animation, isLoading } = props;
   const [value, setValue] = useState('-');
   const requestRef = useRef();
   const prevValue = usePrevious(value);
@@ -53,7 +54,7 @@ function FormulaWidgetUI(props) {
         requestRef
       });
     } else {
-      setValue(data);
+      setValue(data !== null && data !== undefined ? data : '-');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => cancelAnimationFrame(requestRef.current);
@@ -62,6 +63,9 @@ function FormulaWidgetUI(props) {
   const formattedValue = formatter(value);
 
   const isComplexFormat = typeof formattedValue === 'object' && formattedValue !== null;
+  const isDisabled = formattedValue === '-';
+
+  if (isLoading) return <FormulaSkeleton />;
 
   return isComplexFormat ? (
     <Typography variant='h5' component='div' weight='medium'>
@@ -70,7 +74,15 @@ function FormulaWidgetUI(props) {
       <Suffix>{formattedValue.suffix}</Suffix>
     </Typography>
   ) : (
-    <Typography variant='h5' component='div' weight='medium'>
+    <Typography
+      variant='h5'
+      component='div'
+      weight='medium'
+      color={isDisabled ? 'text.disabled' : 'default'}
+      whiteSpace='nowrap'
+      textOverflow='ellipsis'
+      overflow='hidden'
+    >
       {formattedValue}
     </Typography>
   );
@@ -95,7 +107,8 @@ FormulaWidgetUI.propTypes = {
     })
   ]),
   formatter: PropTypes.func,
-  animation: PropTypes.bool
+  animation: PropTypes.bool,
+  isLoading: PropTypes.bool
 };
 
 export default FormulaWidgetUI;

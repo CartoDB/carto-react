@@ -10,7 +10,8 @@ import {
   TableContainer,
   TableBody,
   Table,
-  IconButton
+  IconButton,
+  MenuItem
 } from '@mui/material';
 import SelectField from '../../../src/components/atoms/SelectField';
 import { MoreVertOutlined } from '@mui/icons-material';
@@ -103,12 +104,19 @@ const PlaygroundTemplate = (args) => {
                 <SelectField
                   size='small'
                   placeholder='Placeholder'
-                  items={[
-                    { value: '1', label: 'One' },
-                    { value: '2', label: 'Two' },
-                    { value: '3', label: 'Three' }
-                  ]}
-                />
+                  onChange={() => void 0}
+                  value={[]}
+                >
+                  {[...Array(3)].map((item, index) => {
+                    const itemText = `${index + 1}`;
+
+                    return (
+                      <MenuItem key={index} value={itemText}>
+                        {itemText}
+                      </MenuItem>
+                    );
+                  })}
+                </SelectField>
               </TableCell>
               <TableCell sx={{ maxWidth: 160 }}>
                 {index === 3 ? (
@@ -121,7 +129,7 @@ const PlaygroundTemplate = (args) => {
                   row.description
                 )}
               </TableCell>
-              <TableCell>
+              <TableCell padding='checkbox'>
                 <IconButton size='small'>
                   <MoreVertOutlined />
                 </IconButton>
@@ -172,12 +180,19 @@ const ScrollTemplate = (args) => (
                 <SelectField
                   size='small'
                   placeholder='Placeholder'
-                  items={[
-                    { value: '1', label: 'One' },
-                    { value: '2', label: 'Two' },
-                    { value: '3', label: 'Three' }
-                  ]}
-                />
+                  onChange={() => void 0}
+                  value={[]}
+                >
+                  {[...Array(3)].map((item, index) => {
+                    const itemText = `${index + 1}`;
+
+                    return (
+                      <MenuItem key={index} value={itemText}>
+                        {itemText}
+                      </MenuItem>
+                    );
+                  })}
+                </SelectField>
               </TableCell>
               <TableCell sx={{ maxWidth: 160 }}>
                 {index % rows.length === 3 ? (
@@ -190,7 +205,7 @@ const ScrollTemplate = (args) => (
                   row.description
                 )}
               </TableCell>
-              <TableCell>
+              <TableCell padding='checkbox'>
                 <IconButton size='small'>
                   <MoreVertOutlined />
                 </IconButton>

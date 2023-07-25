@@ -5,12 +5,14 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TablePagination,
   TableHead,
   TableRow,
   TableSortLabel,
-  TablePagination,
   styled
 } from '@mui/material';
+import TableSkeleton from './Skeleton/TableSkeleton';
+import TablePaginationActions from '../../components/molecules/Table/TablePaginationActions';
 
 const TableHeadCellLabel = styled(TableSortLabel)(({ theme }) => ({
   ...theme.typography.caption,
@@ -53,7 +55,9 @@ function TableWidgetUI({
   onSetRowsPerPage,
   onRowClick,
   height,
-  dense
+  dense,
+  isLoading,
+  lastPageTooltip
 }) {
   const paginationRef = useRef(null);
 
@@ -74,9 +78,18 @@ function TableWidgetUI({
 
   const fixedHeightStyle = {};
   if (height) {
-    const paginationHeight = paginationRef?.current?.clientHeight || 0;
-    fixedHeightStyle.height = `calc(${height} - ${paginationHeight}px)`;
+    if (isLoading) {
+      fixedHeightStyle.height = `${height}px`;
+    } else {
+      const paginationHeight = Math.max(
+        paginationRef?.current?.clientHeight || 0,
+        pagination ? 48 : 0
+      );
+      fixedHeightStyle.height = `calc(${height} - ${paginationHeight}px)`;
+    }
   }
+
+  if (isLoading) return <TableSkeleton style={fixedHeightStyle} />;
 
   return (
     <>
@@ -102,6 +115,15 @@ function TableWidgetUI({
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          ActionsComponent={() => (
+            <TablePaginationActions
+              count={totalCount}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              lastPageTooltip={lastPageTooltip}
+            />
+          )}
         />
       )}
     </>
@@ -120,10 +142,10 @@ function TableHeaderComponent({ columns, sorting, sortBy, sortDirection, onSort 
                 direction={sortBy === field ? sortDirection : 'asc'}
                 onClick={() => onSort(field)}
               >
-                {headerName}
+                {headerName || field}
               </TableHeadCellLabel>
             ) : (
-              headerName
+              headerName || field
             )}
           </TableCell>
         ))}
@@ -144,18 +166,22 @@ function TableBodyComponent({ columns, rows, onRowClick }) {
             hover={!!onRowClick}
             onClick={() => onRowClick && onRowClick(row)}
           >
-            {columns.map(
-              ({ field, headerName, align, component }) =>
-                headerName && (
+            {columns.map(({ field, headerName, align, component }) => {
+              const cellValue = Object.entries(row).find(([key]) => {
+                return key.toUpperCase() === field.toUpperCase();
+              })?.[1];
+              return (
+                (headerName || field) && (
                   <TableCellStyled
                     key={`${rowKey}_${field}`}
                     scope='row'
                     align={align || 'left'}
                   >
-                    {component ? component(row[field]) : row[field]}
+                    {component ? component(cellValue) : cellValue}
                   </TableCellStyled>
                 )
-            )}
+              );
+            })}
           </TableRowStyled>
         );
       })}
@@ -189,7 +215,9 @@ TableWidgetUI.propTypes = {
   onSetRowsPerPage: PropTypes.func,
   onRowClick: PropTypes.func,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  dense: PropTypes.bool
+  dense: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  lastPageTooltip: PropTypes.string
 };
 
 export default TableWidgetUI;

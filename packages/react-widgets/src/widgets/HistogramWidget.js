@@ -3,7 +3,12 @@ import { useDispatch } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { WrapperWidgetUI, HistogramWidgetUI } from '@carto/react-ui';
-import { _FilterTypes as FilterTypes, AggregationTypes } from '@carto/react-core';
+import {
+  _FilterTypes as FilterTypes,
+  AggregationTypes,
+  _hasFeatureFlag,
+  _FeatureFlags
+} from '@carto/react-core';
 import { getHistogram } from '../models';
 import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 import useWidgetFetch from '../hooks/useWidgetFetch';
@@ -19,22 +24,22 @@ const EMPTY_ARRAY = [];
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's column to get the data from.
- * @param  {number=} props.min - Min value of the indicated column
- * @param  {number=} props.max - Max value of the indicated column
+ * @param  {number=} props.min - Min value of the indicated column.
+ * @param  {number=} props.max - Max value of the indicated column.
  * @param  {string} [props.operation] - Operation to apply to the column. Must be one of those defined in `AggregationTypes` object.
  * @param  {number[]=} [props.ticks] - Array of thresholds for the X axis.
  * @param  {number} [props.bins] - Number of bins to calculate the ticks.
- * @param  {Function} [props.xAxisformatter] - Function to format X axis values.
+ * @param  {Function} [props.xAxisFormatter] - Function to format X axis values.
  * @param  {Function} [props.formatter] - Function to format Y axis values.
- * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not
+ * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not.
  * @param  {Function} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
- * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
- * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
+ * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
+ * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
+ * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  */
 function HistogramWidget({
   id,
@@ -101,7 +106,8 @@ function HistogramWidget({
   let {
     data = EMPTY_ARRAY,
     isLoading,
-    warning = _warning
+    warning = _warning,
+    remoteCalculation
   } = useWidgetFetch(getHistogram, {
     id,
     dataSource,
@@ -112,7 +118,8 @@ function HistogramWidget({
     },
     global,
     onError,
-    enabled: !!ticks.length
+    enabled: !!ticks.length,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   const thresholdsFromFilters = useWidgetFilterValues({
@@ -176,6 +183,7 @@ function HistogramWidget({
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
+        showDroppingFeaturesAlert={!remoteCalculation}
       >
         {(!!data.length || isLoading) && (
           <HistogramWidgetUI
@@ -191,6 +199,7 @@ function HistogramWidget({
             yAxisFormatter={formatter}
             animation={animation}
             filterable={filterable}
+            isLoading={isLoading}
           />
         )}
       </WidgetWithAlert>

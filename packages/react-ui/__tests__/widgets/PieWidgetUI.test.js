@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '../widgets/utils/testUtils';
-import PieWidgetUI from '../../src/widgets/PieWidgetUI';
+import PieWidgetUI from '../../src/widgets/PieWidgetUI/PieWidgetUI';
 import { mockEcharts } from './testUtils';
 
 describe('PieWidgetUI', () => {

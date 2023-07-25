@@ -46,12 +46,35 @@ const TextColor = styled(Typography)(({ theme }) => ({
   maxWidth: theme.spacing(18)
 }));
 
+function decamelCase(s) {
+  return s.replaceAll(/([a-z])([A-Z])/g, (x, p1, p2) => `${p1} ${p2}`);
+}
+
+function capitalize(s) {
+  return s
+    ? String(s).substring(0, 1).toUpperCase() + decamelCase(String(s).substring(1))
+    : '';
+}
+
+function figmaColorName(v, n) {
+  return ['Light', capitalize(v), capitalize(n)].filter(Boolean).join('/');
+}
+
+function jsColorSelector(v, n) {
+  return `theme.palette.${v}${
+    typeof n === 'number' || String(n).match(/^[0-9]/)
+      ? `[${n}]`
+      : typeof n === 'string'
+      ? `.${n}`
+      : ''
+  }`;
+}
+
 const Bullet = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'color'
 })(({ theme, color: background }) => ({
   height: 48,
   width: '100%',
-  marginBottom: theme.spacing(3),
   border: `1px solid ${theme.palette.grey[100]}`,
   borderRadius: theme.spacing(0.5),
   background
@@ -64,7 +87,7 @@ const ColorBox = ({ colorVariant, colorName }) => {
   const textRef = useRef();
 
   return (
-    <Box>
+    <Box mb={3}>
       <Box mt={0.5}>
         <Typography variant='subtitle1'>{colorName}</Typography>
         <Tooltip title={colorValue} enterDelay={600}>
@@ -74,6 +97,10 @@ const ColorBox = ({ colorVariant, colorName }) => {
         </Tooltip>
       </Box>
       <Bullet color={colorValue} />
+      <Typography variant='caption'>
+        {figmaColorName(colorVariant, colorName)}
+        <pre style={{ margin: 0 }}>{jsColorSelector(colorVariant, colorName)}</pre>
+      </Typography>
     </Box>
   );
 };

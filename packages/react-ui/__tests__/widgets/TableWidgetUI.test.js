@@ -73,4 +73,17 @@ describe('TableWidgetUI', () => {
       expect(mockOnSetSortDirection).toHaveBeenCalledWith('desc');
     });
   });
+
+  describe('case insensitive', () => {
+    test('should render rows properly', () => {
+      const keptFields = ['address', 'city'];
+      const filteredColumns = columns
+        .filter((col) => keptFields.includes(col.field))
+        .map((c) => ({ ...c, field: c.field.toUpperCase() }));
+      render(<Widget columns={filteredColumns} />);
+
+      const row = rows[1];
+      expect(screen.queryByText(row.address)).toBeInTheDocument();
+    });
+  });
 });

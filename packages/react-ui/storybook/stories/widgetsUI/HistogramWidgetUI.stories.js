@@ -1,5 +1,6 @@
 import React from 'react';
 import HistogramWidgetUI from '../../../src/widgets/HistogramWidgetUI/HistogramWidgetUI';
+import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Organisms/Widgets/HistogramWidgetUI',
@@ -17,6 +18,24 @@ export default options;
 
 const Template = (args) => {
   return <HistogramWidgetUI {...args} />;
+};
+
+const LoadingTemplate = (args) => {
+  return (
+    <>
+      <Label variant='body1' mb={3}>
+        {'Limited width'}
+      </Label>
+      <ThinContainer>
+        <HistogramWidgetUI {...args} />
+      </ThinContainer>
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Responsive'}
+      </Label>
+      <HistogramWidgetUI {...args} />
+    </>
+  );
 };
 
 const defaultProps = {
@@ -60,3 +79,10 @@ const NonEqualSizeBinsProps = {
   ticks: [100, 200, 250, 450, 500, 600]
 };
 NonEqualSizeBins.args = NonEqualSizeBinsProps;
+
+export const Loading = LoadingTemplate.bind({});
+const LoadingProps = {
+  ...defaultProps,
+  isLoading: true
+};
+Loading.args = LoadingProps;

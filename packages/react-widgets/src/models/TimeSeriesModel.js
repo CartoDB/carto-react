@@ -28,12 +28,13 @@ function fromLocal({
 
 // From remote
 function fromRemote(props) {
-  const { source, abortController, ...params } = props;
+  const { source, abortController, spatialFilter, ...params } = props;
   const { column, operationColumn, joinOperation, operation, stepSize } = params;
 
   return _executeModel({
     model: 'timeseries',
     source,
+    spatialFilter,
     params: {
       column,
       stepSize,

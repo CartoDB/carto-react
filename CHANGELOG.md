@@ -2,6 +2,129 @@
 
 ## Not released
 
+## 2.2
+
+### 2.2.1 (2023-07-21)
+
+- Fix MuiList: add more specificity to apply max-height [#748](https://github.com/CartoDB/carto-react/pull/748)
+- SelectField Storybook leftovers [#746](https://github.com/CartoDB/carto-react/pull/746)
+
+### 2.2.0 (2023-07-19)
+
+- Developer API change:
+  - SelectField props removal: `items` no longer available, use a children instead.
+  - Changed to a controlled component. So now it needs to handle onChange function in the parent.
+  - For multiple selection, now use MultipleSelectField.
+- Breaking change in SelectField component: simplification & MultipleSelectField split [#743](https://github.com/CartoDB/carto-react/pull/743)
+- Fix size of image placed inside a Chip [#744](https://github.com/CartoDB/carto-react/pull/744)
+- Fix to build more accurate ranges for time filters [#655](https://github.com/CartoDB/carto-react/pull/655)
+- Improve regex to detect coordinate pairs on search location widget [#742](https://github.com/CartoDB/carto-react/pull/742)
+
+## 2.1
+
+## 2.1.8 (2023-07-07)
+
+- Add client param to LDS Api in geocoding [#737](https://github.com/CartoDB/carto-react/pull/737)
+
+## 2.1.7 (2023-07-06)
+
+- Force numbers for aggregated computations on numbers (workaround for big numeric field transformed to string in PG tileset) [#731](https://github.com/CartoDB/carto-react/pull/731)
+
+### 2.1.6 (2023-07-05)
+
+- Search by coordinates supported in useGeocoderWidgetController hook [#731](https://github.com/CartoDB/carto-react/pull/731)
+- Fix blank map when loading widgets for tilesets [#733](https://github.com/CartoDB/carto-react/pull/733)
+
+### 2.1.5 (2023-07-05)
+
+- Supporting for `client` parameter for Widgets API calls without passing client as component attribute [#729](https://github.com/CartoDB/carto-react/pull/729)
+
+### 2.1.4 (2023-06-29)
+
+- Add TableCell styles for padding prop [#725](https://github.com/CartoDB/carto-react/pull/725)
+
+### 2.1.3 (2023-06-28)
+
+- FormulaWidget custom aggregation expression support and fixes [#699](https://github.com/CartoDB/carto-react/pull/699)
+  - custom aggregation expression e.g `operation=custom / operationExp = SUM(revenue) * 100`
+  - new onStateChange callback
+  - display empty/error state as '-'
+  - useWidgetFetch to ignore outdated results
+  - Fix: Long values cause text-overflow
+
+### 2.1.2 (2023-06-26)
+
+- Fix: table widget was not showing data due to case sensitive [#721](https://github.com/CartoDB/carto-react/pull/721)
+- Supporting for `client` parameter for Widgets API calls [#722](https://github.com/CartoDB/carto-react/pull/722)
+
+### 2.1.1 (2023-06-22)
+
+- Fix spatial filter was not being applied to Timeseries widgets [#719](https://github.com/CartoDB/carto-react/pull/719)
+- Bugfix: The pagination is out of alignment [#711](https://github.com/CartoDB/carto-react/pull/711).
+
+### 2.1.0 (2023-06-16)
+
+- Widgets processing moved to the data warehouses for table and query sources
+- Developer API change:
+  - geoColumn and aggregationExp moved to Source, remote widgets disabled for spatial indexes
+  - (optional) provider type added to Source, remote widgets disabled for Databricks
+  - className and sx props removed from: Legend, Geocoder, Category and FeatureSelection widgets. Use styled API instead to wrap the widgets
+- Mask, when set, is applied to global widgets as well as to viewport-based widgets [#704](https://github.com/CartoDB/carto-react/pull/704)
+- Support for remote scatter plot widget [#704](https://github.com/CartoDB/carto-react/pull/704)
+- Breaking change for styles: sx / classname props removal [#715](https://github.com/CartoDB/carto-react/pull/715)
+
+## 2.0
+
+### 2.0.10 (2023-06-15)
+
+- Fix breaking change for styles (sx / classname) in 2.0.x [#713](https://github.com/CartoDB/carto-react/pull/713)
+- FeatureSelection widget fixes [#708](https://github.com/CartoDB/carto-react/pull/708)
+
+### 2.0.9 (2023-06-14)
+
+- Fix HistogramWidget breaking onZr events after adding skeleton [#709](https://github.com/CartoDB/carto-react/pull/709)
+
+### 2.0.8 (2023-06-13)
+
+- Add custom Alert component [#698](https://github.com/CartoDB/carto-react/pull/698)
+- [Design system] Text button change to improve layout [#703](https://github.com/CartoDB/carto-react/pull/703)
+- Remove styles props from components: className and sx [#701](https://github.com/CartoDB/carto-react/pull/701)
+- Fix histogramWidget not passing down loading state to widgetUI [#702](https://github.com/CartoDB/carto-react/pull/702)
+
+### 2.0.7 (2023-06-13)
+
+### 2.0.6 (2023-06-07)
+
+- Bump deck.gl to latest 8.9.17 [#700](https://github.com/CartoDB/carto-react/pull/700)
+- Feature selection UI refactor [#697](https://github.com/CartoDB/carto-react/pull/697)
+- Fix Theme overrides [#696](https://github.com/CartoDB/carto-react/pull/696)
+- Add Tooltip to Mui TablePagination and TableWidgetUI [#695](https://github.com/CartoDB/carto-react/pull/695)
+- Add typed imports, from deck.gl typed [#693](https://github.com/CartoDB/carto-react/pull/693)
+
+### 2.0.5 (2023-05-26)
+
+- ScatterPlot Widget: Add a skeleton for loading state [#690](https://github.com/CartoDB/carto-react/pull/690)
+- Table Widget: Add a skeleton for loading state [#689](https://github.com/CartoDB/carto-react/pull/689)
+- TimeSeries Widget: Add a skeleton for loading state [#686](https://github.com/CartoDB/carto-react/pull/686)
+- Pie & ComparativePie Widgets: Add a skeleton for loading state [#682](https://github.com/CartoDB/carto-react/pull/682)
+- Range Widget: Add a skeleton for loading state [#681](https://github.com/CartoDB/carto-react/pull/681)
+- Avoid reset of Table widget to page 0 when not necessary [#685](https://github.com/CartoDB/carto-react/pull/685)
+- Fix widget calculation with very large viewports/masks [#680](https://github.com/CartoDB/carto-react/pull/680)
+- Storybook: show figma codes/theme code snippets for colors [#684](https://github.com/CartoDB/carto-react/pull/684)
+- Category & ComparativeCategory Widgets: Add a skeleton for loading state [#679](https://github.com/CartoDB/carto-react/pull/679)
+- Bar & Histogram & Formula & ComparativeFormula Widgets: Add a skeleton for loading state [#674](https://github.com/CartoDB/carto-react/pull/674)
+- Improve Source types [#687](https://github.com/CartoDB/carto-react/pull/687)
+
+### 2.0.4 (2023-05-19)
+
+- Fix type propTypes issues [#677](https://github.com/CartoDB/carto-react/pull/677)
+
+### 2.0.3 (2023-05-18)
+
+- Bump deck.gl to latest 8.9.15 [#675](https://github.com/CartoDB/carto-react/pull/675)
+- Calculation of widget using maps API under FF [#658](https://github.com/CartoDB/carto-react/pull/658)
+- TablePagination fixes & DS application [#673](https://github.com/CartoDB/carto-react/pull/673)
+- Remove ReactDOMServer dependency and simplify avatar image fallback [#672](https://github.com/CartoDB/carto-react/pull/672)
 - Remove @mui/styles after dumping makeStyles [#670](https://github.com/CartoDB/carto-react/pull/670)
 - Add tooltip prop to ComparativeCategoryWidgetUI [#667](https://github.com/CartoDB/carto-react/pull/667)
 - react-ui: Add component typings [#663](https://github.com/CartoDB/carto-react/pull/663)
@@ -27,8 +150,6 @@
 - Remove makeStyles leftovers [#669](https://github.com/CartoDB/carto-react/pull/669)
 - FormulaWidgetUI component migrated from makeStyles to styled-components + cleanup [#666](https://github.com/CartoDB/carto-react/pull/666)
 - Fix histogram widget filter for max/min values [#671](https://github.com/CartoDB/carto-react/pull/671)
-
-## 2.0
 
 ### 2.0.2 (2023-04-26)
 

@@ -1,10 +1,12 @@
-import { DataFilterExtension, MaskExtension } from '@deck.gl/extensions';
-import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
-import { QueryParameters } from '@deck.gl/carto';
+import { DataFilterExtension, MaskExtension } from '@deck.gl/extensions/typed';
+import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto/typed';
+import { QueryParameters } from '@deck.gl/carto/typed';
 import { FeatureCollection } from 'geojson';
 
+type ApiVersionsType = typeof API_VERSIONS;
+type MapTypesType = typeof MAP_TYPES;
 interface CredentialsCarto2 {
-  apiVersion: API_VERSIONS.V1 | API_VERSIONS.V2;
+  apiVersion: ApiVersionsType['V1'] | ApiVersionsType['V2'];
   username: string;
   apiKey: string;
   region?: string;
@@ -13,19 +15,26 @@ interface CredentialsCarto2 {
 }
 
 interface CredentialsCarto3 {
-  apiVersion?: API_VERSIONS.V3;
+  apiVersion?: ApiVersionsType['V3'];
   apiBaseUrl?: string;
   accessToken?: string;
 }
 
 export type Credentials = CredentialsCarto2 | CredentialsCarto3;
 
+/*
+  SourceProps can be passed to a new CartoLayer for map instantiation.
+  Check CartoLayer props at https://deck.gl/docs/api-reference/carto/carto-layer
+*/
 export type SourceProps = {
   data: string;
-  type: MAP_TYPES.QUERY | MAP_TYPES.TABLE | MAP_TYPES.TILESET;
-  connection?: string;
-  credentials: Credentials;
-  queryParameters: QueryParameters;
+  type: MapTypesType['QUERY'] | MapTypesType['TABLE'] | MapTypesType['TILESET'];
+  connection: string;
+  geoColumn?: string;
+  aggregationExp?: string;
+  credentials?: Credentials;
+  queryParameters?: QueryParameters;
+  provider?: 'bigquery' | 'postgres' | 'snowflake' | 'redshift' | 'databricks';
 };
 
 export type LayerConfig = {

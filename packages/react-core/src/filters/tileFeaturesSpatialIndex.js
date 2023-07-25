@@ -37,7 +37,7 @@ export default function tileFeaturesSpatialIndex({
     }
 
     tile.data.forEach((d) => {
-      if (cellsDictionary[d.id]) {
+      if (d.id in cellsDictionary) {
         map.set(d.id, { ...d.properties, [spatialIndexIDName]: d.id });
       }
     });

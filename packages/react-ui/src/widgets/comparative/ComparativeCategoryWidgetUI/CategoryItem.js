@@ -87,15 +87,12 @@ function CategoryItem({
   maxValue,
   showCheckbox,
   checkboxChecked,
-  className,
   formatter,
   tooltipFormatter,
   onClick = IDENTITY_FN,
   names,
   tooltip
 }) {
-  const theme = useTheme();
-
   function getProgressbarLength(value) {
     return `${Math.min(100, ((value || 0) / maxValue) * 100)}%`;
   }
@@ -110,7 +107,7 @@ function CategoryItem({
   );
 
   return (
-    <CategoryItemWrapperRoot onClick={() => onClick(item.key)} className={className}>
+    <CategoryItemWrapperRoot onClick={() => onClick(item.key)}>
       {showCheckbox ? <Checkbox checked={checkboxChecked} /> : null}
       <CategoryItemWrapperInner>
         <Typography variant='body2' noWrap>
@@ -159,7 +156,6 @@ CategoryItem.displayName = 'CategoryItem';
 CategoryItem.defaultProps = {
   animation: true,
   animationOptions: {},
-  className: '',
   formatter: IDENTITY_FN,
   tooltipFormatter: IDENTITY_FN,
   onClick: IDENTITY_FN
@@ -171,7 +167,6 @@ CategoryItem.propTypes = {
   maxValue: PropTypes.number.isRequired,
   showCheckbox: PropTypes.bool.isRequired,
   checkboxChecked: PropTypes.bool.isRequired,
-  className: PropTypes.string,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   onClick: PropTypes.func,

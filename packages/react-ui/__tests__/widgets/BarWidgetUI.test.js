@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '../widgets/utils/testUtils';
-import BarWidgetUI from '../../src/widgets/BarWidgetUI';
+import BarWidgetUI from '../../src/widgets/BarWidgetUI/BarWidgetUI';
 import { mockEcharts } from './testUtils';
 
 describe('BarWidgetUI', () => {

@@ -1,18 +1,30 @@
 import { checkCredentials, makeCall } from './common';
-import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
+import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto/typed';
 import { _assert as assert } from '@carto/react-core/';
 
-const URL_LENGTH = 2048;
+import { REQUEST_GET_MAX_URL_LENGTH, _getClient } from '@carto/react-core';
 
-const AVAILABLE_MODELS = ['category', 'histogram', 'formula', 'timeseries', 'range'];
+const AVAILABLE_MODELS = [
+  'category',
+  'histogram',
+  'formula',
+  'timeseries',
+  'range',
+  'scatterplot',
+  'table'
+];
+
+const DEFAULT_GEO_COLUMN = 'geom';
 
 /**
  * Execute a SQL model request.
  *
+ * @typedef { import('geojson').Polygon | import('geojson').MultiPolygon } SpatialFilter
  * @param { object } props
  * @param { string } props.model - widget's model that we want to get the data for
  * @param { object } props.source - source that owns the column
  * @param { object } props.params - widget's props
+ * @param { SpatialFilter= } props.spatialFilter - restrict widget calculation to an area
  * @param { object= } props.opts - Additional options for the HTTP request
  */
 export function executeModel(props) {
@@ -27,7 +39,7 @@ export function executeModel(props) {
     )}`
   );
 
-  const { source, model, params, opts } = props;
+  const { source, model, params, spatialFilter, opts } = props;
 
   checkCredentials(source.credentials);
 
@@ -45,6 +57,7 @@ export function executeModel(props) {
     : '';
   let queryParams = {
     type,
+    client: _getClient(),
     source: data,
     params: JSON.stringify(params),
     queryParameters,
@@ -52,13 +65,29 @@ export function executeModel(props) {
     filtersLogicalOperator
   };
 
-  const isGet = url.length + JSON.stringify(queryParams).length <= URL_LENGTH;
+  // API supports multiple filters, we apply it only to geoColumn
+  const spatialFilters = spatialFilter
+    ? {
+        [source.geoColumn ? source.geoColumn : DEFAULT_GEO_COLUMN]: spatialFilter
+      }
+    : undefined;
+
+  if (spatialFilters) {
+    queryParams.spatialFilters = JSON.stringify(spatialFilters);
+  }
+
+  const urlWithSearchParams = url + '?' + new URLSearchParams(queryParams).toString();
+  const isGet = urlWithSearchParams.length <= REQUEST_GET_MAX_URL_LENGTH;
   if (isGet) {
-    url += '?' + new URLSearchParams(queryParams).toString();
+    url = urlWithSearchParams;
   } else {
+    // undo the JSON.stringify, @todo find a better pattern
     queryParams.params = params;
     queryParams.filters = filters;
     queryParams.queryParameters = source.queryParameters;
+    if (spatialFilters) {
+      queryParams.spatialFilters = spatialFilters;
+    }
   }
   return makeCall({
     url,

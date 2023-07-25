@@ -15,6 +15,7 @@ import { CHART_TYPES } from './utils/constants';
 import PropTypes from 'prop-types';
 import { GroupDateTypes, getMonday } from '@carto/react-core';
 import Typography from '../../components/atoms/Typography';
+import TimeSeriesSkeleton from './components/TimeSeriesSkeleton';
 
 const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.YEARS]: yearCurrentDateRange,
@@ -65,8 +66,11 @@ function TimeSeriesWidgetUI({
   onPlay,
   isPaused,
   onPause,
-  onStop
+  onStop,
+  isLoading
 }) {
+  if (isLoading) return <TimeSeriesSkeleton height={height} />;
+
   return (
     <TimeSeriesProvider
       isPlaying={isPlaying}
@@ -117,7 +121,8 @@ TimeSeriesWidgetUI.propTypes = {
   onTimelineUpdate: PropTypes.func,
   timeWindow: PropTypes.arrayOf(PropTypes.any),
   onTimeWindowUpdate: PropTypes.func,
-  showControls: PropTypes.bool
+  showControls: PropTypes.bool,
+  isLoading: PropTypes.bool
 };
 
 TimeSeriesWidgetUI.defaultProps = {
@@ -131,7 +136,8 @@ TimeSeriesWidgetUI.defaultProps = {
   isPaused: false,
   timelinePosition: 0,
   timeWindow: [],
-  showControls: true
+  showControls: true,
+  isLoading: false
 };
 
 export default TimeSeriesWidgetUI;
@@ -306,7 +312,7 @@ function TimeSeriesWidgetUIContent({
             <Typography color='textSecondary' variant='caption'>
               {currentDate}
             </Typography>
-            <Typography xs fontSize={12} ml={1} color='textSecondary' variant='caption'>
+            <Typography fontSize={12} ml={1} color='textSecondary' variant='caption'>
               ({capitalize(stepSize)})
             </Typography>
           </Box>

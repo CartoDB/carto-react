@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { _FilterTypes as FilterTypes } from '@carto/react-core';
+import {
+  _FilterTypes as FilterTypes,
+  _FeatureFlags,
+  _hasFeatureFlag
+} from '@carto/react-core';
 import { WrapperWidgetUI } from '@carto/react-ui';
 import { addFilter, selectSourceById } from '@carto/react-redux/';
 import { getRange } from '../models/RangeModel';
@@ -17,11 +21,11 @@ import useStats from '../hooks/useStats';
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {string} props.column - Name of the data source's column(s) to get the data from. If multiples are provided, they will be merged into a single one using joinOperation property.
- * @param  {number} [props.min] - Min value of the indicated column
- * @param  {number} [props.max] - Max value of the indicated column
+ * @param  {number} [props.min] - Min value of the indicated column.
+ * @param  {number} [props.max] - Max value of the indicated column.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
+ * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  */
 function RangeWidget({
   id,
@@ -67,7 +71,8 @@ function RangeWidget({
       column
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   const handleSelectedRangeChange = useCallback(
@@ -140,6 +145,7 @@ function RangeWidget({
             {...(Number.isFinite(data.min) &&
               Number.isFinite(data.max) && { limits: [data.min, data.max] })}
             onSelectedRangeChange={handleSelectedRangeChange}
+            isLoading={isLoading}
           />
         )}
       </WidgetWithAlert>

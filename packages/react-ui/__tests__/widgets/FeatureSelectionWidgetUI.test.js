@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, queryByAttribute, fireEvent } from '../widgets/utils/testUtils';
-import FeatureSelectionWidgetUI from '../../src/widgets/FeatureSelectionWidgetUI';
+import FeatureSelectionWidgetUI from '../../src/widgets/FeatureSelectionWidgetUI/FeatureSelectionWidgetUI';
 import { capitalize } from '@mui/material';
 import CursorIcon from '../../src/assets/icons/CursorIcon';
 import PolygonIcon from '../../src/assets/icons/PolygonIcon';
@@ -53,10 +53,10 @@ describe('FeatureSelectionWidgetUI', () => {
       render(
         <FeatureSelectionWidgetUI
           selectionModes={FEATURE_SELECTION_MODES}
-          selectedMode={'IInvented'}
+          selectedMode={'Invented'}
         />
       )
-    ).toThrowError('Selected mode not supported');
+    ).toThrowError('Selected mode "Invented" not supported');
   });
 
   test('activate selected mode event is correctly raised', () => {
@@ -109,7 +109,16 @@ describe('FeatureSelectionWidgetUI', () => {
     expect(onSelectMode).toHaveBeenCalledWith(anotherMode.id);
   });
 
-  const GEOMETRY = { geometry: 1 };
+  const GEOMETRY = {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [125.6, 10.1]
+    },
+    properties: {
+      name: 'Mask'
+    }
+  };
   test('geometry is rendered correctly', () => {
     const rendered = render(<CommonFeatureSelectionWidgetUI geometry={GEOMETRY} />);
     expect(rendered.getByText('Mask')).toBeDefined();

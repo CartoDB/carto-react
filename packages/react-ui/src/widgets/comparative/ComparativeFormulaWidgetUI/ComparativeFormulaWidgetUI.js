@@ -6,6 +6,7 @@ import { animationOptionsPropTypes } from '../../../custom-components/AnimatedNu
 
 import FormulaValue from './FormulaValue';
 import FormulaLabel from './FormulaLabel';
+import FormulaSkeleton from '../../FormulaWidgetUI/FormulaSkeleton';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
@@ -25,6 +26,7 @@ const FormulaGroup = styled('div')(({ theme }) => ({
  * @param {boolean} [props.animated]
  * @param {{ duration?: number; animateOnMount?: boolean; initialValue?: number; }} [props.animationOptions]
  * @param {(v: number) => React.ReactNode} [props.formatter]
+ * @param {boolean} [props.isLoading]
  * -->
  */
 function ComparativeFormulaWidgetUI({
@@ -32,9 +34,14 @@ function ComparativeFormulaWidgetUI({
   colors = EMPTY_ARRAY,
   animated = true,
   animationOptions,
-  formatter = IDENTITY_FN
+  formatter = IDENTITY_FN,
+  isLoading = false
 }) {
   const formulaValues = prepareFormulaValues(data, colors);
+
+  if (isLoading) {
+    return <FormulaSkeleton />;
+  }
 
   return (
     <div>
@@ -90,7 +97,8 @@ ComparativeFormulaWidgetUI.propTypes = {
   colors: PropTypes.arrayOf(PropTypes.string),
   animated: PropTypes.bool,
   animationOptions: animationOptionsPropTypes,
-  formatter: PropTypes.func
+  formatter: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default ComparativeFormulaWidgetUI;

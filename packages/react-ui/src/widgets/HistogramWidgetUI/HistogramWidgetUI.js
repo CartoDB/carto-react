@@ -7,6 +7,7 @@ import { processFormatterRes } from '../utils/formatterUtils';
 import detectTouchscreen from '../utils/detectTouchScreen';
 import useHistogramInteractivity from './useHistogramInteractivity';
 import Typography from '../../components/atoms/Typography';
+import HistogramSkeleton from './HistogramSkeleton';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 
@@ -39,7 +40,8 @@ function HistogramWidgetUI({
   tooltipFormatter,
   animation,
   filterable: _filterable,
-  height
+  height,
+  isLoading
 }) {
   const theme = useTheme();
 
@@ -262,6 +264,8 @@ function HistogramWidgetUI({
     0
   );
 
+  if (isLoading) return <HistogramSkeleton height={height} />;
+
   return (
     <div>
       {filterable && (
@@ -301,8 +305,8 @@ HistogramWidgetUI.defaultProps = {
 HistogramWidgetUI.propTypes = {
   data: PropTypes.arrayOf(PropTypes.number).isRequired,
   ticks: PropTypes.arrayOf(PropTypes.number).isRequired,
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
+  min: PropTypes.number,
+  max: PropTypes.number,
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
   xAxisFormatter: PropTypes.func,
@@ -311,7 +315,8 @@ HistogramWidgetUI.propTypes = {
   onSelectedBarsChange: PropTypes.func,
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
-  height: PropTypes.number
+  height: PropTypes.number,
+  isLoading: PropTypes.bool
 };
 
 export default HistogramWidgetUI;

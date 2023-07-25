@@ -1,5 +1,4 @@
 import { GroupDateTypes } from '@carto/react-core';
-import { SxProps, Theme } from '@mui/material';
 export { SelectFieldProps } from './components/atoms/SelectField';
 export { TypographyProps } from './components/atoms/Typography';
 export { LabelWithIndicatorProps } from './components/atoms/LabelWithIndicator';
@@ -22,13 +21,13 @@ export type WrapperWidgetUI = {
 export type CategoryWidgetUIData = { name: number | string | boolean; value: number }[];
 export type CategoryWidgetUI = {
   data: CategoryWidgetUIData;
-  isLoading?: boolean;
   formatter?: Function;
   labels?: object;
   maxItems?: number;
   selectedCategories?: string[];
   onSelectedCategoriesChange?: Function;
   order?: 'ranking' | 'fixed';
+  isLoading?: boolean;
 };
 
 export type FormulaWidgetUIData =
@@ -38,6 +37,7 @@ export type FormulaWidgetUIData =
 export type FormulaWidgetUI = {
   data: FormulaWidgetUIData;
   formatter?: Function;
+  isLoading?: boolean;
 };
 
 export type HistogramWidgetUIData = number[];
@@ -51,6 +51,7 @@ export type HistogramWidgetUI = {
   name?: string;
   onSelectedBarsChange?: Function;
   height?: number;
+  isLoading?: boolean;
 };
 
 export type BarWidgetUI = {
@@ -69,6 +70,7 @@ export type BarWidgetUI = {
   height?: string | number;
   filterable?: boolean;
   animation?: boolean;
+  isLoading?: boolean;
 };
 
 export type PieWidgetUIData = { name: string; value: number }[];
@@ -81,6 +83,7 @@ export type PieWidgetUI = {
   colors?: string[];
   selectedCategories?: string[];
   onSelectedCategoriesChange?: Function;
+  isLoading?: boolean;
 };
 
 export type Layer = {
@@ -103,7 +106,6 @@ export type LegendWidgetUIData = {
 };
 
 export type LegendWidgetUI = {
-  className?: string;
   customLegendTypes?: Record<string, Function>;
   layers?: LegendWidgetUIData[];
   collapsed?: boolean;
@@ -120,6 +122,7 @@ export type ScatterPlotWidgetUI = {
   xAxisFormatter?: Function;
   yAxisFormatter?: Function;
   tooltipFormatter?: Function;
+  isLoading?: boolean;
 };
 
 export type TimeSeriesWidgetUIData = { name: number; value: number }[];
@@ -141,6 +144,7 @@ export type TimeSeriesWidgetUI = {
   timeWindow?: any[];
   onTimeWindowUpdate?: Function;
   showControls?: boolean;
+  isLoading?: boolean;
 };
 
 export type NoDataAlert = {
@@ -151,20 +155,50 @@ export type NoDataAlert = {
 export type FeatureSelectionWidgetUIData = {
   id: string;
   label: string;
-  icon: React.ReactElement;
+  icon: React.ReactNode;
 };
 export type FeatureSelectionWidgetUI = {
+  selectionModes: FeatureSelectionWidgetUIData[];
+  editModes?: FeatureSelectionWidgetUIData[];
+  selectedMode: string;
+  onSelectMode?: Function;
+  enabled?: boolean;
+  onEnabledChange?: Function;
+  geometry?: GeoJSON.Feature;
+  onSelectGeometry?: Function;
+  onDeleteGeometry?: Function;
+  tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
+  size?: 'small' | 'medium';
+  chipLabel?: string;
+};
+
+export type FeatureSelectionUIDropdown = {
   selectionModes: FeatureSelectionWidgetUIData[];
   editModes: FeatureSelectionWidgetUIData[];
   selectedMode: string;
   onSelectMode?: Function;
-  activated?: boolean;
-  onActivatedChange?: Function;
-  geometry?: any;
+  enabled?: boolean;
+  onEnabledChange?: Function;
+  tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
+  editDisabled?: boolean;
+};
+export type FeatureSelectionUIGeometryChips = {
+  features: GeoJSON.Feature[];
   onSelectGeometry?: Function;
-  tooltipPlacement?: string;
-  className?: string;
-  sx?: SxProps<Theme>;
+  onDeleteGeometry?: Function;
+  chipTooltip?: string;
+  disabledChipTooltip?: string;
+  size?: 'small' | 'medium';
+  tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
+  chipLabel?: string;
+};
+export type FeatureSelectionUIToggleButton = {
+  icon: React.ReactNode;
+  hoverTooltip?: string;
+  clickTooltip?: string;
+  enabled?: boolean;
+  onEnabledChange?: Function;
+  tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
 };
 
 // Legends
@@ -223,6 +257,7 @@ export type ComparativeFormulaWidgetUI = {
   animated?: boolean;
   animationOptions?: AnimationOptions;
   formatter?: (n: number) => React.ReactNode;
+  isLoading?: boolean;
 };
 
 export enum ORDER_TYPES {
@@ -250,6 +285,7 @@ export type ComparativeCategoryWidgetUI = {
   onSelectedCategoriesChange?: (categories: string[]) => any;
   formatter?: (v: any) => string;
   tooltipFormatter?: (v: any) => string;
+  isLoading?: boolean;
 };
 
 export type PieData = {
@@ -268,6 +304,7 @@ export type ComparativePieWidgetUIProps = {
   tooltipFormatter?: (v: any) => string;
   selectedCategories?: string[];
   onCategorySelected?: (categories: string[]) => any;
+  isLoading?: boolean;
 };
 
 // Tooltip data

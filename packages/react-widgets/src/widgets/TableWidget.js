@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { WrapperWidgetUI, TableWidgetUI } from '@carto/react-ui';
-import { getTable } from '../models';
+import { getTable, paginateTable, TABLE_HARD_LIMIT } from '../models';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
-
-const EMPTY_ARRAY = [];
+import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
 
 /**
  * Renders a <TableWidget /> component
+ * @typedef {{field: string, headerName?: string, align?: string, type?: string}} Column
  * @param  {object} props
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
- * @param  {object[]} props.columns - List of data columns to display. If not specified, all the columns in the data source will be displayed.
+ * @param  {Column[]} props.columns - List of data columns to display.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default)
- * @param  {Object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]()
- * @param  {number} [props.initialPageSize] - Initial number of rows per page
- * @param  {Function} [props.onPageSizeChange] - Function called when the page size is changed internally
- * @param  {string} [props.height] - Static widget height, required for scrollable table content
- * @param  {boolean} [props.dense] - Whether the table should use a compact layout with smaller cell paddings
- * @param  {Object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature
- * @param  {number} [props.pageSize] - Number of rows per page. This is used to manage internal state externally
+ * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
+ * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
+ * @param  {number} [props.initialPageSize] - Initial number of rows per page.
+ * @param  {Function} [props.onPageSizeChange] - Function called when the page size is changed internally.
+ * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
+ * @param  {string} [props.height] - Static widget height, required for scrollable table content.
+ * @param  {boolean} [props.dense] - Whether the table should use a compact layout with smaller cell paddings.
+ * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
+ * @param  {number} [props.pageSize] - Number of rows per page. This is used to manage internal state externally.
  */
 function TableWidget({
   id,
@@ -49,35 +50,38 @@ function TableWidget({
   const [sortDirection, setSortDirection] = useState('asc');
 
   const {
-    data = { data: EMPTY_ARRAY, totalCount: 0 },
+    data = { rows: [], totalCount: 0, hasData: false, isDataComplete: true },
     isLoading,
-    isSourceReady,
-    source,
     warning
   } = useWidgetFetch(getTable, {
     id,
     dataSource,
     params: {
-      rowsPerPage,
-      page,
+      columns: columns.map((c) => c.field),
       sortBy,
       sortDirection,
       sortByColumnType
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
-  const { data: rows, totalCount } = data;
+  const { totalCount, hasData, isDataComplete } = data;
+  const { rows, pages } = paginateTable(data, page, rowsPerPage);
+
+  const lastPageTooltip = isDataComplete
+    ? undefined
+    : `This view is limited to ${TABLE_HARD_LIMIT} rows`;
 
   useEffect(() => {
     if (pageSize !== undefined) setRowsPerPage(pageSize);
   }, [pageSize]);
 
   useEffect(() => {
-    // force reset the page to 0 when the viewport or filters change
+    // force reset to page 0 when the total number of pages changes
     setPage(0);
-  }, [dataSource, isSourceReady, source?.filters]);
+  }, [dataSource, pages]);
 
   const handleRowsPerPageChange = (newRowsPerPage) => {
     setRowsPerPage(newRowsPerPage);
@@ -99,7 +103,7 @@ function TableWidget({
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
       >
-        {(!!rows.length || isLoading) && (
+        {(hasData || isLoading) && (
           <TableWidgetUI
             columns={columns}
             rows={rows}
@@ -116,6 +120,8 @@ function TableWidget({
             onSetSortDirection={setSortDirection}
             height={height}
             dense={dense}
+            isLoading={isLoading}
+            lastPageTooltip={lastPageTooltip}
           />
         )}
       </WidgetWithAlert>
