@@ -24,6 +24,7 @@ type InitialCarto2State = {
 }
 
 type OauthCarto3 = {
+  namespace?: string,
   domain: string,
   clientId: string,
   organizationId: string,
