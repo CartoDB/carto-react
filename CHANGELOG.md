@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Add namespace as optional param in OAuthCarto3 type [#750](https://github.com/CartoDB/carto-react/pull/750)
+
 ## 2.2
 
 ### 2.2.1 (2023-07-21)
