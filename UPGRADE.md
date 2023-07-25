@@ -94,7 +94,7 @@ For external use: `Open Sans` and `Montserrat` families have been replaced by `I
 
 ### Deleted colors
 
-Some keys have been removed from [color palette](https://github.com/CartoDB/carto-react/tree/master/packages/react-ui/src/theme) due they are unused:
+Some keys have been removed from [color palette](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/theme/sections/palette.js) due they are unused:
 
 - activatedOpacity
 - hoverOpacity

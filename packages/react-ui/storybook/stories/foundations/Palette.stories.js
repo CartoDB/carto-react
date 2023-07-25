@@ -2,6 +2,7 @@ import { Box, Grid, Tooltip } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import React, { useRef } from 'react';
 import Typography from '../../../src/components/atoms/Typography';
+import Button from '../../../src/components/atoms/Button';
 import { DocContainer } from '../../utils/storyStyles';
 
 const options = {
@@ -245,8 +246,30 @@ const DividerTemplate = () => {
   );
 };
 
+const DocTemplate = () => {
+  return (
+    <DocContainer
+      severity='warning'
+      action={
+        <Button
+          variant='outlined'
+          size='small'
+          color='inherit'
+          href='/?path=/docs/foundations-palette-guide--page'
+        >
+          Guide
+        </Button>
+      }
+    >
+      Check the usage guide before using CARTO palette
+    </DocContainer>
+  );
+};
+
 export const Playground = ColorTemplate.bind({});
 Playground.args = { colorVariant: 'primary' };
+
+export const Guide = DocTemplate.bind({});
 
 export const Common = CommonTemplate.bind({});
 

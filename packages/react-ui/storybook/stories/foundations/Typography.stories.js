@@ -1,5 +1,7 @@
 import React from 'react';
 import Typography from '../../../src/components/atoms/Typography';
+import ButtonComp from '../../../src/components/atoms/Button';
+import { DocContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Foundations/Typography',
@@ -71,8 +73,30 @@ export default options;
 
 const Template = (args) => <Typography {...args}>{args.text}</Typography>;
 
+const DocTemplate = () => {
+  return (
+    <DocContainer
+      severity='warning'
+      action={
+        <ButtonComp
+          variant='outlined'
+          size='small'
+          color='inherit'
+          href='/?path=/docs/foundations-typography-guide--page'
+        >
+          Guide
+        </ButtonComp>
+      }
+    >
+      Check the usage guide before using CARTO typographies
+    </DocContainer>
+  );
+};
+
 export const Playground = Template.bind({});
 Playground.args = { variant: 'h1', text: 'H1 Headline' };
+
+export const Guide = DocTemplate.bind({});
 
 export const H1 = Template.bind({});
 H1.args = { variant: 'h1', text: 'H1 Headline' };

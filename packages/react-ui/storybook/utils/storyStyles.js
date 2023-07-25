@@ -1,6 +1,7 @@
 import { styled } from '@mui/material/styles';
-import { Alert, Box, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import Typography from '../../src/components/atoms/Typography';
+import Alert from '../../src/components/molecules/Alert';
 
 export const GridVerticalContent = styled(Grid)(({ theme }) => ({
   display: 'flex',

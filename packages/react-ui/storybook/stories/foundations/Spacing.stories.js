@@ -2,7 +2,8 @@ import React from 'react';
 import { Box, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Typography from '../../../src/components/atoms/Typography';
-import { FilledContainer } from '../../utils/storyStyles';
+import Button from '../../../src/components/atoms/Button';
+import { DocContainer, FilledContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Foundations/Spacing',
@@ -71,6 +72,28 @@ const Template = () => {
   );
 };
 
+const DocTemplate = () => {
+  return (
+    <DocContainer
+      severity='warning'
+      action={
+        <Button
+          variant='outlined'
+          size='small'
+          color='inherit'
+          href='/?path=/docs/foundations-spacing-guide--page'
+        >
+          Guide
+        </Button>
+      }
+    >
+      Check the usage guide before using spacing values, specially theme.spacing function.
+    </DocContainer>
+  );
+};
+
 export const Playground = SpacingBox.bind({});
+
+export const Guide = DocTemplate.bind({});
 
 export const Spacings = Template.bind({});

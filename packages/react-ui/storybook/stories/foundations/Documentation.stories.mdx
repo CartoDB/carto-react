@@ -8,6 +8,8 @@ import Storybook from '../../assets/storybook.svg';
 
 <Meta title='Foundations/Guide' />
 
+Migration guide from v1.5 to v2.0.
+
 A complete guide about UI and the design system can be found [here](https://github.com/CartoDB/carto-react/blob/master/UPGRADE.md).
 
 # CARTO MUI theme
@@ -48,10 +50,10 @@ Tip: An easy search to catch up this, would be `-theme.spacing(`
 
 ### New variants
 
-- overlineDelicate
-- code1
-- code2
-- code3
+- `overlineDelicate`
+- `code1`
+- `code2`
+- `code3`
 
 ### Replaced variants
 
@@ -75,14 +77,14 @@ For external use: `Open Sans` and `Montserrat` families have been replaced by `I
 
 ### Deleted colors
 
-Some keys have been removed from [color palette](https://github.com/CartoDB/carto-react/tree/master/packages/react-ui/src/theme) due they are unused:
+Some keys have been removed from [color palette](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/theme/sections/palette.js) due they are unused:
 
-- activatedOpacity
-- hoverOpacity
-- disabledOpacity
-- selectedOpacity
-- focusOpacity
-- other, all removed but divider, which is moved to first level
+- `activatedOpacity`
+- `hoverOpacity`
+- `disabledOpacity`
+- `selectedOpacity`
+- `focusOpacity`
+- other, all removed but `divider`, which is moved to first level
 
 ### Replaced colors
 

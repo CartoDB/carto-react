@@ -1,0 +1,24 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title='Foundations/Typography/Guide' />
+
+# Typography
+
+`responsiveFontSizes` simplified due we want to resize only a few variants through the theme.
+
+### New variants
+
+- `overlineDelicate`
+- `code1`
+- `code2`
+- `code3`
+
+### Replaced variants
+
+Replaced variants due they were so specific to some components, these are:
+
+- `charts`: replaced by `theme.palette.overline` + `weight='strong'`
+
+### Font families
+
+For external use: `Open Sans` and `Montserrat` families have been replaced by `Inter` and `Overpass Mono`, you have an example of this in the [`preview-head.html`](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/storybook/.storybook/preview-head.html) file.
