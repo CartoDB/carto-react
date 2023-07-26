@@ -8,28 +8,32 @@ In order to be interactive, you need to use `MenuItem` component, or use `ListIt
 
 ```
 <List>
-  <ListItem>
-    <ListItemButton>
-      <ListItemIcon>
-        <InboxIcon />
-      </ListItemIcon>
-      <ListItemText primary="Inbox" />
-    </ListItemButton>
-  </ListItem>
+  <ListItemButton>
+    <ListItemIcon>
+      <Icon />
+    </ListItemIcon>
+    <ListItemText primary="List item text" />
+  </ListItemButton>
 <List>
 ```
 
 ```
 <MenuList>
   <MenuItem>
-    <ListItemButton>
-      <ListItemIcon>
-        <InboxIcon />
-      </ListItemIcon>
-      <ListItemText primary="Inbox" />
-    </ListItemButton>
+    <ListItemIcon>
+      <Icon />
+    </ListItemIcon>
+    <ListItemText primary="List item text" />
   </MenuItem>
 <MenuList>
+```
+
+To render a link:
+
+```
+<ListItemButton component="a">
+  <ListItemText primary="List item text" />
+</ListItemButton>
 ```
 
 Note that `<ListItem button />` is deprecated.
