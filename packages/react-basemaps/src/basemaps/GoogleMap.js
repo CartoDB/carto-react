@@ -11,6 +11,7 @@ import { debounce } from '@carto/react-core';
  * @param { Object } props.viewState - Viewstate, as defined by deck.gl. Just center and zoom level are supported
  * @param { Layer[] } props.layers - deck.gl layers array
  * @param { function } props.getTooltip - (Optional) Tooltip handler
+ * @param { function } props.onClick - (Optional) onClick handler
  * @param { function } props.onResize - (Optional) onResize handler
  * @param { function } props.onViewStateChange - (Optional) onViewStateChange handler
  * @param { string } props.apiKey - Google Maps API Key
@@ -24,6 +25,7 @@ export function GoogleMap(props) {
     viewState,
     layers,
     getTooltip,
+    onClick,
     onResize,
     onViewStateChange,
     apiKey,
@@ -90,6 +92,9 @@ export function GoogleMap(props) {
 
       const handleViewportChangeDebounced = debounce(handleViewportChange, 200);
       map.addListener('bounds_changed', handleViewportChangeDebounced);
+      if (onClick) {
+        map.addListener('click', onClick);
+      }
       map.addListener('resize', () => {
         onResize &&
           onResize({

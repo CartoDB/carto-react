@@ -3,6 +3,7 @@
 ## Not released
 
 - Add namespace as optional param in OAuthCarto3 type [#750](https://github.com/CartoDB/carto-react/pull/750)
+- Add onClick event handler to GoogleMap component [#747](https://github.com/CartoDB/carto-react/pull/747)
 
 ## 2.2
 
