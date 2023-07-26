@@ -139,6 +139,44 @@ We have a new component for building data structures within Tooltips, `TooltipDa
 
 # Components
 
+## Good practices
+
+### ListItem
+
+In order to be interactive, you need to use `MenuItem` component, or use `ListItemButton`instead.
+
+```
+<List>
+  <ListItemButton>
+    <ListItemIcon>
+      <Icon />
+    </ListItemIcon>
+    <ListItemText primary="List item text" />
+  </ListItemButton>
+<List>
+```
+
+```
+<MenuList>
+  <MenuItem>
+    <ListItemIcon>
+      <Icon />
+    </ListItemIcon>
+    <ListItemText primary="List item text" />
+  </MenuItem>
+<MenuList>
+```
+
+To render a link:
+
+```
+<ListItemButton component="a">
+  <ListItemText primary="List item text" />
+</ListItemButton>
+```
+
+Note that `<ListItem button />` is deprecated.
+
 ## Mui components replacement
 
 These components should be imported from carto-react library instead of Mui, as they replace the Mui components extending their functionality to meet with design criteria.

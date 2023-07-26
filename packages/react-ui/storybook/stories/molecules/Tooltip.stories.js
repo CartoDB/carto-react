@@ -7,7 +7,7 @@ import { commonPalette } from '../../../src/theme/sections/palette';
 import {
   Container,
   DocContainer,
-  DocTextHighlight,
+  DocHighlight,
   Label,
   Standalone
 } from '../../utils/storyStyles';
@@ -239,15 +239,9 @@ const TooltipBehaviorTemplate = (args) => {
 const DocTemplate = () => {
   return (
     <DocContainer severity='warning'>
-      By default a Tooltip is placed{' '}
-      <DocTextHighlight variant='inherit' component='span'>
-        top
-      </DocTextHighlight>{' '}
-      and has an{' '}
-      <DocTextHighlight variant='inherit' component='span'>
-        arrow
-      </DocTextHighlight>{' '}
-      indicator, so you don't need to specify these properties anymore.
+      By default a Tooltip is placed <DocHighlight component='span'>top</DocHighlight> and
+      has an <DocHighlight component='span'>arrow</DocHighlight> indicator, so you don't
+      need to specify these properties anymore.
     </DocContainer>
   );
 };

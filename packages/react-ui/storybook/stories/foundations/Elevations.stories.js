@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Typography from '../../../src/components/atoms/Typography';
-import { DocContainer, FilledContainer } from '../../utils/storyStyles';
+import { DocContainer, DocHighlight, FilledContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Foundations/Elevations',
@@ -71,10 +71,7 @@ const DocTemplate = () => {
   return (
     <DocContainer severity='warning'>
       Use is restringed to a few specific values, defined in the design system, which are:{' '}
-      <Typography variant='code3' weight='strong'>
-        0, 1, 2, 4, 6, 8, 16, 24
-      </Typography>
-      .
+      <DocHighlight component='span'>0, 1, 2, 4, 6, 8, 16, 24</DocHighlight>.
     </DocContainer>
   );
 };

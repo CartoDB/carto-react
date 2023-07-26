@@ -1,0 +1,35 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title='Organisms/List/Guide' />
+
+# ListItem
+
+In order to be interactive, you need to use `MenuItem` component, or use `ListItemButton`instead.
+
+```
+<List>
+  <ListItem>
+    <ListItemButton>
+      <ListItemIcon>
+        <InboxIcon />
+      </ListItemIcon>
+      <ListItemText primary="Inbox" />
+    </ListItemButton>
+  </ListItem>
+<List>
+```
+
+```
+<MenuList>
+  <MenuItem>
+    <ListItemButton>
+      <ListItemIcon>
+        <InboxIcon />
+      </ListItemIcon>
+      <ListItemText primary="Inbox" />
+    </ListItemButton>
+  </MenuItem>
+<MenuList>
+```
+
+Note that `<ListItem button />` is deprecated.

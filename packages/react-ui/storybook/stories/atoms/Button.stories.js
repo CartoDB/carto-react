@@ -4,7 +4,7 @@ import { Add, Close } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Typography from '../../../src/components/atoms/Typography';
 import Button from '../../../src/components/atoms/Button';
-import { DocContainer, DocTextHighlight, DocLink } from '../../utils/storyStyles';
+import { DocContainer, DocHighlight, DocLink } from '../../utils/storyStyles';
 
 const options = {
   title: 'Atoms/Button',
@@ -213,17 +213,15 @@ const DocTemplate = () => {
       </DocLink>{' '}
       component that uses <i>Mui Button</i> and wraps its children in a <i>Typography</i>{' '}
       component to meet with the designed behavior (text overflow case).
-      <Typography variant='inherit' color='inherit' mt={2}>
+      <Typography mt={2}>
         So, instead of Mui Button, you should use this one:{' '}
-        <DocTextHighlight variant='inherit' component='span'>
-          react-ui/src/components/atoms/Button
-        </DocTextHighlight>
+        <DocHighlight component='span'>react-ui/src/components/atoms/Button</DocHighlight>
       </Typography>
-      <Typography variant='inherit' color='inherit' mt={2}>
+      <Typography mt={2}>
         For external use:{' '}
-        <DocTextHighlight variant='inherit' component='span'>
+        <DocHighlight component='span'>
           {'import { Button } from "@carto/react-ui";'}
-        </DocTextHighlight>
+        </DocHighlight>
         .
       </Typography>
     </DocContainer>

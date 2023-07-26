@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '../../../src/components/atoms/Typography';
 import ButtonComp from '../../../src/components/atoms/Button';
-import { DocContainer, DocLink, DocTextHighlight } from '../../utils/storyStyles';
+import { DocContainer, DocLink, DocHighlight } from '../../utils/storyStyles';
 
 const options = {
   title: 'Foundations/Typography',
@@ -94,20 +94,20 @@ const DocTemplate = () => {
         Typography
       </DocLink>{' '}
       component that extends <i>Mui Typography</i> with some styling props.
-      <Typography variant='inherit' color='inherit' mt={2}>
+      <Typography mt={2}>
         So, instead of Mui Typography, you should use this one:{' '}
-        <DocTextHighlight variant='inherit' component='span'>
+        <DocHighlight component='span'>
           react-ui/src/components/atoms/Typography
-        </DocTextHighlight>
+        </DocHighlight>
       </Typography>
-      <Typography variant='inherit' color='inherit' mt={2}>
+      <Typography mt={2}>
         For external use:{' '}
-        <DocTextHighlight variant='inherit' component='span'>
+        <DocHighlight component='span'>
           {'import { Typography } from "@carto/react-ui";'}
-        </DocTextHighlight>
+        </DocHighlight>
         .
       </Typography>
-      <Typography variant='inherit' color='inherit' mt={2} mb={2}>
+      <Typography mt={2} mb={2}>
         For more details, check the usage guide before using CARTO Typography
       </Typography>
     </DocContainer>

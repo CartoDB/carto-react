@@ -3,7 +3,7 @@ import { Avatar, Chip, Grid, IconButton, Menu, MenuItem } from '@mui/material';
 import { CheckCircleOutline } from '@mui/icons-material';
 import AppBar from '../../../src/components/organisms/AppBar/AppBar';
 import Typography from '../../../src/components/atoms/Typography';
-import { DocContainer, DocLink, DocTextHighlight } from '../../utils/storyStyles';
+import { DocContainer, DocLink, DocHighlight } from '../../utils/storyStyles';
 
 const options = {
   title: 'Organisms/AppBar',
@@ -100,17 +100,17 @@ const DocTemplate = () => {
       to build the basic structure and styles on top of <i>Mui AppBar</i>. It normalizes
       the size and position of common elements like:{' '}
       <i>logo, texts, avatar and burger menu icon</i>.
-      <Typography variant='inherit' color='inherit' mt={2}>
+      <Typography mt={2}>
         So, instead of Mui AppBar, you should use this one:{' '}
-        <DocTextHighlight variant='inherit' component='span'>
+        <DocHighlight component='span'>
           react-ui/src/components/organisms/AppBar
-        </DocTextHighlight>
+        </DocHighlight>
       </Typography>
-      <Typography variant='inherit' color='inherit' mt={2}>
+      <Typography mt={2}>
         For external use:{' '}
-        <DocTextHighlight variant='inherit' component='span'>
+        <DocHighlight component='span'>
           {'import { AppBar } from "@carto/react-ui";'}
-        </DocTextHighlight>
+        </DocHighlight>
         .
       </Typography>
     </DocContainer>

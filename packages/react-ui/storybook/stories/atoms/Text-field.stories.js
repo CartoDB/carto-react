@@ -3,12 +3,7 @@ import { Grid, InputAdornment, TextField } from '@mui/material';
 import React from 'react';
 import PasswordField from '../../../src/components/atoms/PasswordField';
 import Typography from '../../../src/components/atoms/Typography';
-import {
-  Container,
-  DocContainer,
-  DocTextHighlight,
-  Label
-} from '../../utils/storyStyles';
+import { Container, DocContainer, DocHighlight, Label } from '../../utils/storyStyles';
 
 const options = {
   title: 'Atoms/Text Field',
@@ -543,14 +538,9 @@ const PasswordFieldTemplate = ({
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <DocContainer severity='warning'>
-          Use{' '}
-          <DocTextHighlight variant='inherit' component='span'>
-            {'<PasswordField />'}
-          </DocTextHighlight>{' '}
-          instead of{' '}
-          <DocTextHighlight variant='inherit' component='span'>
-            {'<TextField type="password" />'}
-          </DocTextHighlight>{' '}
+          Use <DocHighlight component='span'>{'<PasswordField />'}</DocHighlight> instead
+          of{' '}
+          <DocHighlight component='span'>{'<TextField type="password" />'}</DocHighlight>{' '}
           This component build the show / hide content logic on top of <i>TextField</i>{' '}
           Mui component.
         </DocContainer>

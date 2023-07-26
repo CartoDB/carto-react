@@ -2,7 +2,14 @@ import React from 'react';
 import { Grid, useTheme } from '@mui/material';
 import { Star } from '@mui/icons-material';
 import { getCartoColorStylePropsForItem, Avatar } from '@carto/react-ui';
-import { BoxContent, TitleContent } from '../../utils/storyStyles';
+import {
+  BoxContent,
+  DocContainer,
+  DocLink,
+  DocHighlight,
+  TitleContent
+} from '../../utils/storyStyles';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Molecules/Avatar',
@@ -326,6 +333,37 @@ const ColorBackgroundTemplate = ({ ...args }) => {
   );
 };
 
+const DocTemplate = () => {
+  return (
+    <DocContainer severity='warning'>
+      We have our own{' '}
+      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/molecules/Avatar.js'>
+        Avatar
+      </DocLink>{' '}
+      component that uses <i>Mui Avatar</i> and extends it with a new styling prop,{' '}
+      <DocHighlight component='span'>size</DocHighlight>.
+      <Typography mt={2}>
+        This component normalize <i>size</i> and allow us to use only the 4 sizes defined
+        by the design system:{' '}
+        <DocHighlight component='span'>large, medium, small and xsmall</DocHighlight>
+      </Typography>
+      <Typography mt={2}>
+        Import it from{' '}
+        <DocHighlight component='span'>
+          react-ui/src/components/molecules/Avatar
+        </DocHighlight>
+      </Typography>
+      <Typography mt={2}>
+        For external use:{' '}
+        <DocHighlight component='span'>
+          {'import { Avatar } from "@carto/react-ui";'}
+        </DocHighlight>
+        .
+      </Typography>
+    </DocContainer>
+  );
+};
+
 const disabledVariantArgType = {
   variant: { table: { disable: true } }
 };
@@ -334,6 +372,8 @@ const disabledSizeArgType = {
 };
 
 export const Playground = Template.bind({});
+
+export const Guide = DocTemplate.bind({});
 
 export const Shape = ShapeTemplate.bind({});
 Shape.argTypes = disabledVariantArgType;

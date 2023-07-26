@@ -48,18 +48,27 @@ export const FilledContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const DocContainer = styled(Alert)(({ theme }) => ({
-  marginBottom: theme.spacing(3)
+  marginBottom: theme.spacing(3),
+
+  '& .MuiTypography-root': {
+    ...theme.typography.caption,
+    color: 'inherit'
+  }
 }));
 
-export const DocTextHighlight = styled(Typography)(({ theme }) => ({
-  display: 'inline',
-  fontWeight: theme.typography.fontWeightBold,
-  color: 'inherit'
+export const DocHighlight = styled(Typography)(({ theme }) => ({
+  '&.MuiTypography-root': {
+    display: 'inline',
+    color: 'inherit',
+    ...theme.typography.caption,
+    fontWeight: theme.typography.fontWeightBold
+  }
 }));
 
 export const DocLink = styled(Link)(({ theme }) => ({
   textDecoration: 'underline',
-  color: 'inherit'
+  color: 'inherit',
+  ...theme.typography.caption
 }));
 
 export const Label = styled(Typography)(({ theme }) => ({
