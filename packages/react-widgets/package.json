@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-widgets",
-  "version": "2.2.2-cra-sso-support.3",
+  "version": "2.2.2",
   "description": "CARTO for React - Widgets",
   "author": "CARTO Dev Team",
   "keywords": [

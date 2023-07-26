@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-workers",
-  "version": "2.2.2-cra-sso-support.3",
+  "version": "2.2.2",
   "description": "CARTO for React - Workers",
   "author": "CARTO Dev Team",
   "keywords": [
