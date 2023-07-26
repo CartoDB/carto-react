@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-core",
-  "version": "2.2.1",
+  "version": "2.2.2-cra-sso-support.3",
   "description": "CARTO for React - Core",
   "author": "CARTO Dev Team",
   "keywords": [
