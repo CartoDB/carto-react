@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Improve responsive behavior of MenuItem [#753](https://github.com/CartoDB/carto-react/pull/753)
+
 ## 2.2
 
 ### 2.2.2 (2023-07-26)
