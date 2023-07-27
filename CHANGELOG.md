@@ -6,6 +6,11 @@
 
 ## 2.2
 
+### 2.2.2 (2023-07-26)
+
+- Add namespace as optional param in OAuthCarto3 type [#750](https://github.com/CartoDB/carto-react/pull/750)
+- Add onClick event handler to GoogleMap component [#747](https://github.com/CartoDB/carto-react/pull/747)
+
 ### 2.2.1 (2023-07-21)
 
 - Fix MuiList: add more specificity to apply max-height [#748](https://github.com/CartoDB/carto-react/pull/748)

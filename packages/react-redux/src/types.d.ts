@@ -16,6 +16,7 @@ export type ViewState = {
 }
 
 type InitialCarto2State = {
+  accountsUrl?: string,
   viewState: ViewState,
   basemap: CartoBasemapsNames | GMapsBasemaps,
   credentials: Credentials,
@@ -24,6 +25,7 @@ type InitialCarto2State = {
 }
 
 type OauthCarto3 = {
+  namespace?: string,
   domain: string,
   clientId: string,
   organizationId: string,
