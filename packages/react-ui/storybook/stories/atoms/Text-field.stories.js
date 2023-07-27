@@ -539,9 +539,11 @@ const PasswordFieldTemplate = ({
       <Grid item>
         <DocContainer severity='warning'>
           Use <DocHighlight component='span'>{'<PasswordField />'}</DocHighlight> instead
-          of{' '}
-          <DocHighlight component='span'>{'<TextField type="password" />'}</DocHighlight>{' '}
-          This component build the show / hide content logic on top of <i>TextField</i>{' '}
+          of
+          <DocHighlight component='span'>{'<TextField type="password" />'}</DocHighlight>
+          This component build the show / hide content logic on top of <i>
+            TextField
+          </i>{' '}
           Mui component.
         </DocContainer>
       </Grid>

@@ -70,7 +70,7 @@ const Template = () => {
 const DocTemplate = () => {
   return (
     <DocContainer severity='warning'>
-      Use is restringed to a few specific values, defined in the design system, which are:{' '}
+      Use is restringed to a few specific values, defined in the design system, which are:
       <DocHighlight component='span'>0, 1, 2, 4, 6, 8, 16, 24</DocHighlight>.
     </DocContainer>
   );

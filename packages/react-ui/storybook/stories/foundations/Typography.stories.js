@@ -89,19 +89,19 @@ const DocTemplate = () => {
       }
       content='block'
     >
-      We have our own{' '}
+      We have our own
       <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/atoms/Typography.js'>
         Typography
-      </DocLink>{' '}
+      </DocLink>
       component that extends <i>Mui Typography</i> with some styling props.
       <Typography mt={2}>
-        So, instead of Mui Typography, you should use this one:{' '}
+        So, instead of Mui Typography, you should use this one:
         <DocHighlight component='span'>
           react-ui/src/components/atoms/Typography
         </DocHighlight>
       </Typography>
       <Typography mt={2}>
-        For external use:{' '}
+        For external use:
         <DocHighlight component='span'>
           {'import { Typography } from "@carto/react-ui";'}
         </DocHighlight>

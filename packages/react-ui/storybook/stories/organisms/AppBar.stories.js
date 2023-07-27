@@ -93,21 +93,21 @@ const CustomTemplate = (args) => {
 const DocTemplate = () => {
   return (
     <DocContainer severity='warning'>
-      We have our own{' '}
+      We have our own
       <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/organisms/AppBar/AppBar.js'>
         AppBar
-      </DocLink>{' '}
+      </DocLink>
       to build the basic structure and styles on top of <i>Mui AppBar</i>. It normalizes
       the size and position of common elements like:{' '}
       <i>logo, texts, avatar and burger menu icon</i>.
       <Typography mt={2}>
-        So, instead of Mui AppBar, you should use this one:{' '}
+        So, instead of Mui AppBar, you should use this one:
         <DocHighlight component='span'>
           react-ui/src/components/organisms/AppBar
         </DocHighlight>
       </Typography>
       <Typography mt={2}>
-        For external use:{' '}
+        For external use:
         <DocHighlight component='span'>
           {'import { AppBar } from "@carto/react-ui";'}
         </DocHighlight>

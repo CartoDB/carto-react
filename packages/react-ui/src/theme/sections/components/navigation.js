@@ -1,4 +1,4 @@
-import { ICON_SIZE_MEDIUM, BREAKPOINTS } from '../../themeConstants';
+import { ICON_SIZE_MEDIUM } from '../../themeConstants';
 
 export const navigationOverrides = {
   // Menu
@@ -10,12 +10,6 @@ export const navigationOverrides = {
         height: theme.spacing(4),
         transition: 'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
-        [theme.breakpoints.up('sm')]: {
-          // Overrides an unwanted Mui default style
-          '&.MuiButtonBase-root': {
-            minHeight: theme.spacing(4)
-          }
-        },
         '&:focus-visible': {
           // Solves a known Mui issue: https://github.com/mui/material-ui/issues/23747
           backgroundColor: 'transparent',
@@ -48,14 +42,7 @@ export const navigationOverrides = {
       }),
       dense: ({ theme }) => ({
         minHeight: theme.spacing(3),
-        height: theme.spacing(3),
-
-        [theme.breakpoints.up('sm')]: {
-          // Overrides an unwanted Mui default style
-          '&.MuiButtonBase-root': {
-            minHeight: theme.spacing(3)
-          }
-        }
+        height: theme.spacing(3)
       })
     }
   },

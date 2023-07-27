@@ -87,8 +87,8 @@ const DocTemplate = () => {
         </Button>
       }
     >
-      Check the usage guide before using{' '}
-      <DocHighlight component='span'>spacing</DocHighlight> values, specially{' '}
+      Check the usage guide before using
+      <DocHighlight component='span'>spacing</DocHighlight> values, specially
       <DocHighlight component='span'>theme.spacing</DocHighlight> function.
     </DocContainer>
   );

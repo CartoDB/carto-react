@@ -109,17 +109,17 @@ const GroupTemplate = ({ defaultExpanded, ...args }) => {
     <Grid container direction='column' spacing={3}>
       <Grid item>
         <DocContainer severity='warning'>
-          Component used as a container of a group of `Mui Accordions`, that also adds a{' '}
+          Component used as a container of a group of `Mui Accordions`, that also adds a
           <DocHighlight component='span'>variant</DocHighlight> prop to have different
           styles in the group: <i>Standard (default)</i> and <i>Outlined</i>.
           <Typography mt={2}>
-            Use <i>AccordionGroup</i> from:{' '}
+            Use <i>AccordionGroup</i> from:
             <DocHighlight component='span'>
               react-ui/src/components/molecules/AccordionGroup
             </DocHighlight>
           </Typography>
           <Typography mt={2}>
-            For external use:{' '}
+            For external use:
             <DocHighlight component='span'>
               {'import { AccordionGroup } from "@carto/react-ui";'}
             </DocHighlight>

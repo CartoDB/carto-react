@@ -490,10 +490,10 @@ const MultipleTemplate = ({
         </Button>
       }
     >
-      We have a specific{' '}
+      We have a specific
       <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/atoms/MultipleSelectField.js'>
         MultipleSelectField
-      </DocLink>{' '}
+      </DocLink>
       component to handle this functionality, check the associated story.
     </DocContainer>
   );

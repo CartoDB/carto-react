@@ -59,6 +59,7 @@ export const DocContainer = styled(Alert)(({ theme }) => ({
 export const DocHighlight = styled(Typography)(({ theme }) => ({
   '&.MuiTypography-root': {
     display: 'inline',
+    margin: theme.spacing(0, 0.5),
     color: 'inherit',
     ...theme.typography.caption,
     fontWeight: theme.typography.fontWeightBold
@@ -66,6 +67,7 @@ export const DocHighlight = styled(Typography)(({ theme }) => ({
 }));
 
 export const DocLink = styled(Link)(({ theme }) => ({
+  margin: theme.spacing(0, 0.5),
   textDecoration: 'underline',
   color: 'inherit',
   ...theme.typography.caption

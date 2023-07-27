@@ -336,25 +336,25 @@ const ColorBackgroundTemplate = ({ ...args }) => {
 const DocTemplate = () => {
   return (
     <DocContainer severity='warning'>
-      We have our own{' '}
+      We have our own
       <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/molecules/Avatar.js'>
         Avatar
-      </DocLink>{' '}
-      component that uses <i>Mui Avatar</i> and extends it with a new styling prop,{' '}
+      </DocLink>
+      component that uses <i>Mui Avatar</i> and extends it with a new styling prop,
       <DocHighlight component='span'>size</DocHighlight>.
       <Typography mt={2}>
         This component normalize <i>size</i> and allow us to use only the 4 sizes defined
-        by the design system:{' '}
+        by the design system:
         <DocHighlight component='span'>large, medium, small and xsmall</DocHighlight>
       </Typography>
       <Typography mt={2}>
-        Import it from{' '}
+        Import it from
         <DocHighlight component='span'>
           react-ui/src/components/molecules/Avatar
         </DocHighlight>
       </Typography>
       <Typography mt={2}>
-        For external use:{' '}
+        For external use:
         <DocHighlight component='span'>
           {'import { Avatar } from "@carto/react-ui";'}
         </DocHighlight>
