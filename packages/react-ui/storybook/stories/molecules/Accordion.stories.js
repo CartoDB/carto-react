@@ -8,7 +8,12 @@ import {
   Grid
 } from '@mui/material';
 import { Typography } from '@carto/react-ui';
-import { BoxContent, TitleContent } from '../../utils/storyStyles';
+import {
+  BoxContent,
+  DocContainer,
+  DocHighlight,
+  TitleContent
+} from '../../utils/storyStyles';
 import AccordionGroup from '../../../src/components/molecules/AccordionGroup';
 
 const options = {
@@ -103,6 +108,25 @@ const GroupTemplate = ({ defaultExpanded, ...args }) => {
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
+        <DocContainer severity='warning'>
+          Component used as a container of a group of `Mui Accordions`, that also adds a
+          <DocHighlight component='span'>variant</DocHighlight> prop to have different
+          styles in the group: <i>Standard (default)</i> and <i>Outlined</i>.
+          <Typography mt={2}>
+            Use <i>AccordionGroup</i> from:
+            <DocHighlight component='span'>
+              react-ui/src/components/molecules/AccordionGroup
+            </DocHighlight>
+          </Typography>
+          <Typography mt={2}>
+            For external use:
+            <DocHighlight component='span'>
+              {'import { AccordionGroup } from "@carto/react-ui";'}
+            </DocHighlight>
+            .
+          </Typography>
+        </DocContainer>
+
         <TitleContent variant='subtitle1'>
           {'AccordionGroup custom component'}
         </TitleContent>

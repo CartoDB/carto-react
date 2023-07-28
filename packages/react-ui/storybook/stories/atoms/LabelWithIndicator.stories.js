@@ -8,7 +8,8 @@ import {
   FormLabel,
   FormGroup,
   FormControlLabel,
-  Checkbox
+  Checkbox,
+  MenuItem
 } from '@mui/material';
 import PasswordField from '../../../src/components/atoms/PasswordField';
 import SelectField from '../../../src/components/atoms/SelectField';
@@ -43,21 +44,6 @@ const options = {
   }
 };
 export default options;
-
-const menuItems = [
-  {
-    label: 'Ten: super large text with overflow',
-    value: '10'
-  },
-  {
-    label: 'Twenty',
-    value: '20'
-  },
-  {
-    label: 'Thirty',
-    value: '30'
-  }
-];
 
 const top100Films = [
   { label: 'The Shawshank Redemption', year: 1994 },
@@ -150,32 +136,76 @@ const UseCasesTemplate = ({ label, ...rest }) => {
                 <SelectField
                   label={<LabelWithIndicator {...rest} label={label} />}
                   placeholder='Placeholder text'
-                  items={menuItems}
-                />
+                  onChange={() => void 0}
+                  value={[]}
+                >
+                  {[...Array(5)].map((item, index) => {
+                    const itemText = `Item ${index + 1}`;
+
+                    return (
+                      <MenuItem key={index} value={itemText}>
+                        {itemText}
+                      </MenuItem>
+                    );
+                  })}
+                </SelectField>
               </Grid>
               <Grid item xs={3}>
                 <SelectField
                   label={label}
                   required
                   placeholder='Placeholder text'
-                  items={menuItems}
-                />
+                  onChange={() => void 0}
+                  value={[]}
+                >
+                  {[...Array(5)].map((item, index) => {
+                    const itemText = `Item ${index + 1}`;
+
+                    return (
+                      <MenuItem key={index} value={itemText}>
+                        {itemText}
+                      </MenuItem>
+                    );
+                  })}
+                </SelectField>
               </Grid>
               <Grid item xs={3}>
                 <SelectField
                   label={<LabelWithIndicator {...rest} label={label} />}
                   placeholder='Placeholder text'
-                  items={menuItems}
+                  onChange={() => void 0}
+                  value={[]}
                   error
-                />
+                >
+                  {[...Array(5)].map((item, index) => {
+                    const itemText = `Item ${index + 1}`;
+
+                    return (
+                      <MenuItem key={index} value={itemText}>
+                        {itemText}
+                      </MenuItem>
+                    );
+                  })}
+                </SelectField>
               </Grid>
               <Grid item xs={3}>
                 <SelectField
                   label={<LabelWithIndicator {...rest} label={label} />}
                   placeholder='Placeholder text'
-                  items={menuItems}
+                  onChange={() => void 0}
+                  value={[]}
                   disabled
-                />
+                >
+                  {[...Array(5)].map((item, index) => {
+                    const itemText = `Item ${index + 1}`;
+
+                    return (
+                      <MenuItem key={index} value={itemText}>
+                        {itemText}
+                      </MenuItem>
+                    );
+                  })}
+                </SelectField>
               </Grid>
             </Grid>
           </Grid>
