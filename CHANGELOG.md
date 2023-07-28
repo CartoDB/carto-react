@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Improve responsive behavior of MenuItem [#753](https://github.com/CartoDB/carto-react/pull/753)
 - Increase documentation discoverability [#751](https://github.com/CartoDB/carto-react/pull/751)
 
 ## 2.2
