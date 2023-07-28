@@ -1,5 +1,7 @@
 import React from 'react';
 import Typography from '../../../src/components/atoms/Typography';
+import ButtonComp from '../../../src/components/atoms/Button';
+import { DocContainer, DocLink, DocHighlight } from '../../utils/storyStyles';
 
 const options = {
   title: 'Foundations/Typography',
@@ -71,8 +73,51 @@ export default options;
 
 const Template = (args) => <Typography {...args}>{args.text}</Typography>;
 
+const DocTemplate = () => {
+  return (
+    <DocContainer
+      severity='warning'
+      action={
+        <ButtonComp
+          variant='outlined'
+          size='small'
+          color='inherit'
+          href='/?path=/docs/foundations-typography-guide--page'
+        >
+          Guide
+        </ButtonComp>
+      }
+      content='block'
+    >
+      We have our own
+      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/atoms/Typography.js'>
+        Typography
+      </DocLink>
+      component that extends <i>Mui Typography</i> with some styling props.
+      <Typography mt={2}>
+        So, instead of Mui Typography, you should use this one:
+        <DocHighlight component='span'>
+          react-ui/src/components/atoms/Typography
+        </DocHighlight>
+      </Typography>
+      <Typography mt={2}>
+        For external use:
+        <DocHighlight component='span'>
+          {'import { Typography } from "@carto/react-ui";'}
+        </DocHighlight>
+        .
+      </Typography>
+      <Typography mt={2} mb={2}>
+        For more details, check the usage guide before using CARTO Typography
+      </Typography>
+    </DocContainer>
+  );
+};
+
 export const Playground = Template.bind({});
 Playground.args = { variant: 'h1', text: 'H1 Headline' };
+
+export const Guide = DocTemplate.bind({});
 
 export const H1 = Template.bind({});
 H1.args = { variant: 'h1', text: 'H1 Headline' };

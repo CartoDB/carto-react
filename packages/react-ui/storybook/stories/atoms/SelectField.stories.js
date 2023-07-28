@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { FormControl, Grid, InputLabel, Link, MenuItem, TextField } from '@mui/material';
+import { FormControl, Grid, InputLabel, MenuItem, TextField } from '@mui/material';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
-import { Container, Label } from '../../utils/storyStyles';
+import { Container, DocContainer, DocLink, Label } from '../../utils/storyStyles';
+import Button from '../../../src/components/atoms/Button';
 
 const options = {
   title: 'Atoms/Select Field',
@@ -476,13 +477,25 @@ const MultipleTemplate = ({
   ...rest
 }) => {
   return (
-    <Typography variant='subtitle1'>
-      Check{' '}
-      <Link href='/?path=/docs/atoms-multiple-select-field--playground'>
+    <DocContainer
+      severity='warning'
+      action={
+        <Button
+          color='inherit'
+          variant='outlined'
+          size='small'
+          href='/?path=/docs/atoms-multiple-select-field--playground'
+        >
+          MultipleSelectField story
+        </Button>
+      }
+    >
+      We have a specific
+      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/atoms/MultipleSelectField.js'>
         MultipleSelectField
-      </Link>{' '}
-      component documentation
-    </Typography>
+      </DocLink>
+      component to handle this functionality, check the associated story.
+    </DocContainer>
   );
 };
 

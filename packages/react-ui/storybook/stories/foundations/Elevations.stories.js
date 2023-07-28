@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Typography from '../../../src/components/atoms/Typography';
-import { FilledContainer } from '../../utils/storyStyles';
+import { DocContainer, DocHighlight, FilledContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Foundations/Elevations',
@@ -67,6 +67,17 @@ const Template = () => {
   );
 };
 
+const DocTemplate = () => {
+  return (
+    <DocContainer severity='warning'>
+      Use is restringed to a few specific values, defined in the design system, which are:
+      <DocHighlight component='span'>0, 1, 2, 4, 6, 8, 16, 24</DocHighlight>.
+    </DocContainer>
+  );
+};
+
 export const Playground = ShadowBox.bind({});
+
+export const Guide = DocTemplate.bind({});
 
 export const Elevations = Template.bind({});

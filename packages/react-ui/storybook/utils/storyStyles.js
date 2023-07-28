@@ -1,6 +1,7 @@
 import { styled } from '@mui/material/styles';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Link } from '@mui/material';
 import Typography from '../../src/components/atoms/Typography';
+import Alert from '../../src/components/molecules/Alert';
 
 export const GridVerticalContent = styled(Grid)(({ theme }) => ({
   display: 'flex',
@@ -44,6 +45,32 @@ export const FilledContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.primary.background,
   border: `1px solid ${theme.palette.primary.main}`,
   borderRadius: theme.spacing(0.5)
+}));
+
+export const DocContainer = styled(Alert)(({ theme }) => ({
+  marginBottom: theme.spacing(3),
+
+  '& .MuiTypography-root': {
+    ...theme.typography.caption,
+    color: 'inherit'
+  }
+}));
+
+export const DocHighlight = styled(Typography)(({ theme }) => ({
+  '&.MuiTypography-root': {
+    display: 'inline',
+    margin: theme.spacing(0, 0.5),
+    color: 'inherit',
+    ...theme.typography.caption,
+    fontWeight: theme.typography.fontWeightBold
+  }
+}));
+
+export const DocLink = styled(Link)(({ theme }) => ({
+  margin: theme.spacing(0, 0.5),
+  textDecoration: 'underline',
+  color: 'inherit',
+  ...theme.typography.caption
 }));
 
 export const Label = styled(Typography)(({ theme }) => ({
