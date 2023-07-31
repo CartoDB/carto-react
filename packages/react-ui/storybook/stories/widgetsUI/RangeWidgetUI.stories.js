@@ -3,7 +3,7 @@ import RangeWidgetUI from '../../../src/widgets/RangeWidgetUI/RangeWidgetUI';
 import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
-  title: 'Organisms/Widgets/RangeWidgetUI',
+  title: 'Widgets/RangeWidgetUI',
   component: RangeWidgetUI,
   parameters: {
     docs: {

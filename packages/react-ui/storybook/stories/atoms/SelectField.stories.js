@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { FormControl, Grid, InputLabel, MenuItem, TextField } from '@mui/material';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
-import { Container, DocContainer, DocLink, Label } from '../../utils/storyStyles';
+import {
+  Container,
+  DocContainer,
+  DocHighlight,
+  DocLink,
+  Label
+} from '../../utils/storyStyles';
 import Button from '../../../src/components/atoms/Button';
 
 const options = {
@@ -546,6 +552,28 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
   );
 };
 
+const DocTemplate = () => {
+  return (
+    <DocContainer severity='warning'>
+      This component adds the <i>placeholder</i> logic on top of TextField Mui component.
+      <Typography mt={2}>
+        So, instead of <i>{'<TextField select />'}</i> or <i>{'<Select />'}</i>, you
+        should use this one:
+        <DocHighlight component='span'>
+          react-ui/src/components/atoms/SelectField
+        </DocHighlight>
+      </Typography>
+      <Typography mt={2}>
+        For external use:
+        <DocHighlight component='span'>
+          {'import { SelectField } from "@carto/react-ui";'}
+        </DocHighlight>
+        .
+      </Typography>
+    </DocContainer>
+  );
+};
+
 const commonArgs = {
   label: 'Label text',
   placeholder: 'Placeholder text',
@@ -570,6 +598,8 @@ const disabledControlsSizeArgTypes = {
 export const Playground = PlaygroundTemplate.bind({});
 Playground.args = { ...commonArgs };
 Playground.argTypes = disabledControlsArgTypes;
+
+export const Guide = DocTemplate.bind({});
 
 export const Variants = VariantsTemplate.bind({});
 Variants.args = { ...commonArgs };

@@ -5,7 +5,7 @@ import AddLocationIcon from '@mui/icons-material/AddLocation';
 import WrapperWidgetUI from '.../../../src/widgets/WrapperWidgetUI';
 
 const options = {
-  title: 'Organisms/Widgets/WrapperWidgetUI',
+  title: 'Widgets/WrapperWidgetUI',
   component: WrapperWidgetUI,
   argTypes: {
     actions: {

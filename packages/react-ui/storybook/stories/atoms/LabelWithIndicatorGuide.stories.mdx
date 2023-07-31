@@ -1,0 +1,33 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title='Atoms/LabelWithIndicator/Guide' />
+
+# LabelWithIndicator
+
+Designers had the need to mark inputs as `optional` or `required` depending on the use case. That is, in some forms, we have the optional ones marked but in others the required ones.
+
+Mui only provides a `required` bool prop to mark an input as mandatory. When is true, add an asterisk at the end of the label and the validation logic.
+
+We removed the asterisk in the theme, and handle both, required and optional indicators, with this new component. So we can use the following:
+
+Required
+
+```
+<TextField
+  {...props}
+  label={<LabelWithIndicator label={label}  type='required' />}
+/>
+```
+
+Optional
+
+```
+<TextField
+  {...props}
+  label={<LabelWithIndicator label={label} />}
+/>
+```
+
+Use `<LabelWithIndicator /> ` from: `react-ui/src/components/atoms/Avatar`
+
+For external use: `import { LabelWithIndicator } from '@carto/react-ui';`.

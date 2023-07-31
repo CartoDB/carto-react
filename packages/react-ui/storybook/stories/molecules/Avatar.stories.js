@@ -311,25 +311,33 @@ const ColorBackgroundTemplate = ({ ...args }) => {
   const theme = useTheme();
 
   return (
-    <Grid container direction='column' spacing={3}>
-      <Grid item>
-        <BoxContent>
-          <TitleContent variant='body2'>{'Carto qualitative bold'}</TitleContent>
-          <Grid container item spacing={6}>
-            {[...Array(15)].map((x, index) => (
-              <Grid item key={index}>
-                <Avatar
-                  {...args}
-                  style={{
-                    ...getCartoColorStylePropsForItem(theme, index)
-                  }}
-                >{`${index + 1}`}</Avatar>
-              </Grid>
-            ))}
-          </Grid>
-        </BoxContent>
+    <>
+      <DocContainer severity='warning'>
+        We have a color function to automatically get the color for each item, it is
+        <DocHighlight component='span'>getCartoColorStylePropsForItem</DocHighlight>. It
+        uses <DocHighlight component='span'>qualitativeBold</DocHighlight> CARTO colors.
+        <Typography mt={2}>Check the code to se an example of how to use it.</Typography>
+      </DocContainer>
+      <Grid container direction='column' spacing={3}>
+        <Grid item>
+          <BoxContent>
+            <TitleContent variant='body2'>{'Carto qualitative bold'}</TitleContent>
+            <Grid container item spacing={6}>
+              {[...Array(15)].map((x, index) => (
+                <Grid item key={index}>
+                  <Avatar
+                    {...args}
+                    style={{
+                      ...getCartoColorStylePropsForItem(theme, index)
+                    }}
+                  >{`${index + 1}`}</Avatar>
+                </Grid>
+              ))}
+            </Grid>
+          </BoxContent>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import PieWidgetUI from '../../../src/widgets/PieWidgetUI/PieWidgetUI';
 import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
-  title: 'Organisms/Widgets/PieWidgetUI',
+  title: 'Widgets/PieWidgetUI',
   component: PieWidgetUI,
   parameters: {
     docs: {
