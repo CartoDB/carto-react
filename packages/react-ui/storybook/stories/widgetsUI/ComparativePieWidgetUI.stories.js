@@ -4,7 +4,7 @@ import { buildReactPropsAsString } from '../../utils/utils';
 import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
-  title: 'Organisms/Widgets/ComparativePieWidgetUI',
+  title: 'Widgets/ComparativePieWidgetUI',
   component: ComparativePieWidgetUI
 };
 

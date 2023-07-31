@@ -3,7 +3,7 @@ import ScatterPlotWidgetUI from '../../../src/widgets/ScatterPlotWidgetUI/Scatte
 import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
-  title: 'Organisms/Widgets/ScatterPlotWidgetUI',
+  title: 'Widgets/ScatterPlotWidgetUI',
   component: ScatterPlotWidgetUI,
   parameters: {
     docs: {

@@ -3,7 +3,7 @@ import CategoryWidgetUI from '../../../src/widgets/CategoryWidgetUI/CategoryWidg
 import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
-  title: 'Organisms/Widgets/CategoryWidgetUI',
+  title: 'Widgets/CategoryWidgetUI',
   component: CategoryWidgetUI,
   argTypes: {
     selectedCategories: {

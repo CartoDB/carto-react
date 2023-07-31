@@ -3,7 +3,7 @@ import ComparativeCategoryWidgetUI from '../../../src/widgets/comparative/Compar
 import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
-  title: 'Organisms/Widgets/ComparativeCategoryWidgetUI',
+  title: 'Widgets/ComparativeCategoryWidgetUI',
   component: ComparativeCategoryWidgetUI
 };
 

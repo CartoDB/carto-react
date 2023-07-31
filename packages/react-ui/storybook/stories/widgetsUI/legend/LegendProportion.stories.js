@@ -8,7 +8,7 @@ const DEFAULT_LEGEND = {
 };
 
 const options = {
-  title: 'Organisms/Widgets/Legends/LegendProportion',
+  title: 'Widgets/Legends/LegendProportion',
   component: LegendProportion,
   argTypes: {
     legend: {}

@@ -7,7 +7,7 @@ import Typography from '../../../src/components/atoms/Typography';
 import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
-  title: 'Organisms/Widgets/TableWidgetUI',
+  title: 'Widgets/TableWidgetUI',
   component: TableWidgetUI,
   argTypes: {},
   parameters: {
