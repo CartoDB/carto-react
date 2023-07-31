@@ -105,10 +105,10 @@ export const CategoryItemWrapper = styled('div', {
   '& .progressbar div': {
     backgroundColor: 'var(--color)'
   },
-  ...(!filterable && {
+  ...(filterable && {
     cursor: 'pointer',
 
-    '& > .MuiBox-root:hover .progressbar div': {
+    '& .MuiBox-root:hover .progressbar div': {
       backgroundColor: 'var(--hover-color)'
     }
   })

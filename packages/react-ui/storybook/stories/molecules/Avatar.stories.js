@@ -313,7 +313,7 @@ const ColorBackgroundTemplate = ({ ...args }) => {
   return (
     <>
       <DocContainer severity='warning'>
-        We have a color function to automatically get the color for each item, it is{' '}
+        We have a color function to automatically get the color for each item, it is
         <DocHighlight component='span'>getCartoColorStylePropsForItem</DocHighlight>. It
         uses <DocHighlight component='span'>qualitativeBold</DocHighlight> CARTO colors.
         <Typography mt={2}>Check the code to se an example of how to use it.</Typography>
