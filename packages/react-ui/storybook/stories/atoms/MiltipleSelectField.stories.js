@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import MultipleSelectField from '../../../src/components/atoms/MultipleSelectField';
+import { DocContainer, DocHighlight, DocLink } from '../../utils/storyStyles';
+import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
   title: 'Atoms/Multiple Select Field',
@@ -109,6 +111,28 @@ const PlaygroundTemplate = ({ label, placeholder, ...rest }) => {
   );
 };
 
+const DocTemplate = () => {
+  return (
+    <DocContainer severity='warning'>
+      This component adds the <i>multiple selection</i> logic on top of SelectField
+      component.
+      <Typography mt={2}>
+        So, instead of <i>{'<Select multiple />'}</i>, you should use this one:
+        <DocHighlight component='span'>
+          react-ui/src/components/atoms/MultipleSelectField
+        </DocHighlight>
+      </Typography>
+      <Typography mt={2}>
+        For external use:
+        <DocHighlight component='span'>
+          {'import { MultipleSelectField } from "@carto/react-ui";'}
+        </DocHighlight>
+        .
+      </Typography>
+    </DocContainer>
+  );
+};
+
 const commonArgs = {
   label: 'Label text',
   placeholder: 'Placeholder text',
@@ -117,6 +141,8 @@ const commonArgs = {
 
 export const Playground = PlaygroundTemplate.bind({});
 Playground.args = { ...commonArgs };
+
+export const Guide = DocTemplate.bind({});
 
 export const Counter = PlaygroundTemplate.bind({});
 Counter.args = { ...commonArgs, counter: true };

@@ -2,7 +2,7 @@ import { Grid } from '@mui/material';
 import React, { useState } from 'react';
 import Typography from '../../../src/components/atoms/Typography';
 import UploadField from '../../../src/components/molecules/UploadField/UploadField';
-import { Container, Label } from '../../utils/storyStyles';
+import { Container, DocContainer, DocHighlight, Label } from '../../utils/storyStyles';
 
 const options = {
   title: 'Molecules/UploadField',
@@ -397,6 +397,31 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
   );
 };
 
+const DocTemplate = () => {
+  return (
+    <DocContainer severity='warning'>
+      This component is used to display and input <i>{`type='file'`}</i>.
+      <Typography mt={2}>
+        We are replacing our old <DocHighlight component='span'>InputFile</DocHighlight>
+        component by this new one.
+      </Typography>
+      <Typography mt={2}>
+        So, instead of <i>{'<Inputfile />'}</i>, you should use this one:
+        <DocHighlight component='span'>
+          react-ui/src/components/molecules/UploadField
+        </DocHighlight>
+      </Typography>
+      <Typography mt={2}>
+        For external use:
+        <DocHighlight component='span'>
+          {'import { UploadField } from "@carto/react-ui";'}
+        </DocHighlight>
+        .
+      </Typography>
+    </DocContainer>
+  );
+};
+
 const commonArgs = {
   label: 'Label text',
   helperText: 'Upload a CSV or GeoJSON file, or a zip package with your Shapefile',
@@ -417,6 +442,8 @@ const disabledControlsSizeArgTypes = {
 
 export const Playground = Template.bind({});
 Playground.args = { ...commonArgs };
+
+export const Guide = DocTemplate.bind({});
 
 export const Variants = VariantsTemplate.bind({});
 Variants.args = { ...commonArgs };
