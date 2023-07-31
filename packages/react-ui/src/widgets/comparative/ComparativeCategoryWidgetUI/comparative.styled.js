@@ -1,5 +1,4 @@
 import { Box, TextField, Tooltip, styled } from '@mui/material';
-import CategoryItem from './CategoryItem';
 
 export const Wrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(2, 0),
@@ -100,15 +99,16 @@ export const LabelWrapper = styled(Box)(() => ({
   justifyContent: 'space-between'
 }));
 
-export const CategoryItemStyled = styled(CategoryItem, {
+export const CategoryItemWrapper = styled('div', {
   shouldForwardProp: (prop) => prop !== 'filterable'
 })(({ theme, filterable }) => ({
   '& .progressbar div': {
     backgroundColor: 'var(--color)'
   },
-  ...(filterable && {
+  ...(!filterable && {
     cursor: 'pointer',
-    '&:hover .progressbar div': {
+
+    '& > .MuiBox-root:hover .progressbar div': {
       backgroundColor: 'var(--hover-color)'
     }
   })
