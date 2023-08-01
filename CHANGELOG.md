@@ -2,11 +2,13 @@
 
 ## Not released
 
+## 2.2
+
+### 2.2.3 (2023-08-01)
+
 - Add storybook documentation and fix ComparativeCategoryWidgetUI [#755](https://github.com/CartoDB/carto-react/pull/755)
 - Improve responsive behavior of MenuItem [#753](https://github.com/CartoDB/carto-react/pull/753)
 - Increase documentation discoverability [#751](https://github.com/CartoDB/carto-react/pull/751)
-
-## 2.2
 
 ### 2.2.2 (2023-07-26)
 
