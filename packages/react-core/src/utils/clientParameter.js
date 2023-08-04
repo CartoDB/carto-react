@@ -1,5 +1,6 @@
 // Default client
-let client = 'c4react';
+import { version } from '../../package.json';
+let client = `c4react:${version}`;
 
 export function getClient() {
   return client;
