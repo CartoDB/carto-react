@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Passing C4R version in Client Parameter [#758](https://github.com/CartoDB/carto-react/issues/758)
+
 ## 2.2
 
 ### 2.2.3 (2023-08-01)
