@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Calculation of widget using maps API under FF [#658](https://github.com/CartoDB/carto-react/pull/658)
+
 ## 1.5
 
 ### 1.5.1 (2023-02-06)

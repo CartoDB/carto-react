@@ -43,27 +43,31 @@ export default function useGeojsonFeatures({
     [computeFeatures]
   );
 
-  useEffect(() => {
-    if (sourceId && isGeoJsonLoaded) {
-      clearDebounce();
-      setSourceFeaturesReady(false);
-      debounceIdRef.current = debouncedComputeFeatures({
-        viewport,
-        spatialFilter,
-        uniqueIdProperty
-      });
-    }
-  }, [
-    viewport,
-    spatialFilter,
-    uniqueIdProperty,
-    sourceId,
-    isGeoJsonLoaded,
-    debouncedComputeFeatures,
-    setSourceFeaturesReady,
-    clearDebounce,
-    debounceIdRef
-  ]);
+  useEffect(
+    () => {
+      if (sourceId && isGeoJsonLoaded) {
+        clearDebounce();
+        setSourceFeaturesReady(false);
+        debounceIdRef.current = debouncedComputeFeatures({
+          viewport,
+          spatialFilter,
+          uniqueIdProperty
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      spatialFilter ? spatialFilter : viewport,
+      uniqueIdProperty,
+      sourceId,
+      isGeoJsonLoaded,
+      debouncedComputeFeatures,
+      setSourceFeaturesReady,
+      clearDebounce,
+      debounceIdRef
+    ]
+  );
 
   const onDataLoad = useCallback(
     (geojson) => {

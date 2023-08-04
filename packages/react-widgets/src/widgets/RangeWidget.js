@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { _FilterTypes as FilterTypes } from '@carto/react-core';
+import {
+  _FilterTypes as FilterTypes,
+  _FeatureFlags,
+  _hasFeatureFlag
+} from '@carto/react-core';
 import { WrapperWidgetUI } from '@carto/react-ui';
 import { addFilter, selectSourceById } from '@carto/react-redux/';
 import { getRange } from '../models/RangeModel';
@@ -67,7 +71,8 @@ function RangeWidget({
       column
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   const handleSelectedRangeChange = useCallback(

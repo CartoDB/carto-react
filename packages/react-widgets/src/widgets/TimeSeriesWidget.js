@@ -10,7 +10,9 @@ import {
 import {
   GroupDateTypes,
   AggregationTypes,
-  _FilterTypes as FilterTypes
+  _FilterTypes as FilterTypes,
+  _hasFeatureFlag,
+  _FeatureFlags
 } from '@carto/react-core';
 import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
@@ -122,7 +124,8 @@ function TimeSeriesWidget({
   const {
     data = [],
     isLoading,
-    warning
+    warning,
+    remoteCalculation
   } = useWidgetFetch(getTimeSeries, {
     id,
     dataSource,
@@ -134,7 +137,8 @@ function TimeSeriesWidget({
       operation
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
   const handleTimeWindowUpdate = useCallback(
@@ -240,6 +244,7 @@ function TimeSeriesWidget({
           global={global}
           droppingFeaturesAlertProps={droppingFeaturesAlertProps}
           noDataAlertProps={noDataAlertProps}
+          showDroppingFeaturesAlert={!remoteCalculation}
         >
           {(!!data.length || isLoading) && (
             <TimeSeriesWidgetUI

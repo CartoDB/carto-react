@@ -27,7 +27,7 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
   const name = names[index];
 
   const compareValue = ((data.value - reference.value) / (reference.value || 1)) * 100;
-  const signText = Math.sign(compareValue) === -1 ? '-' : '+'
+  const signText = Math.sign(compareValue) === -1 ? '-' : '+';
   const valueColor =
     Math.sign(compareValue) === -1
       ? theme.palette.error.main
@@ -41,11 +41,7 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
         {item.label}
       </Typography>
       <Box pt={1} pb={0.5}>
-        <Box
-          display='flex'
-          alignItems='baseline'
-          gridGap={theme.spacing(0.75)}
-        >
+        <Box display='flex' alignItems='baseline' gridGap={theme.spacing(0.75)}>
           <div
             className={classes.bullet}
             style={{
@@ -59,7 +55,8 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
           <Box flexGrow={1}></Box>
           <Box ml={1} px={1} bgcolor={numberColor} color='white' borderRadius={2}>
             <Typography color='inherit' variant='caption'>
-              {signText}{formatter(Math.abs(compareValue))}
+              {signText}
+              {formatter(Math.abs(compareValue))}
             </Typography>
           </Box>
         </Box>
@@ -78,7 +75,7 @@ ComparativeCategoryTooltip.propTypes = {
   item: transposedCategoryItemPropTypes,
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
   formatter: PropTypes.func,
-  index: PropTypes.number,
+  index: PropTypes.number
 };
 
 const StyledTooltip = withStyles((theme) => ({
@@ -111,7 +108,12 @@ function CategoryItem({
   }
 
   const tooltipContent = (index) => (
-    <ComparativeCategoryTooltip item={item} names={names} formatter={tooltipFormatter} index={index} />
+    <ComparativeCategoryTooltip
+      item={item}
+      names={names}
+      formatter={tooltipFormatter}
+      index={index}
+    />
   );
 
   return (

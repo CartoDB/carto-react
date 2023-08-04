@@ -21,19 +21,22 @@ function fromLocal(props) {
 
 // From remote
 async function fromRemote(props) {
-  const { source, abortController, ...params } = props;
-
+  const { source, spatialFilter, abortController, ...params } = props;
   const { column, operation, ticks } = params;
 
   const data = await _executeModel({
     model: 'histogram',
     source,
+    spatialFilter,
     params: { column, operation, ticks },
     opts: { abortController }
   }).then((res) => normalizeObjectKeys(res.rows));
 
-  const result = Array(ticks.length + 1).fill(0);
-  data.forEach(({ tick, value }) => (result[tick] = value));
+  if (data.length) {
+    const result = Array(ticks.length + 1).fill(0);
+    data.forEach(({ tick, value }) => (result[tick] = value));
+    return result;
+  }
 
-  return result;
+  return [];
 }

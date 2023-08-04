@@ -9,10 +9,12 @@ const AVAILABLE_MODELS = ['category', 'histogram', 'formula', 'timeseries', 'ran
 /**
  * Execute a SQL model request.
  *
+ * @typedef { import('geojson').Polygon | import('geojson').MultiPolygon } SpatialFilter
  * @param { object } props
  * @param { string } props.model - widget's model that we want to get the data for
  * @param { object } props.source - source that owns the column
  * @param { object } props.params - widget's props
+ * @param { SpatialFilter= } props.spatialFilter - restrict widget calculation to an area
  * @param { object= } props.opts - Additional options for the HTTP request
  */
 export function executeModel(props) {
@@ -27,7 +29,7 @@ export function executeModel(props) {
     )}`
   );
 
-  const { source, model, params, opts } = props;
+  const { source, model, params, spatialFilter, opts } = props;
 
   checkCredentials(source.credentials);
 
@@ -52,13 +54,21 @@ export function executeModel(props) {
     filtersLogicalOperator
   };
 
+  if (spatialFilter) {
+    queryParams.spatialFilter = JSON.stringify(spatialFilter);
+  }
+
   const isGet = url.length + JSON.stringify(queryParams).length <= URL_LENGTH;
   if (isGet) {
     url += '?' + new URLSearchParams(queryParams).toString();
   } else {
+    // undo the JSON.stringify, @todo find a better pattern
     queryParams.params = params;
     queryParams.filters = filters;
     queryParams.queryParameters = source.queryParameters;
+    if (spatialFilter) {
+      queryParams.spatialFilter = spatialFilter;
+    }
   }
   return makeCall({
     url,

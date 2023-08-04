@@ -2,7 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { WrapperWidgetUI, FormulaWidgetUI } from '@carto/react-ui';
 import { getFormula } from '../models';
-import { AggregationTypes } from '@carto/react-core';
+import { AggregationTypes, _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
 import { checkFormulaColumn, columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
@@ -40,7 +40,8 @@ function FormulaWidget({
   const {
     data = { value: undefined },
     isLoading,
-    warning
+    warning,
+    remoteCalculation
   } = useWidgetFetch(getFormula, {
     id,
     dataSource,
@@ -50,8 +51,11 @@ function FormulaWidget({
       joinOperation
     },
     global,
-    onError
+    onError,
+    attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
+
+  const value = Number.isFinite(data?.value) ? data.value : undefined;
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
@@ -60,13 +64,11 @@ function FormulaWidget({
         warning={warning}
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
+        showDroppingFeaturesAlert={!remoteCalculation}
       >
-        <FormulaWidgetUI
-          data={Number.isFinite(data?.value) ? data.value : undefined}
-          formatter={formatter}
-          unitBefore={true}
-          animation={animation}
-        />
+        {value !== undefined && (
+          <FormulaWidgetUI data={value} formatter={formatter} animation={animation} />
+        )}
       </WidgetWithAlert>
     </WrapperWidgetUI>
   );

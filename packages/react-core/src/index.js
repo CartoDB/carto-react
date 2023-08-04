@@ -13,6 +13,7 @@ export { debounce } from './utils/debounce';
 export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';
 export { assert as _assert } from './utils/assert';
+export { getGeometryToIntersect, isGlobalViewport } from './utils/geo';
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
@@ -47,3 +48,10 @@ export {
   EDIT_MODES,
   MASK_ID
 } from './utils/featureSelectionConstants';
+
+export {
+  Flags as _FeatureFlags,
+  hasFlag as _hasFeatureFlag,
+  setFlags as _setFeatureFlags,
+  clearFlags as _clearFeatureFlags
+} from './utils/featureFlags';

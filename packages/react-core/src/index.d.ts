@@ -1,3 +1,5 @@
+import { _FeatureFlags } from '.';
+
 export {
   getRequest,
   postRequest,
@@ -13,6 +15,7 @@ export { debounce } from './utils/debounce';
 export { throttle } from './utils/throttle';
 export { randomString } from './utils/randomString';
 export { assert as _assert } from './utils/assert';
+export { getGeometryToIntersect, isGlobalViewport } from './utils/geo';
 
 export { makeIntervalComplete } from './utils/makeIntervalComplete';
 
@@ -36,3 +39,10 @@ export { groupValuesByDateColumn } from './operations/groupByDate';
 export { SpatialIndex } from './operations/constants/SpatialIndexTypes'
 
 export { FEATURE_SELECTION_MODES, EDIT_MODES, MASK_ID } from './utils/featureSelectionConstants';
+
+export {
+  Flags as _FeatureFlags,
+  hasFlag as _hasFeatureFlag,
+  setFlags as _setFeatureFlags,
+  clearFlags as _clearFeatureFlags
+} from './utils/featureFlags';
