@@ -11,7 +11,9 @@
 - Support for remote scatter plot widget [#704](https://github.com/CartoDB/carto-react/pull/704)
 - Fix spatial filter was not being applied to Timeseries widgets [#719](https://github.com/CartoDB/carto-react/pull/719)
 - Add typed imports, from deck.gl typed [#693](https://github.com/CartoDB/carto-react/pull/693)
-- Bump deck.gl to latest 8.9.17 [#700](https://github.com/CartoDB/carto-react/pull/700)
+- Developer API change: [#683](https://github.com/CartoDB/carto-react/pull/683)
+  - geoColumn and aggregationExp moved to Source, remote widgests disabled for spatial indexes
+  - (optional) provider type added to Source, remote widgets disabled for Databricks 
 
 ## 1.5
 
