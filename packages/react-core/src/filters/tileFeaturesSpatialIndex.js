@@ -20,11 +20,7 @@ export default function tileFeaturesSpatialIndex({
   if (!resolution) {
     return [];
   }
-  const cells = getCellsCoverGeometry(
-    geometryToIntersect.geometry,
-    spatialIndex,
-    resolution
-  );
+  const cells = getCellsCoverGeometry(geometryToIntersect, spatialIndex, resolution);
 
   if (!cells?.length) {
     return [];

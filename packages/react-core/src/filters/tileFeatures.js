@@ -19,6 +19,7 @@ export function tileFeatures({
 
   if (spatialIndex) {
     return tileFeaturesSpatialIndex({
+      // TODO: Searching the error
       tiles,
       geometryToIntersect,
       geoColumName,

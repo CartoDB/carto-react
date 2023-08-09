@@ -17,6 +17,7 @@ import { polygon, multiPolygon } from '@turf/helpers';
  * @returns { Geometry? } the geometry to use for filtering
  */
 export function getGeometryToIntersect(viewport, geometry) {
+  // TODO: Searching the error
   return geometry && geometry.coordinates
     ? geometry
     : Array.isArray(viewport) && viewport.length === 4
