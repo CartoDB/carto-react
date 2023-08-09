@@ -1,6 +1,7 @@
-import { checkCredentials, CLIENT_ID } from './common';
+import { checkCredentials } from './common';
 import { MAP_TYPES, API_VERSIONS, fetchLayerData, FORMATS } from '@deck.gl/carto/typed';
 import { _assert as assert } from '@carto/react-core';
+import { _getClient } from '@carto/react-core';
 
 /**
  * Get the TileJson for static tilesets
@@ -30,7 +31,7 @@ export async function getTileJson(props) {
     connection: source.connection,
     credentials: source.credentials,
     format: FORMATS.TILEJSON,
-    clientId: CLIENT_ID
+    clientId: _getClient()
   });
 
   assert(format === FORMATS.TILEJSON, 'getTileJson: data is not a tilejson');

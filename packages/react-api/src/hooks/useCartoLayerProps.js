@@ -6,7 +6,7 @@ import useTileFeatures from './useTileFeatures';
 import { getDataFilterExtensionProps } from './dataFilterExtensionUtil';
 import { getMaskExtensionProps } from './maskExtensionUtil';
 import FeaturesDroppedLoader from './FeaturesDroppedLoader';
-import { CLIENT_ID } from '../api/common';
+import { _getClient } from '@carto/react-core';
 
 const LOADERS = [FeaturesDroppedLoader];
 
@@ -83,7 +83,7 @@ export default function useCartoLayerProps({
     provider: source?.provider,
     connection: source?.connection,
     credentials: source?.credentials,
-    clientId: CLIENT_ID,
+    clientId: _getClient(),
     queryParameters: source?.queryParameters,
     ...dataFilterExtensionProps,
     ...maskExtensionProps,
