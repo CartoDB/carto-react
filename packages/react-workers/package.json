@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-workers",
-  "version": "1.6.0-alpha.4",
+  "version": "1.6.0",
   "description": "CARTO for React - Workers",
   "author": "CARTO Dev Team",
   "keywords": [
