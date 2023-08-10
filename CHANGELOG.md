@@ -4,7 +4,8 @@
 
 ## 1.6
 
-### 1.6.0-alpha.0 (2023-08-07)
+### 1.6.0 (2023-08-10)
+
 - Supporting for `client` parameter for Widgets API calls without passing client as component attribute [#729](https://github.com/CartoDB/carto-react/pull/729)
 - Calculation of widget using maps API under FF [#658](https://github.com/CartoDB/carto-react/pull/658)
 - Mask, when set, is applied to global widgets as well as to viewport-based widgets [#704](https://github.com/CartoDB/carto-react/pull/704)
