@@ -255,6 +255,7 @@ function WrapperWidgetUI(props) {
       {/* TODO: check collapse error */}
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
         <Box pt={1}>{props.children}</Box>
+        {props.footer ?? <Box>{props.footer}</Box>}
       </Collapse>
     </Root>
   );
@@ -293,6 +294,7 @@ WrapperWidgetUI.propTypes = {
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element.isRequired
   ]),
+  footer: PropTypes.element,
   margin: PropTypes.number
 };
 

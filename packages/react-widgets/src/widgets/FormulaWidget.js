@@ -60,6 +60,7 @@ function FormulaWidget({
     onStateChange,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
+  console.log(wrapperProps);
 
   const value = Number.isFinite(data?.value) ? data.value : undefined;
 
