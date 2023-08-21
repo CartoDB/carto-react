@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-api",
-  "version": "2.2.3",
+  "version": "2.2.3-alpha.legend-widget.0.0",
   "description": "CARTO for React - Api",
   "author": "CARTO Dev Team",
   "keywords": [
