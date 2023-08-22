@@ -2,9 +2,11 @@
 
 ## Not released
 
-- Fix Legend Widget UI: Legend Wrapper spacing [#755](https://github.com/CartoDB/carto-react/pull/762)
-
 ## 2.2
+
+### 2.2.4 (2023-08-21)
+
+- Fix Legend Widget UI: Legend Wrapper spacing [#755](https://github.com/CartoDB/carto-react/pull/762)
 
 ### 2.2.3 (2023-08-01)
 
