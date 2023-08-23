@@ -189,7 +189,13 @@ export const dataDisplayOverrides = {
 
     styleOverrides: {
       root: ({ theme }) => ({
-        padding: theme.spacing(3, 3, 2)
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        height: theme.spacing(8),
+        padding: theme.spacing(0, 2),
+        backgroundColor: theme.palette.background.paper //remove this line to make the background transparent
       })
     }
   },

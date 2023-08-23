@@ -8,21 +8,7 @@ import {
   IconButton
 } from '@mui/material';
 import { CloseOutlined } from '@mui/icons-material';
-
-const StyledDialogTitle = styled(MuiDialogTitle, {
-  shouldForwardProp: (prop) => !['isNeutral'].includes(prop)
-})(({ isNeutral, theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  width: '100%',
-  padding: theme.spacing(2, 3),
-
-  ...(isNeutral && {
-    backgroundColor: theme.palette.background.default,
-    color: theme.palette.text.primary
-  })
-}));
+import Typography from '../atoms/Typography';
 
 const ChipTitle = styled(Chip)(({ theme }) => ({
   marginLeft: theme.spacing(1)
@@ -31,7 +17,8 @@ const ChipTitle = styled(Chip)(({ theme }) => ({
 const ItemsWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  gap: theme.spacing(1)
+  gap: theme.spacing(1),
+  overflow: 'hidden'
 }));
 
 const DialogTitle = ({
@@ -43,10 +30,12 @@ const DialogTitle = ({
   ...otherProps
 }) => {
   return (
-    <StyledDialogTitle {...otherProps}>
-      <ItemsWrapper flex={1}>
-        <Box flex={1}>
-          {title}
+    <MuiDialogTitle {...otherProps}>
+      <ItemsWrapper>
+        <Box flex={1} maxWidth={0.8}>
+          <Typography variant='inherit' noWrap>
+            {title}
+          </Typography>
 
           {chipLabel && <ChipTitle color='default' label={chipLabel} />}
         </Box>
@@ -63,7 +52,7 @@ const DialogTitle = ({
           </IconButton>
         )}
       </ItemsWrapper>
-    </StyledDialogTitle>
+    </MuiDialogTitle>
   );
 };
 
