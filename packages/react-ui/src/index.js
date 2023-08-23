@@ -29,6 +29,8 @@ import RectangleIcon from './assets/icons/RectangleIcon';
 import LassoIcon from './assets/icons/LassoIcon';
 import CircleIcon from './assets/icons/CircleIcon';
 import ArrowDropIcon from './assets/icons/ArrowDropIcon';
+import OpenDiagonallyRightIcon from './assets/icons/ArrowDropIcon';
+import CloseDiagonallyRightIcon from './assets/icons/ArrowDropIcon';
 import Typography from './components/atoms/Typography';
 import Button from './components/atoms/Button';
 import PasswordField from './components/atoms/PasswordField';
@@ -97,5 +99,7 @@ export {
   ICON_SIZE_MEDIUM,
   ICON_SIZE_LARGE,
   AccordionGroup,
-  Alert
+  Alert,
+  OpenDiagonallyRightIcon,
+  CloseDiagonallyRightIcon
 };

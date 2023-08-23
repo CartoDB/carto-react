@@ -7,6 +7,8 @@ import PolygonIcon from './icons/PolygonIcon';
 import RectangleIcon from './icons/RectangleIcon';
 import UploadIcon from './icons/UploadIcon';
 import SearchIcon from './icons/SearchIcon';
+import OpenDiagonallyRightIcon from './icons/OpenDiagonallyRightIcon';
+import CloseDiagonallyRightIcon from './icons/CloseDiagonallyRightIcon';
 
 export const icons = {
   ArrowDrop: ArrowDropIcon,
@@ -17,5 +19,7 @@ export const icons = {
   Polygon: PolygonIcon,
   Rectangle: RectangleIcon,
   Upload: UploadIcon,
-  Search: SearchIcon
+  Search: SearchIcon,
+  OpenDiagonallyRight: OpenDiagonallyRightIcon,
+  CloseDiagonallyRight: CloseDiagonallyRightIcon
 };
