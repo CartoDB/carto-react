@@ -2,6 +2,8 @@
 
 ## Not released
 
+- WrapperWidgetUI: new footer property [#761](https://github.com/CartoDB/carto-react/pull/761)
+
 ## 2.2
 
 ### 2.2.4 (2023-08-21)
