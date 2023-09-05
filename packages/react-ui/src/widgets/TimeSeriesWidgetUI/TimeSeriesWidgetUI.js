@@ -7,15 +7,19 @@ import {
   MenuItem,
   SvgIcon,
   capitalize,
-  Link
+  Link,
+  useTheme
 } from '@mui/material';
 import TimeSeriesChart from './components/TimeSeriesChart';
+import TimeSeriesLegend from './components/TimeSeriesLegend';
 import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesContext';
 import { CHART_TYPES } from './utils/constants';
 import PropTypes from 'prop-types';
 import { GroupDateTypes, getMonday } from '@carto/react-core';
 import Typography from '../../components/atoms/Typography';
 import TimeSeriesSkeleton from './components/TimeSeriesSkeleton';
+import { getColorByCategory } from '../utils/colorUtils';
+import { commonPalette } from '../../theme/sections/palette';
 
 const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.YEARS]: yearCurrentDateRange,
@@ -62,12 +66,16 @@ function TimeSeriesWidgetUI({
   onTimelineUpdate,
   timeWindow,
   onTimeWindowUpdate,
+  selectedCategories,
+  onSelectedCategoriesChange,
   isPlaying,
   onPlay,
   isPaused,
   onPause,
   onStop,
-  isLoading
+  isLoading,
+  palette,
+  showLegend
 }) {
   if (isLoading) return <TimeSeriesSkeleton height={height} />;
 
@@ -93,6 +101,10 @@ function TimeSeriesWidgetUI({
         height={height}
         showControls={showControls}
         animation={animation}
+        palette={palette}
+        showLegend={showLegend}
+        selectedCategories={selectedCategories}
+        onSelectedCategoriesChange={onSelectedCategoriesChange}
       />
     </TimeSeriesProvider>
   );
@@ -102,7 +114,8 @@ TimeSeriesWidgetUI.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.number,
-      value: PropTypes.number
+      value: PropTypes.number,
+      category: PropTypes.string
     })
   ).isRequired,
   stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired,
@@ -122,7 +135,9 @@ TimeSeriesWidgetUI.propTypes = {
   timeWindow: PropTypes.arrayOf(PropTypes.any),
   onTimeWindowUpdate: PropTypes.func,
   showControls: PropTypes.bool,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  palette: PropTypes.arrayOf(PropTypes.string),
+  showLegend: PropTypes.bool
 };
 
 TimeSeriesWidgetUI.defaultProps = {
@@ -137,7 +152,8 @@ TimeSeriesWidgetUI.defaultProps = {
   timelinePosition: 0,
   timeWindow: [],
   showControls: true,
-  isLoading: false
+  isLoading: false,
+  palette: Object.values(commonPalette.qualitative.bold)
 };
 
 export default TimeSeriesWidgetUI;
@@ -153,8 +169,15 @@ function TimeSeriesWidgetUIContent({
   formatter,
   height,
   showControls,
-  animation
+  animation,
+  palette,
+  selectedCategories,
+  onSelectedCategoriesChange,
+  showLegend
 }) {
+  const theme = useTheme();
+  const fallbackColor = theme.palette.secondary.main;
+
   const [anchorSpeedEl, setAnchorSpeedEl] = useState(null);
   const [speed, setSpeed] = useState(1);
   const {
@@ -168,6 +191,57 @@ function TimeSeriesWidgetUIContent({
     togglePlay
   } = useTimeSeriesContext();
   const animationRef = useRef({ animationFrameId: null, timeoutId: null });
+
+  const { series, categories } = useMemo(() => {
+    const series = [];
+
+    const categories = [];
+    const colorMapping = {};
+
+    const firstSerieEntry = data[0];
+    if (
+      firstSerieEntry &&
+      Array.isArray(firstSerieEntry.data) &&
+      firstSerieEntry.category
+    ) {
+      // multiple series model
+      // array of objects {data, category}
+      for (const { data: seriesDataRaw, category } of data) {
+        categories.push(category);
+        series.push({
+          category,
+          data: seriesDataRaw.map(({ name, value }) => [name, value])
+        });
+      }
+    } else {
+      // splitByCategory model
+      // one array, with category embedded: { name: 1009843200000, category: 'DECEPTIVE PRACTICE', value: 6 }
+      for (const { name, value, category } of data) {
+        let dataSeriesIndex = category ? categories.indexOf(category) : 0;
+        if (dataSeriesIndex === -1) {
+          dataSeriesIndex = categories.length;
+          categories.push(category);
+        }
+        if (!series[dataSeriesIndex]) {
+          series[dataSeriesIndex] = {
+            category,
+            data: []
+          };
+        }
+        series[dataSeriesIndex].data.push([name, value]);
+      }
+    }
+
+    series.forEach(({ category }, i) => {
+      series[i].color = getColorByCategory(category, {
+        palette,
+        fallbackColor,
+        colorMapping
+      });
+    });
+
+    return { series, categories };
+  }, [data, palette, fallbackColor]);
 
   // If data changes, stop animation. useDidMountEffect is used to avoid
   // being executed in the initial rendering because that cause
@@ -192,7 +266,8 @@ function TimeSeriesWidgetUIContent({
   const handleStop = useCallback(() => {
     stopAnimation();
     stop();
-  }, [stop]);
+    onSelectedCategoriesChange?.([]);
+  }, [stop, onSelectedCategoriesChange]);
 
   const handleTogglePlay = () => {
     stopAnimation();
@@ -274,8 +349,10 @@ function TimeSeriesWidgetUIContent({
   }, [data, stepSize, isPlaying, isPaused, timeWindow, timelinePosition]);
 
   const showClearButton = useMemo(() => {
-    return isPlaying || isPaused || timeWindow.length > 0;
-  }, [isPaused, isPlaying, timeWindow.length]);
+    return (
+      isPlaying || isPaused || timeWindow.length > 0 || selectedCategories?.length > 0
+    );
+  }, [isPaused, isPlaying, selectedCategories?.length, timeWindow.length]);
 
   const handleOpenSpeedMenu = (e) => {
     if (e?.currentTarget) {
@@ -292,18 +369,51 @@ function TimeSeriesWidgetUIContent({
     handleCloseSpeedMenu();
   };
 
+  const handleCategoryClick = useCallback(
+    (category) => {
+      if (onSelectedCategoriesChange) {
+        const newSelectedCategories = [...selectedCategories];
+
+        const selectedCategoryIdx = newSelectedCategories.indexOf(category);
+        if (selectedCategoryIdx === -1) {
+          newSelectedCategories.push(category);
+        } else {
+          newSelectedCategories.splice(selectedCategoryIdx, 1);
+        }
+
+        onSelectedCategoriesChange(newSelectedCategories);
+      }
+    },
+    [onSelectedCategoriesChange, selectedCategories]
+  );
+
+  const isLegentVisible = showLegend !== undefined ? showLegend : series.length > 1;
+
   const chart = (
     <TimeSeriesChart
       chartType={chartType}
       data={data}
+      series={series}
+      categories={categories}
       tooltip={tooltip}
       formatter={formatter}
-      tooltipFormatter={(params) => tooltipFormatter(params, stepSize, formatter)}
+      tooltipFormatter={(params) =>
+        tooltipFormatter(params, stepSize, formatter, isLegentVisible)
+      }
       height={height}
       animation={animation}
+      selectedCategories={selectedCategories}
+      onCategoryClick={handleCategoryClick}
     />
   );
 
+  const legend = isLegentVisible && (
+    <TimeSeriesLegend
+      series={series}
+      selectedCategories={selectedCategories}
+      onCategoryClick={handleCategoryClick}
+    />
+  );
   return (
     <Box>
       <Box display='flex' justifyContent='space-between' alignItems='center'>
@@ -385,6 +495,7 @@ function TimeSeriesWidgetUIContent({
           <Grid item xs={11}>
             {chart}
           </Grid>
+          {legend}
         </Grid>
       ) : (
         chart
@@ -434,24 +545,33 @@ function formatMonth(date) {
   return ('0' + (date.getMonth() + 1)).slice(-2);
 }
 
-function defaultTooltipFormatter(params, stepSize, valueFormatter) {
+function defaultTooltipFormatter(unsortedParams, stepSize, valueFormatter, showNames) {
+  const sortedParams = [...unsortedParams].sort((a, b) => b.data[1] - a.data[1]);
+
   const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
-  const [name] = params[0].data;
+  const [name] = sortedParams[0].data;
   const date = new Date(name);
   const title = formatter(date);
 
-  return `<div style='width: 160px;'>
+  return `<div style='minWidth: 160px;'>
     <p style='font-weight: 600; line-height: 1; margin: 4px 0;'>${title}</p>
-    ${params
+    ${sortedParams
       .reduce((acc, serie) => {
         if (serie.value !== undefined && serie.value !== null) {
-          const HTML = `<div style='display: flex; flex-direction: row; align-items: center; justify-content: space-between; height: 20px;'>
+          const HTML = `<div style='display: flex; flex-direction: row; align-items: center; justify-content: spread; height: 20px; gap: 8px;'>
             <div style='display: flex; flex-direction: row; align-items: center; margin: 4px 0;'>
-              <div style='width: 8px; height: 8px; margin-right: 4px; border-radius: 50%; background-color: ${
+              <div style='width: 8px; height: 8px; margin-right: 4px; border-radius: 50%; border: 2px solid ${
                 serie.color
               }'></div>
             </div>
-            <p style='line-height: 1;'>${valueFormatter(serie.data[1])}</p>
+            <p style='line-height: 1; flex: 1; margin-left: 0.5em; min-width: 20px; max-width: 200px; overflow: hidden; text-overflow: ellipsis; align-self: left;'>
+            ${
+              showNames && serie.seriesName
+                ? `${serie.seriesName}</p>`
+                : ''
+            }
+            </p>
+            <p style='line-height: 1; justify-self: flex-end;'>${valueFormatter(serie.data[1])}</p>
           </div>`;
           acc.push(HTML);
         }
