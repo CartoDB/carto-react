@@ -46,7 +46,11 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
   // Echarts events
   useEffect(() => {
     function clickEvent(params) {
-      if (!timeWindow.length && params.target?.type !== 'ec-line') {
+      // params target is specified if we hit data-line or point, not the background and for this,
+      // we
+      if (params.target) return
+
+      if (!timeWindow.length) {
         updateTimelineByCoordinate(params);
 
         // If stopped, pause to show the markline.
