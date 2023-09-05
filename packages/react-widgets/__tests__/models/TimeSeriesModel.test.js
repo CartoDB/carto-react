@@ -90,7 +90,11 @@ describe('getTimeSeries', () => {
         column: 'date_column',
         operationColumn: 'opt_column',
         global: true,
-        stepSize: GroupDateTypes.MONTHS
+        stepSize: GroupDateTypes.SECONDS,
+        stepMultiplier: 2,
+        splitByCategory: 'abc',
+        splitByCategoryLimit: 5,
+        splitByCategoryValues: ['a', 'b', 'c']
       };
 
       const data = await getTimeSeries(props);
@@ -105,7 +109,11 @@ describe('getTimeSeries', () => {
           operation: props.operation,
           operationColumn: props.operationColumn || props.column,
           stepSize: props.stepSize,
-          joinOperation: props.joinOperation
+          joinOperation: props.joinOperation,
+          stepMultiplier: props.stepMultiplier,
+          splitByCategory: props.splitByCategory,
+          splitByCategoryLimit: props.splitByCategoryLimit,
+          splitByCategoryValues: props.splitByCategoryValues
         },
         opts: {
           abortController: undefined
