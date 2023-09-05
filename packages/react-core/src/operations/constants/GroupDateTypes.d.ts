@@ -4,5 +4,6 @@ export enum GroupDateTypes {
   WEEKS = 'week',
   DAYS = 'day',
   HOURS = 'hour',
-  MINUTES = 'minute'
+  MINUTES = 'minute',
+  SECONDS = 'second'
 }
