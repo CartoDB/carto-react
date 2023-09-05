@@ -20,6 +20,7 @@ import { PropTypes } from 'prop-types';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
+import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 
 // Due to the widget groups the data by a certain stepSize, when filtering
 // the filter applied must be a range that represent the grouping range.
@@ -45,6 +46,8 @@ function calculateNextStep(time, stepType, stepMultiplier = 1) {
   }
 }
 
+const EMPTY_ARRAY = [];
+
 /**
  * Renders a <TimeSeriesWidget /> component
  * @param  {object} props
@@ -55,8 +58,12 @@ function calculateNextStep(time, stepType, stepMultiplier = 1) {
  * @param  {string | string[]} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`. If multiples are provided, they will be merged into a single one using joinOperation property.
  * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple operation columns into a single one.
  * @param  {string} [props.operation] - Operation to apply to the operationColumn. Operation used by default is COUNT. Must be one of those defined in `AggregationTypes` object.
+ * @param  {object[]=} [props.series] - Array of {operation, operationColumn} objects that specify multiple aggregations
  * @param  {string} props.stepSize - Step applied to group the data. Must be one of those defined in `GroupDateTypes` object.
  * @param  {number=} [props.stepMultiplier] - Multiplier applied to `stepSize`. Use to aggregate by 2 hours, 5 seconds, etc.
+ * @param  {string=} props.splitByCategory
+ * @param  {string=} props.splitByCategoryLimit
+ * @param  {string=} props.splitByCategoryValues
  * @param  {string[]} [props.stepSizeOptions] - Different steps that can be applied to group the data. If filled, an icon with a menu appears to change between steps. Every value must be one of those defined in `AggregationTypes` object.
  * @param  {string} [props.chartType] - Chart used to represent the time serie. Must be one of those defined in `TIME_SERIES_CHART_TYPES` object.
  * @param  {boolean} [props.tooltip] - Enable/disable tooltip.
@@ -67,6 +74,8 @@ function calculateNextStep(time, stepType, stepMultiplier = 1) {
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {function} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Function} [props.onStateChange] - Callback to handle state updates of widgets
+ * @param  {string[]=} [props.palette] - Optional palette
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
  * Internal state
@@ -86,10 +95,12 @@ function TimeSeriesWidget({
   id,
   title,
   dataSource,
+
   column,
   operationColumn,
   joinOperation,
   operation,
+  series,
   stepSizeOptions,
   global,
   onError,
@@ -112,13 +123,26 @@ function TimeSeriesWidget({
   onTimelineUpdate,
   timeWindow,
   onTimeWindowUpdate,
+  onStateChange,
+  palette,
   // Both
   stepSize,
-  stepMultiplier
+  stepMultiplier,
+  splitByCategory,
+  splitByCategoryLimit,
+  splitByCategoryValues
 }) {
   const dispatch = useDispatch();
 
   const [selectedStepSize, setSelectedStepSize] = useState(stepSize);
+
+  const selectedCategories =
+    useWidgetFilterValues({
+      dataSource,
+      id,
+      column: splitByCategory,
+      type: FilterTypes.IN
+    }) || EMPTY_ARRAY;
 
   if (showControls && global) {
     console.warn(
@@ -144,15 +168,20 @@ function TimeSeriesWidget({
     id,
     dataSource,
     params: {
+      series,
       column,
       joinOperation,
       stepSize: selectedStepSize,
       stepMultiplier,
+      operation,
       operationColumn,
-      operation
+      splitByCategory,
+      splitByCategoryLimit,
+      splitByCategoryValues
     },
     global,
     onError,
+    onStateChange,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
@@ -184,6 +213,7 @@ function TimeSeriesWidget({
   const handleTimelineUpdate = useCallback(
     (timelinePosition) => {
       if (!isLoading) {
+        // TODO: new data model ?
         const { name: moment } = data[timelinePosition];
         dispatch(
           addFilter({
@@ -213,6 +243,33 @@ function TimeSeriesWidget({
       id,
       onTimelineUpdate
     ]
+  );
+
+  const handleSelectedCategoriesChange = useCallback(
+    (categories) => {
+      if (!splitByCategory || !categories) return;
+
+      if (categories.length) {
+        dispatch(
+          addFilter({
+            id: dataSource,
+            column: splitByCategory,
+            type: FilterTypes.IN,
+            values: categories,
+            owner: id
+          })
+        );
+      } else {
+        dispatch(
+          removeFilter({
+            id: dataSource,
+            column: splitByCategory,
+            owner: id
+          })
+        );
+      }
+    },
+    [splitByCategory, dispatch, dataSource, id]
   );
 
   const handleStop = useCallback(() => {
@@ -292,7 +349,10 @@ function TimeSeriesWidget({
               onTimelineUpdate={handleTimelineUpdate}
               timeWindow={timeWindow}
               onTimeWindowUpdate={handleTimeWindowUpdate}
+              selectedCategories={selectedCategories}
+              onSelectedCategoriesChange={handleSelectedCategoriesChange}
               isLoading={isLoading}
+              palette={palette}
             />
           )}
         </WidgetWithAlert>
@@ -333,7 +393,11 @@ TimeSeriesWidget.propTypes = {
     PropTypes.arrayOf(PropTypes.string)
   ]),
   joinOperation: columnAggregationOn('operationColumn'),
-  operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
+  series: PropTypes.arrayOf({
+    operation: Object.values(AggregationTypes),
+    operationColumn: PropTypes.string
+  }),
+  operation: PropTypes.oneOf(Object.values(AggregationTypes)),
   stepSizeOptions: PropTypes.arrayOf(PropTypes.oneOf(Object.values(GroupDateTypes))),
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
