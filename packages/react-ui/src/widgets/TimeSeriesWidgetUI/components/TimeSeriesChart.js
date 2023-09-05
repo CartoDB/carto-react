@@ -1,5 +1,5 @@
 import { useTheme } from '@mui/material';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import ReactEcharts from '../../../custom-components/echarts-for-react';
 import useTimeSeriesInteractivity from '../hooks/useTimeSeriesInteractivity';
 
@@ -9,30 +9,27 @@ export default function TimeSeriesChart({
   tooltip,
   tooltipFormatter,
   data,
+  series,
+  categories,
   height,
-  animation
+  animation,
+  selectedCategories,
+  onCategoryClick
 }) {
   const theme = useTheme();
   const [echartsInstance, setEchartInstance] = useState();
 
   const onChartReady = (_echartsInstance) => setEchartInstance(_echartsInstance);
 
-  const { processedData, maxValue } = useMemo(() => {
-    return data.reduce(
-      (acc, { name, value }) => {
-        let { processedData, maxValue } = acc;
-
-        if (value > maxValue) {
-          maxValue = value;
-        }
-
-        processedData.push([name, value]);
-
-        return { processedData, maxValue };
-      },
-      { processedData: [], maxValue: 0 }
-    );
-  }, [data]);
+  const maxValue = useMemo(
+    () =>
+      series.reduce(
+        (accOut, { data }) =>
+          data.reduce((accInt, { value }) => Math.max(value, accInt), accOut),
+        Number.MIN_VALUE
+      ),
+    [series]
+  );
 
   const tooltipOptions = useMemo(
     () => ({
@@ -50,9 +47,9 @@ export default function TimeSeriesChart({
         const position = { top: 0 };
 
         if (size.contentSize[0] < size.viewSize[0] - point[0]) {
-          position.left = point[0];
+          position.left = point[0] + theme.spacingValue * 1.5;
         } else {
-          position.right = size.viewSize[0] - point[0];
+          position.right = size.viewSize[0] - point[0] + theme.spacingValue * 1.5;
         }
         return position;
       },
@@ -129,27 +126,41 @@ export default function TimeSeriesChart({
       data
     });
 
-  const serieOptions = useMemo(
-    () => ({
-      markLine,
-      markArea,
-      animation,
-      data: processedData,
-      type: chartType,
-      smooth: true,
-      color: theme.palette.secondary.main,
-      lineStyle: {
-        width: 2.5
-      },
-      showSymbol: false,
-      emphasis: {
-        lineStyle: {
-          width: 3,
-          color: theme.palette.secondary.main
-        }
-      }
-    }),
-    [markLine, markArea, processedData, theme, chartType, animation]
+  const seriesOptions = useMemo(
+    () =>
+      series.map(({ data, color, category }, i) => {
+        const somethingSelected = selectedCategories && selectedCategories.length > 0;
+
+        const isSelected = somethingSelected && selectedCategories.includes(category);
+        const actualColor =
+          !somethingSelected || isSelected
+            ? color
+            : theme.palette.action.disabledBackground;
+
+        return {
+          name: category,
+          markLine,
+          markArea,
+          animation,
+          data,
+          type: chartType,
+          smooth: true,
+          color: actualColor,
+          z: somethingSelected && isSelected ? 10 : 0,
+          lineStyle: {
+            width: 2
+          },
+          showSymbol: false,
+          emphasis: {
+            scale: 2,
+            lineStyle: {
+              width: 2,
+              color: actualColor
+            }
+          }
+        };
+      }),
+    [series, markLine, markArea, animation, chartType, selectedCategories, theme]
   );
 
   const options = useMemo(
@@ -163,14 +174,33 @@ export default function TimeSeriesChart({
       color: [theme.palette.secondary.main],
       tooltip: tooltipOptions,
       ...axisOptions,
-      series: [serieOptions]
+      series: seriesOptions
     }),
-    [axisOptions, serieOptions, theme, tooltipOptions]
+    [
+      axisOptions,
+      seriesOptions,
+      theme.palette.secondary.main,
+      theme.spacingValue,
+      tooltipOptions
+    ]
   );
+
+  const handleClick = useCallback(
+    (params) => {
+      if (onCategoryClick) {
+        const category = categories[params.seriesIndex];
+        onCategoryClick(category);
+      }
+    },
+    [categories, onCategoryClick]
+  );
+
+  const onEvents = { click: handleClick };
 
   return (
     <ReactEcharts
       option={options}
+      onEvents={onEvents}
       onChartReady={onChartReady}
       style={{ height: height || theme.spacing(22) }}
     />

@@ -66,6 +66,15 @@ const data = [
   { name: 1549839600000, value: 12 }
 ];
 
+const dataSplitByCategory = data.reduce((acc, { name, value }) => {
+  acc.push({ name, value, category: 'Mars' });
+  acc.push({ name, value: Math.sin(name / 10000) * 30 + 30, category: 'Venus' });
+  acc.push({ name, value: Math.cos(name / 700000 + 10) * 100 + 100, category: 'Earth' });
+  acc.push({ name, value: Math.cos(name / 200000 + 10) * 100 + 100, category: 'Foobar - only for test' });
+  acc.push({ name, value: Math.cos(name / 900000 + 10) * 100 + 100, category: 'Very long category to test for scroll support' });
+  return acc;
+}, []);
+
 const options = {
   title: 'Widgets/TimeSeriesWidgetUI',
   component: TimeSeriesWidgetUI,
@@ -134,6 +143,10 @@ const options = {
     onTimeWindowUpdate: {
       description:
         'Event emitted when timeWindow is updated. TimeSeriesWidget is responsible of applying the filter.'
+    },
+    showLegend: {
+      description:
+        `Whether to show legend. By default it's shown only for if data contains multiple series.`
     }
   },
   parameters: {
@@ -152,7 +165,15 @@ const Template = (args) => {
     args.timeWindow = [];
   }
 
-  return <TimeSeriesWidgetUI {...args} />;
+  const [selectedCategories, setSelectedCategories] = React.useState([]);
+
+  return (
+    <TimeSeriesWidgetUI
+      {...args}
+      selectedCategories={selectedCategories}
+      onSelectedCategoriesChange={setSelectedCategories}
+    />
+  );
 };
 
 const LoadingTemplate = (args) => {
@@ -185,6 +206,12 @@ const requiredProps = {
 
 export const Default = Template.bind({});
 Default.args = requiredProps;
+
+export const MultipleSeries = Template.bind({});
+MultipleSeries.args = {
+  ...requiredProps,
+  data: dataSplitByCategory
+};
 
 export const Loading = LoadingTemplate.bind({});
 Loading.args = { ...requiredProps, isLoading: true };
