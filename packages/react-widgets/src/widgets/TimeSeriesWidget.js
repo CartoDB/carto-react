@@ -124,6 +124,7 @@ function TimeSeriesWidget({
   onTimeWindowUpdate,
   onStateChange,
   palette,
+  showLegend,
   // Both
   stepSize,
   stepMultiplier,
@@ -340,6 +341,7 @@ function TimeSeriesWidget({
               onSelectedCategoriesChange={handleSelectedCategoriesChange}
               isLoading={isLoading}
               palette={palette}
+              showLegend={showLegend}
             />
           )}
         </WidgetWithAlert>
