@@ -1,5 +1,5 @@
 import { useTheme } from '@mui/material';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactEcharts from '../../../custom-components/echarts-for-react';
 import useTimeSeriesInteractivity from '../hooks/useTimeSeriesInteractivity';
 
@@ -196,6 +196,42 @@ export default function TimeSeriesChart({
   );
 
   const onEvents = { click: handleClick };
+
+  // useEffect(() => {
+  //   if (typeof ResizeObserver === 'undefined' || !echartsInstance) {
+  //     return;
+  //   }
+
+  //   const element = echartsInstance.getDom().parentElement;
+
+  //   console.log('TimeSeriesChart registering resize callback for', { element });
+  //   if (!element) return;
+
+  //   setInterval(() => {
+  //     console.log('TimeSeriesChart interval', {
+  //       elementHeight: element.height,
+  //       elementClientWidth: element?.clientWidth,
+  //       elementScrollWidth: element?.scrollWidth
+  //     });
+  //   }, 5000);
+
+  //   let observer;
+  //   observer = new ResizeObserver(() => {
+  //     console.log('TimeSeriesChart resizing');
+  //     echartsInstance.resize();
+
+  //     console.log('TimeSeriesChart', {
+  //       elementHeight: element.height,
+  //       elementClientWidth: element?.clientWidth,
+  //       elementScrollWidth: element?.scrollWidth
+  //     });
+  //   });
+  //   observer.observe(element);
+
+  //   return () => {
+  //     observer?.disconnect();
+  //   };
+  // }, [echartsInstance]);
 
   return (
     <ReactEcharts
