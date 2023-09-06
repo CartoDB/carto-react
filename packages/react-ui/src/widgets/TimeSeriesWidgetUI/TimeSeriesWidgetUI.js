@@ -178,39 +178,45 @@ function TimeSeriesWidgetUIContent({
     const categories = [];
     const colorMapping = {};
 
-    const firstSerieEntry = data[0];
-    if (
-      firstSerieEntry &&
-      Array.isArray(firstSerieEntry.data) &&
-      firstSerieEntry.category
-    ) {
-      // multiple series model
-      // array of objects {data, category}
-      for (const { data: seriesDataRaw, category } of data) {
+    // TODO: decide if we use common model for multiple series and splitByCategory
+    // as `splitByCategory` is less optimal and with common model we have "join" and then "split" data
+    // why common model?
+    // some other commponents are relying on old layout of data
+
+    // const firstSerieEntry = data[0];
+    // if (
+    //   firstSerieEntry &&
+    //   Array.isArray(firstSerieEntry.data) &&
+    //   firstSerieEntry.category
+    // ) {
+    //   // multiple series model
+    //   // array of objects {data, category}
+    //   for (const { data: seriesDataRaw, category } of data) {
+    //     categories.push(category);
+    //     series.push({
+    //       category,
+    //       data: seriesDataRaw.map(({ name, value }) => [name, value])
+    //     });
+    //   }
+    // } else {
+
+    // splitByCategory model
+    // one array, with category embedded: { name: 1009843200000, category: 'DECEPTIVE PRACTICE', value: 6 }
+    for (const { name, value, category } of data) {
+      let dataSeriesIndex = category ? categories.indexOf(category) : 0;
+      if (dataSeriesIndex === -1) {
+        dataSeriesIndex = categories.length;
         categories.push(category);
-        series.push({
+      }
+      if (!series[dataSeriesIndex]) {
+        series[dataSeriesIndex] = {
           category,
-          data: seriesDataRaw.map(({ name, value }) => [name, value])
-        });
+          data: []
+        };
       }
-    } else {
-      // splitByCategory model
-      // one array, with category embedded: { name: 1009843200000, category: 'DECEPTIVE PRACTICE', value: 6 }
-      for (const { name, value, category } of data) {
-        let dataSeriesIndex = category ? categories.indexOf(category) : 0;
-        if (dataSeriesIndex === -1) {
-          dataSeriesIndex = categories.length;
-          categories.push(category);
-        }
-        if (!series[dataSeriesIndex]) {
-          series[dataSeriesIndex] = {
-            category,
-            data: []
-          };
-        }
-        series[dataSeriesIndex].data.push([name, value]);
-      }
+      series[dataSeriesIndex].data.push([name, value]);
     }
+    // }
 
     series.forEach(({ category }, i) => {
       series[i].color = getColorByCategory(category, {
@@ -365,7 +371,9 @@ function TimeSeriesWidgetUIContent({
     [onSelectedCategoriesChange, selectedCategories]
   );
 
-  const isLegentVisible = showLegend !== undefined ? showLegend : series.length > 1;
+  const isLegendVisible = Boolean(
+    showLegend !== undefined ? showLegend : series.length > 1
+  );
 
   const chart = (
     <TimeSeriesChart
@@ -376,7 +384,7 @@ function TimeSeriesWidgetUIContent({
       tooltip={tooltip}
       formatter={formatter}
       tooltipFormatter={(params) =>
-        tooltipFormatter(params, stepSize, formatter, stepMultiplier, isLegentVisible)
+        tooltipFormatter(params, stepSize, formatter, stepMultiplier, isLegendVisible)
       }
       height={height}
       animation={animation}
@@ -385,7 +393,7 @@ function TimeSeriesWidgetUIContent({
     />
   );
 
-  const legend = isLegentVisible && (
+  const legend = isLegendVisible && (
     <TimeSeriesLegend
       series={series}
       selectedCategories={selectedCategories}
@@ -473,7 +481,10 @@ function TimeSeriesWidgetUIContent({
           {legend}
         </Grid>
       ) : (
-        chart
+        <>
+          {chart}
+          {legend}
+        </>
       )}
     </Box>
   );
