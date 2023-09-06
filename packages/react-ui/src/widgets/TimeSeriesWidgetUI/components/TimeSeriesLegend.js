@@ -6,7 +6,7 @@ import Typography from '../../../components/atoms/Typography';
 
 const Legend = styled(Box)(({ theme }) => ({
   position: 'relative',
-  padding: theme.spacing(2, 0.5, 1, 0.5),
+  padding: theme.spacing(2, 0.5, 2, 0.5),
   width: '100%'
 }));
 
@@ -19,7 +19,6 @@ const ItemsContainer = styled(Box)(({ theme }) => ({
 }));
 
 const Item = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(1),
   display: 'flex',
   flexDirection: 'row',
   gap: theme.spacing(1),
@@ -33,18 +32,18 @@ const OverflowVeil = styled(Box)(({ theme }) => ({
   display: 'inline-block',
   position: 'absolute',
   left: theme.spacing(-2),
-  top: 0,
-  bottom: 0,
+  top: theme.spacing(1),
+  bottom: theme.spacing(1),
   zIndex: 10,
   width: theme.spacing(2.5),
-  height: '100%',
+  // height: '100%',
   background: `linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)`
 }));
 
 const ShowMoreButtons = styled(Box)(({ theme }) => ({
   position: 'absolute',
   padding: theme.spacing(1, 1),
-  top: theme.spacing(0.75),
+  top: theme.spacing(0.25),
   right: 0,
   background: theme.palette.background.paper
 }));
@@ -89,9 +88,9 @@ export default function TimeSeriesLegend({
 
     setOverflowing(overflowing);
     setMaxWidth(
-      overflowing && legendRef.current
+      overflowing && containerRef.current
         ? legendRef.current.clientWidth - (showMoreButtonsRef.current?.clientWidth || 70)
-        : undefined
+        : legendRef.current?.clientWidth - 12 || 500
     );
   }, [legendRef, containerRef, showMoreButtonsRef]);
 
@@ -122,9 +121,17 @@ export default function TimeSeriesLegend({
     };
   }, [legendRef, updateMaxWidth]);
 
+  console.log('TimeSeriesLegend', {
+    overflowing,
+    legendRefClient: legendRef.current?.clientWidth,
+    containerRefClient: containerRef.current?.clientWidth,
+    containerRefScroll: containerRef.current?.scrollWidth,
+    maxWidth
+  });
+
   return (
     <Legend ref={legendRef}>
-      <ItemsContainer ref={containerRef} style={{ maxWidth }}>
+      <ItemsContainer ref={containerRef} style={{ maxWidth: `${maxWidth}px` }}>
         {series.map(({ category, color }, i) => {
           if (i < offset) return null;
 
@@ -146,10 +153,10 @@ export default function TimeSeriesLegend({
       {(overflowing || offset > 0) && (
         <ShowMoreButtons ref={showMoreButtonsRef}>
           <OverflowVeil />
-          <IconButton disabled={offset === 0} onClick={handleClickLeft}>
+          <IconButton size='small' disabled={offset === 0} onClick={handleClickLeft}>
             <ChevronLeft />
           </IconButton>
-          <IconButton disabled={!overflowing} onClick={handleClickRight}>
+          <IconButton size='small' disabled={!overflowing} onClick={handleClickRight}>
             <ChevronRight />
           </IconButton>
         </ShowMoreButtons>
