@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-redux",
-  "version": "2.2.5",
+  "version": "2.2.6-alpha.timeseries.0.0",
   "description": "CARTO for React - Redux",
   "author": "CARTO Dev Team",
   "keywords": [
