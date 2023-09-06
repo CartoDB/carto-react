@@ -35,6 +35,7 @@ export default function TimeSeriesChart({
     () => ({
       show: tooltip,
       trigger: 'axis',
+      appendToBody: true,
       padding: [theme.spacingValue * 0.5, theme.spacingValue],
       textStyle: {
         ...theme.typography.caption,
