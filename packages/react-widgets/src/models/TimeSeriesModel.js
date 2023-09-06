@@ -3,10 +3,10 @@ import { Methods, executeTask } from '@carto/react-workers';
 import { normalizeObjectKeys, wrapModelCall } from './utils';
 import { AggregationTypes } from '@carto/react-core';
 
-export function getTimeSeries(props) {
+export async function getTimeSeries(props) {
   if (props.series) {
     const { series, propsNoSeries } = props;
-    return Promise.all(
+    const rawSeriesData = await Promise.all(
       series.map(({ operation, operationColumn }) => {
         const category = getCategory(operation, operationColumn, series);
         return {
@@ -19,6 +19,13 @@ export function getTimeSeries(props) {
         };
       })
     );
+    let aggregatedData = [];
+    for (const { data, category } of rawSeriesData) {
+      for (const { name, value } of data) {
+        aggregatedData.push({ name, value, category });
+      }
+    }
+    return aggregatedData;
   } else {
     return wrapModelCall(props, fromLocal, fromRemote);
   }
