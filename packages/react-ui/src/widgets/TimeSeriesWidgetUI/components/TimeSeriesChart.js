@@ -25,7 +25,7 @@ export default function TimeSeriesChart({
     () =>
       series.reduce(
         (accOut, { data }) =>
-          data.reduce((accInt, { value }) => Math.max(value, accInt), accOut),
+          data.reduce((accInt, row) => (row[1] > accInt ? row[1] : accInt), accOut),
         Number.MIN_VALUE
       ),
     [series]
@@ -197,41 +197,26 @@ export default function TimeSeriesChart({
 
   const onEvents = { click: handleClick };
 
-  // useEffect(() => {
-  //   if (typeof ResizeObserver === 'undefined' || !echartsInstance) {
-  //     return;
-  //   }
+  // echarts sometimes misses resizes, so we use a ResizeObserver and force resizes
+  useEffect(() => {
+    if (typeof ResizeObserver === 'undefined' || !echartsInstance) {
+      return;
+    }
 
-  //   const element = echartsInstance.getDom().parentElement;
+    const element = echartsInstance.getDom().parentElement;
 
-  //   console.log('TimeSeriesChart registering resize callback for', { element });
-  //   if (!element) return;
+    if (!element) return;
 
-  //   setInterval(() => {
-  //     console.log('TimeSeriesChart interval', {
-  //       elementHeight: element.height,
-  //       elementClientWidth: element?.clientWidth,
-  //       elementScrollWidth: element?.scrollWidth
-  //     });
-  //   }, 5000);
+    let observer;
+    observer = new ResizeObserver(() => {
+      echartsInstance.resize();
+    });
+    observer.observe(element);
 
-  //   let observer;
-  //   observer = new ResizeObserver(() => {
-  //     console.log('TimeSeriesChart resizing');
-  //     echartsInstance.resize();
-
-  //     console.log('TimeSeriesChart', {
-  //       elementHeight: element.height,
-  //       elementClientWidth: element?.clientWidth,
-  //       elementScrollWidth: element?.scrollWidth
-  //     });
-  //   });
-  //   observer.observe(element);
-
-  //   return () => {
-  //     observer?.disconnect();
-  //   };
-  // }, [echartsInstance]);
+    return () => {
+      observer?.disconnect();
+    };
+  }, [echartsInstance]);
 
   return (
     <ReactEcharts
