@@ -70,8 +70,16 @@ const dataSplitByCategory = data.reduce((acc, { name, value }) => {
   acc.push({ name, value, category: 'Mars' });
   acc.push({ name, value: Math.sin(name / 10000) * 30 + 30, category: 'Venus' });
   acc.push({ name, value: Math.cos(name / 700000 + 10) * 100 + 100, category: 'Earth' });
-  acc.push({ name, value: Math.cos(name / 200000 + 10) * 100 + 100, category: 'Foobar - only for test' });
-  acc.push({ name, value: Math.cos(name / 900000 + 10) * 100 + 100, category: 'Very long category to test for scroll support' });
+  acc.push({
+    name,
+    value: Math.cos(name / 200000 + 10) * 100 + 100,
+    category: 'Foobar - only for test'
+  });
+  acc.push({
+    name,
+    value: Math.cos(name / 900000 + 10) * 100 + 100,
+    category: 'Very long category to test for scroll support'
+  });
   return acc;
 }, []);
 
@@ -145,8 +153,7 @@ const options = {
         'Event emitted when timeWindow is updated. TimeSeriesWidget is responsible of applying the filter.'
     },
     showLegend: {
-      description:
-        `Whether to show legend. By default it's shown only for if data contains multiple series.`
+      description: `Whether to show legend. By default it's shown only for if data contains multiple series.`
     }
   },
   parameters: {
@@ -181,19 +188,31 @@ const LoadingTemplate = (args) => {
     args.timeWindow = [];
   }
 
+  const [selectedCategories, setSelectedCategories] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(args.isLoading);
   return (
     <>
       <Label variant='body1' mb={3}>
-        {'Limited width'}
+        {'Limited width'} <button onClick={() => setIsLoading(!isLoading)}>toggle</button>
       </Label>
       <ThinContainer>
-        <TimeSeriesWidgetUI {...args} />
+        <TimeSeriesWidgetUI
+          {...args}
+          isLoading={isLoading}
+          selectedCategories={selectedCategories}
+          onSelectedCategoriesChange={setSelectedCategories}
+        />
       </ThinContainer>
 
       <Label variant='body1' mt={8} mb={3}>
         {'Responsive'}
       </Label>
-      <TimeSeriesWidgetUI {...args} />
+      <TimeSeriesWidgetUI
+        {...args}
+        isLoading={isLoading}
+        selectedCategories={selectedCategories}
+        onSelectedCategoriesChange={setSelectedCategories}
+      />
     </>
   );
 };
@@ -207,11 +226,11 @@ const requiredProps = {
 export const Default = Template.bind({});
 Default.args = requiredProps;
 
-export const MultipleSeries = Template.bind({});
+export const MultipleSeries = LoadingTemplate.bind({});
 MultipleSeries.args = {
   ...requiredProps,
   data: dataSplitByCategory
 };
 
 export const Loading = LoadingTemplate.bind({});
-Loading.args = { ...requiredProps, isLoading: true };
+Loading.args = { ...requiredProps, isLoading: true, showLegend: true };
