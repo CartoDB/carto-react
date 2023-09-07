@@ -2,6 +2,7 @@
 
 ## Not released
 
+- TimeSeriesWidget: support for multiple time series [#767](https://github.com/CartoDB/carto-react/pull/767)
 - TimeSeriesWidget: support for second precision and stepMultiplier [#776](https://github.com/CartoDB/carto-react/pull/776)
 - (chore) Include only required files in published packages [#780](https://github.com/CartoDB/carto-react/pull/780)
 
