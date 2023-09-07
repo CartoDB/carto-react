@@ -5,6 +5,10 @@
 
 ## 2.2
 
+### 2.2.6 (2023-09-07)
+
+- Use selectLoader to obtain loader from mime type [#766](https://github.com/CartoDB/carto-react/pull/766)
+
 ### 2.2.5 (2023-08-30)
 
 - WrapperWidgetUI: new footer property [#761](https://github.com/CartoDB/carto-react/pull/761)
