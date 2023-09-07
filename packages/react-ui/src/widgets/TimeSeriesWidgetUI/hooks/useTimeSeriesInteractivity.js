@@ -5,7 +5,11 @@ import { useTimeSeriesContext } from './TimeSeriesContext';
 const events = {};
 let initialTimeWindow = null;
 
-export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
+export default function useTimeSeriesInteractivity({
+  echartsInstance,
+  data,
+  canSelectLines
+}) {
   const theme = useTheme();
   const {
     isPlaying,
@@ -47,7 +51,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
   useEffect(() => {
     function clickEvent(params) {
       // params target is specified if we hit data-line or point, not time selection is only for background hits
-      if (params.target) return
+      if (canSelectLines && params.target) return;
 
       if (!timeWindow.length) {
         updateTimelineByCoordinate(params);

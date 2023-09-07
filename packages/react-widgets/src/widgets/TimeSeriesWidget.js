@@ -338,7 +338,9 @@ function TimeSeriesWidget({
               timeWindow={timeWindow}
               onTimeWindowUpdate={handleTimeWindowUpdate}
               selectedCategories={selectedCategories}
-              onSelectedCategoriesChange={handleSelectedCategoriesChange}
+              onSelectedCategoriesChange={
+                splitByCategory ? handleSelectedCategoriesChange : undefined
+              }
               isLoading={isLoading}
               palette={palette}
               showLegend={showLegend}
