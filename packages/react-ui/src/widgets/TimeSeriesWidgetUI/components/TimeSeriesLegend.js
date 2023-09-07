@@ -120,14 +120,6 @@ export default function TimeSeriesLegend({
     };
   }, [legendRef, updateMaxWidth]);
 
-  console.log('TimeSeriesLegend', {
-    overflowing,
-    legendRefClient: legendRef.current?.clientWidth,
-    containerRefClient: containerRef.current?.clientWidth,
-    containerRefScroll: containerRef.current?.scrollWidth,
-    maxWidth
-  });
-
   return (
     <Legend ref={legendRef}>
       <ItemsContainer ref={containerRef} style={{ maxWidth: `${maxWidth}px` }}>
