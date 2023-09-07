@@ -201,30 +201,6 @@ function TimeSeriesWidgetUIContent({
     const categories = [];
     const colorMapping = {};
 
-    // TODO: decide if we use common model for multiple series and splitByCategory
-    // as `splitByCategory` is less optimal and with common model we have "join" and then "split" data
-    // why common model?
-    // some other commponents are relying on old layout of data
-
-    // const firstSerieEntry = data[0];
-    // if (
-    //   firstSerieEntry &&
-    //   Array.isArray(firstSerieEntry.data) &&
-    //   firstSerieEntry.category
-    // ) {
-    //   // multiple series model
-    //   // array of objects {data, category}
-    //   for (const { data: seriesDataRaw, category } of data) {
-    //     categories.push(category);
-    //     series.push({
-    //       category,
-    //       data: seriesDataRaw.map(({ name, value }) => [name, value])
-    //     });
-    //   }
-    // } else {
-
-    // splitByCategory model
-    // one array, with category embedded: { name: 1009843200000, category: 'DECEPTIVE PRACTICE', value: 6 }
     for (const { name, value, category } of data) {
       let dataSeriesIndex = category ? categories.indexOf(category) : 0;
       if (dataSeriesIndex === -1) {
@@ -256,7 +232,7 @@ function TimeSeriesWidgetUIContent({
     }
 
     return { series, categories };
-  }, [data, palette, fallbackColor]);
+  }, [data, palette, fallbackColor, theme.palette.secondary.main]);
 
   const currentDate = useMemo(() => {
     if (!data.length) {
