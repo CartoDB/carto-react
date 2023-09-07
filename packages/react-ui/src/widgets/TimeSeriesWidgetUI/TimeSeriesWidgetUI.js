@@ -51,7 +51,7 @@ const ControlsBox = styled(Box)(({ theme }) => ({
   marginLeft: 0,
   paddingLeft: theme.spacing(1),
   [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
-    paddingLeft: 0,
+    paddingLeft: 0
   },
   paddingBottom: theme.spacing(3),
   alignSelf: 'flex-end'
@@ -60,7 +60,6 @@ const ControlsBox = styled(Box)(({ theme }) => ({
 const ChartBox = styled(Box)(({ theme }) => ({
   flex: 1,
   minWidth: 0,
-
   paddingLeft: theme.spacing(5),
   [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
     paddingLeft: theme.spacing(1)
@@ -193,8 +192,6 @@ function TimeSeriesWidgetUIContent({
   const theme = useTheme();
   const fallbackColor = theme.palette.secondary.main;
 
-  // const [anchorSpeedEl, setAnchorSpeedEl] = useState(null);
-  // const [speed, setSpeed] = useState(1);
   const { isPlaying, isPaused, timeWindow, timelinePosition, stop } =
     useTimeSeriesContext();
 
@@ -293,6 +290,7 @@ function TimeSeriesWidgetUIContent({
     stop();
     onSelectedCategoriesChange?.([]);
   };
+
   const handleCategoryClick = useCallback(
     (category) => {
       if (onSelectedCategoriesChange) {
@@ -340,6 +338,7 @@ function TimeSeriesWidgetUIContent({
       onCategoryClick={handleCategoryClick}
     />
   );
+
   return (
     <Root>
       <Box display='flex' justifyContent='space-between' alignItems='center'>
