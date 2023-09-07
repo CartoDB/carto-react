@@ -241,13 +241,19 @@ function TimeSeriesWidgetUIContent({
     }
     // }
 
-    series.forEach(({ category }, i) => {
-      series[i].color = getColorByCategory(category, {
-        palette,
-        fallbackColor,
-        colorMapping
+    const hasMultipleSeries = data[0]?.category || series.length > 1;
+
+    if (hasMultipleSeries) {
+      series.forEach(({ category }, i) => {
+        series[i].color = getColorByCategory(category, {
+          palette,
+          fallbackColor,
+          colorMapping
+        });
       });
-    });
+    } else {
+      series[0].color = theme.palette.secondary.main;
+    }
 
     return { series, categories };
   }, [data, palette, fallbackColor]);
