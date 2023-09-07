@@ -2,6 +2,7 @@
 
 ## Not released
 
+- TimeSeriesWidget support for multiple time series [#767](https://github.com/CartoDB/carto-react/pull/767)
 - WrapperWidgetUI: contentProps property to support scrolling [#769](https://github.com/CartoDB/carto-react/pull/769)
 
 ## 2.2
