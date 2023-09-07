@@ -5,12 +5,12 @@ import { AggregationTypes } from '@carto/react-core';
 
 export async function getTimeSeries(props) {
   if (props.series) {
-    const { series, propsNoSeries } = props;
+    const { series, ...propsNoSeries } = props;
     const rawSeriesData = await Promise.all(
-      series.map(({ operation, operationColumn }) => {
-        const category = getCategory(operation, operationColumn, series);
+      series.map(async ({ operation, operationColumn }) => {
+        const category = getCategory({ operation, operationColumn, series });
         return {
-          data: wrapModelCall(
+          data: await wrapModelCall(
             { ...propsNoSeries, operation, operationColumn },
             fromLocal,
             fromRemote
@@ -93,16 +93,16 @@ function fromRemote(props) {
   }).then((res) => normalizeObjectKeys(res.rows));
 }
 
-function getCategory(series, operation, operationColumn) {
+function getCategory({ operation, operationColumn, series }) {
+  if (operation === AggregationTypes.COUNT) {
+    return `count of records`;
+  }
   const countColumnUsed = series.filter(
     (s) => s.operationColumn === operationColumn
   ).length;
   if (countColumnUsed < 2) {
     return operationColumn;
   } else {
-    if (operation === AggregationTypes.COUNT) {
-      return `count of records`;
-    }
     return `${operation} of ${operationColumn}`; // todo translate maybe ?
   }
 }
