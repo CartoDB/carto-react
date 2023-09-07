@@ -124,7 +124,8 @@ export default function TimeSeriesChart({
   const { timelineOptions: markLine, timeWindowOptions: markArea } =
     useTimeSeriesInteractivity({
       echartsInstance,
-      data
+      data,
+      canSelectLines: Boolean(onCategoryClick)
     });
 
   const seriesOptions = useMemo(
