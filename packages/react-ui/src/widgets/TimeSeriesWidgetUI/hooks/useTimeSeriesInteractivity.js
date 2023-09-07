@@ -46,8 +46,7 @@ export default function useTimeSeriesInteractivity({ echartsInstance, data }) {
   // Echarts events
   useEffect(() => {
     function clickEvent(params) {
-      // params target is specified if we hit data-line or point, not the background and for this,
-      // we
+      // params target is specified if we hit data-line or point, not time selection is only for background hits
       if (params.target) return
 
       if (!timeWindow.length) {
