@@ -36,14 +36,13 @@ const OverflowVeil = styled(Box)(({ theme }) => ({
   bottom: theme.spacing(1),
   zIndex: 10,
   width: theme.spacing(2.5),
-  // height: '100%',
   background: `linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)`
 }));
 
 const ShowMoreButtons = styled(Box)(({ theme }) => ({
   position: 'absolute',
-  padding: theme.spacing(1, 1),
-  top: theme.spacing(0.25),
+  padding: theme.spacing(0.5, 1),
+  top: theme.spacing(0.5),
   right: 0,
   background: theme.palette.background.paper
 }));
