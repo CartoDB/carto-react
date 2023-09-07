@@ -3,6 +3,7 @@ import TimeSeriesWidgetUI from '../../../src/widgets/TimeSeriesWidgetUI/TimeSeri
 import { GroupDateTypes } from '@carto/react-core';
 import { TIME_SERIES_CHART_TYPES } from '@carto/react-ui';
 import { Label, ThinContainer } from '../../utils/storyStyles';
+import LoadingTemplateWithSwitch from './LoadingTemplateWithSwitch';
 
 const data = [
   { name: 1514761200000, value: 310 },
@@ -183,39 +184,23 @@ const Template = (args) => {
   );
 };
 
-const LoadingTemplate = (args) => {
+const TimeSeriesWidgetUIWithDefaults = (args) => {
   if (args.timeWindow && !Array.isArray(args.timeWindow)) {
     args.timeWindow = [];
   }
 
   const [selectedCategories, setSelectedCategories] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(args.isLoading);
-  return (
-    <>
-      <Label variant='body1' mb={3}>
-        {'Limited width'} <button onClick={() => setIsLoading(!isLoading)}>toggle</button>
-      </Label>
-      <ThinContainer>
-        <TimeSeriesWidgetUI
-          {...args}
-          isLoading={isLoading}
-          selectedCategories={selectedCategories}
-          onSelectedCategoriesChange={setSelectedCategories}
-        />
-      </ThinContainer>
 
-      <Label variant='body1' mt={8} mb={3}>
-        {'Responsive'}
-      </Label>
-      <TimeSeriesWidgetUI
-        {...args}
-        isLoading={isLoading}
-        selectedCategories={selectedCategories}
-        onSelectedCategoriesChange={setSelectedCategories}
-      />
-    </>
+  return (
+    <TimeSeriesWidgetUI
+      {...args}
+      selectedCategories={selectedCategories}
+      onSelectedCategoriesChange={setSelectedCategories}
+    />
   );
 };
+
+const LoadingTemplate = LoadingTemplateWithSwitch(TimeSeriesWidgetUIWithDefaults);
 
 const requiredProps = {
   data,
