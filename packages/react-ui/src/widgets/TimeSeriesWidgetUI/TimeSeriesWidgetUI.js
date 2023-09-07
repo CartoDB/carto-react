@@ -1,5 +1,7 @@
 import React, { useMemo, useCallback } from 'react';
 import { Box, capitalize, Link, useTheme, styled } from '@mui/material';
+
+import { BREAKPOINTS } from '../../theme/themeConstants';
 import TimeSeriesChart from './components/TimeSeriesChart';
 import TimeSeriesLegend from './components/TimeSeriesLegend';
 import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesContext';
@@ -30,6 +32,10 @@ const FORMAT_DATE_BY_STEP_SIZE_FOR_TIME_WINDOW = {
   [GroupDateTypes.MINUTES]: minutesCurrentDateRange
 };
 
+const Root = styled(Box)(({ theme }) => ({
+  containerType: 'inline-size'
+}));
+
 const BoxVert = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column'
@@ -42,7 +48,11 @@ const BoxHorz = styled(Box)(({ theme }) => ({
 
 const ControlsBox = styled(Box)(({ theme }) => ({
   flexShrink: 0,
+  marginLeft: 0,
   paddingLeft: theme.spacing(1),
+  [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
+    paddingLeft: 0,
+  },
   paddingBottom: theme.spacing(3),
   alignSelf: 'flex-end'
 }));
@@ -50,7 +60,11 @@ const ControlsBox = styled(Box)(({ theme }) => ({
 const ChartBox = styled(Box)(({ theme }) => ({
   flex: 1,
   minWidth: 0,
-  paddingLeft: theme.spacing(2.5)
+
+  paddingLeft: theme.spacing(5),
+  [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
+    paddingLeft: theme.spacing(1)
+  }
 }));
 
 function TimeSeriesWidgetUI({
@@ -78,7 +92,7 @@ function TimeSeriesWidgetUI({
   palette,
   showLegend
 }) {
-  if (isLoading) return <TimeSeriesSkeleton height={height} />;
+  if (isLoading) return <TimeSeriesSkeleton height={height} showLegend={showLegend} />;
 
   return (
     <TimeSeriesProvider
@@ -327,7 +341,7 @@ function TimeSeriesWidgetUIContent({
     />
   );
   return (
-    <Box>
+    <Root>
       <Box display='flex' justifyContent='space-between' alignItems='center'>
         {!!currentDate && (
           <Box>
@@ -366,7 +380,7 @@ function TimeSeriesWidgetUIContent({
           {legend}
         </BoxVert>
       )}
-    </Box>
+    </Root>
   );
 }
 
