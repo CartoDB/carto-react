@@ -406,17 +406,15 @@ function formatMonth(date) {
   return ('0' + (date.getMonth() + 1)).slice(-2);
 }
 
-function defaultTooltipFormatter(unsortedParams, stepSize, valueFormatter, showNames) {
-  const sortedParams = [...unsortedParams].sort((a, b) => b.data[1] - a.data[1]);
-
+function defaultTooltipFormatter(params, stepSize, valueFormatter, showNames) {
   const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
-  const [name] = sortedParams[0].data;
+  const [name] = params[0].data;
   const date = new Date(name);
   const title = formatter(date);
 
   return `<div style='minWidth: 160px;'>
     <p style='font-weight: 600; line-height: 1; margin: 4px 0;'>${title}</p>
-    ${sortedParams
+    ${params
       .reduce((acc, serie) => {
         if (serie.value !== undefined && serie.value !== null) {
           const HTML = `<div style='display: flex; flex-direction: row; align-items: center; justify-content: spread; height: 20px; gap: 8px;'>
