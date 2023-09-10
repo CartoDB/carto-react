@@ -141,8 +141,8 @@ export default function TimeSeriesChart({
 
         return {
           name: category,
-          markLine,
-          markArea,
+          markLine: i === 0 ? markLine : undefined,
+          markArea: i === 0 ? markArea : undefined,
           animation,
           data,
           type: chartType,
