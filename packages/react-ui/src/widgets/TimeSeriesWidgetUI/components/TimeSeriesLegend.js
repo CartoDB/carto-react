@@ -128,7 +128,11 @@ export default function TimeSeriesLegend({
           const selected =
             selectedCategories.length === 0 || selectedCategories.includes(category);
           return (
-            <Item key={i} onClick={() => onCategoryClick(category)}>
+            <Item
+              key={i}
+              onClick={onCategoryClick ? () => onCategoryClick(category) : undefined}
+              style={{ cursor: onCategoryClick ? 'pointer' : undefined }}
+            >
               <Circle color={selected ? color : theme.palette.text.disabled} />
               <Typography
                 variant='overline'
