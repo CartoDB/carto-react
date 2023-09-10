@@ -24,8 +24,7 @@ const Item = styled(Box)(({ theme }) => ({
   gap: theme.spacing(1),
   alignItems: 'center',
   textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-  cursor: 'pointer'
+  whiteSpace: 'nowrap'
 }));
 
 const OverflowVeil = styled(Box)(({ theme }) => ({
