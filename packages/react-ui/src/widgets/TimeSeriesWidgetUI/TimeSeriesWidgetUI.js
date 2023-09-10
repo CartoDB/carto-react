@@ -317,7 +317,7 @@ function TimeSeriesWidgetUIContent({
     <TimeSeriesLegend
       series={series}
       selectedCategories={selectedCategories}
-      onCategoryClick={handleCategoryClick}
+      onCategoryClick={onSelectedCategoriesChange && handleCategoryClick}
     />
   );
 
