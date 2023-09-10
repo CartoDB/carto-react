@@ -62,25 +62,27 @@ const SkeletonGraphLine = styled(SkeletonBarsGrid)(({ theme }) => ({
   }
 }));
 
-const TimeSeriesSkeleton = ({ height, showLegend = true }) => {
+const TimeSeriesSkeleton = ({ height, showControls, showLegend }) => {
   return (
     <Root container>
       <Grid item xs={12} pt={1} pb={1}>
         <Skeleton width={48} height={8} />
       </Grid>
-      <Controls item>
-        <Grid item>
-          <Box>
-            <Skeleton width={24} height={24} />
-          </Box>
-          <Box mt={2}>
-            <Skeleton width={24} height={24} />
-          </Box>
-          <Box mt={1}>
-            <Skeleton width={24} height={24} />
-          </Box>
-        </Grid>
-      </Controls>
+      {showControls && (
+        <Controls item>
+          <Grid item>
+            <Box>
+              <Skeleton width={24} height={24} />
+            </Box>
+            <Box mt={2}>
+              <Skeleton width={24} height={24} />
+            </Box>
+            <Box mt={1}>
+              <Skeleton width={24} height={24} />
+            </Box>
+          </Grid>
+        </Controls>
+      )}
 
       <Graph item xs height={height || getSpacing(22)}>
         <SkeletonGraphLine>

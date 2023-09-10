@@ -2,7 +2,6 @@ import React from 'react';
 import TimeSeriesWidgetUI from '../../../src/widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import { GroupDateTypes } from '@carto/react-core';
 import { TIME_SERIES_CHART_TYPES } from '@carto/react-ui';
-import { Label, ThinContainer } from '../../utils/storyStyles';
 import LoadingTemplateWithSwitch from './LoadingTemplateWithSwitch';
 
 const data = [
@@ -214,8 +213,10 @@ Default.args = requiredProps;
 export const MultipleSeries = LoadingTemplate.bind({});
 MultipleSeries.args = {
   ...requiredProps,
-  data: dataSplitByCategory
+  data: dataSplitByCategory,
+  showControls: true,
+  showLegend: true
 };
 
 export const Loading = LoadingTemplate.bind({});
-Loading.args = { ...requiredProps, isLoading: true, showLegend: true };
+Loading.args = { ...requiredProps, isLoading: true };
