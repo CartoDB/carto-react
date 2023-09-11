@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getTimeSeries } from '../models';
 import { addFilter, removeFilter } from '@carto/react-redux';
@@ -161,7 +161,7 @@ function TimeSeriesWidget({
   }, [stepSize]);
 
   const {
-    data = [],
+    data: unsafeData = [],
     isLoading,
     warning,
     remoteCalculation
@@ -185,6 +185,8 @@ function TimeSeriesWidget({
     onStateChange,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
+
+  const data = useMemo(() => unsafeData.filter((row) => row.name !== null), [unsafeData]);
 
   const handleTimeWindowUpdate = useCallback(
     (timeWindow) => {
