@@ -68,5 +68,6 @@
     "@deck.gl/carto": "^8.9.18",
     "@deck.gl/core": "^8.9.18",
     "@reduxjs/toolkit": "^1.5.0"
-  }
+  },
+  "gitHead": "1cf883fdee05832f4bb1947895274e1a1f45033b"
 }

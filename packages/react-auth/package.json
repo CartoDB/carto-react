@@ -67,5 +67,6 @@
     "@carto/react-core": "^2.2.4",
     "react": "17.x || 18.x",
     "react-dom": "17.x || 18.x"
-  }
+  },
+  "gitHead": "1cf883fdee05832f4bb1947895274e1a1f45033b"
 }

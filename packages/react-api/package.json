@@ -75,5 +75,6 @@
     "react-dom": "17.x || 18.x",
     "react-redux": "^7.2.2 || 8.x",
     "redux": "^4.0.5"
-  }
+  },
+  "gitHead": "1cf883fdee05832f4bb1947895274e1a1f45033b"
 }

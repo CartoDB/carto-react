@@ -68,5 +68,6 @@
     "@deck.gl/google-maps": "^8.9.18",
     "react": "17.x || 18.x",
     "react-dom": "17.x || 18.x"
-  }
+  },
+  "gitHead": "1cf883fdee05832f4bb1947895274e1a1f45033b"
 }
