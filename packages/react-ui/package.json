@@ -32,7 +32,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --collectCoverage",
     "storybook:start": "export NODE_OPTIONS=--openssl-legacy-provider && start-storybook -c ./storybook/.storybook -p 6006",
-    "storybook:build": "export NODE_OPTIONS=--openssl-legacy-provider && build-storybook -c ./storybook/.storybook",
+    "storybook:build": "export NODE_OPTIONS=\"--openssl-legacy-provider --max_old_space_size=4096\" && build-storybook -c ./storybook/.storybook",
     "storybook:publish": "yarn storybook:build && yarn firebase deploy --project cartodb-fb-storybook-react",
     "precommit": "lint-staged"
   },
