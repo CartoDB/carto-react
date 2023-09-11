@@ -1,58 +1,34 @@
 import React from 'react';
-import { Box, Grid, styled } from '@mui/material';
-import { Skeleton } from '@mui/material';
+import { Box, styled, Skeleton } from '@mui/material';
+
 import { SkeletonBarsGrid } from '../../SkeletonWidgets';
-import { BREAKPOINTS } from '../../../theme/themeConstants';
 import GraphLine from '../../../assets/images/GraphLine';
 import { getSpacing } from '../../../theme/themeUtils';
+import TimeSeriesLayout from './TimeSeriesLayout';
 
-const Root = styled(Grid)(() => ({
-  containerType: 'inline-size',
-  gap: 0,
-  margin: 0,
-  padding: 0
-}));
-
-const Controls = styled(Grid)(({ theme }) => ({
+const Controls = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'flex-end',
-  margin: 0,
-  paddingLeft: theme.spacing(1),
-  paddingBottom: theme.spacing(3),
-  gap: theme.spacing(2),
-  [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
-    paddingLeft: 0
-  }
+  justifyContent: 'flex-end'
 }));
 
-const Graph = styled(Grid)(({ theme }) => ({
+const Graph = styled(Box)(() => ({
+  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'flex-end',
-  margin: 0,
-  paddingTop: 0,
-  paddingBottom: 0,
-  paddingLeft: theme.spacing(5),
-  [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
-    paddingLeft: theme.spacing(1)
-  }
+  justifyContent: 'flex-end'
 }));
 
-const Legend = styled(Grid)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'flex-start',
-  gap: theme.spacing(2),
-  margin: 0,
-  padding: theme.spacing(2.25, 0.5)
+const MaxValue = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(2.25, 0, 0.5, 2)
 }));
 
-const SkeletonGraphLine = styled(SkeletonBarsGrid)(({ theme }) => ({
+const GraphLineBox = styled(SkeletonBarsGrid)(({ theme }) => ({
+  height: '100%',
+  overflow: 'hidden',
   svg: {
+    height: '100%',
     width: '100%',
-    height: 'auto',
-    paddingTop: theme.spacing(4),
     fontSize: 'initial',
     fill: 'none',
 
@@ -62,45 +38,82 @@ const SkeletonGraphLine = styled(SkeletonBarsGrid)(({ theme }) => ({
   }
 }));
 
+const GraphXAxis = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  padding: theme.spacing(1.25, 0.5, 0.75, 0.5)
+}));
+
+//  display='flex' flexDirection='row' gap='20px' pt={1} pb={1}
+const Legend = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  gap: theme.spacing(2),
+  margin: 0,
+  padding: theme.spacing(2.25, 0.5)
+}));
+
+const LegendItem = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  gap: theme.spacing(1)
+}));
+
 const TimeSeriesSkeleton = ({ height, showControls, showLegend }) => {
-  return (
-    <Root container>
-      <Grid item xs={12} pt={1} pb={1}>
+  const header = (
+    <Box pt={1.25} pb={0.75}>
+      <Skeleton width={48} height={8} />
+    </Box>
+  );
+  const controls = showControls && (
+    <Controls>
+      <Box>
+        <Skeleton width={24} height={24} />
+      </Box>
+      <Box mt={2}>
+        <Skeleton width={24} height={24} />
+      </Box>
+      <Box mt={1}>
+        <Skeleton width={24} height={24} />
+      </Box>
+    </Controls>
+  );
+
+  const chart = (
+    <Graph height={height || getSpacing(22)}>
+      <MaxValue>
+        <Skeleton width={24} height={8} />
+      </MaxValue>
+      <GraphLineBox height={`calc(100%-${getSpacing(4)})`}>
+        <GraphLine preserveAspectRatio='none' />
+      </GraphLineBox>
+      <GraphXAxis>
+        <Skeleton width={32} height={8} />
+        <Skeleton width={32} height={8} />
+      </GraphXAxis>
+    </Graph>
+  );
+
+  const legend = showLegend && (
+    <Legend>
+      <LegendItem>
+        <Skeleton width={8} height={8} />
         <Skeleton width={48} height={8} />
-      </Grid>
-      {showControls && (
-        <Controls item>
-          <Grid item>
-            <Box>
-              <Skeleton width={24} height={24} />
-            </Box>
-            <Box mt={2}>
-              <Skeleton width={24} height={24} />
-            </Box>
-            <Box mt={1}>
-              <Skeleton width={24} height={24} />
-            </Box>
-          </Grid>
-        </Controls>
-      )}
-
-      <Graph item xs height={height || getSpacing(22)}>
-        <SkeletonGraphLine>
-          <GraphLine preserveAspectRatio='none' />
-        </SkeletonGraphLine>
-        <Box display='flex' flexDirection='row' gap='20px' pt={1} pb={1}>
-          <Skeleton width={48} height={8} />
-          <Skeleton width={48} height={8} />
-        </Box>
-      </Graph>
-
-      {showLegend && (
-        <Legend item xs={12}>
-          <Skeleton width={48} height={8} />
-          <Skeleton width={48} height={8} />
-        </Legend>
-      )}
-    </Root>
+      </LegendItem>
+      <LegendItem>
+        <Skeleton width={8} height={8} />
+        <Skeleton width={48} height={8} />
+      </LegendItem>
+    </Legend>
+  );
+  return (
+    <TimeSeriesLayout
+      header={header}
+      controls={controls}
+      chart={chart}
+      legend={showLegend && legend}
+    />
   );
 };
 
