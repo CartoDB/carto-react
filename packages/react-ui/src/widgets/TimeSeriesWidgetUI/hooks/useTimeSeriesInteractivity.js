@@ -77,7 +77,8 @@ export default function useTimeSeriesInteractivity({
     setTimeWindow,
     stop,
     timeWindow.length,
-    updateTimelineByCoordinate
+    updateTimelineByCoordinate,
+    canSelectLines
   ]);
 
   useEffect(() => {
