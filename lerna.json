@@ -3,6 +3,5 @@
     "packages/*"
   ],
   "npmClient": "yarn",
-  "useWorkspaces": true,
-  "version": "2.2.7-alpha.timeseries.5.0"
+  "version": "2.2.7-alpha.timeseries.6.0"
 }
