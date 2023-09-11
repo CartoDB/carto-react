@@ -1,7 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
-import { Box, capitalize, Link, useTheme, styled } from '@mui/material';
+import { Box, capitalize, Link, useTheme } from '@mui/material';
 
-import { BREAKPOINTS } from '../../theme/themeConstants';
 import TimeSeriesChart from './components/TimeSeriesChart';
 import TimeSeriesLegend from './components/TimeSeriesLegend';
 import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesContext';
@@ -13,6 +12,7 @@ import TimeSeriesSkeleton from './components/TimeSeriesSkeleton';
 import { getColorByCategory } from '../utils/colorUtils';
 import { commonPalette } from '../../theme/sections/palette';
 import { TimeSeriesControls } from './components/TimeSeriesControls';
+import TimeSeriesLayout from './components/TimeSeriesLayout';
 
 const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.YEARS]: yearCurrentDateRange,
@@ -33,40 +33,6 @@ const FORMAT_DATE_BY_STEP_SIZE_FOR_TIME_WINDOW = {
   [GroupDateTypes.MINUTES]: minutesCurrentDateRange,
   [GroupDateTypes.SECONDS]: secondsCurrentDateRange
 };
-
-const Root = styled(Box)(({ theme }) => ({
-  containerType: 'inline-size'
-}));
-
-const BoxVert = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column'
-}));
-
-const BoxHorz = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'row'
-}));
-
-const ControlsBox = styled(Box)(({ theme }) => ({
-  flexShrink: 0,
-  marginLeft: 0,
-  paddingLeft: theme.spacing(1),
-  [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
-    paddingLeft: 0
-  },
-  paddingBottom: theme.spacing(3),
-  alignSelf: 'flex-end'
-}));
-
-const ChartBox = styled(Box)(({ theme }) => ({
-  flex: 1,
-  minWidth: 0,
-  paddingLeft: theme.spacing(5),
-  [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
-    paddingLeft: theme.spacing(1)
-  }
-}));
 
 function TimeSeriesWidgetUI({
   data,
@@ -93,7 +59,14 @@ function TimeSeriesWidgetUI({
   palette,
   showLegend
 }) {
-  if (isLoading) return <TimeSeriesSkeleton height={height} showLegend={showLegend} />;
+  if (isLoading)
+    return (
+      <TimeSeriesSkeleton
+        height={height}
+        showControls={showControls}
+        showLegend={showLegend}
+      />
+    );
 
   return (
     <TimeSeriesProvider
@@ -297,6 +270,33 @@ function TimeSeriesWidgetUIContent({
     showLegend !== undefined ? showLegend : series.length > 1
   );
 
+  const header = (
+    <>
+      {!!currentDate && (
+        <Box>
+          <Typography color='textSecondary' variant='caption'>
+            {currentDate}
+          </Typography>
+          <Typography fontSize={12} ml={1} color='textSecondary' variant='caption'>
+            ({capitalize(stepSize)})
+          </Typography>
+        </Box>
+      )}
+      {showClearButton && (
+        <Link
+          variant='caption'
+          style={{ cursor: 'pointer' }}
+          onClick={handleStop}
+          underline='hover'
+        >
+          Clear
+        </Link>
+      )}
+    </>
+  );
+
+  const controls = showControls && <TimeSeriesControls data={data} stepSize={stepSize} />;
+
   const chart = (
     <TimeSeriesChart
       chartType={chartType}
@@ -324,46 +324,7 @@ function TimeSeriesWidgetUIContent({
   );
 
   return (
-    <Root>
-      <Box display='flex' justifyContent='space-between' alignItems='center'>
-        {!!currentDate && (
-          <Box>
-            <Typography color='textSecondary' variant='caption'>
-              {currentDate}
-            </Typography>
-            <Typography fontSize={12} ml={1} color='textSecondary' variant='caption'>
-              ({capitalize(stepSize)})
-            </Typography>
-          </Box>
-        )}
-        {showClearButton && (
-          <Link
-            variant='caption'
-            style={{ cursor: 'pointer' }}
-            onClick={handleStop}
-            underline='hover'
-          >
-            Clear
-          </Link>
-        )}
-      </Box>
-      {showControls ? (
-        <BoxVert>
-          <BoxHorz>
-            <ControlsBox>
-              <TimeSeriesControls data={data} stepSize={stepSize} />
-            </ControlsBox>
-            <ChartBox>{chart}</ChartBox>
-          </BoxHorz>
-          {legend}
-        </BoxVert>
-      ) : (
-        <BoxVert>
-          {chart}
-          {legend}
-        </BoxVert>
-      )}
-    </Root>
+    <TimeSeriesLayout header={header} controls={controls} chart={chart} legend={legend} />
   );
 }
 

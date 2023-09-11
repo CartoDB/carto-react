@@ -89,6 +89,7 @@ const EMPTY_ARRAY = [];
  * @param  {function} [props.onTimelineUpdate] - Event raised when the timeline is updated. It happens when the animation is playing. The function receive as param the date that is being shown.
  * @param  {function} [props.onTimeWindowUpdate] - Event raised when the timeWindow is updated. It happens when the animation is playing with a timeWindow enabled. The function receive as param an array of two date objects.
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
+ * @param  {boolean=} [props.showLegend] - Show/hide the legend. True by default only splitByCategory/multiple series mode.
  */
 function TimeSeriesWidget({
   // Widget
