@@ -162,7 +162,7 @@ function TimeSeriesWidget({
   }, [stepSize]);
 
   const {
-    data = [],
+    data: unsafeData = [],
     isLoading,
     warning,
     remoteCalculation
@@ -186,6 +186,8 @@ function TimeSeriesWidget({
     onStateChange,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
+
+  const data = useMemo(() => unsafeData.filter((row) => row.name !== null), [unsafeData]);
 
   const minTime = useMemo(
     () => data.reduce((acc, { name }) => (name < acc ? name : acc), Number.MAX_VALUE),
