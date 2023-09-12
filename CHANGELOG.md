@@ -3,6 +3,7 @@
 ## Not released
 
 - Pie Widget: Add number of selected categories + clear button [#771](https://github.com/CartoDB/carto-react/pull/771)
+- WrapperWidgetUI: contentProps property to support scrolling [#769](https://github.com/CartoDB/carto-react/pull/769)
 
 ## 2.2
 
