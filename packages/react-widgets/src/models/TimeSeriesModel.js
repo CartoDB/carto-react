@@ -3,32 +3,36 @@ import { Methods, executeTask } from '@carto/react-workers';
 import { normalizeObjectKeys, wrapModelCall } from './utils';
 import { AggregationTypes } from '@carto/react-core';
 
-export async function getTimeSeries(props) {
+export function getTimeSeries(props) {
   if (props.series) {
-    const { series, ...propsNoSeries } = props;
-    const rawSeriesData = await Promise.all(
-      series.map(async ({ operation, operationColumn }) => {
-        const category = getCategory({ operation, operationColumn, series });
-        return {
-          data: await wrapModelCall(
-            { ...propsNoSeries, operation, operationColumn },
-            fromLocal,
-            fromRemote
-          ),
-          category
-        };
-      })
-    );
-    let aggregatedData = [];
-    for (const { data, category } of rawSeriesData) {
-      for (const { name, value } of data) {
-        aggregatedData.push({ name, value, category });
-      }
-    }
-    return aggregatedData;
+    return getMultipleSeries(props);
   } else {
     return wrapModelCall(props, fromLocal, fromRemote);
   }
+}
+
+async function getMultipleSeries(props) {
+  const { series, ...propsNoSeries } = props;
+
+  const categories = series.map(({ operation, operationColumn }) =>
+    getCategoryForAggregationOperation({ operation, operationColumn, series })
+  );
+  const rowsByCategory = await Promise.all(
+    series.map(async (serie, index) => ({
+      data: await getTimeSeries({ ...propsNoSeries, ...serie }),
+      category: categories[index]
+    }))
+  );
+  const rows = [];
+  for (const { data, category } of rowsByCategory) {
+    for (const { name, value } of data) {
+      rows.push({ name, value, category });
+    }
+  }
+  return {
+    rows,
+    categories
+  };
 }
 
 // From local
@@ -90,10 +94,13 @@ function fromRemote(props) {
       splitByCategoryValues
     },
     opts: { abortController }
-  }).then((res) => normalizeObjectKeys(res.rows));
+  }).then((res) => ({
+    rows: normalizeObjectKeys(res.rows),
+    categories: res.metadata?.categories
+  }));
 }
 
-function getCategory({ operation, operationColumn, series }) {
+function getCategoryForAggregationOperation({ operation, operationColumn, series }) {
   if (operation === AggregationTypes.COUNT) {
     return `count of records`;
   }
@@ -103,6 +110,6 @@ function getCategory({ operation, operationColumn, series }) {
   if (countColumnUsed < 2) {
     return operationColumn;
   } else {
-    return `${operation} of ${operationColumn}`; // todo translate maybe ?
+    return `${operation} of ${operationColumn}`;
   }
 }

@@ -189,7 +189,7 @@ export default function TimeSeriesChart({
 
   const handleClick = useCallback(
     (params) => {
-      if (onCategoryClick) {
+      if (categories && onCategoryClick) {
         const category = categories[params.seriesIndex];
         onCategoryClick(category);
       }
