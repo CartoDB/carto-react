@@ -152,6 +152,12 @@ export const navigationOverrides = {
   MuiLink: {
     defaultProps: {
       underline: 'hover'
+    },
+
+    styleOverrides: {
+      root: ({ theme }) => ({
+        cursor: 'pointer'
+      })
     }
   }
 };
