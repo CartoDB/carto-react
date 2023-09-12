@@ -54,6 +54,7 @@ function TimeSeriesWidgetUI({
   tooltipFormatter,
   formatter,
   height,
+  fitHeight,
   showControls,
   animation,
   timelinePosition,
@@ -102,6 +103,7 @@ function TimeSeriesWidgetUI({
         tooltipFormatter={tooltipFormatter}
         formatter={formatter}
         height={height}
+        fitHeight={fitHeight}
         showControls={showControls}
         animation={animation}
         palette={palette}
@@ -129,6 +131,7 @@ TimeSeriesWidgetUI.propTypes = {
   tooltipFormatter: PropTypes.func,
   formatter: PropTypes.func,
   height: PropTypes.string,
+  fitHeight: PropTypes.bool,
   animation: PropTypes.bool,
   isPlaying: PropTypes.bool,
   onPlay: PropTypes.func,
@@ -175,6 +178,7 @@ function TimeSeriesWidgetUIContent({
   tooltipFormatter,
   formatter,
   height,
+  fitHeight,
   showControls,
   animation,
   palette,
@@ -312,6 +316,7 @@ function TimeSeriesWidgetUIContent({
         tooltipFormatter(params, stepSize, formatter, stepMultiplier, isLegendVisible)
       }
       height={height}
+      fitHeight={fitHeight}
       animation={animation}
       selectedCategories={selectedCategories}
       onCategoryClick={handleCategoryClick}
@@ -327,7 +332,13 @@ function TimeSeriesWidgetUIContent({
   );
 
   return (
-    <TimeSeriesLayout header={header} controls={controls} chart={chart} legend={legend} />
+    <TimeSeriesLayout
+      fitHeight={fitHeight}
+      header={header}
+      controls={controls}
+      chart={chart}
+      legend={legend}
+    />
   );
 }
 

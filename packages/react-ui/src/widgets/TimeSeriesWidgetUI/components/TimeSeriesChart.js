@@ -1,5 +1,5 @@
 import { useTheme } from '@mui/material';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import ReactEcharts from '../../../custom-components/echarts-for-react';
 import useTimeSeriesInteractivity from '../hooks/useTimeSeriesInteractivity';
 
@@ -12,6 +12,7 @@ export default function TimeSeriesChart({
   series,
   categories,
   height,
+  fitHeight,
   animation,
   selectedCategories,
   onCategoryClick
@@ -220,12 +221,16 @@ export default function TimeSeriesChart({
     };
   }, [echartsInstance]);
 
+  useLayoutEffect(() => {
+    echartsInstance?.resize();
+  }, [height, fitHeight, echartsInstance]);
+
   return (
     <ReactEcharts
       option={options}
       onEvents={onEvents}
       onChartReady={onChartReady}
-      style={{ height: height || theme.spacing(22) }}
+      style={{ height: fitHeight ? 'calc(100% - 20px)' : height || theme.spacing(22) }}
     />
   );
 }
