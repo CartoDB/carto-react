@@ -162,7 +162,7 @@ function TimeSeriesWidget({
   }, [stepSize]);
 
   const {
-    data: unsafeData = [],
+    data: result = [],
     isLoading,
     warning,
     remoteCalculation
@@ -187,6 +187,11 @@ function TimeSeriesWidget({
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
+  const { data: unsafeData, categories } = Array.isArray(result)
+    ? { data: result, categories: undefined }
+    : { data: result.rows, categories: result.categories };
+
+  // filter nulls, TODO remove when backend already fixes this
   const data = useMemo(() => unsafeData.filter((row) => row.name !== null), [unsafeData]);
 
   const minTime = useMemo(
@@ -247,16 +252,16 @@ function TimeSeriesWidget({
   );
 
   const handleSelectedCategoriesChange = useCallback(
-    (categories) => {
-      if (!splitByCategory || !categories) return;
+    (newSelectedCategories) => {
+      if (!splitByCategory || !newSelectedCategories) return;
 
-      if (categories.length) {
+      if (newSelectedCategories.length) {
         dispatch(
           addFilter({
             id: dataSource,
             column: splitByCategory,
             type: FilterTypes.IN,
-            values: categories,
+            values: newSelectedCategories,
             owner: id
           })
         );
@@ -333,6 +338,7 @@ function TimeSeriesWidget({
           {(!!data.length || isLoading) && (
             <TimeSeriesWidgetUI
               data={data}
+              categories={categories}
               stepSize={selectedStepSize}
               chartType={chartType}
               tooltip={tooltip}
