@@ -7,11 +7,11 @@ import { processFormatterRes } from '../utils/formatterUtils';
 import PieSkeleton from './PieSkeleton';
 import Typography from '../../components/atoms/Typography';
 
-export const OptionsBar = styled(Grid)(({ theme: { spacing, palette } }) => ({
+export const OptionsBar = styled(Grid)(({ theme }) => ({
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginBottom: spacing(1.5)
+  marginBottom: theme.spacing(1.5)
 }));
 
 function PieWidgetUI({
