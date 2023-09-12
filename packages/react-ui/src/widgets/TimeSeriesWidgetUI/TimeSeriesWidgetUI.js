@@ -46,6 +46,7 @@ const FORMAT_DATE_BY_STEP_SIZE_FOR_TIME_WINDOW = {
 
 function TimeSeriesWidgetUI({
   data,
+  categories,
   stepSize,
   stepMultiplier = 1,
   chartType,
@@ -93,6 +94,7 @@ function TimeSeriesWidgetUI({
     >
       <TimeSeriesWidgetUIContent
         data={data}
+        categories={categories}
         stepSize={stepSize}
         stepMultiplier={stepMultiplier}
         chartType={chartType}
@@ -119,6 +121,7 @@ TimeSeriesWidgetUI.propTypes = {
       category: PropTypes.string
     })
   ).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.string),
   stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired,
   stepMultiplier: PropTypes.number,
   chartType: PropTypes.oneOf(Object.values(CHART_TYPES)),
@@ -164,6 +167,7 @@ export default TimeSeriesWidgetUI;
 // component to be able to use context
 function TimeSeriesWidgetUIContent({
   data,
+  categories,
   stepSize,
   stepMultiplier,
   chartType,
@@ -184,44 +188,29 @@ function TimeSeriesWidgetUIContent({
   const { isPlaying, isPaused, timeWindow, timelinePosition, stop } =
     useTimeSeriesContext();
 
-  const { series, categories } = useMemo(() => {
-    const series = [];
-
-    const categories = [];
+  const series = useMemo(() => {
     const colorMapping = {};
+    const series = categories
+      ? categories.map((category) => ({
+          category,
+          data: [],
+          color: getColorByCategory(category, {
+            palette,
+            fallbackColor,
+            colorMapping
+          })
+        }))
+      : [{ data: [], color: theme.palette.secondary.main }];
 
     for (const { name, value, category } of data) {
-      let dataSeriesIndex = category ? categories.indexOf(category) : 0;
-      if (dataSeriesIndex === -1) {
-        dataSeriesIndex = categories.length;
-        categories.push(category);
-      }
-      if (!series[dataSeriesIndex]) {
-        series[dataSeriesIndex] = {
-          category,
-          data: []
-        };
-      }
-      series[dataSeriesIndex].data.push([name, value]);
-    }
-    // }
+      const categoryIndex = categories && category ? categories.indexOf(category) : 0;
+      if (categoryIndex === -1) continue;
 
-    const hasMultipleSeries = data[0]?.category || series.length > 1;
-
-    if (hasMultipleSeries) {
-      series.forEach(({ category }, i) => {
-        series[i].color = getColorByCategory(category, {
-          palette,
-          fallbackColor,
-          colorMapping
-        });
-      });
-    } else {
-      series[0].color = theme.palette.secondary.main;
+      series[categoryIndex].data.push([name, value]);
     }
 
-    return { series, categories };
-  }, [data, palette, fallbackColor, theme.palette.secondary.main]);
+    return series;
+  }, [categories, data, palette, fallbackColor, theme.palette.secondary.main]);
 
   const currentDate = useMemo(() => {
     if (!data.length) {
