@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Pie Widget: Add number of selected categories + clear button [#771](https://github.com/CartoDB/carto-react/pull/771)
 
 ## 2.2
 

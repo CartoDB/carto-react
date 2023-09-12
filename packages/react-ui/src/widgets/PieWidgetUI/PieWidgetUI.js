@@ -223,7 +223,7 @@ function PieWidgetUI({
     }
   };
 
-  const handleClearClicked = () => {
+  const handleClearSelectedCategories = () => {
     onSelectedCategoriesChange([]);
   };
 
@@ -236,7 +236,7 @@ function PieWidgetUI({
           {selectedCategories.length ? selectedCategories.length : 'All'} selected
         </Typography>
         {selectedCategories.length > 0 && (
-          <Link variant='caption' onClick={handleClearClicked}>
+          <Link variant='caption' onClick={handleClearSelectedCategories}>
             Clear
           </Link>
         )}
