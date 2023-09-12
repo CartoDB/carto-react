@@ -68,7 +68,8 @@ const EMPTY_ARRAY = [];
  * @param  {boolean} [props.tooltip] - Enable/disable tooltip.
  * @param  {function} [props.tooltipFormatter] - Function that returns the HTML for the chart tooltip.
  * @param  {function} [props.formatter] - Function for formatting the value that is represented in the tooltip.
- * @param  {string} [props.height] - Height of the chart.
+ * @param  {string=} [props.height] - Height of the chart, default 22*theme.spacingValue
+ * @param  {string=} [props.fitHeight] - Widget should occupy all vertical space available.
  * @param  {boolean} [props.showControls] - Enable/disable animation controls (play, pause, stop, speed). True by default.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
@@ -113,6 +114,7 @@ function TimeSeriesWidget({
   tooltipFormatter,
   formatter,
   height,
+  fitHeight,
   showControls,
   animation,
   isPlaying,
@@ -336,6 +338,7 @@ function TimeSeriesWidget({
               tooltipFormatter={tooltipFormatter}
               formatter={formatter}
               height={height}
+              fitHeight={fitHeight}
               showControls={showControls}
               animation={animation}
               isPlaying={isPlaying}
@@ -408,6 +411,7 @@ TimeSeriesWidget.propTypes = {
   tooltipFormatter: PropTypes.func,
   formatter: PropTypes.func,
   height: PropTypes.string,
+  fitHeight: PropTypes.bool,
   animation: PropTypes.bool,
   isPlaying: PropTypes.bool,
   onPlay: PropTypes.func,

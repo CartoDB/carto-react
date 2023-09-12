@@ -3,6 +3,7 @@ import TimeSeriesWidgetUI from '../../../src/widgets/TimeSeriesWidgetUI/TimeSeri
 import { GroupDateTypes } from '@carto/react-core';
 import { TIME_SERIES_CHART_TYPES } from '@carto/react-ui';
 import LoadingTemplateWithSwitch from './LoadingTemplateWithSwitch';
+import { Box } from '@mui/material';
 
 const data = [
   { name: 1514761200000, value: 310 },
@@ -66,22 +67,35 @@ const data = [
   { name: 1549839600000, value: 12 }
 ];
 
-const dataSplitByCategory = data.reduce((acc, { name, value }) => {
-  acc.push({ name, value, category: 'Mars' });
-  acc.push({ name, value: Math.sin(name / 10000) * 30 + 30, category: 'Venus' });
-  acc.push({ name, value: Math.cos(name / 700000 + 10) * 100 + 100, category: 'Earth' });
-  acc.push({
-    name,
-    value: Math.cos(name / 200000 + 10) * 100 + 100,
-    category: 'Foobar - only for test'
-  });
-  acc.push({
-    name,
-    value: Math.cos(name / 900000 + 10) * 100 + 100,
-    category: 'Very long category to test for scroll support'
-  });
-  return acc;
-}, []);
+const dataSplitByCategory = {
+  data: data.reduce((acc, { name, value }) => {
+    acc.push({ name, value, category: 'Mars' });
+    acc.push({ name, value: Math.sin(name / 10000) * 30 + 30, category: 'Venus' });
+    acc.push({
+      name,
+      value: Math.cos(name / 700000 + 10) * 100 + 100,
+      category: 'Earth'
+    });
+    acc.push({
+      name,
+      value: Math.cos(name / 200000 + 10) * 100 + 100,
+      category: 'Foobar - only for test'
+    });
+    acc.push({
+      name,
+      value: Math.cos(name / 900000 + 10) * 100 + 100,
+      category: 'Very long category to test for scroll support'
+    });
+    return acc;
+  }, []),
+  categories: [
+    'Mars',
+    'Venus',
+    'Earth',
+    'Foobar - only for test',
+    'Very long category to test for scroll support'
+  ]
+};
 
 const options = {
   title: 'Widgets/TimeSeriesWidgetUI',
@@ -117,6 +131,7 @@ const options = {
     tooltipFormatter: {},
     formatter: {},
     height: {},
+    fitHeight: { control: { type: 'boolean' } },
     isPlaying: {
       description:
         '[Internal state] This prop is used to managed state outside of the component.'
@@ -175,11 +190,36 @@ const Template = (args) => {
   const [selectedCategories, setSelectedCategories] = React.useState([]);
 
   return (
-    <TimeSeriesWidgetUI
-      {...args}
-      selectedCategories={selectedCategories}
-      onSelectedCategoriesChange={setSelectedCategories}
-    />
+    <Box
+      style={{
+        position: 'absolute',
+        top: 0,
+        padding: '20px',
+        right: 0,
+        bottom: 0,
+        left: 0,
+        border: '1px solid green',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
+      <Box
+        flex={1}
+        style={{
+          margin: '5px',
+          border: '1px solid blue',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        <TimeSeriesWidgetUI
+          {...args}
+          selectedCategories={selectedCategories}
+          onSelectedCategoriesChange={setSelectedCategories}
+        />
+      </Box>
+    </Box>
   );
 };
 
@@ -213,7 +253,7 @@ Default.args = requiredProps;
 export const MultipleSeries = LoadingTemplate.bind({});
 MultipleSeries.args = {
   ...requiredProps,
-  data: dataSplitByCategory,
+  ...dataSplitByCategory,
   showControls: true,
   showLegend: true
 };
