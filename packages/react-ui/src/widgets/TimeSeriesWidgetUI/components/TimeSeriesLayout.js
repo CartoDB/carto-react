@@ -2,16 +2,19 @@ import { Box, styled } from '@mui/material';
 import { BREAKPOINTS } from '../../../theme/themeConstants';
 import React from 'react';
 
-const Root = styled(Box)(({ theme }) => ({
-  containerType: 'inline-size'
+const Root = styled(Box)(() => ({
+  containerType: 'inline-size',
+  display: 'flex',
+  flexDirection: 'column',
+  border: '1px solid brown'
 }));
 
-const BoxVert = styled(Box)(({ theme }) => ({
+const BoxVert = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column'
 }));
 
-const BoxHorz = styled(Box)(({ theme }) => ({
+const BoxHorz = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'row'
 }));
@@ -28,7 +31,6 @@ const ControlsBox = styled(Box)(({ theme }) => ({
 }));
 
 const ChartBox = styled(Box)(({ theme }) => ({
-  flex: 1,
   minWidth: 0,
   paddingLeft: theme.spacing(5),
   [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
@@ -36,25 +38,29 @@ const ChartBox = styled(Box)(({ theme }) => ({
   }
 }));
 
-export default function TimeSeriesLayout({ header, controls, chart, legend }) {
+export default function TimeSeriesLayout({ fitHeight, header, controls, chart, legend }) {
   return (
-    <Root>
-      <Box display='flex' justifyContent='space-between' alignItems='center'>
+    <Root
+      style={{
+        flex: fitHeight ? '1' : undefined
+      }}
+    >
+      <BoxHorz flex={0} alignItems={'center'}>
         {header}
-      </Box>
+      </BoxHorz>
       {controls ? (
-        <BoxVert>
-          <BoxHorz>
-            <ControlsBox>{controls}</ControlsBox>
-            <ChartBox>{chart}</ChartBox>
+        <BoxVert flex={1}>
+          <BoxHorz flex={1}>
+            <ControlsBox flex={0}>{controls}</ControlsBox>
+            <ChartBox flex={1}>{chart}</ChartBox>
           </BoxHorz>
-          {legend}
+          <Box flex={0}>{legend}</Box>
         </BoxVert>
       ) : (
-        <BoxVert>
-          {chart}
-          {legend}
-        </BoxVert>
+        <>
+          <Box flex={1}>{chart}</Box>
+          <Box flex={0}>{legend}</Box>
+        </>
       )}
     </Root>
   );
