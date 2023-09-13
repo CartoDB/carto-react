@@ -2,7 +2,7 @@
 
 ## Not released
 
-- SelectField: Remove empty item at the beginning [#772](https://github.com/CartoDB/carto-react/pull/772)
+- SelectField: Remove empty space at the beginning [#772](https://github.com/CartoDB/carto-react/pull/772)
 - WrapperWidgetUI: contentProps property to support scrolling [#769](https://github.com/CartoDB/carto-react/pull/769)
 
 ## 2.2
