@@ -131,7 +131,6 @@ const options = {
     tooltipFormatter: {},
     formatter: {},
     height: {},
-    fitHeight: { control: { type: 'boolean' } },
     isPlaying: {
       description:
         '[Internal state] This prop is used to managed state outside of the component.'
@@ -190,36 +189,11 @@ const Template = (args) => {
   const [selectedCategories, setSelectedCategories] = React.useState([]);
 
   return (
-    <Box
-      style={{
-        position: 'absolute',
-        top: 0,
-        padding: '20px',
-        right: 0,
-        bottom: 0,
-        left: 0,
-        border: '1px solid green',
-        display: 'flex',
-        flexDirection: 'column'
-      }}
-    >
-      <Box
-        flex={1}
-        style={{
-          margin: '5px',
-          border: '1px solid blue',
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column'
-        }}
-      >
-        <TimeSeriesWidgetUI
-          {...args}
-          selectedCategories={selectedCategories}
-          onSelectedCategoriesChange={setSelectedCategories}
-        />
-      </Box>
-    </Box>
+    <TimeSeriesWidgetUI
+      {...args}
+      selectedCategories={selectedCategories}
+      onSelectedCategoriesChange={setSelectedCategories}
+    />
   );
 };
 
@@ -260,3 +234,39 @@ MultipleSeries.args = {
 
 export const Loading = LoadingTemplate.bind({});
 Loading.args = { ...requiredProps, isLoading: true };
+
+export const FitHeightMultiple = (args) => {
+  if (args.timeWindow && !Array.isArray(args.timeWindow)) {
+    args.timeWindow = [];
+  }
+
+  const [selectedCategories, setSelectedCategories] = React.useState([]);
+
+  return (
+    <Box
+      style={{
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
+      <TimeSeriesWidgetUI
+        {...args}
+        selectedCategories={selectedCategories}
+        onSelectedCategoriesChange={setSelectedCategories}
+      />
+    </Box>
+  );
+};
+
+FitHeightMultiple.args = {
+  ...requiredProps,
+  ...dataSplitByCategory,
+  showControls: true,
+  showLegend: true,
+  fitHeight: true
+};
