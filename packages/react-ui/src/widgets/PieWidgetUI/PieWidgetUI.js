@@ -48,9 +48,10 @@ function PieWidgetUI({
   const tooltipOptions = useMemo(
     () => ({
       show: showTooltip,
-      showDelay: 1000,
-      transitionDuration: 0,
+      showDelay: 100,
+      transitionDuration: 0.4,
       backgroundColor: theme.palette.black[90],
+      borderColor: 'transparent',
       textStyle: { color: theme.palette.common.white },
       confine: true,
       formatter:
