@@ -162,6 +162,10 @@ function PieWidgetUI({
         label: { show: showLabel, ...labelOptions },
         emphasis: {
           label: { ...labelOptions, position: undefined }
+        },
+        itemStyle: {
+          borderColor: theme.palette.background.paper,
+          borderWidth: 1
         }
       }
     ],
