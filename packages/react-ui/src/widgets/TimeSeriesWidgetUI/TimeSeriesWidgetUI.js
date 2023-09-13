@@ -75,6 +75,7 @@ function TimeSeriesWidgetUI({
   if (isLoading)
     return (
       <TimeSeriesSkeleton
+        fitHeight={fitHeight}
         height={height}
         showControls={showControls}
         showLegend={showLegend}

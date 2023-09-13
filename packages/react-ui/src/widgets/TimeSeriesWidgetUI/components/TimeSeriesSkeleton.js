@@ -3,8 +3,8 @@ import { Box, styled, Skeleton } from '@mui/material';
 
 import { SkeletonBarsGrid } from '../../SkeletonWidgets';
 import GraphLine from '../../../assets/images/GraphLine';
-import { getSpacing } from '../../../theme/themeUtils';
 import TimeSeriesLayout from './TimeSeriesLayout';
+import { CHART_HEIGHT_DEFAULT, CHART_HEIGHT_FITHEIGHT } from './TimeSeriesChart';
 
 const Controls = styled(Box)(() => ({
   display: 'flex',
@@ -14,6 +14,9 @@ const Controls = styled(Box)(() => ({
 
 const Graph = styled(Box)(() => ({
   position: 'relative',
+  height: '100%',
+  alignSelf: 'normal',
+
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-end'
@@ -24,6 +27,8 @@ const MaxValue = styled(Box)(({ theme }) => ({
 }));
 
 const GraphLineBox = styled(SkeletonBarsGrid)(({ theme }) => ({
+  flexDirection: 'column',
+  flex: 1,
   height: '100%',
   overflow: 'hidden',
   svg: {
@@ -45,7 +50,6 @@ const GraphXAxis = styled(Box)(({ theme }) => ({
   padding: theme.spacing(1.25, 0.5, 0.75, 0.5)
 }));
 
-//  display='flex' flexDirection='row' gap='20px' pt={1} pb={1}
 const Legend = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
@@ -60,7 +64,12 @@ const LegendItem = styled(Box)(({ theme }) => ({
   gap: theme.spacing(1)
 }));
 
-const TimeSeriesSkeleton = ({ height, showControls, showLegend }) => {
+const TimeSeriesSkeleton = ({
+  fitHeight,
+  height: heightProp,
+  showControls,
+  showLegend
+}) => {
   const header = (
     <Box pt={1.25} pb={0.75}>
       <Skeleton width={48} height={8} />
@@ -68,27 +77,29 @@ const TimeSeriesSkeleton = ({ height, showControls, showLegend }) => {
   );
   const controls = showControls && (
     <Controls>
-      <Box>
-        <Skeleton width={24} height={24} />
+      <Box p={0.5}>
+        <Skeleton width={16} height={16} />
       </Box>
-      <Box mt={2}>
-        <Skeleton width={24} height={24} />
+      <Box mt={2} p={0.5}>
+        <Skeleton width={16} height={16} />
       </Box>
-      <Box mt={1}>
-        <Skeleton width={24} height={24} />
+      <Box mt={1} p={0.5}>
+        <Skeleton width={16} height={16} />
       </Box>
     </Controls>
   );
 
+  const height = fitHeight ? CHART_HEIGHT_FITHEIGHT : heightProp || CHART_HEIGHT_DEFAULT;
+
   const chart = (
-    <Graph height={height || getSpacing(22)}>
-      <MaxValue>
+    <Graph style={{ height }}>
+      <MaxValue flex={0}>
         <Skeleton width={24} height={8} />
       </MaxValue>
-      <GraphLineBox height={`calc(100%-${getSpacing(4)})`}>
+      <GraphLineBox flex={1}>
         <GraphLine preserveAspectRatio='none' />
       </GraphLineBox>
-      <GraphXAxis>
+      <GraphXAxis flex={0}>
         <Skeleton width={32} height={8} />
         <Skeleton width={32} height={8} />
       </GraphXAxis>
@@ -109,6 +120,7 @@ const TimeSeriesSkeleton = ({ height, showControls, showLegend }) => {
   );
   return (
     <TimeSeriesLayout
+      fitHeight={fitHeight}
       header={header}
       controls={controls}
       chart={chart}
