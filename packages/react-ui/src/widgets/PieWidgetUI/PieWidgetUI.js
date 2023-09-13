@@ -26,7 +26,8 @@ function PieWidgetUI({
   filterable,
   selectedCategories,
   onSelectedCategoriesChange,
-  isLoading
+  isLoading,
+  maxItems
 }) {
   const theme = useTheme();
   const [showLabel, setShowLabel] = useState(true);
@@ -40,9 +41,32 @@ function PieWidgetUI({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...colors]);
 
-  const dataWithColor = useMemo(() => {
-    return data.map(processDataItem(colorByCategory, colors, theme));
-  }, [data, colors, theme]);
+  // Add a color to each category AND Limit the number of categories to display, then group the rest into an "Others" category
+  const groupedDataWithColor = useMemo(() => {
+    const dataWithProcessedColor = data.map(
+      processDataItem(colorByCategory, colors, theme)
+    );
+    let categories = [];
+    let othersValue = 0;
+
+    for (const category of dataWithProcessedColor) {
+      if (categories.length < maxItems) {
+        categories.push({ ...category });
+      } else {
+        othersValue += category.value;
+      }
+    }
+
+    if (othersValue > 0) {
+      categories.push({
+        name: 'Others',
+        value: othersValue,
+        color: theme.palette.qualitative.bold[11]
+      });
+    }
+
+    return categories;
+  }, [colors, data, maxItems, theme]);
 
   // Tooltip
   const tooltipOptions = useMemo(
@@ -136,7 +160,7 @@ function PieWidgetUI({
         type: 'pie',
         name,
         animation,
-        data: dataWithColor.map((item) => {
+        data: groupedDataWithColor.map((item) => {
           // Avoid modifying data item
           const clonedItem = { ...item };
 
@@ -173,7 +197,7 @@ function PieWidgetUI({
     [
       name,
       animation,
-      dataWithColor,
+      groupedDataWithColor,
       labels,
       selectedCategories,
       theme,
@@ -265,7 +289,8 @@ PieWidgetUI.defaultProps = {
   height: '260px',
   animation: true,
   filterable: true,
-  selectedCategories: []
+  selectedCategories: [],
+  maxItems: 11
 };
 
 PieWidgetUI.propTypes = {
@@ -285,7 +310,8 @@ PieWidgetUI.propTypes = {
   filterable: PropTypes.bool,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  maxItems: PropTypes.number
 };
 
 export default PieWidgetUI;
