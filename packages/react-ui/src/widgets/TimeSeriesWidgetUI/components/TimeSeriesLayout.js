@@ -5,8 +5,7 @@ import React from 'react';
 const Root = styled(Box)(() => ({
   containerType: 'inline-size',
   display: 'flex',
-  flexDirection: 'column',
-  border: '1px solid brown'
+  flexDirection: 'column'
 }));
 
 const BoxVert = styled(Box)(() => ({
@@ -17,6 +16,11 @@ const BoxVert = styled(Box)(() => ({
 const BoxHorz = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'row'
+}));
+
+const Header = styled(BoxHorz)(() => ({
+  alignItems: 'center',
+  justifyContent: 'space-between'
 }));
 
 const ControlsBox = styled(Box)(({ theme }) => ({
@@ -31,6 +35,7 @@ const ControlsBox = styled(Box)(({ theme }) => ({
 }));
 
 const ChartBox = styled(Box)(({ theme }) => ({
+  alignSelf: 'normal',
   minWidth: 0,
   paddingLeft: theme.spacing(5),
   [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
@@ -45,9 +50,7 @@ export default function TimeSeriesLayout({ fitHeight, header, controls, chart, l
         flex: fitHeight ? '1' : undefined
       }}
     >
-      <BoxHorz flex={0} alignItems={'center'}>
-        {header}
-      </BoxHorz>
+      <Header flex={0}>{header}</Header>
       {controls ? (
         <BoxVert flex={1}>
           <BoxHorz flex={1}>
