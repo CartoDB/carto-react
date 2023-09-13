@@ -158,11 +158,11 @@ function PieWidgetUI({
         }),
         radius: ['74%', '90%'],
         selectedOffset: 0,
-        hoverOffset: 5,
         bottom: theme.spacingValue * 2.5,
         label: { show: showLabel, ...labelOptions },
         emphasis: {
-          label: { ...labelOptions, position: undefined }
+          label: { ...labelOptions, position: undefined },
+          scaleSize: 5
         },
         itemStyle: {
           borderColor: theme.palette.background.paper,
