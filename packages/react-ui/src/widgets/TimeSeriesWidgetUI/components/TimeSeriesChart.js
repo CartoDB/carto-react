@@ -2,6 +2,10 @@ import { useTheme } from '@mui/material';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import ReactEcharts from '../../../custom-components/echarts-for-react';
 import useTimeSeriesInteractivity from '../hooks/useTimeSeriesInteractivity';
+import { theme } from '../../../theme/carto-theme';
+
+const CHART_HEIGHT_DEFAULT = theme.spacingValue * 22;
+const CHART_HEIGHT_FITHEIGHT = `calc(100% - ${theme.spacingValue * 2.5}px}`;
 
 export default function TimeSeriesChart({
   chartType,
@@ -11,7 +15,7 @@ export default function TimeSeriesChart({
   data,
   series,
   categories,
-  height,
+  height: heightProp,
   fitHeight,
   animation,
   selectedCategories,
@@ -225,12 +229,14 @@ export default function TimeSeriesChart({
     echartsInstance?.resize();
   }, [height, fitHeight, echartsInstance]);
 
+  const height = fitHeight ? CHART_HEIGHT_FITHEIGHT : heightProp || CHART_HEIGHT_DEFAULT;
+
   return (
     <ReactEcharts
       option={options}
       onEvents={onEvents}
       onChartReady={onChartReady}
-      style={{ height: fitHeight ? 'calc(100% - 20px)' : height || theme.spacing(22) }}
+      style={{ height }}
     />
   );
 }
