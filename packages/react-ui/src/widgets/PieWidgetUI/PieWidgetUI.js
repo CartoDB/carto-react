@@ -69,6 +69,7 @@ function PieWidgetUI({
     return categories;
   }, [colors, data, maxItems, theme]);
 
+  // Sort categories by size, but keep "Others" at the end
   const sortCategoriesBySize = useMemo(() => {
     return (categories) => {
       const sortedCategories = [...categories];
