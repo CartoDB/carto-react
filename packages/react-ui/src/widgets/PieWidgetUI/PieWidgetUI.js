@@ -33,6 +33,7 @@ function PieWidgetUI({
   const [showLabel, setShowLabel] = useState(true);
   const [showTooltip, setShowTooltip] = useState(true);
   const colorByCategory = useRef({});
+  const othersCategory = 'Others';
 
   // Reset colorByCategory when colors changes
   useEffect(() => {
@@ -59,7 +60,7 @@ function PieWidgetUI({
 
     if (othersValue > 0) {
       categories.push({
-        name: 'Others',
+        name: othersCategory,
         value: othersValue,
         color: theme.palette.qualitative.bold[11]
       });
@@ -68,12 +69,27 @@ function PieWidgetUI({
     return categories;
   }, [colors, data, maxItems, theme]);
 
+  const sortCategoriesBySize = useMemo(() => {
+    return (categories) => {
+      const sortedCategories = [...categories];
+
+      sortedCategories.sort((a, b) => {
+        if (a.name === 'Others' && b.name !== 'Others') {
+          return 1; // 'Others' placed at the end
+        } else {
+          return b.value - a.value;
+        }
+      });
+
+      return sortedCategories;
+    };
+  }, []);
+  console.log(sortCategoriesBySize(groupedDataWithColor));
+
   // Tooltip
   const tooltipOptions = useMemo(
     () => ({
       show: showTooltip,
-      showDelay: 100,
-      transitionDuration: 0.4,
       backgroundColor: theme.palette.black[90],
       borderColor: 'transparent',
       textStyle: { color: theme.palette.common.white },
@@ -93,6 +109,7 @@ function PieWidgetUI({
   // Legend
   const legendOptions = useMemo(
     () => ({
+      data: sortCategoriesBySize(groupedDataWithColor).map((item) => item.name),
       selectedMode: false,
       type: 'scroll',
       left: theme.spacingValue,

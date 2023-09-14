@@ -45,27 +45,6 @@ export const Default = Template.bind({});
 const DefaultProps = { data: dataDefault };
 Default.args = DefaultProps;
 
-export const CollapseMoreThan12Categories = Template.bind({});
-const CollapseCategoriesProps = {
-  data: [
-    { name: 'Dogs', value: 100 },
-    { name: 'Cats', value: 120 },
-    { name: 'Rabbits', value: 150 },
-    { name: 'Canaries', value: 90 },
-    { name: 'Passerines', value: 200 },
-    { name: 'Elephants', value: 100 },
-    { name: 'Mamouths', value: 120 },
-    { name: 'Torttles', value: 150 },
-    { name: 'Spiders', value: 80 },
-    { name: 'Frogs', value: 30 },
-    { name: 'Pigeons', value: 150 },
-    { name: 'Owls', value: 90 },
-    { name: 'Snakes', value: 80 },
-    { name: 'Birds', value: 220 }
-  ]
-};
-CollapseMoreThan12Categories.args = CollapseCategoriesProps;
-
 export const CustomColors = Template.bind({});
 const CustomColorsProps = {
   data: [
@@ -108,6 +87,27 @@ const SelectedCategoriesProps = {
   onSelectedCategoriesChange: (categories) => console.log(categories)
 };
 SelectedCategories.args = SelectedCategoriesProps;
+
+export const CollapseMoreThan12Categories = Template.bind({});
+const CollapseCategoriesProps = {
+  data: [
+    { name: 'Dogs', value: 100 },
+    { name: 'Cats', value: 120 },
+    { name: 'Rabbits', value: 150 },
+    { name: 'Canaries', value: 90 },
+    { name: 'Passerines', value: 200 },
+    { name: 'Elephants', value: 100 },
+    { name: 'Mamouths', value: 120 },
+    { name: 'Torttles', value: 150 },
+    { name: 'Spiders', value: 80 },
+    { name: 'Frogs', value: 30 },
+    { name: 'Pigeons', value: 150 },
+    { name: 'Owls', value: 90 },
+    { name: 'Snakes', value: 80 },
+    { name: 'Birds', value: 220 }
+  ]
+};
+CollapseMoreThan12Categories.args = CollapseCategoriesProps;
 
 export const Loading = LoadingTemplate.bind({});
 const LoadingProps = { data: dataDefault, isLoading: true };
