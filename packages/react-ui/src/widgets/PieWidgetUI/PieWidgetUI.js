@@ -143,7 +143,15 @@ function PieWidgetUI({
         color: theme.palette.text.primary
       }
     }),
-    [theme]
+    [
+      groupedDataWithColor,
+      sortCategoriesBySize,
+      theme.palette.text.disabled,
+      theme.palette.text.primary,
+      theme.palette.text.secondary,
+      theme.spacingValue,
+      theme.typography.overlineDelicate
+    ]
   );
 
   // Series
