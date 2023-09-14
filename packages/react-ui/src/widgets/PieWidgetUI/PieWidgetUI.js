@@ -85,7 +85,6 @@ function PieWidgetUI({
       return sortedCategories;
     };
   }, []);
-  console.log(sortCategoriesBySize(groupedDataWithColor));
 
   // Tooltip
   const tooltipOptions = useMemo(
