@@ -7,6 +7,11 @@
 
 ## 2.2
 
+### 2.2.7 (2023-09-13)
+
+- SelectField: Remove empty space at the beginning [#772](https://github.com/CartoDB/carto-react/pull/772)
+- WrapperWidgetUI: contentProps property to support scrolling [#769](https://github.com/CartoDB/carto-react/pull/769)
+
 ### 2.2.6 (2023-09-07)
 
 - Use selectLoader to obtain loader from mime type [#766](https://github.com/CartoDB/carto-react/pull/766)
