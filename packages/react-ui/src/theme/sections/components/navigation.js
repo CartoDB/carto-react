@@ -155,7 +155,7 @@ export const navigationOverrides = {
     },
 
     styleOverrides: {
-      root: ({ theme }) => ({
+      root: () => ({
         cursor: 'pointer'
       })
     }
