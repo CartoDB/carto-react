@@ -2,10 +2,15 @@
 
 ## Not released
 
+- Pie Widget: Add maxNumber of elements + a sorted by size desc by default [#774](https://github.com/CartoDB/carto-react/pull/774)
 - Pie Widget: Add number of selected categories + clear button [#771](https://github.com/CartoDB/carto-react/pull/771)
-- WrapperWidgetUI: contentProps property to support scrolling [#769](https://github.com/CartoDB/carto-react/pull/769)
 
 ## 2.2
+
+### 2.2.7 (2023-09-13)
+
+- SelectField: Remove empty space at the beginning [#772](https://github.com/CartoDB/carto-react/pull/772)
+- WrapperWidgetUI: contentProps property to support scrolling [#769](https://github.com/CartoDB/carto-react/pull/769)
 
 ### 2.2.6 (2023-09-07)
 

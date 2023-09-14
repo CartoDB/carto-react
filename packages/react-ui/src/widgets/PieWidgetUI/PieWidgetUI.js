@@ -26,12 +26,14 @@ function PieWidgetUI({
   filterable,
   selectedCategories,
   onSelectedCategoriesChange,
-  isLoading
+  isLoading,
+  maxItems
 }) {
   const theme = useTheme();
   const [showLabel, setShowLabel] = useState(true);
   const [showTooltip, setShowTooltip] = useState(true);
   const colorByCategory = useRef({});
+  const othersCategory = 'Others';
 
   // Reset colorByCategory when colors changes
   useEffect(() => {
@@ -40,17 +42,56 @@ function PieWidgetUI({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...colors]);
 
-  const dataWithColor = useMemo(() => {
-    return data.map(processDataItem(colorByCategory, colors, theme));
-  }, [data, colors, theme]);
+  // Add a color to each category AND Limit the number of categories to display, then group the rest into an "Others" category
+  const groupedDataWithColor = useMemo(() => {
+    const dataWithProcessedColor = data.map(
+      processDataItem(colorByCategory, colors, theme)
+    );
+    let categories = [];
+    let othersValue = 0;
+
+    for (const category of dataWithProcessedColor) {
+      if (categories.length < maxItems) {
+        categories.push({ ...category });
+      } else {
+        othersValue += category.value;
+      }
+    }
+
+    if (othersValue > 0) {
+      categories.push({
+        name: othersCategory,
+        value: othersValue,
+        color: theme.palette.qualitative.bold[11]
+      });
+    }
+
+    return categories;
+  }, [colors, data, maxItems, theme]);
+
+  // Sort categories by size, but keep "Others" at the end
+  const sortCategoriesBySize = useMemo(() => {
+    return (categories) => {
+      const sortedCategories = [...categories];
+
+      sortedCategories.sort((a, b) => {
+        if (a.name === 'Others' && b.name !== 'Others') {
+          return 1; // 'Others' placed at the end
+        } else {
+          return b.value - a.value;
+        }
+      });
+
+      return sortedCategories;
+    };
+  }, []);
 
   // Tooltip
   const tooltipOptions = useMemo(
     () => ({
       show: showTooltip,
-      showDelay: 1000,
-      transitionDuration: 0,
       backgroundColor: theme.palette.black[90],
+      borderColor: 'transparent',
       textStyle: { color: theme.palette.common.white },
       confine: true,
       formatter:
@@ -68,6 +109,7 @@ function PieWidgetUI({
   // Legend
   const legendOptions = useMemo(
     () => ({
+      data: sortCategoriesBySize(groupedDataWithColor).map((item) => item.name),
       selectedMode: false,
       type: 'scroll',
       left: theme.spacingValue,
@@ -101,7 +143,15 @@ function PieWidgetUI({
         color: theme.palette.text.primary
       }
     }),
-    [theme]
+    [
+      groupedDataWithColor,
+      sortCategoriesBySize,
+      theme.palette.text.disabled,
+      theme.palette.text.primary,
+      theme.palette.text.secondary,
+      theme.spacingValue,
+      theme.typography.overlineDelicate
+    ]
   );
 
   // Series
@@ -135,7 +185,7 @@ function PieWidgetUI({
         type: 'pie',
         name,
         animation,
-        data: dataWithColor.map((item) => {
+        data: groupedDataWithColor.map((item) => {
           // Avoid modifying data item
           const clonedItem = { ...item };
 
@@ -157,18 +207,22 @@ function PieWidgetUI({
         }),
         radius: ['74%', '90%'],
         selectedOffset: 0,
-        hoverOffset: 5,
         bottom: theme.spacingValue * 2.5,
         label: { show: showLabel, ...labelOptions },
         emphasis: {
-          label: { ...labelOptions, position: undefined }
+          label: { ...labelOptions, position: undefined },
+          scaleSize: 5
+        },
+        itemStyle: {
+          borderColor: theme.palette.background.paper,
+          borderWidth: 1
         }
       }
     ],
     [
       name,
       animation,
-      dataWithColor,
+      groupedDataWithColor,
       labels,
       selectedCategories,
       theme,
@@ -260,7 +314,8 @@ PieWidgetUI.defaultProps = {
   height: '260px',
   animation: true,
   filterable: true,
-  selectedCategories: []
+  selectedCategories: [],
+  maxItems: 11
 };
 
 PieWidgetUI.propTypes = {
@@ -280,7 +335,8 @@ PieWidgetUI.propTypes = {
   filterable: PropTypes.bool,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  maxItems: PropTypes.number
 };
 
 export default PieWidgetUI;
