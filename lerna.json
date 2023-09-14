@@ -1,6 +1,8 @@
 {
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "2.2.6-alpha.pie-widget.0.0"
+  "version": "2.2.7-alpha.pie-widget.0.1"
 }
