@@ -1,10 +1,18 @@
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../../custom-components/echarts-for-react';
-import { useTheme } from '@mui/material';
+import { Grid, Link, styled, useTheme } from '@mui/material';
 import { disableSerie, setColor } from '../utils/chartUtils';
 import { processFormatterRes } from '../utils/formatterUtils';
 import PieSkeleton from './PieSkeleton';
+import Typography from '../../components/atoms/Typography';
+
+export const OptionsBar = styled(Grid)(({ theme }) => ({
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: theme.spacing(1.5)
+}));
 
 function PieWidgetUI({
   name,
@@ -40,9 +48,10 @@ function PieWidgetUI({
   const tooltipOptions = useMemo(
     () => ({
       show: showTooltip,
-      showDelay: 1000,
-      transitionDuration: 0,
+      showDelay: 100,
+      transitionDuration: 0.4,
       backgroundColor: theme.palette.black[90],
+      borderColor: 'transparent',
       textStyle: { color: theme.palette.common.white },
       confine: true,
       formatter:
@@ -149,11 +158,15 @@ function PieWidgetUI({
         }),
         radius: ['74%', '90%'],
         selectedOffset: 0,
-        hoverOffset: 5,
         bottom: theme.spacingValue * 2.5,
         label: { show: showLabel, ...labelOptions },
         emphasis: {
-          label: { ...labelOptions, position: undefined }
+          label: { ...labelOptions, position: undefined },
+          scaleSize: 5
+        },
+        itemStyle: {
+          borderColor: theme.palette.background.paper,
+          borderWidth: 1
         }
       }
     ],
@@ -215,15 +228,31 @@ function PieWidgetUI({
     }
   };
 
+  const handleClearSelectedCategories = () => {
+    onSelectedCategoriesChange([]);
+  };
+
   if (isLoading) return <PieSkeleton height={height} />;
 
   return (
-    <ReactEcharts
-      option={options}
-      onEvents={onEvents}
-      lazyUpdate={true}
-      style={{ maxHeight: height }}
-    />
+    <>
+      <OptionsBar container>
+        <Typography variant='caption' color='textSecondary'>
+          {selectedCategories.length ? selectedCategories.length : 'All'} selected
+        </Typography>
+        {selectedCategories.length > 0 && (
+          <Link variant='caption' onClick={handleClearSelectedCategories}>
+            Clear
+          </Link>
+        )}
+      </OptionsBar>
+      <ReactEcharts
+        option={options}
+        onEvents={onEvents}
+        lazyUpdate={true}
+        style={{ maxHeight: height }}
+      />
+    </>
   );
 }
 
