@@ -4,7 +4,6 @@
 
 - Pie Widget: Add maxNumber of elements + a sorted by size desc by default [#774](https://github.com/CartoDB/carto-react/pull/774)
 - Pie Widget: Add number of selected categories + clear button [#771](https://github.com/CartoDB/carto-react/pull/771)
-- WrapperWidgetUI: contentProps property to support scrolling [#769](https://github.com/CartoDB/carto-react/pull/769)
 
 ## 2.2
 
