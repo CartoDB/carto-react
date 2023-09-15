@@ -11,7 +11,7 @@ import { CHART_TYPES } from './utils/constants';
 import Typography from '../../components/atoms/Typography';
 import TimeSeriesSkeleton from './components/TimeSeriesSkeleton';
 import { formatTimeRange, formatTime } from './utils/timeFormat';
-import { getColorByCategory } from '../utils/colorUtils';
+import { getColorByCategory } from '../../utils/palette';
 import { commonPalette } from '../../theme/sections/palette';
 import { TimeSeriesControls } from './components/TimeSeriesControls';
 import TimeSeriesLayout from './components/TimeSeriesLayout';
