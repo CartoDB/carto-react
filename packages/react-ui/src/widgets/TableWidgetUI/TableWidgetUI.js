@@ -9,7 +9,8 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
-  styled
+  styled,
+  useTheme
 } from '@mui/material';
 import TableSkeleton from './Skeleton/TableSkeleton';
 import TablePaginationActions from '../../components/molecules/Table/TablePaginationActions';
@@ -38,6 +39,12 @@ const TableCellStyled = styled(TableCell)(() => ({
   }
 }));
 
+const StyledTablePagination = styled(TablePagination)(({ theme }) => ({
+  height: theme.spacing(6),
+  overflowX: 'auto',
+  overflowY: 'hidden'
+}));
+
 function TableWidgetUI({
   columns,
   rows,
@@ -59,6 +66,7 @@ function TableWidgetUI({
   isLoading,
   lastPageTooltip
 }) {
+  const theme = useTheme();
   const paginationRef = useRef(null);
 
   const handleSort = (sortField) => {
@@ -77,19 +85,19 @@ function TableWidgetUI({
   };
 
   const fixedHeightStyle = {};
+
   if (height) {
-    if (isLoading) {
-      fixedHeightStyle.height = `${height}px`;
-    } else {
-      const paginationHeight = Math.max(
-        paginationRef?.current?.clientHeight || 0,
-        pagination ? 48 : 0
-      );
-      fixedHeightStyle.height = `calc(${height} - ${paginationHeight}px)`;
-    }
+    const paginationHeight = Math.max(
+      paginationRef?.current?.clientHeight || 0,
+      pagination ? theme.spacingValue * 6 : 0
+    );
+    fixedHeightStyle.height = `calc(${height} - ${paginationHeight}px)`;
   }
 
-  if (isLoading) return <TableSkeleton style={fixedHeightStyle} />;
+  if (isLoading)
+    return (
+      <TableSkeleton style={fixedHeightStyle} dense={dense} pagination={pagination} />
+    );
 
   return (
     <>
@@ -106,7 +114,7 @@ function TableWidgetUI({
         </Table>
       </TableContainer>
       {pagination && (
-        <TablePagination
+        <StyledTablePagination
           ref={paginationRef}
           rowsPerPageOptions={rowsPerPageOptions}
           component='div'
