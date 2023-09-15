@@ -96,7 +96,12 @@ function TableWidgetUI({
 
   if (isLoading)
     return (
-      <TableSkeleton style={fixedHeightStyle} dense={dense} pagination={pagination} />
+      <TableSkeleton
+        rowsPerPage={rowsPerPage}
+        style={fixedHeightStyle}
+        dense={dense}
+        pagination={pagination}
+      />
     );
 
   return (
