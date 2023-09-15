@@ -19,7 +19,7 @@ import {
   minutesCurrentDateRange,
   secondsCurrentDateRange
 } from './utils/timeFormat';
-import { getColorByCategory } from '../utils/colorUtils';
+import { getColorByCategory } from '../../utils/palette';
 import { commonPalette } from '../../theme/sections/palette';
 import { TimeSeriesControls } from './components/TimeSeriesControls';
 import TimeSeriesLayout from './components/TimeSeriesLayout';
@@ -285,7 +285,7 @@ function TimeSeriesWidgetUIContent({
           <Typography color='textSecondary' variant='caption'>
             {currentDate}
           </Typography>
-          <Typography fontSize={12} ml={1} color='textSecondary' variant='caption'>
+          <Typography ml={1} color='textSecondary' variant='caption'>
             ({capitalize(stepSize)})
           </Typography>
         </Box>
