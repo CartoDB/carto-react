@@ -1,10 +1,10 @@
-import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
+import React, { useMemo, useRef, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { Grid, Link, styled, useTheme } from '@mui/material';
 import { disableSerie, setColor } from '../utils/chartUtils';
 import { processFormatterRes } from '../utils/formatterUtils';
-import PieSkeleton from './PieSkeleton';
+import PieSkeleton from './components/PieSkeleton';
 import Typography from '../../components/atoms/Typography';
 
 export const OptionsBar = styled(Grid)(({ theme }) => ({
@@ -30,8 +30,6 @@ function PieWidgetUI({
   maxItems
 }) {
   const theme = useTheme();
-  const [showLabel, setShowLabel] = useState(true);
-  const [showTooltip, setShowTooltip] = useState(true);
   const colorByCategory = useRef({});
   const othersCategory = 'Others';
 
@@ -42,11 +40,36 @@ function PieWidgetUI({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...colors]);
 
+  // Sort categories by size, but keep "Others" at the end
+  const sortCategoriesBySize = useMemo(() => {
+    return (categories) => {
+      const sortedCategories = [...categories];
+
+      sortedCategories.sort((a, b) => {
+        if (a.name === 'Others' && b.name !== 'Others') {
+          return 1; // 'Others' placed at the end
+        } else {
+          return b.value - a.value;
+        }
+      });
+      console.log('sortedCategories', sortedCategories);
+      return sortedCategories;
+    };
+  }, []);
+
   // Add a color to each category AND Limit the number of categories to display, then group the rest into an "Others" category
   const groupedDataWithColor = useMemo(() => {
+    console.log('data', data);
+    //const sortedCategories = sortCategoriesBySize(data);
+
+    /*     const dataWithProcessedColor = sortedCategories.map(
+      processDataItem(colorByCategory, colors, theme)
+    ); */
+
     const dataWithProcessedColor = data.map(
       processDataItem(colorByCategory, colors, theme)
     );
+
     let categories = [];
     let othersValue = 0;
 
@@ -66,30 +89,14 @@ function PieWidgetUI({
       });
     }
 
-    return categories;
-  }, [colors, data, maxItems, theme]);
+    const updatedCategories = processDataItem(colorByCategory, colors, theme)(categories);
 
-  // Sort categories by size, but keep "Others" at the end
-  const sortCategoriesBySize = useMemo(() => {
-    return (categories) => {
-      const sortedCategories = [...categories];
-
-      sortedCategories.sort((a, b) => {
-        if (a.name === 'Others' && b.name !== 'Others') {
-          return 1; // 'Others' placed at the end
-        } else {
-          return b.value - a.value;
-        }
-      });
-
-      return sortedCategories;
-    };
-  }, []);
+    return updatedCategories;
+  }, [colors, data, maxItems, sortCategoriesBySize, theme]);
 
   // Tooltip
   const tooltipOptions = useMemo(
     () => ({
-      show: showTooltip,
       backgroundColor: theme.palette.black[90],
       borderColor: 'transparent',
       textStyle: { color: theme.palette.common.white },
@@ -97,13 +104,7 @@ function PieWidgetUI({
       formatter:
         !!tooltipFormatter && ((params) => tooltipFormatter({ ...params, formatter }))
     }),
-    [
-      showTooltip,
-      formatter,
-      theme.palette.common.white,
-      theme.palette.black,
-      tooltipFormatter
-    ]
+    [formatter, theme.palette.common.white, theme.palette.black, tooltipFormatter]
   );
 
   // Legend
@@ -208,9 +209,10 @@ function PieWidgetUI({
         radius: ['74%', '90%'],
         selectedOffset: 0,
         bottom: theme.spacingValue * 2.5,
-        label: { show: showLabel, ...labelOptions },
+        label: { show: true, ...labelOptions },
         emphasis: {
-          label: { ...labelOptions, position: undefined },
+          label: { show: false },
+
           scaleSize: 5
         },
         itemStyle: {
@@ -226,7 +228,6 @@ function PieWidgetUI({
       labels,
       selectedCategories,
       theme,
-      showLabel,
       labelOptions
     ]
   );
@@ -266,15 +267,7 @@ function PieWidgetUI({
   );
 
   const onEvents = {
-    ...(filterable && { click: clickEvent }),
-    mouseover: () => {
-      setShowLabel(false);
-      setShowTooltip(true);
-    },
-    mouseout: () => {
-      setShowLabel(true);
-      setShowTooltip(false);
-    }
+    ...(filterable && { click: clickEvent })
   };
 
   const handleClearSelectedCategories = () => {
@@ -345,7 +338,9 @@ export default PieWidgetUI;
 function tooltipFormatter(params) {
   const value = processFormatterRes(params.formatter(params.value));
 
-  const markerColor = params.data.color || params.textStyle.color;
+  // Check if params.textStyle exists and has a color property; otherwise, use a default color
+  const markerColor =
+    params.textStyle && params.textStyle.color ? params.textStyle.color : 'defaultColor';
   const markerStyle = `display:inline-block;margin-right:4px;border-radius:4px;width:8px;height:8px;background-color:${markerColor}`;
 
   return `
@@ -355,15 +350,21 @@ function tooltipFormatter(params) {
 }
 
 function processDataItem(colorByCategory, colors, theme) {
+  let colorIndex = 0; // Initialize the color index
+
   return (item) => {
     const { name } = item;
     const colorUsed = colorByCategory.current[name];
+
     if (colorUsed) {
       item.color = colorUsed;
     } else {
       const paletteToUse = colors.length ? colors : theme.palette.qualitative.bold;
-      const colorToUse =
-        paletteToUse[Object.keys(colorByCategory.current).length] || '#fff';
+      const colorToUse = paletteToUse[colorIndex];
+
+      // Increment the color index and reset to 0 if it reaches the end
+      colorIndex = (colorIndex + 1) % paletteToUse.length;
+
       colorByCategory.current[name] = colorToUse;
       item.color = colorToUse;
     }
