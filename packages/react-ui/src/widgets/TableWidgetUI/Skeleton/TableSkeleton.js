@@ -21,7 +21,7 @@ const Pagination = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2, 1)
 }));
 
-const TableSkeleton = ({ style, dense, pagination }) => {
+const TableSkeleton = ({ style, dense, pagination, rowsPerPage }) => {
   return (
     <>
       <TableContainer style={style}>
@@ -33,7 +33,7 @@ const TableSkeleton = ({ style, dense, pagination }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {[...Array(10)].map((_, i) => (
+            {[...Array(Math.min(10, rowsPerPage ?? 10))].map((_, i) => (
               <TableRow key={i}>
                 <TableSkeletonRow rows={1} width={8} />
                 <TableSkeletonRow index={i} />
