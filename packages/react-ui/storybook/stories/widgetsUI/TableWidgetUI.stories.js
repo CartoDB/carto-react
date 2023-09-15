@@ -4,7 +4,7 @@ import { Box, useTheme } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { columns, rows } from '../../../src/widgets/TableWidgetUI/mockData';
 import Typography from '../../../src/components/atoms/Typography';
-import { Label, ThinContainer } from '../../utils/storyStyles';
+import LoadingTemplateWithSwitch from './LoadingTemplateWithSwitch';
 
 const options = {
   title: 'Widgets/TableWidgetUI',
@@ -24,28 +24,17 @@ const Template = (args) => {
   return <TableWidgetUI {...args} />;
 };
 
-const LoadingTemplate = (args) => {
+const TableWidgetUiWithDefaults = (args) => {
   const theme = useTheme();
-
   return (
-    <>
-      <Label variant='body1' mb={3}>
-        {'Limited width'}
-      </Label>
-      <ThinContainer>
-        <TableWidgetUI {...args} />
-      </ThinContainer>
-
-      <Label variant='body1' mt={8} mb={3}>
-        {'Limited height'}
-      </Label>
-      <TableWidgetUI {...args} height={theme.spacing(36)} />
-
-      <Label variant='body1' mt={8} mb={3}>
-        {'Responsive'}
-      </Label>
-      <TableWidgetUI {...args} />
-    </>
+    <TableWidgetUI
+      {...args}
+      height={theme.spacing(36)}
+      pagination={true}
+      page={1}
+      totalCount={rows.length}
+      rowsPerPage={10}
+    />
   );
 };
 
@@ -109,5 +98,10 @@ CustomComponent.args = {
   rows: rows.slice(0, 5)
 };
 
+const LoadingTemplate = LoadingTemplateWithSwitch(TableWidgetUiWithDefaults);
+
 export const Loading = LoadingTemplate.bind({});
 Loading.args = { ...DefaultProps, isLoading: true };
+
+export const LoadingDense = LoadingTemplate.bind({});
+LoadingDense.args = { ...DefaultProps, dense: true, isLoading: true };
