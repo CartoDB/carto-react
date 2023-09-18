@@ -232,6 +232,11 @@ function PieWidgetUI({
         const newSelectedCategories = [...selectedCategories];
         const { name } = dataWithColor[params.dataIndex];
 
+        // Avoid clicking if the category name is "Others"
+        if (name === othersCategory) {
+          return;
+        }
+
         const selectedCategoryIdx = newSelectedCategories.indexOf(name);
         if (selectedCategoryIdx === -1) {
           newSelectedCategories.push(name);
