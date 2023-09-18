@@ -1,6 +1,5 @@
 import React from 'react';
-import { Alert, AlertTitle } from '@mui/material';
-import { Box } from '@mui/material';
+import { Alert, AlertTitle, Box } from '@mui/material';
 import Typography from '../components/atoms/Typography';
 
 function AlertBody({ color = undefined, children }) {
@@ -23,17 +22,22 @@ function AlertBody({ color = undefined, children }) {
 function NoDataAlert({
   title = 'No data available',
   body = 'There are no results for the combination of filters applied to your data. Try tweaking your filters, or zoom and pan the map to adjust the Map View.',
-  severity = undefined
+  severity = undefined,
+  ...otherProps
 }) {
-  return severity ? (
-    <Alert severity={severity}>
-      {title && <AlertTitle>{title}</AlertTitle>}
-      <AlertBody>{body}</AlertBody>
-    </Alert>
-  ) : (
+  return (
     <Box>
-      {title && <Typography variant='body2'>{title}</Typography>}
-      <AlertBody color='textSecondary'>{body}</AlertBody>
+      {severity ? (
+        <Alert severity={severity} {...otherProps}>
+          {title && <AlertTitle>{title}</AlertTitle>}
+          <AlertBody>{body}</AlertBody>
+        </Alert>
+      ) : (
+        <Box {...otherProps}>
+          {title && <Typography variant='body2'>{title}</Typography>}
+          <AlertBody color='textSecondary'>{body}</AlertBody>
+        </Box>
+      )}
     </Box>
   );
 }
