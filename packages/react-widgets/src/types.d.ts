@@ -93,26 +93,6 @@ export type useSourceFilters =  {
   id: string,
 };
 
-export type TimeSeriesWidget = {
-  operationColumn?: string,
-  stepSize: string,
-  stepSizeOptions?: string[],
-  chartType?: string,
-  tooltip?: boolean,
-  tooltipFormatter?: Function,
-  formatter?: Function,
-  height?: string,
-  showControls?: boolean,
-  isPlaying?: boolean,
-  isPaused?: boolean,
-  timeWindow?: any[],
-  onPlay?: Function,
-  onPause?: Function,
-  onStop?: Function,
-  onTimelineUpdate?: Function,
-  onTimeWindowUpdate?: Function
-} & CommonWidgetProps & MonoColumnWidgetProps;
-
 export type LegendWidget = {
   initialCollapsed?: boolean;
   customLegendTypes?: Record<string, Function>;
