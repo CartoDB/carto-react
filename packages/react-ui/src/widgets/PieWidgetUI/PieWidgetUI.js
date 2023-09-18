@@ -41,27 +41,21 @@ function PieWidgetUI({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...colors]);
 
-  // Sort categories by size, but keep "Others" at the end
+  // Sort categories by value size
   const sortCategoriesBySize = useMemo(() => {
     return (data) => {
       const sortedCategories = [...data];
 
       sortedCategories.sort((a, b) => {
-        if (a.name === othersCategory && b.name !== othersCategory) {
-          return 1; // 'Others' placed at the end
-        } else {
-          return b.value - a.value;
-        }
+        return b.value - a.value;
       });
 
-      console.log('sortedCategories', sortedCategories);
       return sortedCategories;
     };
   }, []);
-
   const sortedCategories = sortCategoriesBySize(data);
 
-  // Add a color to each category AND Limit the number of categories to display, then group the rest into an "Others" category
+  // Limit the number of categories to display, then group the rest into an "Others" category
   const groupedData = useMemo(() => {
     let categories = [];
     let othersValue = 0;
@@ -78,20 +72,15 @@ function PieWidgetUI({
       categories.push({
         name: othersCategory,
         value: othersValue
-        //color: theme.palette.qualitative.bold[11]
       });
     }
 
-    console.log('groupedCategories', categories);
     return categories;
   }, [maxItems, sortedCategories]);
 
   // Add a color to each category
   const dataWithColor = useMemo(() => {
-    const categories = groupedData;
-
-    console.log('categoriesWithColor', categories);
-    return categories.map(processDataItem(colorByCategory, colors, theme));
+    return groupedData.map(processDataItem(colorByCategory, colors, theme));
   }, [groupedData, colors, theme]);
 
   // Tooltip
