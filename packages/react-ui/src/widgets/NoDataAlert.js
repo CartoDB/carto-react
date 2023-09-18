@@ -25,19 +25,15 @@ function NoDataAlert({
   severity = undefined,
   ...otherProps
 }) {
-  return (
-    <Box>
-      {severity ? (
-        <Alert severity={severity} {...otherProps}>
-          {title && <AlertTitle>{title}</AlertTitle>}
-          <AlertBody>{body}</AlertBody>
-        </Alert>
-      ) : (
-        <Box {...otherProps}>
-          {title && <Typography variant='body2'>{title}</Typography>}
-          <AlertBody color='textSecondary'>{body}</AlertBody>
-        </Box>
-      )}
+  return severity ? (
+    <Alert severity={severity} {...otherProps}>
+      {title && <AlertTitle>{title}</AlertTitle>}
+      <AlertBody>{body}</AlertBody>
+    </Alert>
+  ) : (
+    <Box {...otherProps}>
+      {title && <Typography variant='body2'>{title}</Typography>}
+      <AlertBody color='textSecondary'>{body}</AlertBody>
     </Box>
   );
 }
