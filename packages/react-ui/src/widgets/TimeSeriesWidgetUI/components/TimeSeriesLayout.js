@@ -30,7 +30,7 @@ const ControlsBox = styled(Box)(({ theme }) => ({
   [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
     paddingLeft: 0
   },
-  paddingBottom: theme.spacing(3),
+  paddingBottom: theme.spacing(1.5),
   alignSelf: 'flex-end'
 }));
 
@@ -38,12 +38,18 @@ const ChartBox = styled(Box)(({ theme }) => ({
   alignSelf: 'normal',
   minWidth: 0,
   paddingLeft: theme.spacing(5),
+  paddingBottom: theme.spacing(1.5),
   [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
     paddingLeft: theme.spacing(1)
   }
 }));
 
 export default function TimeSeriesLayout({ fitHeight, header, controls, chart, legend }) {
+  const legendFragment = legend && (
+    <Box flex={0} mt={2}>
+      {legend}
+    </Box>
+  );
   return (
     <Root
       style={{
@@ -57,12 +63,14 @@ export default function TimeSeriesLayout({ fitHeight, header, controls, chart, l
             <ControlsBox flex={0}>{controls}</ControlsBox>
             <ChartBox flex={1}>{chart}</ChartBox>
           </BoxHorz>
-          <Box flex={0}>{legend}</Box>
+          {legendFragment}
         </BoxVert>
       ) : (
         <>
-          <Box flex={1}>{chart}</Box>
-          <Box flex={0}>{legend}</Box>
+          <Box pb={1.5} flex={1}>
+            {chart}
+          </Box>
+          {legendFragment}
         </>
       )}
     </Root>
