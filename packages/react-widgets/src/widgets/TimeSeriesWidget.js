@@ -70,13 +70,13 @@ const EMPTY_ARRAY = [];
  * @param  {function} [props.tooltipFormatter] - Function that returns the HTML for the chart tooltip.
  * @param  {function} [props.formatter] - Function for formatting the value that is represented in the tooltip.
  * @param  {string=} [props.height] - Height of the chart, default 22*theme.spacingValue
- * @param  {string=} [props.fitHeight] - Widget should occupy all vertical space available.
+ * @param  {boolean=} [props.fitHeight] - Widget should occupy all vertical space available.
  * @param  {boolean=} [props.stableHeight] -  If specified, error and no-data state will maintain same height as normal widget in loading/loaded state.
  * @param  {boolean} [props.showControls] - Enable/disable animation controls (play, pause, stop, speed). True by default.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
- * @param  {function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Function} [props.onStateChange] - Callback to handle state updates of widgets
+ * @param  {function=} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {string[]=} [props.palette] - Optional palette
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
@@ -98,7 +98,6 @@ function TimeSeriesWidget({
   id,
   title,
   dataSource,
-
   column,
   operationColumn,
   joinOperation,
@@ -226,7 +225,6 @@ function TimeSeriesWidget({
   const handleTimelineUpdate = useCallback(
     (timelinePosition) => {
       if (!isLoading) {
-        // TODO: new data model ?
         const { name: moment } = data[timelinePosition];
         dispatch(
           addFilter({
@@ -428,6 +426,7 @@ TimeSeriesWidget.propTypes = {
   formatter: PropTypes.func,
   height: PropTypes.string,
   fitHeight: PropTypes.bool,
+  stableHeight: PropTypes.bool,
   animation: PropTypes.bool,
   isPlaying: PropTypes.bool,
   onPlay: PropTypes.func,
