@@ -34,13 +34,6 @@ function PieWidgetUI({
   const colorByCategory = useRef({});
   const othersCategory = 'Others';
 
-  // Reset colorByCategory when colors changes
-  useEffect(() => {
-    colorByCategory.current = {};
-    // Spread colors array to avoid reference problems
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...colors]);
-
   // Sort categories by value size
   const sortCategoriesBySize = useMemo(() => {
     return (data) => {
@@ -82,6 +75,13 @@ function PieWidgetUI({
   const dataWithColor = useMemo(() => {
     return groupedData.map(processDataItem(colorByCategory, colors, theme));
   }, [groupedData, colors, theme]);
+
+  // Reset colorByCategory when colors and categories changes
+  useEffect(() => {
+    colorByCategory.current = {};
+    // Spread colors array to avoid reference problems
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [...colors, sortedCategories]);
 
   // Tooltip
   const tooltipOptions = useMemo(
