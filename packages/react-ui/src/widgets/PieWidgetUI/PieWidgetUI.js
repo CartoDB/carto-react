@@ -35,7 +35,7 @@ function PieWidgetUI({
   const colorByCategory = useRef({});
   const othersCategory = 'Others';
 
-  // Order data by size if order is ranking, otherwise keep the original order
+  // Sort data by size if order is ranking, otherwise keep the original order
   const orderedData = useMemo(() => {
     let orderedCategories = [];
 
@@ -192,7 +192,8 @@ function PieWidgetUI({
         bottom: theme.spacingValue * 2.5,
         label: { show: showLabel, ...labelOptions },
         emphasis: {
-          label: { ...labelOptions, position: undefined }
+          label: { ...labelOptions, position: undefined },
+          scaleSize: 5
         },
         itemStyle: {
           borderColor: theme.palette.background.paper,
