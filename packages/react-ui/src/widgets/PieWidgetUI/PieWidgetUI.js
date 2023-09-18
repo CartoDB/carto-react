@@ -64,7 +64,8 @@ function PieWidgetUI({
     if (othersValue > 0) {
       categories.push({
         name: othersCategory,
-        value: othersValue
+        value: othersValue,
+        emphasis: { scale: false }
       });
     }
 
