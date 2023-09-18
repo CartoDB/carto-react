@@ -150,6 +150,7 @@ TableWidget.propTypes = {
   initialPageSize: PropTypes.number,
   onPageSizeChange: PropTypes.func,
   height: PropTypes.string,
+  stableHeight: PropTypes.bool,
   dense: PropTypes.bool,
   // Internal state
   pageSize: PropTypes.number
