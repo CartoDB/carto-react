@@ -21,10 +21,14 @@ const Pagination = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2, 1)
 }));
 
+const TableContainerNoOverflow = styled(TableContainer)(({ theme }) => ({
+  overflow: 'hidden'
+}));
+
 const TableSkeleton = ({ style, dense, pagination, rowsPerPage }) => {
   return (
     <>
-      <TableContainer style={style}>
+      <TableContainerNoOverflow style={style}>
         <Table aria-label='skeleton table' size={dense ? 'small' : 'medium'}>
           <TableHead>
             <TableRow>
@@ -41,7 +45,7 @@ const TableSkeleton = ({ style, dense, pagination, rowsPerPage }) => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainerNoOverflow>
       {pagination && (
         <Pagination>
           <Skeleton width={56} height={8} />
