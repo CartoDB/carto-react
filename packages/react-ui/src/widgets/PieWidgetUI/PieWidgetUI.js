@@ -77,6 +77,40 @@ function PieWidgetUI({
     return groupedData.map(processDataItem(colorByCategory, colors, theme));
   }, [groupedData, colors, theme]);
 
+  // Get the category with the largest value
+  /*     const largerCategory = useMemo(() => {
+      return (selectedCategories, dataWithColor) => {
+        let largerCategory = null;
+        let maxValue = -1;
+
+        if (selectedCategories.length === 0) {
+          for (const category of dataWithColor) {
+            if (category.value > maxValue) {
+              largerCategory = category.name;
+              maxValue = category.value;
+            }
+          }
+
+          return largerCategory;
+        } else {
+          for (const category of selectedCategories) {
+            if (category.value > maxValue) {
+              largerCategory = category.name;
+              maxValue = category.value;
+            }
+          }
+        }
+
+
+        return largerCategory;
+      };
+    }, [selectedCategories, dataWithColor]); */
+
+  const maxCategoryValue = Math.max(...dataWithColor.map((item) => item.value));
+  const largestCategory = dataWithColor.find((item) => item.value === maxCategoryValue);
+
+  console.log('largerCategory', largestCategory);
+
   // Reset colorByCategory when colors and categories change
   useEffect(() => {
     colorByCategory.current = {};
@@ -190,9 +224,9 @@ function PieWidgetUI({
         radius: ['74%', '90%'],
         selectedOffset: 0,
         bottom: theme.spacingValue * 2.5,
-        label: { show: showLabel, ...labelOptions },
+        label: { show: true, ...labelOptions },
         emphasis: {
-          label: { ...labelOptions, position: undefined },
+          label: { show: false, ...labelOptions, position: undefined },
           scaleSize: 5
         },
         itemStyle: {
@@ -201,16 +235,7 @@ function PieWidgetUI({
         }
       }
     ],
-    [
-      name,
-      animation,
-      dataWithColor,
-      labels,
-      selectedCategories,
-      theme,
-      showLabel,
-      labelOptions
-    ]
+    [name, animation, dataWithColor, labels, selectedCategories, theme, labelOptions]
   );
 
   const options = useMemo(
@@ -223,9 +248,14 @@ function PieWidgetUI({
       },
       tooltip: tooltipOptions,
       legend: legendOptions,
-      series: seriesOptions
+      series: seriesOptions,
+      title: {
+        text: `${largestCategory.name}`,
+        left: 'center',
+        top: 'center'
+      }
     }),
-    [tooltipOptions, seriesOptions, legendOptions]
+    [tooltipOptions, seriesOptions, legendOptions, largestCategory]
   );
 
   const clickEvent = useCallback(
