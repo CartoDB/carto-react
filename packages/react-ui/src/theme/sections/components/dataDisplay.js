@@ -30,6 +30,11 @@ export const dataDisplayOverrides = {
   MuiList: {
     styleOverrides: {
       root: ({ theme }) => ({
+        '.MuiPopover-root &, .MuiPopper-root &': {
+          maxHeight: theme.spacing(39), // 312px, defined by design
+          overflowY: 'auto'
+        },
+
         // Indent sublevels, ugly but needed to avoid issues with hover
         '& .MuiList-root': {
           '& .MuiListItem-root': {
@@ -323,6 +328,7 @@ export const dataDisplayOverrides = {
 
         '& .MuiAvatar-root': {
           width: ICON_SIZE_LARGE,
+          minWidth: ICON_SIZE_LARGE,
           height: ICON_SIZE_LARGE,
           margin: 0,
           color: theme.palette.secondary.contrastText,
@@ -335,6 +341,7 @@ export const dataDisplayOverrides = {
         },
         '& img': {
           width: ICON_SIZE_LARGE,
+          minWidth: ICON_SIZE_LARGE,
           height: ICON_SIZE_LARGE
         },
         '&.Mui-disabled': {
@@ -395,10 +402,12 @@ export const dataDisplayOverrides = {
       sizeSmall: ({ theme }) => ({
         '& img': {
           width: ICON_SIZE_MEDIUM,
+          minWidth: ICON_SIZE_MEDIUM,
           height: ICON_SIZE_MEDIUM
         },
         '& .MuiAvatar-root': {
           width: ICON_SIZE_MEDIUM,
+          minWidth: ICON_SIZE_MEDIUM,
           height: ICON_SIZE_MEDIUM
         },
         '& .MuiChip-icon': {

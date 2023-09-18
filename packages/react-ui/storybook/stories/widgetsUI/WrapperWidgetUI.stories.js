@@ -5,7 +5,7 @@ import AddLocationIcon from '@mui/icons-material/AddLocation';
 import WrapperWidgetUI from '.../../../src/widgets/WrapperWidgetUI';
 
 const options = {
-  title: 'Organisms/Widgets/WrapperWidgetUI',
+  title: 'Widgets/WrapperWidgetUI',
   component: WrapperWidgetUI,
   argTypes: {
     actions: {
@@ -258,6 +258,40 @@ WithActionsTooltip.parameters = {
     }
   ]}
 />`
+    }
+  }
+};
+
+export const BigScrollableContent = (args) => (
+  <WrapperWidgetUI {...args}>
+    <div>
+      <p>
+        Note: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam, mi nibh
+        fames rhoncus id ultricies. Faucibus enim commodo morbi amet sit eget. Ut
+        pellentesque tellus iaculis diam. Ornare convallis dictum purus quisque nisl.
+      </p>
+      <p>
+        Vivamus imperdiet, urna eu blandit lobortis, tortor risus sodales urna, sit amet
+        tempor eros elit faucibus nulla. Donec vel tellus nec nibh molestie hendrerit.
+        Donec nulla massa, interdum ut nisl non, sollicitudin condimentum leo. Integer
+        eget accumsan sem. Aliquam tincidunt turpis et leo ac.
+      </p>
+      <p>
+        Vivamus imperdiet, urna eu blandit lobortis, tortor risus sodales urna, sit amet
+        tempor eros elit faucibus nulla. Donec vel tellus nec nibh molestie hendrerit.
+        Donec nulla massa, interdum ut nisl non, sollicitudin condimentum leo. Integer
+        eget accumsan sem. Aliquam tincidunt turpis et leo ac.
+      </p>
+    </div>
+  </WrapperWidgetUI>
+);
+BigScrollableContent.args = {
+  title: 'Big scrollable content',
+  expandable: true,
+  contentProps: {
+    style: {
+      overflowY: 'scroll',
+      maxHeight: '200px'
     }
   }
 };

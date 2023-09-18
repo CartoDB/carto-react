@@ -2,6 +2,52 @@
 
 ## Not released
 
+## 2.2
+
+### 2.2.7 (2023-09-13)
+
+- SelectField: Remove empty space at the beginning [#772](https://github.com/CartoDB/carto-react/pull/772)
+- WrapperWidgetUI: contentProps property to support scrolling [#769](https://github.com/CartoDB/carto-react/pull/769)
+
+### 2.2.6 (2023-09-07)
+
+- Use selectLoader to obtain loader from mime type [#766](https://github.com/CartoDB/carto-react/pull/766)
+
+### 2.2.5 (2023-08-30)
+
+- WrapperWidgetUI: new footer property [#761](https://github.com/CartoDB/carto-react/pull/761)
+
+### 2.2.4 (2023-08-21)
+
+- Fix Legend Widget UI: Legend Wrapper spacing [#755](https://github.com/CartoDB/carto-react/pull/762)
+
+### 2.2.3 (2023-08-01)
+
+- Add storybook documentation and fix ComparativeCategoryWidgetUI [#755](https://github.com/CartoDB/carto-react/pull/755)
+- Improve responsive behavior of MenuItem [#753](https://github.com/CartoDB/carto-react/pull/753)
+- Increase documentation discoverability [#751](https://github.com/CartoDB/carto-react/pull/751)
+
+### 2.2.2 (2023-07-26)
+
+- Add namespace as optional param in OAuthCarto3 type [#750](https://github.com/CartoDB/carto-react/pull/750)
+- Add onClick event handler to GoogleMap component [#747](https://github.com/CartoDB/carto-react/pull/747)
+
+### 2.2.1 (2023-07-21)
+
+- Fix MuiList: add more specificity to apply max-height [#748](https://github.com/CartoDB/carto-react/pull/748)
+- SelectField Storybook leftovers [#746](https://github.com/CartoDB/carto-react/pull/746)
+
+### 2.2.0 (2023-07-19)
+
+- Developer API change:
+  - SelectField props removal: `items` no longer available, use a children instead.
+  - Changed to a controlled component. So now it needs to handle onChange function in the parent.
+  - For multiple selection, now use MultipleSelectField.
+- Breaking change in SelectField component: simplification & MultipleSelectField split [#743](https://github.com/CartoDB/carto-react/pull/743)
+- Fix size of image placed inside a Chip [#744](https://github.com/CartoDB/carto-react/pull/744)
+- Fix to build more accurate ranges for time filters [#655](https://github.com/CartoDB/carto-react/pull/655)
+- Improve regex to detect coordinate pairs on search location widget [#742](https://github.com/CartoDB/carto-react/pull/742)
+
 ## 2.1
 
 ## 2.1.8 (2023-07-07)

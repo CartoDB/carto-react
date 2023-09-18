@@ -8,7 +8,6 @@ import {
   Grid,
   IconButton,
   List,
-  ListItem,
   ListItemAvatar,
   ListItemIcon,
   ListItemSecondaryAction,
@@ -16,7 +15,8 @@ import {
   Typography,
   Switch,
   Paper,
-  styled
+  styled,
+  ListItemButton
 } from '@mui/material';
 import {
   Drafts,
@@ -27,6 +27,8 @@ import {
   Inbox,
   Star
 } from '@mui/icons-material';
+import { DocContainer, DocHighlight } from '../../utils/storyStyles';
+import Button from '../../../src/components/atoms/Button';
 
 const options = {
   title: 'Organisms/List',
@@ -56,17 +58,17 @@ const Template = ({ secondary, ...args }) => {
         <Grid item xs={3}>
           <Paper>
             <List component='nav' aria-label='main mailbox folders'>
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Home' secondary={secondary} />
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Inbox' secondary={secondary} />
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Drafts' secondary={secondary} />
-              </ListItem>
+              </ListItemButton>
             </List>
           </Paper>
         </Grid>
@@ -74,26 +76,26 @@ const Template = ({ secondary, ...args }) => {
         <Grid item xs={3}>
           <Paper>
             <List component='nav' aria-label='main mailbox folders'>
-              <ListItem button>
+              <ListItemButton>
                 <ListItemIcon>
                   <Home />
                 </ListItemIcon>
                 <ListItemText primary='Home' secondary={secondary} />
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemIcon>
                   <Inbox />
                 </ListItemIcon>
                 <ListItemText primary='Inbox' secondary={secondary} />
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemIcon>
                   <Drafts />
                 </ListItemIcon>
                 <ListItemText primary='Drafts' secondary={secondary} />
-              </ListItem>
+              </ListItemButton>
             </List>
           </Paper>
         </Grid>
@@ -101,26 +103,26 @@ const Template = ({ secondary, ...args }) => {
         <Grid item xs={3}>
           <Paper>
             <List component='nav' aria-label='main mailbox folders'>
-              <ListItem button>
+              <ListItemButton>
                 <ListItemIcon>
                   <Checkbox edge='start' />
                 </ListItemIcon>
                 <ListItemText primary='Home' secondary={secondary} />
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemIcon>
                   <Checkbox edge='start' />
                 </ListItemIcon>
                 <ListItemText primary='Inbox' secondary={secondary} />
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemIcon>
                   <Checkbox edge='start' />
                 </ListItemIcon>
                 <ListItemText primary='Drafts' secondary={secondary} />
-              </ListItem>
+              </ListItemButton>
             </List>
           </Paper>
         </Grid>
@@ -128,32 +130,32 @@ const Template = ({ secondary, ...args }) => {
         <Grid item xs={3}>
           <Paper>
             <List component='nav' aria-label='main mailbox folders'>
-              <ListItem button>
+              <ListItemButton>
                 <ListItemAvatar>
                   <Avatar>
                     <Star />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary='Home' secondary={secondary} />
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemAvatar>
                   <Avatar>
                     <Star />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary='Inbox' secondary={secondary} />
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemAvatar>
                   <Avatar>
                     <Star />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary='Drafts' secondary={secondary} />
-              </ListItem>
+              </ListItemButton>
             </List>
           </Paper>
         </Grid>
@@ -179,20 +181,20 @@ const TemplateMetaValue = ({ secondary, ...args }) => {
         <Grid item xs={3}>
           <Paper>
             <List component='nav' aria-label='main mailbox folders'>
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Home' />
                 <MetaValueLabel value={args.metaValue}></MetaValueLabel>
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Inbox' />
                 <MetaValueLabel value={args.metaValue}></MetaValueLabel>
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Drafts' />
                 <MetaValueLabel value={args.metaValue}></MetaValueLabel>
-              </ListItem>
+              </ListItemButton>
             </List>
           </Paper>
         </Grid>
@@ -200,20 +202,20 @@ const TemplateMetaValue = ({ secondary, ...args }) => {
         <Grid item xs={3}>
           <Paper>
             <List component='nav' aria-label='main mailbox folders'>
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Home' secondary={secondary} />
                 <MetaValueLabel value={args.metaValue}></MetaValueLabel>
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Inbox' secondary={secondary} />
                 <MetaValueLabel value={args.metaValue}></MetaValueLabel>
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Drafts' secondary={secondary} />
                 <MetaValueLabel value={args.metaValue}></MetaValueLabel>
-              </ListItem>
+              </ListItemButton>
             </List>
           </Paper>
         </Grid>
@@ -229,20 +231,20 @@ const TemplateSecondaryActions = ({ ...args }) => {
         <Grid item xs={3}>
           <Paper>
             <List component='nav' aria-label='main mailbox folders'>
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Home' />
                 <ExpandMore />
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Inbox' />
                 <ExpandMore />
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Drafts' />
                 <ExpandMore />
-              </ListItem>
+              </ListItemButton>
             </List>
           </Paper>
         </Grid>
@@ -250,26 +252,26 @@ const TemplateSecondaryActions = ({ ...args }) => {
         <Grid item xs={3}>
           <Paper>
             <List component='nav' aria-label='main mailbox folders'>
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Home' />
                 <ListItemSecondaryAction>
                   <Checkbox edge='end' />
                 </ListItemSecondaryAction>
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Inbox' />
                 <ListItemSecondaryAction>
                   <Checkbox edge='end' />
                 </ListItemSecondaryAction>
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Drafts' />
                 <ListItemSecondaryAction>
                   <Checkbox edge='end' />
                 </ListItemSecondaryAction>
-              </ListItem>
+              </ListItemButton>
             </List>
           </Paper>
         </Grid>
@@ -277,32 +279,32 @@ const TemplateSecondaryActions = ({ ...args }) => {
         <Grid item xs={3}>
           <Paper>
             <List component='nav' aria-label='main mailbox folders'>
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Home' />
                 <ListItemSecondaryAction>
                   <IconButton size='small' edge='end' aria-label='delete'>
                     <Delete />
                   </IconButton>
                 </ListItemSecondaryAction>
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Inbox' />
                 <ListItemSecondaryAction>
                   <IconButton size='small' edge='end' aria-label='delete'>
                     <Delete />
                   </IconButton>
                 </ListItemSecondaryAction>
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Drafts' />
                 <ListItemSecondaryAction>
                   <IconButton size='small' edge='end' aria-label='delete'>
                     <Delete />
                   </IconButton>
                 </ListItemSecondaryAction>
-              </ListItem>
+              </ListItemButton>
             </List>
           </Paper>
         </Grid>
@@ -310,26 +312,26 @@ const TemplateSecondaryActions = ({ ...args }) => {
         <Grid item xs={3}>
           <Paper>
             <List component='nav' aria-label='main mailbox folders'>
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Home' />
                 <ListItemSecondaryAction>
                   <Switch edge='end' />
                 </ListItemSecondaryAction>
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Inbox' />
                 <ListItemSecondaryAction>
                   <Switch edge='end' />
                 </ListItemSecondaryAction>
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Drafts' />
                 <ListItemSecondaryAction>
                   <Switch edge='end' />
                 </ListItemSecondaryAction>
-              </ListItem>
+              </ListItemButton>
             </List>
           </Paper>
         </Grid>
@@ -345,42 +347,42 @@ const TemplateNested = ({ ...args }) => {
         <Grid item xs={3}>
           <Paper>
             <List component='nav' aria-label='main mailbox folders'>
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Home' />
                 <ExpandLess />
-              </ListItem>
+              </ListItemButton>
               <Collapse in={true} timeout='auto' unmountOnExit>
                 <List component='div' disablePadding>
-                  <ListItem button>
+                  <ListItemButton>
                     <ListItemText primary='Sub item' />
-                  </ListItem>
+                  </ListItemButton>
                   <List component='div' disablePadding>
-                    <ListItem button>
+                    <ListItemButton>
                       <ListItemText primary='Sub item 2' />
-                    </ListItem>
+                    </ListItemButton>
                     <List component='div' disablePadding>
-                      <ListItem button>
+                      <ListItemButton>
                         <ListItemText primary='Sub item 3' />
-                      </ListItem>
+                      </ListItemButton>
                       <List component='div' disablePadding>
-                        <ListItem button>
+                        <ListItemButton>
                           <ListItemText primary='Sub item 4' />
-                        </ListItem>
+                        </ListItemButton>
                       </List>
                     </List>
                   </List>
                 </List>
               </Collapse>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Inbox' />
                 <ExpandMore />
-              </ListItem>
+              </ListItemButton>
               <Divider />
-              <ListItem button>
+              <ListItemButton>
                 <ListItemText primary='Drafts' />
                 <ExpandMore />
-              </ListItem>
+              </ListItemButton>
             </List>
           </Paper>
         </Grid>
@@ -389,7 +391,33 @@ const TemplateNested = ({ ...args }) => {
   );
 };
 
+const DocTemplate = () => {
+  return (
+    <DocContainer
+      severity='warning'
+      content='block'
+      action={
+        <Button
+          variant='outlined'
+          size='small'
+          color='inherit'
+          href='/?path=/docs/organisms-list-guide--page'
+        >
+          Guide
+        </Button>
+      }
+    >
+      In order <DocHighlight component='span'>ListItem</DocHighlight> to be interactive,
+      you need to use <DocHighlight component='span'>MenuItem</DocHighlight> component, or
+      use <DocHighlight component='span'>ListItemButton</DocHighlight> instead.
+      <Typography mt={2}>Note that {'<ListItem button />'} is deprecated.</Typography>
+    </DocContainer>
+  );
+};
+
 export const Playground = Template.bind({});
+
+export const Guide = DocTemplate.bind({});
 
 export const OneLine = Template.bind({});
 

@@ -18,7 +18,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=3840%3A74274&t=8yIyrIS5EqFhj2RB-0'
     },
     status: {
-      type: 'inDevelopment'
+      type: 'needsUpdate'
     }
   }
 };

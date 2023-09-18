@@ -8,6 +8,7 @@ import {
   StoreOutlined
 } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
+import { DocContainer, DocHighlight, DocLink } from '../../utils/storyStyles';
 
 const options = {
   title: 'Organisms/Tabs',
@@ -284,6 +285,21 @@ const BehaviorTemplate = ({ wrapped, ...args }) => {
   );
 };
 
+const DocTemplate = () => {
+  return (
+    <DocContainer severity='warning'>
+      Some tests rely on tab clicking, but with the new design, the click is disabled on
+      selected tab. So, if your test fails in an assert like this:
+      <Typography mt={2}>
+        <DocHighlight component='span'>{`await page.getByRole('tab', { name: 'Map' }).click()`}</DocHighlight>
+      </Typography>
+      <Typography mt={2}>
+        Before the click, yo have to check if the tab is selected.
+      </Typography>
+    </DocContainer>
+  );
+};
+
 const commonArgs = { label: 'Label', disabled: true };
 const disabledControlsVerticalArgTypes = {
   orientation: { table: { disable: true } },
@@ -316,3 +332,5 @@ Vertical.argTypes = disabledControlsVerticalArgTypes;
 
 export const Behavior = BehaviorTemplate.bind({});
 Behavior.argTypes = disabledControlsBehaviorArgTypes;
+
+export const E2ETesting = DocTemplate.bind({});

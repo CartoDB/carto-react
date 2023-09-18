@@ -1,0 +1,32 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title='Foundations/Palette/Guide' />
+
+# Palette
+
+### New colors
+
+- `default` variant: new set of neutral colors. Use it instead of `grey palette`.
+- `brand palette` with custom CARTO colors for branding.
+- We also have a set of `shade` colors (with transparency):
+  - `black`
+  - `white`
+
+### Deleted colors
+
+Some keys have been removed from [color palette](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/theme/sections/palette.js) due they are unused:
+
+- `activatedOpacity`
+- `hoverOpacity`
+- `disabledOpacity`
+- `selectedOpacity`
+- `focusOpacity`
+- `other`, all removed but `divider`, which is moved to first level
+
+### Replaced colors
+
+Some others have been moved or replaced because they aren't native MUI keys and are so specific to some components, these are:
+
+- `charts`: replaced by `theme.palette.black[%]`
+- `primary.relatedLight`: replaced by `primary.background`
+- `secondary.relatedLight`: replaced by `secondary.background`.

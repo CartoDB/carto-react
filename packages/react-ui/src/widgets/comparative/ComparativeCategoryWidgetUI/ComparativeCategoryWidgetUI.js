@@ -22,9 +22,10 @@ import {
   SearchInput,
   Toolbar,
   Wrapper,
-  CategoryItemStyled
+  CategoryItemWrapper
 } from './comparative.styled';
 import useImperativeIntl from '../../../hooks/useImperativeIntl';
+import CategoryItem from './CategoryItem';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
@@ -312,21 +313,23 @@ function ComparativeCategoryWidgetUI({
           </>
         ) : null}
         {list.map((d) => (
-          <CategoryItemStyled
-            key={d.key}
-            item={d}
-            animation={animation}
-            animationOptions={animationOptions}
-            maxValue={maxValue}
-            showCheckbox={filterable && searchActive}
-            checkboxChecked={tempSelection.indexOf(d.key) !== -1}
-            filterable={filterable}
-            formatter={formatter}
-            tooltipFormatter={tooltipFormatter}
-            tooltip={tooltip}
-            onClick={clickHandler}
-            names={names}
-          />
+          <CategoryItemWrapper>
+            <CategoryItem
+              key={d.key}
+              item={d}
+              animation={animation}
+              animationOptions={animationOptions}
+              maxValue={maxValue}
+              showCheckbox={filterable && searchActive}
+              checkboxChecked={tempSelection.indexOf(d.key) !== -1}
+              filterable={filterable}
+              formatter={formatter}
+              tooltipFormatter={tooltipFormatter}
+              tooltip={tooltip}
+              onClick={clickHandler}
+              names={names}
+            />
+          </CategoryItemWrapper>
         ))}
       </CategoriesList>
       {showSearchToggle ? (

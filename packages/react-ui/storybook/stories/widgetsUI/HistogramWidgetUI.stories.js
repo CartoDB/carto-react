@@ -3,7 +3,7 @@ import HistogramWidgetUI from '../../../src/widgets/HistogramWidgetUI/HistogramW
 import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
-  title: 'Organisms/Widgets/HistogramWidgetUI',
+  title: 'Widgets/HistogramWidgetUI',
   component: HistogramWidgetUI,
   parameters: {
     docs: {

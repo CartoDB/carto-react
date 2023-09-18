@@ -7,6 +7,8 @@ import {
   ContentPasteOutlined
 } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
+import { DocContainer, DocHighlight } from '../../utils/storyStyles';
+import Button from '../../../src/components/atoms/Button';
 
 const options = {
   title: 'Organisms/Menu',
@@ -30,7 +32,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A29229&t=0T8NJiytWngAdJeO-0'
     },
     status: {
-      type: 'inDevelopment'
+      type: 'needsUpdate'
     }
   }
 };
@@ -77,7 +79,33 @@ const Template = ({ label, ...args }) => {
   );
 };
 
+const DocTemplate = () => {
+  return (
+    <DocContainer
+      severity='warning'
+      content='block'
+      action={
+        <Button
+          variant='outlined'
+          size='small'
+          color='inherit'
+          href='/?path=/docs/organisms-list-guide--page'
+        >
+          Guide
+        </Button>
+      }
+    >
+      In order <DocHighlight component='span'>ListItem</DocHighlight> to be interactive,
+      you need to use <DocHighlight component='span'>MenuItem</DocHighlight> component, or
+      use <DocHighlight component='span'>ListItemButton</DocHighlight> instead.
+      <Typography mt={2}>Note that {'<ListItem button />'} is deprecated.</Typography>
+    </DocContainer>
+  );
+};
+
 const commonArgs = { label: 'Label', dense: false };
 
 export const Playground = Template.bind({});
 Playground.args = { ...commonArgs };
+
+export const Guide = DocTemplate.bind({});

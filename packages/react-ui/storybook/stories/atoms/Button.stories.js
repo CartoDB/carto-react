@@ -4,6 +4,7 @@ import { Add, Close } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Typography from '../../../src/components/atoms/Typography';
 import Button from '../../../src/components/atoms/Button';
+import { DocContainer, DocHighlight, DocLink } from '../../utils/storyStyles';
 
 const options = {
   title: 'Atoms/Button',
@@ -203,8 +204,34 @@ const BehaviorTemplate = ({ label, icon, ...rest }) => {
   );
 };
 
+const DocTemplate = () => {
+  return (
+    <DocContainer severity='warning'>
+      We have our own
+      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/atoms/Button.js'>
+        Button
+      </DocLink>
+      component that uses <i>Mui Button</i> and wraps its children in a <i>Typography</i>{' '}
+      component to meet with the designed behavior (text overflow case).
+      <Typography mt={2}>
+        So, instead of Mui Button, you should use this one:
+        <DocHighlight component='span'>react-ui/src/components/atoms/Button</DocHighlight>
+      </Typography>
+      <Typography mt={2}>
+        For external use:
+        <DocHighlight component='span'>
+          {'import { Button } from "@carto/react-ui";'}
+        </DocHighlight>
+        .
+      </Typography>
+    </DocContainer>
+  );
+};
+
 export const Playground = PlaygroundTemplate.bind({});
 Playground.args = { label: 'Button' };
+
+export const Guide = DocTemplate.bind({});
 
 export const Contained = VariantTemplate.bind({});
 Contained.args = { variant: 'contained' };

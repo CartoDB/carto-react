@@ -94,7 +94,7 @@ For external use: `Open Sans` and `Montserrat` families have been replaced by `I
 
 ### Deleted colors
 
-Some keys have been removed from [color palette](https://github.com/CartoDB/carto-react/tree/master/packages/react-ui/src/theme) due they are unused:
+Some keys have been removed from [color palette](https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/theme/sections/palette.js) due they are unused:
 
 - activatedOpacity
 - hoverOpacity
@@ -138,6 +138,44 @@ Now, by default is placed `top` and has an `arrow` indicator, so you don't need 
 We have a new component for building data structures within Tooltips, `TooltipData`.
 
 # Components
+
+## Good practices
+
+### ListItem
+
+In order to be interactive, you need to use `MenuItem` component, or use `ListItemButton`instead.
+
+```
+<List>
+  <ListItemButton>
+    <ListItemIcon>
+      <Icon />
+    </ListItemIcon>
+    <ListItemText primary="List item text" />
+  </ListItemButton>
+<List>
+```
+
+```
+<MenuList>
+  <MenuItem>
+    <ListItemIcon>
+      <Icon />
+    </ListItemIcon>
+    <ListItemText primary="List item text" />
+  </MenuItem>
+<MenuList>
+```
+
+To render a link:
+
+```
+<ListItemButton component="a">
+  <ListItemText primary="List item text" />
+</ListItemButton>
+```
+
+Note that `<ListItem button />` is deprecated.
 
 ## Mui components replacement
 
@@ -213,12 +251,21 @@ For external use: `import { PasswordField } from '@carto/react-ui';`.
 
 ### SelectField
 
-This component add the `placeholder` and `multiple selection` logic on top of TextField Mui component.
+This component adds the `placeholder` logic on top of TextField Mui component.
 
 Instead of `<TextField select /> ` or `<Select />` you should use:
 `react-ui/src/components/atoms/SelectField`
 
 For external use: `import { SelectField } from '@carto/react-ui';`.
+
+### MultipleSelectField
+
+This component adds the `multiple selection` logic on top of SelectField component.
+
+Instead of `<Select multiple /> ` you should use:
+`react-ui/src/components/atoms/MultipleSelectField`
+
+For external use: `import { MultipleSelectField } from '@carto/react-ui';`.
 
 ### UploadField
 

@@ -3,7 +3,7 @@ import FormulaWidgetUI from '../../../src/widgets/FormulaWidgetUI/FormulaWidgetU
 import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
-  title: 'Organisms/Widgets/FormulaWidgetUI',
+  title: 'Widgets/FormulaWidgetUI',
   component: FormulaWidgetUI,
   argTypes: {
     formatter: {
