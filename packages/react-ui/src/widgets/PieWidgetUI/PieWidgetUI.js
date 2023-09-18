@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react'
 import PropTypes from 'prop-types';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { Grid, Link, styled, useTheme } from '@mui/material';
-import { disableSerie, setColor, sortDataBySize } from '../utils/chartUtils';
+import { disableSerie, setColor, sortDataDescending } from '../utils/chartUtils';
 import { processFormatterRes } from '../utils/formatterUtils';
 import PieSkeleton from './components/PieSkeleton';
 import Typography from '../../components/atoms/Typography';
@@ -40,7 +40,7 @@ function PieWidgetUI({
     let orderedCategories = [];
 
     if (order === PieWidgetUI.ORDER_TYPES.RANKING) {
-      orderedCategories = sortDataBySize(data);
+      orderedCategories = sortDataDescending(data);
     } else {
       orderedCategories = [...data];
     }

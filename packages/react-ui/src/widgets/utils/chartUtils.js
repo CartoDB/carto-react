@@ -62,8 +62,8 @@ export function applyChartFilter(serie, clickedSerieIndex, theme) {
   return serie;
 }
 
-// Sort data by value size
-export function sortDataBySize(data) {
+// Sort data from largest to smallest
+export function sortDataDescending(data) {
   const sortedData = [...data];
 
   sortedData.sort((a, b) => {
