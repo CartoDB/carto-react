@@ -19,7 +19,7 @@ async function getMultipleSeries(props) {
   );
   const rowsByCategory = await Promise.all(
     series.map(async (serie, index) => ({
-      data: await getTimeSeries({ ...propsNoSeries, ...serie }),
+      data: (await getTimeSeries({ ...propsNoSeries, ...serie })).rows,
       category: categories[index]
     }))
   );
