@@ -6,7 +6,7 @@ import Typography from '../../../components/atoms/Typography';
 
 const Legend = styled(Box)(({ theme }) => ({
   position: 'relative',
-  padding: theme.spacing(2, 0.5, 2, 0.5),
+  padding: theme.spacing(1.25, 1, 0, 1),
   width: '100%'
 }));
 
@@ -40,8 +40,8 @@ const OverflowVeil = styled(Box)(({ theme }) => ({
 
 const ShowMoreButtons = styled(Box)(({ theme }) => ({
   position: 'absolute',
-  padding: theme.spacing(0.5, 1),
-  top: theme.spacing(0.5),
+  padding: theme.spacing(0.25, 1),
+  top: theme.spacing(0),
   right: 0,
   background: theme.palette.background.paper
 }));

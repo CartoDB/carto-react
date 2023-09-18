@@ -55,7 +55,7 @@ const Legend = styled(Box)(({ theme }) => ({
   flexDirection: 'row',
   gap: theme.spacing(2),
   margin: 0,
-  padding: theme.spacing(2.25, 0.5)
+  padding: theme.spacing(1.5, 1, 0.25, 1)
 }));
 
 const LegendItem = styled(Box)(({ theme }) => ({
