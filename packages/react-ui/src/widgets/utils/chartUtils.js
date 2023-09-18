@@ -61,3 +61,14 @@ export function applyChartFilter(serie, clickedSerieIndex, theme) {
 
   return serie;
 }
+
+// Sort data by value size
+export function sortDataBySize(data) {
+  const sortedData = [...data];
+
+  sortedData.sort((a, b) => {
+    return b.value - a.value;
+  });
+
+  return sortedData;
+}

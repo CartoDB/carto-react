@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react'
 import PropTypes from 'prop-types';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { Grid, Link, styled, useTheme } from '@mui/material';
-import { disableSerie, setColor } from '../utils/chartUtils';
+import { disableSerie, setColor, sortDataBySize } from '../utils/chartUtils';
 import { processFormatterRes } from '../utils/formatterUtils';
 import PieSkeleton from './components/PieSkeleton';
 import Typography from '../../components/atoms/Typography';
@@ -27,33 +27,33 @@ function PieWidgetUI({
   selectedCategories,
   onSelectedCategoriesChange,
   isLoading,
-  maxItems
+  maxItems,
+  order
 }) {
   const theme = useTheme();
   const [showLabel, setShowLabel] = useState(true);
   const colorByCategory = useRef({});
   const othersCategory = 'Others';
 
-  // Sort categories by value size
-  const sortCategoriesBySize = useMemo(() => {
-    return (data) => {
-      const sortedCategories = [...data];
+  // Order data by size if order is ranking, otherwise keep the original order
+  const orderedData = useMemo(() => {
+    let orderedCategories = [];
 
-      sortedCategories.sort((a, b) => {
-        return b.value - a.value;
-      });
+    if (order === PieWidgetUI.ORDER_TYPES.RANKING) {
+      orderedCategories = sortDataBySize(data);
+    } else {
+      orderedCategories = [...data];
+    }
 
-      return sortedCategories;
-    };
-  }, []);
-  const sortedCategories = sortCategoriesBySize(data);
+    return orderedCategories;
+  }, [data, order]);
 
   // Limit the number of categories to display, then group the rest into an "Others" category
   const groupedData = useMemo(() => {
     let categories = [];
     let othersValue = 0;
 
-    for (const category of sortedCategories) {
+    for (const category of orderedData) {
       if (categories.length < maxItems) {
         categories.push({ ...category });
       } else {
@@ -69,19 +69,19 @@ function PieWidgetUI({
     }
 
     return categories;
-  }, [maxItems, sortedCategories]);
+  }, [maxItems, orderedData]);
 
   // Add a color to each category
   const dataWithColor = useMemo(() => {
     return groupedData.map(processDataItem(colorByCategory, colors, theme));
   }, [groupedData, colors, theme]);
 
-  // Reset colorByCategory when colors and categories changes
+  // Reset colorByCategory when colors and categories change
   useEffect(() => {
     colorByCategory.current = {};
     // Spread colors array to avoid reference problems
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...colors, sortedCategories]);
+  }, [...colors, dataWithColor]);
 
   // Tooltip
   const tooltipOptions = useMemo(
@@ -192,6 +192,10 @@ function PieWidgetUI({
         label: { show: showLabel, ...labelOptions },
         emphasis: {
           label: { ...labelOptions, position: undefined }
+        },
+        itemStyle: {
+          borderColor: theme.palette.background.paper,
+          borderWidth: 1
         }
       }
     ],
@@ -279,6 +283,15 @@ function PieWidgetUI({
   );
 }
 
+/**
+ * Enum for PieWidgetUI order types. 'RANKING' orders the data by value and 'FIXED' keeps the order present in the original data
+ * @enum {string}
+ */
+PieWidgetUI.ORDER_TYPES = {
+  RANKING: 'ranking',
+  FIXED: 'fixed'
+};
+
 PieWidgetUI.defaultProps = {
   name: null,
   formatter: (v) => v,
@@ -289,7 +302,8 @@ PieWidgetUI.defaultProps = {
   animation: true,
   filterable: true,
   selectedCategories: [],
-  maxItems: 11
+  maxItems: 11,
+  order: PieWidgetUI.ORDER_TYPES.RANKING
 };
 
 PieWidgetUI.propTypes = {
@@ -310,7 +324,8 @@ PieWidgetUI.propTypes = {
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func,
   isLoading: PropTypes.bool,
-  maxItems: PropTypes.number
+  maxItems: PropTypes.number,
+  order: PropTypes.oneOf(Object.values(PieWidgetUI.ORDER_TYPES))
 };
 
 export default PieWidgetUI;
