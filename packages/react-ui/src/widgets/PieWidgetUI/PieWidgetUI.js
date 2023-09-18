@@ -59,10 +59,10 @@ function PieWidgetUI({
     };
   }, []);
 
+  const sortedCategories = sortCategoriesBySize(data);
+
   // Add a color to each category AND Limit the number of categories to display, then group the rest into an "Others" category
   const groupedData = useMemo(() => {
-    const sortedCategories = sortCategoriesBySize(data);
-
     let categories = [];
     let othersValue = 0;
 
@@ -84,7 +84,7 @@ function PieWidgetUI({
 
     console.log('groupedCategories', categories);
     return categories;
-  }, [data, maxItems, sortCategoriesBySize]);
+  }, [maxItems, sortedCategories]);
 
   // Add a color to each category
   const dataWithColor = useMemo(() => {
@@ -98,6 +98,7 @@ function PieWidgetUI({
   const tooltipOptions = useMemo(
     () => ({
       backgroundColor: theme.palette.black[90],
+      borderColor: 'transparent',
       textStyle: { color: theme.palette.common.white },
       confine: true,
       formatter:
@@ -236,7 +237,7 @@ function PieWidgetUI({
     (params) => {
       if (onSelectedCategoriesChange) {
         const newSelectedCategories = [...selectedCategories];
-        const { name } = data[params.dataIndex];
+        const { name } = dataWithColor[params.dataIndex];
 
         const selectedCategoryIdx = newSelectedCategories.indexOf(name);
         if (selectedCategoryIdx === -1) {
@@ -248,7 +249,7 @@ function PieWidgetUI({
         onSelectedCategoriesChange(newSelectedCategories);
       }
     },
-    [data, onSelectedCategoriesChange, selectedCategories]
+    [dataWithColor, onSelectedCategoriesChange, selectedCategories]
   );
 
   const onEvents = {
