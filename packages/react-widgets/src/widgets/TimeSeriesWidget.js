@@ -61,9 +61,9 @@ const EMPTY_ARRAY = [];
  * @param  {object[]=} [props.series] - Array of {operation, operationColumn} objects that specify multiple aggregations
  * @param  {string} props.stepSize - Step applied to group the data. Must be one of those defined in `GroupDateTypes` object.
  * @param  {number=} [props.stepMultiplier] - Multiplier applied to `stepSize`. Use to aggregate by 2 hours, 5 seconds, etc.
- * @param  {string=} props.splitByCategory
- * @param  {string=} props.splitByCategoryLimit
- * @param  {string=} props.splitByCategoryValues
+ * @param  {string=} [props.splitByCategory] - Name of the data source's column to split the data by category.
+ * @param  {string=} [props.splitByCategoryLimit] - Limit of categories shown.  categories to show. Default: 5
+ * @param  {string=} [props.splitByCategoryValues]  - Select specific categories. Default most dominant categories are selected.
  * @param  {string[]} [props.stepSizeOptions] - Different steps that can be applied to group the data. If filled, an icon with a menu appears to change between steps. Every value must be one of those defined in `AggregationTypes` object.
  * @param  {string} [props.chartType] - Chart used to represent the time serie. Must be one of those defined in `TIME_SERIES_CHART_TYPES` object.
  * @param  {boolean} [props.tooltip] - Enable/disable tooltip.
