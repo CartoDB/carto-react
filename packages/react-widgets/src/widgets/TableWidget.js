@@ -21,6 +21,7 @@ import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
  * @param  {Function} [props.onPageSizeChange] - Function called when the page size is changed internally.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {string} [props.height] - Static widget height, required for scrollable table content.
+ * @param  {boolean=} [props.stableHeight] -  If specified, error and no-data state will maintain same height as normal widget in loading/loaded state.
  * @param  {boolean} [props.dense] - Whether the table should use a compact layout with smaller cell paddings.
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  * @param  {number} [props.pageSize] - Number of rows per page. This is used to manage internal state externally.
@@ -37,6 +38,7 @@ function TableWidget({
   onPageSizeChange,
   global,
   height,
+  stableHeight,
   dense,
   droppingFeaturesAlertProps,
   // Internal state
@@ -102,6 +104,7 @@ function TableWidget({
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
+        stableHeight={stableHeight}
       >
         {(hasData || isLoading) && (
           <TableWidgetUI

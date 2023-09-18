@@ -71,6 +71,7 @@ const EMPTY_ARRAY = [];
  * @param  {function} [props.formatter] - Function for formatting the value that is represented in the tooltip.
  * @param  {string=} [props.height] - Height of the chart, default 22*theme.spacingValue
  * @param  {string=} [props.fitHeight] - Widget should occupy all vertical space available.
+ * @param  {boolean=} [props.stableHeight] -  If specified, error and no-data state will maintain same height as normal widget in loading/loaded state.
  * @param  {boolean} [props.showControls] - Enable/disable animation controls (play, pause, stop, speed). True by default.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
@@ -116,6 +117,7 @@ function TimeSeriesWidget({
   formatter,
   height,
   fitHeight,
+  stableHeight,
   showControls,
   animation,
   isPlaying,
@@ -339,6 +341,7 @@ function TimeSeriesWidget({
           droppingFeaturesAlertProps={droppingFeaturesAlertProps}
           noDataAlertProps={noDataAlertProps}
           showDroppingFeaturesAlert={!remoteCalculation}
+          stableHeight={stableHeight}
         >
           {(!!data.length || isLoading) && (
             <TimeSeriesWidgetUI
