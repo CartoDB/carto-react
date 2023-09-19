@@ -1,12 +1,12 @@
-import enUS from './en-US';
-import esES from './es-ES';
+import en from './en';
+import es from './es';
 
 import { flattenMessages } from './localeUtils';
 
-const enUSFlat = flattenMessages(enUS);
-const esESFlat = flattenMessages(esES);
+const enFlat = flattenMessages(en);
+const esFlat = flattenMessages(es);
 
 export const messages = {
-  'en-US': enUSFlat,
-  'es-ES': esESFlat
+  en: enFlat,
+  es: esFlat
 };
