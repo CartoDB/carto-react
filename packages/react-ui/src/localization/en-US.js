@@ -30,7 +30,9 @@ const locales = {
         hide: 'Hide',
         show: 'Show',
         layer: 'layer',
-        opacity: 'Opacity'
+        opacity: 'Opacity',
+        hideLayer: 'Hide layer',
+        showLayer: 'Show layer'
       },
       range: {
         clear: 'Clear',

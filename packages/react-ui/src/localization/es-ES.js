@@ -31,7 +31,9 @@ const appMessages = {
         hide: 'Ocultar',
         show: 'Mostrar',
         layer: 'capa',
-        opacity: 'Opacidad'
+        opacity: 'Opacidad',
+        hideLayer: 'Ocultar capa',
+        showLayer: 'Mostrar capa'
       },
       range: {
         clear: 'Limpiar',

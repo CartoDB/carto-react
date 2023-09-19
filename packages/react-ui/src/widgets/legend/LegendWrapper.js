@@ -188,12 +188,9 @@ function Header({
       )}
       {switchable && (
         <Tooltip
-          title={
-            (visible
-              ? intl.formatMessage({ id: 'c4r.widgets.legend.hide' })
-              : intl.formatMessage({ id: 'c4r.widgets.legend.show' })) +
-            ` ${intl.formatMessage({ id: 'c4r.widgets.legend.layer' })}`
-          }
+          title={intl.formatMessage({
+            id: visible ? 'c4r.widgets.legend.showLayer' : 'c4r.widgets.legend.hideLayer'
+          })}
         >
           <Switch checked={visible} onChange={onChangeVisibility} />
         </Tooltip>
