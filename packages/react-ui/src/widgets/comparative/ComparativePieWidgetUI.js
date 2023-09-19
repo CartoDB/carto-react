@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material';
 import { lighten } from '@mui/material/styles';
 import EchartsWrapper from '../../custom-components/echarts-for-react';
-import PieSkeleton from '../PieWidgetUI/PieSkeleton';
+import PieSkeleton from '../PieWidgetUI/components/PieSkeleton';
 
 /**
  * process incoming data to assign labels, colors and selected / unselected styles
