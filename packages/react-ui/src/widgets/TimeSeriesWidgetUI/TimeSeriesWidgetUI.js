@@ -23,7 +23,8 @@ const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.WEEKS]: weeksCurrentDateRange,
   [GroupDateTypes.DAYS]: daysCurrentDateRange,
   [GroupDateTypes.HOURS]: hoursCurrentDateRange,
-  [GroupDateTypes.MINUTES]: minutesCurrentDateRange
+  [GroupDateTypes.MINUTES]: minutesCurrentDateRange,
+  [GroupDateTypes.SECONDS]: secondsCurrentDateRange
 };
 
 const FORMAT_DATE_BY_STEP_SIZE_FOR_TIME_WINDOW = {
@@ -32,7 +33,8 @@ const FORMAT_DATE_BY_STEP_SIZE_FOR_TIME_WINDOW = {
   [GroupDateTypes.WEEKS]: daysCurrentDateRange,
   [GroupDateTypes.DAYS]: daysCurrentDateRange,
   [GroupDateTypes.HOURS]: hoursCurrentDateRange,
-  [GroupDateTypes.MINUTES]: minutesCurrentDateRange
+  [GroupDateTypes.MINUTES]: minutesCurrentDateRange,
+  [GroupDateTypes.SECONDS]: secondsCurrentDateRange
 };
 
 // TimeWindow step is the amount of time (in seconds) that pass in every iteration during the animation.
@@ -394,6 +396,19 @@ function TimeSeriesWidgetUIContent({
 }
 
 // Auxiliary fns
+function secondsCurrentDateRange(date) {
+  return (
+    date.toLocaleDateString() +
+    ' ' +
+    date.toLocaleTimeString(undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+      second: '2-digit'
+    })
+  );
+}
+
 function minutesCurrentDateRange(date) {
   return (
     date.toLocaleDateString() +
