@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Skeleton, styled } from '@mui/material';
-import { SKELETON_HEIGHT, SkeletonMask } from '../SkeletonWidgets';
+import { SKELETON_HEIGHT, SkeletonMask } from '../../SkeletonWidgets';
 
 const GUTTER = 16;
 const LEYEND_SIZE = 64;

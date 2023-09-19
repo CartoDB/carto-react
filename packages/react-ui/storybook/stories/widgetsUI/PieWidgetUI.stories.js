@@ -5,6 +5,15 @@ import { Label, ThinContainer } from '../../utils/storyStyles';
 const options = {
   title: 'Widgets/PieWidgetUI',
   component: PieWidgetUI,
+  argTypes: {
+    order: {
+      defaultValue: 'ranking',
+      control: {
+        type: 'select',
+        options: ['ranking', 'fixed']
+      }
+    }
+  },
   parameters: {
     docs: {
       source: {
