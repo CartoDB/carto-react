@@ -260,7 +260,7 @@ function TimeSeriesWidgetUIContent({
     }
 
     const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
-    const weeOfMessage = intl.formatMessage({ id: 'c4r.widgets.timeSeries.weekOf' });
+    const weekOfMessage = intl.formatMessage({ id: 'c4r.widgets.timeSeries.weekOf' });
 
     // If widget is reset, then first and last date
     if (!isPlaying && !isPaused) {
@@ -268,7 +268,7 @@ function TimeSeriesWidgetUIContent({
       const lastDate = new Date(data[data.length - 1].name);
 
       return stepSize === GroupDateTypes.WEEKS
-        ? `${formatter(firstDate, weeOfMessage)} - ${formatter(lastDate, weeOfMessage)}`
+        ? `${formatter(firstDate, weekOfMessage)} - ${formatter(lastDate, weekOfMessage)}`
         : `${formatter(firstDate)} - ${formatter(lastDate)}`;
     }
 
@@ -276,7 +276,7 @@ function TimeSeriesWidgetUIContent({
     if (timelinePosition >= 0 && data[timelinePosition]) {
       const currentDate = new Date(data[timelinePosition].name);
       return stepSize === GroupDateTypes.WEEKS
-        ? formatter(currentDate, weeOfMessage)
+        ? formatter(currentDate, weekOfMessage)
         : formatter(currentDate);
     }
   }, [data, stepSize, isPlaying, isPaused, timeWindow, timelinePosition, intl]);
