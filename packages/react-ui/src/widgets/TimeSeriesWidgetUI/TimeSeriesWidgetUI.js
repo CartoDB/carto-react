@@ -54,6 +54,7 @@ const SPEED_FACTORS = [0.5, 1, 2, 3];
 function TimeSeriesWidgetUI({
   data,
   stepSize,
+  stepMultiplier = 1,
   chartType,
   tooltip,
   tooltipFormatter,
@@ -89,6 +90,7 @@ function TimeSeriesWidgetUI({
       <TimeSeriesWidgetUIContent
         data={data}
         stepSize={stepSize}
+        stepMultiplier={stepMultiplier}
         chartType={chartType}
         tooltip={tooltip}
         tooltipFormatter={tooltipFormatter}
@@ -109,6 +111,7 @@ TimeSeriesWidgetUI.propTypes = {
     })
   ).isRequired,
   stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired,
+  stepMultiplier: PropTypes.number,
   chartType: PropTypes.oneOf(Object.values(CHART_TYPES)),
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
@@ -150,6 +153,7 @@ export default TimeSeriesWidgetUI;
 function TimeSeriesWidgetUIContent({
   data,
   stepSize,
+  stepMultiplier,
   chartType,
   tooltip,
   tooltipFormatter,
@@ -301,7 +305,9 @@ function TimeSeriesWidgetUIContent({
       data={data}
       tooltip={tooltip}
       formatter={formatter}
-      tooltipFormatter={(params) => tooltipFormatter(params, stepSize, formatter)}
+      tooltipFormatter={(params) =>
+        tooltipFormatter(params, stepSize, formatter, stepMultiplier)
+      }
       height={height}
       animation={animation}
     />
@@ -422,39 +428,86 @@ function minutesCurrentDateRange(date) {
   );
 }
 
-function hoursCurrentDateRange(date) {
-  return (
-    date.toLocaleDateString() +
-    ' ' +
-    date.toLocaleTimeString(undefined, { hour: 'numeric', hour12: true })
-  );
+const formatDateHour = (date) =>
+  date.toLocaleDateString() +
+  ' ' +
+  date.toLocaleTimeString(undefined, { hour: 'numeric', hour12: true });
+
+export function hoursCurrentDateRange(date, stepMultiplier = 1) {
+  const startDateFmt = formatDateHour(date);
+  if (stepMultiplier > 1) {
+    const end = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours() + (stepMultiplier - 1),
+      0,
+      0
+    );
+    const endDateFmt = formatDateHour(end);
+    return `${stepMultiplier} hours (${startDateFmt} - ${endDateFmt})`;
+  }
+  return startDateFmt;
 }
 
-function daysCurrentDateRange(date) {
+export function daysCurrentDateRange(date, stepMultiplier = 1) {
+  const startDateFmt = date.toLocaleDateString();
+  if (stepMultiplier > 1) {
+    const end = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate() + (stepMultiplier - 1)
+    );
+    const endDateFmt = end.toLocaleDateString();
+    return `${stepMultiplier} days (${startDateFmt} - ${endDateFmt})`;
+  }
   return date.toLocaleDateString();
 }
 
-function weeksCurrentDateRange(date) {
-  return `Week of ${new Date(getMonday(date)).toLocaleDateString()}`;
+export function weeksCurrentDateRange(date, stepMultiplier = 1) {
+  const start = new Date(getMonday(date));
+  const startDateFmt = start.toLocaleDateString();
+  if (stepMultiplier > 1) {
+    const end = new Date(
+      start.getFullYear(),
+      start.getMonth(),
+      start.getDate() + 6 + 7 * (stepMultiplier - 1)
+    );
+    const endDateFmt = end.toLocaleDateString();
+    return `${stepMultiplier} weeks (${startDateFmt} - ${endDateFmt})`;
+  }
+  return `Week of ${startDateFmt}`;
 }
 
-function yearCurrentDateRange(date) {
-  return date.getFullYear();
+export function monthsCurrentDateRange(date, stepMultiplier) {
+  const startDateFmt = formatMonth(date) + '/' + date.getFullYear();
+  if (stepMultiplier > 1) {
+    const end = new Date(date.getFullYear(), date.getMonth() + (stepMultiplier - 1), 1);
+    const endDateFmt = formatMonth(end) + '/' + end.getFullYear();
+    return `${stepMultiplier} months (${startDateFmt} - ${endDateFmt})`;
+  }
+  return startDateFmt;
 }
 
-function monthsCurrentDateRange(date) {
-  return formatMonth(date) + '/' + date.getFullYear();
+export function yearCurrentDateRange(date, stepMultiplier = 1) {
+  const startDateFmt = `${date.getFullYear()}`;
+  if (stepMultiplier > 1) {
+    const end = new Date(date.getFullYear() + (stepMultiplier - 1), 1, 1);
+    const endDateFmt = end.getFullYear();
+    return `${stepMultiplier} years (${startDateFmt} - ${endDateFmt})`;
+  }
+  return startDateFmt;
 }
 
-function formatMonth(date) {
+function formatMonth(date, stepMultiplier) {
   return ('0' + (date.getMonth() + 1)).slice(-2);
 }
 
-function defaultTooltipFormatter(params, stepSize, valueFormatter) {
+function defaultTooltipFormatter(params, stepSize, valueFormatter, stepMultiplier) {
   const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
   const [name] = params[0].data;
   const date = new Date(name);
-  const title = formatter(date);
+  const title = formatter(date, stepMultiplier);
 
   return `<div style='width: 160px;'>
     <p style='font-weight: 600; line-height: 1; margin: 4px 0;'>${title}</p>
