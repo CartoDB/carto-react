@@ -56,6 +56,7 @@ function calculateNextStep(time, stepType) {
  * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple operation columns into a single one.
  * @param  {string} [props.operation] - Operation to apply to the operationColumn. Operation used by default is COUNT. Must be one of those defined in `AggregationTypes` object.
  * @param  {string} props.stepSize - Step applied to group the data. Must be one of those defined in `GroupDateTypes` object.
+ * @param  {number=} [props.stepMultiplier] - Multiplier applied to `stepSize`. Use to aggregate by 2 hours, 5 seconds, etc.
  * @param  {string[]} [props.stepSizeOptions] - Different steps that can be applied to group the data. If filled, an icon with a menu appears to change between steps. Every value must be one of those defined in `AggregationTypes` object.
  * @param  {string} [props.chartType] - Chart used to represent the time serie. Must be one of those defined in `TIME_SERIES_CHART_TYPES` object.
  * @param  {boolean} [props.tooltip] - Enable/disable tooltip.
@@ -112,7 +113,8 @@ function TimeSeriesWidget({
   timeWindow,
   onTimeWindowUpdate,
   // Both
-  stepSize
+  stepSize,
+  stepMultiplier
 }) {
   const dispatch = useDispatch();
 
@@ -145,6 +147,7 @@ function TimeSeriesWidget({
       column,
       joinOperation,
       stepSize: selectedStepSize,
+      stepMultiplier,
       operationColumn,
       operation
     },
