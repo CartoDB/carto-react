@@ -59,7 +59,7 @@ const EMPTY_ARRAY = [];
  * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple operation columns into a single one.
  * @param  {string} [props.operation] - Operation to apply to the operationColumn. Operation used by default is COUNT. Must be one of those defined in `AggregationTypes` object.
  * @param  {object[]=} [props.series] - Array of {operation, operationColumn} objects that specify multiple aggregations
- * @param  {string} props.stepSize - Step applied to group the data. Must be one of those defined in `GroupDateTypes` object.
+ * @param  {string} [props.stepSize] - Step applied to group the data. Must be one of those defined in `GroupDateTypes` object.
  * @param  {number=} [props.stepMultiplier] - Multiplier applied to `stepSize`. Use to aggregate by 2 hours, 5 seconds, etc.
  * @param  {string=} [props.splitByCategory] - Name of the data source's column to split the data by category.
  * @param  {string=} [props.splitByCategoryLimit] - Limit of categories shown.  categories to show. Default: 5
@@ -190,12 +190,9 @@ function TimeSeriesWidget({
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
-  const { data: unsafeData, categories } = Array.isArray(result)
+  const { data, categories } = Array.isArray(result)
     ? { data: result, categories: undefined }
     : { data: result.rows, categories: result.categories };
-
-  // filter nulls, TODO remove when backend already fixes this
-  const data = useMemo(() => unsafeData.filter((row) => row.name !== null), [unsafeData]);
 
   const minTime = useMemo(
     () => data.reduce((acc, { name }) => (name < acc ? name : acc), Number.MAX_VALUE),
