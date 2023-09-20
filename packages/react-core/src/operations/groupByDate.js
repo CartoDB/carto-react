@@ -23,6 +23,15 @@ const GROUP_KEY_FN_MAPPING = {
       date.getUTCDate(),
       date.getUTCHours(),
       date.getUTCMinutes()
+    ),
+  [GroupDateTypes.SECONDS]: (date) =>
+    Date.UTC(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+      date.getUTCHours(),
+      date.getUTCMinutes(),
+      date.getUTCSeconds()
     )
 };
 

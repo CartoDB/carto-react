@@ -89,6 +89,10 @@ describe('groupValuesByDateColumn', () => {
         [GroupDateTypes.MINUTES]: DATES_VALUES.map((dateValue) => ({
           name: dateValue,
           value: 1
+        })),
+        [GroupDateTypes.SECONDS]: DATES_VALUES.map((dateValue) => ({
+          name: dateValue,
+          value: 1
         }))
       };
 
