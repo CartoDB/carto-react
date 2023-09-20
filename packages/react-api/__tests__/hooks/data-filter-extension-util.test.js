@@ -35,9 +35,8 @@ describe('gpu-filter-utils', () => {
         revenue: 100
       }
     };
-    const { filterRange, updateTriggers, getFilterValue } = getDataFilterExtensionProps(
-      filters
-    );
+    const { filterRange, updateTriggers, getFilterValue } =
+      getDataFilterExtensionProps(filters);
 
     expect(filterRange.length).toEqual(MAX_GPU_FILTERS);
     filterRange.forEach((range, index) => {
@@ -51,7 +50,8 @@ describe('gpu-filter-utils', () => {
     expect(getFilterValue(featureNotFilter)).toEqual([0, 0, 0, 0]);
   });
 
-  test.only('correct values with time filter', () => {
+  test('correct values with time filter', () => {
+    const offsetBy = 473380000000;
     const filters = {
       storetype: {
         in: {
@@ -62,7 +62,8 @@ describe('gpu-filter-utils', () => {
       dateTime: {
         time: {
           values: [[473385600000, 504921600000]],
-          owner: 'storesByRevenue'
+          owner: 'storesByRevenue',
+          params: { offsetBy }
         }
       }
     };
@@ -74,22 +75,26 @@ describe('gpu-filter-utils', () => {
       }
     };
 
-    const { filterRange, updateTriggers, getFilterValue } = getDataFilterExtensionProps(
-      filters
-    );
+    const { filterRange, updateTriggers, getFilterValue } =
+      getDataFilterExtensionProps(filters);
 
     filterRange.forEach((range, index) => {
       if (index === 0) {
         expect(range).toEqual([1, 1]);
       } else if (index === 1) {
-        expect(range).toEqual(filters.dateTime.time.values[0]);
+        expect(range).toEqual(filters.dateTime.time.values[0].map((v) => v - offsetBy));
       } else {
         expect(range).toEqual([0, 0]);
       }
     });
 
-    filters.dateTime.time = {};
+    filters.dateTime = { time: {}, offsetBy };
     expect(updateTriggers.getFilterValue).toEqual(JSON.stringify(filters));
-    expect(getFilterValue(feature)).toEqual([1, feature.properties.dateTime, 0, 0]);
+    expect(getFilterValue(feature)).toEqual([
+      1,
+      feature.properties.dateTime - offsetBy,
+      0,
+      0
+    ]);
   });
 });
