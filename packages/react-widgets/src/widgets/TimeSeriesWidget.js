@@ -34,15 +34,15 @@ const STEP_SIZE_RANGE_MAPPING = {
   [GroupDateTypes.SECONDS]: 1 * 1000
 };
 
-function calculateNextStep(time, stepType) {
+function calculateNextStep(time, stepType, stepMultiplier = 1) {
   const currentDate = new Date(time);
   switch (stepType) {
     case GroupDateTypes.YEARS:
-      return currentDate.setFullYear(currentDate.getFullYear() + 1);
+      return currentDate.setFullYear(currentDate.getFullYear() + stepMultiplier);
     case GroupDateTypes.MONTHS:
-      return currentDate.setMonth(currentDate.getMonth() + 1);
+      return currentDate.setMonth(currentDate.getMonth() + stepMultiplier);
     default:
-      return time + STEP_SIZE_RANGE_MAPPING[stepType];
+      return time + STEP_SIZE_RANGE_MAPPING[stepType] * stepMultiplier;
   }
 }
 
@@ -228,7 +228,9 @@ function TimeSeriesWidget({
             id: dataSource,
             column,
             type: FilterTypes.TIME,
-            values: [[moment, calculateNextStep(moment, selectedStepSize) - 1]],
+            values: [
+              [moment, calculateNextStep(moment, selectedStepSize, stepMultiplier) - 1]
+            ],
             params: { offsetBy: minTime },
             owner: id
           })
@@ -244,6 +246,7 @@ function TimeSeriesWidget({
       dataSource,
       column,
       selectedStepSize,
+      stepMultiplier,
       minTime,
       id,
       onTimelineUpdate
@@ -340,6 +343,7 @@ function TimeSeriesWidget({
               data={data}
               categories={categories}
               stepSize={selectedStepSize}
+              stepMultiplier={stepMultiplier}
               chartType={chartType}
               tooltip={tooltip}
               tooltipFormatter={tooltipFormatter}
