@@ -2,6 +2,8 @@
 
 ## Not released
 
+- TimeSeriesWidget: support for second precision and stepMultiplier [#776](https://github.com/CartoDB/carto-react/pull/776)
+
 ## 2.2
 
 ### 2.2.7 (2023-09-13)
