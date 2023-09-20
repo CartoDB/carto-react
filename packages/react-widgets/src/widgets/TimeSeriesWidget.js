@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getTimeSeries } from '../models';
 import { addFilter, removeFilter } from '@carto/react-redux';
@@ -29,7 +29,8 @@ const STEP_SIZE_RANGE_MAPPING = {
   [GroupDateTypes.WEEKS]: 60 * 60 * 24 * 7 * 1000,
   [GroupDateTypes.DAYS]: 60 * 60 * 24 * 1000,
   [GroupDateTypes.HOURS]: 60 * 60 * 1000,
-  [GroupDateTypes.MINUTES]: 60 * 1000
+  [GroupDateTypes.MINUTES]: 60 * 1000,
+  [GroupDateTypes.SECONDS]: 1 * 1000
 };
 
 function calculateNextStep(time, stepType) {
@@ -152,6 +153,11 @@ function TimeSeriesWidget({
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
+  const minTime = useMemo(
+    () => data.reduce((acc, { name }) => (name < acc ? name : acc), Number.MAX_VALUE),
+    [data]
+  );
+
   const handleTimeWindowUpdate = useCallback(
     (timeWindow) => {
       if (!isLoading) {
@@ -161,6 +167,7 @@ function TimeSeriesWidget({
             column,
             type: FilterTypes.TIME,
             values: [timeWindow.map((date) => date.getTime?.() || date)],
+            params: { offsetBy: minTime },
             owner: id
           })
         );
@@ -168,7 +175,7 @@ function TimeSeriesWidget({
         if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
       }
     },
-    [column, dataSource, isLoading, dispatch, id, onTimeWindowUpdate]
+    [isLoading, dispatch, dataSource, column, minTime, id, onTimeWindowUpdate]
   );
 
   const handleTimelineUpdate = useCallback(
@@ -181,6 +188,7 @@ function TimeSeriesWidget({
             column,
             type: FilterTypes.TIME,
             values: [[moment, calculateNextStep(moment, selectedStepSize) - 1]],
+            params: { offsetBy: minTime },
             owner: id
           })
         );
@@ -189,14 +197,15 @@ function TimeSeriesWidget({
       }
     },
     [
-      column,
-      dataSource,
       isLoading,
+      data,
       dispatch,
-      id,
-      onTimelineUpdate,
+      dataSource,
+      column,
       selectedStepSize,
-      data
+      minTime,
+      id,
+      onTimelineUpdate
     ]
   );
 
