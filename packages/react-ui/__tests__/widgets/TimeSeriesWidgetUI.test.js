@@ -1,6 +1,12 @@
 import React from 'react';
 import { render, screen, act, fireEvent, waitFor } from '../widgets/utils/testUtils';
-import TimeSeriesWidgetUI from '../../src/widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
+import TimeSeriesWidgetUI, {
+  daysCurrentDateRange,
+  hoursCurrentDateRange,
+  monthsCurrentDateRange,
+  weeksCurrentDateRange,
+  yearCurrentDateRange
+} from '../../src/widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import { mockEcharts } from './testUtils';
 import { GroupDateTypes } from '@carto/react-core';
 
@@ -245,5 +251,106 @@ describe('TimeSeriesWidgetUI', () => {
     render(<Widget timeWindow={[1517785200000, 1528063200000]} onStop={onStop} />);
     fireEvent.click(screen.getByText(/Clear/));
     await waitFor(async () => expect(onStop).toHaveBeenCalledTimes(1));
+  });
+
+  describe.only('defaultTooltipFormatter', () => {
+    test('hoursCurrentDateRange', async () => {
+      // warning, at least in my test env all those dates a formatted as US dates MM/DD/YYYY
+      expect(hoursCurrentDateRange(new Date('2022-03-10T13:00:00'))).toBe(
+        '3/10/2022 1 PM'
+      );
+      expect(hoursCurrentDateRange(new Date('2022-03-10T13:00:00'), 2)).toBe(
+        '2 hours (3/10/2022 1 PM - 3/10/2022 2 PM)'
+      );
+
+      // cross day
+      expect(hoursCurrentDateRange(new Date('2022-03-10T15:00:00'), 24)).toBe(
+        '24 hours (3/10/2022 3 PM - 3/11/2022 2 PM)'
+      );
+
+      // // february/march normal year
+      // expect(hoursCurrentDateRange(new Date('2015-02-20'), 10)).toBe(
+      //   '10 days (2/20/2015 - 3/1/2015)'
+      // );
+
+      // // february/march normal step year
+      // expect(hoursCurrentDateRange(new Date('2016-02-20'), 10)).toBe(
+      //   '10 days (2/20/2016 - 2/29/2016)'
+      // );
+
+      // // cross year
+      // expect(hoursCurrentDateRange(new Date('2022-12-01'), 62)).toBe(
+      //   '62 days (12/1/2022 - 1/31/2023)'
+      // );
+    });
+
+    test('daysCurrentDateRange', async () => {
+      // warning, at least in my test env all those dates a formatted as US dates MM/DD/YYYY
+      expect(daysCurrentDateRange(new Date('2022-03-10'))).toBe('3/10/2022');
+      expect(daysCurrentDateRange(new Date('2022-03-10'), 2)).toBe(
+        '2 days (3/10/2022 - 3/11/2022)'
+      );
+      expect(daysCurrentDateRange(new Date('2022-12-01'), 31)).toBe(
+        '31 days (12/1/2022 - 12/31/2022)'
+      );
+
+      // cross year
+      expect(daysCurrentDateRange(new Date('2022-12-01'), 62)).toBe(
+        '62 days (12/1/2022 - 1/31/2023)'
+      );
+
+      // february/march normal year
+      expect(daysCurrentDateRange(new Date('2015-02-20'), 10)).toBe(
+        '10 days (2/20/2015 - 3/1/2015)'
+      );
+
+      // february/march normal step year
+      expect(daysCurrentDateRange(new Date('2016-02-20'), 10)).toBe(
+        '10 days (2/20/2016 - 2/29/2016)'
+      );
+    });
+    test('weeksCurrentDateRange', async () => {
+      // warning, at least in my test env all those dates a formatted as US dates MM/DD/YYYY
+      expect(weeksCurrentDateRange(new Date('2023-05-01'))).toBe('Week of 5/1/2023');
+      expect(weeksCurrentDateRange(new Date('2023-05-01'), 2)).toBe(
+        '2 weeks (5/1/2023 - 5/14/2023)'
+      );
+
+      // cross end of year
+      expect(weeksCurrentDateRange(new Date('2014-12-01'), 10)).toBe(
+        '10 weeks (12/1/2014 - 2/8/2015)'
+      );
+
+      // february/march normal year
+      expect(weeksCurrentDateRange(new Date('2015-02-23'), 2)).toBe(
+        '2 weeks (2/23/2015 - 3/8/2015)'
+      );
+
+      // february/march normal step year
+      expect(weeksCurrentDateRange(new Date('2016-02-22'), 2)).toBe(
+        '2 weeks (2/22/2016 - 3/6/2016)'
+      );
+    });
+
+    test('monthsCurrentDateRange', async () => {
+      // warning, at least in my test env all those dates a formatted as US dates MM/DD/YYYY
+      expect(monthsCurrentDateRange(new Date('2023-05-01'))).toBe('05/2023');
+      expect(monthsCurrentDateRange(new Date('2023-05-01'), 2)).toBe(
+        '2 months (05/2023 - 06/2023)'
+      );
+
+      // cross end of year
+      expect(monthsCurrentDateRange(new Date('2014-12-01'), 10)).toBe(
+        '10 months (12/2014 - 09/2015)'
+      );
+    });
+
+    test('yearCurrentDateRange', async () => {
+      // warning, at least in my test env all those dates a formatted as US dates MM/DD/YYYY
+      expect(yearCurrentDateRange(new Date('2023-05-01'))).toBe('2023');
+      expect(yearCurrentDateRange(new Date('2023-05-01'), 2)).toBe(
+        '2 years (2023 - 2024)'
+      );
+    });
   });
 });
