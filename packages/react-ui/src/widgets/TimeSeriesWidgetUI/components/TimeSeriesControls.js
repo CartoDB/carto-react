@@ -13,7 +13,7 @@ const TIME_WINDOW_STEP_BY_STEP_SIZE = {
   [GroupDateTypes.WEEKS]: 60 * 60 * 24, // Day
   [GroupDateTypes.DAYS]: 60 * 60 * 12, // Half day
   [GroupDateTypes.HOURS]: 60 * 60, // Hour
-  [GroupDateTypes.MINUTES]: 60 * 15 // Quarter hour,
+  [GroupDateTypes.MINUTES]: 60 * 15, // Quarter hour,
   [GroupDateTypes.SECONDS]: 1 // Second,
 };
 
