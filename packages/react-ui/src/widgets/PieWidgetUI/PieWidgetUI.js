@@ -5,6 +5,7 @@ import { Grid, Link, styled, useTheme } from '@mui/material';
 import { disableSerie, setColor, sortDataDescending } from '../utils/chartUtils';
 import { processFormatterRes } from '../utils/formatterUtils';
 import PieSkeleton from './components/PieSkeleton';
+import ChartLegend from '../ChartLegend';
 import Typography from '../../components/atoms/Typography';
 
 export const OptionsBar = styled(Grid)(({ theme }) => ({
@@ -100,7 +101,7 @@ function PieWidgetUI({
   // Legend
   const legendOptions = useMemo(
     () => ({
-      selectedMode: false,
+      //selectedMode: false,
       type: 'scroll',
       left: theme.spacingValue,
       bottom: theme.spacingValue * -0.5,
@@ -137,6 +138,7 @@ function PieWidgetUI({
   );
 
   // Series
+  // example https://codepen.io/MarsHunag/details/xxGGMgE
   const labelOptions = useMemo(
     () => ({
       formatter: '{per|{d}%}\n{b|{b}}',
@@ -167,6 +169,8 @@ function PieWidgetUI({
         type: 'pie',
         name,
         animation,
+        //expandAndCollapse: false,
+        //silent: true,
         data: dataWithColor.map((item) => {
           // Avoid modifying data item
           const clonedItem = { ...item };
@@ -192,7 +196,8 @@ function PieWidgetUI({
         bottom: theme.spacingValue * 2.5,
         label: { show: showLabel, ...labelOptions },
         emphasis: {
-          label: { ...labelOptions, position: undefined },
+          focus: 'series',
+          //label: { ...labelOptions, position: undefined },
           scaleSize: 5
         },
         itemStyle: {
@@ -222,13 +227,31 @@ function PieWidgetUI({
         bottom: 0
       },
       tooltip: tooltipOptions,
-      legend: legendOptions,
-      series: seriesOptions
+      legend: {
+        show: false
+      },
+      series: seriesOptions,
+      title: {
+        text: 'text',
+        subtext: 'subtext',
+        x: 'center',
+        y: 'center',
+        textStyle: {
+          fontWeight: 'normal',
+          fontSize: 24,
+          color: '#FDB560'
+        },
+        subtextStyle: {
+          fontWeight: 'normal',
+          fontSize: 16,
+          color: '#4A4A4A'
+        }
+      }
     }),
-    [tooltipOptions, seriesOptions, legendOptions]
+    [tooltipOptions, seriesOptions]
   );
 
-  const clickEvent = useCallback(
+  const handleClickEvent = useCallback(
     (params) => {
       if (onSelectedCategoriesChange) {
         const newSelectedCategories = [...selectedCategories];
@@ -246,14 +269,34 @@ function PieWidgetUI({
           newSelectedCategories.splice(selectedCategoryIdx, 1);
         }
 
+        console.log('newSelectedCategories chart', newSelectedCategories);
         onSelectedCategoriesChange(newSelectedCategories);
       }
     },
     [dataWithColor, onSelectedCategoriesChange, selectedCategories]
   );
 
+  const handleCategoryClick = useCallback(
+    (category) => {
+      if (onSelectedCategoriesChange) {
+        const newSelectedCategories = [...selectedCategories];
+
+        const selectedCategoryIdx = newSelectedCategories.indexOf(category);
+        if (selectedCategoryIdx === -1) {
+          newSelectedCategories.push(category);
+        } else {
+          newSelectedCategories.splice(selectedCategoryIdx, 1);
+        }
+
+        console.log('newSelectedCategories legend', newSelectedCategories);
+        onSelectedCategoriesChange(newSelectedCategories);
+      }
+    },
+    [onSelectedCategoriesChange, selectedCategories]
+  );
+
   const onEvents = {
-    ...(filterable && { click: clickEvent }),
+    ...(filterable && { click: handleClickEvent }),
     mouseover: () => {
       setShowLabel(false);
     },
@@ -280,12 +323,21 @@ function PieWidgetUI({
           </Link>
         )}
       </OptionsBar>
+
       <ReactEcharts
         option={options}
         onEvents={onEvents}
         lazyUpdate={true}
         style={{ maxHeight: height }}
       />
+
+      {dataWithColor.length > 1 && (
+        <ChartLegend
+          series={dataWithColor}
+          selectedCategories={selectedCategories}
+          onCategoryClick={onSelectedCategoriesChange && handleCategoryClick}
+        />
+      )}
     </>
   );
 }
