@@ -4,7 +4,7 @@ import { CommonWidgetProps, MonoColumnWidgetProps } from '../types';
 export interface TimeseriesWidgetSerie {
   operation: AggregationTypes;
   operationColumn: string;
-}
+};
 
 export type TimeSeriesWidgetProps = {
   operationColumn?: string;
