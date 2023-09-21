@@ -320,7 +320,7 @@ function TimeSeriesWidgetUIContent({
       fitHeight={fitHeight}
       animation={animation}
       selectedCategories={selectedCategories}
-      onCategoryClick={handleCategoryClick}
+      onCategoryClick={onSelectedCategoriesChange && handleCategoryClick}
     />
   );
 
