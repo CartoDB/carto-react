@@ -16,7 +16,11 @@ export {
   getScatter,
   getTable
 } from './models';
-export { default as TimeSeriesWidget } from './widgets/TimeSeriesWidget';
+export {
+  default as TimeSeriesWidget,
+  TimeSeriesWidgetProps,
+  TimeseriesWidgetSerie
+} from './widgets/TimeSeriesWidget';
 export { default as BarWidget } from './widgets/BarWidget';
 export { default as useSourceFilters } from './hooks/useSourceFilters';
 export { default as FeatureSelectionWidget } from './widgets/FeatureSelectionWidget';
