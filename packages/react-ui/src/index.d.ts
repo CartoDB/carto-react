@@ -1,5 +1,9 @@
 import { theme, cartoThemeOptions, CartoTheme } from './theme/carto-theme';
-import WrapperWidgetUI from './widgets/WrapperWidgetUI';
+import WrapperWidgetUI, {
+  WrapperWidgetUIProps,
+  WrapperWidgetAction,
+  WrapperWidgetOption
+} from './widgets/WrapperWidgetUI';
 import CategoryWidgetUI from './widgets/CategoryWidgetUI/CategoryWidgetUI';
 import FormulaWidgetUI from './widgets/FormulaWidgetUI/FormulaWidgetUI';
 import BarWidgetUI from './widgets/BarWidgetUI/BarWidgetUI';
@@ -59,6 +63,9 @@ export {
   cartoThemeOptions,
   CartoTheme,
   WrapperWidgetUI,
+  WrapperWidgetUIProps,
+  WrapperWidgetAction,
+  WrapperWidgetOption,
   CategoryWidgetUI,
   FormulaWidgetUI,
   HistogramWidgetUI,
