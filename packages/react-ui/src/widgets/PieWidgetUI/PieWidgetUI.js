@@ -1,8 +1,13 @@
-import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
+import React, { useMemo, useRef, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { Grid, Link, styled, useTheme } from '@mui/material';
-import { disableSerie, setColor, sortDataDescending } from '../utils/chartUtils';
+import {
+  calculateMaxValue,
+  disableSerie,
+  setColor,
+  sortDataDescending
+} from '../utils/chartUtils';
 import { processFormatterRes } from '../utils/formatterUtils';
 import PieSkeleton from './components/PieSkeleton';
 import Typography from '../../components/atoms/Typography';
@@ -31,7 +36,6 @@ function PieWidgetUI({
   order
 }) {
   const theme = useTheme();
-  const [showLabel, setShowLabel] = useState(true);
   const colorByCategory = useRef({});
   const othersCategory = 'Others';
 
@@ -170,29 +174,34 @@ function PieWidgetUI({
     [theme]
   );
 
-  // Series
-  const labelOptions = useMemo(
+  // example https://codepen.io/MarsHunag/details/xxGGMgE
+  // Wrap the calculateMaxValue function in useMemo to memoize its result
+  const availableData = selectedCategories || dataWithColor;
+  const maxValue = useMemo(() => calculateMaxValue(availableData), [availableData]);
+  console.log('maxValue', maxValue);
+
+  const titleOptions = useMemo(
     () => ({
-      formatter: '{per|{d}%}\n{b|{b}}',
-      position: 'center',
-      rich: {
-        b: {
-          fontFamily: theme.typography.overlineDelicate.fontFamily,
-          fontSize: theme.spacingValue * 1.75,
-          lineHeight: theme.spacingValue * 1.75,
-          fontWeight: 'normal',
-          color: theme.palette.text.primary
-        },
-        per: {
-          ...theme.typography,
-          fontSize: theme.spacingValue * 3,
-          lineHeight: theme.spacingValue * 4.5,
-          fontWeight: 600,
-          color: theme.palette.text.primary
-        }
+      text: maxValue,
+      subtext: 'subtext',
+      x: 'center',
+      y: 'center',
+      textStyle: {
+        ...theme.typography,
+        fontSize: theme.spacingValue * 3,
+        lineHeight: 1,
+        fontWeight: 600,
+        color: theme.palette.text.primary
+      },
+      subtextStyle: {
+        fontFamily: theme.typography.overlineDelicate.fontFamily,
+        fontSize: theme.spacingValue * 1.75,
+        lineHeight: 1,
+        fontWeight: 400,
+        color: theme.palette.text.primary
       }
     }),
-    [theme]
+    [maxValue, theme.palette.text.primary, theme.spacingValue, theme.typography]
   );
 
   const seriesOptions = useMemo(
@@ -224,9 +233,8 @@ function PieWidgetUI({
         radius: ['74%', '90%'],
         selectedOffset: 0,
         bottom: theme.spacingValue * 2.5,
-        label: { show: true, ...labelOptions },
+        label: { show: false },
         emphasis: {
-          label: { show: false, ...labelOptions, position: undefined },
           scaleSize: 5
         },
         itemStyle: {
@@ -235,7 +243,7 @@ function PieWidgetUI({
         }
       }
     ],
-    [name, animation, dataWithColor, labels, selectedCategories, theme, labelOptions]
+    [name, animation, dataWithColor, labels, selectedCategories, theme]
   );
 
   const options = useMemo(
@@ -249,13 +257,9 @@ function PieWidgetUI({
       tooltip: tooltipOptions,
       legend: legendOptions,
       series: seriesOptions,
-      title: {
-        text: `${largestCategory.name}`,
-        left: 'center',
-        top: 'center'
-      }
+      title: titleOptions
     }),
-    [tooltipOptions, seriesOptions, legendOptions, largestCategory]
+    [tooltipOptions, legendOptions, seriesOptions, titleOptions]
   );
 
   const clickEvent = useCallback(
@@ -283,13 +287,7 @@ function PieWidgetUI({
   );
 
   const onEvents = {
-    ...(filterable && { click: clickEvent }),
-    mouseover: () => {
-      setShowLabel(false);
-    },
-    mouseout: () => {
-      setShowLabel(true);
-    }
+    ...(filterable && { click: clickEvent })
   };
 
   const handleClearSelectedCategories = () => {

@@ -72,3 +72,13 @@ export function sortDataDescending(data) {
 
   return sortedData;
 }
+
+export function calculateMaxValue(series) {
+  const maxValue = series.reduce(
+    (accOut, { data }) =>
+      data.reduce((accInt, row) => (row[1] > accInt ? row[1] : accInt), accOut),
+    Number.MIN_VALUE
+  );
+
+  return maxValue;
+}
