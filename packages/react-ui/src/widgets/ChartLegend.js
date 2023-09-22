@@ -66,7 +66,7 @@ export default function ChartLegend({ series, selectedCategories, onCategoryClic
   const legendRef = useRef(null);
   const containerRef = useRef(null);
   const showMoreButtonsRef = useRef(null);
-  console.log('series', series);
+  console.log('selectedCategories', selectedCategories);
 
   const handleClickRight = () => {
     setOffset(offset + 1);
@@ -129,8 +129,8 @@ export default function ChartLegend({ series, selectedCategories, onCategoryClic
 
           const { name } = series[i];
           const selected =
-            selectedCategories.length === 0 || selectedCategories.indexOf(name);
-
+            selectedCategories.length === 0 || selectedCategories.includes(category);
+          console.log('selected', [selected, name]);
           // Avoid clicking if the category name is "Others"
           //if (name === 'Others') {
           //  return;

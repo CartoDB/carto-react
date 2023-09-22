@@ -65,7 +65,7 @@ const CustomColorsProps = {
     { name: 'Elephants', value: 100 },
     { name: 'Mamouths', value: 120 },
     { name: 'Torttles', value: 150 },
-    { name: 'Snakes', value: 0 }
+    { name: 'Snakes', value: 90 }
   ],
   colors: [
     '#855C75',

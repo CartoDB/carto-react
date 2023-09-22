@@ -138,7 +138,6 @@ function PieWidgetUI({
   );
 
   // Series
-  // example https://codepen.io/MarsHunag/details/xxGGMgE
   const labelOptions = useMemo(
     () => ({
       formatter: '{per|{d}%}\n{b|{b}}',
@@ -169,8 +168,6 @@ function PieWidgetUI({
         type: 'pie',
         name,
         animation,
-        //expandAndCollapse: false,
-        //silent: true,
         data: dataWithColor.map((item) => {
           // Avoid modifying data item
           const clonedItem = { ...item };
@@ -230,31 +227,19 @@ function PieWidgetUI({
       legend: {
         show: false
       },
-      series: seriesOptions,
-      title: {
-        text: 'text',
-        subtext: 'subtext',
-        x: 'center',
-        y: 'center',
-        textStyle: {
-          fontWeight: 'normal',
-          fontSize: 24,
-          color: '#FDB560'
-        },
-        subtextStyle: {
-          fontWeight: 'normal',
-          fontSize: 16,
-          color: '#4A4A4A'
-        }
-      }
+      series: seriesOptions
     }),
     [tooltipOptions, seriesOptions]
   );
 
-  const handleClickEvent = useCallback(
+  const newSelectedCategories = useMemo(
+    () => [...selectedCategories],
+    [selectedCategories]
+  );
+
+  const handleChartClick = useCallback(
     (params) => {
       if (onSelectedCategoriesChange) {
-        const newSelectedCategories = [...selectedCategories];
         const { name } = dataWithColor[params.dataIndex];
 
         // Avoid clicking if the category name is "Others"
@@ -263,25 +248,25 @@ function PieWidgetUI({
         }
 
         const selectedCategoryIdx = newSelectedCategories.indexOf(name);
+
         if (selectedCategoryIdx === -1) {
           newSelectedCategories.push(name);
         } else {
           newSelectedCategories.splice(selectedCategoryIdx, 1);
         }
 
-        console.log('newSelectedCategories chart', newSelectedCategories);
+        console.log('updatedSelectedCategories chart', newSelectedCategories);
         onSelectedCategoriesChange(newSelectedCategories);
       }
     },
-    [dataWithColor, onSelectedCategoriesChange, selectedCategories]
+    [dataWithColor, newSelectedCategories, onSelectedCategoriesChange]
   );
 
-  const handleCategoryClick = useCallback(
+  const handleCategoryLegendClick = useCallback(
     (category) => {
       if (onSelectedCategoriesChange) {
-        const newSelectedCategories = [...selectedCategories];
-
         const selectedCategoryIdx = newSelectedCategories.indexOf(category);
+
         if (selectedCategoryIdx === -1) {
           newSelectedCategories.push(category);
         } else {
@@ -292,11 +277,11 @@ function PieWidgetUI({
         onSelectedCategoriesChange(newSelectedCategories);
       }
     },
-    [onSelectedCategoriesChange, selectedCategories]
+    [newSelectedCategories, onSelectedCategoriesChange]
   );
 
   const onEvents = {
-    ...(filterable && { click: handleClickEvent }),
+    ...(filterable && { click: handleChartClick }),
     mouseover: () => {
       setShowLabel(false);
     },
@@ -335,7 +320,7 @@ function PieWidgetUI({
         <ChartLegend
           series={dataWithColor}
           selectedCategories={selectedCategories}
-          onCategoryClick={onSelectedCategoriesChange && handleCategoryClick}
+          onCategoryClick={onSelectedCategoriesChange && handleCategoryLegendClick}
         />
       )}
     </>
