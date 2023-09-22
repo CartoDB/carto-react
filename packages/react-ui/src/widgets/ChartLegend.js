@@ -24,7 +24,8 @@ const Item = styled(Box)(({ theme }) => ({
   gap: theme.spacing(1),
   alignItems: 'center',
   textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap'
+  whiteSpace: 'nowrap',
+  cursor: 'pointer'
 }));
 
 const OverflowVeil = styled(Box)(({ theme }) => ({
@@ -66,7 +67,6 @@ export default function ChartLegend({ series, selectedCategories, onCategoryClic
   const legendRef = useRef(null);
   const containerRef = useRef(null);
   const showMoreButtonsRef = useRef(null);
-  console.log('selectedCategories', selectedCategories);
 
   const handleClickRight = () => {
     setOffset(offset + 1);
@@ -127,20 +127,17 @@ export default function ChartLegend({ series, selectedCategories, onCategoryClic
         {series.map((category, i) => {
           if (i < offset) return null;
 
-          const { name } = series[i];
           const selected =
-            selectedCategories.length === 0 || selectedCategories.includes(category);
-          console.log('selected', [selected, name]);
-          // Avoid clicking if the category name is "Others"
-          //if (name === 'Others') {
-          //  return;
-          //}
+            selectedCategories.length === 0 || selectedCategories.includes(category.name);
 
           return (
             <Item
               key={i}
-              onClick={onCategoryClick ? () => onCategoryClick(category) : undefined}
-              style={{ cursor: onCategoryClick ? 'pointer' : undefined }}
+              onClick={onCategoryClick ? () => onCategoryClick(category.name) : undefined}
+              style={{
+                pointerEvents:
+                  !onCategoryClick || category.name === 'Others' ? 'none' : undefined
+              }}
             >
               <Circle color={selected ? category.color : theme.palette.text.disabled} />
               <Typography
