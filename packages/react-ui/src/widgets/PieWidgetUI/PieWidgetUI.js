@@ -193,14 +193,10 @@ function PieWidgetUI({
     [tooltipOptions, seriesOptions]
   );
 
-  const newSelectedCategories = useMemo(
-    () => [...selectedCategories],
-    [selectedCategories]
-  );
-
   const handleChartClick = useCallback(
     (params) => {
       if (onSelectedCategoriesChange) {
+        const newSelectedCategories = [...selectedCategories];
         const { name } = dataWithColor[params.dataIndex];
 
         // Avoid clicking if the category name is "Others"
@@ -219,12 +215,13 @@ function PieWidgetUI({
         onSelectedCategoriesChange(newSelectedCategories);
       }
     },
-    [dataWithColor, newSelectedCategories, onSelectedCategoriesChange]
+    [dataWithColor, onSelectedCategoriesChange, selectedCategories]
   );
 
   const handleLegendClick = useCallback(
     (category) => {
       if (onSelectedCategoriesChange) {
+        const newSelectedCategories = [...selectedCategories];
         const selectedCategoryIdx = newSelectedCategories.indexOf(category);
 
         if (selectedCategoryIdx === -1) {
@@ -236,7 +233,7 @@ function PieWidgetUI({
         onSelectedCategoriesChange(newSelectedCategories);
       }
     },
-    [newSelectedCategories, onSelectedCategoriesChange]
+    [onSelectedCategoriesChange, selectedCategories]
   );
 
   const onEvents = {
