@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Pie widget: New ChartLegend component from scratch [#777](https://github.com/CartoDB/carto-react/pull/777)
 - Pie Widget: Add maxNumber of elements + a sorted by size desc by default [#774](https://github.com/CartoDB/carto-react/pull/774)
 - Pie Widget: Add number of selected categories + clear button [#771](https://github.com/CartoDB/carto-react/pull/771)
 
