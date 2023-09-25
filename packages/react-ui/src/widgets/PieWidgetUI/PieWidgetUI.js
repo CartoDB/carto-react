@@ -5,6 +5,7 @@ import { Grid, Link, styled, useTheme } from '@mui/material';
 import { disableSerie, setColor, sortDataDescending } from '../utils/chartUtils';
 import { processFormatterRes } from '../utils/formatterUtils';
 import PieSkeleton from './components/PieSkeleton';
+import ChartLegend from '../ChartLegend';
 import Typography from '../../components/atoms/Typography';
 
 export const OptionsBar = styled(Grid)(({ theme }) => ({
@@ -97,45 +98,6 @@ function PieWidgetUI({
     [formatter, theme.palette.common.white, theme.palette.black, tooltipFormatter]
   );
 
-  // Legend
-  const legendOptions = useMemo(
-    () => ({
-      selectedMode: false,
-      type: 'scroll',
-      left: theme.spacingValue,
-      bottom: theme.spacingValue * -0.5,
-      itemGap: theme.spacingValue * 3,
-      icon: 'circle',
-      itemWidth: theme.spacingValue,
-      itemHeight: theme.spacingValue,
-      // TODO: as prop?
-      formatter: (name) => name.toUpperCase(),
-      textStyle: {
-        ...theme.typography.overlineDelicate,
-        color: theme.palette.text.primary,
-        lineHeight: 1,
-        verticalAlign: 'bottom',
-        padding: [0, 0, 0, theme.spacingValue * 0.5]
-      },
-      inactiveColor: theme.palette.text.disabled,
-      pageIcons: {
-        horizontal: [
-          'path://M15.41 7.41 14 6 8 12 14 18 15.41 16.59 10.83 12z',
-          'path://M9 16.59 13.3265857 12 9 7.41 10.3319838 6 16 12 10.3319838 18z'
-        ]
-      },
-      pageIconSize: theme.spacingValue * 1.5,
-      pageIconColor: theme.palette.text.secondary,
-      pageIconInactiveColor: theme.palette.text.disabled,
-      pageTextStyle: {
-        fontFamily: theme.typography.overlineDelicate.fontFamily,
-        fontSize: 10,
-        color: theme.palette.text.primary
-      }
-    }),
-    [theme]
-  );
-
   // Series
   const labelOptions = useMemo(
     () => ({
@@ -189,9 +151,10 @@ function PieWidgetUI({
         }),
         radius: ['74%', '90%'],
         selectedOffset: 0,
-        bottom: theme.spacingValue * 2.5,
+        bottom: theme.spacingValue * 1.5,
         label: { show: showLabel, ...labelOptions },
         emphasis: {
+          focus: 'series',
           label: { ...labelOptions, position: undefined },
           scaleSize: 5
         },
@@ -222,13 +185,15 @@ function PieWidgetUI({
         bottom: 0
       },
       tooltip: tooltipOptions,
-      legend: legendOptions,
+      legend: {
+        show: false
+      },
       series: seriesOptions
     }),
-    [tooltipOptions, seriesOptions, legendOptions]
+    [tooltipOptions, seriesOptions]
   );
 
-  const clickEvent = useCallback(
+  const handleChartClick = useCallback(
     (params) => {
       if (onSelectedCategoriesChange) {
         const newSelectedCategories = [...selectedCategories];
@@ -240,6 +205,7 @@ function PieWidgetUI({
         }
 
         const selectedCategoryIdx = newSelectedCategories.indexOf(name);
+
         if (selectedCategoryIdx === -1) {
           newSelectedCategories.push(name);
         } else {
@@ -252,8 +218,26 @@ function PieWidgetUI({
     [dataWithColor, onSelectedCategoriesChange, selectedCategories]
   );
 
+  const handleLegendClick = useCallback(
+    (category) => {
+      if (onSelectedCategoriesChange) {
+        const newSelectedCategories = [...selectedCategories];
+        const selectedCategoryIdx = newSelectedCategories.indexOf(category);
+
+        if (selectedCategoryIdx === -1) {
+          newSelectedCategories.push(category);
+        } else {
+          newSelectedCategories.splice(selectedCategoryIdx, 1);
+        }
+
+        onSelectedCategoriesChange(newSelectedCategories);
+      }
+    },
+    [onSelectedCategoriesChange, selectedCategories]
+  );
+
   const onEvents = {
-    ...(filterable && { click: clickEvent }),
+    ...(filterable && { click: handleChartClick }),
     mouseover: () => {
       setShowLabel(false);
     },
@@ -280,12 +264,21 @@ function PieWidgetUI({
           </Link>
         )}
       </OptionsBar>
+
       <ReactEcharts
         option={options}
         onEvents={onEvents}
         lazyUpdate={true}
         style={{ maxHeight: height }}
       />
+
+      {dataWithColor.length > 0 && (
+        <ChartLegend
+          series={dataWithColor}
+          selectedCategories={selectedCategories}
+          onCategoryClick={onSelectedCategoriesChange && handleLegendClick}
+        />
+      )}
     </>
   );
 }
