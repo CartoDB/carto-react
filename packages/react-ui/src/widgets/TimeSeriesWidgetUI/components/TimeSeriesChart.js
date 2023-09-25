@@ -135,17 +135,17 @@ export default function TimeSeriesChart({
 
   const seriesOptions = useMemo(
     () =>
-      series.map(({ data, color, category }, i) => {
+      series.map(({ data, color, name }, i) => {
         const somethingSelected = selectedCategories && selectedCategories.length > 0;
 
-        const isSelected = somethingSelected && selectedCategories.includes(category);
+        const isSelected = somethingSelected && selectedCategories.includes(name);
         const actualColor =
           !somethingSelected || isSelected
             ? color
             : theme.palette.action.disabledBackground;
 
         return {
-          name: category,
+          name,
           markLine: i === 0 ? markLine : undefined,
           markArea: i === 0 ? markArea : undefined,
           animation,
