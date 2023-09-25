@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { GroupDateTypes } from '@carto/react-core';
 
 import TimeSeriesChart from './components/TimeSeriesChart';
-import TimeSeriesLegend from './components/TimeSeriesLegend';
 import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesContext';
 import { CHART_TYPES } from './utils/constants';
 import Typography from '../../components/atoms/Typography';
@@ -23,6 +22,7 @@ import { getColorByCategory } from '../../utils/palette';
 import { commonPalette } from '../../theme/sections/palette';
 import { TimeSeriesControls } from './components/TimeSeriesControls';
 import TimeSeriesLayout from './components/TimeSeriesLayout';
+import ChartLegend from '../ChartLegend';
 
 const FORMAT_DATE_BY_STEP_SIZE = {
   [GroupDateTypes.YEARS]: yearCurrentDateRange,
@@ -197,7 +197,7 @@ function TimeSeriesWidgetUIContent({
     const colorMapping = {};
     const series = categories
       ? categories.map((category) => ({
-          category,
+          name: category,
           data: [],
           color: getColorByCategory(category, {
             palette,
@@ -325,7 +325,7 @@ function TimeSeriesWidgetUIContent({
   );
 
   const legend = isLegendVisible && (
-    <TimeSeriesLegend
+    <ChartLegend
       series={series}
       selectedCategories={selectedCategories}
       onCategoryClick={onSelectedCategoriesChange && handleCategoryClick}
