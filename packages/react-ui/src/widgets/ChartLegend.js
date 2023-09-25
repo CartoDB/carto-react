@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Box, styled, IconButton, useTheme } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 
-import Typography from '../../../components/atoms/Typography';
+import Typography from '../components/atoms/Typography';
 
 const Legend = styled(Box)(({ theme }) => ({
   position: 'relative',
@@ -24,7 +24,8 @@ const Item = styled(Box)(({ theme }) => ({
   gap: theme.spacing(1),
   alignItems: 'center',
   textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap'
+  whiteSpace: 'nowrap',
+  cursor: 'pointer'
 }));
 
 const OverflowVeil = styled(Box)(({ theme }) => ({
@@ -35,7 +36,7 @@ const OverflowVeil = styled(Box)(({ theme }) => ({
   bottom: theme.spacing(1),
   zIndex: 10,
   width: theme.spacing(2.5),
-  background: `linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)`
+  background: `linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, ${theme.palette.background.paper} 100%)`
 }));
 
 const ShowMoreButtons = styled(Box)(({ theme }) => ({
@@ -58,11 +59,7 @@ const Circle = styled(Box, {
   };
 });
 
-export default function TimeSeriesLegend({
-  series,
-  selectedCategories,
-  onCategoryClick
-}) {
+export default function ChartLegend({ series, selectedCategories, onCategoryClick }) {
   const theme = useTheme();
   const [overflowing, setOverflowing] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -121,24 +118,33 @@ export default function TimeSeriesLegend({
 
   return (
     <Legend ref={legendRef}>
-      <ItemsContainer ref={containerRef} style={{ maxWidth: `${maxWidth}px` }}>
-        {series.map(({ category, color }, i) => {
+      <ItemsContainer
+        ref={containerRef}
+        style={{
+          maxWidth: `${maxWidth}px`
+        }}
+      >
+        {series.map((category, i) => {
           if (i < offset) return null;
 
           const selected =
-            selectedCategories.length === 0 || selectedCategories.includes(category);
+            selectedCategories.length === 0 || selectedCategories.includes(category.name);
+
           return (
             <Item
               key={i}
-              onClick={onCategoryClick ? () => onCategoryClick(category) : undefined}
-              style={{ cursor: onCategoryClick ? 'pointer' : undefined }}
+              onClick={onCategoryClick ? () => onCategoryClick(category.name) : undefined}
+              style={{
+                pointerEvents:
+                  !onCategoryClick || category.name === 'Others' ? 'none' : undefined
+              }}
             >
-              <Circle color={selected ? color : theme.palette.text.disabled} />
+              <Circle color={selected ? category.color : theme.palette.text.disabled} />
               <Typography
                 variant='overline'
                 color={selected ? undefined : 'text.disabled'}
               >
-                {category}
+                {category.name}
               </Typography>
             </Item>
           );
