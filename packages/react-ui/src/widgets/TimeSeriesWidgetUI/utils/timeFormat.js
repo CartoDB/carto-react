@@ -33,51 +33,53 @@ const SHORTENED_RANGES_WHEN_NO_MULTIPLIES = [GroupDateTypes.SECONDS, GroupDateTy
  * Format time range.
  *
  * @param {object} props
- * @param {Date=} props.start
- * @param {Date=} props.end
- * @param {Date=} props.date
- * @param {Function=} props.formatter
+ * @param {Date} props.start
+ * @param {Date} props.end
  * @param {GroupDateTypes=} props.stepSize
- * @param {number=} props.stepMultiplier
  * @returns string, formatted date range
  */
-export function formatTimeRange({
-  start,
-  end,
-  date,
-  formatter,
-  stepSize,
-  stepMultiplier = 1
-}) {
+export function formatTimeRange({ start, end, stepSize }) {
+  if (start > end) {
+    return formatTimeRange({ start: end, end: start, stepSize });
+  }
+
+  const formatter = fullTimeFormatters[stepSize];
   if (!formatter) {
-    formatter = fullTimeFormatters[stepSize];
-    if (!formatter) {
-      throw new Error('missing formatter or invalid stepSize');
-    }
+    throw new Error('formatTimeRange: missing formatter or invalid stepSize');
   }
-  if (!start && !end) {
-    if (!date) {
-      throw new Error('formatTimeRange: missing date/start/end');
-    }
-    return formatTimeRange({
-      stepSize,
-      stepMultiplier,
-      formatter,
-      ...getBucketInterval({ date, stepSize, stepMultiplier })
-    });
-  }
+
   const startFmt = formatter(start);
+  const endFmt = formatter(end);
+
+  return `${startFmt} - ${endFmt}`;
+}
+
+/**
+ * Format bucket range.
+ *
+ * @param {object} props
+ * @param {Date} props.date
+ * @param {GroupDateTypes} props.stepSize
+ * @param {number=} props.stepMultiplier
+ * @returns string, formatted bucket range
+ */
+export function formatBucketRange({ date, stepSize, stepMultiplier }) {
+  const formatter = fullTimeFormatters[stepSize];
+  if (!formatter) {
+    throw new Error('formatBucketRange: missing formatter or invalid stepSize');
+  }
+
+  const { start, end } = getBucketInterval({ date, stepSize, stepMultiplier });
 
   if (
     stepMultiplier === 1 &&
     stepSize &&
     SHORTENED_RANGES_WHEN_NO_MULTIPLIES.includes(stepSize)
   ) {
-    return startFmt;
+    return formatTime({ date: start, stepSize });
   }
 
-  const endFmt = formatter(end);
-  return `${startFmt} - ${endFmt}`;
+  return formatTimeRange({ start, end, stepSize });
 }
 
 const secondstoMs = (s) => 1000 * s;
@@ -113,7 +115,7 @@ function formatDateAndTimeWithSeconds(date) {
   return formatLocalDate(date) + ' ' + formatTimeWithSeconds(date);
 }
 
-export function getBucketInterval({ date, stepSize, stepMultiplier }) {
+export function getBucketInterval({ date, stepSize, stepMultiplier = 1 }) {
   const intervalCalculator = intervalCalculators[stepSize];
   if (!intervalCalculator) {
     throw new Error('getBucketInterval: invalid bucket size');

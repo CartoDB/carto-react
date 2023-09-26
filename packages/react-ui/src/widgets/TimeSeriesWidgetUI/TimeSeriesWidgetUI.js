@@ -1,14 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
-import {
-  Box,
-  Menu,
-  Grid,
-  IconButton,
-  MenuItem,
-  SvgIcon,
-  capitalize,
-  Link
-} from '@mui/material';
+import { Box, Menu, Grid, IconButton, MenuItem, SvgIcon, Link } from '@mui/material';
 import PropTypes from 'prop-types';
 
 import { GroupDateTypes } from '@carto/react-core';
@@ -18,7 +9,7 @@ import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesCont
 import { CHART_TYPES } from './utils/constants';
 import Typography from '../../components/atoms/Typography';
 import TimeSeriesSkeleton from './components/TimeSeriesSkeleton';
-import { formatTimeRange, formatTime } from './utils/timeFormat';
+import { formatTimeRange, formatBucketRange } from './utils/timeFormat';
 
 // TimeWindow step is the amount of time (in seconds) that pass in every iteration during the animation.
 // It depends on step size for a better animation speed adjustment.
@@ -242,7 +233,7 @@ function TimeSeriesWidgetUIContent({
 
     // If timeWindow is activated
     if (timeWindow.length) {
-      const [start, end] = timeWindow;
+      const [start, end] = timeWindow.map((time) => new Date(time));
       return formatTimeRange({ start, end, stepSize });
     }
 
@@ -257,11 +248,7 @@ function TimeSeriesWidgetUIContent({
     // If animation is active
     if (timelinePosition >= 0 && data[timelinePosition]) {
       const currentDate = new Date(data[timelinePosition].name);
-      if (stepMultiplier === 1) {
-        return formatTime({ date: currentDate, stepSize });
-      } else {
-        return formatTimeRange({ date: currentDate, stepSize, stepMultiplier });
-      }
+      return formatBucketRange({ date: currentDate, stepSize, stepMultiplier });
     }
   }, [data, timeWindow, isPlaying, isPaused, timelinePosition, stepSize, stepMultiplier]);
 
@@ -387,7 +374,7 @@ function TimeSeriesWidgetUIContent({
 function defaultTooltipFormatter(params, stepSize, valueFormatter, stepMultiplier) {
   const [name] = params[0].data;
   const date = new Date(name);
-  const title = formatTimeRange({ date, stepMultiplier, stepSize });
+  const title = formatBucketRange({ date, stepMultiplier, stepSize });
 
   return `<div style='width: 160px;'>
     <p style='font-weight: 600; line-height: 1; margin: 4px 0;'>${title}</p>
