@@ -18,35 +18,7 @@ import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesCont
 import { CHART_TYPES } from './utils/constants';
 import Typography from '../../components/atoms/Typography';
 import TimeSeriesSkeleton from './components/TimeSeriesSkeleton';
-import {
-  yearCurrentDateRange,
-  monthsCurrentDateRange,
-  weeksCurrentDateRange,
-  daysCurrentDateRange,
-  hoursCurrentDateRange,
-  minutesCurrentDateRange,
-  secondsCurrentDateRange
-} from './utils/timeFormat';
-
-const FORMAT_DATE_BY_STEP_SIZE = {
-  [GroupDateTypes.YEARS]: yearCurrentDateRange,
-  [GroupDateTypes.MONTHS]: monthsCurrentDateRange,
-  [GroupDateTypes.WEEKS]: weeksCurrentDateRange,
-  [GroupDateTypes.DAYS]: daysCurrentDateRange,
-  [GroupDateTypes.HOURS]: hoursCurrentDateRange,
-  [GroupDateTypes.MINUTES]: minutesCurrentDateRange,
-  [GroupDateTypes.SECONDS]: secondsCurrentDateRange
-};
-
-const FORMAT_DATE_BY_STEP_SIZE_FOR_TIME_WINDOW = {
-  [GroupDateTypes.YEARS]: daysCurrentDateRange,
-  [GroupDateTypes.MONTHS]: daysCurrentDateRange,
-  [GroupDateTypes.WEEKS]: daysCurrentDateRange,
-  [GroupDateTypes.DAYS]: daysCurrentDateRange,
-  [GroupDateTypes.HOURS]: hoursCurrentDateRange,
-  [GroupDateTypes.MINUTES]: minutesCurrentDateRange,
-  [GroupDateTypes.SECONDS]: secondsCurrentDateRange
-};
+import { formatTimeRange, formatTime } from './utils/timeFormat';
 
 // TimeWindow step is the amount of time (in seconds) that pass in every iteration during the animation.
 // It depends on step size for a better animation speed adjustment.
@@ -270,26 +242,28 @@ function TimeSeriesWidgetUIContent({
 
     // If timeWindow is activated
     if (timeWindow.length) {
-      const timeWindowformatter = FORMAT_DATE_BY_STEP_SIZE_FOR_TIME_WINDOW[stepSize];
-      return timeWindow.map((time) => timeWindowformatter(new Date(time))).join(' - ');
+      const [start, end] = timeWindow;
+      return formatTimeRange({ start, end, stepSize });
     }
-
-    const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
 
     // If widget is reset, then first and last date
     if (!isPlaying && !isPaused) {
-      const firstDate = new Date(data[0].name);
-      const lastDate = new Date(data[data.length - 1].name);
+      const start = new Date(data[0].name);
+      const end = new Date(data[data.length - 1].name);
 
-      return `${formatter(firstDate)} - ${formatter(lastDate)}`;
+      return formatTimeRange({ start, end, stepSize });
     }
 
     // If animation is active
     if (timelinePosition >= 0 && data[timelinePosition]) {
       const currentDate = new Date(data[timelinePosition].name);
-      return formatter(currentDate);
+      if (stepMultiplier === 1) {
+        return formatTime({ date: currentDate, stepSize });
+      } else {
+        return formatTimeRange({ date: currentDate, stepSize, stepMultiplier });
+      }
     }
-  }, [data, stepSize, isPlaying, isPaused, timeWindow, timelinePosition]);
+  }, [data, timeWindow, isPlaying, isPaused, timelinePosition, stepSize, stepMultiplier]);
 
   const showClearButton = useMemo(() => {
     return isPlaying || isPaused || timeWindow.length > 0;
@@ -331,9 +305,6 @@ function TimeSeriesWidgetUIContent({
           <Box>
             <Typography color='textSecondary' variant='caption'>
               {currentDate}
-            </Typography>
-            <Typography fontSize={12} ml={1} color='textSecondary' variant='caption'>
-              ({capitalize(stepSize)})
             </Typography>
           </Box>
         )}
@@ -414,10 +385,9 @@ function TimeSeriesWidgetUIContent({
 }
 
 function defaultTooltipFormatter(params, stepSize, valueFormatter, stepMultiplier) {
-  const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
   const [name] = params[0].data;
   const date = new Date(name);
-  const title = formatter(date, stepMultiplier);
+  const title = formatTimeRange({ date, stepMultiplier, stepSize });
 
   return `<div style='width: 160px;'>
     <p style='font-weight: 600; line-height: 1; margin: 4px 0;'>${title}</p>
