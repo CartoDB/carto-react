@@ -72,15 +72,33 @@ function TimeSeriesWidgetUI({
   palette,
   showLegend
 }) {
-  if (isLoading)
-    return (
-      <TimeSeriesSkeleton
-        fitHeight={fitHeight}
-        height={height}
-        showControls={showControls}
-        showLegend={showLegend}
-      />
-    );
+  const content = isLoading ? (
+    <TimeSeriesSkeleton
+      fitHeight={fitHeight}
+      height={height}
+      showControls={showControls}
+      showLegend={showLegend}
+    />
+  ) : (
+    <TimeSeriesWidgetUIContent
+      data={data}
+      categories={categories}
+      stepSize={stepSize}
+      stepMultiplier={stepMultiplier}
+      chartType={chartType}
+      tooltip={tooltip}
+      tooltipFormatter={tooltipFormatter}
+      formatter={formatter}
+      height={height}
+      fitHeight={fitHeight}
+      showControls={showControls}
+      animation={animation}
+      palette={palette}
+      showLegend={showLegend}
+      selectedCategories={selectedCategories}
+      onSelectedCategoriesChange={onSelectedCategoriesChange}
+    />
+  );
 
   return (
     <TimeSeriesProvider
@@ -94,24 +112,7 @@ function TimeSeriesWidgetUI({
       timeWindow={timeWindow}
       onTimeWindowUpdate={onTimeWindowUpdate}
     >
-      <TimeSeriesWidgetUIContent
-        data={data}
-        categories={categories}
-        stepSize={stepSize}
-        stepMultiplier={stepMultiplier}
-        chartType={chartType}
-        tooltip={tooltip}
-        tooltipFormatter={tooltipFormatter}
-        formatter={formatter}
-        height={height}
-        fitHeight={fitHeight}
-        showControls={showControls}
-        animation={animation}
-        palette={palette}
-        showLegend={showLegend}
-        selectedCategories={selectedCategories}
-        onSelectedCategoriesChange={onSelectedCategoriesChange}
-      />
+      {content}
     </TimeSeriesProvider>
   );
 }
