@@ -9,7 +9,7 @@ import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesCont
 import { CHART_TYPES } from './utils/constants';
 import Typography from '../../components/atoms/Typography';
 import TimeSeriesSkeleton from './components/TimeSeriesSkeleton';
-import { formatTimeRange, formatTime } from './utils/timeFormat';
+import { formatTimeRange, formatBucketRange } from './utils/timeFormat';
 import { getColorByCategory } from '../../utils/palette';
 import { commonPalette } from '../../theme/sections/palette';
 import { TimeSeriesControls } from './components/TimeSeriesControls';
@@ -197,7 +197,7 @@ function TimeSeriesWidgetUIContent({
 
     // If timeWindow is activated
     if (timeWindow.length) {
-      const [start, end] = timeWindow;
+      const [start, end] = timeWindow.map(time => new Date(time));
       return formatTimeRange({ start, end, stepSize });
     }
 
@@ -212,11 +212,7 @@ function TimeSeriesWidgetUIContent({
     // If animation is active
     if (timelinePosition >= 0 && data[timelinePosition]) {
       const currentDate = new Date(data[timelinePosition].name);
-      if (stepMultiplier === 1) {
-        return formatTime({ date: currentDate, stepSize });
-      } else {
-        return formatTimeRange({ date: currentDate, stepSize, stepMultiplier });
-      }
+      return formatBucketRange({ date: currentDate, stepSize, stepMultiplier });
     }
   }, [data, timeWindow, isPlaying, isPaused, timelinePosition, stepSize, stepMultiplier]);
 
@@ -324,7 +320,7 @@ function defaultTooltipFormatter(
 ) {
   const [name] = params[0].data;
   const date = new Date(name);
-  const title = formatTimeRange({ date, stepMultiplier, stepSize });
+  const title = formatBucketRange({ date, stepMultiplier, stepSize });
 
   return `<div style='minWidth: 160px;'>
     <p style='font-weight: 600; line-height: 1; margin: 4px 0;'>${title}</p>
