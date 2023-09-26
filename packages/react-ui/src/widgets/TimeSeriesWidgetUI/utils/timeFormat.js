@@ -1,9 +1,82 @@
-import { getMonday } from '@carto/react-core';
+import { GroupDateTypes, getMonday } from '@carto/react-core';
 
-function formatDateRange({ start, end, formatter }) {
+const fullTimeFormatters = {
+  [GroupDateTypes.YEARS]: formatLocalDate,
+  [GroupDateTypes.MONTHS]: formatLocalDate,
+  [GroupDateTypes.WEEKS]: formatLocalDate,
+  [GroupDateTypes.DAYS]: formatLocalDate,
+  [GroupDateTypes.HOURS]: formatDateAndTimeWithMinutes,
+  [GroupDateTypes.MINUTES]: formatDateAndTimeWithSeconds,
+  [GroupDateTypes.SECONDS]: formatDateAndTimeWithSeconds
+};
+
+const intervalCalculators = {
+  [GroupDateTypes.YEARS]: getBucketIntervalYears,
+  [GroupDateTypes.MONTHS]: getBucketIntervalMonths,
+  [GroupDateTypes.WEEKS]: getBucketIntervalWeeks,
+  [GroupDateTypes.DAYS]: getBucketIntervalDays,
+  [GroupDateTypes.HOURS]: getBucketIntervalHours,
+  [GroupDateTypes.MINUTES]: getBucketIntervalMinutes,
+  [GroupDateTypes.SECONDS]: getBucketIntervalSeconds
+};
+
+export function formatTime({ date, stepSize }) {
+  const formatter = fullTimeFormatters[stepSize];
+  if (!formatter) throw new Error('formatTime: invalid stepSize');
+
+  return formatter(date);
+}
+
+const SHORTENED_RANGES_WHEN_NO_MULTIPLIES = [GroupDateTypes.SECONDS, GroupDateTypes.DAYS];
+
+/**
+ * Format time range.
+ *
+ * @param {object} props
+ * @param {Date=} props.start
+ * @param {Date=} props.end
+ * @param {Date=} props.date
+ * @param {Function=} props.formatter
+ * @param {GroupDateTypes=} props.stepSize
+ * @param {number=} props.stepMultiplier
+ * @returns string, formatted date range
+ */
+export function formatTimeRange({
+  start,
+  end,
+  date,
+  formatter,
+  stepSize,
+  stepMultiplier = 1
+}) {
+  if (!formatter) {
+    formatter = fullTimeFormatters[stepSize];
+    if (!formatter) {
+      throw new Error('missing formatter or invalid stepSize');
+    }
+  }
+  if (!start && !end) {
+    if (!date) {
+      throw new Error('formatTimeRange: missing date/start/end');
+    }
+    return formatTimeRange({
+      stepSize,
+      stepMultiplier,
+      formatter,
+      ...getBucketInterval({ date, stepSize, stepMultiplier })
+    });
+  }
   const startFmt = formatter(start);
-  const endFmt = formatter(end);
 
+  if (
+    stepMultiplier === 1 &&
+    stepSize &&
+    SHORTENED_RANGES_WHEN_NO_MULTIPLIES.includes(stepSize)
+  ) {
+    return startFmt;
+  }
+
+  const endFmt = formatter(end);
   return `${startFmt} - ${endFmt}`;
 }
 
@@ -11,8 +84,47 @@ const secondstoMs = (s) => 1000 * s;
 const minutesToMs = (m) => secondstoMs(60 * m);
 const hoursToMs = (h) => minutesToMs(60 * h);
 
-// Auxiliary fns
-export function secondsCurrentDateRange(date, stepMultiplier = 1) {
+function formatLocalDate(date) {
+  return date.toLocaleDateString();
+}
+
+function formatDateAndTimeWithMinutes(date) {
+  return (
+    formatLocalDate(date) +
+    ' ' +
+    date.toLocaleTimeString(undefined, {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    })
+  );
+}
+
+function formatTimeWithSeconds(date) {
+  return date.toLocaleTimeString(undefined, {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+    second: '2-digit'
+  });
+}
+
+function formatDateAndTimeWithSeconds(date) {
+  return formatLocalDate(date) + ' ' + formatTimeWithSeconds(date);
+}
+
+export function getBucketInterval({ date, stepSize, stepMultiplier }) {
+  const intervalCalculator = intervalCalculators[stepSize];
+  if (!intervalCalculator) {
+    throw new Error('getBucketInterval: invalid bucket size');
+  }
+
+  return intervalCalculator({ date, stepMultiplier });
+}
+//
+// bucket interval calculations
+//
+function getBucketIntervalSeconds({ date, stepMultiplier = 1 }) {
   const start = new Date(
     date.getFullYear(),
     date.getMonth(),
@@ -23,27 +135,10 @@ export function secondsCurrentDateRange(date, stepMultiplier = 1) {
     0
   );
   const end = new Date(start.getTime() + secondstoMs(stepMultiplier - 1) + 999);
-
-  const datePrefix = date.toLocaleDateString();
-  const formatter = (date) =>
-    date.toLocaleTimeString(undefined, {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-      second: '2-digit'
-    });
-  if (stepMultiplier === 1) {
-    return `${datePrefix} ${formatDateRange({ start, end, formatter })}`;
-  }
-
-  return formatDateRange({
-    start,
-    end,
-    formatter: (date) => `${datePrefix} ${formatter(date)}`
-  });
+  return { start, end };
 }
 
-export function minutesCurrentDateRange(date, stepMultiplier = 1) {
+function getBucketIntervalMinutes({ date, stepMultiplier = 1 }) {
   const start = new Date(
     date.getFullYear(),
     date.getMonth(),
@@ -56,23 +151,10 @@ export function minutesCurrentDateRange(date, stepMultiplier = 1) {
   const end = new Date(
     start.getTime() + minutesToMs(stepMultiplier - 1) + secondstoMs(59)
   );
-
-  return formatDateRange({
-    start,
-    end,
-    formatter: (date) =>
-      date.toLocaleDateString() +
-      ' ' +
-      date.toLocaleTimeString(undefined, {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true,
-        second: '2-digit'
-      })
-  });
+  return { start, end };
 }
 
-export function hoursCurrentDateRange(date, stepMultiplier = 1) {
+function getBucketIntervalHours({ date, stepMultiplier = 1 }) {
   const start = new Date(
     date.getFullYear(),
     date.getMonth(),
@@ -83,67 +165,37 @@ export function hoursCurrentDateRange(date, stepMultiplier = 1) {
     0
   );
   const end = new Date(start.getTime() + hoursToMs(stepMultiplier - 1) + minutesToMs(59));
-
-  return formatDateRange({
-    start,
-    end,
-    formatter: (date) =>
-      date.toLocaleDateString() +
-      ' ' +
-      date.toLocaleTimeString(undefined, {
-        hour: 'numeric',
-        hour12: true,
-        minute: '2-digit'
-      })
-  });
+  return { start, end };
 }
 
-export function daysCurrentDateRange(date, stepMultiplier = 1) {
+function getBucketIntervalDays({ date, stepMultiplier = 1 }) {
   const start = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
-  if (stepMultiplier === 1) {
-    return start.toLocaleDateString();
-  }
-
   const end = new Date(
     date.getFullYear(),
     date.getMonth(),
     date.getDate() + stepMultiplier - 1
   );
-
-  return formatDateRange({
-    start,
-    end,
-    formatter: (date) => date.toLocaleDateString()
-  });
+  return { start, end };
 }
 
-export function weeksCurrentDateRange(date, stepMultiplier = 1) {
-  const startDate = new Date(getMonday(date));
-  const startDateFmt = startDate.toLocaleDateString();
-
-  const endDate = new Date(
-    startDate.getFullYear(),
-    startDate.getMonth(),
-    startDate.getDate() + 6 + 7 * (stepMultiplier - 1)
+function getBucketIntervalWeeks({ date, stepMultiplier = 1 }) {
+  const start = new Date(getMonday(date));
+  const end = new Date(
+    start.getFullYear(),
+    start.getMonth(),
+    start.getDate() + 6 + 7 * (stepMultiplier - 1)
   );
-  const endDateFmt = endDate.toLocaleDateString();
-  return `${startDateFmt} - ${endDateFmt}`;
+  return { start, end };
 }
 
-export function monthsCurrentDateRange(date, stepMultiplier = 1) {
-  const startDate = new Date(date.getFullYear(), date.getMonth(), 1);
-  const startDateFmt = startDate.toLocaleDateString();
-
-  const endDate = new Date(date.getFullYear(), date.getMonth() + stepMultiplier, 0);
-  const endDateFmt = endDate.toLocaleDateString();
-  return `${startDateFmt} - ${endDateFmt}`;
+function getBucketIntervalMonths({ date, stepMultiplier = 1 }) {
+  const start = new Date(date.getFullYear(), date.getMonth(), 1);
+  const end = new Date(date.getFullYear(), date.getMonth() + stepMultiplier, 0);
+  return { start, end };
 }
 
-export function yearCurrentDateRange(date, stepMultiplier = 1) {
-  const startDate = new Date(date.getFullYear(), 0, 1);
-  const startDateFmt = startDate.toLocaleDateString();
-
-  const endDate = new Date(date.getFullYear() + (stepMultiplier - 1), 11, 31);
-  const endDateFmt = endDate.toLocaleDateString();
-  return `${startDateFmt} - ${endDateFmt}`;
+function getBucketIntervalYears({ date, stepMultiplier = 1 }) {
+  const start = new Date(date.getFullYear(), 0, 1);
+  const end = new Date(date.getFullYear() + (stepMultiplier - 1), 11, 31);
+  return { start, end };
 }
