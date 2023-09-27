@@ -19,7 +19,7 @@ describe('timeFormat', () => {
             stepMultiplier: 1,
             date: '2022-09-13T13:00:00',
             stepSize: GroupDateTypes.SECONDS,
-            expected: '9/13/2022 01:00:00 PM'
+            expected: '9/13/2022 01:00:00 PM - 01:00:00 PM'
           },
           {
             title: 'two seconds',
