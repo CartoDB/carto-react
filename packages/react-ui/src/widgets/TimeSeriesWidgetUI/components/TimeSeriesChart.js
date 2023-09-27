@@ -7,9 +7,14 @@ import { theme } from '../../../theme/carto-theme';
 export const CHART_HEIGHT_DEFAULT = theme.spacingValue * 22;
 export const CHART_HEIGHT_FITHEIGHT = '100%';
 
+const DEFAULT_SPLIT_NUMBER = 5;
+const MIN_ADAPTIVE_SPLIT_NUMBER = 3;
+const ADAPTIVE_SPLIT_NUMBER_SPACING = theme.spacingValue * 20;
+
 export default function TimeSeriesChart({
   chartType,
   formatter,
+  timeAxisSplitNumber,
   tooltip,
   tooltipFormatter,
   data,
@@ -107,7 +112,13 @@ export default function TimeSeriesChart({
           show: false
         },
         splitNumber:
-          width !== undefined ? Math.ceil(width / (theme.spacingValue * 20)) : 5
+          timeAxisSplitNumber ??
+          (width !== undefined
+            ? Math.min(
+                MIN_ADAPTIVE_SPLIT_NUMBER,
+                Math.ceil(width / ADAPTIVE_SPLIT_NUMBER_SPACING)
+              )
+            : DEFAULT_SPLIT_NUMBER)
       },
       yAxis: {
         type: 'value',
