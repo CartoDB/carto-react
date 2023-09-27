@@ -14,7 +14,8 @@ import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {Column[]} props.columns - List of data columns to display.
- * @param  {Function} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Function=} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
  * @param  {number} [props.initialPageSize] - Initial number of rows per page.
@@ -34,6 +35,7 @@ function TableWidget({
   wrapperProps,
   noDataAlertProps,
   onError,
+  onStateChange,
   initialPageSize = 10,
   onPageSizeChange,
   global,
@@ -66,6 +68,7 @@ function TableWidget({
     },
     global,
     onError,
+    onStateChange,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
