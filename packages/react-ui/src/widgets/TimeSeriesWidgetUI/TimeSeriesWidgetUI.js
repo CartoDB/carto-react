@@ -185,7 +185,7 @@ function TimeSeriesWidgetUIContent({
         _categoryIndex ?? (categories && category ? categories.indexOf(category) : 0);
       if (
         categoryIndex === -1 ||
-        categoryIndex >= categories.length ||
+        (categories && categoryIndex >= categories.length) ||
         !Number.isFinite(categoryIndex)
       ) {
         continue;
