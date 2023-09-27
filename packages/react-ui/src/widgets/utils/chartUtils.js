@@ -72,3 +72,16 @@ export function sortDataDescending(data) {
 
   return sortedData;
 }
+
+export function findElementByName(arr, name) {
+  return arr.find((element) => element === name);
+}
+
+export function findLargestCategory(array) {
+  return array.reduce((largestItem, currentItem) => {
+    if (currentItem.value > largestItem.value) {
+      return currentItem;
+    }
+    return largestItem;
+  }, array[0]); // Initialize largest with the first item in the array
+}

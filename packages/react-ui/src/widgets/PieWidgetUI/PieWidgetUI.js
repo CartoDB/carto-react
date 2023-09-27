@@ -2,7 +2,13 @@ import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react'
 import PropTypes from 'prop-types';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { Grid, Link, styled, useTheme } from '@mui/material';
-import { disableSerie, setColor, sortDataDescending } from '../utils/chartUtils';
+import {
+  findLargestCategory,
+  disableSerie,
+  findElementByName,
+  setColor,
+  sortDataDescending
+} from '../utils/chartUtils';
 import { processFormatterRes } from '../utils/formatterUtils';
 import PieSkeleton from './components/PieSkeleton';
 import ChartLegend from '../ChartLegend';
@@ -32,7 +38,6 @@ function PieWidgetUI({
   order
 }) {
   const theme = useTheme();
-  const [showLabel, setShowLabel] = useState(true);
   const colorByCategory = useRef({});
   const othersCategory = 'Others';
 
@@ -98,30 +103,34 @@ function PieWidgetUI({
     [formatter, theme.palette.common.white, theme.palette.black, tooltipFormatter]
   );
 
-  // Series
-  const labelOptions = useMemo(
-    () => ({
-      formatter: '{per|{d}%}\n{b|{b}}',
-      position: 'center',
-      rich: {
-        b: {
-          fontFamily: theme.typography.overlineDelicate.fontFamily,
-          fontSize: theme.spacingValue * 1.75,
-          lineHeight: theme.spacingValue * 1.75,
-          fontWeight: 'normal',
-          color: theme.palette.text.primary
-        },
-        per: {
-          ...theme.typography,
-          fontSize: theme.spacingValue * 3,
-          lineHeight: theme.spacingValue * 4.5,
-          fontWeight: 600,
-          color: theme.palette.text.primary
-        }
-      }
-    }),
-    [theme]
-  );
+  // WIP Central Text
+  const [selectedItem, setSelectedItem] = useState({});
+
+  useEffect(() => {
+    console.log('dataWithColor', dataWithColor); // ok
+    if (!dataWithColor || dataWithColor.length === 0) {
+      return;
+    }
+
+    let array;
+    if (selectedCategories.length > 0) {
+      array = dataWithColor.filter((dataItem) =>
+        selectedCategories.includes(dataItem.name)
+      );
+    } else {
+      array = dataWithColor;
+    }
+    console.log('array in', array); // ok also in the updated array
+
+    const largestCategory = findLargestCategory(array);
+    console.log('largestCategory', largestCategory); // ok, but not in the updated array
+
+    const category = findElementByName(array, largestCategory);
+    setSelectedItem(category);
+
+    console.log('category', selectedItem); // undefined in the first render, ok in the updated array
+  }, [dataWithColor, selectedCategories, selectedItem]);
+  console.log('selectedItem Out', selectedItem); // undefined in the first render, ok in the updated array
 
   const seriesOptions = useMemo(
     () => [
@@ -152,10 +161,9 @@ function PieWidgetUI({
         radius: ['74%', '90%'],
         selectedOffset: 0,
         bottom: theme.spacingValue * 1.5,
-        label: { show: showLabel, ...labelOptions },
+        label: { show: false },
         emphasis: {
           focus: 'series',
-          label: { ...labelOptions, position: undefined },
           scaleSize: 5
         },
         itemStyle: {
@@ -164,16 +172,7 @@ function PieWidgetUI({
         }
       }
     ],
-    [
-      name,
-      animation,
-      dataWithColor,
-      labels,
-      selectedCategories,
-      theme,
-      showLabel,
-      labelOptions
-    ]
+    [name, animation, dataWithColor, labels, selectedCategories, theme]
   );
 
   const options = useMemo(
@@ -237,13 +236,7 @@ function PieWidgetUI({
   );
 
   const onEvents = {
-    ...(filterable && { click: handleChartClick }),
-    mouseover: () => {
-      setShowLabel(false);
-    },
-    mouseout: () => {
-      setShowLabel(true);
-    }
+    ...(filterable && { click: handleChartClick })
   };
 
   const handleClearSelectedCategories = () => {
@@ -264,6 +257,8 @@ function PieWidgetUI({
           </Link>
         )}
       </OptionsBar>
+
+      <CentralText selectedItem={selectedItem} />
 
       <ReactEcharts
         option={options}
@@ -358,4 +353,47 @@ function processDataItem(colorByCategory, colors, theme) {
     }
     return item;
   };
+}
+
+// TODO: Move this component to a separate file as JSX
+function CentralText({ selectedItem }) {
+  if (!selectedItem) {
+    return null;
+  }
+
+  const { name, value, color } = selectedItem;
+
+  const markerStyle = {
+    display: 'inline-block',
+    marginRight: '4px',
+    borderRadius: '4px',
+    width: '8px',
+    height: '8px',
+    backgroundColor: color
+  };
+
+  return (
+    <div>
+      <p
+        style={{
+          fontSize: '12px',
+          fontWeight: 600,
+          lineHeight: '1.33',
+          margin: '4px 0 4px 0'
+        }}
+      >
+        {name}
+      </p>
+      <p
+        style={{
+          fontSize: '12px',
+          fontWeight: 'normal',
+          lineHeight: '1.33',
+          margin: '0 0 4px 0'
+        }}
+      >
+        <span style={markerStyle}></span> {value} ({value}%)
+      </p>
+    </div>
+  );
 }
