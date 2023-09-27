@@ -180,9 +180,16 @@ function TimeSeriesWidgetUIContent({
         }))
       : [{ data: [], color: theme.palette.secondary.main }];
 
-    for (const { name, value, category } of data) {
-      const categoryIndex = categories && category ? categories.indexOf(category) : 0;
-      if (categoryIndex === -1) continue;
+    for (const { name, value, category, categoryIndex: _categoryIndex } of data) {
+      const categoryIndex =
+        _categoryIndex ?? (categories && category ? categories.indexOf(category) : 0);
+      if (
+        categoryIndex === -1 ||
+        categoryIndex >= categories.length ||
+        !Number.isFinite(categoryIndex)
+      ) {
+        continue;
+      }
 
       series[categoryIndex].data.push([name, value]);
     }
@@ -197,7 +204,7 @@ function TimeSeriesWidgetUIContent({
 
     // If timeWindow is activated
     if (timeWindow.length) {
-      const [start, end] = timeWindow.map(time => new Date(time));
+      const [start, end] = timeWindow.map((time) => new Date(time));
       return formatTimeRange({ start, end, stepSize });
     }
 
