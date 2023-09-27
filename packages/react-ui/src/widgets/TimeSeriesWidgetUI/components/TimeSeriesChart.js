@@ -80,6 +80,20 @@ export default function TimeSeriesChart({
             opacity: 0.2
           }
         },
+        axisLabel: {
+          fontSize: theme.typography.caption.fontSize,
+          fontFamily: theme.typography.caption.fontFamily,
+          fontWeight: theme.typography.fontWeightRegular,
+          // https://echarts.apache.org/en/option.html#xAxis.axisLabel.formatter
+          formatter: {
+            year: '{yearStyle|{yyyy}}'
+          },
+          rich: {
+            yearStyle: {
+              fontWeight: theme.typography.fontWeightMedium
+            }
+          }
+        },
         axisTick: {
           show: false
         },
