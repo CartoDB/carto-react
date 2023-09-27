@@ -27,8 +27,6 @@ export function formatTime({ date, stepSize }) {
   return formatter(date);
 }
 
-const SHORTENED_RANGES_WHEN_NO_MULTIPLIES = [GroupDateTypes.SECONDS, GroupDateTypes.DAYS];
-
 /**
  * Format time range.
  *
@@ -71,12 +69,16 @@ export function formatBucketRange({ date, stepSize, stepMultiplier }) {
 
   const { start, end } = getBucketInterval({ date, stepSize, stepMultiplier });
 
-  if (
-    stepMultiplier === 1 &&
-    stepSize &&
-    SHORTENED_RANGES_WHEN_NO_MULTIPLIES.includes(stepSize)
-  ) {
-    return formatTime({ date: start, stepSize });
+  // exceptions/shorthands
+  if (stepMultiplier === 1) {
+    if (stepSize === GroupDateTypes.DAYS) {
+      return formatTime({ date: start, stepSize });
+    }
+    if (stepSize === GroupDateTypes.SECONDS) {
+      return `${formatLocalDate(start)} ${formatTimeWithSeconds(
+        start
+      )} - ${formatTimeWithSeconds(end)}`;
+    }
   }
 
   return formatTimeRange({ start, end, stepSize });
