@@ -18,15 +18,15 @@ async function getMultipleSeries(props) {
     getCategoryForAggregationOperation({ operation, operationColumn, series })
   );
   const rowsByCategory = await Promise.all(
-    series.map(async (serie, index) => ({
+    series.map(async (serie, categoryIndex) => ({
       data: (await getTimeSeries({ ...propsNoSeries, ...serie })).rows,
-      category: categories[index]
+      categoryIndex
     }))
   );
   const rows = [];
-  for (const { data, category } of rowsByCategory) {
+  for (const { data, categoryIndex } of rowsByCategory) {
     for (const { name, value } of data) {
-      rows.push({ name, value, category });
+      rows.push({ name, value, categoryIndex });
     }
   }
   return {
