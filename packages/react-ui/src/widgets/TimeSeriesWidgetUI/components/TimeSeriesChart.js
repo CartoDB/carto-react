@@ -26,6 +26,7 @@ export default function TimeSeriesChart({
 
   const onChartReady = (_echartsInstance) => setEchartInstance(_echartsInstance);
 
+  const [width, setWidth] = useState();
   const maxValue = useMemo(
     () =>
       series.reduce(
@@ -97,7 +98,8 @@ export default function TimeSeriesChart({
         axisTick: {
           show: false
         },
-        splitNumber: 5
+        splitNumber:
+          width !== undefined ? Math.ceil(width / (theme.spacingValue * 15)) : 5
       },
       yAxis: {
         type: 'value',
@@ -137,7 +139,7 @@ export default function TimeSeriesChart({
         max: maxValue
       }
     }),
-    [theme, maxValue, formatter]
+    [theme, maxValue, formatter, width]
   );
 
   const { timelineOptions: markLine, timeWindowOptions: markArea } =
@@ -231,6 +233,7 @@ export default function TimeSeriesChart({
 
     let observer;
     observer = new ResizeObserver(() => {
+      setWidth(element.clientWidth);
       echartsInstance.resize();
     });
     observer.observe(element);
@@ -243,6 +246,10 @@ export default function TimeSeriesChart({
   const height = fitHeight ? CHART_HEIGHT_FITHEIGHT : heightProp || CHART_HEIGHT_DEFAULT;
 
   useLayoutEffect(() => {
+    const element = echartsInstance?.getDom()?.parentElement;
+    if (element) {
+      setWidth(element.clientWidth);
+    }
     echartsInstance?.resize();
   }, [height, fitHeight, echartsInstance]);
 
