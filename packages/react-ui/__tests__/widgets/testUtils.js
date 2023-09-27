@@ -37,7 +37,8 @@ export const mockEcharts = {
       on: jest.fn(),
       off: jest.fn(),
       getZr: jest.fn(),
-      resize: jest.fn()
+      resize: jest.fn(),
+      getDom: jest.fn()
     }));
   },
   destroy() {
