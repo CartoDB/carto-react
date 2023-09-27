@@ -66,6 +66,7 @@ const EMPTY_ARRAY = [];
  * @param  {string=} [props.splitByCategoryValues]  - Select specific categories. Default most dominant categories are selected.
  * @param  {string[]} [props.stepSizeOptions] - Different steps that can be applied to group the data. If filled, an icon with a menu appears to change between steps. Every value must be one of those defined in `AggregationTypes` object.
  * @param  {string} [props.chartType] - Chart used to represent the time serie. Must be one of those defined in `TIME_SERIES_CHART_TYPES` object.
+ * @param  {number=} [props.timeAxisSplitNumber] - Suggested number of intervals for x axis label. If undefined, will adapt to chart width.
  * @param  {boolean} [props.tooltip] - Enable/disable tooltip.
  * @param  {function} [props.tooltipFormatter] - Function that returns the HTML for the chart tooltip.
  * @param  {function} [props.formatter] - Function for formatting the value that is represented in the tooltip.
@@ -111,6 +112,7 @@ function TimeSeriesWidget({
   droppingFeaturesAlertProps,
   // UI
   chartType,
+  timeAxisSplitNumber,
   tooltip,
   tooltipFormatter,
   formatter,
@@ -345,6 +347,7 @@ function TimeSeriesWidget({
               stepSize={selectedStepSize}
               stepMultiplier={stepMultiplier}
               chartType={chartType}
+              timeAxisSplitNumber={timeAxisSplitNumber}
               tooltip={tooltip}
               tooltipFormatter={tooltipFormatter}
               formatter={formatter}

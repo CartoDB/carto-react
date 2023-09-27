@@ -22,6 +22,7 @@ function TimeSeriesWidgetUI({
   stepSize,
   stepMultiplier = 1,
   chartType,
+  timeAxisSplitNumber,
   tooltip,
   tooltipFormatter,
   formatter,
@@ -58,6 +59,7 @@ function TimeSeriesWidgetUI({
       stepSize={stepSize}
       stepMultiplier={stepMultiplier}
       chartType={chartType}
+      timeAxisSplitNumber={timeAxisSplitNumber}
       tooltip={tooltip}
       tooltipFormatter={tooltipFormatter}
       formatter={formatter}
@@ -101,6 +103,7 @@ TimeSeriesWidgetUI.propTypes = {
   stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired,
   stepMultiplier: PropTypes.number,
   chartType: PropTypes.oneOf(Object.values(CHART_TYPES)),
+  timeAxisSplitNumber: PropTypes.number,
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
   formatter: PropTypes.func,
@@ -148,6 +151,7 @@ function TimeSeriesWidgetUIContent({
   stepSize,
   stepMultiplier,
   chartType,
+  timeAxisSplitNumber,
   tooltip,
   tooltipFormatter,
   formatter,
@@ -283,6 +287,7 @@ function TimeSeriesWidgetUIContent({
   const chart = (
     <TimeSeriesChart
       chartType={chartType}
+      timeAxisSplitNumber={timeAxisSplitNumber}
       data={data}
       series={series}
       categories={categories}
