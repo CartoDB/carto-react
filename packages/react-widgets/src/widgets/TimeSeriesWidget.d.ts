@@ -19,6 +19,7 @@ export type TimeSeriesWidgetProps = {
   splitByCategoryValues?: string[];
 
   chartType?: string;
+  timeAxisSplitNumber?: number;
   tooltip?: boolean;
   tooltipFormatter?: Function;
   formatter?: Function;
