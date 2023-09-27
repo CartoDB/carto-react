@@ -82,16 +82,24 @@ export default function TimeSeriesChart({
           }
         },
         axisLabel: {
+          fontWeight: theme.typography.fontWeightRegular,
           fontSize: theme.typography.caption.fontSize,
           fontFamily: theme.typography.caption.fontFamily,
-          fontWeight: theme.typography.fontWeightRegular,
+          // echarts doesn't intepret lineHeight properly, so hack it around
+          lineHeight: theme.typography.caption.lineHeight * 8,
+          letterSpacing: theme.typography.caption.letterSpacing,
+
           // https://echarts.apache.org/en/option.html#xAxis.axisLabel.formatter
           formatter: {
             year: '{yearStyle|{yyyy}}'
           },
           rich: {
             yearStyle: {
-              fontWeight: theme.typography.fontWeightMedium
+              fontWeight: theme.typography.fontWeightMedium,
+              fontSize: theme.typography.caption.fontSize,
+              fontFamily: theme.typography.caption.fontFamily,
+              letterSpacing: theme.typography.caption.letterSpacing,
+              lineHeight: theme.typography.caption.lineHeight * 8
             }
           }
         },
@@ -99,7 +107,7 @@ export default function TimeSeriesChart({
           show: false
         },
         splitNumber:
-          width !== undefined ? Math.ceil(width / (theme.spacingValue * 15)) : 5
+          width !== undefined ? Math.ceil(width / (theme.spacingValue * 20)) : 5
       },
       yAxis: {
         type: 'value',
