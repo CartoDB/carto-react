@@ -1,24 +1,32 @@
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../../custom-components/echarts-for-react';
-import { Grid, Link, styled, useTheme } from '@mui/material';
+import { Box, Grid, Link, styled, useTheme } from '@mui/material';
 import {
   findLargestCategory,
   disableSerie,
-  findElementByName,
   setColor,
   sortDataDescending
 } from '../utils/chartUtils';
 import { processFormatterRes } from '../utils/formatterUtils';
 import PieSkeleton from './components/PieSkeleton';
+import PieCentralText from './components/PieCentralText';
 import ChartLegend from '../ChartLegend';
 import Typography from '../../components/atoms/Typography';
 
-export const OptionsBar = styled(Grid)(({ theme }) => ({
+const OptionsBar = styled(Grid)(({ theme }) => ({
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginBottom: theme.spacing(1.5)
+  marginBottom: theme.spacing(0.5)
+}));
+
+const ChartContent = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'width'
+})(({ width, theme }) => ({
+  position: 'relative',
+  margin: '0 auto',
+  maxWidth: width ? width : '100%'
 }));
 
 function PieWidgetUI({
@@ -27,6 +35,7 @@ function PieWidgetUI({
   formatter,
   tooltipFormatter,
   height,
+  width,
   labels,
   colors,
   animation,
@@ -39,6 +48,7 @@ function PieWidgetUI({
 }) {
   const theme = useTheme();
   const colorByCategory = useRef({});
+  const [selectedItem, setSelectedItem] = useState({});
   const othersCategory = 'Others';
 
   // Sort data by size if order is ranking, otherwise keep the original order
@@ -103,13 +113,10 @@ function PieWidgetUI({
     [formatter, theme.palette.common.white, theme.palette.black, tooltipFormatter]
   );
 
-  // WIP Central Text
-  const [selectedItem, setSelectedItem] = useState({});
-
-  useEffect(() => {
-    console.log('dataWithColor', dataWithColor); // ok
+  // Central Text
+  const topSelectedCategory = useMemo(() => {
     if (!dataWithColor || dataWithColor.length === 0) {
-      return;
+      return null;
     }
 
     let array;
@@ -120,17 +127,18 @@ function PieWidgetUI({
     } else {
       array = dataWithColor;
     }
-    console.log('array in', array); // ok also in the updated array
 
     const largestCategory = findLargestCategory(array);
-    console.log('largestCategory', largestCategory); // ok, but not in the updated array
+    const category = array.find((element) => element === largestCategory);
 
-    const category = findElementByName(array, largestCategory);
-    setSelectedItem(category);
+    return category;
+  }, [dataWithColor, selectedCategories]);
 
-    console.log('category', selectedItem); // undefined in the first render, ok in the updated array
-  }, [dataWithColor, selectedCategories, selectedItem]);
-  console.log('selectedItem Out', selectedItem); // undefined in the first render, ok in the updated array
+  useEffect(() => {
+    if (topSelectedCategory) {
+      setSelectedItem(topSelectedCategory);
+    }
+  }, [topSelectedCategory, setSelectedItem]);
 
   const seriesOptions = useMemo(
     () => [
@@ -258,14 +266,16 @@ function PieWidgetUI({
         )}
       </OptionsBar>
 
-      <CentralText selectedItem={selectedItem} />
+      <ChartContent width={width}>
+        <PieCentralText selectedItem={selectedItem} />
 
-      <ReactEcharts
-        option={options}
-        onEvents={onEvents}
-        lazyUpdate={true}
-        style={{ maxHeight: height }}
-      />
+        <ReactEcharts
+          option={options}
+          onEvents={onEvents}
+          lazyUpdate={true}
+          style={{ maxHeight: height, maxWidth: width }}
+        />
+      </ChartContent>
 
       {dataWithColor.length > 0 && (
         <ChartLegend
@@ -293,7 +303,8 @@ PieWidgetUI.defaultProps = {
   tooltipFormatter,
   colors: [],
   labels: {},
-  height: '260px',
+  height: '232px',
+  width: '232px',
   animation: true,
   filterable: true,
   selectedCategories: [],
@@ -314,6 +325,7 @@ PieWidgetUI.propTypes = {
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   height: PropTypes.string,
+  width: PropTypes.string,
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   selectedCategories: PropTypes.array,
@@ -353,47 +365,4 @@ function processDataItem(colorByCategory, colors, theme) {
     }
     return item;
   };
-}
-
-// TODO: Move this component to a separate file as JSX
-function CentralText({ selectedItem }) {
-  if (!selectedItem) {
-    return null;
-  }
-
-  const { name, value, color } = selectedItem;
-
-  const markerStyle = {
-    display: 'inline-block',
-    marginRight: '4px',
-    borderRadius: '4px',
-    width: '8px',
-    height: '8px',
-    backgroundColor: color
-  };
-
-  return (
-    <div>
-      <p
-        style={{
-          fontSize: '12px',
-          fontWeight: 600,
-          lineHeight: '1.33',
-          margin: '4px 0 4px 0'
-        }}
-      >
-        {name}
-      </p>
-      <p
-        style={{
-          fontSize: '12px',
-          fontWeight: 'normal',
-          lineHeight: '1.33',
-          margin: '0 0 4px 0'
-        }}
-      >
-        <span style={markerStyle}></span> {value} ({value}%)
-      </p>
-    </div>
-  );
 }
