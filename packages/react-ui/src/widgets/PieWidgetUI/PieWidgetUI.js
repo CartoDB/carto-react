@@ -15,7 +15,7 @@ import PieCentralText from './components/PieCentralText';
 import ChartLegend from '../ChartLegend';
 import Typography from '../../components/atoms/Typography';
 
-const CHART_SIZE = 232;
+const CHART_SIZE = '232px';
 
 const OptionsBar = styled(Grid)(({ theme }) => ({
   flexDirection: 'row',
@@ -146,6 +146,10 @@ function PieWidgetUI({
 
     const largestCategory = findLargestCategory(array);
     const category = array.find((element) => element === largestCategory);
+
+    if (!category) {
+      return null;
+    }
 
     let sumValue = 0;
     for (const category of dataWithColor) {
