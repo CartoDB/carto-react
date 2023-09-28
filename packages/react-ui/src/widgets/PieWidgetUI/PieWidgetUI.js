@@ -15,6 +15,8 @@ import PieCentralText from './components/PieCentralText';
 import ChartLegend from '../ChartLegend';
 import Typography from '../../components/atoms/Typography';
 
+const CHART_SIZE = 232;
+
 const OptionsBar = styled(Grid)(({ theme }) => ({
   flexDirection: 'row',
   justifyContent: 'space-between',
@@ -23,16 +25,16 @@ const OptionsBar = styled(Grid)(({ theme }) => ({
 }));
 
 const ChartContent = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'size'
-})(({ size, theme }) => ({
+  shouldForwardProp: (prop) => !['height', 'width'].includes(prop)
+})(({ height, width, theme }) => ({
   position: 'relative',
   margin: '0 auto',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  width: size || '100%',
-  height: size || '100%'
+  width: width || '100%',
+  height: height || '100%'
 }));
 
 const Chart = styled(ReactEcharts)(({ theme }) => ({
@@ -48,7 +50,8 @@ function PieWidgetUI({
   data = [],
   formatter,
   tooltipFormatter,
-  size,
+  height,
+  width,
   labels,
   colors,
   animation,
@@ -272,7 +275,7 @@ function PieWidgetUI({
     onSelectedCategoriesChange([]);
   };
 
-  if (isLoading) return <PieSkeleton height={size} />;
+  if (isLoading) return <PieSkeleton height={height} />;
 
   return (
     <>
@@ -287,14 +290,14 @@ function PieWidgetUI({
         )}
       </OptionsBar>
 
-      <ChartContent size={size}>
+      <ChartContent height={height} width={width}>
         <PieCentralText item={selectedItem} />
 
         <Chart
           option={options}
           onEvents={onEvents}
           lazyUpdate={true}
-          style={{ height: size, width: size }}
+          style={{ height: height, width: width }}
         />
       </ChartContent>
 
@@ -324,7 +327,8 @@ PieWidgetUI.defaultProps = {
   tooltipFormatter,
   colors: [],
   labels: {},
-  size: '232px',
+  height: CHART_SIZE,
+  width: CHART_SIZE,
   animation: true,
   filterable: true,
   selectedCategories: [],
@@ -344,7 +348,8 @@ PieWidgetUI.propTypes = {
   colors: PropTypes.array,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
-  size: PropTypes.string,
+  height: PropTypes.string,
+  width: PropTypes.string,
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   selectedCategories: PropTypes.array,

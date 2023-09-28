@@ -89,6 +89,6 @@ export function calculatePercentage(value, total) {
     return '0.00%'; // Avoid division by zero
   }
 
-  const percentage = ((value / total) * 100).toFixed(2); // Limit to two decimal
+  const percentage = ((value / total) * 100).toFixed(2); // Limit to two decimals
   return `${percentage}%`;
 }
