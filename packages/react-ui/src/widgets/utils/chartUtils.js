@@ -73,10 +73,7 @@ export function sortDataDescending(data) {
   return sortedData;
 }
 
-export function findElementByName(arr, name) {
-  return arr.find((element) => element === name);
-}
-
+// Find the largest item in an array based on its value
 export function findLargestCategory(array) {
   return array.reduce((largestItem, currentItem) => {
     if (currentItem.value > largestItem.value) {
