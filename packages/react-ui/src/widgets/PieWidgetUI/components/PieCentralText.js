@@ -31,8 +31,8 @@ const MarkerColor = styled(Box)(({ theme }) => ({
   height: theme.spacing(1)
 }));
 
-function PieCentralText({ data, selectedItem }) {
-  const { name, value, color } = selectedItem;
+function PieCentralText({ selectedItem }) {
+  const { name, percentage, color } = selectedItem;
 
   if (!selectedItem) {
     return null;
@@ -40,7 +40,7 @@ function PieCentralText({ data, selectedItem }) {
 
   return (
     <Root>
-      <Typography variant='h5'>{'48.16%'}</Typography>
+      <Typography variant='h5'>{percentage}</Typography>
       <Category variant='body2'>
         <MarkerColor bgcolor={color} component='span' /> {name}
       </Category>
@@ -49,13 +49,11 @@ function PieCentralText({ data, selectedItem }) {
 }
 
 PieCentralText.propTypes = {
-  selectedItem: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      value: PropTypes.number,
-      color: PropTypes.string
-    })
-  )
+  selectedItem: PropTypes.shape({
+    name: PropTypes.string,
+    percentage: PropTypes.string,
+    color: PropTypes.string
+  })
 };
 
 export default PieCentralText;

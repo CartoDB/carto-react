@@ -6,7 +6,8 @@ import {
   findLargestCategory,
   disableSerie,
   setColor,
-  sortDataDescending
+  sortDataDescending,
+  calculatePercentage
 } from '../utils/chartUtils';
 import { processFormatterRes } from '../utils/formatterUtils';
 import PieSkeleton from './components/PieSkeleton';
@@ -113,7 +114,7 @@ function PieWidgetUI({
     [formatter, theme.palette.common.white, theme.palette.black, tooltipFormatter]
   );
 
-  // Central Text
+  // Select the largest category to display in CentralText and calculate its percentage from the total
   const topSelectedCategory = useMemo(() => {
     if (!dataWithColor || dataWithColor.length === 0) {
       return null;
@@ -130,6 +131,14 @@ function PieWidgetUI({
 
     const largestCategory = findLargestCategory(array);
     const category = array.find((element) => element === largestCategory);
+
+    let sumValue = 0;
+    for (const category of dataWithColor) {
+      sumValue += category.value;
+    }
+
+    const percentage = calculatePercentage(category.value, sumValue);
+    category.percentage = percentage;
 
     return category;
   }, [dataWithColor, selectedCategories]);

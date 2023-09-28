@@ -80,5 +80,15 @@ export function findLargestCategory(array) {
       return currentItem;
     }
     return largestItem;
-  }, array[0]); // Initialize largest with the first item in the array
+  }, array[0]); // Initialize with the first item in the array
+}
+
+// Calculate the percentage of a value in relation to a total
+export function calculatePercentage(value, total) {
+  if (total === 0) {
+    return '0.00%'; // Avoid division by zero
+  }
+
+  const percentage = ((value / total) * 100).toFixed(2); // Limit to two decimal
+  return `${percentage}%`;
 }
