@@ -23,11 +23,24 @@ const OptionsBar = styled(Grid)(({ theme }) => ({
 }));
 
 const ChartContent = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'width'
-})(({ width, theme }) => ({
+  shouldForwardProp: (prop) => prop !== 'size'
+})(({ size, theme }) => ({
   position: 'relative',
   margin: '0 auto',
-  maxWidth: width ? width : '100%'
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: size || '100%',
+  height: size || '100%'
+}));
+
+const Chart = styled(ReactEcharts)(({ theme }) => ({
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  left: 0,
+  bottom: 0
 }));
 
 function PieWidgetUI({
@@ -35,8 +48,7 @@ function PieWidgetUI({
   data = [],
   formatter,
   tooltipFormatter,
-  height,
-  width,
+  size,
   labels,
   colors,
   animation,
@@ -260,7 +272,7 @@ function PieWidgetUI({
     onSelectedCategoriesChange([]);
   };
 
-  if (isLoading) return <PieSkeleton height={height} />;
+  if (isLoading) return <PieSkeleton height={size} />;
 
   return (
     <>
@@ -275,14 +287,14 @@ function PieWidgetUI({
         )}
       </OptionsBar>
 
-      <ChartContent width={width}>
-        <PieCentralText selectedItem={selectedItem} />
+      <ChartContent size={size}>
+        <PieCentralText item={selectedItem} />
 
-        <ReactEcharts
+        <Chart
           option={options}
           onEvents={onEvents}
           lazyUpdate={true}
-          style={{ maxHeight: height, maxWidth: width }}
+          style={{ height: size, width: size }}
         />
       </ChartContent>
 
@@ -312,8 +324,7 @@ PieWidgetUI.defaultProps = {
   tooltipFormatter,
   colors: [],
   labels: {},
-  height: '232px',
-  width: '232px',
+  size: '232px',
   animation: true,
   filterable: true,
   selectedCategories: [],
@@ -333,8 +344,7 @@ PieWidgetUI.propTypes = {
   colors: PropTypes.array,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
-  height: PropTypes.string,
-  width: PropTypes.string,
+  size: PropTypes.string,
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   selectedCategories: PropTypes.array,
