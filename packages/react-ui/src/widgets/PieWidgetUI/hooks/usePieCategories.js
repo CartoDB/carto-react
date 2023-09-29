@@ -1,11 +1,10 @@
-import { useMemo, useRef, useEffect } from 'react';
+import { useMemo } from 'react';
 import { useTheme } from '@mui/material';
 import { OTHERS_CATEGORY_NAME, ORDER_TYPES } from '../../utils/chartConstants';
 import { sortDataDescending } from '../../utils/chartUtils';
 
 function usePieCategories(data, order, maxItems, colors) {
   const theme = useTheme();
-  const colorByCategory = useRef({});
 
   // Sort data by size if order is ranking, otherwise keep the original order
   const orderedData = useMemo(() => {
@@ -46,32 +45,28 @@ function usePieCategories(data, order, maxItems, colors) {
 
   // Add a color to each category
   const dataWithColor = useMemo(() => {
-    return groupedData.map(processDataItem(colorByCategory, colors, theme));
+    return groupedData.map(processDataItem(colors, theme));
   }, [groupedData, colors, theme]);
-
-  // Reset colorByCategory when colors and categories change
-  useEffect(() => {
-    colorByCategory.current = {};
-  }, [colors, dataWithColor]);
 
   return dataWithColor;
 }
 
 export default usePieCategories;
 
-function processDataItem(colorByCategory, colors, theme) {
-  return (item) => {
-    const { name } = item;
-    const colorUsed = colorByCategory.current[name];
-    if (colorUsed) {
-      item.color = colorUsed;
+function processDataItem(colors, theme) {
+  const fallbackColor = theme.palette.common.white;
+
+  return (item, index) => {
+    const paletteToUse = colors.length ? colors : theme.palette.qualitative.bold;
+
+    let colorToUse;
+    if (Array.isArray(paletteToUse)) {
+      colorToUse = paletteToUse[index % paletteToUse.length] || fallbackColor;
     } else {
-      const paletteToUse = colors.length ? colors : theme.palette.qualitative.bold;
-      const colorToUse =
-        paletteToUse[Object.keys(colorByCategory.current).length] || '#fff';
-      colorByCategory.current[name] = colorToUse;
-      item.color = colorToUse;
+      colorToUse = paletteToUse[index.toString()] || fallbackColor;
     }
+    item.color = colorToUse || fallbackColor;
+
     return item;
   };
 }
