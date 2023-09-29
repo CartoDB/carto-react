@@ -1,3 +1,5 @@
+import { OTHERS_CATEGORY_NAME } from './chartConstants';
+
 export function areChartPropsEqual(optionPrev, optionNext) {
   const tooltipFormatterPrev = optionPrev?.tooltip?.formatter;
   const tooltipFormatterNext = optionNext.tooltip?.formatter;
@@ -75,7 +77,15 @@ export function sortDataDescending(data) {
 
 // Find the largest item in an array based on its value
 export function findLargestCategory(array) {
-  return array.reduce((largestItem, currentItem) => {
+  // Filter out items with the name 'Others'
+  const filteredArray = array.filter((item) => item.name !== OTHERS_CATEGORY_NAME);
+
+  if (filteredArray.length === 0) {
+    // If no items remain after filtering
+    return array[0];
+  }
+
+  return filteredArray.reduce((largestItem, currentItem) => {
     if (currentItem.value > largestItem.value) {
       return currentItem;
     }
