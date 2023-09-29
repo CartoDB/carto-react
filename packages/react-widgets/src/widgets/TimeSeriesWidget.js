@@ -166,15 +166,8 @@ function TimeSeriesWidget({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepSize]);
 
-  const {
-    data: result = [],
-    isLoading,
-    warning,
-    remoteCalculation
-  } = useWidgetFetch(getTimeSeries, {
-    id,
-    dataSource,
-    params: {
+  const widgetParams = useMemo(
+    () => ({
       series,
       column,
       joinOperation,
@@ -185,7 +178,29 @@ function TimeSeriesWidget({
       splitByCategory,
       splitByCategoryLimit,
       splitByCategoryValues
-    },
+    }),
+    [
+      series,
+      column,
+      joinOperation,
+      selectedStepSize,
+      stepMultiplier,
+      operation,
+      operationColumn,
+      splitByCategory,
+      splitByCategoryLimit,
+      splitByCategoryValues
+    ]
+  );
+  const {
+    data: result = [],
+    isLoading,
+    warning,
+    remoteCalculation
+  } = useWidgetFetch(getTimeSeries, {
+    id,
+    dataSource,
+    params: widgetParams,
     global,
     onError,
     onStateChange,
@@ -196,6 +211,24 @@ function TimeSeriesWidget({
     ? { data: result, categories: undefined }
     : { data: result.rows, categories: result.categories };
 
+  // clean filter
+  useEffect(() => {
+    return () => {
+      removeFilter({
+        id: dataSource,
+        column,
+        owner: id
+      });
+      if (widgetParams.splitByCategory) {
+        removeFilter({
+          id: dataSource,
+          column: widgetParams.splitByCategory,
+          owner: id
+        });
+      }
+    };
+  }, [column, dataSource, id, widgetParams]);
+
   const minTime = useMemo(
     () => data.reduce((acc, { name }) => (name < acc ? name : acc), Number.MAX_VALUE),
     [data]
@@ -203,7 +236,9 @@ function TimeSeriesWidget({
 
   const handleTimeWindowUpdate = useCallback(
     (timeWindow) => {
-      if (!isLoading) {
+      if (isLoading) return;
+
+      if (timeWindow.length === 2) {
         dispatch(
           addFilter({
             id: dataSource,
@@ -214,17 +249,29 @@ function TimeSeriesWidget({
             owner: id
           })
         );
-
-        if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
+      } else {
+        dispatch(
+          removeFilter({
+            id: dataSource,
+            column,
+            owner: id
+          })
+        );
       }
+
+      if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
     },
     [isLoading, dispatch, dataSource, column, minTime, id, onTimeWindowUpdate]
   );
 
   const handleTimelineUpdate = useCallback(
     (timelinePosition) => {
-      if (!isLoading) {
-        const { name: moment } = data[timelinePosition];
+      if (isLoading) return;
+
+      const moment =
+        timelinePosition !== undefined ? data[timelinePosition]?.name : undefined;
+
+      if (moment) {
         dispatch(
           addFilter({
             id: dataSource,
@@ -237,9 +284,17 @@ function TimeSeriesWidget({
             owner: id
           })
         );
-
-        if (onTimelineUpdate) onTimelineUpdate(new Date(moment));
+      } else {
+        dispatch(
+          removeFilter({
+            id: dataSource,
+            column,
+            owner: id
+          })
+        );
       }
+
+      if (onTimelineUpdate) onTimelineUpdate(moment ? new Date(moment) : undefined);
     },
     [
       isLoading,
@@ -454,7 +509,6 @@ TimeSeriesWidget.defaultProps = {
   animation: true,
   isPlaying: false,
   isPaused: false,
-  // timelinePosition: 0,
   timeWindow: [],
   showControls: true,
   chartType: TIME_SERIES_CHART_TYPES.LINE

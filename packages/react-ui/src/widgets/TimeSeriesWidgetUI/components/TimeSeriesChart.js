@@ -158,7 +158,7 @@ export default function TimeSeriesChart({
         max: maxValue
       }
     }),
-    [theme, maxValue, formatter, width]
+    [theme, maxValue, formatter, width, timeAxisSplitNumber]
   );
 
   const { timelineOptions: markLine, timeWindowOptions: markArea } =
