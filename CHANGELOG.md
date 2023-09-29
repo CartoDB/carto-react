@@ -2,6 +2,8 @@
 
 ## Not released
 
+- (chore) Include only required files in published packages [#780](https://github.com/CartoDB/carto-react/pull/780)
+
 ## 2.2
 
 ### 2.2.7 (2023-09-13)
