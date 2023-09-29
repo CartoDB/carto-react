@@ -2,7 +2,26 @@
 
 ## Not released
 
+- (chore) Include only required files in published packages [#780](https://github.com/CartoDB/carto-react/pull/780)
+
 ## 2.2
+
+### 2.2.7 (2023-09-13)
+
+- SelectField: Remove empty space at the beginning [#772](https://github.com/CartoDB/carto-react/pull/772)
+- WrapperWidgetUI: contentProps property to support scrolling [#769](https://github.com/CartoDB/carto-react/pull/769)
+
+### 2.2.6 (2023-09-07)
+
+- Use selectLoader to obtain loader from mime type [#766](https://github.com/CartoDB/carto-react/pull/766)
+
+### 2.2.5 (2023-08-30)
+
+- WrapperWidgetUI: new footer property [#761](https://github.com/CartoDB/carto-react/pull/761)
+
+### 2.2.4 (2023-08-21)
+
+- Fix Legend Widget UI: Legend Wrapper spacing [#755](https://github.com/CartoDB/carto-react/pull/762)
 
 ### 2.2.3 (2023-08-01)
 

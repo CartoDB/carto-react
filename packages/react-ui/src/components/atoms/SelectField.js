@@ -70,7 +70,6 @@ const SelectField = forwardRef(
           }
         }}
       >
-        <MenuItem key='empty' disabled value={''}></MenuItem>
         {children}
       </TextField>
     );

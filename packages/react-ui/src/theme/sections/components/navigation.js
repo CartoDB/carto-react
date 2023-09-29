@@ -40,6 +40,7 @@ export const navigationOverrides = {
         },
         '&.Mui-disabled:empty': {
           height: 0,
+          minHeight: 0,
           padding: 0
         },
         '& .MuiCheckbox-root, & > .MuiSvgIcon-root': {
