@@ -1,6 +1,7 @@
 import { useTheme } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTimeSeriesContext } from './TimeSeriesContext';
+import { findItemIndexByTime } from '../utils/utilities';
 
 const events = {};
 let initialTimeWindow = null;
@@ -11,16 +12,8 @@ export default function useTimeSeriesInteractivity({
   canSelectLines
 }) {
   const theme = useTheme();
-  const {
-    isPlaying,
-    isPaused,
-    setIsPaused,
-    timelinePosition,
-    timeWindow,
-    setTimeWindow,
-    setTimelinePosition,
-    stop
-  } = useTimeSeriesContext();
+  const { isPlaying, isPaused, setIsPaused, timeWindow, setTimeWindow, stop } =
+    useTimeSeriesContext();
 
   const [isMarkLineSelected, setIsMarkLineSelected] = useState(false);
   const [isMarkAreaSelected, setIsMarkAreaSelected] = useState(false);
@@ -38,13 +31,11 @@ export default function useTimeSeriesInteractivity({
           params.offsetX,
           params.offsetY
         ]);
-        const position = data.findIndex((item, idx) =>
-          findTimelinePositionByX(item, idx, data, x)
-        );
-        setTimelinePosition(Math.max(0, position));
+        const itemIndex = findItemIndexByTime(x, data);
+        setTimeWindow(itemIndex !== undefined ? [data[itemIndex].name] : []);
       }
     },
-    [data, echartsInstance, setTimelinePosition]
+    [data, echartsInstance, setTimeWindow]
   );
 
   // Echarts events
@@ -196,10 +187,15 @@ export default function useTimeSeriesInteractivity({
 
   // markLine in echarts
   const timelineOptions = useMemo(() => {
-    const xAxis = data?.[Math.max(0, timelinePosition)]?.name;
+    if (timeWindow.length !== 1) return undefined;
+
+    const timestamp = timeWindow[0];
+    const itemIndex = findItemIndexByTime(timestamp, data);
+    if (itemIndex === undefined) return undefined;
+
+    const xAxis = data[itemIndex]?.name;
     return (
       // Cannot have markLine and markArea at the same time
-      !timeWindow.length &&
       xAxis !== undefined && {
         symbol: ['none', 'none'],
         animationDuration: 100,
@@ -230,7 +226,7 @@ export default function useTimeSeriesInteractivity({
             : []
       }
     );
-  }, [isPaused, isPlaying, data, theme, timelinePosition, timeWindow]);
+  }, [data, isPaused, isPlaying, theme, timeWindow]);
 
   // markArea in echarts
   const timeWindowOptions = useMemo(
@@ -257,22 +253,5 @@ function addEventWithCleanUp(zr, eventKey, event) {
     return () => {
       if (events[eventKey] && zr?.handler) zr.off(eventKey, event);
     };
-  }
-}
-
-function findTimelinePositionByX(item, idx, data, x) {
-  const currentDate = item.name;
-  const upperCloseDate = data[idx + 1]?.name;
-  const lowerCloseDate = data[idx - 1]?.name;
-  const upperDiff = Math.abs(currentDate - upperCloseDate);
-  const lowerDiff = Math.abs(currentDate - lowerCloseDate);
-  const lowerBound = currentDate - lowerDiff * 0.5,
-    upperBound = currentDate + upperDiff * 0.5;
-  if (isFinite(lowerBound) && isFinite(upperBound)) {
-    return x >= lowerBound && x <= upperBound;
-  } else if (isFinite(lowerBound)) {
-    return x >= lowerBound;
-  } else if (isFinite(upperBound)) {
-    return x <= upperBound;
   }
 }

@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useEffect, useRef } from 'react';
 import { Box, Link, useTheme } from '@mui/material';
 import PropTypes from 'prop-types';
 
@@ -15,6 +15,7 @@ import { commonPalette } from '../../theme/sections/palette';
 import { TimeSeriesControls } from './components/TimeSeriesControls';
 import TimeSeriesLayout from './components/TimeSeriesLayout';
 import ChartLegend from '../ChartLegend';
+import { findItemIndexByTime, getDate } from './utils/utilities';
 
 function TimeSeriesWidgetUI({
   data,
@@ -30,9 +31,9 @@ function TimeSeriesWidgetUI({
   fitHeight,
   showControls,
   animation,
-  timelinePosition,
   onTimelineUpdate,
   timeWindow,
+  timelinePosition,
   onTimeWindowUpdate,
   selectedCategories,
   onSelectedCategoriesChange,
@@ -45,6 +46,35 @@ function TimeSeriesWidgetUI({
   palette,
   showLegend
 }) {
+  let prevEmittedTimeWindow = useRef();
+  const handleTimeWindowUpdate = useCallback(
+    (timeWindow) => {
+      if (timeWindow.length === 2) {
+        if (prevEmittedTimeWindow.current?.length === 1) {
+          onTimelineUpdate?.(undefined);
+        }
+        const sorted = timeWindow
+          .sort((timeA, timeB) => (timeA < timeB ? -1 : 1))
+          .map(getDate);
+        onTimeWindowUpdate?.(sorted);
+      }
+
+      if (timeWindow.length === 1) {
+        if (prevEmittedTimeWindow.current?.length === 2) {
+          onTimeWindowUpdate?.([]);
+        }
+        const itemIndex = findItemIndexByTime(timeWindow[0], data);
+        onTimelineUpdate?.(itemIndex);
+      }
+
+      prevEmittedTimeWindow.current = timeWindow;
+
+      // Only executed when timeWindow changes
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [onTimeWindowUpdate, onTimelineUpdate, data]
+  );
+
   const content = isLoading ? (
     <TimeSeriesSkeleton
       fitHeight={fitHeight}
@@ -70,6 +100,7 @@ function TimeSeriesWidgetUI({
       palette={palette}
       showLegend={showLegend}
       selectedCategories={selectedCategories}
+      timelinePosition={timelinePosition}
       onSelectedCategoriesChange={onSelectedCategoriesChange}
     />
   );
@@ -81,10 +112,8 @@ function TimeSeriesWidgetUI({
       isPaused={isPaused}
       onPause={onPause}
       onStop={onStop}
-      timelinePosition={timelinePosition}
-      onTimelineUpdate={onTimelineUpdate}
       timeWindow={timeWindow}
-      onTimeWindowUpdate={onTimeWindowUpdate}
+      onTimeWindowUpdate={handleTimeWindowUpdate}
     >
       {content}
     </TimeSeriesProvider>
@@ -134,8 +163,6 @@ TimeSeriesWidgetUI.defaultProps = {
   animation: true,
   isPlaying: false,
   isPaused: false,
-  timelinePosition: 0,
-  timeWindow: [],
   showControls: true,
   isLoading: false,
   palette: Object.values(commonPalette.qualitative.bold)
@@ -162,13 +189,39 @@ function TimeSeriesWidgetUIContent({
   palette,
   selectedCategories,
   onSelectedCategoriesChange,
-  showLegend
+  showLegend,
+  timelinePosition
 }) {
   const theme = useTheme();
   const fallbackColor = theme.palette.secondary.main;
 
-  const { isPlaying, isPaused, timeWindow, timelinePosition, stop } =
-    useTimeSeriesContext();
+  const { isPlaying, isPaused, timeWindow, stop, setTimeWindow } = useTimeSeriesContext();
+
+  useEffect(() => {
+    if (timelinePosition !== undefined) {
+      if (timelinePosition < 0 || timelinePosition >= data.length) return;
+
+      const timeAtSelectedPosition = data[timelinePosition].name;
+      setTimeWindow([timeAtSelectedPosition]);
+    }
+    // ignore timeWindow, as we're only expecting to change when external data changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timelinePosition, data]);
+
+  useEffect(() => {
+    const start = data[0].name;
+    const end = data[data.length - 1].name;
+    if (
+      timeWindow[0] < start ||
+      timeWindow[1] > end ||
+      timeWindow[1] < start ||
+      timeWindow[1] > end
+    ) {
+      setTimeWindow([]);
+    }
+    // only run on data updates to cross-check that time-window isn't out-of bounds
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   const series = useMemo(() => {
     const colorMapping = {};
@@ -207,7 +260,7 @@ function TimeSeriesWidgetUIContent({
     }
 
     // If timeWindow is activated
-    if (timeWindow.length) {
+    if (timeWindow.length === 2) {
       const [start, end] = timeWindow.map((time) => new Date(time));
       return formatTimeRange({ start, end, stepSize });
     }
@@ -220,12 +273,11 @@ function TimeSeriesWidgetUIContent({
       return formatTimeRange({ start, end, stepSize });
     }
 
-    // If animation is active
-    if (timelinePosition >= 0 && data[timelinePosition]) {
-      const currentDate = new Date(data[timelinePosition].name);
-      return formatBucketRange({ date: currentDate, stepSize, stepMultiplier });
+    if (timeWindow.length === 1) {
+      const date = new Date(timeWindow[0]);
+      return formatBucketRange({ date, stepSize, stepMultiplier });
     }
-  }, [data, timeWindow, isPlaying, isPaused, timelinePosition, stepSize, stepMultiplier]);
+  }, [data, timeWindow, isPlaying, isPaused, stepSize, stepMultiplier]);
 
   const showClearButton = useMemo(() => {
     return (
@@ -233,8 +285,9 @@ function TimeSeriesWidgetUIContent({
     );
   }, [isPaused, isPlaying, selectedCategories?.length, timeWindow.length]);
 
-  const handleStop = () => {
+  const handleClear = () => {
     stop();
+    setTimeWindow([]);
     onSelectedCategoriesChange?.([]);
   };
 
@@ -262,18 +315,17 @@ function TimeSeriesWidgetUIContent({
 
   const header = (
     <>
-      {!!currentDate && (
-        <Box>
-          <Typography color='textSecondary' variant='caption'>
-            {currentDate}
-          </Typography>
-        </Box>
-      )}
+      <Box>
+        <Typography color='textSecondary' variant='caption'>
+          {currentDate || '-'}
+        </Typography>
+      </Box>
+
       {showClearButton && (
         <Link
           variant='caption'
           style={{ cursor: 'pointer' }}
-          onClick={handleStop}
+          onClick={handleClear}
           underline='hover'
         >
           Clear

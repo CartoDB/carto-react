@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { MenuItem, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import Typography from './Typography';
 
 const SelectField = forwardRef(

@@ -158,7 +158,7 @@ const options = {
         'Event emitted when timeline is updated. TimeSeriesWidget is responsible of applying the filter.'
     },
     timeWindow: {
-      description: `Array of two UNIX timestamp (ms) that indicates the start and end of a frame to filter data. Example: [${data[0].name}, ${data[5].name}].
+      description: `Array of  UNIX timestamp (ms) that indicates selected time. One entry mean one bucket selected, two entries mean start and end of a frame to filter data. Example: [${data[0].name}, ${data[5].name}].
       [Internal state] This prop is used to managed state outside of the component.`,
       control: { type: 'array', expanded: true }
     },

@@ -4,6 +4,7 @@ import { Box, Menu, IconButton, MenuItem, SvgIcon } from '@mui/material';
 import { GroupDateTypes } from '@carto/react-core';
 import Typography from '../../../components/atoms/Typography';
 import { useTimeSeriesContext } from '../hooks/TimeSeriesContext';
+import { countDistinctTimePoints, findItemIndexByTime } from '../utils/utilities';
 
 // TimeWindow step is the amount of time (in seconds) that pass in every iteration during the animation.
 // It depends on step size for a better animation speed adjustment.
@@ -24,16 +25,8 @@ export function TimeSeriesControls({ data, stepSize }) {
   const [speed, setSpeed] = useState(1);
   const animationRef = useRef({ animationFrameId: null, timeoutId: null });
 
-  const {
-    isPlaying,
-    isPaused,
-    timeWindow,
-    timelinePosition,
-    setTimelinePosition,
-    setTimeWindow,
-    stop,
-    togglePlay
-  } = useTimeSeriesContext();
+  const { isPlaying, isPaused, timeWindow, setTimeWindow, stop, togglePlay } =
+    useTimeSeriesContext();
 
   // If data changes, stop animation. useDidMountEffect is used to avoid
   // being executed in the initial rendering because that cause
@@ -92,13 +85,13 @@ export function TimeSeriesControls({ data, stepSize }) {
 
   // Running timeline
   useEffect(() => {
-    if (isPlaying && !timeWindow.length && data.length) {
+    if (isPlaying && timeWindow.length === 1 && data.length) {
       animateTimeline({
         speed,
-        timelinePosition,
+        timelinePosition: timeWindow[0],
         data,
         drawFrame: (newTimelinePosition) => {
-          setTimelinePosition(newTimelinePosition);
+          setTimeWindow([newTimelinePosition]);
         },
         onEnd: () => {
           setTimeout(handleStop, 250);
@@ -107,9 +100,11 @@ export function TimeSeriesControls({ data, stepSize }) {
       });
 
       return () => stopAnimation();
+    } else if (isPlaying && timeWindow.length === 0) {
+      setTimeWindow([data[0].name]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isPlaying, speed, timeWindow.length, handleStop, setTimelinePosition]);
+  }, [data, isPlaying, speed, timeWindow.length, handleStop]);
 
   const handleOpenSpeedMenu = (e) => {
     if (e?.currentTarget) {
@@ -282,11 +277,13 @@ function animateTimeline({
   onEnd,
   animationRef
 }) {
-  let currentTimeline = timelinePosition;
+  let currentItemIndex = findItemIndexByTime(timelinePosition, data) || 0;
+  let currentTime = data[currentItemIndex].name;
 
+  const numberOfTimePoints = countDistinctTimePoints(data);
   const fpsToUse =
     Math.max(
-      Math.round(Math.sqrt(data.length) / 2), // FPS based on data length
+      Math.round(Math.sqrt(numberOfTimePoints) / 2), // FPS based on number of unique time points
       MIN_FPS // Min FPS
     ) * speed;
 
@@ -297,11 +294,18 @@ function animateTimeline({
   };
 
   const animate = () => {
-    currentTimeline = Math.min(data.length, currentTimeline + 1);
-    if (currentTimeline === data.length) {
+    //  // search for next time different than previous one
+    for (; currentItemIndex < data.length; currentItemIndex++) {
+      const itemTime = data[currentItemIndex].name;
+      if (itemTime !== currentTime) {
+        currentTime = itemTime;
+        break;
+      }
+    }
+    if (currentItemIndex === data.length) {
       onEnd();
     } else {
-      drawFrame(currentTimeline);
+      drawFrame(currentTime);
       fireAnimation();
     }
   };

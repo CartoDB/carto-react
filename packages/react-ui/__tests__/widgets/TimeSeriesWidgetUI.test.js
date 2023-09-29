@@ -79,10 +79,9 @@ describe('TimeSeriesWidgetUI', () => {
     expect(screen.queryByTestId('pause-icon')).not.toBeInTheDocument();
     expect(screen.queryByTestId('stop')).toBeInTheDocument();
     expect(screen.queryByTestId('play-icon')).toBeInTheDocument();
-    expect(onTimelineUpdate).toBeCalled();
   });
 
-  test('renders with initial timeline position', () => {
+  test('renders with initial timeline position', async () => {
     const onTimelineUpdate = jest.fn();
 
     render(
@@ -96,7 +95,7 @@ describe('TimeSeriesWidgetUI', () => {
     expect(screen.queryByTestId('pause-icon')).not.toBeInTheDocument();
     expect(screen.queryByTestId('stop')).toBeInTheDocument();
     expect(screen.queryByTestId('play-icon')).toBeInTheDocument();
-    expect(onTimelineUpdate).toHaveBeenCalledWith(2);
+    await waitFor(() => expect(onTimelineUpdate).toHaveBeenCalledWith(2));
   });
 
   test('plays when play button is fired', () => {
@@ -127,45 +126,6 @@ describe('TimeSeriesWidgetUI', () => {
 
     expect(screen.queryByTestId('pause-icon')).not.toBeInTheDocument();
     expect(onPause).toBeCalled();
-  });
-
-  test('updates data cause reset component', () => {
-    const NEW_DATA = [
-      { name: 1514761200000, value: 310 },
-      { name: 1515366000000, value: 406 },
-      { name: 1515970800000, value: 387 },
-      { name: 1516575600000, value: 471 }
-    ];
-
-    const onTimelineUpdate = jest.fn();
-    const onStop = jest.fn();
-
-    const { rerender } = render(
-      <Widget
-        isPlaying={false}
-        isPaused={true}
-        onStop={onStop}
-        onTimelineUpdate={onTimelineUpdate}
-      />
-    );
-
-    rerender(
-      <Widget
-        data={NEW_DATA}
-        isPlaying={false}
-        isPaused={true}
-        onStop={onStop}
-        onTimelineUpdate={onTimelineUpdate}
-      />
-    );
-
-    expect(screen.queryByTestId('pause-icon')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('stop')).toBeInTheDocument();
-    expect(screen.queryByTestId('play-icon')).toBeInTheDocument();
-    expect(onTimelineUpdate).toHaveBeenCalledWith(0);
-    // Wait a second, because onStop is called with a certain delay
-    setTimeout(() => expect(onStop).toBeCalled());
-    jest.runOnlyPendingTimers();
   });
 
   test('updates internal state from outside correctly', () => {
