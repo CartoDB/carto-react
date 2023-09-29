@@ -61,9 +61,9 @@ function processDataItem(colors, theme) {
 
     let colorToUse;
     if (Array.isArray(paletteToUse)) {
-      colorToUse = paletteToUse[index % paletteToUse.length] || fallbackColor;
+      colorToUse = paletteToUse[index % paletteToUse.length];
     } else {
-      colorToUse = paletteToUse[index.toString()] || fallbackColor;
+      colorToUse = paletteToUse[index.toString()];
     }
     item.color = colorToUse || fallbackColor;
 
