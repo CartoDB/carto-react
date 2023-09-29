@@ -12,10 +12,11 @@ const Root = styled(Box)(({ theme }) => ({
   paddingBottom: theme.spacing(1)
 }));
 
-const Category = styled(Typography)(({ theme }) => ({
+const Category = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing(1),
+  maxWidth: '140px',
   textTransform: 'uppercase'
 }));
 
@@ -23,6 +24,7 @@ const MarkerColor = styled(Box)(({ theme }) => ({
   display: 'inline-block',
   borderRadius: theme.spacing(0.5),
   width: theme.spacing(1),
+  minWidth: theme.spacing(1),
   height: theme.spacing(1)
 }));
 
@@ -36,8 +38,11 @@ function PieCentralText({ item }) {
   return (
     <Root>
       <Typography variant='h5'>{percentage}</Typography>
-      <Category variant='body2'>
-        <MarkerColor bgcolor={color} component='span' /> {name}
+      <Category>
+        <MarkerColor bgcolor={color} component='span' />
+        <Typography component='span' variant='body2' noWrap>
+          {name}
+        </Typography>
       </Category>
     </Root>
   );
