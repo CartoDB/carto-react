@@ -1,13 +1,8 @@
-import React, { useMemo, useEffect, useState, useCallback } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { Box, Grid, Link, styled, useTheme } from '@mui/material';
-import {
-  findLargestCategory,
-  disableSerie,
-  setColor,
-  calculatePercentage
-} from '../utils/chartUtils';
+import { disableSerie, setColor } from '../utils/chartUtils';
 import { OTHERS_CATEGORY_NAME, ORDER_TYPES } from '../utils/chartConstants';
 import { processFormatterRes } from '../utils/formatterUtils';
 import PieSkeleton from './components/PieSkeleton';
@@ -64,7 +59,6 @@ function PieWidgetUI({
   order
 }) {
   const theme = useTheme();
-  const [selectedItem, setSelectedItem] = useState({});
   const processedData = usePieCategories(data, order, maxItems, colors);
 
   // Tooltip
@@ -80,45 +74,7 @@ function PieWidgetUI({
     [formatter, theme.palette.common.white, theme.palette.black, tooltipFormatter]
   );
 
-  // Select the largest category to display in CentralText and calculate its percentage from the total
-  const topSelectedCategory = useMemo(() => {
-    if (!processedData || processedData.length === 0) {
-      return null;
-    }
-
-    let array;
-    if (selectedCategories.length > 0) {
-      array = processedData.filter((dataItem) =>
-        selectedCategories.includes(dataItem.name)
-      );
-    } else {
-      array = processedData;
-    }
-
-    const largestCategory = findLargestCategory(array);
-    const category = array.find((element) => element === largestCategory);
-
-    if (!category) {
-      return null;
-    }
-
-    let sumValue = 0;
-    for (const category of processedData) {
-      sumValue += category.value;
-    }
-
-    const percentage = calculatePercentage(category.value, sumValue);
-    category.percentage = percentage;
-
-    return category;
-  }, [processedData, selectedCategories]);
-
-  useEffect(() => {
-    if (topSelectedCategory) {
-      setSelectedItem(topSelectedCategory);
-    }
-  }, [topSelectedCategory, setSelectedItem]);
-
+  // Series
   const seriesOptions = useMemo(
     () => [
       {
@@ -246,7 +202,7 @@ function PieWidgetUI({
       </OptionsBar>
 
       <ChartContent height={height} width={width}>
-        <PieCentralText item={selectedItem} />
+        <PieCentralText data={processedData} selectedCategories={selectedCategories} />
 
         <Chart
           option={options}
