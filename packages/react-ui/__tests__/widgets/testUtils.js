@@ -36,7 +36,9 @@ export const mockEcharts = {
       showLoading: jest.fn(),
       on: jest.fn(),
       off: jest.fn(),
-      getZr: jest.fn()
+      getZr: jest.fn(),
+      resize: jest.fn(),
+      getDom: jest.fn()
     }));
   },
   destroy() {

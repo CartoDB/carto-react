@@ -2,27 +2,33 @@ import { getTimeSeries } from '../../src/models/TimeSeriesModel';
 import { AggregationTypes, GroupDateTypes } from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 
-const MOCK_API_RESULT = [
-  { name: Date.UTC(1970, 0, 1, 0, 0), value: 2 },
-  { name: Date.UTC(1970, 1, 1, 0, 0), value: 3 }
-];
+const MOCK_API_RESULT = {
+  rows: [
+    { name: Date.UTC(1970, 0, 1, 0, 0), value: 2 },
+    { name: Date.UTC(1970, 1, 1, 0, 0), value: 3 }
+  ],
+  categories: undefined
+};
 
 const mockedExecuteModel = jest.fn();
 
 jest.mock('@carto/react-api', () => ({
   _executeModel: (props) => {
     mockedExecuteModel(props);
-    return Promise.resolve({ rows: MOCK_API_RESULT });
+    return Promise.resolve(MOCK_API_RESULT);
   }
 }));
 
-const MOCK_WORKER_RESULT = [
-  Date.UTC(1970, 0, 1, 0, 0),
-  Date.UTC(1970, 0, 1, 0, 30),
-  Date.UTC(1970, 1, 1, 0, 0),
-  Date.UTC(1970, 1, 1, 0, 30),
-  Date.UTC(1971, 0, 1, 1, 0)
-].map((name) => ({ name, value: 1 }));
+const MOCK_WORKER_RESULT = {
+  rows: [
+    Date.UTC(1970, 0, 1, 0, 0),
+    Date.UTC(1970, 0, 1, 0, 30),
+    Date.UTC(1970, 1, 1, 0, 0),
+    Date.UTC(1970, 1, 1, 0, 30),
+    Date.UTC(1971, 0, 1, 1, 0)
+  ].map((name) => ({ name, value: 1 })),
+  categories: undefined
+};
 
 jest.mock('@carto/react-workers', () => ({
   executeTask: jest
@@ -90,7 +96,11 @@ describe('getTimeSeries', () => {
         column: 'date_column',
         operationColumn: 'opt_column',
         global: true,
-        stepSize: GroupDateTypes.MONTHS
+        stepSize: GroupDateTypes.SECONDS,
+        stepMultiplier: 2,
+        splitByCategory: 'abc',
+        splitByCategoryLimit: 5,
+        splitByCategoryValues: ['a', 'b', 'c']
       };
 
       const data = await getTimeSeries(props);
@@ -105,7 +115,11 @@ describe('getTimeSeries', () => {
           operation: props.operation,
           operationColumn: props.operationColumn || props.column,
           stepSize: props.stepSize,
-          joinOperation: props.joinOperation
+          joinOperation: props.joinOperation,
+          stepMultiplier: props.stepMultiplier,
+          splitByCategory: props.splitByCategory,
+          splitByCategoryLimit: props.splitByCategoryLimit,
+          splitByCategoryValues: props.splitByCategoryValues
         },
         opts: {
           abortController: undefined

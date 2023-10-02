@@ -1,8 +1,12 @@
 import React from 'react';
-import { Skeleton } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
 
 const FormulaSkeleton = () => {
-  return <Skeleton height={24} width={120} />;
+  return (
+    <Box pt={0.5}>
+      <Skeleton height={24} width={120} />
+    </Box>
+  );
 };
 
 export default FormulaSkeleton;
