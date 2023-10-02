@@ -1,3 +1,5 @@
+import { OTHERS_CATEGORY_NAME } from './chartConstants';
+
 export function areChartPropsEqual(optionPrev, optionNext) {
   const tooltipFormatterPrev = optionPrev?.tooltip?.formatter;
   const tooltipFormatterNext = optionNext.tooltip?.formatter;
@@ -71,4 +73,32 @@ export function sortDataDescending(data) {
   });
 
   return sortedData;
+}
+
+// Find the largest item in an array based on its value
+export function findLargestCategory(array) {
+  // Filter out items with the name 'Others'
+  const filteredArray = array.filter((item) => item.name !== OTHERS_CATEGORY_NAME);
+
+  if (filteredArray.length === 0) {
+    // If no items remain after filtering
+    return array[0];
+  }
+
+  return filteredArray.reduce((largestItem, currentItem) => {
+    if (currentItem.value > largestItem.value) {
+      return currentItem;
+    }
+    return largestItem;
+  }, array[0]); // Initialize with the first item in the array
+}
+
+// Calculate the percentage of a value in relation to a total
+export function calculatePercentage(value, total) {
+  if (total === 0) {
+    return '0.00%'; // Avoid division by zero
+  }
+
+  const percentage = ((value / total) * 100).toFixed(2); // Limit to two decimals
+  return `${percentage}%`;
 }
