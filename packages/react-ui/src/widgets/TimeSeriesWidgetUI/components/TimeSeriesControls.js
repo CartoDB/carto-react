@@ -5,6 +5,7 @@ import { GroupDateTypes } from '@carto/react-core';
 import Typography from '../../../components/atoms/Typography';
 import { useTimeSeriesContext } from '../hooks/TimeSeriesContext';
 import { countDistinctTimePoints, findItemIndexByTime } from '../utils/utilities';
+import useImperativeIntl from '../../../hooks/useImperativeIntl';
 
 // TimeWindow step is the amount of time (in seconds) that pass in every iteration during the animation.
 // It depends on step size for a better animation speed adjustment.
@@ -20,10 +21,11 @@ const TIME_WINDOW_STEP_BY_STEP_SIZE = {
 
 const SPEED_FACTORS = [0.5, 1, 2, 3];
 
-export function TimeSeriesControls({ data, stepSize }) {
+export function TimeSeriesControls({ data, stepSize, intlConfig }) {
   const [anchorSpeedEl, setAnchorSpeedEl] = useState(null);
   const [speed, setSpeed] = useState(1);
   const animationRef = useRef({ animationFrameId: null, timeoutId: null });
+  const intl = useImperativeIntl(intlConfig);
 
   const { isPlaying, isPaused, timeWindow, setTimeWindow, stop, togglePlay } =
     useTimeSeriesContext();
@@ -139,7 +141,7 @@ export function TimeSeriesControls({ data, stepSize }) {
       >
         <MenuItem disabled>
           <Typography variant='caption' color='textSecondary'>
-            Speed
+            {intl.formatMessage({ id: 'c4r.widgets.timeSeries.speed' })}
           </Typography>
         </MenuItem>
         {SPEED_FACTORS.map((speedItem) => (

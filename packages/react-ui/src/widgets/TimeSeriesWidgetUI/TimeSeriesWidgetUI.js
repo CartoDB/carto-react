@@ -16,7 +16,7 @@ import { TimeSeriesControls } from './components/TimeSeriesControls';
 import TimeSeriesLayout from './components/TimeSeriesLayout';
 import ChartLegend from '../ChartLegend';
 import { findItemIndexByTime, getDate } from './utils/utilities';
-
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 function TimeSeriesWidgetUI({
   data,
   categories,
@@ -44,7 +44,8 @@ function TimeSeriesWidgetUI({
   onStop,
   isLoading,
   palette,
-  showLegend
+  showLegend,
+  intlConfig
 }) {
   let prevEmittedTimeWindow = useRef();
   const handleTimeWindowUpdate = useCallback(
@@ -102,6 +103,7 @@ function TimeSeriesWidgetUI({
       selectedCategories={selectedCategories}
       timelinePosition={timelinePosition}
       onSelectedCategoriesChange={onSelectedCategoriesChange}
+      intlConfig={intlConfig}
     />
   );
 
@@ -151,7 +153,8 @@ TimeSeriesWidgetUI.propTypes = {
   showControls: PropTypes.bool,
   isLoading: PropTypes.bool,
   palette: PropTypes.arrayOf(PropTypes.string),
-  showLegend: PropTypes.bool
+  showLegend: PropTypes.bool,
+  intlConfig: PropTypes.object
 };
 
 TimeSeriesWidgetUI.defaultProps = {
@@ -190,12 +193,15 @@ function TimeSeriesWidgetUIContent({
   selectedCategories,
   onSelectedCategoriesChange,
   showLegend,
-  timelinePosition
+  timelinePosition,
+  intlConfig
 }) {
   const theme = useTheme();
   const fallbackColor = theme.palette.secondary.main;
 
   const { isPlaying, isPaused, timeWindow, stop, setTimeWindow } = useTimeSeriesContext();
+
+  const intl = useImperativeIntl(intlConfig);
 
   useEffect(() => {
     if (timelinePosition !== undefined) {
@@ -328,13 +334,15 @@ function TimeSeriesWidgetUIContent({
           onClick={handleClear}
           underline='hover'
         >
-          Clear
+          {intl.formatMessage({ id: 'c4r.widgets.timeSeries.clear' })}
         </Link>
       )}
     </>
   );
 
-  const controls = showControls && <TimeSeriesControls data={data} stepSize={stepSize} />;
+  const controls = showControls && (
+    <TimeSeriesControls data={data} stepSize={stepSize} intlConfig={intlConfig} />
+  );
 
   const chart = (
     <TimeSeriesChart

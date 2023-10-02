@@ -81,6 +81,7 @@ const EMPTY_ARRAY = [];
  * @param  {string[]=} [props.palette] - Optional palette
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
+ * @param  {object} [props.intlConfig] - Object with intl configuration. If not provided, default messages will be used.
  * Internal state
  * @param  {boolean} [props.isPlaying] - If true, the animation starts.
  * @param  {boolean} [props.isPaused] - If true and isPlaying false, the animation is paused.
@@ -110,6 +111,7 @@ function TimeSeriesWidget({
   wrapperProps,
   noDataAlertProps,
   droppingFeaturesAlertProps,
+  intlConfig,
   // UI
   chartType,
   timeAxisSplitNumber,
@@ -425,6 +427,7 @@ function TimeSeriesWidget({
               isLoading={isLoading}
               palette={palette}
               showLegend={showLegend}
+              intlConfig={intlConfig}
             />
           )}
         </WidgetWithAlert>
@@ -475,6 +478,7 @@ TimeSeriesWidget.propTypes = {
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
   droppingFeaturesAlertProps: PropTypes.object,
+  intlConfig: PropTypes.object,
   // UI
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
