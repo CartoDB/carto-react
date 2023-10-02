@@ -1,19 +1,17 @@
-import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { Box, Grid, Link, styled, useTheme } from '@mui/material';
-import {
-  findLargestCategory,
-  disableSerie,
-  setColor,
-  sortDataDescending,
-  calculatePercentage
-} from '../utils/chartUtils';
+import { disableSerie, setColor } from '../utils/chartUtils';
+import { OTHERS_CATEGORY_NAME, ORDER_TYPES } from '../utils/chartConstants';
 import { processFormatterRes } from '../utils/formatterUtils';
 import PieSkeleton from './components/PieSkeleton';
 import PieCentralText from './components/PieCentralText';
+import usePieCategories from './hooks/usePieCategories';
 import ChartLegend from '../ChartLegend';
 import Typography from '../../components/atoms/Typography';
+
+const CHART_SIZE = '232px';
 
 const OptionsBar = styled(Grid)(({ theme }) => ({
   flexDirection: 'row',
@@ -23,16 +21,16 @@ const OptionsBar = styled(Grid)(({ theme }) => ({
 }));
 
 const ChartContent = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'size'
-})(({ size, theme }) => ({
+  shouldForwardProp: (prop) => !['height', 'width'].includes(prop)
+})(({ height, width, theme }) => ({
   position: 'relative',
   margin: '0 auto',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  width: size || '100%',
-  height: size || '100%'
+  width: width || '100%',
+  height: height || '100%'
 }));
 
 const Chart = styled(ReactEcharts)(({ theme }) => ({
@@ -48,7 +46,8 @@ function PieWidgetUI({
   data = [],
   formatter,
   tooltipFormatter,
-  size,
+  height,
+  width,
   labels,
   colors,
   animation,
@@ -60,58 +59,7 @@ function PieWidgetUI({
   order
 }) {
   const theme = useTheme();
-  const colorByCategory = useRef({});
-  const [selectedItem, setSelectedItem] = useState({});
-  const othersCategory = 'Others';
-
-  // Sort data by size if order is ranking, otherwise keep the original order
-  const orderedData = useMemo(() => {
-    let orderedCategories = [];
-
-    if (order === PieWidgetUI.ORDER_TYPES.RANKING) {
-      orderedCategories = sortDataDescending(data);
-    } else {
-      orderedCategories = [...data];
-    }
-
-    return orderedCategories;
-  }, [data, order]);
-
-  // Limit the number of categories to display, then group the rest into an "Others" category
-  const groupedData = useMemo(() => {
-    let categories = [];
-    let othersValue = 0;
-
-    for (const category of orderedData) {
-      if (categories.length < maxItems) {
-        categories.push({ ...category });
-      } else {
-        othersValue += category.value;
-      }
-    }
-
-    if (othersValue > 0) {
-      categories.push({
-        name: othersCategory,
-        value: othersValue,
-        emphasis: { scale: false }
-      });
-    }
-
-    return categories;
-  }, [maxItems, orderedData]);
-
-  // Add a color to each category
-  const dataWithColor = useMemo(() => {
-    return groupedData.map(processDataItem(colorByCategory, colors, theme));
-  }, [groupedData, colors, theme]);
-
-  // Reset colorByCategory when colors and categories change
-  useEffect(() => {
-    colorByCategory.current = {};
-    // Spread colors array to avoid reference problems
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...colors, dataWithColor]);
+  const processedData = usePieCategories(data, order, maxItems, colors);
 
   // Tooltip
   const tooltipOptions = useMemo(
@@ -126,48 +74,14 @@ function PieWidgetUI({
     [formatter, theme.palette.common.white, theme.palette.black, tooltipFormatter]
   );
 
-  // Select the largest category to display in CentralText and calculate its percentage from the total
-  const topSelectedCategory = useMemo(() => {
-    if (!dataWithColor || dataWithColor.length === 0) {
-      return null;
-    }
-
-    let array;
-    if (selectedCategories.length > 0) {
-      array = dataWithColor.filter((dataItem) =>
-        selectedCategories.includes(dataItem.name)
-      );
-    } else {
-      array = dataWithColor;
-    }
-
-    const largestCategory = findLargestCategory(array);
-    const category = array.find((element) => element === largestCategory);
-
-    let sumValue = 0;
-    for (const category of dataWithColor) {
-      sumValue += category.value;
-    }
-
-    const percentage = calculatePercentage(category.value, sumValue);
-    category.percentage = percentage;
-
-    return category;
-  }, [dataWithColor, selectedCategories]);
-
-  useEffect(() => {
-    if (topSelectedCategory) {
-      setSelectedItem(topSelectedCategory);
-    }
-  }, [topSelectedCategory, setSelectedItem]);
-
+  // Series
   const seriesOptions = useMemo(
     () => [
       {
         type: 'pie',
         name,
         animation,
-        data: dataWithColor.map((item) => {
+        data: processedData.map((item) => {
           // Avoid modifying data item
           const clonedItem = { ...item };
 
@@ -201,7 +115,7 @@ function PieWidgetUI({
         }
       }
     ],
-    [name, animation, dataWithColor, labels, selectedCategories, theme]
+    [name, animation, processedData, labels, selectedCategories, theme]
   );
 
   const options = useMemo(
@@ -225,10 +139,10 @@ function PieWidgetUI({
     (params) => {
       if (onSelectedCategoriesChange) {
         const newSelectedCategories = [...selectedCategories];
-        const { name } = dataWithColor[params.dataIndex];
+        const { name } = processedData[params.dataIndex];
 
         // Avoid clicking if the category name is "Others"
-        if (name === othersCategory) {
+        if (name === OTHERS_CATEGORY_NAME) {
           return;
         }
 
@@ -243,7 +157,7 @@ function PieWidgetUI({
         onSelectedCategoriesChange(newSelectedCategories);
       }
     },
-    [dataWithColor, onSelectedCategoriesChange, selectedCategories]
+    [processedData, onSelectedCategoriesChange, selectedCategories]
   );
 
   const handleLegendClick = useCallback(
@@ -272,7 +186,7 @@ function PieWidgetUI({
     onSelectedCategoriesChange([]);
   };
 
-  if (isLoading) return <PieSkeleton height={size} />;
+  if (isLoading) return <PieSkeleton height={height} />;
 
   return (
     <>
@@ -287,20 +201,20 @@ function PieWidgetUI({
         )}
       </OptionsBar>
 
-      <ChartContent size={size}>
-        <PieCentralText item={selectedItem} />
+      <ChartContent height={height} width={width}>
+        <PieCentralText data={processedData} selectedCategories={selectedCategories} />
 
         <Chart
           option={options}
           onEvents={onEvents}
           lazyUpdate={true}
-          style={{ height: size, width: size }}
+          style={{ height: height, width: width }}
         />
       </ChartContent>
 
-      {dataWithColor.length > 0 && (
+      {processedData.length > 0 && (
         <ChartLegend
-          series={dataWithColor}
+          series={processedData}
           selectedCategories={selectedCategories}
           onCategoryClick={onSelectedCategoriesChange && handleLegendClick}
         />
@@ -309,27 +223,19 @@ function PieWidgetUI({
   );
 }
 
-/**
- * Enum for PieWidgetUI order types. 'RANKING' orders the data by value and 'FIXED' keeps the order present in the original data
- * @enum {string}
- */
-PieWidgetUI.ORDER_TYPES = {
-  RANKING: 'ranking',
-  FIXED: 'fixed'
-};
-
 PieWidgetUI.defaultProps = {
   name: null,
   formatter: (v) => v,
   tooltipFormatter,
   colors: [],
   labels: {},
-  size: '232px',
+  height: CHART_SIZE,
+  width: CHART_SIZE,
   animation: true,
   filterable: true,
   selectedCategories: [],
   maxItems: 11,
-  order: PieWidgetUI.ORDER_TYPES.RANKING
+  order: ORDER_TYPES.RANKING
 };
 
 PieWidgetUI.propTypes = {
@@ -344,14 +250,15 @@ PieWidgetUI.propTypes = {
   colors: PropTypes.array,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
-  size: PropTypes.string,
+  height: PropTypes.string,
+  width: PropTypes.string,
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func,
   isLoading: PropTypes.bool,
   maxItems: PropTypes.number,
-  order: PropTypes.oneOf(Object.values(PieWidgetUI.ORDER_TYPES))
+  order: PropTypes.oneOf(Object.values(ORDER_TYPES))
 };
 
 export default PieWidgetUI;
@@ -367,21 +274,4 @@ function tooltipFormatter(params) {
     <p style="font-size:12px;font-weight:600;line-height:1.33;margin:4px 0 4px 0;">${params.name}</p>
     <p style="font-size: 12px;font-weight:normal;line-height:1.33;margin:0 0 4px 0;"><span style="${markerStyle}"></span> ${value} (${params.percent}%)</p>
   `.trim();
-}
-
-function processDataItem(colorByCategory, colors, theme) {
-  return (item) => {
-    const { name } = item;
-    const colorUsed = colorByCategory.current[name];
-    if (colorUsed) {
-      item.color = colorUsed;
-    } else {
-      const paletteToUse = colors.length ? colors : theme.palette.qualitative.bold;
-      const colorToUse =
-        paletteToUse[Object.keys(colorByCategory.current).length] || '#fff';
-      colorByCategory.current[name] = colorToUse;
-      item.color = colorToUse;
-    }
-    return item;
-  };
 }
