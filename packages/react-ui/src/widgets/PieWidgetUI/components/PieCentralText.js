@@ -30,7 +30,6 @@ const MarkerColor = styled(Box)(({ theme }) => ({
 }));
 
 function PieCentralText({ data, selectedCategories }) {
-  console.log('data', data);
   const [selectedItem, setSelectedItem] = useState({});
 
   // Select the largest category to display in CentralText and calculate its percentage from the total
