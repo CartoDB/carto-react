@@ -15,9 +15,6 @@ export const TimeSeriesContext = createContext({
   setIsPaused: (value) => {},
   onPause: () => {},
   onStop: () => {},
-  timelinePosition: 0,
-  setTimelinePosition: (value) => {},
-  onTimelineUpdate: (value) => {},
   timeWindow: [],
   setTimeWindow: (value) => {},
   onTimeWindowUpdate: (value) => {},
@@ -36,33 +33,19 @@ export function TimeSeriesProvider({
   onPlay,
   onPause,
   onStop,
-  timelinePosition,
-  onTimelineUpdate,
   timeWindow,
   onTimeWindowUpdate
 }) {
   const [_isPlaying, setIsPlaying] = useState(isPlaying);
   const [_isPaused, setIsPaused] = useState(isPaused);
-  const [_timelinePosition, setTimelinePosition] = useState(0);
   const [_timeWindow, setTimeWindow] = useState([]);
 
   useEffect(() => {
-    if (_timeWindow.length === 2 && onTimeWindowUpdate) {
-      onTimeWindowUpdate(
-        _timeWindow.sort((timeA, timeB) => (timeA < timeB ? -1 : 1)).map(getDate)
-      );
-    }
-    // Only executed when timeWindow changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_timeWindow]);
-
-  useEffect(() => {
-    if (!_timeWindow.length && (_isPlaying || _isPaused) && onTimelineUpdate) {
-      onTimelineUpdate(_timelinePosition);
-    }
-    // Only executed when timelinePosition changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_timelinePosition, _isPlaying, _isPaused, _timeWindow]);
+    const sorted = _timeWindow
+      .sort((timeA, timeB) => (timeA < timeB ? -1 : 1))
+      .map(getDate);
+    onTimeWindowUpdate?.(sorted);
+  }, [_timeWindow, onTimeWindowUpdate]);
 
   const togglePlay = useCallback(() => {
     if (_isPlaying) {
@@ -79,7 +62,6 @@ export function TimeSeriesProvider({
   const stopWrapper = useCallback(() => {
     setIsPlaying(false);
     setIsPaused(false);
-    setTimelinePosition(0);
     setTimeWindow([]);
   }, []);
 
@@ -109,25 +91,19 @@ export function TimeSeriesProvider({
   }, [isPaused]);
 
   useEffect(() => {
-    if (timelinePosition !== _timelinePosition) {
-      setTimelinePosition(timelinePosition);
-    }
-    // Only when the state out of the context changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timelinePosition]);
+    if (!timeWindow) return;
 
-  useEffect(() => {
     const timeWindowTimestamp = timeWindow.map(getTimestamp);
     const _timeWindowTimestamp = _timeWindow.map(getTimestamp);
     if (
-      timeWindowTimestamp[0] !== _timeWindowTimestamp[0] &&
+      timeWindowTimestamp[0] !== _timeWindowTimestamp[0] ||
       timeWindowTimestamp[1] !== _timeWindowTimestamp[1]
     ) {
       setTimeWindow(timeWindowTimestamp);
     }
     // Only when the state out of the context changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...timeWindow]);
+  }, timeWindow);
 
   return (
     <TimeSeriesContext.Provider
@@ -136,9 +112,6 @@ export function TimeSeriesProvider({
         setIsPlaying,
         isPaused: _isPaused,
         setIsPaused,
-        timelinePosition: _timelinePosition,
-        setTimelinePosition,
-        onTimelineUpdate,
         timeWindow: _timeWindow,
         setTimeWindow,
         onTimeWindowUpdate,

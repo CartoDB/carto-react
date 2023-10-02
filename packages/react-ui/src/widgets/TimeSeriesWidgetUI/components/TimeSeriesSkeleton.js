@@ -1,41 +1,39 @@
 import React from 'react';
-import { Box, Grid, styled } from '@mui/material';
-import { Skeleton } from '@mui/material';
-import { SKELETON_HEIGHT, SkeletonBarsGrid } from '../../SkeletonWidgets';
-import { BREAKPOINTS } from '../../../theme/themeConstants';
+import { Box, styled, Skeleton } from '@mui/material';
+
+import { SkeletonBarsGrid } from '../../SkeletonWidgets';
 import GraphLine from '../../../assets/images/GraphLine';
+import TimeSeriesLayout from './TimeSeriesLayout';
+import { CHART_HEIGHT_DEFAULT, CHART_HEIGHT_FITHEIGHT } from './TimeSeriesChart';
 
-const Root = styled(Grid)(({ theme }) => ({
-  alignItems: 'stretch',
-  containerType: 'inline-size',
-
-  [`@container (max-width: ${BREAKPOINTS.XS}px)`]: {
-    ' > div': {
-      marginRight: 0
-    }
-  }
-}));
-
-const Controls = styled(Grid)(({ theme }) => ({
+const Controls = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'space-between',
-  marginRight: theme.spacing(4)
+  justifyContent: 'flex-end'
 }));
 
-const Graph = styled(Grid)(({ theme }) => ({
+const Graph = styled(Box)(() => ({
+  position: 'relative',
+  height: '100%',
+  alignSelf: 'normal',
+
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'flex-end',
-  marginBottom: theme.spacing(2)
+  justifyContent: 'flex-end'
 }));
 
-const SkeletonGraphLine = styled(SkeletonBarsGrid)(({ theme }) => ({
+const MaxValue = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(2.25, 0, 0.5, 2)
+}));
+
+const GraphLineBox = styled(SkeletonBarsGrid)(({ theme }) => ({
+  flexDirection: 'column',
+  flex: 1,
+  height: '100%',
+  overflow: 'hidden',
   svg: {
+    height: '100%',
     width: '100%',
-    height: 'auto',
-    minHeight: theme.spacing(20),
-    paddingTop: theme.spacing(4),
     fontSize: 'initial',
     fill: 'none',
 
@@ -45,29 +43,89 @@ const SkeletonGraphLine = styled(SkeletonBarsGrid)(({ theme }) => ({
   }
 }));
 
-const TimeSeriesSkeleton = ({ height }) => {
+const GraphXAxis = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  padding: theme.spacing(1.25, 0.5, 0.75, 0.5)
+}));
+
+const Legend = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  gap: theme.spacing(2),
+  margin: 0,
+  padding: theme.spacing(1.5, 1, 0.25, 1)
+}));
+
+const LegendItem = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  gap: theme.spacing(1)
+}));
+
+const TimeSeriesSkeleton = ({
+  fitHeight,
+  height: heightProp,
+  showControls,
+  showLegend
+}) => {
+  const header = (
+    <Box pt={1.25} pb={0.75}>
+      <Skeleton width={48} height={8} />
+    </Box>
+  );
+  const controls = showControls && (
+    <Controls>
+      <Box p={0.5}>
+        <Skeleton width={16} height={16} />
+      </Box>
+      <Box mt={2} p={0.5}>
+        <Skeleton width={16} height={16} />
+      </Box>
+      <Box mt={1} p={0.5}>
+        <Skeleton width={16} height={16} />
+      </Box>
+    </Controls>
+  );
+
+  const height = fitHeight ? CHART_HEIGHT_FITHEIGHT : heightProp || CHART_HEIGHT_DEFAULT;
+
+  const chart = (
+    <Graph style={{ height }}>
+      <MaxValue flex={0}>
+        <Skeleton width={24} height={8} />
+      </MaxValue>
+      <GraphLineBox flex={1}>
+        <GraphLine preserveAspectRatio='none' />
+      </GraphLineBox>
+      <GraphXAxis flex={0}>
+        <Skeleton width={32} height={8} />
+        <Skeleton width={32} height={8} />
+      </GraphXAxis>
+    </Graph>
+  );
+
+  const legend = showLegend && (
+    <Legend>
+      <LegendItem>
+        <Skeleton width={8} height={8} />
+        <Skeleton width={48} height={8} />
+      </LegendItem>
+      <LegendItem>
+        <Skeleton width={8} height={8} />
+        <Skeleton width={48} height={8} />
+      </LegendItem>
+    </Legend>
+  );
   return (
-    <Root container height={height || SKELETON_HEIGHT}>
-      <Controls item>
-        <Grid item>
-          <Skeleton width={48} height={8} />
-        </Grid>
-
-        <Grid item>
-          {[...Array(3)].map((_, i) => (
-            <Box key={i} mt={2}>
-              <Skeleton width={24} height={24} />
-            </Box>
-          ))}
-        </Grid>
-      </Controls>
-
-      <Graph item xs>
-        <SkeletonGraphLine height='80%'>
-          <GraphLine preserveAspectRatio='none' />
-        </SkeletonGraphLine>
-      </Graph>
-    </Root>
+    <TimeSeriesLayout
+      fitHeight={fitHeight}
+      header={header}
+      controls={controls}
+      chart={chart}
+      legend={showLegend && legend}
+    />
   );
 };
 
