@@ -30,6 +30,5 @@ export default function useImperativeIntl(intlConfig) {
 // AUX
 function findMatchingMessagesLocale(locale) {
   const localeMatcher = match([locale], Object.keys(messages), DEFAULT_LOCALE);
-  console.log(localeMatcher);
   return localeMatcher ? localeMatcher : DEFAULT_LOCALE;
 }
