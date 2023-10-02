@@ -20,5 +20,8 @@ export const GroupDateTypes = Object.freeze({
   HOURS: 'hour',
 
   /** Minutes */
-  MINUTES: 'minute'
+  MINUTES: 'minute',
+
+  /** Seconds */
+  SECONDS: 'second'
 });

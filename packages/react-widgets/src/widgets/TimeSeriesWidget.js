@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getTimeSeries } from '../models';
 import { addFilter, removeFilter } from '@carto/react-redux';
@@ -29,18 +29,19 @@ const STEP_SIZE_RANGE_MAPPING = {
   [GroupDateTypes.WEEKS]: 60 * 60 * 24 * 7 * 1000,
   [GroupDateTypes.DAYS]: 60 * 60 * 24 * 1000,
   [GroupDateTypes.HOURS]: 60 * 60 * 1000,
-  [GroupDateTypes.MINUTES]: 60 * 1000
+  [GroupDateTypes.MINUTES]: 60 * 1000,
+  [GroupDateTypes.SECONDS]: 1 * 1000
 };
 
-function calculateNextStep(time, stepType) {
+function calculateNextStep(time, stepType, stepMultiplier = 1) {
   const currentDate = new Date(time);
   switch (stepType) {
     case GroupDateTypes.YEARS:
-      return currentDate.setFullYear(currentDate.getFullYear() + 1);
+      return currentDate.setFullYear(currentDate.getFullYear() + stepMultiplier);
     case GroupDateTypes.MONTHS:
-      return currentDate.setMonth(currentDate.getMonth() + 1);
+      return currentDate.setMonth(currentDate.getMonth() + stepMultiplier);
     default:
-      return time + STEP_SIZE_RANGE_MAPPING[stepType];
+      return time + STEP_SIZE_RANGE_MAPPING[stepType] * stepMultiplier;
   }
 }
 
@@ -55,6 +56,7 @@ function calculateNextStep(time, stepType) {
  * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple operation columns into a single one.
  * @param  {string} [props.operation] - Operation to apply to the operationColumn. Operation used by default is COUNT. Must be one of those defined in `AggregationTypes` object.
  * @param  {string} props.stepSize - Step applied to group the data. Must be one of those defined in `GroupDateTypes` object.
+ * @param  {number=} [props.stepMultiplier] - Multiplier applied to `stepSize`. Use to aggregate by 2 hours, 5 seconds, etc.
  * @param  {string[]} [props.stepSizeOptions] - Different steps that can be applied to group the data. If filled, an icon with a menu appears to change between steps. Every value must be one of those defined in `AggregationTypes` object.
  * @param  {string} [props.chartType] - Chart used to represent the time serie. Must be one of those defined in `TIME_SERIES_CHART_TYPES` object.
  * @param  {boolean} [props.tooltip] - Enable/disable tooltip.
@@ -111,7 +113,8 @@ function TimeSeriesWidget({
   timeWindow,
   onTimeWindowUpdate,
   // Both
-  stepSize
+  stepSize,
+  stepMultiplier
 }) {
   const dispatch = useDispatch();
 
@@ -144,6 +147,7 @@ function TimeSeriesWidget({
       column,
       joinOperation,
       stepSize: selectedStepSize,
+      stepMultiplier,
       operationColumn,
       operation
     },
@@ -151,6 +155,11 @@ function TimeSeriesWidget({
     onError,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
+
+  const minTime = useMemo(
+    () => data.reduce((acc, { name }) => (name < acc ? name : acc), Number.MAX_VALUE),
+    [data]
+  );
 
   const handleTimeWindowUpdate = useCallback(
     (timeWindow) => {
@@ -161,6 +170,7 @@ function TimeSeriesWidget({
             column,
             type: FilterTypes.TIME,
             values: [timeWindow.map((date) => date.getTime?.() || date)],
+            params: { offsetBy: minTime },
             owner: id
           })
         );
@@ -168,7 +178,7 @@ function TimeSeriesWidget({
         if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
       }
     },
-    [column, dataSource, isLoading, dispatch, id, onTimeWindowUpdate]
+    [isLoading, dispatch, dataSource, column, minTime, id, onTimeWindowUpdate]
   );
 
   const handleTimelineUpdate = useCallback(
@@ -180,7 +190,10 @@ function TimeSeriesWidget({
             id: dataSource,
             column,
             type: FilterTypes.TIME,
-            values: [[moment, calculateNextStep(moment, selectedStepSize) - 1]],
+            values: [
+              [moment, calculateNextStep(moment, selectedStepSize, stepMultiplier) - 1]
+            ],
+            params: { offsetBy: minTime },
             owner: id
           })
         );
@@ -189,14 +202,16 @@ function TimeSeriesWidget({
       }
     },
     [
-      column,
-      dataSource,
       isLoading,
+      data,
       dispatch,
-      id,
-      onTimelineUpdate,
+      dataSource,
+      column,
       selectedStepSize,
-      data
+      stepMultiplier,
+      minTime,
+      id,
+      onTimelineUpdate
     ]
   );
 
@@ -261,6 +276,7 @@ function TimeSeriesWidget({
             <TimeSeriesWidgetUI
               data={data}
               stepSize={selectedStepSize}
+              stepMultiplier={stepMultiplier}
               chartType={chartType}
               tooltip={tooltip}
               tooltipFormatter={tooltipFormatter}

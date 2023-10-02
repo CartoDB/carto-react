@@ -29,7 +29,8 @@ function fromLocal({
 // From remote
 function fromRemote(props) {
   const { source, abortController, spatialFilter, ...params } = props;
-  const { column, operationColumn, joinOperation, operation, stepSize } = params;
+  const { column, operationColumn, joinOperation, operation, stepSize, stepMultiplier } =
+    params;
 
   return _executeModel({
     model: 'timeseries',
@@ -38,6 +39,7 @@ function fromRemote(props) {
     params: {
       column,
       stepSize,
+      stepMultiplier,
       operationColumn: operationColumn || column,
       joinOperation,
       operation

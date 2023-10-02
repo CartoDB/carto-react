@@ -1,39 +1,15 @@
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
-import {
-  Box,
-  Menu,
-  Grid,
-  IconButton,
-  MenuItem,
-  SvgIcon,
-  capitalize,
-  Link
-} from '@mui/material';
+import { Box, Menu, Grid, IconButton, MenuItem, SvgIcon, Link } from '@mui/material';
+import PropTypes from 'prop-types';
+
+import { GroupDateTypes } from '@carto/react-core';
+
 import TimeSeriesChart from './components/TimeSeriesChart';
 import { TimeSeriesProvider, useTimeSeriesContext } from './hooks/TimeSeriesContext';
 import { CHART_TYPES } from './utils/constants';
-import PropTypes from 'prop-types';
-import { GroupDateTypes, getMonday } from '@carto/react-core';
 import Typography from '../../components/atoms/Typography';
 import TimeSeriesSkeleton from './components/TimeSeriesSkeleton';
-
-const FORMAT_DATE_BY_STEP_SIZE = {
-  [GroupDateTypes.YEARS]: yearCurrentDateRange,
-  [GroupDateTypes.MONTHS]: monthsCurrentDateRange,
-  [GroupDateTypes.WEEKS]: weeksCurrentDateRange,
-  [GroupDateTypes.DAYS]: daysCurrentDateRange,
-  [GroupDateTypes.HOURS]: hoursCurrentDateRange,
-  [GroupDateTypes.MINUTES]: minutesCurrentDateRange
-};
-
-const FORMAT_DATE_BY_STEP_SIZE_FOR_TIME_WINDOW = {
-  [GroupDateTypes.YEARS]: daysCurrentDateRange,
-  [GroupDateTypes.MONTHS]: daysCurrentDateRange,
-  [GroupDateTypes.WEEKS]: daysCurrentDateRange,
-  [GroupDateTypes.DAYS]: daysCurrentDateRange,
-  [GroupDateTypes.HOURS]: hoursCurrentDateRange,
-  [GroupDateTypes.MINUTES]: minutesCurrentDateRange
-};
+import { formatTimeRange, formatBucketRange } from './utils/timeFormat';
 
 // TimeWindow step is the amount of time (in seconds) that pass in every iteration during the animation.
 // It depends on step size for a better animation speed adjustment.
@@ -43,7 +19,8 @@ const TIME_WINDOW_STEP_BY_STEP_SIZE = {
   [GroupDateTypes.WEEKS]: 60 * 60 * 24, // Day
   [GroupDateTypes.DAYS]: 60 * 60 * 12, // Half day
   [GroupDateTypes.HOURS]: 60 * 60, // Hour
-  [GroupDateTypes.MINUTES]: 60 * 15 // Quarter hour
+  [GroupDateTypes.MINUTES]: 60 * 15, // Quarter hour,
+  [GroupDateTypes.SECONDS]: 1 // Second,
 };
 
 const SPEED_FACTORS = [0.5, 1, 2, 3];
@@ -51,6 +28,7 @@ const SPEED_FACTORS = [0.5, 1, 2, 3];
 function TimeSeriesWidgetUI({
   data,
   stepSize,
+  stepMultiplier = 1,
   chartType,
   tooltip,
   tooltipFormatter,
@@ -86,6 +64,7 @@ function TimeSeriesWidgetUI({
       <TimeSeriesWidgetUIContent
         data={data}
         stepSize={stepSize}
+        stepMultiplier={stepMultiplier}
         chartType={chartType}
         tooltip={tooltip}
         tooltipFormatter={tooltipFormatter}
@@ -106,6 +85,7 @@ TimeSeriesWidgetUI.propTypes = {
     })
   ).isRequired,
   stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired,
+  stepMultiplier: PropTypes.number,
   chartType: PropTypes.oneOf(Object.values(CHART_TYPES)),
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
@@ -147,6 +127,7 @@ export default TimeSeriesWidgetUI;
 function TimeSeriesWidgetUIContent({
   data,
   stepSize,
+  stepMultiplier,
   chartType,
   tooltip,
   tooltipFormatter,
@@ -252,26 +233,24 @@ function TimeSeriesWidgetUIContent({
 
     // If timeWindow is activated
     if (timeWindow.length) {
-      const timeWindowformatter = FORMAT_DATE_BY_STEP_SIZE_FOR_TIME_WINDOW[stepSize];
-      return timeWindow.map((time) => timeWindowformatter(new Date(time))).join(' - ');
+      const [start, end] = timeWindow.map((time) => new Date(time));
+      return formatTimeRange({ start, end, stepSize });
     }
-
-    const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
 
     // If widget is reset, then first and last date
     if (!isPlaying && !isPaused) {
-      const firstDate = new Date(data[0].name);
-      const lastDate = new Date(data[data.length - 1].name);
+      const start = new Date(data[0].name);
+      const end = new Date(data[data.length - 1].name);
 
-      return `${formatter(firstDate)} - ${formatter(lastDate)}`;
+      return formatTimeRange({ start, end, stepSize });
     }
 
     // If animation is active
     if (timelinePosition >= 0 && data[timelinePosition]) {
       const currentDate = new Date(data[timelinePosition].name);
-      return formatter(currentDate);
+      return formatBucketRange({ date: currentDate, stepSize, stepMultiplier });
     }
-  }, [data, stepSize, isPlaying, isPaused, timeWindow, timelinePosition]);
+  }, [data, timeWindow, isPlaying, isPaused, timelinePosition, stepSize, stepMultiplier]);
 
   const showClearButton = useMemo(() => {
     return isPlaying || isPaused || timeWindow.length > 0;
@@ -298,7 +277,9 @@ function TimeSeriesWidgetUIContent({
       data={data}
       tooltip={tooltip}
       formatter={formatter}
-      tooltipFormatter={(params) => tooltipFormatter(params, stepSize, formatter)}
+      tooltipFormatter={(params) =>
+        tooltipFormatter(params, stepSize, formatter, stepMultiplier)
+      }
       height={height}
       animation={animation}
     />
@@ -311,9 +292,6 @@ function TimeSeriesWidgetUIContent({
           <Box>
             <Typography color='textSecondary' variant='caption'>
               {currentDate}
-            </Typography>
-            <Typography fontSize={12} ml={1} color='textSecondary' variant='caption'>
-              ({capitalize(stepSize)})
             </Typography>
           </Box>
         )}
@@ -393,52 +371,10 @@ function TimeSeriesWidgetUIContent({
   );
 }
 
-// Auxiliary fns
-function minutesCurrentDateRange(date) {
-  return (
-    date.toLocaleDateString() +
-    ' ' +
-    date.toLocaleTimeString(undefined, {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
-    })
-  );
-}
-
-function hoursCurrentDateRange(date) {
-  return (
-    date.toLocaleDateString() +
-    ' ' +
-    date.toLocaleTimeString(undefined, { hour: 'numeric', hour12: true })
-  );
-}
-
-function daysCurrentDateRange(date) {
-  return date.toLocaleDateString();
-}
-
-function weeksCurrentDateRange(date) {
-  return `Week of ${new Date(getMonday(date)).toLocaleDateString()}`;
-}
-
-function yearCurrentDateRange(date) {
-  return date.getFullYear();
-}
-
-function monthsCurrentDateRange(date) {
-  return formatMonth(date) + '/' + date.getFullYear();
-}
-
-function formatMonth(date) {
-  return ('0' + (date.getMonth() + 1)).slice(-2);
-}
-
-function defaultTooltipFormatter(params, stepSize, valueFormatter) {
-  const formatter = FORMAT_DATE_BY_STEP_SIZE[stepSize];
+function defaultTooltipFormatter(params, stepSize, valueFormatter, stepMultiplier) {
   const [name] = params[0].data;
   const date = new Date(name);
-  const title = formatter(date);
+  const title = formatBucketRange({ date, stepMultiplier, stepSize });
 
   return `<div style='width: 160px;'>
     <p style='font-weight: 600; line-height: 1; margin: 4px 0;'>${title}</p>
