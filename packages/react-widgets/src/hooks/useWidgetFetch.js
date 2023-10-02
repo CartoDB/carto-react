@@ -10,7 +10,7 @@ import {
   selectViewport
 } from '@carto/react-redux';
 import { dequal } from 'dequal';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { DEFAULT_INVALID_COLUMN_ERR } from '../widgets/utils/constants';
 import useCustomCompareEffect from './useCustomCompareEffect';
@@ -86,7 +86,10 @@ export default function useWidgetFetch(
 
   const viewport = useSelector(selectViewport);
   const spatialFilter = useSelector((state) => selectSpatialFilter(state, dataSource));
-  const geometryToIntersect = selectGeometryToIntersect(global, viewport, spatialFilter);
+  const geometryToIntersect = useMemo(
+    () => selectGeometryToIntersect(global, viewport, spatialFilter),
+    [global, viewport, spatialFilter]
+  );
 
   useCustomCompareEffect(
     () => {

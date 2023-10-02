@@ -20,6 +20,7 @@ import { PropTypes } from 'prop-types';
 import { columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
+import { useWidgetFilterValues } from '../hooks/useWidgetFilterValues';
 
 // Due to the widget groups the data by a certain stepSize, when filtering
 // the filter applied must be a range that represent the grouping range.
@@ -45,6 +46,8 @@ function calculateNextStep(time, stepType, stepMultiplier = 1) {
   }
 }
 
+const EMPTY_ARRAY = [];
+
 /**
  * Renders a <TimeSeriesWidget /> component
  * @param  {object} props
@@ -55,18 +58,27 @@ function calculateNextStep(time, stepType, stepMultiplier = 1) {
  * @param  {string | string[]} [props.operationColumn] - Name of the data source's column to operate with. If not defined it will default to the one defined in `column`. If multiples are provided, they will be merged into a single one using joinOperation property.
  * @param  {AggregationTypes} [props.joinOperation] - Operation applied to aggregate multiple operation columns into a single one.
  * @param  {string} [props.operation] - Operation to apply to the operationColumn. Operation used by default is COUNT. Must be one of those defined in `AggregationTypes` object.
- * @param  {string} props.stepSize - Step applied to group the data. Must be one of those defined in `GroupDateTypes` object.
+ * @param  {object[]=} [props.series] - Array of {operation, operationColumn} objects that specify multiple aggregations
+ * @param  {string} [props.stepSize] - Step applied to group the data. Must be one of those defined in `GroupDateTypes` object.
  * @param  {number=} [props.stepMultiplier] - Multiplier applied to `stepSize`. Use to aggregate by 2 hours, 5 seconds, etc.
+ * @param  {string=} [props.splitByCategory] - Name of the data source's column to split the data by category.
+ * @param  {string=} [props.splitByCategoryLimit] - Limit of categories shown.  categories to show. Default: 5
+ * @param  {string=} [props.splitByCategoryValues]  - Select specific categories. Default most dominant categories are selected.
  * @param  {string[]} [props.stepSizeOptions] - Different steps that can be applied to group the data. If filled, an icon with a menu appears to change between steps. Every value must be one of those defined in `AggregationTypes` object.
  * @param  {string} [props.chartType] - Chart used to represent the time serie. Must be one of those defined in `TIME_SERIES_CHART_TYPES` object.
+ * @param  {number=} [props.timeAxisSplitNumber] - Suggested number of intervals for x axis label. If undefined, will adapt to chart width.
  * @param  {boolean} [props.tooltip] - Enable/disable tooltip.
  * @param  {function} [props.tooltipFormatter] - Function that returns the HTML for the chart tooltip.
  * @param  {function} [props.formatter] - Function for formatting the value that is represented in the tooltip.
- * @param  {string} [props.height] - Height of the chart.
+ * @param  {string=} [props.height] - Height of the chart, default 22*theme.spacingValue
+ * @param  {boolean=} [props.fitHeight] - Widget should occupy all vertical space available.
+ * @param  {boolean=} [props.stableHeight] -  If specified, error and no-data state will maintain same height as normal widget in loading/loaded state.
  * @param  {boolean} [props.showControls] - Enable/disable animation controls (play, pause, stop, speed). True by default.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
- * @param  {function} [props.onError] - Function to handle error messages from the widget.
+ * @param  {function=} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
+ * @param  {string[]=} [props.palette] - Optional palette
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
  * Internal state
@@ -80,6 +92,7 @@ function calculateNextStep(time, stepType, stepMultiplier = 1) {
  * @param  {function} [props.onTimelineUpdate] - Event raised when the timeline is updated. It happens when the animation is playing. The function receive as param the date that is being shown.
  * @param  {function} [props.onTimeWindowUpdate] - Event raised when the timeWindow is updated. It happens when the animation is playing with a timeWindow enabled. The function receive as param an array of two date objects.
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
+ * @param  {boolean=} [props.showLegend] - Show/hide the legend. True by default only splitByCategory/multiple series mode.
  */
 function TimeSeriesWidget({
   // Widget
@@ -90,6 +103,7 @@ function TimeSeriesWidget({
   operationColumn,
   joinOperation,
   operation,
+  series,
   stepSizeOptions,
   global,
   onError,
@@ -98,10 +112,13 @@ function TimeSeriesWidget({
   droppingFeaturesAlertProps,
   // UI
   chartType,
+  timeAxisSplitNumber,
   tooltip,
   tooltipFormatter,
   formatter,
   height,
+  fitHeight,
+  stableHeight,
   showControls,
   animation,
   isPlaying,
@@ -112,13 +129,27 @@ function TimeSeriesWidget({
   onTimelineUpdate,
   timeWindow,
   onTimeWindowUpdate,
+  onStateChange,
+  palette,
+  showLegend,
   // Both
   stepSize,
-  stepMultiplier
+  stepMultiplier,
+  splitByCategory,
+  splitByCategoryLimit,
+  splitByCategoryValues
 }) {
   const dispatch = useDispatch();
 
   const [selectedStepSize, setSelectedStepSize] = useState(stepSize);
+
+  const selectedCategories =
+    useWidgetFilterValues({
+      dataSource,
+      id,
+      column: splitByCategory,
+      type: FilterTypes.IN
+    }) || EMPTY_ARRAY;
 
   if (showControls && global) {
     console.warn(
@@ -135,26 +166,68 @@ function TimeSeriesWidget({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepSize]);
 
+  const widgetParams = useMemo(
+    () => ({
+      series,
+      column,
+      joinOperation,
+      stepSize: selectedStepSize,
+      stepMultiplier,
+      operation,
+      operationColumn,
+      splitByCategory,
+      splitByCategoryLimit,
+      splitByCategoryValues
+    }),
+    [
+      series,
+      column,
+      joinOperation,
+      selectedStepSize,
+      stepMultiplier,
+      operation,
+      operationColumn,
+      splitByCategory,
+      splitByCategoryLimit,
+      splitByCategoryValues
+    ]
+  );
   const {
-    data = [],
+    data: result = [],
     isLoading,
     warning,
     remoteCalculation
   } = useWidgetFetch(getTimeSeries, {
     id,
     dataSource,
-    params: {
-      column,
-      joinOperation,
-      stepSize: selectedStepSize,
-      stepMultiplier,
-      operationColumn,
-      operation
-    },
+    params: widgetParams,
     global,
     onError,
+    onStateChange,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
+
+  const { data, categories } = Array.isArray(result)
+    ? { data: result, categories: undefined }
+    : { data: result.rows, categories: result.categories };
+
+  // clean filter
+  useEffect(() => {
+    return () => {
+      removeFilter({
+        id: dataSource,
+        column,
+        owner: id
+      });
+      if (widgetParams.splitByCategory) {
+        removeFilter({
+          id: dataSource,
+          column: widgetParams.splitByCategory,
+          owner: id
+        });
+      }
+    };
+  }, [column, dataSource, id, widgetParams]);
 
   const minTime = useMemo(
     () => data.reduce((acc, { name }) => (name < acc ? name : acc), Number.MAX_VALUE),
@@ -163,7 +236,9 @@ function TimeSeriesWidget({
 
   const handleTimeWindowUpdate = useCallback(
     (timeWindow) => {
-      if (!isLoading) {
+      if (isLoading) return;
+
+      if (timeWindow.length === 2) {
         dispatch(
           addFilter({
             id: dataSource,
@@ -174,17 +249,29 @@ function TimeSeriesWidget({
             owner: id
           })
         );
-
-        if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
+      } else {
+        dispatch(
+          removeFilter({
+            id: dataSource,
+            column,
+            owner: id
+          })
+        );
       }
+
+      if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
     },
     [isLoading, dispatch, dataSource, column, minTime, id, onTimeWindowUpdate]
   );
 
   const handleTimelineUpdate = useCallback(
     (timelinePosition) => {
-      if (!isLoading) {
-        const { name: moment } = data[timelinePosition];
+      if (isLoading) return;
+
+      const moment =
+        timelinePosition !== undefined ? data[timelinePosition]?.name : undefined;
+
+      if (moment) {
         dispatch(
           addFilter({
             id: dataSource,
@@ -197,9 +284,17 @@ function TimeSeriesWidget({
             owner: id
           })
         );
-
-        if (onTimelineUpdate) onTimelineUpdate(new Date(moment));
+      } else {
+        dispatch(
+          removeFilter({
+            id: dataSource,
+            column,
+            owner: id
+          })
+        );
       }
+
+      if (onTimelineUpdate) onTimelineUpdate(moment ? new Date(moment) : undefined);
     },
     [
       isLoading,
@@ -213,6 +308,33 @@ function TimeSeriesWidget({
       id,
       onTimelineUpdate
     ]
+  );
+
+  const handleSelectedCategoriesChange = useCallback(
+    (newSelectedCategories) => {
+      if (!splitByCategory || !newSelectedCategories) return;
+
+      if (newSelectedCategories.length) {
+        dispatch(
+          addFilter({
+            id: dataSource,
+            column: splitByCategory,
+            type: FilterTypes.IN,
+            values: newSelectedCategories,
+            owner: id
+          })
+        );
+      } else {
+        dispatch(
+          removeFilter({
+            id: dataSource,
+            column: splitByCategory,
+            owner: id
+          })
+        );
+      }
+    },
+    [splitByCategory, dispatch, dataSource, id]
   );
 
   const handleStop = useCallback(() => {
@@ -271,17 +393,21 @@ function TimeSeriesWidget({
           droppingFeaturesAlertProps={droppingFeaturesAlertProps}
           noDataAlertProps={noDataAlertProps}
           showDroppingFeaturesAlert={!remoteCalculation}
+          stableHeight={stableHeight}
         >
           {(!!data.length || isLoading) && (
             <TimeSeriesWidgetUI
               data={data}
+              categories={categories}
               stepSize={selectedStepSize}
               stepMultiplier={stepMultiplier}
               chartType={chartType}
+              timeAxisSplitNumber={timeAxisSplitNumber}
               tooltip={tooltip}
               tooltipFormatter={tooltipFormatter}
               formatter={formatter}
               height={height}
+              fitHeight={fitHeight}
               showControls={showControls}
               animation={animation}
               isPlaying={isPlaying}
@@ -292,7 +418,13 @@ function TimeSeriesWidget({
               onTimelineUpdate={handleTimelineUpdate}
               timeWindow={timeWindow}
               onTimeWindowUpdate={handleTimeWindowUpdate}
+              selectedCategories={selectedCategories}
+              onSelectedCategoriesChange={
+                splitByCategory ? handleSelectedCategoriesChange : undefined
+              }
               isLoading={isLoading}
+              palette={palette}
+              showLegend={showLegend}
             />
           )}
         </WidgetWithAlert>
@@ -333,7 +465,11 @@ TimeSeriesWidget.propTypes = {
     PropTypes.arrayOf(PropTypes.string)
   ]),
   joinOperation: columnAggregationOn('operationColumn'),
-  operation: PropTypes.oneOf(Object.values(AggregationTypes)).isRequired,
+  series: PropTypes.arrayOf({
+    operation: Object.values(AggregationTypes),
+    operationColumn: PropTypes.string
+  }),
+  operation: PropTypes.oneOf(Object.values(AggregationTypes)),
   stepSizeOptions: PropTypes.arrayOf(PropTypes.oneOf(Object.values(GroupDateTypes))),
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
@@ -344,6 +480,8 @@ TimeSeriesWidget.propTypes = {
   tooltipFormatter: PropTypes.func,
   formatter: PropTypes.func,
   height: PropTypes.string,
+  fitHeight: PropTypes.bool,
+  stableHeight: PropTypes.bool,
   animation: PropTypes.bool,
   isPlaying: PropTypes.bool,
   onPlay: PropTypes.func,
@@ -371,7 +509,6 @@ TimeSeriesWidget.defaultProps = {
   animation: true,
   isPlaying: false,
   isPaused: false,
-  // timelinePosition: 0,
   timeWindow: [],
   showControls: true,
   chartType: TIME_SERIES_CHART_TYPES.LINE

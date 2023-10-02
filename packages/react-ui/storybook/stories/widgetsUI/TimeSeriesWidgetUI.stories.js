@@ -2,7 +2,8 @@ import React from 'react';
 import TimeSeriesWidgetUI from '../../../src/widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import { GroupDateTypes } from '@carto/react-core';
 import { TIME_SERIES_CHART_TYPES } from '@carto/react-ui';
-import { Label, ThinContainer } from '../../utils/storyStyles';
+import LoadingTemplateWithSwitch from './LoadingTemplateWithSwitch';
+import { Box } from '@mui/material';
 
 const data = [
   { name: 1514761200000, value: 310 },
@@ -66,6 +67,36 @@ const data = [
   { name: 1549839600000, value: 12 }
 ];
 
+const dataSplitByCategory = {
+  data: data.reduce((acc, { name, value }) => {
+    acc.push({ name, value, category: 'Mars' });
+    acc.push({ name, value: Math.sin(name / 10000) * 30 + 30, category: 'Venus' });
+    acc.push({
+      name,
+      value: Math.cos(name / 700000 + 10) * 100 + 100,
+      category: 'Earth'
+    });
+    acc.push({
+      name,
+      value: Math.cos(name / 200000 + 10) * 100 + 100,
+      category: 'Foobar - only for test'
+    });
+    acc.push({
+      name,
+      value: Math.cos(name / 900000 + 10) * 100 + 100,
+      category: 'Very long category to test for scroll support'
+    });
+    return acc;
+  }, []),
+  categories: [
+    'Mars',
+    'Venus',
+    'Earth',
+    'Foobar - only for test',
+    'Very long category to test for scroll support'
+  ]
+};
+
 const options = {
   title: 'Widgets/TimeSeriesWidgetUI',
   component: TimeSeriesWidgetUI,
@@ -127,13 +158,16 @@ const options = {
         'Event emitted when timeline is updated. TimeSeriesWidget is responsible of applying the filter.'
     },
     timeWindow: {
-      description: `Array of two UNIX timestamp (ms) that indicates the start and end of a frame to filter data. Example: [${data[0].name}, ${data[5].name}].
+      description: `Array of  UNIX timestamp (ms) that indicates selected time. One entry mean one bucket selected, two entries mean start and end of a frame to filter data. Example: [${data[0].name}, ${data[5].name}].
       [Internal state] This prop is used to managed state outside of the component.`,
       control: { type: 'array', expanded: true }
     },
     onTimeWindowUpdate: {
       description:
         'Event emitted when timeWindow is updated. TimeSeriesWidget is responsible of applying the filter.'
+    },
+    showLegend: {
+      description: `Whether to show legend. By default it's shown only for if data contains multiple series.`
     }
   },
   parameters: {
@@ -152,30 +186,34 @@ const Template = (args) => {
     args.timeWindow = [];
   }
 
-  return <TimeSeriesWidgetUI {...args} />;
+  const [selectedCategories, setSelectedCategories] = React.useState([]);
+
+  return (
+    <TimeSeriesWidgetUI
+      {...args}
+      selectedCategories={selectedCategories}
+      onSelectedCategoriesChange={setSelectedCategories}
+    />
+  );
 };
 
-const LoadingTemplate = (args) => {
+const TimeSeriesWidgetUIWithDefaults = (args) => {
   if (args.timeWindow && !Array.isArray(args.timeWindow)) {
     args.timeWindow = [];
   }
 
-  return (
-    <>
-      <Label variant='body1' mb={3}>
-        {'Limited width'}
-      </Label>
-      <ThinContainer>
-        <TimeSeriesWidgetUI {...args} />
-      </ThinContainer>
+  const [selectedCategories, setSelectedCategories] = React.useState([]);
 
-      <Label variant='body1' mt={8} mb={3}>
-        {'Responsive'}
-      </Label>
-      <TimeSeriesWidgetUI {...args} />
-    </>
+  return (
+    <TimeSeriesWidgetUI
+      {...args}
+      selectedCategories={selectedCategories}
+      onSelectedCategoriesChange={setSelectedCategories}
+    />
   );
 };
+
+const LoadingTemplate = LoadingTemplateWithSwitch(TimeSeriesWidgetUIWithDefaults);
 
 const requiredProps = {
   data,
@@ -186,5 +224,49 @@ const requiredProps = {
 export const Default = Template.bind({});
 Default.args = requiredProps;
 
+export const MultipleSeries = LoadingTemplate.bind({});
+MultipleSeries.args = {
+  ...requiredProps,
+  ...dataSplitByCategory,
+  showControls: true,
+  showLegend: true
+};
+
 export const Loading = LoadingTemplate.bind({});
 Loading.args = { ...requiredProps, isLoading: true };
+
+export const FitHeightMultiple = (args) => {
+  if (args.timeWindow && !Array.isArray(args.timeWindow)) {
+    args.timeWindow = [];
+  }
+
+  const [selectedCategories, setSelectedCategories] = React.useState([]);
+
+  return (
+    <Box
+      style={{
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
+      <TimeSeriesWidgetUI
+        {...args}
+        selectedCategories={selectedCategories}
+        onSelectedCategoriesChange={setSelectedCategories}
+      />
+    </Box>
+  );
+};
+
+FitHeightMultiple.args = {
+  ...requiredProps,
+  ...dataSplitByCategory,
+  showControls: true,
+  showLegend: true,
+  fitHeight: true
+};

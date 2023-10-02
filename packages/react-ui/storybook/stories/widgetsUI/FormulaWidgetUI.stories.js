@@ -1,6 +1,7 @@
 import React from 'react';
 import FormulaWidgetUI from '../../../src/widgets/FormulaWidgetUI/FormulaWidgetUI';
 import { Label, ThinContainer } from '../../utils/storyStyles';
+import LoadingTemplateWithSwitch from './LoadingTemplateWithSwitch';
 
 const options = {
   title: 'Widgets/FormulaWidgetUI',
@@ -27,23 +28,7 @@ const Template = (args) => {
   return <FormulaWidgetUI {...args} />;
 };
 
-const LoadingTemplate = (args) => {
-  return (
-    <>
-      <Label variant='body1' mb={3}>
-        {'Limited width'}
-      </Label>
-      <ThinContainer>
-        <FormulaWidgetUI {...args} />
-      </ThinContainer>
-
-      <Label variant='body1' mt={8} mb={3}>
-        {'Responsive'}
-      </Label>
-      <FormulaWidgetUI {...args} />
-    </>
-  );
-};
+const LoadingTemplate = LoadingTemplateWithSwitch(FormulaWidgetUI);
 
 const data = 10000;
 
