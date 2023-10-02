@@ -45,14 +45,15 @@ function BarWidgetUI(props) {
     height,
     filterable,
     animation,
-    isLoading
+    isLoading,
+    intlConfig
   } = useProcessedProps(props);
 
   const isMultiSeries = series.length > 1;
 
   const theme = useTheme();
 
-  const intl = useImperativeIntl();
+  const intl = useImperativeIntl(intlConfig);
 
   // Tooltip
   const tooltipOptions = useMemo(
@@ -365,7 +366,8 @@ BarWidgetUI.propTypes = {
   height: numberOrString,
   filterable: PropTypes.bool,
   animation: PropTypes.bool,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  intlConfig: PropTypes.object
 };
 
 export default BarWidgetUI;

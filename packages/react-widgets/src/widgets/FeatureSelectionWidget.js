@@ -47,7 +47,8 @@ function FeatureSelectionWidget({
   editModes: editModesKeys,
   tooltipPlacement,
   size,
-  chipLabel
+  chipLabel,
+  intlConfig
 }) {
   const dispatch = useDispatch();
   const geometry = useSelector((state) => state.carto.spatialFilter);
@@ -108,6 +109,7 @@ function FeatureSelectionWidget({
       onDeleteGeometry={handleDeleteGeometry}
       size={size}
       chipLabel={chipLabel}
+      intlConfig={intlConfig}
     />
   );
 }
@@ -126,7 +128,8 @@ FeatureSelectionWidget.propTypes = {
   editModes: PropTypes.arrayOf(PropTypes.oneOf(Object.values(EDIT_MODES_KEYS))),
   tooltipPlacement: FeatureSelectionWidgetUI.propTypes.tooltipPlacement,
   size: FeatureSelectionWidgetUI.propTypes.size,
-  chipLabel: FeatureSelectionWidgetUI.propTypes.chipLabel
+  chipLabel: FeatureSelectionWidgetUI.propTypes.chipLabel,
+  intlConfig: PropTypes.object
 };
 
 export default FeatureSelectionWidget;

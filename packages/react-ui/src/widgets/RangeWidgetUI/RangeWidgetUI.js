@@ -82,14 +82,22 @@ const SliderLimit = styled(Slider)(({ theme: { palette, spacing } }) => ({
  * @param  {number[]} props.limits - Array of two numbers that represent a relative min and max values. It is useful to represent the min and max value taking into account other filters.
  * @param  {Function} [props.onSelectedRangeChange] - This fuction will be cal when selected values change
  * @param {boolean} [props.isLoading] - If true, the component will render a skeleton
- *
+ * @param  {object} [props.intlConfig] - Object with intl configuration. If not provided, default messages will be used.
  */
 
-function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoading }) {
+function RangeWidgetUI({
+  data,
+  min,
+  max,
+  limits,
+  onSelectedRangeChange,
+  isLoading,
+  intlConfig
+}) {
   const [sliderValues, setSliderValues] = useState([min, max]);
   const [inputsValues, setInputsValues] = useState([min, max]);
 
-  const intl = useImperativeIntl();
+  const intl = useImperativeIntl(intlConfig);
 
   const limitsMarks = useMemo(() => {
     if (!limits || limits.length !== 2) {
@@ -237,7 +245,8 @@ RangeWidgetUI.propTypes = {
   max: PropTypes.number.isRequired,
   limits: PropTypes.arrayOf(PropTypes.number),
   onSelectedRangeChange: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  intlConfig: PropTypes.object
 };
 
 export default RangeWidgetUI;

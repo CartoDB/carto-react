@@ -31,13 +31,13 @@ const InputUnit = styled(InputAdornment)(({ theme }) => ({
   }
 }));
 
-export default function OpacityControl({ opacity, onChangeOpacity }) {
+export default function OpacityControl({ opacity, onChangeOpacity, intlConfig }) {
   const handleTextFieldChange = (e) => {
     const newOpacity = parseInt(e.target.value || '0');
     onChangeOpacity(Math.max(0, Math.min(100, newOpacity)) / 100);
   };
 
-  const intl = useImperativeIntl();
+  const intl = useImperativeIntl(intlConfig);
 
   return (
     <LayerOptionWrapper label={intl.formatMessage({ id: 'c4r.widgets.legend.opacity' })}>

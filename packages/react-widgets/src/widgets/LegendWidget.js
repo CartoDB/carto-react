@@ -13,13 +13,15 @@ import sortLayers from './utils/sortLayers';
  * @param  {Object.<string, Function>} [props.customLegendTypes] - Allow to customise by default legend types that can be rendered.
  * @param  {boolean} [props.initialCollapsed] - Define initial collapsed value. false by default.
  * @param  {string[]} [props.layerOrder] - Array of layer identifiers. Defines the order of layer legends. [] by default.
+ * @param  {object} [props.intlConfig] - Object with intl configuration. If not provided, default messages will be used.
  */
 function LegendWidget({
   customLayerOptions,
   customLegendTypes,
   initialCollapsed,
   layerOrder = [],
-  title
+  title,
+  intlConfig
 }) {
   const dispatch = useDispatch();
   const layers = useSelector((state) =>
@@ -72,6 +74,7 @@ function LegendWidget({
       collapsed={collapsed}
       onChangeCollapsed={setCollapsed}
       onChangeLegendRowCollapsed={handleChangeLegendRowCollapsed}
+      intlConfig={intlConfig}
     />
   );
 }
@@ -80,7 +83,8 @@ LegendWidget.propTypes = {
   title: PropTypes.string,
   customLegendTypes: PropTypes.objectOf(PropTypes.func),
   initialCollapsed: PropTypes.bool,
-  layerOrder: PropTypes.arrayOf(PropTypes.string)
+  layerOrder: PropTypes.arrayOf(PropTypes.string),
+  intlConfig: PropTypes.object
 };
 
 LegendWidget.defaultProps = {

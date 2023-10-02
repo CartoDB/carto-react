@@ -37,6 +37,7 @@ const StylesWrapper = styled(Paper)(({ theme }) => ({
  * @param { "bottom" | "left" | "right" | "top" | undefined } [props.tooltipPlacement]
  * @param { "small" | "medium" | undefined } [props.size]
  * @param {string} [props.chipLabel]
+ * @param {object} [props.intlConfig]
  *
  * -->
  */
@@ -52,9 +53,10 @@ function FeatureSelectionWidgetUI({
   onDeleteGeometry,
   tooltipPlacement = 'bottom',
   size = 'medium',
-  chipLabel
+  chipLabel,
+  intlConfig
 }) {
-  const intl = useImperativeIntl();
+  const intl = useImperativeIntl(intlConfig);
 
   const selectionModeWithLocales = useMemo(() => {
     return selectionModes.map((mode) => ({
@@ -179,7 +181,8 @@ FeatureSelectionWidgetUI.propTypes = {
   onSelectGeometry: PropTypes.func,
   tooltipPlacement: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium']),
-  chipLabel: PropTypes.string
+  chipLabel: PropTypes.string,
+  intlConfig: PropTypes.object
 };
 
 export default FeatureSelectionWidgetUI;

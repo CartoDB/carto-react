@@ -68,7 +68,8 @@ function TimeSeriesWidgetUI({
   isPaused,
   onPause,
   onStop,
-  isLoading
+  isLoading,
+  intlConfig
 }) {
   if (isLoading) return <TimeSeriesSkeleton height={height} />;
 
@@ -94,6 +95,7 @@ function TimeSeriesWidgetUI({
         height={height}
         showControls={showControls}
         animation={animation}
+        intlConfig={intlConfig}
       />
     </TimeSeriesProvider>
   );
@@ -123,7 +125,8 @@ TimeSeriesWidgetUI.propTypes = {
   timeWindow: PropTypes.arrayOf(PropTypes.any),
   onTimeWindowUpdate: PropTypes.func,
   showControls: PropTypes.bool,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  intlConfig: PropTypes.object
 };
 
 TimeSeriesWidgetUI.defaultProps = {
@@ -154,7 +157,8 @@ function TimeSeriesWidgetUIContent({
   formatter,
   height,
   showControls,
-  animation
+  animation,
+  intlConfig
 }) {
   const [anchorSpeedEl, setAnchorSpeedEl] = useState(null);
   const [speed, setSpeed] = useState(1);
@@ -170,7 +174,7 @@ function TimeSeriesWidgetUIContent({
   } = useTimeSeriesContext();
   const animationRef = useRef({ animationFrameId: null, timeoutId: null });
 
-  const intl = useImperativeIntl();
+  const intl = useImperativeIntl(intlConfig);
 
   // If data changes, stop animation. useDidMountEffect is used to avoid
   // being executed in the initial rendering because that cause

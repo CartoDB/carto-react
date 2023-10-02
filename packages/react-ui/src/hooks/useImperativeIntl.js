@@ -1,34 +1,35 @@
-import { createIntl, createIntlCache, useIntl, IntlContext } from 'react-intl';
+import { createIntl, createIntlCache } from 'react-intl';
 import { messages } from '../localization';
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import { match } from '@formatjs/intl-localematcher';
-import { createContext } from 'react';
+import { flattenMessages } from '../localization/localeUtils';
 
 export const DEFAULT_LOCALE = 'en';
 const cache = createIntlCache();
 
-export const I18nContext = createContext(IntlContext);
-
-export default function useImperativeIntl() {
-  const external = useContext(I18nContext);
-  const locale = external?.locale || DEFAULT_LOCALE;
+export default function useImperativeIntl(intlConfig) {
+  const locale = intlConfig?.locale || DEFAULT_LOCALE;
   const messagesLocale = findMatchingMessagesLocale(locale);
+  const intMessages = intlConfig?.messages
+    ? flattenMessages(intlConfig?.messages)
+    : messages[messagesLocale];
 
   return useMemo(
     () =>
       createIntl(
         {
           locale,
-          messages: messages[messagesLocale]
+          messages: intMessages
         },
         cache
       ),
-    [locale, messagesLocale]
+    [locale, intMessages]
   );
 }
 
 // AUX
 function findMatchingMessagesLocale(locale) {
   const localeMatcher = match([locale], Object.keys(messages), DEFAULT_LOCALE);
+  console.log(localeMatcher);
   return localeMatcher ? localeMatcher : DEFAULT_LOCALE;
 }

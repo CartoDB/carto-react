@@ -58,11 +58,12 @@ function TableWidgetUI({
   height,
   dense,
   isLoading,
-  lastPageTooltip
+  lastPageTooltip,
+  intlConfig
 }) {
   const paginationRef = useRef(null);
 
-  const intl = useImperativeIntl();
+  const intl = useImperativeIntl(intlConfig);
 
   const defaultLabelDisplayedRows = ({ from, to, count }) => {
     return intl.formatMessage({ id: 'c4r.widgets.table.of' }, { from, to, count });
@@ -226,7 +227,8 @@ TableWidgetUI.propTypes = {
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   dense: PropTypes.bool,
   isLoading: PropTypes.bool,
-  lastPageTooltip: PropTypes.string
+  lastPageTooltip: PropTypes.string,
+  intlConfig: PropTypes.object
 };
 
 export default TableWidgetUI;

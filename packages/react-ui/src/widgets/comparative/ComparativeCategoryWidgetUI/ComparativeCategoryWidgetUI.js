@@ -65,6 +65,7 @@ function SearchIcon() {
  * @param {boolean} [props.tooltip]
  * @param {(v: any) => any} [props.tooltipFormatter]
  * @param {boolean} [props.isLoading]
+ * @param {object} [props.intlConfig]
  * -->
  */
 function ComparativeCategoryWidgetUI({
@@ -83,7 +84,8 @@ function ComparativeCategoryWidgetUI({
   formatter = IDENTITY_FN,
   tooltip = true,
   tooltipFormatter = IDENTITY_FN,
-  isLoading = false
+  isLoading = false,
+  intlConfig
 }) {
   const theme = useTheme();
   const [searchActive, setSearchActive] = useState(false);
@@ -91,7 +93,7 @@ function ComparativeCategoryWidgetUI({
   const [tempSelection, setTempSelection] = useState(selectedCategories);
   const [searchValue, setSearchValue] = useState('');
 
-  const intl = useImperativeIntl();
+  const intl = useImperativeIntl(intlConfig);
 
   // process incoming data to group items by column, apply colors and labels
   const processedData = useMemo(() => {
@@ -403,7 +405,8 @@ ComparativeCategoryWidgetUI.propTypes = {
   onSelectedCategoriesChange: PropTypes.func,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  intlConfig: PropTypes.object
 };
 
 export default ComparativeCategoryWidgetUI;
