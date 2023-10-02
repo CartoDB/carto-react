@@ -48,14 +48,7 @@ const locales = {
       },
       timeSeries: {
         speed: 'Speed',
-        weekOf: 'Week of',
-        clear: 'Clear',
-        year: 'Year',
-        month: 'Month',
-        week: 'Week',
-        day: 'Day',
-        hour: 'Hour',
-        minute: 'Minute'
+        clear: 'Clear'
       },
       featureSelection: {
         drawPolygonMode: 'Polygon',
