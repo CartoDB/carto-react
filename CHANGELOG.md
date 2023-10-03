@@ -2,7 +2,10 @@
 
 ## Not released
 
-## 1.6
+- Developer API change:
+  - geoColumn and aggregationExp moved to Source, remote widgests disabled for spatial indexes
+
+## 1.6.1
 
 ### 1.6.0 (2023-08-10)
 
