@@ -64,6 +64,7 @@ function PieWidgetUI({
   // Tooltip
   const tooltipOptions = useMemo(
     () => ({
+      padding: [theme.spacingValue * 0.5, theme.spacingValue],
       backgroundColor: theme.palette.black[90],
       borderColor: 'transparent',
       textStyle: { color: theme.palette.common.white },
@@ -71,7 +72,13 @@ function PieWidgetUI({
       formatter:
         !!tooltipFormatter && ((params) => tooltipFormatter({ ...params, formatter }))
     }),
-    [formatter, theme.palette.common.white, theme.palette.black, tooltipFormatter]
+    [
+      theme.spacingValue,
+      theme.palette.black,
+      theme.palette.common.white,
+      tooltipFormatter,
+      formatter
+    ]
   );
 
   // Series
@@ -268,10 +275,10 @@ function tooltipFormatter(params) {
   const value = processFormatterRes(params.formatter(params.value));
 
   const markerColor = params.data.color || params.textStyle.color;
-  const markerStyle = `display:inline-block;margin-right:4px;border-radius:4px;width:8px;height:8px;background-color:${markerColor}`;
+  const markerStyle = `display:inline-block;border-radius:4px;width:8px;height:8px;background-color:${markerColor}`;
 
   return `
-    <p style="font-size:12px;font-weight:600;line-height:1.33;margin:4px 0 4px 0;">${params.name}</p>
-    <p style="font-size: 12px;font-weight:normal;line-height:1.33;margin:0 0 4px 0;"><span style="${markerStyle}"></span> ${value} (${params.percent}%)</p>
+    <p style="font-size:11px;font-weight:500;line-height:1.454;text-transform:uppercase;margin:0 0 4px 0;">${params.name}</p>
+    <p style="display:flex;align-items:center;font-size: 11px;font-weight:500;line-height:1.454;margin:0;"><span style="${markerStyle}"></span> <span style="margin:0 4px;font-weight:400;">${value}</span> (${params.percent}%)</p>
   `.trim();
 }
