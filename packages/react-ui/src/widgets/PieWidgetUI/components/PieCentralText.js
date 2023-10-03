@@ -95,7 +95,8 @@ PieCentralText.propTypes = {
       value: PropTypes.number,
       color: PropTypes.string
     })
-  )
+  ),
+  selectedCategories: PropTypes.array
 };
 
 export default PieCentralText;
