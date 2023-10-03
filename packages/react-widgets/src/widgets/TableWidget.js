@@ -5,6 +5,8 @@ import { getTable } from '../models';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 
+const EMPTY_ARRAY = [];
+
 /**
  * Renders a <TableWidget /> component
  * @param  {object} props
