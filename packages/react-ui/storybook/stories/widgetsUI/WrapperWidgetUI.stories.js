@@ -65,10 +65,14 @@ export const OnlyTitle = Template.bind({});
 OnlyTitle.args = DefaultProps;
 
 export const LongTitle = ResponsiveTemplate.bind({});
-const LongTitleProps = {
-  title: 'Default wrapper with extra long text overflowing in two lines'
+
+LongTitle.args = {
+  title: 'Default wrapper with extra long text overflowing in two lines',
+  options: [
+    { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
+    { id: 'o2', name: 'Option 2 too long', action: () => alert('Option 2!') }
+  ]
 };
-LongTitle.args = LongTitleProps;
 
 export const Expandable = Template.bind({});
 const ExpandableProps = { title: 'Expandable', expandable: true };
