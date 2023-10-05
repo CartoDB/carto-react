@@ -1,15 +1,13 @@
 import { lighten } from '@mui/material/styles';
-import CategoryWidgetUI from '../../CategoryWidgetUI/CategoryWidgetUI';
 import PropTypes from 'prop-types';
-
-const ORDER_TYPES = CategoryWidgetUI.ORDER_TYPES;
+import { ORDER_TYPES } from '../../utils/chartConstants';
 
 /** transpose incoming data to group items by column, apply colors and labels
  * @param {{ name: string; value: number }[][]} data
  * @param {string[]} colors
  * @param {string[]} labels
  * @param {string[]} selectedCategories
- * @param {CategoryWidgetUI.ORDER_TYPES} order
+ * @param {ORDER_TYPES} order
  *
  * @returns {{ label: string; key: string; data: { color: string; value: number }[] }[]}
  */

@@ -15,7 +15,7 @@ export function useWidgetFilterValues({ dataSource, id, column, type }) {
   const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
 
   return useMemo(() => {
-    if (!column) return null
+    if (!column) return null;
     const filter = filters?.[column]?.[type];
     if (!filter || filter.owner !== id) {
       return null;
