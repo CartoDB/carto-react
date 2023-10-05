@@ -2,6 +2,7 @@
 
 ## Not released
 
+- WrapperWidgetUI: fix header when 2 lines is exceded [#783](https://github.com/CartoDB/carto-react/pull/783)
 
 ## 2.2
 

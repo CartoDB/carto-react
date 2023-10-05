@@ -68,7 +68,10 @@ const HeaderButton = styled(Button, {
   padding: 0,
   alignItems: 'flex-start',
   justifyContent: 'flex-start',
+  height: 'auto',
+  minHeight: theme.spacing(3),
   cursor: expandable ? 'pointer' : 'default',
+
   '& .MuiButton-startIcon': {
     marginTop: '3px',
     marginRight: theme.spacing(1)
@@ -255,7 +258,7 @@ function WrapperWidgetUI(props) {
       {/* TODO: check collapse error */}
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
         <Box {...props.contentProps}>
-          <Box pt={1}>{props.children}</Box>
+          <Box pt={2}>{props.children}</Box>
           {props.footer ?? <Box>{props.footer}</Box>}
         </Box>
       </Collapse>
