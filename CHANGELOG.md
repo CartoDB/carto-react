@@ -2,7 +2,9 @@
 
 ## Not released
 
-## 1.6
+### 1.6.1 (2023-10-05)
+- Developer API change: [#782](https://github.com/CartoDB/carto-react/pull/782)
+  - geoColumn and aggregationExp moved to Source, remote widgests disabled for spatial indexes
 
 ### 1.6.0 (2023-08-10)
 
