@@ -112,12 +112,13 @@ const Text = styled(Typography, {
 
 const ActionsGrid = styled(Grid)(({ theme }) => ({
   display: 'flex',
+  minWidth: theme.spacing(4),
   marginLeft: theme.spacing(1)
 }));
 
 const IconActionButton = styled(IconButton)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  margin: theme.spacing(-0.75, 0)
+  margin: theme.spacing(-0.75, 0),
+  color: theme.palette.text.secondary
 }));
 
 const PaperMenu = styled(Menu)(({ theme }) => ({
@@ -146,6 +147,7 @@ function WrapperWidgetUI(props) {
     actions = [],
     optionsIcon = <MoreVert />
   } = props;
+  const hasActions = actions.length > 0 || options.length > 0;
 
   const handleExpandClick = () => {
     if (props.expandable) {
@@ -199,61 +201,63 @@ function WrapperWidgetUI(props) {
           </Tooltip>
         </HeaderButton>
 
-        <ActionsGrid item>
-          {actions.length > 0 &&
-            actions.map((action) => {
-              return action.tooltip ? (
-                <Tooltip
-                  key={action.id}
-                  title={action.tooltip.text}
-                  placement={action.tooltip.placement || 'top'}
-                >
-                  {iconButtonTooltip(action)}
-                </Tooltip>
-              ) : (
-                iconButtonTooltip(action)
-              );
-            })}
-
-          {options.length > 0 && (
-            <>
-              <IconActionButton
-                aria-label='options'
-                aria-controls='options-menu'
-                aria-haspopup='true'
-                onClick={handleClick}
-              >
-                {optionsIcon}
-              </IconActionButton>
-              <PaperMenu
-                id='options-menu'
-                elevation={8}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                anchorEl={anchorEl}
-                keepMounted
-                open={open}
-                onClose={handleClose}
-              >
-                {options.map((option) => (
-                  <MenuItem
-                    key={option.id}
-                    selected={option.selected}
-                    onClick={() => handleOptionAction(option.action)}
+        {hasActions && (
+          <ActionsGrid item>
+            {actions.length > 0 &&
+              actions.map((action) => {
+                return action.tooltip ? (
+                  <Tooltip
+                    key={action.id}
+                    title={action.tooltip.text}
+                    placement={action.tooltip.placement || 'top'}
                   >
-                    {option.name}
-                  </MenuItem>
-                ))}
-              </PaperMenu>
-            </>
-          )}
-        </ActionsGrid>
+                    {iconButtonTooltip(action)}
+                  </Tooltip>
+                ) : (
+                  iconButtonTooltip(action)
+                );
+              })}
+
+            {options.length > 0 && (
+              <>
+                <IconActionButton
+                  aria-label='options'
+                  aria-controls='options-menu'
+                  aria-haspopup='true'
+                  onClick={handleClick}
+                >
+                  {optionsIcon}
+                </IconActionButton>
+                <PaperMenu
+                  id='options-menu'
+                  elevation={8}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={open}
+                  onClose={handleClose}
+                >
+                  {options.map((option) => (
+                    <MenuItem
+                      key={option.id}
+                      selected={option.selected}
+                      onClick={() => handleOptionAction(option.action)}
+                    >
+                      {option.name}
+                    </MenuItem>
+                  ))}
+                </PaperMenu>
+              </>
+            )}
+          </ActionsGrid>
+        )}
       </Header>
       {/* TODO: check collapse error */}
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
