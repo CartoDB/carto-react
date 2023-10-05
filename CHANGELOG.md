@@ -8,6 +8,8 @@
 
 - WrapperWidgetUI: fix header when 2 lines is exceded [#783](https://github.com/CartoDB/carto-react/pull/783)
 
+### 2.2.9 (2023-10-05)
+
 ### 2.2.8 (2023-10-02)
 
 - TimeSeriesWidget: support for multiple time series [#767](https://github.com/CartoDB/carto-react/pull/767)
