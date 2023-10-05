@@ -3,6 +3,7 @@ import ColorizeIcon from '@mui/icons-material/Colorize';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import WrapperWidgetUI from '.../../../src/widgets/WrapperWidgetUI';
+import { Label, ThinContainer } from '../../utils/storyStyles';
 
 const options = {
   title: 'Widgets/WrapperWidgetUI',
@@ -34,12 +35,44 @@ const Template = (args) => (
   </WrapperWidgetUI>
 );
 
+const ResponsiveTemplate = (args) => {
+  return (
+    <>
+      <Label variant='body1' mb={3}>
+        {'Limited width'}
+      </Label>
+      <ThinContainer>
+        <WrapperWidgetUI {...args}>
+          <div>Your Content</div>
+        </WrapperWidgetUI>
+      </ThinContainer>
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Responsive'}
+      </Label>
+      <WrapperWidgetUI {...args}>
+        <div>Your Content</div>
+      </WrapperWidgetUI>
+    </>
+  );
+};
+
 export const Default = Template.bind({});
 const DefaultProps = { title: 'Default wrapper' };
 Default.args = DefaultProps;
 
 export const OnlyTitle = Template.bind({});
 OnlyTitle.args = DefaultProps;
+
+export const LongTitle = ResponsiveTemplate.bind({});
+
+LongTitle.args = {
+  title: 'Default wrapper with extra long text overflowing in two lines',
+  options: [
+    { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
+    { id: 'o2', name: 'Option 2 too long', action: () => alert('Option 2!') }
+  ]
+};
 
 export const Expandable = Template.bind({});
 const ExpandableProps = { title: 'Expandable', expandable: true };
