@@ -13,7 +13,7 @@ const SelectField = forwardRef(
       multiple,
       displayEmpty,
       selectProps,
-      renderValue,
+      renderValue: customRenderValue,
       menuProps,
       ...otherProps
     },
@@ -26,22 +26,32 @@ const SelectField = forwardRef(
 
     const defaultRenderValue = React.useCallback(
       (selected) => {
-        if (selected.length === 0) {
-          return (
-            <Typography
-              variant={isSmall ? 'body2' : 'body1'}
-              color='text.hint'
-              component='span'
-              noWrap
-            >
-              {placeholder}
-            </Typography>
-          );
+        if (Array.isArray(selected)) {
+          if (selected.length === 0) {
+            return (
+              <Typography
+                variant={isSmall ? 'body2' : 'body1'}
+                color='text.hint'
+                component='span'
+                noWrap
+              >
+                {placeholder}
+              </Typography>
+            );
+          }
+          return selected.join(', ');
+        } else if (selected && typeof selected === 'object' && 'label' in selected) {
+          // Handle the case where selected is a single object
+          return selected.label;
+        } else {
+          return selected || '';
         }
-        return selected.join(', ');
       },
       [isSmall, placeholder]
     );
+
+    // Use the custom renderValue function if provided, or use the default
+    const renderValue = customRenderValue || defaultRenderValue;
 
     return (
       <TextField
@@ -56,7 +66,7 @@ const SelectField = forwardRef(
           multiple: multiple,
           displayEmpty: displayEmpty || !!placeholder,
           size: size,
-          renderValue: renderValue || defaultRenderValue,
+          renderValue: renderValue,
           MenuProps: {
             ...menuProps,
             anchorOrigin: {
