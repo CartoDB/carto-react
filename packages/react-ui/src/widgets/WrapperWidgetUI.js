@@ -114,7 +114,7 @@ const HeaderItems = styled(Grid)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing(1),
-  marginTop: theme.spacing(-0.75),
+  marginRight: theme.spacing(-0.5),
   marginLeft: theme.spacing(1)
 }));
 
@@ -173,7 +173,12 @@ function WrapperWidgetUI(props) {
 
   const iconButtonTooltip = (action) => {
     return (
-      <IconActionButton key={action.id} aria-label={action.label} onClick={action.action}>
+      <IconActionButton
+        key={action.id}
+        aria-label={action.label}
+        onClick={action.action}
+        size='small'
+      >
         {action.icon}
       </IconActionButton>
     );
@@ -226,6 +231,7 @@ function WrapperWidgetUI(props) {
                 aria-controls='options-menu'
                 aria-haspopup='true'
                 onClick={handleClick}
+                size='small'
               >
                 {optionsIcon}
               </IconActionButton>
