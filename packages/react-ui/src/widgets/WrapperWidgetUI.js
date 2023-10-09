@@ -110,6 +110,15 @@ const Text = styled(Typography, {
   })
 }));
 
+const HeaderItems = styled(Grid)(({ theme }) => ({
+  display: 'flex',
+  marginLeft: theme.spacing(1)
+}));
+
+const HeaderItem = styled(Box)(({ theme }) => ({
+  marginLeft: theme.spacing(1)
+}));
+
 const ActionsGrid = styled(Grid)(({ theme }) => ({
   display: 'flex',
   marginLeft: theme.spacing(1)
@@ -199,61 +208,65 @@ function WrapperWidgetUI(props) {
           </Tooltip>
         </HeaderButton>
 
-        <ActionsGrid item>
-          {actions.length > 0 &&
-            actions.map((action) => {
-              return action.tooltip ? (
-                <Tooltip
-                  key={action.id}
-                  title={action.tooltip.text}
-                  placement={action.tooltip.placement || 'top'}
-                >
-                  {iconButtonTooltip(action)}
-                </Tooltip>
-              ) : (
-                iconButtonTooltip(action)
-              );
-            })}
+        <HeaderItems>
+          {props.headerItems && <HeaderItem>{props.headerItems}</HeaderItem>}
 
-          {options.length > 0 && (
-            <>
-              <IconActionButton
-                aria-label='options'
-                aria-controls='options-menu'
-                aria-haspopup='true'
-                onClick={handleClick}
-              >
-                {optionsIcon}
-              </IconActionButton>
-              <PaperMenu
-                id='options-menu'
-                elevation={8}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                anchorEl={anchorEl}
-                keepMounted
-                open={open}
-                onClose={handleClose}
-              >
-                {options.map((option) => (
-                  <MenuItem
-                    key={option.id}
-                    selected={option.selected}
-                    onClick={() => handleOptionAction(option.action)}
+          <ActionsGrid item>
+            {actions.length > 0 &&
+              actions.map((action) => {
+                return action.tooltip ? (
+                  <Tooltip
+                    key={action.id}
+                    title={action.tooltip.text}
+                    placement={action.tooltip.placement || 'top'}
                   >
-                    {option.name}
-                  </MenuItem>
-                ))}
-              </PaperMenu>
-            </>
-          )}
-        </ActionsGrid>
+                    {iconButtonTooltip(action)}
+                  </Tooltip>
+                ) : (
+                  iconButtonTooltip(action)
+                );
+              })}
+
+            {options.length > 0 && (
+              <>
+                <IconActionButton
+                  aria-label='options'
+                  aria-controls='options-menu'
+                  aria-haspopup='true'
+                  onClick={handleClick}
+                >
+                  {optionsIcon}
+                </IconActionButton>
+                <PaperMenu
+                  id='options-menu'
+                  elevation={8}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={open}
+                  onClose={handleClose}
+                >
+                  {options.map((option) => (
+                    <MenuItem
+                      key={option.id}
+                      selected={option.selected}
+                      onClick={() => handleOptionAction(option.action)}
+                    >
+                      {option.name}
+                    </MenuItem>
+                  ))}
+                </PaperMenu>
+              </>
+            )}
+          </ActionsGrid>
+        </HeaderItems>
       </Header>
       {/* TODO: check collapse error */}
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
@@ -280,6 +293,7 @@ WrapperWidgetUI.propTypes = {
   onExpandedChange: PropTypes.func,
   isLoading: PropTypes.bool,
   disabled: PropTypes.bool,
+  headerItems: PropTypes.element,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

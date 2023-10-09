@@ -94,6 +94,12 @@ export const Disabled = Template.bind({});
 const DisabledProps = { title: 'Disabled', disabled: true };
 Disabled.args = DisabledProps;
 
+export const WithHeaderItems = Template.bind({});
+WithHeaderItems.args = {
+  title: 'Wrapper with HeaderItems element',
+  headerItems: <ColorizeIcon />
+};
+
 export const WithActions = Template.bind({});
 WithActions.args = {
   title: 'Wrapper with actions',
