@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-auth",
-  "version": "1.6.0",
+  "version": "1.6.0-alpha.add-source.0.1",
   "description": "CARTO for React - Auth",
   "author": "CARTO Dev Team",
   "keywords": [
