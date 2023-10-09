@@ -69,7 +69,7 @@ const HeaderButton = styled(Button, {
   alignItems: 'flex-start',
   justifyContent: 'flex-start',
   height: 'auto',
-  minHeight: theme.spacing(3),
+  minHeight: theme.spacing(4),
   cursor: expandable ? 'pointer' : 'default',
 
   '& .MuiButton-startIcon': {
@@ -112,21 +112,14 @@ const Text = styled(Typography, {
 
 const HeaderItems = styled(Grid)(({ theme }) => ({
   display: 'flex',
-  marginLeft: theme.spacing(1)
-}));
-
-const HeaderItem = styled(Box)(({ theme }) => ({
-  marginLeft: theme.spacing(1)
-}));
-
-const ActionsGrid = styled(Grid)(({ theme }) => ({
-  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(1),
+  marginTop: theme.spacing(-0.75),
   marginLeft: theme.spacing(1)
 }));
 
 const IconActionButton = styled(IconButton)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  margin: theme.spacing(-0.75, 0)
+  color: theme.palette.text.secondary
 }));
 
 const PaperMenu = styled(Menu)(({ theme }) => ({
@@ -208,70 +201,68 @@ function WrapperWidgetUI(props) {
           </Tooltip>
         </HeaderButton>
 
-        <HeaderItems>
-          {props.headerItems && <HeaderItem>{props.headerItems}</HeaderItem>}
+        <HeaderItems item>
+          {props.headerItems}
 
-          <ActionsGrid item>
-            {actions.length > 0 &&
-              actions.map((action) => {
-                return action.tooltip ? (
-                  <Tooltip
-                    key={action.id}
-                    title={action.tooltip.text}
-                    placement={action.tooltip.placement || 'top'}
+          {actions.length > 0 &&
+            actions.map((action) => {
+              return action.tooltip ? (
+                <Tooltip
+                  key={action.id}
+                  title={action.tooltip.text}
+                  placement={action.tooltip.placement || 'top'}
+                >
+                  {iconButtonTooltip(action)}
+                </Tooltip>
+              ) : (
+                iconButtonTooltip(action)
+              );
+            })}
+
+          {options.length > 0 && (
+            <>
+              <IconActionButton
+                aria-label='options'
+                aria-controls='options-menu'
+                aria-haspopup='true'
+                onClick={handleClick}
+              >
+                {optionsIcon}
+              </IconActionButton>
+              <PaperMenu
+                id='options-menu'
+                elevation={8}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right'
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right'
+                }}
+                anchorEl={anchorEl}
+                keepMounted
+                open={open}
+                onClose={handleClose}
+              >
+                {options.map((option) => (
+                  <MenuItem
+                    key={option.id}
+                    selected={option.selected}
+                    onClick={() => handleOptionAction(option.action)}
                   >
-                    {iconButtonTooltip(action)}
-                  </Tooltip>
-                ) : (
-                  iconButtonTooltip(action)
-                );
-              })}
-
-            {options.length > 0 && (
-              <>
-                <IconActionButton
-                  aria-label='options'
-                  aria-controls='options-menu'
-                  aria-haspopup='true'
-                  onClick={handleClick}
-                >
-                  {optionsIcon}
-                </IconActionButton>
-                <PaperMenu
-                  id='options-menu'
-                  elevation={8}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                  }}
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={open}
-                  onClose={handleClose}
-                >
-                  {options.map((option) => (
-                    <MenuItem
-                      key={option.id}
-                      selected={option.selected}
-                      onClick={() => handleOptionAction(option.action)}
-                    >
-                      {option.name}
-                    </MenuItem>
-                  ))}
-                </PaperMenu>
-              </>
-            )}
-          </ActionsGrid>
+                    {option.name}
+                  </MenuItem>
+                ))}
+              </PaperMenu>
+            </>
+          )}
         </HeaderItems>
       </Header>
       {/* TODO: check collapse error */}
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
         <Box {...props.contentProps}>
-          <Box pt={2}>{props.children}</Box>
+          <Box pt={1}>{props.children}</Box>
           {props.footer ?? <Box>{props.footer}</Box>}
         </Box>
       </Collapse>
