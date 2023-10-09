@@ -23,6 +23,7 @@ import {
   CategoriesRoot
 } from './CategoryWidgetUI.styled';
 import SearchIcon from '../../assets/icons/SearchIcon';
+import { ORDER_TYPES } from '../utils/chartConstants';
 
 function usePrevious(value) {
   const ref = useRef();
@@ -225,14 +226,14 @@ function CategoryWidgetUI(props) {
   useEffect(() => {
     if (data) {
       // Ranking
-      if (order === CategoryWidgetUI.ORDER_TYPES.RANKING) {
+      if (order === ORDER_TYPES.RANKING) {
         const sorted = [...data].sort((a, b) => b.value - a.value);
         const compressed = compressList(sorted);
         compressed.length ? setMaxValue(compressed[0].value) : setMaxValue(1);
         setSortedData(compressed);
 
         // Fixed order
-      } else if (order === CategoryWidgetUI.ORDER_TYPES.FIXED) {
+      } else if (order === ORDER_TYPES.FIXED) {
         setMaxValue(
           Math.max.apply(
             Math,
@@ -438,21 +439,12 @@ function CategoryWidgetUI(props) {
   );
 }
 
-/**
- * Enum for CategoryWidgetUI order types. 'RANKING' orders the data by value and 'FIXED' keeps the order present in the original data
- * @enum {string}
- */
-CategoryWidgetUI.ORDER_TYPES = {
-  RANKING: 'ranking',
-  FIXED: 'fixed'
-};
-
 CategoryWidgetUI.defaultProps = {
   data: null,
   formatter: (v) => v,
   labels: {},
   maxItems: 5,
-  order: CategoryWidgetUI.ORDER_TYPES.RANKING,
+  order: ORDER_TYPES.RANKING,
   selectedCategories: [],
   animation: true,
   filterable: true,
@@ -472,7 +464,7 @@ CategoryWidgetUI.propTypes = {
   maxItems: PropTypes.number,
   selectedCategories: PropTypes.array,
   onSelectedCategoriesChange: PropTypes.func,
-  order: PropTypes.oneOf(Object.values(CategoryWidgetUI.ORDER_TYPES)),
+  order: PropTypes.oneOf(Object.values(ORDER_TYPES)),
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   searchable: PropTypes.bool,
