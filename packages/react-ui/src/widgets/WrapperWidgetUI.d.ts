@@ -34,6 +34,7 @@ export type WrapperWidgetUIProps = {
   isLoading?: boolean;
   disabled?: boolean;
 
+  headerItems?: ReactNode;
   actions?: WrapperWidgetAction[];
   options?: WrapperWidgetOption[];
 

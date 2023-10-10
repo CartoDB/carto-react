@@ -69,7 +69,7 @@ const HeaderButton = styled(Button, {
   alignItems: 'flex-start',
   justifyContent: 'flex-start',
   height: 'auto',
-  minHeight: theme.spacing(3),
+  minHeight: theme.spacing(4),
   cursor: expandable ? 'pointer' : 'default',
 
   '& .MuiButton-startIcon': {
@@ -110,14 +110,16 @@ const Text = styled(Typography, {
   })
 }));
 
-const ActionsGrid = styled(Grid)(({ theme }) => ({
+const HeaderItems = styled(Grid)(({ theme }) => ({
   display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(1),
+  marginRight: theme.spacing(-0.5),
   marginLeft: theme.spacing(1)
 }));
 
 const IconActionButton = styled(IconButton)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  margin: theme.spacing(-0.75, 0)
+  color: theme.palette.text.secondary
 }));
 
 const PaperMenu = styled(Menu)(({ theme }) => ({
@@ -171,7 +173,12 @@ function WrapperWidgetUI(props) {
 
   const iconButtonTooltip = (action) => {
     return (
-      <IconActionButton key={action.id} aria-label={action.label} onClick={action.action}>
+      <IconActionButton
+        key={action.id}
+        aria-label={action.label}
+        onClick={action.action}
+        size='small'
+      >
         {action.icon}
       </IconActionButton>
     );
@@ -199,7 +206,9 @@ function WrapperWidgetUI(props) {
           </Tooltip>
         </HeaderButton>
 
-        <ActionsGrid item>
+        <HeaderItems item>
+          {props.headerItems}
+
           {actions.length > 0 &&
             actions.map((action) => {
               return action.tooltip ? (
@@ -222,6 +231,7 @@ function WrapperWidgetUI(props) {
                 aria-controls='options-menu'
                 aria-haspopup='true'
                 onClick={handleClick}
+                size='small'
               >
                 {optionsIcon}
               </IconActionButton>
@@ -253,12 +263,12 @@ function WrapperWidgetUI(props) {
               </PaperMenu>
             </>
           )}
-        </ActionsGrid>
+        </HeaderItems>
       </Header>
       {/* TODO: check collapse error */}
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
         <Box {...props.contentProps}>
-          <Box pt={2}>{props.children}</Box>
+          <Box pt={1}>{props.children}</Box>
           {props.footer ?? <Box>{props.footer}</Box>}
         </Box>
       </Collapse>
@@ -280,6 +290,7 @@ WrapperWidgetUI.propTypes = {
   onExpandedChange: PropTypes.func,
   isLoading: PropTypes.bool,
   disabled: PropTypes.bool,
+  headerItems: PropTypes.element,
   actions: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
