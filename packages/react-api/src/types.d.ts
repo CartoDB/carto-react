@@ -22,10 +22,16 @@ interface CredentialsCarto3 {
 
 export type Credentials = CredentialsCarto2 | CredentialsCarto3;
 
+/*
+  SourceProps can be passed to a new CartoLayer for map instantiation.
+  Check CartoLayer props at https://deck.gl/docs/api-reference/carto/carto-layer
+*/
 export type SourceProps = {
   data: string;
   type: MapTypesType['QUERY'] | MapTypesType['TABLE'] | MapTypesType['TILESET'];
   connection: string;
+  geoColumn?: string;
+  aggregationExp?: string;
   credentials?: Credentials;
   queryParameters?: QueryParameters;
 };
