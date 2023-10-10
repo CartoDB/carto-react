@@ -2,10 +2,10 @@
 
 ## Not released
 
+## 1.6.1
+
 - Developer API change:
   - geoColumn and aggregationExp moved to Source, remote widgests disabled for spatial indexes
-
-## 1.6.1
 
 ### 1.6.0 (2023-08-10)
 
@@ -17,7 +17,7 @@
 - Add typed imports, from deck.gl typed [#693](https://github.com/CartoDB/carto-react/pull/693)
 - Developer API change: [#683](https://github.com/CartoDB/carto-react/pull/683)
   - geoColumn and aggregationExp moved to Source, remote widgests disabled for spatial indexes
-  - (optional) provider type added to Source, remote widgets disabled for Databricks 
+  - (optional) provider type added to Source, remote widgets disabled for Databricks
 
 ## 1.5
 
