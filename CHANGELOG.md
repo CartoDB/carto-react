@@ -2,6 +2,8 @@
 
 ## Not released
 
+- WrapperWidgetUI: Add a new headerItems prop to make the elements we can use more flexible [#786](https://github.com/CartoDB/carto-react/pull/786)
+
 ## 2.2
 
 ### 2.2.11 (2023-10-05)
