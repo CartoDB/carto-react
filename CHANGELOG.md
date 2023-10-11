@@ -4,6 +4,29 @@
 
 ## 2.2
 
+### 2.2.12 (2023-10-10)
+
+- WrapperWidgetUI: Add a new headerItems prop to make the elements we can use more flexible [#786](https://github.com/CartoDB/carto-react/pull/786)
+
+### 2.2.11 (2023-10-05)
+
+- PieWidgetUI: Refactor & New CentralText component [#779](https://github.com/CartoDB/carto-react/pull/779)
+- Pie widget: New ChartLegend component from scratch [#777](https://github.com/CartoDB/carto-react/pull/777)
+- Pie Widget: Add maxNumber of elements + a sorted by size desc by default [#774](https://github.com/CartoDB/carto-react/pull/774)
+- Pie Widget: Add number of selected categories + clear button [#771](https://github.com/CartoDB/carto-react/pull/771)
+
+### 2.2.10 (2023-10-05)
+
+- WrapperWidgetUI: fix header when 2 lines is exceded [#783](https://github.com/CartoDB/carto-react/pull/783)
+
+### 2.2.9 (2023-10-05)
+
+### 2.2.8 (2023-10-02)
+
+- TimeSeriesWidget: support for multiple time series [#767](https://github.com/CartoDB/carto-react/pull/767)
+- TimeSeriesWidget: support for second precision and stepMultiplier [#776](https://github.com/CartoDB/carto-react/pull/776)
+- (chore) Include only required files in published packages [#780](https://github.com/CartoDB/carto-react/pull/780)
+
 ### 2.2.7 (2023-09-13)
 
 - SelectField: Remove empty space at the beginning [#772](https://github.com/CartoDB/carto-react/pull/772)

@@ -20,8 +20,8 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
  * @param  {Function} [props.formatter] - Function to format each value returned.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
- * @param  {Function} [props.onError] - Function to handle error messages from the widget.
- * @param  {Function} [props.onStateChange] - Callback to handle state updates of widgets
+ * @param  {Function=} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  */

@@ -17,7 +17,8 @@ function getFiltersByType(filters) {
         timeFilter = {
           column,
           values: typeData.values,
-          type
+          type,
+          offsetBy: typeData.params?.offsetBy
         };
       }
     });
@@ -34,7 +35,8 @@ function getFilterRange(timeFilter) {
   // except the time filter value that is resolved with the real value of the feature in the second position of the array
   result[0] = [1, 1];
   if (timeFilter) {
-    result[1] = timeFilter.values[0];
+    const offsetBy = timeFilter.offsetBy || 0;
+    result[1] = timeFilter.values[0].map((v) => v - offsetBy);
   }
   return result;
 }
@@ -48,7 +50,8 @@ function getUpdateTriggers(filtersWithoutTimeType, timeFilter) {
   if (timeFilter) {
     result[timeFilter.column] = {
       ...result[timeFilter.column],
-      [timeFilter.type]: {} // this allows working with other filters, without an impact on performance
+      [timeFilter.type]: {}, // this allows working with other filters, without an impact on performance
+      offsetBy: timeFilter.offsetBy
     };
   }
   return {
@@ -70,8 +73,9 @@ function getFilterValue(filtersWithoutTimeType, timeFilter, filtersLogicalOperat
     result[0] = featureFilter(feature);
 
     if (timeFilter) {
+      const offsetBy = timeFilter.offsetBy || 0;
       const f = feature.properties || feature;
-      result[1] = f[timeFilter.column];
+      result[1] = f[timeFilter.column] - offsetBy;
     }
     return result;
   };

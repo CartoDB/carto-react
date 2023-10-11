@@ -1,43 +1,52 @@
 import { useTheme } from '@mui/material';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import ReactEcharts from '../../../custom-components/echarts-for-react';
 import useTimeSeriesInteractivity from '../hooks/useTimeSeriesInteractivity';
+import { theme } from '../../../theme/carto-theme';
+
+export const CHART_HEIGHT_DEFAULT = theme.spacingValue * 22;
+export const CHART_HEIGHT_FITHEIGHT = '100%';
+
+const DEFAULT_SPLIT_NUMBER = 5;
+const MIN_ADAPTIVE_SPLIT_NUMBER = 3;
+const ADAPTIVE_SPLIT_NUMBER_SPACING = theme.spacingValue * 20;
 
 export default function TimeSeriesChart({
   chartType,
   formatter,
+  timeAxisSplitNumber,
   tooltip,
   tooltipFormatter,
   data,
-  height,
-  animation
+  series,
+  categories,
+  height: heightProp,
+  fitHeight,
+  animation,
+  selectedCategories,
+  onCategoryClick
 }) {
   const theme = useTheme();
   const [echartsInstance, setEchartInstance] = useState();
 
   const onChartReady = (_echartsInstance) => setEchartInstance(_echartsInstance);
 
-  const { processedData, maxValue } = useMemo(() => {
-    return data.reduce(
-      (acc, { name, value }) => {
-        let { processedData, maxValue } = acc;
-
-        if (value > maxValue) {
-          maxValue = value;
-        }
-
-        processedData.push([name, value]);
-
-        return { processedData, maxValue };
-      },
-      { processedData: [], maxValue: 0 }
-    );
-  }, [data]);
+  const [width, setWidth] = useState();
+  const maxValue = useMemo(
+    () =>
+      series.reduce(
+        (accOut, { data }) =>
+          data.reduce((accInt, row) => (row[1] > accInt ? row[1] : accInt), accOut),
+        Number.MIN_VALUE
+      ),
+    [series]
+  );
 
   const tooltipOptions = useMemo(
     () => ({
       show: tooltip,
       trigger: 'axis',
+      appendToBody: true,
       padding: [theme.spacingValue * 0.5, theme.spacingValue],
       textStyle: {
         ...theme.typography.caption,
@@ -50,9 +59,9 @@ export default function TimeSeriesChart({
         const position = { top: 0 };
 
         if (size.contentSize[0] < size.viewSize[0] - point[0]) {
-          position.left = point[0];
+          position.left = point[0] + theme.spacingValue * 1.5;
         } else {
-          position.right = size.viewSize[0] - point[0];
+          position.right = size.viewSize[0] - point[0] + theme.spacingValue * 1.5;
         }
         return position;
       },
@@ -77,10 +86,39 @@ export default function TimeSeriesChart({
             opacity: 0.2
           }
         },
+        axisLabel: {
+          fontWeight: theme.typography.fontWeightRegular,
+          fontSize: theme.typography.caption.fontSize,
+          fontFamily: theme.typography.caption.fontFamily,
+          // echarts doesn't intepret lineHeight properly, so hack it around
+          lineHeight: theme.typography.caption.lineHeight * 8,
+          letterSpacing: theme.typography.caption.letterSpacing,
+
+          // https://echarts.apache.org/en/option.html#xAxis.axisLabel.formatter
+          formatter: {
+            year: '{yearStyle|{yyyy}}'
+          },
+          rich: {
+            yearStyle: {
+              fontWeight: theme.typography.fontWeightMedium,
+              fontSize: theme.typography.caption.fontSize,
+              fontFamily: theme.typography.caption.fontFamily,
+              letterSpacing: theme.typography.caption.letterSpacing,
+              lineHeight: theme.typography.caption.lineHeight * 8
+            }
+          }
+        },
         axisTick: {
           show: false
         },
-        splitNumber: 5
+        splitNumber:
+          timeAxisSplitNumber ??
+          (width !== undefined
+            ? Math.min(
+                MIN_ADAPTIVE_SPLIT_NUMBER,
+                Math.ceil(width / ADAPTIVE_SPLIT_NUMBER_SPACING)
+              )
+            : DEFAULT_SPLIT_NUMBER)
       },
       yAxis: {
         type: 'value',
@@ -120,36 +158,51 @@ export default function TimeSeriesChart({
         max: maxValue
       }
     }),
-    [theme, maxValue, formatter]
+    [theme, maxValue, formatter, width, timeAxisSplitNumber]
   );
 
   const { timelineOptions: markLine, timeWindowOptions: markArea } =
     useTimeSeriesInteractivity({
       echartsInstance,
-      data
+      data,
+      canSelectLines: Boolean(onCategoryClick)
     });
 
-  const serieOptions = useMemo(
-    () => ({
-      markLine,
-      markArea,
-      animation,
-      data: processedData,
-      type: chartType,
-      smooth: true,
-      color: theme.palette.secondary.main,
-      lineStyle: {
-        width: 2.5
-      },
-      showSymbol: false,
-      emphasis: {
-        lineStyle: {
-          width: 3,
-          color: theme.palette.secondary.main
-        }
-      }
-    }),
-    [markLine, markArea, processedData, theme, chartType, animation]
+  const seriesOptions = useMemo(
+    () =>
+      series.map(({ data, color, name }, i) => {
+        const somethingSelected = selectedCategories && selectedCategories.length > 0;
+
+        const isSelected = somethingSelected && selectedCategories.includes(name);
+        const actualColor =
+          !somethingSelected || isSelected
+            ? color
+            : theme.palette.action.disabledBackground;
+
+        return {
+          name,
+          markLine: i === 0 ? markLine : undefined,
+          markArea: i === 0 ? markArea : undefined,
+          animation,
+          data,
+          type: chartType,
+          smooth: true,
+          color: actualColor,
+          z: somethingSelected && isSelected ? 10 : 0,
+          lineStyle: {
+            width: 2
+          },
+          showSymbol: false,
+          emphasis: {
+            scale: 2,
+            lineStyle: {
+              width: 2,
+              color: actualColor
+            }
+          }
+        };
+      }),
+    [series, markLine, markArea, animation, chartType, selectedCategories, theme]
   );
 
   const options = useMemo(
@@ -163,16 +216,68 @@ export default function TimeSeriesChart({
       color: [theme.palette.secondary.main],
       tooltip: tooltipOptions,
       ...axisOptions,
-      series: [serieOptions]
+      series: seriesOptions
     }),
-    [axisOptions, serieOptions, theme, tooltipOptions]
+    [
+      axisOptions,
+      seriesOptions,
+      theme.palette.secondary.main,
+      theme.spacingValue,
+      tooltipOptions
+    ]
   );
+
+  const handleClick = useCallback(
+    (params) => {
+      // known values params.componentType = markLine | series | markArea
+      if (categories && onCategoryClick && params.componentType === 'series') {
+        const category = categories[params.seriesIndex];
+        onCategoryClick(category);
+      }
+    },
+    [categories, onCategoryClick]
+  );
+
+  const onEvents = { click: handleClick };
+
+  // echarts sometimes misses resizes, so we use a ResizeObserver and force resizes
+  useEffect(() => {
+    if (typeof ResizeObserver === 'undefined' || !echartsInstance) {
+      return;
+    }
+
+    const element = echartsInstance.getDom().parentElement;
+
+    if (!element) return;
+
+    let observer;
+    observer = new ResizeObserver(() => {
+      setWidth(element.clientWidth);
+      echartsInstance.resize();
+    });
+    observer.observe(element);
+
+    return () => {
+      observer?.disconnect();
+    };
+  }, [echartsInstance]);
+
+  const height = fitHeight ? CHART_HEIGHT_FITHEIGHT : heightProp || CHART_HEIGHT_DEFAULT;
+
+  useLayoutEffect(() => {
+    const element = echartsInstance?.getDom()?.parentElement;
+    if (element) {
+      setWidth(element.clientWidth);
+    }
+    echartsInstance?.resize();
+  }, [height, fitHeight, echartsInstance]);
 
   return (
     <ReactEcharts
       option={options}
+      onEvents={onEvents}
       onChartReady={onChartReady}
-      style={{ height: height || theme.spacing(22) }}
+      style={{ height }}
     />
   );
 }

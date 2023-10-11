@@ -1,9 +1,15 @@
 import React from 'react';
 import { Box, Skeleton, styled } from '@mui/material';
-import { SKELETON_HEIGHT, SkeletonMask } from '../SkeletonWidgets';
+import { SKELETON_HEIGHT, SkeletonMask } from '../../SkeletonWidgets';
 
-const GUTTER = 16;
-const LEYEND_SIZE = 64;
+const GUTTER = 32;
+
+const Chart = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: theme.spacing(0.5)
+}));
 
 const PieShape = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -30,37 +36,39 @@ const Leyend = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing(2),
-  height: LEYEND_SIZE
+  height: theme.spacing(5)
 }));
 
 const LeyendItem = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  gap: theme.spacing(1.5),
-  height: theme.spacing(6),
-  marginTop: theme.spacing(2)
+  gap: theme.spacing(1.5)
 }));
 
 const PieSkeleton = ({ height }) => {
   const size = parseInt(height, 10) || SKELETON_HEIGHT;
-  const pieSize = size - LEYEND_SIZE;
-  const pieInnerSize = pieSize - GUTTER * 2;
+  const pieSize = size - GUTTER;
+  const pieInnerSize = pieSize - GUTTER;
 
   return (
-    <Box height={size}>
-      <PieShape>
-        <Skeleton variant='circular' width={pieSize} height={pieSize} />
-        <SkeletonCircleMask
-          variant='circular'
-          width={pieInnerSize}
-          height={pieInnerSize}
-        />
+    <Box mt={0.5}>
+      <Skeleton height={8} width={64} />
 
-        <TextContainer>
-          <Skeleton height={24} width={72} />
-          <Skeleton height={8} width={48} />
-        </TextContainer>
-      </PieShape>
+      <Chart height={size}>
+        <PieShape>
+          <Skeleton variant='circular' width={pieSize} height={pieSize} />
+          <SkeletonCircleMask
+            variant='circular'
+            width={pieInnerSize}
+            height={pieInnerSize}
+          />
+
+          <TextContainer>
+            <Skeleton height={24} width={72} />
+            <Skeleton height={8} width={48} />
+          </TextContainer>
+        </PieShape>
+      </Chart>
 
       <Leyend>
         {[...Array(2)].map((_, i) => (

@@ -3,6 +3,8 @@ import ColorizeIcon from '@mui/icons-material/Colorize';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import WrapperWidgetUI from '.../../../src/widgets/WrapperWidgetUI';
+import { Label, ThinContainer } from '../../utils/storyStyles';
+import { Checkbox } from '@mui/material';
 
 const options = {
   title: 'Widgets/WrapperWidgetUI',
@@ -34,12 +36,44 @@ const Template = (args) => (
   </WrapperWidgetUI>
 );
 
+const ResponsiveTemplate = (args) => {
+  return (
+    <>
+      <Label variant='body1' mb={3}>
+        {'Limited width'}
+      </Label>
+      <ThinContainer>
+        <WrapperWidgetUI {...args}>
+          <div>Your Content</div>
+        </WrapperWidgetUI>
+      </ThinContainer>
+
+      <Label variant='body1' mt={8} mb={3}>
+        {'Responsive'}
+      </Label>
+      <WrapperWidgetUI {...args}>
+        <div>Your Content</div>
+      </WrapperWidgetUI>
+    </>
+  );
+};
+
 export const Default = Template.bind({});
 const DefaultProps = { title: 'Default wrapper' };
 Default.args = DefaultProps;
 
 export const OnlyTitle = Template.bind({});
 OnlyTitle.args = DefaultProps;
+
+export const LongTitle = ResponsiveTemplate.bind({});
+
+LongTitle.args = {
+  title: 'Default wrapper with extra long text overflowing in two lines',
+  options: [
+    { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
+    { id: 'o2', name: 'Option 2 too long', action: () => alert('Option 2!') }
+  ]
+};
 
 export const Expandable = Template.bind({});
 const ExpandableProps = { title: 'Expandable', expandable: true };
@@ -61,6 +95,12 @@ export const Disabled = Template.bind({});
 const DisabledProps = { title: 'Disabled', disabled: true };
 Disabled.args = DisabledProps;
 
+export const WithHeaderItems = Template.bind({});
+WithHeaderItems.args = {
+  title: 'Wrapper with Header Items',
+  headerItems: <Checkbox />
+};
+
 export const WithActions = Template.bind({});
 WithActions.args = {
   title: 'Wrapper with actions',
@@ -72,23 +112,6 @@ WithActions.args = {
       action: () => alert('Action!')
     }
   ]
-};
-WithActions.parameters = {
-  docs: {
-    source: {
-      code: `<WrapperWidgetUI
-  title='Wrapper with actions'
-  actions={[
-    {
-      id: 'a1',
-      name: 'Autostyle',
-      icon: <ColorizeIcon />,
-      action: () => alert('Action!')
-    }
-  ]}
-/>`
-    }
-  }
 };
 
 export const WithOptions = Template.bind({});
@@ -106,30 +129,11 @@ WithOptions.args = {
     { id: 'o9', name: 'Option 2', action: () => alert('Option 2!') }
   ]
 };
-WithOptions.parameters = {
-  docs: {
-    source: {
-      code: `<WrapperWidgetUI
-  title='Wrapper with options'
-  options={[
-    { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
-    { id: 'o2', name: 'Option 2 too long', action: () => alert('Option 2!') },
-    { id: 'o3', name: 'Option 2', action: () => alert('Option 2!') },
-    { id: 'o4', name: 'Option 2 too long here', action: () => alert('Option 2!') },
-    { id: 'o5', name: 'Option 2', action: () => alert('Option 2!') },
-    { id: 'o6', name: 'Option 2', action: () => alert('Option 2!') },
-    { id: 'o7', name: 'Option 2', action: () => alert('Option 2!') },
-    { id: 'o8', name: 'Option 2', action: () => alert('Option 2!') },
-    { id: 'o9', name: 'Option 2', action: () => alert('Option 2!') }
-  ]}
-/>`
-    }
-  }
-};
 
-export const WithActionsAndOptions = Template.bind({});
-WithActionsAndOptions.args = {
+export const WithItemsActionsAndOptions = Template.bind({});
+WithItemsActionsAndOptions.args = {
   title: 'Wrapper with actions and options',
+  headerItems: <Checkbox />,
   actions: [
     {
       id: 'a1',
@@ -143,27 +147,6 @@ WithActionsAndOptions.args = {
     { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') }
   ]
 };
-WithActionsAndOptions.parameters = {
-  docs: {
-    source: {
-      code: `<WrapperWidgetUI
-  title='Wrapper with actions and options'
-  actions={[
-    {
-      id: 'a1',
-      name: 'Autostyle',
-      icon: <ColorizeIcon />,
-      action: () => alert('Action!')
-    }
-  ]}
-  options={[
-    { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
-    { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') }
-  ]}
-/>`
-    }
-  }
-};
 
 export const WithOptionsAndCustomIcon = Template.bind({});
 WithOptionsAndCustomIcon.args = {
@@ -174,35 +157,11 @@ WithOptionsAndCustomIcon.args = {
   ],
   optionsIcon: <MenuIcon />
 };
-WithOptionsAndCustomIcon.parameters = {
-  docs: {
-    source: {
-      code: `<WrapperWidgetUI
-  title='Wrapper with options and custom icon'
-  options={[
-    { id: 'o1', name: 'Option 1', action: () => alert('Option 1!') },
-    { id: 'o2', name: 'Option 2', action: () => alert('Option 2!') }
-  ]}
-  optionsIcon={<MenuIcon />}
-/>`
-    }
-  }
-};
 
 export const WithCustomMargins = Template.bind({});
 WithCustomMargins.args = {
   title: 'Wrapper custom margins',
   margin: 100
-};
-WithCustomMargins.parameters = {
-  docs: {
-    source: {
-      code: `<WrapperWidgetUI
-  title='Wrapper custom margins'
-  margin={100}
-/>`
-    }
-  }
 };
 
 export const WithActionsTooltip = Template.bind({});
@@ -230,36 +189,6 @@ WithActionsTooltip.args = {
       }
     }
   ]
-};
-WithActionsTooltip.parameters = {
-  docs: {
-    source: {
-      code: `<WrapperWidgetUI
-  title='Wrapper with actions tooltip'
-  actions={[
-    {
-      id: 'a1',
-      name: 'Autostyle',
-      icon: <ColorizeIcon />,
-      action: () => alert('Action!'),
-      tooltip: {
-        text: 'Tooltip default'
-      }
-    },
-    {
-      id: 'a2',
-      name: 'Autostyle',
-      icon: <AddLocationIcon />,
-      action: () => alert('Action!'),
-      tooltip: {
-        text: 'Tooltip on bottom',
-        placement: 'bottom'
-      }
-    }
-  ]}
-/>`
-    }
-  }
 };
 
 export const BigScrollableContent = (args) => (

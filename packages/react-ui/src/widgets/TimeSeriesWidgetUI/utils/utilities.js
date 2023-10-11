@@ -14,3 +14,40 @@ export function getDate(date) {
   if (date.getTime) return date;
   return new Date(date);
 }
+
+export function findItemIndexByTime(timestamp, data) {
+  for (let idx = 0; idx < data.length; idx++) {
+    const currentDate = data[idx].name;
+    const upperCloseDate = idx < data.length ? data[idx + 1]?.name : currentDate;
+    const lowerCloseDate = idx > 0 ? data[idx - 1]?.name : currentDate;
+    const upperDiff = Math.abs(currentDate - upperCloseDate);
+    const lowerDiff = Math.abs(currentDate - lowerCloseDate);
+    const lowerBound = currentDate - lowerDiff * 0.5,
+      upperBound = currentDate + upperDiff * 0.5;
+
+    if (isFinite(lowerBound) && isFinite(upperBound)) {
+      if (timestamp >= lowerBound && timestamp <= upperBound) {
+        return idx;
+      }
+    } else if (isFinite(lowerBound)) {
+      if (timestamp >= lowerBound) {
+        return idx;
+      }
+    } else if (isFinite(upperBound)) {
+      if (timestamp <= upperBound) {
+        return idx;
+      }
+    }
+  }
+}
+
+export function countDistinctTimePoints(data) {
+  let lastTime = undefined;
+  let result = 0;
+  for (const { name: time } of data) {
+    if (time === lastTime) continue;
+    lastTime = time;
+    result++;
+  }
+  return result;
+}
