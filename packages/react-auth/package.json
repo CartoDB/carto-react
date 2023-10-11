@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-auth",
-  "version": "2.2.11",
+  "version": "2.2.11-alpha.pie-widget-fixes.0.1",
   "description": "CARTO for React - Auth",
   "author": "CARTO Dev Team",
   "keywords": [

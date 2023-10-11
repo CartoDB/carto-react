@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-core",
-  "version": "2.2.11",
+  "version": "2.2.11-alpha.pie-widget-fixes.0.1",
   "description": "CARTO for React - Core",
   "author": "CARTO Dev Team",
   "keywords": [
