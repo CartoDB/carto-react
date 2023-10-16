@@ -2,9 +2,11 @@
 
 ## Not released
 
-- PieWidgetUI: Fix tooltip & ChartLegend styles [#787](https://github.com/CartoDB/carto-react/pull/787)
-
 ## 2.2
+
+### 2.2.13 (2023-10-16)
+
+- PieWidgetUI: Fix tooltip & ChartLegend styles [#787](https://github.com/CartoDB/carto-react/pull/787)
 
 ### 2.2.12 (2023-10-10)
 
