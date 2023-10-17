@@ -34,7 +34,7 @@ const OverflowVeil = styled(Box)(({ theme }) => ({
   left: theme.spacing(-2),
   top: theme.spacing(1),
   bottom: theme.spacing(1),
-  zIndex: 10,
+  zIndex: 1,
   width: theme.spacing(2.5),
   background: `linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, ${theme.palette.background.paper} 100%)`
 }));

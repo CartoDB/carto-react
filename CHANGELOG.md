@@ -4,6 +4,10 @@
 
 ## 2.2
 
+### 2.2.13 (2023-10-16)
+
+- PieWidgetUI: Fix tooltip & ChartLegend styles [#787](https://github.com/CartoDB/carto-react/pull/787)
+
 ### 2.2.12 (2023-10-10)
 
 - WrapperWidgetUI: Add a new headerItems prop to make the elements we can use more flexible [#786](https://github.com/CartoDB/carto-react/pull/786)
