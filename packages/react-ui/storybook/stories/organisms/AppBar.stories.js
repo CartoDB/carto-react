@@ -127,6 +127,6 @@ export const Basic = Template.bind({});
 Basic.args = { ...commonArgs };
 
 export const Composition = CustomTemplate.bind({});
-Composition.args = { ...commonArgs };
+Composition.args = { ...commonArgs, backgroundColor: 'aliceblue', textColor: 'red' };
 
 export const Guide = DocTemplate.bind({});
