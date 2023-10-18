@@ -12,19 +12,21 @@ const Menu = styled('div')(({ theme }) => ({
   marginRight: theme.spacing(1.5)
 }));
 
-const MenuButton = styled(IconButton)(({ theme }) => ({
+const MenuButton = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== 'iconColor'
+})(({ iconColor, theme }) => ({
   marginRight: theme.spacing(1),
 
   '&.MuiButtonBase-root svg path': {
-    fill: theme.palette.background.paper
+    fill: iconColor || theme.palette.background.paper
   }
 }));
 
-export default function BurguerMenu({ onClickMenu }) {
+export default function BurguerMenu({ onClickMenu, iconColor }) {
   return (
     <Hidden mdUp>
       <Menu>
-        <MenuButton onClick={onClickMenu}>
+        <MenuButton onClick={onClickMenu} iconColor={iconColor}>
           <MenuOutlined />
         </MenuButton>
         <Divider orientation='vertical' flexItem light />
