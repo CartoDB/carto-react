@@ -9,9 +9,16 @@ import BrandText from './BrandText';
 import SecondaryText from './SecondaryText';
 
 const Root = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'backgroundColor'
-})(({ backgroundColor, theme }) => ({
-  backgroundColor: backgroundColor || theme.palette.brand.navyBlue
+  shouldForwardProp: (prop) => !['backgroundColor', 'textColor'].includes(prop)
+})(({ backgroundColor, textColor, theme }) => ({
+  backgroundColor: backgroundColor || theme.palette.brand.navyBlue,
+
+  '& .MuiTypography-root': {
+    color: textColor || theme.palette.common.white
+  },
+  '& .MuiIconButton-root path': {
+    fill: textColor || theme.palette.common.white
+  }
 }));
 
 const BrandElements = styled('div')(({ theme }) => ({
@@ -45,7 +52,7 @@ const AppBar = ({
   ...otherProps
 }) => {
   return (
-    <Root backgroundColor={backgroundColor} {...otherProps}>
+    <Root backgroundColor={backgroundColor} textColor={textColor} {...otherProps}>
       <Toolbar>
         <BrandElements>
           {showBurgerMenu && (
