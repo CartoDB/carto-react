@@ -8,14 +8,14 @@ export const DEFAULT_LOCALE = 'en';
 const cache = createIntlCache();
 
 export default function useImperativeIntl(intlConfig) {
-  const locale = intlConfig?.locale || DEFAULT_LOCALE;
-  const messagesLocale = findMatchingMessagesLocale(locale);
-  const intMessages = intlConfig?.messages
-    ? flattenMessages(intlConfig?.messages)
-    : messages[messagesLocale];
+  return useMemo(() => {
+    const locale = intlConfig?.locale || DEFAULT_LOCALE;
+    const messagesLocale = findMatchingMessagesLocale(locale);
+    const intMessages = intlConfig?.messages
+      ? flattenMessages(intlConfig?.messages)
+      : messages[messagesLocale];
 
-  return useMemo(
-    () =>
+    return (
       createIntl(
         {
           locale,
@@ -23,8 +23,9 @@ export default function useImperativeIntl(intlConfig) {
         },
         cache
       ),
-    [locale, intMessages]
-  );
+      [locale, intMessages]
+    );
+  }, [intlConfig]);
 }
 
 // AUX
