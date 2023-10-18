@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider, Hidden, IconButton } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import { MenuOutlined } from '@mui/icons-material';
 
 import { APPBAR_SIZE } from '../../../theme/themeConstants';
@@ -22,6 +22,14 @@ const MenuButton = styled(IconButton, {
   }
 }));
 
+const MenuDivider = styled(Divider, {
+  shouldForwardProp: (prop) => prop !== 'color'
+})(({ color, theme }) => ({
+  ...(color && {
+    borderColor: alpha(color, 0.12)
+  })
+}));
+
 export default function BurguerMenu({ onClickMenu, iconColor }) {
   return (
     <Hidden mdUp>
@@ -29,7 +37,7 @@ export default function BurguerMenu({ onClickMenu, iconColor }) {
         <MenuButton onClick={onClickMenu} iconColor={iconColor}>
           <MenuOutlined />
         </MenuButton>
-        <Divider orientation='vertical' flexItem light />
+        <MenuDivider orientation='vertical' flexItem light color={iconColor} />
       </Menu>
     </Hidden>
   );
