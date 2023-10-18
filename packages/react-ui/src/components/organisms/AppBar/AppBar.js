@@ -9,17 +9,9 @@ import BrandText from './BrandText';
 import SecondaryText from './SecondaryText';
 
 const Root = styled(MuiAppBar, {
-  shouldForwardProp: (prop) =>
-    !['textColor', 'backgroundColor', 'hasCloseButton'].includes(prop)
-})(({ textColor, backgroundColor, theme }) => ({
-  backgroundColor: backgroundColor || theme.palette.brand.navyBlue,
-
-  '& .MuiTypography-root': {
-    color: textColor || theme.palette.common.white
-  },
-  '& .MuiIconButton-root svg:not(.doNotFillIcon) path': {
-    fill: textColor || theme.palette.common.white
-  }
+  shouldForwardProp: (prop) => prop !== 'backgroundColor'
+})(({ backgroundColor, theme }) => ({
+  backgroundColor: backgroundColor || theme.palette.brand.navyBlue
 }));
 
 const BrandElements = styled('div')(({ theme }) => ({
@@ -53,23 +45,21 @@ const AppBar = ({
   ...otherProps
 }) => {
   return (
-    <Root textColor={textColor} backgroundColor={backgroundColor} {...otherProps}>
+    <Root backgroundColor={backgroundColor} {...otherProps}>
       <Toolbar>
         <BrandElements>
-          {showBurgerMenu && <BurguerMenu onClickMenu={onClickMenu} />}
+          {showBurgerMenu && (
+            <BurguerMenu onClickMenu={onClickMenu} iconColor={textColor} />
+          )}
           {brandLogo && <BrandLogo logo={brandLogo} />}
-          {brandText && <BrandText text={brandText} />}
-          {secondaryText && <SecondaryText text={secondaryText} />}
+          {brandText && <BrandText text={brandText} textColor={textColor} />}
+          {secondaryText && <SecondaryText text={secondaryText} textColor={textColor} />}
         </BrandElements>
 
         <Content>{children}</Content>
       </Toolbar>
     </Root>
   );
-};
-
-AppBar.defaultProps = {
-  showBurgerMenu: false
 };
 
 AppBar.propTypes = {
@@ -80,6 +70,10 @@ AppBar.propTypes = {
   showBurgerMenu: PropTypes.bool,
   backgroundColor: PropTypes.string,
   textColor: PropTypes.string
+};
+
+AppBar.defaultProps = {
+  showBurgerMenu: false
 };
 
 export default AppBar;
