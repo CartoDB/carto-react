@@ -45,8 +45,7 @@ function CategoryWidgetUI(props) {
     animation,
     filterable,
     searchable,
-    isLoading,
-    intlConfig
+    isLoading
   } = props;
   const [sortedData, setSortedData] = useState([]);
   const [maxValue, setMaxValue] = useState(1);
@@ -58,7 +57,7 @@ function CategoryWidgetUI(props) {
   const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
-  const intl = useImperativeIntl(intlConfig);
+  const intl = useImperativeIntl();
 
   // Get blockedCategories in the same order as original data
   const sortBlockedSameAsData = (blockedCategories) =>
@@ -491,8 +490,7 @@ CategoryWidgetUI.propTypes = {
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   searchable: PropTypes.bool,
-  isLoading: PropTypes.bool,
-  intlConfig: PropTypes.object
+  isLoading: PropTypes.bool
 };
 
 export default CategoryWidgetUI;

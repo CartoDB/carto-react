@@ -44,14 +44,13 @@ export default function LegendWrapper({
   opacity,
   onChangeOpacity,
   onChangeVisibility,
-  onChangeCollapsed,
-  intlConfig
+  onChangeCollapsed
 }) {
   const wrapper = createRef();
   const expanded = !collapsed;
   const [isLayerOptionsExpanded, setIsLayerOptionsExpanded] = useState(false);
 
-  const intl = useImperativeIntl(intlConfig);
+  const intl = useImperativeIntl();
 
   const handleChangeOpacity = (newOpacity) => {
     if (onChangeOpacity) onChangeOpacity({ id, opacity: newOpacity });
@@ -83,7 +82,6 @@ export default function LegendWrapper({
         layerOptionsEnabled={showOpacityControl || layerOptions.length > 0}
         onToggleLayerOptions={handleToggleLayerOptions}
         isLayerOptionsExpanded={isLayerOptionsExpanded}
-        intlConfig={intlConfig}
       />
       {hasChildren && !!children && (
         <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
@@ -101,7 +99,6 @@ export default function LegendWrapper({
                     <OpacityControl
                       opacity={opacity}
                       onChangeOpacity={handleChangeOpacity}
-                      intlConfig={intlConfig}
                     />
                   )}
                   {layerOptions}
@@ -157,12 +154,11 @@ function Header({
   onChangeVisibility,
   layerOptionsEnabled,
   onToggleLayerOptions,
-  isLayerOptionsExpanded,
-  intlConfig
+  isLayerOptionsExpanded
 }) {
   const ExpandIcon = expanded ? LessIconHeader : MoreIconHeader;
 
-  const intl = useImperativeIntl(intlConfig);
+  const intl = useImperativeIntl();
 
   return (
     <GridHeader container>

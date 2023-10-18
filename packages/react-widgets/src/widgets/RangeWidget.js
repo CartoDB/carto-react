@@ -26,7 +26,7 @@ import useStats from '../hooks/useStats';
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
- * @param  {object} [props.intlConfig] - Object with intl configuration. If not provided, default messages will be used.
+
  */
 function RangeWidget({
   id,
@@ -37,8 +37,7 @@ function RangeWidget({
   max: _max,
   global,
   onError,
-  wrapperProps,
-  intlConfig
+  wrapperProps
 }) {
   const dispatch = useDispatch();
   const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
@@ -148,7 +147,6 @@ function RangeWidget({
               Number.isFinite(data.max) && { limits: [data.min, data.max] })}
             onSelectedRangeChange={handleSelectedRangeChange}
             isLoading={isLoading}
-            intlConfig={intlConfig}
           />
         )}
       </WidgetWithAlert>
@@ -165,8 +163,7 @@ RangeWidget.propTypes = {
   max: PropTypes.number,
   global: PropTypes.bool,
   onError: PropTypes.func,
-  wrapperProps: PropTypes.object,
-  intlConfig: PropTypes.object
+  wrapperProps: PropTypes.object
 };
 
 RangeWidget.defaultProps = {

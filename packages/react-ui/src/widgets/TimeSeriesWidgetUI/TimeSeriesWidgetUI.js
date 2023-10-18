@@ -44,8 +44,7 @@ function TimeSeriesWidgetUI({
   onStop,
   isLoading,
   palette,
-  showLegend,
-  intlConfig
+  showLegend
 }) {
   let prevEmittedTimeWindow = useRef();
   const handleTimeWindowUpdate = useCallback(
@@ -103,7 +102,6 @@ function TimeSeriesWidgetUI({
       selectedCategories={selectedCategories}
       timelinePosition={timelinePosition}
       onSelectedCategoriesChange={onSelectedCategoriesChange}
-      intlConfig={intlConfig}
     />
   );
 
@@ -153,8 +151,7 @@ TimeSeriesWidgetUI.propTypes = {
   showControls: PropTypes.bool,
   isLoading: PropTypes.bool,
   palette: PropTypes.arrayOf(PropTypes.string),
-  showLegend: PropTypes.bool,
-  intlConfig: PropTypes.object
+  showLegend: PropTypes.bool
 };
 
 TimeSeriesWidgetUI.defaultProps = {
@@ -193,15 +190,14 @@ function TimeSeriesWidgetUIContent({
   selectedCategories,
   onSelectedCategoriesChange,
   showLegend,
-  timelinePosition,
-  intlConfig
+  timelinePosition
 }) {
   const theme = useTheme();
   const fallbackColor = theme.palette.secondary.main;
 
   const { isPlaying, isPaused, timeWindow, stop, setTimeWindow } = useTimeSeriesContext();
 
-  const intl = useImperativeIntl(intlConfig);
+  const intl = useImperativeIntl();
 
   useEffect(() => {
     if (timelinePosition !== undefined) {
@@ -340,9 +336,7 @@ function TimeSeriesWidgetUIContent({
     </>
   );
 
-  const controls = showControls && (
-    <TimeSeriesControls data={data} stepSize={stepSize} intlConfig={intlConfig} />
-  );
+  const controls = showControls && <TimeSeriesControls data={data} stepSize={stepSize} />;
 
   const chart = (
     <TimeSeriesChart

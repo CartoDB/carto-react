@@ -42,12 +42,11 @@ function HistogramWidgetUI({
   animation,
   filterable: _filterable,
   height,
-  isLoading,
-  intlConfig
+  isLoading
 }) {
   const theme = useTheme();
 
-  const intl = useImperativeIntl(intlConfig);
+  const intl = useImperativeIntl();
 
   const filterable = _filterable && !!onSelectedBarsChange;
 
@@ -325,8 +324,7 @@ HistogramWidgetUI.propTypes = {
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   height: PropTypes.number,
-  isLoading: PropTypes.bool,
-  intlConfig: PropTypes.object
+  isLoading: PropTypes.bool
 };
 
 export default HistogramWidgetUI;

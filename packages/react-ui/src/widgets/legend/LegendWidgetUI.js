@@ -43,8 +43,7 @@ function LegendWidgetUI({
   onChangeVisibility,
   onChangeOpacity,
   onChangeLegendRowCollapsed,
-  title,
-  intlConfig
+  title
 }) {
   const isSingle = layers.length === 1;
 
@@ -63,7 +62,6 @@ function LegendWidgetUI({
           onChangeVisibility={onChangeVisibility}
           onChangeOpacity={onChangeOpacity}
           onChangeCollapsed={onChangeLegendRowCollapsed}
-          intlConfig={intlConfig}
         />
       </LegendContainer>
     </LegendBox>
@@ -87,8 +85,7 @@ LegendWidgetUI.propTypes = {
   onChangeLegendRowCollapsed: PropTypes.func,
   onChangeVisibility: PropTypes.func,
   onChangeOpacity: PropTypes.func,
-  title: PropTypes.string,
-  intlConfig: PropTypes.object
+  title: PropTypes.string
 };
 
 export default LegendWidgetUI;
@@ -180,8 +177,7 @@ function LegendRows({
   customLayerOptions,
   onChangeVisibility,
   onChangeOpacity,
-  onChangeCollapsed,
-  intlConfig
+  onChangeCollapsed
 }) {
   const isSingle = layers.length === 1;
 
@@ -236,7 +232,6 @@ function LegendRows({
               onChangeOpacity={onChangeOpacity}
               onChangeVisibility={onChangeVisibility}
               onChangeCollapsed={onChangeCollapsed}
-              intlConfig={intlConfig}
             >
               <LegendComponent layer={layer} legend={legend} />
             </LegendWrapper>

@@ -40,7 +40,7 @@ const EMPTY_ARRAY = [];
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
- * @param  {object} [props.intlConfig] - Object with intl configuration. If not provided, default messages will be used.
+
  */
 function HistogramWidget({
   id,
@@ -62,8 +62,7 @@ function HistogramWidget({
   onError,
   wrapperProps,
   noDataAlertProps,
-  droppingFeaturesAlertProps,
-  intlConfig
+  droppingFeaturesAlertProps
 }) {
   const dispatch = useDispatch();
 
@@ -202,7 +201,6 @@ function HistogramWidget({
             animation={animation}
             filterable={filterable}
             isLoading={isLoading}
-            intlConfig={intlConfig}
           />
         )}
       </WidgetWithAlert>
@@ -230,8 +228,7 @@ HistogramWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object,
-  intlConfig: PropTypes.object
+  droppingFeaturesAlertProps: PropTypes.object
 };
 
 HistogramWidget.defaultProps = {

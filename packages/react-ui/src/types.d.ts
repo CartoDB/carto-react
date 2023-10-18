@@ -28,7 +28,6 @@ export type CategoryWidgetUI = {
   onSelectedCategoriesChange?: Function;
   order?: 'ranking' | 'fixed';
   isLoading?: boolean;
-  intlConfig?: object;
 };
 
 export type FormulaWidgetUIData =
@@ -53,7 +52,6 @@ export type HistogramWidgetUI = {
   onSelectedBarsChange?: Function;
   height?: number;
   isLoading?: boolean;
-  intlConfig?: object;
 };
 
 export type BarWidgetUI = {
@@ -73,7 +71,6 @@ export type BarWidgetUI = {
   filterable?: boolean;
   animation?: boolean;
   isLoading?: boolean;
-  intlConfig?: object;
 };
 
 export type PieWidgetUIData = { name: string; value: number }[];
@@ -112,7 +109,7 @@ export type LegendWidgetUI = {
   customLegendTypes?: Record<string, Function>;
   layers?: LegendWidgetUIData[];
   collapsed?: boolean;
-  intlConfig?: object;
+
   onChangeCollapsed?: (collapsed: boolean) => void;
   onChangeVisibility?: (args: { id: string; visible: boolean }) => void;
   onChangeOpacity?: (args: { id: string; visible: boolean }) => void;
@@ -149,7 +146,6 @@ export type TimeSeriesWidgetUI = {
   onTimeWindowUpdate?: Function;
   showControls?: boolean;
   isLoading?: boolean;
-  intlConfig?: object;
 };
 
 export type NoDataAlert = {
@@ -175,7 +171,6 @@ export type FeatureSelectionWidgetUI = {
   tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
   size?: 'small' | 'medium';
   chipLabel?: string;
-  intlConfig?: object;
 };
 
 export type FeatureSelectionUIDropdown = {

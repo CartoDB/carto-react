@@ -23,7 +23,6 @@ export type TimeSeriesWidgetProps = {
   tooltip?: boolean;
   tooltipFormatter?: Function;
   formatter?: Function;
-  intlConfig?: object;
 
   height?: string;
   fitHeihgt?: boolean;

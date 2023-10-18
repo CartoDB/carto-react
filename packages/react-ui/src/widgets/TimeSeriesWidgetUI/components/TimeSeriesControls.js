@@ -21,11 +21,11 @@ const TIME_WINDOW_STEP_BY_STEP_SIZE = {
 
 const SPEED_FACTORS = [0.5, 1, 2, 3];
 
-export function TimeSeriesControls({ data, stepSize, intlConfig }) {
+export function TimeSeriesControls({ data, stepSize }) {
   const [anchorSpeedEl, setAnchorSpeedEl] = useState(null);
   const [speed, setSpeed] = useState(1);
   const animationRef = useRef({ animationFrameId: null, timeoutId: null });
-  const intl = useImperativeIntl(intlConfig);
+  const intl = useImperativeIntl();
 
   const { isPlaying, isPaused, timeWindow, setTimeWindow, stop, togglePlay } =
     useTimeSeriesContext();

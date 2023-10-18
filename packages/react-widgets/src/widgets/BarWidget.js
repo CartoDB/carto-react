@@ -41,7 +41,6 @@ const EMPTY_ARRAY = [];
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
- * @param  {object} [props.intlConfig] - Object with intl configuration. If not provided, default messages will be used.
  */
 function BarWidget({
   id,
@@ -64,8 +63,7 @@ function BarWidget({
   onError,
   wrapperProps,
   noDataAlertProps,
-  droppingFeaturesAlertProps,
-  intlConfig
+  droppingFeaturesAlertProps
 }) {
   const dispatch = useDispatch();
 
@@ -167,7 +165,6 @@ function BarWidget({
             animation={animation}
             filterable={filterable}
             isLoading={isLoading}
-            intlConfig={intlConfig}
           />
         )}
       </WidgetWithAlert>
@@ -199,8 +196,7 @@ BarWidget.propTypes = {
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
   droppingFeaturesAlertProps: PropTypes.object,
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  intlConfig: PropTypes.object
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
 BarWidget.defaultProps = {
