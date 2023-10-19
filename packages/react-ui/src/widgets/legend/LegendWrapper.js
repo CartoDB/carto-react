@@ -85,7 +85,7 @@ function LegendWrapper({
         layerOptionsEnabled={showOpacityControl || layerOptions.length > 0}
         onToggleLayerOptions={handleToggleLayerOptions}
         isLayerOptionsExpanded={isLayerOptionsExpanded}
-        intl={intl}
+        intl={intlConfig}
       />
       {hasChildren && !!children && (
         <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
@@ -103,7 +103,7 @@ function LegendWrapper({
                     <OpacityControl
                       opacity={opacity}
                       onChangeOpacity={handleChangeOpacity}
-                      intl={intl}
+                      intl={intlConfig}
                     />
                   )}
                   {layerOptions}
@@ -164,8 +164,6 @@ function Header({
 }) {
   const ExpandIcon = expanded ? LessIconHeader : MoreIconHeader;
 
-  const intlConfig = useImperativeIntl(intl);
-
   return (
     <GridHeader container>
       <ButtonHeader
@@ -182,9 +180,7 @@ function Header({
         <Typography variant='subtitle1'>{title}</Typography>
       </ButtonHeader>
       {!!layerOptionsEnabled && (
-        <Tooltip
-          title={intlConfig.formatMessage({ id: 'c4r.widgets.legend.layerOptions' })}
-        >
+        <Tooltip title={intl.formatMessage({ id: 'c4r.widgets.legend.layerOptions' })}>
           <ToggleButton
             selected={isLayerOptionsExpanded}
             onClick={onToggleLayerOptions}
@@ -196,7 +192,7 @@ function Header({
       )}
       {switchable && (
         <Tooltip
-          title={intlConfig.formatMessage({
+          title={intl.formatMessage({
             id: visible ? 'c4r.widgets.legend.showLayer' : 'c4r.widgets.legend.hideLayer'
           })}
         >

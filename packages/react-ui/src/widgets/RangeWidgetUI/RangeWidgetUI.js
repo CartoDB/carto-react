@@ -247,7 +247,8 @@ RangeWidgetUI.propTypes = {
   max: PropTypes.number.isRequired,
   limits: PropTypes.arrayOf(PropTypes.number),
   onSelectedRangeChange: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  intl: PropTypes.object
 };
 
 export default injectIntl(RangeWidgetUI);

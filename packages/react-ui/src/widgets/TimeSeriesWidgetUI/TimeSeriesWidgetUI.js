@@ -155,7 +155,8 @@ TimeSeriesWidgetUI.propTypes = {
   showControls: PropTypes.bool,
   isLoading: PropTypes.bool,
   palette: PropTypes.arrayOf(PropTypes.string),
-  showLegend: PropTypes.bool
+  showLegend: PropTypes.bool,
+  intl: PropTypes.object
 };
 
 TimeSeriesWidgetUI.defaultProps = {

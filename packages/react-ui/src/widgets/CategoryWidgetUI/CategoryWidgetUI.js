@@ -485,7 +485,8 @@ CategoryWidgetUI.propTypes = {
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   searchable: PropTypes.bool,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  intl: PropTypes.object
 };
 
 export default injectIntl(CategoryWidgetUI);

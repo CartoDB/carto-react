@@ -56,7 +56,7 @@ function BarWidgetUI(props) {
   const theme = useTheme();
 
   const intlConfig = useImperativeIntl(intl);
-
+  console.log('intlConfig', intlConfig);
   // Tooltip
   const tooltipOptions = useMemo(
     () => ({
@@ -368,7 +368,8 @@ BarWidgetUI.propTypes = {
   height: numberOrString,
   filterable: PropTypes.bool,
   animation: PropTypes.bool,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  intl: PropTypes.object
 };
 
 export default injectIntl(BarWidgetUI);

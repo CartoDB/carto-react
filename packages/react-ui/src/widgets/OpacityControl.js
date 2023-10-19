@@ -37,12 +37,8 @@ export default function OpacityControl({ opacity, onChangeOpacity, intl }) {
     onChangeOpacity(Math.max(0, Math.min(100, newOpacity)) / 100);
   };
 
-  const intlConfig = useImperativeIntl(intl);
-
   return (
-    <LayerOptionWrapper
-      label={intlConfig.formatMessage({ id: 'c4r.widgets.legend.opacity' })}
-    >
+    <LayerOptionWrapper label={intl.formatMessage({ id: 'c4r.widgets.legend.opacity' })}>
       <Content>
         <Grid container spacing={2} direction='row' alignItems='center'>
           <Grid item xs>

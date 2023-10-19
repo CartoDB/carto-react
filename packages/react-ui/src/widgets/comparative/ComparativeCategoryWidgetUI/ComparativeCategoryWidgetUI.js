@@ -405,7 +405,8 @@ ComparativeCategoryWidgetUI.propTypes = {
   onSelectedCategoriesChange: PropTypes.func,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  intl: PropTypes.object
 };
 
 export default injectIntl(ComparativeCategoryWidgetUI);

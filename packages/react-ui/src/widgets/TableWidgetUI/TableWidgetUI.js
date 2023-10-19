@@ -244,7 +244,8 @@ TableWidgetUI.propTypes = {
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   dense: PropTypes.bool,
   isLoading: PropTypes.bool,
-  lastPageTooltip: PropTypes.string
+  lastPageTooltip: PropTypes.string,
+  intl: PropTypes.object
 };
 
 export default injectIntl(TableWidgetUI);

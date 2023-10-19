@@ -326,7 +326,8 @@ HistogramWidgetUI.propTypes = {
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   height: PropTypes.number,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  intl: PropTypes.object
 };
 
 export default injectIntl(HistogramWidgetUI);

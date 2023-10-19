@@ -185,7 +185,7 @@ FeatureSelectionWidgetUI.propTypes = {
   tooltipPlacement: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium']),
   chipLabel: PropTypes.string,
-  intl: PropTypes.any
+  intl: PropTypes.object
 };
 
 export default injectIntl(FeatureSelectionWidgetUI);
