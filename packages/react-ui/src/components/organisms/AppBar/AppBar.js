@@ -3,10 +3,23 @@ import PropTypes from 'prop-types';
 import { AppBar as MuiAppBar, Toolbar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import BurguerMenu from './BurguerMenu';
+import BurgerMenu from './BurgerMenu';
 import BrandLogo from './BrandLogo';
 import BrandText from './BrandText';
 import SecondaryText from './SecondaryText';
+
+const Root = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => !['backgroundColor', 'textColor'].includes(prop)
+})(({ backgroundColor, textColor, theme }) => ({
+  backgroundColor: backgroundColor || theme.palette.brand.navyBlue,
+
+  '& .MuiTypography-root': {
+    color: textColor || theme.palette.common.white
+  },
+  '& .MuiIconButton-root path': {
+    fill: textColor || theme.palette.common.white
+  }
+}));
 
 const BrandElements = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -34,21 +47,25 @@ const AppBar = ({
   secondaryText,
   showBurgerMenu,
   onClickMenu,
+  backgroundColor,
+  textColor,
   ...otherProps
 }) => {
   return (
-    <MuiAppBar {...otherProps}>
+    <Root backgroundColor={backgroundColor} textColor={textColor} {...otherProps}>
       <Toolbar>
         <BrandElements>
-          {showBurgerMenu && <BurguerMenu onClickMenu={onClickMenu} />}
+          {showBurgerMenu && (
+            <BurgerMenu onClickMenu={onClickMenu} iconColor={textColor} />
+          )}
           {brandLogo && <BrandLogo logo={brandLogo} />}
-          {brandText && <BrandText text={brandText} />}
-          {secondaryText && <SecondaryText text={secondaryText} />}
+          {brandText && <BrandText text={brandText} textColor={textColor} />}
+          {secondaryText && <SecondaryText text={secondaryText} textColor={textColor} />}
         </BrandElements>
 
         <Content>{children}</Content>
       </Toolbar>
-    </MuiAppBar>
+    </Root>
   );
 };
 
@@ -61,7 +78,9 @@ AppBar.propTypes = {
   brandText: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   secondaryText: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   onClickMenu: PropTypes.func,
-  showBurgerMenu: PropTypes.bool
+  showBurgerMenu: PropTypes.bool,
+  backgroundColor: PropTypes.string,
+  textColor: PropTypes.string
 };
 
 export default AppBar;

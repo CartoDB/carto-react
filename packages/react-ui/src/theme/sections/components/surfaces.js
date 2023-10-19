@@ -21,12 +21,6 @@ export const surfacesOverrides = {
           padding: theme.spacing(0, 1),
           minHeight: APPBAR_SIZE
         },
-        '& .MuiTypography-root': {
-          color: theme.palette.common.white
-        },
-        '& .MuiIconButton-root path': {
-          fill: theme.palette.common.white
-        },
         '& .MuiAvatar-root': {
           width: theme.spacing(4),
           height: theme.spacing(4)

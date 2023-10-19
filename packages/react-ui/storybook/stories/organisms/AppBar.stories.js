@@ -73,7 +73,7 @@ const CustomTemplate = (args) => {
         <Grid container justifyContent='flex-end' spacing={2}>
           <Grid item>
             <IconButton onClick={handleClick}>
-              <CheckCircleOutline />
+              <CheckCircleOutline className='doNotFillIcon' />
             </IconButton>
             <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
               <MenuItem onClick={handleClose}>Profile</MenuItem>
@@ -128,5 +128,13 @@ Basic.args = { ...commonArgs };
 
 export const Composition = CustomTemplate.bind({});
 Composition.args = { ...commonArgs };
+
+export const CustomBranding = Template.bind({});
+CustomBranding.args = {
+  ...commonArgs,
+  brandLogo: <img src='/carto-logo-dark.svg' alt='' />,
+  backgroundColor: '#e1e3e4',
+  textColor: '#024D9E'
+};
 
 export const Guide = DocTemplate.bind({});
