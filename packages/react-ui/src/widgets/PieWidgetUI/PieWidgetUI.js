@@ -1,4 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { Box, Grid, Link, styled, useTheme } from '@mui/material';
@@ -10,6 +11,7 @@ import PieCentralText from './components/PieCentralText';
 import usePieCategories from './hooks/usePieCategories';
 import ChartLegend from '../ChartLegend';
 import Typography from '../../components/atoms/Typography';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const CHART_SIZE = '232px';
 
@@ -56,10 +58,13 @@ function PieWidgetUI({
   onSelectedCategoriesChange,
   isLoading,
   maxItems,
-  order
+  order,
+  // Injected by injectIntl HOC
+  intl
 }) {
   const theme = useTheme();
   const processedData = usePieCategories(data, order, maxItems, colors);
+  const intlConfig = useImperativeIntl(intl);
 
   // Tooltip
   const tooltipOptions = useMemo(
@@ -199,11 +204,16 @@ function PieWidgetUI({
     <>
       <OptionsBar container>
         <Typography variant='caption' color='textSecondary'>
-          {selectedCategories.length ? selectedCategories.length : 'All'} selected
+          {selectedCategories.length
+            ? intlConfig.formatMessage(
+                { id: 'c4r.widgets.pie.selectedItems' },
+                { items: selectedCategories.length }
+              )
+            : intlConfig.formatMessage({ id: 'c4r.widgets.pie.allSelected' })}
         </Typography>
         {selectedCategories.length > 0 && (
           <Link variant='caption' onClick={handleClearSelectedCategories}>
-            Clear
+            {intlConfig.formatMessage({ id: 'c4r.widgets.pie.clear' })}
           </Link>
         )}
       </OptionsBar>
@@ -268,7 +278,7 @@ PieWidgetUI.propTypes = {
   order: PropTypes.oneOf(Object.values(ORDER_TYPES))
 };
 
-export default PieWidgetUI;
+export default injectIntl(PieWidgetUI);
 
 // Aux
 function tooltipFormatter(params) {
