@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { AppBar as MuiAppBar, Toolbar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import BurguerMenu from './BurguerMenu';
+import BurgerMenu from './BurgerMenu';
 import BrandLogo from './BrandLogo';
 import BrandText from './BrandText';
 import SecondaryText from './SecondaryText';
@@ -56,7 +56,7 @@ const AppBar = ({
       <Toolbar>
         <BrandElements>
           {showBurgerMenu && (
-            <BurguerMenu onClickMenu={onClickMenu} iconColor={textColor} />
+            <BurgerMenu onClickMenu={onClickMenu} iconColor={textColor} />
           )}
           {brandLogo && <BrandLogo logo={brandLogo} />}
           {brandText && <BrandText text={brandText} textColor={textColor} />}

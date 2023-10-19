@@ -30,7 +30,7 @@ const MenuDivider = styled(Divider, {
   })
 }));
 
-export default function BurguerMenu({ onClickMenu, iconColor }) {
+export default function BurgerMenu({ onClickMenu, iconColor }) {
   return (
     <Hidden mdUp>
       <Menu>
