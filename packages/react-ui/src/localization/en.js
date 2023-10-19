@@ -62,7 +62,11 @@ const locales = {
         selectMode: 'Select a mode',
         chooseSelectionMode: 'Choose a selection mode',
         applyMask: 'Apply mask',
-        clearMask: 'Clear mask'
+        clearMask: 'Clear mask',
+        remove: 'Remove',
+        polygon: 'Polygon',
+        point: 'Point',
+        lineString: 'Line'
       }
     }
   }
