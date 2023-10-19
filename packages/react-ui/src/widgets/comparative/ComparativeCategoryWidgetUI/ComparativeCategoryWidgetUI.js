@@ -11,7 +11,6 @@ import React, { useMemo, useState } from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { animationOptionsPropTypes } from '../../../custom-components/AnimatedNumber';
-import CategoryWidgetUI from '../../CategoryWidgetUI/CategoryWidgetUI';
 import { transposeCategoryData } from './transposeCategoryData';
 import CategorySkeleton from '../../CategoryWidgetUI/CategorySkeleton';
 import Typography from '../../../components/atoms/Typography';
@@ -27,10 +26,10 @@ import {
 } from './comparative.styled';
 import useImperativeIntl from '../../../hooks/useImperativeIntl';
 import CategoryItem from './CategoryItem';
+import { ORDER_TYPES } from '../../utils/chartConstants';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
-const ORDER_TYPES = CategoryWidgetUI.ORDER_TYPES;
 export const OTHERS_KEY = 'others';
 
 function SearchIcon() {
@@ -54,7 +53,7 @@ function SearchIcon() {
  * @param {string[]} [props.labels]
  * @param {string[]} [props.colors]
  * @param {number} [props.maxItems]
- * @param {CategoryWidgetUI.ORDER_TYPES} [props.order]
+ * @param {ORDER_TYPES} [props.order]
  * @param {boolean} [props.animation]
  * @param {{ duration?: number; animateOnMount?: boolean; }} [props.animationOptions]
  * @param {boolean} [props.searchable]
