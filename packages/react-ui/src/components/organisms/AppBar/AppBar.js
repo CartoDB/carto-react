@@ -69,6 +69,10 @@ const AppBar = ({
   );
 };
 
+AppBar.defaultProps = {
+  showBurgerMenu: false
+};
+
 AppBar.propTypes = {
   brandLogo: PropTypes.element,
   brandText: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
@@ -77,10 +81,6 @@ AppBar.propTypes = {
   showBurgerMenu: PropTypes.bool,
   backgroundColor: PropTypes.string,
   textColor: PropTypes.string
-};
-
-AppBar.defaultProps = {
-  showBurgerMenu: false
 };
 
 export default AppBar;

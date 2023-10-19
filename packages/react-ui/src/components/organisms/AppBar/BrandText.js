@@ -3,9 +3,7 @@ import { styled, useTheme } from '@mui/material/styles';
 
 import Typography from '../../atoms/Typography';
 
-const Text = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== 'textColor'
-})(({ textColor, theme }) => ({
+const Text = styled(Typography)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   whiteSpace: 'nowrap'
