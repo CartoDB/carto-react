@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 import { Box, Link, Slider, TextField, styled } from '@mui/material';
 import { debounce } from '@carto/react-core';
 import Typography from '../../components/atoms/Typography';
@@ -85,11 +86,20 @@ const SliderLimit = styled(Slider)(({ theme: { palette, spacing } }) => ({
 
  */
 
-function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoading }) {
+function RangeWidgetUI({
+  data,
+  min,
+  max,
+  limits,
+  onSelectedRangeChange,
+  isLoading,
+  // Injected by `injectIntl` HOC
+  intl
+}) {
   const [sliderValues, setSliderValues] = useState([min, max]);
   const [inputsValues, setInputsValues] = useState([min, max]);
 
-  const intl = useImperativeIntl();
+  const intlConfig = useImperativeIntl(intl);
 
   const limitsMarks = useMemo(() => {
     if (!limits || limits.length !== 2) {
@@ -170,7 +180,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoadin
         {hasBeenModified && (
           <Typography variant='caption' color='primary'>
             <ClearButton onClick={resetSlider} underline='hover'>
-              {intl.formatMessage({ id: 'c4r.widgets.range.clear' })}
+              {intlConfig.formatMessage({ id: 'c4r.widgets.range.clear' })}
             </ClearButton>
           </Typography>
         )}
@@ -179,8 +189,8 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoadin
         <StyledSlider
           getAriaLabel={(index) =>
             index === 0
-              ? intl.formatMessage({ id: 'c4r.widgets.range.minValue' })
-              : intl.formatMessage({ id: 'c4r.widgets.range.maxValue' })
+              ? intlConfig.formatMessage({ id: 'c4r.widgets.range.minValue' })
+              : intlConfig.formatMessage({ id: 'c4r.widgets.range.maxValue' })
           }
           value={sliderValues}
           min={min}
@@ -191,8 +201,8 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoadin
           <SliderLimit
             getAriaLabel={(index) =>
               index === 0
-                ? intl.formatMessage({ id: 'c4r.widgets.range.minLimit' })
-                : intl.formatMessage({ id: 'c4r.widgets.range.maxLimit' })
+                ? intlConfig.formatMessage({ id: 'c4r.widgets.range.minLimit' })
+                : intlConfig.formatMessage({ id: 'c4r.widgets.range.maxLimit' })
             }
             value={limits}
             min={min}
@@ -211,7 +221,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoadin
             min: min,
             max: max,
             type: 'number',
-            'aria-label': intl.formatMessage({ id: 'c4r.widgets.range.minValue' })
+            'aria-label': intlConfig.formatMessage({ id: 'c4r.widgets.range.minValue' })
           }}
         />
         <LimitTextField
@@ -223,7 +233,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoadin
             min: min,
             max: max,
             type: 'number',
-            'aria-label': intl.formatMessage({ id: 'c4r.widgets.range.maxValue' })
+            'aria-label': intlConfig.formatMessage({ id: 'c4r.widgets.range.maxValue' })
           }}
         />
       </Box>
@@ -240,4 +250,4 @@ RangeWidgetUI.propTypes = {
   isLoading: PropTypes.bool
 };
 
-export default RangeWidgetUI;
+export default injectIntl(RangeWidgetUI);

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
   Table,
@@ -65,15 +66,17 @@ function TableWidgetUI({
   height,
   dense,
   isLoading,
-  lastPageTooltip
+  lastPageTooltip,
+  // Injected by `injectIntl` HOC
+  intl
 }) {
   const theme = useTheme();
   const paginationRef = useRef(null);
 
-  const intl = useImperativeIntl();
+  const intlConfig = useImperativeIntl(intl);
 
   const defaultLabelDisplayedRows = ({ from, to, count }) => {
-    return intl.formatMessage({ id: 'c4r.widgets.table.of' }, { from, to, count });
+    return intlConfig.formatMessage({ id: 'c4r.widgets.table.of' }, { from, to, count });
   };
 
   const handleSort = (sortField) => {
@@ -129,7 +132,9 @@ function TableWidgetUI({
         <StyledTablePagination
           ref={paginationRef}
           rowsPerPageOptions={rowsPerPageOptions}
-          labelRowsPerPage={intl.formatMessage({ id: 'c4r.widgets.table.rowsPerPage' })}
+          labelRowsPerPage={intlConfig.formatMessage({
+            id: 'c4r.widgets.table.rowsPerPage'
+          })}
           labelDisplayedRows={defaultLabelDisplayedRows}
           component='div'
           count={totalCount}
@@ -242,4 +247,4 @@ TableWidgetUI.propTypes = {
   lastPageTooltip: PropTypes.string
 };
 
-export default TableWidgetUI;
+export default injectIntl(TableWidgetUI);

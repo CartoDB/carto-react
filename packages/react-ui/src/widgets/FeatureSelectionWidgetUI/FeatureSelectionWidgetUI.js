@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Paper, capitalize, styled } from '@mui/material';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import FeatureSelectionUIToggleButton from './FeatureSelectionUIToggleButton';
 import FeatureSelectionUIGeometryChips from './FeatureSelectionUIGeometryChips';
@@ -40,39 +41,42 @@ const StylesWrapper = styled(Paper)(({ theme }) => ({
  *
  * -->
  */
-function FeatureSelectionWidgetUI({
-  selectionModes,
-  editModes = [],
-  selectedMode,
-  onSelectMode,
-  enabled,
-  onEnabledChange,
-  geometry,
-  onSelectGeometry,
-  onDeleteGeometry,
-  tooltipPlacement = 'bottom',
-  size = 'medium',
-  chipLabel
-}) {
-  const intl = useImperativeIntl();
+function FeatureSelectionWidgetUI(props) {
+  const {
+    selectionModes,
+    editModes = [],
+    selectedMode,
+    onSelectMode,
+    enabled,
+    onEnabledChange,
+    geometry,
+    onSelectGeometry,
+    onDeleteGeometry,
+    tooltipPlacement = 'bottom',
+    size = 'medium',
+    chipLabel,
+    // Injected by `injectIntl` HOC
+    intl
+  } = props;
+  const intlConfig = useImperativeIntl(intl);
 
   const selectionModeWithLocales = useMemo(() => {
     return selectionModes.map((mode) => ({
       ...mode,
-      label: intl.formatMessage({
+      label: intlConfig.formatMessage({
         id: `c4r.widgets.featureSelection.${getModeKeyForLocale(mode.id)}`
       })
     }));
-  }, [selectionModes, intl]);
+  }, [selectionModes, intlConfig]);
 
   const editModesWithLocales = useMemo(() => {
     return editModes.map((mode) => ({
       ...mode,
-      label: intl.formatMessage({
+      label: intlConfig.formatMessage({
         id: `c4r.widgets.featureSelection.${getModeKeyForLocale(mode.id)}`
       })
     }));
-  }, [editModes, intl]);
+  }, [editModes, intlConfig]);
 
   const selectedModeData = useMemo(() => {
     const modes = [
@@ -96,17 +100,17 @@ function FeatureSelectionWidgetUI({
   const label = capitalize(selectedModeData?.label || '');
   const hoverTooltip = selectedModeData?.isEdit
     ? label
-    : intl.formatMessage(
+    : intlConfig.formatMessage(
         {
           id: `c4r.widgets.featureSelection.selectTool`
         },
         { label }
       );
   const clickTooltip = selectedModeData?.isEdit
-    ? intl.formatMessage({
+    ? intlConfig.formatMessage({
         id: `c4r.widgets.featureSelection.clickToEdit`
       })
-    : intl.formatMessage({
+    : intlConfig.formatMessage({
         id: `c4r.widgets.featureSelection.clickToCreate`
       });
 
@@ -127,10 +131,10 @@ function FeatureSelectionWidgetUI({
         onSelectMode={onSelectMode}
         enabled={enabled}
         tooltipPlacement={tooltipPlacement}
-        tooltipText={intl.formatMessage({
+        tooltipText={intlConfig.formatMessage({
           id: `c4r.widgets.featureSelection.selectMode`
         })}
-        menuHeaderText={intl.formatMessage({
+        menuHeaderText={intlConfig.formatMessage({
           id: `c4r.widgets.featureSelection.chooseSelectionMode`
         })}
         editDisabled={!geometry}
@@ -140,15 +144,16 @@ function FeatureSelectionWidgetUI({
           features={[geometry]}
           onSelectGeometry={onSelectGeometry}
           onDeleteGeometry={onDeleteGeometry}
-          disabledChipTooltip={intl.formatMessage({
+          disabledChipTooltip={intlConfig.formatMessage({
             id: `c4r.widgets.featureSelection.applyMask`
           })}
-          chipTooltip={intl.formatMessage({
+          chipTooltip={intlConfig.formatMessage({
             id: `c4r.widgets.featureSelection.clearMask`
           })}
           tooltipPlacement={tooltipPlacement}
           size={size}
           chipLabel={chipLabel}
+          intl={intlConfig}
         />
       )}
     </StylesWrapper>
@@ -179,10 +184,11 @@ FeatureSelectionWidgetUI.propTypes = {
   onSelectGeometry: PropTypes.func,
   tooltipPlacement: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium']),
-  chipLabel: PropTypes.string
+  chipLabel: PropTypes.string,
+  intl: PropTypes.any
 };
 
-export default FeatureSelectionWidgetUI;
+export default injectIntl(FeatureSelectionWidgetUI);
 
 // Aux
 function getModeKeyForLocale(id) {

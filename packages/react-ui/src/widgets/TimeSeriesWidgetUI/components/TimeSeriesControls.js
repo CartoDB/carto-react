@@ -21,11 +21,11 @@ const TIME_WINDOW_STEP_BY_STEP_SIZE = {
 
 const SPEED_FACTORS = [0.5, 1, 2, 3];
 
-export function TimeSeriesControls({ data, stepSize }) {
+export function TimeSeriesControls({ data, stepSize, intl }) {
   const [anchorSpeedEl, setAnchorSpeedEl] = useState(null);
   const [speed, setSpeed] = useState(1);
   const animationRef = useRef({ animationFrameId: null, timeoutId: null });
-  const intl = useImperativeIntl();
+  const intlConfig = useImperativeIntl(intl);
 
   const { isPlaying, isPaused, timeWindow, setTimeWindow, stop, togglePlay } =
     useTimeSeriesContext();
@@ -141,7 +141,7 @@ export function TimeSeriesControls({ data, stepSize }) {
       >
         <MenuItem disabled>
           <Typography variant='caption' color='textSecondary'>
-            {intl.formatMessage({ id: 'c4r.widgets.timeSeries.speed' })}
+            {intlConfig.formatMessage({ id: 'c4r.widgets.timeSeries.speed' })}
           </Typography>
         </MenuItem>
         {SPEED_FACTORS.map((speedItem) => (

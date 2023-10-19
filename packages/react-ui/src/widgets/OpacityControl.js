@@ -31,16 +31,18 @@ const InputUnit = styled(InputAdornment)(({ theme }) => ({
   }
 }));
 
-export default function OpacityControl({ opacity, onChangeOpacity }) {
+export default function OpacityControl({ opacity, onChangeOpacity, intl }) {
   const handleTextFieldChange = (e) => {
     const newOpacity = parseInt(e.target.value || '0');
     onChangeOpacity(Math.max(0, Math.min(100, newOpacity)) / 100);
   };
 
-  const intl = useImperativeIntl();
+  const intlConfig = useImperativeIntl(intl);
 
   return (
-    <LayerOptionWrapper label={intl.formatMessage({ id: 'c4r.widgets.legend.opacity' })}>
+    <LayerOptionWrapper
+      label={intlConfig.formatMessage({ id: 'c4r.widgets.legend.opacity' })}
+    >
       <Content>
         <Grid container spacing={2} direction='row' alignItems='center'>
           <Grid item xs>

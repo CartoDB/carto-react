@@ -1,4 +1,5 @@
 import React, { useMemo, useCallback, useEffect, useRef } from 'react';
+import { injectIntl } from 'react-intl';
 import { Box, Link, useTheme } from '@mui/material';
 import PropTypes from 'prop-types';
 
@@ -44,7 +45,9 @@ function TimeSeriesWidgetUI({
   onStop,
   isLoading,
   palette,
-  showLegend
+  showLegend,
+  // Injected by `injectIntl` HOC
+  intl
 }) {
   let prevEmittedTimeWindow = useRef();
   const handleTimeWindowUpdate = useCallback(
@@ -102,6 +105,7 @@ function TimeSeriesWidgetUI({
       selectedCategories={selectedCategories}
       timelinePosition={timelinePosition}
       onSelectedCategoriesChange={onSelectedCategoriesChange}
+      intl={intl}
     />
   );
 
@@ -168,7 +172,7 @@ TimeSeriesWidgetUI.defaultProps = {
   palette: Object.values(commonPalette.qualitative.bold)
 };
 
-export default TimeSeriesWidgetUI;
+export default injectIntl(TimeSeriesWidgetUI);
 
 // Content is splitted from the default
 // component to be able to use context
@@ -190,14 +194,15 @@ function TimeSeriesWidgetUIContent({
   selectedCategories,
   onSelectedCategoriesChange,
   showLegend,
-  timelinePosition
+  timelinePosition,
+  intl
 }) {
   const theme = useTheme();
   const fallbackColor = theme.palette.secondary.main;
 
   const { isPlaying, isPaused, timeWindow, stop, setTimeWindow } = useTimeSeriesContext();
 
-  const intl = useImperativeIntl();
+  const intlConfig = useImperativeIntl(intl);
 
   useEffect(() => {
     if (timelinePosition !== undefined) {
@@ -330,13 +335,15 @@ function TimeSeriesWidgetUIContent({
           onClick={handleClear}
           underline='hover'
         >
-          {intl.formatMessage({ id: 'c4r.widgets.timeSeries.clear' })}
+          {intlConfig.formatMessage({ id: 'c4r.widgets.timeSeries.clear' })}
         </Link>
       )}
     </>
   );
 
-  const controls = showControls && <TimeSeriesControls data={data} stepSize={stepSize} />;
+  const controls = showControls && (
+    <TimeSeriesControls data={data} stepSize={stepSize} intl={intl} />
+  );
 
   const chart = (
     <TimeSeriesChart

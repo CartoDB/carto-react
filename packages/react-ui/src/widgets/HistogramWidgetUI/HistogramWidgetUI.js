@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { injectIntl } from 'react-intl';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { darken, Grid, Link, styled, useTheme } from '@mui/material';
 import { processFormatterRes } from '../utils/formatterUtils';
@@ -42,11 +42,13 @@ function HistogramWidgetUI({
   animation,
   filterable: _filterable,
   height,
-  isLoading
+  isLoading,
+  // Injected by `injectIntl` HOC
+  intl
 }) {
   const theme = useTheme();
 
-  const intl = useImperativeIntl();
+  const intlConfig = useImperativeIntl(intl);
 
   const filterable = _filterable && !!onSelectedBarsChange;
 
@@ -275,15 +277,15 @@ function HistogramWidgetUI({
         <OptionsSelectedBar container>
           <Typography variant='caption' weight='strong'>
             {selectedBars.length > 0
-              ? intl.formatMessage(
+              ? intlConfig.formatMessage(
                   { id: 'c4r.widgets.histogram.selectedItems' },
                   { items: yAxisFormatter(countSelectedElements) }
                 )
-              : intl.formatMessage({ id: 'c4r.widgets.histogram.all' })}
+              : intlConfig.formatMessage({ id: 'c4r.widgets.histogram.all' })}
           </Typography>
           {selectedBars.length > 0 && (
             <ClearButton onClick={() => onSelectedBarsChange([])} underline='hover'>
-              {intl.formatMessage({ id: 'c4r.widgets.histogram.clear' })}
+              {intlConfig.formatMessage({ id: 'c4r.widgets.histogram.clear' })}
             </ClearButton>
           )}
         </OptionsSelectedBar>
@@ -327,7 +329,7 @@ HistogramWidgetUI.propTypes = {
   isLoading: PropTypes.bool
 };
 
-export default HistogramWidgetUI;
+export default injectIntl(HistogramWidgetUI);
 
 // Aux
 function formatMin(value) {
