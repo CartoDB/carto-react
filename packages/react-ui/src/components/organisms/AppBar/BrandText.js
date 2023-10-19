@@ -3,11 +3,11 @@ import { styled, useTheme } from '@mui/material/styles';
 
 import Typography from '../../atoms/Typography';
 
-const Text = styled(Typography)(({ theme }) => ({
+const Text = styled(Typography)({
   display: 'flex',
   alignItems: 'center',
   whiteSpace: 'nowrap'
-}));
+});
 
 export default function BrandText({ text, textColor }) {
   const theme = useTheme();
