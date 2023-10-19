@@ -10,13 +10,13 @@ const locales = {
         noResultsMessage: 'Your search "{searchValue}" didn\'t match with any value.',
         cancel: 'Cancel',
         searchInfo: 'Search in {elements} elements',
-        selectedItems: '{items} selected',
+        selectedItems: '{items, plural, one{# selected} other{# selected}}',
         all: 'All',
         search: 'Search'
       },
       bar: {
         all: 'All',
-        selectedItems: '{items} selected',
+        selectedItems: '{items, plural, one{# selected} other{# selected}}',
         clear: 'Clear'
       },
       histogram: {
@@ -67,6 +67,11 @@ const locales = {
         polygon: 'Polygon',
         point: 'Point',
         lineString: 'Line'
+      },
+      pie: {
+        clear: 'Clear',
+        selectedItems: '{items, plural, one{# selected} other{# selected}}',
+        allSelected: 'All selected'
       }
     }
   }
