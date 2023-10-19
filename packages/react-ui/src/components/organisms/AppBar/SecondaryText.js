@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 
 import Typography from '../../atoms/Typography';
 
@@ -8,10 +8,6 @@ const Text = styled(Typography, {
 })(({ textColor, theme }) => ({
   display: 'flex',
   alignItems: 'center',
-
-  '&.MuiTypography-root': {
-    color: textColor || theme.palette.common.white
-  },
 
   '&::before': {
     content: '"/"',
@@ -22,8 +18,15 @@ const Text = styled(Typography, {
 }));
 
 export default function SecondaryText({ text, textColor }) {
+  const theme = useTheme();
+
   return (
-    <Text component='span' variant='body2' weight='strong' textColor={textColor}>
+    <Text
+      component='span'
+      variant='body2'
+      weight='strong'
+      textColor={textColor || theme.palette.common.white}
+    >
       {text}
     </Text>
   );
