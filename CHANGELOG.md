@@ -2,6 +2,8 @@
 
 ## Not released
 
+- AppBar: Add support for custom branding [#792](https://github.com/CartoDB/carto-react/pull/792)
+
 ## 2.2
 
 ### 2.2.13 (2023-10-16)
