@@ -9,14 +9,14 @@ const Text = styled(Typography)({
   whiteSpace: 'nowrap'
 });
 
-export default function BrandText({ text, textColor }) {
+export default function BrandText({ text }) {
   const theme = useTheme();
 
   return (
     <Text
       component='span'
       variant='subtitle1'
-      textColor={textColor || theme.palette.common.white}
+      textColor={theme.palette.brand.appBarContrastText}
     >
       {text}
     </Text>

@@ -32,6 +32,8 @@ type CustomBrandPaletteColor = {
   locationRed: string;
   predictionBlue: string;
   softBlue: string;
+  appBarMain: string;
+  appBarContrastText: string;
 };
 type CustomTextPaletteColor = Modify<
   TypeText,

@@ -9,8 +9,6 @@ export type AppBarTypeMap<D extends React.ElementType<any> = 'header'> = MuiAppB
     secondaryText?: React.ReactNode;
     onClickMenu?: (event: React.MouseEvent) => void;
     showBurgerMenu?: boolean;
-    backgroundColor?: string;
-    textColor?: string;
   },
   D
 >;

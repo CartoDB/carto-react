@@ -236,6 +236,8 @@ const BrandTemplate = () => {
       <ColorBox colorVariant={'brand'} colorName={'locationRed'} />
       <ColorBox colorVariant={'brand'} colorName={'predictionBlue'} />
       <ColorBox colorVariant={'brand'} colorName={'softBlue'} />
+      <ColorBox colorVariant={'brand'} colorName={'appBarMain'} />
+      <ColorBox colorVariant={'brand'} colorName={'appBarContrastText'} />
     </Container>
   );
 };

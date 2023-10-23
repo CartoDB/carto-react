@@ -3,9 +3,7 @@ import { styled, useTheme } from '@mui/material/styles';
 
 import Typography from '../../atoms/Typography';
 
-const Text = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== 'textColor'
-})(({ textColor, theme }) => ({
+const Text = styled(Typography)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
 
@@ -13,11 +11,11 @@ const Text = styled(Typography, {
     content: '"/"',
     margin: theme.spacing(0, 1),
     opacity: 0.6,
-    color: textColor || theme.palette.common.white
+    color: theme.palette.brand.appBarContrastText
   }
 }));
 
-export default function SecondaryText({ text, textColor }) {
+export default function SecondaryText({ text }) {
   const theme = useTheme();
 
   return (
@@ -25,7 +23,7 @@ export default function SecondaryText({ text, textColor }) {
       component='span'
       variant='body2'
       weight='strong'
-      textColor={textColor || theme.palette.common.white}
+      textColor={theme.palette.brand.appBarContrastText}
     >
       {text}
     </Text>
