@@ -16,7 +16,7 @@ export default function BrandText({ text }) {
     <Text
       component='span'
       variant='subtitle1'
-      textColor={theme.palette.brand.appBarContrastText}
+      color={theme.palette.brand.appBarContrastText}
     >
       {text}
     </Text>

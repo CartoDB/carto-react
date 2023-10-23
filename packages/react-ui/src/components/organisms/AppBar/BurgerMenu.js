@@ -31,7 +31,7 @@ export default function BurgerMenu({ onClickMenu }) {
         <MenuButton onClick={onClickMenu}>
           <MenuOutlined />
         </MenuButton>
-        <MenuDivider orientation='vertical' flexItem light />
+        <MenuDivider orientation='vertical' flexItem />
       </Menu>
     </Hidden>
   );
