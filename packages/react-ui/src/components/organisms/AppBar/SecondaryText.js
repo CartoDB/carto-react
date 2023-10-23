@@ -23,7 +23,7 @@ export default function SecondaryText({ text }) {
       component='span'
       variant='body2'
       weight='strong'
-      textColor={theme.palette.brand.appBarContrastText}
+      color={theme.palette.brand.appBarContrastText}
     >
       {text}
     </Text>
