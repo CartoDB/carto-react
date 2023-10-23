@@ -2,6 +2,7 @@
 
 ## Not released
 
+- AppBar: Add support for custom branding in the Theme [#794](https://github.com/CartoDB/carto-react/pull/794)
 - AppBar: Add support for custom branding [#792](https://github.com/CartoDB/carto-react/pull/792)
 
 ## 2.2
