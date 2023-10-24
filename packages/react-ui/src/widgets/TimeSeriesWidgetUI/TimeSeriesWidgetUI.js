@@ -17,7 +17,6 @@ import { TimeSeriesControls } from './components/TimeSeriesControls';
 import TimeSeriesLayout from './components/TimeSeriesLayout';
 import ChartLegend from '../ChartLegend';
 import { findItemIndexByTime, getDate } from './utils/utilities';
-import useImperativeIntl from '../../hooks/useImperativeIntl';
 function TimeSeriesWidgetUI({
   data,
   categories,
@@ -105,7 +104,6 @@ function TimeSeriesWidgetUI({
       selectedCategories={selectedCategories}
       timelinePosition={timelinePosition}
       onSelectedCategoriesChange={onSelectedCategoriesChange}
-      intl={intl}
     />
   );
 
@@ -118,6 +116,7 @@ function TimeSeriesWidgetUI({
       onStop={onStop}
       timeWindow={timeWindow}
       onTimeWindowUpdate={handleTimeWindowUpdate}
+      intl={intl}
     >
       {content}
     </TimeSeriesProvider>
@@ -195,15 +194,13 @@ function TimeSeriesWidgetUIContent({
   selectedCategories,
   onSelectedCategoriesChange,
   showLegend,
-  timelinePosition,
-  intl
+  timelinePosition
 }) {
   const theme = useTheme();
   const fallbackColor = theme.palette.secondary.main;
 
-  const { isPlaying, isPaused, timeWindow, stop, setTimeWindow } = useTimeSeriesContext();
-
-  const intlConfig = useImperativeIntl(intl);
+  const { isPlaying, isPaused, timeWindow, stop, setTimeWindow, intl } =
+    useTimeSeriesContext();
 
   useEffect(() => {
     if (timelinePosition !== undefined) {
@@ -336,15 +333,13 @@ function TimeSeriesWidgetUIContent({
           onClick={handleClear}
           underline='hover'
         >
-          {intlConfig.formatMessage({ id: 'c4r.widgets.timeSeries.clear' })}
+          {intl.formatMessage({ id: 'c4r.widgets.timeSeries.clear' })}
         </Link>
       )}
     </>
   );
 
-  const controls = showControls && (
-    <TimeSeriesControls data={data} stepSize={stepSize} intl={intl} />
-  );
+  const controls = showControls && <TimeSeriesControls data={data} stepSize={stepSize} />;
 
   const chart = (
     <TimeSeriesChart
