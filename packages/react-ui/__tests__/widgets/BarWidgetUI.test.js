@@ -18,12 +18,14 @@ describe('BarWidgetUI', () => {
   const X_AXIS_DATA = ['column_1', 'column_2', 'column_3'];
 
   const Widget = (props) => (
-    <BarWidgetUI
-      yAxisData={Y_AXIS_DATA}
-      xAxisData={X_AXIS_DATA}
-      onSelectedBarsChange={() => {}}
-      {...props}
-    />
+    <IntlProvider locale='en'>
+      <BarWidgetUI
+        yAxisData={Y_AXIS_DATA}
+        xAxisData={X_AXIS_DATA}
+        onSelectedBarsChange={() => {}}
+        {...props}
+      />
+    </IntlProvider>
   );
 
   const Y_AXIS_DATA_MULTIPLE = [
