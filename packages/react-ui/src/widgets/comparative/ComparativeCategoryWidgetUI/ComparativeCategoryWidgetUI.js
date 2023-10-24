@@ -315,9 +315,8 @@ function ComparativeCategoryWidgetUI({
           </>
         ) : null}
         {list.map((d) => (
-          <CategoryItemWrapper>
+          <CategoryItemWrapper key={d.key}>
             <CategoryItem
-              key={d.key}
               item={d}
               animation={animation}
               animationOptions={animationOptions}
