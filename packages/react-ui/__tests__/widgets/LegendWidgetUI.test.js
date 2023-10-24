@@ -2,6 +2,7 @@ import React from 'react';
 import Typography from '../../src/components/atoms/Typography';
 import LegendWidgetUI from '../../src/widgets/legend/LegendWidgetUI';
 import { fireEvent, render, screen } from '../widgets/utils/testUtils';
+import { IntlProvider } from 'react-intl';
 
 const CUSTOM_CHILDREN = <Typography>Legend custom</Typography>;
 
@@ -116,7 +117,11 @@ describe('LegendWidgetUI', () => {
       }
     }
   ];
-  const Widget = (props) => <LegendWidgetUI {...props} />;
+  const Widget = (props) => (
+    <IntlProvider locale='en'>
+      <LegendWidgetUI {...props} />
+    </IntlProvider>
+  );
 
   test('single legend', () => {
     render(<Widget layers={[DATA[0]]}></Widget>);
