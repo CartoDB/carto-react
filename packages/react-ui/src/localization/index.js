@@ -1,7 +1,7 @@
 import en from './en';
-
-const enFlat = en;
+import es from './es';
 
 export const messages = {
-  en: enFlat
+  en,
+  es
 };
