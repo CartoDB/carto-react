@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '../widgets/utils/testUtils';
 import ScatterPlotWidgetUI from '../../src/widgets/ScatterPlotWidgetUI/ScatterPlotWidgetUI';
 import { mockEcharts } from './testUtils';
+import { IntlProvider } from 'react-intl';
 
 describe('ScatterPlotWidgetUI', () => {
   beforeAll(() => {
@@ -17,7 +18,9 @@ describe('ScatterPlotWidgetUI', () => {
     [3, 6]
   ];
   const Widget = (props) => (
-    <ScatterPlotWidgetUI data={DATA} onSelectedBarsChange={() => {}} {...props} />
+    <IntlProvider locale='en'>
+      <ScatterPlotWidgetUI data={DATA} onSelectedBarsChange={() => {}} {...props} />
+    </IntlProvider>
   );
 
   test('renders correctly', () => {

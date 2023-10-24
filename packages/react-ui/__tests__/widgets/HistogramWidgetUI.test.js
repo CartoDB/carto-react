@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent, screen } from '../widgets/utils/testUtils';
 import HistogramWidgetUI from '../../src/widgets/HistogramWidgetUI/HistogramWidgetUI';
 import { mockEcharts } from './testUtils';
+import { IntlProvider } from 'react-intl';
 
 describe('HistogramWidgetUI', () => {
   beforeAll(() => {
@@ -22,7 +23,11 @@ describe('HistogramWidgetUI', () => {
     onSelectedBarsChange
   };
 
-  const Widget = (props) => <HistogramWidgetUI {...defaultProps} {...props} />;
+  const Widget = (props) => (
+    <IntlProvider locale='en'>
+      <HistogramWidgetUI {...defaultProps} {...props} />
+    </IntlProvider>
+  );
 
   test('all selected', () => {
     render(<Widget />);

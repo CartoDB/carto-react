@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent, screen } from '../widgets/utils/testUtils';
 import BarWidgetUI from '../../src/widgets/BarWidgetUI/BarWidgetUI';
 import { mockEcharts } from './testUtils';
+import { IntlProvider } from 'react-intl';
 
 describe('BarWidgetUI', () => {
   beforeAll(() => {
@@ -39,14 +40,16 @@ describe('BarWidgetUI', () => {
   };
 
   const WidgetMultiple = (props) => (
-    <BarWidgetUI
-      yAxisData={Y_AXIS_DATA_MULTIPLE}
-      xAxisData={X_AXIS_DATA}
-      series={SERIES}
-      labels={LABELS}
-      onSelectedBarsChange={() => {}}
-      {...props}
-    />
+    <IntlProvider locale='en'>
+      <BarWidgetUI
+        yAxisData={Y_AXIS_DATA_MULTIPLE}
+        xAxisData={X_AXIS_DATA}
+        series={SERIES}
+        labels={LABELS}
+        onSelectedBarsChange={() => {}}
+        {...props}
+      />
+    </IntlProvider>
   );
 
   test('all selected', () => {

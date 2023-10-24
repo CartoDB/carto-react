@@ -3,6 +3,7 @@ import { render, screen, act, fireEvent, waitFor } from '../widgets/utils/testUt
 import TimeSeriesWidgetUI from '../../src/widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import { mockEcharts } from './testUtils';
 import { GroupDateTypes } from '@carto/react-core';
+import { IntlProvider } from 'react-intl';
 
 describe('TimeSeriesWidgetUI', () => {
   beforeAll(() => {
@@ -47,7 +48,9 @@ describe('TimeSeriesWidgetUI', () => {
   };
 
   const Widget = (props) => (
-    <TimeSeriesWidgetUI data={DATA} {...props} {...mandatoryProps} />
+    <IntlProvider locale='en'>
+      <TimeSeriesWidgetUI data={DATA} {...props} {...mandatoryProps} />
+    </IntlProvider>
   );
 
   test('renders correctly', () => {

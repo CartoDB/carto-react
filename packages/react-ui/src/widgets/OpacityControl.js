@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Grid, InputAdornment, Slider, TextField, styled } from '@mui/material';
 import LayerOptionWrapper from './legend/LayerOptionWrapper';
-import useImperativeIntl from '../hooks/useImperativeIntl';
 
 const Content = styled(Box)(() => ({
   height: 'auto',

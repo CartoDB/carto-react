@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '../widgets/utils/testUtils';
 import ComparativePieWidgetUI from '../../src/widgets/comparative/ComparativePieWidgetUI';
 import { mockEcharts } from './testUtils';
+import { IntlProvider } from 'react-intl';
 
 const PIE_DATA_PROPS = {
   names: ['name 1', 'name 2'],
@@ -34,7 +35,11 @@ describe('ComparativePieWidgetUI', () => {
     mockEcharts.destroy();
   });
 
-  const Widget = (props) => <ComparativePieWidgetUI {...PIE_DATA_PROPS} {...props} />;
+  const Widget = (props) => (
+    <IntlProvider locale='en'>
+      <ComparativePieWidgetUI {...PIE_DATA_PROPS} {...props} />
+    </IntlProvider>
+  );
 
   test('renders correctly', () => {
     render(<Widget />);

@@ -3,6 +3,7 @@ import { render, fireEvent, screen } from '../widgets/utils/testUtils';
 import userEvent from '@testing-library/user-event';
 import CategoryWidgetUI from '../../src/widgets/CategoryWidgetUI/CategoryWidgetUI';
 import { currencyFormatter } from './testUtils';
+import { IntlProvider } from 'react-intl';
 
 const DATA = [...Array(5)].map((_, idx) => ({
   name: `Category ${idx + 1}`,
@@ -19,42 +20,47 @@ animateValues.mockImplementation(({ end, drawFrame }) => {
 });
 
 describe('CategoryWidgetUI', () => {
+  const Widget = (props) => (
+    <IntlProvider locale='en'>
+      <CategoryWidgetUI {...props} />
+    </IntlProvider>
+  );
   test('item skeleton should display', () => {
-    const { container } = render(<CategoryWidgetUI data={[]} isLoading={true} />);
+    const { container } = render(<Widget data={[]} isLoading={true} />);
 
     expect(container.querySelector('.MuiSkeleton-root')).toBeInTheDocument();
   });
 
   test('simple', () => {
-    render(<CategoryWidgetUI data={DATA} />);
+    render(<Widget data={DATA} />);
 
     expect(screen.getByText(/Category 1/)).toBeInTheDocument();
     expect(screen.getByText(/1234/)).toBeInTheDocument();
   });
 
   test('with currency formatter', () => {
-    render(<CategoryWidgetUI data={DATA} formatter={currencyFormatter} />);
+    render(<Widget data={DATA} formatter={currencyFormatter} />);
 
     expect(screen.getByText(/Category 1/)).toBeInTheDocument();
     expect(screen.getByText(/\$1\.23K/)).toBeInTheDocument();
   });
 
   test('with one selected category', () => {
-    render(<CategoryWidgetUI data={DATA} selectedCategories={['Category 1']} />);
+    render(<Widget data={DATA} selectedCategories={['Category 1']} />);
 
     expect(screen.getByText(/1 selected/)).toBeInTheDocument();
   });
 
   describe('order', () => {
     test('ranking', () => {
-      render(<CategoryWidgetUI data={DATA} />);
+      render(<Widget data={DATA} />);
 
       const renderedCategories = screen.getAllByText(/Category/);
       expect(renderedCategories[0].textContent).toBe('Category 5');
     });
 
     test('fixed', () => {
-      render(<CategoryWidgetUI data={DATA} order='fixed' />);
+      render(<Widget data={DATA} order='fixed' />);
 
       const renderedCategories = screen.getAllByText(/Category/);
       expect(renderedCategories[0].textContent).toBe('Category 1');
@@ -65,10 +71,7 @@ describe('CategoryWidgetUI', () => {
     test('category change', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <CategoryWidgetUI
-          data={DATA}
-          onSelectedCategoriesChange={mockOnSelectedCategoriesChange}
-        />
+        <Widget data={DATA} onSelectedCategoriesChange={mockOnSelectedCategoriesChange} />
       );
 
       fireEvent.click(screen.getByText(1234));
@@ -78,7 +81,7 @@ describe('CategoryWidgetUI', () => {
     test('clear', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <CategoryWidgetUI
+        <Widget
           data={DATA}
           selectedCategories={['Category 1']}
           onSelectedCategoriesChange={mockOnSelectedCategoriesChange}
@@ -92,7 +95,7 @@ describe('CategoryWidgetUI', () => {
     test('lock', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <CategoryWidgetUI
+        <Widget
           data={DATA}
           selectedCategories={['Category 1']}
           onSelectedCategoriesChange={mockOnSelectedCategoriesChange}
@@ -107,7 +110,7 @@ describe('CategoryWidgetUI', () => {
     test('unlock', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <CategoryWidgetUI
+        <Widget
           data={DATA}
           selectedCategories={['Category 1']}
           onSelectedCategoriesChange={mockOnSelectedCategoriesChange}
@@ -123,7 +126,7 @@ describe('CategoryWidgetUI', () => {
     test('search cycle', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <CategoryWidgetUI
+        <Widget
           data={DATA}
           maxItems={1}
           onSelectedCategoriesChange={mockOnSelectedCategoriesChange}
@@ -141,7 +144,7 @@ describe('CategoryWidgetUI', () => {
       HTMLElement.prototype.scrollIntoView = jest.fn();
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <CategoryWidgetUI
+        <Widget
           data={DATA}
           maxItems={1}
           onSelectedCategoriesChange={mockOnSelectedCategoriesChange}
@@ -155,7 +158,7 @@ describe('CategoryWidgetUI', () => {
     });
 
     test('cancel search', () => {
-      render(<CategoryWidgetUI data={DATA} maxItems={1} />);
+      render(<Widget data={DATA} maxItems={1} />);
 
       expect(screen.getByText(/Search in 4 elements/)).toBeInTheDocument();
       fireEvent.click(screen.getByText(/Search in 4 elements/));
@@ -163,7 +166,7 @@ describe('CategoryWidgetUI', () => {
     });
 
     test('searchable prop', () => {
-      render(<CategoryWidgetUI data={DATA} maxItems={1} searchable={false} />);
+      render(<Widget data={DATA} maxItems={1} searchable={false} />);
       expect(screen.queryByText('Search in 4 elements')).not.toBeInTheDocument();
       expect(screen.getByText('Others (4)')).toBeInTheDocument();
     });
@@ -181,7 +184,7 @@ describe('CategoryWidgetUI', () => {
       }
     ];
     test('should render properly', () => {
-      render(<CategoryWidgetUI data={NotStringData} />);
+      render(<Widget data={NotStringData} />);
 
       expect(screen.getByText(/true/)).toBeInTheDocument();
       expect(screen.getByText(/101/)).toBeInTheDocument();
@@ -190,7 +193,7 @@ describe('CategoryWidgetUI', () => {
     test('should maintain typing when filters', () => {
       const onSelectedCategoriesChangeFn = jest.fn();
       render(
-        <CategoryWidgetUI
+        <Widget
           data={NotStringData}
           onSelectedCategoriesChange={onSelectedCategoriesChangeFn}
         />

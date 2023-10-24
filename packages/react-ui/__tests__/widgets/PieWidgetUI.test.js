@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '../widgets/utils/testUtils';
 import PieWidgetUI from '../../src/widgets/PieWidgetUI/PieWidgetUI';
 import { mockEcharts } from './testUtils';
+import { IntlProvider } from 'react-intl';
 
 describe('PieWidgetUI', () => {
   beforeAll(() => {
@@ -24,7 +25,9 @@ describe('PieWidgetUI', () => {
   ];
 
   const Widget = (props) => (
-    <PieWidgetUI data={DATA} onSelectedCategoriesChange={() => {}} {...props} />
+    <IntlProvider locale='en'>
+      <PieWidgetUI data={DATA} onSelectedCategoriesChange={() => {}} {...props} />
+    </IntlProvider>
   );
 
   test('renders correctly', () => {
