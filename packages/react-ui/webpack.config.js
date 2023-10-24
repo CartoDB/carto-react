@@ -14,7 +14,8 @@ const webpackConfig = {
     'echarts',
     'echarts-for-react',
     'react',
-    'react-dom'
+    'react-dom',
+    'react-intl'
   ],
   output: {
     path: path.resolve(__dirname, './dist'),
