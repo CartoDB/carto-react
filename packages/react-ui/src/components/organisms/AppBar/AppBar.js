@@ -8,16 +8,14 @@ import BrandLogo from './BrandLogo';
 import BrandText from './BrandText';
 import SecondaryText from './SecondaryText';
 
-const Root = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => !['backgroundColor', 'textColor'].includes(prop)
-})(({ backgroundColor, textColor, theme }) => ({
-  backgroundColor: backgroundColor || theme.palette.brand.navyBlue,
+const Root = styled(MuiAppBar)(({ theme }) => ({
+  backgroundColor: theme.palette.brand.appBarMain,
 
   '& .MuiTypography-root': {
-    color: textColor || theme.palette.common.white
+    color: theme.palette.brand.appBarContrastText
   },
   '& .MuiIconButton-root path': {
-    fill: textColor || theme.palette.common.white
+    fill: theme.palette.brand.appBarContrastText
   }
 }));
 
@@ -47,20 +45,16 @@ const AppBar = ({
   secondaryText,
   showBurgerMenu,
   onClickMenu,
-  backgroundColor,
-  textColor,
   ...otherProps
 }) => {
   return (
-    <Root backgroundColor={backgroundColor} textColor={textColor} {...otherProps}>
+    <Root {...otherProps}>
       <Toolbar>
         <BrandElements>
-          {showBurgerMenu && (
-            <BurgerMenu onClickMenu={onClickMenu} iconColor={textColor} />
-          )}
+          {showBurgerMenu && <BurgerMenu onClickMenu={onClickMenu} />}
           {brandLogo && <BrandLogo logo={brandLogo} />}
-          {brandText && <BrandText text={brandText} textColor={textColor} />}
-          {secondaryText && <SecondaryText text={secondaryText} textColor={textColor} />}
+          {brandText && <BrandText text={brandText} />}
+          {secondaryText && <SecondaryText text={secondaryText} />}
         </BrandElements>
 
         <Content>{children}</Content>
@@ -78,9 +72,7 @@ AppBar.propTypes = {
   brandText: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   secondaryText: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   onClickMenu: PropTypes.func,
-  showBurgerMenu: PropTypes.bool,
-  backgroundColor: PropTypes.string,
-  textColor: PropTypes.string
+  showBurgerMenu: PropTypes.bool
 };
 
 export default AppBar;

@@ -12,32 +12,26 @@ const Menu = styled('div')(({ theme }) => ({
   marginRight: theme.spacing(1.5)
 }));
 
-const MenuButton = styled(IconButton, {
-  shouldForwardProp: (prop) => prop !== 'iconColor'
-})(({ iconColor, theme }) => ({
+const MenuButton = styled(IconButton)(({ theme }) => ({
   marginRight: theme.spacing(1),
 
   '&.MuiButtonBase-root svg path': {
-    fill: iconColor || theme.palette.background.paper
+    fill: theme.palette.brand.appBarContrastText
   }
 }));
 
-const MenuDivider = styled(Divider, {
-  shouldForwardProp: (prop) => prop !== 'color'
-})(({ color, theme }) => ({
-  ...(color && {
-    borderColor: alpha(color, 0.12)
-  })
+const MenuDivider = styled(Divider)(({ theme }) => ({
+  borderColor: alpha(theme.palette.brand.appBarContrastText, 0.12)
 }));
 
-export default function BurgerMenu({ onClickMenu, iconColor }) {
+export default function BurgerMenu({ onClickMenu }) {
   return (
     <Hidden mdUp>
       <Menu>
-        <MenuButton onClick={onClickMenu} iconColor={iconColor}>
+        <MenuButton onClick={onClickMenu}>
           <MenuOutlined />
         </MenuButton>
-        <MenuDivider orientation='vertical' flexItem light color={iconColor} />
+        <MenuDivider orientation='vertical' flexItem />
       </Menu>
     </Hidden>
   );

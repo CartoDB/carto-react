@@ -181,7 +181,9 @@ export const commonPalette = {
     navyBlue: '#162945',
     locationRed: '#EB1510',
     predictionBlue: '#1785FB',
-    softBlue: '#F2F6F9'
+    softBlue: '#F2F6F9',
+    appBarMain: '#162945',
+    appBarContrastText: baseColors.common.white
   },
   white: {
     ...baseColors.shades.light
