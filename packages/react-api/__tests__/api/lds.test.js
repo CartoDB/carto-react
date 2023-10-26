@@ -1,5 +1,6 @@
 import { API_VERSIONS } from '@deck.gl/carto';
 import { ldsGeocode } from '../../src/api/lds';
+import { _setClient } from '@carto/react-core';
 
 const sampleCredentialsV3 = {
   apiVersion: API_VERSIONS.V3,
@@ -13,6 +14,9 @@ const someCoordinates = {
 };
 
 describe('lds', () => {
+  beforeEach(() => {
+    _setClient('c4react');
+  });
   describe('ldsDecode', () => {
     test('should send proper requests', async () => {
       const fetchMock = (global.fetch = jest.fn().mockImplementation(async () => {

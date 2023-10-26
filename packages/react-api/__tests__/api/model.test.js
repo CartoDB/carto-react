@@ -1,3 +1,4 @@
+import { _setClient } from '@carto/react-core';
 import { executeModel } from '../../src/api/model';
 import {
   QUERY_PARAMS_SOURCE,
@@ -20,6 +21,10 @@ jest.mock('../../src/api/common', () => ({
 const DEFAULT_PARAMS = { column: '__test__', operation: 'avg' };
 
 describe('model', () => {
+  beforeEach(() => {
+    _setClient('c4react');
+  });
+
   describe('executeModel', () => {
     afterEach(() => {
       mockedMakeCall.mockClear();
