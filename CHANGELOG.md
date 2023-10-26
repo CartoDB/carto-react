@@ -2,10 +2,12 @@
 
 ## Not released
 
+## 2.2
+
+### 2.2.14 (2023-10-25)
+
 - AppBar: Add new color keys in the Theme [#794](https://github.com/CartoDB/carto-react/pull/794)
 - AppBar: Add support for custom branding [#792](https://github.com/CartoDB/carto-react/pull/792)
-
-## 2.2
 
 ### 2.2.13 (2023-10-16)
 
