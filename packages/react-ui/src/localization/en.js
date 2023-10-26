@@ -15,12 +15,12 @@ const locales = {
         search: 'Search'
       },
       bar: {
-        all: 'All',
+        all: 'All selected',
         selectedItems: '{items, plural, one{# selected} other{# selected}}',
         clear: 'Clear'
       },
       histogram: {
-        all: 'All',
+        all: 'All selected',
         selectedItems: '{items} selected',
         clear: 'Clear'
       },
