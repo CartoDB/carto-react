@@ -2,7 +2,6 @@ import React from 'react';
 import ComparativeCategoryWidgetUI from '../../src/widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
 import { fireEvent, render, screen } from '../widgets/utils/testUtils';
 import userEvent from '@testing-library/user-event';
-import { IntlProvider } from 'react-intl';
 
 const SAMPLE_DATA = [
   [
@@ -34,19 +33,19 @@ const SAMPLE_DATA = [
 const SAMPLE_NAMES = ['serie 1', 'serie 2', 'serie 3'];
 
 describe('ComparativeCategoryWidgetUI', () => {
-  const Widget = (props) => (
-    <IntlProvider locale='en'>
-      <ComparativeCategoryWidgetUI {...props} />
-    </IntlProvider>
-  );
-
   test('item skeleton should display', () => {
-    const { container } = render(<Widget data={[]} />);
+    const { container } = render(<ComparativeCategoryWidgetUI data={[]} />);
     expect(container.querySelector('.MuiSkeleton-root')).toBeInTheDocument();
   });
 
   test('simple', () => {
-    render(<Widget data={SAMPLE_DATA} names={SAMPLE_NAMES} animation={false} />);
+    render(
+      <ComparativeCategoryWidgetUI
+        data={SAMPLE_DATA}
+        names={SAMPLE_NAMES}
+        animation={false}
+      />
+    );
 
     expect(screen.getByText(/data 1/)).toBeInTheDocument();
 
@@ -57,7 +56,7 @@ describe('ComparativeCategoryWidgetUI', () => {
 
   test('with one selected category', () => {
     render(
-      <Widget
+      <ComparativeCategoryWidgetUI
         data={SAMPLE_DATA}
         names={SAMPLE_NAMES}
         animation={false}
@@ -71,7 +70,7 @@ describe('ComparativeCategoryWidgetUI', () => {
   describe('order', () => {
     test('fixed', () => {
       render(
-        <Widget
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -84,7 +83,7 @@ describe('ComparativeCategoryWidgetUI', () => {
     });
     test('ranking', () => {
       render(
-        <Widget
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -101,7 +100,7 @@ describe('ComparativeCategoryWidgetUI', () => {
     test('category change', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <Widget
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -116,7 +115,7 @@ describe('ComparativeCategoryWidgetUI', () => {
     test('clear', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <Widget
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -132,7 +131,7 @@ describe('ComparativeCategoryWidgetUI', () => {
     test('lock', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <Widget
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -149,7 +148,7 @@ describe('ComparativeCategoryWidgetUI', () => {
     test('unlock', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <Widget
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -173,7 +172,7 @@ describe('ComparativeCategoryWidgetUI', () => {
     test('search cycle', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <Widget
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -191,7 +190,7 @@ describe('ComparativeCategoryWidgetUI', () => {
       HTMLElement.prototype.scrollIntoView = jest.fn();
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <Widget
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -209,7 +208,7 @@ describe('ComparativeCategoryWidgetUI', () => {
     test('search cancel', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
-        <Widget
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}
@@ -225,7 +224,7 @@ describe('ComparativeCategoryWidgetUI', () => {
 
     test('searchable props', () => {
       render(
-        <Widget
+        <ComparativeCategoryWidgetUI
           data={SAMPLE_DATA}
           names={SAMPLE_NAMES}
           animation={false}

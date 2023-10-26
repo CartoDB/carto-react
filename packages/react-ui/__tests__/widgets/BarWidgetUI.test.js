@@ -2,7 +2,6 @@ import React from 'react';
 import { render, fireEvent, screen } from '../widgets/utils/testUtils';
 import BarWidgetUI from '../../src/widgets/BarWidgetUI/BarWidgetUI';
 import { mockEcharts } from './testUtils';
-import { IntlProvider } from 'react-intl';
 
 describe('BarWidgetUI', () => {
   beforeAll(() => {
@@ -18,14 +17,12 @@ describe('BarWidgetUI', () => {
   const X_AXIS_DATA = ['column_1', 'column_2', 'column_3'];
 
   const Widget = (props) => (
-    <IntlProvider locale='en'>
-      <BarWidgetUI
-        yAxisData={Y_AXIS_DATA}
-        xAxisData={X_AXIS_DATA}
-        onSelectedBarsChange={() => {}}
-        {...props}
-      />
-    </IntlProvider>
+    <BarWidgetUI
+      yAxisData={Y_AXIS_DATA}
+      xAxisData={X_AXIS_DATA}
+      onSelectedBarsChange={() => {}}
+      {...props}
+    />
   );
 
   const Y_AXIS_DATA_MULTIPLE = [
@@ -42,21 +39,19 @@ describe('BarWidgetUI', () => {
   };
 
   const WidgetMultiple = (props) => (
-    <IntlProvider locale='en'>
-      <BarWidgetUI
-        yAxisData={Y_AXIS_DATA_MULTIPLE}
-        xAxisData={X_AXIS_DATA}
-        series={SERIES}
-        labels={LABELS}
-        onSelectedBarsChange={() => {}}
-        {...props}
-      />
-    </IntlProvider>
+    <BarWidgetUI
+      yAxisData={Y_AXIS_DATA_MULTIPLE}
+      xAxisData={X_AXIS_DATA}
+      series={SERIES}
+      labels={LABELS}
+      onSelectedBarsChange={() => {}}
+      {...props}
+    />
   );
 
   test('all selected', () => {
     render(<Widget />);
-    expect(screen.getByText(/All/)).toBeInTheDocument();
+    expect(screen.getByText(/All selected/)).toBeInTheDocument();
   });
 
   test('renders with stacked false', () => {

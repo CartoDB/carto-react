@@ -1,14 +1,9 @@
 import React from 'react';
 import { render, fireEvent, screen, waitFor } from '../widgets/utils/testUtils';
 import RangeWidgetUI from '../../src/widgets/RangeWidgetUI/RangeWidgetUI';
-import { IntlProvider } from 'react-intl';
 
 describe('RangeWidgetUI', () => {
-  const Widget = (props) => (
-    <IntlProvider locale='en'>
-      <RangeWidgetUI min={0} max={100} {...props} />
-    </IntlProvider>
-  );
+  const Widget = (props) => <RangeWidgetUI min={0} max={100} {...props} />;
 
   test('renders with default props', () => {
     const { container } = render(<Widget />);

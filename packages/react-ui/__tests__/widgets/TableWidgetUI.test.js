@@ -2,14 +2,9 @@ import React from 'react';
 import { render, fireEvent, screen } from '../widgets/utils/testUtils';
 import TableWidgetUI from '../../src/widgets/TableWidgetUI/TableWidgetUI';
 import { columns, rows } from '../../src/widgets/TableWidgetUI/mockData';
-import { IntlProvider } from 'react-intl';
 
 describe('TableWidgetUI', () => {
-  const Widget = (props) => (
-    <IntlProvider locale='en'>
-      <TableWidgetUI columns={columns} rows={rows} {...props} />
-    </IntlProvider>
-  );
+  const Widget = (props) => <TableWidgetUI columns={columns} rows={rows} {...props} />;
 
   test('renders with default props', () => {
     render(<Widget />);

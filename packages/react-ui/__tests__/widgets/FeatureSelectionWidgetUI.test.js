@@ -5,7 +5,6 @@ import { capitalize } from '@mui/material';
 import CursorIcon from '../../src/assets/icons/CursorIcon';
 import PolygonIcon from '../../src/assets/icons/PolygonIcon';
 import RectangleIcon from '../../src/assets/icons/RectangleIcon';
-import { IntlProvider } from 'react-intl';
 
 const POLYGON_ICON_ID = 'polygon-icon';
 
@@ -22,14 +21,8 @@ const FEATURE_SELECTION_MODES = [
 
 const EDIT_MODES = [{ id: 'edit', label: 'Edit mask', icon: <CursorIcon /> }];
 
-const Widget = (props) => (
-  <IntlProvider locale='en'>
-    <FeatureSelectionWidgetUI {...props} />
-  </IntlProvider>
-);
-
 const CommonFeatureSelectionWidgetUI = (props) => (
-  <Widget
+  <FeatureSelectionWidgetUI
     selectionModes={FEATURE_SELECTION_MODES}
     editModes={EDIT_MODES}
     selectedMode={FEATURE_SELECTION_MODES[0].id}
@@ -44,14 +37,14 @@ describe('FeatureSelectionWidgetUI', () => {
   afterAll(() => jest.restoreMocks());
   test('renders selectedMode correctly', () => {
     const { container } = render(
-      <Widget
+      <FeatureSelectionWidgetUI
         selectionModes={FEATURE_SELECTION_MODES}
         selectedMode={FEATURE_SELECTION_MODES[0].id}
       />
     );
     expect(getById(container, POLYGON_ICON_ID)).toBeInTheDocument();
     const { container: container2 } = render(
-      <Widget
+      <FeatureSelectionWidgetUI
         selectionModes={FEATURE_SELECTION_MODES}
         selectedMode={FEATURE_SELECTION_MODES[1].id}
       />
@@ -62,7 +55,10 @@ describe('FeatureSelectionWidgetUI', () => {
   test('throw error if selectedMode is not found neither in select modes or edit modes', () => {
     expect(() =>
       render(
-        <Widget selectionModes={FEATURE_SELECTION_MODES} selectedMode={'Invented'} />
+        <FeatureSelectionWidgetUI
+          selectionModes={FEATURE_SELECTION_MODES}
+          selectedMode={'Invented'}
+        />
       )
     ).toThrowError('Selected mode "Invented" not supported');
   });
