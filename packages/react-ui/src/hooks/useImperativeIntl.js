@@ -14,8 +14,8 @@ export default function useImperativeIntl(intlConfig) {
     const locale = intlConfig?.locale || DEFAULT_LOCALE;
     const messagesLocale = findMatchingMessagesLocale(locale, messages);
     const intMessages = {
-      ...(intlConfig?.messages || {}),
-      ...(messages[messagesLocale] || {})
+      ...(messages[messagesLocale] || {}),
+      ...(intlConfig?.messages || {})
     };
 
     return createIntl(
