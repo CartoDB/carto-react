@@ -13,10 +13,10 @@ export default function useImperativeIntl(intlConfig) {
   return useMemo(() => {
     const locale = intlConfig?.locale || DEFAULT_LOCALE;
     const messagesLocale = findMatchingMessagesLocale(locale, messages);
-    const intMessages =
-      intlConfig?.messages && Object.keys(intlConfig?.messages).length > 0
-        ? intlConfig?.messages
-        : messages[messagesLocale];
+    const intMessages = {
+      ...(intlConfig?.messages || {}),
+      ...(messages[messagesLocale] || {})
+    };
 
     return createIntl(
       {
