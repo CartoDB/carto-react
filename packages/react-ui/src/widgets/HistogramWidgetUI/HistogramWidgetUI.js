@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { darken, Grid, Link, styled, useTheme } from '@mui/material';
 import { processFormatterRes } from '../utils/formatterUtils';
@@ -42,12 +42,11 @@ function HistogramWidgetUI({
   animation,
   filterable: _filterable,
   height,
-  isLoading,
-  // Injected by `injectIntl` HOC
-  intl
+  isLoading
 }) {
   const theme = useTheme();
 
+  const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
 
   const filterable = _filterable && !!onSelectedBarsChange;
@@ -330,7 +329,7 @@ HistogramWidgetUI.propTypes = {
   intl: PropTypes.object
 };
 
-export default injectIntl(HistogramWidgetUI);
+export default HistogramWidgetUI;
 
 // Aux
 function formatMin(value) {

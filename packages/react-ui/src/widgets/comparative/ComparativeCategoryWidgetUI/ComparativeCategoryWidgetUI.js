@@ -8,7 +8,7 @@ import {
   useTheme
 } from '@mui/material';
 import React, { useMemo, useState } from 'react';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { animationOptionsPropTypes } from '../../../custom-components/AnimatedNumber';
 import { transposeCategoryData } from './transposeCategoryData';
@@ -83,9 +83,7 @@ function ComparativeCategoryWidgetUI({
   formatter = IDENTITY_FN,
   tooltip = true,
   tooltipFormatter = IDENTITY_FN,
-  isLoading = false,
-  // Injected by `injectIntl` HOC
-  intl
+  isLoading = false
 }) {
   const theme = useTheme();
   const [searchActive, setSearchActive] = useState(false);
@@ -93,6 +91,7 @@ function ComparativeCategoryWidgetUI({
   const [tempSelection, setTempSelection] = useState(selectedCategories);
   const [searchValue, setSearchValue] = useState('');
 
+  const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
 
   // process incoming data to group items by column, apply colors and labels
@@ -408,4 +407,4 @@ ComparativeCategoryWidgetUI.propTypes = {
   intl: PropTypes.object
 };
 
-export default injectIntl(ComparativeCategoryWidgetUI);
+export default ComparativeCategoryWidgetUI;

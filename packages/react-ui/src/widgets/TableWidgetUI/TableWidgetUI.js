@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
   Table,
@@ -66,13 +66,12 @@ function TableWidgetUI({
   height,
   dense,
   isLoading,
-  lastPageTooltip,
-  // Injected by `injectIntl` HOC
-  intl
+  lastPageTooltip
 }) {
   const theme = useTheme();
   const paginationRef = useRef(null);
 
+  const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
 
   const defaultLabelDisplayedRows = ({ from, to, count }) => {
@@ -248,4 +247,4 @@ TableWidgetUI.propTypes = {
   intl: PropTypes.object
 };
 
-export default injectIntl(TableWidgetUI);
+export default TableWidgetUI;

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { Box, Link, Slider, TextField, styled } from '@mui/material';
 import { debounce } from '@carto/react-core';
 import Typography from '../../components/atoms/Typography';
@@ -86,19 +86,11 @@ const SliderLimit = styled(Slider)(({ theme: { palette, spacing } }) => ({
 
  */
 
-function RangeWidgetUI({
-  data,
-  min,
-  max,
-  limits,
-  onSelectedRangeChange,
-  isLoading,
-  // Injected by `injectIntl` HOC
-  intl
-}) {
+function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoading }) {
   const [sliderValues, setSliderValues] = useState([min, max]);
   const [inputsValues, setInputsValues] = useState([min, max]);
 
+  const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
 
   const limitsMarks = useMemo(() => {
@@ -251,4 +243,4 @@ RangeWidgetUI.propTypes = {
   intl: PropTypes.object
 };
 
-export default injectIntl(RangeWidgetUI);
+export default RangeWidgetUI;

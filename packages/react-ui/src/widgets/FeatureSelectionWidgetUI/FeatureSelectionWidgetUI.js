@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Paper, capitalize, styled } from '@mui/material';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import FeatureSelectionUIToggleButton from './FeatureSelectionUIToggleButton';
 import FeatureSelectionUIGeometryChips from './FeatureSelectionUIGeometryChips';
@@ -54,10 +54,9 @@ function FeatureSelectionWidgetUI(props) {
     onDeleteGeometry,
     tooltipPlacement = 'bottom',
     size = 'medium',
-    chipLabel,
-    // Injected by `injectIntl` HOC
-    intl
+    chipLabel
   } = props;
+  const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
 
   const selectionModeWithLocales = useMemo(() => {
@@ -188,7 +187,7 @@ FeatureSelectionWidgetUI.propTypes = {
   intl: PropTypes.object
 };
 
-export default injectIntl(FeatureSelectionWidgetUI);
+export default FeatureSelectionWidgetUI;
 
 // Aux
 function getModeKeyForLocale(id) {

@@ -1,6 +1,6 @@
 import React, { createRef, useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import {
   Box,
   Button,
@@ -45,14 +45,13 @@ function LegendWrapper({
   opacity,
   onChangeOpacity,
   onChangeVisibility,
-  onChangeCollapsed,
-  // Injected by `injectIntl` HOC
-  intl
+  onChangeCollapsed
 }) {
   const wrapper = createRef();
   const expanded = !collapsed;
   const [isLayerOptionsExpanded, setIsLayerOptionsExpanded] = useState(false);
 
+  const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
 
   const handleChangeOpacity = (newOpacity) => {
@@ -203,4 +202,4 @@ function Header({
   );
 }
 
-export default injectIntl(LegendWrapper);
+export default LegendWrapper;

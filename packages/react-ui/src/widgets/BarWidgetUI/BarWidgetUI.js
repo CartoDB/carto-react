@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { Grid, Link, useTheme, darken, styled } from '@mui/material';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import detectTouchScreen from '../utils/detectTouchScreen';
 import { processFormatterRes } from '../utils/formatterUtils';
 import Typography from '../../components/atoms/Typography';
@@ -46,16 +46,16 @@ function BarWidgetUI(props) {
     height,
     filterable,
     animation,
-    isLoading,
-    // Injected by `injectIntl` HOC
-    intl
+    isLoading
   } = useProcessedProps(props);
 
   const isMultiSeries = series.length > 1;
 
   const theme = useTheme();
 
+  const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
+
   // Tooltip
   const tooltipOptions = useMemo(
     () => ({
@@ -371,7 +371,7 @@ BarWidgetUI.propTypes = {
   intl: PropTypes.object
 };
 
-export default injectIntl(BarWidgetUI);
+export default BarWidgetUI;
 
 // Aux
 function calculateMargin(label = '', amountCategories = 0) {

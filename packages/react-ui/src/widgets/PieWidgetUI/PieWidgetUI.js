@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { Box, Grid, Link, styled, useTheme } from '@mui/material';
@@ -58,12 +58,12 @@ function PieWidgetUI({
   onSelectedCategoriesChange,
   isLoading,
   maxItems,
-  order,
-  // Injected by injectIntl HOC
-  intl
+  order
 }) {
   const theme = useTheme();
   const processedData = usePieCategories(data, order, maxItems, colors);
+
+  const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
 
   // Tooltip
@@ -278,7 +278,7 @@ PieWidgetUI.propTypes = {
   order: PropTypes.oneOf(Object.values(ORDER_TYPES))
 };
 
-export default injectIntl(PieWidgetUI);
+export default PieWidgetUI;
 
 // Aux
 function tooltipFormatter(params) {

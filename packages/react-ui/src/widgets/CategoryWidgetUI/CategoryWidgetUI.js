@@ -9,7 +9,8 @@ import {
   TextField,
   Tooltip
 } from '@mui/material';
-import { injectIntl } from 'react-intl';
+
+import { useIntl } from 'react-intl';
 
 import { animateValues } from '../utils/animations';
 import Typography from '../../components/atoms/Typography';
@@ -47,9 +48,7 @@ function CategoryWidgetUI(props) {
     animation,
     filterable,
     searchable,
-    isLoading,
-    // Injected by `injectIntl` HOC
-    intl
+    isLoading
   } = props;
   const [sortedData, setSortedData] = useState([]);
   const [maxValue, setMaxValue] = useState(1);
@@ -61,6 +60,8 @@ function CategoryWidgetUI(props) {
   const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
+
+  const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
 
   // Get blockedCategories in the same order as original data
@@ -489,4 +490,4 @@ CategoryWidgetUI.propTypes = {
   intl: PropTypes.object
 };
 
-export default injectIntl(CategoryWidgetUI);
+export default CategoryWidgetUI;

@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback, useEffect, useRef } from 'react';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { Box, Link, useTheme } from '@mui/material';
 import PropTypes from 'prop-types';
 
@@ -44,11 +44,10 @@ function TimeSeriesWidgetUI({
   onStop,
   isLoading,
   palette,
-  showLegend,
-  // Injected by `injectIntl` HOC
-  intl
+  showLegend
 }) {
   let prevEmittedTimeWindow = useRef();
+  const intl = useIntl();
   const handleTimeWindowUpdate = useCallback(
     (timeWindow) => {
       if (timeWindow.length === 2) {
@@ -172,7 +171,7 @@ TimeSeriesWidgetUI.defaultProps = {
   palette: Object.values(commonPalette.qualitative.bold)
 };
 
-export default injectIntl(TimeSeriesWidgetUI);
+export default TimeSeriesWidgetUI;
 
 // Content is splitted from the default
 // component to be able to use context
