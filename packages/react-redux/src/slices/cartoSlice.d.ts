@@ -1,5 +1,4 @@
-import { Credentials } from '@carto/react-api/';
-import { SourceProps } from '@carto/react-api/types';
+import { Credentials, SourceProps } from '@carto/react-api/';
 import { FiltersLogicalOperators, Viewport, _FilterTypes } from '@carto/react-core';
 import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/';
 import { InitialCartoState, CartoState, ViewState } from '../types';

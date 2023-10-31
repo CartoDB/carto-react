@@ -1,11 +1,11 @@
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import {
-  formatTableNameWithFilters,
+  sourceAndFiltersToSQL,
   wrapModelCall,
   formatOperationColumn,
   normalizeObjectKeys
 } from '../../src/models/utils';
-import { AggregationTypes, _filtersToSQL } from '@carto/react-core';
+import { AggregationTypes, Provider, _filtersToSQL } from '@carto/react-core';
 
 const V2_SOURCE = {
   id: '__test__',
@@ -22,7 +22,8 @@ const V3_SOURCE = {
   data: '__test__',
   credentials: {
     apiVersion: API_VERSIONS.V3
-  }
+  },
+  provider: Provider.BigQuery
 };
 
 const SOURCE_WITH_FILTERS = {
@@ -89,29 +90,29 @@ describe('utils', () => {
     });
   });
 
-  describe('formatTableNameWithFilters', () => {
+  describe('sourceAndFiltersToSQL', () => {
     test('should format query sources correctly', () => {
       const source = {
         ...V3_SOURCE,
         type: MAP_TYPES.QUERY,
         data: 'SELECT * FROM test;'
       };
-      const query = formatTableNameWithFilters({ source });
+      const query = sourceAndFiltersToSQL(source);
 
-      expect(query).toBe(`(SELECT * FROM test) foo`);
+      expect(query).toBe(`(SELECT * FROM test) __source_query `);
     });
 
     test('should format table sources correctly', () => {
-      const query = formatTableNameWithFilters({ source: V3_SOURCE });
+      const query = sourceAndFiltersToSQL(V3_SOURCE);
 
-      expect(query).toBe(V3_SOURCE.data);
+      expect(query).toBe(`\`${V3_SOURCE.data}\` `);
     });
 
     test('should format source with filters correctly', () => {
-      const query = formatTableNameWithFilters({ source: SOURCE_WITH_FILTERS });
+      const query = sourceAndFiltersToSQL(SOURCE_WITH_FILTERS);
 
       expect(query).toBe(
-        `${SOURCE_WITH_FILTERS.data} WHERE (column_1 in('value_1','value_2'))`
+        `\`${SOURCE_WITH_FILTERS.data}\` WHERE (column_1 in('value_1','value_2'))`
       );
     });
   });

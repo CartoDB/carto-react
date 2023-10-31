@@ -2,6 +2,7 @@ import { DataFilterExtension, MaskExtension } from '@deck.gl/extensions/typed';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto/typed';
 import { QueryParameters } from '@deck.gl/carto/typed';
 import { FeatureCollection } from 'geojson';
+import { Provider } from '@carto/react-core';
 
 type ApiVersionsType = typeof API_VERSIONS;
 type MapTypesType = typeof MAP_TYPES;
@@ -22,6 +23,15 @@ interface CredentialsCarto3 {
 
 export type Credentials = CredentialsCarto2 | CredentialsCarto3;
 
+export const filterFunctions: Record<
+  string,
+  (
+    filterValues: unknown[],
+    featureValue: unknown,
+    params?: Record<string, unknown>
+  ) => boolean
+>;
+
 /*
   SourceProps can be passed to a new CartoLayer for map instantiation.
   Check CartoLayer props at https://deck.gl/docs/api-reference/carto/carto-layer
@@ -34,7 +44,7 @@ export type SourceProps = {
   aggregationExp?: string;
   credentials?: Credentials;
   queryParameters?: QueryParameters;
-  provider?: 'bigquery' | 'postgres' | 'snowflake' | 'redshift' | 'databricks';
+  provider?: Provider;
 };
 
 export type LayerConfig = {
