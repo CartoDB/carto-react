@@ -4,6 +4,19 @@
 
 ## 2.2
 
+### 2.2.14 (2023-10-25)
+
+- AppBar: Add new color keys in the Theme [#794](https://github.com/CartoDB/carto-react/pull/794)
+- AppBar: Add support for custom branding [#792](https://github.com/CartoDB/carto-react/pull/792)
+
+### 2.2.13 (2023-10-16)
+
+- PieWidgetUI: Fix tooltip & ChartLegend styles [#787](https://github.com/CartoDB/carto-react/pull/787)
+
+### 2.2.12 (2023-10-10)
+
+- WrapperWidgetUI: Add a new headerItems prop to make the elements we can use more flexible [#786](https://github.com/CartoDB/carto-react/pull/786)
+
 ### 2.2.11 (2023-10-05)
 
 - PieWidgetUI: Refactor & New CentralText component [#779](https://github.com/CartoDB/carto-react/pull/779)

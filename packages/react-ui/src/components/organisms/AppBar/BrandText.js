@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 
 import Typography from '../../atoms/Typography';
 
@@ -10,8 +10,14 @@ const Text = styled(Typography)({
 });
 
 export default function BrandText({ text }) {
+  const theme = useTheme();
+
   return (
-    <Text component='span' variant='subtitle1'>
+    <Text
+      component='span'
+      variant='subtitle1'
+      color={theme.palette.brand.appBarContrastText}
+    >
       {text}
     </Text>
   );

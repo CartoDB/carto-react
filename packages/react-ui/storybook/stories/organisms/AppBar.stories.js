@@ -1,6 +1,16 @@
 import React from 'react';
-import { Avatar, Chip, Grid, IconButton, Menu, MenuItem } from '@mui/material';
+import {
+  Avatar,
+  Chip,
+  Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+  ThemeProvider,
+  createTheme
+} from '@mui/material';
 import { CheckCircleOutline } from '@mui/icons-material';
+import { cartoThemeOptions } from '../../../src/theme/carto-theme';
 import AppBar from '../../../src/components/organisms/AppBar/AppBar';
 import Typography from '../../../src/components/atoms/Typography';
 import { DocContainer, DocLink, DocHighlight } from '../../utils/storyStyles';
@@ -73,7 +83,7 @@ const CustomTemplate = (args) => {
         <Grid container justifyContent='flex-end' spacing={2}>
           <Grid item>
             <IconButton onClick={handleClick}>
-              <CheckCircleOutline />
+              <CheckCircleOutline className='doNotFillIcon' />
             </IconButton>
             <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
               <MenuItem onClick={handleClose}>Profile</MenuItem>
@@ -87,6 +97,32 @@ const CustomTemplate = (args) => {
         </Grid>
       </AppBar>
     </>
+  );
+};
+
+const BrandingTemplate = (args) => {
+  const backgroundColor = '#e1e3e4';
+  const textColor = '#024D9E';
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        ...cartoThemeOptions,
+        palette: {
+          ...cartoThemeOptions.palette,
+          brand: {
+            appBarMain: backgroundColor,
+            appBarContrastText: textColor
+          }
+        }
+      }),
+    []
+  );
+
+  return (
+    <ThemeProvider theme={theme}>
+      <AppBar {...args} position='static' />
+    </ThemeProvider>
   );
 };
 
@@ -128,5 +164,11 @@ Basic.args = { ...commonArgs };
 
 export const Composition = CustomTemplate.bind({});
 Composition.args = { ...commonArgs };
+
+export const CustomBranding = BrandingTemplate.bind({});
+CustomBranding.args = {
+  ...commonArgs,
+  brandLogo: <img src='/carto-logo-dark.svg' alt='' />
+};
 
 export const Guide = DocTemplate.bind({});

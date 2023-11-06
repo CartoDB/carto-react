@@ -3,10 +3,21 @@ import PropTypes from 'prop-types';
 import { AppBar as MuiAppBar, Toolbar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import BurguerMenu from './BurguerMenu';
+import BurgerMenu from './BurgerMenu';
 import BrandLogo from './BrandLogo';
 import BrandText from './BrandText';
 import SecondaryText from './SecondaryText';
+
+const Root = styled(MuiAppBar)(({ theme }) => ({
+  backgroundColor: theme.palette.brand.appBarMain,
+
+  '& .MuiTypography-root': {
+    color: theme.palette.brand.appBarContrastText
+  },
+  '& .MuiIconButton-root path': {
+    fill: theme.palette.brand.appBarContrastText
+  }
+}));
 
 const BrandElements = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -37,10 +48,10 @@ const AppBar = ({
   ...otherProps
 }) => {
   return (
-    <MuiAppBar {...otherProps}>
+    <Root {...otherProps}>
       <Toolbar>
         <BrandElements>
-          {showBurgerMenu && <BurguerMenu onClickMenu={onClickMenu} />}
+          {showBurgerMenu && <BurgerMenu onClickMenu={onClickMenu} />}
           {brandLogo && <BrandLogo logo={brandLogo} />}
           {brandText && <BrandText text={brandText} />}
           {secondaryText && <SecondaryText text={secondaryText} />}
@@ -48,7 +59,7 @@ const AppBar = ({
 
         <Content>{children}</Content>
       </Toolbar>
-    </MuiAppBar>
+    </Root>
   );
 };
 

@@ -278,7 +278,7 @@ function tooltipFormatter(params) {
   const markerStyle = `display:inline-block;border-radius:4px;width:8px;height:8px;background-color:${markerColor}`;
 
   return `
-    <p style="font-size:11px;font-weight:500;line-height:1.454;text-transform:uppercase;margin:0 0 4px 0;">${params.name}</p>
-    <p style="display:flex;align-items:center;font-size: 11px;font-weight:500;line-height:1.454;margin:0;"><span style="${markerStyle}"></span> <span style="margin:0 4px;font-weight:400;">${value}</span> (${params.percent}%)</p>
+    <div style="white-space:normal;"><p style="max-width:${CHART_SIZE};font-size:11px;font-weight:500;line-height:1.454;text-transform:uppercase;margin:0 0 4px 0;">${params.name}</p>
+    <p style="display:flex;align-items:center;font-size: 11px;font-weight:500;line-height:1.454;margin:0;"><span style="${markerStyle}"></span> <span style="margin:0 4px;font-weight:400;">${value}</span> (${params.percent}%)</p></div>
   `.trim();
 }
