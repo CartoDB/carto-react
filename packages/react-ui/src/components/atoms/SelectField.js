@@ -26,23 +26,25 @@ const SelectField = forwardRef(
 
     const defaultRenderValue = React.useCallback(
       (selected) => {
+        if (selected.length === 0) {
+          return (
+            <Typography
+              variant={isSmall ? 'body2' : 'body1'}
+              color='text.hint'
+              component='span'
+              noWrap
+            >
+              {placeholder}
+            </Typography>
+          );
+        }
         if (Array.isArray(selected)) {
-          if (selected.length === 0) {
-            return (
-              <Typography
-                variant={isSmall ? 'body2' : 'body1'}
-                color='text.hint'
-                component='span'
-                noWrap
-              >
-                {placeholder}
-              </Typography>
-            );
-          }
           return selected.join(', ');
-        } else if (selected && typeof selected === 'object' && 'label' in selected) {
-          // Handle the case where selected is a single object
-          return selected.label;
+        } else if (selected && typeof selected === 'object') {
+          // Check if selected is an object and has a 'label' property
+          if ('label' in selected) {
+            return selected.label;
+          }
         } else {
           return selected || '';
         }
