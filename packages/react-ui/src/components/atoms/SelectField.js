@@ -1,7 +1,16 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { TextField } from '@mui/material';
+import { TextField, styled } from '@mui/material';
 import Typography from './Typography';
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  '& .MuiInputAdornment-root.MuiInputAdornment-positionStart': {
+    paddingLeft: `8px !important`
+  },
+  '& .MuiInputBase-inputAdornedStart': {
+    paddingLeft: `0px !important`
+  }
+}));
 
 const SelectField = forwardRef(
   (
@@ -56,7 +65,7 @@ const SelectField = forwardRef(
     const renderValue = customRenderValue || defaultRenderValue;
 
     return (
-      <TextField
+      <StyledTextField
         {...otherProps}
         select
         onChange={onChange}
@@ -83,7 +92,7 @@ const SelectField = forwardRef(
         }}
       >
         {children}
-      </TextField>
+      </StyledTextField>
     );
   }
 );
