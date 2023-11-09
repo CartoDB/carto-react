@@ -66,7 +66,7 @@ export function sourceAndFiltersToSQL({
       ? `(${sanitizeSQLSource(data)}) ${SOURCE_QUERY_ALIAS}`
       : getSqlEscapedSource(data, provider);
 
-  return `${formattedSourceData} ${whereClause}`;
+  return `SELECT * FROM ${formattedSourceData} ${whereClause}`;
 }
 
 function sanitizeSQLSource(sql) {
