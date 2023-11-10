@@ -214,6 +214,7 @@ export const createCartoSlice = (initialState) => {
  * @param {string} data.type - type of source. Possible values are sql or bigquery.
  * @param {object=} data.credentials - (optional) Custom credentials to be used in the source.
  * @param {string} data.connection - connection name for CARTO 3 source.
+ * @param {import('./cartoSlice').SourceFilters=} data.filters - logical operator that defines how filters for different columns are joined together.
  * @param {FiltersLogicalOperators=} data.filtersLogicalOperator - logical operator that defines how filters for different columns are joined together.
  * @param {import('@deck.gl/carto/typed').QueryParameters} data.queryParameters - SQL query parameters.
  * @param {string=} data.geoColumn - (optional) name of column containing geometries or spatial index data.
@@ -226,6 +227,7 @@ export const addSource = ({
   type,
   credentials,
   connection,
+  filters = undefined,
   filtersLogicalOperator = FiltersLogicalOperators.AND,
   queryParameters = [],
   geoColumn,
@@ -239,6 +241,7 @@ export const addSource = ({
     type,
     credentials,
     connection,
+    ...(filters && { filters }),
     filtersLogicalOperator,
     queryParameters,
     geoColumn,
