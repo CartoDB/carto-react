@@ -135,14 +135,6 @@ export const createCartoSlice = (initialState) => {
           state.spatialFilter = null;
         }
       },
-      setSourceFilters: (state, action) => {
-        const { sourceId, filters } = action.payload;
-        const source = state.dataSources[sourceId];
-
-        if (source) {
-          source.filters = filters;
-        }
-      },
       addFilter: (state, action) => {
         const { id, column, type, values, owner, params } = action.payload;
         const source = state.dataSources[id];
@@ -323,17 +315,6 @@ export const addSpatialFilter = ({ sourceId, geometry }) => ({
 export const removeSpatialFilter = (sourceId) => ({
   type: 'carto/removeSpatialFilter',
   payload: sourceId
-});
-
-/**
- * Action to set filters on a given source.
- * @param {object} data
- * @param {string} data.sourceId - sourceId of the source to set filters.
- * @param {import('./cartoSlice').SourceFilters} data.filters - filters to apply.
- */
-export const setSourceFilters = ({ sourceId, filters }) => ({
-  type: 'carto/setSourceFilters',
-  payload: { sourceId, filters }
 });
 
 /**

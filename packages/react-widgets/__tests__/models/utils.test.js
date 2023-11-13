@@ -99,20 +99,20 @@ describe('utils', () => {
       };
       const query = sourceAndFiltersToSQL(source);
 
-      expect(query).toBe(`(SELECT * FROM test) __source_query `);
+      expect(query).toBe(`SELECT * FROM (SELECT * FROM test) __source_query `);
     });
 
     test('should format table sources correctly', () => {
       const query = sourceAndFiltersToSQL(V3_SOURCE);
 
-      expect(query).toBe(`\`${V3_SOURCE.data}\` `);
+      expect(query).toBe(`SELECT * FROM \`${V3_SOURCE.data}\` `);
     });
 
     test('should format source with filters correctly', () => {
       const query = sourceAndFiltersToSQL(SOURCE_WITH_FILTERS);
 
       expect(query).toBe(
-        `\`${SOURCE_WITH_FILTERS.data}\` WHERE (column_1 in('value_1','value_2'))`
+        `SELECT * FROM \`${SOURCE_WITH_FILTERS.data}\` WHERE (column_1 in('value_1','value_2'))`
       );
     });
   });
