@@ -23,15 +23,6 @@ interface CredentialsCarto3 {
 
 export type Credentials = CredentialsCarto2 | CredentialsCarto3;
 
-export const filterFunctions: Record<
-  string,
-  (
-    filterValues: unknown[],
-    featureValue: unknown,
-    params?: Record<string, unknown>
-  ) => boolean
->;
-
 /*
   SourceProps can be passed to a new CartoLayer for map instantiation.
   Check CartoLayer props at https://deck.gl/docs/api-reference/carto/carto-layer
