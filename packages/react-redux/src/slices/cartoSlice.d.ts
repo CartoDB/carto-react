@@ -71,7 +71,6 @@ declare enum CartoActions {
   SET_BASEMAP = 'carto/setBasemap',
   ADD_SPATIAL_FILTER = 'carto/addSpatialFilter',
   REMOVE_SPATIAL_FILTER = 'carto/removeSpatialFilter',
-  SET_SOURCE_FILTERS = 'carto/setSourceFilters',
   ADD_FILTER = 'carto/addFilter',
   REMOVE_FILTER = 'carto/removeFilter',
   CLEAR_FILTERS = 'carto/clearFilters',
@@ -123,11 +122,6 @@ export function addSpatialFilter(spatialFilter: SpatialFilter): {
 export function removeSpatialFilter(sourceId?: string): {
   type: CartoActions.REMOVE_SPATIAL_FILTER;
   payload: string;
-};
-
-export function setSourceFilters(arg: { sourceId: string, filters: SourceFilters }): {
-  type: CartoActions.SET_SOURCE_FILTERS;
-  payload: { sourceId: string, filters: SourceFilters };
 };
 
 export function addFilter(filter: Filter): {
