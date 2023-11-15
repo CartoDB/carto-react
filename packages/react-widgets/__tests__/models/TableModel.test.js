@@ -9,8 +9,9 @@ const RESULT = {
     { id: 40, city: 'Paris', value: 400 },
     { id: 50, city: 'London', value: 500 }
   ],
-  totalCount: 5,
-  hasData: true
+  metadata: {
+    total: 5
+  }
 };
 
 const mockedExecuteModel = jest.fn();
@@ -86,7 +87,11 @@ describe('getTable', () => {
   describe('remote mode', () => {
     test('correctly returns data', async () => {
       const data = await getTable({ ...tableParams, remoteCalculation: true });
-      expect(data).toStrictEqual(RESULT);
+      expect(data).toStrictEqual({
+        rows: RESULT.rows,
+        totalCount: RESULT.metadata.total,
+        hasData: true
+      });
     });
   });
 });
