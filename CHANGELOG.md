@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Allow server-side table widget without hard limit [#798](https://github.com/CartoDB/carto-react/pull/798)
+
 ## 2.2
 
 ### 2.2.14 (2023-10-25)
