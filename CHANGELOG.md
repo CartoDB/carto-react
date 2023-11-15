@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix TableWidget not displaying quadbin field for a table with spatial index [#799](https://github.com/CartoDB/carto-react/pull/799)
+
 ## 2.2
 
 ### 2.2.14 (2023-10-25)
