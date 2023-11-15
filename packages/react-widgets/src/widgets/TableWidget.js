@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { WrapperWidgetUI, TableWidgetUI } from '@carto/react-ui';
-import { getTable, paginateTable, TABLE_HARD_LIMIT } from '../models';
+import { getTable } from '../models';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
@@ -54,9 +54,10 @@ function TableWidget({
   const [sortDirection, setSortDirection] = useState('asc');
 
   const {
-    data = { rows: [], totalCount: 0, hasData: false, isDataComplete: true },
+    data = { rows: [], totalCount: 0, hasData: false },
     isLoading,
-    warning
+    warning,
+    remoteCalculation
   } = useWidgetFetch(getTable, {
     id,
     dataSource,
@@ -64,7 +65,9 @@ function TableWidget({
       columns: columns.map((c) => c.field),
       sortBy,
       sortDirection,
-      sortByColumnType
+      sortByColumnType,
+      page,
+      rowsPerPage
     },
     global,
     onError,
@@ -72,12 +75,8 @@ function TableWidget({
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
-  const { totalCount, hasData, isDataComplete } = data;
-  const { rows, pages } = paginateTable(data, page, rowsPerPage);
-
-  const lastPageTooltip = isDataComplete
-    ? undefined
-    : `This view is limited to ${TABLE_HARD_LIMIT} rows`;
+  const { rows, totalCount, hasData } = data;
+  const pages = Math.ceil(totalCount / rowsPerPage);
 
   useEffect(() => {
     if (pageSize !== undefined) setRowsPerPage(pageSize);
@@ -106,6 +105,7 @@ function TableWidget({
         warning={warning}
         global={global}
         droppingFeaturesAlertProps={droppingFeaturesAlertProps}
+        showDroppingFeaturesAlert={!remoteCalculation}
         noDataAlertProps={noDataAlertProps}
         stableHeight={stableHeight}
       >
@@ -127,7 +127,6 @@ function TableWidget({
             height={height}
             dense={dense}
             isLoading={isLoading}
-            lastPageTooltip={lastPageTooltip}
           />
         )}
       </WidgetWithAlert>
