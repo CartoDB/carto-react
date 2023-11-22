@@ -136,7 +136,7 @@ export const createCartoSlice = (initialState) => {
         }
       },
       addFilter: (state, action) => {
-        const { id, column, type, values, owner, params } = action.payload;
+        const { id, column, type, values, owner, params, isAnimation } = action.payload;
         const source = state.dataSources[id];
 
         if (source) {
@@ -148,7 +148,7 @@ export const createCartoSlice = (initialState) => {
             source.filters[column] = {};
           }
 
-          source.filters[column][type] = { values, owner, params };
+          source.filters[column][type] = { values, owner, params, isAnimation };
         }
       },
       removeFilter: (state, action) => {
