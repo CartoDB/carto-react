@@ -29,6 +29,8 @@ export { groupValuesByColumn } from './operations/groupBy';
 export { histogram } from './operations/histogram';
 export { scatterPlot } from './operations/scatterPlot';
 
+export { Provider } from './operations/constants/Provider';
+
 export { FilterTypes as _FilterTypes } from './filters/FilterTypes';
 
 export {

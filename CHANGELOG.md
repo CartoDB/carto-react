@@ -4,6 +4,15 @@
 
 ## 2.2
 
+### 2.2.16 (2023-11-23)
+
+- Fix TableWidget cannot render columns when it contains an array [#802](https://github.com/CartoDB/carto-react/pull/802)
+- Allow server-side table widget without hard limit [#798](https://github.com/CartoDB/carto-react/pull/798)
+
+### 2.2.15 (2023-11-15)
+
+- Fix TableWidget not displaying quadbin field for a table with spatial index [#799](https://github.com/CartoDB/carto-react/pull/799)
+
 ### 2.2.14 (2023-10-25)
 
 - AppBar: Add new color keys in the Theme [#794](https://github.com/CartoDB/carto-react/pull/794)

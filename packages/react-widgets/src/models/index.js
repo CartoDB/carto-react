@@ -4,4 +4,4 @@ export { getCategories } from './CategoryModel';
 export { geocodeStreetPoint } from './GeocodingModel';
 export { getScatter, HARD_LIMIT as SCATTER_PLOT_HARD_LIMIT } from './ScatterPlotModel';
 export { getTimeSeries } from './TimeSeriesModel';
-export { getTable, paginateTable, HARD_LIMIT as TABLE_HARD_LIMIT } from './TableModel';
+export { getTable } from './TableModel';

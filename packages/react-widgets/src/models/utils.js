@@ -2,8 +2,10 @@ import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto/typed';
 import {
   AggregationTypes,
   getSpatialIndexFromGeoColumn,
-  _filtersToSQL
+  _filtersToSQL,
+  Provider
 } from '@carto/react-core';
+import { FullyQualifiedName } from './fqn';
 
 export function isRemoteCalculationSupported(props) {
   const { source } = props;
@@ -48,16 +50,53 @@ export function wrapModelCall(props, fromLocal, fromRemote) {
   }
 }
 
-export function formatTableNameWithFilters(props) {
-  const { source } = props;
-  const { data, filters, filtersLogicalOperator } = source;
+const SOURCE_QUERY_ALIAS = '__source_query';
 
+export function sourceAndFiltersToSQL({
+  data,
+  filters,
+  filtersLogicalOperator,
+  provider,
+  type
+}) {
   const whereClause = _filtersToSQL(filters, filtersLogicalOperator);
 
   const formattedSourceData =
-    source.type === MAP_TYPES.QUERY ? `(${data.replace(';', '')}) foo` : data;
+    type === MAP_TYPES.QUERY
+      ? `(${sanitizeSQLSource(data)}) ${SOURCE_QUERY_ALIAS}`
+      : getSqlEscapedSource(data, provider);
 
-  return `${formattedSourceData} ${whereClause}`.trim();
+  return `SELECT * FROM ${formattedSourceData} ${whereClause}`;
+}
+
+function sanitizeSQLSource(sql) {
+  return sql.trim().replace(/;$/, '');
+}
+
+function getSqlEscapedSource(table, provider) {
+  const fqn = new FullyQualifiedName(table, provider);
+
+  if (provider === Provider.Snowflake) {
+    if (!fqn.getSchemaName({ safe: true })) {
+      fqn.setSchemaName('PUBLIC');
+    }
+  }
+
+  if (provider === Provider.Postgres || provider === Provider.Redshift) {
+    if (!fqn.getSchemaName({ safe: true })) {
+      fqn.setSchemaName('public');
+    }
+  }
+
+  if (provider === Provider.Databricks) {
+    if (!fqn.getDatabaseName({ safe: true })) {
+      throw new Error('Database name is required for Databricks');
+    }
+    if (!fqn.getSchemaName({ safe: true })) {
+      fqn.setSchemaName('default');
+    }
+  }
+  return fqn.toString();
 }
 
 // Due to each data warehouse has its own behavior with columns,
@@ -65,6 +104,8 @@ export function formatTableNameWithFilters(props) {
 export function normalizeObjectKeys(el) {
   if (Array.isArray(el)) {
     return el.map(normalizeObjectKeys);
+  } else if (typeof el !== 'object') {
+    return el;
   }
 
   return Object.entries(el).reduce((acc, [key, value]) => {
