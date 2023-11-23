@@ -185,6 +185,10 @@ function TableBodyComponent({ columns, rows, onRowClick }) {
               })?.[1];
               if (typeof cellValue === 'bigint') {
                 cellValue = cellValue.toString(); // otherwise TableCell will fail for displaying it
+              } else if (Array.isArray(cellValue)) {
+                cellValue = `[${cellValue
+                  .map((c) => (typeof c === 'string' ? `"${c}"` : c))
+                  .join(', ')}]`;
               }
               return (
                 (headerName || field) && (
