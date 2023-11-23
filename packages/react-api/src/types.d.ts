@@ -2,6 +2,7 @@ import { DataFilterExtension, MaskExtension } from '@deck.gl/extensions/typed';
 import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto/typed';
 import { QueryParameters } from '@deck.gl/carto/typed';
 import { FeatureCollection } from 'geojson';
+import { Provider } from '@carto/react-core';
 
 type ApiVersionsType = typeof API_VERSIONS;
 type MapTypesType = typeof MAP_TYPES;
@@ -34,7 +35,7 @@ export type SourceProps = {
   aggregationExp?: string;
   credentials?: Credentials;
   queryParameters?: QueryParameters;
-  provider?: 'bigquery' | 'postgres' | 'snowflake' | 'redshift' | 'databricks';
+  provider?: Provider;
 };
 
 export type LayerConfig = {
