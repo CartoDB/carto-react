@@ -2,10 +2,12 @@
 
 ## Not released
 
+## 2.2
+
+### 2.2.16 (2023-11-23)
+
 - Fix TableWidget cannot render columns when it contains an array [#802](https://github.com/CartoDB/carto-react/pull/802)
 - Allow server-side table widget without hard limit [#798](https://github.com/CartoDB/carto-react/pull/798)
-
-## 2.2
 
 ### 2.2.15 (2023-11-15)
 
