@@ -142,6 +142,7 @@ function TimeSeriesWidget({
   const dispatch = useDispatch();
 
   const [selectedStepSize, setSelectedStepSize] = useState(stepSize);
+  const [isRunningAnimation, setIsRunningAnimation] = useState(false);
 
   const selectedCategories =
     useWidgetFilterValues({
@@ -246,7 +247,8 @@ function TimeSeriesWidget({
             type: FilterTypes.TIME,
             values: [timeWindow.map((date) => date.getTime?.() || date)],
             params: { offsetBy: minTime },
-            owner: id
+            owner: id,
+            ...(isRunningAnimation && { ignore: true })
           })
         );
       } else {
@@ -261,7 +263,16 @@ function TimeSeriesWidget({
 
       if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
     },
-    [isLoading, dispatch, dataSource, column, minTime, id, onTimeWindowUpdate]
+    [
+      isLoading,
+      onTimeWindowUpdate,
+      dispatch,
+      dataSource,
+      column,
+      minTime,
+      id,
+      isRunningAnimation
+    ]
   );
 
   const handleTimelineUpdate = useCallback(
@@ -281,7 +292,8 @@ function TimeSeriesWidget({
               [moment, calculateNextStep(moment, selectedStepSize, stepMultiplier) - 1]
             ],
             params: { offsetBy: minTime },
-            owner: id
+            owner: id,
+            ...(isRunningAnimation && { ignore: true })
           })
         );
       } else {
@@ -299,6 +311,7 @@ function TimeSeriesWidget({
     [
       isLoading,
       data,
+      onTimelineUpdate,
       dispatch,
       dataSource,
       column,
@@ -306,7 +319,7 @@ function TimeSeriesWidget({
       stepMultiplier,
       minTime,
       id,
-      onTimelineUpdate
+      isRunningAnimation
     ]
   );
 
@@ -338,6 +351,7 @@ function TimeSeriesWidget({
   );
 
   const handleStop = useCallback(() => {
+    setIsRunningAnimation(false);
     dispatch(
       removeFilter({
         id: dataSource,
@@ -348,6 +362,16 @@ function TimeSeriesWidget({
 
     if (onStop) onStop();
   }, [column, dataSource, id, dispatch, onStop]);
+
+  const handlePlay = () => {
+    setIsRunningAnimation(true);
+    if (onPlay) onPlay();
+  };
+
+  const handlePause = () => {
+    setIsRunningAnimation(false);
+    if (onPause) onPause();
+  };
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -411,9 +435,9 @@ function TimeSeriesWidget({
               showControls={showControls}
               animation={animation}
               isPlaying={isPlaying}
-              onPlay={onPlay}
+              onPlay={handlePlay}
               isPaused={isPaused}
-              onPause={onPause}
+              onPause={handlePause}
               onStop={handleStop}
               onTimelineUpdate={handleTimelineUpdate}
               timeWindow={timeWindow}

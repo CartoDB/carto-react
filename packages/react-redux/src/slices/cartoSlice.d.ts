@@ -31,7 +31,7 @@ type FilterBasic = {
   values: FilterValues;
   owner?: string;
   params?: Record<string, unknown>;
-  isAnimation?: boolean;
+  ignore?: boolean;
 };
 
 type FilterCommonProps = {
