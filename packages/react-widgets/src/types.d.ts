@@ -12,7 +12,7 @@ export type WidgetState =
     }
   | {
       state: WidgetStateType.Success;
-      data: any;
+      data: unknown;
     }
   | {
       state: WidgetStateType.Error;
