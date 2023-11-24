@@ -104,6 +104,8 @@ function getSqlEscapedSource(table, provider) {
 export function normalizeObjectKeys(el) {
   if (Array.isArray(el)) {
     return el.map(normalizeObjectKeys);
+  } else if (typeof el !== 'object') {
+    return el;
   }
 
   return Object.entries(el).reduce((acc, [key, value]) => {

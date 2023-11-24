@@ -180,9 +180,16 @@ function TableBodyComponent({ columns, rows, onRowClick }) {
             onClick={() => onRowClick && onRowClick(row)}
           >
             {columns.map(({ field, headerName, align, component }) => {
-              const cellValue = Object.entries(row).find(([key]) => {
+              let cellValue = Object.entries(row).find(([key]) => {
                 return key.toUpperCase() === field.toUpperCase();
               })?.[1];
+              if (typeof cellValue === 'bigint') {
+                cellValue = cellValue.toString(); // otherwise TableCell will fail for displaying it
+              } else if (Array.isArray(cellValue)) {
+                cellValue = `[${cellValue
+                  .map((c) => (typeof c === 'string' ? `"${c}"` : c))
+                  .join(', ')}]`;
+              }
               return (
                 (headerName || field) && (
                   <TableCellStyled

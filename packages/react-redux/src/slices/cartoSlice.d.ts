@@ -8,7 +8,7 @@ import { Feature, Polygon, MultiPolygon } from 'geojson';
 type FilterValues = string[] | number[] | number[][]
 
 export type SourceFilters = {
-  [column: string]: Partial<Record<_FilterTypes, { values: FilterValues; owner?: string; params?: Record<string, unknown>; isAnimation?: boolean }>>
+  [column: string]: Partial<Record<_FilterTypes, { values: FilterValues; owner?: string; params?: Record<string, unknown>; ignore?: boolean }>>
 }
 
 type Source = SourceProps & {
