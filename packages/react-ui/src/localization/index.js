@@ -5,5 +5,5 @@ import id from './id';
 export const messages = {
   en,
   es,
-  id,
+  id
 };
