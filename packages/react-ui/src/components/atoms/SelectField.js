@@ -16,7 +16,6 @@ const SelectField = forwardRef(
   (
     {
       children,
-      onChange,
       placeholder,
       size,
       multiple,
@@ -68,7 +67,6 @@ const SelectField = forwardRef(
       <StyledTextField
         {...otherProps}
         select
-        onChange={onChange}
         ref={ref}
         size={size}
         SelectProps={{
