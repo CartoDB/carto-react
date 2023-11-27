@@ -5,7 +5,7 @@ import React from 'react';
 
 export type SelectFieldProps2 = Omit<TextFieldProps, 'placeholder'> &
   SelectProps & {
-    placeholder?: React.ReactNode;
+    placeholder?: React.ReactNode | string;
     size?: 'small' | 'medium';
     renderValue?: (value: string[]) => React.ReactNode;
     menuProps?: Partial<MenuProps>;

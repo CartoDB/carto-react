@@ -107,7 +107,7 @@ SelectField2.defaultProps = {
   size: 'small'
 };
 SelectField2.propTypes = {
-  placeholder: PropTypes.string,
+  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   size: PropTypes.oneOf(['small', 'medium']),
   renderValue: PropTypes.func,
   menuProps: PropTypes.object,
