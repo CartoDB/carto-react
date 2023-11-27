@@ -10,6 +10,7 @@ const webpackConfig = {
     '@carto/react-core',
     /^@mui\/.+$/,
     /^@emotion\/.+$/,
+    /^@formatjs\/.+$/,
     'styled-components',
     'echarts',
     'echarts-for-react',
