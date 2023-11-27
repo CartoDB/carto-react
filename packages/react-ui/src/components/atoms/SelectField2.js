@@ -25,6 +25,7 @@ const SelectField2 = forwardRef(
       labelId,
       label,
       helperText,
+      name,
       error,
       focused,
       disabled,
@@ -97,7 +98,9 @@ const SelectField2 = forwardRef(
           {children}
         </StyledSelect>
 
-        {helperText && <FormHelperText>{helperText}</FormHelperText>}
+        {helperText && (
+          <FormHelperText aria-label={`${name}-helper`}>{helperText}</FormHelperText>
+        )}
       </FormControl>
     );
   }
