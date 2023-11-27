@@ -13,7 +13,7 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   }
 }));
 
-const SelectField = forwardRef(
+const SelectField2 = forwardRef(
   (
     {
       children,
@@ -103,10 +103,10 @@ const SelectField = forwardRef(
   }
 );
 
-SelectField.defaultProps = {
+SelectField2.defaultProps = {
   size: 'small'
 };
-SelectField.propTypes = {
+SelectField2.propTypes = {
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium']),
   renderValue: PropTypes.func,
@@ -115,4 +115,4 @@ SelectField.propTypes = {
   helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
 };
 
-export default SelectField;
+export default SelectField2;
