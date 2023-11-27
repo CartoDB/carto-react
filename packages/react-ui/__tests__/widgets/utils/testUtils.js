@@ -4,6 +4,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { ThemeProvider } from '@mui/material';
+import { IntlProvider } from 'react-intl';
+
 import { createTheme, responsiveFontSizes } from '@mui/material';
 
 import { cartoThemeOptions } from '../../../src/theme/carto-theme';
@@ -21,7 +23,11 @@ function getTheme() {
 }
 
 const AllTheProviders = ({ children }) => {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  return (
+    <ThemeProvider theme={theme}>
+      <IntlProvider locale='en'>{children}</IntlProvider>
+    </ThemeProvider>
+  );
 };
 
 const customRender = (ui, options) =>

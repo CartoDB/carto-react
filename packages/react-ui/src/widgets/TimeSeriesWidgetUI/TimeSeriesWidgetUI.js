@@ -1,4 +1,5 @@
 import React, { useMemo, useCallback, useEffect, useRef } from 'react';
+import { useIntl } from 'react-intl';
 import { Box, Link, useTheme } from '@mui/material';
 import PropTypes from 'prop-types';
 
@@ -16,7 +17,6 @@ import { TimeSeriesControls } from './components/TimeSeriesControls';
 import TimeSeriesLayout from './components/TimeSeriesLayout';
 import ChartLegend from '../ChartLegend';
 import { findItemIndexByTime, getDate } from './utils/utilities';
-
 function TimeSeriesWidgetUI({
   data,
   categories,
@@ -47,6 +47,7 @@ function TimeSeriesWidgetUI({
   showLegend
 }) {
   let prevEmittedTimeWindow = useRef();
+  const intl = useIntl();
   const handleTimeWindowUpdate = useCallback(
     (timeWindow) => {
       if (timeWindow.length === 2) {
@@ -114,6 +115,7 @@ function TimeSeriesWidgetUI({
       onStop={onStop}
       timeWindow={timeWindow}
       onTimeWindowUpdate={handleTimeWindowUpdate}
+      intl={intl}
     >
       {content}
     </TimeSeriesProvider>
@@ -151,7 +153,8 @@ TimeSeriesWidgetUI.propTypes = {
   showControls: PropTypes.bool,
   isLoading: PropTypes.bool,
   palette: PropTypes.arrayOf(PropTypes.string),
-  showLegend: PropTypes.bool
+  showLegend: PropTypes.bool,
+  intl: PropTypes.object
 };
 
 TimeSeriesWidgetUI.defaultProps = {
@@ -195,7 +198,8 @@ function TimeSeriesWidgetUIContent({
   const theme = useTheme();
   const fallbackColor = theme.palette.secondary.main;
 
-  const { isPlaying, isPaused, timeWindow, stop, setTimeWindow } = useTimeSeriesContext();
+  const { isPlaying, isPaused, timeWindow, stop, setTimeWindow, intl } =
+    useTimeSeriesContext();
 
   useEffect(() => {
     if (timelinePosition !== undefined) {
@@ -328,7 +332,7 @@ function TimeSeriesWidgetUIContent({
           onClick={handleClear}
           underline='hover'
         >
-          Clear
+          {intl.formatMessage({ id: 'c4r.widgets.timeSeries.clear' })}
         </Link>
       )}
     </>

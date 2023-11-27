@@ -31,6 +31,7 @@ const NOOP = () => {};
  * @param { "medium" | "small" | undefined } [props.size]
  * @param { "bottom" | "left" | "right" | "top" | undefined } [props.tooltipPlacement]
  * @param {string} [props.chipLabel]
+ * @param {Object} [props.intl]
  * @returns
  */
 function FeatureSelectionUIGeometryChips({
@@ -41,16 +42,26 @@ function FeatureSelectionUIGeometryChips({
   disabledChipTooltip,
   size = 'medium',
   tooltipPlacement = 'bottom',
-  chipLabel
+  chipLabel,
+  intl
 }) {
   /**
    * @param {GeoJSON.Geometry['type']} type
    */
   function translateType(type) {
-    if (type === 'MultiPoint') return 'Point';
-    if (type === 'MultiLineString') return 'LineString';
-    if (type === 'MultiPolygon') return 'Polygon';
-    if (type === 'GeometryCollection') return 'Polygon';
+    if (type === 'MultiPoint')
+      return intl.formatMessage({
+        id: `c4r.widgets.featureSelection.point`
+      });
+    if (type === 'MultiLineString')
+      return intl.formatMessage({
+        id: `c4r.widgets.featureSelection.lineString`
+      });
+    if (type === 'MultiPolygon' || type === 'Polygon' || type === 'GeometryCollection')
+      return intl.formatMessage({
+        id: `c4r.widgets.featureSelection.polygon`
+      });
+
     return type;
   }
 
@@ -69,7 +80,9 @@ function FeatureSelectionUIGeometryChips({
           const tooltipText = isDisabled
             ? disabledChipTooltip || chipTooltip
             : showDeleteTooltip
-            ? 'Remove'
+            ? intl.formatMessage({
+                id: `c4r.widgets.featureSelection.remove`
+              })
             : chipTooltip;
 
           return (
@@ -124,7 +137,8 @@ FeatureSelectionUIGeometryChips.propTypes = {
     'top-end',
     'top-start'
   ]),
-  chipLabel: PropTypes.string
+  chipLabel: PropTypes.string,
+  intl: PropTypes.object
 };
 FeatureSelectionUIGeometryChips.defaultProps = {
   size: 'medium',

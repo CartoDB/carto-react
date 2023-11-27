@@ -1,6 +1,7 @@
 import React from 'react';
 import ScatterPlotWidgetUI from '../../../src/widgets/ScatterPlotWidgetUI/ScatterPlotWidgetUI';
 import { Label, ThinContainer } from '../../utils/storyStyles';
+import { IntlProvider } from 'react-intl';
 
 const options = {
   title: 'Widgets/ScatterPlotWidgetUI',
@@ -16,12 +17,18 @@ const options = {
 
 export default options;
 
+const Widget = (props) => (
+  <IntlProvider locale='en'>
+    <ScatterPlotWidgetUI {...props} />
+  </IntlProvider>
+);
+
 const dataDefault = [
   [1000.0, 800.04],
   [800.07, 600.95]
 ];
 
-const Template = (args) => <ScatterPlotWidgetUI {...args} />;
+const Template = (args) => <Widget {...args} />;
 
 const LoadingTemplate = (args) => {
   return (
@@ -30,13 +37,13 @@ const LoadingTemplate = (args) => {
         {'Limited width'}
       </Label>
       <ThinContainer>
-        <ScatterPlotWidgetUI {...args} />
+        <Widget {...args} />
       </ThinContainer>
 
       <Label variant='body1' mt={8} mb={3}>
         {'Responsive'}
       </Label>
-      <ScatterPlotWidgetUI {...args} />
+      <Widget {...args} />
     </>
   );
 };

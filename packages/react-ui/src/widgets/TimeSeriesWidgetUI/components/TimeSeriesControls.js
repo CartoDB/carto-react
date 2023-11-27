@@ -25,7 +25,7 @@ export function TimeSeriesControls({ data, stepSize }) {
   const [speed, setSpeed] = useState(1);
   const animationRef = useRef({ animationFrameId: null, timeoutId: null });
 
-  const { isPlaying, isPaused, timeWindow, setTimeWindow, stop, togglePlay } =
+  const { isPlaying, isPaused, timeWindow, setTimeWindow, stop, togglePlay, intl } =
     useTimeSeriesContext();
 
   // If data changes, stop animation. useDidMountEffect is used to avoid
@@ -139,7 +139,7 @@ export function TimeSeriesControls({ data, stepSize }) {
       >
         <MenuItem disabled>
           <Typography variant='caption' color='textSecondary'>
-            Speed
+            {intl.formatMessage({ id: 'c4r.widgets.timeSeries.speed' })}
           </Typography>
         </MenuItem>
         {SPEED_FACTORS.map((speedItem) => (

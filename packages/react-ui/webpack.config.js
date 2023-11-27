@@ -10,11 +10,12 @@ const webpackConfig = {
     '@carto/react-core',
     /^@mui\/.+$/,
     /^@emotion\/.+$/,
-    'styled-components',
+    /^@formatjs\/.+$/,
     'echarts',
     'echarts-for-react',
     'react',
-    'react-dom'
+    'react-dom',
+    'react-intl'
   ],
   output: {
     path: path.resolve(__dirname, './dist'),

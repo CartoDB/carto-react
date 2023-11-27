@@ -6,6 +6,7 @@ import React, {
   useState
 } from 'react';
 import { getDate, getTimestamp } from '../utils/utilities';
+import useImperativeIntl from '../../../hooks/useImperativeIntl';
 
 export const TimeSeriesContext = createContext({
   isPlaying: false,
@@ -19,7 +20,8 @@ export const TimeSeriesContext = createContext({
   setTimeWindow: (value) => {},
   onTimeWindowUpdate: (value) => {},
   togglePlay: () => {},
-  stop: () => {}
+  stop: () => {},
+  intl: {}
 });
 
 export function useTimeSeriesContext() {
@@ -34,11 +36,13 @@ export function TimeSeriesProvider({
   onPause,
   onStop,
   timeWindow,
-  onTimeWindowUpdate
+  onTimeWindowUpdate,
+  intl
 }) {
   const [_isPlaying, setIsPlaying] = useState(isPlaying);
   const [_isPaused, setIsPaused] = useState(isPaused);
   const [_timeWindow, setTimeWindow] = useState([]);
+  const intlConfig = useImperativeIntl(intl);
 
   useEffect(() => {
     const sorted = _timeWindow
@@ -116,7 +120,8 @@ export function TimeSeriesProvider({
         setTimeWindow,
         onTimeWindowUpdate,
         togglePlay,
-        stop
+        stop,
+        intl: intlConfig
       }}
     >
       {children}

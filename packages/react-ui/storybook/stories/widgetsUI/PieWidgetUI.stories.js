@@ -1,6 +1,7 @@
 import React from 'react';
 import PieWidgetUI from '../../../src/widgets/PieWidgetUI/PieWidgetUI';
 import { Label, ThinContainer } from '../../utils/storyStyles';
+import { IntlProvider } from 'react-intl';
 
 const options = {
   title: 'Widgets/PieWidgetUI',
@@ -25,12 +26,18 @@ const options = {
 
 export default options;
 
+const Widget = (props) => (
+  <IntlProvider locale='en'>
+    <PieWidgetUI {...props} />
+  </IntlProvider>
+);
+
 const dataDefault = [
   { name: 'Women', value: 101 },
   { name: 'Men', value: 100 }
 ];
 
-const Template = (args) => <PieWidgetUI {...args} />;
+const Template = (args) => <Widget {...args} />;
 
 const LoadingTemplate = (args) => {
   return (
@@ -39,13 +46,13 @@ const LoadingTemplate = (args) => {
         {'Limited width'}
       </Label>
       <ThinContainer>
-        <PieWidgetUI {...args} />
+        <Widget {...args} />
       </ThinContainer>
 
       <Label variant='body1' mt={8} mb={3}>
         {'Responsive'}
       </Label>
-      <PieWidgetUI {...args} />
+      <Widget {...args} />
     </>
   );
 };

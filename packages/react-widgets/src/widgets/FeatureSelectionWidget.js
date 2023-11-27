@@ -114,19 +114,14 @@ function FeatureSelectionWidget({
 
 FeatureSelectionWidget.defaultProps = {
   selectionModes: Object.values(FEATURE_SELECTION_MODES),
-  editModes: Object.values(EDIT_MODES_KEYS),
-  tooltipPlacement: FeatureSelectionWidgetUI.defaultProps.tooltipPlacement,
-  size: FeatureSelectionWidgetUI.defaultProps.size
+  editModes: Object.values(EDIT_MODES_KEYS)
 };
 
 FeatureSelectionWidget.propTypes = {
   selectionModes: PropTypes.arrayOf(
     PropTypes.oneOf(Object.values(FEATURE_SELECTION_MODES))
   ),
-  editModes: PropTypes.arrayOf(PropTypes.oneOf(Object.values(EDIT_MODES_KEYS))),
-  tooltipPlacement: FeatureSelectionWidgetUI.propTypes.tooltipPlacement,
-  size: FeatureSelectionWidgetUI.propTypes.size,
-  chipLabel: FeatureSelectionWidgetUI.propTypes.chipLabel
+  editModes: PropTypes.arrayOf(PropTypes.oneOf(Object.values(EDIT_MODES_KEYS)))
 };
 
 export default FeatureSelectionWidget;

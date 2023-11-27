@@ -1,6 +1,7 @@
 import React from 'react';
 import RangeWidgetUI from '../../../src/widgets/RangeWidgetUI/RangeWidgetUI';
 import { Label, ThinContainer } from '../../utils/storyStyles';
+import { IntlProvider } from 'react-intl';
 
 const options = {
   title: 'Widgets/RangeWidgetUI',
@@ -16,8 +17,14 @@ const options = {
 
 export default options;
 
+const Widget = (props) => (
+  <IntlProvider locale='en'>
+    <RangeWidgetUI {...props} />
+  </IntlProvider>
+);
+
 const Template = (args) => {
-  return <RangeWidgetUI {...args} />;
+  return <Widget {...args} />;
 };
 
 const LoadingTemplate = (args) => {
@@ -31,13 +38,13 @@ const LoadingTemplate = (args) => {
         {'Limited width'}
       </Label>
       <ThinContainer>
-        <RangeWidgetUI {...args} />
+        <Widget {...args} />
       </ThinContainer>
 
       <Label variant='body1' mt={8} mb={3}>
         {'Responsive'}
       </Label>
-      <RangeWidgetUI {...args} />
+      <Widget {...args} />
     </>
   );
 };

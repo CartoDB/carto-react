@@ -13,6 +13,7 @@ import sortLayers from './utils/sortLayers';
  * @param  {Object.<string, Function>} [props.customLegendTypes] - Allow to customise by default legend types that can be rendered.
  * @param  {boolean} [props.initialCollapsed] - Define initial collapsed value. false by default.
  * @param  {string[]} [props.layerOrder] - Array of layer identifiers. Defines the order of layer legends. [] by default.
+
  */
 function LegendWidget({
   customLayerOptions,

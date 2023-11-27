@@ -109,6 +109,7 @@ export type LegendWidgetUI = {
   customLegendTypes?: Record<string, Function>;
   layers?: LegendWidgetUIData[];
   collapsed?: boolean;
+
   onChangeCollapsed?: (collapsed: boolean) => void;
   onChangeVisibility?: (args: { id: string; visible: boolean }) => void;
   onChangeOpacity?: (args: { id: string; visible: boolean }) => void;
