@@ -114,7 +114,6 @@ SelectField2.propTypes = {
   size: PropTypes.oneOf(['small', 'medium']),
   renderValue: PropTypes.func,
   menuProps: PropTypes.object,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
 };
 
