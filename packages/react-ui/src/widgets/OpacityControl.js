@@ -1,6 +1,8 @@
 import React from 'react';
 import { Box, Grid, InputAdornment, Slider, TextField, styled } from '@mui/material';
 import LayerOptionWrapper from './legend/LayerOptionWrapper';
+import { useIntl } from 'react-intl';
+import useImperativeIntl from '../hooks/useImperativeIntl';
 
 const Content = styled(Box)(() => ({
   height: 'auto',
@@ -30,14 +32,19 @@ const InputUnit = styled(InputAdornment)(({ theme }) => ({
   }
 }));
 
-export default function OpacityControl({ opacity, onChangeOpacity, intl }) {
+export default function OpacityControl({ opacity, onChangeOpacity }) {
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
+
   const handleTextFieldChange = (e) => {
     const newOpacity = parseInt(e.target.value || '0');
     onChangeOpacity(Math.max(0, Math.min(100, newOpacity)) / 100);
   };
 
   return (
-    <LayerOptionWrapper label={intl.formatMessage({ id: 'c4r.widgets.legend.opacity' })}>
+    <LayerOptionWrapper
+      label={intlConfig.formatMessage({ id: 'c4r.widgets.legend.opacity' })}
+    >
       <Content>
         <Grid container spacing={2} direction='row' alignItems='center'>
           <Grid item xs>
