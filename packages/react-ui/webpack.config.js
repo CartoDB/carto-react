@@ -11,7 +11,6 @@ const webpackConfig = {
     /^@mui\/.+$/,
     /^@emotion\/.+$/,
     /^@formatjs\/.+$/,
-    'styled-components',
     'echarts',
     'echarts-for-react',
     'react',
