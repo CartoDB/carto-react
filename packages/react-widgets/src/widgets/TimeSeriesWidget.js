@@ -352,6 +352,8 @@ function TimeSeriesWidget({
 
   const handleStop = useCallback(() => {
     setIsRunningAnimation(false);
+    // The onStop must be executed before the removeFilter to keep the Builder compatibility
+    if (onStop) onStop();
     dispatch(
       removeFilter({
         id: dataSource,
@@ -359,8 +361,6 @@ function TimeSeriesWidget({
         owner: id
       })
     );
-
-    if (onStop) onStop();
   }, [column, dataSource, id, dispatch, onStop]);
 
   const handlePlay = () => {
