@@ -102,7 +102,6 @@ function LegendWrapper({
                     <OpacityControl
                       opacity={opacity}
                       onChangeOpacity={handleChangeOpacity}
-                      intl={intlConfig}
                     />
                   )}
                   {layerOptions}
