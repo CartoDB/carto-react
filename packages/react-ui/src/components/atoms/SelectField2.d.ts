@@ -4,7 +4,7 @@ import { SelectProps } from '@mui/material/Select';
 import { TextFieldProps } from '@mui/material/TextField';
 
 export type SelectFieldProps2 = Omit<TextFieldProps, 'placeholder'> &
-  SelectProps & {
+  Omit<SelectProps, 'placeholder'> & {
     placeholder?: React.ReactNode | string;
     size?: 'small' | 'medium';
     renderValue?: (value: string[]) => React.ReactNode;
