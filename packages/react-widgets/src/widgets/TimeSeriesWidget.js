@@ -13,7 +13,8 @@ import {
   AggregationTypes,
   _FilterTypes as FilterTypes,
   _hasFeatureFlag,
-  _FeatureFlags
+  _FeatureFlags,
+  debounce
 } from '@carto/react-core';
 import { capitalize, Menu, MenuItem, SvgIcon } from '@mui/material';
 import { PropTypes } from 'prop-types';
@@ -47,6 +48,8 @@ function calculateNextStep(time, stepType, stepMultiplier = 1) {
 }
 
 const EMPTY_ARRAY = [];
+
+const debounceTimeout = 250;
 
 /**
  * Renders a <TimeSeriesWidget /> component
@@ -275,6 +278,11 @@ function TimeSeriesWidget({
     ]
   );
 
+  const handleTimeWindowUpdateDebounced = useMemo(
+    () => debounce(handleTimeWindowUpdate, debounceTimeout),
+    [handleTimeWindowUpdate]
+  );
+
   const handleTimelineUpdate = useCallback(
     (timelinePosition) => {
       if (isLoading) return;
@@ -321,6 +329,11 @@ function TimeSeriesWidget({
       id,
       isRunningAnimation
     ]
+  );
+
+  const handleTimelineUpdateDebounced = useMemo(
+    () => debounce(handleTimelineUpdate, debounceTimeout),
+    [handleTimelineUpdate]
   );
 
   const handleSelectedCategoriesChange = useCallback(
@@ -439,9 +452,15 @@ function TimeSeriesWidget({
               isPaused={isPaused}
               onPause={handlePause}
               onStop={handleStop}
-              onTimelineUpdate={handleTimelineUpdate}
+              onTimelineUpdate={
+                isRunningAnimation ? handleTimelineUpdate : handleTimelineUpdateDebounced
+              }
               timeWindow={timeWindow}
-              onTimeWindowUpdate={handleTimeWindowUpdate}
+              onTimeWindowUpdate={
+                isRunningAnimation
+                  ? handleTimeWindowUpdate
+                  : handleTimeWindowUpdateDebounced
+              }
               selectedCategories={selectedCategories}
               onSelectedCategoriesChange={
                 splitByCategory ? handleSelectedCategoriesChange : undefined
