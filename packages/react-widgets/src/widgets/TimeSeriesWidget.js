@@ -84,6 +84,7 @@ const debounceTimeout = 250;
  * @param  {string[]=} [props.palette] - Optional palette
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
+
  * Internal state
  * @param  {boolean} [props.isPlaying] - If true, the animation starts.
  * @param  {boolean} [props.isPaused] - If true and isPlaying false, the animation is paused.

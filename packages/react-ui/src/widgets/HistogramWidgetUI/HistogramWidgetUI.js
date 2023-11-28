@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useIntl } from 'react-intl';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { darken, Grid, Link, styled, useTheme } from '@mui/material';
 import { processFormatterRes } from '../utils/formatterUtils';
@@ -8,6 +8,7 @@ import detectTouchscreen from '../utils/detectTouchScreen';
 import useHistogramInteractivity from './useHistogramInteractivity';
 import Typography from '../../components/atoms/Typography';
 import HistogramSkeleton from './HistogramSkeleton';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 
@@ -44,6 +45,9 @@ function HistogramWidgetUI({
   isLoading
 }) {
   const theme = useTheme();
+
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
 
   const filterable = _filterable && !!onSelectedBarsChange;
 
@@ -271,11 +275,16 @@ function HistogramWidgetUI({
       {filterable && (
         <OptionsSelectedBar container>
           <Typography variant='caption' weight='strong'>
-            {selectedBars.length ? yAxisFormatter(countSelectedElements) : 'All'} selected
+            {selectedBars.length > 0
+              ? intlConfig.formatMessage(
+                  { id: 'c4r.widgets.histogram.selectedItems' },
+                  { items: yAxisFormatter(countSelectedElements) }
+                )
+              : intlConfig.formatMessage({ id: 'c4r.widgets.histogram.all' })}
           </Typography>
           {selectedBars.length > 0 && (
             <ClearButton onClick={() => onSelectedBarsChange([])} underline='hover'>
-              Clear
+              {intlConfig.formatMessage({ id: 'c4r.widgets.histogram.clear' })}
             </ClearButton>
           )}
         </OptionsSelectedBar>
@@ -316,7 +325,8 @@ HistogramWidgetUI.propTypes = {
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   height: PropTypes.number,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  intl: PropTypes.object
 };
 
 export default HistogramWidgetUI;

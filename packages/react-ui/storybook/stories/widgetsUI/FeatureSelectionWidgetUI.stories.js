@@ -4,6 +4,7 @@ import FeatureSelectionWidgetUI from '../../../src/widgets/FeatureSelectionWidge
 import CursorIcon from '../../../src/assets/icons/CursorIcon';
 import PolygonIcon from '../../../src/assets/icons/PolygonIcon';
 import RectangleIcon from '../../../src/assets/icons/RectangleIcon';
+import { IntlProvider } from 'react-intl';
 
 const options = {
   title: 'Widgets/FeatureSelectionWidgetUI',
@@ -30,11 +31,17 @@ const options = {
 
 export default options;
 
+const Widget = (props) => (
+  <IntlProvider locale='en'>
+    <FeatureSelectionWidgetUI {...props} />
+  </IntlProvider>
+);
+
 // MODES
 
 const FEATURE_SELECTION_MODES = [
-  { id: 'polygon', label: 'polygon', icon: <PolygonIcon /> },
-  { id: 'rectangle', label: 'rectangle', icon: <RectangleIcon /> }
+  { id: 'drawPolygonMode', label: 'polygon', icon: <PolygonIcon /> },
+  { id: 'drawRectangleMode', label: 'rectangle', icon: <RectangleIcon /> }
 ];
 
 const EDIT_MODES = [{ id: 'edit', label: 'Edit geometry', icon: <CursorIcon /> }];
@@ -45,7 +52,7 @@ const Template = (args) => {
 
   return (
     <Box display='inline-block'>
-      <FeatureSelectionWidgetUI
+      <Widget
         selectionModes={FEATURE_SELECTION_MODES}
         editModes={EDIT_MODES}
         {...args}

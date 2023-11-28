@@ -2,6 +2,12 @@
 
 ## Not released
 
+## 2.3
+
+### 2.3.1 (2023-11-27)
+
+- Add localization to widgets with react-intl [#793](https://github.com/CartoDB/carto-react/pull/793)
+
 ## 2.2
 
 ### 2.2.16 (2023-11-23)

@@ -10,6 +10,8 @@ import {
   Tooltip
 } from '@mui/material';
 
+import { useIntl } from 'react-intl';
+
 import { animateValues } from '../utils/animations';
 import Typography from '../../components/atoms/Typography';
 import CategorySkeleton from './CategorySkeleton';
@@ -23,6 +25,7 @@ import {
   CategoriesRoot
 } from './CategoryWidgetUI.styled';
 import SearchIcon from '../../assets/icons/SearchIcon';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 import { ORDER_TYPES } from '../utils/chartConstants';
 
 function usePrevious(value) {
@@ -34,7 +37,6 @@ function usePrevious(value) {
 }
 
 const REST_CATEGORY = '__rest__';
-
 function CategoryWidgetUI(props) {
   const {
     data,
@@ -58,6 +60,9 @@ function CategoryWidgetUI(props) {
   const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
+
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
 
   // Get blockedCategories in the same order as original data
   const sortBlockedSameAsData = (blockedCategories) =>
@@ -356,25 +361,30 @@ function CategoryWidgetUI(props) {
       {filterable && sortedData.length > 0 && (
         <OptionsSelectedBar container>
           <Typography variant='caption'>
-            {selectedCategories.length ? selectedCategories.length : 'All'} selected
+            {selectedCategories.length > 0
+              ? intlConfig.formatMessage(
+                  { id: 'c4r.widgets.category.selectedItems' },
+                  { items: selectedCategories.length }
+                )
+              : intlConfig.formatMessage({ id: 'c4r.widgets.category.all' })}
           </Typography>
           {showAll ? (
             <LinkAsButton onClick={handleApplyClicked} underline='hover'>
-              Apply
+              {intlConfig.formatMessage({ id: 'c4r.widgets.category.apply' })}
             </LinkAsButton>
           ) : blockedCategories.length > 0 ? (
             <LinkAsButton onClick={handleUnblockClicked} underline='hover'>
-              Unlock
+              {intlConfig.formatMessage({ id: 'c4r.widgets.category.unlock' })}
             </LinkAsButton>
           ) : (
             selectedCategories.length > 0 && (
               <Grid container direction='row' justifyContent='flex-end' item xs>
                 <LinkAsButton onClick={handleBlockClicked} underline='hover'>
-                  Lock
+                  {intlConfig.formatMessage({ id: 'c4r.widgets.category.lock' })}
                 </LinkAsButton>
                 <Divider orientation='vertical' flexItem />
                 <LinkAsButton onClick={handleClearClicked} underline='hover'>
-                  Clear
+                  {intlConfig.formatMessage({ id: 'c4r.widgets.category.clear' })}
                 </LinkAsButton>
               </Grid>
             )
@@ -386,7 +396,7 @@ function CategoryWidgetUI(props) {
           <TextField
             size='small'
             mt={-0.5}
-            placeholder='Search'
+            placeholder={intlConfig.formatMessage({ id: 'c4r.widgets.category.search' })}
             onChange={handleSearchChange}
             onFocus={handleSearchFocus}
             InputProps={{
@@ -412,9 +422,14 @@ function CategoryWidgetUI(props) {
           ))
         ) : (
           <>
-            <Typography variant='body2'>No results</Typography>
+            <Typography variant='body2'>
+              {intlConfig.formatMessage({ id: 'c4r.widgets.category.noResults' })}
+            </Typography>
             <Typography variant='caption'>
-              Your search "{searchValue}" didn't match with any value.
+              {intlConfig.formatMessage(
+                { id: 'c4r.widgets.category.noResultsMessage' },
+                { searchValue }
+              )}
             </Typography>
           </>
         )}
@@ -422,7 +437,7 @@ function CategoryWidgetUI(props) {
       {data.length > maxItems && searchable ? (
         showAll ? (
           <Button size='small' color='primary' onClick={handleCancelClicked}>
-            Cancel
+            {intlConfig.formatMessage({ id: 'c4r.widgets.category.cancel' })}
           </Button>
         ) : (
           <Button
@@ -431,7 +446,10 @@ function CategoryWidgetUI(props) {
             startIcon={<SearchIcon />}
             onClick={handleShowAllCategoriesClicked}
           >
-            Search in {getCategoriesCount()} elements
+            {intlConfig.formatMessage(
+              { id: 'c4r.widgets.category.searchInfo' },
+              { elements: getCategoriesCount() }
+            )}
           </Button>
         )
       ) : null}
@@ -468,7 +486,8 @@ CategoryWidgetUI.propTypes = {
   animation: PropTypes.bool,
   filterable: PropTypes.bool,
   searchable: PropTypes.bool,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  intl: PropTypes.object
 };
 
 export default CategoryWidgetUI;

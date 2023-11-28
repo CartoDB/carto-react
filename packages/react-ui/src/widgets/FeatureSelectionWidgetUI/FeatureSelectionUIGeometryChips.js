@@ -1,6 +1,8 @@
 import { Cancel } from '@mui/icons-material';
 import { Box, Chip, List, ListItem, Tooltip, styled } from '@mui/material';
 import PropTypes from 'prop-types';
+import { useIntl } from 'react-intl';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 import React, { useState } from 'react';
 
 const ChipList = styled(List)(({ theme }) => ({
@@ -43,14 +45,26 @@ function FeatureSelectionUIGeometryChips({
   tooltipPlacement = 'bottom',
   chipLabel
 }) {
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
+
   /**
    * @param {GeoJSON.Geometry['type']} type
    */
   function translateType(type) {
-    if (type === 'MultiPoint') return 'Point';
-    if (type === 'MultiLineString') return 'LineString';
-    if (type === 'MultiPolygon') return 'Polygon';
-    if (type === 'GeometryCollection') return 'Polygon';
+    if (type === 'MultiPoint')
+      return intlConfig.formatMessage({
+        id: `c4r.widgets.featureSelection.point`
+      });
+    if (type === 'MultiLineString')
+      return intlConfig.formatMessage({
+        id: `c4r.widgets.featureSelection.lineString`
+      });
+    if (type === 'MultiPolygon' || type === 'Polygon' || type === 'GeometryCollection')
+      return intlConfig.formatMessage({
+        id: `c4r.widgets.featureSelection.polygon`
+      });
+
     return type;
   }
 
@@ -69,7 +83,9 @@ function FeatureSelectionUIGeometryChips({
           const tooltipText = isDisabled
             ? disabledChipTooltip || chipTooltip
             : showDeleteTooltip
-            ? 'Remove'
+            ? intlConfig.formatMessage({
+                id: `c4r.widgets.featureSelection.remove`
+              })
             : chipTooltip;
 
           return (

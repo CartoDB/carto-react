@@ -2,10 +2,12 @@ import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ReactEcharts from '../../custom-components/echarts-for-react';
 import { Grid, Link, useTheme, darken, styled } from '@mui/material';
+import { useIntl } from 'react-intl';
 import detectTouchScreen from '../utils/detectTouchScreen';
 import { processFormatterRes } from '../utils/formatterUtils';
 import Typography from '../../components/atoms/Typography';
 import BarSkeleton from './BarSkeleton';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
 
@@ -50,6 +52,9 @@ function BarWidgetUI(props) {
   const isMultiSeries = series.length > 1;
 
   const theme = useTheme();
+
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
 
   // Tooltip
   const tooltipOptions = useMemo(
@@ -296,11 +301,16 @@ function BarWidgetUI(props) {
       {onSelectedBarsChange && (
         <OptionsSelectedBar container>
           <Typography variant='caption'>
-            {selectedBars?.length || 'All'} selected
+            {selectedBars.length > 0
+              ? intlConfig.formatMessage(
+                  { id: 'c4r.widgets.bar.selectedItems' },
+                  { items: selectedBars.length }
+                )
+              : intlConfig.formatMessage({ id: 'c4r.widgets.bar.all' })}
           </Typography>
           {selectedBars && selectedBars.length > 0 && (
             <SelectAllButton onClick={() => clearBars()} underline='hover'>
-              Clear
+              {intlConfig.formatMessage({ id: 'c4r.widgets.bar.clear' })}
             </SelectAllButton>
           )}
         </OptionsSelectedBar>
@@ -357,7 +367,8 @@ BarWidgetUI.propTypes = {
   height: numberOrString,
   filterable: PropTypes.bool,
   animation: PropTypes.bool,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  intl: PropTypes.object
 };
 
 export default BarWidgetUI;
