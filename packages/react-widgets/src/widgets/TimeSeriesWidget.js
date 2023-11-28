@@ -365,7 +365,7 @@ function TimeSeriesWidget({
 
   const handleStop = useCallback(() => {
     setIsRunningAnimation(false);
-    // The onStop must be executed before the removeFilter to keep the Builder compatibility
+    // The onStop must be executed before the removeFilter to avoid repeated Maps API calls in Builder
     if (onStop) onStop();
     dispatch(
       removeFilter({
