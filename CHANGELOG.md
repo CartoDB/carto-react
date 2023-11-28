@@ -2,10 +2,14 @@
 
 ## Not released
 
+## 1.6.2-alpha.0 (2023-11-28)
+
+- Fix in react dependencies for spatialFilter / viewport (useGeojsonFeatures)
+
 ## 1.6.1
 
 - Developer API change:
-  - geoColumn and aggregationExp moved to Source, remote widgests disabled for spatial indexes
+  - geoColumn and aggregationExp moved to Source, remote widgets disabled for spatial indexes
 
 ### 1.6.0 (2023-08-10)
 
