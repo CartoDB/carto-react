@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Freeze widgets during time-series animation [#804](https://github.com/CartoDB/carto-react/pull/804)
+
 ## 2.3
 
 ### 2.3.1 (2023-11-27)
