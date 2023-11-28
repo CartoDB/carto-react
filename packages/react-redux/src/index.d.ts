@@ -8,4 +8,6 @@ export {
   OauthState,
   ViewState,
   InitialCarto3State,
+  Source,
+  SourceFilters
 } from './types';
