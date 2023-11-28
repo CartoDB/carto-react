@@ -226,7 +226,10 @@ export function getRawFeatures({
   filtersLogicalOperator,
   sortBy,
   sortByDirection = 'asc',
-  sortByColumnType
+  sortByColumnType,
+  // page and rowsPerPage are optional and only used for pagination
+  page = undefined,
+  rowsPerPage = undefined
 }) {
   let rows = [];
   let totalCount = 0;
@@ -243,7 +246,14 @@ export function getRawFeatures({
     hasData = true;
   }
 
-  return { rows, totalCount, hasData, isDataComplete: true };
+  if (page !== undefined && rowsPerPage !== undefined) {
+    rows = rows.slice(
+      Math.min(rowsPerPage * Math.max(0, page), totalCount),
+      Math.min(rowsPerPage * Math.max(1, page + 1), totalCount)
+    );
+  }
+
+  return { rows, totalCount, hasData };
 }
 
 function getFilteredFeatures(filters = {}, filtersLogicalOperator) {

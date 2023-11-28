@@ -1,6 +1,7 @@
 import React from 'react';
 import CategoryWidgetUI from '../../../src/widgets/CategoryWidgetUI/CategoryWidgetUI';
 import { Label, ThinContainer } from '../../utils/storyStyles';
+import { IntlProvider } from 'react-intl';
 
 const options = {
   title: 'Widgets/CategoryWidgetUI',
@@ -31,8 +32,14 @@ const options = {
 
 export default options;
 
+const Widget = (props) => (
+  <IntlProvider locale='en'>
+    <CategoryWidgetUI {...props} />
+  </IntlProvider>
+);
+
 const Template = (args) => {
-  return <CategoryWidgetUI {...args} />;
+  return <Widget {...args} />;
 };
 
 const LoadingTemplate = (args) => {
@@ -42,13 +49,13 @@ const LoadingTemplate = (args) => {
         {'Limited width'}
       </Label>
       <ThinContainer>
-        <CategoryWidgetUI {...args} />
+        <Widget {...args} />
       </ThinContainer>
 
       <Label variant='body1' mt={8} mb={3}>
         {'Responsive'}
       </Label>
-      <CategoryWidgetUI {...args} />
+      <Widget {...args} />
     </>
   );
 };

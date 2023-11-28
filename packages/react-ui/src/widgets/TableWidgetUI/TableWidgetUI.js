@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
   Table,
@@ -14,6 +15,7 @@ import {
 } from '@mui/material';
 import TableSkeleton from './Skeleton/TableSkeleton';
 import TablePaginationActions from '../../components/molecules/Table/TablePaginationActions';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const TableHeadCellLabel = styled(TableSortLabel)(({ theme }) => ({
   ...theme.typography.caption,
@@ -69,6 +71,13 @@ function TableWidgetUI({
   const theme = useTheme();
   const paginationRef = useRef(null);
 
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
+
+  const defaultLabelDisplayedRows = ({ from, to, count }) => {
+    return intlConfig.formatMessage({ id: 'c4r.widgets.table.of' }, { from, to, count });
+  };
+
   const handleSort = (sortField) => {
     const isAsc = sortBy === sortField && sortDirection === 'asc';
     onSetSortDirection(isAsc ? 'desc' : 'asc');
@@ -122,6 +131,10 @@ function TableWidgetUI({
         <StyledTablePagination
           ref={paginationRef}
           rowsPerPageOptions={rowsPerPageOptions}
+          labelRowsPerPage={intlConfig.formatMessage({
+            id: 'c4r.widgets.table.rowsPerPage'
+          })}
+          labelDisplayedRows={defaultLabelDisplayedRows}
           component='div'
           count={totalCount}
           rowsPerPage={rowsPerPage}
@@ -180,9 +193,16 @@ function TableBodyComponent({ columns, rows, onRowClick }) {
             onClick={() => onRowClick && onRowClick(row)}
           >
             {columns.map(({ field, headerName, align, component }) => {
-              const cellValue = Object.entries(row).find(([key]) => {
+              let cellValue = Object.entries(row).find(([key]) => {
                 return key.toUpperCase() === field.toUpperCase();
               })?.[1];
+              if (typeof cellValue === 'bigint') {
+                cellValue = cellValue.toString(); // otherwise TableCell will fail for displaying it
+              } else if (Array.isArray(cellValue)) {
+                cellValue = `[${cellValue
+                  .map((c) => (typeof c === 'string' ? `"${c}"` : c))
+                  .join(', ')}]`;
+              }
               return (
                 (headerName || field) && (
                   <TableCellStyled
@@ -230,7 +250,8 @@ TableWidgetUI.propTypes = {
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   dense: PropTypes.bool,
   isLoading: PropTypes.bool,
-  lastPageTooltip: PropTypes.string
+  lastPageTooltip: PropTypes.string,
+  intl: PropTypes.object
 };
 
 export default TableWidgetUI;

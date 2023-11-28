@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import LegendWidgetUI from '../../../src/widgets/legend/LegendWidgetUI';
+import { IntlProvider } from 'react-intl';
 
 const options = {
   title: 'Widgets/LegendWidgetUI',
@@ -28,11 +29,17 @@ const options = {
 };
 export default options;
 
+const Widget = (props) => (
+  <IntlProvider locale='en'>
+    <LegendWidgetUI {...props} />
+  </IntlProvider>
+);
+
 const Template = ({ ...args }) => {
   return (
-    <LegendWidgetUI {...args}>
+    <Widget {...args}>
       <div>Your Content</div>
-    </LegendWidgetUI>
+    </Widget>
   );
 };
 
@@ -47,7 +54,7 @@ const LegendTemplate = () => {
       }
     }
   ];
-  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+  return <Widget layers={layers}></Widget>;
 };
 
 const LegendNotFoundTemplate = () => {
@@ -58,7 +65,7 @@ const LegendNotFoundTemplate = () => {
       visible: true
     }
   ];
-  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+  return <Widget layers={layers}></Widget>;
 };
 
 const LegendWithOpacityTemplate = () => {
@@ -74,7 +81,7 @@ const LegendWithOpacityTemplate = () => {
       }
     }
   ];
-  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+  return <Widget layers={layers}></Widget>;
 };
 
 const LegendMultiTemplate = () => {
@@ -97,7 +104,7 @@ const LegendMultiTemplate = () => {
       }
     }
   ];
-  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+  return <Widget layers={layers}></Widget>;
 };
 
 const LegendMultiTemplateCollapsed = () => {
@@ -124,7 +131,7 @@ const LegendMultiTemplateCollapsed = () => {
   ];
 
   return (
-    <LegendWidgetUI
+    <Widget
       layers={layers}
       collapsed={collapsed}
       onChangeCollapsed={({ collapsed }) => setCollapsed(collapsed)}
@@ -148,7 +155,7 @@ const LegendCategoriesTemplate = () => {
       legend: categoryLegend
     }
   ];
-  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+  return <Widget layers={layers}></Widget>;
 };
 
 const LegendCategoriesStrokeTemplate = () => {
@@ -163,7 +170,7 @@ const LegendCategoriesStrokeTemplate = () => {
       }
     }
   ];
-  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+  return <Widget layers={layers}></Widget>;
 };
 
 const LegendIconTemplate = () => {
@@ -183,7 +190,7 @@ const LegendIconTemplate = () => {
       }
     }
   ];
-  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+  return <Widget layers={layers}></Widget>;
 };
 
 const LegendRampTemplate = () => {
@@ -215,8 +222,8 @@ const LegendRampTemplate = () => {
 
   return (
     <>
-      <LegendWidgetUI layers={layersDiscontinuous}></LegendWidgetUI>
-      <LegendWidgetUI layers={layersContinuous}></LegendWidgetUI>
+      <Widget layers={layersDiscontinuous}></Widget>
+      <Widget layers={layersContinuous}></Widget>
     </>
   );
 };
@@ -234,7 +241,7 @@ const LegendProportionTemplate = () => {
       }
     }
   ];
-  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+  return <Widget layers={layers}></Widget>;
 };
 
 const LegendCustomTemplate = () => {
@@ -248,7 +255,7 @@ const LegendCustomTemplate = () => {
       }
     }
   ];
-  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+  return <Widget layers={layers}></Widget>;
 };
 
 const LegendNoChildrenTemplate = () => {
@@ -260,7 +267,7 @@ const LegendNoChildrenTemplate = () => {
       legend: {}
     }
   ];
-  return <LegendWidgetUI layers={layers}></LegendWidgetUI>;
+  return <Widget layers={layers}></Widget>;
 };
 
 export const Playground = Template.bind({});

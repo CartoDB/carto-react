@@ -5,6 +5,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { columns, rows } from '../../../src/widgets/TableWidgetUI/mockData';
 import Typography from '../../../src/components/atoms/Typography';
 import LoadingTemplateWithSwitch from './LoadingTemplateWithSwitch';
+import { IntlProvider } from 'react-intl';
 
 const options = {
   title: 'Widgets/TableWidgetUI',
@@ -20,14 +21,20 @@ const options = {
 };
 export default options;
 
+const Widget = (props) => (
+  <IntlProvider locale='en'>
+    <TableWidgetUI {...props} />
+  </IntlProvider>
+);
+
 const Template = (args) => {
-  return <TableWidgetUI {...args} />;
+  return <Widget {...args} />;
 };
 
 const TableWidgetUiWithDefaults = (args) => {
   const theme = useTheme();
   return (
-    <TableWidgetUI
+    <Widget
       {...args}
       height={theme.spacing(36)}
       pagination={true}

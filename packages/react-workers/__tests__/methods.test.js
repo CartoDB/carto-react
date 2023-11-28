@@ -78,7 +78,6 @@ describe('Worker Methods', () => {
       ).toEqual({
         totalCount: 6,
         hasData: true,
-        isDataComplete: true,
         rows: sampleGeoJson.features.map((f) => f.properties)
       });
     });
@@ -94,7 +93,6 @@ describe('Worker Methods', () => {
       ).toEqual({
         totalCount: 6,
         hasData: true,
-        isDataComplete: true,
         rows: sampleGeoJson.features
           .map((f) => f.properties)
           .sort((a, b) => b.size_m2 - a.size_m2)

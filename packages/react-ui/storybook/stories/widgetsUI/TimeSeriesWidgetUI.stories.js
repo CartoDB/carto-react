@@ -4,6 +4,7 @@ import { GroupDateTypes } from '@carto/react-core';
 import { TIME_SERIES_CHART_TYPES } from '@carto/react-ui';
 import LoadingTemplateWithSwitch from './LoadingTemplateWithSwitch';
 import { Box } from '@mui/material';
+import { IntlProvider } from 'react-intl';
 
 const data = [
   { name: 1514761200000, value: 310 },
@@ -181,6 +182,12 @@ const options = {
 
 export default options;
 
+const Widget = (props) => (
+  <IntlProvider locale='en'>
+    <TimeSeriesWidgetUI {...props} />
+  </IntlProvider>
+);
+
 const Template = (args) => {
   if (args.timeWindow && !Array.isArray(args.timeWindow)) {
     args.timeWindow = [];
@@ -189,7 +196,7 @@ const Template = (args) => {
   const [selectedCategories, setSelectedCategories] = React.useState([]);
 
   return (
-    <TimeSeriesWidgetUI
+    <Widget
       {...args}
       selectedCategories={selectedCategories}
       onSelectedCategoriesChange={setSelectedCategories}
@@ -205,7 +212,7 @@ const TimeSeriesWidgetUIWithDefaults = (args) => {
   const [selectedCategories, setSelectedCategories] = React.useState([]);
 
   return (
-    <TimeSeriesWidgetUI
+    <Widget
       {...args}
       selectedCategories={selectedCategories}
       onSelectedCategoriesChange={setSelectedCategories}
@@ -254,7 +261,7 @@ export const FitHeightMultiple = (args) => {
         flexDirection: 'column'
       }}
     >
-      <TimeSeriesWidgetUI
+      <Widget
         {...args}
         selectedCategories={selectedCategories}
         onSelectedCategoriesChange={setSelectedCategories}
