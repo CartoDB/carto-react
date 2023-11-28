@@ -1,14 +1,19 @@
-import { Credentials } from '@carto/react-api/';
-import { SourceProps } from '@carto/react-api/types';
+import { Credentials, SourceProps } from '@carto/react-api/';
 import { FiltersLogicalOperators, Viewport, _FilterTypes } from '@carto/react-core';
 import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/';
 import { InitialCartoState, CartoState, ViewState } from '../types';
 import { AnyAction, Reducer } from 'redux';
 import { Feature, Polygon, MultiPolygon } from 'geojson';
 
+type FilterValues = string[] | number[] | number[][]
+
+export type SourceFilters = {
+  [column: string]: Partial<Record<_FilterTypes, { values: FilterValues; owner?: string; params?: Record<string, unknown>; }>>
+}
+
 type Source = SourceProps & {
   id: string;
-  filters?: any;
+  filters?: SourceFilters;
   filtersLogicalOperator?: FiltersLogicalOperators;
   isDroppingFeatures?: boolean;
 };
@@ -23,7 +28,7 @@ type BasemapName = CartoBasemapsNames | GMapsBasemapsNames;
 
 type FilterBasic = {
   type: _FilterTypes;
-  values: string[] | number[] | number[][];
+  values: FilterValues;
   owner?: string;
   params?: Record<string, unknown>;
 };
@@ -40,6 +45,7 @@ type SpatialFilter = {
 };
 
 type Filter = FilterBasic & FilterCommonProps;
+
 
 type FeaturesData = {
   sourceId: string;

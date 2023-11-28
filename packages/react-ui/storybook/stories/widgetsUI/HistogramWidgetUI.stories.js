@@ -1,6 +1,7 @@
 import React from 'react';
 import HistogramWidgetUI from '../../../src/widgets/HistogramWidgetUI/HistogramWidgetUI';
 import { Label, ThinContainer } from '../../utils/storyStyles';
+import { IntlProvider } from 'react-intl';
 
 const options = {
   title: 'Widgets/HistogramWidgetUI',
@@ -16,8 +17,14 @@ const options = {
 
 export default options;
 
+const Widget = (props) => (
+  <IntlProvider locale='en'>
+    <HistogramWidgetUI {...props} />
+  </IntlProvider>
+);
+
 const Template = (args) => {
-  return <HistogramWidgetUI {...args} />;
+  return <Widget {...args} />;
 };
 
 const LoadingTemplate = (args) => {
@@ -27,13 +34,13 @@ const LoadingTemplate = (args) => {
         {'Limited width'}
       </Label>
       <ThinContainer>
-        <HistogramWidgetUI {...args} />
+        <Widget {...args} />
       </ThinContainer>
 
       <Label variant='body1' mt={8} mb={3}>
         {'Responsive'}
       </Label>
-      <HistogramWidgetUI {...args} />
+      <Widget {...args} />
     </>
   );
 };

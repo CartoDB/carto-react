@@ -1,6 +1,7 @@
 import React from 'react';
 import ComparativeCategoryWidgetUI from '../../../src/widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
 import { Label, ThinContainer } from '../../utils/storyStyles';
+import { IntlProvider } from 'react-intl';
 
 const options = {
   title: 'Widgets/ComparativeCategoryWidgetUI',
@@ -9,7 +10,13 @@ const options = {
 
 export default options;
 
-const Template = (args) => <ComparativeCategoryWidgetUI {...args} />;
+const Widget = (props) => (
+  <IntlProvider locale='en'>
+    <ComparativeCategoryWidgetUI {...props} />
+  </IntlProvider>
+);
+
+const Template = (args) => <Widget {...args} />;
 
 const LoadingTemplate = (args) => {
   return (
@@ -18,13 +25,13 @@ const LoadingTemplate = (args) => {
         {'Limited width'}
       </Label>
       <ThinContainer>
-        <ComparativeCategoryWidgetUI {...args} />
+        <Widget {...args} />
       </ThinContainer>
 
       <Label variant='body1' mt={8} mb={3}>
         {'Responsive'}
       </Label>
-      <ComparativeCategoryWidgetUI {...args} />
+      <Widget {...args} />
     </>
   );
 };

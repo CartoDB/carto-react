@@ -2,6 +2,7 @@ import React from 'react';
 import BarWidgetUI from '../../../src/widgets/BarWidgetUI/BarWidgetUI';
 import { buildReactPropsAsString } from '../../utils/utils';
 import { Label, ThinContainer } from '../../utils/storyStyles';
+import { IntlProvider } from 'react-intl';
 
 const options = {
   title: 'Widgets/BarWidgetUI',
@@ -10,12 +11,18 @@ const options = {
 
 export default options;
 
+const Widget = (props) => (
+  <IntlProvider locale='en'>
+    <BarWidgetUI {...props} />
+  </IntlProvider>
+);
+
 const Template = (args) => {
   if (args.series && !Array.isArray(args.series)) {
     args.series = [];
   }
 
-  return <BarWidgetUI {...args} />;
+  return <Widget {...args} />;
 };
 
 const LoadingTemplate = (args) => {
@@ -29,13 +36,13 @@ const LoadingTemplate = (args) => {
         {'Limited width'}
       </Label>
       <ThinContainer>
-        <BarWidgetUI {...args} />
+        <Widget {...args} />
       </ThinContainer>
 
       <Label variant='body1' mt={8} mb={3}>
         {'Responsive'}
       </Label>
-      <BarWidgetUI {...args} />
+      <Widget {...args} />
     </>
   );
 };

@@ -2,7 +2,22 @@
 
 ## Not released
 
+## 2.3
+
+### 2.3.1 (2023-11-27)
+
+- Add localization to widgets with react-intl [#793](https://github.com/CartoDB/carto-react/pull/793)
+
 ## 2.2
+
+### 2.2.16 (2023-11-23)
+
+- Fix TableWidget cannot render columns when it contains an array [#802](https://github.com/CartoDB/carto-react/pull/802)
+- Allow server-side table widget without hard limit [#798](https://github.com/CartoDB/carto-react/pull/798)
+
+### 2.2.15 (2023-11-15)
+
+- Fix TableWidget not displaying quadbin field for a table with spatial index [#799](https://github.com/CartoDB/carto-react/pull/799)
 
 ### 2.2.14 (2023-10-25)
 
