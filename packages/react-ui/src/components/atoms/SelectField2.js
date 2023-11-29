@@ -11,13 +11,17 @@ import {
 import Typography from './Typography';
 import uniqueId from 'lodash/uniqueId';
 
-const StyledSelect = styled(Select)(({ theme }) => ({
+const StyledSelect = styled(Select)(() => ({
   '& .MuiInputAdornment-root.MuiInputAdornment-positionStart': {
     paddingLeft: `8px !important`
   },
   '& .MuiInputBase-inputAdornedStart': {
     paddingLeft: `0px !important`
   }
+}));
+
+const PlaceholderItem = styled(MenuItem)(() => ({
+  display: 'none'
 }));
 
 const SelectField2 = forwardRef(
@@ -93,7 +97,7 @@ const SelectField2 = forwardRef(
         error={error}
         focused={focused}
         disabled={disabled}
-        sx={{ backgroundColor: 'yellow !important' }}
+        sx={{ backgroundColor: '#fbfbbc !important' }}
       >
         {label && <InputLabel id={labelId || id}>{label}</InputLabel>}
 
@@ -121,7 +125,7 @@ const SelectField2 = forwardRef(
           }}
         >
           {placeholder && (
-            <MenuItem value=''>
+            <PlaceholderItem disabled value=''>
               <Typography
                 variant={isSmall ? 'body2' : 'body1'}
                 color='text.hint'
@@ -130,7 +134,7 @@ const SelectField2 = forwardRef(
               >
                 {placeholder}
               </Typography>
-            </MenuItem>
+            </PlaceholderItem>
           )}
           {children}
         </StyledSelect>
