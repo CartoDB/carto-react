@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix dataSources store type [#807](https://github.com/CartoDB/carto-react/pull/807)
+
 ## 2.3
 
 ### 2.3.1 (2023-11-27)
