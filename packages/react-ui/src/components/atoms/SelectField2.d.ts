@@ -1,13 +1,13 @@
 import React from 'react';
-import { MenuProps } from '@mui/material';
+import { InputProps, MenuProps } from '@mui/material';
 import { SelectProps } from '@mui/material/Select';
-import { TextFieldProps } from '@mui/material/TextField';
 
 export type SelectFieldProps2 = Omit<SelectProps, 'placeholder'> & {
   placeholder?: React.ReactNode | string;
   size?: 'small' | 'medium';
   renderValue?: (value: string[]) => React.ReactNode;
   menuProps?: Partial<MenuProps>;
+  inputProps?: Partial<InputProps>;
   helperText?: React.ReactNode | string;
 };
 
