@@ -22,6 +22,7 @@ const SelectField2 = forwardRef(
       displayEmpty,
       renderValue: customRenderValue,
       menuProps,
+      inputProps,
       labelId,
       label,
       helperText,
@@ -40,8 +41,16 @@ const SelectField2 = forwardRef(
 
     // Based on default renderValue from MUI
     // https://github.com/mui/material-ui/blob/22cf8461ca3fc89a9f40cb860458374922afb6e2/packages/mui-base/src/Select/Select.tsx#L23
-    const defaultRenderValue = React.useCallback(
+    const placeholderRenderValue = React.useCallback(
       (selected) => {
+        /*         const childrenArray = React.Children.toArray(children);
+
+        const item = childrenArray.find(({ value }) => value === selected);
+
+        console.log('selected', selected);
+        console.log('childrenArray', childrenArray);
+        console.log('item', item); */
+
         if (selected.length === 0 || selected === null) {
           return (
             <Typography
@@ -64,13 +73,20 @@ const SelectField2 = forwardRef(
     );
 
     // Use the custom renderValue function if provided, or use the default
-    const renderValue = customRenderValue || defaultRenderValue;
+    const renderValue =
+      customRenderValue || placeholder ? placeholderRenderValue : undefined;
 
     // Accessibility: label id
     const [id] = useState(uniqueId('select-label-'));
 
     return (
-      <FormControl size={size} error={error} focused={focused} disabled={disabled}>
+      <FormControl
+        size={size}
+        error={error}
+        focused={focused}
+        disabled={disabled}
+        sx={{ backgroundColor: 'yellow !important' }}
+      >
         {label && <InputLabel id={labelId || id}>{label}</InputLabel>}
 
         <StyledSelect
@@ -80,6 +96,10 @@ const SelectField2 = forwardRef(
           size={size}
           displayEmpty={displayEmpty || !!placeholder}
           renderValue={renderValue}
+          inputProps={{
+            ...inputProps,
+            children
+          }}
           MenuProps={{
             ...menuProps,
             anchorOrigin: {
@@ -91,9 +111,7 @@ const SelectField2 = forwardRef(
               horizontal: 'left'
             }
           }}
-        >
-          {children}
-        </StyledSelect>
+        />
 
         {helperText && (
           <FormHelperText aria-label={`${name}-helper`}>{helperText}</FormHelperText>
@@ -111,6 +129,7 @@ SelectField2.propTypes = {
   size: PropTypes.oneOf(['small', 'medium']),
   renderValue: PropTypes.func,
   menuProps: PropTypes.object,
+  inputProps: PropTypes.object,
   helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
 };
 

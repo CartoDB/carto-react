@@ -32,7 +32,7 @@ const SelectField = forwardRef(
 
     const isSmall = size === 'small';
 
-    const defaultRenderValue = React.useCallback(
+    const placeholderRenderValue = React.useCallback(
       (selected) => {
         if (selected.length === 0) {
           return (
@@ -61,7 +61,8 @@ const SelectField = forwardRef(
     );
 
     // Use the custom renderValue function if provided, or use the default
-    const renderValue = customRenderValue || defaultRenderValue;
+    const renderValue =
+      customRenderValue || placeholder ? placeholderRenderValue : undefined;
 
     return (
       <StyledTextField
