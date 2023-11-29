@@ -73,8 +73,11 @@ const SelectField2 = forwardRef(
     );
 
     // Use the custom renderValue function if provided, or use the default
-    const renderValue =
-      customRenderValue || placeholder ? placeholderRenderValue : undefined;
+    const renderValue = customRenderValue
+      ? customRenderValue
+      : placeholder
+      ? placeholderRenderValue
+      : undefined;
 
     // Accessibility: label id
     const [id] = useState(uniqueId('select-label-'));
