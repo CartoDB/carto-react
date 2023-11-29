@@ -65,9 +65,14 @@ const SelectField2 = forwardRef(
         }
         if (Array.isArray(selected)) {
           return selected.join(', ');
+        } else if (selected && typeof selected === 'object') {
+          // Check if selected is an object and has a 'label' property
+          if ('label' in selected) {
+            return selected.label;
+          }
+        } else {
+          return selected || '';
         }
-
-        return selected?.label || null;
       },
       [isSmall, placeholder]
     );
