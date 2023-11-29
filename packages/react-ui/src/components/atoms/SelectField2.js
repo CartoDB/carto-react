@@ -1,6 +1,13 @@
 import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormControl, FormHelperText, InputLabel, Select, styled } from '@mui/material';
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+  styled
+} from '@mui/material';
 import Typography from './Typography';
 import uniqueId from 'lodash/uniqueId';
 
@@ -17,12 +24,13 @@ const SelectField2 = forwardRef(
   (
     {
       children,
+      // https://github.com/mui/material-ui/pull/8875#issuecomment-349771804
       placeholder,
       size,
       displayEmpty,
       renderValue: customRenderValue,
       menuProps,
-      inputProps,
+      //inputProps,
       labelId,
       label,
       helperText,
@@ -41,16 +49,8 @@ const SelectField2 = forwardRef(
 
     // Based on default renderValue from MUI
     // https://github.com/mui/material-ui/blob/22cf8461ca3fc89a9f40cb860458374922afb6e2/packages/mui-base/src/Select/Select.tsx#L23
-    const placeholderRenderValue = React.useCallback(
+    /*     const placeholderRenderValue = React.useCallback(
       (selected) => {
-        /*         const childrenArray = React.Children.toArray(children);
-
-        const item = childrenArray.find(({ value }) => value === selected);
-
-        console.log('selected', selected);
-        console.log('childrenArray', childrenArray);
-        console.log('item', item); */
-
         if (selected.length === 0 || selected === null) {
           return (
             <Typography
@@ -75,14 +75,14 @@ const SelectField2 = forwardRef(
         }
       },
       [isSmall, placeholder]
-    );
+    ); */
 
     // Use the custom renderValue function if provided, or use the default
-    const renderValue = customRenderValue
+    /*     const renderValue = customRenderValue
       ? customRenderValue
       : placeholder
       ? placeholderRenderValue
-      : undefined;
+      : undefined; */
 
     // Accessibility: label id
     const [id] = useState(uniqueId('select-label-'));
@@ -103,11 +103,11 @@ const SelectField2 = forwardRef(
           ref={ref}
           size={size}
           displayEmpty={displayEmpty || !!placeholder}
-          renderValue={renderValue}
-          inputProps={{
-            ...inputProps,
-            children
-          }}
+          renderValue={customRenderValue}
+          // inputProps={{
+          //   ...inputProps,
+          //   children
+          // }}
           MenuProps={{
             ...menuProps,
             anchorOrigin: {
@@ -119,7 +119,21 @@ const SelectField2 = forwardRef(
               horizontal: 'left'
             }
           }}
-        />
+        >
+          {placeholder && (
+            <MenuItem value=''>
+              <Typography
+                variant={isSmall ? 'body2' : 'body1'}
+                color='text.hint'
+                component='span'
+                noWrap
+              >
+                {placeholder}
+              </Typography>
+            </MenuItem>
+          )}
+          {children}
+        </StyledSelect>
 
         {helperText && (
           <FormHelperText aria-label={`${name}-helper`}>{helperText}</FormHelperText>
@@ -137,7 +151,7 @@ SelectField2.propTypes = {
   size: PropTypes.oneOf(['small', 'medium']),
   renderValue: PropTypes.func,
   menuProps: PropTypes.object,
-  inputProps: PropTypes.object,
+  //inputProps: PropTypes.object,
   helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
 };
 
