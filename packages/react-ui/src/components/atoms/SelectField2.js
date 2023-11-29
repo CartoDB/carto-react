@@ -38,9 +38,11 @@ const SelectField2 = forwardRef(
 
     const isSmall = size === 'small';
 
+    // Based on default renderValue from MUI
+    // https://github.com/mui/material-ui/blob/22cf8461ca3fc89a9f40cb860458374922afb6e2/packages/mui-base/src/Select/Select.tsx#L23
     const defaultRenderValue = React.useCallback(
       (selected) => {
-        if (selected.length === 0) {
+        if (selected.length === 0 || selected === null) {
           return (
             <Typography
               variant={isSmall ? 'body2' : 'body1'}
@@ -54,14 +56,9 @@ const SelectField2 = forwardRef(
         }
         if (Array.isArray(selected)) {
           return selected.join(', ');
-        } else if (selected && typeof selected === 'object') {
-          // Check if selected is an object and has a 'label' property
-          if ('label' in selected) {
-            return selected.label;
-          }
-        } else {
-          return selected || '';
         }
+
+        return selected?.label || null;
       },
       [isSmall, placeholder]
     );

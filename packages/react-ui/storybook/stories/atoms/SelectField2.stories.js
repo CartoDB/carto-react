@@ -10,7 +10,6 @@ import {
   Label
 } from '../../utils/storyStyles';
 import Button from '../../../src/components/atoms/Button';
-import { EuroOutlined } from '@mui/icons-material';
 
 const options = {
   title: 'Atoms/Select Field 2',
@@ -96,24 +95,36 @@ const SelectField2Item = ({
   error,
   ...rest
 }) => {
-  const [content, setContent] = useState([]);
+  const [contentObject, setContentObject] = useState([]);
+  const [contentArray, setContentArray] = useState([]);
 
-  const handleChange = (event) => {
+  const handleChangeObject = (event) => {
     const {
       target: { value }
     } = event;
-    setContent(
+    setContentObject(
       // On autofill we get a stringified value
       typeof value === 'string' ? value.split(',') : value
     );
   };
 
   const optionsSelect = [
-    { label: 'Ten: super large text with overflow', value: '10', icon: <EuroOutlined /> },
-    { label: 'Twenty', value: '20', icon: <EuroOutlined /> },
-    { label: 'Thirty', value: '30', icon: <EuroOutlined /> }
+    { label: 'Ten: super large text with overflow', id: '10' },
+    { label: 'Twenty', id: '20' },
+    { label: 'Thirty', id: '30' }
   ];
 
+  const handleChangeArray = (event) => {
+    const {
+      target: { value }
+    } = event;
+    setContentArray(
+      // On autofill we get a stringified value
+      typeof value === 'string' ? value.split(',') : value
+    );
+  };
+  console.log('contentArray', contentArray);
+  console.log('contentObject', contentObject);
   return (
     <div>
       <div>
@@ -126,25 +137,17 @@ const SelectField2Item = ({
           variant={variant}
           placeholder={placeholder}
           helperText={helperText}
-          value={content}
+          value={contentObject}
           focused={focused}
           disabled={disabled}
-          onChange={handleChange}
+          onChange={handleChangeObject}
           error={error}
           size={size}
           fullWidth={rest.fullWidth}
-          defaultValue={optionsSelect.length && optionsSelect[0].label}
         >
           {optionsSelect.map((o, i) => (
-            <MenuItem key={i} value={typeof o === 'object' ? o.value : o}>
-              {typeof o === 'object' ? (
-                <span>
-                  {o.icon && <img src={o.icon} alt='' />}
-                  {o.label}
-                </span>
-              ) : (
-                o
-              )}
+            <MenuItem key={i} value={o.label}>
+              {o.label}
             </MenuItem>
           ))}
         </SelectField2>
@@ -159,8 +162,8 @@ const SelectField2Item = ({
           variant={variant}
           placeholder={placeholder}
           helperText={helperText}
-          onChange={handleChange}
-          value={content}
+          onChange={handleChangeArray}
+          value={contentArray}
           focused={focused}
           disabled={disabled}
           error={error}
