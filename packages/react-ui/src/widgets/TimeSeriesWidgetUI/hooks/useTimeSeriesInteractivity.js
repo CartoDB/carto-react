@@ -9,7 +9,8 @@ let initialTimeWindow = null;
 export default function useTimeSeriesInteractivity({
   echartsInstance,
   data,
-  canSelectLines
+  canSelectLines,
+  filterable
 }) {
   const theme = useTheme();
   const { isPlaying, isPaused, setIsPaused, timeWindow, setTimeWindow, stop } =
@@ -41,6 +42,7 @@ export default function useTimeSeriesInteractivity({
   // Echarts events
   useEffect(() => {
     function clickEvent(params) {
+      if (!filterable) return;
       // params target is specified if we hit data-line or point, not time selection is only for background hits
       if (canSelectLines && params.target) return;
 
@@ -69,11 +71,14 @@ export default function useTimeSeriesInteractivity({
     stop,
     timeWindow.length,
     updateTimelineByCoordinate,
-    canSelectLines
+    canSelectLines,
+    filterable
   ]);
 
   useEffect(() => {
     function mouseDownEvent(params) {
+      if (!filterable) return;
+
       if (params.target?.type === 'ec-line') {
         setIsMarkLineSelected(true);
         updateCursor('grabbing');
@@ -106,7 +111,7 @@ export default function useTimeSeriesInteractivity({
     }
 
     return addEventWithCleanUp(zr, 'mousedown', mouseDownEvent);
-  }, [zr, echartsInstance, timeWindow, updateCursor]);
+  }, [zr, echartsInstance, timeWindow, updateCursor, filterable]);
 
   useEffect(() => {
     function mouseMoveEvent(params) {
@@ -184,6 +189,12 @@ export default function useTimeSeriesInteractivity({
     timeWindow,
     updateCursor
   ]);
+
+  useEffect(() => {
+    if (!filterable && timeWindow.length) {
+      setTimeWindow([]);
+    }
+  }, [filterable, setTimeWindow, timeWindow.length]);
 
   // markLine in echarts
   const timelineOptions = useMemo(() => {
