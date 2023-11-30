@@ -78,6 +78,7 @@ const debounceTimeout = 250;
  * @param  {boolean=} [props.stableHeight] -  If specified, error and no-data state will maintain same height as normal widget in loading/loaded state.
  * @param  {boolean} [props.showControls] - Enable/disable animation controls (play, pause, stop, speed). True by default.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
+ * * @param  {boolean} [props.filterable] - Enable/disable widget filtering capabilities. Enabled by default.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {function=} [props.onError] - Function to handle error messages from the widget.
  * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
@@ -125,6 +126,7 @@ function TimeSeriesWidget({
   stableHeight,
   showControls,
   animation,
+  filterable,
   isPlaying,
   onPlay,
   isPaused,
@@ -448,6 +450,7 @@ function TimeSeriesWidget({
               fitHeight={fitHeight}
               showControls={showControls}
               animation={animation}
+              filterable={filterable}
               isPlaying={isPlaying}
               onPlay={handlePlay}
               isPaused={isPaused}
@@ -527,6 +530,7 @@ TimeSeriesWidget.propTypes = {
   fitHeight: PropTypes.bool,
   stableHeight: PropTypes.bool,
   animation: PropTypes.bool,
+  filterable: PropTypes.bool,
   isPlaying: PropTypes.bool,
   onPlay: PropTypes.func,
   isPaused: PropTypes.bool,
@@ -551,6 +555,7 @@ TimeSeriesWidget.defaultProps = {
   tooltip: true,
   formatter: (value) => value,
   animation: true,
+  filterable: true,
   isPlaying: false,
   isPaused: false,
   timeWindow: [],
