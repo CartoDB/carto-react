@@ -82,7 +82,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^2.3.1",
+    "@carto/react-core": "^2.3.2",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@formatjs/intl-localematcher": "^0.4.0",
