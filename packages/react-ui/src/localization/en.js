@@ -15,12 +15,12 @@ const locales = {
         search: 'Search'
       },
       bar: {
-        all: 'All selected',
+        all: 'All',
         selectedItems: '{items, plural, one{# selected} other{# selected}}',
         clear: 'Clear'
       },
       histogram: {
-        all: 'All selected',
+        all: 'All',
         selectedItems: '{items} selected',
         clear: 'Clear'
       },
@@ -71,7 +71,7 @@ const locales = {
       pie: {
         clear: 'Clear',
         selectedItems: '{items, plural, one{# selected} other{# selected}}',
-        allSelected: 'All selected'
+        allSelected: 'All'
       }
     }
   }

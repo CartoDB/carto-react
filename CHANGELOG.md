@@ -4,6 +4,7 @@
 
 - Added filterable prop to TimeSeriesWidget [#808](https://github.com/CartoDB/carto-react/pull/808)
 - Fix dataSources store type [#807](https://github.com/CartoDB/carto-react/pull/807)
+- Fix widget copies [#809](https://github.com/CartoDB/carto-react/pull/809)
 
 ## 2.3
 
