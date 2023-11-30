@@ -7,7 +7,7 @@ export type SelectFieldProps2 = Omit<SelectProps, 'placeholder'> & {
   size?: 'small' | 'medium';
   renderValue?: (value: string[]) => React.ReactNode;
   menuProps?: Partial<MenuProps>;
-  //inputProps?: Partial<InputProps>;
+  inputProps?: Partial<InputProps>;
   helperText?: React.ReactNode | string;
 };
 
