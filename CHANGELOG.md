@@ -4,6 +4,10 @@
 
 ## 2.3
 
+### 2.3.2 (2023-11-30)
+
+- Fix widget copies [#809](https://github.com/CartoDB/carto-react/pull/809)
+
 ### 2.3.1 (2023-11-27)
 
 - Add localization to widgets with react-intl [#793](https://github.com/CartoDB/carto-react/pull/793)
