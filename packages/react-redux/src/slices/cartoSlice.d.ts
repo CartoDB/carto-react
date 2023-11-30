@@ -5,19 +5,6 @@ import { InitialCartoState, CartoState, ViewState, Source, FilterValues } from '
 import { AnyAction, Reducer } from 'redux';
 import { Feature, Polygon, MultiPolygon } from 'geojson';
 
-type FilterValues = string[] | number[] | number[][]
-
-export type SourceFilters = {
-  [column: string]: Partial<Record<_FilterTypes, { values: FilterValues; owner?: string; params?: Record<string, unknown>; ignore?: boolean }>>
-}
-
-type Source = SourceProps & {
-  id: string;
-  filters?: SourceFilters;
-  filtersLogicalOperator?: FiltersLogicalOperators;
-  isDroppingFeatures?: boolean;
-};
-
 type Layer = {
   id: string;
   source?: string;
