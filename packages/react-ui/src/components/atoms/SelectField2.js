@@ -34,7 +34,7 @@ const SelectField2 = forwardRef(
       displayEmpty,
       renderValue: customRenderValue,
       menuProps,
-      //inputProps,
+      inputProps,
       labelId,
       label,
       helperText,
@@ -42,6 +42,7 @@ const SelectField2 = forwardRef(
       error,
       focused,
       disabled,
+      'aria-label': ariaLabel,
       ...otherProps
     },
     ref
@@ -51,45 +52,9 @@ const SelectField2 = forwardRef(
 
     const isSmall = size === 'small';
 
-    // Based on default renderValue from MUI
-    // https://github.com/mui/material-ui/blob/22cf8461ca3fc89a9f40cb860458374922afb6e2/packages/mui-base/src/Select/Select.tsx#L23
-    /*     const placeholderRenderValue = React.useCallback(
-      (selected) => {
-        if (selected.length === 0 || selected === null) {
-          return (
-            <Typography
-              variant={isSmall ? 'body2' : 'body1'}
-              color='text.hint'
-              component='span'
-              noWrap
-            >
-              {placeholder}
-            </Typography>
-          );
-        }
-        if (Array.isArray(selected)) {
-          return selected.join(', ');
-        } else if (selected && typeof selected === 'object') {
-          // Check if selected is an object and has a 'label' property
-          if ('label' in selected) {
-            return selected.label;
-          }
-        } else {
-          return selected || '';
-        }
-      },
-      [isSmall, placeholder]
-    ); */
-
-    // Use the custom renderValue function if provided, or use the default
-    /*     const renderValue = customRenderValue
-      ? customRenderValue
-      : placeholder
-      ? placeholderRenderValue
-      : undefined; */
-
-    // Accessibility: label id
-    const [id] = useState(uniqueId('select-label-'));
+    // Accessibility attributes
+    const [defaultId] = useState(uniqueId('select-label-'));
+    const ariaLabelledBy = label ? labelId || defaultId : undefined;
 
     return (
       <FormControl
@@ -99,19 +64,19 @@ const SelectField2 = forwardRef(
         disabled={disabled}
         sx={{ backgroundColor: '#fbfbbc !important' }}
       >
-        {label && <InputLabel id={labelId || id}>{label}</InputLabel>}
+        {label && <InputLabel id={ariaLabelledBy}>{label}</InputLabel>}
 
         <StyledSelect
           {...otherProps}
-          labelId={labelId || id}
+          labelId={ariaLabelledBy}
           ref={ref}
           size={size}
           displayEmpty={displayEmpty || !!placeholder}
           renderValue={customRenderValue}
-          // inputProps={{
-          //   ...inputProps,
-          //   children
-          // }}
+          inputProps={{
+            ...inputProps,
+            'aria-label': ariaLabel
+          }}
           MenuProps={{
             ...menuProps,
             anchorOrigin: {
@@ -155,7 +120,7 @@ SelectField2.propTypes = {
   size: PropTypes.oneOf(['small', 'medium']),
   renderValue: PropTypes.func,
   menuProps: PropTypes.object,
-  //inputProps: PropTypes.object,
+  inputProps: PropTypes.object,
   helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
 };
 
