@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Checkbox, MenuItem, styled } from '@mui/material';
-import SelectField2 from './SelectField2';
+import SelectField from './SelectField';
 import Typography from './Typography';
 
 const BoxContent = styled(Box)({
@@ -53,7 +53,7 @@ const MultipleSelectField = forwardRef(
     );
 
     return (
-      <SelectField2
+      <SelectField
         {...otherProps}
         ref={ref}
         multiple
@@ -66,7 +66,7 @@ const MultipleSelectField = forwardRef(
             {item.label}
           </MenuItem>
         ))}
-      </SelectField2>
+      </SelectField>
     );
   }
 );
