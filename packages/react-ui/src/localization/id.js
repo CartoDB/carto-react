@@ -16,12 +16,12 @@ const locales = {
         search: 'Cari'
       },
       bar: {
-        all: 'Semua yang dipilih',
+        all: 'Semua',
         selectedItems: '{items, plural, one{# terpilih} other{# terpilih}}',
         clear: 'Bersihkan'
       },
       histogram: {
-        all: 'Semua yang dipilih',
+        all: 'Semua',
         selectedItems: '{items} terpilih',
         clear: 'Bersihkan'
       },

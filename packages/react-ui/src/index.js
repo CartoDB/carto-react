@@ -33,7 +33,6 @@ import Typography from './components/atoms/Typography';
 import Button from './components/atoms/Button';
 import PasswordField from './components/atoms/PasswordField';
 import SelectField from './components/atoms/SelectField';
-import SelectField2 from './components/atoms/SelectField2';
 import MultipleSelectField from './components/atoms/MultipleSelectField';
 import UploadField from './components/molecules/UploadField/UploadField';
 import AppBar from './components/organisms/AppBar/AppBar';
@@ -89,7 +88,6 @@ export {
   Button,
   PasswordField,
   SelectField,
-  SelectField2,
   MultipleSelectField,
   UploadField,
   AppBar,
