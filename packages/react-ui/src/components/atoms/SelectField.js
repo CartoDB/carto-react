@@ -70,6 +70,7 @@ const SelectField = forwardRef(
         <StyledSelect
           {...otherProps}
           labelId={ariaLabelledBy}
+          name={name}
           ref={ref}
           size={size}
           displayEmpty={displayEmpty || !!placeholder}
