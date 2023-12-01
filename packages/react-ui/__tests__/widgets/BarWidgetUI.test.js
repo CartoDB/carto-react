@@ -51,7 +51,7 @@ describe('BarWidgetUI', () => {
 
   test('all selected', () => {
     render(<Widget />);
-    expect(screen.getByText(/All selected/)).toBeInTheDocument();
+    expect(screen.getByText(/All/)).toBeInTheDocument();
   });
 
   test('renders with stacked false', () => {

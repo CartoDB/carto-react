@@ -23,6 +23,7 @@ export default function TimeSeriesChart({
   height: heightProp,
   fitHeight,
   animation,
+  filterable,
   selectedCategories,
   onCategoryClick
 }) {
@@ -165,7 +166,8 @@ export default function TimeSeriesChart({
     useTimeSeriesInteractivity({
       echartsInstance,
       data,
-      canSelectLines: Boolean(onCategoryClick)
+      canSelectLines: Boolean(onCategoryClick),
+      filterable
     });
 
   const seriesOptions = useMemo(

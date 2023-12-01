@@ -31,6 +31,7 @@ function TimeSeriesWidgetUI({
   fitHeight,
   showControls,
   animation,
+  filterable,
   onTimelineUpdate,
   timeWindow,
   timelinePosition,
@@ -98,6 +99,7 @@ function TimeSeriesWidgetUI({
       fitHeight={fitHeight}
       showControls={showControls}
       animation={animation}
+      filterable={filterable}
       palette={palette}
       showLegend={showLegend}
       selectedCategories={selectedCategories}
@@ -141,6 +143,7 @@ TimeSeriesWidgetUI.propTypes = {
   height: PropTypes.string,
   fitHeight: PropTypes.bool,
   animation: PropTypes.bool,
+  filterable: PropTypes.bool,
   isPlaying: PropTypes.bool,
   onPlay: PropTypes.func,
   isPaused: PropTypes.bool,
@@ -164,6 +167,7 @@ TimeSeriesWidgetUI.defaultProps = {
   tooltipFormatter: defaultTooltipFormatter,
   formatter: (value) => value,
   animation: true,
+  filterable: true,
   isPlaying: false,
   isPaused: false,
   showControls: true,
@@ -189,6 +193,7 @@ function TimeSeriesWidgetUIContent({
   fitHeight,
   showControls,
   animation,
+  filterable,
   palette,
   selectedCategories,
   onSelectedCategoriesChange,
@@ -325,7 +330,7 @@ function TimeSeriesWidgetUIContent({
         </Typography>
       </Box>
 
-      {showClearButton && (
+      {filterable && showClearButton && (
         <Link
           variant='caption'
           style={{ cursor: 'pointer' }}
@@ -338,7 +343,9 @@ function TimeSeriesWidgetUIContent({
     </>
   );
 
-  const controls = showControls && <TimeSeriesControls data={data} stepSize={stepSize} />;
+  const controls = filterable && showControls && (
+    <TimeSeriesControls data={data} stepSize={stepSize} />
+  );
 
   const chart = (
     <TimeSeriesChart
@@ -355,6 +362,7 @@ function TimeSeriesWidgetUIContent({
       height={height}
       fitHeight={fitHeight}
       animation={animation}
+      filterable={filterable}
       selectedCategories={selectedCategories}
       onCategoryClick={onSelectedCategoriesChange && handleCategoryClick}
     />

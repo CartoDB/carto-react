@@ -1,22 +1,9 @@
 import { Credentials, SourceProps } from '@carto/react-api/';
 import { FiltersLogicalOperators, Viewport, _FilterTypes } from '@carto/react-core';
 import { CartoBasemapsNames, GMapsBasemapsNames } from '@carto/react-basemaps/';
-import { InitialCartoState, CartoState, ViewState } from '../types';
+import { InitialCartoState, CartoState, ViewState, Source, FilterValues } from '../types';
 import { AnyAction, Reducer } from 'redux';
 import { Feature, Polygon, MultiPolygon } from 'geojson';
-
-type FilterValues = string[] | number[] | number[][]
-
-export type SourceFilters = {
-  [column: string]: Partial<Record<_FilterTypes, { values: FilterValues; owner?: string; params?: Record<string, unknown>; }>>
-}
-
-type Source = SourceProps & {
-  id: string;
-  filters?: SourceFilters;
-  filtersLogicalOperator?: FiltersLogicalOperators;
-  isDroppingFeatures?: boolean;
-};
 
 type Layer = {
   id: string;
