@@ -42,6 +42,7 @@ const SelectField = forwardRef(
       error,
       focused,
       disabled,
+      fullWidth,
       'aria-label': ariaLabel,
       ...otherProps
     },
@@ -62,8 +63,9 @@ const SelectField = forwardRef(
         error={error}
         focused={focused}
         disabled={disabled}
+        fullWidth={fullWidth}
         // TODO: remove this backgroundColor before creating the patch version
-        sx={{ backgroundColor: '#fbfbbc !important' }}
+        //sx={{ backgroundColor: '#fbfbbc !important' }}
       >
         {label && <InputLabel id={ariaLabelledBy}>{label}</InputLabel>}
 
@@ -73,6 +75,7 @@ const SelectField = forwardRef(
           name={name}
           ref={ref}
           size={size}
+          fullWidth={fullWidth}
           displayEmpty={displayEmpty || !!placeholder}
           renderValue={customRenderValue}
           inputProps={{
