@@ -9,6 +9,7 @@ import useHistogramInteractivity from './useHistogramInteractivity';
 import Typography from '../../components/atoms/Typography';
 import HistogramSkeleton from './HistogramSkeleton';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
+import useSkeleton from '../useSkeleton';
 
 const IS_TOUCH_SCREEN = detectTouchscreen();
 
@@ -48,6 +49,7 @@ function HistogramWidgetUI({
 
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
+  const { showSkeleton } = useSkeleton(isLoading);
 
   const filterable = _filterable && !!onSelectedBarsChange;
 
@@ -268,7 +270,7 @@ function HistogramWidgetUI({
     0
   );
 
-  if (isLoading) return <HistogramSkeleton height={height} />;
+  if (showSkeleton) return <HistogramSkeleton height={height} />;
 
   return (
     <div>
