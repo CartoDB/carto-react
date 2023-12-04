@@ -12,6 +12,7 @@ import usePieCategories from './hooks/usePieCategories';
 import ChartLegend from '../ChartLegend';
 import Typography from '../../components/atoms/Typography';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
+import useSkeleton from '../useSkeleton';
 
 const CHART_SIZE = '232px';
 
@@ -63,6 +64,7 @@ function PieWidgetUI({
   const theme = useTheme();
   const processedData = usePieCategories(data, order, maxItems, colors);
 
+  const { showSkeleton } = useSkeleton(isLoading);
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
 
@@ -198,7 +200,7 @@ function PieWidgetUI({
     onSelectedCategoriesChange([]);
   };
 
-  if (isLoading) return <PieSkeleton height={height} />;
+  if (showSkeleton) return <PieSkeleton height={height} />;
 
   return (
     <>

@@ -4,6 +4,7 @@ import { styled } from '@mui/material';
 import { animateValue } from '../utils/animations';
 import Typography from '../../components/atoms/Typography';
 import FormulaSkeleton from './FormulaSkeleton';
+import useSkeleton from '../useSkeleton';
 
 const Prefix = styled('span')(() => ({
   marginRight: '2px'
@@ -27,6 +28,7 @@ function FormulaWidgetUI(props) {
   const requestRef = useRef();
   const prevValue = usePrevious(value);
   const referencedPrevValue = useRef(prevValue);
+  const { showSkeleton } = useSkeleton(isLoading);
 
   useEffect(() => {
     if (typeof data === 'number' && animation) {
@@ -65,7 +67,7 @@ function FormulaWidgetUI(props) {
   const isComplexFormat = typeof formattedValue === 'object' && formattedValue !== null;
   const isDisabled = formattedValue === '-';
 
-  if (isLoading) return <FormulaSkeleton />;
+  if (showSkeleton) return <FormulaSkeleton />;
 
   return isComplexFormat ? (
     <Typography variant='h5' component='div' weight='medium'>

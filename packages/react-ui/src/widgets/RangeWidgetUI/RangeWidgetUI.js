@@ -6,6 +6,7 @@ import { debounce } from '@carto/react-core';
 import Typography from '../../components/atoms/Typography';
 import RangeSkeleton from './RangeSkeleton';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
+import useSkeleton from '../useSkeleton';
 
 const Root = styled(Box)(() => ({
   position: 'relative'
@@ -92,6 +93,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoadin
 
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
+  const { showSkeleton } = useSkeleton(isLoading);
 
   const limitsMarks = useMemo(() => {
     if (!limits || limits.length !== 2) {
@@ -162,7 +164,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoadin
     changeSliderValues([min, max]);
   };
 
-  if (isLoading) {
+  if (showSkeleton) {
     return <RangeSkeleton />;
   }
 
