@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-ui",
-  "version": "2.3.2",
+  "version": "2.3.3-freeze-widgets.0",
   "description": "CARTO for React - UI",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -32,7 +32,7 @@
     "build:watch": "webpack --config webpack.config.js --watch",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
-    "test": "jest",
+    "test": "LC_ALL=\"en_US.UTF-8\" jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --collectCoverage",
     "storybook:start": "export NODE_OPTIONS=--openssl-legacy-provider && start-storybook -c ./storybook/.storybook -p 6006",
