@@ -17,6 +17,7 @@ import { TimeSeriesControls } from './components/TimeSeriesControls';
 import TimeSeriesLayout from './components/TimeSeriesLayout';
 import ChartLegend from '../ChartLegend';
 import { findItemIndexByTime, getDate } from './utils/utilities';
+import useSkeleton from '../useSkeleton';
 function TimeSeriesWidgetUI({
   data,
   categories,
@@ -49,6 +50,8 @@ function TimeSeriesWidgetUI({
 }) {
   let prevEmittedTimeWindow = useRef();
   const intl = useIntl();
+  const { showSkeleton } = useSkeleton(isLoading);
+
   const handleTimeWindowUpdate = useCallback(
     (timeWindow) => {
       if (timeWindow.length === 2) {
@@ -77,36 +80,16 @@ function TimeSeriesWidgetUI({
     [onTimeWindowUpdate, onTimelineUpdate, data]
   );
 
-  const content = isLoading ? (
-    <TimeSeriesSkeleton
-      fitHeight={fitHeight}
-      height={height}
-      showControls={showControls}
-      showLegend={showLegend}
-    />
-  ) : (
-    <TimeSeriesWidgetUIContent
-      data={data}
-      categories={categories}
-      stepSize={stepSize}
-      stepMultiplier={stepMultiplier}
-      chartType={chartType}
-      timeAxisSplitNumber={timeAxisSplitNumber}
-      tooltip={tooltip}
-      tooltipFormatter={tooltipFormatter}
-      formatter={formatter}
-      height={height}
-      fitHeight={fitHeight}
-      showControls={showControls}
-      animation={animation}
-      filterable={filterable}
-      palette={palette}
-      showLegend={showLegend}
-      selectedCategories={selectedCategories}
-      timelinePosition={timelinePosition}
-      onSelectedCategoriesChange={onSelectedCategoriesChange}
-    />
-  );
+  if (showSkeleton) {
+    return (
+      <TimeSeriesSkeleton
+        fitHeight={fitHeight}
+        height={height}
+        showControls={showControls}
+        showLegend={showLegend}
+      />
+    );
+  }
 
   return (
     <TimeSeriesProvider
@@ -119,7 +102,27 @@ function TimeSeriesWidgetUI({
       onTimeWindowUpdate={handleTimeWindowUpdate}
       intl={intl}
     >
-      {content}
+      <TimeSeriesWidgetUIContent
+        data={data}
+        categories={categories}
+        stepSize={stepSize}
+        stepMultiplier={stepMultiplier}
+        chartType={chartType}
+        timeAxisSplitNumber={timeAxisSplitNumber}
+        tooltip={tooltip}
+        tooltipFormatter={tooltipFormatter}
+        formatter={formatter}
+        height={height}
+        fitHeight={fitHeight}
+        showControls={showControls}
+        animation={animation}
+        filterable={filterable}
+        palette={palette}
+        showLegend={showLegend}
+        selectedCategories={selectedCategories}
+        timelinePosition={timelinePosition}
+        onSelectedCategoriesChange={onSelectedCategoriesChange}
+      />
     </TimeSeriesProvider>
   );
 }
@@ -218,6 +221,8 @@ function TimeSeriesWidgetUIContent({
   }, [timelinePosition, data]);
 
   useEffect(() => {
+    if (!data.length) return;
+
     const start = data[0].name;
     const end = data[data.length - 1].name;
     if (

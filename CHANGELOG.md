@@ -3,10 +3,15 @@
 ## Not released
 
 - Freeze widgets during time-series animation [#804](https://github.com/CartoDB/carto-react/pull/804)
+- Show widget skeleton only once [#811](https://github.com/CartoDB/carto-react/pull/811)
 - Added filterable prop to TimeSeriesWidget [#808](https://github.com/CartoDB/carto-react/pull/808)
 - Fix dataSources store type [#807](https://github.com/CartoDB/carto-react/pull/807)
 
 ## 2.3
+
+### 2.3.2 (2023-11-30)
+
+- Fix widget copies [#809](https://github.com/CartoDB/carto-react/pull/809)
 
 ### 2.3.1 (2023-11-27)
 
