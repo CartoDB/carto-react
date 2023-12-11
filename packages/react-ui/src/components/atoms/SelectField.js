@@ -11,12 +11,12 @@ import {
 import Typography from './Typography';
 import uniqueId from 'lodash/uniqueId';
 
-const StyledSelect = styled(Select)(() => ({
-  '& .MuiInputAdornment-root.MuiInputAdornment-positionStart': {
-    paddingLeft: `8px !important`
+const StyledSelect = styled(Select)(({ theme }) => ({
+  '& .MuiInputAdornment-positionStart': {
+    paddingLeft: theme.spacing(1)
   },
   '& .MuiInputBase-inputAdornedStart': {
-    paddingLeft: `0px !important`
+    paddingLeft: '0px !important'
   }
 }));
 
@@ -28,11 +28,9 @@ const SelectField = forwardRef(
   (
     {
       children,
-      // https://github.com/mui/material-ui/pull/8875#issuecomment-349771804
       placeholder,
       size,
       displayEmpty,
-      renderValue: customRenderValue,
       menuProps,
       inputProps,
       labelId,
@@ -77,7 +75,6 @@ const SelectField = forwardRef(
           size={size}
           fullWidth={fullWidth}
           displayEmpty={displayEmpty || !!placeholder}
-          renderValue={customRenderValue}
           inputProps={{
             ...inputProps,
             'aria-label': ariaLabel
@@ -123,7 +120,6 @@ SelectField.defaultProps = {
 SelectField.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   size: PropTypes.oneOf(['small', 'medium']),
-  renderValue: PropTypes.func,
   menuProps: PropTypes.object,
   inputProps: PropTypes.object,
   helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.element])

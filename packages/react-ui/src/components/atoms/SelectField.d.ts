@@ -5,7 +5,6 @@ import { SelectProps } from '@mui/material/Select';
 export type SelectFieldProps = Omit<SelectProps, 'placeholder'> & {
   placeholder?: React.ReactNode | string;
   size?: 'small' | 'medium';
-  renderValue?: (value: string[]) => React.ReactNode;
   menuProps?: Partial<MenuProps>;
   inputProps?: Partial<InputProps>;
   helperText?: React.ReactNode | string;
