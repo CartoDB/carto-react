@@ -41,6 +41,7 @@ const SelectField = forwardRef(
       focused,
       disabled,
       fullWidth,
+      required,
       'aria-label': ariaLabel,
       ...otherProps
     },
@@ -62,6 +63,7 @@ const SelectField = forwardRef(
         focused={focused}
         disabled={disabled}
         fullWidth={fullWidth}
+        required={required}
         // TODO: remove this backgroundColor before creating the patch version
         sx={{ backgroundColor: '#fbfbbc !important' }}
       >
@@ -103,6 +105,7 @@ const SelectField = forwardRef(
               </Typography>
             </PlaceholderItem>
           )}
+
           {children}
         </StyledSelect>
 
