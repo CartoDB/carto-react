@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Extend SelectField to cover more use cases [#796](https://github.com/CartoDB/carto-react/pull/796)
 - Added filterable prop to TimeSeriesWidget [#808](https://github.com/CartoDB/carto-react/pull/808)
 - Fix dataSources store type [#807](https://github.com/CartoDB/carto-react/pull/807)
 
