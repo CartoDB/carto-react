@@ -112,6 +112,7 @@ const SelectFieldItem = ({
       error={error}
       size={size}
       fullWidth={rest.fullWidth}
+      required={required}
     >
       {menuItems.map((o, i) => (
         <MenuItem key={i} value={o.label}>
@@ -124,7 +125,7 @@ const SelectFieldItem = ({
 
 const PlaygroundTemplate = (args) => <SelectFieldItem {...args} />;
 
-const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
+const VariantsTemplate = ({ label, placeholder, ...rest }) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
@@ -200,14 +201,7 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
   );
 };
 
-const SizeTemplate = ({
-  label,
-  placeholder,
-  defaultValue,
-  helperText,
-  size,
-  ...rest
-}) => {
+const SizeTemplate = ({ label, placeholder, helperText, size, ...rest }) => {
   const [fixedValue, setFixedValue] = useState('Twenty');
   const [fixedValue2, setFixedValue2] = useState('Twenty');
   const [fixedValue3, setFixedValue3] = useState('Thirty');
@@ -458,14 +452,7 @@ const SizeTemplate = ({
   );
 };
 
-const MultipleTemplate = ({
-  label,
-  placeholder,
-  defaultValue,
-  helperText,
-  size,
-  ...rest
-}) => {
+const MultipleTemplate = ({ label, placeholder, helperText, size, ...rest }) => {
   return (
     <DocContainer
       severity='warning'
@@ -489,7 +476,7 @@ const MultipleTemplate = ({
   );
 };
 
-const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
+const BehaviorTemplate = ({ label, placeholder, helperText, ...rest }) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
