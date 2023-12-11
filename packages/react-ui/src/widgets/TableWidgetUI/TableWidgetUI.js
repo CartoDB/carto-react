@@ -16,6 +16,7 @@ import {
 import TableSkeleton from './Skeleton/TableSkeleton';
 import TablePaginationActions from '../../components/molecules/Table/TablePaginationActions';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
+import useSkeleton from '../useSkeleton';
 
 const TableHeadCellLabel = styled(TableSortLabel)(({ theme }) => ({
   ...theme.typography.caption,
@@ -73,6 +74,7 @@ function TableWidgetUI({
 
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
+  const { showSkeleton } = useSkeleton(isLoading);
 
   const defaultLabelDisplayedRows = ({ from, to, count }) => {
     return intlConfig.formatMessage({ id: 'c4r.widgets.table.of' }, { from, to, count });
@@ -103,7 +105,7 @@ function TableWidgetUI({
     fixedHeightStyle.height = `calc(${height} - ${paginationHeight}px)`;
   }
 
-  if (isLoading)
+  if (showSkeleton)
     return (
       <TableSkeleton
         rowsPerPage={rowsPerPage}

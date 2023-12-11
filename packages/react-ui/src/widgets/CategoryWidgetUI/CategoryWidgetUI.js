@@ -27,6 +27,7 @@ import {
 import SearchIcon from '../../assets/icons/SearchIcon';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
 import { ORDER_TYPES } from '../utils/chartConstants';
+import useSkeleton from '../useSkeleton';
 
 function usePrevious(value) {
   const ref = useRef();
@@ -60,6 +61,7 @@ function CategoryWidgetUI(props) {
   const requestRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
+  const { showSkeleton } = useSkeleton(isLoading);
 
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
@@ -354,7 +356,7 @@ function CategoryWidgetUI(props) {
     );
   };
 
-  if (data?.length === 0 || isLoading) return <CategorySkeleton />;
+  if (data?.length === 0 || showSkeleton) return <CategorySkeleton />;
 
   return (
     <CategoriesRoot>

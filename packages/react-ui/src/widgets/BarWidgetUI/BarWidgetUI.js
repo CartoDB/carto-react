@@ -8,6 +8,7 @@ import { processFormatterRes } from '../utils/formatterUtils';
 import Typography from '../../components/atoms/Typography';
 import BarSkeleton from './BarSkeleton';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
+import useSkeleton from '../useSkeleton';
 
 const IS_TOUCH_SCREEN = detectTouchScreen();
 
@@ -55,6 +56,7 @@ function BarWidgetUI(props) {
 
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
+  const { showSkeleton } = useSkeleton(isLoading);
 
   // Tooltip
   const tooltipOptions = useMemo(
@@ -294,7 +296,7 @@ function BarWidgetUI(props) {
     [filterable, clickEvent]
   );
 
-  if (isLoading) return <BarSkeleton height={height} />;
+  if (showSkeleton) return <BarSkeleton height={height} />;
 
   return (
     <div>
