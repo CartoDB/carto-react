@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
-import { FormControl, Grid, InputLabel, MenuItem, TextField } from '@mui/material';
+import {
+  FormControl,
+  Grid,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  TextField
+} from '@mui/material';
+import { MapOutlined } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
+import Button from '../../../src/components/atoms/Button';
 import {
   Container,
   DocContainer,
@@ -9,7 +18,6 @@ import {
   DocLink,
   Label
 } from '../../utils/storyStyles';
-import Button from '../../../src/components/atoms/Button';
 
 const options = {
   title: 'Atoms/Select Field',
@@ -195,6 +203,45 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
         <Container>
           <Label variant='body2'>{'Only helper text'}</Label>
           <SelectFieldItem {...rest} placeholder={placeholder} helperText={helperText} />
+        </Container>
+      </Grid>
+    </Grid>
+  );
+};
+
+const PrefixTemplate = ({ label, placeholder, ...rest }) => {
+  return (
+    <Grid container direction='column' spacing={6}>
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Prefix (text)'}</Label>
+          <SelectFieldItem
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            startAdornment={<InputAdornment position='start'>Kg</InputAdornment>}
+          />
+        </Container>
+      </Grid>
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Prefix (icon)'}</Label>
+          <SelectFieldItem
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            startAdornment={
+              <InputAdornment position='start'>
+                <MapOutlined />
+              </InputAdornment>
+            }
+          />
+        </Container>
+      </Grid>
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'None'}</Label>
+          <SelectFieldItem {...rest} label={label} placeholder={placeholder} />
         </Container>
       </Grid>
     </Grid>
@@ -579,6 +626,9 @@ Variants.argTypes = disabledControlsArgTypes;
 export const LabelAndHelperText = LabelAndHelperTextTemplate.bind({});
 LabelAndHelperText.args = { ...commonArgs };
 LabelAndHelperText.argTypes = disabledControlsArgTypes;
+
+export const Prefix = PrefixTemplate.bind({});
+Prefix.args = { ...commonArgs };
 
 export const Medium = SizeTemplate.bind({});
 Medium.args = { ...commonArgs, ...sizeArgs, size: 'medium' };
