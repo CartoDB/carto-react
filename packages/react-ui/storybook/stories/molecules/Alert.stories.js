@@ -277,14 +277,14 @@ const StickyTemplate = (args) => {
           severity='warning'
           title={title}
           action={singleAction}
-          sticky
+          isSticky
         />
         <Alert
           {...args}
           {...inlineProps}
           severity='warning'
           action={singleAction}
-          sticky
+          isSticky
         />
       </Row>
     </Box>
