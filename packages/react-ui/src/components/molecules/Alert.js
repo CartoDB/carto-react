@@ -6,35 +6,36 @@ import { ICON_SIZE_MEDIUM } from '../../theme/themeConstants';
 
 const StyledAlert = styled(MuiAlert, {
   shouldForwardProp: (prop) =>
-    !['isNeutral', 'content', 'hasCloseButton', 'hasTitle', 'sticky'].includes(prop)
-})(({ isNeutral, content, hasCloseButton, hasTitle, sticky, theme }) => ({
-  minHeight: hasTitle ? theme.spacing(8) : theme.spacing(6),
-  padding: theme.spacing(1.5),
-  paddingBottom: hasTitle ? theme.spacing(1.25) : undefined,
-  paddingRight: hasCloseButton ? theme.spacing(2) : theme.spacing(1.5),
-  display: 'grid',
+    !['isNeutral', 'content', 'hasCloseButton', 'hasAction', 'isSticky'].includes(prop)
+})(({ isNeutral, content, hasCloseButton, hasAction, isSticky, theme }) => ({
   columnGap: theme.spacing(1),
-  gridTemplateAreas:
-    content === 'inline' || hasCloseButton
-      ? `"icon message actions"`
-      : `
+  minHeight: theme.spacing(6),
+  padding: theme.spacing(1.5),
+
+  ...(hasAction && {
+    display: 'grid',
+    gridTemplateAreas:
+      content === 'inline' || hasCloseButton
+        ? `"icon message actions"`
+        : `
     "icon message"
     "icon actions"
-  `,
-  gridTemplateColumns: hasCloseButton
-    ? `${ICON_SIZE_MEDIUM} 1fr ${theme.spacing(2)}`
-    : `${ICON_SIZE_MEDIUM}`,
-
+    `,
+    gridTemplateColumns: hasCloseButton
+      ? `${ICON_SIZE_MEDIUM} 1fr ${theme.spacing(3)}`
+      : `${ICON_SIZE_MEDIUM}`
+  }),
   ...(isNeutral && {
     backgroundColor: theme.palette.default.background,
     color: theme.palette.text.primary
   }),
-  ...(sticky && {
+  ...(isSticky && {
     borderRadius: 0
   }),
 
   '.MuiAlert-message': {
     gridArea: 'message',
+
     ...(isNeutral && {
       '& :not(.MuiAlertTitle-root)': {
         color: theme.palette.text.secondary
@@ -42,20 +43,21 @@ const StyledAlert = styled(MuiAlert, {
     })
   },
   '.MuiAlert-icon': {
-    ...(isNeutral && { color: theme.palette.text.primary }),
+    gridArea: 'icon',
     marginRight: 0,
-    gridArea: 'icon'
+
+    ...(isNeutral && {
+      color: theme.palette.text.primary
+    })
   },
   '.MuiAlert-action': {
     gridArea: 'actions',
-    padding: 0,
     alignItems: content === 'inline' ? 'center' : 'flex-start',
-    marginTop: hasCloseButton ? theme.spacing(0.5) : 0,
-    marginBottom: content === 'block' && !hasCloseButton ? theme.spacing(1) : 0,
+    padding: 0,
+    margin: content === 'block' && !hasCloseButton ? theme.spacing(1.5, 0, 0.5) : 0,
     marginLeft: content === 'inline' || hasCloseButton ? 'auto' : 0,
-    marginRight: hasCloseButton ? theme.spacing(0.5) : 0,
 
-    'svg path': {
+    '.MuiIconButton-root svg path': {
       fill: hasCloseButton ? theme.palette.text.secondary : undefined
     }
   }
@@ -69,7 +71,7 @@ const Alert = ({
   onClose,
   action,
   open: controlledOpen,
-  sticky,
+  isSticky,
   ...otherProps
 }) => {
   const [open, setOpen] = useState(controlledOpen !== undefined ? controlledOpen : true);
@@ -94,12 +96,12 @@ const Alert = ({
         action={action}
         onClose={handleClose}
         hasCloseButton={Boolean(onClose)}
-        hasTitle={Boolean(title)}
-        sticky={sticky}
+        hasAction={Boolean(action)}
+        isSticky={isSticky}
         {...otherProps}
       >
         {title && <AlertTitle>{title}</AlertTitle>}
-        <Typography variant='caption' color='inherit' component='p'>
+        <Typography variant='caption' color='inherit' component='div'>
           {children}
         </Typography>
       </StyledAlert>
@@ -119,7 +121,7 @@ Alert.propTypes = {
   variant: PropTypes.string,
   icon: PropTypes.node,
   open: PropTypes.bool,
-  sticky: PropTypes.bool
+  isSticky: PropTypes.bool
 };
 
 export default Alert;

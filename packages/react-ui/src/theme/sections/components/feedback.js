@@ -40,7 +40,6 @@ export const feedbackOverrides = {
   MuiAlert: {
     styleOverrides: {
       root: ({ theme }) => ({
-        minHeight: theme.spacing(6),
         borderRadius: theme.spacing(1),
         alignSelf: 'start',
         width: '100%'
