@@ -34,7 +34,7 @@ const options = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A36257'
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/C4R-Components?node-id=1534%3A26152'
     },
     status: {
       type: 'validated'
@@ -56,7 +56,7 @@ const Row = ({ title, description, children }) => (
     <Box sx={{ width: 180 }} flexShrink={0}>
       <Typography variant='body2'>{title}</Typography>
       {description && (
-        <Typography variant='caption' color='textSecondary'>
+        <Typography variant='caption' component='p' color='textSecondary'>
           {description}
         </Typography>
       )}
@@ -90,6 +90,14 @@ const twoActions = (
     </Button>
   </>
 );
+const inlineActions = (
+  <>
+    <Button size='small' color='inherit'>
+      Action
+    </Button>
+    {singleAction}
+  </>
+);
 
 const SparklesIcon = styled(AutoAwesomeOutlinedIcon)(({ theme }) => ({
   color: theme.palette.warning.light
@@ -101,14 +109,17 @@ const SeverityTemplate = (args) => {
       <Row
         title='Neutral'
         description={
-          <div>
+          <>
             <p>Default variant.</p>
             <p>Use to hightlight general information or actions that aren’t critical.</p>
             <p>Color for icons and buttons can be customized.</p>
-          </div>
+          </>
         }
       >
         <Box sx={{ width: '100%' }}>
+          <Box mb={2}>
+            <Alert {...args} {...blockProps} severity='neutral' title={title} />
+          </Box>
           <Box mb={2}>
             <Alert
               {...args}
@@ -211,7 +222,7 @@ const ActionsTemplate = (args) => {
       </Row>
 
       <Row title='Second action'>
-        <Alert {...args} {...inlineProps} action={twoActions} />
+        <Alert {...args} {...inlineProps} action={inlineActions} />
         <Alert {...args} {...blockProps} title={title} action={twoActions} />
       </Row>
     </Box>
@@ -222,13 +233,59 @@ const RemovableTemplate = (args) => {
   return (
     <Box display='flex' flexDirection='column' gap={3}>
       <Row title='Block content'>
-        <ThinContainer>
-          <Alert {...args} {...blockProps} title={title} onClose={() => {}} />
-        </ThinContainer>
+        <Alert {...args} {...blockProps} title={title} onClose={() => {}} />
       </Row>
 
       <Row title='Inline content'>
         <Alert {...args} {...inlineProps} onClose={() => {}} />
+      </Row>
+    </Box>
+  );
+};
+
+const StickyTemplate = (args) => {
+  return (
+    <Box display='flex' flexDirection='column' gap={3}>
+      <Row
+        title='False (Default)'
+        description='Default alerts are located in a specific area of the ui, near their related elements. They are not sticky and should scroll with the rest of the page content.'
+      >
+        <Alert {...args} {...blockProps} title={title} action={singleAction} />
+      </Row>
+
+      <Row
+        title='True'
+        description={
+          <>
+            <p>
+              Sticky alerts typically occupy the top of an interface to display general
+              product or system notifications. This behavior causes the component to stick
+              to an area of the general content, taking up the full width.
+            </p>
+            <p>
+              It is recommended to combine it with the Inline layout in desktop
+              resolutions, although for smaller ones we can combine it with the Block
+              layouts.
+            </p>
+            <p>Note: these types of alerts don't have corner radius.</p>
+          </>
+        }
+      >
+        <Alert
+          {...args}
+          {...blockProps}
+          severity='warning'
+          title={title}
+          action={singleAction}
+          sticky
+        />
+        <Alert
+          {...args}
+          {...inlineProps}
+          severity='warning'
+          action={singleAction}
+          sticky
+        />
       </Row>
     </Box>
   );
@@ -246,3 +303,5 @@ export const Title = TitleTemplate.bind({});
 export const Actions = ActionsTemplate.bind({});
 
 export const Removable = RemovableTemplate.bind({});
+
+export const Sticky = StickyTemplate.bind({});

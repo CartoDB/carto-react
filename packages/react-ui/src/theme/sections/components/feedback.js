@@ -40,24 +40,37 @@ export const feedbackOverrides = {
   MuiAlert: {
     styleOverrides: {
       root: ({ theme }) => ({
+        minHeight: theme.spacing(6),
         borderRadius: theme.spacing(1),
         alignSelf: 'start',
         width: '100%'
       }),
       icon: ({ theme }) => ({
+        height: theme.spacing(3),
+        display: 'flex',
+        alignItems: 'center',
+        padding: 0,
+
         svg: {
           width: ICON_SIZE_MEDIUM,
           height: ICON_SIZE_MEDIUM
         }
+      }),
+      message: ({ theme }) => ({
+        paddingTop: theme.spacing(0.5),
+        paddingBottom: 0
       })
     }
   },
 
   // AlertTitle
   MuiAlertTitle: {
+    defaultProps: {
+      variant: 'body2'
+    },
     styleOverrides: {
       root: ({ theme }) => ({
-        ...theme.typography.body2,
+        marginBottom: theme.spacing(0.5),
         fontWeight: theme.typography.fontWeightBold,
         color: 'inherit'
       })

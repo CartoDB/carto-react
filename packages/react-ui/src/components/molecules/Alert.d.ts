@@ -4,6 +4,7 @@ export type AlertProps = Omit<MuiAlertProps, 'severity'> & {
   content?: 'inline' | 'block';
   severity?: CartoAlertSeverity;
   open?: boolean;
+  sticky?: boolean;
 };
 
 export type CartoAlertSeverity = 'neutral' | 'info' | 'success' | 'warning' | 'error';
