@@ -1,3 +1,5 @@
+import React from 'react';
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import { ICON_SIZE_MEDIUM } from '../../themeConstants';
 
 export const feedbackOverrides = {
@@ -38,6 +40,11 @@ export const feedbackOverrides = {
 
   // Alert
   MuiAlert: {
+    defaultProps: {
+      iconMapping: {
+        success: <CheckCircleOutlinedIcon />
+      }
+    },
     styleOverrides: {
       root: ({ theme }) => ({
         borderRadius: theme.spacing(1),

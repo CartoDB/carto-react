@@ -6,10 +6,17 @@ import { ICON_SIZE_MEDIUM } from '../../theme/themeConstants';
 
 const StyledAlert = styled(MuiAlert, {
   shouldForwardProp: (prop) =>
-    !['isNeutral', 'content', 'hasCloseButton', 'hasAction', 'isSticky'].includes(prop)
-})(({ isNeutral, content, hasCloseButton, hasAction, isSticky, theme }) => ({
+    ![
+      'isNeutral',
+      'content',
+      'hasCloseButton',
+      'hasAction',
+      'hasTitle',
+      'isSticky'
+    ].includes(prop)
+})(({ isNeutral, content, hasCloseButton, hasAction, hasTitle, isSticky, theme }) => ({
   columnGap: theme.spacing(1),
-  minHeight: theme.spacing(6),
+  minHeight: hasTitle ? theme.spacing(8) : theme.spacing(6),
   padding: theme.spacing(1.5),
 
   ...(hasAction && {
@@ -35,6 +42,7 @@ const StyledAlert = styled(MuiAlert, {
 
   '.MuiAlert-message': {
     gridArea: 'message',
+    paddingTop: hasTitle ? theme.spacing(0.25) : theme.spacing(0.5),
 
     ...(isNeutral && {
       '& :not(.MuiAlertTitle-root)': {
@@ -44,6 +52,7 @@ const StyledAlert = styled(MuiAlert, {
   },
   '.MuiAlert-icon': {
     gridArea: 'icon',
+    height: hasTitle ? theme.spacing(2.5) : theme.spacing(3),
     marginRight: 0,
 
     ...(isNeutral && {
@@ -97,6 +106,7 @@ const Alert = ({
         onClose={handleClose}
         hasCloseButton={Boolean(onClose)}
         hasAction={Boolean(action)}
+        hasTitle={Boolean(title)}
         isSticky={isSticky}
         {...otherProps}
       >
