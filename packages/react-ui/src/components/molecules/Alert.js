@@ -41,9 +41,12 @@ const StyledAlert = styled(MuiAlert, {
   }),
 
   '.MuiAlert-message': {
-    gridArea: 'message',
+    flex: 1,
     paddingTop: hasTitle ? theme.spacing(0.25) : theme.spacing(0.5),
 
+    ...(hasAction && {
+      gridArea: 'message'
+    }),
     ...(isNeutral && {
       '& :not(.MuiAlertTitle-root)': {
         color: theme.palette.text.secondary
@@ -51,20 +54,25 @@ const StyledAlert = styled(MuiAlert, {
     })
   },
   '.MuiAlert-icon': {
-    gridArea: 'icon',
     height: hasTitle ? theme.spacing(2.5) : theme.spacing(3),
     marginRight: 0,
 
+    ...(hasAction && {
+      gridArea: 'icon'
+    }),
     ...(isNeutral && {
       color: theme.palette.text.primary
     })
   },
   '.MuiAlert-action': {
-    gridArea: 'actions',
     alignItems: content === 'inline' ? 'center' : 'flex-start',
-    padding: 0,
     margin: content === 'block' && !hasCloseButton ? theme.spacing(1.5, 0, 0.5) : 0,
     marginLeft: content === 'inline' || hasCloseButton ? 'auto' : 0,
+    padding: 0,
+
+    ...(hasAction && {
+      gridArea: 'actions'
+    }),
 
     '.MuiIconButton-root svg path': {
       fill: hasCloseButton ? theme.palette.text.secondary : undefined
