@@ -111,6 +111,7 @@ const Alert = ({
         {...otherProps}
       >
         {title && <AlertTitle>{title}</AlertTitle>}
+
         <Typography variant='caption' color='inherit' component='div'>
           {children}
         </Typography>
@@ -125,7 +126,7 @@ Alert.defaultProps = {
   variant: 'standard'
 };
 Alert.propTypes = {
-  title: PropTypes.node,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   severity: PropTypes.oneOf(['neutral', 'info', 'success', 'warning', 'error']),
   content: PropTypes.oneOf(['block', 'inline']),
   variant: PropTypes.string,
