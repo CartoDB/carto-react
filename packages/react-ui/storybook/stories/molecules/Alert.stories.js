@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Typography, Badge, capitalize, styled } from '@mui/material';
+import { Box, Button, Typography, capitalize, styled } from '@mui/material';
 import { Standalone, ThinContainer } from '../../utils/storyStyles';
 import Alert from '../../../../react-ui/src/components/molecules/Alert';
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
@@ -124,11 +124,7 @@ const SeverityTemplate = (args) => {
             <Alert
               {...args}
               title='You haven’t published the lastest changes made.'
-              icon={
-                <Box px={1} mt={-1.25}>
-                  <Badge color='secondary' variant='dot' />
-                </Box>
-              }
+              icon={<img src='/dot.svg' alt='' />}
               action={
                 <>
                   <Button size='small'>Open public map</Button>
