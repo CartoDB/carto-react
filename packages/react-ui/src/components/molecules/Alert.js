@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Alert as MuiAlert, AlertTitle, Fade, styled } from '@mui/material';
 import Typography from '../atoms/Typography';
@@ -80,53 +80,62 @@ const StyledAlert = styled(MuiAlert, {
   }
 }));
 
-const Alert = ({
-  title,
-  severity,
-  content,
-  children,
-  onClose,
-  action,
-  open: controlledOpen,
-  isSticky,
-  ...otherProps
-}) => {
-  const [open, setOpen] = useState(controlledOpen !== undefined ? controlledOpen : true);
+const Alert = forwardRef(
+  (
+    {
+      title,
+      severity,
+      content,
+      children,
+      onClose,
+      action,
+      open: controlledOpen,
+      isSticky,
+      ...otherProps
+    },
+    ref
+  ) => {
+    // The transition components require the first child element to forward its ref to the DOM node. https://mui.com/material-ui/transitions/#child-requirement
+    const [open, setOpen] = useState(
+      controlledOpen !== undefined ? controlledOpen : true
+    );
 
-  const handleClose = onClose
-    ? () => {
-        onClose();
-        setOpen(false);
-      }
-    : undefined;
+    const handleClose = onClose
+      ? () => {
+          onClose();
+          setOpen(false);
+        }
+      : undefined;
 
-  const isNeutral = severity === 'neutral';
+    const isNeutral = severity === 'neutral';
 
-  const isOpen = controlledOpen !== undefined ? controlledOpen : open;
+    const isOpen = controlledOpen !== undefined ? controlledOpen : open;
 
-  return (
-    <Fade in={isOpen} appear={false}>
-      <StyledAlert
-        severity={isNeutral ? 'info' : severity}
-        isNeutral={isNeutral}
-        content={content}
-        action={action}
-        onClose={handleClose}
-        hasCloseButton={Boolean(onClose)}
-        hasAction={Boolean(action)}
-        hasTitle={Boolean(title)}
-        isSticky={isSticky}
-        {...otherProps}
-      >
-        {title && <AlertTitle>{title}</AlertTitle>}
+    return (
+      <Fade in={isOpen} appear={false}>
+        <StyledAlert
+          ref={ref}
+          severity={isNeutral ? 'info' : severity}
+          isNeutral={isNeutral}
+          content={content}
+          action={action}
+          onClose={handleClose}
+          hasCloseButton={Boolean(onClose)}
+          hasAction={Boolean(action)}
+          hasTitle={Boolean(title)}
+          isSticky={isSticky}
+          {...otherProps}
+        >
+          {title && <AlertTitle>{title}</AlertTitle>}
 
-        <Typography variant='caption' color='inherit' component='div'>
-          {children}
-        </Typography>
-      </StyledAlert>
-    </Fade>
-  );
-};
+          <Typography variant='caption' color='inherit' component='div'>
+            {children}
+          </Typography>
+        </StyledAlert>
+      </Fade>
+    );
+  }
+);
 
 Alert.defaultProps = {
   severity: 'neutral',
