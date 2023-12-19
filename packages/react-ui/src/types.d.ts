@@ -1,6 +1,5 @@
 import { GroupDateTypes } from '@carto/react-core';
 export { SelectFieldProps } from './components/atoms/SelectField';
-export { MultipleSelectFieldProps } from './components/atoms/MultipleSelectField';
 export { TypographyProps } from './components/atoms/Typography';
 export { LabelWithIndicatorProps } from './components/atoms/LabelWithIndicator';
 export { AvatarProps } from './components/molecules/Avatar';

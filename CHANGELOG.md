@@ -2,12 +2,15 @@
 
 ## Not released
 
-- Extend SelectField to cover more use cases [#796](https://github.com/CartoDB/carto-react/pull/796)
+- Extend SelectField: to accept more data structures as children and to fix placeholder [#796](https://github.com/CartoDB/carto-react/pull/796)
+
+## 2.3
+
+### 2.3.3 (2023-12-15)
+
 - Show widget skeleton only once [#811](https://github.com/CartoDB/carto-react/pull/811)
 - Added filterable prop to TimeSeriesWidget [#808](https://github.com/CartoDB/carto-react/pull/808)
 - Fix dataSources store type [#807](https://github.com/CartoDB/carto-react/pull/807)
-
-## 2.3
 
 ### 2.3.2 (2023-11-30)
 

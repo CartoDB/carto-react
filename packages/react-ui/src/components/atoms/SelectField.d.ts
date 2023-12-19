@@ -2,7 +2,10 @@ import React from 'react';
 import { InputProps, MenuProps } from '@mui/material';
 import { SelectProps } from '@mui/material/Select';
 
-export type SelectFieldProps = Omit<SelectProps, 'placeholder'> & {
+export type SelectFieldProps<Value = unknown> = Omit<
+  SelectProps<Value>,
+  'placeholder'
+> & {
   placeholder?: React.ReactNode | string;
   size?: 'small' | 'medium';
   menuProps?: Partial<MenuProps>;
@@ -10,5 +13,5 @@ export type SelectFieldProps = Omit<SelectProps, 'placeholder'> & {
   helperText?: React.ReactNode | string;
 };
 
-declare const SelectField: (props: SelectFieldProps) => JSX.Element;
+declare const SelectField: <Value>(props: SelectFieldProps<Value>) => JSX.Element;
 export default SelectField;
