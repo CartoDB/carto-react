@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Not released
+- [Pie widget] Removed unnecessary copies if not filterable [#815](https://github.com/CartoDB/carto-react/pull/815)
 
 ## 2.3
 
