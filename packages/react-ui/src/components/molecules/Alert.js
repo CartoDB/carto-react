@@ -17,7 +17,6 @@ const StyledAlert = styled(MuiAlert, {
 })(({ isNeutral, content, hasCloseButton, hasAction, hasTitle, isSticky, theme }) => ({
   columnGap: theme.spacing(1),
   minHeight: theme.spacing(6),
-  padding: theme.spacing(1.5),
 
   ...(hasAction && {
     display: 'grid',
