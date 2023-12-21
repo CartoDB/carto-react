@@ -13,7 +13,8 @@ import {
   AggregationTypes,
   _FilterTypes as FilterTypes,
   _hasFeatureFlag,
-  _FeatureFlags
+  _FeatureFlags,
+  debounce
 } from '@carto/react-core';
 import { capitalize, Menu, MenuItem, SvgIcon } from '@mui/material';
 import { PropTypes } from 'prop-types';
@@ -47,6 +48,8 @@ function calculateNextStep(time, stepType, stepMultiplier = 1) {
 }
 
 const EMPTY_ARRAY = [];
+
+const debounceTimeout = 250;
 
 /**
  * Renders a <TimeSeriesWidget /> component
@@ -145,6 +148,7 @@ function TimeSeriesWidget({
   const dispatch = useDispatch();
 
   const [selectedStepSize, setSelectedStepSize] = useState(stepSize);
+  const [isRunningAnimation, setIsRunningAnimation] = useState(false);
 
   const selectedCategories =
     useWidgetFilterValues({
@@ -249,7 +253,8 @@ function TimeSeriesWidget({
             type: FilterTypes.TIME,
             values: [timeWindow.map((date) => date.getTime?.() || date)],
             params: { offsetBy: minTime },
-            owner: id
+            owner: id,
+            ...(isRunningAnimation && { ignore: true })
           })
         );
       } else {
@@ -264,7 +269,21 @@ function TimeSeriesWidget({
 
       if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
     },
-    [isLoading, dispatch, dataSource, column, minTime, id, onTimeWindowUpdate]
+    [
+      isLoading,
+      onTimeWindowUpdate,
+      dispatch,
+      dataSource,
+      column,
+      minTime,
+      id,
+      isRunningAnimation
+    ]
+  );
+
+  const handleTimeWindowUpdateDebounced = useMemo(
+    () => debounce(handleTimeWindowUpdate, debounceTimeout),
+    [handleTimeWindowUpdate]
   );
 
   const handleTimelineUpdate = useCallback(
@@ -284,7 +303,8 @@ function TimeSeriesWidget({
               [moment, calculateNextStep(moment, selectedStepSize, stepMultiplier) - 1]
             ],
             params: { offsetBy: minTime },
-            owner: id
+            owner: id,
+            ...(isRunningAnimation && { ignore: true })
           })
         );
       } else {
@@ -302,6 +322,7 @@ function TimeSeriesWidget({
     [
       isLoading,
       data,
+      onTimelineUpdate,
       dispatch,
       dataSource,
       column,
@@ -309,8 +330,13 @@ function TimeSeriesWidget({
       stepMultiplier,
       minTime,
       id,
-      onTimelineUpdate
+      isRunningAnimation
     ]
+  );
+
+  const handleTimelineUpdateDebounced = useMemo(
+    () => debounce(handleTimelineUpdate, debounceTimeout),
+    [handleTimelineUpdate]
   );
 
   const handleSelectedCategoriesChange = useCallback(
@@ -341,6 +367,9 @@ function TimeSeriesWidget({
   );
 
   const handleStop = useCallback(() => {
+    setIsRunningAnimation(false);
+    // The onStop must be executed before the removeFilter to avoid repeated Maps API calls in Builder
+    if (onStop) onStop();
     dispatch(
       removeFilter({
         id: dataSource,
@@ -348,9 +377,17 @@ function TimeSeriesWidget({
         owner: id
       })
     );
-
-    if (onStop) onStop();
   }, [column, dataSource, id, dispatch, onStop]);
+
+  const handlePlay = () => {
+    setIsRunningAnimation(true);
+    if (onPlay) onPlay();
+  };
+
+  const handlePause = () => {
+    setIsRunningAnimation(false);
+    if (onPause) onPause();
+  };
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -415,13 +452,19 @@ function TimeSeriesWidget({
               animation={animation}
               filterable={filterable}
               isPlaying={isPlaying}
-              onPlay={onPlay}
+              onPlay={handlePlay}
               isPaused={isPaused}
-              onPause={onPause}
+              onPause={handlePause}
               onStop={handleStop}
-              onTimelineUpdate={handleTimelineUpdate}
+              onTimelineUpdate={
+                isRunningAnimation ? handleTimelineUpdate : handleTimelineUpdateDebounced
+              }
               timeWindow={timeWindow}
-              onTimeWindowUpdate={handleTimeWindowUpdate}
+              onTimeWindowUpdate={
+                isRunningAnimation
+                  ? handleTimeWindowUpdate
+                  : handleTimeWindowUpdateDebounced
+              }
               selectedCategories={selectedCategories}
               onSelectedCategoriesChange={
                 splitByCategory ? handleSelectedCategoriesChange : undefined
