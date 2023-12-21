@@ -31,6 +31,9 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   },
   '& .MuiInputBase-inputAdornedStart': {
     paddingLeft: '0px !important'
+  },
+  '& .MuiSelect-select .MuiMenuItem-root:hover': {
+    backgroundColor: 'transparent'
   }
 }));
 
@@ -113,7 +116,6 @@ const SelectField = forwardRef(
                 variant={isSmall ? 'body2' : 'body1'}
                 color='text.hint'
                 component='span'
-                noWrap
               >
                 {placeholder}
               </Typography>
