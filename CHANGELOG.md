@@ -1,13 +1,16 @@
 # CHANGELOG
 
 ## Not released
-- [Pie widget] Removed unnecessary copies if not filterable [#815](https://github.com/CartoDB/carto-react/pull/815)
 
 ## 2.3
 
+### 2.3.4 (2023-12-21)
+
+- [Pie widget] Removed unnecessary copies if not filterable [#815](https://github.com/CartoDB/carto-react/pull/815)
+- Freeze widgets during time-series animation [#804](https://github.com/CartoDB/carto-react/pull/804)
+
 ### 2.3.3 (2023-12-15)
 
-- Freeze widgets during time-series animation [#804](https://github.com/CartoDB/carto-react/pull/804)
 - Show widget skeleton only once [#811](https://github.com/CartoDB/carto-react/pull/811)
 - Added filterable prop to TimeSeriesWidget [#808](https://github.com/CartoDB/carto-react/pull/808)
 - Fix dataSources store type [#807](https://github.com/CartoDB/carto-react/pull/807)
