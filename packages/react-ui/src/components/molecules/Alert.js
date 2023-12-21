@@ -43,12 +43,24 @@ const StyledAlert = styled(MuiAlert, {
     flex: 1,
     paddingTop: hasTitle ? theme.spacing(0.25) : theme.spacing(0.5),
 
+    '& a': {
+      color: theme.palette.primary.main,
+      textDecoration: 'none',
+
+      '&:hover': {
+        textDecoration: 'underline'
+      }
+    },
+
     ...(hasAction && {
       gridArea: 'message'
     }),
     ...(isNeutral && {
       '& :not(.MuiAlertTitle-root)': {
         color: theme.palette.text.secondary
+      },
+      a: {
+        color: `${theme.palette.primary.main} !important`
       }
     })
   },
