@@ -49,13 +49,15 @@ export const feedbackOverrides = {
       root: ({ theme }) => ({
         borderRadius: theme.spacing(1),
         alignSelf: 'start',
-        width: '100%'
+        width: '100%',
+        padding: theme.spacing(1.5)
       }),
       icon: ({ theme }) => ({
         height: theme.spacing(3),
         display: 'flex',
         alignItems: 'center',
         padding: 0,
+        marginRight: theme.spacing(1),
 
         svg: {
           width: ICON_SIZE_MEDIUM,
@@ -64,7 +66,8 @@ export const feedbackOverrides = {
       }),
       message: ({ theme }) => ({
         paddingTop: theme.spacing(0.5),
-        paddingBottom: 0
+        paddingBottom: 0,
+        ...theme.typography.caption
       })
     }
   },

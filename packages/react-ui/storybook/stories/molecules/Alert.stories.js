@@ -1,7 +1,9 @@
 import React from 'react';
-import { Box, Button, Typography, capitalize, styled } from '@mui/material';
+import { Box, Link, capitalize, styled } from '@mui/material';
 import { Standalone, ThinContainer } from '../../utils/storyStyles';
 import Alert from '../../../../react-ui/src/components/molecules/Alert';
+import Typography from '../../../../react-ui/src/components/atoms/Typography';
+import Button from '../../../../react-ui/src/components/atoms/Button';
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
 
 const title = 'This is a title';
@@ -69,12 +71,20 @@ const Row = ({ title, description, children }) => (
 
 const inlineProps = {
   content: 'inline',
-  children: inlineText
+  children: (
+    <>
+      {inlineText} <Link href='#'>Link</Link>
+    </>
+  )
 };
 
 const blockProps = {
   content: 'block',
-  children: blockText
+  children: (
+    <>
+      {blockText} <Link href='#'>Link</Link>
+    </>
+  )
 };
 
 const singleAction = (

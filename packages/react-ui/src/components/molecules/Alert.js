@@ -16,8 +16,7 @@ const StyledAlert = styled(MuiAlert, {
     ].includes(prop)
 })(({ isNeutral, content, hasCloseButton, hasAction, hasTitle, isSticky, theme }) => ({
   columnGap: theme.spacing(1),
-  minHeight: hasTitle ? theme.spacing(8) : theme.spacing(6),
-  padding: theme.spacing(1.5),
+  minHeight: theme.spacing(6),
 
   ...(hasAction && {
     display: 'grid',
@@ -44,12 +43,24 @@ const StyledAlert = styled(MuiAlert, {
     flex: 1,
     paddingTop: hasTitle ? theme.spacing(0.25) : theme.spacing(0.5),
 
+    '& a': {
+      color: theme.palette.primary.main,
+      textDecoration: 'none',
+
+      '&:hover': {
+        textDecoration: 'underline'
+      }
+    },
+
     ...(hasAction && {
       gridArea: 'message'
     }),
     ...(isNeutral && {
       '& :not(.MuiAlertTitle-root)': {
         color: theme.palette.text.secondary
+      },
+      a: {
+        color: `${theme.palette.primary.main} !important`
       }
     })
   },
@@ -65,7 +76,7 @@ const StyledAlert = styled(MuiAlert, {
     })
   },
   '.MuiAlert-action': {
-    alignItems: content === 'inline' ? 'center' : 'flex-start',
+    alignItems: content === 'inline' && !hasCloseButton ? 'center' : 'flex-start',
     margin: content === 'block' && !hasCloseButton ? theme.spacing(1.5, 0, 0.5) : 0,
     marginLeft: content === 'inline' || hasCloseButton ? 'auto' : 0,
     padding: 0,
@@ -95,7 +106,7 @@ const Alert = forwardRef(
     },
     ref
   ) => {
-    // The transition components require the first child element to forward its ref to the DOM node. https://mui.com/material-ui/transitions/#child-requirement
+    // The Fade transition requires the first child element to forward its ref to the DOM node. https://mui.com/material-ui/transitions/#child-requirement
     const [open, setOpen] = useState(
       controlledOpen !== undefined ? controlledOpen : true
     );
