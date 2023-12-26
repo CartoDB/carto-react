@@ -297,17 +297,28 @@ const StickyTemplate = (args) => {
   );
 };
 
+const disabledControlsArgTypes = {
+  variant: { table: { disable: true } }
+};
+
 export const Playground = AlertPlaygroundTemplate;
 Playground.args = { title };
+Playground.argTypes = disabledControlsArgTypes;
 
 export const Severity = SeverityTemplate.bind({});
+Severity.argTypes = disabledControlsArgTypes;
 
 export const Layout = LayoutTemplate.bind({});
+Layout.argTypes = disabledControlsArgTypes;
 
 export const Title = TitleTemplate.bind({});
+Title.argTypes = disabledControlsArgTypes;
 
 export const Actions = ActionsTemplate.bind({});
+Actions.argTypes = disabledControlsArgTypes;
 
 export const Removable = RemovableTemplate.bind({});
+Removable.argTypes = disabledControlsArgTypes;
 
 export const Sticky = StickyTemplate.bind({});
+Sticky.argTypes = disabledControlsArgTypes;

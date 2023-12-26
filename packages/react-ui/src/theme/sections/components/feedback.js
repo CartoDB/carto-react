@@ -64,6 +64,10 @@ export const feedbackOverrides = {
           height: ICON_SIZE_MEDIUM
         }
       }),
+      action: () => ({
+        paddingTop: 0,
+        marginRight: 0
+      }),
       message: ({ theme }) => ({
         paddingTop: theme.spacing(0.5),
         paddingBottom: 0,
