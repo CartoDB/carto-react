@@ -136,7 +136,7 @@ export const createCartoSlice = (initialState) => {
         }
       },
       addFilter: (state, action) => {
-        const { id, column, type, values, owner, params } = action.payload;
+        const { id, column, type, values, owner, params, ignore } = action.payload;
         const source = state.dataSources[id];
 
         if (source) {
@@ -148,7 +148,7 @@ export const createCartoSlice = (initialState) => {
             source.filters[column] = {};
           }
 
-          source.filters[column][type] = { values, owner, params };
+          source.filters[column][type] = { values, owner, params, ignore };
         }
       },
       removeFilter: (state, action) => {
@@ -326,10 +326,11 @@ export const removeSpatialFilter = (sourceId) => ({
  * @param {array} data.values -  values for the filter (eg: ['a', 'b'] for IN or [10, 20] for BETWEEN).
  * @param {string} data.owner - (optional) id of the widget triggering the filter (to be excluded).
  * @param {object=} data.params - (optional) additional filter parameters.
+ * * @param {string} data.ignore - (optional) boolean indicating that it should be ignored by other widgets.
  */
-export const addFilter = ({ id, column, type, values, owner, params }) => ({
+export const addFilter = ({ id, column, type, values, owner, params, ignore }) => ({
   type: 'carto/addFilter',
-  payload: { id, column, type, values, owner, params }
+  payload: { id, column, type, values, owner, params, ignore }
 });
 
 /**

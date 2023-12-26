@@ -6,7 +6,7 @@ export const getApplicableFilters = (filters = {}, owner) => {
   Object.entries(filters).forEach(([column, filter]) => {
     const filterCopy = {};
     Object.keys(filter)
-      .filter((operator) => filter[operator].owner !== owner)
+      .filter((operator) => filter[operator].owner !== owner && !filter[operator].ignore)
       .forEach((operator) => (filterCopy[operator] = { ...filter[operator] }));
 
     if (Object.keys(filterCopy).length) {
