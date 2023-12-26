@@ -204,21 +204,23 @@ function PieWidgetUI({
 
   return (
     <>
-      <OptionsBar container>
-        <Typography variant='caption' color='textSecondary'>
-          {selectedCategories.length
-            ? intlConfig.formatMessage(
-                { id: 'c4r.widgets.pie.selectedItems' },
-                { items: selectedCategories.length }
-              )
-            : intlConfig.formatMessage({ id: 'c4r.widgets.pie.allSelected' })}
-        </Typography>
-        {selectedCategories.length > 0 && (
-          <Link variant='caption' onClick={handleClearSelectedCategories}>
-            {intlConfig.formatMessage({ id: 'c4r.widgets.pie.clear' })}
-          </Link>
-        )}
-      </OptionsBar>
+      {filterable && (
+        <OptionsBar container>
+          <Typography variant='caption' color='textSecondary'>
+            {selectedCategories.length
+              ? intlConfig.formatMessage(
+                  { id: 'c4r.widgets.pie.selectedItems' },
+                  { items: selectedCategories.length }
+                )
+              : intlConfig.formatMessage({ id: 'c4r.widgets.pie.allSelected' })}
+          </Typography>
+          {selectedCategories.length > 0 && (
+            <Link variant='caption' onClick={handleClearSelectedCategories}>
+              {intlConfig.formatMessage({ id: 'c4r.widgets.pie.clear' })}
+            </Link>
+          )}
+        </OptionsBar>
+      )}
 
       <ChartContent height={height} width={width}>
         <PieCentralText data={processedData} selectedCategories={selectedCategories} />

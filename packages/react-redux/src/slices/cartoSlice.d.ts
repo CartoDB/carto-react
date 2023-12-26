@@ -18,6 +18,7 @@ type FilterBasic = {
   values: FilterValues;
   owner?: string;
   params?: Record<string, unknown>;
+  ignore?: boolean;
 };
 
 type FilterCommonProps = {
