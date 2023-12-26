@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles';
 import Typography from './Typography';
 
 const LabelIndicator = styled(Typography)(({ theme }) => ({
-  marginLeft: theme.spacing(0.5),
   '.Mui-disabled &': {
     color: theme.palette.text.disabled
   }
