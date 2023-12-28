@@ -58,9 +58,8 @@ const options = {
       description: 'Files handled by the input.'
     },
     accept: {
-      defaultValue: ['application/JSON'],
-      description:
-        'Array of strings that defines the file types the file input should accept.',
+      defaultValue: 'null',
+      description: 'Defines the file types the file input should accept.',
       control: {
         type: 'string'
       }
@@ -425,7 +424,8 @@ const DocTemplate = () => {
 const commonArgs = {
   label: 'Label text',
   helperText: 'Upload a CSV or GeoJSON file, or a zip package with your Shapefile',
-  accept: ['application/JSON', 'image/*']
+  accept: 'application/JSON,image/*',
+  name: 'upload-field'
 };
 const sizeArgs = {
   helperText: 'This is a error message.'

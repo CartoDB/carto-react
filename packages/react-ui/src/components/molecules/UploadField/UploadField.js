@@ -5,17 +5,18 @@ import FilesAction from './FilesAction';
 import useFileUpload from './useFileUpload';
 import StyledUploadField from './StyledUploadField';
 
-function UploadField({ buttonText, accept, files, ...props }) {
-  const { onChange, multiple, placeholder, size, error } = props;
+function UploadField({ buttonText, accept, files, name, inputRef, validator, ...props }) {
+  const { onFileChange, multiple, placeholder, size, error } = props;
   const uploadInputRef = useRef(null);
 
   const { filesText, getPlaceholder, dragOver, inputEvents, handleFiles, handleReset } =
     useFileUpload({
       uploadInputRef,
       files,
-      onChange,
+      onFileChange,
       multiple,
-      placeholder
+      placeholder,
+      validator
     });
 
   return (
@@ -29,6 +30,8 @@ function UploadField({ buttonText, accept, files, ...props }) {
         InputProps={{
           ...inputEvents,
           readOnly: true,
+          name: name,
+          inputRef: inputRef,
           endAdornment: (
             <FilesAction
               buttonText={buttonText}
@@ -55,20 +58,26 @@ function UploadField({ buttonText, accept, files, ...props }) {
 
 UploadField.defaultProps = {
   buttonText: 'Browse',
-  accept: ['application/JSON'],
+  accept: null,
   files: [],
   onChange: (files) => files
 };
 
 UploadField.propTypes = {
+  name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   buttonText: PropTypes.string,
-  accept: PropTypes.array,
+  accept: PropTypes.string,
   multiple: PropTypes.bool,
   error: PropTypes.bool,
   files: PropTypes.array,
-  onChange: PropTypes.func.isRequired,
-  size: PropTypes.oneOf(['small', 'medium'])
+  onFileChange: PropTypes.func,
+  validator: PropTypes.func,
+  size: PropTypes.oneOf(['small', 'medium']),
+  inputRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ])
 };
 
 export default UploadField;

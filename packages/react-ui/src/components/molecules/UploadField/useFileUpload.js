@@ -5,7 +5,8 @@ export default function useFileUpload({
   files,
   onChange,
   multiple,
-  placeholder
+  placeholder,
+  validator
 }) {
   const [filesText, setFilesText] = useState('');
   const [dragOver, setDragOver] = useState(false);
@@ -19,6 +20,12 @@ export default function useFileUpload({
       setFilesText(`${files.length} files selected`);
     }
   }, [files]);
+
+  const validateFile = async (file: File) => {
+    const error = validator && (await validator(file));
+    //setError(error);
+    return error;
+  };
 
   const handleBrowse = () => {
     uploadInputRef.current?.click();
