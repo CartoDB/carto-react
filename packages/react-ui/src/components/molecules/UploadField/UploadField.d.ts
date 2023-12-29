@@ -8,7 +8,6 @@ export type UploadFieldProps = Omit<TextFieldProps, 'onChange'> & {
   files?: [];
   multiple?: boolean;
   onChange?: (file?: File | null) => void;
-  validator?: (file: File) => Promise<string | undefined | null>;
   inputRef?: Ref<any>;
   inProgress?: boolean;
 };

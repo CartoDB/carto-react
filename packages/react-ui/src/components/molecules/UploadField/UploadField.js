@@ -77,11 +77,7 @@ UploadField.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   buttonText: PropTypes.string,
-  accept: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.string,
-    PropTypes.oneOf([null])
-  ]),
+  accept: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
   multiple: PropTypes.bool,
   error: PropTypes.bool,
   files: PropTypes.array,
