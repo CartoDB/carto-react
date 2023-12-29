@@ -2,13 +2,12 @@ import { Ref } from 'react';
 import { TextFieldProps } from '@mui/material/TextField';
 
 export type UploadFieldProps = Omit<TextFieldProps, 'onChange'> & {
-  name: string;
+  name?: string;
   buttonText?: string;
   accept?: string[] | string | null;
   files?: [];
   multiple?: boolean;
   onChange?: (file?: File | null) => void;
-  inputRef?: Ref<any>;
   inProgress?: boolean;
 };
 

@@ -10,11 +10,14 @@ function UploadField({
   accept,
   files,
   name,
-  inputRef,
   inProgress,
+  onChange,
+  multiple,
+  placeholder,
+  size,
+  error,
   ...props
 }) {
-  const { onChange, multiple, placeholder, size, error } = props;
   const uploadInputRef = useRef(null);
 
   const { filesText, getPlaceholder, dragOver, inputEvents, handleFiles, handleReset } =
@@ -38,7 +41,6 @@ function UploadField({
           ...inputEvents,
           readOnly: true,
           name: name,
-          inputRef: inputRef,
           endAdornment: (
             <FilesAction
               buttonText={buttonText}
@@ -67,14 +69,14 @@ function UploadField({
 
 UploadField.defaultProps = {
   buttonText: 'Browse',
-  accept: null,
+  accept: ['application/JSON'],
   files: [],
   onChange: (files) => files,
   size: 'small'
 };
 
 UploadField.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   placeholder: PropTypes.string,
   buttonText: PropTypes.string,
   accept: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
@@ -83,10 +85,6 @@ UploadField.propTypes = {
   files: PropTypes.array,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),
-  inputRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-  ]),
   inProgress: PropTypes.bool
 };
 

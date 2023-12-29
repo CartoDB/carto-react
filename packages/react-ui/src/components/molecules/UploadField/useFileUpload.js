@@ -5,8 +5,7 @@ export default function useFileUpload({
   files,
   onChange,
   multiple,
-  placeholder,
-  validator
+  placeholder
 }) {
   const [filesText, setFilesText] = useState('');
   const [dragOver, setDragOver] = useState(false);
