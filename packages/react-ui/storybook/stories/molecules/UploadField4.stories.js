@@ -1,12 +1,12 @@
 import { Grid } from '@mui/material';
 import React, { useState } from 'react';
 import Typography from '../../../src/components/atoms/Typography';
-import UploadField from '../../../src/components/molecules/UploadField/UploadField';
+import UploadField4 from '../../../src/components/molecules/UploadField/UploadField4';
 import { Container, DocContainer, DocHighlight, Label } from '../../utils/storyStyles';
 
 const options = {
-  title: 'Molecules/UploadField',
-  component: UploadField,
+  title: 'Molecules/UploadField4',
+  component: UploadField4,
   argTypes: {
     variant: {
       control: {
@@ -33,9 +33,8 @@ const options = {
       }
     },
     error: {
-      defaultValue: false,
       control: {
-        type: 'boolean'
+        type: 'text'
       }
     },
     label: {
@@ -86,20 +85,20 @@ export default options;
 
 const Template = ({ ...args }) => {
   const [files, setFiles] = useState([]);
-  const handleUploadFieldChange = (files) => {
+  const handleUploadField4Change = (files) => {
     setFiles(files);
   };
 
-  return <UploadField {...args} files={files} onChange={handleUploadFieldChange} />;
+  return <UploadField4 {...args} files={files} onChange={handleUploadField4Change} />;
 };
 
 const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
   const [files, setFiles] = useState([]);
   const [files2, setFiles2] = useState([]);
-  const handleUploadFieldChange = (files) => {
+  const handleUploadField4Change = (files) => {
     setFiles(files);
   };
-  const handleUploadFieldChange2 = (files) => {
+  const handleUploadField4Change2 = (files) => {
     setFiles2(files);
   };
 
@@ -108,26 +107,26 @@ const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Filled'}</Label>
-          <UploadField
+          <UploadField4
             {...rest}
             variant='filled'
             files={files}
             label={label}
             placeholder={placeholder}
-            onChange={handleUploadFieldChange}
+            onChange={handleUploadField4Change}
           />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Outlined'}</Label>
-          <UploadField
+          <UploadField4
             {...rest}
             variant='outlined'
             files={files2}
             label={label}
             placeholder={placeholder}
-            onChange={handleUploadFieldChange2}
+            onChange={handleUploadField4Change2}
           />
         </Container>
       </Grid>
@@ -140,16 +139,16 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
   const [files2, setFiles2] = useState([]);
   const [files3, setFiles3] = useState([]);
   const [files4, setFiles4] = useState([]);
-  const handleUploadFieldChange = (files) => {
+  const handleUploadField4Change = (files) => {
     setFiles(files);
   };
-  const handleUploadFieldChange2 = (files) => {
+  const handleUploadField4Change2 = (files) => {
     setFiles2(files);
   };
-  const handleUploadFieldChange3 = (files) => {
+  const handleUploadField4Change3 = (files) => {
     setFiles3(files);
   };
-  const handleUploadFieldChange4 = (files) => {
+  const handleUploadField4Change4 = (files) => {
     setFiles4(files);
   };
 
@@ -158,48 +157,48 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
       <Grid item>
         <Container>
           <Label variant='body2'>{'Label + helper text'}</Label>
-          <UploadField
+          <UploadField4
             {...rest}
             label={label}
             placeholder={placeholder}
             helperText={helperText}
             files={files}
-            onChange={handleUploadFieldChange}
+            onChange={handleUploadField4Change}
           />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Without label + helper text'}</Label>
-          <UploadField
+          <UploadField4
             {...rest}
             placeholder={placeholder}
             files={files2}
-            onChange={handleUploadFieldChange2}
+            onChange={handleUploadField4Change2}
           />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only label'}</Label>
-          <UploadField
+          <UploadField4
             {...rest}
             label={label}
             placeholder={placeholder}
             files={files3}
-            onChange={handleUploadFieldChange3}
+            onChange={handleUploadField4Change3}
           />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only helper text'}</Label>
-          <UploadField
+          <UploadField4
             {...rest}
             placeholder={placeholder}
             helperText={helperText}
             files={files4}
-            onChange={handleUploadFieldChange4}
+            onChange={handleUploadField4Change4}
           />
         </Container>
       </Grid>
@@ -214,22 +213,22 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
   const [files4, setFiles4] = useState([]);
   const [files5, setFiles5] = useState([]);
   const [files6, setFiles6] = useState([]);
-  const handleUploadFieldChange = (files) => {
+  const handleUploadField4Change = (files) => {
     setFiles(files);
   };
-  const handleUploadFieldChange2 = (files) => {
+  const handleUploadField4Change2 = (files) => {
     setFiles2(files);
   };
-  const handleUploadFieldChange3 = (files) => {
+  const handleUploadField4Change3 = (files) => {
     setFiles3(files);
   };
-  const handleUploadFieldChange4 = (files) => {
+  const handleUploadField4Change4 = (files) => {
     setFiles4(files);
   };
-  const handleUploadFieldChange5 = (files) => {
+  const handleUploadField4Change5 = (files) => {
     setFiles5(files);
   };
-  const handleUploadFieldChange6 = (files) => {
+  const handleUploadField4Change6 = (files) => {
     setFiles6(files);
   };
 
@@ -240,23 +239,23 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Default</Typography>
         </Grid>
         <Grid item xs={4}>
-          <UploadField
+          <UploadField4
             {...rest}
             variant='filled'
             label={label}
             placeholder={placeholder}
             files={files}
-            onChange={handleUploadFieldChange}
+            onChange={handleUploadField4Change}
           />
         </Grid>
         <Grid item xs={4}>
-          <UploadField
+          <UploadField4
             {...rest}
             variant='outlined'
             label={label}
             placeholder={placeholder}
             files={files2}
-            onChange={handleUploadFieldChange2}
+            onChange={handleUploadField4Change2}
           />
         </Grid>
       </Grid>
@@ -266,25 +265,25 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Focused</Typography>
         </Grid>
         <Grid item xs={4}>
-          <UploadField
+          <UploadField4
             {...rest}
             variant='filled'
             label={label}
-            placeholder={placeholder}
+            placeholder={'placeholder focused'}
             focused
             files={files3}
-            onChange={handleUploadFieldChange3}
+            onChange={handleUploadField4Change3}
           />
         </Grid>
         <Grid item xs={4}>
-          <UploadField
+          <UploadField4
             {...rest}
             variant='outlined'
             label={label}
             placeholder={placeholder}
             focused
             files={files4}
-            onChange={handleUploadFieldChange4}
+            onChange={handleUploadField4Change4}
           />
         </Grid>
       </Grid>
@@ -294,7 +293,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Disabled</Typography>
         </Grid>
         <Grid item xs={4}>
-          <UploadField
+          <UploadField4
             {...rest}
             variant='filled'
             label={label}
@@ -303,7 +302,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           />
         </Grid>
         <Grid item xs={4}>
-          <UploadField
+          <UploadField4
             {...rest}
             variant='outlined'
             label={label}
@@ -318,27 +317,27 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Error</Typography>
         </Grid>
         <Grid item xs={4}>
-          <UploadField
+          <UploadField4
             {...rest}
             variant='filled'
             label={label}
             placeholder={placeholder}
             helperText={helperText}
-            error
+            error={'This is a error message.'}
             files={files5}
-            onChange={handleUploadFieldChange5}
+            onChange={handleUploadField4Change5}
           />
         </Grid>
         <Grid item xs={4}>
-          <UploadField
+          <UploadField4
             {...rest}
             variant='outlined'
             label={label}
             placeholder={placeholder}
             helperText={helperText}
-            error
+            error={'This is a error message.'}
             files={files6}
-            onChange={handleUploadFieldChange6}
+            onChange={handleUploadField4Change6}
           />
         </Grid>
       </Grid>
@@ -348,7 +347,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>In Progress</Typography>
         </Grid>
         <Grid item xs={4}>
-          <UploadField
+          <UploadField4
             {...rest}
             variant='filled'
             label={label}
@@ -357,7 +356,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           />
         </Grid>
         <Grid item xs={4}>
-          <UploadField
+          <UploadField4
             {...rest}
             variant='outlined'
             label={label}
@@ -372,7 +371,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
 
 const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
   const [files, setFiles] = useState([]);
-  const handleUploadFieldChange = (files) => {
+  const handleUploadField4Change = (files) => {
     setFiles(files);
   };
 
@@ -381,13 +380,13 @@ const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...res
       <Grid item>
         <Container>
           <Label variant='body2'>{'Default'}</Label>
-          <UploadField
+          <UploadField4
             {...rest}
             multiple
             label={label}
             placeholder={placeholder}
             files={files}
-            onChange={handleUploadFieldChange}
+            onChange={handleUploadField4Change}
           />
         </Container>
       </Grid>
@@ -397,7 +396,7 @@ const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...res
 
 const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
   const [files, setFiles] = useState([]);
-  const handleUploadFieldChange = (files) => {
+  const handleUploadField4Change = (files) => {
     setFiles(files);
   };
 
@@ -407,12 +406,12 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
         <Label variant='subtitle1'>{'Overflow'}</Label>
         <Container style={{ maxWidth: '440px' }}>
           <Label variant='body2'>{'Default'}</Label>
-          <UploadField
+          <UploadField4
             {...rest}
             label={label}
             placeholder={placeholder}
             files={files}
-            onChange={handleUploadFieldChange}
+            onChange={handleUploadField4Change}
           />
         </Container>
       </Grid>
@@ -431,13 +430,13 @@ const DocTemplate = () => {
       <Typography mt={2}>
         So, instead of <i>{'<Inputfile />'}</i>, you should use this one:
         <DocHighlight component='span'>
-          react-ui/src/components/molecules/UploadField
+          react-ui/src/components/molecules/UploadField4
         </DocHighlight>
       </Typography>
       <Typography mt={2}>
         For external use:
         <DocHighlight component='span'>
-          {'import { UploadField } from "@carto/react-ui";'}
+          {'import { UploadField4 } from "@carto/react-ui";'}
         </DocHighlight>
         .
       </Typography>

@@ -42,6 +42,12 @@ import SelectField, { SelectFieldProps } from './components/atoms/SelectField';
 import UploadField, {
   UploadFieldProps
 } from './components/molecules/UploadField/UploadField';
+import UploadField4, {
+  UploadField4Props
+} from './components/molecules/UploadField/UploadField4';
+import UploadFieldBase, {
+  UploadFieldBaseProps
+} from './components/molecules/UploadField/UploadFieldBase';
 import AppBar, { AppBarProps } from './components/organisms/AppBar/AppBar';
 import LabelWithIndicator, {
   LabelWithIndicatorProps
@@ -104,6 +110,10 @@ export {
   SelectFieldProps,
   UploadField,
   UploadFieldProps,
+  UploadField4,
+  UploadField4Props,
+  UploadFieldBase,
+  UploadFieldBaseProps,
   AppBar,
   AppBarProps,
   LabelWithIndicator,
