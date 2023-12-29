@@ -1,6 +1,7 @@
+import { Ref } from 'react';
 import { TextFieldProps } from '@mui/material/TextField';
 
-export type UploadFieldProps = Omit<TextFieldProps, 'onChange'> & {
+export type UploadField4Props = Omit<TextFieldProps, 'onChange'> & {
   name?: string;
   buttonText?: string;
   accept?: string[] | string | null;
@@ -10,5 +11,5 @@ export type UploadFieldProps = Omit<TextFieldProps, 'onChange'> & {
   inProgress?: boolean;
 };
 
-declare const UploadField: (props: UploadFieldProps) => JSX.Element;
-export default UploadField;
+declare const UploadField4: (props: UploadField4Props) => JSX.Element;
+export default UploadField4;
