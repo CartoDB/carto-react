@@ -1,16 +1,7 @@
 import React, { useState } from 'react';
-import {
-  FormControl,
-  Grid,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  TextField
-} from '@mui/material';
-import { MapOutlined } from '@mui/icons-material';
+import { FormControl, Grid, InputLabel, MenuItem, TextField } from '@mui/material';
 import Typography from '../../../src/components/atoms/Typography';
 import SelectField from '../../../src/components/atoms/SelectField';
-import Button from '../../../src/components/atoms/Button';
 import {
   Container,
   DocContainer,
@@ -18,6 +9,7 @@ import {
   DocLink,
   Label
 } from '../../utils/storyStyles';
+import Button from '../../../src/components/atoms/Button';
 
 const options = {
   title: 'Atoms/Select Field',
@@ -77,9 +69,18 @@ const options = {
 export default options;
 
 const menuItems = [
-  { label: 'Ten: super large text with overflow', id: '10' },
-  { label: 'Twenty', id: '20' },
-  { label: 'Thirty', id: '30' }
+  {
+    label: 'Ten: super large text with overflow',
+    value: '10'
+  },
+  {
+    label: 'Twenty',
+    value: '20'
+  },
+  {
+    label: 'Thirty',
+    value: '30'
+  }
 ];
 
 const SelectFieldItem = ({
@@ -113,27 +114,33 @@ const SelectFieldItem = ({
       variant={variant}
       placeholder={placeholder}
       helperText={helperText}
+      onChange={handleChange}
       value={content}
       focused={focused}
       disabled={disabled}
-      onChange={handleChange}
       error={error}
       size={size}
       fullWidth={rest.fullWidth}
-      required={required}
     >
-      {menuItems.map((o, i) => (
-        <MenuItem key={i} value={o.label}>
-          {o.label}
-        </MenuItem>
-      ))}
+      {[...Array(20)].map((item, index) => {
+        const itemText =
+          index === 1
+            ? `Very long item text with overflow ${index + 1}`
+            : `Item ${index + 1}`;
+
+        return (
+          <MenuItem key={index} value={itemText}>
+            {itemText}
+          </MenuItem>
+        );
+      })}
     </SelectField>
   );
 };
 
 const PlaygroundTemplate = (args) => <SelectFieldItem {...args} />;
 
-const VariantsTemplate = ({ label, placeholder, ...rest }) => {
+const VariantsTemplate = ({ label, required, placeholder, ...rest }) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
@@ -209,46 +216,14 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
   );
 };
 
-const PrefixTemplate = ({ label, placeholder, ...rest }) => {
-  return (
-    <Grid container direction='column' spacing={6}>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Prefix (text)'}</Label>
-          <SelectFieldItem
-            {...rest}
-            label={label}
-            placeholder={placeholder}
-            startAdornment={<InputAdornment position='start'>Kg</InputAdornment>}
-          />
-        </Container>
-      </Grid>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Prefix (icon)'}</Label>
-          <SelectFieldItem
-            {...rest}
-            label={label}
-            placeholder={placeholder}
-            startAdornment={
-              <InputAdornment position='start'>
-                <MapOutlined />
-              </InputAdornment>
-            }
-          />
-        </Container>
-      </Grid>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'None'}</Label>
-          <SelectFieldItem {...rest} label={label} placeholder={placeholder} />
-        </Container>
-      </Grid>
-    </Grid>
-  );
-};
-
-const SizeTemplate = ({ label, placeholder, helperText, size, ...rest }) => {
+const SizeTemplate = ({
+  label,
+  placeholder,
+  defaultValue,
+  helperText,
+  size,
+  ...rest
+}) => {
   const [fixedValue, setFixedValue] = useState('Twenty');
   const [fixedValue2, setFixedValue2] = useState('Twenty');
   const [fixedValue3, setFixedValue3] = useState('Thirty');
@@ -499,7 +474,14 @@ const SizeTemplate = ({ label, placeholder, helperText, size, ...rest }) => {
   );
 };
 
-const MultipleTemplate = ({ label, placeholder, helperText, size, ...rest }) => {
+const MultipleTemplate = ({
+  label,
+  placeholder,
+  defaultValue,
+  helperText,
+  size,
+  ...rest
+}) => {
   return (
     <DocContainer
       severity='warning'
@@ -523,7 +505,7 @@ const MultipleTemplate = ({ label, placeholder, helperText, size, ...rest }) => 
   );
 };
 
-const BehaviorTemplate = ({ label, placeholder, helperText, ...rest }) => {
+const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
@@ -626,9 +608,6 @@ Variants.argTypes = disabledControlsArgTypes;
 export const LabelAndHelperText = LabelAndHelperTextTemplate.bind({});
 LabelAndHelperText.args = { ...commonArgs };
 LabelAndHelperText.argTypes = disabledControlsArgTypes;
-
-export const Prefix = PrefixTemplate.bind({});
-Prefix.args = { ...commonArgs };
 
 export const Medium = SizeTemplate.bind({});
 Medium.args = { ...commonArgs, ...sizeArgs, size: 'medium' };

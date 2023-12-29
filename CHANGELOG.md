@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Extend SelectField: to accept more data structures as children and to fix placeholder [#796](https://github.com/CartoDB/carto-react/pull/796)
+- UploadField component: UI fixes [#817](https://github.com/CartoDB/carto-react/pull/817)
 
 ## 2.3
 

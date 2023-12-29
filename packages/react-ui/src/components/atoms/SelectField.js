@@ -1,65 +1,20 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormControl,
-  FormHelperText,
-  InputLabel,
-  MenuItem,
-  Select,
-  styled
-} from '@mui/material';
+import { TextField } from '@mui/material';
 import Typography from './Typography';
-import uniqueId from 'lodash/uniqueId';
-
-const Label = styled(InputLabel)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: theme.spacing(0.5),
-
-  '& .MuiFormLabel-asterisk::after': {
-    marginLeft: theme.spacing(-1)
-  }
-}));
-
-const StyledSelect = styled(Select)(({ theme }) => ({
-  '& .MuiInputAdornment-positionStart': {
-    paddingLeft: theme.spacing(2),
-
-    '&.MuiInputAdornment-sizeSmall': {
-      paddingLeft: theme.spacing(1.5)
-    }
-  },
-  '& .MuiInputBase-inputAdornedStart': {
-    paddingLeft: '0px !important'
-  },
-  '& .MuiSelect-select .MuiMenuItem-root:hover': {
-    backgroundColor: 'transparent'
-  }
-}));
-
-const PlaceholderItem = styled(MenuItem)(() => ({
-  display: 'none'
-}));
 
 const SelectField = forwardRef(
   (
     {
       children,
+      onChange,
       placeholder,
       size,
+      multiple,
       displayEmpty,
+      selectProps,
+      renderValue,
       menuProps,
-      inputProps,
-      labelId,
-      label,
-      helperText,
-      name,
-      error,
-      focused,
-      disabled,
-      fullWidth,
-      required,
-      'aria-label': ariaLabel,
       ...otherProps
     },
     ref
@@ -69,36 +24,40 @@ const SelectField = forwardRef(
 
     const isSmall = size === 'small';
 
-    // Accessibility attributes
-    const [defaultId] = useState(uniqueId('select-label-'));
-    const ariaLabelledBy = label ? labelId || defaultId : undefined;
+    const defaultRenderValue = React.useCallback(
+      (selected) => {
+        if (selected.length === 0) {
+          return (
+            <Typography
+              variant={isSmall ? 'body2' : 'body1'}
+              color='text.hint'
+              component='span'
+              noWrap
+            >
+              {placeholder}
+            </Typography>
+          );
+        }
+        return selected.join(', ');
+      },
+      [isSmall, placeholder]
+    );
 
     return (
-      <FormControl
+      <TextField
+        {...otherProps}
+        select
+        onChange={onChange}
+        ref={ref}
         size={size}
-        error={error}
-        focused={focused}
-        disabled={disabled}
-        fullWidth={fullWidth}
-        required={required}
-        // TODO: remove this backgroundColor before creating the patch version
-        sx={{ backgroundColor: '#fbfbbc !important' }}
-      >
-        {label && <Label id={ariaLabelledBy}>{label}</Label>}
-
-        <StyledSelect
-          {...otherProps}
-          labelId={ariaLabelledBy}
-          name={name}
-          ref={ref}
-          size={size}
-          fullWidth={fullWidth}
-          displayEmpty={displayEmpty || !!placeholder}
-          inputProps={{
-            ...inputProps,
-            'aria-label': ariaLabel
-          }}
-          MenuProps={{
+        placeholder={placeholder}
+        SelectProps={{
+          ...selectProps,
+          multiple: multiple,
+          displayEmpty: displayEmpty || !!placeholder,
+          size: size,
+          renderValue: renderValue || defaultRenderValue,
+          MenuProps: {
             ...menuProps,
             anchorOrigin: {
               vertical: 'bottom',
@@ -108,40 +67,25 @@ const SelectField = forwardRef(
               vertical: -4,
               horizontal: 'left'
             }
-          }}
-        >
-          {placeholder && (
-            <PlaceholderItem disabled value=''>
-              <Typography
-                variant={isSmall ? 'body2' : 'body1'}
-                color='text.hint'
-                component='span'
-              >
-                {placeholder}
-              </Typography>
-            </PlaceholderItem>
-          )}
-
-          {children}
-        </StyledSelect>
-
-        {helperText && (
-          <FormHelperText aria-label={`${name}-helper`}>{helperText}</FormHelperText>
-        )}
-      </FormControl>
+          }
+        }}
+      >
+        {children}
+      </TextField>
     );
   }
 );
 
 SelectField.defaultProps = {
+  multiple: false,
   size: 'small'
 };
 SelectField.propTypes = {
-  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  placeholder: PropTypes.string,
   size: PropTypes.oneOf(['small', 'medium']),
-  menuProps: PropTypes.object,
-  inputProps: PropTypes.object,
-  helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+  selectProps: PropTypes.object,
+  renderValue: PropTypes.func,
+  menuProps: PropTypes.object
 };
 
 export default SelectField;
