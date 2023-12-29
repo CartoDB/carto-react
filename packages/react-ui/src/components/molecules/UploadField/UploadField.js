@@ -5,18 +5,25 @@ import FilesAction from './FilesAction';
 import useFileUpload from './useFileUpload';
 import StyledUploadField from './StyledUploadField';
 
-function UploadField({ buttonText, accept, files, name, inputRef, validator, ...props }) {
-  const { onFileChange, multiple, placeholder, size, error } = props;
+function UploadField({
+  buttonText,
+  accept,
+  files,
+  name,
+  inputRef,
+  inProgress,
+  ...props
+}) {
+  const { onChange, multiple, placeholder, size, error } = props;
   const uploadInputRef = useRef(null);
 
   const { filesText, getPlaceholder, dragOver, inputEvents, handleFiles, handleReset } =
     useFileUpload({
       uploadInputRef,
       files,
-      onFileChange,
+      onChange,
       multiple,
-      placeholder,
-      validator
+      placeholder
     });
 
   return (
@@ -37,9 +44,10 @@ function UploadField({ buttonText, accept, files, name, inputRef, validator, ...
               buttonText={buttonText}
               hasFiles={!!filesText}
               size={size}
-              error={error}
+              error={!!error}
               disabled={!!dragOver}
               handleReset={handleReset}
+              inProgress={inProgress}
             />
           )
         }}
@@ -51,6 +59,7 @@ function UploadField({ buttonText, accept, files, name, inputRef, validator, ...
         accept={accept}
         multiple={multiple}
         onChange={handleFiles}
+        aria-label={name}
       />
     </>
   );
@@ -60,7 +69,8 @@ UploadField.defaultProps = {
   buttonText: 'Browse',
   accept: null,
   files: [],
-  onChange: (files) => files
+  onChange: (files) => files,
+  size: 'small'
 };
 
 UploadField.propTypes = {
@@ -71,13 +81,13 @@ UploadField.propTypes = {
   multiple: PropTypes.bool,
   error: PropTypes.bool,
   files: PropTypes.array,
-  onFileChange: PropTypes.func,
-  validator: PropTypes.func,
+  onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),
   inputRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-  ])
+  ]),
+  inProgress: PropTypes.bool
 };
 
 export default UploadField;

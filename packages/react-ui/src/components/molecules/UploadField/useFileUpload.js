@@ -21,12 +21,6 @@ export default function useFileUpload({
     }
   }, [files]);
 
-  const validateFile = async (file: File) => {
-    const error = validator && (await validator(file));
-    //setError(error);
-    return error;
-  };
-
   const handleBrowse = () => {
     uploadInputRef.current?.click();
   };

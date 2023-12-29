@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, IconButton, InputAdornment } from '@mui/material';
+import { Button, CircularProgress, IconButton, InputAdornment } from '@mui/material';
 import { Cancel } from '@mui/icons-material';
 
 // For Browser or Delete actions
@@ -9,15 +9,20 @@ export default function FilesAction({
   size,
   error,
   disabled,
-  handleReset
+  handleReset,
+  inProgress
 }) {
   return (
     <InputAdornment position='end'>
-      {!hasFiles ? (
+      {inProgress ? (
+        <IconButton aria-label='loading' disabled size={size}>
+          <CircularProgress size={18} />
+        </IconButton>
+      ) : !hasFiles ? (
         <Button
           size={size}
           variant='text'
-          color={error ? 'inherit' : 'primary'}
+          color={error ? 'default' : 'primary'}
           disabled={disabled}
         >
           {buttonText}

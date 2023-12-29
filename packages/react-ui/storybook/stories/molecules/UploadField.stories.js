@@ -342,6 +342,30 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           />
         </Grid>
       </Grid>
+
+      <Grid item container spacing={2}>
+        <Grid item xs={2}>
+          <Typography>In Progress</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <UploadField
+            {...rest}
+            variant='filled'
+            label={label}
+            placeholder={placeholder}
+            inProgress
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <UploadField
+            {...rest}
+            variant='outlined'
+            label={label}
+            placeholder={placeholder}
+            inProgress
+          />
+        </Grid>
+      </Grid>
     </Grid>
   );
 };
