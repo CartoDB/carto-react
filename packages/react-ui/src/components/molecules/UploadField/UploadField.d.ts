@@ -4,7 +4,7 @@ import { TextFieldProps } from '@mui/material/TextField';
 export type UploadFieldProps = Omit<TextFieldProps, 'onChange'> & {
   name: string;
   buttonText?: string;
-  accept?: string | null;
+  accept?: string[] | string | null;
   files?: [];
   multiple?: boolean;
   onChange?: (file?: File | null) => void;
