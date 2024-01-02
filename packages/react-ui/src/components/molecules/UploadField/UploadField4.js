@@ -37,6 +37,7 @@ function UploadField({
       handleReset={handleReset}
       dragOver={dragOver}
       inProgress={inProgress}
+      filesText={filesText}
       muiInputProps={inputEvents}
       nativeInputProps={{
         accept: accept,
