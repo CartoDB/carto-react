@@ -12,10 +12,12 @@ function UploadFieldBase({
   filesText,
   muiInputProps,
   nativeInputProps,
+  onChange,
   handleReset,
   dragOver,
   name,
   uploadInputRef,
+  multiple,
   focused,
   ...props
 }) {
@@ -30,6 +32,7 @@ function UploadFieldBase({
         InputProps={{
           ...muiInputProps,
           readOnly: true,
+          multiple: multiple,
           name: name,
           endAdornment: (
             <FilesAction
@@ -50,6 +53,7 @@ function UploadFieldBase({
         style={{ display: 'none' }}
         type='file'
         aria-label={name}
+        onChange={onChange}
       />
     </>
   );
@@ -58,20 +62,24 @@ function UploadFieldBase({
 UploadFieldBase.defaultProps = {
   buttonText: 'Browse',
   filesText: '',
-  size: 'small'
+  size: 'small',
+  onChange: (files) => files
 };
 
 UploadFieldBase.propTypes = {
   name: PropTypes.string,
-  buttonText: PropTypes.string,
-  error: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  filesText: PropTypes.string,
-  size: PropTypes.oneOf(['small', 'medium']),
-  inProgress: PropTypes.bool,
+  accept: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
+  multiple: PropTypes.bool,
+  onChange: PropTypes.func,
+  handleReset: PropTypes.func,
   dragOver: PropTypes.bool,
+  error: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  inProgress: PropTypes.bool,
   muiInputProps: PropTypes.object,
   nativeInputProps: PropTypes.object,
-  handleReset: PropTypes.func,
+  size: PropTypes.oneOf(['small', 'medium']),
+  buttonText: PropTypes.string,
+  filesText: PropTypes.string,
   inputRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })
