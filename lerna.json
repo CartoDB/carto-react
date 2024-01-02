@@ -1,6 +1,8 @@
 {
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "2.3.4-uploadfield-0.2"
+  "version": "2.3.5-uploadfield-0.3"
 }
