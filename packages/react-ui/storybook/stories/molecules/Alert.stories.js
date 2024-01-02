@@ -1,7 +1,9 @@
 import React from 'react';
-import { Box, Button, Typography, Badge, capitalize, styled } from '@mui/material';
+import { Box, Link, capitalize, styled } from '@mui/material';
 import { Standalone, ThinContainer } from '../../utils/storyStyles';
 import Alert from '../../../../react-ui/src/components/molecules/Alert';
+import Typography from '../../../../react-ui/src/components/atoms/Typography';
+import Button from '../../../../react-ui/src/components/atoms/Button';
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
 
 const title = 'This is a title';
@@ -34,7 +36,7 @@ const options = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A36257'
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/C4R-Components?node-id=1534%3A26152'
     },
     status: {
       type: 'validated'
@@ -56,7 +58,7 @@ const Row = ({ title, description, children }) => (
     <Box sx={{ width: 180 }} flexShrink={0}>
       <Typography variant='body2'>{title}</Typography>
       {description && (
-        <Typography variant='caption' color='textSecondary'>
+        <Typography variant='caption' component='p' color='textSecondary'>
           {description}
         </Typography>
       )}
@@ -69,12 +71,20 @@ const Row = ({ title, description, children }) => (
 
 const inlineProps = {
   content: 'inline',
-  children: inlineText
+  children: (
+    <>
+      {inlineText} <Link href='#'>Link</Link>
+    </>
+  )
 };
 
 const blockProps = {
   content: 'block',
-  children: blockText
+  children: (
+    <>
+      {blockText} <Link href='#'>Link</Link>
+    </>
+  )
 };
 
 const singleAction = (
@@ -90,6 +100,14 @@ const twoActions = (
     </Button>
   </>
 );
+const inlineActions = (
+  <>
+    <Button size='small' color='inherit'>
+      Action
+    </Button>
+    {singleAction}
+  </>
+);
 
 const SparklesIcon = styled(AutoAwesomeOutlinedIcon)(({ theme }) => ({
   color: theme.palette.warning.light
@@ -101,23 +119,22 @@ const SeverityTemplate = (args) => {
       <Row
         title='Neutral'
         description={
-          <div>
+          <>
             <p>Default variant.</p>
             <p>Use to hightlight general information or actions that aren’t critical.</p>
             <p>Color for icons and buttons can be customized.</p>
-          </div>
+          </>
         }
       >
         <Box sx={{ width: '100%' }}>
           <Box mb={2}>
+            <Alert {...args} {...blockProps} severity='neutral' title={title} />
+          </Box>
+          <Box mb={2}>
             <Alert
               {...args}
               title='You haven’t published the lastest changes made.'
-              icon={
-                <Box px={1} mt={-1.25}>
-                  <Badge color='secondary' variant='dot' />
-                </Box>
-              }
+              icon={<img src='/dot.svg' alt='' />}
               action={
                 <>
                   <Button size='small'>Open public map</Button>
@@ -211,7 +228,7 @@ const ActionsTemplate = (args) => {
       </Row>
 
       <Row title='Second action'>
-        <Alert {...args} {...inlineProps} action={twoActions} />
+        <Alert {...args} {...inlineProps} action={inlineActions} />
         <Alert {...args} {...blockProps} title={title} action={twoActions} />
       </Row>
     </Box>
@@ -222,9 +239,7 @@ const RemovableTemplate = (args) => {
   return (
     <Box display='flex' flexDirection='column' gap={3}>
       <Row title='Block content'>
-        <ThinContainer>
-          <Alert {...args} {...blockProps} title={title} onClose={() => {}} />
-        </ThinContainer>
+        <Alert {...args} {...blockProps} title={title} onClose={() => {}} />
       </Row>
 
       <Row title='Inline content'>
@@ -234,15 +249,76 @@ const RemovableTemplate = (args) => {
   );
 };
 
+const StickyTemplate = (args) => {
+  return (
+    <Box display='flex' flexDirection='column' gap={3}>
+      <Row
+        title='False (Default)'
+        description='Default alerts are located in a specific area of the ui, near their related elements. They are not sticky and should scroll with the rest of the page content.'
+      >
+        <Alert {...args} {...blockProps} title={title} action={singleAction} />
+      </Row>
+
+      <Row
+        title='True'
+        description={
+          <>
+            <p>
+              Sticky alerts typically occupy the top of an interface to display general
+              product or system notifications. This behavior causes the component to stick
+              to an area of the general content, taking up the full width.
+            </p>
+            <p>
+              It is recommended to combine it with the Inline layout in desktop
+              resolutions, although for smaller ones we can combine it with the Block
+              layouts.
+            </p>
+            <p>Note: these types of alerts don't have corner radius.</p>
+          </>
+        }
+      >
+        <Alert
+          {...args}
+          {...blockProps}
+          severity='warning'
+          title={title}
+          action={singleAction}
+          isSticky
+        />
+        <Alert
+          {...args}
+          {...inlineProps}
+          severity='warning'
+          action={singleAction}
+          isSticky
+        />
+      </Row>
+    </Box>
+  );
+};
+
+const disabledControlsArgTypes = {
+  variant: { table: { disable: true } }
+};
+
 export const Playground = AlertPlaygroundTemplate;
 Playground.args = { title };
+Playground.argTypes = disabledControlsArgTypes;
 
 export const Severity = SeverityTemplate.bind({});
+Severity.argTypes = disabledControlsArgTypes;
 
 export const Layout = LayoutTemplate.bind({});
+Layout.argTypes = disabledControlsArgTypes;
 
 export const Title = TitleTemplate.bind({});
+Title.argTypes = disabledControlsArgTypes;
 
 export const Actions = ActionsTemplate.bind({});
+Actions.argTypes = disabledControlsArgTypes;
 
 export const Removable = RemovableTemplate.bind({});
+Removable.argTypes = disabledControlsArgTypes;
+
+export const Sticky = StickyTemplate.bind({});
+Sticky.argTypes = disabledControlsArgTypes;
