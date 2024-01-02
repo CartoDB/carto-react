@@ -33,14 +33,15 @@ function UploadField({
       value={filesText}
       focused={focused || dragOver}
       uploadInputRef={uploadInputRef}
+      onChange={handleFiles}
       handleReset={handleReset}
       dragOver={dragOver}
       inProgress={inProgress}
+      filesText={filesText}
       muiInputProps={inputEvents}
       nativeInputProps={{
         accept: accept,
-        multiple: multiple,
-        onChange: handleFiles
+        multiple: multiple
       }}
     />
   );
