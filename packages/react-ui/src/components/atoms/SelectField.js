@@ -81,8 +81,6 @@ const SelectField = forwardRef(
         disabled={disabled}
         fullWidth={fullWidth}
         required={required}
-        // TODO: remove this backgroundColor before creating the patch version
-        sx={{ backgroundColor: '#fbfbbc !important' }}
       >
         {label && <Label id={ariaLabelledBy}>{label}</Label>}
 
