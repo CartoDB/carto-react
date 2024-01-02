@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Alert component: UI fixes [#813](https://github.com/CartoDB/carto-react/pull/813)
+
 ## 2.3
 
 ### 2.3.4 (2023-12-21)
