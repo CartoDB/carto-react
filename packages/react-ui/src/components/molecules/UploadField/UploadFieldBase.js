@@ -61,7 +61,7 @@ function UploadFieldBase({
 
 UploadFieldBase.defaultProps = {
   buttonText: 'Browse',
-  filesText: '',
+  filesText: null,
   size: 'small',
   onChange: (files) => files
 };
@@ -79,7 +79,7 @@ UploadFieldBase.propTypes = {
   nativeInputProps: PropTypes.object,
   size: PropTypes.oneOf(['small', 'medium']),
   buttonText: PropTypes.string,
-  filesText: PropTypes.string,
+  filesText: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(File)]),
   inputRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) })

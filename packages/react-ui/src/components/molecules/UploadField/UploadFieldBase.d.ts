@@ -15,7 +15,7 @@ export type UploadFieldBaseProps = Omit<TextFieldProps, 'onChange' | 'error'> & 
   nativeInputProps?: object;
   size?: 'small' | 'medium';
   buttonText?: string;
-  filesText?: string;
+  filesText?: File | string | null;
   inputRef?: Ref<any>;
 };
 
