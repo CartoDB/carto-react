@@ -9,13 +9,15 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
-  MenuItem
+  MenuItem,
+  Tooltip
 } from '@mui/material';
 import PasswordField from '../../../src/components/atoms/PasswordField';
 import SelectField from '../../../src/components/atoms/SelectField';
 import LabelWithIndicator from '../../../src/components/atoms/LabelWithIndicator';
 import UploadField from '../../../src/components/molecules/UploadField/UploadField';
 import { Container, Label } from '../../utils/storyStyles';
+import { HelpOutline } from '@mui/icons-material';
 
 const options = {
   title: 'Atoms/LabelWithIndicator',
@@ -24,7 +26,8 @@ const options = {
     type: {
       control: {
         type: 'select',
-        options: ['optional', 'required']
+        options: ['optional', 'required', undefined],
+        defaultValue: 'undefined'
       }
     },
     label: {
@@ -64,14 +67,14 @@ const PlaygroundTemplate = (args) => (
   </InputLabel>
 );
 
-const TypesTemplate = ({ ...args }) => {
+const TypeTemplate = (args) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Optional'}</Label>
           <InputLabel>
-            <LabelWithIndicator {...args} />
+            <LabelWithIndicator {...args} type='optional' />
           </InputLabel>
         </Container>
       </Grid>
@@ -86,6 +89,67 @@ const TypesTemplate = ({ ...args }) => {
     </Grid>
   );
 };
+
+const IconTemplate = (args) => (
+  <Grid container direction='column' spacing={6}>
+    <Grid item>
+      <Container>
+        <Label variant='body2'>{'With Icon'}</Label>
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
+            <InputLabel>
+              <LabelWithIndicator
+                {...args}
+                icon={
+                  <Tooltip title='Tooltip example'>
+                    <HelpOutline cursor='pointer' />
+                  </Tooltip>
+                }
+                type='required'
+              />
+            </InputLabel>
+          </Grid>
+          <Grid item xs={3}>
+            <InputLabel>
+              <LabelWithIndicator
+                {...args}
+                icon={
+                  <Tooltip title='Tooltip example'>
+                    <HelpOutline cursor='pointer' />
+                  </Tooltip>
+                }
+              />
+            </InputLabel>
+          </Grid>
+          <Grid item xs={3}>
+            <InputLabel error>
+              <LabelWithIndicator
+                {...args}
+                icon={
+                  <Tooltip title='Tooltip example'>
+                    <HelpOutline cursor='pointer' />
+                  </Tooltip>
+                }
+              />
+            </InputLabel>
+          </Grid>
+          <Grid item xs={3}>
+            <InputLabel disabled>
+              <LabelWithIndicator
+                {...args}
+                icon={
+                  <Tooltip title='Tooltip example'>
+                    <HelpOutline cursor='pointer' />
+                  </Tooltip>
+                }
+              />
+            </InputLabel>
+          </Grid>
+        </Grid>
+      </Container>
+    </Grid>
+  </Grid>
+);
 
 const UseCasesTemplate = ({ label, ...rest }) => {
   const [files, setFiles] = useState([]);
@@ -102,7 +166,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
             <Grid item container spacing={2}>
               <Grid item xs={3}>
                 <TextField
-                  label={<LabelWithIndicator {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} type='optional' />}
                   placeholder='Placeholder text'
                 />
               </Grid>
@@ -111,14 +175,14 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               </Grid>
               <Grid item xs={3}>
                 <TextField
-                  label={<LabelWithIndicator {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} type='optional' />}
                   placeholder='Placeholder text'
                   error
                 />
               </Grid>
               <Grid item xs={3}>
                 <TextField
-                  label={<LabelWithIndicator {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} type='optional' />}
                   placeholder='Placeholder text'
                   disabled
                 />
@@ -134,7 +198,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
             <Grid item container spacing={2}>
               <Grid item xs={3}>
                 <SelectField
-                  label={<LabelWithIndicator {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} type='optional' />}
                   placeholder='Placeholder text'
                   onChange={() => void 0}
                   value={[]}
@@ -171,7 +235,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               </Grid>
               <Grid item xs={3}>
                 <SelectField
-                  label={<LabelWithIndicator {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} type='optional' />}
                   placeholder='Placeholder text'
                   onChange={() => void 0}
                   value={[]}
@@ -190,7 +254,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               </Grid>
               <Grid item xs={3}>
                 <SelectField
-                  label={<LabelWithIndicator {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} type='optional' />}
                   placeholder='Placeholder text'
                   onChange={() => void 0}
                   value={[]}
@@ -219,7 +283,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               <Grid item xs={3}>
                 <UploadField
                   files={files}
-                  label={<LabelWithIndicator {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} type='optional' />}
                   placeholder='Placeholder text'
                   onChange={handleUploadFieldChange}
                 />
@@ -236,7 +300,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               <Grid item xs={3}>
                 <UploadField
                   files={files}
-                  label={<LabelWithIndicator {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} type='optional' />}
                   placeholder='Placeholder text'
                   onChange={handleUploadFieldChange}
                   error
@@ -245,7 +309,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               <Grid item xs={3}>
                 <UploadField
                   files={files}
-                  label={<LabelWithIndicator {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} type='optional' />}
                   placeholder='Placeholder text'
                   onChange={handleUploadFieldChange}
                   disabled
@@ -262,7 +326,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
             <Grid item container spacing={2}>
               <Grid item xs={3}>
                 <PasswordField
-                  label={<LabelWithIndicator {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} type='optional' />}
                   placeholder='Placeholder text'
                   defaultValue='1234'
                 />
@@ -277,7 +341,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               </Grid>
               <Grid item xs={3}>
                 <PasswordField
-                  label={<LabelWithIndicator {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} type='optional' />}
                   placeholder='Placeholder text'
                   defaultValue='1234'
                   error
@@ -285,7 +349,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               </Grid>
               <Grid item xs={3}>
                 <PasswordField
-                  label={<LabelWithIndicator {...rest} label={label} />}
+                  label={<LabelWithIndicator {...rest} label={label} type='optional' />}
                   placeholder='Placeholder text'
                   defaultValue='1234'
                   disabled
@@ -306,7 +370,9 @@ const UseCasesTemplate = ({ label, ...rest }) => {
                   renderInput={(params) => (
                     <TextField
                       size='small'
-                      label={<LabelWithIndicator {...rest} label={label} />}
+                      label={
+                        <LabelWithIndicator {...rest} label={label} type='optional' />
+                      }
                     />
                   )}
                   size='small'
@@ -327,7 +393,9 @@ const UseCasesTemplate = ({ label, ...rest }) => {
                   renderInput={(params) => (
                     <TextField
                       size='small'
-                      label={<LabelWithIndicator {...rest} label={label} />}
+                      label={
+                        <LabelWithIndicator {...rest} label={label} type='optional' />
+                      }
                       error
                     />
                   )}
@@ -340,7 +408,9 @@ const UseCasesTemplate = ({ label, ...rest }) => {
                   renderInput={(params) => (
                     <TextField
                       size='small'
-                      label={<LabelWithIndicator {...rest} label={label} />}
+                      label={
+                        <LabelWithIndicator {...rest} label={label} type='optional' />
+                      }
                       disabled
                     />
                   )}
@@ -359,7 +429,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               <Grid item xs={3}>
                 <FormControl component='fieldset'>
                   <FormLabel component='legend'>
-                    <LabelWithIndicator label={'Group Label'} />
+                    <LabelWithIndicator label={'Group Label'} type='optional' />
                   </FormLabel>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox checked />} label='Gilad Gray' />
@@ -387,7 +457,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               <Grid item xs={3}>
                 <FormControl error component='fieldset'>
                   <FormLabel component='legend'>
-                    <LabelWithIndicator label={'Group Label'} />
+                    <LabelWithIndicator label={'Group Label'} type='optional' />
                   </FormLabel>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox checked />} label='Gilad Gray' />
@@ -402,7 +472,7 @@ const UseCasesTemplate = ({ label, ...rest }) => {
               <Grid item xs={3}>
                 <FormControl disabled component='fieldset'>
                   <FormLabel component='legend'>
-                    <LabelWithIndicator label={'Group Label'} />
+                    <LabelWithIndicator label={'Group Label'} type='optional' />
                   </FormLabel>
                   <FormGroup>
                     <FormControlLabel control={<Checkbox checked />} label='Gilad Gray' />
@@ -427,10 +497,15 @@ const commonArgs = {
 };
 
 export const Playground = PlaygroundTemplate.bind({});
-Playground.args = { ...commonArgs };
+Playground.args = { ...commonArgs, type: 'optional' };
 
-export const Types = TypesTemplate.bind({});
-Types.args = { ...commonArgs };
+export const Type = TypeTemplate.bind({});
+Type.args = { ...commonArgs };
+
+export const Icon = IconTemplate.bind({});
+Icon.args = {
+  ...commonArgs
+};
 
 export const UseCases = UseCasesTemplate.bind({});
 UseCases.args = { ...commonArgs };
