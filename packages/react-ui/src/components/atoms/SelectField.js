@@ -11,16 +11,6 @@ import {
 import Typography from './Typography';
 import uniqueId from 'lodash/uniqueId';
 
-const Label = styled(InputLabel)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: theme.spacing(0.5),
-
-  '& .MuiFormLabel-asterisk::after': {
-    marginLeft: theme.spacing(-1)
-  }
-}));
-
 const StyledSelect = styled(Select)(({ theme }) => ({
   '& .MuiInputAdornment-positionStart': {
     paddingLeft: theme.spacing(2),
@@ -81,10 +71,8 @@ const SelectField = forwardRef(
         disabled={disabled}
         fullWidth={fullWidth}
         required={required}
-        // TODO: remove this backgroundColor before creating the patch version
-        sx={{ backgroundColor: '#fbfbbc !important' }}
       >
-        {label && <Label id={ariaLabelledBy}>{label}</Label>}
+        {label && <InputLabel id={ariaLabelledBy}>{label}</InputLabel>}
 
         <StyledSelect
           {...otherProps}

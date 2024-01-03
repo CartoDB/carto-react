@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Extend SelectField: to accept more data structures as children and to fix placeholder [#796](https://github.com/CartoDB/carto-react/pull/796)
+- SelectField: extend to accept more data structures as children and to fix placeholder [#796](https://github.com/CartoDB/carto-react/pull/796)
 
 ## 2.3
 
