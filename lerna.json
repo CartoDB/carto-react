@@ -1,6 +1,8 @@
 {
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "2.3.5-selectfield-29"
+  "version": "2.3.5-selectfield-30"
 }
