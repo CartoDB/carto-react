@@ -11,16 +11,6 @@ import {
 import Typography from './Typography';
 import uniqueId from 'lodash/uniqueId';
 
-const Label = styled(InputLabel)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: theme.spacing(0.5),
-
-  '& .MuiFormLabel-asterisk::after': {
-    marginLeft: theme.spacing(-1)
-  }
-}));
-
 const StyledSelect = styled(Select)(({ theme }) => ({
   '& .MuiInputAdornment-positionStart': {
     paddingLeft: theme.spacing(2),
@@ -82,7 +72,7 @@ const SelectField = forwardRef(
         fullWidth={fullWidth}
         required={required}
       >
-        {label && <Label id={ariaLabelledBy}>{label}</Label>}
+        {label && <InputLabel id={ariaLabelledBy}>{label}</InputLabel>}
 
         <StyledSelect
           {...otherProps}

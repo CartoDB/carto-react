@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { styled } from '@mui/material/styles';
+import { Box, styled } from '@mui/material';
 
 import Typography from './Typography';
+
+const Root = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(0.5)
+}));
 
 const LabelIndicator = styled(Typography)(({ theme }) => ({
   '.Mui-disabled &': {
@@ -14,7 +20,7 @@ const LabelWithIndicator = ({ label, type }) => {
   const isRequired = type === 'required';
 
   return (
-    <>
+    <Root>
       {label}
       <LabelIndicator
         component='span'
@@ -24,7 +30,7 @@ const LabelWithIndicator = ({ label, type }) => {
       >
         {isRequired ? '(required)' : '(optional)'}
       </LabelIndicator>
-    </>
+    </Root>
   );
 };
 
