@@ -2,10 +2,12 @@
 
 ## Not released
 
+## 2.3
+
+### 2.3.6 (2024-01-04)
+
 - LabelWithIndicator: UI improvements [#819](https://github.com/CartoDB/carto-react/pull/819)
 - SelectField: extend to accept more data structures as children and to fix placeholder [#796](https://github.com/CartoDB/carto-react/pull/796)
-
-## 2.3
 
 ### 2.3.5 (2024-01-02)
 
