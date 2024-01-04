@@ -35,7 +35,7 @@ const Icon = styled(Box)(({ theme }) => ({
   }
 }));
 
-const LabelWithIndicator = ({ label, type, icon }) => {
+const LabelWithIndicator = ({ label, type, icon, inheritSize }) => {
   const isRequired = type === 'required';
 
   return (
@@ -45,7 +45,7 @@ const LabelWithIndicator = ({ label, type, icon }) => {
       {type && (
         <LabelIndicator
           component='span'
-          variant='inherit'
+          variant={inheritSize ? 'inherit' : 'caption'}
           color='textSecondary'
           weight='regular'
         >
@@ -61,7 +61,8 @@ const LabelWithIndicator = ({ label, type, icon }) => {
 LabelWithIndicator.propTypes = {
   label: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
   type: PropTypes.oneOf(['optional', 'required']),
-  icon: PropTypes.element
+  icon: PropTypes.element,
+  inheritSize: PropTypes.bool
 };
 
 export default LabelWithIndicator;
