@@ -16,7 +16,8 @@ function UploadFieldBase({
   handleReset,
   dragOver,
   name,
-  uploadInputRef,
+  accept,
+  inputRef,
   multiple,
   focused,
   ...props
@@ -49,11 +50,12 @@ function UploadFieldBase({
       />
       <input
         {...nativeInputProps}
-        ref={uploadInputRef}
+        ref={inputRef}
         style={{ display: 'none' }}
         type='file'
         aria-label={name}
         onChange={onChange}
+        accept={accept}
       />
     </>
   );
