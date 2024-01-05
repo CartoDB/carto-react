@@ -32,7 +32,7 @@ function UploadField({
       placeholder={getPlaceholder}
       value={filesText}
       focused={focused || dragOver}
-      uploadInputRef={uploadInputRef}
+      inputRef={uploadInputRef}
       onChange={handleFiles}
       handleReset={handleReset}
       dragOver={dragOver}
