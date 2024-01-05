@@ -1,16 +1,17 @@
-import { MenuProps } from '@mui/material';
-import { SelectProps } from '@mui/material/Select';
-import { TextFieldProps } from '@mui/material/TextField';
 import React from 'react';
+import { InputProps, MenuProps } from '@mui/material';
+import { SelectProps } from '@mui/material/Select';
 
-export type SelectFieldProps = Omit<TextFieldProps, 'placeholder'> &
-  Omit<SelectProps, 'placeholder'> & {
-    placeholder?: React.ReactNode;
-    size?: 'small' | 'medium';
-    selectProps?: Partial<SelectProps<unknown>>;
-    renderValue?: (value: string[]) => React.ReactNode;
-    menuProps?: Partial<MenuProps>;
-  };
+export type SelectFieldProps<Value = unknown> = Omit<
+  SelectProps<Value>,
+  'placeholder'
+> & {
+  placeholder?: React.ReactNode | string;
+  size?: 'small' | 'medium';
+  menuProps?: Partial<MenuProps>;
+  inputProps?: Partial<InputProps>;
+  helperText?: React.ReactNode | string;
+};
 
-declare const SelectField: (props: SelectFieldProps) => JSX.Element;
+declare const SelectField: <Value>(props: SelectFieldProps<Value>) => JSX.Element;
 export default SelectField;
