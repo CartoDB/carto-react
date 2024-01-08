@@ -2,14 +2,14 @@ import { TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const StyledUploadField = styled(TextField, {
-  shouldForwardProp: (prop) => prop !== 'focused'
-})(({ focused, theme }) => ({
+  shouldForwardProp: (prop) => !['focused', 'cursor'].includes(prop)
+})(({ focused, cursor, theme }) => ({
   '&.MuiTextField-root .MuiInputBase-root': {
-    cursor: 'pointer',
+    cursor: cursor,
     paddingRight: theme.spacing(1),
 
     '& input': {
-      cursor: 'pointer'
+      cursor: cursor
     },
     '&.Mui-disabled': {
       pointerEvents: 'none',
@@ -23,7 +23,7 @@ const StyledUploadField = styled(TextField, {
     }
   },
   '& .MuiFormLabel-root': {
-    cursor: 'pointer',
+    cursor: cursor,
 
     '&.Mui-disabled': {
       pointerEvents: 'none'
