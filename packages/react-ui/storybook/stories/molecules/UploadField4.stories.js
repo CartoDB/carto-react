@@ -88,6 +88,7 @@ const Template = ({ ...args }) => {
   const handleUploadField4Change = (files) => {
     setFiles(files);
   };
+  console.log('files', files);
 
   return <UploadField4 {...args} files={files} onChange={handleUploadField4Change} />;
 };

@@ -5,6 +5,8 @@ import useFileUpload from './useFileUpload';
 import UploadFieldBase from './UploadFieldBase';
 
 function UploadField({
+  name,
+  buttonText,
   accept,
   files,
   inProgress,
@@ -13,6 +15,7 @@ function UploadField({
   placeholder,
   size,
   focused,
+  nativeInputProps,
   ...props
 }) {
   const uploadInputRef = useRef(null);
@@ -27,23 +30,31 @@ function UploadField({
     });
 
   return (
-    <UploadFieldBase
-      {...props}
-      placeholder={getPlaceholder}
-      value={filesText}
-      focused={focused || dragOver}
-      inputRef={uploadInputRef}
-      onChange={handleFiles}
-      handleReset={handleReset}
-      dragOver={dragOver}
-      inProgress={inProgress}
-      filesText={filesText}
-      muiInputProps={inputEvents}
-      nativeInputProps={{
-        accept: accept,
-        multiple: multiple
-      }}
-    />
+    <>
+      <UploadFieldBase
+        {...props}
+        placeholder={getPlaceholder}
+        value={filesText}
+        focused={focused || dragOver}
+        handleReset={handleReset}
+        dragOver={dragOver}
+        inProgress={inProgress}
+        hasFiles={Boolean(filesText)}
+        inputProps={inputEvents}
+        buttonText={buttonText}
+      />
+      <input
+        {...nativeInputProps}
+        ref={uploadInputRef}
+        style={{ display: 'none' }}
+        type='file'
+        aria-label={name}
+        name={name}
+        accept={accept}
+        multiple={multiple}
+        onChange={handleFiles}
+      />
+    </>
   );
 }
 
@@ -55,13 +66,16 @@ UploadField.defaultProps = {
 };
 
 UploadField.propTypes = {
-  placeholder: PropTypes.string,
+  name: PropTypes.string,
+  buttonText: PropTypes.string,
+  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   accept: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
   multiple: PropTypes.bool,
   files: PropTypes.array,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),
-  inProgress: PropTypes.bool
+  inProgress: PropTypes.bool,
+  nativeInputProps: PropTypes.object
 };
 
 export default UploadField;

@@ -16,7 +16,7 @@ import PasswordField from '../../../src/components/atoms/PasswordField';
 import SelectField from '../../../src/components/atoms/SelectField';
 import LabelWithIndicator from '../../../src/components/atoms/LabelWithIndicator';
 import UploadField from '../../../src/components/molecules/UploadField/UploadField';
-import { Container, Label } from '../../utils/storyStyles';
+import { Container, DocContainer, Label } from '../../utils/storyStyles';
 import { HelpOutline } from '@mui/icons-material';
 
 const options = {
@@ -69,86 +69,96 @@ const PlaygroundTemplate = (args) => (
 
 const TypeTemplate = (args) => {
   return (
-    <Grid container direction='column' spacing={6}>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Optional'}</Label>
-          <InputLabel>
-            <LabelWithIndicator {...args} type='optional' />
-          </InputLabel>
-        </Container>
+    <>
+      <DocContainer severity='info'>
+        LabelWithIndicator should be used inside an Input Label
+      </DocContainer>
+      <Grid container direction='column' spacing={6}>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Optional'}</Label>
+            <InputLabel>
+              <LabelWithIndicator {...args} type='optional' />
+            </InputLabel>
+          </Container>
+        </Grid>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Required'}</Label>
+            <InputLabel>
+              <LabelWithIndicator {...args} type='required' />
+            </InputLabel>
+          </Container>
+        </Grid>
       </Grid>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Required'}</Label>
-          <InputLabel>
-            <LabelWithIndicator {...args} type='required' />
-          </InputLabel>
-        </Container>
-      </Grid>
-    </Grid>
+    </>
   );
 };
 
 const IconTemplate = (args) => (
-  <Grid container direction='column' spacing={6}>
-    <Grid item>
-      <Container>
-        <Label variant='body2'>{'With Icon'}</Label>
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <InputLabel>
-              <LabelWithIndicator
-                {...args}
-                icon={
-                  <Tooltip title='Tooltip example'>
-                    <HelpOutline cursor='pointer' />
-                  </Tooltip>
-                }
-                type='required'
-              />
-            </InputLabel>
+  <>
+    <DocContainer severity='info'>
+      Cursor remains as default also when hovering the tooltip
+    </DocContainer>
+    <Grid container direction='column' spacing={6}>
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'With Icon'}</Label>
+          <Grid container spacing={2}>
+            <Grid item xs={3}>
+              <InputLabel>
+                <LabelWithIndicator
+                  {...args}
+                  icon={
+                    <Tooltip title='Tooltip example'>
+                      <HelpOutline />
+                    </Tooltip>
+                  }
+                  type='required'
+                />
+              </InputLabel>
+            </Grid>
+            <Grid item xs={3}>
+              <InputLabel>
+                <LabelWithIndicator
+                  {...args}
+                  icon={
+                    <Tooltip title='Tooltip example'>
+                      <HelpOutline />
+                    </Tooltip>
+                  }
+                />
+              </InputLabel>
+            </Grid>
+            <Grid item xs={3}>
+              <InputLabel error>
+                <LabelWithIndicator
+                  {...args}
+                  icon={
+                    <Tooltip title='Tooltip example'>
+                      <HelpOutline />
+                    </Tooltip>
+                  }
+                />
+              </InputLabel>
+            </Grid>
+            <Grid item xs={3}>
+              <InputLabel disabled>
+                <LabelWithIndicator
+                  {...args}
+                  icon={
+                    <Tooltip title='Tooltip example'>
+                      <HelpOutline />
+                    </Tooltip>
+                  }
+                />
+              </InputLabel>
+            </Grid>
           </Grid>
-          <Grid item xs={3}>
-            <InputLabel>
-              <LabelWithIndicator
-                {...args}
-                icon={
-                  <Tooltip title='Tooltip example'>
-                    <HelpOutline cursor='pointer' />
-                  </Tooltip>
-                }
-              />
-            </InputLabel>
-          </Grid>
-          <Grid item xs={3}>
-            <InputLabel error>
-              <LabelWithIndicator
-                {...args}
-                icon={
-                  <Tooltip title='Tooltip example'>
-                    <HelpOutline cursor='pointer' />
-                  </Tooltip>
-                }
-              />
-            </InputLabel>
-          </Grid>
-          <Grid item xs={3}>
-            <InputLabel disabled>
-              <LabelWithIndicator
-                {...args}
-                icon={
-                  <Tooltip title='Tooltip example'>
-                    <HelpOutline cursor='pointer' />
-                  </Tooltip>
-                }
-              />
-            </InputLabel>
-          </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      </Grid>
     </Grid>
-  </Grid>
+  </>
 );
 
 const UseCasesTemplate = ({ label, ...rest }) => {
