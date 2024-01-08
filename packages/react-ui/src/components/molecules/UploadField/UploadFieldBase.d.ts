@@ -8,6 +8,7 @@ export type UploadFieldBaseProps = Omit<TextFieldProps, 'onChange' | 'error'> & 
   multiple?: boolean;
   onChange?: (file?: File | null) => void;
   handleReset?: () => void;
+  handleOpen?: () => void;
   dragOver?: boolean;
   error?: string | React.ReactNode;
   inProgress?: boolean;
