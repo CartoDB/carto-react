@@ -69,6 +69,12 @@ const options = {
       control: {
         type: 'boolean'
       }
+    },
+    cursor: {
+      control: {
+        type: 'select',
+        options: ['pointer', 'default']
+      }
     }
   },
   parameters: {

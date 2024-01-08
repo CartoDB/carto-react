@@ -14,6 +14,7 @@ export type UploadFieldBaseProps = Omit<TextFieldProps, 'error'> & {
   inputProps?: Partial<InputProps>;
   size?: 'small' | 'medium';
   hasFiles?: boolean;
+  cursor?: 'pointer' | 'default';
 };
 
 declare const UploadFieldBase: (props: UploadFieldBaseProps) => JSX.Element;

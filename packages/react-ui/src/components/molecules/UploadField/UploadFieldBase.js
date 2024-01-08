@@ -17,6 +17,7 @@ function UploadFieldBase({
   inputProps,
   size,
   hasFiles,
+  cursor,
   ...props
 }) {
   return (
@@ -26,6 +27,7 @@ function UploadFieldBase({
       error={!!error}
       helperText={error}
       focused={focused || dragOver}
+      cursor={cursor}
       InputProps={{
         ...inputProps,
         readOnly: true,
@@ -50,7 +52,8 @@ function UploadFieldBase({
 
 UploadFieldBase.defaultProps = {
   buttonText: 'Browse',
-  size: 'small'
+  size: 'small',
+  cursor: 'pointer'
 };
 
 UploadFieldBase.propTypes = {
@@ -64,7 +67,8 @@ UploadFieldBase.propTypes = {
   inProgress: PropTypes.bool,
   inputProps: PropTypes.object,
   size: PropTypes.oneOf(['small', 'medium']),
-  hasFiles: PropTypes.bool
+  hasFiles: PropTypes.bool,
+  cursor: PropTypes.oneOf(['pointer', 'default'])
 };
 
 export default UploadFieldBase;

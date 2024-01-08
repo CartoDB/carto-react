@@ -3,7 +3,7 @@ import { Button, CircularProgress, IconButton, InputAdornment } from '@mui/mater
 import { Cancel } from '@mui/icons-material';
 
 // For Browser or Delete actions
-export default function FilesAction({
+function FilesAction({
   buttonText,
   hasFiles,
   size,
@@ -42,3 +42,5 @@ export default function FilesAction({
     </InputAdornment>
   );
 }
+
+export default FilesAction;
