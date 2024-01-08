@@ -14,6 +14,7 @@ function UploadFieldBase({
   nativeInputProps,
   onChange,
   handleReset,
+  handleOpen,
   dragOver,
   name,
   accept,
@@ -43,6 +44,7 @@ function UploadFieldBase({
               error={!!error}
               disabled={!!dragOver}
               handleReset={handleReset}
+              handleOpen={handleOpen}
               inProgress={inProgress}
             />
           )
@@ -54,6 +56,7 @@ function UploadFieldBase({
         style={{ display: 'none' }}
         type='file'
         aria-label={name}
+        name={name}
         onChange={onChange}
         accept={accept}
       />
@@ -74,6 +77,7 @@ UploadFieldBase.propTypes = {
   multiple: PropTypes.bool,
   onChange: PropTypes.func,
   handleReset: PropTypes.func,
+  handleOpen: PropTypes.func,
   dragOver: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   inProgress: PropTypes.bool,

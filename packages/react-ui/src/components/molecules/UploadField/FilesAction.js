@@ -10,6 +10,7 @@ export default function FilesAction({
   error,
   disabled,
   handleReset,
+  handleOpen,
   inProgress
 }) {
   return (
@@ -20,6 +21,7 @@ export default function FilesAction({
         </IconButton>
       ) : !hasFiles ? (
         <Button
+          onClick={handleOpen}
           size={size}
           variant='text'
           color={error ? 'default' : 'primary'}
@@ -30,9 +32,9 @@ export default function FilesAction({
       ) : (
         <IconButton
           onClick={handleReset}
+          size={size}
           aria-label='delete'
           disabled={disabled}
-          size={size}
         >
           <Cancel />
         </IconButton>
