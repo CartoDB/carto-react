@@ -14,6 +14,7 @@ function UploadField({
   multiple,
   placeholder,
   size,
+  error,
   focused,
   nativeInputProps,
   ...props
@@ -35,6 +36,7 @@ function UploadField({
         {...props}
         placeholder={getPlaceholder}
         value={filesText}
+        error={error}
         focused={focused || dragOver}
         handleReset={handleReset}
         dragOver={dragOver}
@@ -68,9 +70,10 @@ UploadField.defaultProps = {
 UploadField.propTypes = {
   name: PropTypes.string,
   buttonText: PropTypes.string,
-  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   accept: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
   multiple: PropTypes.bool,
+  error: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  placeholder: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   files: PropTypes.array,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),
