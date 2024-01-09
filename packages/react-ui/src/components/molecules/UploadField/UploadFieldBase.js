@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Box, FormHelperText } from '@mui/material';
 
 import FilesAction from './FilesAction';
 import StyledUploadField from './StyledUploadField';
@@ -19,36 +20,42 @@ function UploadFieldBase({
   size,
   hasFiles,
   cursor,
+  helperText,
+  fullWidth = true,
   ...props
 }) {
   return (
-    <StyledUploadField
-      {...props}
-      size={size}
-      error={!!error}
-      placeholder={placeholder}
-      helperText={error}
-      focused={focused || dragOver}
-      cursor={cursor}
-      InputProps={{
-        ...inputProps,
-        readOnly: true,
-        multiple: multiple,
-        name: name,
-        endAdornment: (
-          <FilesAction
-            buttonText={buttonText}
-            hasFiles={hasFiles}
-            size={size}
-            error={!!error}
-            disabled={!!dragOver}
-            handleReset={handleReset}
-            handleOpen={handleOpen}
-            inProgress={inProgress}
-          />
-        )
-      }}
-    />
+    <Box width={fullWidth ? '100%' : undefined}>
+      <StyledUploadField
+        {...props}
+        size={size}
+        error={!!error}
+        placeholder={placeholder}
+        helperText={error}
+        focused={focused || dragOver}
+        cursor={cursor}
+        fullWidth={fullWidth}
+        InputProps={{
+          ...inputProps,
+          readOnly: true,
+          multiple: multiple,
+          name: name,
+          endAdornment: (
+            <FilesAction
+              buttonText={buttonText}
+              hasFiles={hasFiles}
+              size={size}
+              error={!!error}
+              disabled={!!dragOver}
+              handleReset={handleReset}
+              handleOpen={handleOpen}
+              inProgress={inProgress}
+            />
+          )
+        }}
+      />
+      {helperText && <FormHelperText>{helperText}</FormHelperText>}
+    </Box>
   );
 }
 

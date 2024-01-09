@@ -33,9 +33,8 @@ const options = {
       }
     },
     error: {
-      defaultValue: false,
       control: {
-        type: 'boolean'
+        type: 'text'
       }
     },
     label: {
@@ -69,6 +68,12 @@ const options = {
       description: 'Specifies that multiple files can be chosen at once.',
       control: {
         type: 'boolean'
+      }
+    },
+    cursor: {
+      control: {
+        type: 'select',
+        options: ['pointer', 'default']
       }
     }
   },
@@ -244,6 +249,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='filled'
             label={label}
+            helperText={helperText}
             placeholder={placeholder}
             files={files}
             onChange={handleUploadFieldChange}
@@ -254,6 +260,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='outlined'
             label={label}
+            helperText={helperText}
             placeholder={placeholder}
             files={files2}
             onChange={handleUploadFieldChange2}
@@ -270,7 +277,8 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='filled'
             label={label}
-            placeholder={placeholder}
+            helperText={helperText}
+            placeholder={'placeholder focused'}
             focused
             files={files3}
             onChange={handleUploadFieldChange3}
@@ -281,6 +289,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='outlined'
             label={label}
+            helperText={helperText}
             placeholder={placeholder}
             focused
             files={files4}
@@ -298,6 +307,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='filled'
             label={label}
+            helperText={helperText}
             placeholder={placeholder}
             disabled
           />
@@ -307,6 +317,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='outlined'
             label={label}
+            helperText={helperText}
             placeholder={placeholder}
             disabled
           />
@@ -323,8 +334,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             variant='filled'
             label={label}
             placeholder={placeholder}
-            helperText={helperText}
-            error
+            error={'This is an error message.'}
             files={files5}
             onChange={handleUploadFieldChange5}
           />
@@ -335,8 +345,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             variant='outlined'
             label={label}
             placeholder={placeholder}
-            helperText={helperText}
-            error
+            error={'This is an error message.'}
             files={files6}
             onChange={handleUploadFieldChange6}
           />
@@ -352,6 +361,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='filled'
             label={label}
+            helperText={helperText}
             placeholder={placeholder}
             inProgress
           />
@@ -361,6 +371,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='outlined'
             label={label}
+            helperText={helperText}
             placeholder={placeholder}
             inProgress
           />
@@ -452,7 +463,7 @@ const commonArgs = {
   name: 'upload-field'
 };
 const sizeArgs = {
-  helperText: 'This is a error message.'
+  helperText: 'This is a helper text.'
 };
 
 const disabledControlsVariantsArgTypes = {

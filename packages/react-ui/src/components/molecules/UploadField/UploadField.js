@@ -1,21 +1,22 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import FilesAction from './FilesAction';
 import useFileUpload from './useFileUpload';
-import StyledUploadField from './StyledUploadField';
+import UploadFieldBase from './UploadFieldBase';
 
 function UploadField({
+  name,
   buttonText,
   accept,
   files,
-  name,
   inProgress,
   onChange,
   multiple,
   placeholder,
   size,
   error,
+  focused,
+  nativeInputProps,
   ...props
 }) {
   const uploadInputRef = useRef(null);
@@ -31,44 +32,35 @@ function UploadField({
 
   return (
     <>
-      <StyledUploadField
+      <UploadFieldBase
         {...props}
         placeholder={getPlaceholder}
         value={filesText}
         error={error}
-        focused={dragOver}
-        InputProps={{
-          ...inputEvents,
-          readOnly: true,
-          name: name,
-          endAdornment: (
-            <FilesAction
-              buttonText={buttonText}
-              hasFiles={!!filesText}
-              size={size}
-              error={!!error}
-              disabled={!!dragOver}
-              handleReset={handleReset}
-              inProgress={inProgress}
-            />
-          )
-        }}
+        focused={focused || dragOver}
+        handleReset={handleReset}
+        dragOver={dragOver}
+        inProgress={inProgress}
+        hasFiles={Boolean(filesText)}
+        inputProps={inputEvents}
+        buttonText={buttonText}
       />
       <input
+        {...nativeInputProps}
         ref={uploadInputRef}
         style={{ display: 'none' }}
         type='file'
+        aria-label={name}
+        name={name}
         accept={accept}
         multiple={multiple}
         onChange={handleFiles}
-        aria-label={name}
       />
     </>
   );
 }
 
 UploadField.defaultProps = {
-  buttonText: 'Browse',
   accept: ['application/JSON'],
   files: [],
   onChange: (files) => files,
@@ -77,15 +69,16 @@ UploadField.defaultProps = {
 
 UploadField.propTypes = {
   name: PropTypes.string,
-  placeholder: PropTypes.string,
   buttonText: PropTypes.string,
   accept: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
   multiple: PropTypes.bool,
-  error: PropTypes.bool,
+  error: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  placeholder: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   files: PropTypes.array,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),
-  inProgress: PropTypes.bool
+  inProgress: PropTypes.bool,
+  nativeInputProps: PropTypes.object
 };
 
 export default UploadField;

@@ -34,7 +34,6 @@ import Button from './components/atoms/Button';
 import PasswordField from './components/atoms/PasswordField';
 import SelectField from './components/atoms/SelectField';
 import UploadField from './components/molecules/UploadField/UploadField';
-import UploadField4 from './components/molecules/UploadField/UploadField4';
 import UploadFieldBase from './components/molecules/UploadField/UploadFieldBase';
 import AppBar from './components/organisms/AppBar/AppBar';
 import LabelWithIndicator from './components/atoms/LabelWithIndicator';
@@ -90,7 +89,6 @@ export {
   PasswordField,
   SelectField,
   UploadField,
-  UploadField4,
   UploadFieldBase,
   AppBar,
   ArrowDropIcon,
