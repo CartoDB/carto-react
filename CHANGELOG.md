@@ -2,7 +2,7 @@
 
 ## Not released
 
-- UploadField component: UI fixes [#817](https://github.com/CartoDB/carto-react/pull/817)
+- UploadField component: UI fixes and extract pure UI components [#817](https://github.com/CartoDB/carto-react/pull/817)
 
 ## 2.3
 
