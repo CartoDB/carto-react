@@ -334,7 +334,8 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             variant='filled'
             label={label}
             placeholder={placeholder}
-            error={'This is an error message.'}
+            error
+            helperText={helperText}
             files={files5}
             onChange={handleUploadFieldChange5}
           />
@@ -345,7 +346,8 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             variant='outlined'
             label={label}
             placeholder={placeholder}
-            error={'This is an error message.'}
+            error
+            helperText={helperText}
             files={files6}
             onChange={handleUploadFieldChange6}
           />
@@ -397,6 +399,7 @@ const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             multiple
             label={label}
             placeholder={placeholder}
+            helperText={helperText}
             files={files}
             onChange={handleUploadFieldChange}
           />
@@ -422,6 +425,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             {...rest}
             label={label}
             placeholder={placeholder}
+            helperText={helperText}
             files={files}
             onChange={handleUploadFieldChange}
           />

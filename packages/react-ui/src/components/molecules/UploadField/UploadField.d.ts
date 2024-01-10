@@ -1,5 +1,5 @@
+import { InputProps } from '@mui/material/Input';
 import { TextFieldProps } from '@mui/material/TextField';
-import { InputProps } from '@mui/material';
 
 export type UploadFieldProps = Omit<TextFieldProps, 'placeholder' | 'onChange'> & {
   name?: string;
@@ -9,7 +9,7 @@ export type UploadFieldProps = Omit<TextFieldProps, 'placeholder' | 'onChange'> 
   multiple?: boolean;
   onChange?: (file?: File | null) => void;
   inProgress?: boolean;
-  inputProps?: Partial<InputProps>;
+  InputProps?: Partial<InputProps>;
   nativeInputProps?: object;
   placeholder?: string | React.ReactNode;
 };
