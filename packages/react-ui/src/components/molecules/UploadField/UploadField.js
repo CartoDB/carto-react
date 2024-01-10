@@ -42,7 +42,7 @@ function UploadField({
         dragOver={dragOver}
         inProgress={inProgress}
         hasFiles={Boolean(filesText)}
-        inputProps={inputEvents}
+        InputProps={inputEvents}
         buttonText={buttonText}
       />
       <input
