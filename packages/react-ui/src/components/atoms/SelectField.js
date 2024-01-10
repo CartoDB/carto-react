@@ -39,7 +39,7 @@ const SelectField = forwardRef(
       size,
       displayEmpty,
       menuProps,
-      InputProps,
+      inputProps,
       labelId,
       label,
       helperText,
@@ -83,7 +83,7 @@ const SelectField = forwardRef(
           fullWidth={fullWidth}
           displayEmpty={displayEmpty || !!placeholder}
           inputProps={{
-            ...InputProps,
+            ...inputProps,
             'aria-label': ariaLabel
           }}
           MenuProps={{
@@ -128,7 +128,7 @@ SelectField.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   size: PropTypes.oneOf(['small', 'medium']),
   menuProps: PropTypes.object,
-  InputProps: PropTypes.object,
+  inputProps: PropTypes.object,
   helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
 };
 

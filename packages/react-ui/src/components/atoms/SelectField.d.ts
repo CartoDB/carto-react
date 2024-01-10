@@ -10,7 +10,7 @@ export type SelectFieldProps<Value = unknown> = Omit<
   placeholder?: React.ReactNode | string;
   size?: 'small' | 'medium';
   menuProps?: Partial<MenuProps>;
-  InputProps?: Partial<InputProps>;
+  inputProps?: Partial<InputProps>;
   helperText?: React.ReactNode | string;
 };
 
