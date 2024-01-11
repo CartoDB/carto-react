@@ -21,7 +21,15 @@ const options = {
     color: {
       control: {
         type: 'select',
-        options: ['primary', 'secondary', 'default']
+        options: [
+          'primary',
+          'secondary',
+          'default',
+          'success',
+          'info',
+          'error',
+          'warning'
+        ]
       }
     },
     deleteIcon: {
@@ -103,7 +111,7 @@ const PrefixTemplate = ({ ...args }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Primary'}</Label>
-          <Grid container item spacing={6}>
+          <Grid container item spacing={2}>
             <Grid item>
               <Chip {...args} avatar={<Avatar>M</Avatar>} />
             </Grid>
@@ -133,7 +141,7 @@ const PrefixTemplate = ({ ...args }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Secondary'}</Label>
-          <Grid container item spacing={6}>
+          <Grid container item spacing={2}>
             <Grid item>
               <Chip {...args} color='secondary' avatar={<Avatar>M</Avatar>} />
             </Grid>
@@ -178,7 +186,7 @@ const PrefixTemplate = ({ ...args }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Default'}</Label>
-          <Grid container item spacing={6}>
+          <Grid container item spacing={2}>
             <Grid item>
               <Chip {...args} color='default' avatar={<Avatar>M</Avatar>} />
             </Grid>
@@ -212,6 +220,186 @@ const PrefixTemplate = ({ ...args }) => {
               <Chip
                 {...args}
                 color='default'
+                variant='outlined'
+                icon={<FileUploadOutlined />}
+              />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Success'}</Label>
+          <Grid container item spacing={2}>
+            <Grid item>
+              <Chip {...args} color='success' avatar={<Avatar>M</Avatar>} />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='success'
+                variant='outlined'
+                avatar={<Avatar>M</Avatar>}
+              />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='success'
+                avatar={<Avatar label='Avatar' src='/avatar.jpeg' />}
+              />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='success'
+                variant='outlined'
+                avatar={<Avatar label='Avatar' src='/avatar.jpeg' />}
+              />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='success' icon={<FileUploadOutlined />} />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='success'
+                variant='outlined'
+                icon={<FileUploadOutlined />}
+              />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Info'}</Label>
+          <Grid container item spacing={2}>
+            <Grid item>
+              <Chip {...args} color='info' avatar={<Avatar>M</Avatar>} />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='info'
+                variant='outlined'
+                avatar={<Avatar>M</Avatar>}
+              />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='info'
+                avatar={<Avatar label='Avatar' src='/avatar.jpeg' />}
+              />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='info'
+                variant='outlined'
+                avatar={<Avatar label='Avatar' src='/avatar.jpeg' />}
+              />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='info' icon={<FileUploadOutlined />} />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='info'
+                variant='outlined'
+                icon={<FileUploadOutlined />}
+              />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Error'}</Label>
+          <Grid container item spacing={2}>
+            <Grid item>
+              <Chip {...args} color='error' avatar={<Avatar>M</Avatar>} />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='error'
+                variant='outlined'
+                avatar={<Avatar>M</Avatar>}
+              />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='error'
+                avatar={<Avatar label='Avatar' src='/avatar.jpeg' />}
+              />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='error'
+                variant='outlined'
+                avatar={<Avatar label='Avatar' src='/avatar.jpeg' />}
+              />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='error' icon={<FileUploadOutlined />} />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='error'
+                variant='outlined'
+                icon={<FileUploadOutlined />}
+              />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Warning'}</Label>
+          <Grid container item spacing={2}>
+            <Grid item>
+              <Chip {...args} color='warning' avatar={<Avatar>M</Avatar>} />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='warning'
+                variant='outlined'
+                avatar={<Avatar>M</Avatar>}
+              />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='warning'
+                avatar={<Avatar label='Avatar' src='/avatar.jpeg' />}
+              />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='warning'
+                variant='outlined'
+                avatar={<Avatar label='Avatar' src='/avatar.jpeg' />}
+              />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='warning' icon={<FileUploadOutlined />} />
+            </Grid>
+            <Grid item>
+              <Chip
+                {...args}
+                color='warning'
                 variant='outlined'
                 icon={<FileUploadOutlined />}
               />
@@ -267,6 +455,62 @@ const RemovableTemplate = ({ ...args }) => {
           </Grid>
         </Container>
       </Grid>
+
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Success'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='success' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='success' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Info'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='info' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='info' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Error'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='error' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='error' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Warning'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='warning' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='warning' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
     </Grid>
   );
 };
@@ -287,6 +531,7 @@ const ColorsTemplate = ({ ...args }) => {
           </Grid>
         </Container>
       </Grid>
+
       <Grid item>
         <Container>
           <Label variant='body2'>{'Secondary'}</Label>
@@ -300,6 +545,7 @@ const ColorsTemplate = ({ ...args }) => {
           </Grid>
         </Container>
       </Grid>
+
       <Grid item>
         <Container>
           <Label variant='body2'>{'Default'}</Label>
@@ -309,6 +555,62 @@ const ColorsTemplate = ({ ...args }) => {
             </Grid>
             <Grid item>
               <Chip {...args} color='default' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Success'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='success' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='success' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Info'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='info' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='info' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Error'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='error' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='error' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Warning'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='warning' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='warning' variant='outlined' />
             </Grid>
           </Grid>
         </Container>
@@ -426,6 +728,154 @@ const SizeTemplate = ({ ...args }) => {
             </Grid>
             <Grid item>
               <Chip {...args} color='default' variant='outlined' disabled />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Header variant='subtitle1'>{'Success'}</Header>
+        <Container>
+          <Label variant='body2'>{'Default (hover icon)'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='success' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='success' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Container>
+        <Container>
+          <Label variant='body2'>{'Clickable (hover chip)'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='success' clickable />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='success' variant='outlined' clickable />
+            </Grid>
+          </Grid>
+        </Container>
+        <Container>
+          <Label variant='body2'>{'Disabled'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='success' disabled />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='success' variant='outlined' disabled />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Header variant='subtitle1'>{'Info'}</Header>
+        <Container>
+          <Label variant='body2'>{'Default (hover icon)'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='info' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='info' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Container>
+        <Container>
+          <Label variant='body2'>{'Clickable (hover chip)'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='info' clickable />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='info' variant='outlined' clickable />
+            </Grid>
+          </Grid>
+        </Container>
+        <Container>
+          <Label variant='body2'>{'Disabled'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='info' disabled />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='info' variant='outlined' disabled />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Header variant='subtitle1'>{'Error'}</Header>
+        <Container>
+          <Label variant='body2'>{'Default (hover icon)'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='error' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='error' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Container>
+        <Container>
+          <Label variant='body2'>{'Clickable (hover chip)'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='error' clickable />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='error' variant='outlined' clickable />
+            </Grid>
+          </Grid>
+        </Container>
+        <Container>
+          <Label variant='body2'>{'Disabled'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='error' disabled />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='error' variant='outlined' disabled />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
+
+      <Grid item>
+        <Header variant='subtitle1'>{'Warning'}</Header>
+        <Container>
+          <Label variant='body2'>{'Default (hover icon)'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='warning' />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='warning' variant='outlined' />
+            </Grid>
+          </Grid>
+        </Container>
+        <Container>
+          <Label variant='body2'>{'Clickable (hover chip)'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='warning' clickable />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='warning' variant='outlined' clickable />
+            </Grid>
+          </Grid>
+        </Container>
+        <Container>
+          <Label variant='body2'>{'Disabled'}</Label>
+          <Grid container item spacing={6}>
+            <Grid item>
+              <Chip {...args} color='warning' disabled />
+            </Grid>
+            <Grid item>
+              <Chip {...args} color='warning' variant='outlined' disabled />
             </Grid>
           </Grid>
         </Container>
