@@ -5,6 +5,7 @@ export { LabelWithIndicatorProps } from './components/atoms/LabelWithIndicator';
 export { AvatarProps } from './components/molecules/Avatar';
 export { AccordionGroupProps } from './components/molecules/AccordionGroup';
 export { UploadFieldProps } from './components/molecules/UploadField/UploadField';
+export { UploadFieldBaseProps } from './components/molecules/UploadField/UploadFieldBase';
 export { AppBarProps } from './components/organisms/AppBar/AppBar';
 
 export type WrapperWidgetUI = {
