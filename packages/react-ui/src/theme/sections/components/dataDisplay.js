@@ -406,45 +406,57 @@ export const dataDisplayOverrides = {
         borderColor: theme.palette.secondary.main
       }),
 
-      // Other colors
+      // Status colors
       colorSuccess: ({ theme }) => ({
         '&.MuiChip-outlined': {
-          color: theme.palette.success.main,
+          color: theme.palette.success.dark,
           borderColor: theme.palette.success.main
         },
         '&.MuiChip-filled': {
-          color: theme.palette.success.main,
+          color: theme.palette.success.dark,
           backgroundColor: theme.palette.success.relatedLight
+        },
+        '& .MuiChip-icon': {
+          color: theme.palette.success.main
         }
       }),
       colorInfo: ({ theme }) => ({
         '&.MuiChip-outlined': {
-          color: theme.palette.primary.main,
+          color: theme.palette.primary.dark,
           borderColor: theme.palette.primary.main
         },
         '&.MuiChip-filled': {
-          color: theme.palette.primary.main,
+          color: theme.palette.primary.dark,
           backgroundColor: theme.palette.primary.relatedLight
+        },
+        '& .MuiChip-icon': {
+          color: theme.palette.info.main
         }
       }),
       colorError: ({ theme }) => ({
         '&.MuiChip-outlined': {
-          color: theme.palette.error.main,
+          color: theme.palette.error.dark,
           borderColor: theme.palette.error.main
         },
         '&.MuiChip-filled': {
-          color: theme.palette.error.main,
+          color: theme.palette.error.dark,
           backgroundColor: theme.palette.error.relatedLight
+        },
+        '& .MuiChip-icon': {
+          color: theme.palette.error.main
         }
       }),
       colorWarning: ({ theme }) => ({
         '&.MuiChip-outlined': {
-          color: theme.palette.warning.main,
+          color: theme.palette.warning.relatedDark,
           borderColor: theme.palette.warning.main
         },
         '&.MuiChip-filled': {
-          color: theme.palette.warning.main,
+          color: theme.palette.warning.relatedDark,
           backgroundColor: theme.palette.warning.relatedLight
+        },
+        '& .MuiChip-icon': {
+          color: theme.palette.warning.main
         }
       }),
 
