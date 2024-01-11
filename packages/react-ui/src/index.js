@@ -34,6 +34,7 @@ import Button from './components/atoms/Button';
 import PasswordField from './components/atoms/PasswordField';
 import SelectField from './components/atoms/SelectField';
 import UploadField from './components/molecules/UploadField/UploadField';
+import UploadFieldBase from './components/molecules/UploadField/UploadFieldBase';
 import AppBar from './components/organisms/AppBar/AppBar';
 import LabelWithIndicator from './components/atoms/LabelWithIndicator';
 import { getCartoColorStylePropsForItem } from './utils/palette';
@@ -88,6 +89,7 @@ export {
   PasswordField,
   SelectField,
   UploadField,
+  UploadFieldBase,
   AppBar,
   ArrowDropIcon,
   LabelWithIndicator,

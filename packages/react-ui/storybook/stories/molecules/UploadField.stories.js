@@ -33,9 +33,8 @@ const options = {
       }
     },
     error: {
-      defaultValue: false,
       control: {
-        type: 'boolean'
+        type: 'text'
       }
     },
     label: {
@@ -59,8 +58,7 @@ const options = {
     },
     accept: {
       defaultValue: ['application/JSON'],
-      description:
-        'Array of strings that defines the file types the file input should accept.',
+      description: 'Defines the file types the file input should accept.',
       control: {
         type: 'string'
       }
@@ -70,6 +68,12 @@ const options = {
       description: 'Specifies that multiple files can be chosen at once.',
       control: {
         type: 'boolean'
+      }
+    },
+    cursor: {
+      control: {
+        type: 'select',
+        options: ['pointer', 'default']
       }
     }
   },
@@ -245,6 +249,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='filled'
             label={label}
+            helperText={helperText}
             placeholder={placeholder}
             files={files}
             onChange={handleUploadFieldChange}
@@ -255,6 +260,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='outlined'
             label={label}
+            helperText={helperText}
             placeholder={placeholder}
             files={files2}
             onChange={handleUploadFieldChange2}
@@ -271,7 +277,8 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='filled'
             label={label}
-            placeholder={placeholder}
+            helperText={helperText}
+            placeholder={'placeholder focused'}
             focused
             files={files3}
             onChange={handleUploadFieldChange3}
@@ -282,6 +289,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='outlined'
             label={label}
+            helperText={helperText}
             placeholder={placeholder}
             focused
             files={files4}
@@ -299,6 +307,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='filled'
             label={label}
+            helperText={helperText}
             placeholder={placeholder}
             disabled
           />
@@ -308,6 +317,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             {...rest}
             variant='outlined'
             label={label}
+            helperText={helperText}
             placeholder={placeholder}
             disabled
           />
@@ -324,8 +334,8 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             variant='filled'
             label={label}
             placeholder={placeholder}
-            helperText={helperText}
             error
+            helperText={helperText}
             files={files5}
             onChange={handleUploadFieldChange5}
           />
@@ -336,10 +346,36 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             variant='outlined'
             label={label}
             placeholder={placeholder}
-            helperText={helperText}
             error
+            helperText={helperText}
             files={files6}
             onChange={handleUploadFieldChange6}
+          />
+        </Grid>
+      </Grid>
+
+      <Grid item container spacing={2}>
+        <Grid item xs={2}>
+          <Typography>In Progress</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <UploadField
+            {...rest}
+            variant='filled'
+            label={label}
+            helperText={helperText}
+            placeholder={placeholder}
+            inProgress
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <UploadField
+            {...rest}
+            variant='outlined'
+            label={label}
+            helperText={helperText}
+            placeholder={placeholder}
+            inProgress
           />
         </Grid>
       </Grid>
@@ -363,6 +399,7 @@ const MultipleTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             multiple
             label={label}
             placeholder={placeholder}
+            helperText={helperText}
             files={files}
             onChange={handleUploadFieldChange}
           />
@@ -388,6 +425,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             {...rest}
             label={label}
             placeholder={placeholder}
+            helperText={helperText}
             files={files}
             onChange={handleUploadFieldChange}
           />
@@ -425,10 +463,11 @@ const DocTemplate = () => {
 const commonArgs = {
   label: 'Label text',
   helperText: 'Upload a CSV or GeoJSON file, or a zip package with your Shapefile',
-  accept: ['application/JSON', 'image/*']
+  accept: ['application/JSON', 'image/*'],
+  name: 'upload-field'
 };
 const sizeArgs = {
-  helperText: 'This is a error message.'
+  helperText: 'This is a helper text.'
 };
 
 const disabledControlsVariantsArgTypes = {

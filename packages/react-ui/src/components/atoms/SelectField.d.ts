@@ -1,6 +1,7 @@
 import React from 'react';
-import { InputProps, MenuProps } from '@mui/material';
 import { SelectProps } from '@mui/material/Select';
+import { MenuProps } from '@mui/material/Menu';
+import { InputProps } from '@mui/material/Input';
 
 export type SelectFieldProps<Value = unknown> = Omit<
   SelectProps<Value>,
