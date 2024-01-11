@@ -1,4 +1,5 @@
 import React from 'react';
+import { alpha } from '@mui/material/styles';
 import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE, ICON_SIZE_SMALL } from '../../themeConstants';
 import Typography from '../../../components/atoms/Typography';
 import TablePaginationActions from '../../../components/molecules/Table/TablePaginationActions';
@@ -344,7 +345,7 @@ export const dataDisplayOverrides = {
           minWidth: ICON_SIZE_LARGE,
           height: ICON_SIZE_LARGE
         },
-        '&.Mui-disabled': {
+        '&.MuiChip-root.Mui-disabled': {
           color: theme.palette.text.disabled,
           backgroundColor: theme.palette.action.disabledBackground,
           opacity: 1,
@@ -368,13 +369,20 @@ export const dataDisplayOverrides = {
 
         '& .MuiChip-iconColorPrimary': {
           color: theme.palette.primary.contrastText
+        },
+        '& .MuiChip-deleteIcon:hover': {
+          color: theme.palette.text.primary
         }
       }),
       filledPrimary: ({ theme }) => ({
         backgroundColor: theme.palette.primary.main,
 
         '& .MuiChip-deleteIcon': {
-          color: theme.palette.white[60]
+          color: theme.palette.white[60],
+
+          '&:hover': {
+            color: theme.palette.common.white
+          }
         }
       }),
       filledSecondary: ({ theme }) => ({
@@ -383,7 +391,7 @@ export const dataDisplayOverrides = {
       outlined: ({ theme }) => ({
         borderColor: theme.palette.default.outlinedBorder,
 
-        '&.Mui-disabled': {
+        '&.MuiChip-root.Mui-disabled': {
           borderColor: theme.palette.default.outlinedBorder,
           backgroundColor: 'transparent'
         },
@@ -396,6 +404,48 @@ export const dataDisplayOverrides = {
       }),
       outlinedSecondary: ({ theme }) => ({
         borderColor: theme.palette.secondary.main
+      }),
+
+      // Other colors
+      colorSuccess: ({ theme }) => ({
+        '&.MuiChip-outlined': {
+          color: theme.palette.success.main,
+          borderColor: theme.palette.success.main
+        },
+        '&.MuiChip-filled': {
+          color: theme.palette.success.main,
+          backgroundColor: theme.palette.success.relatedLight
+        }
+      }),
+      colorInfo: ({ theme }) => ({
+        '&.MuiChip-outlined': {
+          color: theme.palette.primary.main,
+          borderColor: theme.palette.primary.main
+        },
+        '&.MuiChip-filled': {
+          color: theme.palette.primary.main,
+          backgroundColor: theme.palette.primary.relatedLight
+        }
+      }),
+      colorError: ({ theme }) => ({
+        '&.MuiChip-outlined': {
+          color: theme.palette.error.main,
+          borderColor: theme.palette.error.main
+        },
+        '&.MuiChip-filled': {
+          color: theme.palette.error.main,
+          backgroundColor: theme.palette.error.relatedLight
+        }
+      }),
+      colorWarning: ({ theme }) => ({
+        '&.MuiChip-outlined': {
+          color: theme.palette.warning.main,
+          borderColor: theme.palette.warning.main
+        },
+        '&.MuiChip-filled': {
+          color: theme.palette.warning.main,
+          backgroundColor: theme.palette.warning.relatedLight
+        }
       }),
 
       // Sizes
@@ -431,15 +481,7 @@ export const dataDisplayOverrides = {
         margin: 0,
         marginLeft: '2px', // Forced to a non-standard value to meet with design
         marginRight: '3px', // Forced to a non-standard value to meet with design
-        transition: 'color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-
-        '&.MuiChip-deleteIconColorDefault': {
-          color: theme.palette.text.secondary,
-
-          '&:hover': {
-            color: theme.palette.text.primary
-          }
-        }
+        transition: 'color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
       }),
       deleteIconSmall: ({ theme }) => ({
         width: theme.spacing(2),
@@ -470,6 +512,22 @@ export const dataDisplayOverrides = {
             },
             '&.MuiChip-colorDefault': {
               borderColor: theme.palette.default.dark
+            },
+            '&.MuiChip-colorSuccess': {
+              color: theme.palette.success.dark,
+              borderColor: theme.palette.success.dark
+            },
+            '&.MuiChip-colorInfo': {
+              color: theme.palette.info.dark,
+              borderColor: theme.palette.info.dark
+            },
+            '&.MuiChip-colorError': {
+              color: theme.palette.error.dark,
+              borderColor: theme.palette.error.dark
+            },
+            '&.MuiChip-colorWarning': {
+              color: theme.palette.warning.dark,
+              borderColor: theme.palette.warning.dark
             }
           }
         },
@@ -480,6 +538,18 @@ export const dataDisplayOverrides = {
             },
             '&.MuiChip-colorDefault': {
               backgroundColor: theme.palette.default.dark
+            },
+            '&.MuiChip-colorSuccess': {
+              backgroundColor: alpha(theme.palette.success.main, 0.25)
+            },
+            '&.MuiChip-colorInfo': {
+              backgroundColor: alpha(theme.palette.info.main, 0.12)
+            },
+            '&.MuiChip-colorError': {
+              backgroundColor: alpha(theme.palette.error.main, 0.12)
+            },
+            '&.MuiChip-colorWarning': {
+              backgroundColor: alpha(theme.palette.warning.main, 0.25)
             }
           }
         }
