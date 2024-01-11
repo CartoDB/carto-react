@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Chip component: Add new colors to the theme [#821](https://github.com/CartoDB/carto-react/pull/821)
 - UploadField component: UI fixes and extract pure UI components [#817](https://github.com/CartoDB/carto-react/pull/817)
 
 ## 2.3
