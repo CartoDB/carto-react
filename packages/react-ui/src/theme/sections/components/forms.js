@@ -325,6 +325,19 @@ export const formsOverrides = {
           }
         },
 
+        // ReadOnly
+        '&.Mui-readOnly': {
+          '&, & input': {
+            cursor: 'default',
+            pointerEvents: 'none',
+            color: theme.palette.text.disabled
+          },
+
+          '&.MuiOutlinedInput-root': {
+            backgroundColor: theme.palette.default.background
+          }
+        },
+
         // Select Multiple selection
         '&.MuiInputBase-root .MuiSelect-multiple.MuiInputBase-input': {
           paddingLeft: 0,
@@ -381,6 +394,14 @@ export const formsOverrides = {
   MuiFormControl: {
     defaultProps: {
       fullWidth: true
+    },
+    styleOverrides: {
+      root: ({ theme }) => ({
+        '&[readonly] .MuiFormLabel-root': {
+          color: theme.palette.text.disabled,
+          pointerEvents: 'none'
+        }
+      })
     }
   },
 
