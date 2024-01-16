@@ -1,10 +1,16 @@
 import { EuroOutlined, InfoOutlined, MapOutlined } from '@mui/icons-material';
-import { Grid, InputAdornment, TextField } from '@mui/material';
+import { Grid, InputAdornment } from '@mui/material';
 import React from 'react';
 import PasswordField from '../../../src/components/atoms/PasswordField';
-import ReadOnlyTextField from '../../../src/components/atoms/ReadOnlyTextField';
+import TextField from '../../../src/components/atoms/TextField';
 import Typography from '../../../src/components/atoms/Typography';
-import { Container, DocContainer, DocHighlight, Label } from '../../utils/storyStyles';
+import {
+  Container,
+  DocContainer,
+  DocHighlight,
+  DocLink,
+  Label
+} from '../../utils/storyStyles';
 
 const options = {
   title: 'Atoms/Text Field',
@@ -77,6 +83,31 @@ const endAdornmentIcon = (
 );
 
 const PlaygroundTemplate = (args) => <TextField {...args}></TextField>;
+
+const DocTemplate = () => {
+  return (
+    <DocContainer severity='warning'>
+      We have our own
+      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/atoms/TextField.js'>
+        TextField
+      </DocLink>
+      component that extends <i>Mui TextField</i> with some props (readOnly support).
+      <Typography mt={2}>
+        So, instead of Mui TextField, you should use this one:
+        <DocHighlight component='span'>
+          react-ui/src/components/atoms/TextField
+        </DocHighlight>
+      </Typography>
+      <Typography mt={2}>
+        For external use:
+        <DocHighlight component='span'>
+          {'import { TextField } from "@carto/react-ui";'}
+        </DocHighlight>
+        .
+      </Typography>
+    </DocContainer>
+  );
+};
 
 const VariantsTemplate = ({ label, placeholder, ...rest }) => {
   return (
@@ -455,30 +486,33 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Read Only</Typography>
         </Grid>
         <Grid item>
-          <ReadOnlyTextField
+          <TextField
             {...rest}
             variant='filled'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
+            readOnly
           />
         </Grid>
         <Grid item>
-          <ReadOnlyTextField
+          <TextField
             {...rest}
             variant='outlined'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
+            readOnly
           />
         </Grid>
         <Grid item>
-          <ReadOnlyTextField
+          <TextField
             {...rest}
             variant='standard'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
+            readOnly
           />
         </Grid>
       </Grid>
@@ -727,6 +761,8 @@ const disabledControlsSizeArgTypes = {
 
 export const Playground = PlaygroundTemplate.bind({});
 Playground.args = { ...commonArgs };
+
+export const Guide = DocTemplate.bind({});
 
 export const Variants = VariantsTemplate.bind({});
 Variants.args = { ...commonArgs };

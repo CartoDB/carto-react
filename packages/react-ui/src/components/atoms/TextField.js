@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField } from '@mui/material';
+import { TextField as MuiTextField } from '@mui/material';
 
-const ReadOnlyTextField = ({ readOnly, ...rest }) => {
+const TextField = ({ readOnly, ...rest }) => {
   return (
-    <TextField
+    <MuiTextField
       {...rest}
       readOnly={readOnly}
       InputProps={{
@@ -15,11 +15,8 @@ const ReadOnlyTextField = ({ readOnly, ...rest }) => {
   );
 };
 
-ReadOnlyTextField.defaultProps = {
-  readOnly: true
-};
-ReadOnlyTextField.propTypes = {
+TextField.propTypes = {
   readOnly: PropTypes.bool
 };
 
-export default ReadOnlyTextField;
+export default TextField;
