@@ -236,6 +236,19 @@ Use `<Avatar /> ` from: `react-ui/src/components/molecules/Avatar`
 
 For external use: `import { Avatar } from '@carto/react-ui';`.
 
+### TextField
+
+We have a `TextField` component that uses `Mui TextField` and extends it with some extra props:
+
+- readOnly
+
+This way we can apply custom styles to the whole component and not just tne Input. More info here: https://github.com/mui/material-ui/issues/9790
+
+In short, instead of Mui TextField, the component you should use to add text is this one:
+`react-ui/src/components/atoms/TextField`
+
+For external use: `import { TextField } from '@carto/react-ui';`.
+
 ## New components
 
 These components provide extra functionality to meet the design specs, but they don't exist in Mui library.
