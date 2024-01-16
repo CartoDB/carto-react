@@ -1,19 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  Checkbox,
-  Grid,
-  InputAdornment,
-  Divider,
-  TextField,
-  Tooltip
-} from '@mui/material';
+import { Button, Checkbox, Grid, InputAdornment, Divider, Tooltip } from '@mui/material';
 
 import { useIntl } from 'react-intl';
 
 import { animateValues } from '../utils/animations';
 import Typography from '../../components/atoms/Typography';
+import TextField from '../../components/atoms/TextField';
 import CategorySkeleton from './CategorySkeleton';
 import {
   CategoriesWrapper,

@@ -1,4 +1,5 @@
-import { Box, TextField, Tooltip, styled } from '@mui/material';
+import { Box, Tooltip, styled } from '@mui/material';
+import TextField from '../../../components/atoms/TextField';
 
 export const Wrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(2, 0),
