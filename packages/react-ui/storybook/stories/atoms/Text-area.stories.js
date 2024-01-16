@@ -1,6 +1,7 @@
 import { Grid, TextField } from '@mui/material';
 import React from 'react';
 import Typography from '../../../src/components/atoms/Typography';
+import ReadOnlyTextField from '../../../src/components/atoms/ReadOnlyTextField';
 import { Container, Label } from '../../utils/storyStyles';
 
 const options = {
@@ -313,31 +314,23 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Read Only</Typography>
         </Grid>
         <Grid item>
-          <TextField
+          <ReadOnlyTextField
             {...rest}
             multiline
             variant='filled'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
-            readOnly
-            InputProps={{
-              readOnly: true
-            }}
           />
         </Grid>
         <Grid item>
-          <TextField
+          <ReadOnlyTextField
             {...rest}
             multiline
             variant='outlined'
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
-            readOnly
-            InputProps={{
-              readOnly: true
-            }}
           />
         </Grid>
       </Grid>
