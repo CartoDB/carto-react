@@ -37,8 +37,11 @@ import Typography, {
   TypographyProps
 } from './components/atoms/Typography';
 import Button, { ButtonProps } from './components/atoms/Button';
-import PasswordField, { PasswordFieldProps } from './components/atoms/PasswordField';
 import SelectField, { SelectFieldProps } from './components/atoms/SelectField';
+import PasswordField, { PasswordFieldProps } from './components/atoms/PasswordField';
+import ToggleButtonGroup, {
+  ToggleButtonGroupProps
+} from './components/atoms/ToggleButtonGroup';
 import UploadField, {
   UploadFieldProps
 } from './components/molecules/UploadField/UploadField';
@@ -101,6 +104,8 @@ export {
   CartoFontWeight,
   Button,
   ButtonProps,
+  ToggleButtonGroup,
+  ToggleButtonGroupProps,
   PasswordField,
   PasswordFieldProps,
   SelectField,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToggleButtonGroup, ToggleButton, Grid, Divider } from '@mui/material';
+import { ToggleButton, Grid, Divider } from '@mui/material';
 import {
   CheckCircleOutline,
   FormatAlignCenter,
@@ -8,11 +8,19 @@ import {
   FormatAlignRight
 } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
+import ToggleButtonGroup from '../../../src/components/atoms/ToggleButtonGroup';
 
 const options = {
   title: 'Molecules/Toggle Button',
   component: ToggleButtonGroup,
   argTypes: {
+    variant: {
+      defaultValue: 'text',
+      control: {
+        type: 'select',
+        options: ['text', 'contained']
+      }
+    },
     size: {
       defaultValue: 'medium',
       control: {
@@ -182,6 +190,19 @@ const DividedTemplate = ({ exclusive, ...args }) => {
   );
 };
 
+const VariantTemplate = ({ ...args }) => {
+  return (
+    <Grid container direction='column' spacing={4}>
+      <Grid item>
+        <ToggleRow {...args} variant='text' />
+      </Grid>
+      <Grid item>
+        <ToggleRow {...args} variant='contained' />
+      </Grid>
+    </Grid>
+  );
+};
+
 const BehaviorTemplate = ({ exclusive, ...args }) => {
   const [selected, setSelected] = React.useState(() => ['opt1']);
   const [selected2, setSelected2] = React.useState(() => ['opt1']);
@@ -250,5 +271,7 @@ HorizontalTextGroup.args = { label: 'Text' };
 
 export const MultipleSelectionGroup = GroupTemplate.bind({});
 MultipleSelectionGroup.args = { exclusive: false };
+
+export const Variant = VariantTemplate.bind({});
 
 export const Behavior = BehaviorTemplate.bind({});
