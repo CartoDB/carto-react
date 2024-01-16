@@ -9,6 +9,7 @@ import {
 } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
 import ToggleButtonGroup from '../../../src/components/atoms/ToggleButtonGroup';
+import { DocContainer, DocHighlight, DocLink } from '../../utils/storyStyles';
 
 const options = {
   title: 'Molecules/Toggle Button',
@@ -119,6 +120,32 @@ const ToggleRow = ({ label, divider, fullWidth, exclusive, ...rest }) => {
         {label ? label : <FormatAlignJustify />}
       </ToggleButton>
     </ToggleButtonGroup>
+  );
+};
+
+const DocTemplate = () => {
+  return (
+    <DocContainer severity='warning'>
+      We have our own
+      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/atoms/ToggleButtonGroup.js'>
+        ToggleButtonGroup
+      </DocLink>
+      component that extends <i>Mui ToggleButtonGroup</i> with some props (variant
+      support).
+      <Typography mt={2}>
+        So, instead of Mui ToggleButtonGroup, you should use this one:
+        <DocHighlight component='span'>
+          react-ui/src/components/atoms/ToggleButtonGroup
+        </DocHighlight>
+      </Typography>
+      <Typography mt={2}>
+        For external use:
+        <DocHighlight component='span'>
+          {'import { ToggleButtonGroup } from "@carto/react-ui";'}
+        </DocHighlight>
+        .
+      </Typography>
+    </DocContainer>
   );
 };
 
@@ -254,6 +281,8 @@ const BehaviorTemplate = ({ exclusive, ...args }) => {
 };
 
 export const Playground = ToggleRow.bind({});
+
+export const Guide = DocTemplate.bind({});
 
 export const Icon = IconTemplate.bind({});
 

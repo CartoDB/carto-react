@@ -2,6 +2,8 @@
 
 ## Not released
 
+- ToggleButtonGroup component: Add support for variant [#824](https://github.com/CartoDB/carto-react/pull/824)
+
 ## 2.3
 
 ### 2.3.7 (2024-01-11)
