@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Grid,
   Autocomplete,
-  TextField,
   InputLabel,
   FormControl,
   FormLabel,
@@ -16,6 +15,7 @@ import PasswordField from '../../../src/components/atoms/PasswordField';
 import SelectField from '../../../src/components/atoms/SelectField';
 import LabelWithIndicator from '../../../src/components/atoms/LabelWithIndicator';
 import UploadField from '../../../src/components/molecules/UploadField/UploadField';
+import TextField from '../../../src/components/atoms/TextField';
 import { Container, DocContainer, Label } from '../../utils/storyStyles';
 import { HelpOutline } from '@mui/icons-material';
 

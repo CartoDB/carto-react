@@ -325,19 +325,6 @@ export const formsOverrides = {
           }
         },
 
-        // ReadOnly
-        '&.Mui-readOnly': {
-          '&, & input': {
-            cursor: 'default',
-            pointerEvents: 'none',
-            color: theme.palette.text.disabled
-          },
-
-          '&.MuiOutlinedInput-root': {
-            backgroundColor: theme.palette.default.background
-          }
-        },
-
         // Select Multiple selection
         '&.MuiInputBase-root .MuiSelect-multiple.MuiInputBase-input': {
           paddingLeft: 0,
@@ -397,9 +384,45 @@ export const formsOverrides = {
     },
     styleOverrides: {
       root: ({ theme }) => ({
-        '&[readonly] .MuiFormLabel-root': {
-          color: theme.palette.text.disabled,
-          pointerEvents: 'none'
+        // ReadOnly
+        '&[readonly]': {
+          '.MuiFormLabel-root': {
+            color: theme.palette.text.disabled,
+            pointerEvents: 'none',
+
+            '& .MuiFormLabel-asterisk::after, & .MuiTypography-root': {
+              color: theme.palette.text.disabled
+            }
+          },
+
+          '.MuiInputBase-root': {
+            '&, & input': {
+              cursor: 'default',
+              pointerEvents: 'none',
+              color: theme.palette.text.disabled,
+
+              '&::placeholder': {
+                color: theme.palette.text.disabled
+              }
+            },
+
+            '&.MuiOutlinedInput-root': {
+              backgroundColor: theme.palette.default.background
+            }
+          },
+
+          '.MuiFormHelperText-root': {
+            color: theme.palette.text.disabled
+          },
+
+          '.MuiInputAdornment-root': {
+            '.MuiButtonBase-root': {
+              color: theme.palette.text.disabled
+            },
+            'svg path': {
+              fill: theme.palette.text.disabled
+            }
+          }
         }
       })
     }

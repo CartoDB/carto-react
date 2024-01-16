@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
-import { Box, Link, Slider, TextField, styled } from '@mui/material';
+import { Box, Link, Slider, styled } from '@mui/material';
 import { debounce } from '@carto/react-core';
 import Typography from '../../components/atoms/Typography';
+import TextField from '../../components/atoms/TextField';
 import RangeSkeleton from './RangeSkeleton';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
 import useSkeleton from '../useSkeleton';

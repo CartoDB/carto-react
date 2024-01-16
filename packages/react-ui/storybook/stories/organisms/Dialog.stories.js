@@ -8,9 +8,9 @@ import {
   DialogActions,
   FormGroup,
   Grid,
-  Slide,
-  TextField
+  Slide
 } from '@mui/material';
+import TextField from '../../../src/components/atoms/TextField';
 
 const options = {
   title: 'Organisms/Dialog',

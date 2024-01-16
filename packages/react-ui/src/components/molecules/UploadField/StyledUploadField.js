@@ -1,5 +1,5 @@
-import { TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import TextField from '../../atoms/TextField';
 
 const StyledUploadField = styled(TextField, {
   shouldForwardProp: (prop) => prop !== 'cursor'

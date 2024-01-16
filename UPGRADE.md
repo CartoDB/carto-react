@@ -242,9 +242,9 @@ We have a `TextField` component that uses `Mui TextField` and extends it with so
 
 - readOnly
 
-This way we can apply custom styles to the whole component and not just tne Input. More info here: https://github.com/mui/material-ui/issues/9790
+This way, we can apply custom styles to the whole component and not just the Input, for readOnly fields. More info here: https://github.com/mui/material-ui/issues/9790
 
-In short, instead of Mui TextField, the component you should use to add text is this one:
+In short, instead of Mui TextField, the component you should use is this one:
 `react-ui/src/components/atoms/TextField`
 
 For external use: `import { TextField } from '@carto/react-ui';`.
@@ -264,7 +264,7 @@ For external use: `import { PasswordField } from '@carto/react-ui';`.
 
 ### SelectField
 
-This component adds the `placeholder` logic on top of TextField Mui component.
+This component adds the `placeholder` logic on top of Select Mui component.
 
 Instead of `<TextField select /> ` or `<Select />` you should use:
 `react-ui/src/components/atoms/SelectField`

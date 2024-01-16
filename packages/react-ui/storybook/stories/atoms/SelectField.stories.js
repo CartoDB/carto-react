@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
-import {
-  FormControl,
-  Grid,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  TextField
-} from '@mui/material';
+import { FormControl, Grid, InputAdornment, InputLabel, MenuItem } from '@mui/material';
 import { MapOutlined } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
+import TextField from '../../../src/components/atoms/TextField';
 import SelectField from '../../../src/components/atoms/SelectField';
 import Button from '../../../src/components/atoms/Button';
 import {

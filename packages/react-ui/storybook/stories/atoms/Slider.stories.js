@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Grid, Slider, TextField, Tooltip } from '@mui/material';
+import { Grid, Slider, Tooltip } from '@mui/material';
+import TextField from '../../../src/components/atoms/TextField';
 
 const options = {
   title: 'Atoms/Slider',
