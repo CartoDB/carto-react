@@ -5,8 +5,10 @@ import { ToggleButtonGroup as MuiToggleButtonGroup, styled } from '@mui/material
 const StyledToggleButtonGroup = styled(MuiToggleButtonGroup, {
   shouldForwardProp: (prop) => prop !== 'variant'
 })(({ variant, theme }) => ({
-  boxShadow: variant === 'contained' ? 'none' : undefined,
-  backgroundColor: variant === 'contained' ? theme.palette.background.default : undefined
+  ...(variant === 'contained' && {
+    boxShadow: 'none',
+    backgroundColor: theme.palette.background.default
+  })
 }));
 
 const ToggleButtonGroup = ({ children, variant, ...rest }) => {
