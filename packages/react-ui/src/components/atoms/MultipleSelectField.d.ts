@@ -1,14 +1,23 @@
 import React from 'react';
 import { SelectFieldProps } from './SelectField';
 
-type MultipleSelectFieldItem = {
+type MultipleSelectFieldOption = {
   label: string | React.ReactNode;
   value: string | number;
+  disabled?: boolean;
+  tooltip?: string | false;
 };
 
-export type MultipleSelectFieldProps = SelectFieldProps & {
-  items: MultipleSelectFieldItem[];
-  itemChecked: Boolean[];
+export type MultipleSelectFieldProps = Omit<
+  SelectFieldProps,
+  'onChange' | 'defaultValue' | 'value'
+> & {
+  options: MultipleSelectFieldOption[];
+  selectedOptions?: string[];
+  selectAllDisabled?: boolean;
+  onChange: (options: string[]) => void;
+  showCounter?: boolean;
+  showFilters?: boolean;
 };
 
 declare const MultipleSelectField: (props: MultipleSelectFieldProps) => JSX.Element;

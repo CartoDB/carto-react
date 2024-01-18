@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { IntlProvider } from 'react-intl';
 import MultipleSelectField from '../../../src/components/atoms/MultipleSelectField';
 import { DocContainer, DocHighlight } from '../../utils/storyStyles';
 import Typography from '../../../src/components/atoms/Typography';
@@ -11,6 +12,24 @@ const options = {
       control: {
         type: 'select',
         options: ['outlined', 'filled', 'standard']
+      }
+    },
+    showFilters: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
+    showCounter: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
+    selectAllDisabled: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
       }
     },
     size: {
@@ -54,60 +73,50 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A29965'
     },
     status: {
-      type: 'validated'
+      type: 'readyToReview'
     }
   }
 };
 export default options;
 
-const menuItems = [
-  {
-    label: 'table_openstreetmap_pointsofinterest',
-    value: '10Long'
-  },
-  {
-    label: 'Twenty',
-    value: '20'
-  },
-  {
-    label: 'Thirty',
-    value: '30'
-  },
-  {
-    label: 'Forty',
-    value: '40'
-  },
-  {
-    label: 'Fifty',
-    value: '50'
-  }
-];
+const PlaygroundTemplate = ({ ...rest }) => {
+  const [selectedLayerNames, setLayerNames] = useState([]);
 
-const PlaygroundTemplate = ({ label, placeholder, ...rest }) => {
-  const [content, setContent] = useState([]);
+  const layerNames = selectedLayerNames || [];
 
-  const handleChange = (event) => {
-    const {
-      target: { value }
-    } = event;
-    setContent(
-      // On autofill we get a stringified value
-      typeof value === 'string' ? value.split(',') : value
-    );
-  };
-
-  const isItemSelected = menuItems.map((item) => content.includes(item.value));
+  const menuItems = [
+    {
+      label: 'table_openstreetmap_pointsofinterest',
+      value: '10Long'
+    },
+    {
+      label: 'Twenty',
+      value: '20'
+    },
+    {
+      label: 'Thirty',
+      value: '30'
+    },
+    {
+      label: 'Forty',
+      value: '40'
+    },
+    {
+      label: 'Fifty',
+      value: '50'
+    }
+  ];
 
   return (
-    <MultipleSelectField
-      {...rest}
-      label={label}
-      placeholder={placeholder}
-      items={menuItems}
-      onChange={handleChange}
-      value={content}
-      itemChecked={isItemSelected}
-    />
+    <IntlProvider locale='en'>
+      <MultipleSelectField
+        {...rest}
+        options={menuItems}
+        selectedOptions={layerNames}
+        onChange={setLayerNames}
+        value={layerNames}
+      />
+    </IntlProvider>
   );
 };
 
@@ -133,6 +142,49 @@ const DocTemplate = () => {
   );
 };
 
+const DisabledWithTooltipTemplate = ({ ...rest }) => {
+  const [selectedLayerNames, setLayerNames] = useState([]);
+
+  const layerNames = selectedLayerNames || [];
+
+  const menuItems = [
+    {
+      label: 'table_openstreetmap_pointsofinterest',
+      value: '10Long'
+    },
+    {
+      label: 'Twenty',
+      value: '20'
+    },
+    {
+      label: 'Thirty',
+      value: '30',
+
+      disabled: true,
+      tooltip: 'This item is disabled'
+    },
+    {
+      label: 'Forty',
+      value: '40'
+    },
+    {
+      label: 'Fifty',
+      value: '50'
+    }
+  ];
+
+  return (
+    <IntlProvider locale='en'>
+      <MultipleSelectField
+        {...rest}
+        options={menuItems}
+        selectedOptions={layerNames}
+        onChange={setLayerNames}
+        value={layerNames}
+      />
+    </IntlProvider>
+  );
+};
 const commonArgs = {
   label: 'Label text',
   placeholder: 'Placeholder text',
@@ -145,4 +197,10 @@ Playground.args = { ...commonArgs };
 export const Guide = DocTemplate.bind({});
 
 export const Counter = PlaygroundTemplate.bind({});
-Counter.args = { ...commonArgs, counter: true };
+Counter.args = { ...commonArgs, showCounter: true };
+
+export const Filters = PlaygroundTemplate.bind({});
+Filters.args = { ...commonArgs, showFilters: true };
+
+export const DisabledWithTooltip = DisabledWithTooltipTemplate.bind({});
+DisabledWithTooltip.args = { ...commonArgs };
