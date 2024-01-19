@@ -310,6 +310,34 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
 
       <Grid item container spacing={2}>
         <Grid item xs={2}>
+          <Typography>Read Only</Typography>
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            multiline
+            variant='filled'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            InputProps={{ readOnly: true }}
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            {...rest}
+            multiline
+            variant='outlined'
+            label={label}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            InputProps={{ readOnly: true }}
+          />
+        </Grid>
+      </Grid>
+
+      <Grid item container spacing={2}>
+        <Grid item xs={2}>
           <Typography>Error</Typography>
         </Grid>
         <Grid item>
