@@ -11,6 +11,7 @@ const StyledToggleButtonGroup = styled(MuiToggleButtonGroup, {
   }),
   ...(variant === 'unbounded' && {
     boxShadow: 'none',
+    borderRadius: theme.spacing(0.5),
 
     '& .MuiDivider-root': {
       height: theme.spacing(4),
@@ -19,8 +20,8 @@ const StyledToggleButtonGroup = styled(MuiToggleButtonGroup, {
         height: theme.spacing(4)
       },
       '&.MuiToggleButtonGroup-groupedVertical': {
-        width: theme.spacing(4),
         height: 'auto',
+        width: theme.spacing(4),
         margin: `${theme.spacing(0.5, 0, 1)} !important`,
         borderRadius: '0 !important'
       }
@@ -29,10 +30,14 @@ const StyledToggleButtonGroup = styled(MuiToggleButtonGroup, {
     '& .MuiToggleButton-sizeSmall': {
       margin: 0,
 
+      '&.MuiToggleButtonGroup-grouped:not(.MuiDivider-root)': {
+        margin: 0
+      },
       '& + .MuiDivider-root.MuiToggleButtonGroup-groupedHorizontal': {
         height: theme.spacing(3)
       },
       '& + .MuiDivider-root.MuiToggleButtonGroup-groupedVertical': {
+        height: 'auto',
         width: theme.spacing(3)
       }
     },
@@ -41,14 +46,10 @@ const StyledToggleButtonGroup = styled(MuiToggleButtonGroup, {
       margin: 0,
 
       '&:first-of-type': {
-        marginLeft: 0,
-        borderRadius: theme.spacing(1, 0.5, 0.5, 1)
+        marginLeft: 0
       },
       '&:not(:last-of-type)': {
         marginRight: theme.spacing(0.5)
-      },
-      '&:last-of-type': {
-        borderRadius: theme.spacing(0.5, 1, 1, 0.5)
       }
     },
     '&.MuiToggleButtonGroup-horizontal:not(.MuiDivider-root)': {
@@ -60,15 +61,11 @@ const StyledToggleButtonGroup = styled(MuiToggleButtonGroup, {
       '.MuiToggleButtonGroup-grouped': {
         margin: theme.spacing(0, 0, 0.5),
 
-        '&:first-of-type': {
-          borderRadius: theme.spacing(1, 1, 0.5, 0.5)
-        },
         '&:not(:last-of-type)': {
           marginRight: 0
         },
         '&:last-of-type': {
-          marginBottom: 0,
-          borderRadius: theme.spacing(0.5, 0.5, 1, 1)
+          marginBottom: 0
         }
       }
     }
