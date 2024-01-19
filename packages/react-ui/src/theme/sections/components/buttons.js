@@ -438,14 +438,6 @@ export const buttonsOverrides = {
           '&:not(:first-of-type)': {
             marginLeft: 0
           }
-          /*           '& + .MuiDivider-root': {
-            '&.MuiToggleButtonGroup-groupedHorizontal': {
-              height: sizeMedium
-            },
-            '&.MuiToggleButtonGroup-groupedVertical': {
-              width: sizeMedium
-            }
-          } */
         }
       }),
       // Styles applied to the children if orientation="vertical"
