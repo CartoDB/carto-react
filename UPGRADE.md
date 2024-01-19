@@ -209,6 +209,7 @@ For external use: `import { Button } from '@carto/react-ui';`.
 We have a `ToggleButtonGroup` component that uses `Mui ToggleButtonGroup` and extends it with some extra props:
 
 - variant
+- backgroundColor
 
 So, instead of Mui ToggleButtonGroup, the component you should use is this one:
 `react-ui/src/components/atoms/ToggleButtonGroup`

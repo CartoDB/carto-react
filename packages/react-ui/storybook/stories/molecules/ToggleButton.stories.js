@@ -16,10 +16,16 @@ const options = {
   component: ToggleButtonGroup,
   argTypes: {
     variant: {
-      defaultValue: 'text',
+      defaultValue: 'floating',
       control: {
         type: 'select',
-        options: ['text', 'contained']
+        options: ['floating', 'contained', 'unbounded']
+      }
+    },
+    backgroundColor: {
+      control: {
+        type: 'select',
+        options: ['primary', 'secondary', 'transparent']
       }
     },
     size: {
@@ -66,7 +72,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A36258'
     },
     status: {
-      type: 'validated'
+      type: 'readyToReview'
     }
   }
 };
@@ -130,8 +136,8 @@ const DocTemplate = () => {
       <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/atoms/ToggleButtonGroup.js'>
         ToggleButtonGroup
       </DocLink>
-      component that extends <i>Mui ToggleButtonGroup</i> with some props (variant
-      support).
+      component that extends <i>Mui ToggleButtonGroup</i> with some props (variant and
+      backgroundColor support).
       <Typography mt={2}>
         So, instead of Mui ToggleButtonGroup, you should use this one:
         <DocHighlight component='span'>
@@ -221,10 +227,29 @@ const VariantTemplate = ({ ...args }) => {
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>
-        <ToggleRow {...args} variant='text' />
+        <ToggleRow {...args} variant='floating' />
       </Grid>
       <Grid item>
         <ToggleRow {...args} variant='contained' />
+      </Grid>
+      <Grid item>
+        <ToggleRow {...args} variant='unbounded' />
+      </Grid>
+    </Grid>
+  );
+};
+
+const BgColorTemplate = ({ ...args }) => {
+  return (
+    <Grid container direction='column' spacing={4}>
+      <Grid item>
+        <ToggleRow {...args} backgroundColor='primary' />
+      </Grid>
+      <Grid item>
+        <ToggleRow {...args} backgroundColor='secondary' />
+      </Grid>
+      <Grid item>
+        <ToggleRow {...args} backgroundColor='transparent' />
       </Grid>
     </Grid>
   );
@@ -302,5 +327,7 @@ export const MultipleSelectionGroup = GroupTemplate.bind({});
 MultipleSelectionGroup.args = { exclusive: false };
 
 export const Variant = VariantTemplate.bind({});
+
+export const BackgroundColor = BgColorTemplate.bind({});
 
 export const Behavior = BehaviorTemplate.bind({});

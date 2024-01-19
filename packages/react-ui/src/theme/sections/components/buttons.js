@@ -434,7 +434,11 @@ export const buttonsOverrides = {
 
         '&.MuiToggleButton-root': {
           marginLeft: theme.spacing(1),
-          marginBottom: theme.spacing(0.5)
+          marginBottom: theme.spacing(0.5),
+
+          '&:last-of-type': {
+            marginBottom: theme.spacing(1)
+          }
         },
         '&.MuiToggleButton-sizeSmall': {
           width: sizeSmall,
@@ -442,6 +446,9 @@ export const buttonsOverrides = {
 
           '&:not(:first-of-type)': {
             marginTop: 0
+          },
+          '&:last-of-type': {
+            marginBottom: theme.spacing(0.5)
           }
         }
       })
