@@ -78,7 +78,7 @@ const options = {
 };
 export default options;
 
-const Toggle = ({ label, exclusive, ...rest }) => {
+const Toggle = ({ label, ...rest }) => {
   const [selected, setSelected] = React.useState(false);
 
   return (
@@ -96,8 +96,10 @@ const Toggle = ({ label, exclusive, ...rest }) => {
   );
 };
 
-const ToggleRow = ({ label, divider, fullWidth, exclusive, ...rest }) => {
+const ToggleRow = ({ label, divider, fullWidth, exclusive, orientation, ...rest }) => {
   const [selected, setSelected] = React.useState(() => ['AlignLeft']);
+  const isVertical = orientation === 'vertical';
+  const dividerOrientation = isVertical ? 'horizontal' : 'vertical';
 
   const handleAlignment = (event, newAlignment) => {
     setSelected(newAlignment);
@@ -110,6 +112,7 @@ const ToggleRow = ({ label, divider, fullWidth, exclusive, ...rest }) => {
       onChange={handleAlignment}
       fullWidth={fullWidth}
       exclusive={exclusive}
+      orientation={orientation}
       aria-label='text alignment'
     >
       <ToggleButton value='AlignLeft' aria-label='AlignLeft'>
@@ -118,7 +121,9 @@ const ToggleRow = ({ label, divider, fullWidth, exclusive, ...rest }) => {
       <ToggleButton value='AlignCenter' aria-label='AlignCenter'>
         {label ? label : <FormatAlignCenter />}
       </ToggleButton>
-      {divider && <Divider flexItem orientation='vertical' />}
+      {divider && (
+        <Divider flexItem={!isVertical ? true : false} orientation={dividerOrientation} />
+      )}
       <ToggleButton value='AlignRight' aria-label='AlignRight'>
         {label ? label : <FormatAlignRight />}
       </ToggleButton>
@@ -155,7 +160,7 @@ const DocTemplate = () => {
   );
 };
 
-const IconTemplate = ({ exclusive, ...args }) => {
+const IconTemplate = (args) => {
   return (
     <Grid container alignItems='center' spacing={4}>
       <Grid item>
@@ -171,7 +176,7 @@ const IconTemplate = ({ exclusive, ...args }) => {
   );
 };
 
-const TextTemplate = ({ exclusive, ...args }) => {
+const TextTemplate = (args) => {
   return (
     <Grid container alignItems='center' spacing={4}>
       <Grid item>
@@ -184,7 +189,7 @@ const TextTemplate = ({ exclusive, ...args }) => {
   );
 };
 
-const GroupTemplate = ({ exclusive, ...args }) => {
+const GroupTemplate = (args) => {
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>
@@ -197,7 +202,7 @@ const GroupTemplate = ({ exclusive, ...args }) => {
   );
 };
 
-const VerticalGroupTemplate = ({ exclusive, ...args }) => {
+const VerticalGroupTemplate = (args) => {
   return (
     <Grid container spacing={4}>
       <Grid item>
@@ -210,7 +215,7 @@ const VerticalGroupTemplate = ({ exclusive, ...args }) => {
   );
 };
 
-const DividedTemplate = ({ exclusive, ...args }) => {
+const DividedTemplate = (args) => {
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>
@@ -223,7 +228,7 @@ const DividedTemplate = ({ exclusive, ...args }) => {
   );
 };
 
-const VariantTemplate = ({ ...args }) => {
+const VariantTemplate = (args) => {
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>
@@ -239,7 +244,7 @@ const VariantTemplate = ({ ...args }) => {
   );
 };
 
-const BgColorTemplate = ({ ...args }) => {
+const BgColorTemplate = (args) => {
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>

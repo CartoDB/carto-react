@@ -12,12 +12,33 @@ const StyledToggleButtonGroup = styled(MuiToggleButtonGroup, {
   ...(variant === 'unbounded' && {
     boxShadow: 'none',
 
-    '.MuiToggleButtonGroup-grouped': {
+    '& .MuiDivider-root': {
+      height: theme.spacing(4),
+
+      '&.MuiToggleButtonGroup-groupedHorizontal': {
+        height: theme.spacing(4)
+      },
+      '&.MuiToggleButtonGroup-groupedVertical': {
+        width: theme.spacing(4),
+        height: 'auto',
+        margin: `${theme.spacing(0.5, 0, 1)} !important`,
+        borderRadius: '0 !important'
+      }
+    },
+
+    '& .MuiToggleButton-sizeSmall': {
       margin: 0,
 
-      '&.MuiToggleButton-sizeSmall': {
-        margin: 0
+      '& + .MuiDivider-root.MuiToggleButtonGroup-groupedHorizontal': {
+        height: theme.spacing(3)
       },
+      '& + .MuiDivider-root.MuiToggleButtonGroup-groupedVertical': {
+        width: theme.spacing(3)
+      }
+    },
+
+    '.MuiToggleButtonGroup-grouped:not(.MuiDivider-root)': {
+      margin: 0,
 
       '&:first-of-type': {
         marginLeft: 0,
@@ -30,7 +51,12 @@ const StyledToggleButtonGroup = styled(MuiToggleButtonGroup, {
         borderRadius: theme.spacing(0.5, 1, 1, 0.5)
       }
     },
-    '&.MuiToggleButtonGroup-vertical': {
+    '&.MuiToggleButtonGroup-horizontal:not(.MuiDivider-root)': {
+      '.MuiToggleButtonGroup-grouped': {
+        margin: theme.spacing(0, 0.5)
+      }
+    },
+    '&.MuiToggleButtonGroup-vertical:not(.MuiDivider-root)': {
       '.MuiToggleButtonGroup-grouped': {
         margin: theme.spacing(0, 0, 0.5),
 

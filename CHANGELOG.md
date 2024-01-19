@@ -2,7 +2,7 @@
 
 ## Not released
 
-- ToggleButtonGroup component: Add support for variant [#824](https://github.com/CartoDB/carto-react/pull/824)
+- ToggleButtonGroup component: Add support for variant and backgroundColor [#824](https://github.com/CartoDB/carto-react/pull/824)
 
 ## 2.3
 

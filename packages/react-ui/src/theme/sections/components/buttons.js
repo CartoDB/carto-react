@@ -397,9 +397,25 @@ export const buttonsOverrides = {
             borderRadius: radius
           },
         '.MuiDivider-root': {
-          height: sizeLarge,
-          margin: theme.spacing(0, 1),
-          marginLeft: theme.spacing(0.5)
+          '&.MuiToggleButtonGroup-groupedHorizontal': {
+            height: sizeLarge,
+            margin: theme.spacing(0, 1),
+            marginLeft: theme.spacing(0.5)
+          },
+          '&.MuiToggleButtonGroup-groupedVertical': {
+            width: sizeLarge,
+            margin: theme.spacing(1, 0),
+            marginTop: theme.spacing(0.5)
+          }
+        },
+
+        '.MuiToggleButton-sizeSmall': {
+          '& + .MuiDivider-root.MuiToggleButtonGroup-groupedHorizontal': {
+            height: sizeMedium
+          },
+          '& + .MuiDivider-root.MuiToggleButtonGroup-groupedVertical': {
+            width: sizeMedium
+          }
         }
       }),
       // Styles applied to the children if orientation="horizontal"
@@ -412,19 +428,24 @@ export const buttonsOverrides = {
           marginLeft: 0,
           borderLeft: 'none'
         },
-        '&:first-of-type': {
+        '&:first-of-type:not(.MuiDivider-root)': {
           marginLeft: theme.spacing(1)
         },
-        '&.MuiToggleButton-sizeSmall': {
+        '&.MuiToggleButton-sizeSmall:not(.MuiDivider-root)': {
           height: sizeSmall,
           margin: theme.spacing(0.5),
 
           '&:not(:first-of-type)': {
             marginLeft: 0
-          },
-          '& + .MuiDivider-root': {
-            height: sizeMedium
           }
+          /*           '& + .MuiDivider-root': {
+            '&.MuiToggleButtonGroup-groupedHorizontal': {
+              height: sizeMedium
+            },
+            '&.MuiToggleButtonGroup-groupedVertical': {
+              width: sizeMedium
+            }
+          } */
         }
       }),
       // Styles applied to the children if orientation="vertical"
