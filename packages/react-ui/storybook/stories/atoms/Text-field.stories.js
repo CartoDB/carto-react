@@ -39,6 +39,12 @@ const options = {
         type: 'boolean'
       }
     },
+    readOnly: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
     label: {
       control: {
         type: 'text'
@@ -75,15 +81,23 @@ const endAdornmentIcon = (
   </InputAdornment>
 );
 
-const PlaygroundTemplate = (args) => <TextField {...args}></TextField>;
+const PlaygroundTemplate = ({ readOnly, ...args }) => (
+  <TextField {...args} InputProps={{ readOnly: readOnly }}></TextField>
+);
 
-const VariantsTemplate = ({ label, placeholder, ...rest }) => {
+const VariantsTemplate = ({ label, placeholder, readOnly, ...rest }) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Filled'}</Label>
-          <TextField {...rest} label={label} variant='filled' placeholder={placeholder} />
+          <TextField
+            {...rest}
+            label={label}
+            variant='filled'
+            placeholder={placeholder}
+            InputProps={{ readOnly: readOnly }}
+          />
         </Container>
       </Grid>
       <Grid item>
@@ -94,6 +108,7 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
             label={label}
             variant='outlined'
             placeholder={placeholder}
+            InputProps={{ readOnly: readOnly }}
           />
         </Container>
       </Grid>
@@ -105,6 +120,7 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
             label={label}
             variant='standard'
             placeholder={placeholder}
+            InputProps={{ readOnly: readOnly }}
           />
         </Container>
       </Grid>
@@ -112,7 +128,13 @@ const VariantsTemplate = ({ label, placeholder, ...rest }) => {
   );
 };
 
-const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest }) => {
+const LabelAndHelperTextTemplate = ({
+  label,
+  placeholder,
+  helperText,
+  readOnly,
+  ...rest
+}) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
@@ -123,25 +145,40 @@ const LabelAndHelperTextTemplate = ({ label, placeholder, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             helperText={helperText}
+            InputProps={{ readOnly: readOnly }}
           />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Without label + helper text'}</Label>
-          <TextField {...rest} placeholder={placeholder} />
+          <TextField
+            {...rest}
+            placeholder={placeholder}
+            InputProps={{ readOnly: readOnly }}
+          />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only label'}</Label>
-          <TextField {...rest} label={label} placeholder={placeholder} />
+          <TextField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            InputProps={{ readOnly: readOnly }}
+          />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only helper text'}</Label>
-          <TextField {...rest} placeholder={placeholder} helperText={helperText} />
+          <TextField
+            {...rest}
+            placeholder={placeholder}
+            helperText={helperText}
+            InputProps={{ readOnly: readOnly }}
+          />
         </Container>
       </Grid>
     </Grid>
@@ -153,6 +190,7 @@ const PrefixAndSuffixTemplate = ({
   placeholder,
   startAdornment,
   endAdornment,
+  readOnly,
   ...rest
 }) => {
   return (
@@ -166,7 +204,8 @@ const PrefixAndSuffixTemplate = ({
             placeholder={placeholder}
             InputProps={{
               startAdornment: startAdornmentText,
-              endAdornment: endAdornmentText
+              endAdornment: endAdornmentText,
+              readOnly: readOnly
             }}
           />
         </Container>
@@ -180,7 +219,8 @@ const PrefixAndSuffixTemplate = ({
             placeholder={placeholder}
             InputProps={{
               startAdornment: startAdornmentIcon,
-              endAdornment: endAdornmentIcon
+              endAdornment: endAdornmentIcon,
+              readOnly: readOnly
             }}
           />
         </Container>
@@ -194,7 +234,8 @@ const PrefixAndSuffixTemplate = ({
             placeholder={placeholder}
             InputProps={{
               startAdornment: startAdornmentText,
-              endAdornment: endAdornmentIcon
+              endAdornment: endAdornmentIcon,
+              readOnly: readOnly
             }}
           />
         </Container>
@@ -207,7 +248,8 @@ const PrefixAndSuffixTemplate = ({
             label={label}
             placeholder={placeholder}
             InputProps={{
-              startAdornment: startAdornmentText
+              startAdornment: startAdornmentText,
+              readOnly: readOnly
             }}
           />
         </Container>
@@ -220,7 +262,8 @@ const PrefixAndSuffixTemplate = ({
             label={label}
             placeholder={placeholder}
             InputProps={{
-              endAdornment: endAdornmentText
+              endAdornment: endAdornmentText,
+              readOnly: readOnly
             }}
           />
         </Container>
@@ -228,14 +271,26 @@ const PrefixAndSuffixTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'None'}</Label>
-          <TextField {...rest} label={label} placeholder={placeholder} />
+          <TextField
+            {...rest}
+            label={label}
+            placeholder={placeholder}
+            InputProps={{ readOnly: readOnly }}
+          />
         </Container>
       </Grid>
     </Grid>
   );
 };
 
-const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
+const SizeTemplate = ({
+  label,
+  placeholder,
+  defaultValue,
+  helperText,
+  readOnly,
+  ...rest
+}) => {
   return (
     <Grid container spacing={6}>
       <Grid item container spacing={2}>
@@ -243,7 +298,13 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Placeholder</Typography>
         </Grid>
         <Grid item>
-          <TextField {...rest} variant='filled' label={label} placeholder={placeholder} />
+          <TextField
+            {...rest}
+            variant='filled'
+            label={label}
+            placeholder={placeholder}
+            InputProps={{ readOnly: readOnly }}
+          />
         </Grid>
         <Grid item>
           <TextField
@@ -251,6 +312,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             variant='outlined'
             label={label}
             placeholder={placeholder}
+            InputProps={{ readOnly: readOnly }}
           />
         </Grid>
         <Grid item>
@@ -259,6 +321,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             variant='standard'
             label={label}
             placeholder={placeholder}
+            InputProps={{ readOnly: readOnly }}
           />
         </Grid>
       </Grid>
@@ -268,13 +331,28 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
           <Typography>Empty</Typography>
         </Grid>
         <Grid item>
-          <TextField {...rest} variant='filled' label={label} />
+          <TextField
+            {...rest}
+            variant='filled'
+            label={label}
+            InputProps={{ readOnly: readOnly }}
+          />
         </Grid>
         <Grid item>
-          <TextField {...rest} variant='outlined' label={label} />
+          <TextField
+            {...rest}
+            variant='outlined'
+            label={label}
+            InputProps={{ readOnly: readOnly }}
+          />
         </Grid>
         <Grid item>
-          <TextField {...rest} variant='standard' label={label} />
+          <TextField
+            {...rest}
+            variant='standard'
+            label={label}
+            InputProps={{ readOnly: readOnly }}
+          />
         </Grid>
       </Grid>
 
@@ -289,6 +367,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
+            InputProps={{ readOnly: readOnly }}
           />
         </Grid>
         <Grid item>
@@ -298,6 +377,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
+            InputProps={{ readOnly: readOnly }}
           />
         </Grid>
         <Grid item>
@@ -307,6 +387,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
+            InputProps={{ readOnly: readOnly }}
           />
         </Grid>
       </Grid>
@@ -321,6 +402,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             variant='filled'
             label={label}
             placeholder={placeholder}
+            InputProps={{ readOnly: readOnly }}
             focused
           />
         </Grid>
@@ -330,6 +412,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             variant='outlined'
             label={label}
             placeholder={placeholder}
+            InputProps={{ readOnly: readOnly }}
             focused
           />
         </Grid>
@@ -339,6 +422,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             variant='standard'
             label={label}
             placeholder={placeholder}
+            InputProps={{ readOnly: readOnly }}
             focused
           />
         </Grid>
@@ -355,6 +439,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
+            InputProps={{ readOnly: readOnly }}
             focused
           />
         </Grid>
@@ -365,6 +450,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
+            InputProps={{ readOnly: readOnly }}
             focused
           />
         </Grid>
@@ -375,6 +461,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             defaultValue={defaultValue}
+            InputProps={{ readOnly: readOnly }}
             focused
           />
         </Grid>
@@ -496,6 +583,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             helperText={helperText}
+            InputProps={{ readOnly: readOnly }}
             error
           />
         </Grid>
@@ -506,6 +594,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             helperText={helperText}
+            InputProps={{ readOnly: readOnly }}
             error
           />
         </Grid>
@@ -516,6 +605,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             label={label}
             placeholder={placeholder}
             helperText={helperText}
+            InputProps={{ readOnly: readOnly }}
             error
           />
         </Grid>
@@ -533,6 +623,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             placeholder={placeholder}
             defaultValue={defaultValue}
             helperText={helperText}
+            InputProps={{ readOnly: readOnly }}
             error
           />
         </Grid>
@@ -544,6 +635,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             placeholder={placeholder}
             defaultValue={defaultValue}
             helperText={helperText}
+            InputProps={{ readOnly: readOnly }}
             error
           />
         </Grid>
@@ -555,6 +647,7 @@ const SizeTemplate = ({ label, placeholder, defaultValue, helperText, ...rest })
             placeholder={placeholder}
             defaultValue={defaultValue}
             helperText={helperText}
+            InputProps={{ readOnly: readOnly }}
             error
           />
         </Grid>
@@ -568,6 +661,7 @@ const PasswordFieldTemplate = ({
   placeholder,
   defaultValue,
   helperText,
+  readOnly,
   ...rest
 }) => {
   return (
@@ -592,6 +686,7 @@ const PasswordFieldTemplate = ({
             placeholder={placeholder}
             defaultValue='1234'
             helperText={helperText}
+            InputProps={{ readOnly: readOnly }}
             type='password'
           />
         </Container>
@@ -605,6 +700,7 @@ const PasswordFieldTemplate = ({
             placeholder={placeholder}
             defaultValue='1234'
             helperText={helperText}
+            InputProps={{ readOnly: readOnly }}
           />
         </Container>
       </Grid>
@@ -612,7 +708,14 @@ const PasswordFieldTemplate = ({
   );
 };
 
-const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...rest }) => {
+const BehaviorTemplate = ({
+  label,
+  placeholder,
+  defaultValue,
+  helperText,
+  readOnly,
+  ...rest
+}) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
@@ -624,6 +727,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             label={label}
             placeholder={placeholder}
             defaultValue='felipegutierrezsoriano@cartodb.com'
+            InputProps={{ readOnly: readOnly }}
           />
         </Container>
       </Grid>
@@ -635,11 +739,21 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
 
           <Grid container spacing={2}>
             <Grid item>
-              <TextField {...rest} label={label} placeholder={placeholder} />
+              <TextField
+                {...rest}
+                label={label}
+                placeholder={placeholder}
+                InputProps={{ readOnly: readOnly }}
+              />
             </Grid>
 
             <Grid item>
-              <TextField {...rest} label={label} placeholder={placeholder} />
+              <TextField
+                {...rest}
+                label={label}
+                placeholder={placeholder}
+                InputProps={{ readOnly: readOnly }}
+              />
             </Grid>
           </Grid>
         </Container>
@@ -654,6 +768,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             label={label}
             placeholder={placeholder}
             defaultValue='felipegutierrezsoriano@cartodb.com'
+            InputProps={{ readOnly: readOnly }}
           />
         </Container>
         <Container>
@@ -664,6 +779,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             placeholder={placeholder}
             defaultValue='felipegutierrezsoriano@cartodb.com'
             fullWidth={false}
+            InputProps={{ readOnly: readOnly }}
           />
         </Container>
       </Grid>
@@ -679,6 +795,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             placeholder={placeholder}
             defaultValue='Felipe'
             helperText={helperText}
+            InputProps={{ readOnly: readOnly }}
           />
           <TextField
             {...rest}
@@ -691,7 +808,8 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
                 <InputAdornment position='start'>
                   <EuroOutlined />
                 </InputAdornment>
-              )
+              ),
+              readOnly: readOnly
             }}
             helperText={helperText}
           />
@@ -701,6 +819,7 @@ const BehaviorTemplate = ({ label, placeholder, defaultValue, helperText, ...res
             placeholder={placeholder}
             defaultValue='1234'
             helperText={helperText}
+            InputProps={{ readOnly: readOnly }}
           />
         </Container>
       </Grid>

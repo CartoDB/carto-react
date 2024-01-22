@@ -2,6 +2,8 @@
 
 ## Not released
 
+- TexField component: Add support for readOnly [#825](https://github.com/CartoDB/carto-react/pull/825
+
 ## 2.3
 
 ### 2.3.7 (2024-01-11)
