@@ -244,6 +244,11 @@ export const formsOverrides = {
           '&.Mui-error::after': {
             opacity: 1,
             border: `2px solid ${theme.palette.error.light}`
+          },
+          '&.Mui-readOnly': {
+            '&.Mui-focused': {
+              backgroundColor: theme.palette.background.default
+            }
           }
         },
 
@@ -258,6 +263,13 @@ export const formsOverrides = {
           },
           '&.Mui-disabled': {
             backgroundColor: theme.palette.default.background
+          },
+          '&.Mui-readOnly': {
+            backgroundColor: theme.palette.background.default,
+
+            '&.Mui-focused': {
+              backgroundColor: theme.palette.background.default
+            }
           },
           '& .MuiOutlinedInput-notchedOutline': {
             top: 0,

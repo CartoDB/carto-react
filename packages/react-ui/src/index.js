@@ -31,6 +31,7 @@ import CircleIcon from './assets/icons/CircleIcon';
 import ArrowDropIcon from './assets/icons/ArrowDropIcon';
 import Typography from './components/atoms/Typography';
 import Button from './components/atoms/Button';
+import ToggleButtonGroup from './components/atoms/ToggleButtonGroup';
 import PasswordField from './components/atoms/PasswordField';
 import SelectField from './components/atoms/SelectField';
 import MultipleSelectField from './components/atoms/SelectField';
@@ -87,6 +88,7 @@ export {
   LegendRamp,
   Typography,
   Button,
+  ToggleButtonGroup,
   PasswordField,
   SelectField,
   MultipleSelectField,
