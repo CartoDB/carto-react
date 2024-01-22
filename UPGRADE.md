@@ -204,6 +204,18 @@ So, instead of Mui Button, the component you should use to create buttons is thi
 
 For external use: `import { Button } from '@carto/react-ui';`.
 
+### ToggleButtonGroup
+
+We have a `ToggleButtonGroup` component that uses `Mui ToggleButtonGroup` and extends it with some extra props:
+
+- variant
+- backgroundColor
+
+So, instead of Mui ToggleButtonGroup, the component you should use is this one:
+`react-ui/src/components/atoms/ToggleButtonGroup`
+
+For external use: `import { ToggleButtonGroup } from '@carto/react-ui';`.
+
 ### AppBar
 
 We have a custom component to build the basic structure and styles on top of AppBar Mui component.
@@ -251,7 +263,7 @@ For external use: `import { PasswordField } from '@carto/react-ui';`.
 
 ### SelectField
 
-This component adds the `placeholder` logic on top of TextField Mui component.
+This component adds the `placeholder` logic on top of Select Mui component.
 
 Instead of `<TextField select /> ` or `<Select />` you should use:
 `react-ui/src/components/atoms/SelectField`
@@ -263,7 +275,7 @@ For external use: `import { SelectField } from '@carto/react-ui';`.
 This component adds the `multiple selection` logic on top of SelectField component.
 
 Instead of `<Select multiple /> ` you should use:
-`react-ui/src/components/atoms/MultipleSelectField`
+`react-ui/src/components/molecules/MultipleSelectField`
 
 For external use: `import { MultipleSelectField } from '@carto/react-ui';`.
 

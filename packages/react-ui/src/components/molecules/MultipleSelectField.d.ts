@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectFieldProps } from './SelectField';
+import { SelectFieldProps } from '../atoms/SelectField';
 
 type MultipleSelectFieldOption = {
   label: string | React.ReactNode;
