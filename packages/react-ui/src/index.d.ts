@@ -40,7 +40,7 @@ import Button, { ButtonProps } from './components/atoms/Button';
 import SelectField, { SelectFieldProps } from './components/atoms/SelectField';
 import MultipleSelectField, {
   MultipleSelectFieldProps
-} from './components/atoms/MultipleSelectField';
+} from './components/molecules/MultipleSelectField';
 import PasswordField, { PasswordFieldProps } from './components/atoms/PasswordField';
 import ToggleButtonGroup, {
   ToggleButtonGroupProps

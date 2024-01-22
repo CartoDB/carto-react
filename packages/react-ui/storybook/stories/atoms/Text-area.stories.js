@@ -128,7 +128,6 @@ const LabelAndHelperTextTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Without label + helper text'}</Label>
-          InputProps={{ readOnly: readOnly }}
           <TextField
             {...rest}
             multiline

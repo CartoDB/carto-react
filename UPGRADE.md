@@ -275,7 +275,7 @@ For external use: `import { SelectField } from '@carto/react-ui';`.
 This component adds the `multiple selection` logic on top of SelectField component.
 
 Instead of `<Select multiple /> ` you should use:
-`react-ui/src/components/atoms/MultipleSelectField`
+`react-ui/src/components/molecules/MultipleSelectField`
 
 For external use: `import { MultipleSelectField } from '@carto/react-ui';`.
 

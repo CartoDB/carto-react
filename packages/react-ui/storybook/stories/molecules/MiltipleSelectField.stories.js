@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { IntlProvider } from 'react-intl';
-import MultipleSelectField from '../../../src/components/atoms/MultipleSelectField';
+import MultipleSelectField from '../../../src/components/molecules/MultipleSelectField';
 import { DocContainer, DocHighlight } from '../../utils/storyStyles';
 import Typography from '../../../src/components/atoms/Typography';
 
 const options = {
-  title: 'Atoms/Multiple Select Field',
+  title: 'Molecules/Multiple Select Field',
   component: MultipleSelectField,
   argTypes: {
     variant: {
@@ -87,23 +87,23 @@ const PlaygroundTemplate = ({ ...rest }) => {
   const menuItems = [
     {
       label: 'table_openstreetmap_pointsofinterest',
-      value: '10Long'
+      value: 'table_openstreetmap_pointsofinterest'
     },
     {
       label: 'Twenty',
-      value: '20'
+      value: 'Twenty'
     },
     {
       label: 'Thirty',
-      value: '30'
+      value: 'Thirty'
     },
     {
       label: 'Forty',
-      value: '40'
+      value: 'Forty'
     },
     {
       label: 'Fifty',
-      value: '50'
+      value: 'Fifty'
     }
   ];
 
@@ -128,7 +128,7 @@ const DocTemplate = () => {
       <Typography mt={2}>
         So, instead of <i>{'<Select multiple />'}</i>, you should use this one:
         <DocHighlight component='span'>
-          react-ui/src/components/atoms/MultipleSelectField
+          react-ui/src/components/molecules/MultipleSelectField
         </DocHighlight>
       </Typography>
       <Typography mt={2}>

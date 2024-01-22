@@ -11,8 +11,8 @@ import {
   Tooltip,
   styled
 } from '@mui/material';
-import SelectField from './SelectField';
-import Typography from './Typography';
+import SelectField from '../atoms/SelectField';
+import Typography from '../atoms/Typography';
 
 const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   '&.Mui-disabled': {
