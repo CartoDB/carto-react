@@ -47,6 +47,7 @@ const MultipleSelectField = forwardRef(
       showFilters,
       onChange,
       selectAllDisabled,
+      tooltipPlacement,
       ...props
     },
     ref
@@ -207,7 +208,11 @@ const MultipleSelectField = forwardRef(
             </StyledMenuItem>
           );
           const content = option.tooltip ? (
-            <Tooltip key={option.value} title={option.tooltip}>
+            <Tooltip
+              key={option.value}
+              title={option.tooltip}
+              placement={tooltipPlacement}
+            >
               {item}
             </Tooltip>
           ) : (
@@ -238,7 +243,8 @@ MultipleSelectField.propTypes = {
   selectAllDisabled: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   showCounter: PropTypes.bool,
-  showFilters: PropTypes.bool
+  showFilters: PropTypes.bool,
+  tooltipPlacement: PropTypes.oneOf(['top', 'right', 'bottom', 'left'])
 };
 
 export default MultipleSelectField;

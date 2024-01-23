@@ -86,8 +86,8 @@ const PlaygroundTemplate = ({ ...rest }) => {
 
   const menuItems = [
     {
-      label: 'table_openstreetmap_pointsofinterest',
-      value: 'table_openstreetmap_pointsofinterest'
+      label: 'table_openstreetmap',
+      value: 'table_openstreetmap'
     },
     {
       label: 'Twenty',
@@ -149,27 +149,40 @@ const DisabledWithTooltipTemplate = ({ ...rest }) => {
 
   const menuItems = [
     {
-      label: 'table_openstreetmap_pointsofinterest',
-      value: '10Long'
+      label: 'table_openstreetmapt',
+      value: 'table_openstreetmapt'
     },
     {
       label: 'Twenty',
-      value: '20'
+      value: 'Twenty'
     },
     {
       label: 'Thirty',
-      value: '30',
-
+      value: 'Thirty',
       disabled: true,
       tooltip: 'This item is disabled'
     },
     {
       label: 'Forty',
-      value: '40'
+      value: 'Forty'
     },
     {
       label: 'Fifty',
-      value: '50'
+      value: 'Fifty'
+    },
+    {
+      label: 'Sixty',
+      value: 'Sixty',
+      disabled: true,
+      tooltip: 'This item is disabled'
+    },
+    {
+      label: 'Seventy',
+      value: 'Seventy'
+    },
+    {
+      label: 'Eighty',
+      value: 'Eighty'
     }
   ];
 
@@ -207,3 +220,6 @@ WithoutFilters.args = { ...commonArgs, showFilters: false };
 
 export const ItemDisabledWithTooltip = DisabledWithTooltipTemplate.bind({});
 ItemDisabledWithTooltip.args = { ...commonArgs };
+
+export const TooltipPlacement = DisabledWithTooltipTemplate.bind({});
+TooltipPlacement.args = { ...commonArgs, tooltipPlacement: 'bottom' };
