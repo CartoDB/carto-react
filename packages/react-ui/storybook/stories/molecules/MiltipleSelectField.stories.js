@@ -15,7 +15,7 @@ const options = {
       }
     },
     showFilters: {
-      defaultValue: false,
+      defaultValue: true,
       control: {
         type: 'boolean'
       }
@@ -199,8 +199,11 @@ export const Guide = DocTemplate.bind({});
 export const Counter = PlaygroundTemplate.bind({});
 Counter.args = { ...commonArgs, showCounter: true };
 
-export const Filters = PlaygroundTemplate.bind({});
-Filters.args = { ...commonArgs, showFilters: true };
+export const selectAllDisabled = PlaygroundTemplate.bind({});
+selectAllDisabled.args = { ...commonArgs, selectAllDisabled: true };
 
-export const DisabledWithTooltip = DisabledWithTooltipTemplate.bind({});
-DisabledWithTooltip.args = { ...commonArgs };
+export const WithoutFilters = PlaygroundTemplate.bind({});
+WithoutFilters.args = { ...commonArgs, showFilters: false };
+
+export const ItemDisabledWithTooltip = DisabledWithTooltipTemplate.bind({});
+ItemDisabledWithTooltip.args = { ...commonArgs };
