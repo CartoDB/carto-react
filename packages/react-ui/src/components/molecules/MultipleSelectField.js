@@ -165,7 +165,7 @@ const MultipleSelectField = forwardRef(
         onChange={handleChange}
         size={size}
         labelSecondary={
-          showFilters && (
+          showFilters ? (
             <Filters>
               <LinkFilter
                 variant='caption'
@@ -189,7 +189,7 @@ const MultipleSelectField = forwardRef(
                 })}
               </LinkFilter>
             </Filters>
-          )
+          ) : undefined
         }
       >
         {options?.map((option) => {
