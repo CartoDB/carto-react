@@ -88,8 +88,6 @@ export default options;
 const PlaygroundTemplate = ({ ...rest }) => {
   const [selectedLayerNames, setLayerNames] = useState([]);
 
-  const layerNames = selectedLayerNames || [];
-
   const menuItems = [
     {
       label: 'table_openstreetmap',
@@ -118,9 +116,8 @@ const PlaygroundTemplate = ({ ...rest }) => {
       <MultipleSelectField
         {...rest}
         options={menuItems}
-        selectedOptions={layerNames}
+        selectedOptions={selectedLayerNames}
         onChange={setLayerNames}
-        value={layerNames}
       />
     </IntlProvider>
   );
@@ -150,8 +147,6 @@ const DocTemplate = () => {
 
 const DisabledWithTooltipTemplate = ({ ...rest }) => {
   const [selectedLayerNames, setLayerNames] = useState([]);
-
-  const layerNames = selectedLayerNames || [];
 
   const menuItems = [
     {
@@ -197,9 +192,8 @@ const DisabledWithTooltipTemplate = ({ ...rest }) => {
       <MultipleSelectField
         {...rest}
         options={menuItems}
-        selectedOptions={layerNames}
+        selectedOptions={selectedLayerNames}
         onChange={setLayerNames}
-        value={layerNames}
       />
     </IntlProvider>
   );
