@@ -1,5 +1,6 @@
 import React from 'react';
 import { SelectFieldProps } from '../atoms/SelectField';
+import { SelectProps } from '@mui/material';
 
 type MultipleSelectFieldOption = {
   label: string | React.ReactNode;
@@ -8,8 +9,8 @@ type MultipleSelectFieldOption = {
   tooltip?: string | false;
 };
 
-export type MultipleSelectFieldProps = Omit<
-  SelectFieldProps,
+export type MultipleSelectFieldProps<Value = unknown> = Omit<
+  SelectFieldProps<Value>,
   'onChange' | 'defaultValue' | 'value'
 > & {
   options: MultipleSelectFieldOption[];
@@ -18,7 +19,10 @@ export type MultipleSelectFieldProps = Omit<
   onChange: (options: string[]) => void;
   showCounter?: boolean;
   showFilters?: boolean;
+  value?: string[] | string;
 };
 
-declare const MultipleSelectField: (props: MultipleSelectFieldProps) => JSX.Element;
+declare const MultipleSelectField: <Value>(
+  props: MultipleSelectFieldProps<Value>
+) => JSX.Element;
 export default MultipleSelectField;
