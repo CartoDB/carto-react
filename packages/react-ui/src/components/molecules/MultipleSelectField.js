@@ -221,7 +221,8 @@ const MultipleSelectField = forwardRef(
 );
 
 MultipleSelectField.defaultProps = {
-  size: 'small'
+  size: 'small',
+  showFilters: true
 };
 
 MultipleSelectField.propTypes = {
