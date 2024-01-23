@@ -38,6 +38,12 @@ const options = {
         options: ['small', 'medium']
       }
     },
+    tooltipPlacement: {
+      control: {
+        type: 'select',
+        options: ['top', 'right', 'bottom', 'left']
+      }
+    },
     required: {
       defaultValue: false,
       control: {
