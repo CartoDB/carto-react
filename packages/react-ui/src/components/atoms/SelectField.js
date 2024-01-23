@@ -81,7 +81,7 @@ const SelectField = forwardRef(
             </InputLabel>
           )}
           {labelSecondary && (
-            <Box display='flex' alignItems='center' ml={2}>
+            <Box display='flex' alignItems='center' ml={2} mb={0.5}>
               {labelSecondary}
             </Box>
           )}

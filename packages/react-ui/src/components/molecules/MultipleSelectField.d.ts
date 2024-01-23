@@ -1,6 +1,5 @@
 import React from 'react';
 import { SelectFieldProps } from '../atoms/SelectField';
-import { SelectProps } from '@mui/material';
 
 type MultipleSelectFieldOption = {
   label: string | React.ReactNode;

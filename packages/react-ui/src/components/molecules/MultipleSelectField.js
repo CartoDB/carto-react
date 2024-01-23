@@ -29,12 +29,11 @@ const Filters = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   gap: theme.spacing(0.5),
   marginLeft: 'auto',
-  marginBottom: theme.spacing(0.5),
   pointerEvents: 'auto'
 }));
 
 const LinkFilter = styled(Link)(({ disabled, theme }) => ({
-  ...(disabled && { pointerEvents: 'none', color: theme.palette.text.secondary })
+  ...(disabled && { pointerEvents: 'none', color: theme.palette.text.disabled })
 }));
 
 const MultipleSelectField = forwardRef(
@@ -161,6 +160,7 @@ const MultipleSelectField = forwardRef(
         multiple
         displayEmpty
         placeholder={placeholder}
+        value={currentOptions}
         renderValue={() => renderValue}
         onChange={handleChange}
         size={size}
@@ -175,8 +175,8 @@ const MultipleSelectField = forwardRef(
               >
                 {intlConfig.formatMessage({ id: 'c4r.form.selectAll' })}
               </LinkFilter>
-              <Typography variant='caption' color='textSecondary'>
-                ·
+              <Typography variant='caption' weight='strong' color='text.hint'>
+                •
               </Typography>
               <LinkFilter
                 variant='caption'
