@@ -6,16 +6,16 @@ const options = {
   title: 'Molecules/Autocomplete',
   component: Autocomplete,
   argTypes: {
+    size: {
+      control: {
+        type: 'select',
+        options: ['small', 'medium']
+      }
+    },
     variant: {
       control: {
         type: 'select',
-        options: ['standard', 'filled', 'outlined']
-      }
-    },
-    color: {
-      control: {
-        type: 'select',
-        options: ['default', 'primary', 'secondary']
+        options: ['filled', 'outlined']
       }
     },
     required: {
@@ -35,7 +35,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A26505'
     },
     status: {
-      type: 'needsUpdate'
+      type: 'readyToReview'
     }
   }
 };
@@ -83,12 +83,13 @@ const AutocompleteTemplate = ({ disabled, size, ...args }) => {
       <Grid item container spacing={2}>
         <Grid item xs={6}>
           <Autocomplete
+            {...args}
             id='combo-box-demo'
             options={top100Films}
             getOptionLabel={(option) => option.title}
             disabled={disabled}
             renderInput={(params) => (
-              <TextField {...args} {...params} size={size} label='Basic autocomplete' />
+              <TextField {...params} size={size} label='Basic autocomplete' />
             )}
             size={size}
           />

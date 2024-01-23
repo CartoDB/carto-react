@@ -1,6 +1,7 @@
 import React from 'react';
 import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE } from '../../themeConstants';
 import ArrowDropIcon from '../../../assets/icons/ArrowDropIcon';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const switchSizeS = 2;
 const switchSizeM = 3;
@@ -517,7 +518,9 @@ export const formsOverrides = {
   // Autocomplete
   MuiAutocomplete: {
     defaultProps: {
-      popupIcon: <ArrowDropIcon />
+      size: 'small',
+      popupIcon: <ArrowDropIcon />,
+      clearIcon: <CancelIcon />
     },
 
     styleOverrides: {
