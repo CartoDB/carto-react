@@ -520,7 +520,8 @@ export const formsOverrides = {
     defaultProps: {
       size: 'small',
       popupIcon: <ArrowDropIcon />,
-      clearIcon: <CancelIcon />
+      clearIcon: <CancelIcon />,
+      ChipProps: { size: 'small', color: 'default' }
     },
 
     styleOverrides: {
