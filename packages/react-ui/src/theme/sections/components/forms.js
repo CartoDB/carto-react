@@ -247,7 +247,7 @@ export const formsOverrides = {
           },
           '&.Mui-readOnly': {
             '&.Mui-focused': {
-              backgroundColor: theme.palette.background.default
+              backgroundColor: theme.palette.default.background
             }
           }
         },
@@ -265,10 +265,10 @@ export const formsOverrides = {
             backgroundColor: theme.palette.default.background
           },
           '&.Mui-readOnly': {
-            backgroundColor: theme.palette.background.default,
+            backgroundColor: theme.palette.default.background,
 
             '&.Mui-focused': {
-              backgroundColor: theme.palette.background.default
+              backgroundColor: theme.palette.default.background
             }
           },
           '& .MuiOutlinedInput-notchedOutline': {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectFieldProps } from '../atoms/SelectField';
+import { SelectFieldProps } from '../../atoms/SelectField';
 import { TooltipProps } from '@mui/material';
 
 type MultipleSelectFieldOption = {

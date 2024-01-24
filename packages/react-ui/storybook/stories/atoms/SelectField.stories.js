@@ -515,7 +515,7 @@ const MultipleTemplate = ({ label, placeholder, helperText, size, ...rest }) => 
       }
     >
       We have a specific
-      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/molecules/MultipleSelectField.js'>
+      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/molecules/MultipleSelectField/MultipleSelectField.js'>
         MultipleSelectField
       </DocLink>
       component to handle this functionality, check the associated story.

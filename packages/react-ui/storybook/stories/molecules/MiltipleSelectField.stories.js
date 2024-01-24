@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IntlProvider } from 'react-intl';
-import MultipleSelectField from '../../../src/components/molecules/MultipleSelectField';
+import MultipleSelectField from '../../../src/components/molecules/MultipleSelectField/MultipleSelectField';
 import { DocContainer, DocHighlight } from '../../utils/storyStyles';
 import Typography from '../../../src/components/atoms/Typography';
 
@@ -150,8 +150,8 @@ const DisabledWithTooltipTemplate = ({ ...rest }) => {
 
   const menuItems = [
     {
-      label: 'table_openstreetmapt',
-      value: 'table_openstreetmapt'
+      label: 'table_openstreetmap',
+      value: 'table_openstreetmap'
     },
     {
       label: 'Twenty',
