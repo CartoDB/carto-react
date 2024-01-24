@@ -1,5 +1,6 @@
 import React from 'react';
-import { SelectFieldProps } from '../atoms/SelectField';
+import { SelectFieldProps } from '../../atoms/SelectField';
+import { TooltipProps } from '@mui/material';
 
 type MultipleSelectFieldOption = {
   label: string | React.ReactNode;
@@ -19,6 +20,7 @@ export type MultipleSelectFieldProps<Value = unknown> = Omit<
   showCounter?: boolean;
   showFilters?: boolean;
   value?: string[] | string;
+  tooltipPlacement?: TooltipProps['placement'];
 };
 
 declare const MultipleSelectField: <Value>(

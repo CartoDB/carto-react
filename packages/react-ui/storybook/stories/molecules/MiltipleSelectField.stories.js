@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IntlProvider } from 'react-intl';
-import MultipleSelectField from '../../../src/components/molecules/MultipleSelectField';
+import MultipleSelectField from '../../../src/components/molecules/MultipleSelectField/MultipleSelectField';
 import { DocContainer, DocHighlight } from '../../utils/storyStyles';
 import Typography from '../../../src/components/atoms/Typography';
 
@@ -36,6 +36,12 @@ const options = {
       control: {
         type: 'select',
         options: ['small', 'medium']
+      }
+    },
+    tooltipPlacement: {
+      control: {
+        type: 'select',
+        options: ['top', 'right', 'bottom', 'left']
       }
     },
     required: {
@@ -82,12 +88,10 @@ export default options;
 const PlaygroundTemplate = ({ ...rest }) => {
   const [selectedLayerNames, setLayerNames] = useState([]);
 
-  const layerNames = selectedLayerNames || [];
-
   const menuItems = [
     {
-      label: 'table_openstreetmap_pointsofinterest',
-      value: 'table_openstreetmap_pointsofinterest'
+      label: 'table_openstreetmap',
+      value: 'table_openstreetmap'
     },
     {
       label: 'Twenty',
@@ -112,9 +116,8 @@ const PlaygroundTemplate = ({ ...rest }) => {
       <MultipleSelectField
         {...rest}
         options={menuItems}
-        selectedOptions={layerNames}
+        selectedOptions={selectedLayerNames}
         onChange={setLayerNames}
-        value={layerNames}
       />
     </IntlProvider>
   );
@@ -145,31 +148,42 @@ const DocTemplate = () => {
 const DisabledWithTooltipTemplate = ({ ...rest }) => {
   const [selectedLayerNames, setLayerNames] = useState([]);
 
-  const layerNames = selectedLayerNames || [];
-
   const menuItems = [
     {
-      label: 'table_openstreetmap_pointsofinterest',
-      value: '10Long'
+      label: 'table_openstreetmap',
+      value: 'table_openstreetmap'
     },
     {
       label: 'Twenty',
-      value: '20'
+      value: 'Twenty'
     },
     {
       label: 'Thirty',
-      value: '30',
-
+      value: 'Thirty',
       disabled: true,
       tooltip: 'This item is disabled'
     },
     {
       label: 'Forty',
-      value: '40'
+      value: 'Forty'
     },
     {
       label: 'Fifty',
-      value: '50'
+      value: 'Fifty'
+    },
+    {
+      label: 'Sixty',
+      value: 'Sixty',
+      disabled: true,
+      tooltip: 'This item is disabled'
+    },
+    {
+      label: 'Seventy',
+      value: 'Seventy'
+    },
+    {
+      label: 'Eighty',
+      value: 'Eighty'
     }
   ];
 
@@ -178,9 +192,8 @@ const DisabledWithTooltipTemplate = ({ ...rest }) => {
       <MultipleSelectField
         {...rest}
         options={menuItems}
-        selectedOptions={layerNames}
+        selectedOptions={selectedLayerNames}
         onChange={setLayerNames}
-        value={layerNames}
       />
     </IntlProvider>
   );
@@ -207,3 +220,6 @@ WithoutFilters.args = { ...commonArgs, showFilters: false };
 
 export const ItemDisabledWithTooltip = DisabledWithTooltipTemplate.bind({});
 ItemDisabledWithTooltip.args = { ...commonArgs };
+
+export const TooltipPlacement = DisabledWithTooltipTemplate.bind({});
+TooltipPlacement.args = { ...commonArgs, tooltipPlacement: 'bottom' };

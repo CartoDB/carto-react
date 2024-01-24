@@ -34,7 +34,7 @@ import Button from './components/atoms/Button';
 import ToggleButtonGroup from './components/atoms/ToggleButtonGroup';
 import PasswordField from './components/atoms/PasswordField';
 import SelectField from './components/atoms/SelectField';
-import MultipleSelectField from './components/molecules/MultipleSelectField';
+import MultipleSelectField from './components/molecules/MultipleSelectField/MultipleSelectField';
 import UploadField from './components/molecules/UploadField/UploadField';
 import UploadFieldBase from './components/molecules/UploadField/UploadFieldBase';
 import AppBar from './components/organisms/AppBar/AppBar';
