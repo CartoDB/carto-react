@@ -20,6 +20,12 @@ const options = {
         options: ['small', 'medium']
       }
     },
+    multiple: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
     required: {
       defaultValue: false,
       control: {
@@ -92,15 +98,31 @@ const top100Films = [
   { title: 'The Lord of the Rings: The Two Towers', year: 2002 }
 ];
 
-const PlaygroundTemplate = ({ label, variant, placeholder, ...args }) => (
+const PlaygroundTemplate = ({
+  label,
+  variant,
+  placeholder,
+  error,
+  size,
+  required,
+  ...args
+}) => (
   <Autocomplete
     {...args}
     options={top100Films}
     getOptionLabel={(option) => option.title}
     renderInput={(params) => (
-      <TextField {...params} label={label} variant={variant} placeholder={placeholder} />
+      <TextField
+        {...params}
+        label={label}
+        placeholder={placeholder}
+        variant={variant}
+        error={error}
+        size={size}
+        required={required}
+      />
     )}
-    size='medium'
+    size={size}
   />
 );
 

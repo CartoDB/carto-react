@@ -521,46 +521,19 @@ export const formsOverrides = {
       size: 'small',
       popupIcon: <ArrowDropIcon />,
       clearIcon: <CancelIcon />,
-      ChipProps: { size: 'small', color: 'default' }
+      ChipProps: { color: 'default' }
     },
 
     styleOverrides: {
-      root: ({ theme }) => ({
-        '& .MuiInputBase-root .MuiAutocomplete-endAdornment': {
-          top: theme.spacing(1),
-          right: theme.spacing(1.5)
-        },
-        '& .MuiInputBase-sizeSmall .MuiAutocomplete-endAdornment': {
-          top: 0,
-          right: theme.spacing(0.75)
-        },
-        '& .MuiFormLabel-root': {
-          pointerEvents: 'auto'
-        }
+      root: ({ theme }) => ({}),
+
+      clearIndicator: ({ theme }) => ({
+        color: theme.palette.text.hint
       }),
 
-      inputRoot: () => ({
-        '&[class*="MuiOutlinedInput-root"]': {
-          '& .MuiAutocomplete-input': {
-            padding: 0
-          }
-        },
-        '& .MuiAutocomplete-popupIndicator:hover, & .MuiAutocomplete-popupIndicator:focus-visible':
-          {
-            backgroundColor: 'transparent'
-          }
-      }),
+      noOptions: ({ theme }) => ({}),
 
-      listbox: ({ theme }) => ({
-        '& .MuiAutocomplete-option': {
-          minHeight: theme.spacing(4),
-          padding: theme.spacing(0, 2)
-        }
-      }),
-
-      option: ({ theme }) => ({
-        ...theme.typography.body2
-      })
+      tag: ({ theme }) => ({})
     }
   },
 
