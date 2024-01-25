@@ -2,10 +2,13 @@
 
 ## Not released
 
-- TexField component: Add support for readOnly [#825](https://github.com/CartoDB/carto-react/pull/825
-- ToggleButtonGroup component: Add support for variant and backgroundColor [#824](https://github.com/CartoDB/carto-react/pull/824)
-
 ## 2.3
+
+### 2.3.8 (2024-01-25)
+
+- Multiple SelectField component: fix counter version [#826](https://github.com/CartoDB/carto-react/pull/826)
+- TexField component: Add support for readOnly [#826](https://github.com/CartoDB/carto-react/pull/825)
+- ToggleButtonGroup component: Add support for variant and backgroundColor [#824](https://github.com/CartoDB/carto-react/pull/824)
 
 ### 2.3.7 (2024-01-11)
 

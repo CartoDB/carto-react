@@ -508,14 +508,14 @@ const MultipleTemplate = ({ label, placeholder, helperText, size, ...rest }) => 
           color='inherit'
           variant='outlined'
           size='small'
-          href='/?path=/docs/atoms-multiple-select-field--playground'
+          href='/?path=/docs/molecules-multiple-select-field--playground'
         >
           MultipleSelectField story
         </Button>
       }
     >
       We have a specific
-      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/atoms/MultipleSelectField.js'>
+      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/molecules/MultipleSelectField/MultipleSelectField.js'>
         MultipleSelectField
       </DocLink>
       component to handle this functionality, check the associated story.
