@@ -38,6 +38,9 @@ import Typography, {
 } from './components/atoms/Typography';
 import Button, { ButtonProps } from './components/atoms/Button';
 import SelectField, { SelectFieldProps } from './components/atoms/SelectField';
+import MultipleSelectField, {
+  MultipleSelectFieldProps
+} from './components/molecules/MultipleSelectField/MultipleSelectField';
 import PasswordField, { PasswordFieldProps } from './components/atoms/PasswordField';
 import ToggleButtonGroup, {
   ToggleButtonGroupProps
@@ -110,6 +113,8 @@ export {
   PasswordFieldProps,
   SelectField,
   SelectFieldProps,
+  MultipleSelectField,
+  MultipleSelectFieldProps,
   UploadField,
   UploadFieldProps,
   UploadFieldBase,
