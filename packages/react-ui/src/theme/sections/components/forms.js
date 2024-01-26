@@ -177,7 +177,6 @@ export const formsOverrides = {
     styleOverrides: {
       root: ({ theme }) => ({
         height: theme.spacing(6),
-        padding: theme.spacing(0, 2),
         ...theme.typography.body1,
 
         '& input': {
@@ -205,7 +204,7 @@ export const formsOverrides = {
 
         // Variants
         '&.MuiFilledInput-root': {
-          padding: theme.spacing(0, 2),
+          padding: theme.spacing(1, 2),
           borderRadius: theme.spacing(0.5),
           backgroundColor: theme.palette.default.background,
 
@@ -226,7 +225,7 @@ export const formsOverrides = {
             border: '1px solid transparent'
           },
           '&.MuiInputBase-sizeSmall': {
-            padding: theme.spacing(0, 1.5)
+            padding: theme.spacing(0.5, 1.5)
           },
           '&.Mui-focused': {
             backgroundColor: theme.palette.background.paper,
@@ -254,10 +253,10 @@ export const formsOverrides = {
         },
 
         '&.MuiOutlinedInput-root': {
-          padding: theme.spacing(0, 2),
+          padding: theme.spacing(1, 2),
 
           '&.MuiInputBase-sizeSmall': {
-            padding: theme.spacing(0, 1.5)
+            padding: theme.spacing(0.5, 1.5)
           },
           '&.Mui-focused': {
             backgroundColor: theme.palette.background.paper
@@ -521,19 +520,134 @@ export const formsOverrides = {
       size: 'small',
       popupIcon: <ArrowDropIcon />,
       clearIcon: <CancelIcon />,
-      ChipProps: { color: 'default' }
+      ChipProps: { color: 'default' },
+      limitTags: 1,
+      componentsProps: {
+        popupIndicator: {
+          disabled: true
+        }
+      }
     },
 
     styleOverrides: {
-      root: ({ theme }) => ({}),
+      root: ({ ownerState, theme }) => ({
+        '.MuiInputBase-root': {
+          gap: theme.spacing(0.5),
+          height: 'auto',
+          minHeight: theme.spacing(6),
+          paddingRight: `${theme.spacing(5)} !important`,
 
-      clearIndicator: ({ theme }) => ({
-        color: theme.palette.text.hint
+          '.MuiInputBase-input': {
+            padding: '0 !important'
+          },
+
+          ...(ownerState.size === 'small' && {
+            minHeight: theme.spacing(4),
+            paddingRight: `${theme.spacing(4)} !important`
+          })
+        },
+        '&.MuiAutocomplete-hasClearIcon .MuiInputBase-root': {
+          paddingRight: `${theme.spacing(8.5)} !important`,
+
+          ...(ownerState.size === 'small' && {
+            paddingRight: `${theme.spacing(7)} !important`
+          })
+        },
+
+        // Variants
+        '.MuiFilledInput-root .MuiAutocomplete-tag': {
+          backgroundColor: 'transparent',
+          border: `1px solid ${theme.palette.default.main}`
+        }
       }),
 
-      noOptions: ({ theme }) => ({}),
+      endAdornment: ({ theme }) => ({
+        top: theme.spacing(2),
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        marginRight: theme.spacing(1),
 
-      tag: ({ theme }) => ({})
+        '.MuiAutocomplete-hasClearIcon &': {
+          top: '9px' // Non-standard value to meet with design
+        },
+
+        '.MuiInputBase-sizeSmall &': {
+          top: theme.spacing(0.5),
+          width: theme.spacing(3),
+          height: theme.spacing(3),
+          marginRight: theme.spacing(0.5)
+        }
+      }),
+
+      clearIndicator: ({ ownerState, theme }) => ({
+        marginRight: 0,
+        color: theme.palette.text.hint,
+
+        ...(ownerState.size === 'small' && {
+          width: theme.spacing(3),
+          height: theme.spacing(3)
+        })
+      }),
+
+      popupIndicator: ({ theme }) => ({
+        width: ICON_SIZE_MEDIUM,
+        height: ICON_SIZE_MEDIUM,
+
+        '&.Mui-disabled': {
+          color: theme.palette.text.secondary
+        }
+      }),
+
+      tag: ({ ownerState, theme }) => ({
+        margin: 0,
+
+        '&:not(.MuiButtonBase-root)': {
+          padding: theme.spacing(0.75, 1.5),
+          backgroundColor: theme.palette.default.main,
+          borderRadius: theme.spacing(2),
+          ...theme.typography.button,
+          fontWeight: theme.typography.fontWeightMedium,
+
+          ...(ownerState.size === 'small' && {
+            padding: theme.spacing(0.5, 1),
+            borderRadius: theme.spacing(1.5),
+            ...theme.typography.caption
+          })
+        },
+        '& + .MuiInputBase-input': {
+          marginLeft: theme.spacing(1)
+        }
+      }),
+
+      option: ({ theme }) => ({
+        minHeight: theme.spacing(4),
+        height: theme.spacing(4),
+        ...theme.typography.body2,
+        transition: 'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+
+        '&:hover': {
+          backgroundColor: theme.palette.action.hover
+        },
+        '&[aria-selected="true"]': {
+          color: theme.palette.primary.main,
+          backgroundColor: theme.palette.primary.background,
+
+          '&.Mui-focused:hover': {
+            backgroundColor: theme.palette.action.hover
+          }
+        }
+      }),
+
+      noOptions: ({ ownerState, theme }) => ({
+        padding: theme.spacing(2.5, 2),
+        ...theme.typography.body2,
+        color: theme.palette.text.secondary,
+
+        ...(ownerState.size === 'small' && {
+          padding: theme.spacing(2, 1.5)
+        })
+      })
     }
   },
 
