@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Export `Filter` type definitions from react-redux [#829](https://github.com/CartoDB/carto-react/pull/829)
+
 ## 2.3
 
 ### 2.3.8 (2024-01-25)
