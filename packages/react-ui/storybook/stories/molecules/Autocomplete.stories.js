@@ -1,6 +1,6 @@
-import { InfoOutlined } from '@mui/icons-material';
-import { Grid, InputAdornment, Autocomplete, TextField } from '@mui/material';
 import React from 'react';
+import { Grid, Autocomplete, TextField } from '@mui/material';
+
 import Typography from '../../../src/components/atoms/Typography';
 import { Container, Label } from '../../utils/storyStyles';
 
@@ -79,13 +79,6 @@ const options = {
 };
 export default options;
 
-const endAdornmentText = <InputAdornment position='end'>Kg</InputAdornment>;
-const endAdornmentIcon = (
-  <InputAdornment position='end'>
-    <InfoOutlined />
-  </InputAdornment>
-);
-
 const top100Films = [
   { title: 'The Shawshank Redemption', year: 1994 },
   { title: 'The Godfather', year: 1972 },
@@ -108,6 +101,7 @@ const PlaygroundTemplate = ({
   label,
   variant,
   placeholder,
+  helperText,
   error,
   size,
   required,
@@ -122,10 +116,12 @@ const PlaygroundTemplate = ({
         {...params}
         label={label}
         placeholder={placeholder}
+        helperText={helperText}
         variant={variant}
         error={error}
         size={size}
         required={required}
+        InputLabelProps={{ shrink: true }}
       />
     )}
     size={size}
@@ -134,8 +130,8 @@ const PlaygroundTemplate = ({
 
 const VariantsTemplate = ({
   label,
-  variant,
   placeholder,
+  helperText,
   error,
   size,
   required,
@@ -155,10 +151,12 @@ const VariantsTemplate = ({
                 {...params}
                 label={label}
                 placeholder={placeholder}
+                helperText={helperText}
                 variant='filled'
                 error={error}
                 size={size}
                 required={required}
+                InputLabelProps={{ shrink: true }}
               />
             )}
             size={size}
@@ -177,10 +175,12 @@ const VariantsTemplate = ({
                 {...params}
                 label={label}
                 placeholder={placeholder}
+                helperText={helperText}
                 variant='outlined'
                 error={error}
                 size={size}
                 required={required}
+                InputLabelProps={{ shrink: true }}
               />
             )}
             size={size}
@@ -208,62 +208,157 @@ const LabelAndHelperTextTemplate = ({
           <Label variant='body2'>{'Label + helper text'}</Label>
           <Autocomplete
             {...args}
-            label={label}
-            placeholder={placeholder}
-            helperText={helperText}
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant={variant}
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
           />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Without label + helper text'}</Label>
-          <Autocomplete {...args} placeholder={placeholder} />
+          <Autocomplete
+            {...args}
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant={variant}
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
+          />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only label'}</Label>
-          <Autocomplete {...args} label={label} placeholder={placeholder} />
+          <Autocomplete
+            {...args}
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                variant={variant}
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
+          />
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only helper text'}</Label>
-          <Autocomplete {...args} placeholder={placeholder} helperText={helperText} />
+          <Autocomplete
+            {...args}
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant={variant}
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
+          />
         </Container>
       </Grid>
     </Grid>
   );
 };
 
-const SuffixTemplate = ({
+const MultipleTemplate = ({
   label,
-  variant,
   placeholder,
   error,
   size,
   required,
+  helperText,
   ...args
 }) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
-          <Label variant='body2'>{'Suffix'}</Label>
+          <Label variant='body2'>{'Filled'}</Label>
           <Autocomplete
             {...args}
-            label={label}
-            placeholder={placeholder}
-            InputProps={{
-              endAdornment: endAdornmentText
-            }}
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='filled'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
+            multiple
           />
         </Container>
       </Grid>
       <Grid item>
         <Container>
-          <Label variant='body2'>{'None'}</Label>
-          <Autocomplete {...args} label={label} placeholder={placeholder} />
+          <Label variant='body2'>{'Outlined'}</Label>
+          <Autocomplete
+            {...args}
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='outlined'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
+            multiple
+          />
         </Container>
       </Grid>
     </Grid>
@@ -286,20 +381,46 @@ const SizeTemplate = ({
         <Grid item xs={2}>
           <Typography>Placeholder</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs>
           <Autocomplete
             {...args}
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='filled'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs>
           <Autocomplete
             {...args}
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='outlined'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
           />
         </Grid>
       </Grid>
@@ -308,11 +429,45 @@ const SizeTemplate = ({
         <Grid item xs={2}>
           <Typography>Empty</Typography>
         </Grid>
-        <Grid item>
-          <Autocomplete {...args} variant='filled' label={label} />
+        <Grid item xs>
+          <Autocomplete
+            {...args}
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                helperText={helperText}
+                variant='filled'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
+          />
         </Grid>
-        <Grid item>
-          <Autocomplete {...args} variant='outlined' label={label} />
+        <Grid item xs>
+          <Autocomplete
+            {...args}
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                helperText={helperText}
+                variant='outlined'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
+          />
         </Grid>
       </Grid>
 
@@ -320,20 +475,48 @@ const SizeTemplate = ({
         <Grid item xs={2}>
           <Typography>Filled</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs>
           <Autocomplete
             {...args}
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
+            options={top100Films}
+            defaultValue={top100Films[6]}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='filled'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs>
           <Autocomplete
             {...args}
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
+            options={top100Films}
+            defaultValue={top100Films[6]}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='outlined'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
           />
         </Grid>
       </Grid>
@@ -342,46 +525,48 @@ const SizeTemplate = ({
         <Grid item xs={2}>
           <Typography>Focused</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs>
           <Autocomplete
             {...args}
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
-            focused
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='filled'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+                focused
+              />
+            )}
+            size={size}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs>
           <Autocomplete
             {...args}
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            focused
-          />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Focused filled</Typography>
-        </Grid>
-        <Grid item>
-          <Autocomplete
-            {...args}
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
-            focused
-          />
-        </Grid>
-        <Grid item>
-          <Autocomplete
-            {...args}
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            focused
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='outlined'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+                focused
+              />
+            )}
+            size={size}
           />
         </Grid>
       </Grid>
@@ -390,45 +575,47 @@ const SizeTemplate = ({
         <Grid item xs={2}>
           <Typography>Disabled</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs>
           <Autocomplete
             {...args}
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='filled'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
             disabled
           />
         </Grid>
-        <Grid item>
+        <Grid item xs>
           <Autocomplete
             {...args}
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            disabled
-          />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Disabled filled</Typography>
-        </Grid>
-        <Grid item>
-          <Autocomplete
-            {...args}
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
-            disabled
-          />
-        </Grid>
-        <Grid item>
-          <Autocomplete
-            {...args}
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='outlined'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
             disabled
           />
         </Grid>
@@ -438,20 +625,50 @@ const SizeTemplate = ({
         <Grid item xs={2}>
           <Typography>Read Only</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs>
           <Autocomplete
             {...args}
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
+            options={top100Films}
+            defaultValue={top100Films[6]}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='filled'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
+            readOnly
           />
         </Grid>
-        <Grid item>
+        <Grid item xs>
           <Autocomplete
             {...args}
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
+            options={top100Films}
+            defaultValue={top100Films[6]}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='outlined'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
+            readOnly
           />
         </Grid>
       </Grid>
@@ -460,50 +677,46 @@ const SizeTemplate = ({
         <Grid item xs={2}>
           <Typography>Error</Typography>
         </Grid>
-        <Grid item>
+        <Grid item xs>
           <Autocomplete
             {...args}
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
-            helperText={helperText}
-            error
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='filled'
+                error
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs>
           <Autocomplete
             {...args}
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            helperText={helperText}
-            error
-          />
-        </Grid>
-      </Grid>
-
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Error filled</Typography>
-        </Grid>
-        <Grid item>
-          <Autocomplete
-            {...args}
-            variant='filled'
-            label={label}
-            placeholder={placeholder}
-            helperText={helperText}
-            error
-          />
-        </Grid>
-        <Grid item>
-          <Autocomplete
-            {...args}
-            variant='outlined'
-            label={label}
-            placeholder={placeholder}
-            helperText={helperText}
-            error
+            options={top100Films}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='outlined'
+                error
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
           />
         </Grid>
       </Grid>
@@ -523,6 +736,9 @@ const sizeArgs = {
 const disabledControlsVariantsArgTypes = {
   variant: { table: { disable: true } }
 };
+const disabledControlsMultipleArgTypes = {
+  multiple: { table: { disable: true } }
+};
 const disabledControlsSizeArgTypes = {
   variant: { table: { disable: true } },
   error: { table: { disable: true } },
@@ -536,11 +752,15 @@ export const Variants = VariantsTemplate.bind({});
 Variants.args = { ...commonArgs };
 Variants.argTypes = disabledControlsVariantsArgTypes;
 
-/* export const LabelAndHelperText = LabelAndHelperTextTemplate.bind({});
+export const LabelAndHelperText = LabelAndHelperTextTemplate.bind({});
 LabelAndHelperText.args = { ...commonArgs };
 
-export const Suffix = SuffixTemplate.bind({});
-Suffix.args = { ...commonArgs };
+export const Multiple = MultipleTemplate.bind({});
+Multiple.args = { ...commonArgs };
+Multiple.argTypes = {
+  ...disabledControlsVariantsArgTypes,
+  ...disabledControlsMultipleArgTypes
+};
 
 export const Medium = SizeTemplate.bind({});
 Medium.args = { ...commonArgs, ...sizeArgs, size: 'medium' };
@@ -548,4 +768,4 @@ Medium.argTypes = disabledControlsSizeArgTypes;
 
 export const Small = SizeTemplate.bind({});
 Small.args = { ...commonArgs, ...sizeArgs, size: 'small' };
-Small.argTypes = disabledControlsSizeArgTypes; */
+Small.argTypes = disabledControlsSizeArgTypes;
