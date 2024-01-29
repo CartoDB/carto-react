@@ -19,11 +19,12 @@ export const setGeocoderResult = (payload) => ({
  * @param  {object} props
  * @param  {Function=} [props.onError] - Function to handle error messages from the widget.
  * @param  {boolean} [props.allowSearchByCoords]
+ * @param  {string} [props.initialSearchText]
  */
 export default function useGeocoderWidgetController(props = {}) {
   const credentials = useSelector((state) => state.carto.credentials);
   // Component local state and events handling
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(props.initialSearchText || '');
   const [loading, setIsLoading] = useState(false);
 
   const { allowSearchByCoords } = props;
@@ -93,7 +94,6 @@ export default function useGeocoderWidgetController(props = {}) {
   return {
     loading,
     searchText,
-    setSearchText,
     handleChange,
     handleInput,
     handleKeyPress,
