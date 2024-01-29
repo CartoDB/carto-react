@@ -92,8 +92,8 @@ export default function useGeocoderWidgetController(props = {}) {
   };
 
   return {
-    loading,
     searchText,
+    loading,
     handleChange,
     handleInput,
     handleKeyPress,
