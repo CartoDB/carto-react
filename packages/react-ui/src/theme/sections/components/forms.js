@@ -568,19 +568,19 @@ export const formsOverrides = {
               pointerEvents: 'none'
             }
           },
-          '&.MuiAutocomplete-hasClearIcon .MuiInputBase-root': {
-            paddingRight: `${theme.spacing(8.5)} !important`,
-
-            ...(ownerState.size === 'small' && {
-              paddingRight: `${theme.spacing(7)} !important`
-            })
-          },
 
           // Variants
           '.MuiFilledInput-root .MuiAutocomplete-tag': {
             backgroundColor: 'transparent',
             border: `1px solid ${theme.palette.default.main}`
           }
+        },
+        '&.MuiAutocomplete-hasClearIcon .MuiFormControl-root .MuiInputBase-root': {
+          paddingRight: theme.spacing(8.5),
+
+          ...(ownerState.size === 'small' && {
+            paddingRight: theme.spacing(7)
+          })
         }
       }),
 
