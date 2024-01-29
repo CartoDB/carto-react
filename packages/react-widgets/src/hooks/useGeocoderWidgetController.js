@@ -8,7 +8,7 @@ import {
 
 const DEFAULT_COUNTRY = ''; // 'SPAIN', 'USA'
 
-const setGeocoderResult = (payload) => ({
+export const setGeocoderResult = (payload) => ({
   type: 'carto/setGeocoderResult',
   payload
 });
@@ -91,8 +91,9 @@ export default function useGeocoderWidgetController(props = {}) {
   };
 
   return {
-    searchText,
     loading,
+    searchText,
+    setSearchText,
     handleChange,
     handleInput,
     handleKeyPress,
