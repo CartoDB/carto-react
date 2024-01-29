@@ -541,9 +541,22 @@ export const formsOverrides = {
             padding: '0 !important'
           },
 
+          // Multiple
+          ...(ownerState.multiple === true && {
+            paddingLeft: `${theme.spacing(1)} !important`,
+
+            '.MuiInputBase-input': {
+              padding: '0 !important',
+              marginLeft: theme.spacing(1)
+            }
+          }),
           ...(ownerState.size === 'small' && {
             minHeight: theme.spacing(4),
-            paddingRight: `${theme.spacing(4)} !important`
+            paddingRight: `${theme.spacing(4)} !important`,
+
+            ...(ownerState.multiple === true && {
+              paddingLeft: `${theme.spacing(0.5)} !important`
+            })
           })
         },
         '&.MuiAutocomplete-hasClearIcon .MuiInputBase-root': {
@@ -569,7 +582,7 @@ export const formsOverrides = {
         marginRight: theme.spacing(1),
 
         '.MuiAutocomplete-hasClearIcon &': {
-          top: '9px' // Non-standard value to meet with design
+          top: theme.spacing(1)
         },
 
         '.MuiInputBase-sizeSmall &': {
@@ -614,9 +627,6 @@ export const formsOverrides = {
             borderRadius: theme.spacing(1.5),
             ...theme.typography.caption
           })
-        },
-        '& + .MuiInputBase-input': {
-          marginLeft: theme.spacing(1)
         }
       }),
 
