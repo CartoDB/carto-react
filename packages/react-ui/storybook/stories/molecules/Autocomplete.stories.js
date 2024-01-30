@@ -308,6 +308,15 @@ const MultipleTemplate = ({
   helperText,
   ...args
 }) => {
+  const defaultValue = [
+    top100Films[2],
+    top100Films[3],
+    top100Films[4],
+    top100Films[6],
+    top100Films[13],
+    top100Films[14]
+  ];
+
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
@@ -357,6 +366,60 @@ const MultipleTemplate = ({
             )}
             size={size}
             multiple
+          />
+        </Container>
+      </Grid>
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Filled readOnly'}</Label>
+          <Autocomplete
+            {...args}
+            options={top100Films}
+            defaultValue={defaultValue}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='filled'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
+            multiple
+            readOnly
+          />
+        </Container>
+      </Grid>
+      <Grid item>
+        <Container>
+          <Label variant='body2'>{'Outlined readOnly'}</Label>
+          <Autocomplete
+            {...args}
+            options={top100Films}
+            defaultValue={defaultValue}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={label}
+                placeholder={placeholder}
+                helperText={helperText}
+                variant='outlined'
+                error={error}
+                size={size}
+                required={required}
+                InputLabelProps={{ shrink: true }}
+              />
+            )}
+            size={size}
+            multiple
+            readOnly
           />
         </Container>
       </Grid>
