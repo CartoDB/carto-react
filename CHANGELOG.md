@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Initial value for Geocoder widget [#831](https://github.com/CartoDB/carto-react/pull/831)
+
 ## 2.3
 
 ### 2.3.8 (2024-01-25)
