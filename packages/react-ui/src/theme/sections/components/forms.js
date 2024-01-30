@@ -669,7 +669,6 @@ export const formsOverrides = {
       option: ({ ownerState, theme }) => ({
         '&.MuiAutocomplete-option': {
           minHeight: theme.spacing(4),
-          height: theme.spacing(4),
           padding: theme.spacing(0.5, 2),
           ...theme.typography.body2,
           transition: 'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
