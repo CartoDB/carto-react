@@ -101,12 +101,15 @@ const SelectField = forwardRef(
           }}
           MenuProps={{
             ...menuProps,
+            PopoverClasses: {
+              paper: isSmall ? 'MuiMenu-paper-sizeSmall' : undefined
+            },
             anchorOrigin: {
               vertical: 'bottom',
               horizontal: 'left'
             },
             transformOrigin: {
-              vertical: -4,
+              vertical: 0,
               horizontal: 'left'
             }
           }}

@@ -45,6 +45,10 @@ export const navigationOverrides = {
         },
         '& .MuiCheckbox-root, & > .MuiSvgIcon-root': {
           marginRight: theme.spacing(1)
+        },
+        '.MuiMenu-paper-sizeSmall &': {
+          paddingLeft: theme.spacing(1.5),
+          paddingRight: theme.spacing(1.5)
         }
       }),
       dense: ({ theme }) => ({

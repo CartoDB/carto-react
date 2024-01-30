@@ -188,6 +188,12 @@ export const formsOverrides = {
           '&::placeholder': {
             opacity: 1,
             color: theme.palette.text.hint
+          },
+          '&:read-only::placeholder': {
+            color: theme.palette.text.disabled
+          },
+          '&.Mui-disabled::placeholder': {
+            color: theme.palette.text.disabled
           }
         },
 
@@ -320,9 +326,12 @@ export const formsOverrides = {
             padding: theme.spacing(1.5, 1.75),
             ...theme.typography.body1,
 
-            '&::placeholder, &.Mui-disabled::placeholder': {
+            '&::placeholder': {
               opacity: 1,
               color: theme.palette.text.hint
+            },
+            '&.Mui-disabled::placeholder': {
+              color: theme.palette.text.disabled
             }
           },
 
@@ -446,6 +455,9 @@ export const formsOverrides = {
         '& .MuiSelect-icon': {
           right: theme.spacing(2),
           color: theme.palette.text.secondary
+        },
+        '&.Mui-disabled .MuiSelect-icon': {
+          color: theme.palette.text.disabled
         },
         '& .MuiSelect-iconStandard': {
           right: 0
@@ -620,8 +632,14 @@ export const formsOverrides = {
         width: ICON_SIZE_MEDIUM,
         height: ICON_SIZE_MEDIUM,
 
-        '&.Mui-disabled': {
+        '&.MuiButtonBase-root': {
           color: theme.palette.text.secondary
+        },
+        '.Mui-disabled &': {
+          color: theme.palette.text.disabled
+        },
+        'input:read-only + .MuiAutocomplete-endAdornment &': {
+          color: theme.palette.text.disabled
         }
       }),
 
@@ -642,7 +660,8 @@ export const formsOverrides = {
             height: theme.spacing(3),
             padding: theme.spacing(0, 1),
             borderRadius: theme.spacing(1.5),
-            ...theme.typography.caption
+            ...theme.typography.caption,
+            fontWeight: theme.typography.fontWeightMedium
           })
         }
       }),
