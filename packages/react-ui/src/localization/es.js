@@ -79,6 +79,10 @@ const locales = {
         clear: 'Limpiar',
         selectedItems: '{items, plural, one {# seleccionado} other {# seleccionados}}',
         allSelected: 'Todos seleccionados'
+      },
+      chartLegend: {
+        next: 'Página siguente',
+        prev: 'Página anterior'
       }
     }
   }

@@ -79,6 +79,10 @@ const locales = {
         clear: 'Clear',
         selectedItems: '{items, plural, one{# selected} other{# selected}}',
         allSelected: 'All'
+      },
+      chartLegend: {
+        next: 'Next page',
+        prev: 'Previous page'
       }
     }
   }

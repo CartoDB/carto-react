@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Box, styled, IconButton, useTheme } from '@mui/material';
+import { useIntl } from 'react-intl';
+
+import { Box, styled, IconButton, useTheme, Tooltip } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 
 import Typography from '../components/atoms/Typography';
+import useImperativeIntl from '../hooks/useImperativeIntl';
 
 const Legend = styled(Box)(({ theme }) => ({
   position: 'relative',
@@ -67,6 +70,9 @@ export default function ChartLegend({ series, selectedCategories, onCategoryClic
   const legendRef = useRef(null);
   const containerRef = useRef(null);
   const showMoreButtonsRef = useRef(null);
+
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
 
   const handleClickRight = () => {
     setOffset(offset + 1);
@@ -153,12 +159,20 @@ export default function ChartLegend({ series, selectedCategories, onCategoryClic
       {(overflowing || offset > 0) && (
         <ShowMoreButtons ref={showMoreButtonsRef}>
           <OverflowVeil />
-          <IconButton size='small' disabled={offset === 0} onClick={handleClickLeft}>
-            <ChevronLeft />
-          </IconButton>
-          <IconButton size='small' disabled={!overflowing} onClick={handleClickRight}>
-            <ChevronRight />
-          </IconButton>
+          <Tooltip
+            title={intlConfig.formatMessage({ id: 'c4r.widgets.chartLegend.next' })}
+          >
+            <IconButton size='small' disabled={offset === 0} onClick={handleClickLeft}>
+              <ChevronLeft />
+            </IconButton>
+          </Tooltip>
+          <Tooltip
+            title={intlConfig.formatMessage({ id: 'c4r.widgets.chartLegend.prev' })}
+          >
+            <IconButton size='small' disabled={!overflowing} onClick={handleClickRight}>
+              <ChevronRight />
+            </IconButton>
+          </Tooltip>
         </ShowMoreButtons>
       )}
     </Legend>
