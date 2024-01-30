@@ -1,4 +1,4 @@
-import { TILE_FORMATS } from '@deck.gl/carto/typed';
+import { TILE_FORMATS } from '@deck.gl/carto';
 import { Polygon, MultiPolygon } from 'geojson';
 import { TileFeaturesResponse } from '../types';
 

@@ -1,4 +1,4 @@
-import { TILE_FORMATS } from '@deck.gl/carto/typed';
+import { TILE_FORMATS } from '@deck.gl/carto';
 import { AggregationTypes } from './operations/constants/AggregationTypes';
 import { Polygon, MultiPolygon } from 'geojson';
 import { SpatialIndex } from './operations/constants/SpatialIndexTypes';

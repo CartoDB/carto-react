@@ -8,3 +8,5 @@ export { default as FeaturesDroppedLoader } from './hooks/FeaturesDroppedLoader'
 export { default as useCartoLayerProps } from './hooks/useCartoLayerProps';
 
 export { getDataFilterExtensionProps } from './hooks/dataFilterExtensionUtil';
+
+export { MAP_TYPES, API_VERSIONS } from './types';

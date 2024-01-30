@@ -1,6 +1,5 @@
 import { geocodeStreetPoint } from '../../src/models/GeocodingModel';
-import { API_VERSIONS } from '@deck.gl/carto';
-import { ldsGeocode, executeSQL } from '@carto/react-api/';
+import { ldsGeocode, executeSQL, API_VERSIONS } from '@carto/react-api/';
 
 const sampleCredentialsV2 = {
   apiVersion: API_VERSIONS.V2

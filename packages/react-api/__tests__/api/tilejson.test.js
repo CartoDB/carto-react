@@ -1,5 +1,5 @@
 import { getTileJson } from '../../src/api/tilejson';
-import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
+import { MAP_TYPES, API_VERSIONS } from '../../src/types';
 
 const mockedFetchLayerData = jest.fn();
 

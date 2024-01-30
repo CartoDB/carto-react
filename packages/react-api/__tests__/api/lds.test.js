@@ -1,5 +1,5 @@
-import { API_VERSIONS } from '@deck.gl/carto';
 import { ldsGeocode } from '../../src/api/lds';
+import { API_VERSIONS } from '../../src/types';
 
 const sampleCredentialsV3 = {
   apiVersion: API_VERSIONS.V3,
