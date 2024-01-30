@@ -238,7 +238,6 @@ const LabelAndHelperTextTemplate = ({
               <TextField
                 {...params}
                 placeholder={placeholder}
-                helperText={helperText}
                 variant={variant}
                 error={error}
                 size={size}
@@ -391,7 +390,6 @@ const SizeTemplate = ({
                 {...params}
                 label={label}
                 placeholder={placeholder}
-                helperText={helperText}
                 variant='filled'
                 error={error}
                 size={size}
@@ -412,7 +410,6 @@ const SizeTemplate = ({
                 {...params}
                 label={label}
                 placeholder={placeholder}
-                helperText={helperText}
                 variant='outlined'
                 error={error}
                 size={size}
@@ -438,7 +435,6 @@ const SizeTemplate = ({
               <TextField
                 {...params}
                 label={label}
-                helperText={helperText}
                 variant='filled'
                 error={error}
                 size={size}
@@ -458,7 +454,6 @@ const SizeTemplate = ({
               <TextField
                 {...params}
                 label={label}
-                helperText={helperText}
                 variant='outlined'
                 error={error}
                 size={size}
@@ -486,7 +481,6 @@ const SizeTemplate = ({
                 {...params}
                 label={label}
                 placeholder={placeholder}
-                helperText={helperText}
                 variant='filled'
                 error={error}
                 size={size}
@@ -508,7 +502,6 @@ const SizeTemplate = ({
                 {...params}
                 label={label}
                 placeholder={placeholder}
-                helperText={helperText}
                 variant='outlined'
                 error={error}
                 size={size}
@@ -535,7 +528,6 @@ const SizeTemplate = ({
                 {...params}
                 label={label}
                 placeholder={placeholder}
-                helperText={helperText}
                 variant='filled'
                 error={error}
                 size={size}
@@ -557,7 +549,6 @@ const SizeTemplate = ({
                 {...params}
                 label={label}
                 placeholder={placeholder}
-                helperText={helperText}
                 variant='outlined'
                 error={error}
                 size={size}
@@ -585,7 +576,6 @@ const SizeTemplate = ({
                 {...params}
                 label={label}
                 placeholder={placeholder}
-                helperText={helperText}
                 variant='filled'
                 error={error}
                 size={size}
@@ -607,7 +597,6 @@ const SizeTemplate = ({
                 {...params}
                 label={label}
                 placeholder={placeholder}
-                helperText={helperText}
                 variant='outlined'
                 error={error}
                 size={size}
@@ -636,7 +625,6 @@ const SizeTemplate = ({
                 {...params}
                 label={label}
                 placeholder={placeholder}
-                helperText={helperText}
                 variant='filled'
                 error={error}
                 size={size}
@@ -659,7 +647,6 @@ const SizeTemplate = ({
                 {...params}
                 label={label}
                 placeholder={placeholder}
-                helperText={helperText}
                 variant='outlined'
                 error={error}
                 size={size}
@@ -730,7 +717,7 @@ const commonArgs = {
   helperText: 'Helper text.'
 };
 const sizeArgs = {
-  helperText: 'This is a error message.'
+  helperText: 'This is an error message.'
 };
 
 const disabledControlsVariantsArgTypes = {

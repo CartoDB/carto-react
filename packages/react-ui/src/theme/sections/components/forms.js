@@ -526,6 +526,9 @@ export const formsOverrides = {
       componentsProps: {
         popupIndicator: {
           disabled: true
+        },
+        paper: {
+          elevation: 8
         }
       }
     },
