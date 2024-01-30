@@ -21,7 +21,10 @@ export {
 } from './models';
 export { default as useSourceFilters } from './hooks/useSourceFilters';
 export { default as FeatureSelectionLayer } from './layers/FeatureSelectionLayer';
-export { default as useGeocoderWidgetController } from './hooks/useGeocoderWidgetController';
+export {
+  default as useGeocoderWidgetController,
+  setGeocoderResult
+} from './hooks/useGeocoderWidgetController';
 export { WidgetStateType } from './hooks/useWidgetFetch';
 export {
   isRemoteCalculationSupported as _isRemoteCalculationSupported,
