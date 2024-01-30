@@ -32,7 +32,7 @@ type SpatialFilter = {
   geometry: object;
 };
 
-type Filter = FilterBasic & FilterCommonProps;
+export type Filter = FilterBasic & FilterCommonProps;
 
 
 type FeaturesData = {
