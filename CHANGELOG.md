@@ -2,7 +2,10 @@
 
 ## Not released
 
+
 - Initial value for Geocoder widget [#831](https://github.com/CartoDB/carto-react/pull/831)
+- Export `Filter` type definitions from react-redux [#829](https://github.com/CartoDB/carto-react/pull/829)
+
 
 ## 2.3
 
