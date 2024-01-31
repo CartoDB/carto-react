@@ -70,10 +70,10 @@ const options = {
   parameters: {
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A33807'
+      url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/C4R-Components?type=design&node-id=1534-26505'
     },
     status: {
-      type: 'readyToReview'
+      type: 'validated'
     }
   }
 };
