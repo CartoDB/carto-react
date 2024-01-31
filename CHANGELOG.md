@@ -4,6 +4,10 @@
 
 ## 2.3
 
+### 2.3.10 (2024-01-31)
+
+- New DS core component: Autocomplete [#828](https://github.com/CartoDB/carto-react/pull/828)
+
 ### 2.3.9 (2024-01-30)
 
 - Initial value for Geocoder widget [#831](https://github.com/CartoDB/carto-react/pull/831)

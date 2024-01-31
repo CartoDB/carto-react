@@ -358,7 +358,7 @@ export const dataDisplayOverrides = {
           }
         },
         '& .MuiChip-deleteIcon': {
-          color: theme.palette.black[60]
+          color: theme.palette.text.hint
         }
       }),
 

@@ -62,6 +62,7 @@ import {
   ICON_SIZE_MEDIUM,
   ICON_SIZE_LARGE
 } from './theme/themeConstants';
+import ArrowDropIcon from './assets/icons/ArrowDropIcon';
 import AccordionGroup, {
   AccordionGroupProps
 } from './components/molecules/AccordionGroup';
@@ -129,6 +130,7 @@ export {
   ICON_SIZE_SMALL,
   ICON_SIZE_MEDIUM,
   ICON_SIZE_LARGE,
+  ArrowDropIcon,
   AccordionGroup,
   AccordionGroupProps,
   Alert,
