@@ -599,7 +599,7 @@ const commonArgs = {
 };
 
 const sizeArgs = {
-  helperText: 'This is a error message.'
+  helperText: 'This is an error message.'
 };
 
 const disabledControlsArgTypes = {

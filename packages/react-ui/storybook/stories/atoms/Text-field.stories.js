@@ -833,7 +833,7 @@ const commonArgs = {
   helperText: 'Helper text.'
 };
 const sizeArgs = {
-  helperText: 'This is a error message.',
+  helperText: 'This is an error message.',
   defaultValue: 'Hello world'
 };
 
