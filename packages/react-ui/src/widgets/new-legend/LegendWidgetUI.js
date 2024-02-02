@@ -231,6 +231,21 @@ NewLegendWidgetUI.propTypes = {
 export default NewLegendWidgetUI;
 
 /**
+ * @param {object} props
+ * @param {number} props.minZoom - Global minimum zoom level for the map.
+ * @param {number} props.maxZoom - Global maximum zoom level for the map.
+ * @param {number} props.layerMinZoom - Layer minimum zoom level.
+ * @param {number} props.layerMaxZoom - Layer maximum zoom level.
+ * @returns {string}
+ */
+function getZoomHelperText({ minZoom, maxZoom, layerMinZoom, layerMaxZoom }) {
+  const maxZoomText = layerMaxZoom < maxZoom ? `lower than ${layerMaxZoom}` : '';
+  const minZoomText = layerMinZoom > minZoom ? `greater than ${layerMinZoom}` : '';
+  const texts = [maxZoomText, minZoomText].filter(Boolean).join(' and ');
+  return texts ? `Note: this layer will display at zoom levels ${texts}` : '';
+}
+
+/**
  * Receives configuration options, send change events and renders a legend item
  * @param {object} props
  * @param {import('../legend/LegendWidgetUI').LegendData} props.layer - Layer object from redux store.
@@ -267,6 +282,14 @@ export function LegendItem({
   const layerHasZoom = layer?.minZoom !== undefined || layer?.maxZoom !== undefined;
   const showZoomNote =
     layerHasZoom && (layer.minZoom > minZoom || layer.maxZoom < maxZoom);
+
+  const zoomHelperText = getZoomHelperText({
+    minZoom,
+    maxZoom,
+    layerMinZoom: layer.minZoom,
+    layerMaxZoom: layer.maxZoom
+  });
+  const helperText = layer.helperText ?? showZoomNote ? zoomHelperText : '';
 
   if (!layer) {
     return null;
@@ -340,11 +363,27 @@ export function LegendItem({
         )}
       </Box>
       <Collapse timeout={100} sx={styles.legendItemBody} in={isExpanded}>
-        {type === LEGEND_TYPES.CATEGORY && (
-          <LegendCategories layer={layer} legend={layer.legend} />
+        <Box pb={2}>
+          {type === LEGEND_TYPES.CATEGORY && (
+            <LegendCategories layer={layer} legend={layer.legend} />
+          )}
+          {type === LEGEND_TYPES.ICON && (
+            <LegendIcon layer={layer} legend={layer.legend} />
+          )}
+          {type === LEGEND_TYPES.BINS && (
+            <LegendRamp layer={layer} legend={layer.legend} />
+          )}
+        </Box>
+        {helperText && (
+          <Typography
+            variant='caption'
+            color='textSecondary'
+            component='p'
+            sx={{ py: 2 }}
+          >
+            {helperText}
+          </Typography>
         )}
-        {type === LEGEND_TYPES.ICON && <LegendIcon layer={layer} legend={layer.legend} />}
-        {type === LEGEND_TYPES.BINS && <LegendRamp layer={layer} legend={layer.legend} />}
       </Collapse>
     </Box>
   );
