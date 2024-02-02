@@ -18,7 +18,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import LayerIcon from '@mui/icons-material/LayersOutlined';
-import { useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 const EMPTY_OBJ = {};
 const EMPTY_FN = () => {};
@@ -195,6 +195,7 @@ function NewLegendWidgetUI({
             <LegendItem
               key={l.id}
               layer={l}
+              collapsed={collapsed}
               onChangeCollapsed={onChangeLegendRowCollapsed}
               onChangeOpacity={onChangeOpacity}
               onChangeVisibility={onChangeVisibility}
@@ -232,27 +233,13 @@ NewLegendWidgetUI.propTypes = {
 export default NewLegendWidgetUI;
 
 /**
- * @param {object} props
- * @param {number} props.minZoom - Global minimum zoom level for the map.
- * @param {number} props.maxZoom - Global maximum zoom level for the map.
- * @param {number} props.layerMinZoom - Layer minimum zoom level.
- * @param {number} props.layerMaxZoom - Layer maximum zoom level.
- * @returns {string}
- */
-function getZoomHelperText({ minZoom, maxZoom, layerMinZoom, layerMaxZoom }) {
-  const maxZoomText = layerMaxZoom < maxZoom ? `lower than ${layerMaxZoom}` : '';
-  const minZoomText = layerMinZoom > minZoom ? `greater than ${layerMinZoom}` : '';
-  const texts = [maxZoomText, minZoomText].filter(Boolean).join(' and ');
-  return texts ? `Note: this layer will display at zoom levels ${texts}` : '';
-}
-
-/**
  * Receives configuration options, send change events and renders a legend item
  * @param {object} props
  * @param {import('../legend/LegendWidgetUI').LegendData} props.layer - Layer object from redux store.
  * @param {({ id, collapsed }: { id: string, collapsed: boolean }) => void} props.onChangeCollapsed - Callback function for layer visibility change.
  * @param {({ id, opacity }: { id: string, opacity: number }) => void} props.onChangeOpacity - Callback function for layer opacity change.
  * @param {({ id, visible }: { id: string, visible: boolean }) => void} props.onChangeVisibility - Callback function for layer collapsed state change.
+ * @param {boolean} [props.collapsed] - Collapsed state for the whole legend.
  * @param {number} [props.maxZoom] - Global maximum zoom level for the map.
  * @param {number} [props.minZoom] - Global minimum zoom level for the map.
  * @returns {React.ReactNode}
@@ -262,6 +249,7 @@ export function LegendItem({
   onChangeCollapsed,
   onChangeOpacity,
   onChangeVisibility,
+  collapsed: legendCollapsed,
   maxZoom,
   minZoom
 }) {
@@ -317,17 +305,10 @@ export function LegendItem({
           </IconButton>
         )}
         <Box flexGrow={1} sx={{ minWidth: 0, flexShrink: 1 }}>
-          <Typography
-            color={visible ? 'textPrimary' : 'textSecondary'}
-            variant='button'
-            fontWeight={500}
-            lineHeight='20px'
-            component='p'
-            noWrap
-            sx={{ my: 0.25 }}
-          >
-            {layer.title}
-          </Typography>
+          <LegendItemTitle
+            visible={legendCollapsed ? false : visible}
+            title={layer.title}
+          />
           {showZoomNote && (
             <Typography
               color={visible ? 'textPrimary' : 'textSecondary'}
@@ -482,4 +463,58 @@ function OpacityControl({ menuRef, open, toggleOpen, opacity, onChange }) {
       </Popover>
     </>
   );
+}
+
+/**
+ * @param {object} props
+ * @param {number} props.minZoom - Global minimum zoom level for the map.
+ * @param {number} props.maxZoom - Global maximum zoom level for the map.
+ * @param {number} props.layerMinZoom - Layer minimum zoom level.
+ * @param {number} props.layerMaxZoom - Layer maximum zoom level.
+ * @returns {string}
+ */
+function getZoomHelperText({ minZoom, maxZoom, layerMinZoom, layerMaxZoom }) {
+  const maxZoomText = layerMaxZoom < maxZoom ? `lower than ${layerMaxZoom}` : '';
+  const minZoomText = layerMinZoom > minZoom ? `greater than ${layerMinZoom}` : '';
+  const texts = [maxZoomText, minZoomText].filter(Boolean).join(' and ');
+  return texts ? `Note: this layer will display at zoom levels ${texts}` : '';
+}
+
+/**
+ * @param {object} props
+ * @param {string} props.title
+ * @param {boolean} props.visible
+ * @returns {React.ReactNode}
+ */
+function LegendItemTitle({ title, visible }) {
+  const ref = useRef(null);
+  const [isOverflow, setIsOverflow] = useState(false);
+
+  useLayoutEffect(() => {
+    if (visible && ref.current) {
+      const { offsetWidth, scrollWidth } = ref.current;
+      setIsOverflow(offsetWidth < scrollWidth);
+    }
+  }, [title, visible]);
+
+  const element = (
+    <Typography
+      ref={ref}
+      color={visible ? 'textPrimary' : 'textSecondary'}
+      variant='button'
+      fontWeight={500}
+      lineHeight='20px'
+      component='p'
+      noWrap
+      sx={{ my: 0.25 }}
+    >
+      {title}
+    </Typography>
+  );
+
+  if (!isOverflow) {
+    return element;
+  }
+
+  return <Tooltip title={title}>{element}</Tooltip>;
 }
