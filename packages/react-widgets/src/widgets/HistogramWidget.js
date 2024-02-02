@@ -177,7 +177,7 @@ function HistogramWidget({
   );
 
   return (
-    <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
+    <WrapperWidgetUI id={id} title={title} {...wrapperProps} isLoading={isLoading}>
       <WidgetWithAlert
         dataSource={dataSource}
         warning={warning}

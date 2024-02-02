@@ -131,7 +131,7 @@ function RangeWidget({
   }, [column, dataSource, dispatch, hasMinMax, id, max, min, selectedValues]);
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
+    <WrapperWidgetUI id={id} title={title} isLoading={isLoading} {...wrapperProps}>
       <WidgetWithAlert
         dataSource={dataSource}
         warning={warning}

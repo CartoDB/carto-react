@@ -64,7 +64,7 @@ function FormulaWidget({
   const value = Number.isFinite(data?.value) ? data.value : undefined;
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
+    <WrapperWidgetUI id={id} title={title} isLoading={isLoading} {...wrapperProps}>
       <WidgetWithAlert
         dataSource={dataSource}
         warning={warning}

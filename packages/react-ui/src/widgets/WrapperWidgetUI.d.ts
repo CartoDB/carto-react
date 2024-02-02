@@ -26,6 +26,7 @@ export type WrapperWidgetOption = {
 
 export type WrapperWidgetUIProps = {
   title: string;
+  id?: string;
 
   expandable?: boolean;
   expanded?: boolean;

@@ -141,7 +141,7 @@ function BarWidget({
   );
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
+    <WrapperWidgetUI id={id} title={title} isLoading={isLoading} {...wrapperProps}>
       <WidgetWithAlert
         dataSource={dataSource}
         warning={warning}

@@ -409,6 +409,7 @@ function TimeSeriesWidget({
   return (
     <>
       <WrapperWidgetUI
+        id={id}
         title={title}
         isLoading={isLoading}
         {...wrapperProps}

@@ -189,7 +189,12 @@ function WrapperWidgetUI(props) {
   }
 
   return (
-    <Root margin={props.margin} component='section' aria-label={props.title}>
+    <Root
+      margin={props.margin}
+      component='section'
+      aria-label={props.title}
+      data-testid={props.id}
+    >
       {props.isLoading ? <LoadingBar /> : null}
       <Header container expanded={props.expanded}>
         <HeaderButton
