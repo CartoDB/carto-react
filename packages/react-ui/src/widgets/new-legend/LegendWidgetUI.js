@@ -20,6 +20,11 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import LayerIcon from '@mui/icons-material/LayersOutlined';
 import { useRef, useState } from 'react';
 
+const EMPTY_OBJ = {};
+const EMPTY_FN = () => {};
+const EMPTY_ARR = [];
+const LEGEND_WIDTH = 240;
+
 /**
  * Returns a number whose value is limited to the given range.
  *
@@ -87,7 +92,7 @@ export const styles = {
     gap: 2,
     alignItems: 'center',
     p: 1,
-    minWidth: 208
+    minWidth: LEGEND_WIDTH - 32
   },
   layerOptions: {
     background: (theme) => theme.palette.background.default,
@@ -117,10 +122,6 @@ export const styles = {
     right: 0
   }
 };
-
-const EMPTY_OBJ = {};
-const EMPTY_FN = () => {};
-const EMPTY_ARR = [];
 
 /**
  * @param {object} props
@@ -155,7 +156,7 @@ function NewLegendWidgetUI({
   const rootSx = {
     ...styles[position],
     position: 'absolute',
-    minWidth: collapsed ? undefined : 240,
+    width: collapsed ? undefined : LEGEND_WIDTH,
     maxHeight: 'calc(100% - 120px)',
     // height: collapsed ? undefined : '100%',
     background: '#fafafa',
@@ -315,13 +316,14 @@ export function LegendItem({
             {collapseIcon}
           </IconButton>
         )}
-        <Box flexGrow={1}>
+        <Box flexGrow={1} sx={{ minWidth: 0, flexShrink: 1 }}>
           <Typography
             color={visible ? 'textPrimary' : 'textSecondary'}
             variant='button'
             fontWeight={500}
             lineHeight='20px'
             component='p'
+            noWrap
             sx={{ my: 0.25 }}
           >
             {layer.title}
