@@ -304,6 +304,11 @@ function TimeSeriesWidgetUIContent({
     setTimeWindow([]);
     onSelectedCategoriesChange?.([]);
   };
+  const handleClearPress = (e) => {
+    if (e.keyCode === 13) {
+      handleClear();
+    }
+  };
 
   const handleCategoryClick = useCallback(
     (category) => {
@@ -340,6 +345,8 @@ function TimeSeriesWidgetUIContent({
           variant='caption'
           style={{ cursor: 'pointer' }}
           onClick={handleClear}
+          onKeyDown={handleClearPress}
+          tabIndex={0}
           underline='hover'
         >
           {intl.formatMessage({ id: 'c4r.widgets.timeSeries.clear' })}

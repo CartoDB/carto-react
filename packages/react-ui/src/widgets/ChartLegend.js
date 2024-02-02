@@ -82,6 +82,12 @@ export default function ChartLegend({ series, selectedCategories, onCategoryClic
     setOffset(Math.max(offset - 1));
   };
 
+  const onCategoryPress = (e, categoryName) => {
+    if (e.keyCode === 13) {
+      onCategoryClick(categoryName);
+    }
+  };
+
   const updateMaxWidth = useCallback(() => {
     const overflowing =
       containerRef.current &&
@@ -139,7 +145,11 @@ export default function ChartLegend({ series, selectedCategories, onCategoryClic
           return (
             <Item
               key={i}
+              tabIndex={0}
               onClick={onCategoryClick ? () => onCategoryClick(category.name) : undefined}
+              onKeyDown={
+                onCategoryClick ? (e) => onCategoryPress(e, category.name) : undefined
+              }
               style={{
                 pointerEvents:
                   !onCategoryClick || category.name === 'Others' ? 'none' : undefined
