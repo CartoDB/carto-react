@@ -15,7 +15,7 @@ import EyeIcon from '@mui/icons-material/VisibilityOutlined';
 import EyeOffIcon from '@mui/icons-material/VisibilityOffOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { styles } from './LegendWidgetUI.styles';
 
 const EMPTY_OBJ = {};
@@ -27,6 +27,7 @@ const EMPTY_OBJ = {};
  * @param {({ id, collapsed }: { id: string, collapsed: boolean }) => void} props.onChangeCollapsed - Callback function for layer visibility change.
  * @param {({ id, opacity }: { id: string, opacity: number }) => void} props.onChangeOpacity - Callback function for layer opacity change.
  * @param {({ id, visible }: { id: string, visible: boolean }) => void} props.onChangeVisibility - Callback function for layer collapsed state change.
+ * @param {({ id, selection }: { id: string, selection: unknown }) => void} props.onChangeSelection - Callback function for layer selection change.
  * @param {number} props.maxZoom - Global maximum zoom level for the map.
  * @param {number} props.minZoom - Global minimum zoom level for the map.
  * @param {number} props.currentZoom - Current zoom level for the map.
@@ -37,6 +38,7 @@ export default function LegendItem({
   onChangeCollapsed,
   onChangeOpacity,
   onChangeVisibility,
+  onChangeSelection,
   maxZoom,
   minZoom,
   currentZoom
@@ -50,6 +52,13 @@ export default function LegendItem({
   const collapsible = layer.collapsible ?? true;
   const opacity = layer.opacity ?? 1;
   const showOpacityControl = layer.showOpacityControl ?? true;
+
+  const legendItemVariables = useMemo(() => {
+    if (!layer.legend) {
+      return [];
+    }
+    return Array.isArray(layer.legend) ? layer.legend : [layer.legend];
+  }, [layer.legend]);
 
   const isExpanded = visible && !collapsed;
   const collapseIcon = isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />;
@@ -134,15 +143,14 @@ export default function LegendItem({
       </Box>
       <Collapse unmountOnExit timeout={100} sx={styles.legendItemBody} in={isExpanded}>
         <Box pb={2} opacity={outsideCurrentZoom ? 0.5 : 1}>
-          {type === LEGEND_TYPES.CATEGORY && (
-            <LegendCategories layer={layer} legend={layer.legend} />
-          )}
-          {type === LEGEND_TYPES.ICON && (
-            <LegendIcon layer={layer} legend={layer.legend} />
-          )}
-          {type === LEGEND_TYPES.BINS && (
-            <LegendRamp layer={layer} legend={layer.legend} />
-          )}
+          {legendItemVariables.map((legend) => (
+            <LegendItemVariable
+              key={legend.type}
+              legend={legend}
+              layer={layer}
+              onChangeSelection={(selection) => onChangeSelection({ id, selection })}
+            />
+          ))}
         </Box>
         {helperText && (
           <Typography
@@ -164,6 +172,7 @@ LegendItem.propTypes = {
   onChangeCollapsed: PropTypes.func.isRequired,
   onChangeOpacity: PropTypes.func.isRequired,
   onChangeVisibility: PropTypes.func.isRequired,
+  onChangeSelection: PropTypes.func.isRequired,
   maxZoom: PropTypes.number,
   minZoom: PropTypes.number,
   currentZoom: PropTypes.number
@@ -332,4 +341,33 @@ function LegendItemTitle({ title, visible }) {
   }
 
   return <Tooltip title={title}>{element}</Tooltip>;
+}
+
+/**
+ * @param {object} props
+ * @param {import('../legend/LegendWidgetUI').LegendData} props.layer - Layer object from redux store.
+ * @param {import('../legend/LegendWidgetUI').LegendItemData} props.legend - legend variable data.
+ * @param {({ id, selection }: { id: string, selection: unknown }) => void} props.onChangeSelection - Callback function for legend options change.
+ * @returns {React.ReactNode}
+ */
+function LegendItemVariable({ layer, legend, onChangeSelection }) {
+  const type = legend.type;
+
+  let typeComponent = null;
+  if (type === LEGEND_TYPES.CATEGORY) {
+    typeComponent = <LegendCategories layer={layer} legend={layer.legend} />;
+  }
+  if (type === LEGEND_TYPES.ICON) {
+    typeComponent = <LegendIcon layer={layer} legend={layer.legend} />;
+  }
+  if (type === LEGEND_TYPES.BINS) {
+    typeComponent = <LegendRamp layer={layer} legend={layer.legend} />;
+  }
+
+  return (
+    <>
+      <div id='legend-option-selector'></div>
+      {typeComponent}
+    </>
+  );
 }

@@ -34,11 +34,11 @@ export type LegendItemData = {
   select: LegendItemSelectConfig
 };
 
-export type LegendItemSelectConfig = {
+export type LegendItemSelectConfig<T = unknown> = {
   label: string;
-  value: string;
+  value: T;
   options: {
     label: string;
-    value: string;
+    value: T;
   }[];
 };
