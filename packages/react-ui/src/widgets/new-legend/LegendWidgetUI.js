@@ -36,6 +36,13 @@ const LEGEND_WIDTH = 240;
 const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
 
 export const styles = {
+  root: {
+    background: (theme) => theme.palette.background.paper,
+    position: 'absolute',
+    maxHeight: 'calc(100% - 120px)',
+    display: 'flex',
+    flexDirection: 'column'
+  },
   legendToggleOpen: {
     borderBottom: (theme) => `1px solid ${theme.palette.divider}`
   },
@@ -63,7 +70,8 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     position: 'sticky',
-    top: 0
+    top: 0,
+    background: (theme) => theme.palette.background.paper
   },
   legendItemBody: {
     px: 2
@@ -155,13 +163,8 @@ function NewLegendWidgetUI({
 } = {}) {
   const rootSx = {
     ...styles[position],
-    position: 'absolute',
-    width: collapsed ? undefined : LEGEND_WIDTH,
-    maxHeight: 'calc(100% - 120px)',
-    // height: collapsed ? undefined : '100%',
-    background: '#fafafa',
-    display: 'flex',
-    flexDirection: 'column'
+    ...styles.root,
+    width: collapsed ? undefined : LEGEND_WIDTH
   };
 
   return (
