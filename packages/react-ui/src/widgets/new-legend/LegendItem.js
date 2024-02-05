@@ -45,7 +45,6 @@ export default function LegendItem({
 }) {
   // layer legend defaults as defined here: https://docs.carto.com/carto-for-developers/carto-for-react/library-reference/widgets#legendwidget
   const id = layer?.id;
-  const type = layer?.legend?.type;
   const visible = layer?.visible ?? true;
   const switchable = layer.switchable ?? true;
   const collapsed = layer.collapsed ?? false;
@@ -114,10 +113,9 @@ export default function LegendItem({
             </Typography>
           )}
         </Box>
-        {showOpacityControl && (
+        {showOpacityControl && visible && (
           <OpacityControl
             menuRef={menuAnchorRef}
-            visible={visible}
             open={opacityOpen}
             toggleOpen={setOpacityOpen}
             opacity={opacity}
@@ -197,14 +195,13 @@ function clamp(val, min, max) {
 /**
  * @param {object} props
  * @param {React.MutableRefObject} props.menuRef - Ref object for the menu anchor
- * @param {boolean} props.visible - Visibility state of the layer
  * @param {boolean} props.open - Open state of the popover
  * @param {(open: boolean) => void} props.toggleOpen - Callback function for open state change
  * @param {number} props.opacity - Opacity value
  * @param {(opacity: number) => void} props.onChange - Callback function for opacity change
  * @returns {React.ReactNode}
  */
-function OpacityControl({ menuRef, visible, open, toggleOpen, opacity, onChange }) {
+function OpacityControl({ menuRef, open, toggleOpen, opacity, onChange }) {
   function handleTextFieldChange(e) {
     const newOpacity = parseInt(e.target.value || '0');
     const clamped = clamp(newOpacity, 0, 100);
@@ -216,7 +213,6 @@ function OpacityControl({ menuRef, visible, open, toggleOpen, opacity, onChange 
       <Tooltip title='Layer opacity'>
         <IconButton
           size='small'
-          disabled={!visible}
           aria-label='Toggle opacity control'
           color={open ? 'primary' : 'default'}
           onClick={() => toggleOpen(!open)}
