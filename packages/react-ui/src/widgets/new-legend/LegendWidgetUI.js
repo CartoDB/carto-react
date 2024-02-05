@@ -74,26 +74,26 @@ export const styles = {
     background: (theme) => theme.palette.background.paper
   },
   legendItemBody: {
-    px: 2
-    // '& [data-testid="categories-legend"] > .MuiGrid-root': {
-    //   paddingTop: '6px',
-    //   paddingBottom: '6px',
-    // },
-    // '& [data-testid="icon-legend"] > .MuiGrid-root': {
-    //   paddingTop: '2px',
-    //   paddingBottom: '2px',
-    //   '& > .MuiBox-root': {
-    //     width: '20px',
-    //     height: '20px',
-    //     marginRight: '8px',
-    //   },
-    //   '& img': {
-    //     display: 'block',
-    //     margin: 'auto',
-    //     width: 'auto',
-    //     height: '20px',
-    //   },
-    // },
+    px: 2,
+    '& [data-testid="categories-legend"] > .MuiGrid-root': {
+      paddingTop: '6px',
+      paddingBottom: '6px'
+    },
+    '& [data-testid="icon-legend"] > .MuiGrid-root': {
+      paddingTop: '2px',
+      paddingBottom: '2px',
+      '& > .MuiBox-root': {
+        width: '20px',
+        height: '20px',
+        marginRight: '8px'
+      },
+      '& img': {
+        display: 'block',
+        margin: 'auto',
+        width: 'auto',
+        height: '20px'
+      }
+    }
   },
   opacityControl: {
     display: 'flex',
@@ -145,6 +145,7 @@ export const styles = {
  * @param {'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'} [props.position] - Position of the widget.
  * @param {number} [props.maxZoom] - Global maximum zoom level for the map.
  * @param {number} [props.minZoom] - Global minimum zoom level for the map.
+ * @param {number} [props.currentZoom] - Current zoom level for the map.
  * @returns {React.ReactNode}
  */
 function NewLegendWidgetUI({
@@ -159,7 +160,8 @@ function NewLegendWidgetUI({
   title,
   position = 'bottom-right',
   maxZoom = 21,
-  minZoom = 0
+  minZoom = 0,
+  currentZoom
 } = {}) {
   const rootSx = {
     ...styles[position],
@@ -193,17 +195,17 @@ function NewLegendWidgetUI({
         </Box>
       )}
       <Box sx={{ ...styles.legendItemList, width: collapsed ? 0 : undefined }}>
-        <Collapse in={!collapsed} timeout={500}>
+        <Collapse unmountOnExit in={!collapsed} timeout={500}>
           {layers.map((l) => (
             <LegendItem
               key={l.id}
               layer={l}
-              collapsed={collapsed}
               onChangeCollapsed={onChangeLegendRowCollapsed}
               onChangeOpacity={onChangeOpacity}
               onChangeVisibility={onChangeVisibility}
               maxZoom={maxZoom}
               minZoom={minZoom}
+              currentZoom={currentZoom}
             />
           ))}
         </Collapse>
@@ -242,9 +244,9 @@ export default NewLegendWidgetUI;
  * @param {({ id, collapsed }: { id: string, collapsed: boolean }) => void} props.onChangeCollapsed - Callback function for layer visibility change.
  * @param {({ id, opacity }: { id: string, opacity: number }) => void} props.onChangeOpacity - Callback function for layer opacity change.
  * @param {({ id, visible }: { id: string, visible: boolean }) => void} props.onChangeVisibility - Callback function for layer collapsed state change.
- * @param {boolean} [props.collapsed] - Collapsed state for the whole legend.
  * @param {number} [props.maxZoom] - Global maximum zoom level for the map.
  * @param {number} [props.minZoom] - Global minimum zoom level for the map.
+ * @param {number} [props.currentZoom] - Current zoom level for the map.
  * @returns {React.ReactNode}
  */
 export function LegendItem({
@@ -252,9 +254,9 @@ export function LegendItem({
   onChangeCollapsed,
   onChangeOpacity,
   onChangeVisibility,
-  collapsed: legendCollapsed,
   maxZoom,
-  minZoom
+  minZoom,
+  currentZoom
 }) {
   // layer legend defaults as defined here: https://docs.carto.com/carto-for-developers/carto-for-react/library-reference/widgets#legendwidget
   const id = layer?.id;
@@ -274,6 +276,7 @@ export function LegendItem({
   const layerHasZoom = layer?.minZoom !== undefined || layer?.maxZoom !== undefined;
   const showZoomNote =
     layerHasZoom && (layer.minZoom > minZoom || layer.maxZoom < maxZoom);
+  const outsideCurrentZoom = currentZoom < layer.minZoom || currentZoom > layer.maxZoom;
 
   const zoomHelperText = getZoomHelperText({
     minZoom,
@@ -308,10 +311,7 @@ export function LegendItem({
           </IconButton>
         )}
         <Box flexGrow={1} sx={{ minWidth: 0, flexShrink: 1 }}>
-          <LegendItemTitle
-            visible={legendCollapsed ? false : visible}
-            title={layer.title}
-          />
+          <LegendItemTitle visible={visible} title={layer.title} />
           {showZoomNote && (
             <Typography
               color={visible ? 'textPrimary' : 'textSecondary'}
@@ -348,8 +348,8 @@ export function LegendItem({
           </Tooltip>
         )}
       </Box>
-      <Collapse timeout={100} sx={styles.legendItemBody} in={isExpanded}>
-        <Box pb={2}>
+      <Collapse unmountOnExit timeout={100} sx={styles.legendItemBody} in={isExpanded}>
+        <Box pb={2} opacity={outsideCurrentZoom ? 0.5 : 1}>
           {type === LEGEND_TYPES.CATEGORY && (
             <LegendCategories layer={layer} legend={layer.legend} />
           )}
