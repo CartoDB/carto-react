@@ -91,6 +91,7 @@ const Template = ({ ...args }) => {
       onChangeLegendRowCollapsed={(layer) => dispatch({ type: 'update', layer })}
       onChangeOpacity={(layer) => dispatch({ type: 'update', layer })}
       onChangeVisibility={(layer) => dispatch({ type: 'update', layer })}
+      currentZoom={13}
     />
   );
 };
