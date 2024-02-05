@@ -305,7 +305,7 @@ function TimeSeriesWidgetUIContent({
     onSelectedCategoriesChange?.([]);
   };
   const handleClearPress = (e) => {
-    if (e.keyCode === 13) {
+    if (e.key === 'Enter') {
       handleClear();
     }
   };

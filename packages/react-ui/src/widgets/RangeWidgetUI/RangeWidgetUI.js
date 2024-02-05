@@ -164,8 +164,8 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoadin
     changeSliderValues([min, max]);
   };
 
-  const onKeyDownHandler = (e) => {
-    if (e.key === 13) {
+  const handleClearPress = (e) => {
+    if (e.key === 'Enter') {
       resetSlider();
     }
   };
@@ -181,7 +181,7 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoadin
           <Typography variant='caption' color='primary'>
             <ClearButton
               onClick={resetSlider}
-              onKeyDown={onKeyDownHandler}
+              onKeyDown={handleClearPress}
               tabIndex={0}
               component='button'
               underline='hover'

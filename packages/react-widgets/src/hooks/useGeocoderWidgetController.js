@@ -43,7 +43,7 @@ export default function useGeocoderWidgetController(props = {}) {
   };
 
   const handleKeyPress = async (e) => {
-    if (e.keyCode === 13) {
+    if (e.key === 'Enter') {
       // Force blur to hide virtual keyboards on mobile and search
       e.target.blur();
     }

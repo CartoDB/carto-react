@@ -83,7 +83,7 @@ export default function ChartLegend({ series, selectedCategories, onCategoryClic
   };
 
   const onCategoryPress = (e, categoryName) => {
-    if (e.keyCode === 13) {
+    if (e.key === 'Enter') {
       onCategoryClick(categoryName);
     }
   };
