@@ -24,9 +24,11 @@ export const fixtures = [
   {
     id: 'basemap',
     title: 'Basemap',
+    collapsible: true,
+    switchable: false,
+    showOpacityControl: false,
     legend: {
       type: 'basemap',
-      collapsible: false,
       select: {
         label: 'Select basemap',
         value: 'light',

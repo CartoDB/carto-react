@@ -1,4 +1,4 @@
-import { Box, MenuItem, OutlinedInput, Select, Typography } from '@mui/material';
+import { Box, ListItemText, MenuItem, Select, Typography } from '@mui/material';
 import LegendCategories from '../legend/LegendCategories';
 import LegendIcon from '../legend/LegendIcon';
 import LegendRamp from '../legend/LegendRamp';
@@ -19,6 +19,10 @@ const legendTypeMap = {
  * @returns {React.ReactNode}
  */
 function LegendUnknown({ legend }) {
+  if (legend.select) {
+    return null;
+  }
+
   return (
     <Typography variant='body2' color='textSecondary' component='p'>
       Legend type {legend.type} not supported
@@ -48,14 +52,13 @@ export default function LegendLayerVariable({
     <>
       {legend.select ? (
         <Box>
-          <Typography variant='caption'>Basemap style</Typography>
+          <Typography variant='caption'>{legend.select.label}</Typography>
           <Select
             value={legend.select.value}
-            renderValue={() =>
-              selectOptions.find((opt) => opt.id === legend.select.value)?.label
+            renderValue={(value) =>
+              selectOptions.find((option) => option.value === value)?.label || value
             }
             onChange={(ev) => onChangeSelection(ev.target.value)}
-            input={<OutlinedInput />}
             MenuProps={{
               transformOrigin: { vertical: 'bottom', horizontal: 'left' },
               anchorOrigin: { vertical: 'top', horizontal: 'left' },
@@ -68,7 +71,7 @@ export default function LegendLayerVariable({
           >
             {selectOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>
-                {option.label}
+                <ListItemText primary={option.label} />
               </MenuItem>
             ))}
           </Select>

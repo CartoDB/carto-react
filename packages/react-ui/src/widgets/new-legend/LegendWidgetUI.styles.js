@@ -34,6 +34,7 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     position: 'sticky',
+    zIndex: 2,
     top: 0,
     background: (theme) => theme.palette.background.paper
   },
