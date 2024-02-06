@@ -202,6 +202,14 @@ export const formsOverrides = {
           }
         },
 
+        '&.Mui-disabled': {
+          cursor: 'not-allowed',
+
+          '& .Mui-disabled': {
+            cursor: 'not-allowed'
+          }
+        },
+
         '&.MuiInputBase-formControl::after': {
           top: 0,
           transform: 'none',
