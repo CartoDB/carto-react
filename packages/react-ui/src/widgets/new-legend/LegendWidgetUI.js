@@ -3,7 +3,7 @@ import { Box, Collapse, IconButton, Paper, Tooltip, Typography } from '@mui/mate
 import CloseIcon from '@mui/icons-material/Close';
 import LayerIcon from '@mui/icons-material/LayersOutlined';
 import { LEGEND_WIDTH, styles } from './LegendWidgetUI.styles';
-import LegendItem from './LegendItem';
+import LegendLayer from './LegendLayer';
 
 const EMPTY_OBJ = {};
 const EMPTY_FN = () => {};
@@ -12,7 +12,7 @@ const EMPTY_ARR = [];
 /**
  * @param {object} props
  * @param {Object.<string, import('../legend/LegendWidgetUI').CustomLegendComponent>} [props.customLegendTypes] - Allow to customise by default legend types that can be rendered.
- * @param {import('../legend/LegendWidgetUI').LegendLayer[]} [props.layers] - Array of layer objects from redux store.
+ * @param {import('../legend/LegendWidgetUI').LegendLayerData[]} [props.layers] - Array of layer objects from redux store.
  * @param {boolean} [props.collapsed] - Collapsed state for whole legend widget.
  * @param {(collapsed: boolean) => void} props.onChangeCollapsed - Callback function for collapsed state change.
  * @param {({ id, collapsed }: { id: string, collapsed: boolean }) => void} props.onChangeLegendRowCollapsed - Callback function for layer visibility change.
@@ -75,7 +75,7 @@ function NewLegendWidgetUI({
       <Box sx={{ ...styles.legendItemList, width: collapsed ? 0 : undefined }}>
         <Collapse unmountOnExit in={!collapsed} timeout={500}>
           {layers.map((l) => (
-            <LegendItem
+            <LegendLayer
               key={l.id}
               layer={l}
               onChangeCollapsed={onChangeLegendRowCollapsed}
