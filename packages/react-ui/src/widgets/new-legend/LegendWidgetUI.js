@@ -18,6 +18,7 @@ const EMPTY_ARR = [];
  * @param {({ id, collapsed }: { id: string, collapsed: boolean }) => void} props.onChangeLegendRowCollapsed - Callback function for layer visibility change.
  * @param {({ id, opacity }: { id: string, opacity: number }) => void} props.onChangeOpacity - Callback function for layer opacity change.
  * @param {({ id, visible }: { id: string, visible: boolean }) => void} props.onChangeVisibility - Callback function for layer collapsed state change.
+ * @param {({ id, index, selection }: { id: string, index: number, selection: unknown }) => void} props.onChangeSelection - Callback function for layer variable selection change.
  * @param {string[]} [props.layerOrder] - Array of layer identifiers. Defines the order of layer legends. [] by default.
  * @param {string} [props.title] - Title of the toggle button when widget is open.
  * @param {'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'} [props.position] - Position of the widget.
@@ -34,6 +35,7 @@ function NewLegendWidgetUI({
   onChangeVisibility = EMPTY_FN,
   onChangeOpacity = EMPTY_FN,
   onChangeLegendRowCollapsed = EMPTY_FN,
+  onChangeSelection = EMPTY_FN,
   layerOrder,
   title,
   position = 'bottom-right',
@@ -81,6 +83,7 @@ function NewLegendWidgetUI({
               onChangeCollapsed={onChangeLegendRowCollapsed}
               onChangeOpacity={onChangeOpacity}
               onChangeVisibility={onChangeVisibility}
+              onChangeSelection={onChangeSelection}
               maxZoom={maxZoom}
               minZoom={minZoom}
               currentZoom={currentZoom}
@@ -109,6 +112,7 @@ NewLegendWidgetUI.propTypes = {
   onChangeLegendRowCollapsed: PropTypes.func.isRequired,
   onChangeVisibility: PropTypes.func.isRequired,
   onChangeOpacity: PropTypes.func.isRequired,
+  onChangeSelection: PropTypes.func.isRequired,
   layerOrder: PropTypes.arrayOf(PropTypes.string),
   title: PropTypes.string,
   position: PropTypes.oneOf(['top-left', 'top-right', 'bottom-left', 'bottom-right'])

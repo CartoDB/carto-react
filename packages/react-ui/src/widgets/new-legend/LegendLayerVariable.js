@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, MenuItem, OutlinedInput, Select, Typography } from '@mui/material';
 import LegendCategories from '../legend/LegendCategories';
 import LegendIcon from '../legend/LegendIcon';
 import LegendRamp from '../legend/LegendRamp';
@@ -31,7 +31,7 @@ function LegendUnknown({ legend }) {
  * @param {import('../legend/LegendWidgetUI').LegendLayerData} props.layer - Layer object from redux store.
  * @param {import('../legend/LegendWidgetUI').LegendLayerVariableData} props.legend - legend variable data.
  * @param {Object.<string, import('../legend/LegendWidgetUI').CustomLegendComponent>} props.customLegendTypes - Map from legend type to legend component that allows to customise additional legend types that can be rendered.
- * @param {({ id, selection }: { id: string, selection: unknown }) => void} props.onChangeSelection - Callback function for legend options change.
+ * @param {(selection: unknown) => void} props.onChangeSelection - Callback function for legend options change.
  * @returns {React.ReactNode}
  */
 export default function LegendLayerVariable({
@@ -42,10 +42,38 @@ export default function LegendLayerVariable({
 }) {
   const type = legend.type;
   const TypeComponent = legendTypeMap[type] || customLegendTypes[type] || LegendUnknown;
+  const selectOptions = legend.select?.options || [];
 
   return (
     <>
-      <div id='legend-option-selector'></div>
+      {legend.select ? (
+        <Box>
+          <Typography variant='caption'>Basemap style</Typography>
+          <Select
+            value={legend.select.value}
+            renderValue={() =>
+              selectOptions.find((opt) => opt.id === legend.select.value)?.label
+            }
+            onChange={(ev) => onChangeSelection(ev.target.value)}
+            input={<OutlinedInput />}
+            MenuProps={{
+              transformOrigin: { vertical: 'bottom', horizontal: 'left' },
+              anchorOrigin: { vertical: 'top', horizontal: 'left' },
+              PaperProps: {
+                style: {
+                  maxHeight: 240
+                }
+              }
+            }}
+          >
+            {selectOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
+      ) : null}
       <TypeComponent layer={layer} legend={legend} />
     </>
   );

@@ -20,7 +20,7 @@ const EMPTY_OBJ = {};
  * @param {({ id, collapsed }: { id: string, collapsed: boolean }) => void} props.onChangeCollapsed - Callback function for layer visibility change.
  * @param {({ id, opacity }: { id: string, opacity: number }) => void} props.onChangeOpacity - Callback function for layer opacity change.
  * @param {({ id, visible }: { id: string, visible: boolean }) => void} props.onChangeVisibility - Callback function for layer collapsed state change.
- * @param {({ id, selection }: { id: string, selection: unknown }) => void} props.onChangeSelection - Callback function for layer selection change.
+ * @param {({ id, index, selection }: { id: string, index: number, selection: unknown }) => void} props.onChangeSelection - Callback function for layer selection change.
  * @param {number} props.maxZoom - Global maximum zoom level for the map.
  * @param {number} props.minZoom - Global minimum zoom level for the map.
  * @param {number} props.currentZoom - Current zoom level for the map.
@@ -133,13 +133,15 @@ export default function LegendLayer({
       </Box>
       <Collapse unmountOnExit timeout={100} sx={styles.legendItemBody} in={isExpanded}>
         <Box pb={2} opacity={outsideCurrentZoom ? 0.5 : 1}>
-          {legendLayerVariables.map((legend) => (
+          {legendLayerVariables.map((legend, index) => (
             <LegendLayerVariable
               key={legend.type}
               legend={legend}
               layer={layer}
               customLegendTypes={customLegendTypes}
-              onChangeSelection={(selection) => onChangeSelection({ id, selection })}
+              onChangeSelection={(selection) =>
+                onChangeSelection({ id, index, selection })
+              }
             />
           ))}
         </Box>

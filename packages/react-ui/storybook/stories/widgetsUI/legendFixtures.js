@@ -22,6 +22,22 @@ export const fixtures = [
     }
   },
   {
+    id: 'basemap',
+    title: 'Basemap',
+    legend: {
+      type: 'basemap',
+      collapsible: false,
+      select: {
+        label: 'Select basemap',
+        value: 'light',
+        options: [
+          { label: 'Light', value: 'light' },
+          { label: 'Dark', value: 'dark' }
+        ]
+      }
+    }
+  },
+  {
     id: 'avland',
     title: 'Available Land',
     visible: true,
