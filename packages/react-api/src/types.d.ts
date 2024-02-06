@@ -9,6 +9,12 @@ export enum API_VERSIONS {
   V3 = 'v3'
 }
 
+export enum MAP_TYPES {
+  TABLE = 'table',
+  QUERY = 'query',
+  TILESET = 'tileset'
+}
+
 type ApiVersionsType = typeof API_VERSIONS;
 type MapTypesType = typeof MAP_TYPES;
 interface CredentialsCarto2 {
@@ -68,8 +74,3 @@ export type UseCartoLayerFilterProps = {
 
 export type ExecuteSQLResponse<Response = FeatureCollection | {}[]> = Promise<Response>;
 
-export enum MAP_TYPES {
-  TABLE = 'table',
-  QUERY = 'query',
-  TILESET = 'tileset'
-}

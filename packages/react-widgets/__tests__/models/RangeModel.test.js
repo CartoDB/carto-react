@@ -6,6 +6,7 @@ const RESULT = { min: 0, max: 100 };
 const mockedExecuteModel = jest.fn();
 
 jest.mock('@carto/react-api', () => ({
+  ...jest.requireActual('@carto/react-api'),
   _executeModel: (props) => {
     mockedExecuteModel(props);
     return Promise.resolve({ rows: [RESULT] });

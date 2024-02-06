@@ -1,7 +1,13 @@
-import { TILE_FORMATS } from '@deck.gl/carto';
 import { AggregationTypes } from './operations/constants/AggregationTypes';
 import { Polygon, MultiPolygon } from 'geojson';
 import { SpatialIndex } from './operations/constants/SpatialIndexTypes';
+
+export enum TILE_FORMATS {
+  MVT = 'mvt',
+  JSON = 'json',
+  GEOJSON = 'geojson',
+  BINARY = 'binary'
+}
 
 export type AggregationFunctions = Record<
   AggregationTypes,

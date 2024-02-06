@@ -16,6 +16,7 @@ const bostonCoordinates = {
 };
 
 jest.mock('@carto/react-api', () => ({
+  ...jest.requireActual('@carto/react-api'),
   executeSQL: jest.fn().mockImplementation(async () => global.executeSqlMockResult),
   ldsGeocode: jest.fn().mockImplementation(async () => global.ldsGeocodeMockResult)
 }));

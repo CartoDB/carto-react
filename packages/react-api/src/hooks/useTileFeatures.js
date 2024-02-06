@@ -1,9 +1,13 @@
 import { useEffect, useCallback, useState } from 'react';
-import { debounce, SpatialIndex, getColumnNameFromGeoColumn } from '@carto/react-core';
+import {
+  debounce,
+  SpatialIndex,
+  getColumnNameFromGeoColumn,
+  TILE_FORMATS
+} from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
 import { setIsDroppingFeatures } from '@carto/react-redux';
 import { Layer } from '@deck.gl/core';
-import { TILE_FORMATS } from '@deck.gl/carto';
 import { throwError } from './utils';
 import useFeaturesCommons from './useFeaturesCommons';
 import { useDispatch } from 'react-redux';
