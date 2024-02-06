@@ -59,6 +59,12 @@ export const dataDisplayOverrides = {
               }
             }
           }
+        },
+
+        '& .MuiListItemButton-root': {
+          '&:focus-visible': {
+            backgroundColor: 'transparent'
+          }
         }
       })
     }

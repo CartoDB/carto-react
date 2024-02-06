@@ -194,6 +194,11 @@ export const formsOverrides = {
           },
           '&.Mui-disabled::placeholder': {
             color: theme.palette.text.disabled
+          },
+          // Remove focus on keyboard navigation as the parent element has focus
+          '&:focus-visible': {
+            outline: 'none !important',
+            boxShadow: 'none !important'
           }
         },
 
@@ -332,6 +337,11 @@ export const formsOverrides = {
             },
             '&.Mui-disabled::placeholder': {
               color: theme.palette.text.disabled
+            },
+            // Remove focus on keyboard navigation as the parent element has focus
+            '&:focus-visible': {
+              outline: 'none !important',
+              boxShadow: 'none !important'
             }
           },
 
