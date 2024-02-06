@@ -10,7 +10,7 @@ import LegendOpacityControl from './LegendOpacityControl';
 import LegendLayerTitle from './LegendLayerTitle';
 import LegendLayerVariable from './LegendLayerVariable';
 import { useIntl } from 'react-intl';
-import useImperativeIntl from '@carto/react-ui/hooks/useImperativeIntl';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const EMPTY_OBJ = {};
 
