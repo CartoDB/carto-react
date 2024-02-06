@@ -6,7 +6,6 @@ export enum LEGEND_TYPES {
   CONTINUOUS_RAMP = 'continuous_ramp',
   BINS = 'bins',
   PROPORTION = 'proportion',
-  CUSTOM = 'custom'
 }
 
 export type LegendData = {
@@ -26,13 +25,34 @@ export type LegendData = {
 
 export type LegendItemData = {
   type: LEGEND_TYPES;
-  children?: React.ReactNode;
-  attr?: React.ReactNode; // subtitle
-  colors?: string[];
-  labels?: (string | number)[];
-  icons?: string[];
   select: LegendItemSelectConfig
-};
+  attr?: React.ReactNode; // subtitle to show below the legend item toggle when expanded
+} & LegendType;
+
+type LegendType = LegendBins | LegendRamp | LegendIcons | LegendCategories | LegendProportion;
+
+type LegendColors = string | string[];
+type LegendNumericLabels = number[] | { label: string; value: number }[]; 
+
+type LegendBins = {
+  colors: LegendColors
+  labels: LegendNumericLabels
+}
+type LegendRamp = {
+  colors: LegendColors
+  labels: LegendNumericLabels
+}
+type LegendIcons = {
+  icons: string[]
+  labels: string[]
+}
+type LegendCategories = {
+  colors: LegendColors
+  labels: string[]
+}
+type LegendProportion = {
+  labels: [number, number]
+}
 
 export type LegendItemSelectConfig<T = unknown> = {
   label: string;
@@ -42,3 +62,8 @@ export type LegendItemSelectConfig<T = unknown> = {
     value: T;
   }[];
 };
+
+export type CustomLegendComponent = React.ComponentType<{
+  layer: LegendData;
+  legend: LegendItemData;
+}>;

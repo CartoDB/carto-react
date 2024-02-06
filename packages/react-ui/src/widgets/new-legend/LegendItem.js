@@ -10,7 +10,13 @@ import {
   Tooltip,
   Typography
 } from '@mui/material';
-import { LEGEND_TYPES, LegendCategories, LegendIcon, LegendRamp } from '@carto/react-ui';
+import {
+  LEGEND_TYPES,
+  LegendCategories,
+  LegendIcon,
+  LegendProportion,
+  LegendRamp
+} from '@carto/react-ui';
 import EyeIcon from '@mui/icons-material/VisibilityOutlined';
 import EyeOffIcon from '@mui/icons-material/VisibilityOffOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -23,6 +29,7 @@ const EMPTY_OBJ = {};
 /**
  * Receives configuration options, send change events and renders a legend item
  * @param {object} props
+ * @param {Object.<string, import('../legend/LegendWidgetUI').CustomLegendComponent>} props.customLegendTypes - Allow to customise by default legend types that can be rendered.
  * @param {import('../legend/LegendWidgetUI').LegendData} props.layer - Layer object from redux store.
  * @param {({ id, collapsed }: { id: string, collapsed: boolean }) => void} props.onChangeCollapsed - Callback function for layer visibility change.
  * @param {({ id, opacity }: { id: string, opacity: number }) => void} props.onChangeOpacity - Callback function for layer opacity change.
@@ -34,6 +41,7 @@ const EMPTY_OBJ = {};
  * @returns {React.ReactNode}
  */
 export default function LegendItem({
+  customLegendTypes = EMPTY_OBJ,
   layer = EMPTY_OBJ,
   onChangeCollapsed,
   onChangeOpacity,
@@ -45,6 +53,7 @@ export default function LegendItem({
 }) {
   // layer legend defaults as defined here: https://docs.carto.com/carto-for-developers/carto-for-react/library-reference/widgets#legendwidget
   const id = layer?.id;
+  const title = layer?.title;
   const visible = layer?.visible ?? true;
   const switchable = layer.switchable ?? true;
   const collapsed = layer.collapsed ?? false;
@@ -83,6 +92,7 @@ export default function LegendItem({
 
   return (
     <Box
+      aria-label={title}
       component='section'
       sx={{
         '&:not(:first-of-type)': {
@@ -102,7 +112,7 @@ export default function LegendItem({
           </IconButton>
         )}
         <Box flexGrow={1} sx={{ minWidth: 0, flexShrink: 1 }}>
-          <LegendItemTitle visible={visible} title={layer.title} />
+          <LegendItemTitle visible={visible} title={title} />
           {showZoomNote && (
             <Typography
               color={visible ? 'textPrimary' : 'textSecondary'}
@@ -146,6 +156,7 @@ export default function LegendItem({
               key={legend.type}
               legend={legend}
               layer={layer}
+              customLegendTypes={customLegendTypes}
               onChangeSelection={(selection) => onChangeSelection({ id, selection })}
             />
           ))}
@@ -166,6 +177,7 @@ export default function LegendItem({
 }
 
 LegendItem.propTypes = {
+  customLegendTypes: PropTypes.object.isRequired,
   layer: PropTypes.object.isRequired,
   onChangeCollapsed: PropTypes.func.isRequired,
   onChangeOpacity: PropTypes.func.isRequired,
@@ -339,31 +351,43 @@ function LegendItemTitle({ title, visible }) {
   return <Tooltip title={title}>{element}</Tooltip>;
 }
 
+const legendTypeMap = {
+  [LEGEND_TYPES.CATEGORY]: LegendCategories,
+  [LEGEND_TYPES.ICON]: LegendIcon,
+  [LEGEND_TYPES.BINS]: LegendRamp,
+  [LEGEND_TYPES.PROPORTION]: LegendProportion,
+  [LEGEND_TYPES.CONTINUOUS_RAMP]: LegendRamp
+};
+
+/**
+ * @param {object} props
+ * @param {import('../legend/LegendWidgetUI').LegendItemData} props.legend - legend variable data.
+ * @returns {React.ReactNode}
+ */
+function LegendUnknown({ legend }) {
+  return (
+    <Typography variant='body2' color='textSecondary' component='p'>
+      Legend type {legend.type} not supported
+    </Typography>
+  );
+}
+
 /**
  * @param {object} props
  * @param {import('../legend/LegendWidgetUI').LegendData} props.layer - Layer object from redux store.
  * @param {import('../legend/LegendWidgetUI').LegendItemData} props.legend - legend variable data.
+ * @param {Object.<string, import('../legend/LegendWidgetUI').CustomLegendComponent>} props.customLegendTypes - Map from legend type to legend component that allows to customise additional legend types that can be rendered.
  * @param {({ id, selection }: { id: string, selection: unknown }) => void} props.onChangeSelection - Callback function for legend options change.
  * @returns {React.ReactNode}
  */
-function LegendItemVariable({ layer, legend, onChangeSelection }) {
+function LegendItemVariable({ layer, legend, customLegendTypes, onChangeSelection }) {
   const type = legend.type;
-
-  let typeComponent = null;
-  if (type === LEGEND_TYPES.CATEGORY) {
-    typeComponent = <LegendCategories layer={layer} legend={layer.legend} />;
-  }
-  if (type === LEGEND_TYPES.ICON) {
-    typeComponent = <LegendIcon layer={layer} legend={layer.legend} />;
-  }
-  if (type === LEGEND_TYPES.BINS) {
-    typeComponent = <LegendRamp layer={layer} legend={layer.legend} />;
-  }
+  const TypeComponent = legendTypeMap[type] || customLegendTypes[type] || LegendUnknown;
 
   return (
     <>
       <div id='legend-option-selector'></div>
-      {typeComponent}
+      <TypeComponent layer={layer} legend={legend} />
     </>
   );
 }
