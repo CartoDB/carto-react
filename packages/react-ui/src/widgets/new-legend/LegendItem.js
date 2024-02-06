@@ -21,7 +21,7 @@ const EMPTY_OBJ = {};
  * Receives configuration options, send change events and renders a legend item
  * @param {object} props
  * @param {Object.<string, import('../legend/LegendWidgetUI').CustomLegendComponent>} props.customLegendTypes - Allow to customise by default legend types that can be rendered.
- * @param {import('../legend/LegendWidgetUI').LegendData} props.layer - Layer object from redux store.
+ * @param {import('../legend/LegendWidgetUI').LegendLayer} props.layer - Layer object from redux store.
  * @param {({ id, collapsed }: { id: string, collapsed: boolean }) => void} props.onChangeCollapsed - Callback function for layer visibility change.
  * @param {({ id, opacity }: { id: string, opacity: number }) => void} props.onChangeOpacity - Callback function for layer opacity change.
  * @param {({ id, visible }: { id: string, visible: boolean }) => void} props.onChangeVisibility - Callback function for layer collapsed state change.
@@ -248,7 +248,7 @@ const legendTypeMap = {
 
 /**
  * @param {object} props
- * @param {import('../legend/LegendWidgetUI').LegendItemData} props.legend - legend variable data.
+ * @param {import('../legend/LegendWidgetUI').LegendLayerVariable} props.legend - legend variable data.
  * @returns {React.ReactNode}
  */
 function LegendUnknown({ legend }) {
@@ -261,8 +261,8 @@ function LegendUnknown({ legend }) {
 
 /**
  * @param {object} props
- * @param {import('../legend/LegendWidgetUI').LegendData} props.layer - Layer object from redux store.
- * @param {import('../legend/LegendWidgetUI').LegendItemData} props.legend - legend variable data.
+ * @param {import('../legend/LegendWidgetUI').LegendLayer} props.layer - Layer object from redux store.
+ * @param {import('../legend/LegendWidgetUI').LegendLayerVariable} props.legend - legend variable data.
  * @param {Object.<string, import('../legend/LegendWidgetUI').CustomLegendComponent>} props.customLegendTypes - Map from legend type to legend component that allows to customise additional legend types that can be rendered.
  * @param {({ id, selection }: { id: string, selection: unknown }) => void} props.onChangeSelection - Callback function for legend options change.
  * @returns {React.ReactNode}

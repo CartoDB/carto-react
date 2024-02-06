@@ -12,7 +12,7 @@ const EMPTY_ARR = [];
 /**
  * @param {object} props
  * @param {Object.<string, import('../legend/LegendWidgetUI').CustomLegendComponent>} [props.customLegendTypes] - Allow to customise by default legend types that can be rendered.
- * @param {import('../legend/LegendWidgetUI').LegendData[]} [props.layers] - Array of layer objects from redux store.
+ * @param {import('../legend/LegendWidgetUI').LegendLayer[]} [props.layers] - Array of layer objects from redux store.
  * @param {boolean} [props.collapsed] - Collapsed state for whole legend widget.
  * @param {(collapsed: boolean) => void} props.onChangeCollapsed - Callback function for collapsed state change.
  * @param {({ id, collapsed }: { id: string, collapsed: boolean }) => void} props.onChangeLegendRowCollapsed - Callback function for layer visibility change.

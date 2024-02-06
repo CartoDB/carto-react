@@ -8,7 +8,7 @@ export enum LEGEND_TYPES {
   PROPORTION = 'proportion',
 }
 
-export type LegendData = {
+export type LegendLayer = {
   id: string;
   title?: string;
   visible?: boolean; // layer visibility state
@@ -20,10 +20,10 @@ export type LegendData = {
   helperText?: React.ReactNode; // note to show below all legend items
   minZoom?: number; // min zoom at which layer is displayed
   maxZoom?: number; // max zoom at which layer is displayed
-  legend?: LegendItemData | LegendItemData[];
+  legend?: LegendLayerVariable | LegendLayerVariable[];
 };
 
-export type LegendItemData = {
+export type LegendLayerVariable = {
   type: LEGEND_TYPES;
   select: LegendItemSelectConfig
   attr?: React.ReactNode; // subtitle to show below the legend item toggle when expanded
@@ -64,6 +64,6 @@ export type LegendItemSelectConfig<T = unknown> = {
 };
 
 export type CustomLegendComponent = React.ComponentType<{
-  layer: LegendData;
-  legend: LegendItemData;
+  layer: LegendLayer;
+  legend: LegendLayerVariable;
 }>;
