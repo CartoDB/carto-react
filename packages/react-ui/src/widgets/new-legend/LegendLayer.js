@@ -9,6 +9,8 @@ import { styles } from './LegendWidgetUI.styles';
 import LegendOpacityControl from './LegendOpacityControl';
 import LegendLayerTitle from './LegendLayerTitle';
 import LegendLayerVariable from './LegendLayerVariable';
+import { useIntl } from 'react-intl';
+import useImperativeIntl from '@carto/react-ui/hooks/useImperativeIntl';
 
 const EMPTY_OBJ = {};
 
@@ -37,6 +39,11 @@ export default function LegendLayer({
   minZoom,
   currentZoom
 }) {
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
+  const menuAnchorRef = useRef(null);
+  const [opacityOpen, setOpacityOpen] = useState(false);
+
   // layer legend defaults as defined here: https://docs.carto.com/carto-for-developers/carto-for-react/library-reference/widgets#legendwidget
   const id = layer.id;
   const title = layer.title;
@@ -48,9 +55,6 @@ export default function LegendLayer({
   const showOpacityControl = layer.showOpacityControl ?? true;
   const isExpanded = visible && !collapsed;
   const collapseIcon = isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />;
-
-  const [opacityOpen, setOpacityOpen] = useState(false);
-  const menuAnchorRef = useRef(null);
 
   const layerHasZoom = layer?.minZoom !== undefined || layer?.maxZoom !== undefined;
   const showZoomNote =
@@ -115,7 +119,13 @@ export default function LegendLayer({
           />
         )}
         {switchable && (
-          <Tooltip title={visible ? 'Hide layer' : 'Show layer'}>
+          <Tooltip
+            title={intlConfig.formatMessage({
+              id: visible
+                ? 'c4r.widgets.legend.hideLayer'
+                : 'c4r.widgets.legend.showLayer'
+            })}
+          >
             <IconButton
               size='small'
               onClick={() =>
