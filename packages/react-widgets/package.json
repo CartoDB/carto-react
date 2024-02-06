@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-widgets",
-  "version": "2.3.7",
+  "version": "2.3.10",
   "description": "CARTO for React - Widgets",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -69,13 +69,13 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-api": "^2.3.7",
-    "@carto/react-core": "^2.3.7",
-    "@carto/react-redux": "^2.3.7",
-    "@carto/react-ui": "^2.3.7",
-    "@carto/react-workers": "^2.3.7",
-    "@deck.gl/core": "9.0.0-alpha.7",
-    "@deck.gl/layers": "9.0.0-alpha.7",
+    "@carto/react-api": "^2.3.10",
+    "@carto/react-core": "^2.3.10",
+    "@carto/react-redux": "^2.3.10",
+    "@carto/react-ui": "^2.3.10",
+    "@carto/react-workers": "^2.3.10",
+    "@deck.gl/core": "^9.0.0-beta.1",
+    "@deck.gl/layers": "^9.0.0-beta.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.16",

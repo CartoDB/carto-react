@@ -53,9 +53,16 @@ type InitialCarto3State = {
 
 export type InitialCartoState = InitialCarto2State | InitialCarto3State;
 
+export type GeocoderResult = {
+  latitude: number,
+  longitude: number,
+  /** Passive results are loaded without moving the map viewport. */
+  passive?: boolean
+}
+
 export type CartoState = {
   viewport: Viewport | undefined,
-  geocoderResult: Record<string,any> | null,
+  geocoderResult: GeocoderResult | null,
   error: null, // TODO: remove from state?
   layers: { [key: string]: string },
   dataSources: { [key: string]: Source },

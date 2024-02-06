@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToggleButtonGroup, ToggleButton, Grid, Divider } from '@mui/material';
+import { ToggleButton, Grid, Divider } from '@mui/material';
 import {
   CheckCircleOutline,
   FormatAlignCenter,
@@ -8,11 +8,26 @@ import {
   FormatAlignRight
 } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
+import ToggleButtonGroup from '../../../src/components/atoms/ToggleButtonGroup';
+import { DocContainer, DocHighlight, DocLink } from '../../utils/storyStyles';
 
 const options = {
   title: 'Molecules/Toggle Button',
   component: ToggleButtonGroup,
   argTypes: {
+    variant: {
+      defaultValue: 'floating',
+      control: {
+        type: 'select',
+        options: ['floating', 'contained', 'unbounded']
+      }
+    },
+    backgroundColor: {
+      control: {
+        type: 'select',
+        options: ['primary', 'secondary', 'transparent']
+      }
+    },
     size: {
       defaultValue: 'medium',
       control: {
@@ -63,7 +78,7 @@ const options = {
 };
 export default options;
 
-const Toggle = ({ label, exclusive, ...rest }) => {
+const Toggle = ({ label, ...rest }) => {
   const [selected, setSelected] = React.useState(false);
 
   return (
@@ -81,8 +96,10 @@ const Toggle = ({ label, exclusive, ...rest }) => {
   );
 };
 
-const ToggleRow = ({ label, divider, fullWidth, exclusive, ...rest }) => {
+const ToggleRow = ({ label, divider, fullWidth, exclusive, orientation, ...rest }) => {
   const [selected, setSelected] = React.useState(() => ['AlignLeft']);
+  const isVertical = orientation === 'vertical';
+  const dividerOrientation = isVertical ? 'horizontal' : 'vertical';
 
   const handleAlignment = (event, newAlignment) => {
     setSelected(newAlignment);
@@ -95,6 +112,7 @@ const ToggleRow = ({ label, divider, fullWidth, exclusive, ...rest }) => {
       onChange={handleAlignment}
       fullWidth={fullWidth}
       exclusive={exclusive}
+      orientation={orientation}
       aria-label='text alignment'
     >
       <ToggleButton value='AlignLeft' aria-label='AlignLeft'>
@@ -103,7 +121,9 @@ const ToggleRow = ({ label, divider, fullWidth, exclusive, ...rest }) => {
       <ToggleButton value='AlignCenter' aria-label='AlignCenter'>
         {label ? label : <FormatAlignCenter />}
       </ToggleButton>
-      {divider && <Divider flexItem orientation='vertical' />}
+      {divider && (
+        <Divider flexItem={!isVertical ? true : false} orientation={dividerOrientation} />
+      )}
       <ToggleButton value='AlignRight' aria-label='AlignRight'>
         {label ? label : <FormatAlignRight />}
       </ToggleButton>
@@ -114,7 +134,33 @@ const ToggleRow = ({ label, divider, fullWidth, exclusive, ...rest }) => {
   );
 };
 
-const IconTemplate = ({ exclusive, ...args }) => {
+const DocTemplate = () => {
+  return (
+    <DocContainer severity='warning'>
+      We have our own
+      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/atoms/ToggleButtonGroup.js'>
+        ToggleButtonGroup
+      </DocLink>
+      component that extends <i>Mui ToggleButtonGroup</i> with some props (variant and
+      backgroundColor support).
+      <Typography mt={2}>
+        So, instead of Mui ToggleButtonGroup, you should use this one:
+        <DocHighlight component='span'>
+          react-ui/src/components/atoms/ToggleButtonGroup
+        </DocHighlight>
+      </Typography>
+      <Typography mt={2}>
+        For external use:
+        <DocHighlight component='span'>
+          {'import { ToggleButtonGroup } from "@carto/react-ui";'}
+        </DocHighlight>
+        .
+      </Typography>
+    </DocContainer>
+  );
+};
+
+const IconTemplate = (args) => {
   return (
     <Grid container alignItems='center' spacing={4}>
       <Grid item>
@@ -130,7 +176,7 @@ const IconTemplate = ({ exclusive, ...args }) => {
   );
 };
 
-const TextTemplate = ({ exclusive, ...args }) => {
+const TextTemplate = (args) => {
   return (
     <Grid container alignItems='center' spacing={4}>
       <Grid item>
@@ -143,7 +189,7 @@ const TextTemplate = ({ exclusive, ...args }) => {
   );
 };
 
-const GroupTemplate = ({ exclusive, ...args }) => {
+const GroupTemplate = (args) => {
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>
@@ -156,7 +202,7 @@ const GroupTemplate = ({ exclusive, ...args }) => {
   );
 };
 
-const VerticalGroupTemplate = ({ exclusive, ...args }) => {
+const VerticalGroupTemplate = (args) => {
   return (
     <Grid container spacing={4}>
       <Grid item>
@@ -169,7 +215,7 @@ const VerticalGroupTemplate = ({ exclusive, ...args }) => {
   );
 };
 
-const DividedTemplate = ({ exclusive, ...args }) => {
+const DividedTemplate = (args) => {
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>
@@ -177,6 +223,38 @@ const DividedTemplate = ({ exclusive, ...args }) => {
       </Grid>
       <Grid item>
         <ToggleRow {...args} divider size='small' />
+      </Grid>
+    </Grid>
+  );
+};
+
+const VariantTemplate = (args) => {
+  return (
+    <Grid container direction='column' spacing={4}>
+      <Grid item>
+        <ToggleRow {...args} variant='floating' />
+      </Grid>
+      <Grid item>
+        <ToggleRow {...args} variant='contained' />
+      </Grid>
+      <Grid item>
+        <ToggleRow {...args} variant='unbounded' />
+      </Grid>
+    </Grid>
+  );
+};
+
+const BgColorTemplate = (args) => {
+  return (
+    <Grid container direction='column' spacing={4}>
+      <Grid item>
+        <ToggleRow {...args} backgroundColor='primary' />
+      </Grid>
+      <Grid item>
+        <ToggleRow {...args} backgroundColor='secondary' />
+      </Grid>
+      <Grid item>
+        <ToggleRow {...args} backgroundColor='transparent' />
       </Grid>
     </Grid>
   );
@@ -234,6 +312,8 @@ const BehaviorTemplate = ({ exclusive, ...args }) => {
 
 export const Playground = ToggleRow.bind({});
 
+export const Guide = DocTemplate.bind({});
+
 export const Icon = IconTemplate.bind({});
 
 export const Text = TextTemplate.bind({});
@@ -250,5 +330,9 @@ HorizontalTextGroup.args = { label: 'Text' };
 
 export const MultipleSelectionGroup = GroupTemplate.bind({});
 MultipleSelectionGroup.args = { exclusive: false };
+
+export const Variant = VariantTemplate.bind({});
+
+export const BackgroundColor = BgColorTemplate.bind({});
 
 export const Behavior = BehaviorTemplate.bind({});

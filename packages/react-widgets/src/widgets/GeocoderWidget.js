@@ -56,7 +56,7 @@ function GeocoderWidget(props = {}) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (geocoderResult) {
+    if (geocoderResult && !geocoderResult.passive) {
       dispatch(
         setViewState({
           longitude: geocoderResult.longitude,

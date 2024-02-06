@@ -1,6 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
+  Box,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -42,6 +43,7 @@ const SelectField = forwardRef(
       inputProps,
       labelId,
       label,
+      labelSecondary,
       helperText,
       name,
       error,
@@ -72,7 +74,18 @@ const SelectField = forwardRef(
         fullWidth={fullWidth}
         required={required}
       >
-        {label && <InputLabel id={ariaLabelledBy}>{label}</InputLabel>}
+        <Box display='flex' alignItems='center' justifyContent='space-between'>
+          {label && (
+            <InputLabel shrink id={ariaLabelledBy}>
+              {label}
+            </InputLabel>
+          )}
+          {labelSecondary && (
+            <Box display='flex' alignItems='center' ml={2} mb={0.5}>
+              {labelSecondary}
+            </Box>
+          )}
+        </Box>
 
         <StyledSelect
           {...otherProps}
@@ -88,12 +101,15 @@ const SelectField = forwardRef(
           }}
           MenuProps={{
             ...menuProps,
+            PopoverClasses: {
+              paper: isSmall ? 'MuiMenu-paper-sizeSmall' : undefined
+            },
             anchorOrigin: {
               vertical: 'bottom',
               horizontal: 'left'
             },
             transformOrigin: {
-              vertical: -4,
+              vertical: 0,
               horizontal: 'left'
             }
           }}
@@ -129,7 +145,8 @@ SelectField.propTypes = {
   size: PropTypes.oneOf(['small', 'medium']),
   menuProps: PropTypes.object,
   inputProps: PropTypes.object,
-  helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+  helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  labelSecondary: PropTypes.element
 };
 
 export default SelectField;

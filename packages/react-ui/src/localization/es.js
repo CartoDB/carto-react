@@ -1,5 +1,12 @@
 const locales = {
   c4r: {
+    form: {
+      selectAll: 'Todos',
+      selectNone: 'Ninguno',
+      allSelected: 'Todos seleccionados',
+      noneSelected: 'Ninguno seleccionado',
+      selected: 'seleccionado'
+    },
     widgets: {
       category: {
         apply: 'Aplicar',

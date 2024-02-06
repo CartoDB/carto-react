@@ -12,6 +12,7 @@ export type SelectFieldProps<Value = unknown> = Omit<
   menuProps?: Partial<MenuProps>;
   inputProps?: Partial<InputProps>;
   helperText?: React.ReactNode | string;
+  labelSecondary?: React.ReactNode;
 };
 
 declare const SelectField: <Value>(props: SelectFieldProps<Value>) => JSX.Element;

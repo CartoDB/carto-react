@@ -13,7 +13,6 @@ function UploadField({
   onChange,
   multiple,
   placeholder,
-  size,
   error,
   focused,
   nativeInputProps,
@@ -63,8 +62,7 @@ function UploadField({
 UploadField.defaultProps = {
   accept: ['application/JSON'],
   files: [],
-  onChange: (files) => files,
-  size: 'small'
+  onChange: (files) => files
 };
 
 UploadField.propTypes = {
@@ -76,7 +74,6 @@ UploadField.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   files: PropTypes.array,
   onChange: PropTypes.func,
-  size: PropTypes.oneOf(['small', 'medium']),
   inProgress: PropTypes.bool,
   nativeInputProps: PropTypes.object
 };

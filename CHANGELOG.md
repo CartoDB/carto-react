@@ -4,6 +4,21 @@
 
 ## 2.3
 
+### 2.3.10 (2024-01-31)
+
+- New DS core component: Autocomplete [#828](https://github.com/CartoDB/carto-react/pull/828)
+
+### 2.3.9 (2024-01-30)
+
+- Initial value for Geocoder widget [#831](https://github.com/CartoDB/carto-react/pull/831)
+- Export `Filter` type definitions from react-redux [#829](https://github.com/CartoDB/carto-react/pull/829)
+
+### 2.3.8 (2024-01-25)
+
+- Multiple SelectField component: fix counter version [#826](https://github.com/CartoDB/carto-react/pull/826)
+- TexField component: Add support for readOnly [#826](https://github.com/CartoDB/carto-react/pull/825)
+- ToggleButtonGroup component: Add support for variant and backgroundColor [#824](https://github.com/CartoDB/carto-react/pull/824)
+
 ### 2.3.7 (2024-01-11)
 
 - Chip component: Add new colors to the theme [#821](https://github.com/CartoDB/carto-react/pull/821)

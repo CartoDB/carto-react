@@ -37,8 +37,14 @@ import Typography, {
   TypographyProps
 } from './components/atoms/Typography';
 import Button, { ButtonProps } from './components/atoms/Button';
-import PasswordField, { PasswordFieldProps } from './components/atoms/PasswordField';
 import SelectField, { SelectFieldProps } from './components/atoms/SelectField';
+import MultipleSelectField, {
+  MultipleSelectFieldProps
+} from './components/molecules/MultipleSelectField/MultipleSelectField';
+import PasswordField, { PasswordFieldProps } from './components/atoms/PasswordField';
+import ToggleButtonGroup, {
+  ToggleButtonGroupProps
+} from './components/atoms/ToggleButtonGroup';
 import UploadField, {
   UploadFieldProps
 } from './components/molecules/UploadField/UploadField';
@@ -56,6 +62,7 @@ import {
   ICON_SIZE_MEDIUM,
   ICON_SIZE_LARGE
 } from './theme/themeConstants';
+import ArrowDropIcon from './assets/icons/ArrowDropIcon';
 import AccordionGroup, {
   AccordionGroupProps
 } from './components/molecules/AccordionGroup';
@@ -101,10 +108,14 @@ export {
   CartoFontWeight,
   Button,
   ButtonProps,
+  ToggleButtonGroup,
+  ToggleButtonGroupProps,
   PasswordField,
   PasswordFieldProps,
   SelectField,
   SelectFieldProps,
+  MultipleSelectField,
+  MultipleSelectFieldProps,
   UploadField,
   UploadFieldProps,
   UploadFieldBase,
@@ -119,6 +130,7 @@ export {
   ICON_SIZE_SMALL,
   ICON_SIZE_MEDIUM,
   ICON_SIZE_LARGE,
+  ArrowDropIcon,
   AccordionGroup,
   AccordionGroupProps,
   Alert,
