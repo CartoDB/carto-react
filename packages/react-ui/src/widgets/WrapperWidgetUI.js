@@ -8,6 +8,7 @@ import {
   Icon,
   IconButton,
   LinearProgress,
+  Link,
   Menu,
   MenuItem,
   Tooltip,
@@ -15,6 +16,7 @@ import {
 } from '@mui/material';
 import { ExpandLess, ExpandMore, MoreVert } from '@mui/icons-material';
 import Typography from '../components/atoms/Typography';
+import uniqueId from 'lodash/uniqueId';
 
 /*
 Options props must have this format:
@@ -130,6 +132,19 @@ const PaperMenu = styled(Menu)(({ theme }) => ({
   }
 }));
 
+const AccessibleLink = styled(Link)(({ theme }) => ({
+  position: 'absolute',
+  left: '-999px',
+  width: '1px',
+  height: '1px',
+
+  '&:focus-visible': {
+    position: 'static',
+    width: 'auto',
+    height: 'auto'
+  }
+}));
+
 function WrapperWidgetUI(props) {
   const wrapper = createRef();
 
@@ -148,6 +163,9 @@ function WrapperWidgetUI(props) {
     actions = [],
     optionsIcon = <MoreVert />
   } = props;
+
+  // Accessibility attributes
+  const [id] = useState(uniqueId());
 
   const handleExpandClick = () => {
     if (props.expandable) {
@@ -189,8 +207,18 @@ function WrapperWidgetUI(props) {
   }
 
   return (
-    <Root margin={props.margin} component='section' aria-label={props.title}>
+    <Root
+      margin={props.margin}
+      component='section'
+      aria-label={props.title}
+      role='section'
+    >
       {props.isLoading ? <LoadingBar /> : null}
+
+      <AccessibleLink to={`#${Number(id) + 1}`} id={id} variant='caption'>
+        Go to next widget
+      </AccessibleLink>
+
       <Header container expanded={props.expanded}>
         <HeaderButton
           expandable={props.expandable}
@@ -265,6 +293,7 @@ function WrapperWidgetUI(props) {
           )}
         </HeaderItems>
       </Header>
+
       {/* TODO: check collapse error */}
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
         <Box {...props.contentProps}>
