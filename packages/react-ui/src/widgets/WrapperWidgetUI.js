@@ -69,7 +69,8 @@ const HeaderButton = styled(Button, {
   alignItems: 'flex-start',
   justifyContent: 'flex-start',
   height: 'auto',
-  minHeight: theme.spacing(4),
+  minHeight: 'auto',
+  marginBottom: theme.spacing(1),
   cursor: expandable ? 'pointer' : 'default',
 
   '& .MuiButton-startIcon': {
@@ -198,6 +199,7 @@ function WrapperWidgetUI(props) {
             props.expandable && <Icon>{expanded ? <HideButton /> : <ShowButton />}</Icon>
           }
           onClick={handleExpandClick}
+          tabIndex={props.expandable ? 0 : -1}
         >
           <Tooltip title={props.title}>
             <Text expanded={props.expanded} align='left' variant='subtitle1'>
