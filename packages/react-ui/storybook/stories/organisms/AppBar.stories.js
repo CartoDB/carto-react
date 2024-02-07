@@ -157,7 +157,11 @@ const commonArgs = {
   brandText: 'CARTO',
   secondaryText: 'Some text',
   showBurgerMenu: true,
-  brandLogo: <img src='/carto-logo.svg' alt='' />
+  brandLogo: (
+    <a href='/'>
+      <img src='/carto-logo.svg' alt='' />
+    </a>
+  )
 };
 export const Basic = Template.bind({});
 Basic.args = { ...commonArgs };
