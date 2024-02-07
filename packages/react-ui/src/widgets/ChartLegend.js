@@ -18,7 +18,10 @@ const ItemsContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   overflowX: 'hidden',
-  gap: theme.spacing(2)
+  gap: theme.spacing(2),
+  // Accessibility tweak to display focus indicator properly
+  padding: theme.spacing(0.5),
+  margin: theme.spacing(-0.5)
 }));
 
 const Item = styled(Box)(({ theme }) => ({

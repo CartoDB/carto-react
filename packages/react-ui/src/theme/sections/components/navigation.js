@@ -107,6 +107,10 @@ export const navigationOverrides = {
         '&:hover': {
           borderBottomColor: theme.palette.text.primary
         },
+        '&:focus-visible': {
+          outline: `none !important`,
+          boxShadow: ` inset 0 0 0 2px ${theme.palette.primary.main} !important`
+        },
         '&.Mui-selected': {
           pointerEvents: 'none',
 
