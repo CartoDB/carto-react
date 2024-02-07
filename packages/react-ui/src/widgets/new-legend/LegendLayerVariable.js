@@ -4,6 +4,8 @@ import LegendIcon from '../legend/LegendIcon';
 import LegendRamp from '../legend/LegendRamp';
 import LegendProportion from '../legend/LegendProportion';
 import { LEGEND_TYPES } from '../legend/LegendWidgetUI';
+import { useIntl } from 'react-intl';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const legendTypeMap = {
   [LEGEND_TYPES.CATEGORY]: LegendCategories,
@@ -19,13 +21,17 @@ const legendTypeMap = {
  * @returns {React.ReactNode}
  */
 function LegendUnknown({ legend }) {
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
+
   if (legend.select) {
     return null;
   }
 
   return (
     <Typography variant='body2' color='textSecondary' component='p'>
-      Legend type {legend.type} not supported
+      "{legend.type}"{' '}
+      {intlConfig.formatMessage({ id: 'c4r.widgets.legend.notSupported' })}
     </Typography>
   );
 }

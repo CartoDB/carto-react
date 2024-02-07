@@ -43,7 +43,13 @@ const locales = {
         open: 'Open legend',
         close: 'Close',
         collapse: 'Collapse layer',
-        expand: 'Expand layer'
+        expand: 'Expand layer',
+        zoomLevel: 'Zoom level',
+        lowerThan: 'lower than',
+        greaterThan: 'greater than',
+        and: 'and',
+        zoomNote: 'Note: this layer will display at zoom levels',
+        notSupported: 'legend type not supported'
       },
       range: {
         clear: 'Clear',

@@ -62,6 +62,7 @@ export default function LegendLayer({
   const outsideCurrentZoom = currentZoom < layer.minZoom || currentZoom > layer.maxZoom;
 
   const zoomHelperText = getZoomHelperText({
+    intl: intlConfig,
     minZoom,
     maxZoom,
     layerMinZoom: layer.minZoom,
@@ -107,7 +108,8 @@ export default function LegendLayer({
               variant='caption'
               component='p'
             >
-              Zoom level: {layer.minZoom} - {layer.maxZoom}
+              {intlConfig.formatMessage({ id: 'c4r.widgets.legend.zoomLevel' })}{' '}
+              {layer.minZoom} - {layer.maxZoom}
             </Typography>
           )}
         </Box>
@@ -191,15 +193,21 @@ LegendLayer.defaultProps = {
 
 /**
  * @param {object} props
+ * @param {import('react-intl').IntlShape} props.intl - React Intl object.
  * @param {number} props.minZoom - Global minimum zoom level for the map.
  * @param {number} props.maxZoom - Global maximum zoom level for the map.
  * @param {number} props.layerMinZoom - Layer minimum zoom level.
  * @param {number} props.layerMaxZoom - Layer maximum zoom level.
  * @returns {string}
  */
-function getZoomHelperText({ minZoom, maxZoom, layerMinZoom, layerMaxZoom }) {
-  const maxZoomText = layerMaxZoom < maxZoom ? `lower than ${layerMaxZoom}` : '';
-  const minZoomText = layerMinZoom > minZoom ? `greater than ${layerMinZoom}` : '';
-  const texts = [maxZoomText, minZoomText].filter(Boolean).join(' and ');
-  return texts ? `Note: this layer will display at zoom levels ${texts}` : '';
+function getZoomHelperText({ intl, minZoom, maxZoom, layerMinZoom, layerMaxZoom }) {
+  const and = intl.formatMessage({ id: 'c4r.widgets.legend.and' });
+  const lowerThan = intl.formatMessage({ id: 'c4r.widgets.legend.lowerThan' });
+  const greaterThan = intl.formatMessage({ id: 'c4r.widgets.legend.greaterThan' });
+  const note = intl.formatMessage({ id: 'c4r.widgets.legend.zoomNote' });
+
+  const maxZoomText = layerMaxZoom < maxZoom ? `${lowerThan} ${layerMaxZoom}` : '';
+  const minZoomText = layerMinZoom > minZoom ? `${greaterThan} ${layerMinZoom}` : '';
+  const texts = [maxZoomText, minZoomText].filter(Boolean).join(` ${and} `);
+  return texts ? `${note} ${texts}` : '';
 }
