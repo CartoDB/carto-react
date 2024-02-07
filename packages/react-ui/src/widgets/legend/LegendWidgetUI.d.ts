@@ -31,7 +31,7 @@ export type LegendLayerVariableData = {
 
 type LegendType = LegendBins | LegendRamp | LegendIcons | LegendCategories | LegendProportion;
 
-type LegendColors = string | string[];
+type LegendColors = string | string[] | number[][];
 type LegendNumericLabels = number[] | { label: string; value: number }[]; 
 
 type LegendBins = {
@@ -48,7 +48,10 @@ type LegendIcons = {
 }
 type LegendCategories = {
   colors: LegendColors
-  labels: string[]
+  labels: string[] | number[]
+  isStrokeColor?: boolean
+  customMarkers?: string | string[]
+  maskedMarkers?: boolean
 }
 type LegendProportion = {
   labels: [number, number]
