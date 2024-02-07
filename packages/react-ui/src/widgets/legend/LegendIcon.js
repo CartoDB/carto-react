@@ -1,30 +1,38 @@
 import React from 'react';
-import { Box, Grid } from '@mui/material';
+import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import Typography from '../../components/atoms/Typography';
 import { ICON_SIZE_MEDIUM } from '../../theme/themeConstants';
 
 function LegendIcon({ legend }) {
   const { labels = [], icons = [] } = legend;
-
-  const Icons = labels.map((label, idx) => (
-    <Grid key={label} container item alignItems='center'>
-      <Box mr={1.5} width={ICON_SIZE_MEDIUM} height={ICON_SIZE_MEDIUM}>
-        <img
-          src={icons[idx]}
-          alt={label}
-          width={ICON_SIZE_MEDIUM}
-          height={ICON_SIZE_MEDIUM}
-        />
-      </Box>
-      <Typography variant='overlineDelicate'>{label}</Typography>
-    </Grid>
-  ));
-
   return (
-    <Grid container direction='column' spacing={1} data-testid='icon-legend'>
-      {Icons}
-    </Grid>
+    <Box
+      component='ul'
+      data-testid='icon-legend'
+      sx={{ m: 0, p: 0, pb: 1, display: 'flex', flexDirection: 'column' }}
+    >
+      {labels.map((label, idx) => (
+        <Box key={label} component='li' sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box
+            sx={{
+              mr: 1.5,
+              width: ICON_SIZE_MEDIUM,
+              height: ICON_SIZE_MEDIUM,
+              '& img': {
+                margin: 'auto',
+                display: 'block'
+              }
+            }}
+          >
+            <img src={icons[idx]} alt={label} width='autio' height={ICON_SIZE_MEDIUM} />
+          </Box>
+          <Typography lineHeight='24px' variant='overlineDelicate'>
+            {label}
+          </Typography>
+        </Box>
+      ))}
+    </Box>
   );
 }
 

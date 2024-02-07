@@ -5,9 +5,10 @@ import { useLayoutEffect, useRef, useState } from 'react';
  * @param {object} props
  * @param {string} props.title
  * @param {boolean} props.visible
+ * @param {object} props.typographyProps
  * @returns {React.ReactNode}
  */
-export default function LegendLayerTitle({ title, visible }) {
+export default function LegendLayerTitle({ title, visible, typographyProps }) {
   const ref = useRef(null);
   const [isOverflow, setIsOverflow] = useState(false);
 
@@ -28,6 +29,7 @@ export default function LegendLayerTitle({ title, visible }) {
       component='p'
       noWrap
       sx={{ my: 0.25 }}
+      {...typographyProps}
     >
       {title}
     </Typography>

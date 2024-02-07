@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Box, Grid, Tooltip, styled } from '@mui/material';
+import React from 'react';
+import { Box, Tooltip, styled } from '@mui/material';
 import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
-import Typography from '../../components/atoms/Typography';
+import LegendLayerTitle from '../new-legend/LegendLayerTitle';
 
 function LegendCategories({ legend }) {
   const {
@@ -15,24 +15,28 @@ function LegendCategories({ legend }) {
 
   const palette = getPalette(colors, labels.length);
 
-  const Rows = labels.map((label, idx) => (
-    <Row
-      key={label + idx}
-      isMax={false}
-      label={label}
-      color={palette[idx]}
-      icon={
-        customMarkers && Array.isArray(customMarkers) ? customMarkers[idx] : customMarkers
-      }
-      maskedIcon={maskedMarkers}
-      isStrokeColor={isStrokeColor}
-    />
-  ));
-
   return (
-    <Grid container direction='column' spacing={1} data-testid='categories-legend'>
-      {Rows}
-    </Grid>
+    <Box
+      component='ul'
+      data-testid='categories-legend'
+      sx={{ m: 0, p: 0, pb: 1, display: 'flex', flexDirection: 'column' }}
+    >
+      {labels.map((label, idx) => (
+        <LegendCategoriesRow
+          key={label + idx}
+          isMax={false}
+          label={label}
+          color={palette[idx]}
+          icon={
+            customMarkers && Array.isArray(customMarkers)
+              ? customMarkers[idx]
+              : customMarkers
+          }
+          maskedIcon={maskedMarkers}
+          isStrokeColor={isStrokeColor}
+        />
+      ))}
+    </Box>
   );
 }
 
@@ -113,56 +117,33 @@ const Marker = styled(Box, {
     : getCircleStyles({ isMax, color, isStrokeColor, theme }))
 }));
 
-const LongTruncate = styled(Typography)(() => ({
-  flex: 1,
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis'
-}));
-
-const TitlePhantom = styled(LongTruncate)(() => ({
-  opacity: 0,
-  position: 'absolute',
-  whiteSpace: 'nowrap',
-  pointerEvents: 'none'
-}));
-
-function Row({ label, isMax, isStrokeColor, color = '#000', icon, maskedIcon }) {
-  const [showTooltip, setShowTooltip] = useState(false);
-  const labelRef = useRef(null);
-  const labelPhantomRef = useRef(null);
-
-  useEffect(() => {
-    if (!labelPhantomRef?.current || !labelRef?.current) {
-      return;
-    }
-    const labelSizes = labelRef?.current.getBoundingClientRect();
-    const labelPhantomSizes = labelPhantomRef?.current.getBoundingClientRect();
-    setShowTooltip(labelPhantomSizes.width > labelSizes.width);
-  }, [setShowTooltip, labelPhantomRef, labelRef]);
-
+function LegendCategoriesRow({
+  label,
+  isMax,
+  isStrokeColor,
+  color = '#000',
+  icon,
+  maskedIcon
+}) {
   return (
-    <Tooltip title={showTooltip ? label : ''} placement='left'>
-      <Grid container item alignContent={'center'}>
-        <Tooltip title={isMax ? 'Most representative' : ''}>
-          <Marker
-            className='marker'
-            mr={1.5}
-            component='span'
-            isMax={isMax}
-            icon={icon}
-            maskedIcon={maskedIcon}
-            isStrokeColor={isStrokeColor}
-            color={color}
-          />
-        </Tooltip>
-        <LongTruncate ref={labelRef} variant='overlineDelicate'>
-          {label}
-        </LongTruncate>
-        <TitlePhantom ref={labelPhantomRef} variant='overlineDelicate'>
-          {label}
-        </TitlePhantom>
-      </Grid>
-    </Tooltip>
+    <Box component='li' sx={{ display: 'flex', alignItems: 'center' }}>
+      <Tooltip title={isMax ? 'Most representative' : ''}>
+        <Marker
+          className='marker'
+          mr={1.5}
+          component='span'
+          isMax={isMax}
+          icon={icon}
+          maskedIcon={maskedIcon}
+          isStrokeColor={isStrokeColor}
+          color={color}
+        />
+      </Tooltip>
+      <LegendLayerTitle
+        title={label}
+        visible
+        typographyProps={{ variant: 'overlineDelicate' }}
+      />
+    </Box>
   );
 }
