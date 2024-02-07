@@ -45,6 +45,7 @@ const locales = {
         collapse: 'Collapse layer',
         expand: 'Expand layer',
         zoomLevel: 'Zoom level',
+        zoomLevelTooltip: 'This layer is only visible at certain zoom levels',
         lowerThan: 'lower than',
         greaterThan: 'greater than',
         and: 'and',

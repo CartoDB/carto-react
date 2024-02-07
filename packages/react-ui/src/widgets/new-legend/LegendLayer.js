@@ -79,6 +79,7 @@ export default function LegendLayer({
 
   return (
     <Box
+      data-testid='legend-layer'
       aria-label={title}
       component='section'
       sx={{
@@ -103,14 +104,20 @@ export default function LegendLayer({
         <Box flexGrow={1} sx={{ minWidth: 0, flexShrink: 1 }}>
           <LegendLayerTitle visible={visible} title={title} />
           {showZoomNote && (
-            <Typography
-              color={visible ? 'textPrimary' : 'textSecondary'}
-              variant='caption'
-              component='p'
+            <Tooltip
+              title={intlConfig.formatMessage({
+                id: 'c4r.widgets.legend.zoomLevelTooltip'
+              })}
             >
-              {intlConfig.formatMessage({ id: 'c4r.widgets.legend.zoomLevel' })}{' '}
-              {layer.minZoom} - {layer.maxZoom}
-            </Typography>
+              <Typography
+                color={visible ? 'textPrimary' : 'textSecondary'}
+                variant='caption'
+                component='p'
+              >
+                {intlConfig.formatMessage({ id: 'c4r.widgets.legend.zoomLevel' })}{' '}
+                {layer.minZoom} - {layer.maxZoom}
+              </Typography>
+            </Tooltip>
           )}
         </Box>
         {showOpacityControl && visible && (
@@ -145,8 +152,14 @@ export default function LegendLayer({
           </Tooltip>
         )}
       </Box>
-      <Collapse unmountOnExit timeout={100} sx={styles.legendItemBody} in={isExpanded}>
-        <Box pb={2} opacity={outsideCurrentZoom ? 0.5 : 1}>
+      <Collapse unmountOnExit timeout={100} in={isExpanded}>
+        <Box
+          data-testid='legend-layer-variable-list'
+          sx={{
+            ...styles.layerVariablesList,
+            opacity: outsideCurrentZoom ? 0.5 : 1
+          }}
+        >
           {legendLayerVariables.map((legend, index) => (
             <LegendLayerVariable
               key={legend.type}
@@ -160,12 +173,7 @@ export default function LegendLayer({
           ))}
         </Box>
         {helperText && (
-          <Typography
-            variant='caption'
-            color='textSecondary'
-            component='p'
-            sx={{ py: 2 }}
-          >
+          <Typography variant='caption' color='textSecondary' component='p' sx={{ p: 2 }}>
             {helperText}
           </Typography>
         )}

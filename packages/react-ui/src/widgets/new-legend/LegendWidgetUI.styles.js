@@ -60,6 +60,11 @@ export const styles = {
     //   }
     // }
   },
+  layerVariablesList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 1
+  },
   opacityControl: {
     display: 'flex',
     gap: 2,

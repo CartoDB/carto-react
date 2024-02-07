@@ -2,6 +2,24 @@ import { LEGEND_TYPES } from '@carto/react-ui';
 
 export const fixtures = [
   {
+    id: 'basemap',
+    title: 'Basemap',
+    collapsible: true,
+    switchable: false,
+    showOpacityControl: false,
+    legend: {
+      type: 'basemap',
+      select: {
+        label: 'Select basemap',
+        value: 'light',
+        options: [
+          { label: 'Light', value: 'light' },
+          { label: 'Dark', value: 'dark' }
+        ]
+      }
+    }
+  },
+  {
     id: 'applicants',
     title: 'Applicants',
     visible: false,
@@ -19,24 +37,6 @@ export const fixtures = [
         </svg>`
       ].map((txt) => txt.replace(/#/g, '%23')),
       labels: ['Applicants']
-    }
-  },
-  {
-    id: 'basemap',
-    title: 'Basemap',
-    collapsible: true,
-    switchable: false,
-    showOpacityControl: false,
-    legend: {
-      type: 'basemap',
-      select: {
-        label: 'Select basemap',
-        value: 'light',
-        options: [
-          { label: 'Light', value: 'light' },
-          { label: 'Dark', value: 'dark' }
-        ]
-      }
     }
   },
   {
@@ -158,6 +158,7 @@ export const fixtures = [
     legend: {
       collapsed: false,
       type: LEGEND_TYPES.ICON,
+      attr: 'icon_category',
       icons: [
         `data:image/svg+xml,<svg width="128" height="129" viewBox="0 0 128 129" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle opacity="0.5" cx="64.0003" cy="64.2" r="53.3333" fill="white"/>

@@ -55,9 +55,9 @@ export default function LegendLayerVariable({
   const selectOptions = legend.select?.options || [];
 
   return (
-    <>
+    <Box data-testid='legend-layer-variable' px={2}>
       {legend.select ? (
-        <Box>
+        <Box pb={1}>
           <Typography variant='caption'>{legend.select.label}</Typography>
           <Select
             value={legend.select.value}
@@ -84,6 +84,6 @@ export default function LegendLayerVariable({
         </Box>
       ) : null}
       <TypeComponent layer={layer} legend={legend} />
-    </>
+    </Box>
   );
 }
