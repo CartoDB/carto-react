@@ -4,6 +4,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import LayerIcon from '@mui/icons-material/LayersOutlined';
 import { LEGEND_WIDTH, styles } from './LegendWidgetUI.styles';
 import LegendLayer from './LegendLayer';
+import { useIntl } from 'react-intl';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const EMPTY_OBJ = {};
 const EMPTY_FN = () => {};
@@ -43,6 +45,9 @@ function NewLegendWidgetUI({
   minZoom = 0,
   currentZoom
 } = {}) {
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
+
   const rootSx = {
     ...styles[position],
     ...styles.root,
@@ -52,7 +57,7 @@ function NewLegendWidgetUI({
   return (
     <Paper elevation={3} sx={rootSx}>
       {collapsed ? (
-        <Tooltip title='Open legend'>
+        <Tooltip title={intlConfig.formatMessage({ id: 'c4r.widgets.legend.open' })}>
           <IconButton onClick={() => onChangeCollapsed(false)}>
             <LayerIcon />
           </IconButton>
@@ -67,7 +72,7 @@ function NewLegendWidgetUI({
           <Typography variant='caption' sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
-          <Tooltip title='Close'>
+          <Tooltip title={intlConfig.formatMessage({ id: 'c4r.widgets.legend.close' })}>
             <IconButton size='small' onClick={() => onChangeCollapsed(true)}>
               <CloseIcon />
             </IconButton>

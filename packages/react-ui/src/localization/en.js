@@ -39,7 +39,11 @@ const locales = {
         layer: 'layer',
         opacity: 'Opacity',
         hideLayer: 'Hide layer',
-        showLayer: 'Show layer'
+        showLayer: 'Show layer',
+        open: 'Open legend',
+        close: 'Close',
+        collapse: 'Collapse layer',
+        expand: 'Expand layer'
       },
       range: {
         clear: 'Clear',

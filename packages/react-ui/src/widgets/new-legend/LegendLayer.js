@@ -90,7 +90,9 @@ export default function LegendLayer({
         {collapsible && (
           <IconButton
             size='small'
-            aria-label='Toggle legend item collapsed'
+            aria-label={intlConfig.formatMessage({
+              id: collapsed ? 'c4r.widgets.legend.expand' : 'c4r.widgets.legend.collapse'
+            })}
             disabled={!visible}
             onClick={() => onChangeCollapsed({ id, collapsed: !collapsed })}
           >
