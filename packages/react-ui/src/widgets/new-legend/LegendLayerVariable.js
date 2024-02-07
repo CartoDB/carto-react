@@ -37,6 +37,23 @@ function LegendUnknown({ legend }) {
 }
 
 /**
+ * @param {import('../legend/LegendWidgetUI').LegendLayerVariableData} legend - legend variable data.
+ * @returns {string}
+ */
+function getLegendSubtitle(legend) {
+  if (legend.type === LEGEND_TYPES.PROPORTION) {
+    return 'c4r.widgets.legend.subtitles.proportion';
+  }
+  if (legend.type === LEGEND_TYPES.ICON || !!legend.customMarkers) {
+    return 'c4r.widgets.legend.subtitles.icon';
+  }
+  if (legend.isStrokeColor) {
+    return 'c4r.widgets.legend.subtitles.strokeColor';
+  }
+  return 'c4r.widgets.legend.subtitles.color';
+}
+
+/**
  * @param {object} props
  * @param {import('../legend/LegendWidgetUI').LegendLayerData} props.layer - Layer object from redux store.
  * @param {import('../legend/LegendWidgetUI').LegendLayerVariableData} props.legend - legend variable data.
@@ -50,12 +67,25 @@ export default function LegendLayerVariable({
   customLegendTypes,
   onChangeSelection
 }) {
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
+
   const type = legend.type;
   const TypeComponent = legendTypeMap[type] || customLegendTypes[type] || LegendUnknown;
   const selectOptions = legend.select?.options || [];
 
   return (
     <Box data-testid='legend-layer-variable' px={2}>
+      {legend.attr ? (
+        <Box pb={1}>
+          <Typography variant='overlineDelicate'>
+            {intlConfig.formatMessage({ id: getLegendSubtitle(legend) })}
+          </Typography>
+          <Typography variant='caption' component='p'>
+            {legend.attr}
+          </Typography>
+        </Box>
+      ) : null}
       {legend.select ? (
         <Box pb={1}>
           <Typography variant='caption'>{legend.select.label}</Typography>

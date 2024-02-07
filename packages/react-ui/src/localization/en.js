@@ -50,7 +50,13 @@ const locales = {
         greaterThan: 'greater than',
         and: 'and',
         zoomNote: 'Note: this layer will display at zoom levels',
-        notSupported: 'legend type not supported'
+        notSupported: 'legend type not supported',
+        subtitles: {
+          proportion: 'Radius range by',
+          icon: 'Icon based on',
+          strokeColor: 'Stroke color based on',
+          color: 'Color based on'
+        }
       },
       range: {
         clear: 'Clear',

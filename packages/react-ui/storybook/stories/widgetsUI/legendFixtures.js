@@ -9,6 +9,7 @@ export const fixtures = [
     showOpacityControl: false,
     legend: {
       type: 'basemap',
+      attr: 'attr',
       select: {
         label: 'Select basemap',
         value: 'light',
