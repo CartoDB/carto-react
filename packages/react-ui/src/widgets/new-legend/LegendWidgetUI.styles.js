@@ -1,4 +1,4 @@
-import { ICON_SIZE_MEDIUM } from '../..';
+import { ICON_SIZE_MEDIUM } from '../../theme/themeConstants';
 
 export const LEGEND_WIDTH = 240;
 export const styles = {
