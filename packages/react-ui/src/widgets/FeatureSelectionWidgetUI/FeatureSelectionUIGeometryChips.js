@@ -9,7 +9,7 @@ const ChipList = styled(List)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   marginLeft: theme.spacing(1.5),
-  padding: 0,
+  padding: theme.spacing(0.5),
   overflowX: 'auto',
   maxWidth: '100%',
   scrollbarWidth: 'none',
