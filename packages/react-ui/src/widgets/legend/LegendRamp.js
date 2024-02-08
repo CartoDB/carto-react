@@ -5,6 +5,12 @@ import Typography from '../../components/atoms/Typography';
 import { getPalette } from '../../utils/palette';
 import LegendProportion, { getMinMax } from './LegendProportion';
 
+/**
+ * @param {object} props
+ * @param {import('../legend/LegendWidgetUI').LegendLayerVariableBase & import('../legend/LegendWidgetUI').LegendRamp} props.legend - legend variable data.
+ * @param {boolean} [props.isContinuous] - If the legend is continuous.
+ * @returns {React.ReactNode}
+ */
 function LegendRamp({ isContinuous = false, legend }) {
   const { labels = [], colors = [], showMinMax = true } = legend;
 

@@ -5,6 +5,11 @@ import PropTypes from 'prop-types';
 import LegendLayerTitle from '../new-legend/LegendLayerTitle';
 import { styles } from '../new-legend/LegendWidgetUI.styles';
 
+/**
+ * @param {object} props
+ * @param {import('../legend/LegendWidgetUI').LegendLayerVariableBase & import('../legend/LegendWidgetUI').LegendCategories} props.legend - legend variable data.
+ * @returns {React.ReactNode}
+ */
 function LegendCategories({ legend }) {
   const {
     labels = [],

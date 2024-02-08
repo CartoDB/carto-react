@@ -18,7 +18,7 @@ const legendTypeMap = {
 
 /**
  * @param {object} props
- * @param {import('../legend/LegendWidgetUI').LegendLayerVariableData} props.legend - legend variable data.
+ * @param {import('../legend/LegendWidgetUI').LegendLayerVariableBase} props.legend - legend variable data.
  * @returns {React.ReactNode}
  */
 function LegendUnknown({ legend }) {

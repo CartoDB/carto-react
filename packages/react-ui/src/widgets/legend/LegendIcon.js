@@ -5,6 +5,11 @@ import { ICON_SIZE_MEDIUM } from '../../theme/themeConstants';
 import { styles } from '../new-legend/LegendWidgetUI.styles';
 import LegendLayerTitle from '../new-legend/LegendLayerTitle';
 
+/**
+ * @param {object} props
+ * @param {import('../legend/LegendWidgetUI').LegendLayerVariableBase & import('../legend/LegendWidgetUI').LegendIcons} props.legend - legend variable data.
+ * @returns {React.ReactNode}
+ */
 function LegendIcon({ legend }) {
   const { labels = [], icons = [] } = legend;
   return (

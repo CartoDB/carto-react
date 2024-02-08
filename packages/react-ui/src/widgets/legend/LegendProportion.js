@@ -56,6 +56,11 @@ const LabelList = styled(Box)(() => ({
   flexShrink: 1
 }));
 
+/**
+ * @param {object} props
+ * @param {import('../legend/LegendWidgetUI').LegendLayerVariableBase & import('../legend/LegendWidgetUI').LegendProportion} props.legend - legend variable data.
+ * @returns {React.ReactNode}
+ */
 function LegendProportion({ legend }) {
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);

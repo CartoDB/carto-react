@@ -23,11 +23,12 @@ export type LegendLayerData = {
   legend?: LegendLayerVariableData | LegendLayerVariableData[];
 };
 
-export type LegendLayerVariableData = {
+export type LegendLayerVariableBase = {
   type: LEGEND_TYPES;
   select: LegendSelectConfig
-  attr?: React.ReactNode; // subtitle to show below the legend item toggle when expanded
-} & LegendType;
+  attr?: string; // subtitle to show below the legend item toggle when expanded
+}
+export type LegendLayerVariableData = LegendLayerVariableBase & LegendType;
 
 type LegendType = LegendBins | LegendRamp | LegendIcons | LegendCategories | LegendProportion;
 
