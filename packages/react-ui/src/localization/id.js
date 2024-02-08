@@ -84,8 +84,7 @@ const locales = {
       chartLegend: {
         next: 'Next page',
         prev: 'Previous page'
-      },
-      skip: 'Skip to next widget'
+      }
     }
   }
 };
