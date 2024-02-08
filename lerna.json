@@ -4,5 +4,5 @@
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "2.3.10-accessibility-0.4"
+  "version": "2.3.10-accessibility-0.5"
 }
