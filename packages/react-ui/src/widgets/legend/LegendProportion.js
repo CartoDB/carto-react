@@ -69,11 +69,6 @@ function LegendProportion({ legend }) {
   const { min, max, error } = calculateRange(legend);
   const [step1, step2] = !error ? calculateSteps(min, max) : [0, 0];
 
-  console.log({
-    error,
-    domain: [max, step2, step1, min]
-  });
-
   return (
     <LegendProportionWrapper data-testid='proportion-legend'>
       <CircleGrid>
