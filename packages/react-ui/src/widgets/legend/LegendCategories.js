@@ -3,6 +3,7 @@ import { Box, Tooltip, styled } from '@mui/material';
 import { getPalette } from '../../utils/palette';
 import PropTypes from 'prop-types';
 import LegendLayerTitle from '../new-legend/LegendLayerTitle';
+import { styles } from '../new-legend/LegendWidgetUI.styles';
 
 function LegendCategories({ legend }) {
   const {
@@ -16,11 +17,7 @@ function LegendCategories({ legend }) {
   const palette = getPalette(colors, labels.length);
 
   return (
-    <Box
-      component='ul'
-      data-testid='categories-legend'
-      sx={{ m: 0, p: 0, pb: 1, display: 'flex', flexDirection: 'column' }}
-    >
+    <Box component='ul' data-testid='categories-legend' sx={styles.legendVariableList}>
       {labels.map((label, idx) => (
         <LegendCategoriesRow
           key={label + idx}
@@ -126,7 +123,7 @@ function LegendCategoriesRow({
   maskedIcon
 }) {
   return (
-    <Box component='li' sx={{ display: 'flex', alignItems: 'center' }}>
+    <Box component='li' sx={styles.legendVariableListItem}>
       <Tooltip title={isMax ? 'Most representative' : ''}>
         <Marker
           className='marker'

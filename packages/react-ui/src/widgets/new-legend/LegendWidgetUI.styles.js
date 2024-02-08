@@ -1,3 +1,5 @@
+import { ICON_SIZE_MEDIUM } from '../..';
+
 export const LEGEND_WIDTH = 240;
 export const styles = {
   root: {
@@ -82,6 +84,26 @@ export const styles = {
     display: 'flex',
     width: '60px',
     flexShrink: 0
+  },
+  legendVariableList: {
+    m: 0,
+    p: 0,
+    pb: 1,
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  legendVariableListItem: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  legendIconWrapper: {
+    mr: 1.5,
+    width: ICON_SIZE_MEDIUM,
+    height: ICON_SIZE_MEDIUM,
+    '& img': {
+      margin: 'auto',
+      display: 'block'
+    }
   },
   'top-left': {
     top: 0,
