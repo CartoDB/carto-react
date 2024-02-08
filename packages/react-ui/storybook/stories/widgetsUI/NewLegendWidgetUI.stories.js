@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import LegendWidgetUI from '../../../src/widgets/new-legend/LegendWidgetUI';
 import { IntlProvider } from 'react-intl';
 import { Box } from '@mui/material';
@@ -56,7 +56,7 @@ const Widget = ({ height, ...props }) => (
 );
 
 function useLegendState(args) {
-  const [collapsed, setCollapsed] = React.useState(args.collapsed);
+  const [collapsed, setCollapsed] = useState(args.collapsed);
   const [layers, dispatch] = useReducer((state, action) => {
     switch (action.type) {
       case 'add':
