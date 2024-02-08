@@ -9,10 +9,10 @@ const DEFAULT_LEGEND = {
 describe('LegendProportion', () => {
   test('renders correctly', () => {
     render(<LegendProportion legend={DEFAULT_LEGEND} />);
-    expect(screen.queryByText('Max: 200')).toBeInTheDocument();
+    expect(screen.queryByText('MAX: 200')).toBeInTheDocument();
     expect(screen.queryByText('150')).toBeInTheDocument();
     expect(screen.queryByText('50')).toBeInTheDocument();
-    expect(screen.queryByText('Min: 0')).toBeInTheDocument();
+    expect(screen.queryByText('MIN: 0')).toBeInTheDocument();
   });
   test('renders error if neither labels is defined', () => {
     render(<LegendProportion legend={{}} />);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import PropTypes from 'prop-types';
 import Typography from '../../components/atoms/Typography';
 import { useIntl } from 'react-intl';
@@ -30,10 +30,30 @@ const Circle = styled(Box, {
   };
 });
 
-const ProportionalGrid = styled(Grid)(({ theme: { spacing } }) => ({
+const CircleGrid = styled(Box)(({ theme: { spacing } }) => ({
+  display: 'flex',
   justifyContent: 'flex-end',
-  marginBottom: spacing(0.5),
-  position: 'relative'
+  flexShrink: 0,
+  position: 'relative',
+  width: spacing(sizes[0]),
+  height: spacing(sizes[0])
+}));
+
+const LegendProportionWrapper = styled(Box)(({ theme: { spacing } }) => ({
+  display: 'flex',
+  gap: spacing(1),
+  alignItems: 'stretch',
+  justifyContent: 'stretch',
+  padding: spacing(2, 0)
+}));
+
+const LabelList = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-around',
+  gap: 1,
+  flexGrow: 1,
+  flexShrink: 1
 }));
 
 function LegendProportion({ legend }) {
@@ -45,54 +65,41 @@ function LegendProportion({ legend }) {
   const [step1, step2] = !error ? calculateSteps(min, max) : [0, 0];
 
   return (
-    <Grid container item direction='row' spacing={2} data-testid='proportion-legend'>
-      <ProportionalGrid container item xs={6}>
-        {[...Array(4)].map((circle, index) => (
-          <Circle key={index} index={index} component='span'></Circle>
+    <LegendProportionWrapper data-testid='proportion-legend'>
+      <CircleGrid>
+        {[...Array(4)].map((_, index) => (
+          <Circle key={index} index={index} component='span' />
         ))}
-      </ProportionalGrid>
-      <Grid
-        container
-        item
-        direction='column'
-        justifyContent='space-between'
-        xs={6}
-        spacing={1}
-      >
+      </CircleGrid>
+      <LabelList>
         {error ? (
-          <Grid item maxWidth={240}>
+          <Box maxWidth={240}>
             <Typography variant='overline'>
               You need to specify valid numbers for the labels property
             </Typography>
-          </Grid>
+          </Box>
         ) : (
           <>
-            <Grid item>
-              <Typography variant='overline'>
-                {showMinMax
-                  ? intlConfig.formatMessage({ id: 'c4r.widgets.legend.max' })
-                  : ''}{' '}
-                {max}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant='overline'>{step2}</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant='overline'>{step1}</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant='overline'>
-                {showMinMax
-                  ? intlConfig.formatMessage({ id: 'c4r.widgets.legend.min' })
-                  : ''}{' '}
-                {min}
-              </Typography>
-            </Grid>
+            <Typography variant='overline' color='textSecondary'>
+              {showMinMax
+                ? `${intlConfig.formatMessage({ id: 'c4r.widgets.legend.max' })}: ${max}`
+                : max}
+            </Typography>
+            <Typography variant='overline' color='textSecondary'>
+              {step2}
+            </Typography>
+            <Typography variant='overline' color='textSecondary'>
+              {step1}
+            </Typography>
+            <Typography variant='overline' color='textSecondary'>
+              {showMinMax
+                ? `${intlConfig.formatMessage({ id: 'c4r.widgets.legend.min' })}: ${min}`
+                : min}
+            </Typography>
           </>
         )}
-      </Grid>
-    </Grid>
+      </LabelList>
+    </LegendProportionWrapper>
   );
 }
 
