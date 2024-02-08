@@ -216,7 +216,7 @@ function WrapperWidgetUI(props) {
     >
       {props.isLoading ? <LoadingBar /> : null}
 
-      <AccessibleLink to={`#${Number(id) + 1}`} id={id} variant='caption'>
+      <AccessibleLink href={`#${Number(id) + 1}`} id={id} variant='caption'>
         Go to next widget
       </AccessibleLink>
 
