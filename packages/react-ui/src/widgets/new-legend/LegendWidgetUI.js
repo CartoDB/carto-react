@@ -1,5 +1,14 @@
 import PropTypes from 'prop-types';
-import { Box, Collapse, IconButton, Paper, Tooltip, Typography } from '@mui/material';
+import {
+  Box,
+  Collapse,
+  Drawer,
+  IconButton,
+  Paper,
+  Tooltip,
+  Typography,
+  useMediaQuery
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import LayerIcon from '@mui/icons-material/LayersOutlined';
 import { LEGEND_WIDTH, styles } from './LegendWidgetUI.styles';
@@ -47,6 +56,7 @@ function NewLegendWidgetUI({
 } = {}) {
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   const rootSx = {
     ...styles[position],
@@ -79,8 +89,8 @@ function NewLegendWidgetUI({
           </Tooltip>
         </Box>
       )}
-      <Box sx={{ ...styles.legendItemList, width: collapsed ? 0 : undefined }}>
-        <Collapse unmountOnExit in={!collapsed} timeout={500}>
+      {isMobile ? (
+        <Drawer anchor='bottom' open={!collapsed} onClose={() => onChangeCollapsed(true)}>
           {layers.map((l) => (
             <LegendLayer
               key={l.id}
@@ -95,8 +105,27 @@ function NewLegendWidgetUI({
               customLegendTypes={customLegendTypes}
             />
           ))}
-        </Collapse>
-      </Box>
+        </Drawer>
+      ) : (
+        <Box sx={{ ...styles.legendItemList, width: collapsed ? 0 : undefined }}>
+          <Collapse unmountOnExit in={!collapsed} timeout={500}>
+            {layers.map((l) => (
+              <LegendLayer
+                key={l.id}
+                layer={l}
+                onChangeCollapsed={onChangeLegendRowCollapsed}
+                onChangeOpacity={onChangeOpacity}
+                onChangeVisibility={onChangeVisibility}
+                onChangeSelection={onChangeSelection}
+                maxZoom={maxZoom}
+                minZoom={minZoom}
+                currentZoom={currentZoom}
+                customLegendTypes={customLegendTypes}
+              />
+            ))}
+          </Collapse>
+        </Box>
+      )}
     </Paper>
   );
 }
