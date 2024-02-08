@@ -6,8 +6,7 @@ import {
   IconButton,
   Paper,
   Tooltip,
-  Typography,
-  useMediaQuery
+  Typography
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import LayerIcon from '@mui/icons-material/LayersOutlined';
@@ -36,6 +35,7 @@ const EMPTY_ARR = [];
  * @param {number} [props.maxZoom] - Global maximum zoom level for the map.
  * @param {number} [props.minZoom] - Global minimum zoom level for the map.
  * @param {number} [props.currentZoom] - Current zoom level for the map.
+ * @param {boolean} [props.isMobile] - Whether the widget is displayed on a mobile device.
  * @returns {React.ReactNode}
  */
 function NewLegendWidgetUI({
@@ -52,17 +52,35 @@ function NewLegendWidgetUI({
   position = 'bottom-right',
   maxZoom = 21,
   minZoom = 0,
-  currentZoom
+  currentZoom,
+  isMobile
 } = {}) {
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   const rootSx = {
     ...styles[position],
     ...styles.root,
     width: collapsed ? undefined : LEGEND_WIDTH
   };
+
+  const legendToggleHeader = (
+    <Box
+      sx={{
+        ...styles.legendToggle,
+        ...(!collapsed && styles.legendToggleOpen)
+      }}
+    >
+      <Typography variant='caption' sx={{ flexGrow: 1 }}>
+        {title}
+      </Typography>
+      <Tooltip title={intlConfig.formatMessage({ id: 'c4r.widgets.legend.close' })}>
+        <IconButton size='small' onClick={() => onChangeCollapsed(true)}>
+          <CloseIcon />
+        </IconButton>
+      </Tooltip>
+    </Box>
+  );
 
   return (
     <Paper elevation={3} sx={rootSx}>
@@ -72,39 +90,28 @@ function NewLegendWidgetUI({
             <LayerIcon />
           </IconButton>
         </Tooltip>
-      ) : (
-        <Box
-          sx={{
-            ...styles.legendToggle,
-            ...(!collapsed && styles.legendToggleOpen)
-          }}
-        >
-          <Typography variant='caption' sx={{ flexGrow: 1 }}>
-            {title}
-          </Typography>
-          <Tooltip title={intlConfig.formatMessage({ id: 'c4r.widgets.legend.close' })}>
-            <IconButton size='small' onClick={() => onChangeCollapsed(true)}>
-              <CloseIcon />
-            </IconButton>
-          </Tooltip>
-        </Box>
+      ) : isMobile ? null : (
+        legendToggleHeader
       )}
       {isMobile ? (
         <Drawer anchor='bottom' open={!collapsed} onClose={() => onChangeCollapsed(true)}>
-          {layers.map((l) => (
-            <LegendLayer
-              key={l.id}
-              layer={l}
-              onChangeCollapsed={onChangeLegendRowCollapsed}
-              onChangeOpacity={onChangeOpacity}
-              onChangeVisibility={onChangeVisibility}
-              onChangeSelection={onChangeSelection}
-              maxZoom={maxZoom}
-              minZoom={minZoom}
-              currentZoom={currentZoom}
-              customLegendTypes={customLegendTypes}
-            />
-          ))}
+          {legendToggleHeader}
+          <Box style={styles.legendItemList}>
+            {layers.map((l) => (
+              <LegendLayer
+                key={l.id}
+                layer={l}
+                onChangeCollapsed={onChangeLegendRowCollapsed}
+                onChangeOpacity={onChangeOpacity}
+                onChangeVisibility={onChangeVisibility}
+                onChangeSelection={onChangeSelection}
+                maxZoom={maxZoom}
+                minZoom={minZoom}
+                currentZoom={currentZoom}
+                customLegendTypes={customLegendTypes}
+              />
+            ))}
+          </Box>
         </Drawer>
       ) : (
         <Box sx={{ ...styles.legendItemList, width: collapsed ? 0 : undefined }}>
@@ -149,7 +156,11 @@ NewLegendWidgetUI.propTypes = {
   onChangeSelection: PropTypes.func.isRequired,
   layerOrder: PropTypes.arrayOf(PropTypes.string),
   title: PropTypes.string,
-  position: PropTypes.oneOf(['top-left', 'top-right', 'bottom-left', 'bottom-right'])
+  position: PropTypes.oneOf(['top-left', 'top-right', 'bottom-left', 'bottom-right']),
+  maxZoom: PropTypes.number,
+  minZoom: PropTypes.number,
+  currentZoom: PropTypes.number,
+  isMobile: PropTypes.bool
 };
 
 export default NewLegendWidgetUI;

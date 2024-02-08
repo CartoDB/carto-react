@@ -1,6 +1,6 @@
-import React from 'react';
-import { Tooltip, Typography } from '@mui/material';
-import { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { Tooltip } from '@mui/material';
+import { Typography } from '@carto/react-ui';
 
 /** Renders the legend layer title with an optional tooltip if the title is detected to be too long.
  * @param {object} props
@@ -25,7 +25,7 @@ export default function LegendLayerTitle({ title, visible, typographyProps }) {
       ref={ref}
       color={visible ? 'textPrimary' : 'textSecondary'}
       variant='button'
-      fontWeight={500}
+      weight='medium'
       lineHeight='20px'
       component='p'
       noWrap
