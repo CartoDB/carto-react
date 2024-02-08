@@ -47,6 +47,7 @@ export const fixtures = [
     switchable: true,
     legend: [
       {
+        attr: 'category',
         collapsed: false,
         type: LEGEND_TYPES.ICON,
         icons: [
@@ -60,6 +61,7 @@ export const fixtures = [
         labels: ['Available land']
       },
       {
+        attr: 'population',
         collapsed: false,
         type: LEGEND_TYPES.PROPORTION,
         labels: [1, 1000]

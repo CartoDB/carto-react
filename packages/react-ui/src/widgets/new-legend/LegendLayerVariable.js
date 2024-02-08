@@ -1,4 +1,4 @@
-import { Box, ListItemText, MenuItem, Select, Typography } from '@mui/material';
+import { Box, ListItemText, MenuItem, Select } from '@mui/material';
 import LegendCategories from '../legend/LegendCategories';
 import LegendIcon from '../legend/LegendIcon';
 import LegendRamp from '../legend/LegendRamp';
@@ -6,6 +6,7 @@ import LegendProportion from '../legend/LegendProportion';
 import { LEGEND_TYPES } from '../legend/LegendWidgetUI';
 import { useIntl } from 'react-intl';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
+import Typography from '../../components/atoms/Typography';
 
 const legendTypeMap = {
   [LEGEND_TYPES.CATEGORY]: LegendCategories,
@@ -78,7 +79,12 @@ export default function LegendLayerVariable({
     <Box data-testid='legend-layer-variable' px={2}>
       {legend.attr ? (
         <Box pb={1}>
-          <Typography variant='overlineDelicate'>
+          <Typography
+            gutterBottom
+            variant='overlineDelicate'
+            color='textSecondary'
+            component='p'
+          >
             {intlConfig.formatMessage({ id: getLegendSubtitle(legend) })}
           </Typography>
           <Typography variant='caption' component='p'>
@@ -88,7 +94,9 @@ export default function LegendLayerVariable({
       ) : null}
       {legend.select ? (
         <Box pb={1}>
-          <Typography variant='caption'>{legend.select.label}</Typography>
+          <Typography variant='caption' weight='medium' component='p'>
+            {legend.select.label}
+          </Typography>
           <Select
             value={legend.select.value}
             renderValue={(value) =>
