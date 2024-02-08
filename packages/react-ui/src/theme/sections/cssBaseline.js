@@ -6,7 +6,8 @@ export const CssBaseline = {
   // Accessibility focus (keyboard only)
   '*:focus-visible': {
     outline: `2px solid ${commonPalette.primary.main} !important`,
-    boxShadow: `0 0 0 4px ${commonPalette.primary.background} !important`
+    boxShadow: `0 0 0 4px ${commonPalette.primary.background} !important`,
+    borderRadius: '4px'
   },
 
   // Custom scrollbars
