@@ -1,4 +1,4 @@
-import { Grid, Tooltip, styled } from '@mui/material';
+import { Box, Tooltip, styled } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Typography from '../../components/atoms/Typography';
@@ -38,18 +38,18 @@ function LegendRamp({ isContinuous = false, legend }) {
   }
 
   return (
-    <Grid container item direction='column' spacing={1} data-testid='ramp-legend'>
+    <Box sx={{ py: 2 }} data-testid='ramp-legend'>
       {error ? (
-        <Grid item xs maxWidth={240}>
+        <Box maxWidth={240}>
           <Typography variant='overline'>
             You need to specify valid numbers for the labels property
           </Typography>
-        </Grid>
+        </Box>
       ) : (
         <>
-          <Grid container item>
+          <Box sx={{ display: 'flex', pb: 1 }}>
             {isContinuous ? (
-              <StepsContinuous data-testid='step-continuous' item xs palette={palette} />
+              <StepsContinuous data-testid='step-continuous' palette={palette} />
             ) : (
               <StepsDiscontinuous
                 labels={formattedLabels}
@@ -58,14 +58,18 @@ function LegendRamp({ isContinuous = false, legend }) {
                 min={minLabel}
               />
             )}
-          </Grid>
-          <Grid container item justifyContent='space-between'>
-            <Typography variant='overline'>{minLabel}</Typography>
-            <Typography variant='overline'>{maxLabel}</Typography>
-          </Grid>
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Typography variant='overlineDelicate' color='textSecondary'>
+              {maxLabel}
+            </Typography>
+            <Typography variant='overlineDelicate' color='textSecondary'>
+              {minLabel}
+            </Typography>
+          </Box>
         </>
       )}
-    </Grid>
+    </Box>
   );
 }
 
@@ -92,17 +96,21 @@ LegendRamp.propTypes = {
 
 export default LegendRamp;
 
-const StepsContinuous = styled(Grid, {
+const StepsContinuous = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'palette'
 })(({ palette, theme }) => ({
+  display: 'block',
+  flexGrow: 1,
   height: theme.spacing(1),
   borderRadius: theme.spacing(0.5),
   background: `linear-gradient(to right, ${palette.join()})`
 }));
 
-const StepGrid = styled(Grid, {
+const StepGrid = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'color'
 })(({ color, theme }) => ({
+  display: 'block',
+  flexGrow: 1,
   height: theme.spacing(1),
   backgroundColor: color,
   '&:first-of-type': {
@@ -128,7 +136,7 @@ function StepsDiscontinuous({ labels = [], palette = [], max, min }) {
 
         return (
           <Tooltip key={idx} title={title}>
-            <StepGrid data-testid='step-discontinuous' item xs color={palette[idx]} />
+            <StepGrid data-testid='step-discontinuous' color={palette[idx]} />
           </Tooltip>
         );
       })}

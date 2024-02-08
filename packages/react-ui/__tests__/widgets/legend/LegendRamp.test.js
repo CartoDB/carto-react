@@ -41,6 +41,13 @@ describe('LegendRamp', () => {
         expect(backgroundColor).toBe(hexToRgb(color));
       });
     });
+    test('renders correctly without min and max', () => {
+      render(<LegendRamp legend={{ ...DEFAULT_LEGEND, showMinMax: false }} />);
+      expect(screen.queryByText('< 0')).not.toBeInTheDocument();
+      expect(screen.queryByText('≥ 200')).not.toBeInTheDocument();
+      expect(screen.queryByText('0')).toBeInTheDocument();
+      expect(screen.queryByText('200')).toBeInTheDocument();
+    });
     test('renders formatted labels correctly', () => {
       render(<LegendRamp legend={DEFAULT_LEGEND_WITH_FORMATTED_LABELS} />);
       expect(screen.queryByText('< 0 km')).toBeInTheDocument();
