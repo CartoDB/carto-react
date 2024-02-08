@@ -56,7 +56,9 @@ const locales = {
           icon: 'Icon based on',
           strokeColor: 'Stroke color based on',
           color: 'Color based on'
-        }
+        },
+        max: 'Max',
+        min: 'Min'
       },
       range: {
         clear: 'Clear',

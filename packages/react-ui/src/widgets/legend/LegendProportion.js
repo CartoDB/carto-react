@@ -2,6 +2,8 @@ import React from 'react';
 import { Box, Grid, styled } from '@mui/material';
 import PropTypes from 'prop-types';
 import Typography from '../../components/atoms/Typography';
+import { useIntl } from 'react-intl';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const sizes = {
   0: 12,
@@ -35,6 +37,10 @@ const ProportionalGrid = styled(Grid)(({ theme: { spacing } }) => ({
 }));
 
 function LegendProportion({ legend }) {
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
+
+  const showMinMax = legend.showMinMax;
   const { min, max, error } = calculateRange(legend);
   const [step1, step2] = !error ? calculateSteps(min, max) : [0, 0];
 
@@ -62,7 +68,12 @@ function LegendProportion({ legend }) {
         ) : (
           <>
             <Grid item>
-              <Typography variant='overline'>Max: {max}</Typography>
+              <Typography variant='overline'>
+                {showMinMax
+                  ? intlConfig.formatMessage({ id: 'c4r.widgets.legend.max' })
+                  : ''}{' '}
+                {max}
+              </Typography>
             </Grid>
             <Grid item>
               <Typography variant='overline'>{step2}</Typography>
@@ -71,7 +82,12 @@ function LegendProportion({ legend }) {
               <Typography variant='overline'>{step1}</Typography>
             </Grid>
             <Grid item>
-              <Typography variant='overline'>Min: {min}</Typography>
+              <Typography variant='overline'>
+                {showMinMax
+                  ? intlConfig.formatMessage({ id: 'c4r.widgets.legend.min' })
+                  : ''}{' '}
+                {min}
+              </Typography>
             </Grid>
           </>
         )}
