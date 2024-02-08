@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Tooltip } from '@mui/material';
-import { Typography } from '@carto/react-ui';
+import Typography from '../../components/atoms/Typography';
 
 /** Renders the legend layer title with an optional tooltip if the title is detected to be too long.
  * @param {object} props
