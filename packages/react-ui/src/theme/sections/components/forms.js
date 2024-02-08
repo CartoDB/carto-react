@@ -531,6 +531,12 @@ export const formsOverrides = {
         '&:focus': {
           background: 'transparent'
         },
+        // Remove focus on keyboard navigation as the parent element has focus
+        '&:focus-visible': {
+          outline: 'none !important',
+          boxShadow: 'none !important'
+        },
+
         '& .MuiTypography-root': {
           whiteSpace: 'nowrap',
           overflow: 'hidden',

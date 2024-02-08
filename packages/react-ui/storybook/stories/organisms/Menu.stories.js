@@ -1,5 +1,13 @@
-import React from 'react';
-import { Divider, ListItemIcon, ListItemText, MenuItem, MenuList } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Divider,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  MenuList,
+  Menu,
+  Box
+} from '@mui/material';
 import {
   CloudOutlined,
   ContentCopyOutlined,
@@ -38,7 +46,79 @@ const options = {
 };
 export default options;
 
-const Template = ({ label, ...args }) => {
+const TemplateMenu = ({ label, ...args }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const open = Boolean(anchorEl);
+
+  const openDropdown = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const closeDropdown = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <Box pb={12}>
+      <Button
+        variant='outlined'
+        id='menu-button'
+        aria-controls='menu'
+        aria-haspopup='true'
+        aria-expanded={open ? 'true' : undefined}
+        onClick={openDropdown}
+        isOpen={open}
+      >
+        Open menu
+      </Button>
+      <Menu
+        {...args}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={closeDropdown}
+        id='menu'
+        MenuListProps={{ 'aria-labelledby': 'menu-button' }}
+      >
+        <MenuItem>
+          <ListItemIcon>
+            <ContentCutOutlined />
+          </ListItemIcon>
+          <ListItemText>{label}</ListItemText>
+          <Typography variant='body2' color='text.secondary'>
+            ⌘X
+          </Typography>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <ContentCopyOutlined />
+          </ListItemIcon>
+          <ListItemText>{label}</ListItemText>
+          <Typography variant='body2' color='text.secondary'>
+            ⌘C
+          </Typography>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <ContentPasteOutlined />
+          </ListItemIcon>
+          <ListItemText>{label}</ListItemText>
+          <Typography variant='body2' color='text.secondary'>
+            ⌘V
+          </Typography>
+        </MenuItem>
+        <Divider />
+        <MenuItem>
+          <ListItemIcon>
+            <CloudOutlined />
+          </ListItemIcon>
+          <ListItemText>{label}</ListItemText>
+        </MenuItem>
+      </Menu>
+    </Box>
+  );
+};
+const TemplateMenuList = ({ label, ...args }) => {
   return (
     <MenuList {...args}>
       <MenuItem>
@@ -105,7 +185,10 @@ const DocTemplate = () => {
 
 const commonArgs = { label: 'Label', dense: false };
 
-export const Playground = Template.bind({});
-Playground.args = { ...commonArgs };
-
 export const Guide = DocTemplate.bind({});
+
+export const MenuWrapper = TemplateMenu.bind({});
+MenuWrapper.args = { ...commonArgs };
+
+export const MenuListWrapper = TemplateMenuList.bind({});
+MenuListWrapper.args = { ...commonArgs };

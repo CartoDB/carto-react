@@ -67,7 +67,8 @@ export const surfacesOverrides = {
           color: theme.palette.text.disabled
         },
         '&.Mui-focusVisible': {
-          backgroundColor: 'transparent'
+          backgroundColor: 'transparent',
+          borderRadius: theme.shape.borderRadius
         }
       }),
       expandIconWrapper: ({ theme }) => ({

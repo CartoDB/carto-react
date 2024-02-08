@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Keyboard accessibility improvements in Widgets and DS components [#835](https://github.com/CartoDB/carto-react/pull/835)
+
 ## 2.3
 
 ### 2.3.10 (2024-01-31)
