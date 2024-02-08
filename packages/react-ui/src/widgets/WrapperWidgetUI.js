@@ -8,12 +8,16 @@ import {
   Icon,
   IconButton,
   LinearProgress,
+  Link,
   Menu,
   MenuItem,
   Tooltip,
   styled
 } from '@mui/material';
 import { ExpandLess, ExpandMore, MoreVert } from '@mui/icons-material';
+import { useIntl } from 'react-intl';
+import useImperativeIntl from '../hooks/useImperativeIntl';
+import uniqueId from 'lodash/uniqueId';
 import Typography from '../components/atoms/Typography';
 
 /*
@@ -131,8 +135,24 @@ const PaperMenu = styled(Menu)(({ theme }) => ({
   }
 }));
 
+const AccessibleLink = styled(Link)(({ theme }) => ({
+  position: 'absolute',
+  left: '-999px',
+  width: '1px',
+  height: '1px',
+
+  '&:focus-visible': {
+    position: 'static',
+    width: 'auto',
+    height: 'auto'
+  }
+}));
+
 function WrapperWidgetUI(props) {
   const wrapper = createRef();
+
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
 
   const [expandedInt, setExpandedInt] = useState(true);
   const externalExpanded =
@@ -149,6 +169,9 @@ function WrapperWidgetUI(props) {
     actions = [],
     optionsIcon = <MoreVert />
   } = props;
+
+  // Accessibility attributes
+  const [id] = useState(uniqueId());
 
   const handleExpandClick = () => {
     if (props.expandable) {
@@ -190,8 +213,20 @@ function WrapperWidgetUI(props) {
   }
 
   return (
-    <Root margin={props.margin} component='section' aria-label={props.title}>
+    <Root
+      margin={props.margin}
+      component='section'
+      aria-label={props.title}
+      role='section'
+    >
       {props.isLoading ? <LoadingBar /> : null}
+
+      <AccessibleLink href={`#${Number(id) + 1}`} id={id} variant='caption'>
+        {intlConfig.formatMessage({
+          id: `c4r.widgets.skip`
+        })}
+      </AccessibleLink>
+
       <Header container expanded={props.expanded}>
         <HeaderButton
           expandable={props.expandable}
@@ -267,6 +302,7 @@ function WrapperWidgetUI(props) {
           )}
         </HeaderItems>
       </Header>
+
       {/* TODO: check collapse error */}
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
         <Box {...props.contentProps}>

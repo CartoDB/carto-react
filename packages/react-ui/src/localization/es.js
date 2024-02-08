@@ -83,7 +83,8 @@ const locales = {
       chartLegend: {
         next: 'Página siguente',
         prev: 'Página anterior'
-      }
+      },
+      skip: 'Saltar al siguiente widget'
     }
   }
 };
