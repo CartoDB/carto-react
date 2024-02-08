@@ -6,7 +6,7 @@ import { getPalette } from '../../utils/palette';
 import LegendProportion, { getMinMax } from './LegendProportion';
 
 function LegendRamp({ isContinuous = false, legend }) {
-  const { labels = [], colors = [] } = legend;
+  const { labels = [], colors = [], showMinMax = true } = legend;
 
   const palette = getPalette(
     colors,
@@ -26,7 +26,7 @@ function LegendRamp({ isContinuous = false, legend }) {
   let maxLabel = formattedLabels[formattedLabels.length - 1];
   let minLabel = formattedLabels[0];
 
-  if (!isContinuous) {
+  if (!isContinuous && showMinMax) {
     minLabel = '< ' + minLabel;
     maxLabel = '≥ ' + maxLabel;
   }

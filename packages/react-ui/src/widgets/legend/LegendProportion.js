@@ -40,7 +40,7 @@ function LegendProportion({ legend }) {
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
 
-  const showMinMax = legend.showMinMax;
+  const showMinMax = legend.showMinMax ?? true;
   const { min, max, error } = calculateRange(legend);
   const [step1, step2] = !error ? calculateSteps(min, max) : [0, 0];
 
