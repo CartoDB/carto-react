@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Box,
   IconButton,
   InputAdornment,
   Popover,
@@ -8,7 +7,7 @@ import {
   TextField,
   Tooltip
 } from '@mui/material';
-import { styles } from './LegendWidgetUI.styles';
+import { StyledOpacityControl, styles } from './LegendWidgetUI.styles';
 import { useIntl } from 'react-intl';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
 import OpacityIcon from '../../assets/icons/OpacityIcon';
@@ -67,7 +66,7 @@ export default function LegendOpacityControl({
           }
         }}
       >
-        <Box sx={styles.opacityControl}>
+        <StyledOpacityControl>
           <Slider
             value={opacity * 100}
             onChange={(_, v) => onChange(v / 100)}
@@ -97,7 +96,7 @@ export default function LegendOpacityControl({
               )
             }}
           />
-        </Box>
+        </StyledOpacityControl>
       </Popover>
     </>
   );

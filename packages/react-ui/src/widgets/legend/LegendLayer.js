@@ -5,7 +5,7 @@ import EyeIcon from '@mui/icons-material/VisibilityOutlined';
 import EyeOffIcon from '@mui/icons-material/VisibilityOffOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { styles } from './LegendWidgetUI.styles';
+import { LegendItemHeader, styles } from './LegendWidgetUI.styles';
 import LegendOpacityControl from './LegendOpacityControl';
 import LegendLayerTitle from './LegendLayerTitle';
 import LegendLayerVariable from './LegendLayerVariable';
@@ -88,7 +88,7 @@ export default function LegendLayer({
         }
       }}
     >
-      <Box ref={menuAnchorRef} component='header' sx={styles.legendItemHeader}>
+      <LegendItemHeader ref={menuAnchorRef}>
         {collapsible && (
           <IconButton
             size='small'
@@ -151,7 +151,7 @@ export default function LegendLayer({
             </IconButton>
           </Tooltip>
         )}
-      </Box>
+      </LegendItemHeader>
       <Collapse unmountOnExit timeout={100} in={isExpanded}>
         <Box
           data-testid='legend-layer-variable-list'
