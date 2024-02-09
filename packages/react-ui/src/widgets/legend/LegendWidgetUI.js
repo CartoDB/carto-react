@@ -1,17 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Box,
-  Collapse,
-  Drawer,
-  IconButton,
-  Paper,
-  Tooltip,
-  Typography
-} from '@mui/material';
+import { Box, Collapse, Drawer, IconButton, Tooltip, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import LayerIcon from '@mui/icons-material/LayersOutlined';
-import { LEGEND_WIDTH, styles } from './LegendWidgetUI.styles';
+import { LegendRoot, LegendToggleHeader, styles } from './LegendWidgetUI.styles';
 import LegendLayer from './LegendLayer';
 import { useIntl } from 'react-intl';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
@@ -31,11 +23,11 @@ const EMPTY_ARR = [];
  * @param {({ id, visible }: { id: string, visible: boolean }) => void} [props.onChangeVisibility] - Callback function for layer collapsed state change.
  * @param {({ id, index, selection }: { id: string, index: number, selection: unknown }) => void} props.onChangeSelection - Callback function for layer variable selection change.
  * @param {string} [props.title] - Title of the toggle button when widget is open.
- * @param {'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'} [props.position] - Position of the widget.
  * @param {number} [props.maxZoom] - Global maximum zoom level for the map.
  * @param {number} [props.minZoom] - Global minimum zoom level for the map.
  * @param {number} [props.currentZoom] - Current zoom level for the map.
  * @param {boolean} [props.isMobile] - Whether the widget is displayed on a mobile device.
+ * @param {import('@mui/system').SxProps<import('@mui/system').Theme>} [props.sx] - Style object for the root component.
  * @returns {React.ReactNode}
  */
 function LegendWidgetUI({
@@ -48,29 +40,18 @@ function LegendWidgetUI({
   onChangeLegendRowCollapsed = EMPTY_FN,
   onChangeSelection = EMPTY_FN,
   title,
-  position = 'bottom-right',
   maxZoom = 21,
   minZoom = 0,
   currentZoom,
-  isMobile
+  isMobile,
+  sx
 } = {}) {
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
   const isSingle = layers.length === 1;
 
-  const rootSx = {
-    ...styles[position],
-    ...styles.root,
-    width: collapsed || isMobile ? undefined : LEGEND_WIDTH
-  };
-
   const legendToggleHeader = (
-    <Box
-      sx={{
-        ...styles.legendToggle,
-        ...(!collapsed && styles.legendToggleOpen)
-      }}
-    >
+    <LegendToggleHeader collapsed={collapsed}>
       <Typography variant='caption' sx={{ flexGrow: 1 }}>
         {title}
       </Typography>
@@ -79,7 +60,7 @@ function LegendWidgetUI({
           <CloseIcon />
         </IconButton>
       </Tooltip>
-    </Box>
+    </LegendToggleHeader>
   );
   const legendToggleButton = (
     <Tooltip title={intlConfig.formatMessage({ id: 'c4r.widgets.legend.open' })}>
@@ -91,7 +72,7 @@ function LegendWidgetUI({
 
   if (isSingle) {
     return (
-      <Paper elevation={3} sx={rootSx}>
+      <LegendRoot sx={sx} elevation={3} collapsed={collapsed || isMobile}>
         <Box style={styles.legendItemList}>
           <LegendLayer
             layer={layers[0]}
@@ -105,12 +86,12 @@ function LegendWidgetUI({
             customLegendTypes={customLegendTypes}
           />
         </Box>
-      </Paper>
+      </LegendRoot>
     );
   }
 
   return (
-    <Paper elevation={3} sx={rootSx}>
+    <LegendRoot sx={sx} elevation={3} collapsed={collapsed || isMobile}>
       {isMobile ? (
         <>
           {legendToggleButton}
@@ -161,7 +142,7 @@ function LegendWidgetUI({
           </Box>
         </>
       )}
-    </Paper>
+    </LegendRoot>
   );
 }
 
@@ -170,7 +151,6 @@ LegendWidgetUI.defaultProps = {
   customLegendTypes: EMPTY_OBJ,
   collapsed: false,
   title: 'Layers',
-  position: 'bottom-right',
   onChangeCollapsed: EMPTY_FN,
   onChangeLegendRowCollapsed: EMPTY_FN,
   onChangeVisibility: EMPTY_FN,
@@ -188,7 +168,6 @@ LegendWidgetUI.propTypes = {
   onChangeOpacity: PropTypes.func,
   onChangeSelection: PropTypes.func,
   title: PropTypes.string,
-  position: PropTypes.oneOf(['top-left', 'top-right', 'bottom-left', 'bottom-right']),
   maxZoom: PropTypes.number,
   minZoom: PropTypes.number,
   currentZoom: PropTypes.number,

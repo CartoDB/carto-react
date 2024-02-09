@@ -1,25 +1,32 @@
+import { Box, Paper, styled } from '@mui/material';
 import { ICON_SIZE_MEDIUM } from '../../theme/themeConstants';
 
 export const LEGEND_WIDTH = 240;
+
+export const LegendRoot = styled(Paper, {
+  shouldForwardProp: (prop) => !['collapsed'].includes(prop)
+})(({ theme, collapsed }) => ({
+  width: collapsed ? undefined : LEGEND_WIDTH,
+  background: theme.palette.background.paper,
+  position: 'absolute',
+  maxHeight: 'calc(100% - 120px)',
+  display: 'flex',
+  flexDirection: 'column'
+}));
+
+export const LegendToggleHeader = styled(Box, {
+  shouldForwardProp: (prop) => !['collapsed'].includes(prop)
+})(({ theme, collapsed }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  pl: 2,
+  pr: 1,
+  py: 1,
+  borderBottom: collapsed ? undefined : `1px solid ${theme.palette.divider}`
+}));
+
 export const styles = {
-  root: {
-    background: (theme) => theme.palette.background.paper,
-    position: 'absolute',
-    maxHeight: 'calc(100% - 120px)',
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  legendToggleOpen: {
-    borderBottom: (theme) => `1px solid ${theme.palette.divider}`
-  },
-  legendToggle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    pl: 2,
-    pr: 1,
-    py: 1
-  },
   legendItemList: {
     overflow: 'auto',
     maxHeight: `calc(100% - 12px)`
@@ -39,28 +46,6 @@ export const styles = {
     zIndex: 2,
     top: 0,
     background: (theme) => theme.palette.background.paper
-  },
-  legendItemBody: {
-    px: 2
-    // '& [data-testid="categories-legend"] > .MuiGrid-root': {
-    //   paddingTop: '6px',
-    //   paddingBottom: '6px'
-    // },
-    // '& [data-testid="icon-legend"] > .MuiGrid-root': {
-    //   paddingTop: '2px',
-    //   paddingBottom: '2px',
-    //   '& > .MuiBox-root': {
-    //     width: '20px',
-    //     height: '20px',
-    //     marginRight: '8px'
-    //   },
-    //   '& img': {
-    //     display: 'block',
-    //     margin: 'auto',
-    //     width: 'auto',
-    //     height: '20px'
-    //   }
-    // }
   },
   layerVariablesList: {
     display: 'flex',
@@ -104,21 +89,5 @@ export const styles = {
       margin: 'auto',
       display: 'block'
     }
-  },
-  'top-left': {
-    top: 0,
-    left: 0
-  },
-  'top-right': {
-    top: 0,
-    right: 0
-  },
-  'bottom-left': {
-    bottom: 0,
-    left: 0
-  },
-  'bottom-right': {
-    bottom: 0,
-    right: 0
   }
 };
