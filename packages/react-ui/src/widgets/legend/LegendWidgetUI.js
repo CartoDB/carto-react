@@ -40,7 +40,7 @@ function LegendWidgetUI({
   onChangeLegendRowCollapsed = EMPTY_FN,
   onChangeSelection = EMPTY_FN,
   title,
-  maxZoom = 21,
+  maxZoom = 20,
   minZoom = 0,
   currentZoom,
   isMobile,
