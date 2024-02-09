@@ -20,16 +20,15 @@ export const LegendToggleHeader = styled('header', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  pl: 2,
-  pr: 1,
-  py: 1,
+  padding: theme.spacing(1),
+  paddingLeft: theme.spacing(2),
   borderBottom: collapsed ? undefined : `1px solid ${theme.palette.divider}`
 }));
 
 export const LegendItemHeader = styled('header')(({ theme }) => ({
-  p: 1.5,
-  pr: 2,
-  gap: 0.5,
+  padding: theme.spacing(1.5),
+  paddingRight: theme.spacing(2),
+  gap: theme.spacing(0.5),
   display: 'flex',
   justifyContent: 'space-between',
   position: 'sticky',
@@ -38,11 +37,11 @@ export const LegendItemHeader = styled('header')(({ theme }) => ({
   background: theme.palette.background.paper
 }));
 
-export const StyledOpacityControl = styled('div')(() => ({
+export const StyledOpacityControl = styled('div')(({ theme }) => ({
   display: 'flex',
-  gap: 2,
+  gap: theme.spacing(2),
   alignItems: 'center',
-  p: 1,
+  padding: theme.spacing(1),
   minWidth: LEGEND_WIDTH - 32
 }));
 
