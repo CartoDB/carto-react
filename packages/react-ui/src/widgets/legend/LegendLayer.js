@@ -5,7 +5,7 @@ import EyeIcon from '@mui/icons-material/VisibilityOutlined';
 import EyeOffIcon from '@mui/icons-material/VisibilityOffOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { LegendItemHeader, styles } from './LegendWidgetUI.styles';
+import { LayerVariablesList, LegendItemHeader } from './LegendWidgetUI.styles';
 import LegendOpacityControl from './LegendOpacityControl';
 import LegendLayerTitle from './LegendLayerTitle';
 import LegendLayerVariable from './LegendLayerVariable';
@@ -153,12 +153,9 @@ export default function LegendLayer({
         )}
       </LegendItemHeader>
       <Collapse unmountOnExit timeout={100} in={isExpanded}>
-        <Box
+        <LayerVariablesList
           data-testid='legend-layer-variable-list'
-          sx={{
-            ...styles.layerVariablesList,
-            opacity: outsideCurrentZoom ? 0.5 : 1
-          }}
+          opacity={outsideCurrentZoom ? 0.5 : 1}
         >
           {legendLayerVariables.map((legend, index) => (
             <LegendLayerVariable
@@ -171,7 +168,7 @@ export default function LegendLayer({
               }
             />
           ))}
-        </Box>
+        </LayerVariablesList>
         {helperText && (
           <Typography variant='caption' color='textSecondary' component='p' sx={{ p: 2 }}>
             {helperText}

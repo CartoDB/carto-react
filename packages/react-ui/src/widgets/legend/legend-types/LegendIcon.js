@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import { ICON_SIZE_MEDIUM } from '../../../theme/themeConstants';
-import { styles } from '../LegendWidgetUI.styles';
+import { LegendIconWrapper, LegendVariableList } from '../LegendWidgetUI.styles';
 import LegendLayerTitle from '../LegendLayerTitle';
 
 /**
@@ -13,12 +13,12 @@ import LegendLayerTitle from '../LegendLayerTitle';
 function LegendIcon({ legend }) {
   const { labels = [], icons = [] } = legend;
   return (
-    <Box component='ul' data-testid='icon-legend' sx={styles.legendVariableList}>
+    <LegendVariableList data-testid='icon-legend'>
       {labels.map((label, idx) => (
-        <Box key={label} component='li' sx={styles.legendVariableListItem}>
-          <Box sx={styles.legendIconWrapper}>
+        <Box key={label} component='li' sx={{ display: 'flex', alignItems: 'center' }}>
+          <LegendIconWrapper>
             <img src={icons[idx]} alt={label} width='autio' height={ICON_SIZE_MEDIUM} />
-          </Box>
+          </LegendIconWrapper>
           <LegendLayerTitle
             visible
             title={label}
@@ -26,7 +26,7 @@ function LegendIcon({ legend }) {
           />
         </Box>
       ))}
-    </Box>
+    </LegendVariableList>
   );
 }
 

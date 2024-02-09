@@ -1,9 +1,9 @@
 import React from 'react';
-import { Box, Tooltip, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import { getPalette } from '../../../utils/palette';
 import PropTypes from 'prop-types';
 import LegendLayerTitle from '../LegendLayerTitle';
-import { styles } from '../LegendWidgetUI.styles';
+import { LegendVariableList } from '../LegendWidgetUI.styles';
 
 /**
  * @param {object} props
@@ -22,11 +22,10 @@ function LegendCategories({ legend }) {
   const palette = getPalette(colors, labels.length);
 
   return (
-    <Box component='ul' data-testid='categories-legend' sx={styles.legendVariableList}>
+    <LegendVariableList data-testid='categories-legend'>
       {labels.map((label, idx) => (
         <LegendCategoriesRow
           key={label + idx}
-          isMax={false}
           label={label}
           color={palette[idx]}
           icon={
@@ -38,7 +37,7 @@ function LegendCategories({ legend }) {
           isStrokeColor={isStrokeColor}
         />
       ))}
-    </Box>
+    </LegendVariableList>
   );
 }
 
@@ -105,8 +104,8 @@ const getIconStyles = ({ icon, color, maskedIcon }) => ({
 
 const Marker = styled(Box, {
   shouldForwardProp: (prop) =>
-    !['isMax', 'icon', 'maskedIcon', 'color', 'isStrokeColor'].includes(prop)
-})(({ isMax, icon, maskedIcon, color, isStrokeColor, theme }) => ({
+    !['icon', 'maskedIcon', 'color', 'isStrokeColor'].includes(prop)
+})(({ icon, maskedIcon, color, isStrokeColor, theme }) => ({
   whiteSpace: 'nowrap',
   display: 'block',
   width: theme.spacing(1.5),
@@ -116,31 +115,21 @@ const Marker = styled(Box, {
   border: '2px solid transparent',
   ...(icon
     ? getIconStyles({ icon, color, maskedIcon })
-    : getCircleStyles({ isMax, color, isStrokeColor, theme }))
+    : getCircleStyles({ color, isStrokeColor, theme }))
 }));
 
-function LegendCategoriesRow({
-  label,
-  isMax,
-  isStrokeColor,
-  color = '#000',
-  icon,
-  maskedIcon
-}) {
+function LegendCategoriesRow({ label, isStrokeColor, color = '#000', icon, maskedIcon }) {
   return (
-    <Box component='li' sx={styles.legendVariableListItem}>
-      <Tooltip title={isMax ? 'Most representative' : ''}>
-        <Marker
-          className='marker'
-          mr={1.5}
-          component='span'
-          isMax={isMax}
-          icon={icon}
-          maskedIcon={maskedIcon}
-          isStrokeColor={isStrokeColor}
-          color={color}
-        />
-      </Tooltip>
+    <Box component='li' sx={{ display: 'flex', alignItems: 'center' }}>
+      <Marker
+        className='marker'
+        mr={1.5}
+        component='span'
+        icon={icon}
+        maskedIcon={maskedIcon}
+        isStrokeColor={isStrokeColor}
+        color={color}
+      />
       <LegendLayerTitle
         title={label}
         visible

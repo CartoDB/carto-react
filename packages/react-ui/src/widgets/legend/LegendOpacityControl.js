@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  IconButton,
-  InputAdornment,
-  Popover,
-  Slider,
-  TextField,
-  Tooltip
-} from '@mui/material';
-import { StyledOpacityControl, styles } from './LegendWidgetUI.styles';
+import { IconButton, InputAdornment, Popover, Slider, Tooltip } from '@mui/material';
+import { OpacityTextField, StyledOpacityControl } from './LegendWidgetUI.styles';
 import { useIntl } from 'react-intl';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
 import OpacityIcon from '../../assets/icons/OpacityIcon';
@@ -74,12 +67,11 @@ export default function LegendOpacityControl({
             max={100}
             step={1}
           />
-          <TextField
+          <OpacityTextField
             size='small'
             type='number'
             value={Math.round(opacity * 100)}
             onChange={handleTextFieldChange}
-            sx={styles.opacityInput}
             inputProps={{
               step: 1,
               min: 0,

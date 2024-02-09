@@ -39,7 +39,26 @@ const locales = {
         layer: 'capa',
         opacity: 'Opacidad',
         hideLayer: 'Ocultar capa',
-        showLayer: 'Mostrar capa'
+        showLayer: 'Mostrar capa',
+        open: 'Abrir leyenda',
+        close: 'Cerrar',
+        collapse: 'Colapsar capa',
+        expand: 'Expandir capa',
+        zoomLevel: 'Nivel de zoom',
+        zoomLevelTooltip: 'Esta capa solo es visible a ciertos niveles de zoom',
+        lowerThan: 'menor que',
+        greaterThan: 'mayor que',
+        and: 'y',
+        zoomNote: 'Nota: esta capa se mostrará a un nivel de zoom',
+        notSupported: 'no es un tipo de leyenda conocido',
+        subtitles: {
+          proportion: 'Tamaño basado en',
+          icon: 'Icono basado en',
+          strokeColor: 'Color del borde basado en',
+          color: 'Color basado en'
+        },
+        max: 'Max',
+        min: 'Min'
       },
       range: {
         clear: 'Limpiar',

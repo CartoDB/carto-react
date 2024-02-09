@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Collapse, Drawer, IconButton, Tooltip, Typography } from '@mui/material';
+import { Collapse, Drawer, IconButton, Tooltip, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import LayerIcon from '@mui/icons-material/LayersOutlined';
-import { LegendRoot, LegendToggleHeader, styles } from './LegendWidgetUI.styles';
+import { LegendContent, LegendRoot, LegendToggleHeader } from './LegendWidgetUI.styles';
 import LegendLayer from './LegendLayer';
 import { useIntl } from 'react-intl';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
@@ -73,7 +73,7 @@ function LegendWidgetUI({
   if (isSingle) {
     return (
       <LegendRoot sx={sx} elevation={3} collapsed={collapsed || isMobile}>
-        <Box style={styles.legendItemList}>
+        <LegendContent>
           <LegendLayer
             layer={layers[0]}
             onChangeCollapsed={onChangeLegendRowCollapsed}
@@ -85,7 +85,7 @@ function LegendWidgetUI({
             currentZoom={currentZoom}
             customLegendTypes={customLegendTypes}
           />
-        </Box>
+        </LegendContent>
       </LegendRoot>
     );
   }
@@ -101,7 +101,7 @@ function LegendWidgetUI({
             onClose={() => onChangeCollapsed(true)}
           >
             {legendToggleHeader}
-            <Box style={styles.legendItemList}>
+            <LegendContent>
               {layers.map((l) => (
                 <LegendLayer
                   key={l.id}
@@ -116,13 +116,13 @@ function LegendWidgetUI({
                   customLegendTypes={customLegendTypes}
                 />
               ))}
-            </Box>
+            </LegendContent>
           </Drawer>
         </>
       ) : (
         <>
           {collapsed ? legendToggleButton : legendToggleHeader}
-          <Box sx={{ ...styles.legendItemList, width: collapsed ? 0 : undefined }}>
+          <LegendContent width={collapsed ? 0 : undefined}>
             <Collapse unmountOnExit in={!collapsed} timeout={500}>
               {layers.map((l) => (
                 <LegendLayer
@@ -139,7 +139,7 @@ function LegendWidgetUI({
                 />
               ))}
             </Collapse>
-          </Box>
+          </LegendContent>
         </>
       )}
     </LegendRoot>

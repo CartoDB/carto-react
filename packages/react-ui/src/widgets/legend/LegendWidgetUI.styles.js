@@ -1,4 +1,4 @@
-import { Paper, styled } from '@mui/material';
+import { Box, Paper, TextField, styled } from '@mui/material';
 import { ICON_SIZE_MEDIUM } from '../../theme/themeConstants';
 
 export const LEGEND_WIDTH = 240;
@@ -45,50 +45,47 @@ export const StyledOpacityControl = styled('div')(({ theme }) => ({
   minWidth: LEGEND_WIDTH - 32
 }));
 
-export const styles = {
-  legendItemList: {
-    overflow: 'auto',
-    maxHeight: `calc(100% - 12px)`
-  },
-  legendItem: {
-    '&:not(:first-of-type)': {
-      borderTop: (theme) => `1px solid ${theme.palette.divider}`
-    }
-  },
-  layerVariablesList: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 1
-  },
-  layerOptions: {
-    background: (theme) => theme.palette.background.default,
-    px: 2,
-    py: 1,
-    m: 2
-  },
-  opacityInput: {
-    display: 'flex',
-    width: '60px',
-    flexShrink: 0
-  },
-  legendVariableList: {
-    m: 0,
-    p: 0,
-    pb: 1,
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  legendVariableListItem: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  legendIconWrapper: {
-    mr: 1.5,
-    width: ICON_SIZE_MEDIUM,
-    height: ICON_SIZE_MEDIUM,
-    '& img': {
-      margin: 'auto',
-      display: 'block'
-    }
+export const OpacityTextField = styled(TextField)(({ theme }) => ({
+  display: 'flex',
+  width: theme.spacing(7.5),
+  flexShrink: 0
+}));
+
+export const LayerVariablesList = styled('ul', {
+  shouldForwardProp: (prop) => !['opacity'].includes(prop)
+})(({ theme, opacity }) => ({
+  opacity,
+  margin: 0,
+  padding: 0,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing(1)
+}));
+
+export const LegendVariableList = styled('ul')(({ theme }) => ({
+  margin: 0,
+  padding: 0,
+  paddingBottom: theme.spacing(1),
+  display: 'flex',
+  flexDirection: 'column'
+}));
+
+export const LegendIconWrapper = styled('div')(({ theme }) => ({
+  marginRight: theme.spacing(1.5),
+  width: ICON_SIZE_MEDIUM,
+  height: ICON_SIZE_MEDIUM,
+  '& img': {
+    margin: 'auto',
+    display: 'block'
   }
-};
+}));
+
+export const LegendContent = styled(Box, {
+  shouldForwardProp: (prop) => !['width'].includes(prop)
+})(({ width }) => ({
+  width,
+  overflow: 'auto',
+  maxHeight: `calc(100% - 12px)`
+}));
+
+export const styles = {};

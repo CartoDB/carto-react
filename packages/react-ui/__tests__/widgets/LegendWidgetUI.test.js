@@ -234,29 +234,6 @@ describe('LegendWidgetUI', () => {
 
   test('helper text', () => {
     render(<Widget layers={[{ ...DATA[0], helperText: 'helperText' }]}></Widget>);
-
     expect(screen.getByText('helperText')).toBeInTheDocument();
   });
-
-  // test('with custom layer options', async () => {
-  //   const layer = DATA[8];
-  //   render(
-  //     <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
-  //   );
-  //   const layerOptionsBtn = await screen.findByLabelText('Layer options');
-  //   expect(layerOptionsBtn).toBeInTheDocument();
-  //   layerOptionsBtn.click();
-  //   expect(screen.getByText('PaletteSelector')).toBeInTheDocument();
-  // });
-
-  // test('with custom layer options - unknown option', async () => {
-  //   const layer = { ...DATA[8], options: ['unknown'] };
-  //   render(
-  //     <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
-  //   );
-  //   const layerOptionsBtn = await screen.findByLabelText('Layer options');
-  //   expect(layerOptionsBtn).toBeInTheDocument();
-  //   layerOptionsBtn.click();
-  //   expect(screen.getByText('Unknown layer option')).toBeInTheDocument();
-  // });
 });
