@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 import { fixtures } from './legendFixtures';
 
 const options = {
-  title: 'Widgets/NewLegendWidgetUI',
+  title: 'Widgets/LegendWidgetUI',
   component: LegendWidgetUI,
   argTypes: {
     collapsed: {
