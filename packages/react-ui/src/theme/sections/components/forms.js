@@ -556,13 +556,10 @@ export const formsOverrides = {
       size: 'small',
       fullWidth: true,
       popupIcon: <ArrowDropIcon />,
-      clearIcon: <CancelIcon />,
+      clearIcon: <CancelIcon date-testid='cancel-icon-autocomplete' />,
       ChipProps: { color: 'default' },
       limitTags: 1,
       componentsProps: {
-        popupIndicator: {
-          disabled: true
-        },
         paper: {
           elevation: 8
         }
@@ -655,7 +652,11 @@ export const formsOverrides = {
       popupIndicator: ({ theme }) => ({
         width: ICON_SIZE_MEDIUM,
         height: ICON_SIZE_MEDIUM,
+        cursor: 'text',
 
+        '&:hover': {
+          backgroundColor: 'transparent'
+        },
         '&.MuiButtonBase-root': {
           color: theme.palette.text.secondary
         },
