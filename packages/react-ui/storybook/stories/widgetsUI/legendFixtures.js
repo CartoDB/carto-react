@@ -1,4 +1,4 @@
-import LEGEND_TYPES from '../../../src/widgets/new-legend/legend-types/LegendTypes';
+import LEGEND_TYPES from '../../../src/widgets/legend/legend-types/LegendTypes';
 
 export const fixtures = [
   {

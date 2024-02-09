@@ -1,5 +1,5 @@
 import React from 'react';
-import LegendWidgetUI from '../../src/widgets/new-legend/LegendWidgetUI';
+import LegendWidgetUI from '../../src/widgets/legend/LegendWidgetUI';
 import { fireEvent, render, screen } from '../widgets/utils/testUtils';
 
 const MY_CUSTOM_LEGEND_KEY = 'my-custom-legend';

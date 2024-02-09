@@ -1,5 +1,5 @@
 import React from 'react';
-import LegendRamp from '../../../../src/widgets/new-legend/legend-types/LegendRamp';
+import LegendRamp from '../../../../src/widgets/legend/legend-types/LegendRamp';
 
 const DEFAULT_LEGEND = {
   legend: {

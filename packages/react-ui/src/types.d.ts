@@ -21,7 +21,7 @@ export {
   LegendLayerVariableBase,
   LegendColors,
   LegendNumericLabels
-} from './widgets/new-legend/LegendWidgetUI'
+} from './widgets/legend/LegendWidgetUI'
 
 export type WrapperWidgetUI = {
   title: string;

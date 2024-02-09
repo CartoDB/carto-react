@@ -1,5 +1,5 @@
 import { useReducer, useState } from 'react';
-import LegendWidgetUI from '../../../src/widgets/new-legend/LegendWidgetUI';
+import LegendWidgetUI from '../../../src/widgets/legend/LegendWidgetUI';
 import { IntlProvider } from 'react-intl';
 import { Box } from '@mui/material';
 import { fixtures } from './legendFixtures';
