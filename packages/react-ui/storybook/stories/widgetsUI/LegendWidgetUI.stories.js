@@ -19,13 +19,6 @@ const options = {
       control: {
         type: 'array'
       }
-    },
-    position: {
-      defaultValue: 'top-left',
-      options: ['bottom-left', 'bottom-right', 'top-left', 'top-right'],
-      control: {
-        type: 'radio'
-      }
     }
   },
   parameters: {
