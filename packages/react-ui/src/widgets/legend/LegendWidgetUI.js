@@ -1,10 +1,10 @@
 import React, { createRef, Fragment } from 'react';
 import { Box, Button, Collapse, Divider, Grid, styled, SvgIcon } from '@mui/material';
 import LegendWrapper from './LegendWrapper';
-import LegendCategories from './LegendCategories';
-import LegendIcon from './LegendIcon';
-import LegendRamp from './LegendRamp';
-import LegendProportion from './LegendProportion';
+import LegendCategories from '../new-legend/legend-types/LegendCategories';
+import LegendIcon from '../new-legend/legend-types/LegendIcon';
+import LegendRamp from '../new-legend/legend-types/LegendRamp';
+import LegendProportion from '../new-legend/legend-types/LegendProportion';
 import PropTypes from 'prop-types';
 import Typography from '../../components/atoms/Typography';
 

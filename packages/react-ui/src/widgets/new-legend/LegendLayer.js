@@ -1,10 +1,10 @@
+import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Collapse, IconButton, Tooltip, Typography } from '@mui/material';
 import EyeIcon from '@mui/icons-material/VisibilityOutlined';
 import EyeOffIcon from '@mui/icons-material/VisibilityOffOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { useMemo, useRef, useState } from 'react';
 import { styles } from './LegendWidgetUI.styles';
 import LegendOpacityControl from './LegendOpacityControl';
 import LegendLayerTitle from './LegendLayerTitle';
@@ -17,8 +17,8 @@ const EMPTY_OBJ = {};
 /**
  * Receives configuration options, send change events and renders a legend item
  * @param {object} props
- * @param {Object.<string, import('../legend/LegendWidgetUI').CustomLegendComponent>} props.customLegendTypes - Allow to customise by default legend types that can be rendered.
- * @param {import('../legend/LegendWidgetUI').LegendLayerData} props.layer - Layer object from redux store.
+ * @param {Object.<string, import('./LegendWidgetUI').CustomLegendComponent>} props.customLegendTypes - Allow to customise by default legend types that can be rendered.
+ * @param {import('./LegendWidgetUI').LegendLayerData} props.layer - Layer object from redux store.
  * @param {({ id, collapsed }: { id: string, collapsed: boolean }) => void} props.onChangeCollapsed - Callback function for layer visibility change.
  * @param {({ id, opacity }: { id: string, opacity: number }) => void} props.onChangeOpacity - Callback function for layer opacity change.
  * @param {({ id, visible }: { id: string, visible: boolean }) => void} props.onChangeVisibility - Callback function for layer collapsed state change.
@@ -68,7 +68,7 @@ export default function LegendLayer({
     layerMinZoom: layer.minZoom,
     layerMaxZoom: layer.maxZoom
   });
-  const helperText = layer.helperText ?? showZoomNote ? zoomHelperText : '';
+  const helperText = layer.helperText ?? (showZoomNote ? zoomHelperText : '');
 
   const legendLayerVariables = useMemo(() => {
     if (!layer.legend) {
@@ -162,7 +162,7 @@ export default function LegendLayer({
         >
           {legendLayerVariables.map((legend, index) => (
             <LegendLayerVariable
-              key={legend.type}
+              key={`${legend.type}-${index}`}
               legend={legend}
               layer={layer}
               customLegendTypes={customLegendTypes}

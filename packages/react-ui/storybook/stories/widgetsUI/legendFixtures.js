@@ -1,4 +1,4 @@
-import { LEGEND_TYPES } from '@carto/react-ui';
+import LEGEND_TYPES from '../../../src/widgets/new-legend/legend-types/LegendTypes';
 
 export const fixtures = [
   {

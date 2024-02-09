@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, styled } from '@mui/material';
 import PropTypes from 'prop-types';
-import Typography from '../../components/atoms/Typography';
+import Typography from '../../../components/atoms/Typography';
 import { useIntl } from 'react-intl';
-import useImperativeIntl from '../../hooks/useImperativeIntl';
+import useImperativeIntl from '../../../hooks/useImperativeIntl';
 
 const sizes = {
   0: 12,
@@ -58,7 +58,7 @@ const LabelList = styled(Box)(() => ({
 
 /**
  * @param {object} props
- * @param {import('../legend/LegendWidgetUI').LegendLayerVariableBase & import('../legend/LegendWidgetUI').LegendProportion} props.legend - legend variable data.
+ * @param {import('../LegendWidgetUI').LegendLayerVariableBase & import('../LegendWidgetUI').LegendProportion} props.legend - legend variable data.
  * @returns {React.ReactNode}
  */
 function LegendProportion({ legend }) {

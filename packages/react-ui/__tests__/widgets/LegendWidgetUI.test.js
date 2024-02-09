@@ -1,38 +1,25 @@
 import React from 'react';
-import Typography from '../../src/components/atoms/Typography';
-import LegendWidgetUI from '../../src/widgets/legend/LegendWidgetUI';
+import LegendWidgetUI from '../../src/widgets/new-legend/LegendWidgetUI';
 import { fireEvent, render, screen } from '../widgets/utils/testUtils';
 
-const CUSTOM_CHILDREN = <Typography>Legend custom</Typography>;
-
 const MY_CUSTOM_LEGEND_KEY = 'my-custom-legend';
-
-const LAYER_OPTIONS = {
-  PALETTE_SELECTOR: 'PALETTE_SELECTOR'
-};
-
-const LAYER_OPTIONS_COMPONENTS = {
-  [LAYER_OPTIONS.PALETTE_SELECTOR]: PaletteSelector
-};
-
-function PaletteSelector() {
-  return <p>PaletteSelector</p>;
-}
 
 describe('LegendWidgetUI', () => {
   const DATA = [
     {
+      // 0
       id: 'category',
       title: 'Category Layer',
       visible: true,
+      helperText: 'lorem',
       legend: {
         type: 'category',
-        note: 'lorem',
         colors: ['#000', '#00F', '#0F0'],
         labels: ['Category 1', 'Category 2', 'Category 3']
       }
     },
     {
+      // 1
       id: 'icon',
       title: 'Icon Layer',
       visible: true,
@@ -47,6 +34,7 @@ describe('LegendWidgetUI', () => {
       }
     },
     {
+      // 2
       id: 'bins',
       title: 'Ramp Layer',
       visible: true,
@@ -57,6 +45,7 @@ describe('LegendWidgetUI', () => {
       }
     },
     {
+      // 3
       id: 'continuous',
       title: 'Ramp Layer',
       visible: true,
@@ -67,6 +56,7 @@ describe('LegendWidgetUI', () => {
       }
     },
     {
+      // 4
       id: 'proportion',
       title: 'Proportion Layer',
       visible: true,
@@ -76,14 +66,7 @@ describe('LegendWidgetUI', () => {
       }
     },
     {
-      id: 'custom',
-      title: 'Single Layer',
-      visible: true,
-      legend: {
-        children: CUSTOM_CHILDREN
-      }
-    },
-    {
+      // 5
       id: 'custom_key',
       title: 'Single Layer',
       visible: true,
@@ -95,32 +78,19 @@ describe('LegendWidgetUI', () => {
         colors: ['#000', '#00F', '#0F0'],
         labels: ['Category 1', 'Category 2', 'Category 3']
       }
-    },
-    {
-      id: 'custom_children',
-      title: 'Single Layer',
-      visible: true,
-      showOpacityControl: true,
-      opacity: 0.6,
-      legend: {
-        children: CUSTOM_CHILDREN
-      }
-    },
-    {
-      id: 'palette',
-      title: 'Store types',
-      visible: true,
-      options: [LAYER_OPTIONS.PALETTE_SELECTOR],
-      legend: {
-        children: CUSTOM_CHILDREN
-      }
     }
   ];
+
   const Widget = (props) => <LegendWidgetUI {...props} />;
 
   test('single legend', () => {
     render(<Widget layers={[DATA[0]]}></Widget>);
+    // expanded legend toggle
     expect(screen.queryByText('Layers')).not.toBeInTheDocument();
+    // collapsed legend toggle
+    expect(screen.queryByLabelText('Layers')).not.toBeInTheDocument();
+    // layer title
+    expect(screen.queryByTestId('categories-legend')).toBeInTheDocument();
   });
 
   test('multiple legends', () => {
@@ -131,7 +101,10 @@ describe('LegendWidgetUI', () => {
 
   test('multiple legends with collapsed as true', () => {
     render(<Widget layers={DATA} collapsed={true}></Widget>);
-    expect(screen.queryByText('Layers')).toBeInTheDocument();
+    // expanded legend toggle
+    expect(screen.queryByText('Layers')).not.toBeInTheDocument();
+    // collapsed legend toggle
+    expect(screen.queryByLabelText('Layers')).toBeInTheDocument();
     expect(screen.queryByTestId('categories-legend')).not.toBeInTheDocument();
   });
 
@@ -160,11 +133,6 @@ describe('LegendWidgetUI', () => {
     expect(screen.getByTestId('proportion-legend')).toBeInTheDocument();
   });
 
-  test('Custom legend', () => {
-    render(<Widget layers={[DATA[5]]}></Widget>);
-    expect(screen.getByText('Legend custom')).toBeInTheDocument();
-  });
-
   test('Empty legend', () => {
     const EMPTY_LAYER = { id: 'empty', title: 'Empty Layer', legend: {} };
     render(<Widget layers={[EMPTY_LAYER]}></Widget>);
@@ -184,42 +152,52 @@ describe('LegendWidgetUI', () => {
   test('with custom legend types', () => {
     const MyCustomLegendComponent = jest.fn();
     MyCustomLegendComponent.mockReturnValue(<p>Test</p>);
+
     render(
       <Widget
-        layers={[DATA[6]]}
+        layers={[DATA[5]]}
         customLegendTypes={{ [MY_CUSTOM_LEGEND_KEY]: MyCustomLegendComponent }}
       ></Widget>
     );
+
     expect(MyCustomLegendComponent).toHaveBeenCalled();
     expect(MyCustomLegendComponent).toHaveBeenCalledWith(
-      { layer: DATA[6], legend: DATA[6].legend },
+      { layer: DATA[5], legend: DATA[5].legend },
       {}
     );
     expect(screen.getByText('Test')).toBeInTheDocument();
   });
 
   test('legend with opacity control', async () => {
-    const legendConfig = DATA[7];
+    const legendConfig = {
+      id: 'test-opacity-control',
+      title: 'Test opacity control',
+      visible: true,
+      showOpacityControl: true,
+      opacity: 0.8
+    };
     const onChangeOpacity = jest.fn();
     const container = render(
       <Widget layers={[legendConfig]} onChangeOpacity={onChangeOpacity}></Widget>
     );
-    const layerOptionsBtn = await screen.findByLabelText('Layer options');
-    expect(layerOptionsBtn).toBeInTheDocument();
-    layerOptionsBtn.click();
-    expect(screen.getByText('Opacity')).toBeInTheDocument();
+
+    const toggleButton = screen.getByRole('button', { name: 'Opacity' });
+    expect(toggleButton).toBeInTheDocument();
+    toggleButton.click();
 
     const opacitySelectorInput = container.getByTestId('opacity-slider');
-    expect(opacitySelectorInput.value).toBe('' + legendConfig.opacity * 100);
+    expect(opacitySelectorInput).toBeInTheDocument();
 
-    fireEvent.change(opacitySelectorInput, { target: { value: '50' } });
+    expect(opacitySelectorInput.value).toBe(String(legendConfig.opacity * 100));
+
+    fireEvent.change(opacitySelectorInput, { target: { value: 50 } });
 
     expect(onChangeOpacity).toHaveBeenCalledTimes(1);
     expect(onChangeOpacity).toHaveBeenCalledWith({ id: legendConfig.id, opacity: 0.5 });
   });
 
   test('should manage legend collapsed state correctly', () => {
-    let legendConfig = { ...DATA[7], legend: { ...DATA[7].legend, collapsed: true } };
+    let legendConfig = { ...DATA[0], collapsed: true };
     const onChangeLegendRowCollapsed = jest.fn();
 
     const { rerender } = render(
@@ -229,11 +207,11 @@ describe('LegendWidgetUI', () => {
       ></Widget>
     );
 
-    expect(screen.queryByText('Legend custom')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('legend-layer-variable-list')).not.toBeInTheDocument();
 
-    const layerOptionsBtn = screen.getByText('Single Layer');
-    expect(layerOptionsBtn).toBeInTheDocument();
-    layerOptionsBtn.click();
+    const toggleButton = screen.getByRole('button', { name: 'Expand layer' });
+    expect(toggleButton).toBeInTheDocument();
+    toggleButton.click();
 
     expect(onChangeLegendRowCollapsed).toHaveBeenCalledTimes(1);
     expect(onChangeLegendRowCollapsed).toHaveBeenCalledWith({
@@ -241,7 +219,8 @@ describe('LegendWidgetUI', () => {
       collapsed: false
     });
 
-    legendConfig = { ...DATA[7], legend: { ...DATA[7].legend, collapsed: false } };
+    legendConfig = { ...DATA[0], collapsed: false };
+
     rerender(
       <Widget
         layers={[legendConfig]}
@@ -249,28 +228,35 @@ describe('LegendWidgetUI', () => {
       ></Widget>
     );
 
-    expect(screen.getByText('Legend custom')).toBeInTheDocument();
+    expect(screen.getByTestId('legend-layer-variable-list')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Collapse layer' })).toBeInTheDocument();
   });
 
-  test('with custom layer options', async () => {
-    const layer = DATA[8];
-    render(
-      <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
-    );
-    const layerOptionsBtn = await screen.findByLabelText('Layer options');
-    expect(layerOptionsBtn).toBeInTheDocument();
-    layerOptionsBtn.click();
-    expect(screen.getByText('PaletteSelector')).toBeInTheDocument();
+  test('helper text', () => {
+    render(<Widget layers={[{ ...DATA[0], helperText: 'helperText' }]}></Widget>);
+
+    expect(screen.getByText('helperText')).toBeInTheDocument();
   });
 
-  test('with custom layer options - unknown option', async () => {
-    const layer = { ...DATA[8], options: ['unknown'] };
-    render(
-      <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
-    );
-    const layerOptionsBtn = await screen.findByLabelText('Layer options');
-    expect(layerOptionsBtn).toBeInTheDocument();
-    layerOptionsBtn.click();
-    expect(screen.getByText('Unknown layer option')).toBeInTheDocument();
-  });
+  // test('with custom layer options', async () => {
+  //   const layer = DATA[8];
+  //   render(
+  //     <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
+  //   );
+  //   const layerOptionsBtn = await screen.findByLabelText('Layer options');
+  //   expect(layerOptionsBtn).toBeInTheDocument();
+  //   layerOptionsBtn.click();
+  //   expect(screen.getByText('PaletteSelector')).toBeInTheDocument();
+  // });
+
+  // test('with custom layer options - unknown option', async () => {
+  //   const layer = { ...DATA[8], options: ['unknown'] };
+  //   render(
+  //     <Widget layers={[layer]} customLayerOptions={LAYER_OPTIONS_COMPONENTS}></Widget>
+  //   );
+  //   const layerOptionsBtn = await screen.findByLabelText('Layer options');
+  //   expect(layerOptionsBtn).toBeInTheDocument();
+  //   layerOptionsBtn.click();
+  //   expect(screen.getByText('Unknown layer option')).toBeInTheDocument();
+  // });
 });

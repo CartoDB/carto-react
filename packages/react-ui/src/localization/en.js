@@ -50,7 +50,7 @@ const locales = {
         greaterThan: 'greater than',
         and: 'and',
         zoomNote: 'Note: this layer will display at zoom levels',
-        notSupported: 'legend type not supported',
+        notSupported: 'is not a known legend type',
         subtitles: {
           proportion: 'Radius range by',
           icon: 'Icon based on',

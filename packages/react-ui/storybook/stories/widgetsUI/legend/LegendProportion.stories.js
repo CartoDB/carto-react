@@ -1,5 +1,5 @@
 import React from 'react';
-import LegendProportion from '../../../../src/widgets/legend/LegendProportion';
+import LegendProportion from '../../../../src/widgets/new-legend/legend-types/LegendProportion';
 import { IntlProvider } from 'react-intl';
 
 const DEFAULT_LEGEND = {

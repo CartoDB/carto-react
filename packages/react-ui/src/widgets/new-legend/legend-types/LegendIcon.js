@@ -1,13 +1,13 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
-import { ICON_SIZE_MEDIUM } from '../../theme/themeConstants';
-import { styles } from '../new-legend/LegendWidgetUI.styles';
-import LegendLayerTitle from '../new-legend/LegendLayerTitle';
+import { ICON_SIZE_MEDIUM } from '../../../theme/themeConstants';
+import { styles } from '../LegendWidgetUI.styles';
+import LegendLayerTitle from '../LegendLayerTitle';
 
 /**
  * @param {object} props
- * @param {import('../legend/LegendWidgetUI').LegendLayerVariableBase & import('../legend/LegendWidgetUI').LegendIcons} props.legend - legend variable data.
+ * @param {import('../LegendWidgetUI').LegendLayerVariableBase & import('../LegendWidgetUI').LegendIcons} props.legend - legend variable data.
  * @returns {React.ReactNode}
  */
 function LegendIcon({ legend }) {

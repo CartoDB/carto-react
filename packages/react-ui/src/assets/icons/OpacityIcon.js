@@ -1,3 +1,4 @@
+import React from 'react';
 import { SvgIcon } from '@mui/material';
 
 export default function OpacityIcon(props) {

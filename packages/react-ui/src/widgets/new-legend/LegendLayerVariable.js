@@ -1,24 +1,25 @@
+import React from 'react';
 import { Box, ListItemText, MenuItem, Select } from '@mui/material';
-import LegendCategories from '../legend/LegendCategories';
-import LegendIcon from '../legend/LegendIcon';
-import LegendRamp from '../legend/LegendRamp';
-import LegendProportion from '../legend/LegendProportion';
-import { LEGEND_TYPES } from '../legend/LegendWidgetUI';
+import LegendCategories from './legend-types/LegendCategories';
+import LegendIcon from './legend-types/LegendIcon';
+import LegendRamp from './legend-types/LegendRamp';
+import LegendProportion from './legend-types/LegendProportion';
+import LEGEND_TYPES from './legend-types/LegendTypes';
 import { useIntl } from 'react-intl';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
 import Typography from '../../components/atoms/Typography';
 
 const legendTypeMap = {
   [LEGEND_TYPES.CATEGORY]: LegendCategories,
-  [LEGEND_TYPES.ICON]: LegendIcon,
-  [LEGEND_TYPES.BINS]: LegendRamp,
   [LEGEND_TYPES.PROPORTION]: LegendProportion,
-  [LEGEND_TYPES.CONTINUOUS_RAMP]: LegendRamp
+  [LEGEND_TYPES.ICON]: LegendIcon,
+  [LEGEND_TYPES.BINS]: (props) => <LegendRamp {...props} isContinuous={false} />,
+  [LEGEND_TYPES.CONTINUOUS_RAMP]: (props) => <LegendRamp {...props} isContinuous={true} />
 };
 
 /**
  * @param {object} props
- * @param {import('../legend/LegendWidgetUI').LegendLayerVariableBase} props.legend - legend variable data.
+ * @param {import('./LegendWidgetUI').LegendLayerVariableBase} props.legend - legend variable data.
  * @returns {React.ReactNode}
  */
 function LegendUnknown({ legend }) {
@@ -31,14 +32,13 @@ function LegendUnknown({ legend }) {
 
   return (
     <Typography variant='body2' color='textSecondary' component='p'>
-      "{legend.type}"{' '}
-      {intlConfig.formatMessage({ id: 'c4r.widgets.legend.notSupported' })}
+      {legend.type} {intlConfig.formatMessage({ id: 'c4r.widgets.legend.notSupported' })}.
     </Typography>
   );
 }
 
 /**
- * @param {import('../legend/LegendWidgetUI').LegendLayerVariableData} legend - legend variable data.
+ * @param {import('./LegendWidgetUI').LegendLayerVariableData} legend - legend variable data.
  * @returns {string}
  */
 function getLegendSubtitle(legend) {
@@ -56,9 +56,9 @@ function getLegendSubtitle(legend) {
 
 /**
  * @param {object} props
- * @param {import('../legend/LegendWidgetUI').LegendLayerData} props.layer - Layer object from redux store.
- * @param {import('../legend/LegendWidgetUI').LegendLayerVariableData} props.legend - legend variable data.
- * @param {Object.<string, import('../legend/LegendWidgetUI').CustomLegendComponent>} props.customLegendTypes - Map from legend type to legend component that allows to customise additional legend types that can be rendered.
+ * @param {import('./LegendWidgetUI').LegendLayerData} props.layer - Layer object from redux store.
+ * @param {import('./LegendWidgetUI').LegendLayerVariableData} props.legend - legend variable data.
+ * @param {Object.<string, import('./LegendWidgetUI').CustomLegendComponent>} props.customLegendTypes - Map from legend type to legend component that allows to customise additional legend types that can be rendered.
  * @param {(selection: unknown) => void} props.onChangeSelection - Callback function for legend options change.
  * @returns {React.ReactNode}
  */

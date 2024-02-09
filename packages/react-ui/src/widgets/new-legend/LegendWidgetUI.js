@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Box,
@@ -21,15 +22,14 @@ const EMPTY_ARR = [];
 
 /**
  * @param {object} props
- * @param {Object.<string, import('../legend/LegendWidgetUI').CustomLegendComponent>} [props.customLegendTypes] - Allow to customise by default legend types that can be rendered.
- * @param {import('../legend/LegendWidgetUI').LegendLayerData[]} [props.layers] - Array of layer objects from redux store.
+ * @param {Object.<string, import('./LegendWidgetUI').CustomLegendComponent>} [props.customLegendTypes] - Allow to customise by default legend types that can be rendered.
+ * @param {import('./LegendWidgetUI').LegendLayerData[]} [props.layers] - Array of layer objects from redux store.
  * @param {boolean} [props.collapsed] - Collapsed state for whole legend widget.
- * @param {(collapsed: boolean) => void} props.onChangeCollapsed - Callback function for collapsed state change.
- * @param {({ id, collapsed }: { id: string, collapsed: boolean }) => void} props.onChangeLegendRowCollapsed - Callback function for layer visibility change.
- * @param {({ id, opacity }: { id: string, opacity: number }) => void} props.onChangeOpacity - Callback function for layer opacity change.
- * @param {({ id, visible }: { id: string, visible: boolean }) => void} props.onChangeVisibility - Callback function for layer collapsed state change.
+ * @param {(collapsed: boolean) => void} [props.onChangeCollapsed] - Callback function for collapsed state change.
+ * @param {({ id, collapsed }: { id: string, collapsed: boolean }) => void} [props.onChangeLegendRowCollapsed] - Callback function for layer visibility change.
+ * @param {({ id, opacity }: { id: string, opacity: number }) => void} [props.onChangeOpacity] - Callback function for layer opacity change.
+ * @param {({ id, visible }: { id: string, visible: boolean }) => void} [props.onChangeVisibility] - Callback function for layer collapsed state change.
  * @param {({ id, index, selection }: { id: string, index: number, selection: unknown }) => void} props.onChangeSelection - Callback function for layer variable selection change.
- * @param {string[]} [props.layerOrder] - Array of layer identifiers. Defines the order of layer legends. [] by default.
  * @param {string} [props.title] - Title of the toggle button when widget is open.
  * @param {'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'} [props.position] - Position of the widget.
  * @param {number} [props.maxZoom] - Global maximum zoom level for the map.
@@ -38,16 +38,15 @@ const EMPTY_ARR = [];
  * @param {boolean} [props.isMobile] - Whether the widget is displayed on a mobile device.
  * @returns {React.ReactNode}
  */
-function NewLegendWidgetUI({
+function LegendWidgetUI({
   customLegendTypes = EMPTY_OBJ,
   layers = EMPTY_ARR,
-  collapsed = true,
+  collapsed = false,
   onChangeCollapsed = EMPTY_FN,
   onChangeVisibility = EMPTY_FN,
   onChangeOpacity = EMPTY_FN,
   onChangeLegendRowCollapsed = EMPTY_FN,
   onChangeSelection = EMPTY_FN,
-  layerOrder,
   title,
   position = 'bottom-right',
   maxZoom = 21,
@@ -57,11 +56,12 @@ function NewLegendWidgetUI({
 } = {}) {
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
+  const isSingle = layers.length === 1;
 
   const rootSx = {
     ...styles[position],
     ...styles.root,
-    width: collapsed ? undefined : LEGEND_WIDTH
+    width: collapsed || isMobile ? undefined : LEGEND_WIDTH
   };
 
   const legendToggleHeader = (
@@ -81,80 +81,112 @@ function NewLegendWidgetUI({
       </Tooltip>
     </Box>
   );
+  const legendToggleButton = (
+    <Tooltip title={intlConfig.formatMessage({ id: 'c4r.widgets.legend.open' })}>
+      <IconButton aria-label={title} onClick={() => onChangeCollapsed(false)}>
+        <LayerIcon />
+      </IconButton>
+    </Tooltip>
+  );
+
+  if (isSingle) {
+    return (
+      <Paper elevation={3} sx={rootSx}>
+        <Box style={styles.legendItemList}>
+          <LegendLayer
+            layer={layers[0]}
+            onChangeCollapsed={onChangeLegendRowCollapsed}
+            onChangeOpacity={onChangeOpacity}
+            onChangeVisibility={onChangeVisibility}
+            onChangeSelection={onChangeSelection}
+            maxZoom={maxZoom}
+            minZoom={minZoom}
+            currentZoom={currentZoom}
+            customLegendTypes={customLegendTypes}
+          />
+        </Box>
+      </Paper>
+    );
+  }
 
   return (
     <Paper elevation={3} sx={rootSx}>
-      {collapsed ? (
-        <Tooltip title={intlConfig.formatMessage({ id: 'c4r.widgets.legend.open' })}>
-          <IconButton onClick={() => onChangeCollapsed(false)}>
-            <LayerIcon />
-          </IconButton>
-        </Tooltip>
-      ) : isMobile ? null : (
-        legendToggleHeader
-      )}
       {isMobile ? (
-        <Drawer anchor='bottom' open={!collapsed} onClose={() => onChangeCollapsed(true)}>
-          {legendToggleHeader}
-          <Box style={styles.legendItemList}>
-            {layers.map((l) => (
-              <LegendLayer
-                key={l.id}
-                layer={l}
-                onChangeCollapsed={onChangeLegendRowCollapsed}
-                onChangeOpacity={onChangeOpacity}
-                onChangeVisibility={onChangeVisibility}
-                onChangeSelection={onChangeSelection}
-                maxZoom={maxZoom}
-                minZoom={minZoom}
-                currentZoom={currentZoom}
-                customLegendTypes={customLegendTypes}
-              />
-            ))}
-          </Box>
-        </Drawer>
+        <>
+          {legendToggleButton}
+          <Drawer
+            anchor='bottom'
+            open={!collapsed}
+            onClose={() => onChangeCollapsed(true)}
+          >
+            {legendToggleHeader}
+            <Box style={styles.legendItemList}>
+              {layers.map((l) => (
+                <LegendLayer
+                  key={l.id}
+                  layer={l}
+                  onChangeCollapsed={onChangeLegendRowCollapsed}
+                  onChangeOpacity={onChangeOpacity}
+                  onChangeVisibility={onChangeVisibility}
+                  onChangeSelection={onChangeSelection}
+                  maxZoom={maxZoom}
+                  minZoom={minZoom}
+                  currentZoom={currentZoom}
+                  customLegendTypes={customLegendTypes}
+                />
+              ))}
+            </Box>
+          </Drawer>
+        </>
       ) : (
-        <Box sx={{ ...styles.legendItemList, width: collapsed ? 0 : undefined }}>
-          <Collapse unmountOnExit in={!collapsed} timeout={500}>
-            {layers.map((l) => (
-              <LegendLayer
-                key={l.id}
-                layer={l}
-                onChangeCollapsed={onChangeLegendRowCollapsed}
-                onChangeOpacity={onChangeOpacity}
-                onChangeVisibility={onChangeVisibility}
-                onChangeSelection={onChangeSelection}
-                maxZoom={maxZoom}
-                minZoom={minZoom}
-                currentZoom={currentZoom}
-                customLegendTypes={customLegendTypes}
-              />
-            ))}
-          </Collapse>
-        </Box>
+        <>
+          {collapsed ? legendToggleButton : legendToggleHeader}
+          <Box sx={{ ...styles.legendItemList, width: collapsed ? 0 : undefined }}>
+            <Collapse unmountOnExit in={!collapsed} timeout={500}>
+              {layers.map((l) => (
+                <LegendLayer
+                  key={l.id}
+                  layer={l}
+                  onChangeCollapsed={onChangeLegendRowCollapsed}
+                  onChangeOpacity={onChangeOpacity}
+                  onChangeVisibility={onChangeVisibility}
+                  onChangeSelection={onChangeSelection}
+                  maxZoom={maxZoom}
+                  minZoom={minZoom}
+                  currentZoom={currentZoom}
+                  customLegendTypes={customLegendTypes}
+                />
+              ))}
+            </Collapse>
+          </Box>
+        </>
       )}
     </Paper>
   );
 }
 
-NewLegendWidgetUI.defaultProps = {
-  layers: [],
-  customLegendTypes: {},
-  collapsed: true,
+LegendWidgetUI.defaultProps = {
+  layers: EMPTY_ARR,
+  customLegendTypes: EMPTY_OBJ,
+  collapsed: false,
   title: 'Layers',
-  position: 'bottom-right'
+  position: 'bottom-right',
+  onChangeCollapsed: EMPTY_FN,
+  onChangeLegendRowCollapsed: EMPTY_FN,
+  onChangeVisibility: EMPTY_FN,
+  onChangeOpacity: EMPTY_FN,
+  onChangeSelection: EMPTY_FN
 };
 
-NewLegendWidgetUI.propTypes = {
+LegendWidgetUI.propTypes = {
   customLegendTypes: PropTypes.objectOf(PropTypes.func),
   layers: PropTypes.array,
-  collapsed: PropTypes.bool.isRequired,
-  onChangeCollapsed: PropTypes.func.isRequired,
-  onChangeLegendRowCollapsed: PropTypes.func.isRequired,
-  onChangeVisibility: PropTypes.func.isRequired,
-  onChangeOpacity: PropTypes.func.isRequired,
-  onChangeSelection: PropTypes.func.isRequired,
-  layerOrder: PropTypes.arrayOf(PropTypes.string),
+  collapsed: PropTypes.bool,
+  onChangeCollapsed: PropTypes.func,
+  onChangeLegendRowCollapsed: PropTypes.func,
+  onChangeVisibility: PropTypes.func,
+  onChangeOpacity: PropTypes.func,
+  onChangeSelection: PropTypes.func,
   title: PropTypes.string,
   position: PropTypes.oneOf(['top-left', 'top-right', 'bottom-left', 'bottom-right']),
   maxZoom: PropTypes.number,
@@ -163,4 +195,4 @@ NewLegendWidgetUI.propTypes = {
   isMobile: PropTypes.bool
 };
 
-export default NewLegendWidgetUI;
+export default LegendWidgetUI;

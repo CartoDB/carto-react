@@ -1,5 +1,5 @@
 import React from 'react';
-import LegendCategories from '../../../../src/widgets/legend/LegendCategories';
+import LegendCategories from '../../../../src/widgets/new-legend/legend-types/LegendCategories';
 
 const DEFAULT_LEGEND = {
   legend: {

@@ -1,13 +1,13 @@
 import { Box, Tooltip, styled } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Typography from '../../components/atoms/Typography';
-import { getPalette } from '../../utils/palette';
+import Typography from '../../../components/atoms/Typography';
+import { getPalette } from '../../../utils/palette';
 import LegendProportion, { getMinMax } from './LegendProportion';
 
 /**
  * @param {object} props
- * @param {import('../legend/LegendWidgetUI').LegendLayerVariableBase & import('../legend/LegendWidgetUI').LegendRamp} props.legend - legend variable data.
+ * @param {import('../LegendWidgetUI').LegendLayerVariableBase & import('../LegendWidgetUI').LegendRamp} props.legend - legend variable data.
  * @param {boolean} [props.isContinuous] - If the legend is continuous.
  * @returns {React.ReactNode}
  */

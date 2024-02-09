@@ -8,6 +8,26 @@ export enum LEGEND_TYPES {
   PROPORTION = 'proportion',
 }
 
+export type LegendWidgetUIProps = {
+  customLegendTypes?: Record<string, CustomLegendComponent>;
+  layers?: LegendLayerData[];
+  collapsed?: boolean;
+  onChangeCollapsed?: (collapsed: boolean) => void;
+  onChangeLegendRowCollapsed?: ({ id, collapsed }: { id: string, collapsed: boolean }) => void;
+  onChangeOpacity?: ({ id, opacity }: { id: string, opacity: number }) => void
+  onChangeVisibility?: ({ id, visible }: { id: string, visible: boolean }) => void
+  onChangeSelection?: ({ id, index, selection }: { id: string, index: number, selection: unknown }) => void
+  title?: string
+  position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+  maxZoom?: number
+  minZoom?: number
+  currentZoom?: number
+  isMobile?: boolean
+}
+
+declare const LegendWidgetUI: (props: LegendWidgetUIProps) => React.ReactNode;
+export default LegendWidgetUI;
+
 export type LegendLayerData = {
   id: string;
   title?: string;
@@ -24,37 +44,37 @@ export type LegendLayerData = {
 };
 
 export type LegendLayerVariableBase = {
-  type: LEGEND_TYPES;
+  type: LEGEND_TYPES | string;
   select: LegendSelectConfig
   attr?: string; // subtitle to show below the legend item toggle when expanded
 }
 export type LegendLayerVariableData = LegendLayerVariableBase & LegendType;
 
-type LegendType = LegendBins | LegendRamp | LegendIcons | LegendCategories | LegendProportion;
+export type LegendType = LegendBins | LegendRamp | LegendIcons | LegendCategories | LegendProportion;
 
-type LegendColors = string | string[] | number[][];
-type LegendNumericLabels = number[] | { label: string; value: number }[]; 
+export type LegendColors = string | string[] | number[][];
+export type LegendNumericLabels = number[] | { label: string; value: number }[]; 
 
-type LegendBins = {
+export type LegendBins = {
   colors: LegendColors
   labels: LegendNumericLabels
 }
-type LegendRamp = {
+export type LegendRamp = {
   colors: LegendColors
   labels: LegendNumericLabels
 }
-type LegendIcons = {
+export type LegendIcons = {
   icons: string[]
   labels: string[]
 }
-type LegendCategories = {
+export type LegendCategories = {
   colors: LegendColors
   labels: string[] | number[]
   isStrokeColor?: boolean
   customMarkers?: string | string[]
   maskedMarkers?: boolean
 }
-type LegendProportion = {
+export type LegendProportion = {
   labels: [number, number]
 }
 

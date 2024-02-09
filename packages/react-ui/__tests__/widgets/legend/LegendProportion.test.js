@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '../../widgets/utils/testUtils';
-import LegendProportion from '../../../src/widgets/legend/LegendProportion';
+import LegendProportion from '../../../src/widgets/new-legend/legend-types/LegendProportion';
 import { IntlProvider } from 'react-intl';
 
 const DEFAULT_LEGEND = {
