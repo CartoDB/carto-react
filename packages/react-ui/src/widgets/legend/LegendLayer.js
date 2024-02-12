@@ -15,6 +15,18 @@ import useImperativeIntl from '../../hooks/useImperativeIntl';
 const EMPTY_OBJ = {};
 
 /**
+ * @param {import('./LegendWidgetUI').LegendLayerData['legend']} legend
+ * @returns {boolean}
+ */
+function isLegendEmpty(legend) {
+  if (Array.isArray(legend)) {
+    return legend.every((l) => isLegendEmpty(l));
+  }
+
+  return !legend.select && !legend.type;
+}
+
+/**
  * Receives configuration options, send change events and renders a legend item
  * @param {object} props
  * @param {Object.<string, import('./LegendWidgetUI').CustomLegendComponent>} props.customLegendTypes - Allow to customise by default legend types that can be rendered.
@@ -50,7 +62,7 @@ export default function LegendLayer({
   const visible = layer.visible ?? true;
   const switchable = layer.switchable ?? true;
   const collapsed = layer.collapsed ?? false;
-  const collapsible = layer.collapsible ?? true;
+  const collapsible = (layer.collapsible ?? true) && !isLegendEmpty(layer.legend);
   const opacity = layer.opacity ?? 1;
   const showOpacityControl = layer.showOpacityControl ?? true;
   const isExpanded = visible && !collapsed;
@@ -170,8 +182,13 @@ export default function LegendLayer({
           ))}
         </LayerVariablesList>
         {helperText && (
-          <Typography variant='caption' color='textSecondary' component='p' sx={{ p: 2 }}>
-            {helperText}
+          <Typography
+            variant='caption'
+            color='textSecondary'
+            component='div'
+            sx={{ p: 2 }}
+          >
+            <div dangerouslySetInnerHTML={{ __html: helperText }}></div>
           </Typography>
         )}
       </Collapse>

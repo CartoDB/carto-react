@@ -40,7 +40,7 @@ export type LegendLayerData = {
   helperText?: React.ReactNode; // note to show below all legend items
   minZoom?: number; // min zoom at which layer is displayed
   maxZoom?: number; // max zoom at which layer is displayed
-  legend?: LegendLayerVariableData | LegendLayerVariableData[];
+  legend: LegendLayerVariableData | LegendLayerVariableData[];
 };
 
 export type LegendLayerVariableBase = {

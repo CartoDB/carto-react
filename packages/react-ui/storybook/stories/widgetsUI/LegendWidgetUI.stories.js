@@ -108,7 +108,10 @@ const LegendNotFoundTemplate = () => {
     {
       id: 0,
       title: 'Single Layer',
-      visible: true
+      visible: true,
+      legend: {
+        type: 'unknown'
+      }
     }
   ];
   return <Template layers={layers} />;
@@ -312,7 +315,8 @@ const LegendNoChildrenTemplate = () => {
     {
       id: 0,
       title: 'Single Layer',
-      visible: true
+      visible: true,
+      legend: {}
     }
   ];
   return <Template layers={layers} />;

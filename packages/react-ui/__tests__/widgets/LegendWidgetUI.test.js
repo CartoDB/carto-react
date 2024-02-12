@@ -108,6 +108,17 @@ describe('LegendWidgetUI', () => {
     expect(screen.queryByTestId('categories-legend')).not.toBeInTheDocument();
   });
 
+  test('layer with no legend is not shown on widget', () => {
+    const layer = {
+      id: 'test-layer-no-legend',
+      title: 'Test layer no legend',
+      visible: true
+    };
+    render(<Widget layers={[layer]}></Widget>);
+    expect(screen.queryByText('Layers')).toBeInTheDocument();
+    expect(screen.queryByText('Test layer no legend')).not.toBeInTheDocument();
+  });
+
   test('Category legend', () => {
     render(<Widget layers={[DATA[0]]}></Widget>);
     expect(screen.getByTestId('categories-legend')).toBeInTheDocument();
@@ -174,7 +185,8 @@ describe('LegendWidgetUI', () => {
       title: 'Test opacity control',
       visible: true,
       showOpacityControl: true,
-      opacity: 0.8
+      opacity: 0.8,
+      legend: {}
     };
     const onChangeOpacity = jest.fn();
     const container = render(

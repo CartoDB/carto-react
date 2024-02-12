@@ -21,8 +21,9 @@ function LegendWidget({ customLegendTypes, initialCollapsed, layerOrder = [], ti
     sortLayers(
       Object.values(state.carto.layers).filter((layer) => !!layer.legend),
       layerOrder
-    )
+    ).filter((l) => !!l.legend)
   );
+
   const [collapsed, setCollapsed] = useState(initialCollapsed);
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const { zoom, maxZoom, minZoom } = useSelector((state) => state.carto.viewState);

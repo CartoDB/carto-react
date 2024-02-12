@@ -26,7 +26,7 @@ function LegendUnknown({ legend }) {
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
 
-  if (legend.select) {
+  if (legend.select || !legend.type) {
     return null;
   }
 
