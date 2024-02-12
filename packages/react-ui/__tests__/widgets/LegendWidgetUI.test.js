@@ -109,14 +109,23 @@ describe('LegendWidgetUI', () => {
   });
 
   test('layer with no legend is not shown on widget', () => {
-    const layer = {
-      id: 'test-layer-no-legend',
-      title: 'Test layer no legend',
-      visible: true
-    };
-    render(<Widget layers={[layer]}></Widget>);
+    const layers = [
+      {
+        id: 'test-layer-no-legend',
+        title: 'Test layer hidden',
+        visible: true
+      },
+      {
+        id: 'test-layer-no-legend-2',
+        title: 'Test layer shown',
+        visible: true,
+        legend: {}
+      }
+    ];
+    render(<Widget layers={layers}></Widget>);
     expect(screen.queryByText('Layers')).toBeInTheDocument();
-    expect(screen.queryByText('Test layer no legend')).not.toBeInTheDocument();
+    expect(screen.queryByText('Test layer hidden')).not.toBeInTheDocument();
+    expect(screen.queryByText('Test layer shown')).toBeInTheDocument();
   });
 
   test('Category legend', () => {

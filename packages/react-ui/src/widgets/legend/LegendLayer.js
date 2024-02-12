@@ -93,6 +93,10 @@ export default function LegendLayer({
     return Array.isArray(layer.legend) ? layer.legend : [layer.legend];
   }, [layer.legend]);
 
+  if (!layer.legend) {
+    return null;
+  }
+
   return (
     <Box
       data-testid='legend-layer'
