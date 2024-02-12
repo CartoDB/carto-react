@@ -20,7 +20,7 @@ export const navigationOverrides = {
           // Solves a known Mui issue: https://github.com/mui/material-ui/issues/23747
           backgroundColor: 'transparent',
           outline: `none !important`,
-          boxShadow: ` inset 0 0 0 2px ${theme.palette.primary.main} !important`,
+          boxShadow: `inset 0 0 0 2px ${theme.palette.primary.main} !important`,
           borderRadius: theme.shape.borderRadius,
 
           '&:hover': {
@@ -112,7 +112,7 @@ export const navigationOverrides = {
         },
         '&:focus-visible': {
           outline: `none !important`,
-          boxShadow: ` inset 0 0 0 2px ${theme.palette.primary.main} !important`,
+          boxShadow: `inset 0 0 0 2px ${theme.palette.primary.main} !important`,
           borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`
         },
         '&.Mui-selected': {

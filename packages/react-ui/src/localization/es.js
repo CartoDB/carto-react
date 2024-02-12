@@ -81,7 +81,7 @@ const locales = {
         allSelected: 'Todos seleccionados'
       },
       chartLegend: {
-        next: 'Página siguente',
+        next: 'Página siguiente',
         prev: 'Página anterior'
       }
     }
