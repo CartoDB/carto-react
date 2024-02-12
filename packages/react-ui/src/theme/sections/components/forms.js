@@ -556,7 +556,7 @@ export const formsOverrides = {
       size: 'small',
       fullWidth: true,
       popupIcon: <ArrowDropIcon />,
-      clearIcon: <CancelIcon date-testid='cancel-icon-autocomplete' />,
+      clearIcon: <CancelIcon data-testid='cancel-icon-autocomplete' />,
       ChipProps: { color: 'default' },
       limitTags: 1,
       componentsProps: {
