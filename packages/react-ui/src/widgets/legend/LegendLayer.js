@@ -19,6 +19,10 @@ const EMPTY_OBJ = {};
  * @returns {boolean}
  */
 function isLegendEmpty(legend) {
+  if (!legend) {
+    return true;
+  }
+
   if (Array.isArray(legend)) {
     return legend.every((l) => isLegendEmpty(l));
   }
