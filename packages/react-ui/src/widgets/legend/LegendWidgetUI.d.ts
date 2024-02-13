@@ -1,3 +1,5 @@
+import { SxProps } from '@mui/material';
+import { Theme } from '@mui/system';
 import type React from 'react'
 
 export enum LEGEND_TYPES {
@@ -23,6 +25,7 @@ export type LegendWidgetUIProps = {
   minZoom?: number
   currentZoom?: number
   isMobile?: boolean
+  sx?: SxProps<Theme>
 }
 
 declare const LegendWidgetUI: (props: LegendWidgetUIProps) => React.ReactNode;
