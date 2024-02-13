@@ -270,6 +270,12 @@ function HistogramWidgetUI({
     0
   );
 
+  const handleClearPress = (e) => {
+    if (e.key === 'Enter') {
+      onSelectedBarsChange([]);
+    }
+  };
+
   if (showSkeleton) return <HistogramSkeleton height={height} />;
 
   return (
@@ -285,7 +291,12 @@ function HistogramWidgetUI({
               : intlConfig.formatMessage({ id: 'c4r.widgets.histogram.all' })}
           </Typography>
           {selectedBars.length > 0 && (
-            <ClearButton onClick={() => onSelectedBarsChange([])} underline='hover'>
+            <ClearButton
+              onClick={() => onSelectedBarsChange([])}
+              onKeyDown={handleClearPress}
+              underline='hover'
+              tabIndex={0}
+            >
               {intlConfig.formatMessage({ id: 'c4r.widgets.histogram.clear' })}
             </ClearButton>
           )}

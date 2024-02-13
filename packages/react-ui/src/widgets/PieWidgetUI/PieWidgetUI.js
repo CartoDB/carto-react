@@ -199,6 +199,11 @@ function PieWidgetUI({
   const handleClearSelectedCategories = () => {
     onSelectedCategoriesChange([]);
   };
+  const handleClearPress = (e) => {
+    if (e.key === 'Enter') {
+      handleClearSelectedCategories();
+    }
+  };
 
   if (showSkeleton) return <PieSkeleton height={height} />;
 
@@ -215,7 +220,12 @@ function PieWidgetUI({
               : intlConfig.formatMessage({ id: 'c4r.widgets.pie.allSelected' })}
           </Typography>
           {selectedCategories.length > 0 && (
-            <Link variant='caption' onClick={handleClearSelectedCategories}>
+            <Link
+              variant='caption'
+              onClick={handleClearSelectedCategories}
+              onKeyDown={handleClearPress}
+              tabIndex={0}
+            >
               {intlConfig.formatMessage({ id: 'c4r.widgets.pie.clear' })}
             </Link>
           )}

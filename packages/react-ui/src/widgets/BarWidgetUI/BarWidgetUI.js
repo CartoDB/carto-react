@@ -248,6 +248,11 @@ function BarWidgetUI(props) {
       onSelectedBarsChange([], []);
     }
   };
+  const handleClearPress = (e) => {
+    if (e.key === 'Enter') {
+      clearBars();
+    }
+  };
 
   const clickEvent = useCallback(
     (params) => {
@@ -311,7 +316,12 @@ function BarWidgetUI(props) {
               : intlConfig.formatMessage({ id: 'c4r.widgets.bar.all' })}
           </Typography>
           {selectedBars && selectedBars.length > 0 && (
-            <SelectAllButton onClick={() => clearBars()} underline='hover'>
+            <SelectAllButton
+              onClick={() => clearBars()}
+              onKeyDown={handleClearPress}
+              underline='hover'
+              tabIndex={0}
+            >
               {intlConfig.formatMessage({ id: 'c4r.widgets.bar.clear' })}
             </SelectAllButton>
           )}

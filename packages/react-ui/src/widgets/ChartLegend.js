@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Box, styled, IconButton, useTheme } from '@mui/material';
+import { useIntl } from 'react-intl';
+
+import { Box, styled, IconButton, useTheme, Tooltip } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 
 import Typography from '../components/atoms/Typography';
+import useImperativeIntl from '../hooks/useImperativeIntl';
 
 const Legend = styled(Box)(({ theme }) => ({
   position: 'relative',
@@ -15,7 +18,10 @@ const ItemsContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   overflowX: 'hidden',
-  gap: theme.spacing(2)
+  gap: theme.spacing(2),
+  // Accessibility tweak to display focus indicator properly
+  padding: theme.spacing(0.5),
+  margin: theme.spacing(-0.5)
 }));
 
 const Item = styled(Box)(({ theme }) => ({
@@ -68,12 +74,21 @@ export default function ChartLegend({ series, selectedCategories, onCategoryClic
   const containerRef = useRef(null);
   const showMoreButtonsRef = useRef(null);
 
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
+
   const handleClickRight = () => {
     setOffset(offset + 1);
   };
 
   const handleClickLeft = () => {
     setOffset(Math.max(offset - 1));
+  };
+
+  const onCategoryPress = (e, categoryName) => {
+    if (e.key === 'Enter') {
+      onCategoryClick(categoryName);
+    }
   };
 
   const updateMaxWidth = useCallback(() => {
@@ -133,7 +148,11 @@ export default function ChartLegend({ series, selectedCategories, onCategoryClic
           return (
             <Item
               key={i}
+              tabIndex={0}
               onClick={onCategoryClick ? () => onCategoryClick(category.name) : undefined}
+              onKeyDown={
+                onCategoryClick ? (e) => onCategoryPress(e, category.name) : undefined
+              }
               style={{
                 pointerEvents:
                   !onCategoryClick || category.name === 'Others' ? 'none' : undefined
@@ -153,12 +172,20 @@ export default function ChartLegend({ series, selectedCategories, onCategoryClic
       {(overflowing || offset > 0) && (
         <ShowMoreButtons ref={showMoreButtonsRef}>
           <OverflowVeil />
-          <IconButton size='small' disabled={offset === 0} onClick={handleClickLeft}>
-            <ChevronLeft />
-          </IconButton>
-          <IconButton size='small' disabled={!overflowing} onClick={handleClickRight}>
-            <ChevronRight />
-          </IconButton>
+          <Tooltip
+            title={intlConfig.formatMessage({ id: 'c4r.widgets.chartLegend.next' })}
+          >
+            <IconButton size='small' disabled={offset === 0} onClick={handleClickLeft}>
+              <ChevronLeft />
+            </IconButton>
+          </Tooltip>
+          <Tooltip
+            title={intlConfig.formatMessage({ id: 'c4r.widgets.chartLegend.prev' })}
+          >
+            <IconButton size='small' disabled={!overflowing} onClick={handleClickRight}>
+              <ChevronRight />
+            </IconButton>
+          </Tooltip>
         </ShowMoreButtons>
       )}
     </Legend>
