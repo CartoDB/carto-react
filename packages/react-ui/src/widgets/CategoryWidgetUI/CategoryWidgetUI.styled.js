@@ -28,6 +28,10 @@ export const CategoryItemGroup = styled(Grid, {
 
         '&:hover .progressbar div': {
           backgroundColor: theme.palette.secondary.dark
+        },
+        '&:focus-visible': {
+          outline: `none !important`,
+          boxShadow: `inset 0 0 0 2px ${theme.palette.primary.main} !important`
         }
       }),
     ...(name === REST_CATEGORY && {
