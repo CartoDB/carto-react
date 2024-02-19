@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix TimeSeriesContext exports [#840](https://github.com/CartoDB/carto-react/pull/840)
+
 ## 2.3
 
 ### 2.3.11 (2024-02-13)
