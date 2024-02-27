@@ -56,6 +56,7 @@ type CustomPalette = Modify<
   {
     primary: CustomMainPaletteColor;
     secondary: CustomMainPaletteColor;
+    tertiary: CustomMainPaletteColor;
     error: CustomFeedbackPaletteColor;
     warning: CustomFeedbackPaletteColor;
     info: CustomFeedbackPaletteColor;
@@ -131,6 +132,7 @@ declare module '@mui/material/Typography' {
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     default: true;
+    tertiary: true;
   }
 }
 

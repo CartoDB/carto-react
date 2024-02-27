@@ -114,6 +114,14 @@ export const commonPalette = {
     background: alpha(baseColors.green[400], 0.08),
     relatedLight: '#EFFCF5'
   },
+  tertiary: {
+    main: baseColors.orange[400],
+    dark: baseColors.orange[500],
+    light: baseColors.orange[300],
+    contrastText: baseColors.common.white,
+    background: '#78540F',
+    relatedLight: '#FEF6EA'
+  },
   text: {
     primary: baseColors.common.black,
     secondary: baseColors.shades.dark[60],

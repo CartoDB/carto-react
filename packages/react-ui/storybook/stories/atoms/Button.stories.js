@@ -21,7 +21,7 @@ const options = {
       defaultValue: 'primary',
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary', 'error']
+        options: ['default', 'primary', 'secondary', 'error', 'tertiary']
       }
     },
     size: {

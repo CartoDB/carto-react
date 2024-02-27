@@ -28,7 +28,8 @@ const options = {
           'success',
           'info',
           'error',
-          'warning'
+          'warning',
+          'tertiary'
         ]
       }
     },

@@ -8,7 +8,7 @@ const options = {
     color: {
       control: {
         type: 'select',
-        options: ['primary', 'secondary']
+        options: ['primary', 'secondary', 'tertiary']
       }
     },
     disabled: {

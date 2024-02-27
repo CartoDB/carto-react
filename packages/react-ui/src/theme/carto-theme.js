@@ -54,6 +54,7 @@ export const cartoThemeOptions = {
     common: { ...commonPalette.common },
     primary: { ...commonPalette.primary },
     secondary: { ...commonPalette.secondary },
+    tertiary: { ...commonPalette.tertiary },
     error: { ...commonPalette.error },
     warning: { ...commonPalette.warning },
     info: { ...commonPalette.info },
