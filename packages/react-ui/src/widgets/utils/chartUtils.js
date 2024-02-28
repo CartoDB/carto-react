@@ -94,11 +94,12 @@ export function findLargestCategory(array) {
 }
 
 // Calculate the percentage of a value in relation to a total
-export function calculatePercentage(value, total) {
-  if (total === 0) {
-    return '0.00%'; // Avoid division by zero
+export function calculatePercentage(value, total, formatter) {
+  let percentage = 0
+
+  if (total !== 0) {
+    percentage = (value / total) * 100
   }
 
-  const percentage = ((value / total) * 100).toFixed(2); // Limit to two decimals
-  return `${percentage}%`;
+  return formatter ? formatter(percentage) : `${percentage.toFixed(2)}%`;
 }

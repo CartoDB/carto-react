@@ -233,7 +233,7 @@ function PieWidgetUI({
       )}
 
       <ChartContent height={height} width={width}>
-        <PieCentralText data={processedData} selectedCategories={selectedCategories} />
+        <PieCentralText formatter={formatter} data={processedData} selectedCategories={selectedCategories} />
 
         <Chart
           option={options}
