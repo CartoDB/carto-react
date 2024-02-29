@@ -58,7 +58,9 @@ const LoadingTemplate = (args) => {
 };
 
 export const Default = Template.bind({});
-const DefaultProps = { data: dataDefault };
+const DefaultProps = {
+  data: dataDefault
+};
 Default.args = DefaultProps;
 
 export const CustomColors = Template.bind({});

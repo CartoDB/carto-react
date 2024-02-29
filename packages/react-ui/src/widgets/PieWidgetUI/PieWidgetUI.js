@@ -67,7 +67,10 @@ function PieWidgetUI({
   const { showSkeleton } = useSkeleton(isLoading);
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
-
+  let _formatter = formatter;
+  if (!_formatter) {
+    _formatter = (val) => `${intl.formatNumber(val, { maximumFractionDigits: 2 })}%`;
+  }
   // Tooltip
   const tooltipOptions = useMemo(
     () => ({
@@ -233,7 +236,11 @@ function PieWidgetUI({
       )}
 
       <ChartContent height={height} width={width}>
-        <PieCentralText formatter={formatter} data={processedData} selectedCategories={selectedCategories} />
+        <PieCentralText
+          formatter={_formatter}
+          data={processedData}
+          selectedCategories={selectedCategories}
+        />
 
         <Chart
           option={options}
@@ -256,7 +263,6 @@ function PieWidgetUI({
 
 PieWidgetUI.defaultProps = {
   name: null,
-  formatter: (v) => v,
   tooltipFormatter,
   colors: [],
   labels: {},
