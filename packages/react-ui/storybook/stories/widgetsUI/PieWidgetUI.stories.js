@@ -130,3 +130,11 @@ CollapseMoreThan12Categories.args = CollapseCategoriesProps;
 export const Loading = LoadingTemplate.bind({});
 const LoadingProps = { data: dataDefault, isLoading: true };
 Loading.args = LoadingProps;
+
+const customFormatterFn = (value) => `${value.toFixed(2)} units`;
+export const CustomFormatter = Template.bind({});
+const CustomFormatterProps = {
+  data: dataDefault,
+  formatter: customFormatterFn
+};
+CustomFormatter.args = CustomFormatterProps;

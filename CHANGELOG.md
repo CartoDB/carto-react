@@ -1,7 +1,8 @@
 # CHANGELOG
 
 ## Not released
-
+- Feat PieWidgetUI: Add formatter to central text component and include a default formatted based on useIntl.formatNumber [#843](https://github.com/CartoDB/carto-react/pull/843)
+  
 ## 2.3
 
 ### 2.3.12 (2024-02-19)
