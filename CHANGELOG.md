@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## Not released
-
+- Add percentFormatter prop in PieWidgetUI, allowing to format percent values [#844](https://github.com/CartoDB/carto-react/pull/844)
 ## 2.3
 
 ### 2.3.12 (2024-02-19)
