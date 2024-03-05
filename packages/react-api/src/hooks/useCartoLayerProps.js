@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { selectSpatialFilter, selectViewport } from '@carto/react-redux';
+import { selectValidSpatialFilter, selectViewport } from '@carto/react-redux';
 import useGeojsonFeatures from './useGeojsonFeatures';
 import useTileFeatures from './useTileFeatures';
 import { getDataFilterExtensionProps } from './dataFilterExtensionUtil';
@@ -18,7 +18,9 @@ export default function useCartoLayerProps({
   viewporFeaturesDebounceTimeout = 250
 }) {
   const viewport = useSelector(selectViewport);
-  const spatialFilter = useSelector((state) => selectSpatialFilter(state, source?.id));
+  const spatialFilter = useSelector((state) =>
+    selectValidSpatialFilter(state, source?.id)
+  );
 
   const [onDataLoadForGeojson] = useGeojsonFeatures({
     source,

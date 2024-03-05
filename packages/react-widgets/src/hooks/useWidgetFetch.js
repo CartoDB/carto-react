@@ -6,7 +6,7 @@ import {
 } from '@carto/react-core';
 import {
   selectAreFeaturesReadyForSource,
-  selectSpatialFilter,
+  selectValidSpatialFilter,
   selectViewport
 } from '@carto/react-redux';
 import { dequal } from 'dequal';
@@ -85,7 +85,9 @@ export default function useWidgetFetch(
   );
 
   const viewport = useSelector(selectViewport);
-  const spatialFilter = useSelector((state) => selectSpatialFilter(state, dataSource));
+  const spatialFilter = useSelector((state) =>
+    selectValidSpatialFilter(state, dataSource)
+  );
   const geometryToIntersect = useMemo(
     () => selectGeometryToIntersect(global, viewport, spatialFilter),
     [global, viewport, spatialFilter]
