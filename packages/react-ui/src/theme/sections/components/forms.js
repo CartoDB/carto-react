@@ -572,7 +572,6 @@ export const formsOverrides = {
           //Needed to overide Mui default styles
           '.MuiInputBase-root': {
             gap: theme.spacing(0.5),
-            height: 'auto',
             minHeight: theme.spacing(6),
             padding: theme.spacing(1, 2),
             paddingRight: theme.spacing(5),
