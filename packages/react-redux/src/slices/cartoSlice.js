@@ -387,7 +387,7 @@ export const selectSpatialFilter = (state, sourceId) => {
  */
 export const selectValidSpatialFilter = (state, sourceId) => {
   const spatialFilter = selectSpatialFilter(state, sourceId);
-  return spatialFilter?.properties?.isInvalid ? null : spatialFilter;
+  return spatialFilter?.properties?.invalid ? null : spatialFilter;
 };
 
 /**

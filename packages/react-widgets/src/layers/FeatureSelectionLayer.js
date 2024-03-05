@@ -65,7 +65,7 @@ export default function FeatureSelectionLayer(
   if (hasGeometry && !isSelected) {
     mainColor = secondaryAsRgba;
   }
-  if (spatialFilterGeometry?.properties?.isInvalid) {
+  if (spatialFilterGeometry?.properties?.invalid) {
     mainColor = errorAsRgba;
   }
 
@@ -101,7 +101,7 @@ export default function FeatureSelectionLayer(
           if (updatedData.features.length !== 0 && !editType.includes('Tentative')) {
             const [lastFeature] = updatedData.features.slice(-1);
             const intersectionPoints = kinks(lastFeature).features.length;
-            lastFeature.properties.isInvalid = intersectionPoints > 0;
+            lastFeature.properties.invalid = intersectionPoints > 0;
 
             if (lastFeature) {
               dispatch(
