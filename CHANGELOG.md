@@ -2,6 +2,7 @@
 
 ## Not released
 - Add percentFormatter prop in PieWidgetUI, allowing to format percent values [#844](https://github.com/CartoDB/carto-react/pull/844)
+- Fix Snowflake spatial index detection [#845](https://github.com/CartoDB/carto-react/pull/845)
 - Fix TimeSeriesWidgetUI check undefined echart.getInstance().getDom() [#842](https://github.com/CartoDB/carto-react/pull/842)
   
 ## 2.3
