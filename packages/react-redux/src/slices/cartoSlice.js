@@ -382,6 +382,15 @@ export const selectSpatialFilter = (state, sourceId) => {
 };
 
 /**
+ * Redux selector to select the spatial filter of a given sourceId or the root one.
+ * This selector returns null if the spatial filter is invalid (if it intersetcs itself)
+ */
+export const selectValidSpatialFilter = (state, sourceId) => {
+  const spatialFilter = selectSpatialFilter(state, sourceId);
+  return spatialFilter?.properties?.isInvalid ? null : spatialFilter;
+};
+
+/**
  * Redux selector to select the feature selection mode based on if it's enabled
  */
 export const selectFeatureSelectionMode = (state) =>
