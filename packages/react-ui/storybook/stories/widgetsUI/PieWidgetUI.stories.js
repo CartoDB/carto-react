@@ -128,3 +128,15 @@ CollapseMoreThan12Categories.args = CollapseCategoriesProps;
 export const Loading = LoadingTemplate.bind({});
 const LoadingProps = { data: dataDefault, isLoading: true };
 Loading.args = LoadingProps;
+
+export const CustomPercentFormatter = Template.bind({});
+const CustomPercentFormatterProps = {
+  data: dataDefault,
+  formatter: (v) => `${v} units`,
+  percentFormatter: (v) =>
+    `${Intl.NumberFormat('en', {
+      maximumFractionDigits: 3,
+      minimumFractionDigits: 3
+    }).format(v)}%`
+};
+CustomPercentFormatter.args = CustomPercentFormatterProps;
