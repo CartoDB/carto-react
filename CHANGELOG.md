@@ -1,7 +1,8 @@
 # CHANGELOG
 
 ## Not released
-
+- Fix TimeSeriesWidgetUI check undefined echart.getInstance().getDom() [#842](https://github.com/CartoDB/carto-react/pull/842)
+  
 ## 2.3
 
 ### 2.3.12 (2024-02-19)
