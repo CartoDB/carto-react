@@ -3,7 +3,8 @@
 ## Not released
 - Fix Snowflake spatial index detection [#845](https://github.com/CartoDB/carto-react/pull/845)
 - Fix TimeSeriesWidgetUI check undefined echart.getInstance().getDom() [#842](https://github.com/CartoDB/carto-react/pull/842)
-  
+- Update MultipleSelectField placeholder text color [#846](https://github.com/CartoDB/carto-react/pull/846)
+
 ## 2.3
 
 ### 2.3.12 (2024-02-19)
