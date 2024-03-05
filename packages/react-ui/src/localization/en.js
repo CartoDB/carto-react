@@ -74,7 +74,7 @@ const locales = {
         polygon: 'Polygon',
         point: 'Point',
         lineString: 'Line',
-        invalid: 'Invalid geometry'
+        invalid: 'Invalid shape'
       },
       pie: {
         clear: 'Clear',
