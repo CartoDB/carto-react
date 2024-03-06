@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Check invalid geometries for spatial filter [#847](https://github.com/CartoDB/carto-react/pull/847)
+
 ## 2.3
 
 ### 2.3.13 (2024-03-06)
