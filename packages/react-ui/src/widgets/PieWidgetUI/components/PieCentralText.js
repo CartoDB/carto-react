@@ -29,7 +29,7 @@ const MarkerColor = styled(Box)(({ theme }) => ({
   height: theme.spacing(1)
 }));
 
-function PieCentralText({ data, selectedCategories }) {
+function PieCentralText({ data, selectedCategories, formatter }) {
   const [selectedItem, setSelectedItem] = useState({});
 
   // Select the largest category to display in CentralText and calculate its percentage from the total
@@ -57,11 +57,11 @@ function PieCentralText({ data, selectedCategories }) {
       sumValue += category.value;
     }
 
-    const percentage = calculatePercentage(category.value, sumValue);
+    const percentage = calculatePercentage(category.value, sumValue, formatter);
     category.percentage = percentage;
 
     return category;
-  }, [data, selectedCategories]);
+  }, [data, selectedCategories, formatter]);
 
   useEffect(() => {
     if (topSelectedCategory) {
@@ -96,7 +96,8 @@ PieCentralText.propTypes = {
       color: PropTypes.string
     })
   ),
-  selectedCategories: PropTypes.array
+  selectedCategories: PropTypes.array,
+  formatter: PropTypes.func
 };
 
 export default PieCentralText;
