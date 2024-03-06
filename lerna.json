@@ -1,9 +1,8 @@
 {
   "packages": [
-    "packages/react-api",
-    "packages/react-widgets"
+    "packages/*"
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "2.3.14-alpha.0"
+  "version": "2.3.14"
 }

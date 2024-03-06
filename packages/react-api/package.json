@@ -1,6 +1,6 @@
 {
   "name": "mcalzado-react-api",
-  "version": "2.3.14-alpha.0",
+  "version": "2.3.14",
   "description": "CARTO for React - Api",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -68,13 +68,13 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^2.3.11",
-    "@carto/react-redux": "^2.3.11",
-    "@carto/react-workers": "^2.3.11",
     "@deck.gl/carto": "^8.9.18",
     "@deck.gl/core": "^8.9.18",
     "@deck.gl/extensions": "^8.9.18",
     "@loaders.gl/mvt": "^3.2.10",
+    "mcalzado-react-core": "^2.3.11",
+    "mcalzado-react-redux": "^2.3.11",
+    "mcalzado-react-workers": "^2.3.11",
     "react": "17.x || 18.x",
     "react-dom": "17.x || 18.x",
     "react-redux": "^7.2.2 || 8.x",
