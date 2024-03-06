@@ -142,7 +142,7 @@ describe('FeatureSelectionWidgetUI', () => {
 
   test('invalid geometry is rendered correctly', () => {
     const rendered = render(<CommonFeatureSelectionWidgetUI geometry={INVALID_GEOM} />);
-    expect(rendered.getByAltText('Invalid geometry')).toBeDefined();
+    expect(rendered.getByRole('button', { name: 'Invalid geometry' })).toBeDefined();
   });
 
   test('geometry select event is raised correctly', () => {
