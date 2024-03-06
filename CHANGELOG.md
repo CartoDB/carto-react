@@ -4,7 +4,7 @@
 
 ## 2.3
 
-### 2.3.12 (2024-03-06)
+### 2.3.13 (2024-03-06)
 
 - Add percentFormatter prop in PieWidgetUI, allowing to format percent values [#844](https://github.com/CartoDB/carto-react/pull/844)
 - Fix Snowflake spatial index detection [#845](https://github.com/CartoDB/carto-react/pull/845)
