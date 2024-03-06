@@ -248,7 +248,7 @@ export default function TimeSeriesChart({
       return;
     }
 
-    const element = echartsInstance.getDom().parentElement;
+    const element = echartsInstance?.getDom()?.parentElement;
 
     if (!element) return;
 
