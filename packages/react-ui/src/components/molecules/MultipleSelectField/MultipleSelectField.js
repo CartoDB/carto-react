@@ -92,7 +92,7 @@ const MultipleSelectField = forwardRef(
         <Typography
           component='span'
           variant={isSmall ? 'body2' : 'body1'}
-          color='textSecondary'
+          color='text.hint'
           ml={paddingSize}
         >
           {placeholder || intlConfig.formatMessage({ id: 'c4r.form.noneSelected' })}

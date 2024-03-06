@@ -80,6 +80,7 @@ export type PieWidgetUI = {
   data: PieWidgetUIData;
   formatter?: Function;
   tooltipFormatter?: Function;
+  percentFormatter?: Function;
   height?: string;
   colors?: string[];
   selectedCategories?: string[];
