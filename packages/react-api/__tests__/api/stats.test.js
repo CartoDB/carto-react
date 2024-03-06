@@ -98,7 +98,7 @@ describe('stats', () => {
 
       expect(fetchMock).toBeCalledWith(TABLE_TEST.url, {
         headers: {
-          Authorization: `Bearer ${TABLE_TEST.input.source.credentials.accessToken}`
+          Cartoauthorization: `Bearer ${TABLE_TEST.input.source.credentials.accessToken}`
         },
         signal: abortController.signal
       });
@@ -129,7 +129,7 @@ describe('stats', () => {
 
       expect(fetchMock).toBeCalledWith(QUERY_TEST.url, {
         headers: {
-          Authorization: `Bearer ${QUERY_TEST.input.source.credentials.accessToken}`
+          Cartoauthorization: `Bearer ${QUERY_TEST.input.source.credentials.accessToken}`
         },
         signal: abortController.signal
       });
@@ -162,7 +162,7 @@ describe('stats', () => {
       expect(fetchMock).toBeCalledWith(QUERY_TEST.url, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${QUERY_TEST.input.source.credentials.accessToken}`,
+          Cartoauthorization: `Bearer ${QUERY_TEST.input.source.credentials.accessToken}`,
           'Content-Type': 'application/json'
         },
         signal: abortController.signal,
@@ -200,7 +200,7 @@ describe('stats', () => {
       expect(fetchMock).toBeCalledWith(QUERY_TEST.url, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${QUERY_TEST.input.source.credentials.accessToken}`,
+          Cartoauthorization: `Bearer ${QUERY_TEST.input.source.credentials.accessToken}`,
           'Content-Type': 'application/json'
         },
         signal: abortController.signal,

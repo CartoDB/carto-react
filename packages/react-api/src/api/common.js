@@ -39,7 +39,7 @@ export async function makeCall({ url, credentials, opts }) {
   try {
     response = await fetch(url.toString(), {
       headers: {
-        Authorization: `Bearer ${credentials.accessToken}`,
+        Cartoauthorization: `Bearer ${credentials.accessToken}`,
         ...(isPost ? { 'Content-Type': 'application/json' } : {})
       },
       ...(isPost

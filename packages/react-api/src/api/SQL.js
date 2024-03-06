@@ -111,7 +111,7 @@ function createRequest({
   if (isGet) {
     if (apiVersion === API_VERSIONS.V3) {
       return getRequest(getUrl, requestOpts, {
-        Authorization: `Bearer ${credentials.accessToken}`
+        Cartoauthorization: `Bearer ${credentials.accessToken}`
       });
     } else {
       return getRequest(getUrl, requestOpts);
@@ -132,7 +132,7 @@ function createRequest({
   });
   if (apiVersion === API_VERSIONS.V3) {
     return postRequest(postUrl, payload, requestOpts, {
-      Authorization: `Bearer ${credentials.accessToken}`
+      Cartoauthorization: `Bearer ${credentials.accessToken}`
     });
   }
   return postRequest(postUrl, payload, requestOpts);
