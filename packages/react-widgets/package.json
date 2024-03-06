@@ -1,5 +1,5 @@
 {
-  "name": "@carto/react-widgets",
+  "name": "mcalzado-react-widgets",
   "version": "2.3.11",
   "description": "CARTO for React - Widgets",
   "author": "CARTO Dev Team",
@@ -69,7 +69,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-api": "^2.3.10",
+    "mcalzado-react-api": "^2.3.10",
     "@carto/react-core": "^2.3.10",
     "@carto/react-redux": "^2.3.10",
     "@carto/react-ui": "^2.3.10",
