@@ -123,9 +123,26 @@ describe('FeatureSelectionWidgetUI', () => {
       name: 'Mask'
     }
   };
+  const INVALID_GEOM = {
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [125.6, 10.1]
+    },
+    properties: {
+      name: 'Mask',
+      invalid: true
+    }
+  };
+
   test('geometry is rendered correctly', () => {
     const rendered = render(<CommonFeatureSelectionWidgetUI geometry={GEOMETRY} />);
     expect(rendered.getByText('Mask')).toBeDefined();
+  });
+
+  test('invalid geometry is rendered correctly', () => {
+    const rendered = render(<CommonFeatureSelectionWidgetUI geometry={INVALID_GEOM} />);
+    expect(rendered.getByText('Invalid geometry')).toBeDefined();
   });
 
   test('geometry select event is raised correctly', () => {
