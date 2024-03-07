@@ -6,9 +6,8 @@ export const LEGEND_WIDTH = 240;
 export const LegendRoot = styled(Paper, {
   shouldForwardProp: (prop) => !['collapsed'].includes(prop)
 })(({ theme, collapsed }) => ({
-  width: collapsed ? undefined : LEGEND_WIDTH,
+  width: collapsed ? 'min-content' : LEGEND_WIDTH,
   background: theme.palette.background.paper,
-  position: 'absolute',
   maxHeight: 'calc(100% - 120px)',
   display: 'flex',
   flexDirection: 'column'
