@@ -58,7 +58,8 @@ const locales = {
           color: 'Color based on'
         },
         max: 'Max',
-        min: 'Min'
+        min: 'Min',
+        maxCategories: 'Legend limited to {n} categories'
       },
       range: {
         clear: 'Clear',

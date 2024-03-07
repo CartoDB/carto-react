@@ -1,9 +1,13 @@
 import React from 'react';
-import { Box, styled } from '@mui/material';
+import { Box, Typography, styled } from '@mui/material';
 import { getPalette } from '../../../utils/palette';
 import PropTypes from 'prop-types';
 import LegendLayerTitle from '../LegendLayerTitle';
 import { LegendVariableList } from '../LegendWidgetUI.styles';
+import useImperativeIntl from '../../../hooks/useImperativeIntl';
+import { useIntl } from 'react-intl';
+
+const MAX_CATEGORIES = 20;
 
 /**
  * @param {object} props
@@ -20,24 +24,46 @@ function LegendCategories({ legend }) {
   } = legend;
 
   const palette = getPalette(colors, labels.length);
+  const showHelperText = labels.length > MAX_CATEGORIES;
+  const intl = useIntl();
+  const intlConfig = useImperativeIntl(intl);
 
   return (
-    <LegendVariableList data-testid='categories-legend'>
-      {labels.map((label, idx) => (
-        <LegendCategoriesRow
-          key={label + idx}
-          label={label}
-          color={palette[idx]}
-          icon={
-            customMarkers && Array.isArray(customMarkers)
-              ? customMarkers[idx]
-              : customMarkers
-          }
-          maskedIcon={maskedMarkers}
-          isStrokeColor={isStrokeColor}
-        />
-      ))}
-    </LegendVariableList>
+    <>
+      <LegendVariableList data-testid='categories-legend'>
+        {labels.slice(0, MAX_CATEGORIES).map((label, idx) => (
+          <LegendCategoriesRow
+            key={label + idx}
+            label={label}
+            color={palette[idx % palette.length]}
+            icon={
+              customMarkers && Array.isArray(customMarkers)
+                ? customMarkers[idx]
+                : customMarkers
+            }
+            maskedIcon={maskedMarkers}
+            isStrokeColor={isStrokeColor}
+          />
+        ))}
+      </LegendVariableList>
+      {showHelperText && (
+        <Typography
+          variant='caption'
+          color='textSecondary'
+          component='div'
+          sx={{ py: 2 }}
+        >
+          {intlConfig.formatMessage(
+            {
+              id: 'c4r.widgets.legend.maxCategories'
+            },
+            {
+              n: MAX_CATEGORIES
+            }
+          )}
+        </Typography>
+      )}
+    </>
   );
 }
 

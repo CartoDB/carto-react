@@ -201,8 +201,8 @@ const LegendMultiTemplateCollapsed = () => {
 const categoryLegend = {
   type: 'category',
   note: 'lorem',
-  colors: ['#000', '#00F', '#0F0'],
-  labels: ['Category 1', 'Category 2', 'Category 3']
+  colors: 'RedOr', //['#000', '#00F', '#0F0'],
+  labels: Array.from({ length: 30 }, (_, i) => `Category ${i + 1}`)
 };
 
 const LegendCategoriesTemplate = () => {
