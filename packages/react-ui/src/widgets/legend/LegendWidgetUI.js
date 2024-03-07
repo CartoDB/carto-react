@@ -70,7 +70,7 @@ function LegendWidgetUI({
     </Tooltip>
   );
 
-  if (isSingle) {
+  if (isSingle && !isMobile) {
     return (
       <LegendRoot sx={sx} elevation={3} collapsed={collapsed || isMobile}>
         <LegendContent>
