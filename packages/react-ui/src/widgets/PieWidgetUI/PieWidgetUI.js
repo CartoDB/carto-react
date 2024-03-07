@@ -71,7 +71,11 @@ function PieWidgetUI({
   const _percentFormatter = useMemo(
     () =>
       percentFormatter ||
-      ((v) => `${intl.formatNumber(v, { maximumFractionDigits: 2 })}%`),
+      ((v) =>
+        `${intl.formatNumber(v, {
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2
+        })}%`),
     [intl, percentFormatter]
   );
   // Tooltip
