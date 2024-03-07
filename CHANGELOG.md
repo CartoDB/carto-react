@@ -1,8 +1,12 @@
 # CHANGELOG
 
 ## Not released
-- Fix PieWidgetUI keep two decimals always in default percent formatter [#850](https://github.com/CartoDB/carto-react/pull/850)
+
 ## 2.3
+
+### 2.3.14 (2024-03-07)
+
+- Fix PieWidgetUI keep two decimals always in default percent formatter [#850](https://github.com/CartoDB/carto-react/pull/850)
 
 ### 2.3.13 (2024-03-06)
 
