@@ -47,7 +47,12 @@ export const StyledOpacityControl = styled('div')(({ theme }) => ({
 export const OpacityTextField = styled(TextField)(({ theme }) => ({
   display: 'flex',
   width: theme.spacing(7.5),
-  flexShrink: 0
+  flexShrink: 0,
+  'input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button':
+    {
+      '-webkit-appearance': 'none',
+      margin: 0
+    }
 }));
 
 export const LayerVariablesList = styled('ul', {
