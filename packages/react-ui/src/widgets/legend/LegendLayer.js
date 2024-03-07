@@ -140,7 +140,7 @@ export default function LegendLayer({
             </Tooltip>
           )}
         </Box>
-        {showOpacityControl && visible && (
+        {showOpacityControl && visible && !collapsed && (
           <LegendOpacityControl
             menuRef={menuAnchorRef}
             open={opacityOpen}
