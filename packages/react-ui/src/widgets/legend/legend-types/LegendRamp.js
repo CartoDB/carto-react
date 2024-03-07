@@ -61,10 +61,10 @@ function LegendRamp({ isContinuous = false, legend }) {
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Typography variant='overlineDelicate' color='textSecondary'>
-              {maxLabel}
+              {minLabel}
             </Typography>
             <Typography variant='overlineDelicate' color='textSecondary'>
-              {minLabel}
+              {maxLabel}
             </Typography>
           </Box>
         </>
