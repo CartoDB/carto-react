@@ -76,7 +76,7 @@ export default function LegendLayerVariable({
   const selectOptions = legend.select?.options || [];
 
   return (
-    <Box data-testid='legend-layer-variable' px={2}>
+    <Box component='li' data-testid='legend-layer-variable' px={2}>
       {legend.attr ? (
         <Box pb={1}>
           <Typography
