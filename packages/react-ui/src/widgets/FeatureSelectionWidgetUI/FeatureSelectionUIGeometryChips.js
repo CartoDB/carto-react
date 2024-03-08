@@ -1,4 +1,4 @@
-import { Cancel } from '@mui/icons-material';
+import { Cancel, ErrorOutline } from '@mui/icons-material';
 import { Box, Chip, List, ListItem, Tooltip, styled } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
@@ -80,13 +80,30 @@ function FeatureSelectionUIGeometryChips({
       <ChipList sx={{ gap: size === 'small' ? 0.5 : 1 }}>
         {features.map((geometry, index) => {
           const isDisabled = geometry.properties?.disabled;
-          const tooltipText = isDisabled
-            ? disabledChipTooltip || chipTooltip
-            : showDeleteTooltip
-            ? intlConfig.formatMessage({
-                id: `c4r.widgets.featureSelection.remove`
-              })
-            : chipTooltip;
+          const isInvalid = geometry.properties?.invalid;
+
+          let tooltipText = chipTooltip;
+          if (isDisabled) {
+            tooltipText = disabledChipTooltip || chipTooltip;
+          }
+          if (isInvalid) {
+            tooltipText = intlConfig.formatMessage({
+              id: `c4r.widgets.featureSelection.invalid`
+            });
+          }
+          if (showDeleteTooltip) {
+            tooltipText = intlConfig.formatMessage({
+              id: `c4r.widgets.featureSelection.remove`
+            });
+          }
+
+          let color = 'secondary';
+          if (isDisabled) {
+            color = 'default';
+          }
+          if (isInvalid) {
+            color = 'error';
+          }
 
           return (
             <ListItem disablePadding key={index}>
@@ -98,11 +115,12 @@ function FeatureSelectionUIGeometryChips({
                 <Chip
                   size={size}
                   label={getFeatureChipLabel(geometry, index)}
-                  color={isDisabled ? 'default' : 'secondary'}
+                  color={color}
                   onClick={() => onSelectGeometry(geometry)}
                   onDelete={
                     onDeleteGeometry ? () => onDeleteGeometry(geometry) : undefined
                   }
+                  icon={isInvalid ? <ErrorOutline color='error' /> : undefined}
                   deleteIcon={
                     <Cancel
                       onMouseEnter={() => setShowDeleteTooltip(true)}
