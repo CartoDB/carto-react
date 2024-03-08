@@ -98,6 +98,8 @@ export default function LegendLayerVariable({
             {legend.select.label}
           </Typography>
           <Select
+            data-testid='legend-layer-variable-select'
+            name='legend-select'
             value={legend.select.value}
             renderValue={(value) =>
               selectOptions.find((option) => option.value === value)?.label || value
