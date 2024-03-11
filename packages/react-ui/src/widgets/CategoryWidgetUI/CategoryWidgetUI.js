@@ -92,14 +92,29 @@ function CategoryWidgetUI(props) {
   const handleClearClicked = () => {
     props.onSelectedCategoriesChange([]);
   };
+  const handleClearPress = (e) => {
+    if (e.key === 'Enter') {
+      handleClearClicked();
+    }
+  };
 
   const handleUnblockClicked = () => {
     props.onSelectedCategoriesChange([]);
     setBlockedCategories([]);
   };
+  const handleUnblockPress = (e) => {
+    if (e.key === 'Enter') {
+      handleUnblockClicked();
+    }
+  };
 
   const handleBlockClicked = () => {
     setBlockedCategories(sortBlockedSameAsData(selectedCategories));
+  };
+  const handleBlockPress = (e) => {
+    if (e.key === 'Enter') {
+      handleBlockClicked();
+    }
   };
 
   const handleApplyClicked = () => {
@@ -110,6 +125,11 @@ function CategoryWidgetUI(props) {
     setTempBlockedCategories([]);
     setShowAll(false);
     setSearchValue('');
+  };
+  const handleApplyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleApplyClicked();
+    }
   };
 
   const handleCancelClicked = () => {
@@ -303,6 +323,12 @@ function CategoryWidgetUI(props) {
       };
     }, []);
 
+    const handleCategoryPress = (e) => {
+      if (e.key === 'Enter') {
+        onCategoryClick();
+      }
+    };
+
     const unselected =
       !showAll &&
       selectedCategories.length > 0 &&
@@ -313,13 +339,18 @@ function CategoryWidgetUI(props) {
         direction='row'
         spacing={1}
         onClick={filterable ? onCategoryClick : () => {}}
+        onKeyDown={handleCategoryPress}
         selectable={filterable}
         unselected={unselected}
         name={data.name === REST_CATEGORY ? REST_CATEGORY : ''}
+        tabIndex={filterable && showAll ? 0 : -1}
       >
         {filterable && showAll && (
           <Grid item>
-            <Checkbox checked={tempBlockedCategories.indexOf(data.name) !== -1} />
+            <Checkbox
+              checked={tempBlockedCategories.indexOf(data.name) !== -1}
+              tabIndex={-1}
+            />
           </Grid>
         )}
         <Grid container item xs>
@@ -371,21 +402,41 @@ function CategoryWidgetUI(props) {
               : intlConfig.formatMessage({ id: 'c4r.widgets.category.all' })}
           </Typography>
           {showAll ? (
-            <LinkAsButton onClick={handleApplyClicked} underline='hover'>
+            <LinkAsButton
+              onClick={handleApplyClicked}
+              onKeyDown={handleApplyPress}
+              underline='hover'
+              tabIndex={0}
+            >
               {intlConfig.formatMessage({ id: 'c4r.widgets.category.apply' })}
             </LinkAsButton>
           ) : blockedCategories.length > 0 ? (
-            <LinkAsButton onClick={handleUnblockClicked} underline='hover'>
+            <LinkAsButton
+              onClick={handleUnblockClicked}
+              onKeyDown={handleUnblockPress}
+              underline='hover'
+              tabIndex={0}
+            >
               {intlConfig.formatMessage({ id: 'c4r.widgets.category.unlock' })}
             </LinkAsButton>
           ) : (
             selectedCategories.length > 0 && (
               <Grid container direction='row' justifyContent='flex-end' item xs>
-                <LinkAsButton onClick={handleBlockClicked} underline='hover'>
+                <LinkAsButton
+                  onClick={handleBlockClicked}
+                  onKeyDown={handleBlockPress}
+                  underline='hover'
+                  tabIndex={0}
+                >
                   {intlConfig.formatMessage({ id: 'c4r.widgets.category.lock' })}
                 </LinkAsButton>
                 <Divider orientation='vertical' flexItem />
-                <LinkAsButton onClick={handleClearClicked} underline='hover'>
+                <LinkAsButton
+                  onClick={handleClearClicked}
+                  onKeyDown={handleClearPress}
+                  underline='hover'
+                  tabIndex={0}
+                >
                   {intlConfig.formatMessage({ id: 'c4r.widgets.category.clear' })}
                 </LinkAsButton>
               </Grid>
@@ -407,6 +458,9 @@ function CategoryWidgetUI(props) {
                   <SearchIcon />
                 </InputAdornment>
               )
+            }}
+            inputProps={{
+              tabIndex: 0
             }}
           />
         </OptionsSelectedBar>

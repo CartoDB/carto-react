@@ -169,4 +169,9 @@ export function selectSpatialFilter(
   sourceId?: string
 ): Feature<Polygon | MultiPolygon> | null;
 
+export function selectValidSpatialFilter(
+  state: any,
+  sourceId?: string
+): Feature<Polygon | MultiPolygon> | null;
+
 export function selectFeatureSelectionMode(state: any): string | null;

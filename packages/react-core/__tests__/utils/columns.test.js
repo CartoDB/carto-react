@@ -21,14 +21,20 @@ describe('getColumnNameFromGeoColumn', () => {
 describe('getSpatialIndexFromGeoColumn', () => {
   it('detect simple spatial index', () => {
     expect(getSpatialIndexFromGeoColumn('quadbin')).toStrictEqual('quadbin');
+    expect(getSpatialIndexFromGeoColumn('QUADBIN')).toStrictEqual('quadbin');
     expect(getSpatialIndexFromGeoColumn('h3')).toStrictEqual('h3');
+    expect(getSpatialIndexFromGeoColumn('H3')).toStrictEqual('h3');
     expect(getSpatialIndexFromGeoColumn('s2')).toStrictEqual('s2');
+    expect(getSpatialIndexFromGeoColumn('S2')).toStrictEqual('s2');
   });
 
   it('detect prefix spatial index', () => {
     expect(getSpatialIndexFromGeoColumn('quadbin:abc')).toStrictEqual('quadbin');
+    expect(getSpatialIndexFromGeoColumn('QUADBIN:ABC')).toStrictEqual('quadbin');
     expect(getSpatialIndexFromGeoColumn('h3:abc')).toStrictEqual('h3');
+    expect(getSpatialIndexFromGeoColumn('H3:abc')).toStrictEqual('h3');
     expect(getSpatialIndexFromGeoColumn('s2:abc')).toStrictEqual('s2');
+    expect(getSpatialIndexFromGeoColumn('S2:abc')).toStrictEqual('s2');
   });
 
   it('handle unsupported spatial index', () => {

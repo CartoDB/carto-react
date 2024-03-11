@@ -1,7 +1,7 @@
 import { ICON_SIZE_MEDIUM } from '../../themeConstants';
 
 export const navigationOverrides = {
-  // Menu
+  // Menu Item
   MuiMenuItem: {
     styleOverrides: {
       root: ({ theme }) => ({
@@ -19,6 +19,9 @@ export const navigationOverrides = {
         '&:focus-visible': {
           // Solves a known Mui issue: https://github.com/mui/material-ui/issues/23747
           backgroundColor: 'transparent',
+          outline: `none !important`,
+          boxShadow: `inset 0 0 0 2px ${theme.palette.primary.main} !important`,
+          borderRadius: theme.shape.borderRadius,
 
           '&:hover': {
             backgroundColor: theme.palette.action.hover
@@ -106,6 +109,11 @@ export const navigationOverrides = {
 
         '&:hover': {
           borderBottomColor: theme.palette.text.primary
+        },
+        '&:focus-visible': {
+          outline: `none !important`,
+          boxShadow: `inset 0 0 0 2px ${theme.palette.primary.main} !important`,
+          borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`
         },
         '&.Mui-selected': {
           pointerEvents: 'none',

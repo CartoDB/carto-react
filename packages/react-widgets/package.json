@@ -81,6 +81,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.16",
+    "@turf/kinks": "^6.3.0",
     "dequal": "^2.0.2",
     "react": "17.x || 18.x",
     "react-dom": "17.x || 18.x",

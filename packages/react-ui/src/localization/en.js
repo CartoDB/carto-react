@@ -73,12 +73,17 @@ const locales = {
         remove: 'Remove',
         polygon: 'Polygon',
         point: 'Point',
-        lineString: 'Line'
+        lineString: 'Line',
+        invalid: 'Invalid geometry'
       },
       pie: {
         clear: 'Clear',
         selectedItems: '{items, plural, one{# selected} other{# selected}}',
         allSelected: 'All'
+      },
+      chartLegend: {
+        next: 'Next page',
+        prev: 'Previous page'
       }
     }
   }
