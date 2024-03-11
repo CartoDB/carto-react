@@ -48,7 +48,6 @@ function LegendWidgetUI({
 } = {}) {
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
-  const isSingle = layers.length === 1;
 
   const legendToggleHeader = (
     <LegendToggleHeader collapsed={collapsed}>
@@ -69,26 +68,6 @@ function LegendWidgetUI({
       </IconButton>
     </Tooltip>
   );
-
-  if (isSingle && !isMobile) {
-    return (
-      <LegendRoot sx={sx} elevation={3} collapsed={collapsed || isMobile}>
-        <LegendContent>
-          <LegendLayer
-            layer={layers[0]}
-            onChangeCollapsed={onChangeLegendRowCollapsed}
-            onChangeOpacity={onChangeOpacity}
-            onChangeVisibility={onChangeVisibility}
-            onChangeSelection={onChangeSelection}
-            maxZoom={maxZoom}
-            minZoom={minZoom}
-            currentZoom={currentZoom}
-            customLegendTypes={customLegendTypes}
-          />
-        </LegendContent>
-      </LegendRoot>
-    );
-  }
 
   return (
     <LegendRoot sx={sx} elevation={3} collapsed={collapsed || isMobile}>
