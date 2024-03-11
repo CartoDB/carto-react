@@ -4335,7 +4335,7 @@
   dependencies:
     "@turf/helpers" "^6.5.0"
 
-"@turf/line-intersect@>=4.0.0", "@turf/line-intersect@^6.5.0":
+"@turf/line-intersect@^6.5.0":
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/@turf/line-intersect/-/line-intersect-6.5.0.tgz#dea48348b30c093715d2195d2dd7524aee4cf020"
   integrity sha512-CS6R1tZvVQD390G9Ea4pmpM6mJGPWoL82jD46y0q1KSor9s6HupMIo1kY4Ny+AEYQl9jd21V3Scz20eldpbTVA==
