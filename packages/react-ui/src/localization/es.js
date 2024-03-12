@@ -32,7 +32,6 @@ const locales = {
         clear: 'Limpiar'
       },
       legend: {
-        by: 'Por {attr}',
         layerOptions: 'Opciones de capa',
         hide: 'Ocultar',
         show: 'Mostrar',

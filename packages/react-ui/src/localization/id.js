@@ -33,7 +33,6 @@ const locales = {
         clear: 'Bersihkan'
       },
       legend: {
-        by: 'Berdasarkan {attr}',
         layerOptions: 'Opsi Layer',
         hide: 'Sembunyikan',
         show: 'Tampilkan',
