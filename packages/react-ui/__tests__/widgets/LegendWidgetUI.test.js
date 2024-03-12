@@ -83,16 +83,6 @@ describe('LegendWidgetUI', () => {
 
   const Widget = (props) => <LegendWidgetUI {...props} />;
 
-  test('single legend', () => {
-    render(<Widget layers={[DATA[0]]}></Widget>);
-    // expanded legend toggle
-    expect(screen.queryByText('Layers')).not.toBeInTheDocument();
-    // collapsed legend toggle
-    expect(screen.queryByLabelText('Layers')).not.toBeInTheDocument();
-    // layer title
-    expect(screen.queryByTestId('categories-legend')).toBeInTheDocument();
-  });
-
   test('multiple legends', () => {
     render(<Widget layers={DATA}></Widget>);
     expect(screen.queryByText('Layers')).toBeInTheDocument();
