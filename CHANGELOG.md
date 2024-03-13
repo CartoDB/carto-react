@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix geometry edit in Feature Selection [#854](https://github.com/CartoDB/carto-react/pull/854)
+
 ## 2.4
 
 ### 2.4.0 (2024-03-08)
