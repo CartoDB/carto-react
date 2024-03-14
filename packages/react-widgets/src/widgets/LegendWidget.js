@@ -61,7 +61,7 @@ function LegendWidget({ customLegendTypes, initialCollapsed, layerOrder = [], ti
 
   const handleSelectionChange = ({ id, index, selection }) => {
     const layer = layers.find((layer) => layer.id === id);
-    const isMultiple = Array.isArray(selection);
+    const isMultiple = Array.isArray(layer.legend);
     const legend = isMultiple ? layer.legend : layer.legend[index];
     const newLegend = {
       ...legend,
