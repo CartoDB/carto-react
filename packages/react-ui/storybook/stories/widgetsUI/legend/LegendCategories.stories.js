@@ -1,5 +1,6 @@
 import React from 'react';
 import LegendCategories from '../../../../src/widgets/legend/legend-types/LegendCategories';
+import { IntlProvider } from 'react-intl';
 
 const DEFAULT_LEGEND = {
   legend: {
@@ -26,7 +27,11 @@ const options = {
 export default options;
 
 const Template = (args) => {
-  return <LegendCategories {...args} />;
+  return (
+    <IntlProvider locale='en'>
+      <LegendCategories {...args} />
+    </IntlProvider>
+  );
 };
 
 export const Default = Template.bind({});
