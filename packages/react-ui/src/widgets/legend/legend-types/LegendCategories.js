@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box, Typography, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import { getPalette } from '../../../utils/palette';
 import PropTypes from 'prop-types';
 import LegendLayerTitle from '../LegendLayerTitle';
 import { LegendVariableList } from '../LegendWidgetUI.styles';
 import useImperativeIntl from '../../../hooks/useImperativeIntl';
 import { useIntl } from 'react-intl';
+import Typography from '../../../components/atoms/Typography';
 
 const MAX_CATEGORIES = 20;
 
@@ -47,12 +48,7 @@ function LegendCategories({ legend }) {
         ))}
       </LegendVariableList>
       {showHelperText && (
-        <Typography
-          variant='caption'
-          color='textSecondary'
-          component='div'
-          sx={{ py: 2 }}
-        >
+        <Typography variant='caption' color='textSecondary' component='div' py={2}>
           {intlConfig.formatMessage(
             {
               id: 'c4r.widgets.legend.maxCategories'

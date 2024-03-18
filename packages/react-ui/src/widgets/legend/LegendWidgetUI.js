@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Collapse, Drawer, IconButton, Tooltip, Typography } from '@mui/material';
+import { Collapse, Drawer, IconButton, Tooltip } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import LayerIcon from '@mui/icons-material/LayersOutlined';
 import { LegendContent, LegendRoot, LegendToggleHeader } from './LegendWidgetUI.styles';
 import LegendLayer from './LegendLayer';
 import { useIntl } from 'react-intl';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
+import Typography from '../../components/atoms/Typography';
 
 const EMPTY_OBJ = {};
 const EMPTY_FN = () => {};
@@ -51,7 +52,7 @@ function LegendWidgetUI({
 
   const legendToggleHeader = (
     <LegendToggleHeader collapsed={collapsed}>
-      <Typography variant='caption' sx={{ flexGrow: 1 }}>
+      <Typography variant='caption' flexGrow={1}>
         {title}
       </Typography>
       <Tooltip title={intlConfig.formatMessage({ id: 'c4r.widgets.legend.close' })}>
