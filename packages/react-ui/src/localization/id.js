@@ -33,14 +33,33 @@ const locales = {
         clear: 'Bersihkan'
       },
       legend: {
-        by: 'Dengan {attr}',
-        layerOptions: 'Opsi lapisan',
+        layerOptions: 'Opsi Layer',
         hide: 'Sembunyikan',
         show: 'Tampilkan',
-        layer: 'lapisan',
+        layer: 'layer',
         opacity: 'Opasitas',
-        hideLayer: 'Sembunyikan lapisan',
-        showLayer: 'Tampilkan lapisan'
+        hideLayer: 'Sembunyikan layer',
+        showLayer: 'Tampilkan layer',
+        open: 'Buka legenda',
+        close: 'Tutup',
+        collapse: 'Ciutkan layer',
+        expand: 'Perluas layer',
+        zoomLevel: 'Tingkat Zoom',
+        zoomLevelTooltip: 'Layer ini hanya terlihat pada tingkat zoom tertentu',
+        lowerThan: 'lebih rendah dari',
+        greaterThan: 'lebih tinggi dari',
+        and: 'dan',
+        zoomNote: 'Catatan: layer ini akan ditampilkan pada tingkat zoom',
+        notSupported: 'bukan jenis legenda yang dikenal',
+        subtitles: {
+          proportion: 'Rentang radius berdasarkan',
+          icon: 'Ikon berdasarkan',
+          strokeColor: 'Warna garis berdasarkan',
+          color: 'Warna berdasarkan'
+        },
+        max: 'Maks',
+        min: 'Min',
+        maxCategories: 'Legenda terbatas pada {n} kategori'
       },
       range: {
         clear: 'Bersihkan',

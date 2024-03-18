@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { withDesign } from 'storybook-addon-designs';
-import {
-  createTheme,
-  responsiveFontSizes,
-  ThemeProvider,
-  StyledEngineProvider,
-  CssBaseline
-} from '@mui/material';
-import { cartoThemeOptions, theme } from '../../src/theme/carto-theme';
+import { ThemeProvider, StyledEngineProvider, CssBaseline } from '@mui/material';
+import { theme } from '../../src/theme/carto-theme';
 import { BREAKPOINTS } from '../../src/theme/themeConstants';
+import {
+  Title,
+  Subtitle,
+  Primary,
+  ArgsTable,
+  Stories,
+  PRIMARY_STORY,
+  DocsContext
+} from '@storybook/addon-docs';
 
 const customViewports = {
   xs: {
@@ -89,13 +92,34 @@ export const decorators = [
   )
 ];
 
+function CustomDescription() {
+  const context = useContext(DocsContext);
+  try {
+    const jsdoc = context.parameters.docs.extractComponentDescription(context.component);
+    const excerpt = jsdoc?.split('@param')[0];
+    return excerpt || null;
+  } catch {
+    return null;
+  }
+}
+
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   viewMode: 'docs',
   docs: {
     source: {
       type: 'code'
-    }
+    },
+    page: () => (
+      <>
+        <Title />
+        <Subtitle />
+        <CustomDescription />
+        <Primary />
+        <ArgsTable story={PRIMARY_STORY} />
+        <Stories />
+      </>
+    )
   },
   options: {
     storySort: {

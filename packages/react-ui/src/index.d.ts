@@ -9,11 +9,12 @@ import FormulaWidgetUI from './widgets/FormulaWidgetUI/FormulaWidgetUI';
 import BarWidgetUI from './widgets/BarWidgetUI/BarWidgetUI';
 import HistogramWidgetUI from './widgets/HistogramWidgetUI/HistogramWidgetUI';
 import PieWidgetUI from './widgets/PieWidgetUI/PieWidgetUI';
-import LegendWidgetUI, { LEGEND_TYPES } from './widgets/legend/LegendWidgetUI';
-import LegendCategories from './widgets/legend/LegendCategories';
-import LegendIcon from './widgets/legend/LegendIcon';
-import LegendProportion from './widgets/legend/LegendProportion';
-import LegendRamp from './widgets/legend/LegendRamp';
+import LegendWidgetUI from './widgets/legend/LegendWidgetUI';
+import LEGEND_TYPES from './widgets/legend/legend-types/LegendTypes'
+import LegendCategories from './widgets/legend/legend-types/LegendCategories';
+import LegendIcon from './widgets/legend/legend-types/LegendIcon';
+import LegendProportion from './widgets/legend/legend-types/LegendProportion';
+import LegendRamp from './widgets/legend/legend-types/LegendRamp';
 import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
 import {

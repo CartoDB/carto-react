@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import { useReducer, useState } from 'react';
 import LegendWidgetUI from '../../../src/widgets/legend/LegendWidgetUI';
 import { IntlProvider } from 'react-intl';
+import { Box } from '@mui/material';
+import { fixtures } from './legendFixtures';
 
 const options = {
   title: 'Widgets/LegendWidgetUI',
   component: LegendWidgetUI,
   argTypes: {
-    layers: {
-      defaultValue: [],
-      control: {
-        type: 'array'
-      }
-    },
     collapsed: {
-      defaultValue: false,
+      defaultValue: true,
       control: {
         type: 'boolean'
+      }
+    },
+    layers: {
+      defaultValue: fixtures,
+      control: {
+        type: 'array'
       }
     }
   },
@@ -29,19 +31,61 @@ const options = {
 };
 export default options;
 
-const Widget = (props) => (
+/**
+ * @param {Parameters<LegendWidgetUI>[0] & { height: number }} args
+ */
+const Widget = ({ height, ...props }) => (
   <IntlProvider locale='en'>
-    <LegendWidgetUI {...props} />
+    <Box sx={{ height, position: 'relative' }}>
+      <LegendWidgetUI {...props} />
+    </Box>
   </IntlProvider>
 );
 
+function useLegendState(args) {
+  const [collapsed, setCollapsed] = useState(args.collapsed);
+  const [layers, dispatch] = useReducer((state, action) => {
+    switch (action.type) {
+      case 'add':
+        return [...state, action.layer];
+      case 'remove':
+        return state.filter((layer) => layer.id !== action.layer.id);
+      case 'update':
+        return state.map((layer) => {
+          if (layer.id === action.layer.id) {
+            return { ...layer, ...action.layer };
+          }
+          return layer;
+        });
+      default:
+        throw new Error(`Unknown action type: ${action.type}`);
+    }
+  }, args.layers);
+
+  return { collapsed, setCollapsed, layers, dispatch };
+}
+
+/**
+ * @param {Parameters<LegendWidgetUI>[0]} args
+ */
 const Template = ({ ...args }) => {
+  const { collapsed, setCollapsed, layers, dispatch } = useLegendState(args);
+
   return (
-    <Widget {...args}>
-      <div>Your Content</div>
-    </Widget>
+    <Widget
+      {...args}
+      height={400}
+      layers={layers}
+      collapsed={collapsed}
+      onChangeCollapsed={setCollapsed}
+      onChangeLegendRowCollapsed={(layer) => dispatch({ type: 'update', layer })}
+      onChangeOpacity={(layer) => dispatch({ type: 'update', layer })}
+      onChangeVisibility={(layer) => dispatch({ type: 'update', layer })}
+      currentZoom={13}
+    />
   );
 };
+export const Playground = Template.bind({});
 
 const LegendTemplate = () => {
   const layers = [
@@ -50,11 +94,13 @@ const LegendTemplate = () => {
       title: 'Single Layer',
       visible: true,
       legend: {
-        children: <div>Your Content</div>
+        type: 'category',
+        labels: ['Category 1', 'Category 2', 'Category 3'],
+        colors: ['#000', '#00F', '#0F0']
       }
     }
   ];
-  return <Widget layers={layers}></Widget>;
+  return <Template layers={layers} />;
 };
 
 const LegendNotFoundTemplate = () => {
@@ -62,49 +108,58 @@ const LegendNotFoundTemplate = () => {
     {
       id: 0,
       title: 'Single Layer',
-      visible: true
+      visible: true,
+      legend: {
+        type: 'unknown'
+      }
     }
   ];
-  return <Widget layers={layers}></Widget>;
+  return <Template layers={layers} />;
 };
 
-const LegendWithOpacityTemplate = () => {
+const LegendWithoutOpacityTemplate = () => {
   const layers = [
     {
       id: 0,
       title: 'Single Layer',
       visible: true,
-      showOpacityControl: true,
+      showOpacityControl: false,
       opacity: 0.5,
       legend: {
-        children: <div>Your Content</div>
+        type: 'category',
+        labels: ['Category 1'],
+        colors: ['#faa']
       }
     }
   ];
-  return <Widget layers={layers}></Widget>;
+  return <Template layers={layers} />;
 };
 
 const LegendMultiTemplate = () => {
   const layers = [
     {
       id: 0,
-      title: 'Multi Layer',
+      title: 'Layer 1',
       visible: true,
       legend: {
-        children: <div>Your Content</div>
+        type: 'category',
+        labels: ['Category 1'],
+        colors: ['#faa']
       }
     },
     {
       id: 1,
-      title: 'Multi Layer',
+      title: 'Layer 2',
       visible: false,
       collapsible: false,
       legend: {
-        children: <div>Your Content</div>
+        type: 'category',
+        labels: ['Category 2'],
+        colors: ['#faf']
       }
     }
   ];
-  return <Widget layers={layers}></Widget>;
+  return <Template layers={layers} />;
 };
 
 const LegendMultiTemplateCollapsed = () => {
@@ -113,25 +168,29 @@ const LegendMultiTemplateCollapsed = () => {
   const layers = [
     {
       id: 0,
-      title: 'Multi Layer',
+      title: 'Layer 1',
       visible: true,
       legend: {
-        children: <div>Your Content</div>
+        type: 'category',
+        labels: ['Category 1'],
+        colors: ['#faa']
       }
     },
     {
       id: 1,
-      title: 'Multi Layer',
+      title: 'Layer 2',
       visible: false,
       collapsible: false,
       legend: {
-        children: <div>Your Content</div>
+        type: 'category',
+        labels: ['Category 2'],
+        colors: ['#faf']
       }
     }
   ];
 
   return (
-    <Widget
+    <Template
       layers={layers}
       collapsed={collapsed}
       onChangeCollapsed={({ collapsed }) => setCollapsed(collapsed)}
@@ -142,8 +201,8 @@ const LegendMultiTemplateCollapsed = () => {
 const categoryLegend = {
   type: 'category',
   note: 'lorem',
-  colors: ['#000', '#00F', '#0F0'],
-  labels: ['Category 1', 'Category 2', 'Category 3']
+  colors: 'RedOr', //['#000', '#00F', '#0F0'],
+  labels: Array.from({ length: 30 }, (_, i) => `Category ${i + 1}`)
 };
 
 const LegendCategoriesTemplate = () => {
@@ -155,7 +214,7 @@ const LegendCategoriesTemplate = () => {
       legend: categoryLegend
     }
   ];
-  return <Widget layers={layers}></Widget>;
+  return <Template layers={layers} />;
 };
 
 const LegendCategoriesStrokeTemplate = () => {
@@ -170,9 +229,10 @@ const LegendCategoriesStrokeTemplate = () => {
       }
     }
   ];
-  return <Widget layers={layers}></Widget>;
+  return <Template layers={layers} />;
 };
 
+const ICON = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxkZWZzPgogICAgICAgIDxmaWx0ZXIgaWQ9InFsbTY3aXI1MWEiPgogICAgICAgICAgICA8ZmVDb2xvck1hdHJpeCBpbj0iU291cmNlR3JhcGhpYyIgdmFsdWVzPSIwIDAgMCAwIDAuMTcyNTQ5IDAgMCAwIDAgMC4xODgyMzUgMCAwIDAgMCAwLjE5NjA3OCAwIDAgMCAxLjAwMDAwMCAwIi8+CiAgICAgICAgPC9maWx0ZXI+CiAgICA8L2RlZnM+CiAgICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnPgogICAgICAgICAgICA8ZyBmaWx0ZXI9InVybCgjcWxtNjdpcjUxYSkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yNDIgLTQ2NCkgdHJhbnNsYXRlKDIyMiA0NDgpIj4KICAgICAgICAgICAgICAgIDxnIGZpbGw9IiMyQzMwMzIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIwIDE2KSI+CiAgICAgICAgICAgICAgICAgICAgPHBhdGggZD0iTTEyIDBjNi42MjcgMCAxMiA1LjM3MyAxMiAxMnMtNS4zNzMgMTItMTIgMTJTMCAxOC42MjcgMCAxMiA1LjM3MyAwIDEyIDB6IiBvcGFjaXR5PSIuMiIvPgogICAgICAgICAgICAgICAgICAgIDxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjQiLz4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==`;
 const LegendIconTemplate = () => {
   const layers = [
     {
@@ -182,35 +242,29 @@ const LegendIconTemplate = () => {
       legend: {
         type: 'icon',
         labels: ['Icon 1', 'Icon 2', 'Icon 3'],
-        icons: [
-          '/static/media/storybook/assets/carto-symbol.svg',
-          '/static/media/storybook/assets/carto-symbol.svg',
-          '/static/media/storybook/assets/carto-symbol.svg'
-        ]
+        icons: [ICON, ICON, ICON]
       }
     }
   ];
-  return <Widget layers={layers}></Widget>;
+  return <Template layers={layers} />;
 };
 
 const LegendRampTemplate = () => {
-  const layersDiscontinuous = [
+  const layers = [
     {
       id: 0,
-      title: 'Ramp Layer',
+      title: 'Ramp Discontinuous',
       visible: true,
       legend: {
         type: 'bins',
         colors: ['#000', '#00F', '#0F0', '#F00'],
-        labels: [100, 200, 300]
+        labels: [100, 200, 300],
+        showMinMax: true
       }
-    }
-  ];
-
-  const layersContinuous = [
+    },
     {
-      id: 0,
-      title: 'Ramp Layer',
+      id: 1,
+      title: 'Ramp Continuous',
       visible: true,
       legend: {
         type: 'continuous_ramp',
@@ -220,12 +274,7 @@ const LegendRampTemplate = () => {
     }
   ];
 
-  return (
-    <>
-      <Widget layers={layersDiscontinuous}></Widget>
-      <Widget layers={layersContinuous}></Widget>
-    </>
-  );
+  return <Template collapsed={false} layers={layers} />;
 };
 
 const LegendProportionTemplate = () => {
@@ -236,12 +285,12 @@ const LegendProportionTemplate = () => {
       visible: true,
       legend: {
         type: 'proportion',
-        labels: [100, 500]
-        // avg: 450
+        labels: [100, 500],
+        showMinMax: true
       }
     }
   ];
-  return <Widget layers={layers}></Widget>;
+  return <Template layers={layers} />;
 };
 
 const LegendCustomTemplate = () => {
@@ -251,11 +300,14 @@ const LegendCustomTemplate = () => {
       title: 'Single Layer',
       visible: true,
       legend: {
-        children: <div>Legend custom</div>
+        type: 'custom'
       }
     }
   ];
-  return <Widget layers={layers}></Widget>;
+  const customLegendTypes = {
+    custom: () => <div>Custom Legend</div>
+  };
+  return <Template layers={layers} customLegendTypes={customLegendTypes} />;
 };
 
 const LegendNoChildrenTemplate = () => {
@@ -267,16 +319,14 @@ const LegendNoChildrenTemplate = () => {
       legend: {}
     }
   ];
-  return <Widget layers={layers}></Widget>;
+  return <Template layers={layers} />;
 };
-
-export const Playground = Template.bind({});
 
 export const SingleLayer = LegendTemplate.bind({});
 export const MultiLayer = LegendMultiTemplate.bind({});
 export const MultiLayerCollapsed = LegendMultiTemplateCollapsed.bind({});
 export const NotFound = LegendNotFoundTemplate.bind({});
-export const LegendWithOpacityControl = LegendWithOpacityTemplate.bind({});
+export const LegendWithoutOpacityControl = LegendWithoutOpacityTemplate.bind({});
 export const Categories = LegendCategoriesTemplate.bind({});
 export const CategoriesAsStroke = LegendCategoriesStrokeTemplate.bind({});
 export const Icon = LegendIconTemplate.bind({});

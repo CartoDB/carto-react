@@ -1,5 +1,6 @@
 import React from 'react';
-import LegendProportion from '../../../../src/widgets/legend/LegendProportion';
+import LegendProportion from '../../../../src/widgets/legend/legend-types/LegendProportion';
+import { IntlProvider } from 'react-intl';
 
 const DEFAULT_LEGEND = {
   legend: {
@@ -25,7 +26,11 @@ const options = {
 export default options;
 
 const Template = (args) => {
-  return <LegendProportion {...args} />;
+  return (
+    <IntlProvider locale='en'>
+      <LegendProportion {...args} />
+    </IntlProvider>
+  );
 };
 
 export const Default = Template.bind({});

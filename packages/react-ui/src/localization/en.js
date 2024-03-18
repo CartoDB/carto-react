@@ -32,14 +32,33 @@ const locales = {
         clear: 'Clear'
       },
       legend: {
-        by: 'By {attr}',
         layerOptions: 'Layer options',
         hide: 'Hide',
         show: 'Show',
         layer: 'layer',
         opacity: 'Opacity',
         hideLayer: 'Hide layer',
-        showLayer: 'Show layer'
+        showLayer: 'Show layer',
+        open: 'Open legend',
+        close: 'Close',
+        collapse: 'Collapse layer',
+        expand: 'Expand layer',
+        zoomLevel: 'Zoom level',
+        zoomLevelTooltip: 'This layer is only visible at certain zoom levels',
+        lowerThan: 'lower than',
+        greaterThan: 'greater than',
+        and: 'and',
+        zoomNote: 'Note: this layer will display at zoom levels',
+        notSupported: 'is not a known legend type',
+        subtitles: {
+          proportion: 'Radius range by',
+          icon: 'Icon based on',
+          strokeColor: 'Stroke color based on',
+          color: 'Color based on'
+        },
+        max: 'Max',
+        min: 'Min',
+        maxCategories: 'Legend limited to {n} categories'
       },
       range: {
         clear: 'Clear',

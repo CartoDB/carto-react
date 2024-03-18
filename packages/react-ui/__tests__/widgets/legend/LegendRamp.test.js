@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '../../widgets/utils/testUtils';
-import LegendRamp from '../../../src/widgets/legend/LegendRamp';
+import LegendRamp from '../../../src/widgets/legend/legend-types/LegendRamp';
 import { getPalette } from '../../../src/utils/palette';
 import { hexToRgb } from '@mui/material';
 
@@ -40,6 +40,13 @@ describe('LegendRamp', () => {
         ];
         expect(backgroundColor).toBe(hexToRgb(color));
       });
+    });
+    test('renders correctly without min and max', () => {
+      render(<LegendRamp legend={{ ...DEFAULT_LEGEND, showMinMax: false }} />);
+      expect(screen.queryByText('< 0')).not.toBeInTheDocument();
+      expect(screen.queryByText('≥ 200')).not.toBeInTheDocument();
+      expect(screen.queryByText('0')).toBeInTheDocument();
+      expect(screen.queryByText('200')).toBeInTheDocument();
     });
     test('renders formatted labels correctly', () => {
       render(<LegendRamp legend={DEFAULT_LEGEND_WITH_FORMATTED_LABELS} />);

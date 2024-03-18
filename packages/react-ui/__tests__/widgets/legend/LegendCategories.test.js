@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '../utils/testUtils';
-import LegendCategories from '../../../src/widgets/legend/LegendCategories';
+import LegendCategories from '../../../src/widgets/legend/legend-types/LegendCategories';
 import { getPalette } from '../../../src/utils/palette';
 import { hexToRgb } from '@mui/material';
 
