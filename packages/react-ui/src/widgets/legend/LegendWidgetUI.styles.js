@@ -41,7 +41,7 @@ export const StyledOpacityControl = styled('div')(({ theme }) => ({
   gap: theme.spacing(2),
   alignItems: 'center',
   padding: theme.spacing(1),
-  minWidth: LEGEND_WIDTH - 32
+  minWidth: LEGEND_WIDTH - theme.spacingValue * 4
 }));
 
 export const OpacityTextField = styled(TextField)(({ theme }) => ({
@@ -74,7 +74,12 @@ export const LegendVariableList = styled('ul')(({ theme }) => ({
   flexDirection: 'column'
 }));
 
-export const LegendIconWrapper = styled('div')(({ theme }) => ({
+export const LegendIconWrapper = styled('li')(() => ({
+  display: 'flex',
+  alignItems: 'center'
+}));
+
+export const LegendIconImageWrapper = styled('div')(({ theme }) => ({
   marginRight: theme.spacing(1.5),
   width: ICON_SIZE_MEDIUM,
   height: ICON_SIZE_MEDIUM,
@@ -86,10 +91,22 @@ export const LegendIconWrapper = styled('div')(({ theme }) => ({
 
 export const LegendContent = styled(Box, {
   shouldForwardProp: (prop) => !['width'].includes(prop)
-})(({ width }) => ({
+})(({ width, theme }) => ({
   width,
   overflow: 'auto',
-  maxHeight: `calc(100% - 12px)`
+  maxHeight: `calc(100% - ${theme.spacing(1.5)})`
+}));
+
+export const LegendLayerWrapper = styled('section')(({ theme }) => ({
+  '&:not(:first-of-type)': {
+    borderTop: `1px solid ${theme.palette.divider}`
+  }
+}));
+
+export const LegendLayerTitleWrapper = styled('div')(() => ({
+  flexGrow: 1,
+  flexShrink: 1,
+  minWidth: 0
 }));
 
 export const styles = {};

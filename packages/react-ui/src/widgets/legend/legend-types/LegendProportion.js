@@ -19,8 +19,8 @@ const Circle = styled(Box, {
   const height = theme.spacing(sizes[index]);
 
   return {
-    border: `solid 1px ${theme.palette.grey[100]}`,
-    backgroundColor: theme.palette.grey[50],
+    border: `solid 1px ${theme.palette.divider}`,
+    backgroundColor: theme.palette.background.default,
     borderRadius: '50%',
     position: 'absolute',
     right: 0,

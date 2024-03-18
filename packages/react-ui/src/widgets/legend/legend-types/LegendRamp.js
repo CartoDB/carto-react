@@ -38,7 +38,7 @@ function LegendRamp({ isContinuous = false, legend }) {
   }
 
   return (
-    <Box sx={{ py: 2 }} data-testid='ramp-legend'>
+    <Box py={2} data-testid='ramp-legend'>
       {error ? (
         <Box maxWidth={240}>
           <Typography variant='overline'>
@@ -47,7 +47,7 @@ function LegendRamp({ isContinuous = false, legend }) {
         </Box>
       ) : (
         <>
-          <Box sx={{ display: 'flex', pb: 1 }}>
+          <Box display='flex' pb={1}>
             {isContinuous ? (
               <StepsContinuous data-testid='step-continuous' palette={palette} />
             ) : (
@@ -59,7 +59,7 @@ function LegendRamp({ isContinuous = false, legend }) {
               />
             )}
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box display='flex' justifyContent='space-between'>
             <Typography variant='overlineDelicate' color='textSecondary'>
               {minLabel}
             </Typography>

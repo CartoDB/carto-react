@@ -159,7 +159,7 @@ function LegendCategoriesRow({ label, isStrokeColor, color = '#000', icon, maske
       <LegendLayerTitle
         title={label}
         visible
-        typographyProps={{ variant: 'overlineDelicate' }}
+        typographyProps={{ variant: 'overline', my: 0.75 }}
       />
     </Box>
   );

@@ -26,10 +26,9 @@ export default function LegendLayerTitle({ title, visible, typographyProps }) {
       color={visible ? 'textPrimary' : 'textSecondary'}
       variant='button'
       weight='medium'
-      lineHeight='20px'
       component='p'
       noWrap
-      sx={{ my: 0.25 }}
+      my={0.25}
       {...typographyProps}
     >
       {title}

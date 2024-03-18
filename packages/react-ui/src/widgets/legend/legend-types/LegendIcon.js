@@ -1,8 +1,11 @@
 import React from 'react';
-import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import { ICON_SIZE_MEDIUM } from '../../../theme/themeConstants';
-import { LegendIconWrapper, LegendVariableList } from '../LegendWidgetUI.styles';
+import {
+  LegendIconImageWrapper,
+  LegendIconWrapper,
+  LegendVariableList
+} from '../LegendWidgetUI.styles';
 import LegendLayerTitle from '../LegendLayerTitle';
 
 /**
@@ -15,16 +18,16 @@ function LegendIcon({ legend }) {
   return (
     <LegendVariableList data-testid='icon-legend'>
       {labels.map((label, idx) => (
-        <Box key={label} component='li' sx={{ display: 'flex', alignItems: 'center' }}>
-          <LegendIconWrapper>
-            <img src={icons[idx]} alt={label} width='autio' height={ICON_SIZE_MEDIUM} />
-          </LegendIconWrapper>
+        <LegendIconWrapper key={label}>
+          <LegendIconImageWrapper>
+            <img src={icons[idx]} alt={label} width='auto' height={ICON_SIZE_MEDIUM} />
+          </LegendIconImageWrapper>
           <LegendLayerTitle
             visible
             title={label}
-            typographyProps={{ variant: 'overlineDelicate' }}
+            typographyProps={{ variant: 'overline', my: 0.75 }}
           />
-        </Box>
+        </LegendIconWrapper>
       ))}
     </LegendVariableList>
   );

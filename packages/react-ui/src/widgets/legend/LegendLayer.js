@@ -1,16 +1,22 @@
 import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Collapse, IconButton, Tooltip, Typography } from '@mui/material';
+import { Collapse, IconButton, Tooltip } from '@mui/material';
 import EyeIcon from '@mui/icons-material/VisibilityOutlined';
 import EyeOffIcon from '@mui/icons-material/VisibilityOffOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { LayerVariablesList, LegendItemHeader } from './LegendWidgetUI.styles';
+import {
+  LayerVariablesList,
+  LegendItemHeader,
+  LegendLayerTitleWrapper,
+  LegendLayerWrapper
+} from './LegendWidgetUI.styles';
 import LegendOpacityControl from './LegendOpacityControl';
 import LegendLayerTitle from './LegendLayerTitle';
 import LegendLayerVariable from './LegendLayerVariable';
 import { useIntl } from 'react-intl';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
+import Typography from '../../components/atoms/Typography';
 
 const EMPTY_OBJ = {};
 
@@ -98,16 +104,7 @@ export default function LegendLayer({
   }
 
   return (
-    <Box
-      data-testid='legend-layer'
-      aria-label={title}
-      component='section'
-      sx={{
-        '&:not(:first-of-type)': {
-          borderTop: (theme) => `1px solid ${theme.palette.divider}`
-        }
-      }}
-    >
+    <LegendLayerWrapper data-testid='legend-layer' aria-label={title}>
       <LegendItemHeader ref={menuAnchorRef}>
         {collapsible && (
           <IconButton
@@ -121,7 +118,7 @@ export default function LegendLayer({
             {collapseIcon}
           </IconButton>
         )}
-        <Box flexGrow={1} sx={{ minWidth: 0, flexShrink: 1 }}>
+        <LegendLayerTitleWrapper>
           <LegendLayerTitle visible={visible} title={title} />
           {showZoomNote && (
             <Tooltip
@@ -139,7 +136,7 @@ export default function LegendLayer({
               </Typography>
             </Tooltip>
           )}
-        </Box>
+        </LegendLayerTitleWrapper>
         {showOpacityControl && visible && !collapsed && (
           <LegendOpacityControl
             menuRef={menuAnchorRef}
@@ -190,17 +187,12 @@ export default function LegendLayer({
           ))}
         </LayerVariablesList>
         {helperText && (
-          <Typography
-            variant='caption'
-            color='textSecondary'
-            component='div'
-            sx={{ p: 2 }}
-          >
+          <Typography variant='caption' color='textSecondary' component='div' p={2}>
             <div dangerouslySetInnerHTML={{ __html: helperText }}></div>
           </Typography>
         )}
       </Collapse>
-    </Box>
+    </LegendLayerWrapper>
   );
 }
 
