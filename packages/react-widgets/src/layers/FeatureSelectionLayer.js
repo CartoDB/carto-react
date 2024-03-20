@@ -72,6 +72,7 @@ export default function FeatureSelectionLayer(
   return [
     mask && MaskLayer(),
     (selectedMode || spatialFilterGeometry) &&
+      // @ts-ignore
       new EditableCartoGeoJsonLayer({
         eventManager: customEventManager,
         id: 'FeatureSelectionLayer',

@@ -41,4 +41,8 @@ export default class EditableCartoGeoJsonLayer extends EditableGeoJsonLayer {
   _getEventManager() {
     return this.props.eventManager || this.context.deck.eventManager;
   }
+
+  createTooltipsLayers() {
+    return [];
+  }
 }
