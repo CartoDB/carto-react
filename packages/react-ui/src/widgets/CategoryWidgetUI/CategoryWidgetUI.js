@@ -7,7 +7,8 @@ import {
   InputAdornment,
   Divider,
   TextField,
-  Tooltip
+  Tooltip,
+  Box
 } from '@mui/material';
 
 import { useIntl } from 'react-intl';
@@ -477,17 +478,17 @@ function CategoryWidgetUI(props) {
             />
           ))
         ) : (
-          <>
+          <Box>
             <Typography variant='body2'>
               {intlConfig.formatMessage({ id: 'c4r.widgets.category.noResults' })}
             </Typography>
-            <Typography variant='caption'>
+            <Typography component='p' variant='caption' mb={2}>
               {intlConfig.formatMessage(
                 { id: 'c4r.widgets.category.noResultsMessage' },
                 { searchValue }
               )}
             </Typography>
-          </>
+          </Box>
         )}
       </CategoriesWrapper>
       {data.length > maxItems && searchable ? (
