@@ -5,7 +5,6 @@ const REST_CATEGORY = '__rest__';
 
 export const CategoriesWrapper = styled(Grid)(({ theme: { spacing } }) => ({
   maxHeight: spacing(40),
-  overflow: 'auto',
   padding: spacing(0, 1, 1, 0)
 }));
 
@@ -28,10 +27,6 @@ export const CategoryItemGroup = styled(Grid, {
 
         '&:hover .progressbar div': {
           backgroundColor: theme.palette.secondary.dark
-        },
-        '&:focus-visible': {
-          outline: `none !important`,
-          boxShadow: `inset 0 0 0 2px ${theme.palette.primary.main} !important`
         }
       }),
     ...(name === REST_CATEGORY && {

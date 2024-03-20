@@ -7,7 +7,8 @@ import {
   InputAdornment,
   Divider,
   TextField,
-  Tooltip
+  Tooltip,
+  Box
 } from '@mui/material';
 
 import { useIntl } from 'react-intl';
@@ -323,7 +324,7 @@ function CategoryWidgetUI(props) {
       };
     }, []);
 
-    const handleCategoryPress = (e) => {
+    const onCategoryPress = (e) => {
       if (e.key === 'Enter') {
         onCategoryClick();
       }
@@ -339,11 +340,11 @@ function CategoryWidgetUI(props) {
         direction='row'
         spacing={1}
         onClick={filterable ? onCategoryClick : () => {}}
-        onKeyDown={handleCategoryPress}
+        onKeyDown={filterable ? onCategoryPress : () => {}}
         selectable={filterable}
         unselected={unselected}
         name={data.name === REST_CATEGORY ? REST_CATEGORY : ''}
-        tabIndex={filterable && showAll ? 0 : -1}
+        tabIndex={filterable ? 0 : -1}
       >
         {filterable && showAll && (
           <Grid item>
@@ -477,17 +478,17 @@ function CategoryWidgetUI(props) {
             />
           ))
         ) : (
-          <>
+          <Box>
             <Typography variant='body2'>
               {intlConfig.formatMessage({ id: 'c4r.widgets.category.noResults' })}
             </Typography>
-            <Typography variant='caption'>
+            <Typography component='p' variant='caption' mb={2}>
               {intlConfig.formatMessage(
                 { id: 'c4r.widgets.category.noResultsMessage' },
                 { searchValue }
               )}
             </Typography>
-          </>
+          </Box>
         )}
       </CategoriesWrapper>
       {data.length > maxItems && searchable ? (
