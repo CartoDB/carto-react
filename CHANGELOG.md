@@ -4,6 +4,10 @@
 
 ## 2.4
 
+### 2.4.1 (2024-03-13)
+
+- Fix geometry edit in Feature Selection [#854](https://github.com/CartoDB/carto-react/pull/854)
+
 ### 2.4.0 (2024-03-08)
 
 - Check invalid geometries for spatial filter [#847](https://github.com/CartoDB/carto-react/pull/847)
