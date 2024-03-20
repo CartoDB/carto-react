@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Category widget UI: increase keyboard accessibility [#856](https://github.com/CartoDB/carto-react/pull/856)
+
 ## 2.4
 
 ### 2.4.1 (2024-03-13)
