@@ -460,7 +460,9 @@ function CategoryWidgetUI(props) {
           <TextField
             size='small'
             mt={-0.5}
-            placeholder={intlConfig.formatMessage({ id: 'c4r.widgets.category.search' })}
+            placeholder={intlConfig.formatMessage({
+              id: 'c4r.widgets.category.search'
+            })}
             onChange={handleSearchChange}
             onFocus={handleSearchFocus}
             InputProps={{
@@ -508,7 +510,12 @@ function CategoryWidgetUI(props) {
       {data.length > maxItems && searchable ? (
         showAll ? (
           <Box mt={1.5}>
-            <Button size='small' color='primary' onClick={handleCancelClicked}>
+            <Button
+              size='small'
+              color='primary'
+              onClick={handleCancelClicked}
+              data-testid='primaryCancelButton'
+            >
               {intlConfig.formatMessage({ id: 'c4r.widgets.category.cancel' })}
             </Button>
           </Box>
