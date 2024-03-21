@@ -3,9 +3,10 @@ import Typography from '../../components/atoms/Typography';
 
 const REST_CATEGORY = '__rest__';
 
-export const CategoriesWrapper = styled(Grid)(({ theme: { spacing } }) => ({
-  maxHeight: spacing(40),
-  padding: spacing(0, 1, 1, 0)
+export const CategoriesWrapper = styled(Grid)(({ theme }) => ({
+  maxHeight: theme.spacing(40),
+  overflow: 'auto',
+  padding: 0
 }));
 
 export const CategoryItemGroup = styled(Grid, {
@@ -13,6 +14,18 @@ export const CategoryItemGroup = styled(Grid, {
 })(({ theme, selectable, name, unselected }) => {
   return {
     flexDirection: 'row',
+    padding: theme.spacing(0.5, 0.25),
+    margin: 0,
+
+    '> .MuiGrid-item': {
+      paddingTop: 0,
+      paddingLeft: 0
+    },
+    '&:focus-visible': {
+      outline: `none !important`,
+      boxShadow: `inset 0 0 0 2px ${theme.palette.primary.main} !important`
+    },
+
     ...(unselected && {
       color: theme.palette.text.disabled,
 
@@ -54,7 +67,7 @@ export const OptionsSelectedBar = styled(Grid)(({ theme: { spacing, palette } })
 export const ProgressBar = styled(Grid)(({ theme }) => ({
   height: theme.spacing(0.5),
   width: '100%',
-  margin: theme.spacing(0.5, 0, 1, 0),
+  margin: theme.spacing(0.5, 0, 0.25, 0),
   borderRadius: theme.spacing(0.5),
   backgroundColor: theme.palette.action.disabledBackground,
 
