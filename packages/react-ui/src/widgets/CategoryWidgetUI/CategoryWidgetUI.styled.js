@@ -1,4 +1,4 @@
-import { Box, Grid, Link, styled } from '@mui/material';
+import { Box, Button, Grid, Link, styled } from '@mui/material';
 import Typography from '../../components/atoms/Typography';
 
 const REST_CATEGORY = '__rest__';
@@ -108,4 +108,20 @@ export const LinkAsButton = styled(Link)(({ theme }) => ({
 
 export const CategoriesRoot = styled(Box)(({ theme }) => ({
   ...theme.typography.body2
+}));
+
+export const HiddenButton = styled(Button)(({ theme }) => ({
+  position: 'absolute',
+  left: '-999px',
+  top: '-1px',
+  width: '1px',
+  height: '1px',
+  display: 'inline-flex',
+
+  '&:focus-visible': {
+    position: 'static',
+    width: 'auto',
+    height: 'auto',
+    marginTop: theme.spacing(2)
+  }
 }));

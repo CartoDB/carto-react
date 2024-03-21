@@ -24,7 +24,8 @@ import {
   OptionsSelectedBar,
   ProgressBar,
   CategoriesRoot,
-  CategoryLabelWrapper
+  CategoryLabelWrapper,
+  HiddenButton
 } from './CategoryWidgetUI.styled';
 import SearchIcon from '../../assets/icons/SearchIcon';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
@@ -61,6 +62,7 @@ function CategoryWidgetUI(props) {
   const [tempBlockedCategories, setTempBlockedCategories] = useState(false);
   const [animValues, setAnimValues] = useState([]);
   const requestRef = useRef();
+  const searchRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
   const { showSkeleton } = useSkeleton(isLoading);
@@ -304,6 +306,12 @@ function CategoryWidgetUI(props) {
     }
   }, [animation, sortedData]);
 
+  useEffect(() => {
+    if (showAll && searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, [showAll, searchRef]);
+
   // Separated to simplify the widget layout but inside the main component to avoid passing all dependencies
   const CategoryItem = (props) => {
     const { data, onCategoryClick } = props;
@@ -335,6 +343,7 @@ function CategoryWidgetUI(props) {
       !showAll &&
       selectedCategories.length > 0 &&
       selectedCategories.indexOf(data.name) === -1;
+
     return (
       <CategoryItemGroup
         container
@@ -462,9 +471,13 @@ function CategoryWidgetUI(props) {
               )
             }}
             inputProps={{
-              tabIndex: 0
+              tabIndex: 0,
+              ref: searchRef
             }}
           />
+          <HiddenButton size='small' color='primary' onClick={handleCancelClicked}>
+            {intlConfig.formatMessage({ id: 'c4r.widgets.category.cancel' })}
+          </HiddenButton>
         </OptionsSelectedBar>
       )}
       <CategoriesWrapper container item>
