@@ -60,7 +60,7 @@ const LoadingTemplate = (args) => {
   );
 };
 
-const data = [...Array(7)].map((_, idx) => ({
+const data = [...Array(30)].map((_, idx) => ({
   name: `Category ${idx + 1}`,
   value: idx * 100
 }));

@@ -347,7 +347,7 @@ function CategoryWidgetUI(props) {
         tabIndex={filterable ? 0 : -1}
       >
         {filterable && showAll && (
-          <Grid item>
+          <Grid item mr={1}>
             <Checkbox
               checked={tempBlockedCategories.indexOf(data.name) !== -1}
               tabIndex={-1}
@@ -493,21 +493,25 @@ function CategoryWidgetUI(props) {
       </CategoriesWrapper>
       {data.length > maxItems && searchable ? (
         showAll ? (
-          <Button size='small' color='primary' onClick={handleCancelClicked}>
-            {intlConfig.formatMessage({ id: 'c4r.widgets.category.cancel' })}
-          </Button>
+          <Box mt={1.5}>
+            <Button size='small' color='primary' onClick={handleCancelClicked}>
+              {intlConfig.formatMessage({ id: 'c4r.widgets.category.cancel' })}
+            </Button>
+          </Box>
         ) : (
-          <Button
-            size='small'
-            color='primary'
-            startIcon={<SearchIcon />}
-            onClick={handleShowAllCategoriesClicked}
-          >
-            {intlConfig.formatMessage(
-              { id: 'c4r.widgets.category.searchInfo' },
-              { elements: getCategoriesCount() }
-            )}
-          </Button>
+          <Box mt={1.5}>
+            <Button
+              size='small'
+              color='primary'
+              startIcon={<SearchIcon />}
+              onClick={handleShowAllCategoriesClicked}
+            >
+              {intlConfig.formatMessage(
+                { id: 'c4r.widgets.category.searchInfo' },
+                { elements: getCategoriesCount() }
+              )}
+            </Button>
+          </Box>
         )
       ) : null}
     </CategoriesRoot>
