@@ -14,6 +14,7 @@ export const CategoryItemGroup = styled(Grid, {
 })(({ theme, selectable, name, unselected }) => {
   return {
     flexDirection: 'row',
+    maxWidth: '100%',
     padding: theme.spacing(0.5, 0.25),
     margin: 0,
 
@@ -80,6 +81,16 @@ export const ProgressBar = styled(Grid)(({ theme }) => ({
                  width ${theme.transitions.easing.sharp} ${theme.transitions.duration.complex}ms`
   }
 }));
+
+export const CategoryLabelWrapper = styled(Grid, {
+  shouldForwardProp: (prop) => prop !== 'isSelectable'
+})(({ theme, isSelectable }) => {
+  return {
+    ...(isSelectable && {
+      width: `calc(100% - ${theme.spacing(4)})`
+    })
+  };
+});
 
 export const CategoryLabel = styled(Typography)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightBold,

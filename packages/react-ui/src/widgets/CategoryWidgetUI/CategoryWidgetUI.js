@@ -23,7 +23,8 @@ import {
   LinkAsButton,
   OptionsSelectedBar,
   ProgressBar,
-  CategoriesRoot
+  CategoriesRoot,
+  CategoryLabelWrapper
 } from './CategoryWidgetUI.styled';
 import SearchIcon from '../../assets/icons/SearchIcon';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
@@ -354,7 +355,7 @@ function CategoryWidgetUI(props) {
             />
           </Grid>
         )}
-        <Grid container item xs>
+        <CategoryLabelWrapper container item xs>
           <Grid
             container
             item
@@ -383,7 +384,7 @@ function CategoryWidgetUI(props) {
           <ProgressBar className='progressbar' item>
             <div style={{ width: getProgressbarLength(data.value) }}></div>
           </ProgressBar>
-        </Grid>
+        </CategoryLabelWrapper>
       </CategoryItemGroup>
     );
   };
