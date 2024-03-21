@@ -355,7 +355,7 @@ function CategoryWidgetUI(props) {
             />
           </Grid>
         )}
-        <CategoryLabelWrapper container item xs>
+        <CategoryLabelWrapper container item xs isSelectable={showAll}>
           <Grid
             container
             item
