@@ -136,7 +136,7 @@ describe('CategoryWidgetUI', () => {
 
       fireEvent.click(screen.getByText(/Search in 4 elements/));
       fireEvent.click(screen.getByText(/Category 1/));
-      fireEvent.click(screen.getByText(/Apply/));
+      fireEvent.click(screen.getByTestId('primaryApplyButton'));
       fireEvent.click(screen.getByText(/Unlock/));
       expect(mockOnSelectedCategoriesChange).toHaveBeenCalledTimes(2);
     });
@@ -154,7 +154,7 @@ describe('CategoryWidgetUI', () => {
       fireEvent.click(screen.getByText(/Search in 4 elements/));
       userEvent.type(screen.getByRole('textbox'), 'Category 1');
       fireEvent.click(screen.getByText(/Category 1/));
-      fireEvent.click(screen.getByText(/Apply/));
+      fireEvent.click(screen.getByTestId('primaryApplyButton'));
     });
 
     test('cancel search', () => {
