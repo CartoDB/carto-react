@@ -418,6 +418,7 @@ function CategoryWidgetUI(props) {
               onKeyDown={handleApplyPress}
               underline='hover'
               tabIndex={0}
+              data-testid='primaryApplyButton'
             >
               {intlConfig.formatMessage({ id: 'c4r.widgets.category.apply' })}
             </LinkAsButton>
@@ -477,7 +478,7 @@ function CategoryWidgetUI(props) {
               ref: searchRef
             }}
           />
-          <HiddenButton size='small' color='primary' onClick={handleCancelClicked}>
+          <HiddenButton size='small' onClick={handleCancelClicked}>
             {intlConfig.formatMessage({ id: 'c4r.widgets.category.cancel' })}
           </HiddenButton>
         </OptionsSelectedBar>
@@ -507,6 +508,11 @@ function CategoryWidgetUI(props) {
           </Box>
         )}
       </CategoriesWrapper>
+      {showAll && (
+        <HiddenButton size='small' onClick={handleApplyClicked}>
+          {intlConfig.formatMessage({ id: 'c4r.widgets.category.apply' })}
+        </HiddenButton>
+      )}
       {data.length > maxItems && searchable ? (
         showAll ? (
           <Box mt={1.5}>
