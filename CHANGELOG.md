@@ -2,10 +2,12 @@
 
 ## Not released
 
+## 2.4
+
+### 2.4.2 (2024-03-22)
+
 - Category widget UI: increase keyboard accessibility [#856](https://github.com/CartoDB/carto-react/pull/856)
 - Category widget UI: change focus order to increase keyboard accessibility [#857](https://github.com/CartoDB/carto-react/pull/857)
-
-## 2.4
 
 ### 2.4.1 (2024-03-13)
 
