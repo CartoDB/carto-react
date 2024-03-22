@@ -478,7 +478,7 @@ function CategoryWidgetUI(props) {
               ref: searchRef
             }}
           />
-          <HiddenButton size='small' color='primary' onClick={handleCancelClicked}>
+          <HiddenButton size='small' onClick={handleCancelClicked}>
             {intlConfig.formatMessage({ id: 'c4r.widgets.category.cancel' })}
           </HiddenButton>
         </OptionsSelectedBar>
@@ -509,7 +509,7 @@ function CategoryWidgetUI(props) {
         )}
       </CategoriesWrapper>
       {showAll && (
-        <HiddenButton onClick={handleApplyClicked} onKeyDown={handleApplyPress}>
+        <HiddenButton size='small' onClick={handleApplyClicked}>
           {intlConfig.formatMessage({ id: 'c4r.widgets.category.apply' })}
         </HiddenButton>
       )}
