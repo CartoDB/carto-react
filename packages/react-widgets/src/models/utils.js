@@ -73,7 +73,7 @@ function sanitizeSQLSource(sql) {
   return sql.trim().replace(/;$/, '');
 }
 
-function getSqlEscapedSource(table, provider) {
+export function getSqlEscapedSource(table, provider) {
   const fqn = new FullyQualifiedName(table, provider);
 
   if (provider === Provider.Snowflake) {

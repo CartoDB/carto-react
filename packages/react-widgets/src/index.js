@@ -28,5 +28,6 @@ export {
 export { WidgetStateType } from './hooks/useWidgetFetch';
 export {
   isRemoteCalculationSupported as _isRemoteCalculationSupported,
-  sourceAndFiltersToSQL as _sourceAndFiltersToSQL
+  sourceAndFiltersToSQL as _sourceAndFiltersToSQL,
+  getSqlEscapedSource as _getSqlEscapedSource
 } from './models/utils';
