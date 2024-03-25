@@ -67,3 +67,5 @@ export {
   setClient as _setClient,
   getClient as _getClient
 } from './utils/clientParameter';
+
+export { TILE_FORMATS } from './types';

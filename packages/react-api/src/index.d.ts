@@ -7,4 +7,4 @@ export { executeModel as _executeModel } from './api/model';
 export { default as FeaturesDroppedLoader } from './hooks/FeaturesDroppedLoader';
 export { default as useCartoLayerProps } from './hooks/useCartoLayerProps';
 
-export { Credentials, UseCartoLayerFilterProps, SourceProps } from './types';
+export { Credentials, UseCartoLayerFilterProps, SourceProps, MAP_TYPES, API_VERSIONS } from './types';

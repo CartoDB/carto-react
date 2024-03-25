@@ -1,8 +1,9 @@
 import { checkCredentials, makeCall } from './common';
-import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto/typed';
 import { _assert as assert } from '@carto/react-core/';
 
 import { REQUEST_GET_MAX_URL_LENGTH, _getClient } from '@carto/react-core';
+import { MAP_TYPES } from '../types';
+import { API_VERSIONS } from '../types';
 
 const AVAILABLE_MODELS = [
   'category',

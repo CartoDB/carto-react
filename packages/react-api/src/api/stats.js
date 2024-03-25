@@ -1,11 +1,11 @@
 import { checkCredentials, makeCall } from './common';
-import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto/typed';
 import { getTileJson } from './tilejson';
 import {
   InvalidColumnError,
   REQUEST_GET_MAX_URL_LENGTH,
   _assert as assert
 } from '@carto/react-core/';
+import { MAP_TYPES, API_VERSIONS } from '../types';
 
 /**
  * Execute a stats service request.

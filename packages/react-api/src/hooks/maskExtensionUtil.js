@@ -1,5 +1,5 @@
 import { MASK_ID } from '@carto/react-core/';
-import { MaskExtension } from '@deck.gl/extensions/typed';
+import { MaskExtension } from '@deck.gl/extensions';
 
 const maskExtension = new MaskExtension();
 

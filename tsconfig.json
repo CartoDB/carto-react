@@ -11,7 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "baseUrl": ".",
-    "compileOnSave": true,
+    // "compileOnSave": true,
     "paths": {
         "@carto/react-api/*": ["packages/react-api/src/*"],
         "@carto/react-auth/*": ["packages/react-auth/src/*"],

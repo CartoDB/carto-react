@@ -1,4 +1,3 @@
-import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import {
   sourceAndFiltersToSQL,
   wrapModelCall,
@@ -6,6 +5,7 @@ import {
   normalizeObjectKeys
 } from '../../src/models/utils';
 import { AggregationTypes, Provider, _filtersToSQL } from '@carto/react-core';
+import { MAP_TYPES, API_VERSIONS } from '@carto/react-api';
 
 const V2_SOURCE = {
   id: '__test__',

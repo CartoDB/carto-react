@@ -14,6 +14,7 @@ const MOCK_SQL_RESPONSE = Array(TICKS.length)
 const mockedExecuteModel = jest.fn();
 
 jest.mock('@carto/react-api', () => ({
+  ...jest.requireActual('@carto/react-api'),
   _executeModel: (props) => {
     mockedExecuteModel(props);
     return Promise.resolve({ rows: MOCK_SQL_RESPONSE });

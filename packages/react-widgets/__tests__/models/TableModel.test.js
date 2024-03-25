@@ -17,6 +17,7 @@ const RESULT = {
 const mockedExecuteModel = jest.fn();
 
 jest.mock('@carto/react-api', () => ({
+  ...jest.requireActual('@carto/react-api'),
   _executeModel: (props) => {
     mockedExecuteModel(props);
     return Promise.resolve(RESULT);

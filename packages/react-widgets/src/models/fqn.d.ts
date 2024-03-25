@@ -18,6 +18,11 @@ export enum ParsingMode {
   RightToLeft = 'rightToLeft'
 }
 
+type IsValidOptions = {
+  parsingMode?: ParsingMode
+  quoted?: boolean
+}
+
 export class FullyQualifiedName {
   protected databaseFragment: Fragment | null
   protected schemaFragment: Fragment | null
@@ -47,9 +52,13 @@ export class FullyQualifiedName {
 
   public setDatabaseName (databaseName: string): void
 
-  public setSchemaName (schemaName: string): void 
+  public setSchemaName (schemaName: string): void
 
   public setObjectName (objectName: string): void
+
+  static isValid (fqn: string, provider: Provider, options?: IsValidOptions): boolean
+
+  private _isValid (quoted: boolean): boolean
 
   private parseFQN (fqn: string): Array<Fragment | null>
 

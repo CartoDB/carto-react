@@ -1,6 +1,7 @@
 import { checkCredentials, CLIENT_ID } from './common';
-import { MAP_TYPES, API_VERSIONS, fetchLayerData, FORMATS } from '@deck.gl/carto/typed';
+import { vectorTilesetSource } from '@deck.gl/carto';
 import { _assert as assert } from '@carto/react-core';
+import { MAP_TYPES, API_VERSIONS } from '../types';
 
 /**
  * Get the TileJson for static tilesets
@@ -24,16 +25,13 @@ export async function getTileJson(props) {
     'TileJson is a feature only available in CARTO 3.'
   );
 
-  const { data, format } = await fetchLayerData({
-    type: source.type,
-    source: source.data,
-    connection: source.connection,
-    credentials: source.credentials,
-    format: FORMATS.TILEJSON,
-    clientId: CLIENT_ID
+  const data = await vectorTilesetSource({
+    connectionName: source.connection,
+    apiBaseUrl: source.credentials.apiBaseUrl,
+    accessToken: source.credentials.accessToken,
+    clientId: CLIENT_ID,
+    tableName: source.data
   });
-
-  assert(format === FORMATS.TILEJSON, 'getTileJson: data is not a tilejson');
 
   return data;
 }

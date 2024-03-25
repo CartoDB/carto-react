@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { WebMercatorViewport } from '@deck.gl/core/typed';
-import { setDefaultCredentials } from '@deck.gl/carto/typed';
+import { WebMercatorViewport } from '@deck.gl/core';
 import { removeWorker } from '@carto/react-workers';
 import {
   FEATURE_SELECTION_MODES,
@@ -183,7 +182,6 @@ export const createCartoSlice = (initialState) => {
           ...state.credentials,
           ...action.payload
         };
-        setDefaultCredentials(state.credentials);
       },
       setFeatureSelectionMode: (state, action) => {
         state.featureSelectionMode = action.payload;
@@ -208,7 +206,7 @@ export const createCartoSlice = (initialState) => {
  * @param {string} data.connection - connection name for CARTO 3 source.
  * @param {import('../types').SourceFilters=} data.filters - logical operator that defines how filters for different columns are joined together.
  * @param {FiltersLogicalOperators=} data.filtersLogicalOperator - logical operator that defines how filters for different columns are joined together.
- * @param {import('@deck.gl/carto/typed').QueryParameters} data.queryParameters - SQL query parameters.
+ * @param {import('@deck.gl/carto').QueryParameters} data.queryParameters - SQL query parameters.
  * @param {string=} data.geoColumn - (optional) name of column containing geometries or spatial index data.
  * @param {string=} data.aggregationExp - (optional) for spatial index data.
  * @param {string=} data.provider - (optional) type of the data warehouse.
