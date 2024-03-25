@@ -68,7 +68,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@deck.gl/carto": "^9.0.0-beta.1",
+    "@deck.gl/carto": "^9.0.1",
     "@turf/bbox-clip": "^6.3.0",
     "@turf/bbox-polygon": "^6.3.0",
     "@turf/boolean-intersects": "^6.3.0",

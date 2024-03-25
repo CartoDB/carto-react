@@ -7,7 +7,8 @@ import {
   InputAdornment,
   Divider,
   TextField,
-  Tooltip
+  Tooltip,
+  Box
 } from '@mui/material';
 
 import { useIntl } from 'react-intl';
@@ -22,7 +23,9 @@ import {
   LinkAsButton,
   OptionsSelectedBar,
   ProgressBar,
-  CategoriesRoot
+  CategoriesRoot,
+  CategoryLabelWrapper,
+  HiddenButton
 } from './CategoryWidgetUI.styled';
 import SearchIcon from '../../assets/icons/SearchIcon';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
@@ -59,6 +62,7 @@ function CategoryWidgetUI(props) {
   const [tempBlockedCategories, setTempBlockedCategories] = useState(false);
   const [animValues, setAnimValues] = useState([]);
   const requestRef = useRef();
+  const searchRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
   const { showSkeleton } = useSkeleton(isLoading);
@@ -302,6 +306,12 @@ function CategoryWidgetUI(props) {
     }
   }, [animation, sortedData]);
 
+  useEffect(() => {
+    if (showAll && searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, [showAll, searchRef]);
+
   // Separated to simplify the widget layout but inside the main component to avoid passing all dependencies
   const CategoryItem = (props) => {
     const { data, onCategoryClick } = props;
@@ -323,7 +333,7 @@ function CategoryWidgetUI(props) {
       };
     }, []);
 
-    const handleCategoryPress = (e) => {
+    const onCategoryPress = (e) => {
       if (e.key === 'Enter') {
         onCategoryClick();
       }
@@ -333,27 +343,28 @@ function CategoryWidgetUI(props) {
       !showAll &&
       selectedCategories.length > 0 &&
       selectedCategories.indexOf(data.name) === -1;
+
     return (
       <CategoryItemGroup
         container
         direction='row'
         spacing={1}
         onClick={filterable ? onCategoryClick : () => {}}
-        onKeyDown={handleCategoryPress}
+        onKeyDown={filterable ? onCategoryPress : () => {}}
         selectable={filterable}
         unselected={unselected}
         name={data.name === REST_CATEGORY ? REST_CATEGORY : ''}
-        tabIndex={filterable && showAll ? 0 : -1}
+        tabIndex={filterable ? 0 : -1}
       >
         {filterable && showAll && (
-          <Grid item>
+          <Grid item mr={1}>
             <Checkbox
               checked={tempBlockedCategories.indexOf(data.name) !== -1}
               tabIndex={-1}
             />
           </Grid>
         )}
-        <Grid container item xs>
+        <CategoryLabelWrapper container item xs isSelectable={showAll}>
           <Grid
             container
             item
@@ -382,7 +393,7 @@ function CategoryWidgetUI(props) {
           <ProgressBar className='progressbar' item>
             <div style={{ width: getProgressbarLength(data.value) }}></div>
           </ProgressBar>
-        </Grid>
+        </CategoryLabelWrapper>
       </CategoryItemGroup>
     );
   };
@@ -407,6 +418,7 @@ function CategoryWidgetUI(props) {
               onKeyDown={handleApplyPress}
               underline='hover'
               tabIndex={0}
+              data-testid='primaryApplyButton'
             >
               {intlConfig.formatMessage({ id: 'c4r.widgets.category.apply' })}
             </LinkAsButton>
@@ -449,7 +461,9 @@ function CategoryWidgetUI(props) {
           <TextField
             size='small'
             mt={-0.5}
-            placeholder={intlConfig.formatMessage({ id: 'c4r.widgets.category.search' })}
+            placeholder={intlConfig.formatMessage({
+              id: 'c4r.widgets.category.search'
+            })}
             onChange={handleSearchChange}
             onFocus={handleSearchFocus}
             InputProps={{
@@ -460,9 +474,13 @@ function CategoryWidgetUI(props) {
               )
             }}
             inputProps={{
-              tabIndex: 0
+              tabIndex: 0,
+              ref: searchRef
             }}
           />
+          <HiddenButton size='small' onClick={handleCancelClicked}>
+            {intlConfig.formatMessage({ id: 'c4r.widgets.category.cancel' })}
+          </HiddenButton>
         </OptionsSelectedBar>
       )}
       <CategoriesWrapper container item>
@@ -477,36 +495,50 @@ function CategoryWidgetUI(props) {
             />
           ))
         ) : (
-          <>
+          <Box>
             <Typography variant='body2'>
               {intlConfig.formatMessage({ id: 'c4r.widgets.category.noResults' })}
             </Typography>
-            <Typography variant='caption'>
+            <Typography component='p' variant='caption' mb={2}>
               {intlConfig.formatMessage(
                 { id: 'c4r.widgets.category.noResultsMessage' },
                 { searchValue }
               )}
             </Typography>
-          </>
+          </Box>
         )}
       </CategoriesWrapper>
+      {showAll && (
+        <HiddenButton size='small' onClick={handleApplyClicked}>
+          {intlConfig.formatMessage({ id: 'c4r.widgets.category.apply' })}
+        </HiddenButton>
+      )}
       {data.length > maxItems && searchable ? (
         showAll ? (
-          <Button size='small' color='primary' onClick={handleCancelClicked}>
-            {intlConfig.formatMessage({ id: 'c4r.widgets.category.cancel' })}
-          </Button>
+          <Box mt={1.5}>
+            <Button
+              size='small'
+              color='primary'
+              onClick={handleCancelClicked}
+              data-testid='primaryCancelButton'
+            >
+              {intlConfig.formatMessage({ id: 'c4r.widgets.category.cancel' })}
+            </Button>
+          </Box>
         ) : (
-          <Button
-            size='small'
-            color='primary'
-            startIcon={<SearchIcon />}
-            onClick={handleShowAllCategoriesClicked}
-          >
-            {intlConfig.formatMessage(
-              { id: 'c4r.widgets.category.searchInfo' },
-              { elements: getCategoriesCount() }
-            )}
-          </Button>
+          <Box mt={1.5}>
+            <Button
+              size='small'
+              color='primary'
+              startIcon={<SearchIcon />}
+              onClick={handleShowAllCategoriesClicked}
+            >
+              {intlConfig.formatMessage(
+                { id: 'c4r.widgets.category.searchInfo' },
+                { elements: getCategoriesCount() }
+              )}
+            </Button>
+          </Box>
         )
       ) : null}
     </CategoriesRoot>
