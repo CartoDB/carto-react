@@ -99,6 +99,10 @@ const locales = {
         clear: 'Bersihkan',
         selectedItems: '{items, plural, one{# terpilih} other{# terpilih}}',
         allSelected: 'Semua terpilih'
+      },
+      chartLegend: {
+        next: 'Next page',
+        prev: 'Previous page'
       }
     }
   }

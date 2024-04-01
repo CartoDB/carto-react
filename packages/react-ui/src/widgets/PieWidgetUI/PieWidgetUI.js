@@ -49,6 +49,7 @@ function PieWidgetUI({
   data = [],
   formatter,
   tooltipFormatter,
+  percentFormatter,
   height,
   width,
   labels,
@@ -67,7 +68,16 @@ function PieWidgetUI({
   const { showSkeleton } = useSkeleton(isLoading);
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
-
+  const _percentFormatter = useMemo(
+    () =>
+      percentFormatter ||
+      ((v) =>
+        `${intl.formatNumber(v, {
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2
+        })}%`),
+    [intl, percentFormatter]
+  );
   // Tooltip
   const tooltipOptions = useMemo(
     () => ({
@@ -77,14 +87,17 @@ function PieWidgetUI({
       textStyle: { color: theme.palette.common.white },
       confine: true,
       formatter:
-        !!tooltipFormatter && ((params) => tooltipFormatter({ ...params, formatter }))
+        !!tooltipFormatter &&
+        ((params) =>
+          tooltipFormatter({ ...params, formatter, percentFormatter: _percentFormatter }))
     }),
     [
       theme.spacingValue,
       theme.palette.black,
       theme.palette.common.white,
       tooltipFormatter,
-      formatter
+      formatter,
+      _percentFormatter
     ]
   );
 
@@ -199,6 +212,11 @@ function PieWidgetUI({
   const handleClearSelectedCategories = () => {
     onSelectedCategoriesChange([]);
   };
+  const handleClearPress = (e) => {
+    if (e.key === 'Enter') {
+      handleClearSelectedCategories();
+    }
+  };
 
   if (showSkeleton) return <PieSkeleton height={height} />;
 
@@ -215,7 +233,12 @@ function PieWidgetUI({
               : intlConfig.formatMessage({ id: 'c4r.widgets.pie.allSelected' })}
           </Typography>
           {selectedCategories.length > 0 && (
-            <Link variant='caption' onClick={handleClearSelectedCategories}>
+            <Link
+              variant='caption'
+              onClick={handleClearSelectedCategories}
+              onKeyDown={handleClearPress}
+              tabIndex={0}
+            >
               {intlConfig.formatMessage({ id: 'c4r.widgets.pie.clear' })}
             </Link>
           )}
@@ -223,7 +246,11 @@ function PieWidgetUI({
       )}
 
       <ChartContent height={height} width={width}>
-        <PieCentralText data={processedData} selectedCategories={selectedCategories} />
+        <PieCentralText
+          data={processedData}
+          selectedCategories={selectedCategories}
+          formatter={_percentFormatter}
+        />
 
         <Chart
           option={options}
@@ -271,6 +298,7 @@ PieWidgetUI.propTypes = {
   colors: PropTypes.array,
   formatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
+  percentFormatter: PropTypes.func,
   height: PropTypes.string,
   width: PropTypes.string,
   animation: PropTypes.bool,
@@ -287,12 +315,12 @@ export default PieWidgetUI;
 // Aux
 function tooltipFormatter(params) {
   const value = processFormatterRes(params.formatter(params.value));
-
+  const percentage = params?.percentFormatter(params.percent) || `${params.percent}%`;
   const markerColor = params.data.color || params.textStyle.color;
   const markerStyle = `display:inline-block;border-radius:4px;width:8px;height:8px;background-color:${markerColor}`;
 
   return `
     <div style="white-space:normal;"><p style="max-width:${CHART_SIZE};font-size:11px;font-weight:500;line-height:1.454;text-transform:uppercase;margin:0 0 4px 0;">${params.name}</p>
-    <p style="display:flex;align-items:center;font-size: 11px;font-weight:500;line-height:1.454;margin:0;"><span style="${markerStyle}"></span> <span style="margin:0 4px;font-weight:400;">${value}</span> (${params.percent}%)</p></div>
+    <p style="display:flex;align-items:center;font-size: 11px;font-weight:500;line-height:1.454;margin:0;"><span style="${markerStyle}"></span> <span style="margin:0 4px;font-weight:400;">${value}</span> (${percentage})</p></div>
   `.trim();
 }

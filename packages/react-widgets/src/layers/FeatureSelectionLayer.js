@@ -12,6 +12,7 @@ import { hexToRgb, useTheme } from '@mui/material';
 import EditableCartoGeoJsonLayer from './EditableCartoGeoJsonLayer';
 import useEventManager from './useEventManager';
 import MaskLayer from './MaskLayer';
+import kinks from '@turf/kinks';
 
 const { ViewMode, TranslateMode, ModifyMode, CompositeMode } = nebulaModes;
 
@@ -58,8 +59,15 @@ export default function FeatureSelectionLayer(
 
   const primaryAsRgba = formatRGBA(hexToRgb(theme.palette.primary.main));
   const secondaryAsRgba = formatRGBA(hexToRgb(theme.palette.secondary.main));
+  const errorAsRgba = formatRGBA(hexToRgb(theme.palette.error.main));
 
-  const mainColor = hasGeometry && !isSelected ? secondaryAsRgba : primaryAsRgba;
+  let mainColor = primaryAsRgba;
+  if (hasGeometry && !isSelected) {
+    mainColor = secondaryAsRgba;
+  }
+  if (spatialFilterGeometry?.properties?.invalid) {
+    mainColor = errorAsRgba;
+  }
 
   return [
     mask && MaskLayer(),
@@ -92,10 +100,18 @@ export default function FeatureSelectionLayer(
           //     2. editType includes tentative, that means it's being drawn
           if (updatedData.features.length !== 0 && !editType.includes('Tentative')) {
             const [lastFeature] = updatedData.features.slice(-1);
+            const intersectionPoints = kinks(lastFeature).features.length;
+
             if (lastFeature) {
               dispatch(
                 addSpatialFilter({
-                  geometry: lastFeature
+                  geometry: {
+                    ...lastFeature,
+                    properties: {
+                      ...lastFeature.properties,
+                      invalid: intersectionPoints > 0
+                    }
+                  }
                 })
               );
             }

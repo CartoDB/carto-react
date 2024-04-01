@@ -2,7 +2,39 @@
 
 ## Not released
 
-## 2.3
+## 2.4
+
+### 2.4.2 (2024-03-22)
+
+- Category widget UI: increase keyboard accessibility [#856](https://github.com/CartoDB/carto-react/pull/856)
+- Category widget UI: change focus order to increase keyboard accessibility [#857](https://github.com/CartoDB/carto-react/pull/857)
+
+### 2.4.1 (2024-03-13)
+
+- Fix geometry edit in Feature Selection [#854](https://github.com/CartoDB/carto-react/pull/854)
+
+### 2.4.0 (2024-03-08)
+
+- Check invalid geometries for spatial filter [#847](https://github.com/CartoDB/carto-react/pull/847)
+
+### 2.3.14 (2024-03-07)
+
+- Fix PieWidgetUI keep two decimals always in default percent formatter [#850](https://github.com/CartoDB/carto-react/pull/850)
+
+### 2.3.13 (2024-03-06)
+
+- Add percentFormatter prop in PieWidgetUI, allowing to format percent values [#844](https://github.com/CartoDB/carto-react/pull/844)
+- Fix Snowflake spatial index detection [#845](https://github.com/CartoDB/carto-react/pull/845)
+- Fix TimeSeriesWidgetUI check undefined echart.getInstance().getDom() [#842](https://github.com/CartoDB/carto-react/pull/842)
+- Update MultipleSelectField placeholder text color [#846](https://github.com/CartoDB/carto-react/pull/846)
+
+### 2.3.12 (2024-02-19)
+
+- Fix TimeSeriesContext exports [#840](https://github.com/CartoDB/carto-react/pull/840)
+
+### 2.3.11 (2024-02-13)
+
+- Keyboard accessibility improvements in Widgets and DS components [#835](https://github.com/CartoDB/carto-react/pull/835)
 
 ### 2.3.10 (2024-01-31)
 

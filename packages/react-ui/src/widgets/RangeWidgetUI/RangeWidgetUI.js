@@ -164,6 +164,12 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoadin
     changeSliderValues([min, max]);
   };
 
+  const handleClearPress = (e) => {
+    if (e.key === 'Enter') {
+      resetSlider();
+    }
+  };
+
   if (showSkeleton) {
     return <RangeSkeleton />;
   }
@@ -173,7 +179,13 @@ function RangeWidgetUI({ data, min, max, limits, onSelectedRangeChange, isLoadin
       <ClearWrapper>
         {hasBeenModified && (
           <Typography variant='caption' color='primary'>
-            <ClearButton onClick={resetSlider} underline='hover'>
+            <ClearButton
+              onClick={resetSlider}
+              onKeyDown={handleClearPress}
+              tabIndex={0}
+              component='button'
+              underline='hover'
+            >
               {intlConfig.formatMessage({ id: 'c4r.widgets.range.clear' })}
             </ClearButton>
           </Typography>

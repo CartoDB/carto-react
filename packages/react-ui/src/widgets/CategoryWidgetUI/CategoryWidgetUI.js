@@ -7,7 +7,8 @@ import {
   InputAdornment,
   Divider,
   TextField,
-  Tooltip
+  Tooltip,
+  Box
 } from '@mui/material';
 
 import { useIntl } from 'react-intl';
@@ -22,7 +23,9 @@ import {
   LinkAsButton,
   OptionsSelectedBar,
   ProgressBar,
-  CategoriesRoot
+  CategoriesRoot,
+  CategoryLabelWrapper,
+  HiddenButton
 } from './CategoryWidgetUI.styled';
 import SearchIcon from '../../assets/icons/SearchIcon';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
@@ -59,6 +62,7 @@ function CategoryWidgetUI(props) {
   const [tempBlockedCategories, setTempBlockedCategories] = useState(false);
   const [animValues, setAnimValues] = useState([]);
   const requestRef = useRef();
+  const searchRef = useRef();
   const prevAnimValues = usePrevious(animValues);
   const referencedPrevAnimValues = useRef();
   const { showSkeleton } = useSkeleton(isLoading);
@@ -92,14 +96,29 @@ function CategoryWidgetUI(props) {
   const handleClearClicked = () => {
     props.onSelectedCategoriesChange([]);
   };
+  const handleClearPress = (e) => {
+    if (e.key === 'Enter') {
+      handleClearClicked();
+    }
+  };
 
   const handleUnblockClicked = () => {
     props.onSelectedCategoriesChange([]);
     setBlockedCategories([]);
   };
+  const handleUnblockPress = (e) => {
+    if (e.key === 'Enter') {
+      handleUnblockClicked();
+    }
+  };
 
   const handleBlockClicked = () => {
     setBlockedCategories(sortBlockedSameAsData(selectedCategories));
+  };
+  const handleBlockPress = (e) => {
+    if (e.key === 'Enter') {
+      handleBlockClicked();
+    }
   };
 
   const handleApplyClicked = () => {
@@ -110,6 +129,11 @@ function CategoryWidgetUI(props) {
     setTempBlockedCategories([]);
     setShowAll(false);
     setSearchValue('');
+  };
+  const handleApplyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleApplyClicked();
+    }
   };
 
   const handleCancelClicked = () => {
@@ -282,6 +306,12 @@ function CategoryWidgetUI(props) {
     }
   }, [animation, sortedData]);
 
+  useEffect(() => {
+    if (showAll && searchRef.current) {
+      searchRef.current.focus();
+    }
+  }, [showAll, searchRef]);
+
   // Separated to simplify the widget layout but inside the main component to avoid passing all dependencies
   const CategoryItem = (props) => {
     const { data, onCategoryClick } = props;
@@ -303,26 +333,38 @@ function CategoryWidgetUI(props) {
       };
     }, []);
 
+    const onCategoryPress = (e) => {
+      if (e.key === 'Enter') {
+        onCategoryClick();
+      }
+    };
+
     const unselected =
       !showAll &&
       selectedCategories.length > 0 &&
       selectedCategories.indexOf(data.name) === -1;
+
     return (
       <CategoryItemGroup
         container
         direction='row'
         spacing={1}
         onClick={filterable ? onCategoryClick : () => {}}
+        onKeyDown={filterable ? onCategoryPress : () => {}}
         selectable={filterable}
         unselected={unselected}
         name={data.name === REST_CATEGORY ? REST_CATEGORY : ''}
+        tabIndex={filterable ? 0 : -1}
       >
         {filterable && showAll && (
-          <Grid item>
-            <Checkbox checked={tempBlockedCategories.indexOf(data.name) !== -1} />
+          <Grid item mr={1}>
+            <Checkbox
+              checked={tempBlockedCategories.indexOf(data.name) !== -1}
+              tabIndex={-1}
+            />
           </Grid>
         )}
-        <Grid container item xs>
+        <CategoryLabelWrapper container item xs isSelectable={showAll}>
           <Grid
             container
             item
@@ -351,7 +393,7 @@ function CategoryWidgetUI(props) {
           <ProgressBar className='progressbar' item>
             <div style={{ width: getProgressbarLength(data.value) }}></div>
           </ProgressBar>
-        </Grid>
+        </CategoryLabelWrapper>
       </CategoryItemGroup>
     );
   };
@@ -371,21 +413,42 @@ function CategoryWidgetUI(props) {
               : intlConfig.formatMessage({ id: 'c4r.widgets.category.all' })}
           </Typography>
           {showAll ? (
-            <LinkAsButton onClick={handleApplyClicked} underline='hover'>
+            <LinkAsButton
+              onClick={handleApplyClicked}
+              onKeyDown={handleApplyPress}
+              underline='hover'
+              tabIndex={0}
+              data-testid='primaryApplyButton'
+            >
               {intlConfig.formatMessage({ id: 'c4r.widgets.category.apply' })}
             </LinkAsButton>
           ) : blockedCategories.length > 0 ? (
-            <LinkAsButton onClick={handleUnblockClicked} underline='hover'>
+            <LinkAsButton
+              onClick={handleUnblockClicked}
+              onKeyDown={handleUnblockPress}
+              underline='hover'
+              tabIndex={0}
+            >
               {intlConfig.formatMessage({ id: 'c4r.widgets.category.unlock' })}
             </LinkAsButton>
           ) : (
             selectedCategories.length > 0 && (
               <Grid container direction='row' justifyContent='flex-end' item xs>
-                <LinkAsButton onClick={handleBlockClicked} underline='hover'>
+                <LinkAsButton
+                  onClick={handleBlockClicked}
+                  onKeyDown={handleBlockPress}
+                  underline='hover'
+                  tabIndex={0}
+                >
                   {intlConfig.formatMessage({ id: 'c4r.widgets.category.lock' })}
                 </LinkAsButton>
                 <Divider orientation='vertical' flexItem />
-                <LinkAsButton onClick={handleClearClicked} underline='hover'>
+                <LinkAsButton
+                  onClick={handleClearClicked}
+                  onKeyDown={handleClearPress}
+                  underline='hover'
+                  tabIndex={0}
+                >
                   {intlConfig.formatMessage({ id: 'c4r.widgets.category.clear' })}
                 </LinkAsButton>
               </Grid>
@@ -398,7 +461,9 @@ function CategoryWidgetUI(props) {
           <TextField
             size='small'
             mt={-0.5}
-            placeholder={intlConfig.formatMessage({ id: 'c4r.widgets.category.search' })}
+            placeholder={intlConfig.formatMessage({
+              id: 'c4r.widgets.category.search'
+            })}
             onChange={handleSearchChange}
             onFocus={handleSearchFocus}
             InputProps={{
@@ -408,7 +473,14 @@ function CategoryWidgetUI(props) {
                 </InputAdornment>
               )
             }}
+            inputProps={{
+              tabIndex: 0,
+              ref: searchRef
+            }}
           />
+          <HiddenButton size='small' onClick={handleCancelClicked}>
+            {intlConfig.formatMessage({ id: 'c4r.widgets.category.cancel' })}
+          </HiddenButton>
         </OptionsSelectedBar>
       )}
       <CategoriesWrapper container item>
@@ -423,36 +495,50 @@ function CategoryWidgetUI(props) {
             />
           ))
         ) : (
-          <>
+          <Box>
             <Typography variant='body2'>
               {intlConfig.formatMessage({ id: 'c4r.widgets.category.noResults' })}
             </Typography>
-            <Typography variant='caption'>
+            <Typography component='p' variant='caption' mb={2}>
               {intlConfig.formatMessage(
                 { id: 'c4r.widgets.category.noResultsMessage' },
                 { searchValue }
               )}
             </Typography>
-          </>
+          </Box>
         )}
       </CategoriesWrapper>
+      {showAll && (
+        <HiddenButton size='small' onClick={handleApplyClicked}>
+          {intlConfig.formatMessage({ id: 'c4r.widgets.category.apply' })}
+        </HiddenButton>
+      )}
       {data.length > maxItems && searchable ? (
         showAll ? (
-          <Button size='small' color='primary' onClick={handleCancelClicked}>
-            {intlConfig.formatMessage({ id: 'c4r.widgets.category.cancel' })}
-          </Button>
+          <Box mt={1.5}>
+            <Button
+              size='small'
+              color='primary'
+              onClick={handleCancelClicked}
+              data-testid='primaryCancelButton'
+            >
+              {intlConfig.formatMessage({ id: 'c4r.widgets.category.cancel' })}
+            </Button>
+          </Box>
         ) : (
-          <Button
-            size='small'
-            color='primary'
-            startIcon={<SearchIcon />}
-            onClick={handleShowAllCategoriesClicked}
-          >
-            {intlConfig.formatMessage(
-              { id: 'c4r.widgets.category.searchInfo' },
-              { elements: getCategoriesCount() }
-            )}
-          </Button>
+          <Box mt={1.5}>
+            <Button
+              size='small'
+              color='primary'
+              startIcon={<SearchIcon />}
+              onClick={handleShowAllCategoriesClicked}
+            >
+              {intlConfig.formatMessage(
+                { id: 'c4r.widgets.category.searchInfo' },
+                { elements: getCategoriesCount() }
+              )}
+            </Button>
+          </Box>
         )
       ) : null}
     </CategoriesRoot>

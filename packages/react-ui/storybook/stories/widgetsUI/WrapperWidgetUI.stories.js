@@ -1,4 +1,5 @@
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import ColorizeIcon from '@mui/icons-material/Colorize';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
@@ -31,14 +32,16 @@ const options = {
 export default options;
 
 const Template = (args) => (
-  <WrapperWidgetUI {...args}>
-    <div>Your Content</div>
-  </WrapperWidgetUI>
+  <IntlProvider locale='en'>
+    <WrapperWidgetUI {...args}>
+      <div>Your Content</div>
+    </WrapperWidgetUI>
+  </IntlProvider>
 );
 
 const ResponsiveTemplate = (args) => {
   return (
-    <>
+    <IntlProvider locale='en'>
       <Label variant='body1' mb={3}>
         {'Limited width'}
       </Label>
@@ -54,7 +57,7 @@ const ResponsiveTemplate = (args) => {
       <WrapperWidgetUI {...args}>
         <div>Your Content</div>
       </WrapperWidgetUI>
-    </>
+    </IntlProvider>
   );
 };
 
@@ -192,27 +195,29 @@ WithActionsTooltip.args = {
 };
 
 export const BigScrollableContent = (args) => (
-  <WrapperWidgetUI {...args}>
-    <div>
-      <p>
-        Note: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam, mi nibh
-        fames rhoncus id ultricies. Faucibus enim commodo morbi amet sit eget. Ut
-        pellentesque tellus iaculis diam. Ornare convallis dictum purus quisque nisl.
-      </p>
-      <p>
-        Vivamus imperdiet, urna eu blandit lobortis, tortor risus sodales urna, sit amet
-        tempor eros elit faucibus nulla. Donec vel tellus nec nibh molestie hendrerit.
-        Donec nulla massa, interdum ut nisl non, sollicitudin condimentum leo. Integer
-        eget accumsan sem. Aliquam tincidunt turpis et leo ac.
-      </p>
-      <p>
-        Vivamus imperdiet, urna eu blandit lobortis, tortor risus sodales urna, sit amet
-        tempor eros elit faucibus nulla. Donec vel tellus nec nibh molestie hendrerit.
-        Donec nulla massa, interdum ut nisl non, sollicitudin condimentum leo. Integer
-        eget accumsan sem. Aliquam tincidunt turpis et leo ac.
-      </p>
-    </div>
-  </WrapperWidgetUI>
+  <IntlProvider locale='en'>
+    <WrapperWidgetUI {...args}>
+      <div>
+        <p>
+          Note: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam, mi nibh
+          fames rhoncus id ultricies. Faucibus enim commodo morbi amet sit eget. Ut
+          pellentesque tellus iaculis diam. Ornare convallis dictum purus quisque nisl.
+        </p>
+        <p>
+          Vivamus imperdiet, urna eu blandit lobortis, tortor risus sodales urna, sit amet
+          tempor eros elit faucibus nulla. Donec vel tellus nec nibh molestie hendrerit.
+          Donec nulla massa, interdum ut nisl non, sollicitudin condimentum leo. Integer
+          eget accumsan sem. Aliquam tincidunt turpis et leo ac.
+        </p>
+        <p>
+          Vivamus imperdiet, urna eu blandit lobortis, tortor risus sodales urna, sit amet
+          tempor eros elit faucibus nulla. Donec vel tellus nec nibh molestie hendrerit.
+          Donec nulla massa, interdum ut nisl non, sollicitudin condimentum leo. Integer
+          eget accumsan sem. Aliquam tincidunt turpis et leo ac.
+        </p>
+      </div>
+    </WrapperWidgetUI>
+  </IntlProvider>
 );
 BigScrollableContent.args = {
   title: 'Big scrollable content',

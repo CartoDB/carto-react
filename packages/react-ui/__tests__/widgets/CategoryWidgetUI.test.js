@@ -62,6 +62,10 @@ describe('CategoryWidgetUI', () => {
   });
 
   describe('events', () => {
+    beforeEach(() => {
+      HTMLElement.prototype.scrollIntoView = jest.fn();
+    });
+
     test('category change', () => {
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
@@ -132,13 +136,12 @@ describe('CategoryWidgetUI', () => {
 
       fireEvent.click(screen.getByText(/Search in 4 elements/));
       fireEvent.click(screen.getByText(/Category 1/));
-      fireEvent.click(screen.getByText(/Apply/));
+      fireEvent.click(screen.getByTestId('primaryApplyButton'));
       fireEvent.click(screen.getByText(/Unlock/));
       expect(mockOnSelectedCategoriesChange).toHaveBeenCalledTimes(2);
     });
 
     test('search category', () => {
-      HTMLElement.prototype.scrollIntoView = jest.fn();
       const mockOnSelectedCategoriesChange = jest.fn();
       render(
         <CategoryWidgetUI
@@ -151,7 +154,7 @@ describe('CategoryWidgetUI', () => {
       fireEvent.click(screen.getByText(/Search in 4 elements/));
       userEvent.type(screen.getByRole('textbox'), 'Category 1');
       fireEvent.click(screen.getByText(/Category 1/));
-      fireEvent.click(screen.getByText(/Apply/));
+      fireEvent.click(screen.getByTestId('primaryApplyButton'));
     });
 
     test('cancel search', () => {
@@ -159,7 +162,7 @@ describe('CategoryWidgetUI', () => {
 
       expect(screen.getByText(/Search in 4 elements/)).toBeInTheDocument();
       fireEvent.click(screen.getByText(/Search in 4 elements/));
-      fireEvent.click(screen.getByText(/Cancel/));
+      fireEvent.click(screen.getByTestId('primaryCancelButton'));
     });
 
     test('searchable prop', () => {

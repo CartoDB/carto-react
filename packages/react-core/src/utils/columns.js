@@ -8,7 +8,7 @@ export function getColumnNameFromGeoColumn(geoColumn) {
 export function getSpatialIndexFromGeoColumn(geoColumn) {
   const parts = geoColumn.split(':');
   return (parts.length === 1 || parts.length === 2) &&
-    Object.values(SpatialIndex).includes(parts[0])
-    ? parts[0]
+    Object.values(SpatialIndex).includes(parts[0].toLowerCase())
+    ? parts[0].toLowerCase()
     : null;
 }

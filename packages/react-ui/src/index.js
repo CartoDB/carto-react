@@ -13,11 +13,16 @@ import LegendProportion from './widgets/legend/legend-types/LegendProportion';
 import LegendRamp from './widgets/legend/legend-types/LegendRamp';
 import ScatterPlotWidgetUI from './widgets/ScatterPlotWidgetUI/ScatterPlotWidgetUI';
 import TimeSeriesWidgetUI from './widgets/TimeSeriesWidgetUI/TimeSeriesWidgetUI';
+import {
+  useTimeSeriesContext,
+  TimeSeriesProvider
+} from './widgets/TimeSeriesWidgetUI/hooks/TimeSeriesContext';
 import FeatureSelectionWidgetUI from './widgets/FeatureSelectionWidgetUI/FeatureSelectionWidgetUI';
 import FeatureSelectionUIDropdown from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIDropdown';
 import FeatureSelectionUIGeometryChips from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIGeometryChips';
 import FeatureSelectionUIToggleButton from './widgets/FeatureSelectionWidgetUI/FeatureSelectionUIToggleButton';
 import RangeWidgetUI from './widgets/RangeWidgetUI/RangeWidgetUI';
+import useTimeSeriesInteractivity from './widgets/TimeSeriesWidgetUI/hooks/useTimeSeriesInteractivity';
 import ComparativeFormulaWidgetUI from './widgets/comparative/ComparativeFormulaWidgetUI/ComparativeFormulaWidgetUI';
 import ComparativeCategoryWidgetUI from './widgets/comparative/ComparativeCategoryWidgetUI/ComparativeCategoryWidgetUI';
 import { CHART_TYPES } from './widgets/TimeSeriesWidgetUI/utils/constants';
@@ -73,6 +78,9 @@ export {
   FeatureSelectionUIGeometryChips,
   FeatureSelectionUIToggleButton,
   TimeSeriesWidgetUI,
+  useTimeSeriesContext,
+  useTimeSeriesInteractivity,
+  TimeSeriesProvider,
   CHART_TYPES as TIME_SERIES_CHART_TYPES,
   TableWidgetUI,
   LegendWidgetUI,
