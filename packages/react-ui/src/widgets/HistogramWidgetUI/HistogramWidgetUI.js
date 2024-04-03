@@ -36,6 +36,7 @@ function HistogramWidgetUI({
   max,
   xAxisFormatter,
   yAxisFormatter,
+  yAxisType,
   selectedBars,
   onSelectedBarsChange,
   tooltip,
@@ -135,8 +136,31 @@ function HistogramWidgetUI({
   );
 
   // yAxis
-  const yAxisOptions = useMemo(
-    () => ({
+  const yAxisOptions = useMemo(() => {
+    const denseAxisConfig = {
+      margin: 0,
+      verticalAlign: 'bottom',
+      padding: [0, 0, theme.spacingValue * 1.25, 0],
+      inside: true,
+      color: (value) => {
+        const maxValue = Math.max(...data.map((d) => d ?? Number.MIN_SAFE_INTEGER)) || 1;
+        let col = 'transparent';
+        if (value >= maxValue) {
+          col = theme.palette.black[60];
+        }
+
+        return col;
+      },
+      ...theme.typography.overlineDelicate,
+      formatter: (v) => processFormatterRes(yAxisFormatter(v))
+    };
+    const fullAxisConfig = {
+      verticalAlign: 'middle',
+      padding: [0, 0, 0, theme.spacingValue * 0.25],
+      color: theme.palette.black[60]
+    };
+    const axisLabelConfig = yAxisType === 'dense' ? denseAxisConfig : fullAxisConfig;
+    return {
       type: 'value',
       axisLine: {
         show: false
@@ -151,35 +175,22 @@ function HistogramWidgetUI({
         show: false
       },
       axisLabel: {
-        margin: 0,
-        verticalAlign: 'bottom',
-        padding: [0, 0, theme.spacingValue * 1.25, 0],
         show: true,
         showMaxLabel: true,
         showMinLabel: false,
-        inside: true,
-        color: (value) => {
-          const maxValue =
-            Math.max(...data.map((d) => d ?? Number.MIN_SAFE_INTEGER)) || 1;
-          let col = 'transparent';
-          if (value >= maxValue) {
-            col = theme.palette.black[60];
-          }
-
-          return col;
-        },
+        ...axisLabelConfig,
         ...theme.typography.overlineDelicate,
         formatter: (v) => processFormatterRes(yAxisFormatter(v))
       }
-    }),
-    [
-      theme.palette.black,
-      theme.spacingValue,
-      theme.typography.overlineDelicate,
-      data,
-      yAxisFormatter
-    ]
-  );
+    };
+  }, [
+    theme.palette.black,
+    theme.spacingValue,
+    theme.typography.overlineDelicate,
+    data,
+    yAxisFormatter,
+    yAxisType
+  ]);
 
   // Series
   const seriesOptions = useMemo(() => {
@@ -318,6 +329,7 @@ HistogramWidgetUI.defaultProps = {
   tooltipFormatter: defaultTooltipFormatter,
   xAxisFormatter: (v) => v,
   yAxisFormatter: (v) => v,
+  yAxisType: 'dense',
   selectedBars: [],
   animation: true,
   filterable: true,
@@ -333,6 +345,7 @@ HistogramWidgetUI.propTypes = {
   tooltipFormatter: PropTypes.func,
   xAxisFormatter: PropTypes.func,
   yAxisFormatter: PropTypes.func,
+  yAxisType: PropTypes.oneOf(['dense', 'full']),
   selectedBars: PropTypes.arrayOf(PropTypes.number),
   onSelectedBarsChange: PropTypes.func,
   animation: PropTypes.bool,

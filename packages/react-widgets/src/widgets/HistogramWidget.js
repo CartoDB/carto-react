@@ -31,6 +31,7 @@ const EMPTY_ARRAY = [];
  * @param  {number} [props.bins] - Number of bins to calculate the ticks.
  * @param  {Function} [props.xAxisFormatter] - Function to format X axis values.
  * @param  {Function} [props.formatter] - Function to format Y axis values.
+ * @param  {'dense' | 'full'} [props.yAxisType='dense'] - Type of Y axis. A dense axis will show only the top value and a full axis will show them all.
  * @param  {boolean} [props.tooltip=true] - Whether to show a tooltip or not.
  * @param  {Function} [props.tooltipFormatter] - Function to return the HTML of the tooltip.
  * @param  {boolean} [props.animation] - Enable/disable widget animations on data updates. Enabled by default.
@@ -54,6 +55,7 @@ function HistogramWidget({
   xAxisFormatter,
   bins,
   formatter,
+  yAxisType,
   tooltip,
   tooltipFormatter,
   animation,
@@ -198,6 +200,7 @@ function HistogramWidget({
             tooltipFormatter={tooltipFormatter}
             xAxisFormatter={xAxisFormatter}
             yAxisFormatter={formatter}
+            yAxisType={yAxisType}
             animation={animation}
             filterable={filterable}
             isLoading={isLoading}
@@ -220,6 +223,7 @@ HistogramWidget.propTypes = {
   operation: PropTypes.oneOf(Object.values(AggregationTypes)),
   xAxisFormatter: PropTypes.func,
   formatter: PropTypes.func,
+  yAxisType: PropTypes.oneOf(['dense', 'full']),
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,
   animation: PropTypes.bool,
@@ -237,6 +241,7 @@ HistogramWidget.defaultProps = {
   min: Number.MIN_SAFE_INTEGER,
   max: Number.MAX_SAFE_INTEGER,
   operation: AggregationTypes.COUNT,
+  yAxisType: 'dense',
   tooltip: true,
   animation: true,
   filterable: true,
