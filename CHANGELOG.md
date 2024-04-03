@@ -4,6 +4,10 @@
 
 ## 2.5
 
+### 2.5.1 (2024-04-03)
+
+- Fix peer dependencies [#859](https://github.com/CartoDB/carto-react/pull/859)
+
 ### 2.5.0 (2024-04-03)
 
 - New Legend Widget [#837](https://github.com/CartoDB/carto-react/pull/837)
