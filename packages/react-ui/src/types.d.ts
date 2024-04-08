@@ -7,6 +7,21 @@ export { AccordionGroupProps } from './components/molecules/AccordionGroup';
 export { UploadFieldProps } from './components/molecules/UploadField/UploadField';
 export { UploadFieldBaseProps } from './components/molecules/UploadField/UploadFieldBase';
 export { AppBarProps } from './components/organisms/AppBar/AppBar';
+export {
+  LegendBins,
+  LegendCategories,
+  LegendIcons,
+  LegendRamp,
+  LegendProportion,
+  LegendWidgetUIProps,
+  LegendSelectConfig,
+  CustomLegendComponent,
+  LegendLayerData,
+  LegendLayerVariableData,
+  LegendLayerVariableBase,
+  LegendColors,
+  LegendNumericLabels
+} from './widgets/legend/LegendWidgetUI'
 
 export type WrapperWidgetUI = {
   title: string;
@@ -202,36 +217,6 @@ export type FeatureSelectionUIToggleButton = {
   enabled?: boolean;
   onEnabledChange?: Function;
   tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
-};
-
-// Legends
-export type LegendCategories = {
-  legend: {
-    labels?: (string | number)[];
-    colors?: string | string[] | number[][];
-    isStrokeColor?: boolean;
-  };
-};
-
-export type LegendIcon = {
-  legend: {
-    labels?: string[];
-    icons?: string[];
-  };
-};
-
-export type LegendProportion = {
-  legend: {
-    labels?: (number | string)[];
-  };
-};
-
-export type LegendRamp = {
-  isContinuous?: boolean;
-  legend: {
-    labels?: (number | string)[];
-    colors?: string | string[] | number[][];
-  };
 };
 
 export type AnimationOptions = {
