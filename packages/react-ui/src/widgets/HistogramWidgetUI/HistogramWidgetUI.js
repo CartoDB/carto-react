@@ -156,7 +156,7 @@ function HistogramWidgetUI({
     };
     const fullAxisConfig = {
       verticalAlign: 'middle',
-      padding: [0, 0, 0, theme.spacingValue * 0.25],
+      padding: [0, 0, 0, theme.spacingValue * 0.5],
       color: theme.palette.black[60]
     };
     const axisLabelConfig = yAxisType === 'dense' ? denseAxisConfig : fullAxisConfig;
