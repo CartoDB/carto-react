@@ -25,7 +25,8 @@ export default function TimeSeriesChart({
   animation,
   filterable,
   selectedCategories,
-  onCategoryClick
+  onCategoryClick,
+  yAxisType = 'dense'
 }) {
   const theme = useTheme();
   const [echartsInstance, setEchartInstance] = useState();
@@ -71,8 +72,30 @@ export default function TimeSeriesChart({
     [theme, tooltip, tooltipFormatter]
   );
 
-  const axisOptions = useMemo(
-    () => ({
+  const axisOptions = useMemo(() => {
+    const denseAxisConfig = {
+      margin: 0,
+      verticalAlign: 'bottom',
+      padding: [0, 0, theme.spacingValue * 1.25, 0],
+      inside: true,
+      color: (value) => {
+        // FIXME: Workaround to show only maxlabel
+        let col = 'transparent';
+        if (value >= maxValue) {
+          col = theme.palette.black[60];
+        }
+        return col;
+      }
+    };
+    const fullAxisConfig = {
+      margin: 0,
+      verticalAlign: 'middle',
+      padding: [0, theme.spacingValue * 0.75, 0, 0],
+      color: theme.palette.black[60]
+    };
+    const yAxisLabelConfig = yAxisType === 'dense' ? denseAxisConfig : fullAxisConfig;
+
+    return {
       axisPointer: {
         lineStyle: {
           color: theme.palette.black[40]
@@ -124,24 +147,17 @@ export default function TimeSeriesChart({
       yAxis: {
         type: 'value',
         axisLabel: {
-          margin: 0,
-          verticalAlign: 'bottom',
-          padding: [0, 0, theme.spacingValue * 1.25, 0],
           show: true,
           showMaxLabel: true,
           showMinLabel: false,
-          inside: true,
-          color: (value) => {
-            // FIXME: Workaround to show only maxlabel
-            let col = 'transparent';
-            if (value >= maxValue) {
-              col = theme.palette.black[60];
-            }
-
-            return col;
-          },
+          ...yAxisLabelConfig,
           ...(formatter ? { formatter: (v) => formatter(v) } : {}),
-          ...theme.typography.overlineDelicate
+          fontWeight: theme.typography.fontWeightRegular,
+          fontSize: theme.typography.overlineDelicate.fontSize,
+          fontFamily: theme.typography.overlineDelicate.fontFamily,
+          // echarts doesn't intepret lineHeight properly, so hack it around
+          lineHeight: theme.typography.overlineDelicate.lineHeight * 8,
+          letterSpacing: theme.typography.overlineDelicate.letterSpacing
         },
         axisLine: {
           show: false
@@ -158,9 +174,8 @@ export default function TimeSeriesChart({
         },
         max: maxValue
       }
-    }),
-    [theme, maxValue, formatter, width, timeAxisSplitNumber]
-  );
+    };
+  }, [theme, maxValue, formatter, width, timeAxisSplitNumber, yAxisType]);
 
   const { timelineOptions: markLine, timeWindowOptions: markArea } =
     useTimeSeriesInteractivity({
@@ -210,7 +225,7 @@ export default function TimeSeriesChart({
   const options = useMemo(
     () => ({
       grid: {
-        left: theme.spacingValue * 2,
+        left: theme.spacingValue * (yAxisType === 'dense' ? 2 : 3.5),
         top: theme.spacingValue * 4,
         right: theme.spacingValue * 2,
         bottom: theme.spacingValue * 3
@@ -223,6 +238,7 @@ export default function TimeSeriesChart({
     [
       axisOptions,
       seriesOptions,
+      yAxisType,
       theme.palette.secondary.main,
       theme.spacingValue,
       tooltipOptions
