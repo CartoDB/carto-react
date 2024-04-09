@@ -2,6 +2,7 @@
 
 ## Not released
 
+-  configurable timeseries y axis [#861](https://github.com/CartoDB/carto-react/pull/861)
 -  configurable histogram y axis [#860](https://github.com/CartoDB/carto-react/pull/860)
 
 ## 2.5
