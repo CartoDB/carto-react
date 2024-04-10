@@ -18,6 +18,7 @@ import TimeSeriesLayout from './components/TimeSeriesLayout';
 import ChartLegend from '../ChartLegend';
 import { findItemIndexByTime, getDate } from './utils/utilities';
 import useSkeleton from '../useSkeleton';
+
 function TimeSeriesWidgetUI({
   data,
   categories,
@@ -46,7 +47,8 @@ function TimeSeriesWidgetUI({
   onStop,
   isLoading,
   palette,
-  showLegend
+  showLegend,
+  yAxisType
 }) {
   let prevEmittedTimeWindow = useRef();
   const intl = useIntl();
@@ -122,6 +124,7 @@ function TimeSeriesWidgetUI({
         selectedCategories={selectedCategories}
         timelinePosition={timelinePosition}
         onSelectedCategoriesChange={onSelectedCategoriesChange}
+        yAxisType={yAxisType}
       />
     </TimeSeriesProvider>
   );
@@ -160,7 +163,8 @@ TimeSeriesWidgetUI.propTypes = {
   isLoading: PropTypes.bool,
   palette: PropTypes.arrayOf(PropTypes.string),
   showLegend: PropTypes.bool,
-  intl: PropTypes.object
+  intl: PropTypes.object,
+  yAxisType: PropTypes.oneOf(['dense', 'full'])
 };
 
 TimeSeriesWidgetUI.defaultProps = {
@@ -175,7 +179,8 @@ TimeSeriesWidgetUI.defaultProps = {
   isPaused: false,
   showControls: true,
   isLoading: false,
-  palette: Object.values(commonPalette.qualitative.bold)
+  palette: Object.values(commonPalette.qualitative.bold),
+  yAxisType: 'dense'
 };
 
 export default TimeSeriesWidgetUI;
@@ -201,7 +206,8 @@ function TimeSeriesWidgetUIContent({
   selectedCategories,
   onSelectedCategoriesChange,
   showLegend,
-  timelinePosition
+  timelinePosition,
+  yAxisType = 'dense'
 }) {
   const theme = useTheme();
   const fallbackColor = theme.palette.secondary.main;
@@ -377,6 +383,7 @@ function TimeSeriesWidgetUIContent({
       filterable={filterable}
       selectedCategories={selectedCategories}
       onCategoryClick={onSelectedCategoriesChange && handleCategoryClick}
+      yAxisType={yAxisType}
     />
   );
 
