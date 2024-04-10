@@ -85,6 +85,7 @@ const debounceTimeout = 250;
  * @param  {string[]=} [props.palette] - Optional palette
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
+ * @param  {'dense' | 'full'} [props.yAxisType='dense'] - Type of Y axis. A dense axis will show only the top value and a full axis will show them all.
 
  * Internal state
  * @param  {boolean} [props.isPlaying] - If true, the animation starts.
@@ -138,6 +139,7 @@ function TimeSeriesWidget({
   onStateChange,
   palette,
   showLegend,
+  yAxisType,
   // Both
   stepSize,
   stepMultiplier,
@@ -472,6 +474,7 @@ function TimeSeriesWidget({
               isLoading={isLoading}
               palette={palette}
               showLegend={showLegend}
+              yAxisType={yAxisType}
             />
           )}
         </WidgetWithAlert>
@@ -541,6 +544,7 @@ TimeSeriesWidget.propTypes = {
   onTimeWindowUpdate: PropTypes.func,
   showControls: PropTypes.bool,
   chartType: PropTypes.oneOf(Object.values(TIME_SERIES_CHART_TYPES)),
+  yAxisType: PropTypes.oneOf(['dense', 'full']),
   // Both
   stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired
 };
@@ -560,7 +564,8 @@ TimeSeriesWidget.defaultProps = {
   isPaused: false,
   timeWindow: [],
   showControls: true,
-  chartType: TIME_SERIES_CHART_TYPES.LINE
+  chartType: TIME_SERIES_CHART_TYPES.LINE,
+  yAxisType: 'dense'
 };
 
 export default TimeSeriesWidget;
