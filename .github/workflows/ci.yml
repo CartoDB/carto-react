@@ -110,6 +110,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      # Configure private registry
+      - name: Configure private registry
+        run: npm set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
       # Install dependencies, lint, build and test
 
       - name: Install dependencies
