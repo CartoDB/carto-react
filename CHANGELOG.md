@@ -2,10 +2,12 @@
 
 ## Not released
 
+## 2.5
+
+### 2.5.2 (2024-04-10)
+
 -  configurable timeseries y axis [#861](https://github.com/CartoDB/carto-react/pull/861)
 -  configurable histogram y axis [#860](https://github.com/CartoDB/carto-react/pull/860)
-
-## 2.5
 
 ### 2.5.1 (2024-04-03)
 
