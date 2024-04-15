@@ -24,7 +24,6 @@ import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
  * @param  {string} [props.height] - Static widget height, required for scrollable table content.
  * @param  {boolean=} [props.stableHeight] -  If specified, error and no-data state will maintain same height as normal widget in loading/loaded state.
  * @param  {boolean} [props.dense] - Whether the table should use a compact layout with smaller cell paddings.
- * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  * @param  {number} [props.pageSize] - Number of rows per page. This is used to manage internal state externally.
 
  */
@@ -43,7 +42,6 @@ function TableWidget({
   height,
   stableHeight,
   dense,
-  droppingFeaturesAlertProps,
   // Internal state
   pageSize
 }) {
@@ -57,8 +55,7 @@ function TableWidget({
   const {
     data = { rows: [], totalCount: 0, hasData: false },
     isLoading,
-    warning,
-    remoteCalculation
+    warning
   } = useWidgetFetch(getTable, {
     id,
     dataSource,
@@ -102,11 +99,8 @@ function TableWidget({
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
       <WidgetWithAlert
-        dataSource={dataSource}
         warning={warning}
         global={global}
-        droppingFeaturesAlertProps={droppingFeaturesAlertProps}
-        showDroppingFeaturesAlert={!remoteCalculation}
         noDataAlertProps={noDataAlertProps}
         stableHeight={stableHeight}
       >
@@ -149,7 +143,6 @@ TableWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object,
   initialPageSize: PropTypes.number,
   onPageSizeChange: PropTypes.func,
   height: PropTypes.string,

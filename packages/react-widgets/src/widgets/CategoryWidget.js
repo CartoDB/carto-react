@@ -36,7 +36,6 @@ const EMPTY_ARRAY = [];
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
- * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
 
  */
 function CategoryWidget(props) {
@@ -56,8 +55,7 @@ function CategoryWidget(props) {
     global,
     onError,
     wrapperProps,
-    noDataAlertProps,
-    droppingFeaturesAlertProps
+    noDataAlertProps
   } = props;
   const dispatch = useDispatch();
 
@@ -68,8 +66,7 @@ function CategoryWidget(props) {
   const {
     data = [],
     isLoading,
-    warning,
-    remoteCalculation
+    warning
   } = useWidgetFetch(getCategories, {
     id,
     dataSource,
@@ -112,12 +109,9 @@ function CategoryWidget(props) {
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
       <WidgetWithAlert
-        dataSource={dataSource}
         warning={warning}
         global={global}
-        droppingFeaturesAlertProps={droppingFeaturesAlertProps}
         noDataAlertProps={noDataAlertProps}
-        showDroppingFeaturesAlert={!remoteCalculation}
       >
         {(!!data.length || isLoading) && (
           <CategoryWidgetUI
@@ -156,8 +150,7 @@ CategoryWidget.propTypes = {
   global: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
-  noDataAlertProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object
+  noDataAlertProps: PropTypes.object
 };
 
 CategoryWidget.defaultProps = {

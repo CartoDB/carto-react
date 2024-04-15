@@ -132,12 +132,7 @@ function RangeWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      <WidgetWithAlert
-        dataSource={dataSource}
-        warning={warning}
-        global={global}
-        showDroppingFeaturesAlert={false}
-      >
+      <WidgetWithAlert warning={warning} global={global}>
         {min !== undefined && max !== undefined && (
           <RangeWidgetUI
             min={min}

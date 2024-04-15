@@ -27,7 +27,6 @@ type CommonWidgetProps = {
   onStateChange?: (stateEvent: WidgetState) => void
   wrapperProps?: object,
   noDataAlertProps?: object
-  droppingFeaturesAlertProps?: object
 }
 
 type MonoColumnWidgetProps = {
@@ -103,7 +102,6 @@ export type WidgetWithAlert = {
   dataSource: string;
   global?: boolean;
   noDataAlertProps?: object;
-  droppingFeaturesAlertProps?: object;
   children?: React.ReactNode;
 }
 

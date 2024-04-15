@@ -70,7 +70,7 @@ export type UseCartoLayerFilterProps = {
   };
   maskEnabled: boolean;
   maskId: string;
-} & SourceProps;
+};
 
 export type ExecuteSQLResponse<Response = FeatureCollection | {}[]> = Promise<Response>;
 
