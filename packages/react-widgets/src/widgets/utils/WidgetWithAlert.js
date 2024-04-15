@@ -4,13 +4,12 @@ import { NoDataAlert } from '@carto/react-ui';
 export default function WidgetWithAlert({
   noDataAlertProps = {},
   warning,
-  global = false,
   stableHeight, // if specified, "no-data" state will attempt to keep the same height as when rendered with data
   children
 }) {
   const [childrenRef, setChildenRef] = useState();
   const [savedHeight, setSavedHeight] = useState();
-  const noData = !global || warning || !children;
+  const noData = warning || !children;
 
   if (stableHeight) {
     if (noData && childrenRef && savedHeight === undefined) {

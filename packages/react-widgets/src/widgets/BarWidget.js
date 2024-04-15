@@ -139,11 +139,7 @@ function BarWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      <WidgetWithAlert
-        warning={warning}
-        global={global}
-        noDataAlertProps={noDataAlertProps}
-      >
+      <WidgetWithAlert warning={warning} noDataAlertProps={noDataAlertProps}>
         {(!!sortedData.length || isLoading) && (
           <BarWidgetUI
             xAxisData={sortedData.map((category) => category.name)}

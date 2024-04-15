@@ -108,11 +108,7 @@ function CategoryWidget(props) {
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      <WidgetWithAlert
-        warning={warning}
-        global={global}
-        noDataAlertProps={noDataAlertProps}
-      >
+      <WidgetWithAlert warning={warning} noDataAlertProps={noDataAlertProps}>
         {(!!data.length || isLoading) && (
           <CategoryWidgetUI
             data={data}

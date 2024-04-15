@@ -177,11 +177,7 @@ function HistogramWidget({
 
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
-      <WidgetWithAlert
-        warning={warning}
-        global={global}
-        noDataAlertProps={noDataAlertProps}
-      >
+      <WidgetWithAlert warning={warning} noDataAlertProps={noDataAlertProps}>
         {(!!data.length || isLoading) && (
           <HistogramWidgetUI
             data={data}

@@ -62,7 +62,7 @@ function FormulaWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      <WidgetWithAlert warning={warning} global={global}>
+      <WidgetWithAlert warning={warning}>
         <FormulaWidgetUI
           data={value}
           formatter={formatter}

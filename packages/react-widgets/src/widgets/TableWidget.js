@@ -100,7 +100,6 @@ function TableWidget({
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
       <WidgetWithAlert
         warning={warning}
-        global={global}
         noDataAlertProps={noDataAlertProps}
         stableHeight={stableHeight}
       >

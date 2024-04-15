@@ -427,7 +427,6 @@ function TimeSeriesWidget({
       >
         <WidgetWithAlert
           warning={warning}
-          global={global}
           noDataAlertProps={noDataAlertProps}
           stableHeight={stableHeight}
         >
