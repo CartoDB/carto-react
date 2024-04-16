@@ -11,7 +11,7 @@ const webpackConfig = {
     /^@deck.gl\/.+$/,
     /^@mui\/.+$/,
     /^@emotion\/.+$/,
-    /^@nebula.gl\/.+$/,
+    /^@deck.gl-community\/.+$/,
     'react',
     'react-dom',
     'react-redux',

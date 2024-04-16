@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as nebulaModes from '@cartodb/nebula-edit-modes';
+import * as nebulaModes from '@deck.gl-community/editable-layers';
 import {
   addSpatialFilter,
   selectSpatialFilter,

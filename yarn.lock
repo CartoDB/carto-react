@@ -1181,75 +1181,6 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cartodb/nebula-edit-modes@1.0.0", "@cartodb/nebula-edit-modes@^1.0.0":
-  version "1.0.0"
-  resolved "https://npm.pkg.github.com/download/@cartodb/nebula-edit-modes/1.0.0/db70eab6cf1f470a5f46866328025dd6a45f4169#db70eab6cf1f470a5f46866328025dd6a45f4169"
-  integrity sha512-et3vrPgWiKaBIxKIYQcAvzlxi7uijlalFZzlLRGx0Qr1lMTdD+3EAYNmf/jOk3w3b6qPXjA0tcWNWtovKJ4GaQ==
-  dependencies:
-    "@turf/along" "^6.5.0"
-    "@turf/area" "^6.5.0"
-    "@turf/bbox" "^6.5.0"
-    "@turf/bbox-polygon" "^6.5.0"
-    "@turf/bearing" "^6.5.0"
-    "@turf/boolean-point-in-polygon" "^6.5.0"
-    "@turf/buffer" "^6.5.0"
-    "@turf/center" "^6.5.0"
-    "@turf/centroid" "^6.5.0"
-    "@turf/circle" "^6.5.0"
-    "@turf/destination" "^6.5.0"
-    "@turf/difference" "^6.5.0"
-    "@turf/distance" "^6.5.0"
-    "@turf/ellipse" "^6.5.0"
-    "@turf/helpers" "^6.5.0"
-    "@turf/intersect" "^6.5.0"
-    "@turf/line-intersect" "^6.5.0"
-    "@turf/midpoint" "^6.5.0"
-    "@turf/nearest-point-on-line" "^6.5.0"
-    "@turf/point-to-line-distance" "^6.5.0"
-    "@turf/polygon-to-line" "^6.5.0"
-    "@turf/rewind" "^6.5.0"
-    "@turf/transform-rotate" "^6.5.0"
-    "@turf/transform-scale" "^6.5.0"
-    "@turf/transform-translate" "^6.5.0"
-    "@turf/union" "^6.5.0"
-    geojson "0.5.0"
-    lodash.throttle "^4.1.1"
-    viewport-mercator-project ">=6.2.3"
-
-"@cartodb/nebula-layers@^1.0.0":
-  version "1.0.0"
-  resolved "https://npm.pkg.github.com/download/@cartodb/nebula-layers/1.0.0/c739344dac593b16344a02820a6dd53ce13c490f#c739344dac593b16344a02820a6dd53ce13c490f"
-  integrity sha512-E6zUIwxeBhHNZtmVF6OT7j60Yjjo4dcnUF42yOC7KYLQXvKJOxBK/aHiflNAYJVcLczpwPlHN5cWiXufytQmuA==
-  dependencies:
-    "@cartodb/nebula-edit-modes" "1.0.0"
-    "@turf/bbox" "^6.5.0"
-    "@turf/bbox-polygon" "^6.5.0"
-    "@turf/bearing" "^6.5.0"
-    "@turf/boolean-point-in-polygon" "^6.5.0"
-    "@turf/buffer" "^6.5.0"
-    "@turf/center" "^6.5.0"
-    "@turf/centroid" "^6.5.0"
-    "@turf/circle" "^6.5.0"
-    "@turf/destination" "^6.5.0"
-    "@turf/difference" "^6.5.0"
-    "@turf/distance" "^6.5.0"
-    "@turf/ellipse" "^6.5.0"
-    "@turf/helpers" "^6.5.0"
-    "@turf/intersect" "^6.5.0"
-    "@turf/line-intersect" "^6.5.0"
-    "@turf/nearest-point-on-line" "^6.5.0"
-    "@turf/point-to-line-distance" "^6.5.0"
-    "@turf/polygon-to-line" "^6.5.0"
-    "@turf/transform-rotate" "^6.5.0"
-    "@turf/transform-scale" "^6.5.0"
-    "@turf/transform-translate" "^6.5.0"
-    "@turf/union" "^6.5.0"
-    cubic-hermite-spline "^1.0.1"
-    geojson-types "^2.0.1"
-    global ">=4.4.0"
-    h3-js "^3.7.2"
-    viewport-mercator-project ">=6.2.3"
-
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -1271,6 +1202,47 @@
     colorspace "1.1.x"
     enabled "2.0.x"
     kuler "^2.0.0"
+
+"@deck.gl-community/editable-layers@^9.0.0-alpha.1":
+  version "9.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@deck.gl-community/editable-layers/-/editable-layers-9.0.0-alpha.1.tgz#3e85a6d8af36c34b51902438a6498045f8632ca1"
+  integrity sha512-CRYfqgZbpdxewaqXMcKrtbmZTQugGKv2dUk6H3A5rSSabDF75an4k0BHaR9gnejexk6/aBfCiIsm9fy+090KiQ==
+  dependencies:
+    "@turf/along" "^6.5.0"
+    "@turf/area" "^6.5.0"
+    "@turf/bbox" "^6.5.0"
+    "@turf/bbox-polygon" "^6.5.0"
+    "@turf/bearing" "^6.5.0"
+    "@turf/boolean-point-in-polygon" "^6.5.0"
+    "@turf/buffer" "^6.5.0"
+    "@turf/center" "^6.5.0"
+    "@turf/centroid" "^6.5.0"
+    "@turf/circle" "^6.5.0"
+    "@turf/clone" "^6.5.0"
+    "@turf/destination" "^6.5.0"
+    "@turf/difference" "^6.5.0"
+    "@turf/distance" "^6.5.0"
+    "@turf/ellipse" "^6.5.0"
+    "@turf/helpers" "^6.5.0"
+    "@turf/intersect" "^6.5.0"
+    "@turf/invariant" "^6.5.0"
+    "@turf/line-intersect" "^6.5.0"
+    "@turf/meta" "^6.5.0"
+    "@turf/midpoint" "^6.5.0"
+    "@turf/nearest-point-on-line" "^6.5.0"
+    "@turf/point-to-line-distance" "^6.5.0"
+    "@turf/polygon-to-line" "^6.5.0"
+    "@turf/rewind" "^6.5.0"
+    "@turf/transform-rotate" "^6.5.0"
+    "@turf/transform-scale" "^6.5.0"
+    "@turf/transform-translate" "^6.5.0"
+    "@turf/union" "^6.5.0"
+    cubic-hermite-spline "^1.0.1"
+    eventemitter3 "^5.0.0"
+    geojson-types "^2.0.1"
+    lodash.throttle "^4.1.1"
+    uuid "9.0.0"
+    viewport-mercator-project ">=6.2.3"
 
 "@deck.gl/aggregation-layers@^9.0.1":
   version "9.0.8"
@@ -9081,6 +9053,11 @@ eventemitter3@^4.0.4:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
+eventemitter3@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-5.0.1.tgz#53f5ffd0a492ac800721bb42c66b841de96423c4"
+  integrity sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==
+
 events-listener@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/events-listener/-/events-listener-1.1.0.tgz#dd49b4628480eba58fde31b870ee346b3990b349"
@@ -10094,11 +10071,6 @@ geojson-types@^2.0.1:
   resolved "https://registry.yarnpkg.com/geojson-types/-/geojson-types-2.0.1.tgz#91040649b7ad39b2904643bd9ad51e5e86d524e3"
   integrity sha512-lF593HhpxQx8PjW7E7R/XsMKk01KbBRMciqg+NR7pkaaIPefS1NZDUep+w1L1QusXKcWDgZzvvgI4s7kDOe3aA==
 
-geojson@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/geojson/-/geojson-0.5.0.tgz#3cd6c96399be65b56ee55596116fe9191ce701c0"
-  integrity sha512-/Bx5lEn+qRF4TfQ5aLu6NH+UKtvIv7Lhc487y/c8BdludrCTpiWf9wyI0RTyqg49MFefIAvFDuEi5Dfd/zgNxQ==
-
 get-caller-file@^2.0.1, get-caller-file@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-2.0.5.tgz#4f94412a82db32f36e3b0b9741f8a97feb031f7e"
@@ -10355,7 +10327,7 @@ global-dirs@^2.0.1:
   dependencies:
     ini "1.3.7"
 
-global@>=4.4.0, global@^4.4.0:
+global@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/global/-/global-4.4.0.tgz#3e7b105179006a323ed71aafca3e9c57a5cc6406"
   integrity sha512-wv/LAoHdRE3BeTGz53FAamhGlPLhlssK45usmGFThIi4XqnBmjKQ16u+RNbP7WvigRZDxUsM0J3gcQ5yicaL0w==
@@ -18764,6 +18736,11 @@ uuid@8.3.2, uuid@^8.3.0, uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+uuid@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 uuid@^3.0.0, uuid@^3.3.2:
   version "3.4.0"

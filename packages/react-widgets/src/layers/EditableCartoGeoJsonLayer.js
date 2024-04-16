@@ -1,4 +1,4 @@
-import { EditableGeoJsonLayer } from '@cartodb/nebula-layers';
+import { EditableGeoJsonLayer } from '@deck.gl-community/editable-layers';
 
 // EditableGeoJsonLayer extends EditableLayer and it's its code https://github.com/uber/nebula.gl/blob/master/modules/layers/src/layers/editable-layer.ts#L75
 // We've overwritten _addEventHandlers and _removeEventHandlers to be able to use an eventManager sent it as a property instead of use

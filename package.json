@@ -5,6 +5,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@deck.gl-community/editable-layers": "^9.0.0-alpha.1",
     "@deck.gl/aggregation-layers": "^9.0.1",
     "@deck.gl/carto": "^9.0.1",
     "@deck.gl/core": "^9.0.1",
@@ -19,8 +20,6 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.125",
     "@mui/material": "^5.11.16",
-    "@cartodb/nebula-edit-modes": "^1.0.0",
-    "@cartodb/nebula-layers": "^1.0.0",
     "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
