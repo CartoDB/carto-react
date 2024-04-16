@@ -97,7 +97,6 @@ const debounceTimeout = 250;
  * @param  {function} [props.onStop] - Event raised when the animation is stopped.
  * @param  {function} [props.onTimelineUpdate] - Event raised when the timeline is updated. It happens when the animation is playing. The function receive as param the date that is being shown.
  * @param  {function} [props.onTimeWindowUpdate] - Event raised when the timeWindow is updated. It happens when the animation is playing with a timeWindow enabled. The function receive as param an array of two date objects.
- * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  * @param  {boolean=} [props.showLegend] - Show/hide the legend. True by default only splitByCategory/multiple series mode.
  */
 function TimeSeriesWidget({
@@ -115,7 +114,6 @@ function TimeSeriesWidget({
   onError,
   wrapperProps,
   noDataAlertProps,
-  droppingFeaturesAlertProps,
   // UI
   chartType,
   timeAxisSplitNumber,
@@ -204,8 +202,7 @@ function TimeSeriesWidget({
   const {
     data: result = [],
     isLoading,
-    warning,
-    remoteCalculation
+    warning
   } = useWidgetFetch(getTimeSeries, {
     id,
     dataSource,
@@ -429,12 +426,8 @@ function TimeSeriesWidget({
         ]}
       >
         <WidgetWithAlert
-          dataSource={dataSource}
           warning={warning}
-          global={global}
-          droppingFeaturesAlertProps={droppingFeaturesAlertProps}
           noDataAlertProps={noDataAlertProps}
-          showDroppingFeaturesAlert={!remoteCalculation}
           stableHeight={stableHeight}
         >
           {(!!data.length || isLoading) && (
@@ -524,7 +517,6 @@ TimeSeriesWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object,
   // UI
   tooltip: PropTypes.bool,
   tooltipFormatter: PropTypes.func,

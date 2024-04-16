@@ -40,7 +40,6 @@ const EMPTY_ARRAY = [];
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
- * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
 
  */
 function HistogramWidget({
@@ -63,8 +62,7 @@ function HistogramWidget({
   global,
   onError,
   wrapperProps,
-  noDataAlertProps,
-  droppingFeaturesAlertProps
+  noDataAlertProps
 }) {
   const dispatch = useDispatch();
 
@@ -109,8 +107,7 @@ function HistogramWidget({
   let {
     data = EMPTY_ARRAY,
     isLoading,
-    warning = _warning,
-    remoteCalculation
+    warning = _warning
   } = useWidgetFetch(getHistogram, {
     id,
     dataSource,
@@ -180,14 +177,7 @@ function HistogramWidget({
 
   return (
     <WrapperWidgetUI title={title} {...wrapperProps} isLoading={isLoading}>
-      <WidgetWithAlert
-        dataSource={dataSource}
-        warning={warning}
-        global={global}
-        droppingFeaturesAlertProps={droppingFeaturesAlertProps}
-        noDataAlertProps={noDataAlertProps}
-        showDroppingFeaturesAlert={!remoteCalculation}
-      >
+      <WidgetWithAlert warning={warning} noDataAlertProps={noDataAlertProps}>
         {(!!data.length || isLoading) && (
           <HistogramWidgetUI
             data={data}
@@ -231,8 +221,7 @@ HistogramWidget.propTypes = {
   global: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
-  noDataAlertProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object
+  noDataAlertProps: PropTypes.object
 };
 
 HistogramWidget.defaultProps = {

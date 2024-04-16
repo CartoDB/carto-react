@@ -2,6 +2,12 @@
 
 ## Not released
 
+## 3.0.0
+
+### 3.0.0-alpha.7 (2024-04-16)
+
+-  Update Deck GL v9 and removed dropping features functionality [#838](https://github.com/CartoDB/carto-react/pull/838)
+
 ## 2.5
 
 ### 2.5.2 (2024-04-10)

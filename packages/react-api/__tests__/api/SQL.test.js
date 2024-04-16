@@ -1,7 +1,7 @@
 import { REQUEST_GET_MAX_URL_LENGTH } from '@carto/react-core';
 import { mockClear, mockSqlApiRequest } from '../mockSqlApiRequest';
 import { executeSQL } from '../../src/api/SQL';
-import { API_VERSIONS } from '@deck.gl/carto';
+import { API_VERSIONS } from '../../src/types';
 
 describe('should call SqlApi', () => {
   const response = { rows: { revenue: 1495728 } };

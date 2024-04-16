@@ -1,5 +1,4 @@
 import * as cartoSlice from '../src/slices/cartoSlice';
-import { setDefaultCredentials } from '@deck.gl/carto';
 import { mockAppStoreConfiguration } from './mockReducerManager';
 import { VOYAGER } from '@carto/react-basemaps';
 import { _FilterTypes } from '@carto/react-core';
@@ -20,10 +19,6 @@ const INITIAL_STATE = {
     mapsUrl: 'https://maps-api-v2.{region}.carto.com/user/{user}'
   }
 };
-
-jest.mock('@deck.gl/carto', () => ({
-  setDefaultCredentials: jest.fn()
-}));
 
 describe('carto slice', () => {
   const store = mockAppStoreConfiguration();
@@ -302,13 +297,6 @@ describe('carto slice', () => {
         ...INITIAL_STATE.credentials,
         updatedProp: 'update'
       });
-    });
-
-    test('should call setDefaultCredentials', () => {
-      store.dispatch(cartoSlice.setCredentials({ updatedProp: 'update' }));
-
-      const { carto: state } = store.getState();
-      expect(setDefaultCredentials).toHaveBeenCalledWith(state.credentials);
     });
   });
 });

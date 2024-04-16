@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as nebulaModes from '@nebula.gl/edit-modes';
+import * as nebulaModes from '@deck.gl-community/editable-layers';
 import {
   addSpatialFilter,
   selectSpatialFilter,
@@ -72,6 +72,7 @@ export default function FeatureSelectionLayer(
   return [
     mask && MaskLayer(),
     (selectedMode || spatialFilterGeometry) &&
+      // @ts-ignore
       new EditableCartoGeoJsonLayer({
         eventManager: customEventManager,
         id: 'FeatureSelectionLayer',

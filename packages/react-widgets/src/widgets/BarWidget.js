@@ -40,7 +40,6 @@ const EMPTY_ARRAY = [];
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
- * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  */
 function BarWidget({
   id,
@@ -62,16 +61,14 @@ function BarWidget({
   global,
   onError,
   wrapperProps,
-  noDataAlertProps,
-  droppingFeaturesAlertProps
+  noDataAlertProps
 }) {
   const dispatch = useDispatch();
 
   const {
     data: _data = [],
     isLoading,
-    warning,
-    remoteCalculation
+    warning
   } = useWidgetFetch(getCategories, {
     id,
     dataSource,
@@ -142,14 +139,7 @@ function BarWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      <WidgetWithAlert
-        dataSource={dataSource}
-        warning={warning}
-        global={global}
-        droppingFeaturesAlertProps={droppingFeaturesAlertProps}
-        noDataAlertProps={noDataAlertProps}
-        showDroppingFeaturesAlert={!remoteCalculation}
-      >
+      <WidgetWithAlert warning={warning} noDataAlertProps={noDataAlertProps}>
         {(!!sortedData.length || isLoading) && (
           <BarWidgetUI
             xAxisData={sortedData.map((category) => category.name)}
@@ -195,7 +185,6 @@ BarWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 

@@ -1,9 +1,9 @@
-import { TILE_FORMATS } from '@deck.gl/carto/typed';
 import bboxPolygon from '@turf/bbox-polygon';
 import intersects from '@turf/boolean-intersects';
 import booleanWithin from '@turf/boolean-within';
 import intersect from '@turf/intersect';
 import transformToTileCoords from '../utils/transformToTileCoords';
+import { TILE_FORMATS } from '../types';
 
 const GEOMETRY_TYPES = Object.freeze({
   Point: 0,

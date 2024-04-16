@@ -5,10 +5,6 @@ import useGeojsonFeatures from './useGeojsonFeatures';
 import useTileFeatures from './useTileFeatures';
 import { getDataFilterExtensionProps } from './dataFilterExtensionUtil';
 import { getMaskExtensionProps } from './maskExtensionUtil';
-import FeaturesDroppedLoader from './FeaturesDroppedLoader';
-import { CLIENT_ID } from '../api/common';
-
-const LOADERS = [FeaturesDroppedLoader];
 
 export default function useCartoLayerProps({
   source,
@@ -57,7 +53,6 @@ export default function useCartoLayerProps({
     ...(viewportFeatures && {
       onViewportLoad,
       fetch,
-      loaders: LOADERS,
       onDataLoad
     })
   };
@@ -78,15 +73,6 @@ export default function useCartoLayerProps({
     visible: layerConfig?.visible !== undefined ? layerConfig.visible : true,
     opacity: layerConfig?.opacity ?? 1,
     uniqueIdProperty,
-    data: source?.data,
-    type: source?.type,
-    geoColumn: source?.geoColumn,
-    aggregationExp: source?.aggregationExp,
-    provider: source?.provider,
-    connection: source?.connection,
-    credentials: source?.credentials,
-    clientId: CLIENT_ID,
-    queryParameters: source?.queryParameters,
     ...dataFilterExtensionProps,
     ...maskExtensionProps,
     extensions

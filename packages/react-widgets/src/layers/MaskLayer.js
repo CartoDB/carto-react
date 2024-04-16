@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { SolidPolygonLayer } from '@deck.gl/layers/typed';
+import { SolidPolygonLayer } from '@deck.gl/layers';
 import { MASK_ID } from '@carto/react-core/';
 import { selectValidSpatialFilter } from '@carto/react-redux/';
 

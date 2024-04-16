@@ -25,7 +25,6 @@ import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
- * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  */
 function ScatterPlotWidget({
   id,
@@ -42,8 +41,7 @@ function ScatterPlotWidget({
   global,
   onError,
   wrapperProps,
-  noDataAlertProps,
-  droppingFeaturesAlertProps
+  noDataAlertProps
 }) {
   const {
     data = [],
@@ -65,13 +63,7 @@ function ScatterPlotWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      <WidgetWithAlert
-        dataSource={dataSource}
-        warning={warning}
-        global={global}
-        droppingFeaturesAlertProps={droppingFeaturesAlertProps}
-        noDataAlertProps={noDataAlertProps}
-      >
+      <WidgetWithAlert warning={warning} noDataAlertProps={noDataAlertProps}>
         {(!!data.length || isLoading) && (
           <ScatterPlotWidgetUI
             data={data}
@@ -107,8 +99,7 @@ ScatterPlotWidget.propTypes = {
   tooltipFormatter: PropTypes.func,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
-  noDataAlertProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object
+  noDataAlertProps: PropTypes.object
 };
 
 ScatterPlotWidget.defaultProps = {

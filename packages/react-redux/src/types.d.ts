@@ -25,7 +25,6 @@ export type Source = SourceProps & {
   id: string;
   filters?: SourceFilters;
   filtersLogicalOperator?: FiltersLogicalOperators;
-  isDroppingFeatures?: boolean;
 };
 
 type InitialCarto2State = {

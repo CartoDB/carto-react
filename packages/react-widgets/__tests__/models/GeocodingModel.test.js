@@ -1,6 +1,5 @@
 import { geocodeStreetPoint } from '../../src/models/GeocodingModel';
-import { API_VERSIONS } from '@deck.gl/carto';
-import { ldsGeocode, executeSQL } from '@carto/react-api/';
+import { ldsGeocode, executeSQL, API_VERSIONS } from '@carto/react-api/';
 
 const sampleCredentialsV2 = {
   apiVersion: API_VERSIONS.V2
@@ -17,6 +16,7 @@ const bostonCoordinates = {
 };
 
 jest.mock('@carto/react-api', () => ({
+  ...jest.requireActual('@carto/react-api'),
   executeSQL: jest.fn().mockImplementation(async () => global.executeSqlMockResult),
   ldsGeocode: jest.fn().mockImplementation(async () => global.ldsGeocodeMockResult)
 }));

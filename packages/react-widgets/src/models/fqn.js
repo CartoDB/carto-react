@@ -5,6 +5,7 @@ export const ParsingMode = Object.freeze({
   RightToLeft: 'rightToLeft'
 });
 
+const bqProjectId = /^[a-z][a-z0-9-]{4,28}[a-z0-9]$/;
 const bqIdentifierRegex = '((?:[^`.]*?)|`(?:(?:[^`.])*?)`)';
 const identifierRegex = '((?:[^".]*?)|"(?:(?:[^"]|"")*?)")';
 const databricksIdentifierRegex = '((?:[^`.]*?)|`(?:(?:[^`]|``)*?)`)';
@@ -206,6 +207,115 @@ export class FullyQualifiedName {
     this.objectFragment = objectFqnFragment[0];
   }
 
+  static isValid(fqn, provider, options) {
+    try {
+      const parsingMode = options?.parsingMode || ParsingMode.RightToLeft;
+      const quoted = options?.quoted || false;
+      const fqnObject = new FullyQualifiedName(fqn, provider, parsingMode);
+      return fqnObject._isValid(quoted);
+    } catch (err) {
+      return false;
+      // if (err instanceof InvalidFQNError) {
+      //   return false
+      // }
+      // throw err
+    }
+  }
+
+  _isValid(quoted) {
+    let checkDatabase = false;
+    let checkSchema = false;
+    let checkObject = false;
+    let namePresent = false;
+    // @ts-ignore
+    if (this.parsingMode === ParsingMode.LeftToRight) {
+      if (this.objectFragment) {
+        if (!this.schemaFragment || !this.databaseFragment) {
+          return false;
+        }
+        if (!quoted) {
+          checkDatabase = checkSchema = checkObject = true;
+        }
+        namePresent = true;
+      } else if (this.schemaFragment) {
+        if (!this.databaseFragment) {
+          return false;
+        }
+        if (!quoted) {
+          checkDatabase = checkSchema = true;
+        }
+        namePresent = true;
+      } else if (this.databaseFragment) {
+        if (!quoted) {
+          checkDatabase = true;
+        }
+        namePresent = true;
+      }
+    } else {
+      if (this.databaseFragment) {
+        if (!this.schemaFragment || !this.objectFragment) {
+          return false;
+        }
+        if (!quoted) {
+          checkDatabase = checkSchema = checkObject = true;
+        }
+        namePresent = true;
+      } else if (this.schemaFragment) {
+        if (!this.objectFragment) {
+          return false;
+        }
+        if (!quoted) {
+          checkSchema = checkObject = true;
+        }
+        namePresent = true;
+      } else if (this.objectFragment) {
+        if (!quoted) {
+          checkObject = true;
+        }
+        namePresent = true;
+      }
+    }
+
+    if (!namePresent) {
+      return false;
+    }
+
+    const fullyQuoted =
+      this.provider === Provider.BigQuery &&
+      this.originalFQN.startsWith(escapeCharacter[Provider.BigQuery]) &&
+      this.originalFQN.endsWith(escapeCharacter[Provider.BigQuery]) &&
+      !this.originalFQN.slice(1, -1).includes(escapeCharacter[Provider.BigQuery]);
+    if (
+      checkDatabase &&
+      !(fullyQuoted || this.databaseFragment?.quoted) &&
+      nameNeedsQuotesChecker[this.provider].test(this.databaseFragment?.name || '')
+    ) {
+      // make exception for valid bigquery project ids (which can contain dashes)
+      if (
+        this.provider !== Provider.BigQuery ||
+        !bqProjectId.test(this.databaseFragment?.name || '')
+      ) {
+        return false;
+      }
+    }
+    if (
+      checkSchema &&
+      !(fullyQuoted || this.schemaFragment?.quoted) &&
+      nameNeedsQuotesChecker[this.provider].test(this.schemaFragment?.name || '')
+    ) {
+      return false;
+    }
+    if (
+      checkObject &&
+      !(fullyQuoted || this.objectFragment?.quoted) &&
+      nameNeedsQuotesChecker[this.provider].test(this.objectFragment?.name || '')
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
   parseFQN(fqn) {
     const matchResult = fqn.match(fqnParseRegex[this.provider]);
     if (!matchResult) {
@@ -215,6 +325,10 @@ export class FullyQualifiedName {
     const identifiers = matchResult.slice(1, 4);
 
     const fragments = identifiers.map((name) => {
+      if (name === '' && this.originalFQN !== '') {
+        throw new Error(this.originalFQN);
+      }
+
       if (!name) {
         return null;
       }

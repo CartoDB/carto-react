@@ -1,4 +1,3 @@
-import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto/typed';
 import {
   AggregationTypes,
   getSpatialIndexFromGeoColumn,
@@ -6,6 +5,7 @@ import {
   Provider
 } from '@carto/react-core';
 import { FullyQualifiedName } from './fqn';
+import { MAP_TYPES, API_VERSIONS } from '@carto/react-api';
 
 export function isRemoteCalculationSupported(props) {
   const { source } = props;
@@ -73,7 +73,7 @@ function sanitizeSQLSource(sql) {
   return sql.trim().replace(/;$/, '');
 }
 
-function getSqlEscapedSource(table, provider) {
+export function getSqlEscapedSource(table, provider) {
   const fqn = new FullyQualifiedName(table, provider);
 
   if (provider === Provider.Snowflake) {

@@ -1,16 +1,13 @@
 import { getTileJson } from '../../src/api/tilejson';
-import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
+import { MAP_TYPES, API_VERSIONS } from '../../src/types';
 
-const mockedFetchLayerData = jest.fn();
+const mockedVectorTilesetSource = jest.fn();
 
 jest.mock('@deck.gl/carto', () => ({
   ...jest.requireActual('@deck.gl/carto'),
-  fetchLayerData: (props) => {
-    mockedFetchLayerData(props);
-    return Promise.resolve({
-      data: {},
-      format: 'tilejson'
-    });
+  vectorTilesetSource: (props) => {
+    mockedVectorTilesetSource(props);
+    return Promise.resolve({});
   }
 }));
 
@@ -34,17 +31,12 @@ describe('tilejson', () => {
 
       const tilejson = await getTileJson({ source });
 
-      expect(mockedFetchLayerData).toBeCalledWith({
+      expect(mockedVectorTilesetSource).toBeCalledWith({
+        connectionName: '__test_connection__',
+        apiBaseUrl: 'https://gcp-us-east1.api.carto.com',
+        accessToken: '__test_api_key__',
         clientId: 'carto-for-react', // hardcoded as no neeed to export CLIENT_ID from '@carto/react-api/api/common';
-        connection: '__test_connection__',
-        credentials: {
-          accessToken: '__test_api_key__',
-          apiBaseUrl: 'https://gcp-us-east1.api.carto.com',
-          apiVersion: 'v3'
-        },
-        format: 'tilejson',
-        source: '__test_tileset__',
-        type: 'tileset'
+        tableName: '__test_tileset__'
       });
 
       expect(tilejson).toBeDefined();

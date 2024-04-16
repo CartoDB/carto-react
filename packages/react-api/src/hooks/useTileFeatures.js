@@ -1,12 +1,14 @@
 import { useEffect, useCallback, useState } from 'react';
-import { debounce, SpatialIndex, getColumnNameFromGeoColumn } from '@carto/react-core';
+import {
+  debounce,
+  SpatialIndex,
+  getColumnNameFromGeoColumn,
+  TILE_FORMATS
+} from '@carto/react-core';
 import { Methods, executeTask } from '@carto/react-workers';
-import { setIsDroppingFeatures } from '@carto/react-redux';
-import { Layer } from '@deck.gl/core/typed';
-import { TILE_FORMATS } from '@deck.gl/carto/typed';
+import { Layer } from '@deck.gl/core';
 import { throwError } from './utils';
 import useFeaturesCommons from './useFeaturesCommons';
-import { useDispatch } from 'react-redux';
 
 export default function useTileFeatures({
   source,
@@ -15,7 +17,6 @@ export default function useTileFeatures({
   uniqueIdProperty,
   debounceTimeout = 250
 }) {
-  const dispatch = useDispatch();
   const [
     debounceIdRef,
     isTilesetLoaded,
@@ -77,14 +78,11 @@ export default function useTileFeatures({
         return acc;
       }, []);
 
-      const isDroppingFeatures = tiles?.some((tile) => tile.content?.isDroppingFeatures);
-      dispatch(setIsDroppingFeatures({ id: sourceId, isDroppingFeatures }));
-
       executeTask(sourceId, Methods.LOAD_TILES, { tiles: cleanedTiles })
         .then(() => setTilesetLoaded(true))
         .catch(throwError);
     },
-    [sourceId, setTilesetLoaded, dispatch]
+    [sourceId, setTilesetLoaded]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

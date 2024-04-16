@@ -23,7 +23,6 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
  * @param  {Function=} [props.onError] - Function to handle error messages from the widget.
  * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
- * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
  */
 function FormulaWidget({
   id,
@@ -38,14 +37,12 @@ function FormulaWidget({
   global,
   onError,
   onStateChange,
-  wrapperProps,
-  droppingFeaturesAlertProps
+  wrapperProps
 }) {
   const {
     data = { value: undefined },
     isLoading,
-    warning,
-    remoteCalculation
+    warning
   } = useWidgetFetch(getFormula, {
     id,
     dataSource,
@@ -65,13 +62,7 @@ function FormulaWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} {...wrapperProps}>
-      <WidgetWithAlert
-        dataSource={dataSource}
-        warning={warning}
-        global={global}
-        droppingFeaturesAlertProps={droppingFeaturesAlertProps}
-        showDroppingFeaturesAlert={!remoteCalculation}
-      >
+      <WidgetWithAlert warning={warning}>
         <FormulaWidgetUI
           data={value}
           formatter={formatter}
@@ -94,8 +85,7 @@ FormulaWidget.propTypes = {
   animation: PropTypes.bool,
   global: PropTypes.bool,
   onError: PropTypes.func,
-  wrapperProps: PropTypes.object,
-  droppingFeaturesAlertProps: PropTypes.object
+  wrapperProps: PropTypes.object
 };
 
 FormulaWidget.defaultProps = {

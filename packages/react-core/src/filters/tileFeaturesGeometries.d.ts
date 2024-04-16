@@ -1,6 +1,6 @@
-import { TILE_FORMATS } from '@deck.gl/carto/typed';
 import { Polygon, MultiPolygon } from 'geojson';
 import { TileFeaturesResponse } from '../types';
+import { TILE_FORMATS } from '../types';
 
 export default function tileFeaturesGeometries(arg: {
   tiles: any;

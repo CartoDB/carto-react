@@ -1,8 +1,19 @@
-import { DataFilterExtension, MaskExtension } from '@deck.gl/extensions/typed';
-import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto/typed';
-import { QueryParameters } from '@deck.gl/carto/typed';
+import { DataFilterExtension, MaskExtension } from '@deck.gl/extensions';
+import { QueryParameters } from '@deck.gl/carto';
 import { FeatureCollection } from 'geojson';
 import { Provider } from '@carto/react-core';
+
+export enum API_VERSIONS {
+  V1 = 'v1',
+  V2 = 'v2',
+  V3 = 'v3'
+}
+
+export enum MAP_TYPES {
+  TABLE = 'table',
+  QUERY = 'query',
+  TILESET = 'tileset'
+}
 
 type ApiVersionsType = typeof API_VERSIONS;
 type MapTypesType = typeof MAP_TYPES;
@@ -59,6 +70,7 @@ export type UseCartoLayerFilterProps = {
   };
   maskEnabled: boolean;
   maskId: string;
-} & SourceProps;
+};
 
 export type ExecuteSQLResponse<Response = FeatureCollection | {}[]> = Promise<Response>;
+

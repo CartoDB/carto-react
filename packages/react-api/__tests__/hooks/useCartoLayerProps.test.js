@@ -1,9 +1,9 @@
 import { DataFilterExtension, MaskExtension } from '@deck.gl/extensions';
-import { MAP_TYPES, API_VERSIONS } from '@deck.gl/carto';
 import { renderHook } from '@testing-library/react-hooks';
 import useCartoLayerProps from '../../src/hooks/useCartoLayerProps';
 import { mockReduxHooks, mockClear } from '../mockReduxHooks';
 import { MAX_GPU_FILTERS } from '../../src/hooks/dataFilterExtensionUtil';
+import { MAP_TYPES, API_VERSIONS } from '../../src/types';
 
 describe('useCartoLayerProps', () => {
   mockReduxHooks();
@@ -13,21 +13,11 @@ describe('useCartoLayerProps', () => {
       'binary',
       'onViewportLoad',
       'fetch',
-      'loaders',
       'onDataLoad',
       'id',
       'visible',
       'opacity',
       'uniqueIdProperty',
-      'data',
-      'type',
-      'geoColumn',
-      'aggregationExp',
-      'provider',
-      'connection',
-      'credentials',
-      'clientId',
-      'queryParameters',
       'filterRange',
       'updateTriggers',
       'getFilterValue',
@@ -88,22 +78,6 @@ describe('useCartoLayerProps', () => {
 
         expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
       });
-    });
-
-    test('should return correct props when source geo column is set', () => {
-      const source = {
-        credentials: {
-          apiVersion: API_VERSIONS.V2
-        },
-        geoColumn: 'column_name',
-        aggregationExp: 'agg_exp'
-      };
-
-      const { result } = renderHook(() => useCartoLayerProps({ source }));
-
-      expect(Object.keys(result.current)).toEqual([...COMMON_PROPS]);
-      expect(result.current.geoColumn).toBe(source.geoColumn);
-      expect(result.current.aggregationExp).toBe(source.aggregationExp);
     });
 
     describe('when maps_api_version is V3', () => {

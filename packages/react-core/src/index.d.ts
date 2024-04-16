@@ -44,7 +44,7 @@ export {
 export { tileFeatures } from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';
 
-export { AggregationFunctions, GroupByFeature, HistogramFeature, Viewport, TileFeatures } from './types';
+export { AggregationFunctions, GroupByFeature, HistogramFeature, Viewport, TileFeatures, TILE_FORMATS } from './types';
 
 export { GroupDateTypes } from './operations/constants/GroupDateTypes';
 export { groupValuesByDateColumn } from './operations/groupByDate';

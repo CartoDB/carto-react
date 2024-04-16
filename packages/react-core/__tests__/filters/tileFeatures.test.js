@@ -1,6 +1,5 @@
-import { TILE_FORMATS } from '@deck.gl/carto';
 import { geojsonToBinary } from '@loaders.gl/gis';
-import { tileFeatures } from '../../src';
+import { TILE_FORMATS, tileFeatures } from '../../src';
 import * as transformToTileCoords from '../../src/utils/transformToTileCoords';
 
 describe('viewport features with binary mode', () => {
