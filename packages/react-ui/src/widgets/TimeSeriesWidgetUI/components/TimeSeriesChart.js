@@ -293,6 +293,7 @@ export default function TimeSeriesChart({
   return (
     <ReactEcharts
       option={options}
+      notMerge
       onEvents={onEvents}
       onChartReady={onChartReady}
       style={{ height }}
