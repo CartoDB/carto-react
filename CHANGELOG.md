@@ -2,6 +2,8 @@
 
 ## Not released
 
+- TimeSeriesWidget: support removing series in mounted widget [#863](https://github.com/CartoDB/carto-react/pull/863)
+
 ## 2.5
 
 ### 2.5.2 (2024-04-10)
