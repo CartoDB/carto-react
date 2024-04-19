@@ -25,10 +25,18 @@ export default function useTimeSeriesInteractivity({
 
   const updateCursor = useCallback((cursor) => zr?.setCursorStyle(cursor), [zr]);
 
+  const firstCategory = data?.[0]?.category;
+  const seriesFinder = useMemo(() => {
+    if (firstCategory) {
+      return { seriesId: firstCategory };
+    }
+    return { seriesIndex: 0 };
+  }, [firstCategory]);
+
   const updateTimelineByCoordinate = useCallback(
     (params) => {
       if (echartsInstance) {
-        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+        const [x] = echartsInstance.convertFromPixel(seriesFinder, [
           params.offsetX,
           params.offsetY
         ]);
@@ -36,7 +44,7 @@ export default function useTimeSeriesInteractivity({
         setTimeWindow(itemIndex !== undefined ? [data[itemIndex].name] : []);
       }
     },
-    [data, echartsInstance, setTimeWindow]
+    [data, echartsInstance, setTimeWindow, seriesFinder]
   );
 
   // Echarts events
@@ -87,7 +95,7 @@ export default function useTimeSeriesInteractivity({
 
       // Move markArea
       if (timeWindow.length === 2) {
-        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+        const [x] = echartsInstance.convertFromPixel(seriesFinder, [
           params.offsetX,
           params.offsetY
         ]);
@@ -101,7 +109,7 @@ export default function useTimeSeriesInteractivity({
 
       if (echartsInstance) {
         setIsMarkAreaSelected(true);
-        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+        const [x] = echartsInstance.convertFromPixel(seriesFinder, [
           params.offsetX,
           params.offsetY
         ]);
@@ -111,7 +119,7 @@ export default function useTimeSeriesInteractivity({
     }
 
     return addEventWithCleanUp(zr, 'mousedown', mouseDownEvent);
-  }, [zr, echartsInstance, timeWindow, updateCursor, filterable]);
+  }, [zr, echartsInstance, timeWindow, updateCursor, filterable, seriesFinder]);
 
   useEffect(() => {
     function mouseMoveEvent(params) {
@@ -125,7 +133,7 @@ export default function useTimeSeriesInteractivity({
       }
 
       if (isMarkAreaSelected && echartsInstance) {
-        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+        const [x] = echartsInstance.convertFromPixel(seriesFinder, [
           params.offsetX,
           params.offsetY
         ]);
@@ -145,7 +153,8 @@ export default function useTimeSeriesInteractivity({
     isMarkLineSelected,
     setTimeWindow,
     updateCursor,
-    updateTimelineByCoordinate
+    updateTimelineByCoordinate,
+    seriesFinder
   ]);
 
   useEffect(() => {
@@ -164,7 +173,7 @@ export default function useTimeSeriesInteractivity({
       }
 
       if (isMarkAreaMoving && echartsInstance) {
-        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+        const [x] = echartsInstance.convertFromPixel(seriesFinder, [
           params.offsetX,
           params.offsetY
         ]);
@@ -187,7 +196,8 @@ export default function useTimeSeriesInteractivity({
     oldMarkAreaPosition,
     setTimeWindow,
     timeWindow,
-    updateCursor
+    updateCursor,
+    seriesFinder
   ]);
 
   useEffect(() => {
