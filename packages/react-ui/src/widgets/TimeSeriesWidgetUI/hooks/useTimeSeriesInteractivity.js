@@ -6,6 +6,9 @@ import { findItemIndexByTime } from '../utils/utilities';
 const events = {};
 let initialTimeWindow = null;
 
+// we identify series by their index and stringify it
+const seriesFinder = { seriesId: '0' };
+
 export default function useTimeSeriesInteractivity({
   echartsInstance,
   data,
@@ -25,14 +28,6 @@ export default function useTimeSeriesInteractivity({
 
   const updateCursor = useCallback((cursor) => zr?.setCursorStyle(cursor), [zr]);
 
-  const firstCategory = data?.[0]?.category;
-  const seriesFinder = useMemo(() => {
-    if (firstCategory) {
-      return { seriesId: firstCategory };
-    }
-    return { seriesIndex: 0 };
-  }, [firstCategory]);
-
   const updateTimelineByCoordinate = useCallback(
     (params) => {
       if (echartsInstance) {
@@ -44,7 +39,7 @@ export default function useTimeSeriesInteractivity({
         setTimeWindow(itemIndex !== undefined ? [data[itemIndex].name] : []);
       }
     },
-    [data, echartsInstance, setTimeWindow, seriesFinder]
+    [data, echartsInstance, setTimeWindow]
   );
 
   // Echarts events
@@ -119,7 +114,7 @@ export default function useTimeSeriesInteractivity({
     }
 
     return addEventWithCleanUp(zr, 'mousedown', mouseDownEvent);
-  }, [zr, echartsInstance, timeWindow, updateCursor, filterable, seriesFinder]);
+  }, [zr, echartsInstance, timeWindow, updateCursor, filterable]);
 
   useEffect(() => {
     function mouseMoveEvent(params) {
@@ -153,8 +148,7 @@ export default function useTimeSeriesInteractivity({
     isMarkLineSelected,
     setTimeWindow,
     updateCursor,
-    updateTimelineByCoordinate,
-    seriesFinder
+    updateTimelineByCoordinate
   ]);
 
   useEffect(() => {
@@ -196,8 +190,7 @@ export default function useTimeSeriesInteractivity({
     oldMarkAreaPosition,
     setTimeWindow,
     timeWindow,
-    updateCursor,
-    seriesFinder
+    updateCursor
   ]);
 
   useEffect(() => {

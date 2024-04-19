@@ -197,7 +197,7 @@ export default function TimeSeriesChart({
             : theme.palette.action.disabledBackground;
 
         return {
-          id: name,
+          id: String(i),
           name,
           markLine: i === 0 ? markLine : undefined,
           markArea: i === 0 ? markArea : undefined,
