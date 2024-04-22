@@ -2,6 +2,7 @@
 
 ## Not released
 
+- TimeSeriesWidget: fix echarts props update, to keep state of control when clicking [#865](https://github.com/CartoDB/carto-react/pull/865)
 - TimeSeriesWidget: support removing series in mounted widget [#863](https://github.com/CartoDB/carto-react/pull/863)
 
 ## 3.0.0
@@ -11,6 +12,10 @@
 -  Update Deck GL v9 and removed dropping features functionality [#838](https://github.com/CartoDB/carto-react/pull/838)
 
 ## 2.5
+
+### 2.5.3 (2024-04-18)
+
+- TimeSeriesWidget: support removing series in mounted widget [#863](https://github.com/CartoDB/carto-react/pull/863)
 
 ### 2.5.2 (2024-04-10)
 

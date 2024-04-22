@@ -197,6 +197,7 @@ export default function TimeSeriesChart({
             : theme.palette.action.disabledBackground;
 
         return {
+          id: String(i),
           name,
           markLine: i === 0 ? markLine : undefined,
           markArea: i === 0 ? markArea : undefined,
@@ -293,7 +294,6 @@ export default function TimeSeriesChart({
   return (
     <ReactEcharts
       option={options}
-      notMerge
       onEvents={onEvents}
       onChartReady={onChartReady}
       style={{ height }}
