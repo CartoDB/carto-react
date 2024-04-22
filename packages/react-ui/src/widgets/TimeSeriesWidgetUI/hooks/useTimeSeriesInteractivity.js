@@ -6,6 +6,9 @@ import { findItemIndexByTime } from '../utils/utilities';
 const events = {};
 let initialTimeWindow = null;
 
+// we identify series by their index and stringify it
+const seriesFinder = { seriesId: '0' };
+
 export default function useTimeSeriesInteractivity({
   echartsInstance,
   data,
@@ -28,7 +31,7 @@ export default function useTimeSeriesInteractivity({
   const updateTimelineByCoordinate = useCallback(
     (params) => {
       if (echartsInstance) {
-        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+        const [x] = echartsInstance.convertFromPixel(seriesFinder, [
           params.offsetX,
           params.offsetY
         ]);
@@ -87,7 +90,7 @@ export default function useTimeSeriesInteractivity({
 
       // Move markArea
       if (timeWindow.length === 2) {
-        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+        const [x] = echartsInstance.convertFromPixel(seriesFinder, [
           params.offsetX,
           params.offsetY
         ]);
@@ -101,7 +104,7 @@ export default function useTimeSeriesInteractivity({
 
       if (echartsInstance) {
         setIsMarkAreaSelected(true);
-        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+        const [x] = echartsInstance.convertFromPixel(seriesFinder, [
           params.offsetX,
           params.offsetY
         ]);
@@ -125,7 +128,7 @@ export default function useTimeSeriesInteractivity({
       }
 
       if (isMarkAreaSelected && echartsInstance) {
-        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+        const [x] = echartsInstance.convertFromPixel(seriesFinder, [
           params.offsetX,
           params.offsetY
         ]);
@@ -164,7 +167,7 @@ export default function useTimeSeriesInteractivity({
       }
 
       if (isMarkAreaMoving && echartsInstance) {
-        const [x] = echartsInstance.convertFromPixel({ seriesIndex: 0 }, [
+        const [x] = echartsInstance.convertFromPixel(seriesFinder, [
           params.offsetX,
           params.offsetY
         ]);

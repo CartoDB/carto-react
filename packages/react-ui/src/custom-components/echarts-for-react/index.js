@@ -49,6 +49,20 @@ export default class ReactEcharts extends _ReactEcharts {
     }
   }
 
+  updateEChartsOption() {
+    const { option, lazyUpdate, showLoading, loadingOption = null } = this.props;
+    const echartInstance = this.getEchartsInstance();
+
+    echartInstance.setOption(option, { replaceMerge: ['series'], lazyUpdate });
+
+    if (showLoading) {
+      echartInstance.showLoading(loadingOption);
+    } else {
+      echartInstance.hideLoading();
+    }
+    return echartInstance;
+  }
+
   offEvents(instance, events) {
     if (!events) return;
     // loop and off
