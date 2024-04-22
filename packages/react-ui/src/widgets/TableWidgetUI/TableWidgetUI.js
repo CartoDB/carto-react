@@ -204,6 +204,8 @@ function TableBodyComponent({ columns, rows, onRowClick }) {
                 cellValue = `[${cellValue
                   .map((c) => (typeof c === 'string' ? `"${c}"` : c))
                   .join(', ')}]`;
+              } else if (typeof cellValue === 'object' && cellValue !== null) {
+                cellValue = JSON.stringify(cellValue);
               }
               return (
                 (headerName || field) && (
