@@ -2,9 +2,11 @@
 
 ## Not released
 
-- TimeSeriesWidget: fix echarts props update, to keep state of control when clicking [#865](https://github.com/CartoDB/carto-react/pull/865)
-
 ## 2.5
+
+### 2.5.4 (2024-04-22)
+
+- TimeSeriesWidget: fix echarts props update, to keep state of control when clicking [#865](https://github.com/CartoDB/carto-react/pull/865)
 
 ### 2.5.3 (2024-04-18)
 
