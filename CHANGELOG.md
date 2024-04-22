@@ -2,6 +2,7 @@
 
 ## Not released
 
+- TableWidget: support for object values [#867](https://github.com/CartoDB/carto-react/pull/867)
 - TimeSeriesWidget: fix echarts props update, to keep state of control when clicking [#865](https://github.com/CartoDB/carto-react/pull/865)
 - TimeSeriesWidget: support removing series in mounted widget [#863](https://github.com/CartoDB/carto-react/pull/863)
 
