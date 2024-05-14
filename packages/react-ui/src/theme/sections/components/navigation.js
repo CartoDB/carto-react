@@ -7,6 +7,7 @@ export const navigationOverrides = {
       root: ({ theme }) => ({
         ...theme.typography.body2,
         minHeight: theme.spacing(4),
+        minWidth: theme.spacing(12),
         whiteSpace: 'normal',
         transition: 'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
