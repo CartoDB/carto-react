@@ -8,6 +8,7 @@ export const navigationOverrides = {
         ...theme.typography.body2,
         minHeight: theme.spacing(4),
         minWidth: theme.spacing(12),
+        backgroundColor: theme.palette.background.paper,
         whiteSpace: 'normal',
         transition: 'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
@@ -42,10 +43,15 @@ export const navigationOverrides = {
             color: theme.palette.primary.main
           }
         },
-        '&.Mui-disabled:empty': {
-          height: 0,
-          minHeight: 0,
-          padding: 0
+        '&.Mui-disabled': {
+          opacity: 1,
+          backgroundColor: theme.palette.background.paper,
+
+          '&:empty': {
+            height: 0,
+            minHeight: 0,
+            padding: 0
+          }
         },
         '& .MuiCheckbox-root, & > .MuiSvgIcon-root': {
           marginRight: theme.spacing(1)

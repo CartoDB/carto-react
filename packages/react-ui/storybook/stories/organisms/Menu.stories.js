@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import {
   ListItemIcon,
   ListItemText,
-  MenuItem,
   MenuList,
-  Menu,
   Box,
   Grid,
   Divider,
@@ -18,33 +16,66 @@ import {
   DeleteOutline
 } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
-import { Container, DocContainer, DocHighlight, Label } from '../../utils/storyStyles';
+import {
+  Container,
+  DocContainer,
+  DocHighlight,
+  DocLink,
+  Label
+} from '../../utils/storyStyles';
 import Button from '../../../src/components/atoms/Button';
 import Avatar from '../../../src/components/molecules/Avatar';
+import Menu from '../../../src/components/molecules/Menu';
+import MenuItem from '../../../src/components/molecules/MenuItem';
 
 const options = {
   title: 'Organisms/Menu',
   component: MenuList,
   argTypes: {
-    label: {
-      control: {
-        type: 'text'
-      }
-    },
     dense: {
+      description: 'Menu / MenuItem prop',
       defaultValue: false,
       control: {
         type: 'boolean'
       }
     },
+    extended: {
+      description: 'Menu prop',
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
+    width: {
+      description: 'Menu prop',
+      defaultValue: false,
+      control: {
+        type: 'text'
+      }
+    },
+    height: {
+      description: 'Menu prop',
+      defaultValue: false,
+      control: {
+        type: 'text'
+      }
+    },
     selected: {
+      description: 'MenuItem prop',
       defaultValue: false,
       control: {
         type: 'boolean'
       }
     },
     destructive: {
+      description: 'MenuItem prop',
       defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
+    subtitle: {
+      description: 'MenuItem prop',
       control: {
         type: 'boolean'
       }
@@ -184,7 +215,7 @@ const TemplateMenuItemContent = ({ label, selected, ...args }) => {
           </MenuItem>
           <MenuItem selected={selected}>
             <ListItemIcon>
-              <Chip size='small' label='B' />
+              <Chip size='small' label='B' color='default' />
             </ListItemIcon>
             <ListItemText>{label}</ListItemText>
           </MenuItem>
@@ -213,14 +244,14 @@ const TemplateMenuItemContent = ({ label, selected, ...args }) => {
               <ContentCutOutlined />
             </ListItemIcon>
             <ListItemText>{label}</ListItemText>
-            <Chip size='small' label='type' />
+            <Chip size='small' label='type' color='default' />
           </MenuItem>
           <MenuItem selected={selected}>
             <ListItemIcon>
-              <Chip size='small' label='B' />
+              <Chip size='small' label='B' color='default' />
             </ListItemIcon>
             <ListItemText>{label}</ListItemText>
-            <Chip size='small' label='type' />
+            <Chip size='small' label='type' color='default' />
           </MenuItem>
         </Container>
       </Grid>
@@ -307,29 +338,22 @@ const TemplateMenu = ({ label, ...args }) => {
             <ContentCutOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
-          <Typography variant='body2' color='text.secondary'>
-            ⌘X
-          </Typography>
+          <Chip size='small' label='type' color='default' />
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
             <ContentCopyOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
-          <Typography variant='body2' color='text.secondary'>
-            ⌘C
-          </Typography>
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
             <ContentPasteOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
-          <Typography variant='body2' color='text.secondary'>
-            ⌘V
-          </Typography>
         </MenuItem>
         <Divider />
+        <MenuItem subtitle>{'subtitle'}</MenuItem>
         <MenuItem>
           <ListItemIcon>
             <CloudOutlined />
@@ -343,20 +367,26 @@ const TemplateMenu = ({ label, ...args }) => {
 
 const DocTemplate = () => {
   return (
-    <DocContainer
-      severity='warning'
-      content='block'
-      action={
-        <Button
-          variant='outlined'
-          size='small'
-          color='inherit'
-          href='/?path=/docs/organisms-list-guide--page'
-        >
-          Guide
-        </Button>
-      }
-    >
+    <DocContainer severity='warning' content='block'>
+      We have our own
+      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/atoms/ToggleButtonGroup.js'>
+        ToggleButtonGroup
+      </DocLink>
+      component that extends <i>Mui ToggleButtonGroup</i> with some props (variant and
+      backgroundColor support).
+      <Typography mt={2}>
+        So, instead of Mui ToggleButtonGroup, you should use this one:
+        <DocHighlight component='span'>
+          react-ui/src/components/atoms/ToggleButtonGroup
+        </DocHighlight>
+      </Typography>
+      <Typography mt={2}>
+        For external use:
+        <DocHighlight component='span'>
+          {'import { ToggleButtonGroup } from "@carto/react-ui";'}
+        </DocHighlight>
+        .
+      </Typography>
       In order <DocHighlight component='span'>ListItem</DocHighlight> to be interactive,
       you need to use <DocHighlight component='span'>MenuItem</DocHighlight> component, or
       use <DocHighlight component='span'>ListItemButton</DocHighlight> instead.
@@ -381,5 +411,14 @@ Content.args = { ...commonArgs };
 export const Destructive = TemplateMenuItemDestructive.bind({});
 Destructive.args = { ...commonArgs };
 
-export const MenuWrapper = TemplateMenu.bind({});
-MenuWrapper.args = { ...commonArgs };
+export const Subtitle = TemplateMenu.bind({});
+Subtitle.args = { ...commonArgs, subtitle: 'Subtitle' };
+
+export const TextOverflow = TemplateMenu.bind({});
+TextOverflow.args = { ...commonArgs, label: 'Long text that will be truncated' };
+
+export const CustomWidth = TemplateMenu.bind({});
+CustomWidth.args = { ...commonArgs, widht: '200px' };
+
+export const CustomHeight = TemplateMenu.bind({});
+CustomHeight.args = { ...commonArgs, height: '200px' };
