@@ -9,11 +9,11 @@ import {
   Chip
 } from '@mui/material';
 import {
-  CloudOutlined,
   ContentCopyOutlined,
-  ContentCutOutlined,
-  ContentPasteOutlined,
-  DeleteOutline
+  DeleteOutline,
+  EditOutlined,
+  HistoryOutlined,
+  RefreshOutlined
 } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
 import {
@@ -93,60 +93,15 @@ const options = {
 };
 export default options;
 
-const TemplateMenuItemSize = ({ label, selected, ...args }) => {
-  return (
-    <Grid container direction='column' spacing={6}>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Dense'}</Label>
-          <MenuItem dense selected={selected}>
-            <ListItemIcon>
-              <ContentCutOutlined />
-            </ListItemIcon>
-            <ListItemText>{label}</ListItemText>
-          </MenuItem>
-        </Container>
-      </Grid>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Default'}</Label>
-          <MenuItem selected={selected}>
-            <ListItemIcon>
-              <ContentCutOutlined />
-            </ListItemIcon>
-            <ListItemText>{label}</ListItemText>
-          </MenuItem>
-        </Container>
-      </Grid>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Extended'}</Label>
-          <MenuItem extended selected={selected}>
-            <ListItemIcon>
-              <Avatar>M</Avatar>
-            </ListItemIcon>
-            <ListItemText>
-              {label}
-              <Typography component='p' variant='caption' color='text.secondary'>
-                Secondary text
-              </Typography>
-            </ListItemText>
-          </MenuItem>
-        </Container>
-      </Grid>
-    </Grid>
-  );
-};
-
 const TemplateMenuItemStates = ({ label, ...args }) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Default'}</Label>
-          <MenuItem>
+          <MenuItem {...args}>
             <ListItemIcon>
-              <ContentCutOutlined />
+              <EditOutlined />
             </ListItemIcon>
             <ListItemText>
               {label}
@@ -160,9 +115,9 @@ const TemplateMenuItemStates = ({ label, ...args }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Selected'}</Label>
-          <MenuItem selected>
+          <MenuItem {...args} selected>
             <ListItemIcon>
-              <ContentCutOutlined />
+              <EditOutlined />
             </ListItemIcon>
             <ListItemText>
               {label}
@@ -176,17 +131,32 @@ const TemplateMenuItemStates = ({ label, ...args }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Disabled'}</Label>
-          <MenuItem disabled>
-            <ListItemIcon>
-              <ContentCutOutlined />
-            </ListItemIcon>
-            <ListItemText>
-              {label}
-              <Typography component='p' variant='caption' color='text.secondary'>
-                Secondary text
-              </Typography>
-            </ListItemText>
-          </MenuItem>
+          <Container>
+            <MenuItem {...args} disabled>
+              <ListItemIcon>
+                <EditOutlined />
+              </ListItemIcon>
+              <ListItemText>
+                {label}
+                <Typography component='p' variant='caption' color='text.secondary'>
+                  Secondary text
+                </Typography>
+              </ListItemText>
+            </MenuItem>
+          </Container>
+          <Container>
+            <MenuItem {...args} extended disabled>
+              <ListItemIcon>
+                <Avatar>M</Avatar>
+              </ListItemIcon>
+              <ListItemText>
+                {label}
+                <Typography component='p' variant='caption' color='text.secondary'>
+                  Secondary text
+                </Typography>
+              </ListItemText>
+            </MenuItem>
+          </Container>
         </Container>
       </Grid>
     </Grid>
@@ -199,7 +169,7 @@ const TemplateMenuItemContent = ({ label, selected, ...args }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only text'}</Label>
-          <MenuItem dense selected={selected}>
+          <MenuItem {...args} selected={selected}>
             {label}
           </MenuItem>
         </Container>
@@ -207,52 +177,64 @@ const TemplateMenuItemContent = ({ label, selected, ...args }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Prefix'}</Label>
-          <MenuItem selected={selected}>
-            <ListItemIcon>
-              <ContentCutOutlined />
-            </ListItemIcon>
-            <ListItemText>{label}</ListItemText>
-          </MenuItem>
-          <MenuItem selected={selected}>
-            <ListItemIcon>
-              <Chip size='small' label='B' color='default' />
-            </ListItemIcon>
-            <ListItemText>{label}</ListItemText>
-          </MenuItem>
-          <MenuItem extended selected={selected}>
-            <ListItemIcon>
-              <Avatar>M</Avatar>
-            </ListItemIcon>
-            <ListItemText>
-              {label}
-              <Typography component='p' variant='caption' color='text.secondary'>
-                Secondary text
-              </Typography>
-            </ListItemText>
-          </MenuItem>
+          <Container pr={3}>
+            <MenuItem {...args}>
+              <ListItemIcon>
+                <ContentCopyOutlined />
+              </ListItemIcon>
+              <ListItemText>{label}</ListItemText>
+            </MenuItem>
+          </Container>
+          <Container pr={3}>
+            <MenuItem {...args}>
+              <ListItemIcon>
+                <Chip size='small' label='B' color='default' />
+              </ListItemIcon>
+              <ListItemText>{label}</ListItemText>
+            </MenuItem>
+          </Container>
+          <Container>
+            <MenuItem {...args} extended>
+              <ListItemIcon>
+                <Avatar>M</Avatar>
+              </ListItemIcon>
+              <ListItemText>
+                {label}
+                <Typography component='p' variant='caption' color='text.secondary'>
+                  Secondary text
+                </Typography>
+              </ListItemText>
+            </MenuItem>
+          </Container>
         </Container>
       </Grid>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Suffix'}</Label>
-          <MenuItem selected={selected}>
-            <ListItemText>{label}</ListItemText>
-            <Chip size='small' label='type' />
-          </MenuItem>
-          <MenuItem selected={selected}>
-            <ListItemIcon>
-              <ContentCutOutlined />
-            </ListItemIcon>
-            <ListItemText>{label}</ListItemText>
-            <Chip size='small' label='type' color='default' />
-          </MenuItem>
-          <MenuItem selected={selected}>
-            <ListItemIcon>
-              <Chip size='small' label='B' color='default' />
-            </ListItemIcon>
-            <ListItemText>{label}</ListItemText>
-            <Chip size='small' label='type' color='default' />
-          </MenuItem>
+          <Container pr={3}>
+            <MenuItem {...args} selected={selected}>
+              <ListItemText>{label}</ListItemText>
+              <Chip size='small' label='type' />
+            </MenuItem>
+          </Container>
+          <Container pr={3}>
+            <MenuItem {...args}>
+              <ListItemIcon>
+                <ContentCopyOutlined />
+              </ListItemIcon>
+              <ListItemText>{label}</ListItemText>
+              <Chip size='small' label='type' color='default' />
+            </MenuItem>
+          </Container>
+          <Container>
+            <MenuItem {...args}>
+              <ListItemIcon>
+                <Chip size='small' label='B' color='default' />
+              </ListItemIcon>
+              <ListItemText>{label}</ListItemText>
+              <Chip size='small' label='type' color='default' />
+            </MenuItem>
+          </Container>
         </Container>
       </Grid>
     </Grid>
@@ -265,7 +247,7 @@ const TemplateMenuItemDestructive = ({ label, destructive, ...args }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Default'}</Label>
-          <MenuItem destructive>
+          <MenuItem {...args} destructive>
             <ListItemIcon>
               <DeleteOutline />
             </ListItemIcon>
@@ -276,7 +258,7 @@ const TemplateMenuItemDestructive = ({ label, destructive, ...args }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Selected'}</Label>
-          <MenuItem destructive selected>
+          <MenuItem {...args} destructive selected>
             <ListItemIcon>
               <DeleteOutline />
             </ListItemIcon>
@@ -287,7 +269,7 @@ const TemplateMenuItemDestructive = ({ label, destructive, ...args }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Disabled'}</Label>
-          <MenuItem destructive disabled>
+          <MenuItem {...args} destructive disabled>
             <ListItemIcon>
               <DeleteOutline />
             </ListItemIcon>
@@ -299,7 +281,7 @@ const TemplateMenuItemDestructive = ({ label, destructive, ...args }) => {
   );
 };
 
-const TemplateMenu = ({ label, ...args }) => {
+const TemplateMenu = ({ label, subtitle, dense, ...args }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
@@ -330,33 +312,35 @@ const TemplateMenu = ({ label, ...args }) => {
         anchorEl={anchorEl}
         open={open}
         onClose={closeDropdown}
+        dense={dense}
         id='menu'
         MenuListProps={{ 'aria-labelledby': 'menu-button' }}
       >
-        <MenuItem>
+        {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
+        <MenuItem dense={dense}>
           <ListItemIcon>
-            <ContentCutOutlined />
+            <EditOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
           <Chip size='small' label='type' color='default' />
         </MenuItem>
-        <MenuItem>
+        <MenuItem dense={dense}>
           <ListItemIcon>
             <ContentCopyOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
         </MenuItem>
-        <MenuItem>
+        {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
+        <MenuItem dense={dense}>
           <ListItemIcon>
-            <ContentPasteOutlined />
+            <HistoryOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
         </MenuItem>
         <Divider />
-        <MenuItem subtitle>{'subtitle'}</MenuItem>
-        <MenuItem>
+        <MenuItem dense={dense}>
           <ListItemIcon>
-            <CloudOutlined />
+            <RefreshOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
         </MenuItem>
@@ -369,28 +353,35 @@ const DocTemplate = () => {
   return (
     <DocContainer severity='warning' content='block'>
       We have our own
-      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/atoms/ToggleButtonGroup.js'>
-        ToggleButtonGroup
+      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/molecules/Menu.js'>
+        Menu
+      </DocLink>{' '}
+      and{' '}
+      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/molecules/MenuItem.js'>
+        MenuItem
       </DocLink>
-      component that extends <i>Mui ToggleButtonGroup</i> with some props (variant and
+      components that extends <i>Mui components</i> with some props (variant and
       backgroundColor support).
       <Typography mt={2}>
-        So, instead of Mui ToggleButtonGroup, you should use this one:
+        So, instead of Mui Menu, you should use this one:
         <DocHighlight component='span'>
-          react-ui/src/components/atoms/ToggleButtonGroup
+          react-ui/src/components/molecules/Menu
         </DocHighlight>
       </Typography>
       <Typography mt={2}>
         For external use:
         <DocHighlight component='span'>
-          {'import { ToggleButtonGroup } from "@carto/react-ui";'}
+          {'import { Menu, MenuItem } from "@carto/react-ui";'}
         </DocHighlight>
         .
       </Typography>
-      In order <DocHighlight component='span'>ListItem</DocHighlight> to be interactive,
-      you need to use <DocHighlight component='span'>MenuItem</DocHighlight> component, or
-      use <DocHighlight component='span'>ListItemButton</DocHighlight> instead.
-      <Typography mt={2}>Note that {'<ListItem button />'} is deprecated.</Typography>
+      <Typography mt={2}>
+        Note: In order <DocHighlight component='span'>ListItem</DocHighlight> to be
+        interactive, you need to use{' '}
+        <DocHighlight component='span'>MenuItem</DocHighlight> component, or use{' '}
+        <DocHighlight component='span'>ListItemButton</DocHighlight> instead (
+        {'<ListItem button />'} is deprecated.)
+      </Typography>
     </DocContainer>
   );
 };
@@ -399,8 +390,11 @@ const commonArgs = { label: 'Label' };
 
 export const Guide = DocTemplate.bind({});
 
-export const Size = TemplateMenuItemSize.bind({});
-Size.args = { ...commonArgs };
+export const Dense = TemplateMenu.bind({});
+Dense.args = { ...commonArgs, dense: true };
+
+export const Extended = TemplateMenu.bind({});
+Extended.args = { ...commonArgs, extended: true };
 
 export const States = TemplateMenuItemStates.bind({});
 States.args = { ...commonArgs };
@@ -412,7 +406,7 @@ export const Destructive = TemplateMenuItemDestructive.bind({});
 Destructive.args = { ...commonArgs };
 
 export const Subtitle = TemplateMenu.bind({});
-Subtitle.args = { ...commonArgs, subtitle: 'Subtitle' };
+Subtitle.args = { ...commonArgs, subtitle: true };
 
 export const TextOverflow = TemplateMenu.bind({});
 TextOverflow.args = { ...commonArgs, label: 'Long text that will be truncated' };

@@ -1,16 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Divider, MenuItem as MuiMenuItem, styled } from '@mui/material';
+import { MenuItem as MuiMenuItem, styled } from '@mui/material';
 
 const StyledMenuItem = styled(MuiMenuItem, {
-  shouldForwardProp: (prop) => !['subtitle', 'destructive'].includes(prop)
-})(({ subtitle, destructive, height, theme }) => ({
+  shouldForwardProp: (prop) => !['subtitle', 'destructive', 'extended'].includes(prop)
+})(({ subtitle, destructive, extended, theme }) => ({
   columnGap: theme.spacing(1),
   minHeight: theme.spacing(6),
 
   ...(subtitle && {
-    backgroundColor: theme.palette.default.background,
-    color: theme.palette.text.primary
+    pointerEvents: 'none',
+    columnGap: 0,
+    ...theme.typography.caption,
+    fontWeight: 500,
+    color: theme.palette.text.secondary,
+
+    '&.MuiMenuItem-root': {
+      minHeight: theme.spacing(3),
+      paddingTop: 0,
+      paddingBottom: 0,
+
+      '&:not(:first-of-type)': {
+        minHeight: theme.spacing(5),
+        marginTop: theme.spacing(1),
+        paddingTop: theme.spacing(1),
+        borderTop: `1px solid ${theme.palette.divider}`
+      }
+    }
   }),
   ...(destructive && {
     color: theme.palette.error.main,
@@ -46,14 +62,17 @@ const StyledMenuItem = styled(MuiMenuItem, {
         color: theme.palette.text.disabled
       }
     }
+  }),
+  ...(extended && {
+    '&.MuiMenuItem-root': {
+      minHeight: theme.spacing(6)
+    }
   })
 }));
 
 const MenuItem = ({ subtitle, destructive, children, ...otherProps }) => {
   return (
     <StyledMenuItem destructive={destructive} subtitle={subtitle} {...otherProps}>
-      {subtitle && <Divider />}
-
       {children}
     </StyledMenuItem>
   );
