@@ -1,58 +1,52 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import useImperativeIntl from '../../../hooks/useImperativeIntl';
-import { Box, Link, styled } from '@mui/material';
-import Typography from '../../atoms/Typography';
+import { Box, Checkbox, Link, styled } from '@mui/material';
 
 const FiltersRoot = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: theme.spacing(0.5),
-  marginLeft: 'auto',
-  pointerEvents: 'auto'
+  position: 'sticky',
+  top: 0,
+  left: 0,
+  right: 0,
+  zIndex: 1,
+  height: theme.spacing(4),
+  marginBottom: theme.spacing(1),
+  padding: theme.spacing(1, 0),
+  backgroundColor: theme.palette.background.paper,
+  borderBottom: `1px solid ${theme.palette.divider}`
 }));
 
 const LinkFilter = styled(Link)(({ disabled, theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(1),
+  width: '100%',
+  height: '100%',
+  padding: theme.spacing(0.5, 1.5),
+  textAlign: 'initial',
+
   ...(disabled && { pointerEvents: 'none', color: theme.palette.text.disabled })
 }));
 
-function Filters({
-  showFilters,
-  areAllSelected,
-  areAnySelected,
-  selectAll,
-  unselectAll,
-  selectAllDisabled
-}) {
+function Filters({ areAllSelected, areAnySelected, selectAll, selectAllDisabled }) {
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
-
-  if (!showFilters) {
-    return null;
-  }
 
   return (
     <FiltersRoot>
       <LinkFilter
-        variant='caption'
+        variant='body2'
+        color='textPrimary'
         component='button'
+        underline='none'
         disabled={areAllSelected || selectAllDisabled}
         onClick={selectAll}
       >
-        {intlConfig.formatMessage({ id: 'c4r.form.selectAll' })}
-      </LinkFilter>
-      <Typography variant='caption' weight='strong' color='text.hint'>
-        •
-      </Typography>
-      <LinkFilter
-        variant='caption'
-        component='button'
-        onClick={unselectAll}
-        disabled={!areAnySelected}
-      >
-        {intlConfig.formatMessage({
-          id: 'c4r.form.selectNone'
-        })}
+        <Checkbox
+          checked={areAllSelected}
+          indeterminate={areAnySelected && !areAllSelected}
+        />
+        <span>{intlConfig.formatMessage({ id: 'c4r.form.selectAll' })}</span>
       </LinkFilter>
     </FiltersRoot>
   );

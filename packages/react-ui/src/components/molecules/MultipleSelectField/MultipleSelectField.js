@@ -2,7 +2,16 @@ import React, { forwardRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import useImperativeIntl from '../../../hooks/useImperativeIntl';
-import { Checkbox, ListItemText, MenuItem, Tooltip, styled } from '@mui/material';
+import {
+  Checkbox,
+  IconButton,
+  InputAdornment,
+  ListItemText,
+  MenuItem,
+  Tooltip,
+  styled
+} from '@mui/material';
+import { Cancel } from '@mui/icons-material';
 
 import SelectField from '../../atoms/SelectField';
 import Typography from '../../atoms/Typography';
@@ -17,6 +26,20 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
     '&:hover': {
       backgroundColor: `${theme.palette.background.default} !important`
     }
+  }
+}));
+
+const UnselectButton = styled(InputAdornment)(({ theme }) => ({
+  display: 'none',
+  position: 'absolute',
+  top: theme.spacing(2),
+  right: theme.spacing(3.5),
+
+  '.MuiInputBase-root:hover &, .MuiInputBase-root.Mui-focused &': {
+    display: 'flex'
+  },
+  '.MuiSvgIcon-root': {
+    color: theme.palette.text.hint
   }
 }));
 
@@ -121,17 +144,25 @@ const MultipleSelectField = forwardRef(
         renderValue={() => renderValue}
         onChange={handleChange}
         size={size}
-        labelSecondary={
+        endAdornment={
+          showFilters &&
+          areAnySelected && (
+            <UnselectButton position='end'>
+              <IconButton onClick={unselectAll} size='small'>
+                <Cancel />
+              </IconButton>
+            </UnselectButton>
+          )
+        }
+      >
+        {showFilters && (
           <Filters
-            showFilters={showFilters}
             areAllSelected={areAllSelected}
             areAnySelected={areAnySelected}
             selectAll={selectAll}
-            unselectAll={unselectAll}
             selectAllDisabled={selectAllDisabled}
           />
-        }
-      >
+        )}
         {options?.map((option) => {
           const item = (
             <StyledMenuItem

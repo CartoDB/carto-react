@@ -1,7 +1,7 @@
 const locales = {
   c4r: {
     form: {
-      selectAll: 'All',
+      selectAll: 'Select all',
       selectNone: 'None',
       allSelected: 'All selected',
       noneSelected: 'None selected',

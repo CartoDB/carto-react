@@ -115,17 +115,28 @@ const TemplateMenuItemStates = ({ label, ...args }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Selected'}</Label>
-          <MenuItem {...args} selected>
-            <ListItemIcon>
-              <EditOutlined />
-            </ListItemIcon>
-            <ListItemText>
-              {label}
-              <Typography component='p' variant='caption' color='text.secondary'>
-                Secondary text
-              </Typography>
-            </ListItemText>
-          </MenuItem>
+          <Container pr={3}>
+            <MenuItem {...args} selected>
+              <ListItemIcon>
+                <EditOutlined />
+              </ListItemIcon>
+              <ListItemText>
+                {label}
+                <Typography component='p' variant='caption' color='text.secondary'>
+                  Secondary text
+                </Typography>
+              </ListItemText>
+            </MenuItem>
+          </Container>
+          <Container>
+            <MenuItem {...args} selected>
+              <ListItemIcon>
+                <ContentCopyOutlined />
+              </ListItemIcon>
+              <ListItemText>{label}</ListItemText>
+              <Chip size='small' label='type' color='primary' variant='outlined' />
+            </MenuItem>
+          </Container>
         </Container>
       </Grid>
       <Grid item>
@@ -388,6 +399,9 @@ const DocTemplate = () => {
 
 const commonArgs = { label: 'Label' };
 
+export const Playground = TemplateMenu.bind({});
+Playground.args = { ...commonArgs };
+
 export const Guide = DocTemplate.bind({});
 
 export const Dense = TemplateMenu.bind({});
@@ -409,7 +423,11 @@ export const Subtitle = TemplateMenu.bind({});
 Subtitle.args = { ...commonArgs, subtitle: true };
 
 export const TextOverflow = TemplateMenu.bind({});
-TextOverflow.args = { ...commonArgs, label: 'Long text that will be truncated' };
+TextOverflow.args = {
+  ...commonArgs,
+  width: '200px',
+  label: 'Long text that will be truncated'
+};
 
 export const CustomWidth = TemplateMenu.bind({});
 CustomWidth.args = { ...commonArgs, width: '400px' };

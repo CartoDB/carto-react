@@ -9,6 +9,11 @@ export const navigationOverrides = {
           minWidth: theme.spacing(8), // 64px, defined by design
           maxHeight: theme.spacing(39) // 312px, defined by design
         }
+      }),
+      list: ({ theme }) => ({
+        '.MuiMenuItem-root': {
+          paddingRight: theme.spacing(3)
+        }
       })
     }
   },
@@ -81,7 +86,7 @@ export const navigationOverrides = {
             backgroundColor: theme.palette.action.disabledBackground
           }
         },
-        '& .MuiCheckbox-root, & > .MuiSvgIcon-root': {
+        '& > .MuiSvgIcon-root': {
           marginRight: theme.spacing(1)
         },
         '.MuiMenu-paper-sizeSmall &': {
@@ -161,13 +166,11 @@ export const navigationOverrides = {
   MuiListItemIcon: {
     styleOverrides: {
       root: ({ theme }) => ({
-        marginRight: theme.spacing(1),
-
         '& .MuiSvgIcon-root': {
           fontSize: ICON_SIZE_LARGE
         },
         '.MuiMenuItem-root.MuiButtonBase-root &': {
-          minWidth: theme.spacing(2.25)
+          minWidth: ICON_SIZE_MEDIUM
         }
       })
     }
