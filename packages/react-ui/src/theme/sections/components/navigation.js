@@ -1,13 +1,25 @@
-import { ICON_SIZE_MEDIUM } from '../../themeConstants';
+import { ICON_SIZE_LARGE, ICON_SIZE_MEDIUM } from '../../themeConstants';
 
 export const navigationOverrides = {
+  // Menu
+  MuiMenu: {
+    styleOverrides: {
+      paper: ({ theme }) => ({
+        '.MuiMenu-paper': {
+          minWidth: theme.spacing(8), // 64px, defined by design
+          maxHeight: theme.spacing(39) // 312px, defined by design
+        }
+      })
+    }
+  },
+
   // Menu Item
   MuiMenuItem: {
     styleOverrides: {
       root: ({ theme }) => ({
         ...theme.typography.body2,
+        columnGap: theme.spacing(1),
         minHeight: theme.spacing(4),
-        minWidth: theme.spacing(8), // 64px, defined by design
         backgroundColor: theme.palette.background.paper,
         whiteSpace: 'normal',
         transition: 'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
@@ -41,6 +53,10 @@ export const navigationOverrides = {
           },
           '& .MuiTypography-root, & .MuiSvgIcon-root': {
             color: theme.palette.primary.main
+          },
+          '.MuiTypography-caption': {
+            // secondary text
+            color: theme.palette.text.secondary
           }
         },
         '&.Mui-disabled': {
@@ -59,6 +75,10 @@ export const navigationOverrides = {
           },
           svg: {
             color: theme.palette.text.disabled
+          },
+          '.MuiAvatar-root': {
+            color: theme.palette.text.disabled,
+            backgroundColor: theme.palette.action.disabledBackground
           }
         },
         '& .MuiCheckbox-root, & > .MuiSvgIcon-root': {
@@ -79,6 +99,88 @@ export const navigationOverrides = {
           '&.MuiButtonBase-root': {
             minHeight: theme.spacing(3)
           }
+        }
+      })
+    }
+  },
+
+  // List
+  MuiList: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        '.MuiPopover-root &, .MuiPopper-root &': {
+          minWidth: theme.spacing(8), // 64px, defined by design
+          maxHeight: theme.spacing(39), // 312px, defined by design
+          overflowY: 'auto'
+        },
+
+        // Indent sublevels, ugly but needed to avoid issues with hover
+        '& .MuiList-root': {
+          '& .MuiListItem-root': {
+            paddingLeft: theme.spacing(4)
+          },
+
+          '& .MuiList-root': {
+            '& .MuiListItem-root': {
+              paddingLeft: theme.spacing(6)
+            },
+
+            '& .MuiList-root': {
+              '& .MuiListItem-root': {
+                paddingLeft: theme.spacing(8)
+              },
+
+              '& .MuiList-root': {
+                '& .MuiListItem-root': {
+                  paddingLeft: theme.spacing(10)
+                }
+              }
+            }
+          }
+        },
+
+        '& .MuiListItemButton-root': {
+          '&:focus-visible': {
+            backgroundColor: 'transparent'
+          }
+        }
+      })
+    }
+  },
+
+  // List Item
+  MuiListItemText: {
+    defaultProps: {
+      primaryTypographyProps: {
+        variant: 'body2',
+        noWrap: true
+      },
+      secondaryTypographyProps: { variant: 'caption' }
+    }
+  },
+  MuiListItemIcon: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        marginRight: theme.spacing(1),
+
+        '& .MuiSvgIcon-root': {
+          fontSize: ICON_SIZE_LARGE
+        },
+        '.MuiMenuItem-root.MuiButtonBase-root &': {
+          minWidth: theme.spacing(2.25)
+        }
+      })
+    }
+  },
+  MuiListItemAvatar: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        '& .MuiAvatar-root': {
+          height: theme.spacing(4),
+          width: theme.spacing(4)
+        },
+        '& .MuiSvgIcon-root': {
+          fontSize: ICON_SIZE_MEDIUM
         }
       })
     }

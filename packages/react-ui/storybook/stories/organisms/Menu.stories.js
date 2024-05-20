@@ -15,7 +15,6 @@ import {
   HistoryOutlined,
   RefreshOutlined
 } from '@mui/icons-material';
-import Typography from '../../../src/components/atoms/Typography';
 import {
   Container,
   DocContainer,
@@ -23,6 +22,7 @@ import {
   DocLink,
   Label
 } from '../../utils/storyStyles';
+import Typography from '../../../src/components/atoms/Typography';
 import Button from '../../../src/components/atoms/Button';
 import Avatar from '../../../src/components/molecules/Avatar';
 import Menu from '../../../src/components/molecules/Menu';
@@ -131,7 +131,7 @@ const TemplateMenuItemStates = ({ label, ...args }) => {
       <Grid item>
         <Container>
           <Label variant='body2'>{'Disabled'}</Label>
-          <Container>
+          <Container pr={3}>
             <MenuItem {...args} disabled>
               <ListItemIcon>
                 <EditOutlined />
@@ -188,7 +188,7 @@ const TemplateMenuItemContent = ({ label, selected, ...args }) => {
           <Container pr={3}>
             <MenuItem {...args}>
               <ListItemIcon>
-                <Chip size='small' label='B' color='default' />
+                <Chip size='small' label='B' />
               </ListItemIcon>
               <ListItemText>{label}</ListItemText>
             </MenuItem>
@@ -214,7 +214,7 @@ const TemplateMenuItemContent = ({ label, selected, ...args }) => {
           <Container pr={3}>
             <MenuItem {...args} selected={selected}>
               <ListItemText>{label}</ListItemText>
-              <Chip size='small' label='type' />
+              <Chip size='small' label='type' color='default' variant='outlined' />
             </MenuItem>
           </Container>
           <Container pr={3}>
@@ -223,16 +223,16 @@ const TemplateMenuItemContent = ({ label, selected, ...args }) => {
                 <ContentCopyOutlined />
               </ListItemIcon>
               <ListItemText>{label}</ListItemText>
-              <Chip size='small' label='type' color='default' />
+              <Chip size='small' label='type' color='default' variant='outlined' />
             </MenuItem>
           </Container>
           <Container>
             <MenuItem {...args}>
               <ListItemIcon>
-                <Chip size='small' label='B' color='default' />
+                <Chip size='small' label='B' />
               </ListItemIcon>
               <ListItemText>{label}</ListItemText>
-              <Chip size='small' label='type' color='default' />
+              <Chip size='small' label='type' color='default' variant='outlined' />
             </MenuItem>
           </Container>
         </Container>
@@ -322,7 +322,7 @@ const TemplateMenu = ({ label, subtitle, dense, ...args }) => {
             <EditOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
-          <Chip size='small' label='type' color='default' />
+          <Chip size='small' label='type' color='default' variant='outlined' />
         </MenuItem>
         <MenuItem dense={dense}>
           <ListItemIcon>
@@ -412,7 +412,7 @@ export const TextOverflow = TemplateMenu.bind({});
 TextOverflow.args = { ...commonArgs, label: 'Long text that will be truncated' };
 
 export const CustomWidth = TemplateMenu.bind({});
-CustomWidth.args = { ...commonArgs, widht: '200px' };
+CustomWidth.args = { ...commonArgs, width: '400px' };
 
 export const CustomHeight = TemplateMenu.bind({});
-CustomHeight.args = { ...commonArgs, height: '200px' };
+CustomHeight.args = { ...commonArgs, height: '100px' };

@@ -5,9 +5,6 @@ import { MenuItem as MuiMenuItem, styled } from '@mui/material';
 const StyledMenuItem = styled(MuiMenuItem, {
   shouldForwardProp: (prop) => !['subtitle', 'destructive', 'extended'].includes(prop)
 })(({ subtitle, destructive, extended, theme }) => ({
-  columnGap: theme.spacing(1),
-  minHeight: theme.spacing(6),
-
   ...(subtitle && {
     pointerEvents: 'none',
     columnGap: 0,
