@@ -178,6 +178,7 @@ const MultipleSelectField = forwardRef(
               key={option.value}
               value={option.value}
               disabled={option.disabled}
+              tabIndex={0}
             >
               <Checkbox
                 disabled={option.disabled}

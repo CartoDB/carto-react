@@ -5,7 +5,7 @@ export const navigationOverrides = {
   MuiMenu: {
     styleOverrides: {
       paper: ({ theme }) => ({
-        '.MuiMenu-paper': {
+        '&.MuiMenu-paper': {
           minWidth: theme.spacing(8), // 64px, defined by design
           maxHeight: theme.spacing(39), // 312px, defined by design
 
@@ -39,6 +39,11 @@ export const navigationOverrides = {
           // Overrides an unwanted Mui default style
           '&.MuiButtonBase-root': {
             minHeight: theme.spacing(4)
+          }
+        },
+        '&:hover': {
+          '.MuiAvatar-root, .MuiChip-root': {
+            cursor: 'pointer'
           }
         },
         '&:focus-visible': {

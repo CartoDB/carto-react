@@ -74,6 +74,13 @@ const options = {
         type: 'boolean'
       }
     },
+    disabled: {
+      description: 'MenuItem prop',
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
     subtitle: {
       description: 'MenuItem prop',
       control: {
@@ -93,13 +100,13 @@ const options = {
 };
 export default options;
 
-const TemplateMenuItemStates = ({ label, ...args }) => {
+const TemplateMenuItemStates = ({ label, disabled, ...args }) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Default'}</Label>
-          <MenuItem {...args}>
+          <MenuItem {...args} disabled={disabled}>
             <ListItemIcon>
               <EditOutlined />
             </ListItemIcon>
@@ -116,7 +123,7 @@ const TemplateMenuItemStates = ({ label, ...args }) => {
         <Container>
           <Label variant='body2'>{'Selected'}</Label>
           <Container pr={3}>
-            <MenuItem {...args} selected>
+            <MenuItem {...args} selected disabled={disabled}>
               <ListItemIcon>
                 <EditOutlined />
               </ListItemIcon>
@@ -129,12 +136,18 @@ const TemplateMenuItemStates = ({ label, ...args }) => {
             </MenuItem>
           </Container>
           <Container>
-            <MenuItem {...args} selected>
+            <MenuItem {...args} selected disabled={disabled}>
               <ListItemIcon>
                 <ContentCopyOutlined />
               </ListItemIcon>
               <ListItemText>{label}</ListItemText>
-              <Chip size='small' label='type' color='primary' variant='outlined' />
+              <Chip
+                size='small'
+                label='type'
+                color='primary'
+                variant='outlined'
+                disabled={disabled}
+              />
             </MenuItem>
           </Container>
         </Container>
@@ -174,13 +187,13 @@ const TemplateMenuItemStates = ({ label, ...args }) => {
   );
 };
 
-const TemplateMenuItemContent = ({ label, selected, ...args }) => {
+const TemplateMenuItemContent = ({ label, selected, disabled, ...args }) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only text'}</Label>
-          <MenuItem {...args} selected={selected}>
+          <MenuItem {...args} selected={selected} disabled={disabled}>
             {label}
           </MenuItem>
         </Container>
@@ -189,7 +202,7 @@ const TemplateMenuItemContent = ({ label, selected, ...args }) => {
         <Container>
           <Label variant='body2'>{'Prefix'}</Label>
           <Container pr={3}>
-            <MenuItem {...args}>
+            <MenuItem {...args} disabled={disabled}>
               <ListItemIcon>
                 <ContentCopyOutlined />
               </ListItemIcon>
@@ -197,15 +210,15 @@ const TemplateMenuItemContent = ({ label, selected, ...args }) => {
             </MenuItem>
           </Container>
           <Container pr={3}>
-            <MenuItem {...args}>
+            <MenuItem {...args} disabled={disabled}>
               <ListItemIcon>
-                <Chip size='small' label='B' />
+                <Chip size='small' label='B' disabled={disabled} />
               </ListItemIcon>
               <ListItemText>{label}</ListItemText>
             </MenuItem>
           </Container>
           <Container>
-            <MenuItem {...args} extended>
+            <MenuItem {...args} extended disabled={disabled}>
               <ListItemIcon>
                 <Avatar>M</Avatar>
               </ListItemIcon>
@@ -223,27 +236,45 @@ const TemplateMenuItemContent = ({ label, selected, ...args }) => {
         <Container>
           <Label variant='body2'>{'Suffix'}</Label>
           <Container pr={3}>
-            <MenuItem {...args} selected={selected}>
+            <MenuItem {...args} selected={selected} disabled={disabled}>
               <ListItemText>{label}</ListItemText>
-              <Chip size='small' label='type' color='default' variant='outlined' />
+              <Chip
+                size='small'
+                label='type'
+                color='default'
+                variant='outlined'
+                disabled={disabled}
+              />
             </MenuItem>
           </Container>
           <Container pr={3}>
-            <MenuItem {...args}>
+            <MenuItem {...args} disabled={disabled}>
               <ListItemIcon>
                 <ContentCopyOutlined />
               </ListItemIcon>
               <ListItemText>{label}</ListItemText>
-              <Chip size='small' label='type' color='default' variant='outlined' />
+              <Chip
+                size='small'
+                label='type'
+                color='default'
+                variant='outlined'
+                disabled={disabled}
+              />
             </MenuItem>
           </Container>
           <Container>
-            <MenuItem {...args}>
+            <MenuItem {...args} disabled={disabled}>
               <ListItemIcon>
-                <Chip size='small' label='B' />
+                <Chip size='small' label='B' disabled={disabled} />
               </ListItemIcon>
               <ListItemText>{label}</ListItemText>
-              <Chip size='small' label='type' color='default' variant='outlined' />
+              <Chip
+                size='small'
+                label='type'
+                color='default'
+                variant='outlined'
+                disabled={disabled}
+              />
             </MenuItem>
           </Container>
         </Container>
@@ -292,7 +323,7 @@ const TemplateMenuItemDestructive = ({ label, destructive, ...args }) => {
   );
 };
 
-const TemplateMenu = ({ label, subtitle, dense, ...args }) => {
+const TemplateMenu = ({ label, subtitle, dense, disabled, ...args }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -326,28 +357,34 @@ const TemplateMenu = ({ label, subtitle, dense, ...args }) => {
         MenuListProps={{ 'aria-labelledby': 'menu-button' }}
       >
         {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
-        <MenuItem onClick={closeDropdown} dense={dense}>
+        <MenuItem onClick={closeDropdown} dense={dense} disabled={disabled}>
           <ListItemIcon>
             <EditOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
-          <Chip size='small' label='type' color='default' variant='outlined' />
+          <Chip
+            size='small'
+            label='type'
+            color='default'
+            variant='outlined'
+            disabled={disabled}
+          />
         </MenuItem>
-        <MenuItem onClick={closeDropdown} dense={dense}>
+        <MenuItem onClick={closeDropdown} dense={dense} disabled={disabled}>
           <ListItemIcon>
             <ContentCopyOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
         </MenuItem>
         {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
-        <MenuItem onClick={closeDropdown} dense={dense}>
+        <MenuItem onClick={closeDropdown} dense={dense} disabled={disabled}>
           <ListItemIcon>
             <HistoryOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
         </MenuItem>
         <Divider />
-        <MenuItem onClick={closeDropdown} dense={dense}>
+        <MenuItem onClick={closeDropdown} dense={dense} disabled={disabled}>
           <ListItemIcon>
             <RefreshOutlined />
           </ListItemIcon>

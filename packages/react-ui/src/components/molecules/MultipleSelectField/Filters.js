@@ -9,9 +9,7 @@ const FiltersRoot = styled(Box)(({ theme }) => ({
   left: 0,
   right: 0,
   zIndex: 1,
-  height: theme.spacing(6),
   marginBottom: theme.spacing(1),
-  padding: theme.spacing(2, 0),
   backgroundColor: theme.palette.background.paper,
   borderBottom: `1px solid ${theme.palette.divider}`
 }));
@@ -21,7 +19,7 @@ const LinkFilter = styled(Link)(({ disabled, theme }) => ({
   alignItems: 'center',
   gap: theme.spacing(1),
   width: '100%',
-  height: '100%',
+  height: theme.spacing(6),
   padding: theme.spacing(0.5, 1.5),
   textAlign: 'initial',
 
@@ -41,6 +39,7 @@ function Filters({ areAllSelected, areAnySelected, selectAll, selectAllDisabled 
         underline='none'
         disabled={selectAllDisabled}
         onClick={selectAll}
+        tabIndex={0}
       >
         <Checkbox
           checked={areAllSelected}
