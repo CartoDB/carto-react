@@ -29,10 +29,6 @@ const Menu = ({ extended, width, height, children, ...otherProps }) => {
   );
 };
 
-Menu.defaultProps = {
-  width: '100%',
-  height: '100%'
-};
 Menu.propTypes = {
   extended: PropTypes.bool,
   width: PropTypes.string,

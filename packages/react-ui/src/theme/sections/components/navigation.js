@@ -110,6 +110,11 @@ export const navigationOverrides = {
         paddingTop: 0,
         paddingBottom: 0,
 
+        '.MuiTypography-root': {
+          ...theme.typography.caption,
+          fontWeight: 500
+        },
+
         [theme.breakpoints.up('sm')]: {
           // Overrides an unwanted Mui default style
           '&.MuiButtonBase-root': {
@@ -169,7 +174,8 @@ export const navigationOverrides = {
     defaultProps: {
       primaryTypographyProps: {
         variant: 'body2',
-        noWrap: true
+        noWrap: true,
+        component: 'div'
       },
       secondaryTypographyProps: { variant: 'caption' }
     }

@@ -48,14 +48,12 @@ const options = {
     },
     width: {
       description: 'Menu prop',
-      defaultValue: false,
       control: {
         type: 'text'
       }
     },
     height: {
       description: 'Menu prop',
-      defaultValue: false,
       control: {
         type: 'text'
       }
@@ -323,7 +321,7 @@ const TemplateMenuItemDestructive = ({ label, destructive, ...args }) => {
   );
 };
 
-const TemplateMenu = ({ label, subtitle, dense, disabled, ...args }) => {
+const TemplateMenu = ({ label, subtitle, dense, disabled, destructive, ...args }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -352,12 +350,16 @@ const TemplateMenu = ({ label, subtitle, dense, disabled, ...args }) => {
         anchorEl={anchorEl}
         open={open}
         onClose={closeDropdown}
-        dense={dense}
         id='menu'
         MenuListProps={{ 'aria-labelledby': 'menu-button' }}
       >
         {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
-        <MenuItem onClick={closeDropdown} dense={dense} disabled={disabled}>
+        <MenuItem
+          onClick={closeDropdown}
+          dense={dense}
+          disabled={disabled}
+          destructive={destructive}
+        >
           <ListItemIcon>
             <EditOutlined />
           </ListItemIcon>
@@ -370,21 +372,36 @@ const TemplateMenu = ({ label, subtitle, dense, disabled, ...args }) => {
             disabled={disabled}
           />
         </MenuItem>
-        <MenuItem onClick={closeDropdown} dense={dense} disabled={disabled}>
+        <MenuItem
+          onClick={closeDropdown}
+          dense={dense}
+          disabled={disabled}
+          destructive={destructive}
+        >
           <ListItemIcon>
             <ContentCopyOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
         </MenuItem>
         {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
-        <MenuItem onClick={closeDropdown} dense={dense} disabled={disabled}>
+        <MenuItem
+          onClick={closeDropdown}
+          dense={dense}
+          disabled={disabled}
+          destructive={destructive}
+        >
           <ListItemIcon>
             <HistoryOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
         </MenuItem>
         <Divider />
-        <MenuItem onClick={closeDropdown} dense={dense} disabled={disabled}>
+        <MenuItem
+          onClick={closeDropdown}
+          dense={dense}
+          disabled={disabled}
+          destructive={destructive}
+        >
           <ListItemIcon>
             <RefreshOutlined />
           </ListItemIcon>
