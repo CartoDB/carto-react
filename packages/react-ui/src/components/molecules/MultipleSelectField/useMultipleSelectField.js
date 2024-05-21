@@ -30,8 +30,16 @@ export default function useMultipleSelectField({ selectedOptions, options, onCha
       .map(({ value }) => value);
 
     if (optionsValues) {
-      setCurrentOptions(optionsValues);
-      onChange(optionsValues);
+      const allSelected = optionsValues.every((value) => currentOptions.includes(value));
+      if (allSelected) {
+        // Deselect all options
+        setCurrentOptions([]);
+        onChange([]);
+      } else {
+        // Select all options
+        setCurrentOptions(optionsValues);
+        onChange(optionsValues);
+      }
     }
   };
 

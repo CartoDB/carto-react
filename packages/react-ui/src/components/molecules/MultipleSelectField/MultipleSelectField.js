@@ -154,6 +154,15 @@ const MultipleSelectField = forwardRef(
             </UnselectButton>
           )
         }
+        menuProps={{
+          PaperProps: {
+            sx: {
+              '.MuiList-root': {
+                paddingTop: 0
+              }
+            }
+          }
+        }}
       >
         {showFilters && (
           <Filters

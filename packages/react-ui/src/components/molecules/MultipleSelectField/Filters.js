@@ -9,9 +9,9 @@ const FiltersRoot = styled(Box)(({ theme }) => ({
   left: 0,
   right: 0,
   zIndex: 1,
-  height: theme.spacing(4),
+  height: theme.spacing(6),
   marginBottom: theme.spacing(1),
-  padding: theme.spacing(1, 0),
+  padding: theme.spacing(2, 0),
   backgroundColor: theme.palette.background.paper,
   borderBottom: `1px solid ${theme.palette.divider}`
 }));
@@ -39,14 +39,15 @@ function Filters({ areAllSelected, areAnySelected, selectAll, selectAllDisabled 
         color='textPrimary'
         component='button'
         underline='none'
-        disabled={areAllSelected || selectAllDisabled}
+        disabled={selectAllDisabled}
         onClick={selectAll}
       >
         <Checkbox
           checked={areAllSelected}
           indeterminate={areAnySelected && !areAllSelected}
+          disabled={selectAllDisabled}
         />
-        <span>{intlConfig.formatMessage({ id: 'c4r.form.selectAll' })}</span>
+        {intlConfig.formatMessage({ id: 'c4r.form.selectAll' })}
       </LinkFilter>
     </FiltersRoot>
   );

@@ -294,7 +294,6 @@ const TemplateMenuItemDestructive = ({ label, destructive, ...args }) => {
 
 const TemplateMenu = ({ label, subtitle, dense, ...args }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-
   const open = Boolean(anchorEl);
 
   const openDropdown = (event) => {
@@ -306,15 +305,14 @@ const TemplateMenu = ({ label, subtitle, dense, ...args }) => {
   };
 
   return (
-    <Box pb={12}>
+    <Box py={20} mx='auto' textAlign='center'>
       <Button
         variant='outlined'
         id='menu-button'
-        aria-controls='menu'
+        aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup='true'
         aria-expanded={open ? 'true' : undefined}
         onClick={openDropdown}
-        isOpen={open}
       >
         Open menu
       </Button>
@@ -328,28 +326,28 @@ const TemplateMenu = ({ label, subtitle, dense, ...args }) => {
         MenuListProps={{ 'aria-labelledby': 'menu-button' }}
       >
         {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
-        <MenuItem dense={dense}>
+        <MenuItem onClick={closeDropdown} dense={dense}>
           <ListItemIcon>
             <EditOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
           <Chip size='small' label='type' color='default' variant='outlined' />
         </MenuItem>
-        <MenuItem dense={dense}>
+        <MenuItem onClick={closeDropdown} dense={dense}>
           <ListItemIcon>
             <ContentCopyOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
         </MenuItem>
         {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
-        <MenuItem dense={dense}>
+        <MenuItem onClick={closeDropdown} dense={dense}>
           <ListItemIcon>
             <HistoryOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
         </MenuItem>
         <Divider />
-        <MenuItem dense={dense}>
+        <MenuItem onClick={closeDropdown} dense={dense}>
           <ListItemIcon>
             <RefreshOutlined />
           </ListItemIcon>
@@ -408,7 +406,18 @@ export const Dense = TemplateMenu.bind({});
 Dense.args = { ...commonArgs, dense: true };
 
 export const Extended = TemplateMenu.bind({});
-Extended.args = { ...commonArgs, extended: true };
+Extended.args = {
+  ...commonArgs,
+  extended: true,
+  label: (
+    <>
+      Label
+      <Typography component='p' variant='caption' color='text.secondary'>
+        Secondary text
+      </Typography>
+    </>
+  )
+};
 
 export const States = TemplateMenuItemStates.bind({});
 States.args = { ...commonArgs };
@@ -434,3 +443,17 @@ CustomWidth.args = { ...commonArgs, width: '400px' };
 
 export const CustomHeight = TemplateMenu.bind({});
 CustomHeight.args = { ...commonArgs, height: '100px' };
+
+export const PlacementTop = TemplateMenu.bind({});
+PlacementTop.args = {
+  ...commonArgs,
+  transformOrigin: { vertical: 'bottom', horizontal: 'left' },
+  anchorOrigin: { vertical: -4, horizontal: 'left' }
+};
+
+export const PlacementRight = TemplateMenu.bind({});
+PlacementRight.args = {
+  ...commonArgs,
+  transformOrigin: { vertical: 'top', horizontal: 'right' },
+  anchorOrigin: { vertical: 'bottom', horizontal: 'right' }
+};
