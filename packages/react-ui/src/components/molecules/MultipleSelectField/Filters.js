@@ -7,8 +7,9 @@ const FiltersRoot = styled(Box)(({ theme }) => ({
   position: 'sticky',
   top: 0,
   left: 0,
+  bottom: 0,
   right: 0,
-  zIndex: 1,
+  zIndex: 2,
   marginBottom: theme.spacing(1),
   backgroundColor: theme.palette.background.paper,
   borderBottom: `1px solid ${theme.palette.divider}`
