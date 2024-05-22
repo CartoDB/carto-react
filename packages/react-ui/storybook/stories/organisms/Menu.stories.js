@@ -6,7 +6,8 @@ import {
   Box,
   Grid,
   Divider,
-  Chip
+  Chip,
+  Tooltip
 } from '@mui/material';
 import {
   ContentCopyOutlined,
@@ -192,7 +193,7 @@ const TemplateMenuItemContent = ({ label, selected, disabled, ...args }) => {
         <Container>
           <Label variant='body2'>{'Only text'}</Label>
           <MenuItem {...args} selected={selected} disabled={disabled}>
-            {label}
+            <ListItemText>{label}</ListItemText>
           </MenuItem>
         </Container>
       </Grid>
@@ -288,17 +289,6 @@ const TemplateMenuItemDestructive = ({ label, destructive, ...args }) => {
         <Container>
           <Label variant='body2'>{'Default'}</Label>
           <MenuItem {...args} destructive>
-            <ListItemIcon>
-              <DeleteOutline />
-            </ListItemIcon>
-            <ListItemText>{label}</ListItemText>
-          </MenuItem>
-        </Container>
-      </Grid>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Selected'}</Label>
-          <MenuItem {...args} destructive selected>
             <ListItemIcon>
               <DeleteOutline />
             </ListItemIcon>
@@ -412,6 +402,225 @@ const TemplateMenu = ({ label, subtitle, dense, disabled, destructive, ...args }
   );
 };
 
+const TemplateMenuOverflow = ({
+  label,
+  subtitle,
+  dense,
+  disabled,
+  destructive,
+  ...args
+}) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const openDropdown = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const closeDropdown = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <Box py={20} mx='auto' textAlign='center'>
+      <Button
+        variant='outlined'
+        id='menu-button'
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup='true'
+        aria-expanded={open ? 'true' : undefined}
+        onClick={openDropdown}
+      >
+        Open menu
+      </Button>
+      <Menu
+        {...args}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={closeDropdown}
+        id='menu'
+        MenuListProps={{ 'aria-labelledby': 'menu-button' }}
+      >
+        {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
+        <MenuItem
+          onClick={closeDropdown}
+          dense={dense}
+          disabled={disabled}
+          destructive={destructive}
+        >
+          <ListItemIcon>
+            <EditOutlined />
+          </ListItemIcon>
+          <Tooltip title={label}>
+            <ListItemText>{label}</ListItemText>
+          </Tooltip>
+          <Chip
+            size='small'
+            label='type'
+            color='default'
+            variant='outlined'
+            disabled={disabled}
+          />
+        </MenuItem>
+        <MenuItem
+          onClick={closeDropdown}
+          dense={dense}
+          disabled={disabled}
+          destructive={destructive}
+        >
+          <ListItemIcon>
+            <ContentCopyOutlined />
+          </ListItemIcon>
+          <Tooltip title={label}>
+            <ListItemText>{label}</ListItemText>
+          </Tooltip>
+        </MenuItem>
+        {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
+        <MenuItem
+          onClick={closeDropdown}
+          dense={dense}
+          disabled={disabled}
+          destructive={destructive}
+        >
+          <ListItemIcon>
+            <HistoryOutlined />
+          </ListItemIcon>
+          <Tooltip title={label}>
+            <ListItemText>{label}</ListItemText>
+          </Tooltip>
+        </MenuItem>
+        <Divider />
+        <MenuItem
+          onClick={closeDropdown}
+          dense={dense}
+          disabled={disabled}
+          destructive={destructive}
+        >
+          <ListItemIcon>
+            <RefreshOutlined />
+          </ListItemIcon>
+          <Tooltip title={label}>
+            <ListItemText>{label}</ListItemText>
+          </Tooltip>
+        </MenuItem>
+      </Menu>
+    </Box>
+  );
+};
+
+const TemplateMenuExtended = ({
+  label,
+  subtitle,
+  dense,
+  disabled,
+  destructive,
+  ...args
+}) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const openDropdown = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const closeDropdown = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <Box py={20} mx='auto' textAlign='center'>
+      <Button
+        variant='outlined'
+        id='menu-button'
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup='true'
+        aria-expanded={open ? 'true' : undefined}
+        onClick={openDropdown}
+      >
+        Open menu
+      </Button>
+      <Menu
+        {...args}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={closeDropdown}
+        id='menu'
+        MenuListProps={{ 'aria-labelledby': 'menu-button' }}
+      >
+        {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
+        <MenuItem
+          onClick={closeDropdown}
+          dense={dense}
+          disabled={disabled}
+          destructive={destructive}
+        >
+          <ListItemIcon>
+            <Avatar>Ar</Avatar>
+          </ListItemIcon>
+          <ListItemText>
+            {label}
+            <Typography component='p' variant='caption' color='text.secondary'>
+              Secondary text
+            </Typography>
+          </ListItemText>
+          <Chip
+            size='small'
+            label='type'
+            color='default'
+            variant='outlined'
+            disabled={disabled}
+          />
+        </MenuItem>
+        <MenuItem
+          onClick={closeDropdown}
+          dense={dense}
+          disabled={disabled}
+          destructive={destructive}
+        >
+          <ListItemIcon>
+            <Avatar>Mr</Avatar>
+          </ListItemIcon>
+          <ListItemText>
+            {label}
+            <Typography component='p' variant='caption' color='text.secondary'>
+              Secondary text
+            </Typography>
+          </ListItemText>
+        </MenuItem>
+        {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
+        <MenuItem
+          onClick={closeDropdown}
+          dense={dense}
+          disabled={disabled}
+          destructive={destructive}
+        >
+          <ListItemIcon>
+            <Avatar>Av</Avatar>
+          </ListItemIcon>
+          <ListItemText>{label}</ListItemText>
+        </MenuItem>
+        <Divider />
+        <MenuItem
+          onClick={closeDropdown}
+          dense={dense}
+          disabled={disabled}
+          destructive={destructive}
+        >
+          <ListItemIcon>
+            <Avatar>Lm</Avatar>
+          </ListItemIcon>
+          <ListItemText>
+            {label}
+            <Typography component='p' variant='caption' color='text.secondary'>
+              Secondary text
+            </Typography>
+          </ListItemText>
+        </MenuItem>
+      </Menu>
+    </Box>
+  );
+};
+
 const DocTemplate = () => {
   return (
     <DocContainer severity='warning' content='block'>
@@ -459,18 +668,10 @@ export const Guide = DocTemplate.bind({});
 export const Dense = TemplateMenu.bind({});
 Dense.args = { ...commonArgs, dense: true };
 
-export const Extended = TemplateMenu.bind({});
+export const Extended = TemplateMenuExtended.bind({});
 Extended.args = {
   ...commonArgs,
-  extended: true,
-  label: (
-    <>
-      Label
-      <Typography component='p' variant='caption' color='text.secondary'>
-        Secondary text
-      </Typography>
-    </>
-  )
+  extended: true
 };
 
 export const States = TemplateMenuItemStates.bind({});
@@ -485,11 +686,11 @@ Destructive.args = { ...commonArgs };
 export const Subtitle = TemplateMenu.bind({});
 Subtitle.args = { ...commonArgs, subtitle: true };
 
-export const TextOverflow = TemplateMenu.bind({});
+export const TextOverflow = TemplateMenuOverflow.bind({});
 TextOverflow.args = {
   ...commonArgs,
   width: '200px',
-  label: 'Long text that will be truncated'
+  label: 'Long text that will be truncated with ellipsis'
 };
 
 export const CustomWidth = TemplateMenu.bind({});
@@ -502,7 +703,7 @@ export const PlacementTop = TemplateMenu.bind({});
 PlacementTop.args = {
   ...commonArgs,
   transformOrigin: { vertical: 'bottom', horizontal: 'left' },
-  anchorOrigin: { vertical: -4, horizontal: 'left' }
+  anchorOrigin: { vertical: -8, horizontal: 'left' }
 };
 
 export const PlacementRight = TemplateMenu.bind({});
