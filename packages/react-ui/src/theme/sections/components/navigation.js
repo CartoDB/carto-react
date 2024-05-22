@@ -14,11 +14,6 @@ export const navigationOverrides = {
             boxShadow: 'none !important'
           }
         }
-      }),
-      list: ({ theme }) => ({
-        '.MuiMenuItem-root': {
-          paddingRight: theme.spacing(3)
-        }
       })
     }
   },
@@ -178,13 +173,23 @@ export const navigationOverrides = {
         component: 'div'
       },
       secondaryTypographyProps: { variant: 'caption' }
+    },
+    styleOverrides: {
+      root: ({ theme }) => ({
+        paddingRight: theme.spacing(2),
+
+        '& + .MuiChip-root, & + .CartoTag-root': {
+          marginRight: theme.spacing(1)
+        }
+      })
     }
   },
   MuiListItemIcon: {
     styleOverrides: {
       root: ({ theme }) => ({
         '& .MuiSvgIcon-root': {
-          fontSize: ICON_SIZE_LARGE
+          fontSize: ICON_SIZE_LARGE,
+          color: theme.palette.text.primary
         },
         '.MuiMenuItem-root.MuiButtonBase-root &': {
           minWidth: ICON_SIZE_MEDIUM

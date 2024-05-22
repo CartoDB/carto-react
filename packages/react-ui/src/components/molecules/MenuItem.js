@@ -31,7 +31,7 @@ const StyledMenuItem = styled(MuiMenuItem, {
     '.MuiTypography-root': {
       color: theme.palette.error.main
     },
-    svg: {
+    'svg, & .MuiSvgIcon-root': {
       color: theme.palette.error.main
     },
 
@@ -67,9 +67,14 @@ const StyledMenuItem = styled(MuiMenuItem, {
   })
 }));
 
-const MenuItem = ({ subtitle, destructive, children, ...otherProps }) => {
+const MenuItem = ({ subtitle, destructive, extended, children, ...otherProps }) => {
   return (
-    <StyledMenuItem destructive={destructive} subtitle={subtitle} {...otherProps}>
+    <StyledMenuItem
+      subtitle={subtitle}
+      destructive={destructive}
+      extended={extended}
+      {...otherProps}
+    >
       {children}
     </StyledMenuItem>
   );
@@ -77,7 +82,8 @@ const MenuItem = ({ subtitle, destructive, children, ...otherProps }) => {
 
 MenuItem.propTypes = {
   subtitle: PropTypes.bool,
-  destructive: PropTypes.bool
+  destructive: PropTypes.bool,
+  extended: PropTypes.bool
 };
 
 export default MenuItem;
