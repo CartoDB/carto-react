@@ -37,7 +37,7 @@ export const navigationOverrides = {
           }
         },
         '&:hover': {
-          '.MuiAvatar-root, .MuiChip-root': {
+          '.MuiAvatar-root, .MuiChip-root, .CartoTag-root': {
             cursor: 'pointer'
           }
         },
@@ -127,7 +127,15 @@ export const navigationOverrides = {
         '.MuiPopover-root &, .MuiPopper-root &': {
           minWidth: theme.spacing(8), // 64px, defined by design
           maxHeight: theme.spacing(39), // 312px, defined by design
-          overflowY: 'auto'
+          overflowY: 'auto',
+
+          '&:focus-visible': {
+            outline: 'none !important',
+            boxShadow: 'none !important'
+          },
+          '.MuiDivider-root': {
+            margin: theme.spacing(1, 0)
+          }
         },
 
         // Indent sublevels, ugly but needed to avoid issues with hover
@@ -178,7 +186,7 @@ export const navigationOverrides = {
       root: ({ theme }) => ({
         paddingRight: theme.spacing(2),
 
-        '& + .MuiChip-root, & + .CartoTag-root': {
+        '& + .MuiBox-root': {
           marginRight: theme.spacing(1)
         }
       })
@@ -189,7 +197,11 @@ export const navigationOverrides = {
       root: ({ theme }) => ({
         '& .MuiSvgIcon-root': {
           fontSize: ICON_SIZE_LARGE,
-          color: theme.palette.text.primary
+          color: theme.palette.text.primary,
+
+          path: {
+            fill: 'currentColor'
+          }
         },
         '.MuiMenuItem-root.MuiButtonBase-root &': {
           minWidth: ICON_SIZE_MEDIUM
