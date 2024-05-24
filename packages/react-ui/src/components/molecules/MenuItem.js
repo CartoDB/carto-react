@@ -34,6 +34,9 @@ const StyledMenuItem = styled(MuiMenuItem, {
     'svg, & .MuiSvgIcon-root': {
       color: theme.palette.error.main
     },
+    '.MuiListItemIcon-root svg path': {
+      fill: theme.palette.error.main
+    },
 
     '&:hover': {
       backgroundColor: theme.palette.error.relatedLight
