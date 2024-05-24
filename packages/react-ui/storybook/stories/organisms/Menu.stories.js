@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   ListItemIcon,
   ListItemText,
-  MenuList,
   Box,
   Grid,
   Divider,
   Chip,
-  Tooltip
+  Tooltip,
+  Popper,
+  ClickAwayListener,
+  Paper,
+  Grow
 } from '@mui/material';
 import {
   ContentCopyOutlined,
@@ -27,6 +30,7 @@ import Typography from '../../../src/components/atoms/Typography';
 import Button from '../../../src/components/atoms/Button';
 import Avatar from '../../../src/components/molecules/Avatar';
 import Menu from '../../../src/components/molecules/Menu';
+import MenuList from '../../../src/components/molecules/MenuList';
 import MenuItem from '../../../src/components/molecules/MenuItem';
 
 const options = {
@@ -93,7 +97,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/CARTO-Components-1.0?node-id=1534%3A29229&t=0T8NJiytWngAdJeO-0'
     },
     status: {
-      type: 'readyToReview'
+      type: 'validated'
     }
   }
 };
@@ -140,13 +144,15 @@ const TemplateMenuItemStates = ({ label, disabled, ...args }) => {
                 <ContentCopyOutlined />
               </ListItemIcon>
               <ListItemText>{label}</ListItemText>
-              <Chip
-                size='small'
-                label='type'
-                color='primary'
-                variant='outlined'
-                disabled={disabled}
-              />
+              <Box>
+                <Chip
+                  size='small'
+                  label='type'
+                  color='primary'
+                  variant='outlined'
+                  disabled={disabled}
+                />
+              </Box>
             </MenuItem>
           </Container>
         </Container>
@@ -237,13 +243,15 @@ const TemplateMenuItemContent = ({ label, selected, disabled, ...args }) => {
           <Container pr={3}>
             <MenuItem {...args} selected={selected} disabled={disabled}>
               <ListItemText>{label}</ListItemText>
-              <Chip
-                size='small'
-                label='type'
-                color='default'
-                variant='outlined'
-                disabled={disabled}
-              />
+              <Box>
+                <Chip
+                  size='small'
+                  label='type'
+                  color='default'
+                  variant='outlined'
+                  disabled={disabled}
+                />
+              </Box>
             </MenuItem>
           </Container>
           <Container pr={3}>
@@ -252,13 +260,15 @@ const TemplateMenuItemContent = ({ label, selected, disabled, ...args }) => {
                 <ContentCopyOutlined />
               </ListItemIcon>
               <ListItemText>{label}</ListItemText>
-              <Chip
-                size='small'
-                label='type'
-                color='default'
-                variant='outlined'
-                disabled={disabled}
-              />
+              <Box>
+                <Chip
+                  size='small'
+                  label='type'
+                  color='default'
+                  variant='outlined'
+                  disabled={disabled}
+                />
+              </Box>
             </MenuItem>
           </Container>
           <Container>
@@ -267,13 +277,15 @@ const TemplateMenuItemContent = ({ label, selected, disabled, ...args }) => {
                 <Chip size='small' label='B' disabled={disabled} />
               </ListItemIcon>
               <ListItemText>{label}</ListItemText>
-              <Chip
-                size='small'
-                label='type'
-                color='default'
-                variant='outlined'
-                disabled={disabled}
-              />
+              <Box>
+                <Chip
+                  size='small'
+                  label='type'
+                  color='default'
+                  variant='outlined'
+                  disabled={disabled}
+                />
+              </Box>
             </MenuItem>
           </Container>
         </Container>
@@ -354,13 +366,15 @@ const TemplateMenu = ({ label, subtitle, dense, disabled, destructive, ...args }
             <EditOutlined />
           </ListItemIcon>
           <ListItemText>{label}</ListItemText>
-          <Chip
-            size='small'
-            label='type'
-            color='default'
-            variant='outlined'
-            disabled={disabled}
-          />
+          <Box>
+            <Chip
+              size='small'
+              label='type'
+              color='default'
+              variant='outlined'
+              disabled={disabled}
+            />
+          </Box>
         </MenuItem>
         <MenuItem
           onClick={closeDropdown}
@@ -398,6 +412,112 @@ const TemplateMenu = ({ label, subtitle, dense, disabled, destructive, ...args }
           <ListItemText>{label}</ListItemText>
         </MenuItem>
       </Menu>
+    </Box>
+  );
+};
+
+const TemplateMenuList = ({ label, subtitle, dense, disabled, destructive, ...args }) => {
+  const anchorRef = useRef(null);
+  const [open, setOpen] = useState(false);
+
+  const closeDropdown = () => {
+    setOpen(null);
+  };
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  return (
+    <Box py={20} mx='auto' textAlign='center'>
+      <Button
+        variant='outlined'
+        id='menu-button'
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup='true'
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleToggle}
+        ref={anchorRef}
+      >
+        Open menu
+      </Button>
+      <Popper anchorEl={anchorRef.current} open={open}>
+        <Grow in={open}>
+          <Paper
+            elevation={8}
+            onKeyDown={(ev) => {
+              if (ev.key === 'Escape') {
+                closeDropdown();
+              }
+            }}
+          >
+            <ClickAwayListener onClickAway={closeDropdown}>
+              <MenuList
+                {...args}
+                id='menu'
+                MenuListProps={{ 'aria-labelledby': 'menu-button' }}
+              >
+                {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
+                <MenuItem
+                  onClick={closeDropdown}
+                  dense={dense}
+                  disabled={disabled}
+                  destructive={destructive}
+                >
+                  <ListItemIcon>
+                    <EditOutlined />
+                  </ListItemIcon>
+                  <ListItemText>{label}</ListItemText>
+                  <Box>
+                    <Chip
+                      size='small'
+                      label='type'
+                      color='default'
+                      variant='outlined'
+                      disabled={disabled}
+                    />
+                  </Box>
+                </MenuItem>
+                <MenuItem
+                  onClick={closeDropdown}
+                  dense={dense}
+                  disabled={disabled}
+                  destructive={destructive}
+                >
+                  <ListItemIcon>
+                    <ContentCopyOutlined />
+                  </ListItemIcon>
+                  <ListItemText>{label}</ListItemText>
+                </MenuItem>
+                {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
+                <MenuItem
+                  onClick={closeDropdown}
+                  dense={dense}
+                  disabled={disabled}
+                  destructive={destructive}
+                >
+                  <ListItemIcon>
+                    <HistoryOutlined />
+                  </ListItemIcon>
+                  <ListItemText>{label}</ListItemText>
+                </MenuItem>
+                <Divider />
+                <MenuItem
+                  onClick={closeDropdown}
+                  dense={dense}
+                  disabled={disabled}
+                  destructive={destructive}
+                >
+                  <ListItemIcon>
+                    <RefreshOutlined />
+                  </ListItemIcon>
+                  <ListItemText>{label}</ListItemText>
+                </MenuItem>
+              </MenuList>
+            </ClickAwayListener>
+          </Paper>
+        </Grow>
+      </Popper>
     </Box>
   );
 };
@@ -454,13 +574,15 @@ const TemplateMenuOverflow = ({
           <Tooltip title={label}>
             <ListItemText>{label}</ListItemText>
           </Tooltip>
-          <Chip
-            size='small'
-            label='type'
-            color='default'
-            variant='outlined'
-            disabled={disabled}
-          />
+          <Box>
+            <Chip
+              size='small'
+              label='type'
+              color='default'
+              variant='outlined'
+              disabled={disabled}
+            />
+          </Box>
         </MenuItem>
         <MenuItem
           onClick={closeDropdown}
@@ -563,13 +685,15 @@ const TemplateMenuExtended = ({
               Secondary text
             </Typography>
           </ListItemText>
-          <Chip
-            size='small'
-            label='type'
-            color='default'
-            variant='outlined'
-            disabled={disabled}
-          />
+          <Box>
+            <Chip
+              size='small'
+              label='type'
+              color='default'
+              variant='outlined'
+              disabled={disabled}
+            />
+          </Box>
         </MenuItem>
         <MenuItem
           onClick={closeDropdown}
@@ -692,6 +816,9 @@ TextOverflow.args = {
   width: '200px',
   label: 'Long text that will be truncated with ellipsis'
 };
+
+export const MenuListWrapper = TemplateMenuList.bind({});
+MenuListWrapper.args = { ...commonArgs };
 
 export const CustomWidth = TemplateMenu.bind({});
 CustomWidth.args = { ...commonArgs, width: '400px' };

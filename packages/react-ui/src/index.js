@@ -44,6 +44,7 @@ import MultipleSelectField from './components/molecules/MultipleSelectField/Mult
 import UploadField from './components/molecules/UploadField/UploadField';
 import UploadFieldBase from './components/molecules/UploadField/UploadFieldBase';
 import Menu from './components/molecules/Menu';
+import MenuList from './components/molecules/MenuList';
 import MenuItem from './components/molecules/MenuItem';
 import AppBar from './components/organisms/AppBar/AppBar';
 import LabelWithIndicator from './components/atoms/LabelWithIndicator';
@@ -106,6 +107,7 @@ export {
   UploadField,
   UploadFieldBase,
   Menu,
+  MenuList,
   MenuItem,
   AppBar,
   ArrowDropIcon,
