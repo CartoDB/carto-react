@@ -33,6 +33,21 @@ import Menu from '../../../src/components/molecules/Menu';
 import MenuList from '../../../src/components/molecules/MenuList';
 import MenuItem from '../../../src/components/molecules/MenuItem';
 
+const icon = (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    width='13.504'
+    height='13.5'
+    viewBox='0 0 13.504 13.5'
+  >
+    <path
+      fill='#8a2be2'
+      fill-rule='evenodd'
+      d='M6.078 0a6.075 6.075 0 0 1 4.92 9.637l.034.028 2.39 2.39a.283.283 0 0 1 0 .4l-.966.965a.283.283 0 0 1-.4 0l-2.39-2.39a.283.283 0 0 1-.029-.033 6.075 6.075 0 1 1-3.561-11Zm0 1.573a4.509 4.509 0 1 0 4.511 4.506 4.508 4.508 0 0 0-4.511-4.506Zm.675 2.754V9.45a5.4 5.4 0 0 1-.674 0 5.379 5.379 0 0 1-.75-.041V4.327Zm-2.4 1.633v2.95a3.314 3.314 0 0 1-1.027-.973l-.127-.2V5.96Zm4.657.695v.995a3.374 3.374 0 0 1-1.147 1.229v-2.22H9.01Z'
+    />
+  </svg>
+);
+
 const options = {
   title: 'Organisms/Menu',
   component: MenuList,
@@ -86,8 +101,17 @@ const options = {
     },
     subtitle: {
       description: 'MenuItem prop',
+      defaultValue: false,
       control: {
         type: 'boolean'
+      }
+    },
+    iconColor: {
+      description: 'MenuItem prop',
+      defaultValue: 'primary',
+      control: {
+        type: 'select',
+        options: ['primary', 'default']
       }
     }
   },
@@ -320,6 +344,37 @@ const TemplateMenuItemDestructive = ({ label, destructive, ...args }) => {
         </Container>
       </Grid>
     </Grid>
+  );
+};
+
+const TemplateMenuIconColor = ({ label, iconColor, ...args }) => {
+  return (
+    <>
+      <DocContainer severity='info'>
+        Default keeps the color of the icon as is, Primary changes the color of the icon
+        to theme.palette.text.primary.
+      </DocContainer>
+      <Grid container direction='column' spacing={6}>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Primary'}</Label>
+            <MenuItem {...args} iconColor='primary'>
+              <ListItemIcon>{icon}</ListItemIcon>
+              <ListItemText>{label}</ListItemText>
+            </MenuItem>
+          </Container>
+        </Grid>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Default'}</Label>
+            <MenuItem {...args} iconColor='default'>
+              <ListItemIcon>{icon}</ListItemIcon>
+              <ListItemText>{label}</ListItemText>
+            </MenuItem>
+          </Container>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 
@@ -803,6 +858,11 @@ States.args = { ...commonArgs };
 
 export const Content = TemplateMenuItemContent.bind({});
 Content.args = { ...commonArgs };
+
+export const IconColor = TemplateMenuIconColor.bind({});
+IconColor.args = {
+  ...commonArgs
+};
 
 export const Destructive = TemplateMenuItemDestructive.bind({});
 Destructive.args = { ...commonArgs };

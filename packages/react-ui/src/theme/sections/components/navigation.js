@@ -41,9 +41,6 @@ export const navigationOverrides = {
             cursor: 'pointer'
           }
         },
-        '.MuiListItemIcon-root svg path': {
-          fill: theme.palette.text.primary
-        },
 
         '&:focus-visible': {
           // Solves a known Mui issue: https://github.com/mui/material-ui/issues/23747
@@ -68,9 +65,6 @@ export const navigationOverrides = {
           },
           '& .MuiTypography-root, & .MuiSvgIcon-root': {
             color: theme.palette.primary.main
-          },
-          '.MuiListItemIcon-root svg path': {
-            fill: theme.palette.primary.main
           },
           '.MuiTypography-caption': {
             // secondary text
