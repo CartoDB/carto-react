@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { MenuItem as MuiMenuItem, styled } from '@mui/material';
 
 const StyledMenuItem = styled(MuiMenuItem, {
-  shouldForwardProp: (prop) => !['subtitle', 'destructive', 'extended'].includes(prop)
-})(({ subtitle, destructive, extended, theme }) => ({
+  shouldForwardProp: (prop) =>
+    !['subtitle', 'destructive', 'extended', 'iconColor'].includes(prop)
+})(({ subtitle, destructive, extended, iconColor, theme }) => ({
   ...(subtitle && {
     pointerEvents: 'none',
     columnGap: 0,
@@ -25,6 +26,15 @@ const StyledMenuItem = styled(MuiMenuItem, {
       }
     }
   }),
+
+  ...(iconColor === 'primary' && {
+    '.MuiListItemIcon-root svg path': {
+      fill: theme.palette.text.primary
+    },
+    '&.Mui-selected .MuiListItemIcon-root svg path': {
+      fill: theme.palette.primary.main
+    }
+  }),
   ...(destructive && {
     color: theme.palette.error.main,
 
@@ -35,6 +45,9 @@ const StyledMenuItem = styled(MuiMenuItem, {
       color: theme.palette.error.main
     },
     '.MuiListItemIcon-root svg path': {
+      fill: theme.palette.error.main
+    },
+    '&.Mui-selected .MuiListItemIcon-root svg path': {
       fill: theme.palette.error.main
     },
 
@@ -70,12 +83,20 @@ const StyledMenuItem = styled(MuiMenuItem, {
   })
 }));
 
-const MenuItem = ({ subtitle, destructive, extended, children, ...otherProps }) => {
+const MenuItem = ({
+  subtitle,
+  destructive,
+  extended,
+  children,
+  iconColor,
+  ...otherProps
+}) => {
   return (
     <StyledMenuItem
       subtitle={subtitle}
       destructive={destructive}
       extended={extended}
+      iconColor={iconColor}
       {...otherProps}
     >
       {children}
@@ -83,10 +104,14 @@ const MenuItem = ({ subtitle, destructive, extended, children, ...otherProps }) 
   );
 };
 
+MenuItem.defaultProps = {
+  iconColor: 'primary'
+};
 MenuItem.propTypes = {
   subtitle: PropTypes.bool,
   destructive: PropTypes.bool,
-  extended: PropTypes.bool
+  extended: PropTypes.bool,
+  iconColor: PropTypes.oneOf(['primary', 'default'])
 };
 
 export default MenuItem;
