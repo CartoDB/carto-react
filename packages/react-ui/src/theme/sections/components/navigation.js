@@ -26,7 +26,6 @@ export const navigationOverrides = {
         columnGap: theme.spacing(1),
         minHeight: theme.spacing(4),
         padding: theme.spacing(0.75, 1, 0.75, 1.5),
-        backgroundColor: theme.palette.background.paper,
         whiteSpace: 'normal',
         transition: 'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
