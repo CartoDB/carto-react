@@ -68,7 +68,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^3.0.0-alpha.7",
+    "@carto/react-core": "^3.0.0-alpha.9",
     "react": "17.x || 18.x",
     "react-dom": "17.x || 18.x"
   }
