@@ -132,7 +132,7 @@ const Marker = styled(Box, {
   display: 'block',
   width: theme.spacing(1.5),
   height: theme.spacing(1.5),
-  flex: '0, 0, auto',
+  flexShrink: '0',
   borderRadius: '50%',
   position: 'relative',
   border: '2px solid transparent',
