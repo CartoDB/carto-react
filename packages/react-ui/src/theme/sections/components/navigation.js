@@ -135,10 +135,10 @@ export const navigationOverrides = {
           '&:focus-visible': {
             outline: 'none !important',
             boxShadow: 'none !important'
-          },
-          '.MuiDivider-root': {
-            margin: theme.spacing(1, 0)
           }
+        },
+        '.MuiDivider-root': {
+          margin: theme.spacing(1, 0)
         },
 
         // Indent sublevels, ugly but needed to avoid issues with hover
@@ -199,12 +199,7 @@ export const navigationOverrides = {
     styleOverrides: {
       root: ({ theme }) => ({
         '& .MuiSvgIcon-root': {
-          fontSize: ICON_SIZE_LARGE,
-          color: theme.palette.text.primary,
-
-          path: {
-            fill: 'currentColor'
-          }
+          fontSize: ICON_SIZE_LARGE
         },
         '.MuiMenuItem-root.MuiButtonBase-root &': {
           minWidth: ICON_SIZE_MEDIUM
