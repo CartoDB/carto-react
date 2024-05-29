@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix legend deformed dot when the title is too long [#871](https://github.com/CartoDB/carto-react/pull/871)
+
 ## 3.0.0
 
 ### 3.0.0-alpha.8 (2024-04-23)
