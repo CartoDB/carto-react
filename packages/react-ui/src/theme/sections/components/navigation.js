@@ -143,6 +143,9 @@ export const navigationOverrides = {
 
         // Indent sublevels, ugly but needed to avoid issues with hover
         '& .MuiList-root': {
+          paddingTop: 0,
+          paddingBottom: 0,
+
           '& .MuiListItem-root': {
             paddingLeft: theme.spacing(4)
           },

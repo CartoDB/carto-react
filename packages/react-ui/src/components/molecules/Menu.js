@@ -6,7 +6,11 @@ const StyledMenu = styled(MuiMenu, {
   shouldForwardProp: (prop) => !['extended', 'width', 'height'].includes(prop)
 })(({ extended, width, height, theme }) => ({
   '.MuiMenu-list': {
-    backgroundColor: '#ff970038 !important' // TODO: remove, just for QA purposes
+    backgroundColor: '#ff970038 !important', // TODO: remove, just for QA purposes
+
+    '& .MuiList-root': {
+      backgroundColor: 'transparent !important' // TODO: remove, just for QA purposes,
+    }
   },
   ...(extended && {
     '.MuiMenuItem-root': {
