@@ -6,6 +6,10 @@ const StyledMenuItem = styled(MuiMenuItem, {
   shouldForwardProp: (prop) =>
     !['subtitle', 'destructive', 'extended', 'iconColor'].includes(prop)
 })(({ subtitle, destructive, extended, iconColor, theme }) => ({
+  '&.MuiMenuItem-root': {
+    backgroundColor: '#fbf6e8 !important' // TODO: remove, just for QA purposes
+  },
+
   ...(subtitle && {
     pointerEvents: 'none',
     columnGap: 0,
