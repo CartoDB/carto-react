@@ -13,6 +13,10 @@ const StyledMenuList = styled(MuiMenuList, {
   '&.MuiList-root': {
     backgroundColor: '#ff970038 !important', // TODO: remove, just for QA purposes
 
+    '& .MuiList-root': {
+      backgroundColor: 'transparent !important' // TODO: remove, just for QA purposes,
+    },
+
     ...(width && {
       width: width,
       minWidth: width
