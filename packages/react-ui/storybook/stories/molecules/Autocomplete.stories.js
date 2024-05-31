@@ -1,12 +1,18 @@
 import React from 'react';
-import { Grid, Autocomplete, TextField } from '@mui/material';
-
+import { Grid, Autocomplete as MuiAutocomplete, TextField } from '@mui/material';
 import Typography from '../../../src/components/atoms/Typography';
-import { Container, Label } from '../../utils/storyStyles';
+import Autocomplete from '../../../src/components/molecules/Autocomplete';
+import {
+  Container,
+  DocContainer,
+  DocHighlight,
+  DocLink,
+  Label
+} from '../../utils/storyStyles';
 
 const options = {
   title: 'Molecules/Autocomplete',
-  component: Autocomplete,
+  component: MuiAutocomplete,
   argTypes: {
     variant: {
       control: {
@@ -73,7 +79,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/C4R-Components?type=design&node-id=1534-26505'
     },
     status: {
-      type: 'validated'
+      type: 'readyToReview'
     }
   }
 };
@@ -107,7 +113,7 @@ const PlaygroundTemplate = ({
   required,
   ...args
 }) => (
-  <Autocomplete
+  <MuiAutocomplete
     {...args}
     options={top100Films}
     getOptionLabel={(option) => option.title}
@@ -142,7 +148,7 @@ const VariantsTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Filled'}</Label>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -166,7 +172,7 @@ const VariantsTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Outlined'}</Label>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -206,7 +212,7 @@ const LabelAndHelperTextTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Label + helper text'}</Label>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -230,7 +236,7 @@ const LabelAndHelperTextTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Without label + helper text'}</Label>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -252,7 +258,7 @@ const LabelAndHelperTextTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only label'}</Label>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -275,7 +281,7 @@ const LabelAndHelperTextTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only helper text'}</Label>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -322,7 +328,7 @@ const MultipleTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Filled'}</Label>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -347,7 +353,7 @@ const MultipleTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Outlined'}</Label>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -372,7 +378,7 @@ const MultipleTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Filled readOnly'}</Label>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             defaultValue={defaultValue}
@@ -399,7 +405,7 @@ const MultipleTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Outlined readOnly'}</Label>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             defaultValue={defaultValue}
@@ -444,7 +450,7 @@ const SizeTemplate = ({
           <Typography>Placeholder</Typography>
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -464,7 +470,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -490,7 +496,7 @@ const SizeTemplate = ({
           <Typography>Empty</Typography>
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -509,7 +515,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -534,7 +540,7 @@ const SizeTemplate = ({
           <Typography>Filled</Typography>
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             defaultValue={top100Films[6]}
@@ -555,7 +561,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             defaultValue={top100Films[6]}
@@ -582,7 +588,7 @@ const SizeTemplate = ({
           <Typography>Focused</Typography>
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -603,7 +609,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -630,7 +636,7 @@ const SizeTemplate = ({
           <Typography>Disabled</Typography>
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -651,7 +657,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -678,7 +684,7 @@ const SizeTemplate = ({
           <Typography>Read Only</Typography>
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             defaultValue={top100Films[6]}
@@ -700,7 +706,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             defaultValue={top100Films[6]}
@@ -728,7 +734,7 @@ const SizeTemplate = ({
           <Typography>Error</Typography>
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -749,7 +755,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <Autocomplete
+          <MuiAutocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -773,6 +779,62 @@ const SizeTemplate = ({
     </Grid>
   );
 };
+
+const CreatableTemplate = ({
+  label,
+  variant,
+  placeholder,
+  helperText,
+  error,
+  size,
+  required,
+  ...args
+}) => (
+  <>
+    <DocContainer severity='warning'>
+      For this use case, we have our own
+      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/molecules/Autocomplete.js'>
+        Autocomplete
+      </DocLink>
+      component that uses <i>Mui Autocomplete</i> and extends it with a new prop
+      <DocHighlight component='span'>(creatable)</DocHighlight> to add new MenuItem
+      options that don't exist yet.
+      <Typography mt={2}>
+        Import it from
+        <DocHighlight component='span'>
+          react-ui/src/components/molecules/Autocomplete
+        </DocHighlight>
+      </Typography>
+      <Typography mt={2}>
+        For external use:
+        <DocHighlight component='span'>
+          {'import { Autocomplete } from "@carto/react-ui";'}
+        </DocHighlight>
+        .
+      </Typography>
+    </DocContainer>
+
+    <Autocomplete
+      {...args}
+      options={top100Films}
+      getOptionLabel={(option) => option.title}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={label}
+          placeholder={placeholder}
+          helperText={helperText}
+          variant={variant}
+          error={error}
+          size={size}
+          required={required}
+          InputLabelProps={{ shrink: true }}
+        />
+      )}
+      size={size}
+    />
+  </>
+);
 
 const commonArgs = {
   label: 'Label text',
@@ -819,3 +881,6 @@ Medium.argTypes = disabledControlsSizeArgTypes;
 export const Small = SizeTemplate.bind({});
 Small.args = { ...commonArgs, ...sizeArgs, size: 'small' };
 Small.argTypes = disabledControlsSizeArgTypes;
+
+export const Creatable = CreatableTemplate.bind({});
+Creatable.args = { ...commonArgs };

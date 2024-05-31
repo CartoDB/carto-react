@@ -43,6 +43,7 @@ import SelectField from './components/atoms/SelectField';
 import MultipleSelectField from './components/molecules/MultipleSelectField/MultipleSelectField';
 import UploadField from './components/molecules/UploadField/UploadField';
 import UploadFieldBase from './components/molecules/UploadField/UploadFieldBase';
+import Autocomplete from './components/molecules/Autocomplete';
 import AppBar from './components/organisms/AppBar/AppBar';
 import LabelWithIndicator from './components/atoms/LabelWithIndicator';
 import { getCartoColorStylePropsForItem } from './utils/palette';
@@ -103,6 +104,7 @@ export {
   MultipleSelectField,
   UploadField,
   UploadFieldBase,
+  Autocomplete,
   AppBar,
   ArrowDropIcon,
   LabelWithIndicator,

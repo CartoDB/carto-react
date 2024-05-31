@@ -32,7 +32,7 @@ const PlaceholderItem = styled(MenuItem)(() => ({
   display: 'none'
 }));
 
-const SelectField = forwardRef(
+const Autocomplete = forwardRef(
   (
     {
       children,
@@ -137,16 +137,8 @@ const SelectField = forwardRef(
   }
 );
 
-SelectField.defaultProps = {
-  size: 'small'
-};
-SelectField.propTypes = {
-  placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  size: PropTypes.oneOf(['small', 'medium']),
-  menuProps: PropTypes.object,
-  inputProps: PropTypes.object,
-  helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  labelSecondary: PropTypes.element
+Autocomplete.propTypes = {
+  creatable: PropTypes.bool
 };
 
-export default SelectField;
+export default Autocomplete;

@@ -10,7 +10,7 @@ import BarWidgetUI from './widgets/BarWidgetUI/BarWidgetUI';
 import HistogramWidgetUI from './widgets/HistogramWidgetUI/HistogramWidgetUI';
 import PieWidgetUI from './widgets/PieWidgetUI/PieWidgetUI';
 import LegendWidgetUI from './widgets/legend/LegendWidgetUI';
-import LEGEND_TYPES from './widgets/legend/legend-types/LegendTypes'
+import LEGEND_TYPES from './widgets/legend/legend-types/LegendTypes';
 import LegendCategories from './widgets/legend/legend-types/LegendCategories';
 import LegendIcon from './widgets/legend/legend-types/LegendIcon';
 import LegendProportion from './widgets/legend/legend-types/LegendProportion';
@@ -52,6 +52,7 @@ import UploadField, {
 import UploadFieldBase, {
   UploadFieldBaseProps
 } from './components/molecules/UploadField/UploadFieldBase';
+import Autocomplete, { AutocompleteProps } from './components/molecules/Autocomplete';
 import AppBar, { AppBarProps } from './components/organisms/AppBar/AppBar';
 import LabelWithIndicator, {
   LabelWithIndicatorProps
@@ -121,6 +122,8 @@ export {
   UploadFieldProps,
   UploadFieldBase,
   UploadFieldBaseProps,
+  Autocomplete,
+  AutocompleteProps,
   AppBar,
   AppBarProps,
   LabelWithIndicator,

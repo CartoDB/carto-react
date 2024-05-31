@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Add creatable functionality to Autocomplete [#828](https://github.com/CartoDB/carto-react/pull/828)
+
 ## 3.0.0
 
 ### 3.0.0-alpha.9 (2024-05-29)
@@ -16,7 +18,7 @@
 
 ### 3.0.0-alpha.7 (2024-04-16)
 
--  Update Deck GL v9 and removed dropping features functionality [#838](https://github.com/CartoDB/carto-react/pull/838)
+- Update Deck GL v9 and removed dropping features functionality [#838](https://github.com/CartoDB/carto-react/pull/838)
 
 ## 2.5
 
@@ -26,8 +28,8 @@
 
 ### 2.5.2 (2024-04-10)
 
--  configurable timeseries y axis [#861](https://github.com/CartoDB/carto-react/pull/861)
--  configurable histogram y axis [#860](https://github.com/CartoDB/carto-react/pull/860)
+- configurable timeseries y axis [#861](https://github.com/CartoDB/carto-react/pull/861)
+- configurable histogram y axis [#860](https://github.com/CartoDB/carto-react/pull/860)
 
 ### 2.5.1 (2024-04-03)
 
