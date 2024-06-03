@@ -220,6 +220,16 @@ export const formsOverrides = {
           opacity: 1
         },
         '& legend': { display: 'none' },
+        '& .MuiButtonBase-root.MuiMenuItem-root': {
+          padding: 0,
+
+          '&:hover': {
+            backgroundColor: 'transparent'
+          },
+          [theme.breakpoints.up('sm')]: {
+            minHeight: 'initial'
+          }
+        },
 
         // Variants
         '&.MuiFilledInput-root': {

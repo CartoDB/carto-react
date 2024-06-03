@@ -108,6 +108,26 @@ const PlaygroundTemplate = ({ ...rest }) => {
     {
       label: 'Fifty',
       value: 'Fifty'
+    },
+    {
+      label: 'Sixty',
+      value: 'Sixty'
+    },
+    {
+      label: 'Seventy',
+      value: 'Seventy'
+    },
+    {
+      label: 'Eighty',
+      value: 'Eighty'
+    },
+    {
+      label: 'Ninety',
+      value: 'Ninety'
+    },
+    {
+      label: 'Hundred',
+      value: 'Hundred'
     }
   ];
 

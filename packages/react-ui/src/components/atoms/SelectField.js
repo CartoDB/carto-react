@@ -25,6 +25,9 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   },
   '& .MuiSelect-select .MuiMenuItem-root:hover': {
     backgroundColor: 'transparent'
+  },
+  '&.MuiInputBase-root .MuiSelect-select.MuiSelect-multiple': {
+    paddingRight: theme.spacing(7)
   }
 }));
 
