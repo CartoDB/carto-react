@@ -1,40 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  MenuItem,
   Autocomplete as MuiAutocomplete,
-  createFilterOptions,
-  TextField
+  createFilterOptions
 } from '@mui/material';
 
 const filter = createFilterOptions();
 
-const Autocomplete = ({ options, creatable, ...otherProps }) => {
-  const [value, setValue] = React.useState(null);
-
+const Autocomplete = ({ creatable, ...otherProps }) => {
   return (
     <MuiAutocomplete
       {...otherProps}
       creatable={creatable}
-      value={value}
-      onChange={(event, newValue) => {
-        if (typeof newValue === 'string') {
-          setValue({
-            title: newValue
-          });
-        } else if (newValue && newValue.inputValue) {
-          // Create a new value from the user input
-          setValue({
-            title: newValue.inputValue
-          });
-        } else {
-          setValue(newValue);
-        }
-      }}
       filterOptions={(options, params) => {
         const filtered = filter(options, params);
-
         const { inputValue } = params;
-        // Suggest the creation of a new value
+
         const isExisting = options.some((option) => inputValue === option.title);
         if (inputValue !== '' && !isExisting) {
           filtered.push({
@@ -45,12 +27,8 @@ const Autocomplete = ({ options, creatable, ...otherProps }) => {
 
         return filtered;
       }}
-      selectOnFocus
-      clearOnBlur
-      handleHomeEndKeys
-      options={options}
       getOptionLabel={(option) => {
-        // Value selected with enter, right from the input
+        // Value selected with enter
         if (typeof option === 'string') {
           return option;
         }
@@ -61,10 +39,8 @@ const Autocomplete = ({ options, creatable, ...otherProps }) => {
         // Regular option
         return option.title;
       }}
-      renderOption={(props, option) => <li {...props}>{option.title}</li>}
-      sx={{ width: 300 }}
+      renderOption={(props, option) => <MenuItem {...props}>{option.title}</MenuItem>}
       freeSolo
-      renderInput={(params) => <TextField {...params} label='Free solo with text demo' />}
     />
   );
 };
