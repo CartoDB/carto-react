@@ -69,9 +69,6 @@ const Autocomplete = ({ options, creatable, ...otherProps }) => {
   );
 };
 
-Autocomplete.defaultProps = {
-  size: 'medium'
-};
 Autocomplete.propTypes = {
   creatable: PropTypes.bool
 };
