@@ -18,7 +18,7 @@ const Autocomplete = ({ creatable, ...otherProps }) => {
         const { inputValue } = params;
 
         const isExisting = options.some((option) => inputValue === option.title);
-        if (inputValue !== '' && !isExisting) {
+        if (inputValue.length > 1 && inputValue !== '' && !isExisting) {
           filtered.push({
             inputValue,
             title: `Add "${inputValue}"`
