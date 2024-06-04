@@ -5,6 +5,7 @@ export type MenuItemProps = MuiMenuItemProps & {
   destructive?: boolean;
   extended?: boolean;
   iconColor?: 'primary' | 'default';
+  fixed?: boolean;
 };
 
 declare const MenuItem: (props: MenuItemProps) => JSX.Element;
