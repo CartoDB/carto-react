@@ -53,6 +53,9 @@ import UploadFieldBase, {
   UploadFieldBaseProps
 } from './components/molecules/UploadField/UploadFieldBase';
 import Autocomplete, { AutocompleteProps } from './components/molecules/Autocomplete';
+import Menu, { MenuProps } from './components/molecules/Menu';
+import MenuList, { MenuListProps } from './components/molecules/MenuList';
+import MenuItem, { MenuItemProps } from './components/molecules/MenuItem';
 import AppBar, { AppBarProps } from './components/organisms/AppBar/AppBar';
 import LabelWithIndicator, {
   LabelWithIndicatorProps
@@ -124,6 +127,12 @@ export {
   UploadFieldBaseProps,
   Autocomplete,
   AutocompleteProps,
+  Menu,
+  MenuProps,
+  MenuList,
+  MenuListProps,
+  MenuItem,
+  MenuItemProps,
   AppBar,
   AppBarProps,
   LabelWithIndicator,
