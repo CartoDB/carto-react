@@ -2,9 +2,11 @@
 
 ## Not released
 
-- New DS core components: Menu & MenuItem [#828](https://github.com/CartoDB/carto-react/pull/828)
-
 ## 3.0.0
+
+### 3.0.0-alpha.10 (2024-06-03)
+
+- New DS core components: Menu & MenuItem [#828](https://github.com/CartoDB/carto-react/pull/828)
 
 ### 3.0.0-alpha.9 (2024-05-29)
 
