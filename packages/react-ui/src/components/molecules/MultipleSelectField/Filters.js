@@ -1,27 +1,14 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import useImperativeIntl from '../../../hooks/useImperativeIntl';
-import { Box, Checkbox, Link, styled } from '@mui/material';
-
-const FiltersRoot = styled(Box)(({ theme }) => ({
-  position: 'sticky',
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,
-  zIndex: 2,
-  marginBottom: theme.spacing(1),
-  backgroundColor: theme.palette.background.paper,
-  borderBottom: `1px solid ${theme.palette.divider}`
-}));
+import { Checkbox, Link, styled } from '@mui/material';
+import MenuItem from '../MenuItem';
 
 const LinkFilter = styled(Link)(({ disabled, theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing(1),
   width: '100%',
-  height: theme.spacing(6),
-  padding: theme.spacing(0.5, 1.5),
   textAlign: 'initial',
 
   ...(disabled && { pointerEvents: 'none', color: theme.palette.text.disabled })
@@ -32,7 +19,7 @@ function Filters({ areAllSelected, areAnySelected, selectAll, selectAllDisabled 
   const intlConfig = useImperativeIntl(intl);
 
   return (
-    <FiltersRoot>
+    <MenuItem fixed>
       <LinkFilter
         variant='body2'
         color='textPrimary'
@@ -49,7 +36,7 @@ function Filters({ areAllSelected, areAnySelected, selectAll, selectAllDisabled 
         />
         {intlConfig.formatMessage({ id: 'c4r.form.selectAll' })}
       </LinkFilter>
-    </FiltersRoot>
+    </MenuItem>
   );
 }
 
