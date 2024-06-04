@@ -288,6 +288,9 @@ export const dataDisplayOverrides = {
 
         '&.MuiTableRow-hover:hover': {
           cursor: 'pointer'
+        },
+        '&.Mui-selected': {
+          backgroundColor: theme.palette.background.default
         }
       })
     }
