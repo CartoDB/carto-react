@@ -8,11 +8,11 @@ import {
 
 const filter = createFilterOptions();
 
-const Autocomplete = ({ creatable, ...otherProps }) => {
+const Autocomplete = ({ creatable, freeSolo, ...otherProps }) => {
+  console.log('creatable', creatable);
   return (
     <MuiAutocomplete
       {...otherProps}
-      creatable={creatable}
       filterOptions={(options, params) => {
         const filtered = filter(options, params);
         const { inputValue } = params;
@@ -40,7 +40,9 @@ const Autocomplete = ({ creatable, ...otherProps }) => {
         return option.title;
       }}
       renderOption={(props, option) => <MenuItem {...props}>{option.title}</MenuItem>}
-      freeSolo
+      freeSolo={creatable || freeSolo}
+      forcePopupIcon
+      creatable={creatable}
     />
   );
 };
