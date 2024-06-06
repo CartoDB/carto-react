@@ -8,11 +8,16 @@ import {
 
 const filter = createFilterOptions();
 
-const Autocomplete = ({ creatable, ...otherProps }) => {
+const Autocomplete = ({
+  creatable,
+  newItemTitle,
+  freeSolo,
+  renderOption,
+  ...otherProps
+}) => {
   return (
     <MuiAutocomplete
       {...otherProps}
-      creatable={creatable}
       filterOptions={(options, params) => {
         const filtered = filter(options, params);
         const { inputValue } = params;
@@ -21,7 +26,7 @@ const Autocomplete = ({ creatable, ...otherProps }) => {
         if (inputValue.length > 1 && inputValue !== '' && !isExisting) {
           filtered.push({
             inputValue,
-            title: `Add "${inputValue}"`
+            title: newItemTitle || `Add "${inputValue}"`
           });
         }
 
@@ -32,21 +37,28 @@ const Autocomplete = ({ creatable, ...otherProps }) => {
         if (typeof option === 'string') {
           return option;
         }
-        // Add "xxx" option created dynamically
+        // Add option created dynamically
         if (option.inputValue) {
           return option.inputValue;
         }
         // Regular option
         return option.title;
       }}
-      renderOption={(props, option) => <MenuItem {...props}>{option.title}</MenuItem>}
-      freeSolo
+      renderOption={
+        creatable
+          ? (props, option) => <MenuItem {...props}>{option.title}</MenuItem>
+          : renderOption
+      }
+      freeSolo={creatable || freeSolo}
+      forcePopupIcon
+      creatable={creatable}
     />
   );
 };
 
 Autocomplete.propTypes = {
-  creatable: PropTypes.bool
+  creatable: PropTypes.bool,
+  newItemTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
 };
 
 export default Autocomplete;

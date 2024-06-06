@@ -1,7 +1,29 @@
-import React from 'react';
-import { Grid, Autocomplete as MuiAutocomplete, TextField } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Grid,
+  InputAdornment,
+  ListItemIcon,
+  ListItemText,
+  TextField
+} from '@mui/material';
+import {
+  AccessAlarmOutlined,
+  AccountTreeOutlined,
+  AddCircleOutlined,
+  AddTaskOutlined,
+  AnalyticsOutlined,
+  AnimationOutlined,
+  AutorenewOutlined,
+  BlockOutlined,
+  BookmarkAddOutlined,
+  BuildOutlined,
+  CheckCircleOutlined,
+  EditOutlined,
+  MovieOutlined
+} from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
 import Autocomplete from '../../../src/components/molecules/Autocomplete';
+import MenuItem from '../../../src/components/molecules/MenuItem';
 import {
   Container,
   DocContainer,
@@ -12,7 +34,7 @@ import {
 
 const options = {
   title: 'Molecules/Autocomplete',
-  component: MuiAutocomplete,
+  component: Autocomplete,
   argTypes: {
     variant: {
       control: {
@@ -56,6 +78,12 @@ const options = {
         type: 'boolean'
       }
     },
+    creatable: {
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
+    },
     limitTags: {
       defaultValue: 1,
       control: {
@@ -68,6 +96,11 @@ const options = {
       }
     },
     placeholder: {
+      control: {
+        type: 'text'
+      }
+    },
+    newItemTitle: {
       control: {
         type: 'text'
       }
@@ -86,21 +119,37 @@ const options = {
 export default options;
 
 const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  { title: 'The Lord of the Rings: The Return of the King', year: 2003 },
-  { title: 'The Good, the Bad and the Ugly', year: 1966 },
-  { title: 'Fight Club', year: 1999 },
-  { title: 'The Lord of the Rings: The Fellowship of the Ring', year: 2001 },
-  { title: 'Star Wars: Episode V - The Empire Strikes Back', year: 1980 },
-  { title: 'Forrest Gump', year: 1994 },
-  { title: 'Inception', year: 2010 },
-  { title: 'The Lord of the Rings: The Two Towers', year: 2002 }
+  { title: 'The Shawshank Redemption', year: 1994, icon: <MovieOutlined /> },
+  { title: 'The Godfather', year: 1972, icon: <EditOutlined /> },
+  { title: 'The Godfather: Part II', year: 1974, icon: <AccessAlarmOutlined /> },
+  { title: 'The Dark Knight', year: 2008, icon: <AccountTreeOutlined /> },
+  { title: '12 Angry Men', year: 1957, icon: <AddCircleOutlined /> },
+  { title: "Schindler's List", year: 1993, icon: <AddTaskOutlined /> },
+  { title: 'Pulp Fiction', year: 1994, icon: <AnalyticsOutlined /> },
+  {
+    title: 'The Lord of the Rings: The Return of the King',
+    year: 2003,
+    icon: <AnimationOutlined />
+  },
+  { title: 'The Good, the Bad and the Ugly', year: 1966, icon: <AutorenewOutlined /> },
+  { title: 'Fight Club', year: 1999, icon: <MovieOutlined /> },
+  {
+    title: 'The Lord of the Rings: The Fellowship of the Ring',
+    year: 2001,
+    icon: <BlockOutlined />
+  },
+  {
+    title: 'Star Wars: Episode V - The Empire Strikes Back',
+    year: 1980,
+    icon: <BookmarkAddOutlined />
+  },
+  { title: 'Forrest Gump', year: 1994, icon: <BuildOutlined /> },
+  { title: 'Inception', year: 2010, icon: <MovieOutlined /> },
+  {
+    title: 'The Lord of the Rings: The Two Towers',
+    year: 2002,
+    icon: <CheckCircleOutlined />
+  }
 ];
 
 const PlaygroundTemplate = ({
@@ -113,7 +162,7 @@ const PlaygroundTemplate = ({
   required,
   ...args
 }) => (
-  <MuiAutocomplete
+  <Autocomplete
     {...args}
     options={top100Films}
     getOptionLabel={(option) => option.title}
@@ -148,7 +197,7 @@ const VariantsTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Filled'}</Label>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -172,7 +221,7 @@ const VariantsTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Outlined'}</Label>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -212,7 +261,7 @@ const LabelAndHelperTextTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Label + helper text'}</Label>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -236,7 +285,7 @@ const LabelAndHelperTextTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Without label + helper text'}</Label>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -258,7 +307,7 @@ const LabelAndHelperTextTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only label'}</Label>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -281,7 +330,7 @@ const LabelAndHelperTextTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Only helper text'}</Label>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -328,7 +377,7 @@ const MultipleTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Filled'}</Label>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -353,7 +402,7 @@ const MultipleTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Outlined'}</Label>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -378,7 +427,7 @@ const MultipleTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Filled readOnly'}</Label>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             defaultValue={defaultValue}
@@ -405,7 +454,7 @@ const MultipleTemplate = ({
       <Grid item>
         <Container>
           <Label variant='body2'>{'Outlined readOnly'}</Label>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             defaultValue={defaultValue}
@@ -450,7 +499,7 @@ const SizeTemplate = ({
           <Typography>Placeholder</Typography>
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -470,7 +519,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -496,7 +545,7 @@ const SizeTemplate = ({
           <Typography>Empty</Typography>
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -515,7 +564,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -540,7 +589,7 @@ const SizeTemplate = ({
           <Typography>Filled</Typography>
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             defaultValue={top100Films[6]}
@@ -561,7 +610,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             defaultValue={top100Films[6]}
@@ -588,7 +637,7 @@ const SizeTemplate = ({
           <Typography>Focused</Typography>
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -609,7 +658,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -636,7 +685,7 @@ const SizeTemplate = ({
           <Typography>Disabled</Typography>
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -657,7 +706,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -684,7 +733,7 @@ const SizeTemplate = ({
           <Typography>Read Only</Typography>
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             defaultValue={top100Films[6]}
@@ -706,7 +755,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             defaultValue={top100Films[6]}
@@ -734,7 +783,7 @@ const SizeTemplate = ({
           <Typography>Error</Typography>
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -755,7 +804,7 @@ const SizeTemplate = ({
           />
         </Grid>
         <Grid item xs>
-          <MuiAutocomplete
+          <Autocomplete
             {...args}
             options={top100Films}
             getOptionLabel={(option) => option.title}
@@ -780,7 +829,7 @@ const SizeTemplate = ({
   );
 };
 
-const CreatableTemplate = ({
+const RenderOptionTemplate = ({
   label,
   variant,
   placeholder,
@@ -789,51 +838,78 @@ const CreatableTemplate = ({
   size,
   required,
   ...args
-}) => (
-  <>
-    <DocContainer severity='warning'>
-      For this use case, we have our own
-      <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/molecules/Autocomplete.js'>
-        Autocomplete
-      </DocLink>
-      component that uses <i>Mui Autocomplete</i> and extends it with a new prop
-      <DocHighlight component='span'>(creatable)</DocHighlight> to add new MenuItem
-      options that don't exist yet.
-      <Typography mt={2}>
-        Import it from
-        <DocHighlight component='span'>
-          react-ui/src/components/molecules/Autocomplete
-        </DocHighlight>
-      </Typography>
-      <Typography mt={2}>
-        For external use:
-        <DocHighlight component='span'>
-          {'import { Autocomplete } from "@carto/react-ui";'}
-        </DocHighlight>
-        .
-      </Typography>
-    </DocContainer>
+}) => {
+  const [selectedOption, setSelectedOption] = useState(null);
 
-    <Autocomplete
-      {...args}
-      options={top100Films}
-      getOptionLabel={(option) => option.title}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label={label}
-          placeholder={placeholder}
-          helperText={helperText}
-          variant={variant}
-          error={error}
-          size={size}
-          required={required}
-          InputLabelProps={{ shrink: true }}
-        />
-      )}
-      size={size}
-    />
-  </>
+  return (
+    <>
+      <DocContainer severity='info'>
+        Uses `startAdornment` for the icon in the input and `renderOption` to override
+        default list items
+      </DocContainer>
+
+      <Autocomplete
+        {...args}
+        options={top100Films}
+        getOptionLabel={(option) => option.title}
+        onChange={(event, newValue) => {
+          setSelectedOption(newValue);
+        }}
+        renderInput={(params) => {
+          if (selectedOption) {
+            params.InputProps.startAdornment = (
+              <InputAdornment position='start'>{selectedOption.icon}</InputAdornment>
+            );
+          }
+          return (
+            <TextField
+              {...params}
+              label={label}
+              placeholder={placeholder}
+              helperText={helperText}
+              variant={variant}
+              error={error}
+              size={size}
+              required={required}
+              InputLabelProps={{ shrink: true }}
+            />
+          );
+        }}
+        size={size}
+        renderOption={(props, option) => (
+          <MenuItem {...props}>
+            <ListItemIcon>{option.icon}</ListItemIcon>
+            <ListItemText>{option.title}</ListItemText>
+          </MenuItem>
+        )}
+      />
+    </>
+  );
+};
+
+const DocTemplate = () => (
+  <DocContainer severity='warning'>
+    We have our own
+    <DocLink href='https://github.com/CartoDB/carto-react/blob/master/packages/react-ui/src/components/molecules/Autocomplete.js'>
+      Autocomplete
+    </DocLink>
+    component that uses <i>Mui Autocomplete</i> and extends it with a new prop
+    <DocHighlight component='span'>(creatable)</DocHighlight> to add new MenuItem options
+    that don't exist yet.
+    <Typography mt={2}>
+      Import it from
+      <DocHighlight component='span'>
+        react-ui/src/components/molecules/Autocomplete
+      </DocHighlight>
+    </Typography>
+    <Typography mt={2}>
+      For external use:
+      <DocHighlight component='span'>
+        {'import { Autocomplete } from "@carto/react-ui";'}
+      </DocHighlight>
+      .
+    </Typography>
+  </DocContainer>
 );
 
 const commonArgs = {
@@ -860,6 +936,8 @@ const disabledControlsSizeArgTypes = {
 export const Playground = PlaygroundTemplate.bind({});
 Playground.args = { ...commonArgs };
 
+export const Guide = DocTemplate.bind({});
+
 export const Variants = VariantsTemplate.bind({});
 Variants.args = { ...commonArgs };
 Variants.argTypes = disabledControlsVariantsArgTypes;
@@ -882,5 +960,8 @@ export const Small = SizeTemplate.bind({});
 Small.args = { ...commonArgs, ...sizeArgs, size: 'small' };
 Small.argTypes = disabledControlsSizeArgTypes;
 
-export const Creatable = CreatableTemplate.bind({});
-Creatable.args = { ...commonArgs };
+export const CustomRenderOption = RenderOptionTemplate.bind({});
+CustomRenderOption.args = { ...commonArgs };
+
+export const Creatable = PlaygroundTemplate.bind({});
+Creatable.args = { ...commonArgs, creatable: true };
