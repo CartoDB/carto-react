@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-redux",
-  "version": "3.0.0-alpha.10-autocomplete-0.2",
+  "version": "3.0.0-alpha.10-autocomplete-0.3",
   "description": "CARTO for React - Redux",
   "author": "CARTO Dev Team",
   "keywords": [
