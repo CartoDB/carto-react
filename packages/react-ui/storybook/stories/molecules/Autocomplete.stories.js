@@ -1,7 +1,29 @@
-import React from 'react';
-import { Grid, TextField } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Grid,
+  InputAdornment,
+  ListItemIcon,
+  ListItemText,
+  TextField
+} from '@mui/material';
+import {
+  AccessAlarmOutlined,
+  AccountTreeOutlined,
+  AddCircleOutlined,
+  AddTaskOutlined,
+  AnalyticsOutlined,
+  AnimationOutlined,
+  AutorenewOutlined,
+  BlockOutlined,
+  BookmarkAddOutlined,
+  BuildOutlined,
+  CheckCircleOutlined,
+  EditOutlined,
+  MovieOutlined
+} from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
 import Autocomplete from '../../../src/components/molecules/Autocomplete';
+import MenuItem from '../../../src/components/molecules/MenuItem';
 import {
   Container,
   DocContainer,
@@ -77,6 +99,11 @@ const options = {
       control: {
         type: 'text'
       }
+    },
+    newItemTitle: {
+      control: {
+        type: 'text'
+      }
     }
   },
   parameters: {
@@ -92,21 +119,37 @@ const options = {
 export default options;
 
 const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  { title: 'The Lord of the Rings: The Return of the King', year: 2003 },
-  { title: 'The Good, the Bad and the Ugly', year: 1966 },
-  { title: 'Fight Club', year: 1999 },
-  { title: 'The Lord of the Rings: The Fellowship of the Ring', year: 2001 },
-  { title: 'Star Wars: Episode V - The Empire Strikes Back', year: 1980 },
-  { title: 'Forrest Gump', year: 1994 },
-  { title: 'Inception', year: 2010 },
-  { title: 'The Lord of the Rings: The Two Towers', year: 2002 }
+  { title: 'The Shawshank Redemption', year: 1994, icon: <MovieOutlined /> },
+  { title: 'The Godfather', year: 1972, icon: <EditOutlined /> },
+  { title: 'The Godfather: Part II', year: 1974, icon: <AccessAlarmOutlined /> },
+  { title: 'The Dark Knight', year: 2008, icon: <AccountTreeOutlined /> },
+  { title: '12 Angry Men', year: 1957, icon: <AddCircleOutlined /> },
+  { title: "Schindler's List", year: 1993, icon: <AddTaskOutlined /> },
+  { title: 'Pulp Fiction', year: 1994, icon: <AnalyticsOutlined /> },
+  {
+    title: 'The Lord of the Rings: The Return of the King',
+    year: 2003,
+    icon: <AnimationOutlined />
+  },
+  { title: 'The Good, the Bad and the Ugly', year: 1966, icon: <AutorenewOutlined /> },
+  { title: 'Fight Club', year: 1999, icon: <MovieOutlined /> },
+  {
+    title: 'The Lord of the Rings: The Fellowship of the Ring',
+    year: 2001,
+    icon: <BlockOutlined />
+  },
+  {
+    title: 'Star Wars: Episode V - The Empire Strikes Back',
+    year: 1980,
+    icon: <BookmarkAddOutlined />
+  },
+  { title: 'Forrest Gump', year: 1994, icon: <BuildOutlined /> },
+  { title: 'Inception', year: 2010, icon: <MovieOutlined /> },
+  {
+    title: 'The Lord of the Rings: The Two Towers',
+    year: 2002,
+    icon: <CheckCircleOutlined />
+  }
 ];
 
 const PlaygroundTemplate = ({
@@ -786,6 +829,64 @@ const SizeTemplate = ({
   );
 };
 
+const RenderOptionTemplate = ({
+  label,
+  variant,
+  placeholder,
+  helperText,
+  error,
+  size,
+  required,
+  ...args
+}) => {
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  return (
+    <>
+      <DocContainer severity='info'>
+        Uses `startAdornment` for the icon in the input and `renderOption` to override
+        default list items
+      </DocContainer>
+
+      <Autocomplete
+        {...args}
+        options={top100Films}
+        getOptionLabel={(option) => option.title}
+        onChange={(event, newValue) => {
+          setSelectedOption(newValue);
+        }}
+        renderInput={(params) => {
+          if (selectedOption) {
+            params.InputProps.startAdornment = (
+              <InputAdornment position='start'>{selectedOption.icon}</InputAdornment>
+            );
+          }
+          return (
+            <TextField
+              {...params}
+              label={label}
+              placeholder={placeholder}
+              helperText={helperText}
+              variant={variant}
+              error={error}
+              size={size}
+              required={required}
+              InputLabelProps={{ shrink: true }}
+            />
+          );
+        }}
+        size={size}
+        renderOption={(props, option) => (
+          <MenuItem {...props}>
+            <ListItemIcon>{option.icon}</ListItemIcon>
+            <ListItemText>{option.title}</ListItemText>
+          </MenuItem>
+        )}
+      />
+    </>
+  );
+};
+
 const DocTemplate = () => (
   <DocContainer severity='warning'>
     We have our own
@@ -858,6 +959,9 @@ Medium.argTypes = disabledControlsSizeArgTypes;
 export const Small = SizeTemplate.bind({});
 Small.args = { ...commonArgs, ...sizeArgs, size: 'small' };
 Small.argTypes = disabledControlsSizeArgTypes;
+
+export const CustomRenderOption = RenderOptionTemplate.bind({});
+CustomRenderOption.args = { ...commonArgs };
 
 export const Creatable = PlaygroundTemplate.bind({});
 Creatable.args = { ...commonArgs, creatable: true };
