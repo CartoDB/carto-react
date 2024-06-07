@@ -15,8 +15,9 @@ const Autocomplete = forwardRef(
       newItemTitle,
       freeSolo,
       renderOption,
-      forcePopupIcon = true,
+      forcePopupIcon,
       filterOptions,
+      getOptionLabel,
       ...otherProps
     },
     ref
@@ -39,29 +40,31 @@ const Autocomplete = forwardRef(
       return filtered;
     };
 
+    const creatableOptionLabel = (option) => {
+      // Value selected with enter
+      if (typeof option === 'string') {
+        return option;
+      }
+      // Add option created dynamically
+      if (option.inputValue) {
+        return option.inputValue;
+      }
+      // Regular option
+      return option.title;
+    };
+
+    const creatableRenderOption = (props, option) => (
+      <MenuItem {...props}>{option.title}</MenuItem>
+    );
+
     return (
       <MuiAutocomplete
         {...otherProps}
         filterOptions={creatable ? creatableOptions : filterOptions}
-        getOptionLabel={(option) => {
-          // Value selected with enter
-          if (typeof option === 'string') {
-            return option;
-          }
-          // Add option created dynamically
-          if (option.inputValue) {
-            return option.inputValue;
-          }
-          // Regular option
-          return option.title;
-        }}
-        renderOption={
-          creatable
-            ? (props, option) => <MenuItem {...props}>{option.title}</MenuItem>
-            : renderOption
-        }
+        getOptionLabel={creatable ? creatableOptionLabel : getOptionLabel}
+        renderOption={creatable ? creatableRenderOption : renderOption}
         freeSolo={creatable || freeSolo}
-        forcePopupIcon={forcePopupIcon}
+        forcePopupIcon={creatable || forcePopupIcon}
       />
     );
   }
