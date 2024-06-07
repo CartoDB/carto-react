@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Docs added Table With Checkbox example & selected row state
+
 ## 3.0.0
 
 ### 3.0.0-alpha.10 (2024-06-03)
