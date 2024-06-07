@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Docs added Table With Checkbox example & selected row state
+- Table component: Added selected row and with checkbox example in Storybook [#876](https://github.com/CartoDB/carto-react/pull/876)
 
 ## 3.0.0
 
