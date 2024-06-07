@@ -1,10 +1,14 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import {
-  MenuItem,
+  Divider,
+  ListItemIcon,
+  ListItemText,
   Autocomplete as MuiAutocomplete,
   createFilterOptions
 } from '@mui/material';
+import { AddCircleOutlineOutlined } from '@mui/icons-material';
+import MenuItem from './MenuItem';
 
 const filter = createFilterOptions();
 
@@ -18,8 +22,6 @@ const Autocomplete = forwardRef(
       forcePopupIcon,
       filterOptions,
       getOptionLabel,
-      startAdornment,
-      inputParams,
       ...otherProps
     },
     ref
@@ -31,7 +33,7 @@ const Autocomplete = forwardRef(
       const filtered = filter(options, params);
       const { inputValue } = params;
 
-      const isExisting = options.some((option) => inputValue === option.title);
+      const isExisting = options.every((option) => inputValue === option.title);
       if (inputValue.length > 1 && inputValue !== '' && !isExisting) {
         filtered.push({
           inputValue,
@@ -56,7 +58,17 @@ const Autocomplete = forwardRef(
     };
 
     const creatableRenderOption = (props, option) => (
-      <MenuItem {...props}>{option.title}</MenuItem>
+      <React.Fragment key={option.inputValue || option.title}>
+        {option.inputValue && <Divider />}
+        <MenuItem {...props}>
+          {option.inputValue && (
+            <ListItemIcon>
+              <AddCircleOutlineOutlined />
+            </ListItemIcon>
+          )}
+          <ListItemText>{option.title}</ListItemText>
+        </MenuItem>
+      </React.Fragment>
     );
 
     return (

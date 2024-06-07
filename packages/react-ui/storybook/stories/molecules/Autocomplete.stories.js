@@ -19,7 +19,8 @@ import {
   BuildOutlined,
   CheckCircleOutlined,
   EditOutlined,
-  MovieOutlined
+  MovieOutlined,
+  NewReleasesOutlined
 } from '@mui/icons-material';
 import Typography from '../../../src/components/atoms/Typography';
 import Autocomplete from '../../../src/components/molecules/Autocomplete';
@@ -351,6 +352,44 @@ const LabelAndHelperTextTemplate = ({
         </Container>
       </Grid>
     </Grid>
+  );
+};
+
+const PrefixTemplate = ({
+  label,
+  variant,
+  placeholder,
+  helperText,
+  error,
+  size,
+  required,
+  ...args
+}) => {
+  return (
+    <Autocomplete
+      {...args}
+      options={top100Films}
+      getOptionLabel={(option) => option.title}
+      renderInput={(params) => {
+        params.InputProps.startAdornment = (
+          <InputAdornment position='start'>{<AnalyticsOutlined />}</InputAdornment>
+        );
+        return (
+          <TextField
+            {...params}
+            label={label}
+            placeholder={placeholder}
+            helperText={helperText}
+            variant={variant}
+            error={error}
+            size={size}
+            required={required}
+            InputLabelProps={{ shrink: true }}
+          />
+        );
+      }}
+      size={size}
+    />
   );
 };
 
@@ -877,13 +916,64 @@ const RenderOptionTemplate = ({
         }}
         size={size}
         renderOption={(props, option) => (
-          <MenuItem {...props}>
+          <MenuItem {...props} key={option.title}>
             <ListItemIcon>{option.icon}</ListItemIcon>
             <ListItemText>{option.title}</ListItemText>
           </MenuItem>
         )}
       />
     </>
+  );
+};
+
+const CreatableTemplate = ({
+  label,
+  variant,
+  placeholder,
+  helperText,
+  error,
+  size,
+  required,
+  ...args
+}) => {
+  const [creatableTop100Films, setCreatableTop100Films] = useState(top100Films);
+
+  const handleAddOption = (newOption) => {
+    if (newOption.inputValue) {
+      const newFilm = {
+        title: newOption.inputValue,
+        icon: <NewReleasesOutlined />
+      };
+      setCreatableTop100Films((prev) => [...prev, newFilm]);
+    }
+  };
+
+  return (
+    <Autocomplete
+      {...args}
+      creatable
+      options={creatableTop100Films}
+      getOptionLabel={(option) => option.title}
+      onChange={(event, newValue) => {
+        if (newValue && newValue.inputValue) {
+          handleAddOption(newValue);
+        }
+      }}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={label}
+          placeholder={placeholder}
+          helperText={helperText}
+          variant={variant}
+          error={error}
+          size={size}
+          required={required}
+          InputLabelProps={{ shrink: true }}
+        />
+      )}
+      size={size}
+    />
   );
 };
 
@@ -945,6 +1035,9 @@ Variants.argTypes = disabledControlsVariantsArgTypes;
 export const LabelAndHelperText = LabelAndHelperTextTemplate.bind({});
 LabelAndHelperText.args = { ...commonArgs };
 
+export const Prefix = PrefixTemplate.bind({});
+Prefix.args = { ...commonArgs };
+
 export const Multiple = MultipleTemplate.bind({});
 Multiple.args = { ...commonArgs };
 Multiple.argTypes = {
@@ -963,5 +1056,5 @@ Small.argTypes = disabledControlsSizeArgTypes;
 export const CustomRenderOption = RenderOptionTemplate.bind({});
 CustomRenderOption.args = { ...commonArgs };
 
-export const Creatable = PlaygroundTemplate.bind({});
-Creatable.args = { ...commonArgs, creatable: true };
+export const Creatable = CreatableTemplate.bind({});
+Creatable.args = { ...commonArgs };
