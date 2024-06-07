@@ -734,6 +734,15 @@ export const formsOverrides = {
         ...(ownerState.size === 'small' && {
           padding: theme.spacing(2, 1.5)
         })
+      }),
+
+      listbox: ({ ownerState, theme }) => ({
+        '.MuiDivider-root': {
+          display: 'none'
+        },
+        '.MuiButtonBase-root + .MuiDivider-root': {
+          display: 'block'
+        }
       })
     }
   },
