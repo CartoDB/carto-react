@@ -10,6 +10,9 @@ export type AutocompleteProps<
   ChipComponent extends React.ElementType = ChipTypeMap['defaultComponent']
 > = MuiAutocompleteProps<Value, Multiple, DisableClearable, FreeSolo, ChipComponent> & {
   creatable?: boolean;
+  newItemTitle?: React.ReactNode | string;
+  startAdornment?: React.ReactNode;
+  inputParams?: object;
 };
 
 declare const Autocomplete: <
