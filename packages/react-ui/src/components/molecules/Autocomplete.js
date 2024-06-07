@@ -1,10 +1,8 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import {
-  InputAdornment,
   MenuItem,
   Autocomplete as MuiAutocomplete,
-  TextField,
   createFilterOptions
 } from '@mui/material';
 
@@ -69,22 +67,6 @@ const Autocomplete = forwardRef(
         renderOption={creatable ? creatableRenderOption : renderOption}
         freeSolo={creatable || freeSolo}
         forcePopupIcon={creatable || forcePopupIcon}
-        renderInput={(params) => {
-          if (startAdornment) {
-            params.InputProps.startAdornment = (
-              <InputAdornment position='start'>{startAdornment}</InputAdornment>
-            );
-          }
-          return (
-            <div ref={params.InputProps.ref}>
-              <TextField
-                {...params}
-                {...inputParams}
-                InputLabelProps={{ shrink: true }}
-              />
-            </div>
-          );
-        }}
       />
     );
   }
@@ -92,9 +74,7 @@ const Autocomplete = forwardRef(
 
 Autocomplete.propTypes = {
   creatable: PropTypes.bool,
-  newItemTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  startAdornment: PropTypes.element,
-  inputParams: PropTypes.object
+  newItemTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
 };
 
 export default Autocomplete;
