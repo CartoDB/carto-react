@@ -16,6 +16,7 @@ const Autocomplete = forwardRef(
       freeSolo,
       renderOption,
       forcePopupIcon = true,
+      filterOptions,
       ...otherProps
     },
     ref
@@ -23,23 +24,25 @@ const Autocomplete = forwardRef(
     // forwardRef needed to be able to hold a reference, in this way it can be a child for some Mui components, like Tooltip
     // https://mui.com/material-ui/guides/composition/#caveat-with-refs
 
+    const creatableOptions = (options, params) => {
+      const filtered = filter(options, params);
+      const { inputValue } = params;
+
+      const isExisting = options.some((option) => inputValue === option.title);
+      if (inputValue.length > 1 && inputValue !== '' && !isExisting) {
+        filtered.push({
+          inputValue,
+          title: newItemTitle || `Add "${inputValue}"`
+        });
+      }
+
+      return filtered;
+    };
+
     return (
       <MuiAutocomplete
         {...otherProps}
-        filterOptions={(options, params) => {
-          const filtered = filter(options, params);
-          const { inputValue } = params;
-
-          const isExisting = options.some((option) => inputValue === option.title);
-          if (inputValue.length > 1 && inputValue !== '' && !isExisting) {
-            filtered.push({
-              inputValue,
-              title: newItemTitle || `Add "${inputValue}"`
-            });
-          }
-
-          return filtered;
-        }}
+        filterOptions={creatable ? creatableOptions : filterOptions}
         getOptionLabel={(option) => {
           // Value selected with enter
           if (typeof option === 'string') {
@@ -59,7 +62,6 @@ const Autocomplete = forwardRef(
         }
         freeSolo={creatable || freeSolo}
         forcePopupIcon={forcePopupIcon}
-        creatable={creatable}
       />
     );
   }
