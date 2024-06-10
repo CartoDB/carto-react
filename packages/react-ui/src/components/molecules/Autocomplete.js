@@ -33,7 +33,8 @@ const Autocomplete = forwardRef(
       const filtered = filter(options, params);
       const { inputValue } = params;
 
-      const isExisting = options.every((option) => inputValue === option.title);
+      const isExisting = options.some((option) => inputValue === option.title);
+
       if (inputValue.length > 1 && inputValue !== '' && !isExisting) {
         filtered.push({
           inputValue,

@@ -113,7 +113,7 @@ const options = {
       url: 'https://www.figma.com/file/nmaoLeo69xBJCHm9nc6lEV/C4R-Components?type=design&node-id=1534-26505'
     },
     status: {
-      type: 'readyToReview'
+      type: 'validated'
     }
   }
 };
@@ -977,6 +977,54 @@ const CreatableTemplate = ({
   );
 };
 
+const FreeSoloTemplate = ({
+  label,
+  variant,
+  placeholder,
+  helperText,
+  error,
+  size,
+  required,
+  multiple,
+  ...args
+}) => {
+  const [values, setValues] = useState([]);
+
+  const handleChange = (event, newValue) => {
+    setValues(newValue);
+  };
+
+  return (
+    <>
+      <DocContainer severity='info'>
+        The textbox can contain any arbitrary value.
+      </DocContainer>
+
+      <Autocomplete
+        {...args}
+        freeSolo
+        multiple={multiple}
+        options={multiple ? values : [values]}
+        onChange={handleChange}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={label}
+            placeholder={placeholder}
+            helperText={helperText}
+            variant={variant}
+            error={error}
+            size={size}
+            required={required}
+            InputLabelProps={{ shrink: true }}
+          />
+        )}
+        size={size}
+      />
+    </>
+  );
+};
+
 const DocTemplate = () => (
   <DocContainer severity='warning'>
     We have our own
@@ -1058,3 +1106,6 @@ CustomRenderOption.args = { ...commonArgs };
 
 export const Creatable = CreatableTemplate.bind({});
 Creatable.args = { ...commonArgs };
+
+export const FreeSolo = FreeSoloTemplate.bind({});
+FreeSolo.args = { ...commonArgs };

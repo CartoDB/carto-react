@@ -957,7 +957,7 @@ export const FixedMenuItem = TemplateMenuItemFixed.bind({});
 FixedMenuItem.args = { ...commonArgs };
 
 export const MenuListWrapper = TemplateMenuList.bind({});
-MenuListWrapper.args = { ...commonArgs, height: '100px' };
+MenuListWrapper.args = { ...commonArgs };
 
 export const CustomWidth = TemplateMenu.bind({});
 CustomWidth.args = { ...commonArgs, width: '400px' };
