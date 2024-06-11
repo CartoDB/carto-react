@@ -149,10 +149,11 @@ function calculateRange(legend) {
   return { min, max, error };
 }
 
+/**
+ * Calculates two evenly-spaced steps, linearly interpolated between a given
+ * min and max. For example, `calculateSteps(3, 12)` gives `[6, 9]`.
+ */
 function calculateSteps(min, max) {
-  const gap = (max + min) / 4;
-  const step1 = min + gap;
-  const step2 = max - gap;
-
-  return [step1, step2];
+  const step = (max - min) / 3;
+  return [min + step, max - step];
 }
