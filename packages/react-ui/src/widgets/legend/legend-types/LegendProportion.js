@@ -91,10 +91,10 @@ function LegendProportion({ legend }) {
                 : max}
             </Typography>
             <Typography variant='overline' color='textSecondary'>
-              {step2}
+              {intl.formatNumber(step2, { maximumFractionDigits: 6 })}
             </Typography>
             <Typography variant='overline' color='textSecondary'>
-              {step1}
+              {intl.formatNumber(step1, { maximumFractionDigits: 6 })}
             </Typography>
             <Typography variant='overline' color='textSecondary'>
               {showMinMax
