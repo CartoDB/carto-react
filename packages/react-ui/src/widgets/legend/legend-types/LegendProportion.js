@@ -5,7 +5,7 @@ import Typography from '../../../components/atoms/Typography';
 import { useIntl } from 'react-intl';
 import useImperativeIntl from '../../../hooks/useImperativeIntl';
 
-const MAX_SIGNIFICANT_DIGITS = 6;
+const MAX_SIG_DIGITS = 6;
 
 const sizes = {
   0: 12,
@@ -88,26 +88,20 @@ function LegendProportion({ legend }) {
         ) : (
           <>
             <Typography variant='overline' color='textSecondary'>
-              {showMinMax && intlConfig.formatMessage({ id: 'c4r.widgets.legend.max' })}:
-              {intl.formatNumber(max, {
-                maximumSignificantDigits: MAX_SIGNIFICANT_DIGITS
-              })}
+              {showMinMax &&
+                intlConfig.formatMessage({ id: 'c4r.widgets.legend.max' }) + ': '}
+              {intl.formatNumber(max, { maximumSignificantDigits: MAX_SIG_DIGITS })}
             </Typography>
             <Typography variant='overline' color='textSecondary'>
-              {intl.formatNumber(step2, {
-                maximumSignificantDigits: MAX_SIGNIFICANT_DIGITS
-              })}
+              {intl.formatNumber(step2, { maximumSignificantDigits: MAX_SIG_DIGITS })}
             </Typography>
             <Typography variant='overline' color='textSecondary'>
-              {intl.formatNumber(step1, {
-                maximumSignificantDigits: MAX_SIGNIFICANT_DIGITS
-              })}
+              {intl.formatNumber(step1, { maximumSignificantDigits: MAX_SIG_DIGITS })}
             </Typography>
             <Typography variant='overline' color='textSecondary'>
-              {showMinMax && intlConfig.formatMessage({ id: 'c4r.widgets.legend.min' })}:
-              {intl.formatNumber(min, {
-                maximumSignificantDigits: MAX_SIGNIFICANT_DIGITS
-              })}
+              {showMinMax &&
+                intlConfig.formatMessage({ id: 'c4r.widgets.legend.min' }) + ': '}
+              {intl.formatNumber(min, { maximumSignificantDigits: MAX_SIG_DIGITS })}
             </Typography>
           </>
         )}
