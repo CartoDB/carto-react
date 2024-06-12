@@ -977,6 +977,63 @@ const CreatableTemplate = ({
   );
 };
 
+const CreatableMultipleTemplate = ({
+  label,
+  variant,
+  placeholder,
+  helperText,
+  error,
+  size,
+  required,
+  ...args
+}) => {
+  const [creatableTop100Films, setCreatableTop100Films] = useState(top100Films);
+  console.log('creatableTop100Films', creatableTop100Films);
+
+  const handleAddOption = (newOption) => {
+    if (newOption.inputValue) {
+      const newFilm = {
+        title: newOption.inputValue,
+        icon: <NewReleasesOutlined />
+      };
+      setCreatableTop100Films((prev) => [...prev, newFilm]);
+    }
+  };
+
+  return (
+    <Autocomplete
+      {...args}
+      creatable
+      multiple
+      options={creatableTop100Films}
+      getOptionLabel={(option) => option.title}
+      onChange={(event, newValue) => {
+        if (Array.isArray(newValue)) {
+          newValue.forEach((option) => {
+            if (option.inputValue) {
+              handleAddOption(option);
+            }
+          });
+        }
+      }}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={label}
+          placeholder={placeholder}
+          helperText={helperText}
+          variant={variant}
+          error={error}
+          size={size}
+          required={required}
+          InputLabelProps={{ shrink: true }}
+        />
+      )}
+      size={size}
+    />
+  );
+};
+
 const FreeSoloTemplate = ({
   label,
   variant,
@@ -1106,6 +1163,9 @@ CustomRenderOption.args = { ...commonArgs };
 
 export const Creatable = CreatableTemplate.bind({});
 Creatable.args = { ...commonArgs };
+
+export const CreatableMultiple = CreatableMultipleTemplate.bind({});
+CreatableMultiple.args = { ...commonArgs };
 
 export const FreeSolo = FreeSoloTemplate.bind({});
 FreeSolo.args = { ...commonArgs };
