@@ -127,6 +127,8 @@ export const navigationOverrides = {
   MuiList: {
     styleOverrides: {
       root: ({ theme }) => ({
+        paddingTop: 0,
+
         '.MuiPopover-root &, .MuiPopper-root &': {
           minWidth: theme.spacing(8), // 64px, defined by design
           maxHeight: theme.spacing(39), // 312px, defined by design

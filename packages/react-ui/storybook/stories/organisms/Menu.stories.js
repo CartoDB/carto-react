@@ -113,6 +113,13 @@ const options = {
         type: 'select',
         options: ['primary', 'default']
       }
+    },
+    fixed: {
+      description: 'MenuItem prop',
+      defaultValue: false,
+      control: {
+        type: 'boolean'
+      }
     }
   },
   parameters: {
@@ -685,6 +692,75 @@ const TemplateMenuOverflow = ({
   );
 };
 
+const TemplateMenuItemFixed = ({
+  label,
+  subtitle,
+  dense,
+  disabled,
+  destructive,
+  ...args
+}) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const openDropdown = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const closeDropdown = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <Box py={20} mx='auto' textAlign='center'>
+      <Button
+        variant='outlined'
+        id='menu-button'
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup='true'
+        aria-expanded={open ? 'true' : undefined}
+        onClick={openDropdown}
+      >
+        Open menu
+      </Button>
+      <Menu
+        {...args}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={closeDropdown}
+        id='menu'
+        MenuListProps={{ 'aria-labelledby': 'menu-button' }}
+      >
+        {subtitle && <MenuItem subtitle>{'Subtitle'}</MenuItem>}
+        {[...Array(12)].map((_, i) => (
+          <MenuItem
+            key={i}
+            onClick={closeDropdown}
+            dense={dense}
+            disabled={disabled}
+            destructive={destructive}
+            fixed={i === 0 ? true : false}
+          >
+            <ListItemIcon>
+              <ContentCopyOutlined />
+            </ListItemIcon>
+            <ListItemText>{label}</ListItemText>
+            <Box>
+              <Chip
+                size='small'
+                label='type'
+                color='default'
+                variant='outlined'
+                disabled={disabled}
+              />
+            </Box>
+          </MenuItem>
+        ))}
+      </Menu>
+    </Box>
+  );
+};
+
 const TemplateMenuExtended = ({
   label,
   subtitle,
@@ -876,6 +952,9 @@ TextOverflow.args = {
   width: '200px',
   label: 'Long text that will be truncated with ellipsis'
 };
+
+export const FixedMenuItem = TemplateMenuItemFixed.bind({});
+FixedMenuItem.args = { ...commonArgs };
 
 export const MenuListWrapper = TemplateMenuList.bind({});
 MenuListWrapper.args = { ...commonArgs };

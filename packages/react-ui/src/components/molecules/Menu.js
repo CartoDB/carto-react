@@ -10,15 +10,20 @@ const StyledMenu = styled(MuiMenu, {
       minHeight: theme.spacing(6)
     }
   }),
-  '.MuiMenu-paper': {
-    ...(width && {
+  ...(width && {
+    '.MuiList-root': {
       width: width,
       minWidth: width
-    }),
-    ...(height && {
+    }
+  }),
+  ...(height && {
+    '.MuiMenu-paper': {
+      overflow: 'hidden'
+    },
+    '.MuiList-root': {
       maxHeight: height
-    })
-  }
+    }
+  })
 }));
 
 const Menu = ({ extended, width, height, children, ...otherProps }) => {

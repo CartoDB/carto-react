@@ -52,6 +52,7 @@ import UploadField, {
 import UploadFieldBase, {
   UploadFieldBaseProps
 } from './components/molecules/UploadField/UploadFieldBase';
+import Autocomplete, { AutocompleteProps } from './components/molecules/Autocomplete';
 import Menu, { MenuProps } from './components/molecules/Menu';
 import MenuList, { MenuListProps } from './components/molecules/MenuList';
 import MenuItem, { MenuItemProps } from './components/molecules/MenuItem';
@@ -124,6 +125,8 @@ export {
   UploadFieldProps,
   UploadFieldBase,
   UploadFieldBaseProps,
+  Autocomplete,
+  AutocompleteProps,
   Menu,
   MenuProps,
   MenuList,

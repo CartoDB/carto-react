@@ -43,6 +43,7 @@ import SelectField from './components/atoms/SelectField';
 import MultipleSelectField from './components/molecules/MultipleSelectField/MultipleSelectField';
 import UploadField from './components/molecules/UploadField/UploadField';
 import UploadFieldBase from './components/molecules/UploadField/UploadFieldBase';
+import Autocomplete from './components/molecules/Autocomplete';
 import Menu from './components/molecules/Menu';
 import MenuList from './components/molecules/MenuList';
 import MenuItem from './components/molecules/MenuItem';
@@ -106,6 +107,7 @@ export {
   MultipleSelectField,
   UploadField,
   UploadFieldBase,
+  Autocomplete,
   Menu,
   MenuList,
   MenuItem,

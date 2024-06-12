@@ -5,7 +5,8 @@ const locales = {
       selectNone: 'None',
       allSelected: 'All selected',
       noneSelected: 'None selected',
-      selected: 'selected'
+      selected: 'selected',
+      add: 'Add'
     },
     widgets: {
       category: {
