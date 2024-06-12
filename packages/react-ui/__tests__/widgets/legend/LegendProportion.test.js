@@ -4,7 +4,7 @@ import LegendProportion from '../../../src/widgets/legend/legend-types/LegendPro
 import { IntlProvider } from 'react-intl';
 
 const DEFAULT_LEGEND = {
-  labels: ['0', '200']
+  labels: ['0', '150']
 };
 
 describe('LegendProportion', () => {
@@ -14,8 +14,8 @@ describe('LegendProportion', () => {
         <LegendProportion legend={DEFAULT_LEGEND} />
       </IntlProvider>
     );
-    expect(screen.queryByText('Max: 200')).toBeInTheDocument();
-    expect(screen.queryByText('150')).toBeInTheDocument();
+    expect(screen.queryByText('Max: 150')).toBeInTheDocument();
+    expect(screen.queryByText('100')).toBeInTheDocument();
     expect(screen.queryByText('50')).toBeInTheDocument();
     expect(screen.queryByText('Min: 0')).toBeInTheDocument();
   });
@@ -27,8 +27,8 @@ describe('LegendProportion', () => {
     );
     expect(screen.queryByText('Max')).not.toBeInTheDocument();
     expect(screen.queryByText('Min')).not.toBeInTheDocument();
-    expect(screen.queryByText('200')).toBeInTheDocument();
     expect(screen.queryByText('150')).toBeInTheDocument();
+    expect(screen.queryByText('100')).toBeInTheDocument();
     expect(screen.queryByText('50')).toBeInTheDocument();
     expect(screen.queryByText('0')).toBeInTheDocument();
   });

@@ -5,6 +5,8 @@ import Typography from '../../../components/atoms/Typography';
 import { useIntl } from 'react-intl';
 import useImperativeIntl from '../../../hooks/useImperativeIntl';
 
+const MAX_SIG_DIGITS = 6;
+
 const sizes = {
   0: 12,
   1: 9,
@@ -86,20 +88,20 @@ function LegendProportion({ legend }) {
         ) : (
           <>
             <Typography variant='overline' color='textSecondary'>
-              {showMinMax
-                ? `${intlConfig.formatMessage({ id: 'c4r.widgets.legend.max' })}: ${max}`
-                : max}
+              {showMinMax &&
+                intlConfig.formatMessage({ id: 'c4r.widgets.legend.max' }) + ': '}
+              {intl.formatNumber(max, { maximumSignificantDigits: MAX_SIG_DIGITS })}
             </Typography>
             <Typography variant='overline' color='textSecondary'>
-              {step2}
+              {intl.formatNumber(step2, { maximumSignificantDigits: MAX_SIG_DIGITS })}
             </Typography>
             <Typography variant='overline' color='textSecondary'>
-              {step1}
+              {intl.formatNumber(step1, { maximumSignificantDigits: MAX_SIG_DIGITS })}
             </Typography>
             <Typography variant='overline' color='textSecondary'>
-              {showMinMax
-                ? `${intlConfig.formatMessage({ id: 'c4r.widgets.legend.min' })}: ${min}`
-                : min}
+              {showMinMax &&
+                intlConfig.formatMessage({ id: 'c4r.widgets.legend.min' }) + ': '}
+              {intl.formatNumber(min, { maximumSignificantDigits: MAX_SIG_DIGITS })}
             </Typography>
           </>
         )}
@@ -149,10 +151,11 @@ function calculateRange(legend) {
   return { min, max, error };
 }
 
+/**
+ * Calculates two evenly-spaced steps, linearly interpolated between a given
+ * min and max. For example, `calculateSteps(3, 12)` gives `[6, 9]`.
+ */
 function calculateSteps(min, max) {
-  const gap = (max + min) / 4;
-  const step1 = min + gap;
-  const step2 = max - gap;
-
-  return [step1, step2];
+  const step = (max - min) / 3;
+  return [min + step, max - step];
 }
