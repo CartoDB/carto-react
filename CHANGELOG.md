@@ -2,10 +2,12 @@
 
 ## Not released
 
+## 3.0.0
+
+### 3.0.0-alpha.11 (2024-06-12)
+
 - Add creatable functionality to Autocomplete & MenuItem fixed [#828](https://github.com/CartoDB/carto-react/pull/828)
 - Table component: Added selected row and with checkbox example in Storybook [#876](https://github.com/CartoDB/carto-react/pull/876)
-
-## 3.0.0
 
 ### 3.0.0-alpha.10 (2024-06-03)
 
