@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
+import { useIntl } from 'react-intl';
 import {
   Divider,
   ListItemIcon,
@@ -9,6 +10,7 @@ import {
 } from '@mui/material';
 import { AddCircleOutlineOutlined } from '@mui/icons-material';
 import MenuItem from './MenuItem';
+import useImperativeIntl from '../../hooks/useImperativeIntl';
 
 const filter = createFilterOptions();
 
@@ -28,6 +30,8 @@ const Autocomplete = forwardRef(
   ) => {
     // forwardRef needed to be able to hold a reference, in this way it can be a child for some Mui components, like Tooltip
     // https://mui.com/material-ui/guides/composition/#caveat-with-refs
+    const intl = useIntl();
+    const intlConfig = useImperativeIntl(intl);
 
     const creatableOptions = (options, params) => {
       const filtered = filter(options, params);
@@ -38,7 +42,9 @@ const Autocomplete = forwardRef(
       if (inputValue.length > 1 && inputValue !== '' && !isExisting) {
         filtered.push({
           inputValue,
-          title: newItemTitle || `Add "${inputValue}"`
+          title:
+            newItemTitle ||
+            `${intlConfig.formatMessage({ id: 'c4r.form.add' })} "${inputValue}"`
         });
       }
 

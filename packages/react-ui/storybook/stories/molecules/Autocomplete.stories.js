@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { IntlProvider } from 'react-intl';
 import {
   Grid,
   InputAdornment,
@@ -163,25 +164,27 @@ const PlaygroundTemplate = ({
   required,
   ...args
 }) => (
-  <Autocomplete
-    {...args}
-    options={top100Films}
-    getOptionLabel={(option) => option.title}
-    renderInput={(params) => (
-      <TextField
-        {...params}
-        label={label}
-        placeholder={placeholder}
-        helperText={helperText}
-        variant={variant}
-        error={error}
-        size={size}
-        required={required}
-        InputLabelProps={{ shrink: true }}
-      />
-    )}
-    size={size}
-  />
+  <IntlProvider locale='en'>
+    <Autocomplete
+      {...args}
+      options={top100Films}
+      getOptionLabel={(option) => option.title}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={label}
+          placeholder={placeholder}
+          helperText={helperText}
+          variant={variant}
+          error={error}
+          size={size}
+          required={required}
+          InputLabelProps={{ shrink: true }}
+        />
+      )}
+      size={size}
+    />
+  </IntlProvider>
 );
 
 const VariantsTemplate = ({
@@ -194,56 +197,58 @@ const VariantsTemplate = ({
   ...args
 }) => {
   return (
-    <Grid container direction='column' spacing={6}>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Filled'}</Label>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                helperText={helperText}
-                variant='filled'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
-        </Container>
+    <IntlProvider locale='en'>
+      <Grid container direction='column' spacing={6}>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Filled'}</Label>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  helperText={helperText}
+                  variant='filled'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Container>
+        </Grid>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Outlined'}</Label>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  helperText={helperText}
+                  variant='outlined'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Container>
+        </Grid>
       </Grid>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Outlined'}</Label>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                helperText={helperText}
-                variant='outlined'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
-        </Container>
-      </Grid>
-    </Grid>
+    </IntlProvider>
   );
 };
 
@@ -258,100 +263,102 @@ const LabelAndHelperTextTemplate = ({
   ...args
 }) => {
   return (
-    <Grid container direction='column' spacing={6}>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Label + helper text'}</Label>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                helperText={helperText}
-                variant={variant}
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
-        </Container>
+    <IntlProvider locale='en'>
+      <Grid container direction='column' spacing={6}>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Label + helper text'}</Label>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  helperText={helperText}
+                  variant={variant}
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Container>
+        </Grid>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Without label + helper text'}</Label>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder={placeholder}
+                  variant={variant}
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Container>
+        </Grid>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Only label'}</Label>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  variant={variant}
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Container>
+        </Grid>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Only helper text'}</Label>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder={placeholder}
+                  helperText={helperText}
+                  variant={variant}
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Container>
+        </Grid>
       </Grid>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Without label + helper text'}</Label>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                placeholder={placeholder}
-                variant={variant}
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
-        </Container>
-      </Grid>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Only label'}</Label>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                variant={variant}
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
-        </Container>
-      </Grid>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Only helper text'}</Label>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                placeholder={placeholder}
-                helperText={helperText}
-                variant={variant}
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
-        </Container>
-      </Grid>
-    </Grid>
+    </IntlProvider>
   );
 };
 
@@ -366,30 +373,32 @@ const PrefixTemplate = ({
   ...args
 }) => {
   return (
-    <Autocomplete
-      {...args}
-      options={top100Films}
-      getOptionLabel={(option) => option.title}
-      renderInput={(params) => {
-        params.InputProps.startAdornment = (
-          <InputAdornment position='start'>{<AnalyticsOutlined />}</InputAdornment>
-        );
-        return (
-          <TextField
-            {...params}
-            label={label}
-            placeholder={placeholder}
-            helperText={helperText}
-            variant={variant}
-            error={error}
-            size={size}
-            required={required}
-            InputLabelProps={{ shrink: true }}
-          />
-        );
-      }}
-      size={size}
-    />
+    <IntlProvider locale='en'>
+      <Autocomplete
+        {...args}
+        options={top100Films}
+        getOptionLabel={(option) => option.title}
+        renderInput={(params) => {
+          params.InputProps.startAdornment = (
+            <InputAdornment position='start'>{<AnalyticsOutlined />}</InputAdornment>
+          );
+          return (
+            <TextField
+              {...params}
+              label={label}
+              placeholder={placeholder}
+              helperText={helperText}
+              variant={variant}
+              error={error}
+              size={size}
+              required={required}
+              InputLabelProps={{ shrink: true }}
+            />
+          );
+        }}
+        size={size}
+      />
+    </IntlProvider>
   );
 };
 
@@ -412,112 +421,114 @@ const MultipleTemplate = ({
   ];
 
   return (
-    <Grid container direction='column' spacing={6}>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Filled'}</Label>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                helperText={helperText}
-                variant='filled'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-            multiple
-          />
-        </Container>
+    <IntlProvider locale='en'>
+      <Grid container direction='column' spacing={6}>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Filled'}</Label>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  helperText={helperText}
+                  variant='filled'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+              multiple
+            />
+          </Container>
+        </Grid>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Outlined'}</Label>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  helperText={helperText}
+                  variant='outlined'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+              multiple
+            />
+          </Container>
+        </Grid>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Filled readOnly'}</Label>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              defaultValue={defaultValue}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  helperText={helperText}
+                  variant='filled'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+              multiple
+              readOnly
+            />
+          </Container>
+        </Grid>
+        <Grid item>
+          <Container>
+            <Label variant='body2'>{'Outlined readOnly'}</Label>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              defaultValue={defaultValue}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  helperText={helperText}
+                  variant='outlined'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+              multiple
+              readOnly
+            />
+          </Container>
+        </Grid>
       </Grid>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Outlined'}</Label>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                helperText={helperText}
-                variant='outlined'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-            multiple
-          />
-        </Container>
-      </Grid>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Filled readOnly'}</Label>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            defaultValue={defaultValue}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                helperText={helperText}
-                variant='filled'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-            multiple
-            readOnly
-          />
-        </Container>
-      </Grid>
-      <Grid item>
-        <Container>
-          <Label variant='body2'>{'Outlined readOnly'}</Label>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            defaultValue={defaultValue}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                helperText={helperText}
-                variant='outlined'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-            multiple
-            readOnly
-          />
-        </Container>
-      </Grid>
-    </Grid>
+    </IntlProvider>
   );
 };
 
@@ -532,339 +543,341 @@ const SizeTemplate = ({
   ...args
 }) => {
   return (
-    <Grid container spacing={6}>
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Placeholder</Typography>
+    <IntlProvider locale='en'>
+      <Grid container spacing={6}>
+        <Grid item container spacing={2}>
+          <Grid item xs={2}>
+            <Typography>Placeholder</Typography>
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  variant='filled'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  variant='outlined'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                variant='filled'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
-        </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                variant='outlined'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
-        </Grid>
-      </Grid>
 
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Empty</Typography>
+        <Grid item container spacing={2}>
+          <Grid item xs={2}>
+            <Typography>Empty</Typography>
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  variant='filled'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  variant='outlined'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                variant='filled'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
-        </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                variant='outlined'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
-        </Grid>
-      </Grid>
 
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Filled</Typography>
+        <Grid item container spacing={2}>
+          <Grid item xs={2}>
+            <Typography>Filled</Typography>
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              defaultValue={top100Films[6]}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  variant='filled'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              defaultValue={top100Films[6]}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  variant='outlined'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            defaultValue={top100Films[6]}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                variant='filled'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
-        </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            defaultValue={top100Films[6]}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                variant='outlined'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
-        </Grid>
-      </Grid>
 
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Focused</Typography>
+        <Grid item container spacing={2}>
+          <Grid item xs={2}>
+            <Typography>Focused</Typography>
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  variant='filled'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                  focused
+                />
+              )}
+              size={size}
+            />
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  variant='outlined'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                  focused
+                />
+              )}
+              size={size}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                variant='filled'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-                focused
-              />
-            )}
-            size={size}
-          />
-        </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                variant='outlined'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-                focused
-              />
-            )}
-            size={size}
-          />
-        </Grid>
-      </Grid>
 
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Disabled</Typography>
+        <Grid item container spacing={2}>
+          <Grid item xs={2}>
+            <Typography>Disabled</Typography>
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  variant='filled'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+              disabled
+            />
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  variant='outlined'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+              disabled
+            />
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                variant='filled'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-            disabled
-          />
-        </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                variant='outlined'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-            disabled
-          />
-        </Grid>
-      </Grid>
 
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Read Only</Typography>
+        <Grid item container spacing={2}>
+          <Grid item xs={2}>
+            <Typography>Read Only</Typography>
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              defaultValue={top100Films[6]}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  variant='filled'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+              readOnly
+            />
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              defaultValue={top100Films[6]}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  variant='outlined'
+                  error={error}
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+              readOnly
+            />
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            defaultValue={top100Films[6]}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                variant='filled'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-            readOnly
-          />
-        </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            defaultValue={top100Films[6]}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                variant='outlined'
-                error={error}
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-            readOnly
-          />
-        </Grid>
-      </Grid>
 
-      <Grid item container spacing={2}>
-        <Grid item xs={2}>
-          <Typography>Error</Typography>
-        </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                helperText={helperText}
-                variant='filled'
-                error
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
-        </Grid>
-        <Grid item xs>
-          <Autocomplete
-            {...args}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                placeholder={placeholder}
-                helperText={helperText}
-                variant='outlined'
-                error
-                size={size}
-                required={required}
-                InputLabelProps={{ shrink: true }}
-              />
-            )}
-            size={size}
-          />
+        <Grid item container spacing={2}>
+          <Grid item xs={2}>
+            <Typography>Error</Typography>
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  helperText={helperText}
+                  variant='filled'
+                  error
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Grid>
+          <Grid item xs>
+            <Autocomplete
+              {...args}
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={label}
+                  placeholder={placeholder}
+                  helperText={helperText}
+                  variant='outlined'
+                  error
+                  size={size}
+                  required={required}
+                  InputLabelProps={{ shrink: true }}
+                />
+              )}
+              size={size}
+            />
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </IntlProvider>
   );
 };
 
@@ -881,7 +894,7 @@ const RenderOptionTemplate = ({
   const [selectedOption, setSelectedOption] = useState(null);
 
   return (
-    <>
+    <IntlProvider locale='en'>
       <DocContainer severity='info'>
         Uses `startAdornment` for the icon in the input and `renderOption` to override
         default list items
@@ -922,7 +935,7 @@ const RenderOptionTemplate = ({
           </MenuItem>
         )}
       />
-    </>
+    </IntlProvider>
   );
 };
 
@@ -949,88 +962,33 @@ const CreatableTemplate = ({
   };
 
   return (
-    <Autocomplete
-      {...args}
-      creatable
-      options={creatableTop100Films}
-      getOptionLabel={(option) => option.title}
-      onChange={(event, newValue) => {
-        if (newValue && newValue.inputValue) {
-          handleAddOption(newValue);
-        }
-      }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label={label}
-          placeholder={placeholder}
-          helperText={helperText}
-          variant={variant}
-          error={error}
-          size={size}
-          required={required}
-          InputLabelProps={{ shrink: true }}
-        />
-      )}
-      size={size}
-    />
-  );
-};
-
-const CreatableMultipleTemplate = ({
-  label,
-  variant,
-  placeholder,
-  helperText,
-  error,
-  size,
-  required,
-  ...args
-}) => {
-  const [creatableTop100Films, setCreatableTop100Films] = useState(top100Films);
-  console.log('creatableTop100Films', creatableTop100Films);
-
-  const handleAddOption = (newOption) => {
-    if (newOption.inputValue) {
-      const newFilm = {
-        title: newOption.inputValue,
-        icon: <NewReleasesOutlined />
-      };
-      setCreatableTop100Films((prev) => [...prev, newFilm]);
-    }
-  };
-
-  return (
-    <Autocomplete
-      {...args}
-      creatable
-      multiple
-      options={creatableTop100Films}
-      getOptionLabel={(option) => option.title}
-      onChange={(event, newValue) => {
-        if (Array.isArray(newValue)) {
-          newValue.forEach((option) => {
-            if (option.inputValue) {
-              handleAddOption(option);
-            }
-          });
-        }
-      }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label={label}
-          placeholder={placeholder}
-          helperText={helperText}
-          variant={variant}
-          error={error}
-          size={size}
-          required={required}
-          InputLabelProps={{ shrink: true }}
-        />
-      )}
-      size={size}
-    />
+    <IntlProvider locale='en'>
+      <Autocomplete
+        {...args}
+        creatable
+        options={creatableTop100Films}
+        getOptionLabel={(option) => option.title}
+        onChange={(event, newValue) => {
+          if (newValue && newValue.inputValue) {
+            handleAddOption(newValue);
+          }
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={label}
+            placeholder={placeholder}
+            helperText={helperText}
+            variant={variant}
+            error={error}
+            size={size}
+            required={required}
+            InputLabelProps={{ shrink: true }}
+          />
+        )}
+        size={size}
+      />
+    </IntlProvider>
   );
 };
 
@@ -1052,7 +1010,7 @@ const FreeSoloTemplate = ({
   };
 
   return (
-    <>
+    <IntlProvider locale='en'>
       <DocContainer severity='info'>
         The textbox can contain any arbitrary value.
       </DocContainer>
@@ -1078,7 +1036,7 @@ const FreeSoloTemplate = ({
         )}
         size={size}
       />
-    </>
+    </IntlProvider>
   );
 };
 
@@ -1163,9 +1121,6 @@ CustomRenderOption.args = { ...commonArgs };
 
 export const Creatable = CreatableTemplate.bind({});
 Creatable.args = { ...commonArgs };
-
-export const CreatableMultiple = CreatableMultipleTemplate.bind({});
-CreatableMultiple.args = { ...commonArgs };
 
 export const FreeSolo = FreeSoloTemplate.bind({});
 FreeSolo.args = { ...commonArgs };
