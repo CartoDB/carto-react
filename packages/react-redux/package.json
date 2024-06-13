@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-redux",
-  "version": "3.0.0-alpha.11",
+  "version": "3.0.0-alpha.11-forms-0.1",
   "description": "CARTO for React - Redux",
   "author": "CARTO Dev Team",
   "keywords": [
