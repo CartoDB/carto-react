@@ -132,6 +132,9 @@ declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     default: true;
   }
+  interface ButtonPropsSizeOverrides {
+    xsmall: true;
+  }
 }
 
 // Update the FAB's color prop options
