@@ -44,29 +44,23 @@ function createUTCDate([year, month, date]) {
 }
 
 describe('getMonday', () => {
-  function defineCases(cases) {
-    cases.forEach(({ date, expected, title }) => {
-      const expectedString = createDate(expected).toLocaleString();
-      it(`${date} ===> ${expectedString} ${title ? `- ${title}` : ''}`, () => {
-        const actualString = new Date(getMonday(createDate(date))).toLocaleString();
-        expect(actualString).toBe(expectedString);
-      });
+  for (const { date, expected, title } of TEST_CASES) {
+    const expectedString = createDate(expected).toLocaleString();
+    it(`${date} ===> ${expectedString} - ${title}`, () => {
+      const local = getMonday(createDate(date));
+      const localString = new Date(local).toLocaleString();
+      expect(localString).toBe(expectedString);
     });
   }
-
-  defineCases(TEST_CASES);
 });
 
 describe('getUTCMonday', () => {
-  function defineCases(cases) {
-    cases.forEach(({ date, expected, title }) => {
-      const expectedString = createUTCDate(expected).toISOString();
-      it(`${date} ===> ${expectedString} ${title ? `- ${title}` : ''}`, () => {
-        const actualString = new Date(getUTCMonday(createUTCDate(date))).toISOString();
-        expect(actualString).toBe(expectedString);
-      });
+  for (const { date, expected, title } of TEST_CASES) {
+    const expectedString = createUTCDate(expected).toISOString();
+    it(`${date} ===> ${expectedString} - ${title}`, () => {
+      const utc = getUTCMonday(createUTCDate(date));
+      const utcString = new Date(utc).toISOString();
+      expect(utcString).toBe(expectedString);
     });
   }
-
-  defineCases(TEST_CASES);
 });
