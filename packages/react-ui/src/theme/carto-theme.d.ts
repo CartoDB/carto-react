@@ -132,7 +132,11 @@ declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     default: true;
   }
-  interface ButtonPropsSizeOverrides {
+}
+
+// Update the IconButtons's size prop options
+declare module '@mui/material/IconButton' {
+  interface IconButtonPropsSizeOverrides {
     xsmall: true;
   }
 }
