@@ -2,7 +2,8 @@
 
 ## Not released
 
-- Fix LegendProportion radius scale [#827](https://github.com/CartoDB/carto-react/pull/877)
+- Forms fixes & improvements [#881](https://github.com/CartoDB/carto-react/pull/881)
+- Fix LegendProportion radius scale [#877](https://github.com/CartoDB/carto-react/pull/877)
 
 ## 3.0.0
 
