@@ -2,9 +2,11 @@
 
 ## Not released
 
-- Fix legend formatting of radius scales [#877](https://github.com/CartoDB/carto-react/pull/877)
-
 ## 3.0.0
+
+### 3.0.0-alpha.12 (2024-06-14)
+
+- Fix legend formatting of radius scales [#877](https://github.com/CartoDB/carto-react/pull/877)
 
 ### 3.0.0-alpha.11 (2024-06-12)
 
