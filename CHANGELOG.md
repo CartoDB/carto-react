@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix time zone handling in week counts, separate getMonday and getUTCMonday utilities [#879](https://github.com/CartoDB/carto-react/pull/879)
+
 ## 3.0.0
 
 ### 3.0.0-alpha.12 (2024-06-14)
