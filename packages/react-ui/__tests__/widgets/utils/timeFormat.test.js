@@ -4,12 +4,19 @@ import { formatBucketRange } from '../../../src/widgets/TimeSeriesWidgetUI/utils
 describe('timeFormat', () => {
   describe('formatBucketRange', () => {
     describe('buckets from date', () => {
+      /** https://stackoverflow.com/a/33909265 */
+      function parseISOLocal(s) {
+        var b = s.split(/\D/);
+        return new Date(b[0], b[1] - 1, b[2], b[3] ?? 0, b[4] ?? 0, b[5] ?? 0);
+      }
       function defineCases(cases) {
         cases.forEach(({ date, expected, title, ...params }) =>
           it(`${date} / ${params.stepMultiplier ?? 1} ${
             params.stepSize
           } ===> ${expected} ${title ? `- ${title}` : ''}`, () =>
-            expect(formatBucketRange({ date: new Date(date), ...params })).toBe(expected))
+            expect(formatBucketRange({ date: parseISOLocal(date), ...params })).toBe(
+              expected
+            ))
         );
       }
       describe('second', () => {
