@@ -13,6 +13,12 @@ const StyledMenuItem = styled(MuiMenuItem, {
     fontWeight: 500,
     color: theme.palette.text.secondary,
 
+    '.MuiListItemText-root .MuiTypography-root': {
+      ...theme.typography.caption,
+      fontWeight: 500,
+      color: theme.palette.text.secondary
+    },
+
     '&.MuiMenuItem-root': {
       minHeight: theme.spacing(3),
       paddingTop: 0,

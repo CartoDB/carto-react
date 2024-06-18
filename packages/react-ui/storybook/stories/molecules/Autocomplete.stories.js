@@ -121,9 +121,10 @@ const options = {
 export default options;
 
 const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994, icon: <MovieOutlined /> },
+  { title: 'The Shawshank Redemption', year: 1994, icon: <MovieOutlined />, fixed: true },
   { title: 'The Godfather', year: 1972, icon: <EditOutlined /> },
   { title: 'The Godfather: Part II', year: 1974, icon: <AccessAlarmOutlined /> },
+  { title: 'Subtitle', subtitle: true },
   { title: 'The Dark Knight', year: 2008, icon: <AccountTreeOutlined /> },
   { title: '12 Angry Men', year: 1957, icon: <AddCircleOutlined /> },
   { title: "Schindler's List", year: 1993, icon: <AddTaskOutlined /> },

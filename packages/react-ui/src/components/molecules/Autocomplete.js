@@ -67,11 +67,14 @@ const Autocomplete = forwardRef(
     const creatableRenderOption = (props, option) => (
       <React.Fragment key={option.inputValue || option.title}>
         {option.inputValue && <Divider />}
-        <MenuItem {...props}>
+        <MenuItem {...props} fixed={option.fixed} subtitle={option.subtitle}>
           {option.inputValue && (
             <ListItemIcon>
               <AddCircleOutlineOutlined />
             </ListItemIcon>
+          )}
+          {option.icon && !option.inputValue && (
+            <ListItemIcon>{option.icon}</ListItemIcon>
           )}
           <ListItemText>{option.title}</ListItemText>
         </MenuItem>
