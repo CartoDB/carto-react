@@ -11,6 +11,7 @@ import {
 import { AddCircleOutlineOutlined } from '@mui/icons-material';
 import MenuItem from './MenuItem';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
+import Typography from '../atoms/Typography';
 
 const filter = createFilterOptions();
 
@@ -18,7 +19,8 @@ const Autocomplete = forwardRef(
   (
     {
       creatable,
-      newItemTitle,
+      newItemTitle = 'c4r.form.add',
+      newItemIcon,
       freeSolo,
       renderOption,
       forcePopupIcon,
@@ -33,7 +35,7 @@ const Autocomplete = forwardRef(
     const intl = useIntl();
     const intlConfig = useImperativeIntl(intl);
 
-    const creatableOptions = (options, params) => {
+    const creatableFilterOptions = (options, params) => {
       const filtered = filter(options, params);
       const { inputValue } = params;
 
@@ -42,9 +44,7 @@ const Autocomplete = forwardRef(
       if (inputValue.length > 1 && inputValue !== '' && !isExisting) {
         filtered.push({
           inputValue,
-          title:
-            newItemTitle ||
-            `${intlConfig.formatMessage({ id: 'c4r.form.add' })} "${inputValue}"`
+          title: `${intlConfig.formatMessage({ id: newItemTitle })} "${inputValue}"`
         });
       }
 
@@ -67,16 +67,28 @@ const Autocomplete = forwardRef(
     const creatableRenderOption = (props, option) => (
       <React.Fragment key={option.inputValue || option.title}>
         {option.inputValue && <Divider />}
-        <MenuItem {...props} fixed={option.fixed} subtitle={option.subtitle}>
+        <MenuItem
+          {...props}
+          fixed={option.fixed}
+          subtitle={option.subtitle}
+          extended={option.extended}
+          iconColor={option.iconColor}
+        >
           {option.inputValue && (
-            <ListItemIcon>
-              <AddCircleOutlineOutlined />
-            </ListItemIcon>
+            <ListItemIcon>{newItemIcon || <AddCircleOutlineOutlined />}</ListItemIcon>
           )}
-          {option.icon && !option.inputValue && (
-            <ListItemIcon>{option.icon}</ListItemIcon>
+          {option.startAdornment && !option.inputValue && (
+            <ListItemIcon>{option.startAdornment}</ListItemIcon>
           )}
-          <ListItemText>{option.title}</ListItemText>
+          <ListItemText>
+            {option.alternativeTitle || option.title}
+            {option.secondaryText && (
+              <Typography component='p' variant='caption' color='text.secondary'>
+                {option.secondaryText}
+              </Typography>
+            )}
+          </ListItemText>
+          {option.endAdornment}
         </MenuItem>
       </React.Fragment>
     );
@@ -84,7 +96,7 @@ const Autocomplete = forwardRef(
     return (
       <MuiAutocomplete
         {...otherProps}
-        filterOptions={creatable ? creatableOptions : filterOptions}
+        filterOptions={creatable ? creatableFilterOptions : filterOptions}
         getOptionLabel={creatable ? creatableOptionLabel : getOptionLabel}
         renderOption={creatable ? creatableRenderOption : renderOption}
         freeSolo={creatable || freeSolo}
@@ -96,7 +108,8 @@ const Autocomplete = forwardRef(
 
 Autocomplete.propTypes = {
   creatable: PropTypes.bool,
-  newItemTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+  newItemTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  newItemIcon: PropTypes.element
 };
 
 export default Autocomplete;

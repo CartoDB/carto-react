@@ -11,6 +11,7 @@ export type AutocompleteProps<
 > = MuiAutocompleteProps<Value, Multiple, DisableClearable, FreeSolo, ChipComponent> & {
   creatable?: boolean;
   newItemTitle?: React.ReactNode | string;
+  newItemIcon?: React.ReactNode;
 };
 
 declare const Autocomplete: <

@@ -83,7 +83,7 @@ const StyledMenuItem = styled(MuiMenuItem, {
     }
   }),
   ...(extended && {
-    '&.MuiMenuItem-root': {
+    '&.MuiButtonBase-root.MuiMenuItem-root': {
       minHeight: theme.spacing(6)
     }
   }),

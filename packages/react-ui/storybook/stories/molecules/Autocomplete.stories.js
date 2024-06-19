@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { IntlProvider } from 'react-intl';
 import {
+  Chip,
   Grid,
   InputAdornment,
   ListItemIcon,
@@ -121,37 +122,71 @@ const options = {
 export default options;
 
 const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994, icon: <MovieOutlined />, fixed: true },
-  { title: 'The Godfather', year: 1972, icon: <EditOutlined /> },
-  { title: 'The Godfather: Part II', year: 1974, icon: <AccessAlarmOutlined /> },
+  {
+    title: 'The Shawshank Redemption',
+    year: 1994,
+    startAdornment: <MovieOutlined />,
+    fixed: true
+  },
+  {
+    title: 'Extended item',
+    secondaryText: 'Secondary text',
+    year: 1972,
+    startAdornment: <EditOutlined />,
+    extended: true
+  },
+  {
+    title: 'The Godfather: Part II',
+    year: 1974,
+    startAdornment: <AccessAlarmOutlined />
+  },
+  {
+    title: 'The Dark Knight',
+    alternativeTitle: 'Movie: The Dark Knight',
+    year: 2008,
+    startAdornment: <AccountTreeOutlined />
+  },
+  {
+    title: '12 Angry Men',
+    year: 1957,
+    startAdornment: <AddCircleOutlined />,
+    iconColor: 'default'
+  },
+  {
+    title: "Schindler's List",
+    year: 1993,
+    startAdornment: <AddTaskOutlined />,
+    endAdornment: <Chip size='small' label='type' color='default' variant='outlined' />
+  },
   { title: 'Subtitle', subtitle: true },
-  { title: 'The Dark Knight', year: 2008, icon: <AccountTreeOutlined /> },
-  { title: '12 Angry Men', year: 1957, icon: <AddCircleOutlined /> },
-  { title: "Schindler's List", year: 1993, icon: <AddTaskOutlined /> },
-  { title: 'Pulp Fiction', year: 1994, icon: <AnalyticsOutlined /> },
+  { title: 'Pulp Fiction', year: 1994, startAdornment: <AnalyticsOutlined /> },
   {
     title: 'The Lord of the Rings: The Return of the King',
     year: 2003,
-    icon: <AnimationOutlined />
+    startAdornment: <AnimationOutlined />
   },
-  { title: 'The Good, the Bad and the Ugly', year: 1966, icon: <AutorenewOutlined /> },
-  { title: 'Fight Club', year: 1999, icon: <MovieOutlined /> },
+  {
+    title: 'The Good, the Bad and the Ugly',
+    year: 1966,
+    startAdornment: <AutorenewOutlined />
+  },
+  { title: 'Fight Club', year: 1999, startAdornment: <MovieOutlined /> },
   {
     title: 'The Lord of the Rings: The Fellowship of the Ring',
     year: 2001,
-    icon: <BlockOutlined />
+    startAdornment: <BlockOutlined />
   },
   {
     title: 'Star Wars: Episode V - The Empire Strikes Back',
     year: 1980,
-    icon: <BookmarkAddOutlined />
+    startAdornment: <BookmarkAddOutlined />
   },
-  { title: 'Forrest Gump', year: 1994, icon: <BuildOutlined /> },
-  { title: 'Inception', year: 2010, icon: <MovieOutlined /> },
+  { title: 'Forrest Gump', year: 1994, startAdornment: <BuildOutlined /> },
+  { title: 'Inception', year: 2010, startAdornment: <MovieOutlined /> },
   {
     title: 'The Lord of the Rings: The Two Towers',
     year: 2002,
-    icon: <CheckCircleOutlined />
+    startAdornment: <CheckCircleOutlined />
   }
 ];
 
@@ -911,7 +946,9 @@ const RenderOptionTemplate = ({
         renderInput={(params) => {
           if (selectedOption) {
             params.InputProps.startAdornment = (
-              <InputAdornment position='start'>{selectedOption.icon}</InputAdornment>
+              <InputAdornment position='start'>
+                {selectedOption.startAdornment}
+              </InputAdornment>
             );
           }
           return (
@@ -930,9 +967,22 @@ const RenderOptionTemplate = ({
         }}
         size={size}
         renderOption={(props, option) => (
-          <MenuItem {...props} key={option.title}>
-            <ListItemIcon>{option.icon}</ListItemIcon>
-            <ListItemText>{option.title}</ListItemText>
+          <MenuItem
+            {...props}
+            key={option.title}
+            fixed={option.fixed}
+            subtitle={option.subtitle}
+            extended={option.extended}
+            iconColor={option.iconColor}
+          >
+            <ListItemIcon>{option.startAdornment}</ListItemIcon>
+            <ListItemText>
+              {option.title}
+              <Typography component='p' variant='caption' color='text.secondary'>
+                {option.secondaryText}
+              </Typography>
+            </ListItemText>
+            {option.endAdornment}
           </MenuItem>
         )}
       />
@@ -956,7 +1006,7 @@ const CreatableTemplate = ({
     if (newOption.inputValue) {
       const newFilm = {
         title: newOption.inputValue,
-        icon: <NewReleasesOutlined />
+        startAdornment: <NewReleasesOutlined />
       };
       setCreatableTop100Films((prev) => [...prev, newFilm]);
     }
@@ -968,7 +1018,6 @@ const CreatableTemplate = ({
         {...args}
         creatable
         options={creatableTop100Films}
-        getOptionLabel={(option) => option.title}
         onChange={(event, newValue) => {
           if (newValue && newValue.inputValue) {
             handleAddOption(newValue);
@@ -987,6 +1036,146 @@ const CreatableTemplate = ({
             InputLabelProps={{ shrink: true }}
           />
         )}
+        size={size}
+      />
+    </IntlProvider>
+  );
+};
+
+const CreatableWithPrefixAndSuffixTemplate = ({
+  label,
+  variant,
+  placeholder,
+  helperText,
+  error,
+  size,
+  required,
+  ...args
+}) => {
+  const [creatableTop100Films, setCreatableTop100Films] = useState(top100Films);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleAddOption = (newOption) => {
+    if (newOption.inputValue) {
+      const newFilm = {
+        title: newOption.inputValue,
+        startAdornment: <NewReleasesOutlined />
+      };
+      console.log('newFilm', newFilm);
+      setCreatableTop100Films((prev) => [...prev, newFilm]);
+    }
+  };
+
+  return (
+    <IntlProvider locale='en'>
+      <Autocomplete
+        {...args}
+        creatable
+        options={creatableTop100Films}
+        onChange={(event, newValue) => {
+          if (newValue && newValue.inputValue) {
+            handleAddOption(newValue);
+          }
+          setSelectedOption(newValue);
+          console.log('onChange newValue', newValue);
+        }}
+        renderInput={(params) => {
+          if (selectedOption) {
+            params.InputProps.startAdornment = (
+              <InputAdornment position='start'>
+                {selectedOption.startAdornment}
+              </InputAdornment>
+            );
+            params.InputProps.endAdornment = (
+              <>
+                <InputAdornment position='start'>
+                  {selectedOption.endAdornment}
+                </InputAdornment>
+                <InputAdornment position='start'>
+                  {params.InputProps.endAdornment}
+                </InputAdornment>
+              </>
+            );
+          }
+          return (
+            <TextField
+              {...params}
+              label={label}
+              placeholder={placeholder}
+              helperText={helperText}
+              variant={variant}
+              error={error}
+              size={size}
+              required={required}
+              InputLabelProps={{ shrink: true }}
+            />
+          );
+        }}
+        size={size}
+      />
+    </IntlProvider>
+  );
+};
+
+const CreatableMultipleWithPrefixTemplate = ({
+  label,
+  variant,
+  placeholder,
+  helperText,
+  error,
+  size,
+  required,
+  ...args
+}) => {
+  const [creatableTop100Films, setCreatableTop100Films] = useState(top100Films);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleAddOption = (newOption) => {
+    if (newOption.inputValue) {
+      const newFilm = {
+        title: newOption.inputValue,
+        startAdornment: <NewReleasesOutlined />
+      };
+      setCreatableTop100Films((prev) => [...prev, newFilm]);
+    }
+  };
+
+  return (
+    <IntlProvider locale='en'>
+      <Autocomplete
+        {...args}
+        creatable
+        multiple
+        options={creatableTop100Films}
+        getOptionLabel={(option) => option.title}
+        onChange={(event, newValue) => {
+          if (newValue && newValue.inputValue) {
+            handleAddOption(newValue);
+          }
+          setSelectedOption(newValue);
+        }}
+        renderInput={(params) => {
+          if (selectedOption) {
+            params.InputProps.startAdornment = (
+              <InputAdornment position='start'>
+                {selectedOption.startAdornment}
+              </InputAdornment>
+            );
+          }
+          return (
+            <TextField
+              {...params}
+              label={label}
+              placeholder={placeholder}
+              helperText={helperText}
+              variant={variant}
+              error={error}
+              size={size}
+              required={required}
+              InputLabelProps={{ shrink: true }}
+            />
+          );
+        }}
         size={size}
       />
     </IntlProvider>
@@ -1122,6 +1311,19 @@ CustomRenderOption.args = { ...commonArgs };
 
 export const Creatable = CreatableTemplate.bind({});
 Creatable.args = { ...commonArgs };
+
+export const CreatableCustomNewOption = CreatableTemplate.bind({});
+CreatableCustomNewOption.args = {
+  ...commonArgs,
+  newItemTitle: 'c4r.widgets.category.apply',
+  newItemIcon: <NewReleasesOutlined />
+};
+
+export const CreatableWithPrefixAndSuffix = CreatableWithPrefixAndSuffixTemplate.bind({});
+CreatableWithPrefixAndSuffix.args = { ...commonArgs };
+
+export const CreatableMultipleWithPrefix = CreatableMultipleWithPrefixTemplate.bind({});
+CreatableMultipleWithPrefix.args = { ...commonArgs };
 
 export const FreeSolo = FreeSoloTemplate.bind({});
 FreeSolo.args = { ...commonArgs };
