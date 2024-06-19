@@ -66,30 +66,39 @@ const Autocomplete = forwardRef(
 
     const creatableRenderOption = (props, option) => (
       <React.Fragment key={option.inputValue || option.title}>
-        {option.inputValue && <Divider />}
-        <MenuItem
-          {...props}
-          fixed={option.fixed}
-          subtitle={option.subtitle}
-          extended={option.extended}
-          iconColor={option.iconColor}
-        >
-          {option.inputValue && (
-            <ListItemIcon>{newItemIcon || <AddCircleOutlineOutlined />}</ListItemIcon>
-          )}
-          {option.startAdornment && !option.inputValue && (
-            <ListItemIcon>{option.startAdornment}</ListItemIcon>
-          )}
-          <ListItemText>
-            {option.alternativeTitle || option.title}
-            {option.secondaryText && (
-              <Typography component='p' variant='caption' color='text.secondary'>
-                {option.secondaryText}
-              </Typography>
-            )}
-          </ListItemText>
-          {option.endAdornment}
-        </MenuItem>
+        {option.divider ? (
+          <Divider />
+        ) : (
+          <>
+            {option.inputValue && <Divider />}
+            <MenuItem
+              {...props}
+              fixed={option.fixed}
+              extended={option.extended}
+              dense={option.dense}
+              destructive={option.destructive}
+              disabled={option.disabled}
+              subtitle={option.subtitle}
+              iconColor={option.iconColor}
+            >
+              {option.inputValue && (
+                <ListItemIcon>{newItemIcon || <AddCircleOutlineOutlined />}</ListItemIcon>
+              )}
+              {option.startAdornment && !option.inputValue && (
+                <ListItemIcon>{option.startAdornment}</ListItemIcon>
+              )}
+              <ListItemText>
+                {option.alternativeTitle || option.title}
+                {option.secondaryText && (
+                  <Typography component='p' variant='caption' color='text.secondary'>
+                    {option.secondaryText}
+                  </Typography>
+                )}
+              </ListItemText>
+              {option.endAdornment}
+            </MenuItem>
+          </>
+        )}
       </React.Fragment>
     );
 

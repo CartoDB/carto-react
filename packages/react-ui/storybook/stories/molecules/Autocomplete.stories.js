@@ -138,7 +138,8 @@ const top100Films = [
   {
     title: 'The Godfather: Part II',
     year: 1974,
-    startAdornment: <AccessAlarmOutlined />
+    startAdornment: <AccessAlarmOutlined />,
+    dense: true
   },
   {
     title: 'The Dark Knight',
@@ -159,7 +160,12 @@ const top100Films = [
     endAdornment: <Chip size='small' label='type' color='default' variant='outlined' />
   },
   { title: 'Subtitle', subtitle: true },
-  { title: 'Pulp Fiction', year: 1994, startAdornment: <AnalyticsOutlined /> },
+  {
+    title: 'Pulp Fiction',
+    year: 1994,
+    startAdornment: <AnalyticsOutlined />,
+    disabled: true
+  },
   {
     title: 'The Lord of the Rings: The Return of the King',
     year: 2003,
@@ -183,10 +189,12 @@ const top100Films = [
   },
   { title: 'Forrest Gump', year: 1994, startAdornment: <BuildOutlined /> },
   { title: 'Inception', year: 2010, startAdornment: <MovieOutlined /> },
+  { title: 'divider', divider: true },
   {
     title: 'The Lord of the Rings: The Two Towers',
     year: 2002,
-    startAdornment: <CheckCircleOutlined />
+    startAdornment: <CheckCircleOutlined />,
+    destructive: true
   }
 ];
 
@@ -1070,6 +1078,7 @@ const CreatableWithPrefixAndSuffixTemplate = ({
     <IntlProvider locale='en'>
       <Autocomplete
         {...args}
+        open
         creatable
         options={creatableTop100Films}
         onChange={(event, newValue) => {
