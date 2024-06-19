@@ -5,7 +5,7 @@ export {
   REQUEST_GET_MAX_URL_LENGTH
 } from './utils/requestsUtils';
 
-export { getMonday } from './utils/dateUtils';
+export { getMonday, getUTCMonday } from './utils/dateUtils';
 
 export { InvalidColumnError } from './utils/InvalidColumnError';
 

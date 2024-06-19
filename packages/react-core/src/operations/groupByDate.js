@@ -1,4 +1,4 @@
-import { getMonday } from '../utils/dateUtils';
+import { getUTCMonday } from '../utils/dateUtils';
 import { aggregate, aggregationFunctions } from './aggregation';
 import { GroupDateTypes } from './constants/GroupDateTypes';
 
@@ -6,7 +6,7 @@ const GROUP_KEY_FN_MAPPING = {
   // @ts-ignore
   [GroupDateTypes.YEARS]: (date) => Date.UTC(date.getUTCFullYear()),
   [GroupDateTypes.MONTHS]: (date) => Date.UTC(date.getUTCFullYear(), date.getUTCMonth()),
-  [GroupDateTypes.WEEKS]: (date) => getMonday(date),
+  [GroupDateTypes.WEEKS]: (date) => getUTCMonday(date),
   [GroupDateTypes.DAYS]: (date) =>
     Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()),
   [GroupDateTypes.HOURS]: (date) =>
