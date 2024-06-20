@@ -1078,7 +1078,6 @@ const CreatableWithPrefixAndSuffixTemplate = ({
     <IntlProvider locale='en'>
       <Autocomplete
         {...args}
-        //open
         creatable
         options={creatableTop100Films}
         onChange={(event, newValue) => {
