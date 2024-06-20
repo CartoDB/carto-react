@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Forms fixes & improvements [#881](https://github.com/CartoDB/carto-react/pull/881)
+- Autocomplete creatable: improved API to cover more use cases [#881](https://github.com/CartoDB/carto-react/pull/881)
 - Fix LegendProportion radius scale [#877](https://github.com/CartoDB/carto-react/pull/877)
 - Fix time zone handling in week counts, separate getMonday and getUTCMonday utilities [#879](https://github.com/CartoDB/carto-react/pull/879)
 

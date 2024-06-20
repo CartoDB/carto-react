@@ -1,7 +1,6 @@
 import { getSpacing } from '../../themeUtils';
-import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE, ICON_SIZE_SMALL } from '../../themeConstants';
+import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE } from '../../themeConstants';
 
-const sizeXsmall = getSpacing(2);
 const sizeSmall = getSpacing(3);
 const sizeMedium = getSpacing(4);
 const sizeLarge = getSpacing(6);
@@ -327,25 +326,7 @@ export const buttonsOverrides = {
         width: sizeLarge,
         height: sizeLarge
       })
-    },
-
-    variants: [
-      // Custom props and its variants
-      {
-        props: { size: 'xsmall' },
-        style: ({ theme }) => ({
-          width: sizeXsmall,
-          height: sizeXsmall,
-
-          '& .MuiSvgIcon-root, & svg': {
-            fontSize: ICON_SIZE_SMALL,
-            width: ICON_SIZE_SMALL,
-            minWidth: ICON_SIZE_SMALL,
-            height: ICON_SIZE_SMALL
-          }
-        })
-      }
-    ]
+    }
   },
 
   // MuiToggleButton
