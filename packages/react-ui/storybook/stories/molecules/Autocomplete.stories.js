@@ -103,7 +103,7 @@ const options = {
         type: 'text'
       }
     },
-    newItemTitle: {
+    newItemLabel: {
       control: {
         type: 'text'
       }
@@ -1078,7 +1078,7 @@ const CreatableWithPrefixAndSuffixTemplate = ({
     <IntlProvider locale='en'>
       <Autocomplete
         {...args}
-        open
+        //open
         creatable
         options={creatableTop100Films}
         onChange={(event, newValue) => {
@@ -1104,71 +1104,6 @@ const CreatableWithPrefixAndSuffixTemplate = ({
                   {params.InputProps.endAdornment}
                 </InputAdornment>
               </>
-            );
-          }
-          return (
-            <TextField
-              {...params}
-              label={label}
-              placeholder={placeholder}
-              helperText={helperText}
-              variant={variant}
-              error={error}
-              size={size}
-              required={required}
-              InputLabelProps={{ shrink: true }}
-            />
-          );
-        }}
-        size={size}
-      />
-    </IntlProvider>
-  );
-};
-
-const CreatableMultipleWithPrefixTemplate = ({
-  label,
-  variant,
-  placeholder,
-  helperText,
-  error,
-  size,
-  required,
-  ...args
-}) => {
-  const [creatableTop100Films, setCreatableTop100Films] = useState(top100Films);
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  const handleAddOption = (newOption) => {
-    if (newOption.inputValue) {
-      const newFilm = {
-        title: newOption.inputValue,
-        startAdornment: <NewReleasesOutlined />
-      };
-      setCreatableTop100Films((prev) => [...prev, newFilm]);
-    }
-  };
-
-  return (
-    <IntlProvider locale='en'>
-      <Autocomplete
-        {...args}
-        creatable
-        multiple
-        options={creatableTop100Films}
-        getOptionLabel={(option) => option.title}
-        onChange={(event, newValue) => {
-          if (newValue && newValue.inputValue) {
-            handleAddOption(newValue);
-          }
-          setSelectedOption(newValue);
-        }}
-        renderInput={(params) => {
-          if (selectedOption) {
-            params.InputProps.startAdornment = (
-              <InputAdornment position='start'>
-                {selectedOption.startAdornment}
-              </InputAdornment>
             );
           }
           return (
@@ -1324,15 +1259,12 @@ Creatable.args = { ...commonArgs };
 export const CreatableCustomNewOption = CreatableTemplate.bind({});
 CreatableCustomNewOption.args = {
   ...commonArgs,
-  newItemTitle: 'c4r.widgets.category.apply',
+  newItemLabel: (value) => `Add this '${value}' new item`,
   newItemIcon: <NewReleasesOutlined />
 };
 
 export const CreatableWithPrefixAndSuffix = CreatableWithPrefixAndSuffixTemplate.bind({});
 CreatableWithPrefixAndSuffix.args = { ...commonArgs };
-
-export const CreatableMultipleWithPrefix = CreatableMultipleWithPrefixTemplate.bind({});
-CreatableMultipleWithPrefix.args = { ...commonArgs };
 
 export const FreeSolo = FreeSoloTemplate.bind({});
 FreeSolo.args = { ...commonArgs };
