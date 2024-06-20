@@ -103,7 +103,7 @@ const options = {
         type: 'text'
       }
     },
-    newItemTitle: {
+    newItemLabel: {
       control: {
         type: 'text'
       }
@@ -1078,7 +1078,7 @@ const CreatableWithPrefixAndSuffixTemplate = ({
     <IntlProvider locale='en'>
       <Autocomplete
         {...args}
-        open
+        //open
         creatable
         options={creatableTop100Films}
         onChange={(event, newValue) => {
@@ -1324,7 +1324,7 @@ Creatable.args = { ...commonArgs };
 export const CreatableCustomNewOption = CreatableTemplate.bind({});
 CreatableCustomNewOption.args = {
   ...commonArgs,
-  newItemTitle: 'c4r.widgets.category.apply',
+  newItemLabel: (value) => `Add this '${value}' new item`,
   newItemIcon: <NewReleasesOutlined />
 };
 

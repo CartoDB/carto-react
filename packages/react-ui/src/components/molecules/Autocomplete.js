@@ -19,7 +19,7 @@ const Autocomplete = forwardRef(
   (
     {
       creatable,
-      newItemTitle = 'c4r.form.add',
+      newItemLabel = 'c4r.form.add',
       newItemIcon,
       freeSolo,
       renderOption,
@@ -44,7 +44,10 @@ const Autocomplete = forwardRef(
       if (inputValue.length > 1 && inputValue !== '' && !isExisting) {
         filtered.push({
           inputValue,
-          title: typeof newItemTitle === 'function' ? newItemTitle(inputValue) : `${newItemTitle} "${inputValue}"`
+          title:
+            typeof newItemLabel === 'function'
+              ? newItemLabel(inputValue)
+              : `${intlConfig.formatMessage({ id: newItemLabel })} "${inputValue}"`
         });
       }
 
@@ -117,7 +120,11 @@ const Autocomplete = forwardRef(
 
 Autocomplete.propTypes = {
   creatable: PropTypes.bool,
-  newItemTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  newItemLabel: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.string,
+    PropTypes.element
+  ]),
   newItemIcon: PropTypes.element
 };
 
