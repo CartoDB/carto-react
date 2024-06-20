@@ -44,7 +44,7 @@ const Autocomplete = forwardRef(
       if (inputValue.length > 1 && inputValue !== '' && !isExisting) {
         filtered.push({
           inputValue,
-          title: `${intlConfig.formatMessage({ id: newItemTitle })} "${inputValue}"`
+          title: typeof newItemTitle === 'function' ? newItemTitle(inputValue) : `${newItemTitle} "${inputValue}"`
         });
       }
 
