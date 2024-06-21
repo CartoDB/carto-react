@@ -39,6 +39,9 @@ const StyledMenuItem = styled(MuiMenuItem, {
     },
     '&.Mui-selected .MuiListItemIcon-root svg path': {
       fill: theme.palette.primary.main
+    },
+    '.MuiAutocomplete-listbox &[aria-selected="true"] svg path': {
+      fill: theme.palette.primary.main
     }
   }),
   ...(destructive && {

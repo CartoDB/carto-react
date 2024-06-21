@@ -751,7 +751,7 @@ export const formsOverrides = {
         '.MuiButtonBase-root + .MuiDivider-root': {
           display: 'block'
         },
-        '.MuiMenuItem-root': {
+        '.MuiMenuItem-root:first-of-type': {
           marginTop: theme.spacing(1)
         }
       })
