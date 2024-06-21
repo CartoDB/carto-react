@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Autocomplete creatable: improved API to cover more use cases [#881](https://github.com/CartoDB/carto-react/pull/881)
+- Fix LegendProportion radius scale [#877](https://github.com/CartoDB/carto-react/pull/877)
 - Fix time zone handling in week counts, separate getMonday and getUTCMonday utilities [#879](https://github.com/CartoDB/carto-react/pull/879)
 
 ## 3.0.0
@@ -12,7 +14,7 @@
 
 ### 3.0.0-alpha.11 (2024-06-12)
 
-- Add creatable functionality to Autocomplete & MenuItem fixed [#828](https://github.com/CartoDB/carto-react/pull/828)
+- Add creatable functionality to Autocomplete & MenuItem fixed [#873](https://github.com/CartoDB/carto-react/pull/873)
 - Table component: Added selected row and with checkbox example in Storybook [#876](https://github.com/CartoDB/carto-react/pull/876)
 
 ### 3.0.0-alpha.10 (2024-06-03)

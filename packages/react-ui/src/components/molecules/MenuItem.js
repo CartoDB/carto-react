@@ -5,7 +5,7 @@ import { MenuItem as MuiMenuItem, styled } from '@mui/material';
 const StyledMenuItem = styled(MuiMenuItem, {
   shouldForwardProp: (prop) =>
     !['subtitle', 'destructive', 'extended', 'iconColor', 'fixed'].includes(prop)
-})(({ subtitle, destructive, extended, iconColor, fixed, theme }) => ({
+})(({ dense, subtitle, destructive, extended, iconColor, fixed, theme }) => ({
   ...(subtitle && {
     pointerEvents: 'none',
     columnGap: 0,
@@ -13,14 +13,20 @@ const StyledMenuItem = styled(MuiMenuItem, {
     fontWeight: 500,
     color: theme.palette.text.secondary,
 
+    '.MuiListItemText-root .MuiTypography-root': {
+      ...theme.typography.caption,
+      fontWeight: 500,
+      color: theme.palette.text.secondary
+    },
+
     '&.MuiMenuItem-root': {
       minHeight: theme.spacing(3),
       paddingTop: 0,
       paddingBottom: 0,
+      marginTop: theme.spacing(1),
 
       '&:not(:first-of-type)': {
         minHeight: theme.spacing(5),
-        marginTop: theme.spacing(1),
         paddingTop: theme.spacing(1),
         borderTop: `1px solid ${theme.palette.divider}`
       }
@@ -32,6 +38,9 @@ const StyledMenuItem = styled(MuiMenuItem, {
       fill: theme.palette.text.primary
     },
     '&.Mui-selected .MuiListItemIcon-root svg path': {
+      fill: theme.palette.primary.main
+    },
+    '.MuiAutocomplete-listbox &[aria-selected="true"] svg path': {
       fill: theme.palette.primary.main
     }
   }),
@@ -77,7 +86,7 @@ const StyledMenuItem = styled(MuiMenuItem, {
     }
   }),
   ...(extended && {
-    '&.MuiMenuItem-root': {
+    '&.MuiButtonBase-root.MuiMenuItem-root': {
       minHeight: theme.spacing(6)
     }
   }),
@@ -94,11 +103,25 @@ const StyledMenuItem = styled(MuiMenuItem, {
       padding: theme.spacing(0.5, 1.5),
       backgroundColor: theme.palette.background.paper,
       borderBottom: `1px solid ${theme.palette.divider}`
+    },
+    '.MuiAutocomplete-listbox &.MuiAutocomplete-option:first-of-type': {
+      minHeight: theme.spacing(6),
+      marginTop: 0,
+
+      '&:hover': {
+        backgroundColor: theme.palette.background.paper
+      }
     }
   }),
   ...(!fixed && {
     '.MuiList-root &:first-of-type': {
       marginTop: theme.spacing(1)
+    }
+  }),
+  ...(dense && {
+    '&.MuiButtonBase-root.MuiMenuItem-root': {
+      minHeight: theme.spacing(3),
+      padding: theme.spacing(0.25, 1.5)
     }
   })
 }));
