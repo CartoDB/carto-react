@@ -1,10 +1,7 @@
 import React from 'react';
-import { ICON_SIZE_MEDIUM } from '../../themeConstants';
+import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE } from '../../themeConstants';
 import ArrowDropIcon from '../../../assets/icons/ArrowDropIcon';
 import CancelIcon from '@mui/icons-material/Cancel';
-
-const controlSizeS = 2.25;
-const controlSizeM = 3;
 
 const switchSizeS = 2;
 const switchSizeM = 3;
@@ -31,16 +28,10 @@ const checkboxRadioOverrides = {
     },
 
     '& .MuiSvgIcon-root': {
-      fontSize: theme.spacing(controlSizeM),
-      width: theme.spacing(controlSizeM),
-      minWidth: theme.spacing(controlSizeM),
-      height: theme.spacing(controlSizeM),
+      fontSize: ICON_SIZE_LARGE,
 
       ...(ownerState.size === 'small' && {
-        fontSize: theme.spacing(controlSizeS),
-        width: theme.spacing(controlSizeS),
-        minWidth: theme.spacing(controlSizeS),
-        height: theme.spacing(controlSizeS)
+        fontSize: ICON_SIZE_MEDIUM
       })
     }
   })
@@ -84,9 +75,6 @@ const LabelOverrides = {
 export const formsOverrides = {
   // Checkbox
   MuiCheckbox: {
-    defaultProps: {
-      size: 'small'
-    },
     styleOverrides: {
       ...checkboxRadioOverrides
     }
@@ -94,9 +82,6 @@ export const formsOverrides = {
 
   // Radio Button
   MuiRadio: {
-    defaultProps: {
-      size: 'small'
-    },
     styleOverrides: {
       ...checkboxRadioOverrides
     }
@@ -730,6 +715,12 @@ export const formsOverrides = {
             color: theme.palette.primary.main,
             backgroundColor: theme.palette.primary.background,
 
+            '.MuiTypography-root': {
+              color: theme.palette.primary.main
+            },
+            '.MuiTypography-caption': {
+              color: theme.palette.text.secondary
+            },
             '&.Mui-focused:hover': {
               backgroundColor: theme.palette.action.hover
             }
@@ -752,11 +743,16 @@ export const formsOverrides = {
       }),
 
       listbox: ({ ownerState, theme }) => ({
+        paddingTop: 0,
+
         '.MuiDivider-root': {
           display: 'none'
         },
         '.MuiButtonBase-root + .MuiDivider-root': {
           display: 'block'
+        },
+        '.MuiMenuItem-root': {
+          marginTop: theme.spacing(1)
         }
       })
     }

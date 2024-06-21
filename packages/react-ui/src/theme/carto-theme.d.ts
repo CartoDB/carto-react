@@ -134,13 +134,6 @@ declare module '@mui/material/Button' {
   }
 }
 
-// Update the IconButtons's size prop options
-declare module '@mui/material/IconButton' {
-  interface IconButtonPropsSizeOverrides {
-    xsmall: true;
-  }
-}
-
 // Update the FAB's color prop options
 declare module '@mui/material/Fab' {
   interface FabPropsColorOverrides {

@@ -17,7 +17,7 @@ const options = {
     size: {
       control: {
         type: 'select',
-        options: ['xsmall', 'small', 'medium', 'large']
+        options: ['small', 'medium', 'large']
       }
     },
     disabled: {
