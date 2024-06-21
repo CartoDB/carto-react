@@ -715,6 +715,12 @@ export const formsOverrides = {
             color: theme.palette.primary.main,
             backgroundColor: theme.palette.primary.background,
 
+            '.MuiTypography-root': {
+              color: theme.palette.primary.main
+            },
+            '.MuiTypography-caption': {
+              color: theme.palette.text.secondary
+            },
             '&.Mui-focused:hover': {
               backgroundColor: theme.palette.action.hover
             }
@@ -737,11 +743,16 @@ export const formsOverrides = {
       }),
 
       listbox: ({ ownerState, theme }) => ({
+        paddingTop: 0,
+
         '.MuiDivider-root': {
           display: 'none'
         },
         '.MuiButtonBase-root + .MuiDivider-root': {
           display: 'block'
+        },
+        '.MuiMenuItem-root': {
+          marginTop: theme.spacing(1)
         }
       })
     }

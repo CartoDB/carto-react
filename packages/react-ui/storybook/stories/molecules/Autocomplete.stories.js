@@ -1069,7 +1069,6 @@ const CreatableWithPrefixAndSuffixTemplate = ({
         title: newOption.inputValue,
         startAdornment: <NewReleasesOutlined />
       };
-      console.log('newFilm', newFilm);
       setCreatableTop100Films((prev) => [...prev, newFilm]);
     }
   };
@@ -1085,7 +1084,6 @@ const CreatableWithPrefixAndSuffixTemplate = ({
             handleAddOption(newValue);
           }
           setSelectedOption(newValue);
-          console.log('onChange newValue', newValue);
         }}
         renderInput={(params) => {
           if (selectedOption) {
