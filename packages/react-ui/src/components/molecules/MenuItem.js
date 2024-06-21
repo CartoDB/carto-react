@@ -104,7 +104,7 @@ const StyledMenuItem = styled(MuiMenuItem, {
       backgroundColor: theme.palette.background.paper,
       borderBottom: `1px solid ${theme.palette.divider}`
     },
-    '.MuiAutocomplete-listbox &:first-of-type': {
+    '.MuiAutocomplete-listbox &.MuiAutocomplete-option:first-of-type': {
       minHeight: theme.spacing(6),
       marginTop: 0,
 
