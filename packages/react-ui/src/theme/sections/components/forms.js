@@ -725,6 +725,9 @@ export const formsOverrides = {
               backgroundColor: theme.palette.action.hover
             }
           },
+          '&:first-of-type': {
+            marginTop: theme.spacing(1)
+          },
 
           ...(ownerState.size === 'small' && {
             padding: theme.spacing(0.5, 1.5)
@@ -751,7 +754,7 @@ export const formsOverrides = {
         '.MuiButtonBase-root + .MuiDivider-root': {
           display: 'block'
         },
-        '.MuiMenuItem-root': {
+        '.MuiMenuItem-root:first-of-type': {
           marginTop: theme.spacing(1)
         }
       })

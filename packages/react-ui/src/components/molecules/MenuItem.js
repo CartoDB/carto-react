@@ -39,6 +39,9 @@ const StyledMenuItem = styled(MuiMenuItem, {
     },
     '&.Mui-selected .MuiListItemIcon-root svg path': {
       fill: theme.palette.primary.main
+    },
+    '.MuiAutocomplete-listbox &[aria-selected="true"] svg path': {
+      fill: theme.palette.primary.main
     }
   }),
   ...(destructive && {
@@ -101,7 +104,7 @@ const StyledMenuItem = styled(MuiMenuItem, {
       backgroundColor: theme.palette.background.paper,
       borderBottom: `1px solid ${theme.palette.divider}`
     },
-    '.MuiAutocomplete-listbox &:first-of-type': {
+    '.MuiAutocomplete-listbox &.MuiAutocomplete-option:first-of-type': {
       minHeight: theme.spacing(6),
       marginTop: 0,
 
