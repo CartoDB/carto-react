@@ -2,11 +2,14 @@
 
 ## Not released
 
-- Autocomplete creatable: improved API to cover more use cases [#881](https://github.com/CartoDB/carto-react/pull/881)
-- Fix LegendProportion radius scale [#877](https://github.com/CartoDB/carto-react/pull/877)
-- Fix time zone handling in week counts, separate getMonday and getUTCMonday utilities [#879](https://github.com/CartoDB/carto-react/pull/879)
+- Form components: fixes and improvements [#883](https://github.com/CartoDB/carto-react/pull/883)
 
 ## 3.0.0
+
+### 3.0.0-alpha.13 (2024-06-21)
+
+- Autocomplete creatable: improved API to cover more use cases [#881](https://github.com/CartoDB/carto-react/pull/881)
+- Fix time zone handling in week counts, separate getMonday and getUTCMonday utilities [#879](https://github.com/CartoDB/carto-react/pull/879)
 
 ### 3.0.0-alpha.12 (2024-06-14)
 

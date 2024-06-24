@@ -1,7 +1,10 @@
 import React from 'react';
-import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE } from '../../themeConstants';
+import { ICON_SIZE_MEDIUM } from '../../themeConstants';
 import ArrowDropIcon from '../../../assets/icons/ArrowDropIcon';
 import CancelIcon from '@mui/icons-material/Cancel';
+
+const controlSizeS = 2.25;
+const controlSizeM = 3;
 
 const switchSizeS = 2;
 const switchSizeM = 3;
@@ -28,10 +31,16 @@ const checkboxRadioOverrides = {
     },
 
     '& .MuiSvgIcon-root': {
-      fontSize: ICON_SIZE_LARGE,
+      fontSize: theme.spacing(controlSizeM),
+      width: theme.spacing(controlSizeM),
+      minWidth: theme.spacing(controlSizeM),
+      height: theme.spacing(controlSizeM),
 
       ...(ownerState.size === 'small' && {
-        fontSize: ICON_SIZE_MEDIUM
+        fontSize: theme.spacing(controlSizeS),
+        width: theme.spacing(controlSizeS),
+        minWidth: theme.spacing(controlSizeS),
+        height: theme.spacing(controlSizeS)
       })
     }
   })
@@ -75,6 +84,9 @@ const LabelOverrides = {
 export const formsOverrides = {
   // Checkbox
   MuiCheckbox: {
+    defaultProps: {
+      size: 'small'
+    },
     styleOverrides: {
       ...checkboxRadioOverrides
     }
@@ -82,6 +94,9 @@ export const formsOverrides = {
 
   // Radio Button
   MuiRadio: {
+    defaultProps: {
+      size: 'small'
+    },
     styleOverrides: {
       ...checkboxRadioOverrides
     }
