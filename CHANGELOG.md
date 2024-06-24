@@ -2,7 +2,7 @@
 
 ## Not released
 
-- Forms components: fixes and improvements [#883](https://github.com/CartoDB/carto-react/pull/883)
+- Form components: fixes and improvements [#883](https://github.com/CartoDB/carto-react/pull/883)
 
 ## 3.0.0
 
