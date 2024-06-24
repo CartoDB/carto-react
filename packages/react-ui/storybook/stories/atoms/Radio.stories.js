@@ -102,10 +102,18 @@ const SizeTemplate = ({ ...args }) => {
 
       <Grid item container spacing={2}>
         <Grid item xs={4}>
-          <FormControlLabel control={<Radio checked />} label='Medium Active' {...args} />
+          <FormControlLabel
+            control={<Radio checked size='medium' />}
+            label='Medium Active'
+            {...args}
+          />
         </Grid>
         <Grid item xs={4}>
-          <FormControlLabel control={<Radio />} label='Medium Inactive' {...args} />
+          <FormControlLabel
+            control={<Radio size='medium' />}
+            label='Medium Inactive'
+            {...args}
+          />
         </Grid>
       </Grid>
     </Grid>
@@ -127,7 +135,6 @@ Playground.args = { label: 'Text' };
 
 export const States = StatesTemplate.bind({});
 States.argTypes = disabledStatesArgTypes;
-States.args = { size: 'medium' };
 
 export const Sizes = SizeTemplate.bind({});
 Sizes.argTypes = disabledSizesArgTypes;

@@ -143,17 +143,21 @@ const SizeTemplate = ({ ...args }) => {
       <Grid item container spacing={2}>
         <Grid item xs={4}>
           <FormControlLabel
-            control={<Checkbox checked />}
+            control={<Checkbox checked size='medium' />}
             label='Medium Active'
             {...args}
           />
         </Grid>
         <Grid item xs={4}>
-          <FormControlLabel control={<Checkbox />} label='Medium Inactive' {...args} />
+          <FormControlLabel
+            control={<Checkbox size='medium' />}
+            label='Medium Inactive'
+            {...args}
+          />
         </Grid>
         <Grid item xs={4}>
           <FormControlLabel
-            control={<Checkbox checked indeterminate />}
+            control={<Checkbox checked indeterminate size='medium' />}
             label='Medium Indeterminate'
             {...args}
           />
@@ -180,7 +184,6 @@ Playground.args = { label: 'Text' };
 
 export const States = StatesTemplate.bind({});
 States.argTypes = disabledStatesArgTypes;
-States.args = { size: 'medium' };
 
 export const Sizes = SizeTemplate.bind({});
 Sizes.argTypes = disabledSizesArgTypes;
