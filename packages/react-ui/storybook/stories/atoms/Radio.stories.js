@@ -16,6 +16,11 @@ const options = {
         type: 'boolean'
       }
     },
+    readOnly: {
+      control: {
+        type: 'boolean'
+      }
+    },
     label: {
       control: {
         type: 'text'
@@ -34,12 +39,15 @@ const options = {
 };
 export default options;
 
-const RadioTemplate = ({ label, size, checked, disabled, ...args }) => {
+const RadioTemplate = ({ label, size, checked, disabled, readOnly, ...args }) => {
   return (
     <FormControlLabel
       value={label}
-      control={<Radio size={size} checked={checked} disabled={disabled} />}
+      control={
+        <Radio size={size} checked={checked} disabled={disabled} readOnly={readOnly} />
+      }
       label={label}
+      readOnly={readOnly}
     />
   );
 };
@@ -72,6 +80,25 @@ const StatesTemplate = ({ size, ...args }) => {
           <FormControlLabel
             control={<Radio size={size} disabled />}
             label='Disabled Inactive'
+            {...args}
+          />
+        </Grid>
+      </Grid>
+
+      <Grid item container spacing={2}>
+        <Grid item xs={4}>
+          <FormControlLabel
+            control={<Radio size={size} checked readOnly />}
+            label='Read Only Active'
+            readOnly
+            {...args}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <FormControlLabel
+            control={<Radio size={size} readOnly />}
+            label='Read Only Inactive'
+            readOnly
             {...args}
           />
         </Grid>

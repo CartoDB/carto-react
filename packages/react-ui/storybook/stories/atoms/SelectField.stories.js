@@ -459,6 +459,42 @@ const SizeTemplate = ({ label, placeholder, helperText, size, ...rest }) => {
 
       <Grid item container spacing={2}>
         <Grid item xs={2}>
+          <Typography>Read only</Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <SelectFieldItem
+            {...rest}
+            variant='filled'
+            label={label}
+            placeholder={placeholder}
+            readOnly
+            size={size}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <SelectFieldItem
+            {...rest}
+            variant='outlined'
+            label={label}
+            placeholder={placeholder}
+            readOnly
+            size={size}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <SelectFieldItem
+            {...rest}
+            variant='standard'
+            label={label}
+            placeholder={placeholder}
+            readOnly
+            size={size}
+          />
+        </Grid>
+      </Grid>
+
+      <Grid item container spacing={2}>
+        <Grid item xs={2}>
           <Typography>Error</Typography>
         </Grid>
         <Grid item xs={3}>

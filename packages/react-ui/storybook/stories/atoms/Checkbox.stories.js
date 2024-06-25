@@ -26,6 +26,11 @@ const options = {
         type: 'boolean'
       }
     },
+    readOnly: {
+      control: {
+        type: 'boolean'
+      }
+    },
     label: {
       control: {
         type: 'text'
@@ -44,7 +49,15 @@ const options = {
 };
 export default options;
 
-const CheckboxTemplate = ({ label, size, checked, indeterminate, disabled, ...args }) => {
+const CheckboxTemplate = ({
+  label,
+  size,
+  checked,
+  indeterminate,
+  disabled,
+  readOnly,
+  ...args
+}) => {
   return (
     <FormControlLabel
       control={
@@ -53,9 +66,11 @@ const CheckboxTemplate = ({ label, size, checked, indeterminate, disabled, ...ar
           checked={checked}
           indeterminate={indeterminate}
           disabled={disabled}
+          readOnly={readOnly}
         />
       }
       label={label}
+      readOnly={readOnly}
       {...args}
     />
   );
@@ -108,6 +123,32 @@ const StatesTemplate = ({ size, ...args }) => {
             label='Disabled Indeterminate'
             {...args}
           />
+        </Grid>
+        <Grid item container spacing={2}>
+          <Grid item xs={4}>
+            <FormControlLabel
+              control={<Checkbox size={size} checked readOnly />}
+              label='Read Only Active'
+              readOnly
+              {...args}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <FormControlLabel
+              control={<Checkbox size={size} readOnly />}
+              label='Read Only Inactive'
+              readOnly
+              {...args}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <FormControlLabel
+              control={<Checkbox size={size} checked indeterminate readOnly />}
+              label='Read Only Indeterminate'
+              readOnly
+              {...args}
+            />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
