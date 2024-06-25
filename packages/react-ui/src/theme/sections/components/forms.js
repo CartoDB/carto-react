@@ -17,6 +17,14 @@ const checkboxRadioOverrides = {
     ...(ownerState.size === 'small' && {
       padding: '3px' // Forced to a non-standard value to meet with design
     }),
+    ...(ownerState.readOnly === true && {
+      pointerEvents: 'none',
+      color: theme.palette.text.disabled,
+
+      '&.Mui-checked': {
+        color: theme.palette.text.disabled
+      }
+    }),
 
     '&:hover, &:focus-visible': {
       backgroundColor: theme.palette.primary.background
@@ -451,12 +459,16 @@ export const formsOverrides = {
   // Form Control Label (radio, checkbox and switch wrapper)
   MuiFormControlLabel: {
     styleOverrides: {
-      root: ({ theme }) => ({
+      root: ({ ownerState, theme }) => ({
         marginLeft: theme.spacing(-0.5),
 
         '& .MuiSwitch-root': {
           marginLeft: theme.spacing(0.5)
-        }
+        },
+
+        ...(ownerState.readOnly === true && {
+          pointerEvents: 'none'
+        })
       })
     }
   },
@@ -801,7 +813,7 @@ export const formsOverrides = {
         }
       }),
 
-      switchBase: ({ theme }) => ({
+      switchBase: ({ ownerState, theme }) => ({
         width: theme.spacing(switchSizeL),
         height: theme.spacing(switchSizeL),
         padding: theme.spacing(0.5),
@@ -827,7 +839,11 @@ export const formsOverrides = {
             opacity: 1,
             border: 0
           }
-        }
+        },
+
+        ...(ownerState.readOnly === true && {
+          color: theme.palette.text.disabled
+        })
       }),
 
       thumb: ({ theme }) => ({
@@ -852,7 +868,7 @@ export const formsOverrides = {
         left: 0
       }),
 
-      track: ({ theme }) => ({
+      track: ({ ownerState, theme }) => ({
         height: 'auto',
         border: `1px solid ${theme.palette.text.secondary}`,
         borderRadius: theme.spacing(2),
@@ -866,7 +882,18 @@ export const formsOverrides = {
         },
         '.MuiButtonBase-root.Mui-checked.Mui-disabled + &': {
           backgroundColor: theme.palette.text.disabled
-        }
+        },
+
+        '.MuiButtonBase-root.MuiSwitch-switchBase[readOnly] + &': {
+          borderColor: theme.palette.text.disabled
+        },
+        '[readOnly] .MuiButtonBase-root.Mui-checked + &': {
+          backgroundColor: theme.palette.text.disabled
+        },
+
+        ...(ownerState.readOnly === true && {
+          borderColor: theme.palette.text.disabled
+        })
       }),
 
       colorPrimary: ({ theme }) => ({
