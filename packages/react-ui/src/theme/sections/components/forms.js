@@ -624,6 +624,9 @@ export const formsOverrides = {
                 paddingLeft: theme.spacing(0.5)
               })
             }),
+            ...(ownerState.readOnly === true && {
+              backgroundColor: theme.palette.default.background
+            }),
 
             '&.Mui-disabled': {
               pointerEvents: 'none'
