@@ -26,6 +26,11 @@ const options = {
         type: 'boolean'
       }
     },
+    readOnly: {
+      control: {
+        type: 'boolean'
+      }
+    },
     label: {
       control: {
         type: 'text'
@@ -44,7 +49,15 @@ const options = {
 };
 export default options;
 
-const CheckboxTemplate = ({ label, size, checked, indeterminate, disabled, ...args }) => {
+const CheckboxTemplate = ({
+  label,
+  size,
+  checked,
+  indeterminate,
+  disabled,
+  readOnly,
+  ...args
+}) => {
   return (
     <FormControlLabel
       control={
@@ -53,9 +66,11 @@ const CheckboxTemplate = ({ label, size, checked, indeterminate, disabled, ...ar
           checked={checked}
           indeterminate={indeterminate}
           disabled={disabled}
+          readOnly={readOnly}
         />
       }
       label={label}
+      readOnly={readOnly}
       {...args}
     />
   );
@@ -109,6 +124,32 @@ const StatesTemplate = ({ size, ...args }) => {
             {...args}
           />
         </Grid>
+        <Grid item container spacing={2}>
+          <Grid item xs={4}>
+            <FormControlLabel
+              control={<Checkbox size={size} checked readOnly />}
+              label='Read Only Active'
+              readOnly
+              {...args}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <FormControlLabel
+              control={<Checkbox size={size} readOnly />}
+              label='Read Only Inactive'
+              readOnly
+              {...args}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <FormControlLabel
+              control={<Checkbox size={size} checked indeterminate readOnly />}
+              label='Read Only Indeterminate'
+              readOnly
+              {...args}
+            />
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
@@ -143,17 +184,21 @@ const SizeTemplate = ({ ...args }) => {
       <Grid item container spacing={2}>
         <Grid item xs={4}>
           <FormControlLabel
-            control={<Checkbox checked />}
+            control={<Checkbox checked size='medium' />}
             label='Medium Active'
             {...args}
           />
         </Grid>
         <Grid item xs={4}>
-          <FormControlLabel control={<Checkbox />} label='Medium Inactive' {...args} />
+          <FormControlLabel
+            control={<Checkbox size='medium' />}
+            label='Medium Inactive'
+            {...args}
+          />
         </Grid>
         <Grid item xs={4}>
           <FormControlLabel
-            control={<Checkbox checked indeterminate />}
+            control={<Checkbox checked indeterminate size='medium' />}
             label='Medium Indeterminate'
             {...args}
           />
@@ -180,7 +225,6 @@ Playground.args = { label: 'Text' };
 
 export const States = StatesTemplate.bind({});
 States.argTypes = disabledStatesArgTypes;
-States.args = { size: 'medium' };
 
 export const Sizes = SizeTemplate.bind({});
 Sizes.argTypes = disabledSizesArgTypes;

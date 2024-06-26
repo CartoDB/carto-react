@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Form components: fixes and improvements to IconButton, Checkbox, Radio, Switch and Autocomplete [#883](https://github.com/CartoDB/carto-react/pull/883)
+
 ## 3.0.0
 
 ### 3.0.0-alpha.13 (2024-06-21)

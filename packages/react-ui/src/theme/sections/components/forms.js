@@ -1,7 +1,10 @@
 import React from 'react';
-import { ICON_SIZE_MEDIUM, ICON_SIZE_LARGE } from '../../themeConstants';
+import { ICON_SIZE_MEDIUM } from '../../themeConstants';
 import ArrowDropIcon from '../../../assets/icons/ArrowDropIcon';
 import CancelIcon from '@mui/icons-material/Cancel';
+
+const controlSizeS = 2.25;
+const controlSizeM = 3;
 
 const switchSizeS = 2;
 const switchSizeM = 3;
@@ -13,6 +16,14 @@ const checkboxRadioOverrides = {
 
     ...(ownerState.size === 'small' && {
       padding: '3px' // Forced to a non-standard value to meet with design
+    }),
+    ...(ownerState.readOnly === true && {
+      pointerEvents: 'none',
+      color: theme.palette.text.disabled,
+
+      '&.Mui-checked': {
+        color: theme.palette.text.disabled
+      }
     }),
 
     '&:hover, &:focus-visible': {
@@ -28,10 +39,16 @@ const checkboxRadioOverrides = {
     },
 
     '& .MuiSvgIcon-root': {
-      fontSize: ICON_SIZE_LARGE,
+      fontSize: theme.spacing(controlSizeM),
+      width: theme.spacing(controlSizeM),
+      minWidth: theme.spacing(controlSizeM),
+      height: theme.spacing(controlSizeM),
 
       ...(ownerState.size === 'small' && {
-        fontSize: ICON_SIZE_MEDIUM
+        fontSize: theme.spacing(controlSizeS),
+        width: theme.spacing(controlSizeS),
+        minWidth: theme.spacing(controlSizeS),
+        height: theme.spacing(controlSizeS)
       })
     }
   })
@@ -75,6 +92,9 @@ const LabelOverrides = {
 export const formsOverrides = {
   // Checkbox
   MuiCheckbox: {
+    defaultProps: {
+      size: 'small'
+    },
     styleOverrides: {
       ...checkboxRadioOverrides
     }
@@ -82,6 +102,9 @@ export const formsOverrides = {
 
   // Radio Button
   MuiRadio: {
+    defaultProps: {
+      size: 'small'
+    },
     styleOverrides: {
       ...checkboxRadioOverrides
     }
@@ -436,12 +459,16 @@ export const formsOverrides = {
   // Form Control Label (radio, checkbox and switch wrapper)
   MuiFormControlLabel: {
     styleOverrides: {
-      root: ({ theme }) => ({
+      root: ({ ownerState, theme }) => ({
         marginLeft: theme.spacing(-0.5),
 
         '& .MuiSwitch-root': {
           marginLeft: theme.spacing(0.5)
-        }
+        },
+
+        ...(ownerState.readOnly === true && {
+          pointerEvents: 'none'
+        })
       })
     }
   },
@@ -608,6 +635,9 @@ export const formsOverrides = {
               ...(ownerState.multiple === true && {
                 paddingLeft: theme.spacing(0.5)
               })
+            }),
+            ...(ownerState.readOnly === true && {
+              backgroundColor: theme.palette.default.background
             }),
 
             '&.Mui-disabled': {
@@ -783,7 +813,7 @@ export const formsOverrides = {
         }
       }),
 
-      switchBase: ({ theme }) => ({
+      switchBase: ({ ownerState, theme }) => ({
         width: theme.spacing(switchSizeL),
         height: theme.spacing(switchSizeL),
         padding: theme.spacing(0.5),
@@ -809,7 +839,11 @@ export const formsOverrides = {
             opacity: 1,
             border: 0
           }
-        }
+        },
+
+        ...(ownerState.readOnly === true && {
+          color: theme.palette.text.disabled
+        })
       }),
 
       thumb: ({ theme }) => ({
@@ -834,7 +868,7 @@ export const formsOverrides = {
         left: 0
       }),
 
-      track: ({ theme }) => ({
+      track: ({ ownerState, theme }) => ({
         height: 'auto',
         border: `1px solid ${theme.palette.text.secondary}`,
         borderRadius: theme.spacing(2),
@@ -848,7 +882,18 @@ export const formsOverrides = {
         },
         '.MuiButtonBase-root.Mui-checked.Mui-disabled + &': {
           backgroundColor: theme.palette.text.disabled
-        }
+        },
+
+        '.MuiButtonBase-root.MuiSwitch-switchBase[readOnly] + &': {
+          borderColor: theme.palette.text.disabled
+        },
+        '[readOnly] .MuiButtonBase-root.Mui-checked + &': {
+          backgroundColor: theme.palette.text.disabled
+        },
+
+        ...(ownerState.readOnly === true && {
+          borderColor: theme.palette.text.disabled
+        })
       }),
 
       colorPrimary: ({ theme }) => ({

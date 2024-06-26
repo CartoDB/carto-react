@@ -16,6 +16,11 @@ const options = {
         type: 'boolean'
       }
     },
+    readOnly: {
+      control: {
+        type: 'boolean'
+      }
+    },
     label: {
       control: {
         type: 'text'
@@ -34,8 +39,15 @@ const options = {
 };
 export default options;
 
-const Template = ({ label, color, ...args }) => {
-  return <FormControlLabel control={<Switch color={color} />} label={label} {...args} />;
+const Template = ({ label, color, readOnly, ...args }) => {
+  return (
+    <FormControlLabel
+      control={<Switch color={color} readOnly={readOnly} />}
+      label={label}
+      readOnly={readOnly}
+      {...args}
+    />
+  );
 };
 
 const SwitchTemplate = ({ color, ...args }) => {
@@ -66,6 +78,25 @@ const SwitchTemplate = ({ color, ...args }) => {
           <FormControlLabel
             control={<Switch color={color} defaultChecked disabled />}
             label='Disabled On'
+            {...args}
+          />
+        </Grid>
+      </Grid>
+
+      <Grid item container spacing={2}>
+        <Grid item xs={4}>
+          <FormControlLabel
+            control={<Switch color={color} readOnly />}
+            label='Read Only Off'
+            readOnly
+            {...args}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <FormControlLabel
+            control={<Switch color={color} defaultChecked readOnly />}
+            label='Read Only On'
+            readOnly
             {...args}
           />
         </Grid>
