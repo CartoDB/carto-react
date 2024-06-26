@@ -529,7 +529,6 @@ const MultipleTemplate = ({
                 <TextField
                   {...params}
                   label={label}
-                  placeholder={placeholder}
                   helperText={helperText}
                   variant='filled'
                   error={error}
@@ -556,7 +555,6 @@ const MultipleTemplate = ({
                 <TextField
                   {...params}
                   label={label}
-                  placeholder={placeholder}
                   helperText={helperText}
                   variant='outlined'
                   error={error}
