@@ -25,6 +25,7 @@ import useStats from '../hooks/useStats';
  * @param  {number} [props.max] - Max value of the indicated column.
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
 
  */
@@ -37,6 +38,7 @@ function RangeWidget({
   max: _max,
   global,
   onError,
+  onStateChange,
   wrapperProps
 }) {
   const dispatch = useDispatch();
@@ -73,6 +75,7 @@ function RangeWidget({
     },
     global,
     onError,
+    onStateChange,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
