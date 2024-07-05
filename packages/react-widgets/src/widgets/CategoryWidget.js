@@ -35,6 +35,7 @@ const EMPTY_ARRAY = [];
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
+ * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
 
  */
@@ -55,6 +56,7 @@ function CategoryWidget(props) {
     global,
     onError,
     wrapperProps,
+    onStateChange,
     noDataAlertProps
   } = props;
   const dispatch = useDispatch();
@@ -78,6 +80,7 @@ function CategoryWidget(props) {
     },
     global,
     onError,
+    onStateChange,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
