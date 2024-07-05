@@ -4,6 +4,9 @@
 
 ## 2.5
 
+### 2.5.6 (2024-07-05)
+- onStateChange callback for all widgets [#886](https://github.com/CartoDB/carto-react/pull/886)
+
 ### 2.5.5 (2024-04-22)
 - TableWidget: support for object values [#867](https://github.com/CartoDB/carto-react/pull/867)
 
