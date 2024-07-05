@@ -39,6 +39,7 @@ const EMPTY_ARRAY = [];
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
+ * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
  * @param  {object} [props.droppingFeaturesAlertProps] - Extra props to pass to [NoDataAlert]() when dropping feature.
 
@@ -62,6 +63,7 @@ function HistogramWidget({
   filterable,
   global,
   onError,
+  onStateChange,
   wrapperProps,
   noDataAlertProps,
   droppingFeaturesAlertProps
@@ -106,6 +108,20 @@ function HistogramWidget({
     return [];
   }, [min, max, _ticks, bins, hasExternalMinMax]);
 
+  const customOnStateChange = ({ state, data }) => {
+    if (!onStateChange) return;
+    if (!data) return onStateChange({ state });
+    return onStateChange({
+      state,
+      data: {
+        values: data,
+        ticks,
+        min,
+        max
+      }
+    });
+  };
+
   let {
     data = EMPTY_ARRAY,
     isLoading,
@@ -121,6 +137,7 @@ function HistogramWidget({
     },
     global,
     onError,
+    onStateChange: customOnStateChange,
     enabled: !!ticks.length,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
