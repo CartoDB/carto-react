@@ -8,6 +8,12 @@
 
 ## 3.0.0
 
+### 3.0.0-alpha.15 (2024-07-22)
+
+- onStateChange callback for range widget [#890](https://github.com/CartoDB/carto-react/pull/890)
+- fix LegendWidget update logic for multiple legends case [#889](https://github.com/CartoDB/carto-react/pull/889)
+- onStateChange callback for all widgets [#886](https://github.com/CartoDB/carto-react/pull/886)
+
 ### 3.0.0-alpha.14 (2024-06-27)
 
 - Form components: fixes and improvements to IconButton, Checkbox, Radio, Switch and Autocomplete [#883](https://github.com/CartoDB/carto-react/pull/883)
