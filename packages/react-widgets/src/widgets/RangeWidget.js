@@ -63,6 +63,19 @@ function RangeWidget({
     [column, filters]
   );
 
+  const customOnStateChange = ({ state, data }) => {
+    if (!onStateChange) return;
+    if (!data) return onStateChange({ state });
+    return onStateChange({
+      state,
+      data: {
+        values: data,
+        min,
+        max
+      }
+    });
+  };
+
   const {
     data = { min: undefined, max: undefined },
     isLoading,
@@ -75,7 +88,7 @@ function RangeWidget({
     },
     global,
     onError,
-    onStateChange,
+    onStateChange: customOnStateChange,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
