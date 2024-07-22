@@ -129,7 +129,7 @@ export const navigationOverrides = {
       root: ({ theme }) => ({
         paddingTop: 0,
 
-        '.MuiPopover-root &, .MuiPopper-root &': {
+        '.MuiPopover-root &, .MuiPopper-root &, .base-Popper-root &': {
           minWidth: theme.spacing(8), // 64px, defined by design
           maxHeight: theme.spacing(39), // 312px, defined by design
           overflowY: 'auto',
