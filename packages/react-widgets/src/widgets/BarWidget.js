@@ -38,6 +38,7 @@ const EMPTY_ARRAY = [];
  * @param  {boolean} [props.global] - Enable/disable the viewport filtering in the data fetching.
  * @param  {string} [props.height] - Static widget height.
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
+ * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
  */
@@ -60,6 +61,7 @@ function BarWidget({
   filterable,
   global,
   onError,
+  onStateChange,
   wrapperProps,
   noDataAlertProps
 }) {
@@ -80,6 +82,7 @@ function BarWidget({
     },
     global,
     onError,
+    onStateChange,
     attemptRemoteCalculation: _hasFeatureFlag(_FeatureFlags.REMOTE_WIDGETS)
   });
 
