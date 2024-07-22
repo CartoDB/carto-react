@@ -2,6 +2,7 @@
 
 ## Not released
 
+- fix LegendWidget update logic for multiple legends case [#889](https://github.com/CartoDB/carto-react/pull/889)
 - onStateChange callback for all widgets [#886](https://github.com/CartoDB/carto-react/pull/886)
 
 ## 3.0.0

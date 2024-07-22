@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { updateLayer } from '@carto/react-redux/';
 import { LegendWidgetUI } from '@carto/react-ui';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,12 +17,13 @@ import { useMediaQuery } from '@mui/material';
  */
 function LegendWidget({ customLegendTypes, initialCollapsed, layerOrder = [], title }) {
   const dispatch = useDispatch();
-  const layers = useSelector((state) =>
+  const reduxLayers = useSelector((state) => state.carto.layers);
+  const layers = useMemo(() => {
     sortLayers(
-      Object.values(state.carto.layers).filter((layer) => !!layer.legend),
+      Object.values(reduxLayers).filter((layer) => !!layer.legend),
       layerOrder
-    ).filter((l) => !!l.legend)
-  );
+    ).filter((l) => !!l.legend);
+  }, [reduxLayers, layerOrder]);
 
   const [collapsed, setCollapsed] = useState(initialCollapsed);
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));

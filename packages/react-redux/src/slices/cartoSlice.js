@@ -81,14 +81,15 @@ export const createCartoSlice = (initialState) => {
         const layer = state.layers[action.payload.id];
         if (layer) {
           const newLayer = { ...layer, ...action.payload.layerAttributes };
+          const hasLegendUpdate = layer.legend && newLayer.legend;
+          // Merge legend object if it's not an array (for the case of multiple legend objects per layer)
+          if (hasLegendUpdate && !Array.isArray(newLayer.legend)) {
+            newLayer.legend = { ...layer.legend, ...newLayer.legend };
+          }
 
           // TODO: Study if we should use a deepmerge fn
           state.layers[action.payload.id] = {
-            ...newLayer,
-            ...(layer.legend &&
-              newLayer.legend && {
-                legend: { ...layer.legend, ...newLayer.legend }
-              })
+            ...newLayer
           };
         }
       },
