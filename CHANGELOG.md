@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Mui v5 fix styles to upgrade to the latest stable version [#892](https://github.com/CartoDB/carto-react/pull/892)
 - onStateChange callback for range widget [#890](https://github.com/CartoDB/carto-react/pull/890)
 - fix LegendWidget update logic for multiple legends case [#889](https://github.com/CartoDB/carto-react/pull/889)
 - onStateChange callback for all widgets [#886](https://github.com/CartoDB/carto-react/pull/886)
