@@ -19,7 +19,7 @@ function LegendWidget({ customLegendTypes, initialCollapsed, layerOrder = [], ti
   const dispatch = useDispatch();
   const reduxLayers = useSelector((state) => state.carto.layers);
   const layers = useMemo(() => {
-    sortLayers(
+    return sortLayers(
       Object.values(reduxLayers).filter((layer) => !!layer.legend),
       layerOrder
     ).filter((l) => !!l.legend);
