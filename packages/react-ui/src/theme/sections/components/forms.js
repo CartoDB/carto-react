@@ -511,7 +511,7 @@ export const formsOverrides = {
           right: theme.spacing(2),
           color: theme.palette.text.secondary
         },
-        '&.Mui-disabled .MuiSelect-icon': {
+        '&.Mui-disabled .MuiSelect-icon, &.Mui-readOnly .MuiSelect-icon': {
           color: theme.palette.text.disabled
         },
         '& .MuiSelect-iconStandard': {
@@ -661,6 +661,7 @@ export const formsOverrides = {
       }),
 
       endAdornment: ({ theme }) => ({
+        transform: 'none',
         top: theme.spacing(2),
         display: 'flex',
         alignItems: 'center',

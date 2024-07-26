@@ -2,6 +2,7 @@
 
 ## Not released
 
+- Mui v5 fix styles to upgrade to the latest stable version [#892](https://github.com/CartoDB/carto-react/pull/892)
 - fix legend widget return bug [#893](https://github.com/CartoDB/carto-react/pull/893)
 
 ## 3.0.0
