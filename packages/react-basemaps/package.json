@@ -68,7 +68,7 @@
     "@babel/runtime": "^7.13.9"
   },
   "peerDependencies": {
-    "@carto/react-core": "^3.0.0-alpha.16",
+    "@carto/react-core": "^3.0.0-alpha.17",
     "@deck.gl/google-maps": "^9.0.1",
     "react": "17.x || 18.x",
     "react-dom": "17.x || 18.x"
