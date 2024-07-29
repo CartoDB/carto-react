@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix MuiList outside Popper elements [#896](https://github.com/CartoDB/carto-react/pull/896)
+
 ## 3.0.0
 
 ### 3.0.0-alpha.16 (2024-07-26)
