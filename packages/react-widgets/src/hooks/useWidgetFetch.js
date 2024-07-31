@@ -109,6 +109,7 @@ export default function useWidgetFetch(
 
   const source2 = useMemo(() => {
     if (
+      !source ||
       !geometryToIntersect ||
       !source.dataResolution ||
       source.spatialDataType === 'geo'
