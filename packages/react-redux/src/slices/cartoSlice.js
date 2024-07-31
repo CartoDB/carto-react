@@ -217,6 +217,9 @@ export const addSource = ({
   filtersLogicalOperator = FiltersLogicalOperators.AND,
   queryParameters = [],
   geoColumn,
+  spatialDataType,
+  spatialDataColumn,
+  spatialFiltersResolution,
   aggregationExp,
   provider
 }) => ({
@@ -231,6 +234,9 @@ export const addSource = ({
     filtersLogicalOperator,
     queryParameters,
     geoColumn,
+    spatialDataType,
+    spatialDataColumn,
+    spatialFiltersResolution,
     aggregationExp,
     provider
   }

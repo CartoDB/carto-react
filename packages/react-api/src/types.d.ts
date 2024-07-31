@@ -43,6 +43,9 @@ export type SourceProps = {
   type: MapTypesType['QUERY'] | MapTypesType['TABLE'] | MapTypesType['TILESET'];
   connection: string;
   geoColumn?: string;
+  spatialDataType?: string;
+  spatialDataColumn?: string;
+  spatialFiltersResolution?: number;
   aggregationExp?: string;
   credentials?: Credentials;
   queryParameters?: QueryParameters;
