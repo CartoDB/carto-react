@@ -57,6 +57,19 @@ export function selectGeometryToIntersect(global, viewport, spatialFilter) {
   }
 }
 
+// stolen from deck.gl/modules/carto/src/layers/h3-tileset-2d.ts
+const BIAS = 2;
+export function getHexagonResolution(viewport, tileSize) {
+  // Difference in given tile size compared to deck's internal 512px tile size,
+  // expressed as an offset to the viewport zoom.
+  const zoomOffset = Math.log2(tileSize / 512);
+  const hexagonScaleFactor = (2 / 3) * (viewport.zoom - zoomOffset);
+  const latitudeScaleFactor = Math.log(1 / Math.cos((Math.PI * viewport.latitude) / 180));
+
+  // Clip and bias
+  return Math.max(0, Math.floor(hexagonScaleFactor + latitudeScaleFactor - BIAS));
+}
+
 export default function useWidgetFetch(
   modelFn,
   {
@@ -85,6 +98,7 @@ export default function useWidgetFetch(
   );
 
   const viewport = useSelector(selectViewport);
+  const viewState = useSelector((state) => state.carto.viewState);
   const spatialFilter = useSelector((state) =>
     selectValidSpatialFilter(state, dataSource)
   );
@@ -92,6 +106,35 @@ export default function useWidgetFetch(
     () => selectGeometryToIntersect(global, viewport, spatialFilter),
     [global, viewport, spatialFilter]
   );
+
+  const source2 = useMemo(() => {
+    if (
+      !geometryToIntersect ||
+      !source.dataResolution ||
+      source.spatialDataType === 'geo'
+    ) {
+      return source;
+    }
+
+    if (source.spatialDataType === 'h3') {
+      const hexagonResolution = getHexagonResolution(
+        { zoom: viewState.zoom, latitude: viewState.latitude },
+        source.dataResolution
+      );
+      return {
+        ...source,
+        spatialFiltersResolution: Math.min(source.dataResolution, hexagonResolution)
+      };
+    }
+    if (source.spatialDataType === 'quadbin') {
+      const quadsResolution = viewState.zoom;
+      return {
+        ...source,
+        spatialFiltersResolution: Math.min(source.dataResolution, quadsResolution)
+      };
+    }
+    return source;
+  }, [geometryToIntersect, source, viewState.zoom, viewState.latitude]);
 
   useCustomCompareEffect(
     () => {
@@ -106,7 +149,7 @@ export default function useWidgetFetch(
       onStateChange?.({ state: WidgetStateType.Loading });
 
       modelFn({
-        source,
+        source: source2,
         ...params,
         global,
         remoteCalculation,
@@ -141,7 +184,7 @@ export default function useWidgetFetch(
     },
     [
       params,
-      source,
+      source2,
       onError,
       isSourceReady,
       global,
