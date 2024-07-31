@@ -101,7 +101,6 @@ export function executeModel(props) {
     queryParams.spatialFilters = JSON.stringify(spatialFilters);
     queryParams.spatialDataType = spatialDataType;
     if (spatialDataType !== 'geo') {
-      // TODO: any sane default (?)
       if (source.spatialFiltersResolution !== undefined) {
         queryParams.spatialFiltersResolution = source.spatialFiltersResolution;
       }
