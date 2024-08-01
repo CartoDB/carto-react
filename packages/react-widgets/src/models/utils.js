@@ -1,9 +1,4 @@
-import {
-  AggregationTypes,
-  getSpatialIndexFromGeoColumn,
-  _filtersToSQL,
-  Provider
-} from '@carto/react-core';
+import { AggregationTypes, _filtersToSQL, Provider } from '@carto/react-core';
 import { FullyQualifiedName } from './fqn';
 import { MAP_TYPES, API_VERSIONS } from '@carto/react-api';
 
@@ -14,7 +9,6 @@ export function isRemoteCalculationSupported(props) {
     source &&
     source.type !== MAP_TYPES.TILESET &&
     source.credentials.apiVersion !== API_VERSIONS.V2 &&
-    !(source.geoColumn && getSpatialIndexFromGeoColumn(source.geoColumn)) &&
     source.provider !== 'databricks'
   );
 }

@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Spatial Index Sources use remote widgets calculation [#898](https://github.com/CartoDB/carto-react/pull/898)
+
 ## 3.0.0
 
 ### 3.0.0-alpha.17 (2024-07-29)
