@@ -30,19 +30,20 @@ function formatResult(res) {
 // From remote
 function fromRemote(props) {
   const { source, spatialFilter, abortController, ...params } = props;
-  const { columns, sortBy, sortDirection, page, rowsPerPage } = params;
+  const { spatialDataColumn, columns, sortBy, sortDirection, page, rowsPerPage } = params;
 
   return _executeModel({
     model: 'table',
     source,
     spatialFilter,
     params: {
-      column: columns,
+      column: spatialDataColumn ? [...columns, spatialDataColumn] : columns,
       sortBy,
       sortDirection,
       limit: rowsPerPage,
       offset: page * rowsPerPage
     },
+    ...(spatialDataColumn && { spatialDataColumn }),
     opts: { abortController }
   })
     .then((res) => ({

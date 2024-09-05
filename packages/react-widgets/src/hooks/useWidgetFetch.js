@@ -66,6 +66,7 @@ export default function useWidgetFetch(
     global,
     onError,
     onStateChange,
+    spatialDataColumn = null,
     enabled = true,
     attemptRemoteCalculation = false
   }
@@ -108,6 +109,7 @@ export default function useWidgetFetch(
       modelFn({
         source,
         ...params,
+        spatialDataColumn,
         global,
         remoteCalculation,
         spatialFilter: geometryToIntersect

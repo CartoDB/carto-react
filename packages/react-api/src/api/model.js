@@ -40,7 +40,7 @@ export function executeModel(props) {
     )}`
   );
 
-  const { source, model, params, spatialFilter, opts } = props;
+  const { source, model, params, spatialFilter, spatialDataColumn, opts } = props;
 
   checkCredentials(source.credentials);
 
@@ -61,6 +61,7 @@ export function executeModel(props) {
     client: _getClient(),
     source: data,
     params: JSON.stringify(params),
+    spatialDataColumn,
     queryParameters,
     filters: JSON.stringify(filters),
     filtersLogicalOperator

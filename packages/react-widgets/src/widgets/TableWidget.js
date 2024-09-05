@@ -31,6 +31,7 @@ function TableWidget({
   id,
   title,
   dataSource,
+  geoColumn,
   columns,
   wrapperProps,
   noDataAlertProps,
@@ -67,6 +68,7 @@ function TableWidget({
       page,
       rowsPerPage
     },
+    spatialDataColumn: geoColumn,
     global,
     onError,
     onStateChange,
@@ -121,6 +123,7 @@ function TableWidget({
             height={height}
             dense={dense}
             isLoading={isLoading}
+            onRowClick={(row) => console.log(row)}
           />
         )}
       </WidgetWithAlert>
@@ -132,6 +135,7 @@ TableWidget.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
+  geoColumn: PropTypes.string.isRequired,
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       field: PropTypes.string.isRequired,
