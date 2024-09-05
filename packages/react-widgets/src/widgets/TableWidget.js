@@ -123,7 +123,6 @@ function TableWidget({
             height={height}
             dense={dense}
             isLoading={isLoading}
-            onRowClick={(row) => console.log(row)}
           />
         )}
       </WidgetWithAlert>
