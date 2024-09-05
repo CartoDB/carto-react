@@ -107,12 +107,13 @@ export default function useWidgetFetch(
     [global, viewport, spatialFilter]
   );
 
-  const source2 = useMemo(() => {
+  const enrichedSource = useMemo(() => {
     if (
       !source ||
       !geometryToIntersect ||
-      !source.dataResolution ||
-      source.spatialDataType === 'geo'
+      source.spatialDataType === 'geo' ||
+      source.spatialFiltersResolution !== undefined ||
+      !source.dataResolution
     ) {
       return source;
     }
@@ -128,7 +129,7 @@ export default function useWidgetFetch(
       };
     }
     if (source.spatialDataType === 'quadbin') {
-      const quadsResolution = viewState.zoom;
+      const quadsResolution = Math.floor(viewState.zoom);
       return {
         ...source,
         spatialFiltersResolution: Math.min(source.dataResolution, quadsResolution)
@@ -150,7 +151,7 @@ export default function useWidgetFetch(
       onStateChange?.({ state: WidgetStateType.Loading });
 
       modelFn({
-        source: source2,
+        source: enrichedSource,
         ...params,
         global,
         remoteCalculation,
@@ -185,7 +186,7 @@ export default function useWidgetFetch(
     },
     [
       params,
-      source2,
+      enrichedSource,
       onError,
       isSourceReady,
       global,

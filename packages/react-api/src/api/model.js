@@ -73,7 +73,7 @@ export function executeModel(props) {
 
     if (!spatialDataType || !spatialDataColumn) {
       if (source.geoColumn) {
-        const parsedGeoColumn = source.geoColumn ? source.geoColumn.split(':') : [];
+        const parsedGeoColumn = source.geoColumn.split(':');
         if (parsedGeoColumn.length === 2) {
           spatialDataType = parsedGeoColumn[0];
           spatialDataColumn = parsedGeoColumn[1];
@@ -82,7 +82,7 @@ export function executeModel(props) {
           spatialDataType = 'geo';
         }
         if (spatialDataType === 'geom') {
-          // fallback if for some reason someone provided old `geom:whatever`
+          // fallback if for some reason someone provided old `geom:$column`
           spatialDataType = 'geo';
         }
       } else {
