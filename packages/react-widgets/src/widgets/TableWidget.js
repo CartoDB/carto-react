@@ -31,7 +31,6 @@ function TableWidget({
   id,
   title,
   dataSource,
-  geoColumn,
   columns,
   wrapperProps,
   noDataAlertProps,
@@ -43,6 +42,7 @@ function TableWidget({
   height,
   stableHeight,
   dense,
+  spatialDataColumn,
   // Internal state
   pageSize
 }) {
@@ -68,7 +68,7 @@ function TableWidget({
       page,
       rowsPerPage
     },
-    spatialDataColumn: geoColumn,
+    spatialDataColumn,
     global,
     onError,
     onStateChange,
@@ -135,7 +135,6 @@ TableWidget.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   dataSource: PropTypes.string.isRequired,
-  geoColumn: PropTypes.string.isRequired,
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       field: PropTypes.string.isRequired,
@@ -151,6 +150,7 @@ TableWidget.propTypes = {
   height: PropTypes.string,
   stableHeight: PropTypes.bool,
   dense: PropTypes.bool,
+  spatialDataColumn: PropTypes.string,
   // Internal state
   pageSize: PropTypes.number
 };
