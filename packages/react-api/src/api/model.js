@@ -66,15 +66,46 @@ export function executeModel(props) {
     filtersLogicalOperator
   };
 
-  // API supports multiple filters, we apply it only to geoColumn
-  const spatialFilters = spatialFilter
-    ? {
-        [source.geoColumn ? source.geoColumn : DEFAULT_GEO_COLUMN]: spatialFilter
-      }
-    : undefined;
+  let spatialFilters;
+  if (spatialFilter) {
+    let spatialDataType = source.spatialDataType;
+    let spatialDataColumn = source.spatialDataColumn;
 
-  if (spatialFilters) {
+    if (!spatialDataType || !spatialDataColumn) {
+      if (source.geoColumn) {
+        const parsedGeoColumn = source.geoColumn.split(':');
+        if (parsedGeoColumn.length === 2) {
+          spatialDataType = parsedGeoColumn[0];
+          spatialDataColumn = parsedGeoColumn[1];
+        } else if (parsedGeoColumn.length === 1) {
+          spatialDataColumn = parsedGeoColumn[0] || DEFAULT_GEO_COLUMN;
+          spatialDataType = 'geo';
+        }
+        if (spatialDataType === 'geom') {
+          // fallback if for some reason someone provided old `geom:$column`
+          spatialDataType = 'geo';
+        }
+      } else {
+        spatialDataType = 'geo';
+        spatialDataColumn = DEFAULT_GEO_COLUMN;
+      }
+    }
+
+    // API supports multiple filters, we apply it only to geometry column or spatialDataColumn
+    spatialFilters = spatialFilter
+      ? {
+          [spatialDataColumn]: spatialFilter
+        }
+      : undefined;
+
     queryParams.spatialFilters = JSON.stringify(spatialFilters);
+    queryParams.spatialDataType = spatialDataType;
+    if (spatialDataType !== 'geo') {
+      if (source.spatialFiltersResolution !== undefined) {
+        queryParams.spatialFiltersResolution = source.spatialFiltersResolution;
+      }
+      queryParams.spatialFiltersMode = source.spatialFiltersMode || 'intersects';
+    }
   }
 
   const urlWithSearchParams = url + '?' + new URLSearchParams(queryParams).toString();

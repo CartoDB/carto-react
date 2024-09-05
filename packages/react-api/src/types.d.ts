@@ -43,6 +43,10 @@ export type SourceProps = {
   type: MapTypesType['QUERY'] | MapTypesType['TABLE'] | MapTypesType['TILESET'];
   connection: string;
   geoColumn?: string;
+  dataResolution?: number;
+  spatialDataType?: string;
+  spatialDataColumn?: string;
+  spatialFiltersResolution?: number;
   aggregationExp?: string;
   credentials?: Credentials;
   queryParameters?: QueryParameters;
@@ -73,4 +77,3 @@ export type UseCartoLayerFilterProps = {
 };
 
 export type ExecuteSQLResponse<Response = FeatureCollection | {}[]> = Promise<Response>;
-
