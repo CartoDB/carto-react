@@ -17,6 +17,33 @@ const AVAILABLE_MODELS = [
 
 const DEFAULT_GEO_COLUMN = 'geom';
 
+const extractSpatialDataFromSource = (source) => {
+  let spatialDataType = source.spatialDataType;
+  let spatialDataColumn = source.spatialDataColumn;
+
+  if (!spatialDataType || !spatialDataColumn) {
+    if (source.geoColumn) {
+      const parsedGeoColumn = source.geoColumn.split(':');
+      if (parsedGeoColumn.length === 2) {
+        spatialDataType = parsedGeoColumn[0];
+        spatialDataColumn = parsedGeoColumn[1];
+      } else if (parsedGeoColumn.length === 1) {
+        spatialDataColumn = parsedGeoColumn[0] || DEFAULT_GEO_COLUMN;
+        spatialDataType = 'geo';
+      }
+      if (spatialDataType === 'geom') {
+        // fallback if for some reason someone provided old `geom:$column`
+        spatialDataType = 'geo';
+      }
+    } else {
+      spatialDataType = 'geo';
+      spatialDataColumn = DEFAULT_GEO_COLUMN;
+    }
+  }
+
+  return { spatialDataType, spatialDataColumn };
+};
+
 /**
  * Execute a SQL model request.
  *
@@ -56,6 +83,7 @@ export function executeModel(props) {
   const queryParameters = source.queryParameters
     ? JSON.stringify(source.queryParameters)
     : '';
+
   let queryParams = {
     type,
     client: _getClient(),
@@ -67,29 +95,8 @@ export function executeModel(props) {
   };
 
   let spatialFilters;
-  if (spatialFilter) {
-    let spatialDataType = source.spatialDataType;
-    let spatialDataColumn = source.spatialDataColumn;
-
-    if (!spatialDataType || !spatialDataColumn) {
-      if (source.geoColumn) {
-        const parsedGeoColumn = source.geoColumn.split(':');
-        if (parsedGeoColumn.length === 2) {
-          spatialDataType = parsedGeoColumn[0];
-          spatialDataColumn = parsedGeoColumn[1];
-        } else if (parsedGeoColumn.length === 1) {
-          spatialDataColumn = parsedGeoColumn[0] || DEFAULT_GEO_COLUMN;
-          spatialDataType = 'geo';
-        }
-        if (spatialDataType === 'geom') {
-          // fallback if for some reason someone provided old `geom:$column`
-          spatialDataType = 'geo';
-        }
-      } else {
-        spatialDataType = 'geo';
-        spatialDataColumn = DEFAULT_GEO_COLUMN;
-      }
-    }
+  if (spatialFilter || props.model === 'table') {
+    const { spatialDataType, spatialDataColumn } = extractSpatialDataFromSource(source);
 
     // API supports multiple filters, we apply it only to geometry column or spatialDataColumn
     spatialFilters = spatialFilter
@@ -98,13 +105,23 @@ export function executeModel(props) {
         }
       : undefined;
 
-    queryParams.spatialFilters = JSON.stringify(spatialFilters);
-    queryParams.spatialDataType = spatialDataType;
+    if (spatialFilters) queryParams.spatialFilters = JSON.stringify(spatialFilters);
+    if (spatialDataType) queryParams.spatialDataType = spatialDataType;
+    if (spatialDataColumn) queryParams.spatialDataColumn = spatialDataColumn;
+
     if (spatialDataType !== 'geo') {
       if (source.spatialFiltersResolution !== undefined) {
         queryParams.spatialFiltersResolution = source.spatialFiltersResolution;
       }
       queryParams.spatialFiltersMode = source.spatialFiltersMode || 'intersects';
+    }
+
+    // We should retrieve the spatialDataColumn as part of the params.column
+    if (props.model === 'table') {
+      queryParams.params = JSON.stringify({
+        ...params,
+        column: [...params.column, spatialDataColumn]
+      });
     }
   }
 

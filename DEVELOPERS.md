@@ -31,6 +31,20 @@ Then, inside the proper template folder in carto-react-template, link packages w
   yarn link-carto-react
 ```
 
+## copy-packages.sh
+
+As an alternative to `yarn link`, `copy-packages.sh` could be used for copying the content of every package to the target directory, e.g:
+
+```
+./copy-packages.sh ~/workspace/repositories/cloud-native/workspace-www/node_modules/@carto
+```
+
+Thus, combined with the execution of `yarn build` in the root of this repository, will copy every package into the target directory:
+
+```
+yarn build && ./copy-packages.sh ~/workspace/repositories/cloud-native/workspace-www/node_modules/@carto
+```
+
 ## npm release
 
 You will need npm credentials under @carto organization.

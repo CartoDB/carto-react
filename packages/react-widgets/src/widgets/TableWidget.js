@@ -36,6 +36,7 @@ function TableWidget({
   noDataAlertProps,
   onError,
   onStateChange,
+  onRowClick,
   initialPageSize = 10,
   onPageSizeChange,
   global,
@@ -121,6 +122,7 @@ function TableWidget({
             height={height}
             dense={dense}
             isLoading={isLoading}
+            onRowClick={onRowClick}
           />
         )}
       </WidgetWithAlert>
