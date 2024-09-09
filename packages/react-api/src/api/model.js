@@ -115,14 +115,6 @@ export function executeModel(props) {
       }
       queryParams.spatialFiltersMode = source.spatialFiltersMode || 'intersects';
     }
-
-    // We should retrieve the spatialDataColumn as part of the params.column
-    if (props.model === 'table') {
-      queryParams.params = JSON.stringify({
-        ...params,
-        column: [...params.column, spatialDataColumn]
-      });
-    }
   }
 
   const urlWithSearchParams = url + '?' + new URLSearchParams(queryParams).toString();

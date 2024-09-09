@@ -14,6 +14,8 @@ import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {Column[]} props.columns - List of data columns to display.
+ * @param  {Column[]} props.hiddenColumnsFields - List of data columns to be retrieved, but not displayed.
+ * @param  {Function=} props.onRowClick - Function to handle on click events on rows.
  * @param  {Function=} [props.onError] - Function to handle error messages from the widget.
  * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
@@ -32,6 +34,7 @@ function TableWidget({
   title,
   dataSource,
   columns,
+  hiddenColumnsFields = [],
   wrapperProps,
   noDataAlertProps,
   onError,
@@ -61,7 +64,7 @@ function TableWidget({
     id,
     dataSource,
     params: {
-      columns: columns.map((c) => c.field),
+      columns: [...columns.map((c) => c.field), ...hiddenColumnsFields],
       sortBy,
       sortDirection,
       sortByColumnType,
@@ -141,6 +144,7 @@ TableWidget.propTypes = {
       align: PropTypes.oneOf(['left', 'right'])
     })
   ).isRequired,
+  hiddenColumnsFields: PropTypes.arrayOf(PropTypes.string),
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
