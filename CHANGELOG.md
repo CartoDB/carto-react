@@ -3,6 +3,7 @@
 ## Not released
 
 - Spatial Index Sources use remote widgets calculation [#898](https://github.com/CartoDB/carto-react/pull/898)
+- Support for `hiddenColumnFields` parameter and `onRowClick` handler for Table Widget [#900](https://github.com/CartoDB/carto-react/pull/900)
 
 ## 3.0.0
 
