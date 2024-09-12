@@ -195,7 +195,8 @@ function HistogramWidgetUI({
   // Series
   const seriesOptions = useMemo(() => {
     // We check if we have just one different value
-    const isUniqueDataRow = formattedData.filter((row) => row[2] !== 0).length === 1;
+    const isUniqueDataRow =
+      min === max && formattedData.filter((row) => row[2] !== 0).length === 1;
 
     const data = isUniqueDataRow
       ? [formattedData[0], formattedData[formattedData.length - 1]]

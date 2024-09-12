@@ -93,3 +93,22 @@ const LoadingProps = {
   isLoading: true
 };
 Loading.args = LoadingProps;
+
+export const OneNonZeroBinMid = LoadingTemplate.bind({});
+OneNonZeroBinMid.args = {
+  ...defaultProps,
+  data: [0, 300, 0, 0, 0, 0, 0]
+};
+
+export const OneNonZeroBinStart = LoadingTemplate.bind({});
+OneNonZeroBinStart.args = {
+  ...defaultProps,
+  data: [100, 0, 0, 0, 0, 0, 0]
+};
+
+
+export const OneNonZeroBinEnd = LoadingTemplate.bind({});
+OneNonZeroBinEnd.args = {
+  ...defaultProps,
+  data: [0, 0, 0, 0, 0, 0, 100]
+};
