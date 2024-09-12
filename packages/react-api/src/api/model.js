@@ -90,7 +90,7 @@ export function executeModel(props) {
     source: data,
     params: JSON.stringify(params),
     queryParameters,
-    filters: JSON.stringify(filters),
+    filters: JSON.stringify({ ...filters, ...props.searchFilter }),
     filtersLogicalOperator
   };
 
