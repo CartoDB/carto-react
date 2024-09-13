@@ -27,6 +27,8 @@ import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
  * @param  {boolean=} [props.stableHeight] -  If specified, error and no-data state will maintain same height as normal widget in loading/loaded state.
  * @param  {boolean} [props.dense] - Whether the table should use a compact layout with smaller cell paddings.
  * @param  {number} [props.pageSize] - Number of rows per page. This is used to manage internal state externally.
+ * @param  {string} [props.searchText] - Text to search in the table
+ * @param  {string} [props.searchColumn] - Column used to perform the search, using the searchText property
 
  */
 function TableWidget({
@@ -46,6 +48,8 @@ function TableWidget({
   height,
   stableHeight,
   dense,
+  searchText,
+  searchColumn,
   // Internal state
   pageSize
 }) {
@@ -55,6 +59,7 @@ function TableWidget({
   const [sortBy, setSortBy] = useState(undefined);
   const [sortByColumnType, setSortByColumnType] = useState(undefined);
   const [sortDirection, setSortDirection] = useState('asc');
+  const containsStringSearchFilter = searchColumn && searchText;
 
   const {
     data = { rows: [], totalCount: 0, hasData: false },
@@ -65,6 +70,9 @@ function TableWidget({
     dataSource,
     params: {
       columns: [...columns.map((c) => c.field), ...hiddenColumnFields],
+      searchFilter: containsStringSearchFilter && {
+        [searchColumn]: { stringSearch: { values: [searchText] } }
+      },
       sortBy,
       sortDirection,
       sortByColumnType,
@@ -153,6 +161,8 @@ TableWidget.propTypes = {
   height: PropTypes.string,
   stableHeight: PropTypes.bool,
   dense: PropTypes.bool,
+  searchText: PropTypes.string,
+  searchColumn: PropTypes.string,
   // Internal state
   pageSize: PropTypes.number
 };
