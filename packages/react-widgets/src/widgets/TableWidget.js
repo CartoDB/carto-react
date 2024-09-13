@@ -29,7 +29,6 @@ import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
  * @param  {number} [props.pageSize] - Number of rows per page. This is used to manage internal state externally.
  * @param  {string} [props.searchText] - Text to search in the table
  * @param  {string} [props.searchColumn] - Column used to perform the search, using the searchText property
- * @param  {Function} [props.search] - React component to handle search functionality
 
  */
 function TableWidget({
@@ -51,7 +50,6 @@ function TableWidget({
   dense,
   searchText,
   searchColumn,
-  search,
   // Internal state
   pageSize
 }) {
@@ -163,7 +161,6 @@ TableWidget.propTypes = {
   height: PropTypes.string,
   stableHeight: PropTypes.bool,
   dense: PropTypes.bool,
-  search: PropTypes.func,
   searchText: PropTypes.string,
   searchColumn: PropTypes.string,
   // Internal state
