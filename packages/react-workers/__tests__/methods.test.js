@@ -98,5 +98,46 @@ describe('Worker Methods', () => {
           .sort((a, b) => b.size_m2 - a.size_m2)
       });
     });
+
+    it('should not filter when searchFilterColumn is provided, but searchFilterText is not', () => {
+      expect(
+        getRawFeatures({
+          searchFilterColumn: Object.keys(sampleGeoJson.features[0].properties)[0],
+          searchFilterText: null
+        })
+      ).toEqual({
+        totalCount: 6,
+        hasData: true,
+        rows: sampleGeoJson.features.map((f) => f.properties)
+      });
+    });
+
+    it('should not filter when searchFilterText is provided, but searchFilterColumn is not', () => {
+      expect(
+        getRawFeatures({
+          searchFilterColumn: null,
+          searchFilterText: 'any-text'
+        })
+      ).toEqual({
+        totalCount: 6,
+        hasData: true,
+        rows: sampleGeoJson.features.map((f) => f.properties)
+      });
+    });
+
+    it('should filter when searchFilterColumn and searchFilterText are provided', () => {
+      const searchFilterColumn = Object.keys(sampleGeoJson.features[0].properties)[0];
+
+      const result = getRawFeatures({
+        searchFilterColumn,
+        searchFilterText: sampleGeoJson.features[0].properties[searchFilterColumn]
+      });
+
+      expect(result).toEqual({
+        totalCount: 1,
+        hasData: true,
+        rows: [sampleGeoJson.features.map((f) => f.properties)[0]]
+      });
+    });
   });
 });

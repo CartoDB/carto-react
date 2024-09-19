@@ -8,11 +8,22 @@ export function getTable(props) {
 
 function fromLocal(props) {
   // Injecting sortByColumnType externally from metadata gives better results. It allows to avoid deriving type from row value itself (with potential null values)
-  const { source, sortBy, sortDirection, sortByColumnType, page, rowsPerPage } = props;
+  const {
+    source,
+    sortBy,
+    sortDirection,
+    sortByColumnType,
+    page,
+    rowsPerPage,
+    searchFilterText,
+    searchFilterColumn
+  } = props;
 
   return executeTask(source.id, Methods.FEATURES_RAW, {
     filters: source.filters,
     filtersLogicalOperator: source.filtersLogicalOperator,
+    searchFilterText,
+    searchFilterColumn,
     sortBy,
     sortByDirection: sortDirection,
     sortByColumnType,
@@ -29,14 +40,26 @@ function formatResult(res) {
 
 // From remote
 function fromRemote(props) {
-  const { source, spatialFilter, searchFilter, abortController, ...params } = props;
+  const {
+    source,
+    spatialFilter,
+    searchFilterText,
+    searchFilterColumn,
+    abortController,
+    ...params
+  } = props;
   const { columns, sortBy, sortDirection, page, rowsPerPage } = params;
+
+  const searchFilter =
+    searchFilterText && searchFilterColumn
+      ? { [searchFilterColumn]: { stringSearch: { values: [searchFilterText] } } }
+      : null;
 
   return _executeModel({
     model: 'table',
     source,
     spatialFilter,
-    searchFilter,
+    ...(searchFilter && { searchFilter }),
     params: {
       column: columns,
       sortBy,
