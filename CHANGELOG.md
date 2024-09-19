@@ -2,6 +2,7 @@
 
 ## Not released
 
+- isRemoteCalculationSupported: revert remote calculation for dynamic spatial index sources  [#905](https://github.com/CartoDB/carto-react/pull/905)
 - Fix HistogramWidget with one non-zero bucket [#901](https://github.com/CartoDB/carto-react/pull/901)
 - Spatial Index Sources use remote widgets calculation [#898](https://github.com/CartoDB/carto-react/pull/898)
 - Support for `hiddenColumnFields` parameter and `onRowClick` handler for Table Widget [#900](https://github.com/CartoDB/carto-react/pull/900)
