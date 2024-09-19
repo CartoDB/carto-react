@@ -2,6 +2,10 @@
 
 ## Not released
 
+## 3.0.0
+
+### 3.0.0-alpha.19 (2024-09-19)
+
 - Fix HistogramWidget with one non-zero bucket [#901](https://github.com/CartoDB/carto-react/pull/901)
 - Spatial Index Sources use remote widgets calculation [#898](https://github.com/CartoDB/carto-react/pull/898)
 - Support for `hiddenColumnFields` parameter and `onRowClick` handler for Table Widget [#900](https://github.com/CartoDB/carto-react/pull/900)
@@ -9,8 +13,6 @@
 - Support `searchText` and `searchColumn` for local calculations (Tilesets) for Table Widget [#903](https://github.com/CartoDB/carto-react/pull/903)
 - Support for columns `formatter` function for Table Widget [#904](https://github.com/CartoDB/carto-react/pull/904)
 - isRemoteCalculationSupported: revert remote calculation for dynamic spatial index sources [#905](https://github.com/CartoDB/carto-react/pull/905)
-
-## 3.0.0
 
 ### 3.0.0-alpha.17 (2024-07-29)
 
