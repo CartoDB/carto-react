@@ -239,26 +239,23 @@ export function getRawFeatures({
   let hasData = false;
 
   if (currentFeatures) {
-    const filteredFeatures = applySorting(
-      getFilteredFeatures(filters, filtersLogicalOperator),
-      {
-        sortBy,
-        sortByDirection,
-        sortByColumnType
-      }
-    );
+    let filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
 
     if (searchFilterColumn && searchFilterText) {
-      rows = filteredFeatures.filter(
+      filteredFeatures = filteredFeatures.filter(
         (row) =>
           row[searchFilterColumn] &&
           String(row[searchFilterColumn])
             .toLowerCase()
             .includes(String(searchFilterText).toLowerCase())
       );
-    } else {
-      rows = filteredFeatures;
     }
+
+    rows = applySorting(filteredFeatures, {
+      sortBy,
+      sortByDirection,
+      sortByColumnType
+    });
 
     totalCount = rows.length;
     hasData = true;
