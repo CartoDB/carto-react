@@ -8,7 +8,7 @@ import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
 
 /**
  * Renders a <TableWidget /> component
- * @typedef {{field: string, headerName?: string, align?: string, type?: string}} Column
+ * @typedef {{field: string, headerName?: string, align?: string, type?: string, formatter?: Function}} Column
  * @param  {object} props
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
