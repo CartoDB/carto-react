@@ -11,6 +11,7 @@ import {
 } from '@carto/react-core';
 import { InvalidColumnError } from '@carto/react-core/';
 import { applySorting } from '../utils/sorting';
+import { current } from '@reduxjs/toolkit';
 
 let currentFeatures;
 let currentGeoJSON;
@@ -224,6 +225,8 @@ export function getRange({ filters, filtersLogicalOperator, column }) {
 export function getRawFeatures({
   filters,
   filtersLogicalOperator,
+  searchFilterColumn,
+  searchFilterText,
   sortBy,
   sortByDirection = 'asc',
   sortByColumnType,
@@ -236,7 +239,19 @@ export function getRawFeatures({
   let hasData = false;
 
   if (currentFeatures) {
-    rows = applySorting(getFilteredFeatures(filters, filtersLogicalOperator), {
+    let filteredFeatures = getFilteredFeatures(filters, filtersLogicalOperator);
+
+    if (searchFilterColumn && searchFilterText) {
+      filteredFeatures = filteredFeatures.filter(
+        (row) =>
+          row[searchFilterColumn] &&
+          String(row[searchFilterColumn])
+            .toLowerCase()
+            .includes(String(searchFilterText).toLowerCase())
+      );
+    }
+
+    rows = applySorting(filteredFeatures, {
       sortBy,
       sortByDirection,
       sortByColumnType

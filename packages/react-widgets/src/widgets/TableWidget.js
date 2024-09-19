@@ -70,9 +70,8 @@ function TableWidget({
     dataSource,
     params: {
       columns: [...columns.map((c) => c.field), ...hiddenColumnFields],
-      searchFilter: containsStringSearchFilter && {
-        [searchColumn]: { stringSearch: { values: [searchText] } }
-      },
+      searchFilterText: searchText,
+      searchFilterColumn: searchColumn,
       sortBy,
       sortDirection,
       sortByColumnType,
