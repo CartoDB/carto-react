@@ -4,6 +4,7 @@ import booleanWithin from '@turf/boolean-within';
 import intersect from '@turf/intersect';
 import transformToTileCoords from '../utils/transformToTileCoords';
 import { TILE_FORMATS } from '../types';
+import transformTileCoordsToWGS84 from '../utils/transformTileCoordsToWGS84';
 
 const GEOMETRY_TYPES = Object.freeze({
   Point: 0,
@@ -11,29 +12,76 @@ const GEOMETRY_TYPES = Object.freeze({
   Polygon: 2
 });
 
+function processTileFeatureProperties({
+  map,
+  data,
+  startIndex,
+  endIndex,
+  type,
+  bbox,
+  tileFormat,
+  uniqueIdProperty,
+  storeGeometry,
+  geometryIntersection = null
+}) {
+  const tileProps = getPropertiesFromTile(data, startIndex);
+  const uniquePropertyValue = getUniquePropertyValue(tileProps, uniqueIdProperty, map);
+
+  if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
+    let geometry;
+
+    // Only calculate geometry if necessary
+    if (storeGeometry || geometryIntersection) {
+      const { positions } = data;
+      const ringCoordinates = getRingCoordinatesFor(startIndex, endIndex, positions);
+      geometry = getFeatureByType(ringCoordinates, type);
+    }
+
+    // If intersection is required, check before proceeding
+    if (!geometryIntersection || intersects(geometry, geometryIntersection)) {
+      const properties = parseProperties(tileProps);
+
+      // Only save geometry if necessary
+      if (storeGeometry) {
+        properties.geom =
+          tileFormat === TILE_FORMATS.MVT
+            ? transformTileCoordsToWGS84(geometry, bbox)
+            : geometry;
+      }
+
+      map.set(uniquePropertyValue, properties);
+    }
+  }
+}
+
 function addIntersectedFeaturesInTile({
   map,
   data,
   geometryIntersection,
   type,
-  uniqueIdProperty
+  bbox,
+  tileFormat,
+  uniqueIdProperty,
+  options
 }) {
   const indices = getIndices(data);
-  const { positions } = data;
+  const storeGeometry = options?.storeGeometry;
 
   for (let i = 0; i < indices.length - 1; i++) {
     const startIndex = indices[i];
     const endIndex = indices[i + 1];
-
-    const tileProps = getPropertiesFromTile(data, startIndex);
-    const uniquePropertyValue = getUniquePropertyValue(tileProps, uniqueIdProperty, map);
-
-    if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
-      const ringCoordinates = getRingCoordinatesFor(startIndex, endIndex, positions);
-      if (intersects(getFeatureByType(ringCoordinates, type), geometryIntersection)) {
-        map.set(uniquePropertyValue, parseProperties(tileProps));
-      }
-    }
+    processTileFeatureProperties({
+      map,
+      data,
+      startIndex,
+      endIndex,
+      type,
+      bbox,
+      tileFormat,
+      uniqueIdProperty,
+      storeGeometry,
+      geometryIntersection
+    });
   }
 }
 
@@ -120,37 +168,64 @@ function calculateFeatures({
   geometryIntersection,
   data,
   type,
-  uniqueIdProperty
+  bbox,
+  tileFormat,
+  uniqueIdProperty,
+  options
 }) {
   if (!data?.properties.length) {
     return;
   }
 
   if (tileIsFullyVisible) {
-    addAllFeaturesInTile({ map, data, uniqueIdProperty });
+    addAllFeaturesInTile({
+      map,
+      data,
+      type,
+      bbox,
+      tileFormat,
+      uniqueIdProperty,
+      options
+    });
   } else {
     addIntersectedFeaturesInTile({
       map,
       data,
       geometryIntersection,
       type,
-      uniqueIdProperty
+      bbox,
+      tileFormat,
+      uniqueIdProperty,
+      options
     });
   }
 }
 
-function addAllFeaturesInTile({ map, data, uniqueIdProperty }) {
+function addAllFeaturesInTile({
+  map,
+  data,
+  type,
+  bbox,
+  tileFormat,
+  uniqueIdProperty,
+  options
+}) {
   const indices = getIndices(data);
-
+  const storeGeometry = options?.storeGeometry;
   for (let i = 0; i < indices.length - 1; i++) {
     const startIndex = indices[i];
-
-    const tileProps = getPropertiesFromTile(data, startIndex);
-    const uniquePropertyValue = getUniquePropertyValue(tileProps, uniqueIdProperty, map);
-
-    if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
-      map.set(uniquePropertyValue, parseProperties(tileProps));
-    }
+    const endIndex = indices[i + 1];
+    processTileFeatureProperties({
+      map,
+      data,
+      startIndex,
+      endIndex,
+      type,
+      bbox,
+      tileFormat,
+      uniqueIdProperty,
+      storeGeometry
+    });
   }
 }
 
@@ -170,7 +245,8 @@ export default function tileFeaturesGeometries({
   tiles,
   tileFormat,
   geometryToIntersect,
-  uniqueIdProperty
+  uniqueIdProperty,
+  options
 }) {
   const map = new Map();
 
@@ -208,7 +284,10 @@ export default function tileFeaturesGeometries({
       geometryIntersection: transformedGeomtryToIntersect,
       data: tile.data.points,
       type: GEOMETRY_TYPES['Point'],
-      uniqueIdProperty
+      bbox,
+      tileFormat,
+      uniqueIdProperty,
+      options
     });
     calculateFeatures({
       map,
@@ -216,7 +295,10 @@ export default function tileFeaturesGeometries({
       geometryIntersection: transformedGeomtryToIntersect,
       data: tile.data.lines,
       type: GEOMETRY_TYPES['LineString'],
-      uniqueIdProperty
+      bbox,
+      tileFormat,
+      uniqueIdProperty,
+      options
     });
     calculateFeatures({
       map,
@@ -224,7 +306,10 @@ export default function tileFeaturesGeometries({
       geometryIntersection: transformedGeomtryToIntersect,
       data: tile.data.polygons,
       type: GEOMETRY_TYPES['Polygon'],
-      uniqueIdProperty
+      bbox,
+      tileFormat,
+      uniqueIdProperty,
+      options
     });
   }
   return Array.from(map.values());

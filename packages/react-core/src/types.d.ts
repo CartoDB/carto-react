@@ -44,6 +44,7 @@ export type TileFeatures = {
   tileFormat: typeof TILE_FORMATS;
   geoColumName?: string;
   spatialIndex?: SpatialIndex;
+  options?: { storeGeometry: boolean }
 };
 
 export type TileFeaturesResponse = Record<string, unknown>[] | [];
