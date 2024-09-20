@@ -20,7 +20,8 @@ import useSkeleton from '../useSkeleton';
 
 const TableHeadCellLabel = styled(TableSortLabel)(({ theme }) => ({
   ...theme.typography.caption,
-  color: theme.palette.text.secondary
+  color: theme.palette.text.secondary,
+  whiteSpace: 'nowrap'
 }));
 
 const TableRowStyled = styled(TableRow)(({ theme }) => ({

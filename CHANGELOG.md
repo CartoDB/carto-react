@@ -6,6 +6,10 @@
 
 ## 3.0.0
 
+### 3.0.0-alpha.20 (2024-09-20)
+
+- `NoWrap` for table header [#908](https://github.com/CartoDB/carto-react/pull/908)
+
 ### 3.0.0-alpha.19 (2024-09-19)
 
 - Fix HistogramWidget with one non-zero bucket [#901](https://github.com/CartoDB/carto-react/pull/901)
