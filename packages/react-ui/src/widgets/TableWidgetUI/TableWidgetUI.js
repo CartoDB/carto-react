@@ -64,6 +64,8 @@ function TableWidgetUI({
   rowsPerPageOptions,
   onSetRowsPerPage,
   onRowClick,
+  onRowMouseEnter,
+  onRowMouseLeave,
   height,
   dense,
   isLoading,
@@ -126,7 +128,13 @@ function TableWidgetUI({
             sortDirection={sortDirection}
             onSort={handleSort}
           />
-          <TableBodyComponent columns={columns} rows={rows} onRowClick={onRowClick} />
+          <TableBodyComponent
+            columns={columns}
+            rows={rows}
+            onRowMouseEnter={onRowMouseEnter}
+            onRowMouseLeave={onRowMouseLeave}
+            onRowClick={onRowClick}
+          />
         </Table>
       </TableContainer>
       {pagination && (
@@ -182,7 +190,13 @@ function TableHeaderComponent({ columns, sorting, sortBy, sortDirection, onSort 
   );
 }
 
-function TableBodyComponent({ columns, rows, onRowClick }) {
+function TableBodyComponent({
+  columns,
+  rows,
+  onRowMouseEnter,
+  onRowMouseLeave,
+  onRowClick
+}) {
   return (
     <TableBody>
       {rows.map((row, i) => {
@@ -192,6 +206,8 @@ function TableBodyComponent({ columns, rows, onRowClick }) {
           <TableRowStyled
             key={rowKey}
             hover={!!onRowClick}
+            onMouseEnter={() => onRowMouseEnter && onRowMouseEnter(row)}
+            onMouseLeave={() => onRowMouseLeave && onRowMouseLeave(row)}
             onClick={() => onRowClick && onRowClick(row)}
           >
             {columns.map(({ field, headerName, align, component, formatter }) => {
@@ -253,6 +269,8 @@ TableWidgetUI.propTypes = {
   rowsPerPageOptions: PropTypes.array,
   onSetRowsPerPage: PropTypes.func,
   onRowClick: PropTypes.func,
+  onRowMouseEnter: PropTypes.func,
+  onRowMouseLeave: PropTypes.func,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   dense: PropTypes.bool,
   isLoading: PropTypes.bool,

@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Support for `onRowMouseEnter` and `onRowMouseLeave` handlers for Table Widget [#906](https://github.com/CartoDB/carto-react/pull/906)
+
 ## 3.0.0
 
 ### 3.0.0-alpha.19 (2024-09-19)
