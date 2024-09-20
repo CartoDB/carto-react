@@ -2,6 +2,8 @@
 
 ## Not released
 
+- `NoWrap` for table header [#908](https://github.com/CartoDB/carto-react/pull/908)
+
 ## 3.0.0
 
 ### 3.0.0-alpha.19 (2024-09-19)
