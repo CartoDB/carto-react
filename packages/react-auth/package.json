@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-auth",
-  "version": "3.0.0-alpha.20",
+  "version": "3.0.0-alpha.21-remote-spatial-index-widgets.1.0",
   "description": "CARTO for React - Auth",
   "author": "CARTO Dev Team",
   "keywords": [
