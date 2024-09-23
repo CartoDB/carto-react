@@ -31,3 +31,4 @@ export {
   sourceAndFiltersToSQL as _sourceAndFiltersToSQL,
   getSqlEscapedSource as _getSqlEscapedSource
 } from './models/utils';
+export { getSpatialFiltersResolution as _getSpatialFiltersResolution } from './models/spatialFiltersResolution';
