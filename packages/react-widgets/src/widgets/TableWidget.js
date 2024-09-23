@@ -8,13 +8,15 @@ import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
 
 /**
  * Renders a <TableWidget /> component
- * @typedef {{field: string, headerName?: string, align?: string, type?: string}} Column
+ * @typedef {{field: string, headerName?: string, align?: string, type?: string, formatter?: Function}} Column
  * @param  {object} props
  * @param  {string} props.id - ID for the widget instance.
  * @param  {string} props.title - Title to show in the widget header.
  * @param  {string} props.dataSource - ID of the data source to get the data from.
  * @param  {Column[]} props.columns - List of data columns to display.
  * @param  {Column[]} props.hiddenColumnFields - List of data columns to be retrieved, but not displayed.
+ * @param  {Function=} props.onRowMouseEnter - Function to handle on mouse enter events on rows.
+ * @param  {Function=} props.onRowMouseLeave - Function to handle on mouse leave events on rows.
  * @param  {Function=} props.onRowClick - Function to handle on click events on rows.
  * @param  {Function=} [props.onError] - Function to handle error messages from the widget.
  * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
@@ -42,6 +44,8 @@ function TableWidget({
   onError,
   onStateChange,
   onRowClick,
+  onRowMouseEnter,
+  onRowMouseLeave,
   initialPageSize = 10,
   onPageSizeChange,
   global,
@@ -70,9 +74,8 @@ function TableWidget({
     dataSource,
     params: {
       columns: [...columns.map((c) => c.field), ...hiddenColumnFields],
-      searchFilter: containsStringSearchFilter && {
-        [searchColumn]: { stringSearch: { values: [searchText] } }
-      },
+      searchFilterText: searchText,
+      searchFilterColumn: searchColumn,
       sortBy,
       sortDirection,
       sortByColumnType,
@@ -133,6 +136,8 @@ function TableWidget({
             height={height}
             dense={dense}
             isLoading={isLoading}
+            onRowMouseEnter={onRowMouseEnter}
+            onRowMouseLeave={onRowMouseLeave}
             onRowClick={onRowClick}
           />
         )}
@@ -161,6 +166,8 @@ TableWidget.propTypes = {
   height: PropTypes.string,
   stableHeight: PropTypes.bool,
   dense: PropTypes.bool,
+  onRowMouseEnter: PropTypes.func,
+  onRowMouseLeave: PropTypes.func,
   searchText: PropTypes.string,
   searchColumn: PropTypes.string,
   // Internal state
