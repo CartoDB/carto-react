@@ -48,6 +48,7 @@ export type SourceProps = {
   spatialDataColumn?: string;
   spatialFiltersResolution?: number;
   aggregationExp?: string;
+  aggregationResLevel?: number;
   credentials?: Credentials;
   queryParameters?: QueryParameters;
   provider?: Provider;
