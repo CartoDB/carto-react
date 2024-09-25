@@ -9,6 +9,9 @@ const bqProjectId = /^[a-z][a-z0-9-]{4,28}[a-z0-9]$/;
 const bqIdentifierRegex = '((?:[^`.]*?)|`(?:(?:[^`.])*?)`)';
 const identifierRegex = '((?:[^".]*?)|"(?:(?:[^"]|"")*?)")';
 const databricksIdentifierRegex = '((?:[^`.]*?)|`(?:(?:[^`]|``)*?)`)';
+const databricksFqnParseRegex = new RegExp(
+  `^${databricksIdentifierRegex}(?:\\.${databricksIdentifierRegex})?(?:\\.${databricksIdentifierRegex})?$`
+);
 const fqnParseRegex = {
   [Provider.BigQuery]: new RegExp(
     `^\`?${bqIdentifierRegex}(?:\\.${bqIdentifierRegex})?(?:\\.${bqIdentifierRegex})?\`?$`
@@ -22,11 +25,9 @@ const fqnParseRegex = {
   [Provider.Redshift]: new RegExp(
     `^${identifierRegex}(?:\\.${identifierRegex})?(?:\\.${identifierRegex})?$`
   ),
-  [Provider.Databricks]: new RegExp(
-    `^${databricksIdentifierRegex}(?:\\.${databricksIdentifierRegex})?(?:\\.${databricksIdentifierRegex})?$`
-  )
+  [Provider.Databricks]: databricksFqnParseRegex,
+  [Provider.DatabricksRest]: databricksFqnParseRegex
 };
-fqnParseRegex[Provider.DatabricksRest] = fqnParseRegex[Provider.Databricks];
 
 const escapeCharacter = {
   [Provider.BigQuery]: '`',
@@ -42,11 +43,9 @@ const nameNeedsQuotesChecker = {
   [Provider.Postgres]: /^[^a-z_]|[^a-z_\d$]/i,
   [Provider.Snowflake]: /^[^a-z_]|[^a-z_\d$]/i,
   [Provider.Redshift]: /^[^a-z_]|[^a-z_\d$]/i,
-  [Provider.Databricks]: /[^a-z_\d]/i
+  [Provider.Databricks]: /[^a-z_\d]/i,
+  [Provider.DatabricksRest]: /[^a-z_\d]/i
 };
-nameNeedsQuotesChecker[Provider.DatabricksRest] =
-  nameNeedsQuotesChecker[Provider.Databricks];
-
 const caseSensitivenessChecker = {
   [Provider.BigQuery]: null,
   [Provider.Postgres]: /[A-Z]/,
