@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-redux",
-  "version": "3.0.0-alpha.20",
+  "version": "3.0.0-alpha.21-remote-spatial-index-widgets.3.0",
   "description": "CARTO for React - Redux",
   "author": "CARTO Dev Team",
   "keywords": [
