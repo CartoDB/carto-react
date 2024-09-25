@@ -1,9 +1,21 @@
-import { SourceProps, MAP_TYPES } from "@carto/react-api";
-import { FiltersLogicalOperators, Provider, _FilterTypes, Provider } from "@carto/react-core";
-import { SourceFilters } from "@carto/react-redux";
+import { SourceProps, MAP_TYPES } from '@carto/react-api';
+import { FiltersLogicalOperators, Provider, _FilterTypes } from '@carto/react-core';
+import { SourceFilters, ViewState } from '@carto/react-redux';
 
-export function isRemoteCalculationSupported(prop: { source: SourceProps }): boolean
+export function isRemoteCalculationSupported(prop: { source: SourceProps }): boolean;
 
-export function sourceAndFiltersToSQL(props: { data: string, filters?: SourceFilters, filtersLogicalOperator?: FiltersLogicalOperators, provider: Provider, type: typeof MAP_TYPES }): string
+export function sourceAndFiltersToSQL(props: {
+  data: string;
+  filters?: SourceFilters;
+  filtersLogicalOperator?: FiltersLogicalOperators;
+  provider: Provider;
+  type: typeof MAP_TYPES;
+}): string;
 
-export function getSqlEscapedSource(table: string, provider: Provider): string
+export function getSqlEscapedSource(table: string, provider: Provider): string;
+
+export function getSpatialFiltersResolution(props: {
+  source: SourceProps;
+  spatialDataType: string;
+  viewState: ViewState;
+}): number;
