@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-ui",
-  "version": "3.0.0-alpha.20",
+  "version": "3.0.0-alpha.21-remote-spatial-index-widgets.2.0",
   "description": "CARTO for React - UI",
   "author": "CARTO Dev Team",
   "keywords": [
