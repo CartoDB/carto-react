@@ -207,6 +207,7 @@ export const createCartoSlice = (initialState) => {
  * @param {number=} data.dataResolution - data resolution for spatial index data.
  * @param {number=} data.spatialFiltersResolution - spatial filters resolution for spatial index data.
  * @param {string=} data.aggregationExp - (optional) for spatial index data.
+ * @param {number=} data.aggregationResLevel - (optional) for spatial index data.
  * @param {string=} data.provider - (optional) type of the data warehouse.
  */
 export const addSource = ({
@@ -224,6 +225,7 @@ export const addSource = ({
   dataResolution,
   spatialFiltersResolution,
   aggregationExp,
+  aggregationResLevel,
   provider
 }) => ({
   type: 'carto/addSource',
@@ -238,6 +240,7 @@ export const addSource = ({
     queryParameters,
     geoColumn,
     dataResolution,
+    aggregationResLevel,
     spatialDataType,
     spatialDataColumn,
     spatialFiltersResolution,
