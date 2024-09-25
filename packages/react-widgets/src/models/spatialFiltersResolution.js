@@ -48,7 +48,7 @@ export function getSpatialFiltersResolution({ source, spatialDataType, viewState
   const dataResolution = source.dataResolution ?? Number.MAX_VALUE;
 
   const aggregationResLevel =
-    source.metadata?.aggregationResLevel ??
+    source.aggregationResLevel ??
     (spatialDataType === 'h3'
       ? DEFAULT_AGGREGATION_RES_LEVEL_H3
       : DEFAULT_AGGREGATION_RES_LEVEL_QUADBIN);
