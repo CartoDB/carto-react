@@ -7,6 +7,8 @@ import {
 import { FullyQualifiedName } from './fqn';
 import { MAP_TYPES, API_VERSIONS } from '@carto/react-api';
 
+export { getSpatialFiltersResolution } from './spatialFiltersResolution';
+
 export function isRemoteCalculationSupported(props) {
   const { source } = props;
 
@@ -23,7 +25,8 @@ export function isRemoteCalculationSupported(props) {
     source.geoColumn && getSpatialIndexFromGeoColumn(source.geoColumn);
   if (
     isDynamicSpatialIndex &&
-    (!source.dataResolution && !source.spatialFiltersResolution)
+    !source.dataResolution &&
+    !source.spatialFiltersResolution
   ) {
     return false;
   }
