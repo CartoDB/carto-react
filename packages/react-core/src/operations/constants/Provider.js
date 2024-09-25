@@ -8,5 +8,6 @@ export const Provider = Object.freeze({
   Redshift: 'redshift',
   Postgres: 'postgres',
   Snowflake: 'snowflake',
-  Databricks: 'databricks'
+  Databricks: 'databricks',
+  DatabricksRest: 'databricksRest'
 });

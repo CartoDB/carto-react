@@ -2,6 +2,7 @@
 
 ## Not released
 
+- getSqlEscapedSource: support for databricksRest provider [#913](https://github.com/CartoDB/carto-react/pull/913)
 - cache Intl instances to improve performance [#894](https://github.com/CartoDB/carto-react/pull/894)
 - Support for `onRowMouseEnter` and `onRowMouseLeave` handlers for Table Widget [#907](https://github.com/CartoDB/carto-react/pull/907)
 

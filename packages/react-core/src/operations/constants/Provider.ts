@@ -3,5 +3,6 @@ export enum Provider {
   Redshift = 'redshift',
   Postgres = 'postgres',
   Snowflake = 'snowflake',
-  Databricks = 'databricks'
+  Databricks = 'databricks',
+  DatabricksRest = 'databricksRest'
 }
