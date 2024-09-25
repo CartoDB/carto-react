@@ -26,13 +26,15 @@ const fqnParseRegex = {
     `^${databricksIdentifierRegex}(?:\\.${databricksIdentifierRegex})?(?:\\.${databricksIdentifierRegex})?$`
   )
 };
+fqnParseRegex[Provider.DatabricksRest] = fqnParseRegex[Provider.Databricks];
 
 const escapeCharacter = {
   [Provider.BigQuery]: '`',
   [Provider.Postgres]: '"',
   [Provider.Snowflake]: '"',
   [Provider.Redshift]: '"',
-  [Provider.Databricks]: '`'
+  [Provider.Databricks]: '`',
+  [Provider.DatabricksRest]: '`'
 };
 
 const nameNeedsQuotesChecker = {
@@ -42,13 +44,16 @@ const nameNeedsQuotesChecker = {
   [Provider.Redshift]: /^[^a-z_]|[^a-z_\d$]/i,
   [Provider.Databricks]: /[^a-z_\d]/i
 };
+nameNeedsQuotesChecker[Provider.DatabricksRest] =
+  nameNeedsQuotesChecker[Provider.Databricks];
 
 const caseSensitivenessChecker = {
   [Provider.BigQuery]: null,
   [Provider.Postgres]: /[A-Z]/,
   [Provider.Snowflake]: /[a-z]/,
   [Provider.Redshift]: null,
-  [Provider.Databricks]: null
+  [Provider.Databricks]: null,
+  [Provider.DatabricksRest]: null
 };
 
 export class FullyQualifiedName {
@@ -384,6 +389,7 @@ export class FullyQualifiedName {
     switch (this.provider) {
       case Provider.BigQuery:
       case Provider.Databricks:
+      case Provider.DatabricksRest:
         return unquotedName;
       case Provider.Postgres:
         return needsQuotes ? unquotedName : unquotedName.toLowerCase();

@@ -1225,7 +1225,7 @@ describe('FQN', () => {
     });
   });
 
-  describe('for Databricks', () => {
+  describe.each([Provider.Databricks, Provider.DatabricksRest])('for %s', (provider) => {
     test.each([
       [
         'database.schema.table',
@@ -1289,6 +1289,14 @@ describe('FQN', () => {
           quoted: [null, '`schema`', '`ta``bl``e`']
         },
         'database.`schema`.`ta``bl``e`'
+      ],
+      [
+        '`carto-dev-data`.support_team.airports_rls_prepared',
+        {
+          unquoted: ['carto-dev-data', 'support_team', 'airports_rls_prepared'],
+          quoted: ['`carto-dev-data`', 'support_team', 'airports_rls_prepared']
+        },
+        '`carto-dev-data`.support_team.airports_rls_prepared'
       ]
     ])(
       'should parse %p correctly',
@@ -1300,7 +1308,7 @@ describe('FQN', () => {
         },
         expectedFqn
       ) => {
-        const fqnObj = new FullyQualifiedName(fqn, Provider.Databricks);
+        const fqnObj = new FullyQualifiedName(fqn, provider);
 
         expect(fqnObj.getObjectName()).toEqual(objectName);
         expect(fqnObj.getObjectName({ quoted: true })).toEqual(
@@ -1338,11 +1346,7 @@ describe('FQN', () => {
     ])(
       'should parse %p correctly in left to right parsing mode',
       (fqn, databaseName, schemaName, objectName, expectedFqn) => {
-        const fqnObj = new FullyQualifiedName(
-          fqn,
-          Provider.Databricks,
-          ParsingMode.LeftToRight
-        );
+        const fqnObj = new FullyQualifiedName(fqn, provider, ParsingMode.LeftToRight);
         expect(fqnObj.getDatabaseName()).toEqual(databaseName);
         if (schemaName) {
           expect(fqnObj.getSchemaName()).toEqual(schemaName);
@@ -1365,7 +1369,7 @@ describe('FQN', () => {
     });
 
     test('should set database / schema name correctly for an incomplete FQN', () => {
-      const fqnObj = new FullyQualifiedName('schema.table', Provider.Databricks);
+      const fqnObj = new FullyQualifiedName('schema.table', provider);
       fqnObj.setDatabaseName('DAT_A-base');
       fqnObj.setSchemaName('my_schema');
       expect(fqnObj.getDatabaseName()).toEqual('DAT_A-base');
@@ -1382,7 +1386,7 @@ describe('FQN', () => {
     ])(
       'should get object name correctly from %p with suffix %p',
       (fqn, suffix, quotedName, unquotedName) => {
-        const fqnObj = new FullyQualifiedName(fqn, Provider.Databricks);
+        const fqnObj = new FullyQualifiedName(fqn, provider);
         expect(fqnObj.getObjectName({ quoted: true, suffix: suffix })).toEqual(
           quotedName
         );
@@ -1395,7 +1399,7 @@ describe('FQN', () => {
     test('should set object name correctly when it should be escaped', () => {
       const fqnObj = new FullyQualifiedName(
         'database.schema',
-        Provider.Databricks,
+        provider,
         ParsingMode.LeftToRight
       );
       fqnObj.setObjectName('ta ".ble name');
@@ -1422,25 +1426,25 @@ describe('FQN', () => {
         ['`a`..`b`']
       ])('should never accept %p', (fqn) => {
         expect(
-          FullyQualifiedName.isValid(fqn, Provider.Databricks, {
+          FullyQualifiedName.isValid(fqn, provider, {
             parsingMode: ParsingMode.RightToLeft,
             quoted: false
           })
         ).toEqual(false);
         expect(
-          FullyQualifiedName.isValid(fqn, Provider.Databricks, {
+          FullyQualifiedName.isValid(fqn, provider, {
             parsingMode: ParsingMode.RightToLeft,
             quoted: true
           })
         ).toEqual(false);
         expect(
-          FullyQualifiedName.isValid(fqn, Provider.Databricks, {
+          FullyQualifiedName.isValid(fqn, provider, {
             parsingMode: ParsingMode.LeftToRight,
             quoted: false
           })
         ).toEqual(false);
         expect(
-          FullyQualifiedName.isValid(fqn, Provider.Databricks, {
+          FullyQualifiedName.isValid(fqn, provider, {
             parsingMode: ParsingMode.LeftToRight,
             quoted: true
           })
@@ -1458,25 +1462,25 @@ describe('FQN', () => {
         ['my table']
       ])('should should only accept quoted %p', (fqn) => {
         expect(
-          FullyQualifiedName.isValid(fqn, Provider.Databricks, {
+          FullyQualifiedName.isValid(fqn, provider, {
             parsingMode: ParsingMode.RightToLeft,
             quoted: false
           })
         ).toEqual(false);
         expect(
-          FullyQualifiedName.isValid(fqn, Provider.Databricks, {
+          FullyQualifiedName.isValid(fqn, provider, {
             parsingMode: ParsingMode.RightToLeft,
             quoted: true
           })
         ).toEqual(true);
         expect(
-          FullyQualifiedName.isValid(fqn, Provider.Databricks, {
+          FullyQualifiedName.isValid(fqn, provider, {
             parsingMode: ParsingMode.LeftToRight,
             quoted: false
           })
         ).toEqual(false);
         expect(
-          FullyQualifiedName.isValid(fqn, Provider.Databricks, {
+          FullyQualifiedName.isValid(fqn, provider, {
             parsingMode: ParsingMode.LeftToRight,
             quoted: true
           })
@@ -1492,25 +1496,25 @@ describe('FQN', () => {
         ['`a table`']
       ])('should always accept %p', (fqn) => {
         expect(
-          FullyQualifiedName.isValid(fqn, Provider.Databricks, {
+          FullyQualifiedName.isValid(fqn, provider, {
             parsingMode: ParsingMode.RightToLeft,
             quoted: false
           })
         ).toEqual(true);
         expect(
-          FullyQualifiedName.isValid(fqn, Provider.Databricks, {
+          FullyQualifiedName.isValid(fqn, provider, {
             parsingMode: ParsingMode.RightToLeft,
             quoted: true
           })
         ).toEqual(true);
         expect(
-          FullyQualifiedName.isValid(fqn, Provider.Databricks, {
+          FullyQualifiedName.isValid(fqn, provider, {
             parsingMode: ParsingMode.LeftToRight,
             quoted: false
           })
         ).toEqual(true);
         expect(
-          FullyQualifiedName.isValid(fqn, Provider.Databricks, {
+          FullyQualifiedName.isValid(fqn, provider, {
             parsingMode: ParsingMode.LeftToRight,
             quoted: true
           })
