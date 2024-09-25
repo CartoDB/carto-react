@@ -1,16 +1,33 @@
-import { AggregationTypes, _filtersToSQL, Provider } from '@carto/react-core';
+import {
+  AggregationTypes,
+  getSpatialIndexFromGeoColumn,
+  _filtersToSQL,
+  Provider
+} from '@carto/react-core';
 import { FullyQualifiedName } from './fqn';
 import { MAP_TYPES, API_VERSIONS } from '@carto/react-api';
 
 export function isRemoteCalculationSupported(props) {
   const { source } = props;
 
-  return (
-    source &&
-    source.type !== MAP_TYPES.TILESET &&
-    source.credentials.apiVersion !== API_VERSIONS.V2 &&
-    source.provider !== 'databricks'
-  );
+  if (
+    !source ||
+    source.type === MAP_TYPES.TILESET ||
+    source.credentials.apiVersion === API_VERSIONS.V2 ||
+    source.provider === 'databricks'
+  ) {
+    return false;
+  }
+
+  const isDynamicSpatialIndex =
+    source.geoColumn && getSpatialIndexFromGeoColumn(source.geoColumn);
+  if (
+    isDynamicSpatialIndex &&
+    (!source.dataResolution && !source.spatialFiltersResolution)
+  ) {
+    return false;
+  }
+  return true;
 }
 
 export function wrapModelCall(props, fromLocal, fromRemote) {
