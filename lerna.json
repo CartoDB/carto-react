@@ -4,5 +4,5 @@
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "3.0.0-alpha.21"
+  "version": "3.0.0-alpha.22-remote-spatial-index-widgets.4.0"
 }
