@@ -42,6 +42,7 @@ export {
   applyFilters as _applyFilters
 } from './filters/Filter';
 
+export { FEATURE_GEOM_PROPERTY } from './filters/tileFeaturesGeometries';
 export { tileFeatures } from './filters/tileFeatures';
 export { geojsonFeatures } from './filters/geojsonFeatures';
 

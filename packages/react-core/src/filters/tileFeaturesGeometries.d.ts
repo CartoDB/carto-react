@@ -7,4 +7,7 @@ export default function tileFeaturesGeometries(arg: {
   tileFormat: typeof TILE_FORMATS;
   geometryToIntersect: Polygon | MultiPolygon;
   uniqueIdProperty?: string;
+  options?: { storeGeometry: boolean };
 }): TileFeaturesResponse;
+
+export const FEATURE_GEOM_PROPERTY: string;

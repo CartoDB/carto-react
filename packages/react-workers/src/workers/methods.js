@@ -23,7 +23,8 @@ export function getTileFeatures({
   uniqueIdProperty,
   tileFormat,
   geoColumName,
-  spatialIndex
+  spatialIndex,
+  options
 }) {
   currentFeatures = tileFeatures({
     tiles: currentTiles,
@@ -32,7 +33,8 @@ export function getTileFeatures({
     uniqueIdProperty,
     tileFormat,
     geoColumName,
-    spatialIndex
+    spatialIndex,
+    options
   });
   return true;
 }

@@ -1,6 +1,8 @@
 import { geojsonToBinary } from '@loaders.gl/gis';
 import { TILE_FORMATS, tileFeatures } from '../../src';
 import * as transformToTileCoords from '../../src/utils/transformToTileCoords';
+import * as transformTileCoordsToWGS84 from '../../src/utils/transformTileCoordsToWGS84';
+import { FEATURE_GEOM_PROPERTY } from '../../src/filters/tileFeaturesGeometries';
 
 describe('viewport features with binary mode', () => {
   const viewport = [-10, -10, 10, 10]; // west - south - east - north
@@ -71,18 +73,33 @@ describe('viewport features with binary mode', () => {
         }
       ];
 
-      const properties = tileFeatures({
+      let properties = tileFeatures({
         tiles: mockedTile,
         viewport,
         uniqueIdProperty: 'cartodb_id'
       });
 
-      // prettier-ignore
-      expect(properties).toEqual([
-        { 'cartodb_id': 1, 'other_prop': 0 },
-        { 'cartodb_id': 2, 'other_prop': 1 },
-        { 'cartodb_id': 3, 'other_prop': 2 }
-      ]);
+      const expectedProperties = [
+        { cartodb_id: 1, other_prop: 0 },
+        { cartodb_id: 2, other_prop: 1 },
+        { cartodb_id: 3, other_prop: 2 }
+      ];
+
+      expect(properties).toEqual(expectedProperties);
+
+      properties = tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty: 'cartodb_id',
+        options: { storeGeometry: true }
+      });
+
+      expect(properties).toEqual(
+        expectedProperties.map((expected, i) => ({
+          ...expected,
+          [FEATURE_GEOM_PROPERTY]: linestrings[i].geometry
+        }))
+      );
     });
 
     test('should handle multilinestrings correctly', () => {
@@ -107,17 +124,36 @@ describe('viewport features with binary mode', () => {
         }
       ];
 
-      const properties = tileFeatures({
+      let properties = tileFeatures({
         tiles: mockedTile,
         viewport,
         uniqueIdProperty: 'cartodb_id'
       });
-      // prettier-ignore
-      expect(properties).toEqual([
-        { 'cartodb_id': 1, 'other_prop': 0 },
-        { 'cartodb_id': 2, 'other_prop': 1 },
-        { 'cartodb_id': 3, 'other_prop': 2 }
-      ]);
+
+      const expectedProperties = [
+        { cartodb_id: 1, other_prop: 0 },
+        { cartodb_id: 2, other_prop: 1 },
+        { cartodb_id: 3, other_prop: 2 }
+      ];
+
+      expect(properties).toEqual(expectedProperties);
+
+      properties = tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty: 'cartodb_id',
+        options: { storeGeometry: true }
+      });
+
+      expect(properties).toEqual(
+        expectedProperties.map((expected, i) => ({
+          ...expected,
+          [FEATURE_GEOM_PROPERTY]: {
+            coordinates: multilinestrings[i].geometry.coordinates[0],
+            type: 'LineString'
+          }
+        }))
+      );
     });
 
     test('should handle polygons correctly', () => {
@@ -142,17 +178,31 @@ describe('viewport features with binary mode', () => {
         }
       ];
 
-      const properties = tileFeatures({
+      let properties = tileFeatures({
         tiles: mockedTile,
         viewport,
         uniqueIdProperty: 'cartodb_id'
       });
-      // prettier-ignore
-      expect(properties).toEqual([
-        { 'cartodb_id': 1, 'other_prop': 0 },
-        { 'cartodb_id': 2, 'other_prop': 1 },
-        { 'cartodb_id': 3, 'other_prop': 2 }
-      ]);
+      const expectedProperties = [
+        { cartodb_id: 1, other_prop: 0 },
+        { cartodb_id: 2, other_prop: 1 },
+        { cartodb_id: 3, other_prop: 2 }
+      ];
+
+      expect(properties).toEqual(expectedProperties);
+
+      properties = tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty: 'cartodb_id',
+        options: { storeGeometry: true }
+      });
+      expect(properties).toEqual(
+        expectedProperties.map((expected, i) => ({
+          ...expected,
+          [FEATURE_GEOM_PROPERTY]: polygons[i].geometry
+        }))
+      );
     });
 
     test('should handle multilipolygons correctly', () => {
@@ -180,17 +230,34 @@ describe('viewport features with binary mode', () => {
         }
       ];
 
-      const properties = tileFeatures({
+      let properties = tileFeatures({
         tiles: mockedTile,
         viewport,
         uniqueIdProperty: 'cartodb_id'
       });
-      // prettier-ignore
-      expect(properties).toEqual([
-        { 'cartodb_id': 1, 'other_prop': 0 },
-        { 'cartodb_id': 2, 'other_prop': 1 },
-        { 'cartodb_id': 3, 'other_prop': 2 }
-      ]);
+      const expectedProperties = [
+        { cartodb_id: 1, other_prop: 0 },
+        { cartodb_id: 2, other_prop: 1 },
+        { cartodb_id: 3, other_prop: 2 }
+      ];
+
+      expect(properties).toEqual(expectedProperties);
+
+      properties = tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty: 'cartodb_id',
+        options: { storeGeometry: true }
+      });
+      expect(properties).toEqual(
+        expectedProperties.map((expected, i) => ({
+          ...expected,
+          [FEATURE_GEOM_PROPERTY]: {
+            coordinates: multipolygons[i].geometry.coordinates[0],
+            type: 'Polygon'
+          }
+        }))
+      );
     });
   });
 
@@ -216,12 +283,26 @@ describe('viewport features with binary mode', () => {
         }
       ];
 
-      const properties = tileFeatures({
+      let properties = tileFeatures({
         tiles: mockedTile,
         viewport,
         uniqueIdProperty: 'cartodb_id'
       });
-      expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
+      const expectedProperties = [{ cartodb_id: 1, other_prop: 1 }];
+      expect(properties).toEqual(expectedProperties);
+
+      properties = tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty: 'cartodb_id',
+        options: { storeGeometry: true }
+      });
+      expect(properties).toEqual(
+        expectedProperties.map((expected, i) => ({
+          ...expected,
+          [FEATURE_GEOM_PROPERTY]: points[i].geometry
+        }))
+      );
     });
 
     test('linestrings', () => {
@@ -246,12 +327,26 @@ describe('viewport features with binary mode', () => {
         }
       ];
 
-      const properties = tileFeatures({
+      let properties = tileFeatures({
         tiles: mockedTile,
         viewport,
         uniqueIdProperty: 'cartodb_id'
       });
-      expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
+      const expectedProperties = [{ cartodb_id: 1, other_prop: 1 }];
+      expect(properties).toEqual(expectedProperties);
+
+      properties = tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty: 'cartodb_id',
+        options: { storeGeometry: true }
+      });
+      expect(properties).toEqual(
+        expectedProperties.map((expected, i) => ({
+          ...expected,
+          [FEATURE_GEOM_PROPERTY]: linestrings[i].geometry
+        }))
+      );
     });
 
     test('multilinestrings', () => {
@@ -276,12 +371,29 @@ describe('viewport features with binary mode', () => {
         }
       ];
 
-      const properties = tileFeatures({
+      let properties = tileFeatures({
         tiles: mockedTile,
         viewport,
         uniqueIdProperty: 'cartodb_id'
       });
-      expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
+      const expectedProperties = [{ cartodb_id: 1, other_prop: 1 }];
+      expect(properties).toEqual(expectedProperties);
+
+      properties = tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty: 'cartodb_id',
+        options: { storeGeometry: true }
+      });
+      expect(properties).toEqual(
+        expectedProperties.map((expected, i) => ({
+          ...expected,
+          [FEATURE_GEOM_PROPERTY]: {
+            coordinates: multilinestrings[i].geometry.coordinates[0],
+            type: 'LineString'
+          }
+        }))
+      );
     });
 
     test('polygons', () => {
@@ -306,12 +418,26 @@ describe('viewport features with binary mode', () => {
         }
       ];
 
-      const properties = tileFeatures({
+      let properties = tileFeatures({
         tiles: mockedTile,
         viewport,
         uniqueIdProperty: 'cartodb_id'
       });
-      expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
+      const expectedProperties = [{ cartodb_id: 1, other_prop: 1 }];
+      expect(properties).toEqual(expectedProperties);
+
+      properties = tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty: 'cartodb_id',
+        options: { storeGeometry: true }
+      });
+      expect(properties).toEqual(
+        expectedProperties.map((expected, i) => ({
+          ...expected,
+          [FEATURE_GEOM_PROPERTY]: polygons[i].geometry
+        }))
+      );
     });
 
     test('multipolygons', () => {
@@ -339,12 +465,29 @@ describe('viewport features with binary mode', () => {
         }
       ];
 
-      const properties = tileFeatures({
+      let properties = tileFeatures({
         tiles: mockedTile,
         viewport,
         uniqueIdProperty: 'cartodb_id'
       });
-      expect(properties).toEqual([{ cartodb_id: 1, other_prop: 1 }]);
+      const expectedProperties = [{ cartodb_id: 1, other_prop: 1 }];
+      expect(properties).toEqual(expectedProperties);
+
+      properties = tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty: 'cartodb_id',
+        options: { storeGeometry: true }
+      });
+      expect(properties).toEqual(
+        expectedProperties.map((expected, i) => ({
+          ...expected,
+          [FEATURE_GEOM_PROPERTY]: {
+            coordinates: multipolygons[i].geometry.coordinates[0],
+            type: 'Polygon'
+          }
+        }))
+      );
     });
   });
 
@@ -385,18 +528,31 @@ describe('viewport features with binary mode', () => {
           }
         ];
 
-        const properties = tileFeatures({
+        let properties = tileFeatures({
           tiles: mockedTiles,
           viewport,
           uniqueIdProperty: undefined
         });
 
-        // prettier-ignore
-        expect(properties).toEqual([
-          { 'other_prop': 0 },
-          { 'other_prop': 1 },
-          { 'other_prop': 2 }
-        ]);
+        const expectedProperties = [
+          { other_prop: 0 },
+          { other_prop: 1 },
+          { other_prop: 2 }
+        ];
+        expect(properties).toEqual(expectedProperties);
+
+        properties = tileFeatures({
+          tiles: mockedTiles,
+          viewport,
+          uniqueIdProperty: undefined,
+          options: { storeGeometry: true }
+        });
+        expect(properties).toEqual(
+          expectedProperties.map((expected, i) => ({
+            ...expected,
+            [FEATURE_GEOM_PROPERTY]: linestrings[i].geometry
+          }))
+        );
       });
     });
 
@@ -422,17 +578,30 @@ describe('viewport features with binary mode', () => {
           }
         ];
 
-        const properties = tileFeatures({
+        let properties = tileFeatures({
           tiles: mockedTile,
           viewport,
           uniqueIdProperty: undefined
         });
-        // prettier-ignore
-        expect(properties).toEqual([
-          { 'cartodb_id': 1, 'other_prop': 0 },
-          { 'cartodb_id': 2, 'other_prop': 1 },
-          { 'cartodb_id': 3, 'other_prop': 2 }
-        ]);
+        const expectedProperties = [
+          { cartodb_id: 1, other_prop: 0 },
+          { cartodb_id: 2, other_prop: 1 },
+          { cartodb_id: 3, other_prop: 2 }
+        ];
+        expect(properties).toEqual(expectedProperties);
+
+        properties = tileFeatures({
+          tiles: mockedTile,
+          viewport,
+          uniqueIdProperty: undefined,
+          options: { storeGeometry: true }
+        });
+        expect(properties).toEqual(
+          expectedProperties.map((expected, i) => ({
+            ...expected,
+            [FEATURE_GEOM_PROPERTY]: points[i].geometry
+          }))
+        );
       });
     });
 
@@ -458,17 +627,30 @@ describe('viewport features with binary mode', () => {
           }
         ];
 
-        const properties = tileFeatures({
+        let properties = tileFeatures({
           tiles: mockedTile,
           viewport,
           uniqueIdProperty: undefined
         });
-        // prettier-ignore
-        expect(properties).toEqual([
-          { 'geoid': '1', 'other_prop': 0 },
-          { 'geoid': '2', 'other_prop': 1 },
-          { 'geoid': '3', 'other_prop': 2 }
-        ]);
+        const expectedProperties = [
+          { geoid: '1', other_prop: 0 },
+          { geoid: '2', other_prop: 1 },
+          { geoid: '3', other_prop: 2 }
+        ];
+        expect(properties).toEqual(expectedProperties);
+
+        properties = tileFeatures({
+          tiles: mockedTile,
+          viewport,
+          uniqueIdProperty: undefined,
+          options: { storeGeometry: true }
+        });
+        expect(properties).toEqual(
+          expectedProperties.map((expected, i) => ({
+            ...expected,
+            [FEATURE_GEOM_PROPERTY]: points[i].geometry
+          }))
+        );
       });
     });
 
@@ -493,17 +675,30 @@ describe('viewport features with binary mode', () => {
           }
         ];
 
-        const properties = tileFeatures({
+        let properties = tileFeatures({
           tiles: mockedTile,
           viewport,
           uniqueIdProperty: undefined
         });
-        // prettier-ignore
-        expect(properties).toEqual([
-          { 'other_prop': 0 },
-          { 'other_prop': 1 },
-          { 'other_prop': 2 }
-        ]);
+        const expectedProperties = [
+          { other_prop: 0 },
+          { other_prop: 1 },
+          { other_prop: 2 }
+        ];
+        expect(properties).toEqual(expectedProperties);
+
+        properties = tileFeatures({
+          tiles: mockedTile,
+          viewport,
+          uniqueIdProperty: undefined,
+          options: { storeGeometry: true }
+        });
+        expect(properties).toEqual(
+          expectedProperties.map((expected, i) => ({
+            ...expected,
+            [FEATURE_GEOM_PROPERTY]: points[i].geometry
+          }))
+        );
       });
     });
   });
@@ -530,39 +725,54 @@ describe('viewport features with binary mode', () => {
         }
       ];
 
-      const properties = tileFeatures({
+      let properties = tileFeatures({
         tiles: mockedTile,
         viewport,
         uniqueIdProperty: 'user_id'
       });
-      // prettier-ignore
-      expect(properties).toEqual([
-        { 'user_id': 1, 'other_prop': 0 },
-        { 'user_id': 2, 'other_prop': 1 },
-        { 'user_id': 3, 'other_prop': 2 }
-      ]);
+      const expectedProperties = [
+        { user_id: 1, other_prop: 0 },
+        { user_id: 2, other_prop: 1 },
+        { user_id: 3, other_prop: 2 }
+      ];
+
+      expect(properties).toEqual(expectedProperties);
+
+      properties = tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        uniqueIdProperty: 'user_id',
+        options: { storeGeometry: true }
+      });
+
+      expect(properties).toEqual(
+        expectedProperties.map((expected, i) => ({
+          ...expected,
+          [FEATURE_GEOM_PROPERTY]: points[i].geometry
+        }))
+      );
     });
   });
 
   describe('Different tile formats', () => {
+    const points = [...Array(3)].map((_, i) => ({
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [i, i]
+      }
+    }));
+
+    const mockedTile = [
+      {
+        isVisible: true,
+        data: geojsonToBinary(points),
+        bbox: { west, east, north, south }
+      }
+    ];
+
     test('transformToTileCoords should only be called if format is mvt', () => {
       const transformToTileCoordsSpy = jest.spyOn(transformToTileCoords, 'default');
-
-      const points = [...Array(3)].map((_, i) => ({
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [i, i]
-        }
-      }));
-
-      const mockedTile = [
-        {
-          isVisible: true,
-          data: geojsonToBinary(points),
-          bbox: { west, east, north, south }
-        }
-      ];
 
       tileFeatures({
         tiles: mockedTile,
@@ -586,6 +796,45 @@ describe('viewport features with binary mode', () => {
       expect(transformToTileCoordsSpy).toHaveBeenCalledTimes(1);
 
       transformToTileCoordsSpy.mockRestore();
+    });
+    test('transformTileCoordsToWGS84 should only be called if format is mvt and storeGeometry option is true', () => {
+      const transformTileCoordsToWGS84Spy = jest.spyOn(
+        transformTileCoordsToWGS84,
+        'default'
+      );
+
+      tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        tileFormat: TILE_FORMATS.GEOJSON,
+        options: { storeGeometry: true }
+      });
+      expect(transformTileCoordsToWGS84Spy).toHaveBeenCalledTimes(0);
+
+      tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        tileFormat: TILE_FORMATS.BINARY,
+        options: { storeGeometry: true }
+      });
+      expect(transformTileCoordsToWGS84Spy).toHaveBeenCalledTimes(0);
+
+      tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        tileFormat: TILE_FORMATS.MVT
+      });
+      expect(transformTileCoordsToWGS84Spy).toHaveBeenCalledTimes(0);
+
+      tileFeatures({
+        tiles: mockedTile,
+        viewport,
+        tileFormat: TILE_FORMATS.MVT,
+        options: { storeGeometry: true }
+      });
+      expect(transformTileCoordsToWGS84Spy).toHaveBeenCalled();
+
+      transformTileCoordsToWGS84Spy.mockRestore();
     });
   });
 });
