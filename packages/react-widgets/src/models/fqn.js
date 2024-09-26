@@ -9,6 +9,9 @@ const bqProjectId = /^[a-z][a-z0-9-]{4,28}[a-z0-9]$/;
 const bqIdentifierRegex = '((?:[^`.]*?)|`(?:(?:[^`.])*?)`)';
 const identifierRegex = '((?:[^".]*?)|"(?:(?:[^"]|"")*?)")';
 const databricksIdentifierRegex = '((?:[^`.]*?)|`(?:(?:[^`]|``)*?)`)';
+const databricksFqnParseRegex = new RegExp(
+  `^${databricksIdentifierRegex}(?:\\.${databricksIdentifierRegex})?(?:\\.${databricksIdentifierRegex})?$`
+);
 const fqnParseRegex = {
   [Provider.BigQuery]: new RegExp(
     `^\`?${bqIdentifierRegex}(?:\\.${bqIdentifierRegex})?(?:\\.${bqIdentifierRegex})?\`?$`
@@ -22,9 +25,8 @@ const fqnParseRegex = {
   [Provider.Redshift]: new RegExp(
     `^${identifierRegex}(?:\\.${identifierRegex})?(?:\\.${identifierRegex})?$`
   ),
-  [Provider.Databricks]: new RegExp(
-    `^${databricksIdentifierRegex}(?:\\.${databricksIdentifierRegex})?(?:\\.${databricksIdentifierRegex})?$`
-  )
+  [Provider.Databricks]: databricksFqnParseRegex,
+  [Provider.DatabricksRest]: databricksFqnParseRegex
 };
 
 const escapeCharacter = {
@@ -32,7 +34,8 @@ const escapeCharacter = {
   [Provider.Postgres]: '"',
   [Provider.Snowflake]: '"',
   [Provider.Redshift]: '"',
-  [Provider.Databricks]: '`'
+  [Provider.Databricks]: '`',
+  [Provider.DatabricksRest]: '`'
 };
 
 const nameNeedsQuotesChecker = {
@@ -40,15 +43,16 @@ const nameNeedsQuotesChecker = {
   [Provider.Postgres]: /^[^a-z_]|[^a-z_\d$]/i,
   [Provider.Snowflake]: /^[^a-z_]|[^a-z_\d$]/i,
   [Provider.Redshift]: /^[^a-z_]|[^a-z_\d$]/i,
-  [Provider.Databricks]: /[^a-z_\d]/i
+  [Provider.Databricks]: /[^a-z_\d]/i,
+  [Provider.DatabricksRest]: /[^a-z_\d]/i
 };
-
 const caseSensitivenessChecker = {
   [Provider.BigQuery]: null,
   [Provider.Postgres]: /[A-Z]/,
   [Provider.Snowflake]: /[a-z]/,
   [Provider.Redshift]: null,
-  [Provider.Databricks]: null
+  [Provider.Databricks]: null,
+  [Provider.DatabricksRest]: null
 };
 
 export class FullyQualifiedName {
@@ -384,6 +388,7 @@ export class FullyQualifiedName {
     switch (this.provider) {
       case Provider.BigQuery:
       case Provider.Databricks:
+      case Provider.DatabricksRest:
         return unquotedName;
       case Provider.Postgres:
         return needsQuotes ? unquotedName : unquotedName.toLowerCase();
