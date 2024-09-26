@@ -2,12 +2,14 @@
 
 ## Not released
 
+## 3.0.0
+
+### 3.0.0-alpha.21 (2024-09-26)
+
 - TileFeatures returns features with geometry if asked [#911](https://github.com/CartoDB/carto-react/pull/911)
 - getSqlEscapedSource: support for databricksRest provider [#913](https://github.com/CartoDB/carto-react/pull/913)
 - cache Intl instances to improve performance [#894](https://github.com/CartoDB/carto-react/pull/894)
 - Support for `onRowMouseEnter` and `onRowMouseLeave` handlers for Table Widget [#907](https://github.com/CartoDB/carto-react/pull/907)
-
-## 3.0.0
 
 ### 3.0.0-alpha.20 (2024-09-20)
 
