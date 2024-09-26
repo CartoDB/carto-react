@@ -3,7 +3,7 @@ import { lngLatToWorld, worldToLngLat } from '@math.gl/web-mercator';
 
 /**
  * Transform WGS84 coordinates to tile coords.
- * It's the inverse of deck.gl coordinate-transform (https://github.com/visgl/deck.gl/blob/master/modules/geo-layers/src/mvt-layer/coordinate-transform.js)
+ * It's the inverse of deck.gl coordinate-transform (https://github.com/visgl/deck.gl/blob/master/modules/geo-layers/src/mvt-layer/coordinate-transform.ts)
  *
  * @param {object} geometry - any valid geojson geometry
  * @param {{ west: number, east: number, north: number, south: number }} bbox - tile bbox as used in deck.gl

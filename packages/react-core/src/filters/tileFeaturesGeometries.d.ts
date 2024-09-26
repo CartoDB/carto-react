@@ -9,3 +9,5 @@ export default function tileFeaturesGeometries(arg: {
   uniqueIdProperty?: string;
   options?: { storeGeometry: boolean };
 }): TileFeaturesResponse;
+
+export const GEOM_STORED_VALUE: string;

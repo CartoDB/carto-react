@@ -6,6 +6,8 @@ import transformToTileCoords from '../utils/transformToTileCoords';
 import { TILE_FORMATS } from '../types';
 import transformTileCoordsToWGS84 from '../utils/transformTileCoordsToWGS84';
 
+export const GEOM_STORED_VALUE = '__geomValue';
+
 const GEOMETRY_TYPES = Object.freeze({
   Point: 0,
   LineString: 1,
@@ -27,31 +29,32 @@ function processTileFeatureProperties({
   const tileProps = getPropertiesFromTile(data, startIndex);
   const uniquePropertyValue = getUniquePropertyValue(tileProps, uniqueIdProperty, map);
 
-  if (uniquePropertyValue && !map.has(uniquePropertyValue)) {
-    let geometry;
-
-    // Only calculate geometry if necessary
-    if (storeGeometry || geometryIntersection) {
-      const { positions } = data;
-      const ringCoordinates = getRingCoordinatesFor(startIndex, endIndex, positions);
-      geometry = getFeatureByType(ringCoordinates, type);
-    }
-
-    // If intersection is required, check before proceeding
-    if (!geometryIntersection || intersects(geometry, geometryIntersection)) {
-      const properties = parseProperties(tileProps);
-
-      // Only save geometry if necessary
-      if (storeGeometry) {
-        properties.geom =
-          tileFormat === TILE_FORMATS.MVT
-            ? transformTileCoordsToWGS84(geometry, bbox)
-            : geometry;
-      }
-
-      map.set(uniquePropertyValue, properties);
-    }
+  if (!uniquePropertyValue || map.has(uniquePropertyValue)) {
+    return;
   }
+  let geometry;
+
+  // Only calculate geometry if necessary
+  if (storeGeometry || geometryIntersection) {
+    const { positions } = data;
+    const ringCoordinates = getRingCoordinatesFor(startIndex, endIndex, positions);
+    geometry = getFeatureByType(ringCoordinates, type);
+  }
+
+  // If intersection is required, check before proceeding
+  if (geometryIntersection && !intersects(geometry, geometryIntersection)) {
+    return;
+  }
+  const properties = parseProperties(tileProps);
+
+  // Only save geometry if necessary
+  if (storeGeometry) {
+    properties[GEOM_STORED_VALUE] =
+      tileFormat === TILE_FORMATS.MVT
+        ? transformTileCoordsToWGS84(geometry, bbox)
+        : geometry;
+  }
+  map.set(uniquePropertyValue, properties);
 }
 
 function addIntersectedFeaturesInTile({

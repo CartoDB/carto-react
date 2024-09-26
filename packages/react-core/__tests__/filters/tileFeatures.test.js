@@ -2,6 +2,7 @@ import { geojsonToBinary } from '@loaders.gl/gis';
 import { TILE_FORMATS, tileFeatures } from '../../src';
 import * as transformToTileCoords from '../../src/utils/transformToTileCoords';
 import * as transformTileCoordsToWGS84 from '../../src/utils/transformTileCoordsToWGS84';
+import { GEOM_STORED_VALUE } from '../../src/filters/tileFeaturesGeometries';
 
 describe('viewport features with binary mode', () => {
   const viewport = [-10, -10, 10, 10]; // west - south - east - north
@@ -96,7 +97,7 @@ describe('viewport features with binary mode', () => {
       expect(properties).toEqual(
         expectedProperties.map((expected, i) => ({
           ...expected,
-          geom: linestrings[i].geometry
+          [GEOM_STORED_VALUE]: linestrings[i].geometry
         }))
       );
     });
@@ -147,7 +148,7 @@ describe('viewport features with binary mode', () => {
       expect(properties).toEqual(
         expectedProperties.map((expected, i) => ({
           ...expected,
-          geom: {
+          [GEOM_STORED_VALUE]: {
             coordinates: multilinestrings[i].geometry.coordinates[0],
             type: 'LineString'
           }
@@ -199,7 +200,7 @@ describe('viewport features with binary mode', () => {
       expect(properties).toEqual(
         expectedProperties.map((expected, i) => ({
           ...expected,
-          geom: polygons[i].geometry
+          [GEOM_STORED_VALUE]: polygons[i].geometry
         }))
       );
     });
@@ -251,7 +252,10 @@ describe('viewport features with binary mode', () => {
       expect(properties).toEqual(
         expectedProperties.map((expected, i) => ({
           ...expected,
-          geom: { coordinates: multipolygons[i].geometry.coordinates[0], type: 'Polygon' }
+          [GEOM_STORED_VALUE]: {
+            coordinates: multipolygons[i].geometry.coordinates[0],
+            type: 'Polygon'
+          }
         }))
       );
     });
@@ -296,7 +300,7 @@ describe('viewport features with binary mode', () => {
       expect(properties).toEqual(
         expectedProperties.map((expected, i) => ({
           ...expected,
-          geom: points[i].geometry
+          [GEOM_STORED_VALUE]: points[i].geometry
         }))
       );
     });
@@ -340,7 +344,7 @@ describe('viewport features with binary mode', () => {
       expect(properties).toEqual(
         expectedProperties.map((expected, i) => ({
           ...expected,
-          geom: linestrings[i].geometry
+          [GEOM_STORED_VALUE]: linestrings[i].geometry
         }))
       );
     });
@@ -384,7 +388,7 @@ describe('viewport features with binary mode', () => {
       expect(properties).toEqual(
         expectedProperties.map((expected, i) => ({
           ...expected,
-          geom: {
+          [GEOM_STORED_VALUE]: {
             coordinates: multilinestrings[i].geometry.coordinates[0],
             type: 'LineString'
           }
@@ -431,7 +435,7 @@ describe('viewport features with binary mode', () => {
       expect(properties).toEqual(
         expectedProperties.map((expected, i) => ({
           ...expected,
-          geom: polygons[i].geometry
+          [GEOM_STORED_VALUE]: polygons[i].geometry
         }))
       );
     });
@@ -478,7 +482,10 @@ describe('viewport features with binary mode', () => {
       expect(properties).toEqual(
         expectedProperties.map((expected, i) => ({
           ...expected,
-          geom: { coordinates: multipolygons[i].geometry.coordinates[0], type: 'Polygon' }
+          [GEOM_STORED_VALUE]: {
+            coordinates: multipolygons[i].geometry.coordinates[0],
+            type: 'Polygon'
+          }
         }))
       );
     });
@@ -543,7 +550,7 @@ describe('viewport features with binary mode', () => {
         expect(properties).toEqual(
           expectedProperties.map((expected, i) => ({
             ...expected,
-            geom: linestrings[i].geometry
+            [GEOM_STORED_VALUE]: linestrings[i].geometry
           }))
         );
       });
@@ -592,7 +599,7 @@ describe('viewport features with binary mode', () => {
         expect(properties).toEqual(
           expectedProperties.map((expected, i) => ({
             ...expected,
-            geom: points[i].geometry
+            [GEOM_STORED_VALUE]: points[i].geometry
           }))
         );
       });
@@ -641,7 +648,7 @@ describe('viewport features with binary mode', () => {
         expect(properties).toEqual(
           expectedProperties.map((expected, i) => ({
             ...expected,
-            geom: points[i].geometry
+            [GEOM_STORED_VALUE]: points[i].geometry
           }))
         );
       });
@@ -689,7 +696,7 @@ describe('viewport features with binary mode', () => {
         expect(properties).toEqual(
           expectedProperties.map((expected, i) => ({
             ...expected,
-            geom: points[i].geometry
+            [GEOM_STORED_VALUE]: points[i].geometry
           }))
         );
       });
@@ -741,7 +748,7 @@ describe('viewport features with binary mode', () => {
       expect(properties).toEqual(
         expectedProperties.map((expected, i) => ({
           ...expected,
-          geom: points[i].geometry
+          [GEOM_STORED_VALUE]: points[i].geometry
         }))
       );
     });
