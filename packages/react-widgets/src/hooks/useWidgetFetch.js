@@ -96,22 +96,21 @@ export default function useWidgetFetch(
   );
 
   const enrichedSource = useMemo(() => {
-    const { spatialDataType } = source;
     if (
       !source ||
       !geometryToIntersect ||
-      spatialDataType === 'geo' ||
+      source.spatialDataType === 'geo' ||
       source.spatialFiltersResolution !== undefined ||
       !source.dataResolution
     ) {
       return source;
     }
 
-    if (spatialDataType === 'h3' || spatialDataType === 'quadbin') {
+    if (source.spatialDataType === 'h3' || source.spatialDataType === 'quadbin') {
       const spatialFiltersResolution = getSpatialFiltersResolution({
         source,
         viewState,
-        spatialDataType
+        spatialDataType: source.spatialDataType
       });
       return {
         ...source,
