@@ -6,7 +6,7 @@ import transformToTileCoords from '../utils/transformToTileCoords';
 import { TILE_FORMATS } from '../types';
 import transformTileCoordsToWGS84 from '../utils/transformTileCoordsToWGS84';
 
-export const GEOM_STORED_VALUE = '__geomValue';
+export const FEATURE_GEOM_PROPERTY = '__geomValue';
 
 const GEOMETRY_TYPES = Object.freeze({
   Point: 0,
@@ -49,7 +49,7 @@ function processTileFeatureProperties({
 
   // Only save geometry if necessary
   if (storeGeometry) {
-    properties[GEOM_STORED_VALUE] =
+    properties[FEATURE_GEOM_PROPERTY] =
       tileFormat === TILE_FORMATS.MVT
         ? transformTileCoordsToWGS84(geometry, bbox)
         : geometry;

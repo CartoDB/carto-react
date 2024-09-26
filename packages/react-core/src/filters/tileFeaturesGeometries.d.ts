@@ -10,4 +10,4 @@ export default function tileFeaturesGeometries(arg: {
   options?: { storeGeometry: boolean };
 }): TileFeaturesResponse;
 
-export const GEOM_STORED_VALUE: string;
+export const FEATURE_GEOM_PROPERTY: string;
