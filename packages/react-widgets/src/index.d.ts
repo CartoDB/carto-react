@@ -25,7 +25,14 @@ export { default as BarWidget } from './widgets/BarWidget';
 export { default as useSourceFilters } from './hooks/useSourceFilters';
 export { default as FeatureSelectionWidget } from './widgets/FeatureSelectionWidget';
 export { default as FeatureSelectionLayer } from './layers/FeatureSelectionLayer';
-export { default as useGeocoderWidgetController, setGeocoderResult } from './hooks/useGeocoderWidgetController';
+export {
+  default as useGeocoderWidgetController,
+  setGeocoderResult
+} from './hooks/useGeocoderWidgetController';
 export { WidgetState, WidgetStateType } from './types';
-export { isRemoteCalculationSupported as _isRemoteCalculationSupported, sourceAndFiltersToSQL as _sourceAndFiltersToSQL, getSqlEscapedSource as _getSqlEscapedSource } from './models/utils';
-
+export {
+  isRemoteCalculationSupported as _isRemoteCalculationSupported,
+  sourceAndFiltersToSQL as _sourceAndFiltersToSQL,
+  getSqlEscapedSource as _getSqlEscapedSource,
+  getSpatialFiltersResolution as _getSpatialFiltersResolution
+} from './models/utils';

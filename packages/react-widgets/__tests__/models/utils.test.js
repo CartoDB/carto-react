@@ -2,7 +2,8 @@ import {
   sourceAndFiltersToSQL,
   wrapModelCall,
   formatOperationColumn,
-  normalizeObjectKeys
+  normalizeObjectKeys,
+  isRemoteCalculationSupported
 } from '../../src/models/utils';
 import { AggregationTypes, Provider, _filtersToSQL } from '@carto/react-core';
 import { MAP_TYPES, API_VERSIONS } from '@carto/react-api';
@@ -41,6 +42,28 @@ const fromLocal = jest.fn();
 const fromRemote = jest.fn();
 
 describe('utils', () => {
+  describe('isRemoteCalculationSupported', () => {
+    test.each([
+      ['v2', V2_SOURCE, false],
+      ['v3', V3_SOURCE, true],
+      ['v3', { ...V3_SOURCE, type: 'tileset' }, false],
+      ['v3/databricks', { ...V3_SOURCE, provider: 'databricks' }, false],
+      ['v3/databricksRest', { ...V3_SOURCE, provider: 'databricksRest' }, true],
+      ['v3/h3/no dataResolution', { ...V3_SOURCE, geoColumn: 'h3' }, false],
+      [
+        'v3/h3/with dataResolution',
+        { ...V3_SOURCE, geoColumn: 'h3', dataResolution: 5 },
+        true
+      ],
+      [
+        'v3/quadbin/with dataResolution',
+        { ...V3_SOURCE, geoColumn: 'quadbin:abc', spatialFiltersResolution: 5 },
+        true
+      ]
+    ])('works correctly for %s', (_, source, expected) => {
+      expect(isRemoteCalculationSupported({ source })).toEqual(expected);
+    });
+  });
   describe('wrapModelCall', () => {
     const cases = [
       // source, global, remoteCalculation, expectedFn

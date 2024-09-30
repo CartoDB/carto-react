@@ -16,6 +16,7 @@ import { DEFAULT_INVALID_COLUMN_ERR } from '../widgets/utils/constants';
 import useCustomCompareEffect from './useCustomCompareEffect';
 import useWidgetSource from './useWidgetSource';
 import { isRemoteCalculationSupported } from '../models/utils';
+import { getSpatialFiltersResolution } from '../models/spatialFiltersResolution';
 
 export const WidgetStateType = {
   Loading: 'loading',
@@ -55,19 +56,6 @@ export function selectGeometryToIntersect(global, viewport, spatialFilter) {
       );
     }
   }
-}
-
-// stolen from deck.gl/modules/carto/src/layers/h3-tileset-2d.ts
-const BIAS = 2;
-export function getHexagonResolution(viewport, tileSize) {
-  // Difference in given tile size compared to deck's internal 512px tile size,
-  // expressed as an offset to the viewport zoom.
-  const zoomOffset = Math.log2(tileSize / 512);
-  const hexagonScaleFactor = (2 / 3) * (viewport.zoom - zoomOffset);
-  const latitudeScaleFactor = Math.log(1 / Math.cos((Math.PI * viewport.latitude) / 180));
-
-  // Clip and bias
-  return Math.max(0, Math.floor(hexagonScaleFactor + latitudeScaleFactor - BIAS));
 }
 
 export default function useWidgetFetch(
@@ -118,21 +106,15 @@ export default function useWidgetFetch(
       return source;
     }
 
-    if (source.spatialDataType === 'h3') {
-      const hexagonResolution = getHexagonResolution(
-        { zoom: viewState.zoom, latitude: viewState.latitude },
-        source.dataResolution
-      );
+    if (source.spatialDataType === 'h3' || source.spatialDataType === 'quadbin') {
+      const spatialFiltersResolution = getSpatialFiltersResolution({
+        source,
+        viewState,
+        spatialDataType: source.spatialDataType
+      });
       return {
         ...source,
-        spatialFiltersResolution: Math.min(source.dataResolution, hexagonResolution)
-      };
-    }
-    if (source.spatialDataType === 'quadbin') {
-      const quadsResolution = Math.floor(viewState.zoom);
-      return {
-        ...source,
-        spatialFiltersResolution: Math.min(source.dataResolution, quadsResolution)
+        spatialFiltersResolution
       };
     }
     return source;
