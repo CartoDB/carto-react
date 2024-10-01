@@ -31,6 +31,10 @@ jest.mock('@carto/react-workers', () => ({
   }
 }));
 
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 describe('getTable', () => {
   const tableParams = {
     source: {
@@ -93,6 +97,16 @@ describe('getTable', () => {
         totalCount: RESULT.metadata.total,
         hasData: true
       });
+    });
+
+    test('prevents column duplicates', async () => {
+      const data = await getTable({
+        ...tableParams,
+        columns: ['any-column', 'any-column'],
+        remoteCalculation: true
+      });
+
+      expect(mockedExecuteModel.mock.calls[0][0].params.column).toEqual(['any-column']);
     });
   });
 });

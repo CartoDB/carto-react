@@ -61,7 +61,7 @@ function fromRemote(props) {
     spatialFilter,
     ...(searchFilter && { searchFilter }),
     params: {
-      column: columns,
+      column: [...new Set(columns)],
       sortBy,
       sortDirection,
       limit: rowsPerPage,
