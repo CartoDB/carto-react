@@ -21,6 +21,8 @@ export function isRemoteCalculationSupported(props) {
     return false;
   }
 
+  // If user specifies a spatialDataType, we assume it is _binding_
+  // otherwise, try to deduce it from the geoColumn
   const isDynamicSpatialIndex = source.spatialDataType
     ? source.spatialDataType !== 'geo'
     : source.geoColumn && getSpatialIndexFromGeoColumn(source.geoColumn);
