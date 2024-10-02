@@ -1,6 +1,5 @@
 import {
   AggregationTypes,
-  getSpatialIndexFromGeoColumn,
   _filtersToSQL,
   Provider
 } from '@carto/react-core';
@@ -21,19 +20,6 @@ export function isRemoteCalculationSupported(props) {
     return false;
   }
 
-  // If user specifies a spatialDataType, we assume it is _binding_
-  // otherwise, try to deduce it from the geoColumn
-  const isDynamicSpatialIndex = source.spatialDataType
-    ? source.spatialDataType !== 'geo'
-    : source.geoColumn && getSpatialIndexFromGeoColumn(source.geoColumn);
-
-  if (
-    isDynamicSpatialIndex &&
-    !source.dataResolution &&
-    !source.spatialFiltersResolution
-  ) {
-    return false;
-  }
   return true;
 }
 

@@ -49,7 +49,7 @@ describe('utils', () => {
       ['v3', { ...V3_SOURCE, type: 'tileset' }, false],
       ['v3/databricks', { ...V3_SOURCE, provider: 'databricks' }, false],
       ['v3/databricksRest', { ...V3_SOURCE, provider: 'databricksRest' }, true],
-      ['v3/h3/no dataResolution', { ...V3_SOURCE, geoColumn: 'h3' }, false],
+
       [
         'v3/h3/with dataResolution',
         { ...V3_SOURCE, geoColumn: 'h3', dataResolution: 5 },
