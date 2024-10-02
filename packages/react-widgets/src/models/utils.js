@@ -1,6 +1,5 @@
 import {
   AggregationTypes,
-  getSpatialIndexFromGeoColumn,
   _filtersToSQL,
   Provider
 } from '@carto/react-core';
@@ -21,15 +20,6 @@ export function isRemoteCalculationSupported(props) {
     return false;
   }
 
-  const isDynamicSpatialIndex =
-    source.geoColumn && getSpatialIndexFromGeoColumn(source.geoColumn);
-  if (
-    isDynamicSpatialIndex &&
-    !source.dataResolution &&
-    !source.spatialFiltersResolution
-  ) {
-    return false;
-  }
   return true;
 }
 

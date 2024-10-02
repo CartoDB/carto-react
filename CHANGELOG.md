@@ -2,6 +2,8 @@
 
 ## Not released
 
+- isRemoteCalculationSupported: remove backwards compatbility check for spatial indices [#917](https://github.com/CartoDB/carto-react/pull/917)
+
 ## 3.0.0
 
 ### 3.0.0-alpha.22 (2024-09-30)
