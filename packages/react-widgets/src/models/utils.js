@@ -21,8 +21,10 @@ export function isRemoteCalculationSupported(props) {
     return false;
   }
 
-  const isDynamicSpatialIndex =
-    source.geoColumn && getSpatialIndexFromGeoColumn(source.geoColumn);
+  const isDynamicSpatialIndex = source.spatialDataType
+    ? source.spatialDataType !== 'geo'
+    : source.geoColumn && getSpatialIndexFromGeoColumn(source.geoColumn);
+
   if (
     isDynamicSpatialIndex &&
     !source.dataResolution &&

@@ -56,6 +56,16 @@ describe('utils', () => {
         true
       ],
       [
+        'v3/h3-frompoint/without dataResolution',
+        { ...V3_SOURCE, geoColumn: 'h3:geom', spatialDataType: 'geo' },
+        true
+      ],
+      [
+        'v3/quadbin-frompoint/without dataResolution',
+        { ...V3_SOURCE, geoColumn: 'quadbin:geom', spatialDataType: 'geo' },
+        true
+      ],
+      [
         'v3/quadbin/with dataResolution',
         { ...V3_SOURCE, geoColumn: 'quadbin:abc', spatialFiltersResolution: 5 },
         true
