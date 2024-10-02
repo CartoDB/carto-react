@@ -10,6 +10,10 @@
 
 ## 3.0.0
 
+### 3.0.0-alpha.23 (2024-10-01)
+
+- Prevent duplicated columns in TableModel [#916](https://github.com/CartoDB/carto-react/pull/916)
+
 ### 3.0.0-alpha.22 (2024-09-30)
 
 - Remote calculation for dynamic spatial index sources [#908](https://github.com/CartoDB/carto-react/pull/908)
