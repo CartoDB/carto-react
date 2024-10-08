@@ -1,6 +1,6 @@
 import { _executeModel } from '@carto/react-api';
 import { Methods, executeTask } from '@carto/react-workers';
-import { normalizeObjectKeys, wrapModelCall } from './utils';
+import { wrapModelCall } from './utils';
 
 export function getTable(props) {
   return wrapModelCall(props, fromLocal, fromRemote);

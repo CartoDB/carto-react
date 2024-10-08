@@ -63,7 +63,6 @@ function TableWidget({
   const [sortBy, setSortBy] = useState(undefined);
   const [sortByColumnType, setSortByColumnType] = useState(undefined);
   const [sortDirection, setSortDirection] = useState('asc');
-  const containsStringSearchFilter = searchColumn && searchText;
 
   const {
     data = { rows: [], totalCount: 0, hasData: false },
