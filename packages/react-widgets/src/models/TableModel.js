@@ -70,7 +70,7 @@ function fromRemote(props) {
     opts: { abortController }
   })
     .then((res) => ({
-      rows: normalizeObjectKeys(res.rows),
+      rows: res.rows,
       totalCount: res.metadata.total
     }))
     .then(formatResult);
