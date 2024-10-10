@@ -1,5 +1,14 @@
 import { InvalidColumnError } from '@carto/react-core/';
 import JSONbig from 'json-bigint';
+import JSON5 from 'json5';
+
+// Widgets API may return BigInt values, and JSON.parse does not handle them properly, so we need to use a reviver
+const bigIntReviver = (key, value) => {
+  if (typeof value === 'number' && value > Number.MAX_SAFE_INTEGER) {
+    return BigInt(value);
+  }
+  return value;
+};
 
 /**
  * Return more descriptive error from API
@@ -53,9 +62,8 @@ export async function makeCall({ url, credentials, opts }) {
       ...opts?.otherOptions
     });
 
-    // Parse with JSONbig to automatically handle large numbers as BigInt
     const text = await response.text();
-    data = JSONbig.parse(text);
+    data = JSON.parse(text, bigIntReviver);
   } catch (error) {
     if (error.name === 'AbortError') throw error;
 
