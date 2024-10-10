@@ -1,6 +1,4 @@
 import { InvalidColumnError } from '@carto/react-core/';
-import JSONbig from 'json-bigint';
-import JSON5 from 'json5';
 
 // Widgets API may return BigInt values, and JSON.parse does not handle them properly, so we need to use a reviver
 const bigIntReviver = (key, value) => {
