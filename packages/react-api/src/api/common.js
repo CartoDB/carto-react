@@ -1,4 +1,5 @@
 import { InvalidColumnError } from '@carto/react-core/';
+import JSONbig from 'json-bigint';
 
 /**
  * Return more descriptive error from API
@@ -51,7 +52,10 @@ export async function makeCall({ url, credentials, opts }) {
       signal: opts?.abortController?.signal,
       ...opts?.otherOptions
     });
-    data = await response.json();
+
+    // Parse with JSONbig to automatically handle large numbers as BigInt
+    const text = await response.text();
+    data = JSONbig.parse(text);
   } catch (error) {
     if (error.name === 'AbortError') throw error;
 
