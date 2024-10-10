@@ -1,5 +1,13 @@
 import { InvalidColumnError } from '@carto/react-core/';
 
+// Widgets API may return BigInt values, and JSON.parse does not handle them properly, so we need to use a reviver
+const bigIntReviver = (key, value) => {
+  if (typeof value === 'number' && value > Number.MAX_SAFE_INTEGER) {
+    return BigInt(value);
+  }
+  return value;
+};
+
 /**
  * Return more descriptive error from API
  */
@@ -51,7 +59,9 @@ export async function makeCall({ url, credentials, opts }) {
       signal: opts?.abortController?.signal,
       ...opts?.otherOptions
     });
-    data = await response.json();
+
+    const text = await response.text();
+    data = JSON.parse(text, bigIntReviver);
   } catch (error) {
     if (error.name === 'AbortError') throw error;
 

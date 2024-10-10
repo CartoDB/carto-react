@@ -86,7 +86,7 @@ describe('stats', () => {
       const fetchMock = (global.fetch = jest.fn().mockImplementation(async () => {
         return {
           ok: true,
-          json: async () => TABLE_TEST.output
+          text: async () => JSON.stringify(TABLE_TEST.output)
         };
       }));
 
@@ -117,7 +117,7 @@ describe('stats', () => {
       const fetchMock = (global.fetch = jest.fn().mockImplementation(async () => {
         return {
           ok: true,
-          json: async () => QUERY_TEST.output
+          text: async () => JSON.stringify(QUERY_TEST.output)
         };
       }));
 
@@ -149,7 +149,7 @@ describe('stats', () => {
       const fetchMock = (global.fetch = jest.fn().mockImplementation(async () => {
         return {
           ok: true,
-          json: async () => QUERY_TEST.output
+          text: async () => JSON.stringify(QUERY_TEST.output)
         };
       }));
 
@@ -187,7 +187,7 @@ describe('stats', () => {
       const fetchMock = (global.fetch = jest.fn().mockImplementation(async () => {
         return {
           ok: true,
-          json: async () => QUERY_TEST.output
+          text: async () => JSON.stringify(QUERY_TEST.output)
         };
       }));
 
@@ -224,6 +224,21 @@ describe('stats', () => {
 
       expect(res).toEqual(TILESET_TEST.output);
       expect(mockedGetTileJson).toBeCalledWith({ source: TILESET_TEST.input.source });
+    });
+
+    test('BigInt numbers are correctly parsed', async () => {
+      const jsonWithBigInt = '{"rows": [{"quadbin":5256683984082960383}]}';
+
+      const fetchMock = (global.fetch = jest.fn().mockImplementation(async () => {
+        return {
+          ok: true,
+          text: async () => jsonWithBigInt
+        };
+      }));
+
+      const res = await getStats({ source: QUERY_SOURCE, column: 'injuries' });
+
+      expect(res.rows[0].quadbin).toEqual(BigInt(5256683984082960383));
     });
   });
 });

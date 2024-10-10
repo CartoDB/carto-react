@@ -18,7 +18,7 @@ describe('lds', () => {
       const fetchMock = (global.fetch = jest.fn().mockImplementation(async () => {
         return {
           ok: true,
-          json: async () => [{ value: [someCoordinates] }]
+          text: async () => JSON.stringify({ value: [someCoordinates] })
         };
       }));
 
