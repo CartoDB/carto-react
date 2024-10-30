@@ -124,7 +124,7 @@ export function executeModel(props) {
   } else {
     // undo the JSON.stringify, @todo find a better pattern
     queryParams.params = params;
-    queryParams.filters = filters;
+    queryParams.filters = { ...filters, ...props.searchFilter };
     queryParams.queryParameters = source.queryParameters;
     if (spatialFilters) {
       queryParams.spatialFilters = spatialFilters;
