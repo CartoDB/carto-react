@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-core",
-  "version": "3.1.0-alpha.3",
+  "version": "3.1.0-alpha.4",
   "description": "CARTO for React - Core",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -79,5 +79,6 @@
     "@turf/union": "^6.3.0",
     "h3-js": "^3.7.2",
     "quadbin": "^0.1.9"
-  }
+  },
+  "gitHead": "1217fc677ddb467f64ed56bfd15fe1d92f140fff"
 }

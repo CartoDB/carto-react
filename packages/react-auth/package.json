@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-auth",
-  "version": "3.1.0-alpha.3",
+  "version": "3.1.0-alpha.4",
   "description": "CARTO for React - Auth",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -71,5 +71,6 @@
     "@carto/react-core": "^3.1.0-alpha.1",
     "react": "17.x || 18.x",
     "react-dom": "17.x || 18.x"
-  }
+  },
+  "gitHead": "1217fc677ddb467f64ed56bfd15fe1d92f140fff"
 }
