@@ -115,6 +115,7 @@ function CategoryWidget(props) {
         {(!!data.length || isLoading) && (
           <CategoryWidgetUI
             data={data}
+            aggregationType={operation}
             formatter={formatter}
             labels={labels}
             selectedCategories={selectedCategories}

@@ -10,6 +10,7 @@ import {
   Tooltip,
   Box
 } from '@mui/material';
+import { AggregationTypes } from '@carto/react-core';
 
 import { useIntl } from 'react-intl';
 
@@ -40,10 +41,44 @@ function usePrevious(value) {
   return ref.current;
 }
 
+const aggregateRest = ({ items, aggregationType }) => {
+  let aggregatedValue = undefined;
+
+  if (aggregationType === AggregationTypes.AVG) {
+    // We should calculate the average based on each element weight, which is equivalent to ∑(value×count) / ∑count
+    aggregatedValue =
+      items.reduce((accum, elem) => accum + elem.value * elem.count, 0) /
+      items.reduce((accum, elem) => accum + elem.count, 0);
+  } else {
+    const defaultValue =
+      {
+        [AggregationTypes.MIN]: Infinity,
+        [AggregationTypes.MAX]: -Infinity
+      }[aggregationType] || 0;
+
+    aggregatedValue = items.reduce((accum, elem, index, arr) => {
+      switch (aggregationType) {
+        case AggregationTypes.SUM:
+        case AggregationTypes.COUNT:
+          return accum + elem.value;
+        case AggregationTypes.MIN:
+          return Math.min(accum, elem.value);
+        case AggregationTypes.MAX:
+          return Math.max(accum, elem.value);
+        default:
+          return accum;
+      }
+    }, defaultValue);
+  }
+
+  return { name: REST_CATEGORY, value: aggregatedValue };
+};
+
 const REST_CATEGORY = '__rest__';
 function CategoryWidgetUI(props) {
   const {
     data,
+    aggregationType,
     formatter,
     labels,
     maxItems,
@@ -175,13 +210,10 @@ function CategoryWidgetUI(props) {
         if (!blockedCategories.length) {
           const main = list.slice(0, maxItems);
           if (main.length < list.length) {
-            const rest = list.slice(maxItems).reduce(
-              (acum, elem) => {
-                acum.value += elem.value;
-                return acum;
-              },
-              { name: REST_CATEGORY, value: 0 }
-            );
+            const rest = aggregateRest({
+              items: list.slice(maxItems),
+              aggregationType
+            });
             return [...main, rest];
           } else {
             return main;
@@ -218,7 +250,7 @@ function CategoryWidgetUI(props) {
           : list;
       }
     },
-    [blockedCategories, labels, maxItems, searchValue, showAll]
+    [blockedCategories, labels, maxItems, searchValue, showAll, aggregationType]
   );
 
   const getCategoriesCount = useCallback(() => {
