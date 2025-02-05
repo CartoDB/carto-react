@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { FixedSizeList } from 'react-window';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -32,6 +33,7 @@ import SearchIcon from '../../assets/icons/SearchIcon';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
 import { ORDER_TYPES } from '../utils/chartConstants';
 import useSkeleton from '../useSkeleton';
+import styled from '@emotion/styled';
 
 function usePrevious(value) {
   const ref = useRef();
@@ -75,6 +77,12 @@ const aggregateRest = ({ items, aggregationType }) => {
 };
 
 const REST_CATEGORY = '__rest__';
+
+const ListWrapper = styled('div')({
+  flex: 1,
+  width: '100%'
+});
+
 function CategoryWidgetUI(props) {
   const {
     data,
@@ -104,6 +112,9 @@ function CategoryWidgetUI(props) {
 
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
+
+  const ITEM_HEIGHT = 48;
+  const LIST_HEIGHT = 320;
 
   // Get blockedCategories in the same order as original data
   const sortBlockedSameAsData = (blockedCategories) =>
@@ -430,6 +441,23 @@ function CategoryWidgetUI(props) {
     );
   };
 
+  const Row = useCallback(
+    ({ index, style }) => {
+      const d = animValues[index];
+      return (
+        <div style={style}>
+          <CategoryItem
+            data={d}
+            onCategoryClick={() =>
+              showAll ? handleCategoryBlocked(d.name) : handleCategorySelected(d.name)
+            }
+          />
+        </div>
+      );
+    },
+    [animValues, showAll]
+  );
+
   if (data?.length === 0 || showSkeleton) return <CategorySkeleton />;
 
   return (
@@ -517,15 +545,16 @@ function CategoryWidgetUI(props) {
       )}
       <CategoriesWrapper container item>
         {animValues.length ? (
-          animValues.map((d, i) => (
-            <CategoryItem
-              key={i}
-              data={d}
-              onCategoryClick={() =>
-                showAll ? handleCategoryBlocked(d.name) : handleCategorySelected(d.name)
-              }
-            />
-          ))
+          <ListWrapper>
+            <FixedSizeList
+              height={LIST_HEIGHT}
+              width='100%'
+              itemCount={animValues.length}
+              itemSize={ITEM_HEIGHT}
+            >
+              {Row}
+            </FixedSizeList>
+          </ListWrapper>
         ) : (
           <Box>
             <Typography variant='body2'>

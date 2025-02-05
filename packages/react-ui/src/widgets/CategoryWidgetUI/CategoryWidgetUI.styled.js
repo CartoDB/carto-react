@@ -4,7 +4,6 @@ import Typography from '../../components/atoms/Typography';
 const REST_CATEGORY = '__rest__';
 
 export const CategoriesWrapper = styled(Grid)(({ theme }) => ({
-  maxHeight: theme.spacing(40),
   overflow: 'auto',
   padding: 0
 }));
