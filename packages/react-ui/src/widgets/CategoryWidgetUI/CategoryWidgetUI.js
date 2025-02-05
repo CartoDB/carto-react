@@ -9,8 +9,7 @@ import {
   Divider,
   TextField,
   Tooltip,
-  Box,
-  styled
+  Box
 } from '@mui/material';
 import { AggregationTypes } from '@carto/react-core';
 
@@ -77,11 +76,6 @@ const aggregateRest = ({ items, aggregationType }) => {
 };
 
 const REST_CATEGORY = '__rest__';
-
-const ListWrapper = styled('div')({
-  flex: 1,
-  width: '100%'
-});
 
 function CategoryWidgetUI(props) {
   const {
@@ -542,16 +536,14 @@ function CategoryWidgetUI(props) {
       )}
       <CategoriesWrapper container item>
         {animValues.length ? (
-          <ListWrapper>
-            <FixedSizeList
-              height={320}
-              width='100%'
-              itemCount={animValues.length}
-              itemSize={48}
-            >
-              {Row}
-            </FixedSizeList>
-          </ListWrapper>
+          <FixedSizeList
+            height={320}
+            width='100%'
+            itemCount={animValues.length}
+            itemSize={48}
+          >
+            {Row}
+          </FixedSizeList>
         ) : (
           <Box>
             <Typography variant='body2'>
