@@ -9,7 +9,8 @@ import {
   Divider,
   TextField,
   Tooltip,
-  Box
+  Box,
+  styled
 } from '@mui/material';
 import { AggregationTypes } from '@carto/react-core';
 
@@ -33,7 +34,6 @@ import SearchIcon from '../../assets/icons/SearchIcon';
 import useImperativeIntl from '../../hooks/useImperativeIntl';
 import { ORDER_TYPES } from '../utils/chartConstants';
 import useSkeleton from '../useSkeleton';
-import styled from '@emotion/styled';
 
 function usePrevious(value) {
   const ref = useRef();
@@ -112,9 +112,6 @@ function CategoryWidgetUI(props) {
 
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
-
-  const ITEM_HEIGHT = 48;
-  const LIST_HEIGHT = 320;
 
   // Get blockedCategories in the same order as original data
   const sortBlockedSameAsData = (blockedCategories) =>
@@ -547,10 +544,10 @@ function CategoryWidgetUI(props) {
         {animValues.length ? (
           <ListWrapper>
             <FixedSizeList
-              height={LIST_HEIGHT}
+              height={320}
               width='100%'
               itemCount={animValues.length}
-              itemSize={ITEM_HEIGHT}
+              itemSize={48}
             >
               {Row}
             </FixedSizeList>
