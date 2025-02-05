@@ -432,7 +432,7 @@ function CategoryWidgetUI(props) {
     );
   };
 
-  const Row = useCallback(
+  const CategoryRow = useCallback(
     ({ index, style }) => {
       const d = animValues[index];
       return (
@@ -542,7 +542,7 @@ function CategoryWidgetUI(props) {
             itemCount={animValues.length}
             itemSize={48}
           >
-            {Row}
+            {CategoryRow}
           </FixedSizeList>
         ) : (
           <Box>
