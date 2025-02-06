@@ -13,6 +13,9 @@ const options = {
     onSelectedCategoriesChange: {
       table: { disable: true }
     },
+    data: {
+      table: { disable: true }
+    },
     order: {
       defaultValue: 'ranking',
       control: {
@@ -60,7 +63,7 @@ const LoadingTemplate = (args) => {
   );
 };
 
-const data = [...Array(30)].map((_, idx) => ({
+const data = [...Array(3000)].map((_, idx) => ({
   name: `Category ${idx + 1}`,
   value: idx * 100
 }));

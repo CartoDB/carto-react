@@ -66,7 +66,8 @@
     "webpack-cli": "^4.5.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.13.9"
+    "@babel/runtime": "^7.13.9",
+    "react-window": "^1.8.11"
   },
   "peerDependencies": {
     "@carto/react-api": "^3.1.0-alpha.1",

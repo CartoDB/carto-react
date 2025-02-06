@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { FixedSizeList } from 'react-window';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -75,6 +76,7 @@ const aggregateRest = ({ items, aggregationType }) => {
 };
 
 const REST_CATEGORY = '__rest__';
+
 function CategoryWidgetUI(props) {
   const {
     data,
@@ -430,6 +432,23 @@ function CategoryWidgetUI(props) {
     );
   };
 
+  const CategoryRow = useCallback(
+    ({ index, style }) => {
+      const d = animValues[index];
+      return (
+        <div style={style}>
+          <CategoryItem
+            data={d}
+            onCategoryClick={() =>
+              showAll ? handleCategoryBlocked(d.name) : handleCategorySelected(d.name)
+            }
+          />
+        </div>
+      );
+    },
+    [animValues, showAll]
+  );
+
   if (data?.length === 0 || showSkeleton) return <CategorySkeleton />;
 
   return (
@@ -517,15 +536,14 @@ function CategoryWidgetUI(props) {
       )}
       <CategoriesWrapper container item>
         {animValues.length ? (
-          animValues.map((d, i) => (
-            <CategoryItem
-              key={i}
-              data={d}
-              onCategoryClick={() =>
-                showAll ? handleCategoryBlocked(d.name) : handleCategorySelected(d.name)
-              }
-            />
-          ))
+          <FixedSizeList
+            height={320}
+            width='100%'
+            itemCount={animValues.length}
+            itemSize={48}
+          >
+            {CategoryRow}
+          </FixedSizeList>
         ) : (
           <Box>
             <Typography variant='body2'>
