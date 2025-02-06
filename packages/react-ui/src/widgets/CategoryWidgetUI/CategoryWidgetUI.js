@@ -537,10 +537,10 @@ function CategoryWidgetUI(props) {
       <CategoriesWrapper container item>
         {animValues.length ? (
           <FixedSizeList
-            height={!showAll ? (maxItems + 1) * 36 : 320}
+            height={!showAll ? (maxItems + 1) * 38 : 320}
             width='100%'
             itemCount={animValues.length}
-            itemSize={32}
+            itemSize={36}
           >
             {CategoryRow}
           </FixedSizeList>
