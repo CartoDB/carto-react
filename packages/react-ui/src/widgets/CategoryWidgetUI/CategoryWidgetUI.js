@@ -432,22 +432,19 @@ function CategoryWidgetUI(props) {
     );
   };
 
-  const CategoryRow = useCallback(
-    ({ index, style }) => {
-      const d = animValues[index];
-      return (
-        <div style={style}>
-          <CategoryItem
-            data={d}
-            onCategoryClick={() =>
-              showAll ? handleCategoryBlocked(d.name) : handleCategorySelected(d.name)
-            }
-          />
-        </div>
-      );
-    },
-    [animValues, showAll]
-  );
+  const CategoryRow = ({ index, style }) => {
+    const d = animValues[index];
+    return (
+      <div style={style}>
+        <CategoryItem
+          data={d}
+          onCategoryClick={() =>
+            showAll ? handleCategoryBlocked(d.name) : handleCategorySelected(d.name)
+          }
+        />
+      </div>
+    );
+  };
 
   if (data?.length === 0 || showSkeleton) return <CategorySkeleton />;
 
