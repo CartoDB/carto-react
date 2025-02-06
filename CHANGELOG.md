@@ -4,6 +4,11 @@
 
 ## 3.1.0
 
+### 3.1.0-alpha.6 (2024-02-06)
+
+- Calculate VirtualizedList height dynamically [#924](https://github.com/CartoDB/carto-react/pull/924)
+- Support VirtualizedList for CategoryWidgetUI [#923](https://github.com/CartoDB/carto-react/pull/923)
+
 ### 3.1.0-alpha.1 (2024-10-02)
 
 - isRemoteCalculationSupported: remove backwards compatbility check for spatial indices [#917](https://github.com/CartoDB/carto-react/pull/917)
