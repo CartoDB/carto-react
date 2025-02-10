@@ -44,6 +44,10 @@ test('isCoordinate should return true for valid coordinates', () => {
   expect(isCoordinate('0.1234 -45.6789')).toBe(true);
   expect(isCoordinate('12.3456789 0')).toBe(true);
   expect(isCoordinate('12.3456789123456789 123.4567891234567891')).toBe(true);
+  expect(isCoordinate('90  120')).toBe(true);
+  expect(isCoordinate('90  ,120')).toBe(true);
+  expect(isCoordinate('90  ,  120')).toBe(true);
+  expect(isCoordinate('90, \t  120')).toBe(true);
 });
 
 test('isCoordinate should return false for invalid coordinates', () => {
