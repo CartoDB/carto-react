@@ -2,6 +2,8 @@
 
 ## Not released
 
+- GeocoderWidget: Fix detection of lat,lng coordinates with whitespace
+
 ## 3.1.0
 
 ### 3.1.0-alpha.6 (2024-02-06)
