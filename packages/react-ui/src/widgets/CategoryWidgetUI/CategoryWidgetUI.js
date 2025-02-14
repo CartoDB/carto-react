@@ -448,6 +448,18 @@ function CategoryWidgetUI(props) {
 
   if (data?.length === 0 || showSkeleton) return <CategorySkeleton />;
 
+  const getFixedSizeListHeight = () => {
+    if (showAll) {
+      return 320;
+    }
+
+    if (blockedCategories.length > 0) {
+      return blockedCategories.length * 38;
+    }
+
+    return (maxItems + 1) * 38;
+  };
+
   return (
     <CategoriesRoot>
       {filterable && sortedData.length > 0 && (
@@ -534,7 +546,7 @@ function CategoryWidgetUI(props) {
       <CategoriesWrapper container item>
         {animValues.length ? (
           <FixedSizeList
-            height={!showAll ? (maxItems + 1) * 38 : 320}
+            height={getFixedSizeListHeight()}
             width='100%'
             itemCount={animValues.length}
             itemSize={36}
