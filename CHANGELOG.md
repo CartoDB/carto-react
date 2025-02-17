@@ -4,6 +4,10 @@
 
 ## 3.1.0
 
+### 3.1.0-alpha.7 (2024-02-17)
+
+- Calculate VirtualizedList height dynamically in CategoryWidgetUI, when there are blocked categories [#927](https://github.com/CartoDB/carto-react/pull/927)
+
 ### 3.1.0-alpha.6 (2024-02-06)
 
 - Calculate VirtualizedList height dynamically in CategoryWidgetUI [#924](https://github.com/CartoDB/carto-react/pull/924)
