@@ -181,8 +181,8 @@ module.exports = {
   //   "\\.pnp\\.[^\\/]+$"
   // ],
   transformIgnorePatterns: [
-    'node_modules/(?!(@mapbox/tiny-sdf|mapbox-gl|d3-array|internmap|d3-color|d3-scale|d3-interpolate|d3-format|d3-time|d3-time-format)/)'
-  ]
+    'node_modules/(?!(@mapbox/tiny-sdf|mapbox-gl|d3-array|internmap|d3-color|d3-scale|d3-interpolate|d3-format|d3-time|d3-time-format|polyclip-ts|@turf/union|splaytree-ts)/)'
+  ]  
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,

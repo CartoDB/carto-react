@@ -8,6 +8,7 @@ import { EditableGeoJsonLayer } from '@deck.gl-community/editable-layers';
 const EVENT_TYPES = ['click', 'pointermove', 'panstart', 'panmove', 'panend', 'keyup'];
 
 export default class EditableCartoGeoJsonLayer extends EditableGeoJsonLayer {
+  static componentName = 'EditableCartoGeoJsonLayer';
   updateState({ props, oldProps, context, changeFlags }) {
     if (props.eventManager !== oldProps.eventManager) {
       this._removeEventHandlers(props.eventManager);
