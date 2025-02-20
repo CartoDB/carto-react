@@ -55,10 +55,10 @@
     "webpack-cli": "^4.5.0"
   },
   "resolutions": {
-    "@luma.gl/core": "9.1.2",
-    "@luma.gl/constants": "9.1.2",
-    "@luma.gl/engine": "9.1.2",
-    "@luma.gl/shadertools": "9.1.2"
+    "@luma.gl/core": "9.1.4",
+    "@luma.gl/constants": "9.1.4",
+    "@luma.gl/engine": "9.1.4",
+    "@luma.gl/shadertools": "9.1.4"
   },
   "scripts": {
     "build": "yarn clean:build && NODE_ENV=production lerna run build --stream",
