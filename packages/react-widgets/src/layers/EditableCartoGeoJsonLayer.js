@@ -5,9 +5,10 @@ import { EditableGeoJsonLayer } from '@deck.gl-community/editable-layers';
 // the default (this.context.deck.eventManager). We need to do this to get the compatibility with Google maps because GoogleMapsOverlay
 // uses its own event system
 
-const EVENT_TYPES = ['anyclick', 'pointermove', 'panstart', 'panmove', 'panend', 'keyup'];
+const EVENT_TYPES = ['click', 'pointermove', 'panstart', 'panmove', 'panend', 'keyup'];
 
 export default class EditableCartoGeoJsonLayer extends EditableGeoJsonLayer {
+  static componentName = 'EditableCartoGeoJsonLayer';
   updateState({ props, oldProps, context, changeFlags }) {
     if (props.eventManager !== oldProps.eventManager) {
       this._removeEventHandlers(props.eventManager);
