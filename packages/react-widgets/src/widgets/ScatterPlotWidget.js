@@ -7,6 +7,10 @@ import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 import { _FeatureFlags, _hasFeatureFlag } from '@carto/react-core';
 
+const EMPTY_OBJECT = {};
+const IDENTITY_FN = (v) => v;
+const DEFAULT_TOOLTIP_FORMATTER = (v) => `[${v.value[0]}, ${v.value[1]})`;
+
 /**
  * Renders a <ScatterPlotWidget /> component
  * @param  {object} props
@@ -36,14 +40,14 @@ function ScatterPlotWidget({
   yAxisColumn,
   yAxisJoinOperation,
   animation = true,
-  yAxisFormatter = (v) => v,
-  xAxisFormatter = (v) => v,
-  tooltipFormatter = (v) => `[${v.value[0]}, ${v.value[1]})`,
+  yAxisFormatter = IDENTITY_FN,
+  xAxisFormatter = IDENTITY_FN,
+  tooltipFormatter = DEFAULT_TOOLTIP_FORMATTER,
   global,
   onError,
   onStateChange,
-  wrapperProps = {},
-  noDataAlertProps = {}
+  wrapperProps = EMPTY_OBJECT,
+  noDataAlertProps = EMPTY_OBJECT
 }) {
   const {
     data = [],
