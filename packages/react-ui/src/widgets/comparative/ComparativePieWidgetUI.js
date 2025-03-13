@@ -81,7 +81,7 @@ function ComparativePieWidgetUI({
   labels = EMPTY_ARRAY,
   colors = EMPTY_ARRAY,
   height = '260px',
-  animation,
+  animation = true,
   formatter = IDENTITY_FN,
   tooltipFormatter = defaultTooltipFormatter,
   selectedCategories = [],
@@ -286,18 +286,6 @@ function ComparativePieWidgetUI({
 }
 
 ComparativePieWidgetUI.displayName = 'ComparativePieWidgetUI';
-ComparativePieWidgetUI.defaultProps = {
-  names: EMPTY_ARRAY,
-  data: EMPTY_ARRAY,
-  labels: EMPTY_ARRAY,
-  colors: EMPTY_ARRAY,
-  height: '260px',
-  animation: true,
-  formatter: IDENTITY_FN,
-  tooltipFormatter: defaultTooltipFormatter,
-  selectedCategories: [],
-  onCategorySelected: IDENTITY_FN
-};
 ComparativePieWidgetUI.propTypes = {
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
   data: PropTypes.arrayOf(

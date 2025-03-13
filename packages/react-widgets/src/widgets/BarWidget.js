@@ -53,17 +53,17 @@ function BarWidget({
   xAxisFormatter,
   yAxisFormatter,
   order = [],
-  labels,
-  tooltip,
+  labels = {},
+  tooltip = true,
   tooltipFormatter,
   height,
-  animation,
-  filterable,
-  global,
+  animation = true,
+  filterable = true,
+  global = false,
   onError,
   onStateChange,
-  wrapperProps,
-  noDataAlertProps
+  wrapperProps = {},
+  noDataAlertProps = {}
 }) {
   const dispatch = useDispatch();
 
@@ -189,17 +189,6 @@ BarWidget.propTypes = {
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-};
-
-BarWidget.defaultProps = {
-  order: [],
-  labels: {},
-  animation: true,
-  filterable: true,
-  tooltip: true,
-  global: false,
-  wrapperProps: {},
-  noDataAlertProps: {}
 };
 
 export default BarWidget;

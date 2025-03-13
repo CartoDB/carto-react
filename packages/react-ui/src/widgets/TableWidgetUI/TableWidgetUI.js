@@ -52,23 +52,23 @@ const StyledTablePagination = styled(TablePagination)(({ theme }) => ({
 function TableWidgetUI({
   columns,
   rows,
-  sorting,
+  sorting = false,
   sortBy,
-  sortDirection,
+  sortDirection = 'asc',
   onSetSortBy,
   onSetSortDirection,
-  pagination,
+  pagination = false,
   totalCount,
   page,
   onSetPage,
-  rowsPerPage,
-  rowsPerPageOptions,
+  rowsPerPage = 10,
+  rowsPerPageOptions = [5, 10, 25],
   onSetRowsPerPage,
   onRowClick,
   onRowMouseEnter,
   onRowMouseLeave,
   height,
-  dense,
+  dense = false,
   isLoading,
   lastPageTooltip
 }) {
@@ -244,15 +244,6 @@ function TableBodyComponent({
     </TableBody>
   );
 }
-
-TableWidgetUI.defaultProps = {
-  sorting: false,
-  sortDirection: 'asc',
-  pagination: false,
-  rowsPerPage: 10,
-  rowsPerPageOptions: [5, 10, 25],
-  dense: false
-};
 
 TableWidgetUI.propTypes = {
   columns: PropTypes.array.isRequired,

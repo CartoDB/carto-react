@@ -64,9 +64,9 @@ function FeatureSelectionUIDropdown({
   selectionModes,
   editModes,
   selectedMode,
-  onSelectMode,
+  onSelectMode = () => {},
   enabled,
-  tooltipPlacement,
+  tooltipPlacement = 'bottom',
   tooltipText = '',
   menuHeaderText = '',
   editDisabled
@@ -165,12 +165,6 @@ FeatureSelectionUIDropdown.propTypes = {
   tooltipText: PropTypes.string,
   menuHeaderText: PropTypes.string,
   editDisabled: PropTypes.bool
-};
-FeatureSelectionUIDropdown.defaultProps = {
-  onSelectMode: () => {},
-  tooltipPlacement: 'bottom',
-  tooltipText: '',
-  menuHeaderText: ''
 };
 
 export default FeatureSelectionUIDropdown;

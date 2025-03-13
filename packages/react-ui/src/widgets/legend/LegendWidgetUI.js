@@ -40,7 +40,7 @@ function LegendWidgetUI({
   onChangeOpacity = EMPTY_FN,
   onChangeLegendRowCollapsed = EMPTY_FN,
   onChangeSelection = EMPTY_FN,
-  title,
+  title = 'Layers',
   maxZoom = 20,
   minZoom = 0,
   currentZoom,
@@ -125,18 +125,6 @@ function LegendWidgetUI({
     </LegendRoot>
   );
 }
-
-LegendWidgetUI.defaultProps = {
-  layers: EMPTY_ARR,
-  customLegendTypes: EMPTY_OBJ,
-  collapsed: false,
-  title: 'Layers',
-  onChangeCollapsed: EMPTY_FN,
-  onChangeLegendRowCollapsed: EMPTY_FN,
-  onChangeVisibility: EMPTY_FN,
-  onChangeOpacity: EMPTY_FN,
-  onChangeSelection: EMPTY_FN
-};
 
 LegendWidgetUI.propTypes = {
   customLegendTypes: PropTypes.objectOf(PropTypes.func),

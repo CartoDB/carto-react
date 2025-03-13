@@ -37,7 +37,6 @@ const EMPTY_ARRAY = [];
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
-
  */
 function CategoryWidget(props) {
   const {
@@ -49,15 +48,15 @@ function CategoryWidget(props) {
     joinOperation,
     operation,
     formatter,
-    labels,
-    animation,
-    filterable,
-    searchable,
-    global,
+    labels = {},
+    animation = true,
+    filterable = true,
+    searchable = true,
+    global = false,
     onError,
-    wrapperProps,
+    wrapperProps = {},
     onStateChange,
-    noDataAlertProps
+    noDataAlertProps = {}
   } = props;
   const dispatch = useDispatch();
 
@@ -151,16 +150,6 @@ CategoryWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object
-};
-
-CategoryWidget.defaultProps = {
-  labels: {},
-  animation: true,
-  filterable: true,
-  searchable: true,
-  global: false,
-  wrapperProps: {},
-  noDataAlertProps: {}
 };
 
 export default CategoryWidget;

@@ -37,7 +37,14 @@ const Category = styled(Typography)(({ theme }) => ({
   marginRight: theme.spacing(1.5)
 }));
 
-const TooltipData = ({ items, title }) => {
+const TooltipData = ({
+  items = [
+    {
+      outlinedBullet: false
+    }
+  ],
+  title
+}) => {
   return (
     <>
       {title && (
@@ -68,14 +75,6 @@ const TooltipData = ({ items, title }) => {
       </Content>
     </>
   );
-};
-
-TooltipData.defaultProps = {
-  items: [
-    {
-      outlinedBullet: false
-    }
-  ]
 };
 
 TooltipData.propTypes = {

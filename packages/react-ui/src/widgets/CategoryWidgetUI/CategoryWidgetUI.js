@@ -79,16 +79,16 @@ const REST_CATEGORY = '__rest__';
 
 function CategoryWidgetUI(props) {
   const {
-    data,
+    data = null,
     aggregationType,
-    formatter,
-    labels,
-    maxItems,
-    order,
-    selectedCategories,
-    animation,
-    filterable,
-    searchable,
+    formatter = (v) => v,
+    labels = {},
+    maxItems = 5,
+    order = ORDER_TYPES.RANKING,
+    selectedCategories = [],
+    animation = true,
+    filterable = true,
+    searchable = true,
     isLoading
   } = props;
   const [sortedData, setSortedData] = useState([]);
@@ -603,18 +603,6 @@ function CategoryWidgetUI(props) {
     </CategoriesRoot>
   );
 }
-
-CategoryWidgetUI.defaultProps = {
-  data: null,
-  formatter: (v) => v,
-  labels: {},
-  maxItems: 5,
-  order: ORDER_TYPES.RANKING,
-  selectedCategories: [],
-  animation: true,
-  filterable: true,
-  searchable: true
-};
 
 CategoryWidgetUI.propTypes = {
   data: PropTypes.arrayOf(

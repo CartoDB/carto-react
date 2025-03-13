@@ -73,12 +73,12 @@ const EchartsWrapper = React.memo(
 );
 
 function ScatterPlotWidgetUI({
-  name,
+  name = null,
   data = [],
-  animation,
-  xAxisFormatter,
-  yAxisFormatter,
-  tooltipFormatter,
+  animation = true,
+  xAxisFormatter = (v) => v,
+  yAxisFormatter = (v) => v,
+  tooltipFormatter = (v) => `[${v.value[0]}, ${v.value[1]})`,
   isLoading
 }) {
   const theme = useTheme();
@@ -118,14 +118,6 @@ function ScatterPlotWidgetUI({
     />
   );
 }
-
-ScatterPlotWidgetUI.defaultProps = {
-  name: null,
-  animation: true,
-  tooltipFormatter: (v) => `[${v.value[0]}, ${v.value[1]})`,
-  xAxisFormatter: (v) => v,
-  yAxisFormatter: (v) => v
-};
 
 ScatterPlotWidgetUI.propTypes = {
   name: PropTypes.string,

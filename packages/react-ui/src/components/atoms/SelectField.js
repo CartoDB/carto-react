@@ -40,7 +40,7 @@ const SelectField = forwardRef(
     {
       children,
       placeholder,
-      size,
+      size = 'small',
       displayEmpty,
       menuProps,
       inputProps,
@@ -140,9 +140,6 @@ const SelectField = forwardRef(
   }
 );
 
-SelectField.defaultProps = {
-  size: 'small'
-};
 SelectField.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   size: PropTypes.oneOf(['small', 'medium']),

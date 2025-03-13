@@ -11,7 +11,13 @@ import LegendProportion, { getMinMax } from './LegendProportion';
  * @param {boolean} [props.isContinuous] - If the legend is continuous.
  * @returns {React.ReactNode}
  */
-function LegendRamp({ isContinuous = false, legend }) {
+function LegendRamp({
+  isContinuous = false,
+  legend = {
+    labels: [],
+    colors: []
+  }
+}) {
   const { labels = [], colors = [], showMinMax = true } = legend;
 
   const palette = getPalette(
@@ -72,14 +78,6 @@ function LegendRamp({ isContinuous = false, legend }) {
     </Box>
   );
 }
-
-LegendRamp.defaultProps = {
-  legend: {
-    labels: [],
-    colors: []
-  },
-  isContinuous: false
-};
 
 const ColorType = PropTypes.oneOfType([
   PropTypes.string,

@@ -132,6 +132,11 @@ const PaperMenu = styled(Menu)(({ theme }) => ({
 }));
 
 function WrapperWidgetUI(props) {
+  props.expanded ??= true;
+  props.expandable ??= true;
+  props.isLoading ??= false;
+  props.disabled ??= false;
+
   const wrapper = createRef();
 
   const [expandedInt, setExpandedInt] = useState(true);
@@ -278,13 +283,6 @@ function WrapperWidgetUI(props) {
     </Root>
   );
 }
-
-WrapperWidgetUI.defaultProps = {
-  expanded: true,
-  expandable: true,
-  isLoading: false,
-  disabled: false
-};
 
 WrapperWidgetUI.propTypes = {
   title: PropTypes.string.isRequired,

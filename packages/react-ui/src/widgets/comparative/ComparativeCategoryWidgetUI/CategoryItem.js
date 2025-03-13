@@ -20,7 +20,12 @@ import {
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
 
-function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_FN }) {
+function ComparativeCategoryTooltip({
+  item,
+  index = 0,
+  names = EMPTY_ARRAY,
+  formatter = IDENTITY_FN
+}) {
   const theme = useTheme();
   const reference = item.data[0];
   const data = item.data[index];
@@ -68,11 +73,6 @@ function ComparativeCategoryTooltip({ item, index, names, formatter = IDENTITY_F
 }
 
 ComparativeCategoryTooltip.displayName = 'ComparativeCategoryTooltip';
-ComparativeCategoryTooltip.defaultProps = {
-  names: EMPTY_ARRAY,
-  formatter: IDENTITY_FN,
-  index: 0
-};
 ComparativeCategoryTooltip.propTypes = {
   item: transposedCategoryItemPropTypes,
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -82,13 +82,13 @@ ComparativeCategoryTooltip.propTypes = {
 
 function CategoryItem({
   item,
-  animation,
-  animationOptions,
+  animation = true,
+  animationOptions = {},
   maxValue,
   showCheckbox,
   checkboxChecked,
-  formatter,
-  tooltipFormatter,
+  formatter = IDENTITY_FN,
+  tooltipFormatter = IDENTITY_FN,
   onClick = IDENTITY_FN,
   names,
   tooltip
@@ -153,13 +153,6 @@ function CategoryItem({
 }
 
 CategoryItem.displayName = 'CategoryItem';
-CategoryItem.defaultProps = {
-  animation: true,
-  animationOptions: {},
-  formatter: IDENTITY_FN,
-  tooltipFormatter: IDENTITY_FN,
-  onClick: IDENTITY_FN
-};
 CategoryItem.propTypes = {
   item: transposedCategoryItemPropTypes,
   animation: PropTypes.bool,

@@ -95,8 +95,9 @@ const Alert = forwardRef(
   (
     {
       title,
-      severity,
-      content,
+      severity = 'neutral',
+      content = 'inline',
+      variant = 'standard',
       children,
       onClose,
       action,
@@ -129,6 +130,7 @@ const Alert = forwardRef(
           severity={isNeutral ? 'info' : severity}
           isNeutral={isNeutral}
           content={content}
+          variant={variant}
           action={action}
           onClose={handleClose}
           hasCloseButton={Boolean(onClose)}
@@ -148,11 +150,6 @@ const Alert = forwardRef(
   }
 );
 
-Alert.defaultProps = {
-  severity: 'neutral',
-  content: 'inline',
-  variant: 'standard'
-};
 Alert.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   severity: PropTypes.oneOf(['neutral', 'info', 'success', 'warning', 'error']),

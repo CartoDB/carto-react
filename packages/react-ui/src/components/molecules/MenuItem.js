@@ -131,7 +131,7 @@ const MenuItem = ({
   destructive,
   extended,
   children,
-  iconColor,
+  iconColor = 'primary',
   fixed,
   ...otherProps
 }) => {
@@ -149,9 +149,6 @@ const MenuItem = ({
   );
 };
 
-MenuItem.defaultProps = {
-  iconColor: 'primary'
-};
 MenuItem.propTypes = {
   subtitle: PropTypes.bool,
   destructive: PropTypes.bool,

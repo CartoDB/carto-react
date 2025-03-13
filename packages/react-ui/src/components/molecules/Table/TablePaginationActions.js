@@ -21,7 +21,7 @@ const Button = styled('div')(({ theme }) => ({
 const TablePaginationActions = ({
   count,
   page,
-  rowsPerPage,
+  rowsPerPage = 10,
   onPageChange,
   lastPageTooltip
 }) => {
@@ -67,9 +67,6 @@ const TablePaginationActions = ({
   );
 };
 
-TablePaginationActions.defaultProps = {
-  rowsPerPage: 10
-};
 TablePaginationActions.propTypes = {
   count: PropTypes.number.isRequired,
   onPageChange: PropTypes.func.isRequired,

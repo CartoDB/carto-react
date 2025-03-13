@@ -20,7 +20,7 @@ function FeatureSelectionUIToggleButton({
   hoverTooltip,
   clickTooltip,
   enabled,
-  onEnabledChange,
+  onEnabledChange = () => {},
   tooltipPlacement = 'bottom'
 }) {
   const [tooltipShown, setTooltipShown] = useState(false);
@@ -76,10 +76,6 @@ FeatureSelectionUIToggleButton.propTypes = {
   enabled: PropTypes.bool,
   onEnabledChange: PropTypes.func,
   tooltipPlacement: PropTypes.string
-};
-FeatureSelectionUIToggleButton.defaultProps = {
-  onEnabledChange: () => {},
-  tooltipPlacement: 'bottom'
 };
 
 export default FeatureSelectionUIToggleButton;

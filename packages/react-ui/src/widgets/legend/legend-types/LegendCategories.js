@@ -15,7 +15,13 @@ const MAX_CATEGORIES = 20;
  * @param {import('../LegendWidgetUI').LegendLayerVariableBase & import('../LegendWidgetUI').LegendCategories} props.legend - legend variable data.
  * @returns {React.ReactNode}
  */
-function LegendCategories({ legend }) {
+function LegendCategories({
+  legend = {
+    labels: [],
+    colors: [],
+    isStrokeColor: false
+  }
+}) {
   const {
     labels = [],
     colors = [],
@@ -62,14 +68,6 @@ function LegendCategories({ legend }) {
     </>
   );
 }
-
-LegendCategories.defaultProps = {
-  legend: {
-    labels: [],
-    colors: [],
-    isStrokeColor: false
-  }
-};
 
 const ColorType = PropTypes.oneOfType([
   PropTypes.string,

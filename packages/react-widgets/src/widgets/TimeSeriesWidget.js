@@ -107,37 +107,37 @@ function TimeSeriesWidget({
   column,
   operationColumn,
   joinOperation,
-  operation,
+  operation = AggregationTypes.COUNT,
   series,
-  stepSizeOptions,
+  stepSizeOptions = [],
   global,
   onError,
-  wrapperProps,
-  noDataAlertProps,
+  wrapperProps = {},
+  noDataAlertProps = {},
   // UI
-  chartType,
+  chartType = TIME_SERIES_CHART_TYPES.LINE,
   timeAxisSplitNumber,
-  tooltip,
+  tooltip = true,
   tooltipFormatter,
-  formatter,
+  formatter = (value) => value,
   height,
   fitHeight,
   stableHeight,
-  showControls,
-  animation,
-  filterable,
-  isPlaying,
+  showControls = true,
+  animation = true,
+  filterable = true,
+  isPlaying = false,
   onPlay,
-  isPaused,
+  isPaused = false,
   onPause,
   onStop,
   onTimelineUpdate,
-  timeWindow,
+  timeWindow = [],
   onTimeWindowUpdate,
   onStateChange,
   palette,
   showLegend,
-  yAxisType,
+  yAxisType = 'dense',
   // Both
   stepSize,
   stepMultiplier,
@@ -539,25 +539,6 @@ TimeSeriesWidget.propTypes = {
   yAxisType: PropTypes.oneOf(['dense', 'full']),
   // Both
   stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired
-};
-
-TimeSeriesWidget.defaultProps = {
-  // Widget
-  operation: AggregationTypes.COUNT,
-  stepSizeOptions: [],
-  wrapperProps: {},
-  noDataAlertProps: {},
-  // UI
-  tooltip: true,
-  formatter: (value) => value,
-  animation: true,
-  filterable: true,
-  isPlaying: false,
-  isPaused: false,
-  timeWindow: [],
-  showControls: true,
-  chartType: TIME_SERIES_CHART_TYPES.LINE,
-  yAxisType: 'dense'
 };
 
 export default TimeSeriesWidget;

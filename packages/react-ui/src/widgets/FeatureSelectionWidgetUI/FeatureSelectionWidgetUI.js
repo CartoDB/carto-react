@@ -47,7 +47,7 @@ function FeatureSelectionWidgetUI(props) {
     editModes = [],
     selectedMode,
     onSelectMode,
-    enabled,
+    enabled = false,
     onEnabledChange,
     geometry,
     onSelectGeometry,
@@ -158,13 +158,6 @@ function FeatureSelectionWidgetUI(props) {
     </StylesWrapper>
   );
 }
-
-FeatureSelectionWidgetUI.defaultProps = {
-  enabled: false,
-  tooltipPlacement: 'bottom',
-  editModes: [],
-  size: 'medium'
-};
 
 const MODE_SHAPE = PropTypes.shape({
   id: PropTypes.string.isRequired,

@@ -15,7 +15,7 @@ const AccordionContainer = styled('div', {
   })
 }));
 
-const AccordionGroup = ({ variant, items, ...otherProps }) => {
+const AccordionGroup = ({ variant = 'standard', items, ...otherProps }) => {
   return (
     <AccordionContainer {...otherProps} variant={variant}>
       {items.map((item, index) => (
@@ -35,9 +35,6 @@ const AccordionGroup = ({ variant, items, ...otherProps }) => {
   );
 };
 
-AccordionGroup.defaultProps = {
-  variant: 'standard'
-};
 AccordionGroup.propTypes = {
   variant: PropTypes.oneOf(['standard' | 'outlined']),
   items: PropTypes.arrayOf(

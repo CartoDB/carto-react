@@ -35,15 +35,15 @@ function ScatterPlotWidget({
   xAxisJoinOperation,
   yAxisColumn,
   yAxisJoinOperation,
-  animation,
-  yAxisFormatter,
-  xAxisFormatter,
-  tooltipFormatter,
+  animation = true,
+  yAxisFormatter = (v) => v,
+  xAxisFormatter = (v) => v,
+  tooltipFormatter = (v) => `[${v.value[0]}, ${v.value[1]})`,
   global,
   onError,
   onStateChange,
-  wrapperProps,
-  noDataAlertProps
+  wrapperProps = {},
+  noDataAlertProps = {}
 }) {
   const {
     data = [],
@@ -103,16 +103,6 @@ ScatterPlotWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object
-};
-
-ScatterPlotWidget.defaultProps = {
-  tooltip: true,
-  animation: true,
-  wrapperProps: {},
-  noDataAlertProps: {},
-  tooltipFormatter: (v) => `[${v.value[0]}, ${v.value[1]})`,
-  xAxisFormatter: (v) => v,
-  yAxisFormatter: (v) => v
 };
 
 export default ScatterPlotWidget;

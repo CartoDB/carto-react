@@ -33,7 +33,7 @@ function ComparativeFormulaWidgetUI({
   data = EMPTY_ARRAY,
   colors = EMPTY_ARRAY,
   animated = true,
-  animationOptions,
+  animationOptions = {},
   formatter = IDENTITY_FN,
   isLoading = false
 }) {
@@ -77,13 +77,6 @@ function prepareFormulaValues(data, colors) {
 }
 
 ComparativeFormulaWidgetUI.displayName = 'ComparativeFormulaWidgetUI';
-ComparativeFormulaWidgetUI.defaultProps = {
-  data: EMPTY_ARRAY,
-  colors: EMPTY_ARRAY,
-  animated: true,
-  animationOptions: {},
-  formatter: IDENTITY_FN
-};
 
 const formulaDataPropTypes = PropTypes.shape({
   prefix: PropTypes.string,

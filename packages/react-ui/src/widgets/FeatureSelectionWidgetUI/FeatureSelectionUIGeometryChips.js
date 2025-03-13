@@ -160,10 +160,5 @@ FeatureSelectionUIGeometryChips.propTypes = {
   ]),
   chipLabel: PropTypes.string
 };
-FeatureSelectionUIGeometryChips.defaultProps = {
-  size: 'medium',
-  tooltipPlacement: 'bottom',
-  onSelectGeometry: NOOP
-};
 
 export default FeatureSelectionUIGeometryChips;

@@ -45,22 +45,22 @@ const Chart = styled(ReactEcharts)(({ theme }) => ({
 }));
 
 function PieWidgetUI({
-  name,
+  name = null,
   data = [],
-  formatter,
-  tooltipFormatter,
+  formatter = (v) => v,
+  tooltipFormatter = _tooltipFormatter,
   percentFormatter,
-  height,
-  width,
-  labels,
-  colors,
-  animation,
-  filterable,
-  selectedCategories,
+  height = CHART_SIZE,
+  width = CHART_SIZE,
+  labels = {},
+  colors = [],
+  animation = true,
+  filterable = true,
+  selectedCategories = [],
   onSelectedCategoriesChange,
   isLoading,
-  maxItems,
-  order
+  maxItems = 11,
+  order = ORDER_TYPES.RANKING
 }) {
   const theme = useTheme();
   const processedData = usePieCategories(data, order, maxItems, colors);
@@ -271,21 +271,6 @@ function PieWidgetUI({
   );
 }
 
-PieWidgetUI.defaultProps = {
-  name: null,
-  formatter: (v) => v,
-  tooltipFormatter,
-  colors: [],
-  labels: {},
-  height: CHART_SIZE,
-  width: CHART_SIZE,
-  animation: true,
-  filterable: true,
-  selectedCategories: [],
-  maxItems: 11,
-  order: ORDER_TYPES.RANKING
-};
-
 PieWidgetUI.propTypes = {
   name: PropTypes.string,
   data: PropTypes.arrayOf(
@@ -313,7 +298,7 @@ PieWidgetUI.propTypes = {
 export default PieWidgetUI;
 
 // Aux
-function tooltipFormatter(params) {
+function _tooltipFormatter(params) {
   const value = processFormatterRes(params.formatter(params.value));
   const percentage = params?.percentFormatter(params.percent) || `${params.percent}%`;
   const markerColor = params.data.color || params.textStyle.color;

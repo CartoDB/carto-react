@@ -15,7 +15,12 @@ import { useMediaQuery } from '@mui/material';
  * @param  {string[]} [props.layerOrder] - Array of layer identifiers. Defines the order of layer legends. [] by default.
  * @returns {React.ReactNode}
  */
-function LegendWidget({ customLegendTypes, initialCollapsed, layerOrder = [], title }) {
+function LegendWidget({
+  customLegendTypes,
+  initialCollapsed = false,
+  layerOrder = [],
+  title
+}) {
   const dispatch = useDispatch();
   const reduxLayers = useSelector((state) => state.carto.layers);
   const layers = useMemo(() => {
@@ -108,11 +113,6 @@ LegendWidget.propTypes = {
   customLegendTypes: PropTypes.objectOf(PropTypes.func),
   initialCollapsed: PropTypes.bool,
   layerOrder: PropTypes.arrayOf(PropTypes.string)
-};
-
-LegendWidget.defaultProps = {
-  initialCollapsed: false,
-  layerOrder: []
 };
 
 export default LegendWidget;

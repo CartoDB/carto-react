@@ -63,7 +63,11 @@ const LabelList = styled(Box)(() => ({
  * @param {import('../LegendWidgetUI').LegendLayerVariableBase & import('../LegendWidgetUI').LegendProportion} props.legend - legend variable data.
  * @returns {React.ReactNode}
  */
-function LegendProportion({ legend }) {
+function LegendProportion({
+  legend = {
+    labels: []
+  }
+}) {
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
 
@@ -109,12 +113,6 @@ function LegendProportion({ legend }) {
     </LegendProportionWrapper>
   );
 }
-
-LegendProportion.defaultProps = {
-  legend: {
-    labels: []
-  }
-};
 
 LegendProportion.propTypes = {
   legend: PropTypes.shape({

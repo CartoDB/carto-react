@@ -10,7 +10,7 @@ import useAnimatedNumber from '../hooks/useAnimatedNumber';
  * @param {{ duration?: number; animateOnMount?: boolean; initialValue?: number }} [props.options]
  * @param {(n: number) => React.ReactNode} [props.formatter]
  */
-function AnimatedNumber({ enabled, value, options, formatter }) {
+function AnimatedNumber({ enabled = true, value = 0, options = {}, formatter = null }) {
   const defaultOptions = {
     animateOnMount: true,
     disabled: enabled === false || value === null || value === undefined
@@ -20,12 +20,6 @@ function AnimatedNumber({ enabled, value, options, formatter }) {
 }
 
 AnimatedNumber.displayName = 'AnimatedNumber';
-AnimatedNumber.defaultProps = {
-  enabled: true,
-  value: 0,
-  options: {},
-  formatter: null
-};
 
 export const animationOptionsPropTypes = PropTypes.shape({
   duration: PropTypes.number,

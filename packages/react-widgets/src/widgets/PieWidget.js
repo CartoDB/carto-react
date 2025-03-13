@@ -52,14 +52,14 @@ function PieWidget({
   formatter,
   tooltipFormatter,
   labels,
-  animation,
-  filterable,
-  global,
+  animation = true,
+  filterable = true,
+  global = false,
   colors,
   onError,
   onStateChange,
-  wrapperProps,
-  noDataAlertProps
+  wrapperProps = {},
+  noDataAlertProps = {}
 }) {
   const dispatch = useDispatch();
 
@@ -156,14 +156,6 @@ PieWidget.propTypes = {
   colors: PropTypes.arrayOf(PropTypes.string),
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object
-};
-
-PieWidget.defaultProps = {
-  animation: true,
-  filterable: true,
-  global: false,
-  wrapperProps: {},
-  noDataAlertProps: {}
 };
 
 export default PieWidget;

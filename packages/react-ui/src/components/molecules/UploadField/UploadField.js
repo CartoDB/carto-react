@@ -7,10 +7,10 @@ import UploadFieldBase from './UploadFieldBase';
 function UploadField({
   name,
   buttonText,
-  accept,
-  files,
+  accept = ['application/JSON'],
+  files = [],
   inProgress,
-  onChange,
+  onChange = (files) => files,
   multiple,
   placeholder,
   error,
@@ -58,12 +58,6 @@ function UploadField({
     </>
   );
 }
-
-UploadField.defaultProps = {
-  accept: ['application/JSON'],
-  files: [],
-  onChange: (files) => files
-};
 
 UploadField.propTypes = {
   name: PropTypes.string,

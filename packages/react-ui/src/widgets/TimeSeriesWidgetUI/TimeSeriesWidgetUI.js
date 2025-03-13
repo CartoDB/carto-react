@@ -20,35 +20,35 @@ import { findItemIndexByTime, getDate } from './utils/utilities';
 import useSkeleton from '../useSkeleton';
 
 function TimeSeriesWidgetUI({
-  data,
+  data = [],
   categories,
   stepSize,
   stepMultiplier = 1,
-  chartType,
+  chartType = CHART_TYPES.LINE,
   timeAxisSplitNumber,
-  tooltip,
-  tooltipFormatter,
-  formatter,
+  tooltip = true,
+  tooltipFormatter = defaultTooltipFormatter,
+  formatter = (value) => value,
   height,
   fitHeight,
-  showControls,
-  animation,
-  filterable,
+  showControls = true,
+  animation = true,
+  filterable = true,
   onTimelineUpdate,
   timeWindow,
   timelinePosition,
   onTimeWindowUpdate,
   selectedCategories,
   onSelectedCategoriesChange,
-  isPlaying,
+  isPlaying = false,
   onPlay,
-  isPaused,
+  isPaused = false,
   onPause,
   onStop,
-  isLoading,
-  palette,
+  isLoading = false,
+  palette = Object.values(commonPalette.qualitative.bold),
   showLegend,
-  yAxisType
+  yAxisType = 'dense'
 }) {
   let prevEmittedTimeWindow = useRef();
   const intl = useIntl();
@@ -165,22 +165,6 @@ TimeSeriesWidgetUI.propTypes = {
   showLegend: PropTypes.bool,
   intl: PropTypes.object,
   yAxisType: PropTypes.oneOf(['dense', 'full'])
-};
-
-TimeSeriesWidgetUI.defaultProps = {
-  data: [],
-  chartType: CHART_TYPES.LINE,
-  tooltip: true,
-  tooltipFormatter: defaultTooltipFormatter,
-  formatter: (value) => value,
-  animation: true,
-  filterable: true,
-  isPlaying: false,
-  isPaused: false,
-  showControls: true,
-  isLoading: false,
-  palette: Object.values(commonPalette.qualitative.bold),
-  yAxisType: 'dense'
 };
 
 export default TimeSeriesWidgetUI;

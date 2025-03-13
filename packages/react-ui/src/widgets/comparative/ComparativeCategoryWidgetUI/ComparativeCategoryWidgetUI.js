@@ -71,11 +71,11 @@ function ComparativeCategoryWidgetUI({
   names = EMPTY_ARRAY,
   data = EMPTY_ARRAY,
   labels = EMPTY_ARRAY,
-  colors,
+  colors = EMPTY_ARRAY,
   maxItems = 5,
   order = ORDER_TYPES.FIXED,
   animation = true,
-  animationOptions,
+  animationOptions = {},
   searchable = true,
   filterable = true,
   selectedCategories = EMPTY_ARRAY,
@@ -363,23 +363,6 @@ function ComparativeCategoryWidgetUI({
 }
 
 ComparativeCategoryWidgetUI.displayName = 'ComparativeCategoryWidgetUI';
-ComparativeCategoryWidgetUI.defaultProps = {
-  names: EMPTY_ARRAY,
-  data: EMPTY_ARRAY,
-  labels: EMPTY_ARRAY,
-  colors: EMPTY_ARRAY,
-  maxItems: 5,
-  order: ORDER_TYPES.FIXED,
-  animation: true,
-  animationOptions: {},
-  searchable: true,
-  filterable: true,
-  selectedCategories: [],
-  tooltip: true,
-  onSelectedCategoriesChange: IDENTITY_FN,
-  formatter: IDENTITY_FN,
-  tooltipFormatter: IDENTITY_FN
-};
 ComparativeCategoryWidgetUI.propTypes = {
   names: PropTypes.arrayOf(PropTypes.string).isRequired,
   data: PropTypes.arrayOf(

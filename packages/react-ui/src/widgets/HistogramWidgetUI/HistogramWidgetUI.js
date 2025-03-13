@@ -34,16 +34,16 @@ function HistogramWidgetUI({
   ticks,
   min,
   max,
-  xAxisFormatter,
-  yAxisFormatter,
-  yAxisType,
-  selectedBars,
+  xAxisFormatter = (v) => v,
+  yAxisFormatter = (v) => v,
+  yAxisType = 'dense',
+  selectedBars = [],
   onSelectedBarsChange,
-  tooltip,
-  tooltipFormatter,
-  animation,
-  filterable: _filterable,
-  height,
+  tooltip = true,
+  tooltipFormatter = defaultTooltipFormatter,
+  animation = true,
+  filterable: _filterable = true,
+  height = 200,
   isLoading
 }) {
   const theme = useTheme();
@@ -324,18 +324,6 @@ function HistogramWidgetUI({
     </div>
   );
 }
-
-HistogramWidgetUI.defaultProps = {
-  tooltip: true,
-  tooltipFormatter: defaultTooltipFormatter,
-  xAxisFormatter: (v) => v,
-  yAxisFormatter: (v) => v,
-  yAxisType: 'dense',
-  selectedBars: [],
-  animation: true,
-  filterable: true,
-  height: 200
-};
 
 HistogramWidgetUI.propTypes = {
   data: PropTypes.arrayOf(PropTypes.number).isRequired,

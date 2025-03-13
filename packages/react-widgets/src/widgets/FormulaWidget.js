@@ -33,11 +33,11 @@ function FormulaWidget({
   joinOperation,
   operationExp,
   formatter,
-  animation,
-  global,
+  animation = true,
+  global = false,
   onError,
   onStateChange,
-  wrapperProps
+  wrapperProps = {}
 }) {
   const {
     data = { value: undefined },
@@ -86,12 +86,6 @@ FormulaWidget.propTypes = {
   global: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object
-};
-
-FormulaWidget.defaultProps = {
-  animation: true,
-  global: false,
-  wrapperProps: {}
 };
 
 export default FormulaWidget;

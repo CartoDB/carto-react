@@ -32,21 +32,21 @@ function BarWidgetUI(props) {
   // With useProcessedProps we convert those multiple shapes in a common one
   // to avoid complex logic in the component.
   const {
-    yAxisData,
+    yAxisData = [],
     xAxisData,
-    series,
-    selectedBars,
-    onSelectedBarsChange,
-    tooltip,
-    tooltipFormatter,
-    labels,
+    series = [],
+    selectedBars = [],
+    onSelectedBarsChange = null,
+    tooltip = true,
+    tooltipFormatter = defaultTooltipFormatter,
+    labels = {},
     colors,
-    xAxisFormatter,
-    yAxisFormatter,
-    stacked,
+    xAxisFormatter = (v) => v,
+    yAxisFormatter = (v) => v,
+    stacked = true,
     height,
-    filterable,
-    animation,
+    filterable = true,
+    animation = true,
     isLoading
   } = useProcessedProps(props);
 
@@ -339,21 +339,6 @@ function BarWidgetUI(props) {
     </div>
   );
 }
-
-BarWidgetUI.defaultProps = {
-  tooltip: true,
-  tooltipFormatter: defaultTooltipFormatter,
-  yAxisData: [],
-  series: [],
-  xAxisFormatter: (v) => v,
-  yAxisFormatter: (v) => v,
-  selectedBars: [],
-  labels: {},
-  onSelectedBarsChange: null,
-  animation: true,
-  filterable: true,
-  stacked: true
-};
 
 const numberOrString = PropTypes.oneOfType([PropTypes.number, PropTypes.string]);
 

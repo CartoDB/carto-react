@@ -23,7 +23,7 @@ function usePrevious(value) {
 }
 
 function FormulaWidgetUI(props) {
-  const { data, formatter, animation, isLoading } = props;
+  const { data = '-', formatter = (v) => v, animation = true, isLoading } = props;
   const [value, setValue] = useState('-');
   const requestRef = useRef();
   const prevValue = usePrevious(value);
@@ -89,14 +89,6 @@ function FormulaWidgetUI(props) {
     </Typography>
   );
 }
-
-FormulaWidgetUI.defaultProps = {
-  data: '-',
-  formatter: (v) => v,
-  prefix: '',
-  suffix: '',
-  animation: true
-};
 
 FormulaWidgetUI.propTypes = {
   data: PropTypes.oneOfType([

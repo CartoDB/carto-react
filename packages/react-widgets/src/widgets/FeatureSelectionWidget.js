@@ -43,8 +43,8 @@ const EDIT_MODES_MAP = {
 };
 
 function FeatureSelectionWidget({
-  selectionModes: selectionModesKeys,
-  editModes: editModesKeys,
+  selectionModes: selectionModesKeys = Object.values(FEATURE_SELECTION_MODES),
+  editModes: editModesKeys = Object.values(EDIT_MODES_KEYS),
   tooltipPlacement,
   size,
   chipLabel
@@ -111,11 +111,6 @@ function FeatureSelectionWidget({
     />
   );
 }
-
-FeatureSelectionWidget.defaultProps = {
-  selectionModes: Object.values(FEATURE_SELECTION_MODES),
-  editModes: Object.values(EDIT_MODES_KEYS)
-};
 
 FeatureSelectionWidget.propTypes = {
   selectionModes: PropTypes.arrayOf(

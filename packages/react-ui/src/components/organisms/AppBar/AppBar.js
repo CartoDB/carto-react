@@ -43,7 +43,7 @@ const AppBar = ({
   brandLogo,
   brandText,
   secondaryText,
-  showBurgerMenu,
+  showBurgerMenu = false,
   onClickMenu,
   ...otherProps
 }) => {
@@ -61,10 +61,6 @@ const AppBar = ({
       </Toolbar>
     </Root>
   );
-};
-
-AppBar.defaultProps = {
-  showBurgerMenu: false
 };
 
 AppBar.propTypes = {
