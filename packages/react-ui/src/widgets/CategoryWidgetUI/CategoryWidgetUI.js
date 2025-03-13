@@ -77,15 +77,18 @@ const aggregateRest = ({ items, aggregationType }) => {
 
 const REST_CATEGORY = '__rest__';
 
+const EMPTY_OBJECT = {};
+const EMPTY_ARRAY = [];
+
 function CategoryWidgetUI(props) {
   const {
     data = null,
     aggregationType,
     formatter = (v) => v,
-    labels = {},
+    labels = EMPTY_OBJECT,
     maxItems = 5,
     order = ORDER_TYPES.RANKING,
-    selectedCategories = [],
+    selectedCategories = EMPTY_ARRAY,
     animation = true,
     filterable = true,
     searchable = true,

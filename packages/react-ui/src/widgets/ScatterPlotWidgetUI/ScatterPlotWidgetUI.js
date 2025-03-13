@@ -72,13 +72,17 @@ const EchartsWrapper = React.memo(
     areChartPropsEqual(optionPrev, optionNext)
 );
 
+const EMPTY_ARRAY = [];
+const IDENTITY_FN = (v) => v;
+const DEFAULT_TOOLTIP_FORMATTER = (v) => `[${v.value[0]}, ${v.value[1]})`;
+
 function ScatterPlotWidgetUI({
   name = null,
-  data = [],
+  data = EMPTY_ARRAY,
   animation = true,
-  xAxisFormatter = (v) => v,
-  yAxisFormatter = (v) => v,
-  tooltipFormatter = (v) => `[${v.value[0]}, ${v.value[1]})`,
+  xAxisFormatter = IDENTITY_FN,
+  yAxisFormatter = IDENTITY_FN,
+  tooltipFormatter = DEFAULT_TOOLTIP_FORMATTER,
   isLoading
 }) {
   const theme = useTheme();
