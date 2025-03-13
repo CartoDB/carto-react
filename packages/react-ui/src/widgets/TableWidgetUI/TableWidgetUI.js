@@ -49,6 +49,8 @@ const StyledTablePagination = styled(TablePagination)(({ theme }) => ({
   overflowY: 'hidden'
 }));
 
+const DEFAULT_ROWS_PER_PAGE_OPTIONS = [5, 10, 25];
+
 function TableWidgetUI({
   columns,
   rows,
@@ -62,7 +64,7 @@ function TableWidgetUI({
   page,
   onSetPage,
   rowsPerPage = 10,
-  rowsPerPageOptions = [5, 10, 25],
+  rowsPerPageOptions = DEFAULT_ROWS_PER_PAGE_OPTIONS,
   onSetRowsPerPage,
   onRowClick,
   onRowMouseEnter,

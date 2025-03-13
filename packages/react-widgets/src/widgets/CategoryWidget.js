@@ -16,6 +16,7 @@ import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 
 const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
 
 /**
  * Renders a <CategoryWidget /> component
@@ -48,15 +49,15 @@ function CategoryWidget(props) {
     joinOperation,
     operation,
     formatter,
-    labels = {},
+    labels = EMPTY_OBJECT,
     animation = true,
     filterable = true,
     searchable = true,
     global = false,
     onError,
-    wrapperProps = {},
+    wrapperProps = EMPTY_OBJECT,
     onStateChange,
-    noDataAlertProps = {}
+    noDataAlertProps = EMPTY_OBJECT
   } = props;
   const dispatch = useDispatch();
 

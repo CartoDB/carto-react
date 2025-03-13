@@ -22,8 +22,10 @@ function usePrevious(value) {
   return ref.current;
 }
 
+const IDENTITY_FN = (v) => v;
+
 function FormulaWidgetUI(props) {
-  const { data = '-', formatter = (v) => v, animation = true, isLoading } = props;
+  const { data = '-', formatter = IDENTITY_FN, animation = true, isLoading } = props;
   const [value, setValue] = useState('-');
   const requestRef = useRef();
   const prevValue = usePrevious(value);

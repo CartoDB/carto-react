@@ -16,6 +16,7 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
 import useStats from '../hooks/useStats';
 
 const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
 
 /**
  * Renders a <HistogramWidget /> component
@@ -48,7 +49,7 @@ function HistogramWidget({
   dataSource,
   column,
   operation = AggregationTypes.COUNT,
-  ticks: _ticks = [],
+  ticks: _ticks = EMPTY_ARRAY,
   min: externalMin = Number.MIN_SAFE_INTEGER,
   max: externalMax = Number.MAX_SAFE_INTEGER,
   xAxisFormatter,
@@ -62,8 +63,8 @@ function HistogramWidget({
   global = false,
   onError,
   onStateChange,
-  wrapperProps = {},
-  noDataAlertProps = {}
+  wrapperProps = EMPTY_OBJECT,
+  noDataAlertProps = EMPTY_OBJECT
 }) {
   const dispatch = useDispatch();
 

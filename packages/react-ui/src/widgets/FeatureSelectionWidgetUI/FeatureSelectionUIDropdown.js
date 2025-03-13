@@ -37,6 +37,9 @@ const DisabledMenuItem = styled(MenuItem)(({ theme }) => ({
     opacity: 1
   }
 }));
+
+const NOOP = () => {};
+
 /**
  * Renders a `<FeatureSelectionUIDropdown />` component.
  * This component displays the dropdown layout with all available edit and selection modes
@@ -64,7 +67,7 @@ function FeatureSelectionUIDropdown({
   selectionModes,
   editModes,
   selectedMode,
-  onSelectMode = () => {},
+  onSelectMode = NOOP,
   enabled,
   tooltipPlacement = 'bottom',
   tooltipText = '',

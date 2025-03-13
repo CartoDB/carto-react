@@ -2,6 +2,8 @@ import { ClickAwayListener, ToggleButton, Tooltip } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
+const NOOP = () => {};
+
 /**
  * Renders the toggle button for feature selection UI
  * handles tooltip logic for click away listener and listens on escape key to disable the button
@@ -20,7 +22,7 @@ function FeatureSelectionUIToggleButton({
   hoverTooltip,
   clickTooltip,
   enabled,
-  onEnabledChange = () => {},
+  onEnabledChange = NOOP,
   tooltipPlacement = 'bottom'
 }) {
   const [tooltipShown, setTooltipShown] = useState(false);

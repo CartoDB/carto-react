@@ -30,6 +30,7 @@ import { ORDER_TYPES } from '../../utils/chartConstants';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
 export const OTHERS_KEY = 'others';
 
 function SearchIcon() {
@@ -75,7 +76,7 @@ function ComparativeCategoryWidgetUI({
   maxItems = 5,
   order = ORDER_TYPES.FIXED,
   animation = true,
-  animationOptions = {},
+  animationOptions = EMPTY_OBJECT,
   searchable = true,
   filterable = true,
   selectedCategories = EMPTY_ARRAY,

@@ -16,6 +16,7 @@ import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 
 const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
 
 /**
  * Renders a <PieWidget /> component
@@ -58,8 +59,8 @@ function PieWidget({
   colors,
   onError,
   onStateChange,
-  wrapperProps = {},
-  noDataAlertProps = {}
+  wrapperProps = EMPTY_OBJECT,
+  noDataAlertProps = EMPTY_OBJECT
 }) {
   const dispatch = useDispatch();
 

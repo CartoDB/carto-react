@@ -4,13 +4,17 @@ import PropTypes from 'prop-types';
 import useFileUpload from './useFileUpload';
 import UploadFieldBase from './UploadFieldBase';
 
+const DEFAULT_ACCEPT = ['application/JSON'];
+const DEFAULT_FILES = [];
+const IDENTITY_FN = (x) => x;
+
 function UploadField({
   name,
   buttonText,
-  accept = ['application/JSON'],
-  files = [],
+  accept = DEFAULT_ACCEPT,
+  files = DEFAULT_FILES,
   inProgress,
-  onChange = (files) => files,
+  onChange = IDENTITY_FN,
   multiple,
   placeholder,
   error,

@@ -7,6 +7,8 @@ import { checkFormulaColumn, columnAggregationOn } from './utils/propTypesFns';
 import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 
+const EMPTY_OBJECT = {};
+
 /**
  * Renders a <FormulaWidget /> component
  * @param  {object} props
@@ -37,7 +39,7 @@ function FormulaWidget({
   global = false,
   onError,
   onStateChange,
-  wrapperProps = {}
+  wrapperProps = EMPTY_OBJECT
 }) {
   const {
     data = { value: undefined },

@@ -398,18 +398,22 @@ function defaultTooltipFormatter(params, yAxisFormatter) {
   return message;
 }
 
+const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
+const IDENTITY_FN = (v) => v;
+
 function useProcessedProps({
-  yAxisData: _yAxisData = [],
+  yAxisData: _yAxisData = EMPTY_ARRAY,
   xAxisData,
-  series: _series = [],
-  selectedBars: _selectedBars = [],
+  series: _series = EMPTY_ARRAY,
+  selectedBars: _selectedBars = EMPTY_ARRAY,
   onSelectedBarsChange = null,
   tooltip = true,
   tooltipFormatter = defaultTooltipFormatter,
-  labels = {},
+  labels = EMPTY_OBJECT,
   colors: _colors,
-  xAxisFormatter = (v) => v,
-  yAxisFormatter = (v) => v,
+  xAxisFormatter = IDENTITY_FN,
+  yAxisFormatter = IDENTITY_FN,
   stacked = true,
   height,
   filterable = true,

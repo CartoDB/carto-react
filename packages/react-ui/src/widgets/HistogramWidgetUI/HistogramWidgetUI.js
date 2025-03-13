@@ -29,15 +29,18 @@ const ClearButton = styled(Link)(({ theme }) => ({
   cursor: 'pointer'
 }));
 
+const IDENTITY_FN = (v) => v;
+const EMPTY_ARRAY = [];
+
 function HistogramWidgetUI({
   data,
   ticks,
   min,
   max,
-  xAxisFormatter = (v) => v,
-  yAxisFormatter = (v) => v,
+  xAxisFormatter = IDENTITY_FN,
+  yAxisFormatter = IDENTITY_FN,
   yAxisType = 'dense',
-  selectedBars = [],
+  selectedBars = EMPTY_ARRAY,
   onSelectedBarsChange,
   tooltip = true,
   tooltipFormatter = defaultTooltipFormatter,

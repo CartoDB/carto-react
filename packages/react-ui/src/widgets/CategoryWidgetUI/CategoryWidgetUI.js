@@ -79,12 +79,13 @@ const REST_CATEGORY = '__rest__';
 
 const EMPTY_OBJECT = {};
 const EMPTY_ARRAY = [];
+const IDENTITY_FN = (v) => v;
 
 function CategoryWidgetUI(props) {
   const {
     data = null,
     aggregationType,
-    formatter = (v) => v,
+    formatter = IDENTITY_FN,
     labels = EMPTY_OBJECT,
     maxItems = 5,
     order = ORDER_TYPES.RANKING,

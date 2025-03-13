@@ -16,6 +16,7 @@ import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 
 const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
 
 /**
  * Renders a <BarWidget /> component
@@ -52,8 +53,8 @@ function BarWidget({
   operation,
   xAxisFormatter,
   yAxisFormatter,
-  order = [],
-  labels = {},
+  order = EMPTY_ARRAY,
+  labels = EMPTY_OBJECT,
   tooltip = true,
   tooltipFormatter,
   height,
@@ -62,8 +63,8 @@ function BarWidget({
   global = false,
   onError,
   onStateChange,
-  wrapperProps = {},
-  noDataAlertProps = {}
+  wrapperProps = EMPTY_OBJECT,
+  noDataAlertProps = EMPTY_OBJECT
 }) {
   const dispatch = useDispatch();
 

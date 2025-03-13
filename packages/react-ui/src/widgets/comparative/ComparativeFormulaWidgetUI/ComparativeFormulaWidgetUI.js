@@ -10,6 +10,7 @@ import FormulaSkeleton from '../../FormulaWidgetUI/FormulaSkeleton';
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
 
 const FormulaGroup = styled('div')(({ theme }) => ({
   '&:nth-of-type(n+2)': {
@@ -33,7 +34,7 @@ function ComparativeFormulaWidgetUI({
   data = EMPTY_ARRAY,
   colors = EMPTY_ARRAY,
   animated = true,
-  animationOptions = {},
+  animationOptions = EMPTY_OBJECT,
   formatter = IDENTITY_FN,
   isLoading = false
 }) {

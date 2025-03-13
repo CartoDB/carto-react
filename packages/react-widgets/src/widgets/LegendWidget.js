@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import sortLayers from './utils/sortLayers';
 import { useMediaQuery } from '@mui/material';
 
+const EMPTY_ARRAY = [];
+
 /**
  * Renders a <LegendWidget /> component
  * @param  {object} props
@@ -18,7 +20,7 @@ import { useMediaQuery } from '@mui/material';
 function LegendWidget({
   customLegendTypes,
   initialCollapsed = false,
-  layerOrder = [],
+  layerOrder = EMPTY_ARRAY,
   title
 }) {
   const dispatch = useDispatch();

@@ -131,6 +131,9 @@ const PaperMenu = styled(Menu)(({ theme }) => ({
   }
 }));
 
+const EMPTY_ARRAY = [];
+const DEFAULT_OPTIONS_ICON = <MoreVert />;
+
 function WrapperWidgetUI({
   title,
   expanded: _expanded = true,
@@ -138,9 +141,9 @@ function WrapperWidgetUI({
   onExpandedChange,
   isLoading = false,
   disabled = false,
-  options = [],
-  actions = [],
-  optionsIcon = <MoreVert />,
+  options = EMPTY_ARRAY,
+  actions = EMPTY_ARRAY,
+  optionsIcon = DEFAULT_OPTIONS_ICON,
   children,
   margin,
   headerItems,

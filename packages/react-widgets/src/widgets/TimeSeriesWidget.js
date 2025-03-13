@@ -48,6 +48,8 @@ function calculateNextStep(time, stepType, stepMultiplier = 1) {
 }
 
 const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
+const IDENTITY_FN = (v) => v;
 
 const debounceTimeout = 250;
 
@@ -109,17 +111,17 @@ function TimeSeriesWidget({
   joinOperation,
   operation = AggregationTypes.COUNT,
   series,
-  stepSizeOptions = [],
+  stepSizeOptions = EMPTY_ARRAY,
   global,
   onError,
-  wrapperProps = {},
-  noDataAlertProps = {},
+  wrapperProps = EMPTY_OBJECT,
+  noDataAlertProps = EMPTY_OBJECT,
   // UI
   chartType = TIME_SERIES_CHART_TYPES.LINE,
   timeAxisSplitNumber,
   tooltip = true,
   tooltipFormatter,
-  formatter = (value) => value,
+  formatter = IDENTITY_FN,
   height,
   fitHeight,
   stableHeight,
@@ -132,7 +134,7 @@ function TimeSeriesWidget({
   onPause,
   onStop,
   onTimelineUpdate,
-  timeWindow = [],
+  timeWindow = EMPTY_ARRAY,
   onTimeWindowUpdate,
   onStateChange,
   palette,

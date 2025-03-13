@@ -19,8 +19,12 @@ import ChartLegend from '../ChartLegend';
 import { findItemIndexByTime, getDate } from './utils/utilities';
 import useSkeleton from '../useSkeleton';
 
+const EMPTY_ARRAY = [];
+const IDENTITY_FN = (v) => v;
+const DEFAULT_PALETTE = Object.values(commonPalette.qualitative.bold);
+
 function TimeSeriesWidgetUI({
-  data = [],
+  data = EMPTY_ARRAY,
   categories,
   stepSize,
   stepMultiplier = 1,
@@ -28,7 +32,7 @@ function TimeSeriesWidgetUI({
   timeAxisSplitNumber,
   tooltip = true,
   tooltipFormatter = defaultTooltipFormatter,
-  formatter = (value) => value,
+  formatter = IDENTITY_FN,
   height,
   fitHeight,
   showControls = true,
@@ -46,7 +50,7 @@ function TimeSeriesWidgetUI({
   onPause,
   onStop,
   isLoading = false,
-  palette = Object.values(commonPalette.qualitative.bold),
+  palette = DEFAULT_PALETTE,
   showLegend,
   yAxisType = 'dense'
 }) {

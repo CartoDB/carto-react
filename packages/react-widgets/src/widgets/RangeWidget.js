@@ -14,6 +14,8 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
 import { RangeWidgetUI } from '@carto/react-ui';
 import useStats from '../hooks/useStats';
 
+const EMPTY_OBJECT = {};
+
 /**
  * Renders a <RangeWidget /> component
  * @param  {object} props
@@ -38,7 +40,7 @@ function RangeWidget({
   global = false,
   onError,
   onStateChange,
-  wrapperProps = {}
+  wrapperProps = EMPTY_OBJECT
 }) {
   const dispatch = useDispatch();
   const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
