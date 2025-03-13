@@ -32,21 +32,21 @@ function BarWidgetUI(props) {
   // With useProcessedProps we convert those multiple shapes in a common one
   // to avoid complex logic in the component.
   const {
-    yAxisData = [],
+    yAxisData,
     xAxisData,
-    series = [],
-    selectedBars = [],
-    onSelectedBarsChange = null,
-    tooltip = true,
-    tooltipFormatter = defaultTooltipFormatter,
-    labels = {},
+    series,
+    selectedBars,
+    onSelectedBarsChange,
+    tooltip,
+    tooltipFormatter,
+    labels,
     colors,
-    xAxisFormatter = (v) => v,
-    yAxisFormatter = (v) => v,
-    stacked = true,
+    xAxisFormatter,
+    yAxisFormatter,
+    stacked,
     height,
-    filterable = true,
-    animation = true,
+    filterable,
+    animation,
     isLoading
   } = useProcessedProps(props);
 
@@ -399,12 +399,22 @@ function defaultTooltipFormatter(params, yAxisFormatter) {
 }
 
 function useProcessedProps({
-  labels,
-  height,
-  selectedBars: _selectedBars,
-  yAxisData: _yAxisData,
+  yAxisData: _yAxisData = [],
+  xAxisData,
+  series: _series = [],
+  selectedBars: _selectedBars = [],
+  onSelectedBarsChange = null,
+  tooltip = true,
+  tooltipFormatter = defaultTooltipFormatter,
+  labels = {},
   colors: _colors,
-  series: _series,
+  xAxisFormatter = (v) => v,
+  yAxisFormatter = (v) => v,
+  stacked = true,
+  height,
+  filterable = true,
+  animation = true,
+  isLoading,
   ...props
 }) {
   const theme = useTheme();
@@ -441,12 +451,22 @@ function useProcessedProps({
 
   return {
     ...props,
-    labels,
-    height: height ?? theme.spacingValue * 22,
-    selectedBars: formatSelectedBars(_selectedBars),
     yAxisData,
+    xAxisData,
+    series,
+    selectedBars: formatSelectedBars(_selectedBars),
+    onSelectedBarsChange,
+    tooltip,
+    tooltipFormatter,
+    labels,
     colors,
-    series
+    xAxisFormatter,
+    yAxisFormatter,
+    stacked,
+    height: height ?? theme.spacingValue * 22,
+    filterable,
+    animation,
+    isLoading
   };
 }
 

@@ -364,7 +364,7 @@ function ComparativeCategoryWidgetUI({
 
 ComparativeCategoryWidgetUI.displayName = 'ComparativeCategoryWidgetUI';
 ComparativeCategoryWidgetUI.propTypes = {
-  names: PropTypes.arrayOf(PropTypes.string).isRequired,
+  names: PropTypes.arrayOf(PropTypes.string),
   data: PropTypes.arrayOf(
     PropTypes.arrayOf(
       PropTypes.shape({
