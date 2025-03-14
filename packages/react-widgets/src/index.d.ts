@@ -33,6 +33,5 @@ export { WidgetState, WidgetStateType } from './types';
 export {
   isRemoteCalculationSupported as _isRemoteCalculationSupported,
   sourceAndFiltersToSQL as _sourceAndFiltersToSQL,
-  getSqlEscapedSource as _getSqlEscapedSource,
-  getSpatialFiltersResolution as _getSpatialFiltersResolution
+  getSqlEscapedSource as _getSqlEscapedSource
 } from './models/utils';

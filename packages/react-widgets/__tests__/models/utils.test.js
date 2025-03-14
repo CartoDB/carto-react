@@ -65,11 +65,7 @@ describe('utils', () => {
         { ...V3_SOURCE, geoColumn: 'quadbin:geom', spatialDataType: 'geo' },
         true
       ],
-      [
-        'v3/quadbin/with dataResolution',
-        { ...V3_SOURCE, geoColumn: 'quadbin:abc', spatialFiltersResolution: 5 },
-        true
-      ]
+      ['v3/quadbin/with dataResolution', { ...V3_SOURCE, geoColumn: 'quadbin:abc' }, true]
     ])('works correctly for %s', (_, source, expected) => {
       expect(isRemoteCalculationSupported({ source })).toEqual(expected);
     });

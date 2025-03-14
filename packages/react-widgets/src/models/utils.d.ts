@@ -13,9 +13,3 @@ export function sourceAndFiltersToSQL(props: {
 }): string;
 
 export function getSqlEscapedSource(table: string, provider: Provider): string;
-
-export function getSpatialFiltersResolution(props: {
-  source: SourceProps;
-  spatialDataType: string;
-  viewState: ViewState;
-}): number;

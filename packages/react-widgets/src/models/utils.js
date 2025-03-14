@@ -1,12 +1,6 @@
-import {
-  AggregationTypes,
-  _filtersToSQL,
-  Provider
-} from '@carto/react-core';
+import { AggregationTypes, _filtersToSQL, Provider } from '@carto/react-core';
 import { FullyQualifiedName } from './fqn';
 import { MAP_TYPES, API_VERSIONS } from '@carto/react-api';
-
-export { getSpatialFiltersResolution } from './spatialFiltersResolution';
 
 export function isRemoteCalculationSupported(props) {
   const { source } = props;
