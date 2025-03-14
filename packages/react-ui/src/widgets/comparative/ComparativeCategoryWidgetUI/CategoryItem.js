@@ -19,6 +19,7 @@ import {
 
 const IDENTITY_FN = (v) => v;
 const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
 
 function ComparativeCategoryTooltip({
   item,
@@ -83,7 +84,7 @@ ComparativeCategoryTooltip.propTypes = {
 function CategoryItem({
   item,
   animation = true,
-  animationOptions = {},
+  animationOptions = EMPTY_OBJECT,
   maxValue,
   showCheckbox,
   checkboxChecked,

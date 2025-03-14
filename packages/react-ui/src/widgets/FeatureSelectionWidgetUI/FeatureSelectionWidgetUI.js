@@ -15,6 +15,8 @@ const StylesWrapper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(0.5)
 }));
 
+const EMPTY_ARRAY = [];
+
 /**
  * Renders a <FeatureSelectionWidgetUI /> component
  *
@@ -44,7 +46,7 @@ const StylesWrapper = styled(Paper)(({ theme }) => ({
 function FeatureSelectionWidgetUI(props) {
   const {
     selectionModes,
-    editModes = [],
+    editModes = EMPTY_ARRAY,
     selectedMode,
     onSelectMode,
     enabled = false,
