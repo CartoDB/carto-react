@@ -3,6 +3,7 @@
 ## Not released
 
 - GeocoderWidget: Fix detection of lat,lng coordinates with whitespace
+- Remove 'spatialFiltersResolution' parameter from widgets [#930](https://github.com/CartoDB/carto-react/pull/930)
 
 ## 3.1.0
 
