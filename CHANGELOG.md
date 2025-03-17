@@ -2,16 +2,21 @@
 
 ## Not released
 
-- GeocoderWidget: Fix detection of lat,lng coordinates with whitespace
-- Remove 'spatialFiltersResolution' and 'dataResolution' parameters from widgets [#930](https://github.com/CartoDB/carto-react/pull/930)
-
 ## 3.1.0
 
-### 3.1.0-alpha.7 (2024-02-17)
+### 3.1.0-alpha.12 (2025-03-17)
+
+- Remove 'spatialFiltersResolution' and 'dataResolution' parameters from widgets [#930](https://github.com/CartoDB/carto-react/pull/930)
+
+### 3.1.0-alpha.10 (2025-02-17)
+
+- GeocoderWidget: Fix detection of lat,lng coordinates with whitespace
+
+### 3.1.0-alpha.7 (2025-02-06)
 
 - Calculate VirtualizedList height dynamically in CategoryWidgetUI, when there are blocked categories [#927](https://github.com/CartoDB/carto-react/pull/927)
 
-### 3.1.0-alpha.6 (2024-02-06)
+### 3.1.0-alpha.6 (2025-02-06)
 
 - Calculate VirtualizedList height dynamically in CategoryWidgetUI [#924](https://github.com/CartoDB/carto-react/pull/924)
 - Support VirtualizedList for CategoryWidgetUI [#923](https://github.com/CartoDB/carto-react/pull/923)
