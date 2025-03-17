@@ -15,6 +15,8 @@ const StylesWrapper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(0.5)
 }));
 
+const EMPTY_ARRAY = [];
+
 /**
  * Renders a <FeatureSelectionWidgetUI /> component
  *
@@ -44,10 +46,10 @@ const StylesWrapper = styled(Paper)(({ theme }) => ({
 function FeatureSelectionWidgetUI(props) {
   const {
     selectionModes,
-    editModes = [],
+    editModes = EMPTY_ARRAY,
     selectedMode,
     onSelectMode,
-    enabled,
+    enabled = false,
     onEnabledChange,
     geometry,
     onSelectGeometry,
@@ -158,13 +160,6 @@ function FeatureSelectionWidgetUI(props) {
     </StylesWrapper>
   );
 }
-
-FeatureSelectionWidgetUI.defaultProps = {
-  enabled: false,
-  tooltipPlacement: 'bottom',
-  editModes: [],
-  size: 'medium'
-};
 
 const MODE_SHAPE = PropTypes.shape({
   id: PropTypes.string.isRequired,

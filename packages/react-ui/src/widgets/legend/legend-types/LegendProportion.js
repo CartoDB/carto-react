@@ -58,12 +58,16 @@ const LabelList = styled(Box)(() => ({
   flexShrink: 1
 }));
 
+const DEFAULT_LEGEND = {
+  labels: []
+};
+
 /**
  * @param {object} props
  * @param {import('../LegendWidgetUI').LegendLayerVariableBase & import('../LegendWidgetUI').LegendProportion} props.legend - legend variable data.
  * @returns {React.ReactNode}
  */
-function LegendProportion({ legend }) {
+function LegendProportion({ legend = DEFAULT_LEGEND }) {
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
 
@@ -109,12 +113,6 @@ function LegendProportion({ legend }) {
     </LegendProportionWrapper>
   );
 }
-
-LegendProportion.defaultProps = {
-  legend: {
-    labels: []
-  }
-};
 
 LegendProportion.propTypes = {
   legend: PropTypes.shape({

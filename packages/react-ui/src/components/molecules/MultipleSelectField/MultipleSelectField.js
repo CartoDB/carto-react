@@ -48,10 +48,10 @@ const MultipleSelectField = forwardRef(
     {
       options,
       selectedOptions,
-      size,
+      size = 'small',
       placeholder,
       showCounter,
-      showFilters,
+      showFilters = true,
       onChange,
       selectAllDisabled,
       tooltipPlacement,
@@ -204,11 +204,6 @@ const MultipleSelectField = forwardRef(
     );
   }
 );
-
-MultipleSelectField.defaultProps = {
-  size: 'small',
-  showFilters: true
-};
 
 MultipleSelectField.propTypes = {
   options: PropTypes.arrayOf(

@@ -36,7 +36,7 @@ const AvatarContainer = styled(MuiAvatar, {
   })
 }));
 
-const Avatar = ({ size, children, ...otherProps }) => {
+const Avatar = ({ size = 'medium', children, ...otherProps }) => {
   return (
     <AvatarContainer {...otherProps} size={size}>
       {children}
@@ -44,9 +44,6 @@ const Avatar = ({ size, children, ...otherProps }) => {
   );
 };
 
-Avatar.defaultProps = {
-  size: 'medium'
-};
 Avatar.propTypes = {
   size: PropTypes.oneOf(Object.keys(sizes))
 };

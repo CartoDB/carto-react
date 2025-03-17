@@ -13,12 +13,12 @@ function UploadFieldBase({
   error,
   placeholder,
   focused,
-  buttonText,
+  buttonText = 'Browse',
   inProgress,
   InputProps,
-  size,
+  size = 'small',
   hasFiles,
-  cursor,
+  cursor = 'pointer',
   ...props
 }) {
   return (
@@ -50,12 +50,6 @@ function UploadFieldBase({
     />
   );
 }
-
-UploadFieldBase.defaultProps = {
-  buttonText: 'Browse',
-  size: 'small',
-  cursor: 'pointer'
-};
 
 UploadFieldBase.propTypes = {
   name: PropTypes.string,

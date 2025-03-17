@@ -96,6 +96,4 @@ GeocoderWidget.propTypes = {
   onError: PropTypes.func
 };
 
-GeocoderWidget.defaultProps = {};
-
 export default GeocoderWidget;

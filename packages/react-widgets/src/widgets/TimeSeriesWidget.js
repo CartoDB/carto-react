@@ -48,6 +48,8 @@ function calculateNextStep(time, stepType, stepMultiplier = 1) {
 }
 
 const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
+const IDENTITY_FN = (v) => v;
 
 const debounceTimeout = 250;
 
@@ -107,37 +109,37 @@ function TimeSeriesWidget({
   column,
   operationColumn,
   joinOperation,
-  operation,
+  operation = AggregationTypes.COUNT,
   series,
-  stepSizeOptions,
+  stepSizeOptions = EMPTY_ARRAY,
   global,
   onError,
-  wrapperProps,
-  noDataAlertProps,
+  wrapperProps = EMPTY_OBJECT,
+  noDataAlertProps = EMPTY_OBJECT,
   // UI
-  chartType,
+  chartType = TIME_SERIES_CHART_TYPES.LINE,
   timeAxisSplitNumber,
-  tooltip,
+  tooltip = true,
   tooltipFormatter,
-  formatter,
+  formatter = IDENTITY_FN,
   height,
   fitHeight,
   stableHeight,
-  showControls,
-  animation,
-  filterable,
-  isPlaying,
+  showControls = true,
+  animation = true,
+  filterable = true,
+  isPlaying = false,
   onPlay,
-  isPaused,
+  isPaused = false,
   onPause,
   onStop,
   onTimelineUpdate,
-  timeWindow,
+  timeWindow = EMPTY_ARRAY,
   onTimeWindowUpdate,
   onStateChange,
   palette,
   showLegend,
-  yAxisType,
+  yAxisType = 'dense',
   // Both
   stepSize,
   stepMultiplier,
@@ -539,25 +541,6 @@ TimeSeriesWidget.propTypes = {
   yAxisType: PropTypes.oneOf(['dense', 'full']),
   // Both
   stepSize: PropTypes.oneOf(Object.values(GroupDateTypes)).isRequired
-};
-
-TimeSeriesWidget.defaultProps = {
-  // Widget
-  operation: AggregationTypes.COUNT,
-  stepSizeOptions: [],
-  wrapperProps: {},
-  noDataAlertProps: {},
-  // UI
-  tooltip: true,
-  formatter: (value) => value,
-  animation: true,
-  filterable: true,
-  isPlaying: false,
-  isPaused: false,
-  timeWindow: [],
-  showControls: true,
-  chartType: TIME_SERIES_CHART_TYPES.LINE,
-  yAxisType: 'dense'
 };
 
 export default TimeSeriesWidget;

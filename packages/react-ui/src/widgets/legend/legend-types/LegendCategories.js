@@ -10,12 +10,18 @@ import Typography from '../../../components/atoms/Typography';
 
 const MAX_CATEGORIES = 20;
 
+const DEFAULT_LEGEND = {
+  labels: [],
+  colors: [],
+  isStrokeColor: false
+};
+
 /**
  * @param {object} props
  * @param {import('../LegendWidgetUI').LegendLayerVariableBase & import('../LegendWidgetUI').LegendCategories} props.legend - legend variable data.
  * @returns {React.ReactNode}
  */
-function LegendCategories({ legend }) {
+function LegendCategories({ legend = DEFAULT_LEGEND }) {
   const {
     labels = [],
     colors = [],
@@ -62,14 +68,6 @@ function LegendCategories({ legend }) {
     </>
   );
 }
-
-LegendCategories.defaultProps = {
-  legend: {
-    labels: [],
-    colors: [],
-    isStrokeColor: false
-  }
-};
 
 const ColorType = PropTypes.oneOfType([
   PropTypes.string,

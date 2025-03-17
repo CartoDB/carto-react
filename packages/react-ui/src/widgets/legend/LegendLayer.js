@@ -57,9 +57,9 @@ export default function LegendLayer({
   onChangeOpacity,
   onChangeVisibility,
   onChangeSelection,
-  maxZoom,
-  minZoom,
-  currentZoom
+  maxZoom = 21,
+  minZoom = 0,
+  currentZoom = 0
 }) {
   const intl = useIntl();
   const intlConfig = useImperativeIntl(intl);
@@ -206,11 +206,6 @@ LegendLayer.propTypes = {
   maxZoom: PropTypes.number,
   minZoom: PropTypes.number,
   currentZoom: PropTypes.number
-};
-LegendLayer.defaultProps = {
-  maxZoom: 21,
-  minZoom: 0,
-  currentZoom: 0
 };
 
 /**

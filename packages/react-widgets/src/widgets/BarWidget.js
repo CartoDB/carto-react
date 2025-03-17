@@ -16,6 +16,7 @@ import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 
 const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
 
 /**
  * Renders a <BarWidget /> component
@@ -52,18 +53,18 @@ function BarWidget({
   operation,
   xAxisFormatter,
   yAxisFormatter,
-  order = [],
-  labels,
-  tooltip,
+  order = EMPTY_ARRAY,
+  labels = EMPTY_OBJECT,
+  tooltip = true,
   tooltipFormatter,
   height,
-  animation,
-  filterable,
-  global,
+  animation = true,
+  filterable = true,
+  global = false,
   onError,
   onStateChange,
-  wrapperProps,
-  noDataAlertProps
+  wrapperProps = EMPTY_OBJECT,
+  noDataAlertProps = EMPTY_OBJECT
 }) {
   const dispatch = useDispatch();
 
@@ -189,17 +190,6 @@ BarWidget.propTypes = {
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-};
-
-BarWidget.defaultProps = {
-  order: [],
-  labels: {},
-  animation: true,
-  filterable: true,
-  tooltip: true,
-  global: false,
-  wrapperProps: {},
-  noDataAlertProps: {}
 };
 
 export default BarWidget;

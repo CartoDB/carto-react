@@ -8,12 +8,17 @@ import {
 } from '../LegendWidgetUI.styles';
 import LegendLayerTitle from '../LegendLayerTitle';
 
+const DEFAULT_LEGEND = {
+  labels: [],
+  icons: []
+};
+
 /**
  * @param {object} props
  * @param {import('../LegendWidgetUI').LegendLayerVariableBase & import('../LegendWidgetUI').LegendIcons} props.legend - legend variable data.
  * @returns {React.ReactNode}
  */
-function LegendIcon({ legend }) {
+function LegendIcon({ legend = DEFAULT_LEGEND }) {
   const { labels = [], icons = [] } = legend;
   return (
     <LegendVariableList data-testid='icon-legend'>
@@ -32,13 +37,6 @@ function LegendIcon({ legend }) {
     </LegendVariableList>
   );
 }
-
-LegendIcon.defaultProps = {
-  legend: {
-    labels: [],
-    icons: []
-  }
-};
 
 LegendIcon.propTypes = {
   legend: PropTypes.shape({

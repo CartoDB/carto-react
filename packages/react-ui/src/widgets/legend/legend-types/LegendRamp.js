@@ -5,13 +5,18 @@ import Typography from '../../../components/atoms/Typography';
 import { getPalette } from '../../../utils/palette';
 import LegendProportion, { getMinMax } from './LegendProportion';
 
+const DEFAULT_LEGEND = {
+  labels: [],
+  colors: []
+};
+
 /**
  * @param {object} props
  * @param {import('../LegendWidgetUI').LegendLayerVariableBase & import('../LegendWidgetUI').LegendRamp} props.legend - legend variable data.
  * @param {boolean} [props.isContinuous] - If the legend is continuous.
  * @returns {React.ReactNode}
  */
-function LegendRamp({ isContinuous = false, legend }) {
+function LegendRamp({ isContinuous = false, legend = DEFAULT_LEGEND }) {
   const { labels = [], colors = [], showMinMax = true } = legend;
 
   const palette = getPalette(
@@ -72,14 +77,6 @@ function LegendRamp({ isContinuous = false, legend }) {
     </Box>
   );
 }
-
-LegendRamp.defaultProps = {
-  legend: {
-    labels: [],
-    colors: []
-  },
-  isContinuous: false
-};
 
 const ColorType = PropTypes.oneOfType([
   PropTypes.string,

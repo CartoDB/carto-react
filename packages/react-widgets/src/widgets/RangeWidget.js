@@ -14,6 +14,8 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
 import { RangeWidgetUI } from '@carto/react-ui';
 import useStats from '../hooks/useStats';
 
+const EMPTY_OBJECT = {};
+
 /**
  * Renders a <RangeWidget /> component
  * @param  {object} props
@@ -27,7 +29,6 @@ import useStats from '../hooks/useStats';
  * @param  {Function} [props.onError] - Function to handle error messages from the widget.
  * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
-
  */
 function RangeWidget({
   id,
@@ -36,10 +37,10 @@ function RangeWidget({
   column,
   min: _min,
   max: _max,
-  global,
+  global = false,
   onError,
   onStateChange,
-  wrapperProps
+  wrapperProps = EMPTY_OBJECT
 }) {
   const dispatch = useDispatch();
   const { filters } = useSelector((state) => selectSourceById(state, dataSource) || {});
@@ -175,11 +176,6 @@ RangeWidget.propTypes = {
   global: PropTypes.bool,
   onError: PropTypes.func,
   wrapperProps: PropTypes.object
-};
-
-RangeWidget.defaultProps = {
-  global: false,
-  wrapperProps: {}
 };
 
 export default RangeWidget;

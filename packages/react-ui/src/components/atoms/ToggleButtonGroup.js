@@ -83,7 +83,12 @@ const StyledToggleButtonGroup = styled(MuiToggleButtonGroup, {
   })
 }));
 
-const ToggleButtonGroup = ({ children, variant, backgroundColor, ...rest }) => {
+const ToggleButtonGroup = ({
+  children,
+  variant = 'floating',
+  backgroundColor,
+  ...rest
+}) => {
   const isUnbounded = variant === 'unbounded';
   const defaultColor = isUnbounded ? 'transparent' : 'primary';
 
@@ -96,10 +101,6 @@ const ToggleButtonGroup = ({ children, variant, backgroundColor, ...rest }) => {
       {children}
     </StyledToggleButtonGroup>
   );
-};
-
-ToggleButtonGroup.defaultProps = {
-  variant: 'floating'
 };
 
 ToggleButtonGroup.propTypes = {

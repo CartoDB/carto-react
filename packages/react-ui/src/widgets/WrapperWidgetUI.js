@@ -131,27 +131,39 @@ const PaperMenu = styled(Menu)(({ theme }) => ({
   }
 }));
 
-function WrapperWidgetUI(props) {
+const EMPTY_ARRAY = [];
+const DEFAULT_OPTIONS_ICON = <MoreVert />;
+
+function WrapperWidgetUI({
+  title,
+  expanded: _expanded = true,
+  expandable: _expandable = true,
+  onExpandedChange,
+  isLoading = false,
+  disabled = false,
+  options = EMPTY_ARRAY,
+  actions = EMPTY_ARRAY,
+  optionsIcon = DEFAULT_OPTIONS_ICON,
+  children,
+  margin,
+  headerItems,
+  contentProps,
+  footer
+}) {
   const wrapper = createRef();
 
   const [expandedInt, setExpandedInt] = useState(true);
   const externalExpanded =
-    typeof props.expanded === 'boolean' && typeof props.onExpandedChange === 'function';
+    typeof _expanded === 'boolean' && typeof onExpandedChange === 'function';
   const expanded =
-    props.expandable !== false ? (externalExpanded ? props.expanded : expandedInt) : true;
-  const setExpanded = externalExpanded ? props.onExpandedChange : setExpandedInt;
+    _expandable !== false ? (externalExpanded ? _expanded : expandedInt) : true;
+  const setExpanded = externalExpanded ? onExpandedChange : setExpandedInt;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const {
-    disabled = false,
-    options = [],
-    actions = [],
-    optionsIcon = <MoreVert />
-  } = props;
 
   const handleExpandClick = () => {
-    if (props.expandable) {
+    if (_expandable) {
       setExpanded(!expanded);
     }
   };
@@ -186,30 +198,30 @@ function WrapperWidgetUI(props) {
   };
 
   if (disabled) {
-    return props.children;
+    return children;
   }
 
   return (
-    <Root margin={props.margin} component='section' aria-label={props.title}>
-      {props.isLoading ? <LoadingBar /> : null}
-      <Header container expanded={props.expanded}>
+    <Root margin={margin} component='section' aria-label={title}>
+      {isLoading ? <LoadingBar /> : null}
+      <Header container expanded={_expanded}>
         <HeaderButton
-          expandable={props.expandable}
+          expandable={_expandable}
           startIcon={
-            props.expandable && <Icon>{expanded ? <HideButton /> : <ShowButton />}</Icon>
+            _expandable && <Icon>{expanded ? <HideButton /> : <ShowButton />}</Icon>
           }
           onClick={handleExpandClick}
-          tabIndex={props.expandable ? 0 : -1}
+          tabIndex={_expandable ? 0 : -1}
         >
-          <Tooltip title={props.title}>
-            <Text expanded={props.expanded} align='left' variant='subtitle1'>
-              {props.title}
+          <Tooltip title={title}>
+            <Text expanded={_expanded} align='left' variant='subtitle1'>
+              {title}
             </Text>
           </Tooltip>
         </HeaderButton>
 
         <HeaderItems item>
-          {props.headerItems}
+          {headerItems}
 
           {actions.length > 0 &&
             actions.map((action) => {
@@ -270,21 +282,14 @@ function WrapperWidgetUI(props) {
 
       {/* TODO: check collapse error */}
       <Collapse ref={wrapper} in={expanded} timeout='auto' unmountOnExit>
-        <Box {...props.contentProps}>
-          <Box pt={1}>{props.children}</Box>
-          {props.footer ?? <Box>{props.footer}</Box>}
+        <Box {...contentProps}>
+          <Box pt={1}>{children}</Box>
+          {footer ?? <Box>{footer}</Box>}
         </Box>
       </Collapse>
     </Root>
   );
 }
-
-WrapperWidgetUI.defaultProps = {
-  expanded: true,
-  expandable: true,
-  isLoading: false,
-  disabled: false
-};
 
 WrapperWidgetUI.propTypes = {
   title: PropTypes.string.isRequired,

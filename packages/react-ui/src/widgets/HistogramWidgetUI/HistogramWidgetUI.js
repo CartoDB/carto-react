@@ -29,21 +29,24 @@ const ClearButton = styled(Link)(({ theme }) => ({
   cursor: 'pointer'
 }));
 
+const IDENTITY_FN = (v) => v;
+const EMPTY_ARRAY = [];
+
 function HistogramWidgetUI({
   data,
   ticks,
   min,
   max,
-  xAxisFormatter,
-  yAxisFormatter,
-  yAxisType,
-  selectedBars,
+  xAxisFormatter = IDENTITY_FN,
+  yAxisFormatter = IDENTITY_FN,
+  yAxisType = 'dense',
+  selectedBars = EMPTY_ARRAY,
   onSelectedBarsChange,
-  tooltip,
-  tooltipFormatter,
-  animation,
-  filterable: _filterable,
-  height,
+  tooltip = true,
+  tooltipFormatter = defaultTooltipFormatter,
+  animation = true,
+  filterable: _filterable = true,
+  height = 200,
   isLoading
 }) {
   const theme = useTheme();
@@ -324,18 +327,6 @@ function HistogramWidgetUI({
     </div>
   );
 }
-
-HistogramWidgetUI.defaultProps = {
-  tooltip: true,
-  tooltipFormatter: defaultTooltipFormatter,
-  xAxisFormatter: (v) => v,
-  yAxisFormatter: (v) => v,
-  yAxisType: 'dense',
-  selectedBars: [],
-  animation: true,
-  filterable: true,
-  height: 200
-};
 
 HistogramWidgetUI.propTypes = {
   data: PropTypes.arrayOf(PropTypes.number).isRequired,

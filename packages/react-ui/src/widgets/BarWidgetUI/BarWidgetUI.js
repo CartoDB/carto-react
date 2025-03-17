@@ -340,21 +340,6 @@ function BarWidgetUI(props) {
   );
 }
 
-BarWidgetUI.defaultProps = {
-  tooltip: true,
-  tooltipFormatter: defaultTooltipFormatter,
-  yAxisData: [],
-  series: [],
-  xAxisFormatter: (v) => v,
-  yAxisFormatter: (v) => v,
-  selectedBars: [],
-  labels: {},
-  onSelectedBarsChange: null,
-  animation: true,
-  filterable: true,
-  stacked: true
-};
-
 const numberOrString = PropTypes.oneOfType([PropTypes.number, PropTypes.string]);
 
 BarWidgetUI.propTypes = {
@@ -413,13 +398,27 @@ function defaultTooltipFormatter(params, yAxisFormatter) {
   return message;
 }
 
+const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
+const IDENTITY_FN = (v) => v;
+
 function useProcessedProps({
-  labels,
-  height,
-  selectedBars: _selectedBars,
-  yAxisData: _yAxisData,
+  yAxisData: _yAxisData = EMPTY_ARRAY,
+  xAxisData,
+  series: _series = EMPTY_ARRAY,
+  selectedBars: _selectedBars = EMPTY_ARRAY,
+  onSelectedBarsChange = null,
+  tooltip = true,
+  tooltipFormatter = defaultTooltipFormatter,
+  labels = EMPTY_OBJECT,
   colors: _colors,
-  series: _series,
+  xAxisFormatter = IDENTITY_FN,
+  yAxisFormatter = IDENTITY_FN,
+  stacked = true,
+  height,
+  filterable = true,
+  animation = true,
+  isLoading,
   ...props
 }) {
   const theme = useTheme();
@@ -456,12 +455,22 @@ function useProcessedProps({
 
   return {
     ...props,
-    labels,
-    height: height ?? theme.spacingValue * 22,
-    selectedBars: formatSelectedBars(_selectedBars),
     yAxisData,
+    xAxisData,
+    series,
+    selectedBars: formatSelectedBars(_selectedBars),
+    onSelectedBarsChange,
+    tooltip,
+    tooltipFormatter,
+    labels,
     colors,
-    series
+    xAxisFormatter,
+    yAxisFormatter,
+    stacked,
+    height: height ?? theme.spacingValue * 22,
+    filterable,
+    animation,
+    isLoading
   };
 }
 

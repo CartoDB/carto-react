@@ -16,6 +16,7 @@ import WidgetWithAlert from './utils/WidgetWithAlert';
 import useStats from '../hooks/useStats';
 
 const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
 
 /**
  * Renders a <HistogramWidget /> component
@@ -41,30 +42,29 @@ const EMPTY_ARRAY = [];
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
-
  */
 function HistogramWidget({
   id,
   title,
   dataSource,
   column,
-  operation,
-  ticks: _ticks = [],
-  min: externalMin,
-  max: externalMax,
+  operation = AggregationTypes.COUNT,
+  ticks: _ticks = EMPTY_ARRAY,
+  min: externalMin = Number.MIN_SAFE_INTEGER,
+  max: externalMax = Number.MAX_SAFE_INTEGER,
   xAxisFormatter,
-  bins,
+  bins = 15,
   formatter,
-  yAxisType,
-  tooltip,
+  yAxisType = 'dense',
+  tooltip = true,
   tooltipFormatter,
-  animation,
-  filterable,
-  global,
+  animation = true,
+  filterable = true,
+  global = false,
   onError,
   onStateChange,
-  wrapperProps,
-  noDataAlertProps
+  wrapperProps = EMPTY_OBJECT,
+  noDataAlertProps = EMPTY_OBJECT
 }) {
   const dispatch = useDispatch();
 
@@ -239,21 +239,6 @@ HistogramWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object
-};
-
-HistogramWidget.defaultProps = {
-  bins: 15,
-  ticks: [],
-  min: Number.MIN_SAFE_INTEGER,
-  max: Number.MAX_SAFE_INTEGER,
-  operation: AggregationTypes.COUNT,
-  yAxisType: 'dense',
-  tooltip: true,
-  animation: true,
-  filterable: true,
-  global: false,
-  wrapperProps: {},
-  noDataAlertProps: {}
 };
 
 export default HistogramWidget;

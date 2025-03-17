@@ -16,6 +16,7 @@ import useWidgetFetch from '../hooks/useWidgetFetch';
 import WidgetWithAlert from './utils/WidgetWithAlert';
 
 const EMPTY_ARRAY = [];
+const EMPTY_OBJECT = {};
 
 /**
  * Renders a <CategoryWidget /> component
@@ -37,7 +38,6 @@ const EMPTY_ARRAY = [];
  * @param  {object} [props.wrapperProps] - Extra props to pass to [WrapperWidgetUI](https://storybook-react.carto.com/?path=/docs/widgets-wrapperwidgetui--default).
  * @param  {Function=} [props.onStateChange] - Callback to handle state updates of widgets
  * @param  {object} [props.noDataAlertProps] - Extra props to pass to [NoDataAlert]().
-
  */
 function CategoryWidget(props) {
   const {
@@ -49,15 +49,15 @@ function CategoryWidget(props) {
     joinOperation,
     operation,
     formatter,
-    labels,
-    animation,
-    filterable,
-    searchable,
-    global,
+    labels = EMPTY_OBJECT,
+    animation = true,
+    filterable = true,
+    searchable = true,
+    global = false,
     onError,
-    wrapperProps,
+    wrapperProps = EMPTY_OBJECT,
     onStateChange,
-    noDataAlertProps
+    noDataAlertProps = EMPTY_OBJECT
   } = props;
   const dispatch = useDispatch();
 
@@ -151,16 +151,6 @@ CategoryWidget.propTypes = {
   onError: PropTypes.func,
   wrapperProps: PropTypes.object,
   noDataAlertProps: PropTypes.object
-};
-
-CategoryWidget.defaultProps = {
-  labels: {},
-  animation: true,
-  filterable: true,
-  searchable: true,
-  global: false,
-  wrapperProps: {},
-  noDataAlertProps: {}
 };
 
 export default CategoryWidget;
