@@ -49,23 +49,18 @@ describe('utils', () => {
       ['v3', { ...V3_SOURCE, type: 'tileset' }, false],
       ['v3/databricks', { ...V3_SOURCE, provider: 'databricks' }, false],
       ['v3/databricksRest', { ...V3_SOURCE, provider: 'databricksRest' }, true],
-
+      ['v3/h3', { ...V3_SOURCE, geoColumn: 'h3' }, true],
       [
-        'v3/h3/with dataResolution',
-        { ...V3_SOURCE, geoColumn: 'h3', dataResolution: 5 },
-        true
-      ],
-      [
-        'v3/h3-frompoint/without dataResolution',
+        'v3/h3-frompoint',
         { ...V3_SOURCE, geoColumn: 'h3:geom', spatialDataType: 'geo' },
         true
       ],
+      ['v3/quadbin', { ...V3_SOURCE, geoColumn: 'quadbin:abc' }, true],
       [
-        'v3/quadbin-frompoint/without dataResolution',
+        'v3/quadbin-frompoint',
         { ...V3_SOURCE, geoColumn: 'quadbin:geom', spatialDataType: 'geo' },
         true
-      ],
-      ['v3/quadbin/with dataResolution', { ...V3_SOURCE, geoColumn: 'quadbin:abc' }, true]
+      ]
     ])('works correctly for %s', (_, source, expected) => {
       expect(isRemoteCalculationSupported({ source })).toEqual(expected);
     });
