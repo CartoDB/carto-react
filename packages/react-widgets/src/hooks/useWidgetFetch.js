@@ -16,7 +16,6 @@ import { DEFAULT_INVALID_COLUMN_ERR } from '../widgets/utils/constants';
 import useCustomCompareEffect from './useCustomCompareEffect';
 import useWidgetSource from './useWidgetSource';
 import { isRemoteCalculationSupported } from '../models/utils';
-import { getSpatialFiltersResolution } from '../models/spatialFiltersResolution';
 
 export const WidgetStateType = {
   Loading: 'loading',
@@ -86,7 +85,6 @@ export default function useWidgetFetch(
   );
 
   const viewport = useSelector(selectViewport);
-  const viewState = useSelector((state) => state.carto.viewState);
   const spatialFilter = useSelector((state) =>
     selectValidSpatialFilter(state, dataSource)
   );
@@ -94,31 +92,6 @@ export default function useWidgetFetch(
     () => selectGeometryToIntersect(global, viewport, spatialFilter),
     [global, viewport, spatialFilter]
   );
-
-  const enrichedSource = useMemo(() => {
-    if (
-      !source ||
-      !geometryToIntersect ||
-      source.spatialDataType === 'geo' ||
-      source.spatialFiltersResolution !== undefined ||
-      !source.dataResolution
-    ) {
-      return source;
-    }
-
-    if (source.spatialDataType === 'h3' || source.spatialDataType === 'quadbin') {
-      const spatialFiltersResolution = getSpatialFiltersResolution({
-        source,
-        viewState,
-        spatialDataType: source.spatialDataType
-      });
-      return {
-        ...source,
-        spatialFiltersResolution
-      };
-    }
-    return source;
-  }, [geometryToIntersect, source, viewState.zoom, viewState.latitude]);
 
   useCustomCompareEffect(
     () => {
@@ -133,7 +106,7 @@ export default function useWidgetFetch(
       onStateChange?.({ state: WidgetStateType.Loading });
 
       modelFn({
-        source: enrichedSource,
+        source,
         ...params,
         global,
         remoteCalculation,
@@ -168,7 +141,6 @@ export default function useWidgetFetch(
     },
     [
       params,
-      enrichedSource,
       onError,
       isSourceReady,
       global,

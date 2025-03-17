@@ -204,8 +204,6 @@ export const createCartoSlice = (initialState) => {
  * @param {FiltersLogicalOperators=} data.filtersLogicalOperator - logical operator that defines how filters for different columns are joined together.
  * @param {import('@deck.gl/carto').QueryParameters} data.queryParameters - SQL query parameters.
  * @param {string=} data.geoColumn - (optional) name of column containing geometries or spatial index data.
- * @param {number=} data.dataResolution - data resolution for spatial index data.
- * @param {number=} data.spatialFiltersResolution - spatial filters resolution for spatial index data.
  * @param {string=} data.aggregationExp - (optional) for spatial index data.
  * @param {number=} data.aggregationResLevel - (optional) for spatial index data.
  * @param {string=} data.provider - (optional) type of the data warehouse.
@@ -222,8 +220,6 @@ export const addSource = ({
   geoColumn,
   spatialDataType,
   spatialDataColumn,
-  dataResolution,
-  spatialFiltersResolution,
   aggregationExp,
   aggregationResLevel,
   provider
@@ -239,11 +235,9 @@ export const addSource = ({
     filtersLogicalOperator,
     queryParameters,
     geoColumn,
-    dataResolution,
     aggregationResLevel,
     spatialDataType,
     spatialDataColumn,
-    spatialFiltersResolution,
     aggregationExp,
     provider
   }

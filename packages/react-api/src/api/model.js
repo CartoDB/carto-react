@@ -110,9 +110,6 @@ export function executeModel(props) {
     if (spatialDataColumn) queryParams.spatialDataColumn = spatialDataColumn;
 
     if (spatialDataType !== 'geo') {
-      if (source.spatialFiltersResolution !== undefined) {
-        queryParams.spatialFiltersResolution = source.spatialFiltersResolution;
-      }
       queryParams.spatialFiltersMode = source.spatialFiltersMode || 'intersects';
     }
   }
