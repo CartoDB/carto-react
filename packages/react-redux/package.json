@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-redux",
-  "version": "3.1.0-alpha.13",
+  "version": "3.1.0-alpha.14",
   "description": "CARTO for React - Redux",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -73,5 +73,5 @@
     "@deck.gl/core": "^9.0.1",
     "@reduxjs/toolkit": "^1.5.0"
   },
-  "gitHead": "1217fc677ddb467f64ed56bfd15fe1d92f140fff"
+  "gitHead": "766d93bf8ad50123edf2de35d33154542f94123d"
 }
