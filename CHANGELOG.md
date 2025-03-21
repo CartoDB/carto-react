@@ -4,6 +4,10 @@
 
 ## 3.1.0
 
+### 3.1.0-alpha.13 (2025-03-17)
+
+- Fix Category Widget height [#933](https://github.com/CartoDB/carto-react/pull/933)
+
 ### 3.1.0-alpha.12 (2025-03-17)
 
 - Remove 'spatialFiltersResolution' and 'dataResolution' parameters from widgets [#930](https://github.com/CartoDB/carto-react/pull/930)

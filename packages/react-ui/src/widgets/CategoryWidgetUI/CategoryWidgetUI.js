@@ -453,15 +453,22 @@ function CategoryWidgetUI(props) {
   if (data?.length === 0 || showSkeleton) return <CategorySkeleton />;
 
   const getFixedSizeListHeight = () => {
+    const ITEM_HEIGHT = 38;
+    const MAX_HEIGHT = 320;
+
     if (showAll) {
-      return 320;
+      return MAX_HEIGHT;
+    }
+
+    if (animValues.length <= maxItems) {
+      return animValues.length * ITEM_HEIGHT;
     }
 
     if (blockedCategories.length > 0) {
-      return blockedCategories.length * 38;
+      return blockedCategories.length * ITEM_HEIGHT;
     }
 
-    return (maxItems + 1) * 38;
+    return (maxItems + 1) * ITEM_HEIGHT;
   };
 
   return (
