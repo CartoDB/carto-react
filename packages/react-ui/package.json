@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-ui",
-  "version": "3.1.0-alpha.12",
+  "version": "3.1.0-alpha.14",
   "description": "CARTO for React - UI",
   "author": "CARTO Dev Team",
   "keywords": [
@@ -95,5 +95,5 @@
     "react-dom": "17.x || 18.x",
     "react-intl": "^6.5.0"
   },
-  "gitHead": "1217fc677ddb467f64ed56bfd15fe1d92f140fff"
+  "gitHead": "766d93bf8ad50123edf2de35d33154542f94123d"
 }

@@ -43,7 +43,7 @@ const EDIT_MODES_MAP = {
 };
 
 const DEFAULT_SELECTION_MODES = Object.values(FEATURE_SELECTION_MODES);
-const DEFAULT_EDIT_MODES = Object.values(EDIT_MODES_MAP);
+const DEFAULT_EDIT_MODES = Object.values(EDIT_MODES_KEYS);
 
 function FeatureSelectionWidget({
   selectionModes: selectionModesKeys = DEFAULT_SELECTION_MODES,
