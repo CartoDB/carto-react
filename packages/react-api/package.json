@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-api",
-  "version": "3.1.0-alpha.16-source-filter-fix.0",
+  "version": "3.1.0-alpha.16",
   "description": "CARTO for React - Api",
   "author": "CARTO Dev Team",
   "keywords": [
