@@ -141,6 +141,7 @@ export default function useWidgetFetch(
     },
     [
       params,
+      source,
       onError,
       isSourceReady,
       global,

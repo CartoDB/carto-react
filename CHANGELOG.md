@@ -2,6 +2,8 @@
 
 ## Not released
 
+- Fix useWidgetFetch to fetch data on source changes [#xxx](https://github.com/CartoDB/carto-react/pull/xxx)
+
 ## 3.1.0
 
 ### 3.1.0-alpha.15 (2025-03-17)
