@@ -1,6 +1,6 @@
 {
   "name": "@carto/react-core",
-  "version": "3.1.0-alpha.14",
+  "version": "3.1.0-alpha.16-source-filter-fix.0",
   "description": "CARTO for React - Core",
   "author": "CARTO Dev Team",
   "keywords": [
