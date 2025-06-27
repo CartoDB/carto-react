@@ -14,4 +14,4 @@
 
 Package to use CARTO basemaps + an easy to use GoogleMap React component
 
-See the official doc & reference at [CARTO for React](https://docs.carto.com/react/)
+See the official doc & reference at [CARTO for React](https://docs.carto.com/carto-for-developers/carto-for-react/)
